@@ -80,6 +80,18 @@ public sealed class LocalizationServiceTests : IDisposable
     }
 
     [Fact]
+    public void Persian_numbers_use_unambiguous_latin_separators()
+    {
+        var service = CreateService();
+        service.Initialize();
+
+        service.SetLanguage(AppLanguages.Persian);
+
+        Assert.Equal("1,250.50", 1250.5m.ToString("N2", service.CurrentCulture));
+        Assert.Equal("1,250.50", 1250.5m.ToString("N2", CultureInfo.CurrentCulture));
+    }
+
+    [Fact]
     public void Calendar_follows_the_language_until_the_user_picks_one()
     {
         var service = CreateService();

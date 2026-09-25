@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Vafadar.Backup;
+using Vafadar.Finance.App.Features.Accounts;
 using Vafadar.Finance.App.Features.Home;
+using Vafadar.Finance.App.Features.More;
+using Vafadar.Finance.App.Features.Onboarding;
 using Vafadar.Finance.App.Features.Settings;
 using Vafadar.Finance.App.Resources.Strings;
 using Vafadar.Finance.Core;
@@ -35,10 +38,12 @@ public static class MauiProgram
 
         builder.Services
             .AddTransient<AppShell>()
-            .AddTransient<HomePage>()
-            .AddTransient<HomeViewModel>()
-            .AddTransient<SettingsPage>()
-            .AddTransient<SettingsViewModel>();
+            .AddTransient<OnboardingPage>().AddTransient<OnboardingViewModel>()
+            .AddTransient<HomePage>().AddTransient<HomeViewModel>()
+            .AddTransient<AccountsPage>().AddTransient<AccountsViewModel>()
+            .AddTransient<AccountEditorPage>().AddTransient<AccountEditorViewModel>()
+            .AddTransient<MorePage>().AddTransient<MoreViewModel>()
+            .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

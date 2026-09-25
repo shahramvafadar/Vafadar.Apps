@@ -10,11 +10,11 @@ public partial class HomePage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        // The language or calendar may have changed on another tab.
-        _viewModel.Refresh();
+        // Language, calendar or data may have changed elsewhere.
+        await _viewModel.LoadAsync();
     }
 }

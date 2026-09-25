@@ -119,8 +119,12 @@ dotnet_diagnostic.IDE0005.severity = suggestion       # Remove unnecessary using
 dotnet_diagnostic.CA1848.severity = none              # LoggerMessage delegates: not worth it in apps
 dotnet_diagnostic.CA2007.severity = none              # ConfigureAwait: UI apps need the sync context
 
-# Generated code
+# Generated code (build output and EF Core migrations)
 [**/{obj,bin}/**.cs]
+generated_code = true
+dotnet_analyzer_diagnostic.severity = none
+
+[**/Migrations/*.cs]
 generated_code = true
 dotnet_analyzer_diagnostic.severity = none
 

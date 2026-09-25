@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<!-- Visual system of the Finance app (docs/03-ux-design.md §6). Light theme only in phase 1. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:v="http://vafadar.pro/schemas/maui">
+
+    <v:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    <v:IsNotNullConverter x:Key="IsNotNullConverter" />
+
+    <Color x:Key="IncomeText">#1B5E20</Color>
+    <Color x:Key="IncomeBackground">#E8F5E9</Color>
+    <Color x:Key="ExpenseText">#B71C1C</Color>
+    <Color x:Key="ExpenseBackground">#FFEBEE</Color>
+    <Color x:Key="TransferText">#37474F</Color>
+    <Color x:Key="TransferBackground">#ECEFF1</Color>
+    <Color x:Key="WarningText">#8D5B00</Color>
+    <Color x:Key="WarningBackground">#FFF4E0</Color>
+    <Color x:Key="PageBackground">#F6F7F6</Color>
+    <Color x:Key="CardBackground">#FFFFFF</Color>
+    <Color x:Key="SecondaryText">#5F6368</Color>
+    <Color x:Key="DividerColor">#E3E6E3</Color>
+
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource PageBackground}" />
+    </Style>
+
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}" />
+        <Setter Property="Stroke" Value="{StaticResource DividerColor}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+    </Style>
+
+    <Style x:Key="SectionHeader" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryText}" />
+        <Setter Property="Margin" Value="0,16,0,4" />
+    </Style>
+
+    <Style x:Key="Secondary" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryText}" />
+    </Style>
+
+    <Style x:Key="FieldLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryText}" />
+        <Setter Property="Margin" Value="0,12,0,4" />
+    </Style>
+
+    <Style x:Key="ErrorText" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource ExpenseText}" />
+    </Style>
+
+    <Style x:Key="AmountLarge" TargetType="Label">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="#1F1F1F" />
+    </Style>
+
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="24" />
+    </Style>
+
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="24" />
+    </Style>
+
+    <Style x:Key="FloatingAddButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="CornerRadius" Value="28" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="16" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="End" />
+    </Style>
+
+    <Style x:Key="ListRow" TargetType="Grid">
+        <Setter Property="MinimumHeightRequest" Value="56" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="ColumnSpacing" Value="12" />
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}" />
+    </Style>
+</ResourceDictionary>

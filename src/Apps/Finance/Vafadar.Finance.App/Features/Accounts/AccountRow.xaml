@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- One account in a list. The binding context is an AccountItem; taps open the editor. -->
+<Grid
+    x:Class="Vafadar.Finance.App.Features.Accounts.AccountRow"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    x:DataType="local:AccountItem"
+    Style="{StaticResource ListRow}"
+    ColumnDefinitions="Auto,*,Auto">
+
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnTapped" />
+    </Grid.GestureRecognizers>
+
+    <fi:SymbolIcon Grid.Column="0" Symbol="{Binding Icon}" FontSize="24" VerticalOptions="Center"
+                   ForegroundColor="{StaticResource Primary}" />
+    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+        <Label Text="{Binding Name}" FontSize="16" />
+        <HorizontalStackLayout Spacing="8">
+            <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
+            <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" IsVisible="{Binding NotInTotals}" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+    <Label Grid.Column="2" Text="{Binding BalanceText}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
+        <Label.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                <Setter Property="TextColor" Value="{StaticResource ExpenseText}" />
+            </DataTrigger>
+        </Label.Triggers>
+    </Label>
+</Grid>

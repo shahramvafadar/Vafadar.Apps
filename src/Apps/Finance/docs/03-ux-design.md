@@ -74,6 +74,12 @@ More:    Accounts · Budget · Reports · Categories · Import/Export · Backup 
 * Direction-dependent icons (back, chevrons) mirror in RTL; charts, logos and money icons do not.
 * Every icon has an accessible name (`SemanticProperties.Description`); charts have a table alternative (UX-06).
 * Light theme only in phase 1 (D-12).
+* Digits are Latin in every language for now; Persian uses the Latin separators `.` and `,` because the Arabic
+  separators (U+066B, U+066C) look like commas next to Latin digits. Input accepts Persian/Arabic digits and `٫`.
+* Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
+  segmented control, so German and Persian labels never scroll or get cut off.
+* Changing language or calendar rebuilds the main shell and returns to the current page, so every cached number,
+  date and icon is re-rendered in the new direction.
 
 ## 7. Syncfusion controls used (D-13)
 
@@ -82,6 +88,6 @@ More:    Accounts · Budget · Reports · Categories · Import/Export · Backup 
 | `SfCircularChart` / `SfCartesianChart` | Home donut, reports, forecast path |
 | `SfSegmentedControl` | Entry kind, Simple/Advanced, report period |
 | `SfNumericEntry` or custom keypad | Amount entry (custom parsing for Persian digits) |
-| `SfCalendar` / `SfDatePicker` | Date input – if Persian calendar support is confirmed; otherwise own picker |
+| `SfCalendar` (dialog mode) | Date input via the shared `DateField`; Persian calendar confirmed (`CalendarIdentifier.Persian`) |
 | `SfChip` / `SfChipGroup` | Filters |
 | `SfBusyIndicator`, `SfPopup` | Long operations, confirmations |

@@ -1,3 +1,4 @@
+using FluentIcons.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Syncfusion.Licensing;
@@ -50,6 +51,9 @@ public static class VafadarMauiAppBuilderExtensions
         }
 
         builder.ConfigureSyncfusionCore();
+
+        // Fluent UI System Icons (MIT), bundled offline (VIS-03).
+        builder.UseFluentIcons();
 
         var services = builder.Services;
         services.TryAddSingleton(TimeProvider.System);

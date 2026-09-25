@@ -38,7 +38,7 @@ privacy policy, Data safety and Financial features declaration match that build.
 | Slice | Status |
 |---|---|
 | S1 | Implemented – verified (domain + persistence; 59 new tests; migration InitialLedger) |
-| S2 | Planned |
+| S2 | Implemented – verified (Android/Windows builds; en/de/fa screens reviewed via Debug snapshots; AT-10 history part unit-tested, plan part follows S4) |
 | S3 | Planned |
 | S4 | Planned |
 | S5 | Planned |

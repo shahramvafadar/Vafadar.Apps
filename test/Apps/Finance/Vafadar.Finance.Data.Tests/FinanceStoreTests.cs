@@ -84,6 +84,23 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    [Trait("AT", "AT-10")]
+    public async Task Archived_account_keeps_its_history_in_past_reports()
+    {
+        var account = await NewAccountAsync();
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 4_000, Date = new DateOnly(2026, 10, 10) }, Ct);
+
+        account.IsArchived = true;
+        Assert.True(await _store.SaveAccountAsync(account, Ct));
+
+        Assert.Empty(await _store.GetAccountsAsync(includeArchived: false, cancellationToken: Ct));
+        var all = await _store.GetAccountsAsync(cancellationToken: Ct);
+        var entries = await _store.GetEntriesAsync(cancellationToken: Ct);
+        var october = LedgerCalculator.Totals(all, entries, new LedgerFilter(new DateOnly(2026, 10, 1), new DateOnly(2026, 10, 31)));
+        Assert.Equal(4_000, october.Single().GrossExpense);
+    }
+
+    [Fact]
     public async Task Default_categories_are_created_once()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

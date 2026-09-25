@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="FluentIcons.Maui" />
     <PackageReference Include="Syncfusion.Licensing" />
+    <PackageReference Include="Syncfusion.Maui.Calendar" />
     <PackageReference Include="Syncfusion.Maui.Core" />
   </ItemGroup>
 

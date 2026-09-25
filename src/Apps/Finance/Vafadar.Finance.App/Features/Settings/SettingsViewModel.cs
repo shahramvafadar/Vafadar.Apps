@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Core.Hosting;
+using Vafadar.Finance.Core.Money;
+using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
@@ -14,6 +16,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
     private readonly IAppEnvironment _app;
+    private readonly FinanceStore _store;
     private bool _refreshing;
 
     public SettingsViewModel(
@@ -21,19 +24,58 @@ public sealed partial class SettingsViewModel : ViewModelBase
         Translator translator,
         IDateFormatter dates,
         TimeProvider time,
-        IAppEnvironment app)
+        IAppEnvironment app,
+        FinanceStore store)
     {
         _localization = localization;
         _translator = translator;
         _dates = dates;
         _time = time;
         _app = app;
+        _store = store;
 
         Languages = [.. localization.SupportedLanguages];
+        ReportCurrency = string.Empty;
         Refresh();
     }
 
     public AppLanguage[] Languages { get; }
+
+    public IReadOnlyList<string> CurrencyCodes { get; } = [.. Currencies.All.Select(c => c.Code)];
+
+    [ObservableProperty]
+    public partial string ReportCurrency { get; set; }
+
+    /// <summary>Loads the finance settings.</summary>
+    public async Task LoadAsync()
+    {
+        _refreshing = true;
+        try
+        {
+            ReportCurrency = (await _store.GetSettingsAsync()).ReportCurrencyCode;
+        }
+        finally
+        {
+            _refreshing = false;
+        }
+
+        Refresh();
+    }
+
+    async partial void OnReportCurrencyChanged(string value)
+    {
+        if (_refreshing || string.IsNullOrEmpty(value))
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        if (settings.ReportCurrencyCode != value)
+        {
+            settings.ReportCurrencyCode = value;
+            await _store.SaveSettingsAsync(settings);
+        }
+    }
 
     [ObservableProperty]
     public partial AppLanguage? SelectedLanguage { get; set; }

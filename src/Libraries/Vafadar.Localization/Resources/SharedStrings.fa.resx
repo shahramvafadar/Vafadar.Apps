@@ -109,4 +109,55 @@
   <data name="Backup_Never" xml:space="preserve">
     <value>هنوز نسخه پشتیبانی تهیه نشده است</value>
   </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>بعدی</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>قبلی</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>انجام شد</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="Common_Add" xml:space="preserve">
+    <value>افزودن</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>بله</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="Common_Undo" xml:space="preserve">
+    <value>بازگردانی</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>جست‌وجو</value>
+  </data>
+  <data name="Common_Today" xml:space="preserve">
+    <value>امروز</value>
+  </data>
+  <data name="Common_DiscardTitle" xml:space="preserve">
+    <value>تغییرات کنار گذاشته شود؟</value>
+  </data>
+  <data name="Common_DiscardMessage" xml:space="preserve">
+    <value>تغییرات شما ذخیره نشده است.</value>
+  </data>
+  <data name="Common_Discard" xml:space="preserve">
+    <value>کنار گذاشتن</value>
+  </data>
+  <data name="Common_KeepEditing" xml:space="preserve">
+    <value>ادامهٔ ویرایش</value>
+  </data>
+  <data name="Common_SaveFailed" xml:space="preserve">
+    <value>ذخیره نشد. اطلاعات واردشده حفظ شده است؛ لطفاً دوباره تلاش کنید.</value>
+  </data>
+  <data name="Common_Saved" xml:space="preserve">
+    <value>ذخیره شد</value>
+  </data>
+  <data name="Common_SelectDate" xml:space="preserve">
+    <value>انتخاب تاریخ</value>
+  </data>
 </root>

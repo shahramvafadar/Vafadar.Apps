@@ -22,6 +22,16 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 /// </summary>
 public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFactory)
 {
+    /// <summary>
+    /// Returns the settings synchronously – for startup code on the UI thread, where blocking on async code could
+    /// deadlock. Returns defaults (not saved) when no settings exist yet.
+    /// </summary>
+    public FinanceSettings GetSettings()
+    {
+        using var db = contextFactory.CreateDbContext();
+        return db.Settings.AsNoTracking().FirstOrDefault() ?? new FinanceSettings();
+    }
+
     /// <summary>Returns the settings row, creating it on first use.</summary>
     public async Task<FinanceSettings> GetSettingsAsync(CancellationToken cancellationToken = default)
     {
@@ -43,7 +53,20 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(settings);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        db.Settings.Update(settings);
+        var existingId = await db.Settings.Select(s => (Guid?)s.Id).FirstOrDefaultAsync(cancellationToken);
+        if (existingId is null)
+        {
+            db.Settings.Add(settings);
+        }
+        else if (existingId == settings.Id)
+        {
+            db.Settings.Update(settings);
+        }
+        else
+        {
+            throw new InvalidOperationException("A different settings row already exists; load it with GetSettingsAsync first.");
+        }
+
         await db.SaveChangesAsync(cancellationToken);
     }
 

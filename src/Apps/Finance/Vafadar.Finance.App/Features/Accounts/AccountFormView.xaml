@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Account fields; binding context is an AccountFormModel. -->
+<VerticalStackLayout
+    x:Class="Vafadar.Finance.App.Features.Accounts.AccountFormView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    x:DataType="local:AccountFormModel"
+    Spacing="0">
+
+    <Label Text="{v:Translate Account_Name}" Style="{StaticResource FieldLabel}" />
+    <Entry Text="{Binding Name}" MaxLength="100" ReturnType="Next"
+           SemanticProperties.Description="{v:Translate Account_Name}" />
+    <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}"
+           IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
+
+    <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
+    <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
+                   AccentColor="{StaticResource Primary}" SemanticProperties.Description="{v:Translate Account_Type}" />
+
+    <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
+    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}"
+            IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
+            SemanticProperties.Description="{v:Translate Account_Currency}" />
+    <Label Text="{v:Translate Account_CurrencyLocked}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}" />
+
+    <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
+    <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
+           SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
+    <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
+           IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0">
+        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{StaticResource Primary}" />
+        <Label Grid.Column="1" Text="{v:Translate Account_OpeningNegative}" VerticalOptions="Center" LineBreakMode="WordWrap">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnNegativeLabelTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+
+    <Label Text="{v:Translate Account_OpeningDate}" Style="{StaticResource FieldLabel}" />
+    <v:DateField Date="{Binding OpeningDate}" />
+    <Label Text="{v:Translate Account_OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
+
+    <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
+        <Label Text="{v:Translate Account_IncludeInTotals}" VerticalOptions="Center" />
+        <Switch Grid.Column="1" IsToggled="{Binding IncludeInTotals}" OnColor="{StaticResource Primary}" />
+    </Grid>
+</VerticalStackLayout>

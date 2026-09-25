@@ -33,6 +33,12 @@ internal static class CultureFactory
             format.LongDatePattern = "dddd d MMMM yyyy";
             format.YearMonthPattern = "MMMM yyyy";
             format.MonthDayPattern = "d MMMM";
+
+            // The app shows Latin digits; next to them the Arabic separators (U+066B, U+066C) look like commas, so
+            // "1٬250٫50" reads as "1,250,50". Use the unambiguous Latin separators instead (input accepts both).
+            var numbers = culture.NumberFormat;
+            numbers.NumberDecimalSeparator = numbers.CurrencyDecimalSeparator = numbers.PercentDecimalSeparator = ".";
+            numbers.NumberGroupSeparator = numbers.CurrencyGroupSeparator = numbers.PercentGroupSeparator = ",";
         }
 
         return culture;

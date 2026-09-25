@@ -4,19 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:icx="clr-namespace:FluentIcons.Maui.Markup;assembly=FluentIcons.Maui"
     xmlns:home="clr-namespace:Vafadar.Finance.App.Features.Home"
-    xmlns:settings="clr-namespace:Vafadar.Finance.App.Features.Settings"
-    Title="{v:Translate App_Name}">
+    xmlns:more="clr-namespace:Vafadar.Finance.App.Features.More"
+    Title="{v:Translate App_Name}"
+    Shell.TabBarForegroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="{StaticResource Primary}"
+    Shell.TabBarUnselectedColor="#5F6368">
 
     <TabBar>
         <ShellContent
-            Title="{v:Translate Home_Title}"
+            Title="{v:Translate Tab_Home}"
+            Icon="{icx:SymbolImageSource Symbol=Home}"
             ContentTemplate="{DataTemplate home:HomePage}"
             Route="home" />
         <ShellContent
-            Title="{v:Translate Settings_Title}"
-            ContentTemplate="{DataTemplate settings:SettingsPage}"
-            Route="settings" />
+            Title="{v:Translate Tab_More}"
+            Icon="{icx:SymbolImageSource Symbol=MoreHorizontal}"
+            ContentTemplate="{DataTemplate more:MorePage}"
+            Route="more" />
     </TabBar>
 
 </Shell>

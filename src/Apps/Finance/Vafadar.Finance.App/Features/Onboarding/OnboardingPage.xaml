@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Onboarding.OnboardingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:loc="clr-namespace:Vafadar.Localization;assembly=Vafadar.Localization"
+    xmlns:accounts="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Onboarding"
+    x:DataType="local:OnboardingViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+        <Label Text="{Binding StepText}" Style="{StaticResource Secondary}" Margin="24,24,24,0" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,8" Spacing="12">
+
+                <!-- Step 1: welcome and language -->
+                <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="12">
+                    <fi:SymbolIcon Symbol="Wallet" FontSize="56" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Start" />
+                    <Label Text="{v:Translate Onb_WelcomeTitle}" FontSize="28" FontAttributes="Bold" />
+                    <Label Text="{v:Translate Onb_WelcomeText}" FontSize="16" />
+                    <Label Text="{v:Translate Settings_Language}" Style="{StaticResource FieldLabel}" />
+                    <CollectionView ItemsSource="{Binding Languages}" SelectionMode="Single" SelectedItem="{Binding SelectedLanguage}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="loc:AppLanguage">
+                                <Border Style="{StaticResource Card}" Margin="0,4" Padding="16,14">
+                                    <Label Text="{Binding NativeName}" FontSize="17" />
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal" />
+                                            <VisualState Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                                    <Setter Property="StrokeThickness" Value="2" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- Step 2: report currency and calendar -->
+                <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="8">
+                    <Label Text="{v:Translate Onb_CurrencyTitle}" FontSize="24" FontAttributes="Bold" />
+                    <Label Text="{v:Translate Onb_CurrencyText}" />
+                    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency}"
+                            SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />
+                    <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
+                            SemanticProperties.Description="{v:Translate Settings_Calendar}" />
+                    <Label Text="{v:Translate Onb_LaterText}" Style="{StaticResource Secondary}" Margin="0,12,0,0" />
+                </VerticalStackLayout>
+
+                <!-- Step 3: first account -->
+                <VerticalStackLayout IsVisible="{Binding IsStep3}" Spacing="8">
+                    <Label Text="{v:Translate Onb_AccountTitle}" FontSize="24" FontAttributes="Bold" />
+                    <Label Text="{v:Translate Onb_AccountText}" />
+                    <accounts:AccountFormView BindingContext="{Binding Account}" />
+                    <Label Text="{v:Translate Onb_ZeroHint}" Style="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="24,12,24,24">
+            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Back}" Command="{Binding BackCommand}"
+                    IsVisible="{Binding CanGoBack}" />
+            <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Next}" Command="{Binding NextCommand}"
+                    IsEnabled="{Binding IsNotBusy}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsLastStep}" Value="True">
+                        <Setter Property="Text" Value="{v:Translate Onb_Start}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+    </Grid>
+</ContentPage>

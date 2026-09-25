@@ -9,19 +9,30 @@
     Title="{v:Translate Settings_Title}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12">
+        <VerticalStackLayout Padding="16" Spacing="8">
 
-            <Label FontAttributes="Bold" Text="{v:Translate Settings_Language}" />
-            <Picker ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" />
+            <Label Text="{v:Translate Settings_Display}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout>
+                    <Label Text="{v:Translate Settings_Language}" Style="{StaticResource FieldLabel}" Margin="0" />
+                    <Picker ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"
+                            SemanticProperties.Description="{v:Translate Settings_Language}" />
 
-            <Label FontAttributes="Bold" Text="{v:Translate Settings_Calendar}" />
-            <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}" />
-            <Label Text="{Binding CalendarPreview}" />
+                    <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
+                            SemanticProperties.Description="{v:Translate Settings_Calendar}" />
+                    <Label Text="{Binding CalendarPreview}" Style="{StaticResource Secondary}" />
 
-            <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Gray200}" />
+                    <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency}"
+                            SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
+                </VerticalStackLayout>
+            </Border>
 
-            <Label FontAttributes="Bold" Text="{v:Translate Settings_About}" />
-            <Label Text="{Binding VersionText}" />
+            <Label Text="{v:Translate Settings_About}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <Label Text="{Binding VersionText}" />
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

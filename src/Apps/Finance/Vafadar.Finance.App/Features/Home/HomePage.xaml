@@ -4,16 +4,46 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:accounts="clr-namespace:Vafadar.Finance.App.Features.Accounts"
     xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Home"
     x:DataType="local:HomeViewModel"
-    Title="{v:Translate Home_Title}">
+    Title="{v:Translate App_Name}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="16">
-            <Label Style="{StaticResource Headline}" Text="{v:Translate App_Name}" />
-            <Label Style="{StaticResource SubHeadline}" Text="{v:Translate Home_Welcome}" />
-            <Label HorizontalOptions="Center" Text="{Binding Today}" />
+        <VerticalStackLayout Padding="16" Spacing="8">
+            <Label Text="{Binding Today}" Style="{StaticResource Secondary}" />
+
+            <!-- Recorded balance per currency -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="{v:Translate Home_Balance}" Style="{StaticResource Secondary}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Balances}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="accounts:CurrencyTotal">
+                                <Label Text="{Binding Text}" Style="{StaticResource AmountLarge}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Accounts -->
+            <Label Text="{v:Translate Home_AccountsSection}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}" Padding="0">
+                <VerticalStackLayout>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="accounts:AccountItem">
+                                <accounts:AccountRow />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate Home_NoAccounts}" Padding="16" IsVisible="{Binding HasAccounts, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Button Text="{v:Translate Accounts_Title}" Command="{Binding OpenAccountsCommand}" BackgroundColor="Transparent"
+                            TextColor="{StaticResource Primary}" HorizontalOptions="End" />
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

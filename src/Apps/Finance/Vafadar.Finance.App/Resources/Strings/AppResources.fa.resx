@@ -64,10 +64,151 @@
   <data name="Home_Title" xml:space="preserve">
     <value>خانه</value>
   </data>
-  <data name="Home_Welcome" xml:space="preserve">
-    <value>خوش آمدید! مدیر مالی شخصی شما در حال ساخت است.</value>
-  </data>
   <data name="Home_Today" xml:space="preserve">
     <value>امروز: {0}</value>
+  </data>
+  <data name="Tab_Home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="Tab_More" xml:space="preserve">
+    <value>بیشتر</value>
+  </data>
+  <data name="More_Title" xml:space="preserve">
+    <value>بیشتر</value>
+  </data>
+  <data name="More_About" xml:space="preserve">
+    <value>درباره</value>
+  </data>
+  <data name="Home_Balance" xml:space="preserve">
+    <value>مانده ثبت‌شده</value>
+  </data>
+  <data name="Home_BalanceHint" xml:space="preserve">
+    <value>بر اساس ثبت‌های شما؛ نه مانده بانک.</value>
+  </data>
+  <data name="Home_AccountsSection" xml:space="preserve">
+    <value>حساب‌ها</value>
+  </data>
+  <data name="Home_NoAccounts" xml:space="preserve">
+    <value>هنوز حسابی ندارید.</value>
+  </data>
+  <data name="Accounts_Title" xml:space="preserve">
+    <value>حساب‌ها</value>
+  </data>
+  <data name="Accounts_Add" xml:space="preserve">
+    <value>افزودن حساب</value>
+  </data>
+  <data name="Accounts_Empty" xml:space="preserve">
+    <value>هنوز حسابی ندارید. حسابی را که بیشتر استفاده می‌کنید اضافه کنید.</value>
+  </data>
+  <data name="Accounts_Archived" xml:space="preserve">
+    <value>بایگانی‌شده</value>
+  </data>
+  <data name="Accounts_Total" xml:space="preserve">
+    <value>جمع کل</value>
+  </data>
+  <data name="Accounts_NotInTotals" xml:space="preserve">
+    <value>خارج از جمع کل</value>
+  </data>
+  <data name="Account_NewTitle" xml:space="preserve">
+    <value>حساب جدید</value>
+  </data>
+  <data name="Account_EditTitle" xml:space="preserve">
+    <value>ویرایش حساب</value>
+  </data>
+  <data name="Account_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Account_Type" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="AccountType_Cash" xml:space="preserve">
+    <value>نقد</value>
+  </data>
+  <data name="AccountType_Checking" xml:space="preserve">
+    <value>جاری</value>
+  </data>
+  <data name="AccountType_Savings" xml:space="preserve">
+    <value>پس‌انداز</value>
+  </data>
+  <data name="AccountType_CreditCard" xml:space="preserve">
+    <value>کارت اعتباری</value>
+  </data>
+  <data name="Account_Currency" xml:space="preserve">
+    <value>ارز</value>
+  </data>
+  <data name="Account_OpeningBalance" xml:space="preserve">
+    <value>موجودی آغازین</value>
+  </data>
+  <data name="Account_OpeningDate" xml:space="preserve">
+    <value>موجودی در تاریخ</value>
+  </data>
+  <data name="Account_OpeningHint" xml:space="preserve">
+    <value>موجودی در ابتدای این روز، پیش از تراکنش‌های آن. این مقدار را خودتان وارد می‌کنید و از بانک خوانده نمی‌شود.</value>
+  </data>
+  <data name="Account_OpeningNegative" xml:space="preserve">
+    <value>موجودی منفی است (مثلاً بدهی کارت یا برداشت بیش از موجودی)</value>
+  </data>
+  <data name="Account_IncludeInTotals" xml:space="preserve">
+    <value>در جمع کل حساب شود</value>
+  </data>
+  <data name="Account_IsDefault" xml:space="preserve">
+    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+  </data>
+  <data name="Account_Archive" xml:space="preserve">
+    <value>بایگانی حساب</value>
+  </data>
+  <data name="Account_Unarchive" xml:space="preserve">
+    <value>خروج از بایگانی</value>
+  </data>
+  <data name="Account_ArchiveMessage" xml:space="preserve">
+    <value>حساب سابقه‌اش را نگه می‌دارد و در گزارش‌های گذشته می‌ماند، ولی تراکنش جدید نمی‌پذیرد.</value>
+  </data>
+  <data name="Account_CurrencyLocked" xml:space="preserve">
+    <value>ارز این حساب قابل تغییر نیست، چون تراکنش دارد.</value>
+  </data>
+  <data name="Account_NameRequired" xml:space="preserve">
+    <value>لطفاً نام را وارد کنید.</value>
+  </data>
+  <data name="Account_DefaultName" xml:space="preserve">
+    <value>حساب من</value>
+  </data>
+  <data name="Amount_Invalid" xml:space="preserve">
+    <value>یک مبلغ معتبر وارد کنید، مثلاً 12.50</value>
+  </data>
+  <data name="Onb_WelcomeTitle" xml:space="preserve">
+    <value>خوش آمدید</value>
+  </data>
+  <data name="Onb_WelcomeText" xml:space="preserve">
+    <value>اطلاعات مالی شما روی همین دستگاه می‌ماند و به ثبت‌نام یا ورود نیازی نیست. پشتیبان‌گیری اختیاری و در اختیار خود شماست.</value>
+  </data>
+  <data name="Onb_CurrencyTitle" xml:space="preserve">
+    <value>ارز گزارش</value>
+  </data>
+  <data name="Onb_CurrencyText" xml:space="preserve">
+    <value>جمع‌ها و گزارش‌ها با این ارز نمایش داده می‌شوند. هر حساب ارز خودش را دارد.</value>
+  </data>
+  <data name="Onb_LaterText" xml:space="preserve">
+    <value>زبان، تقویم و ارز را بعداً هم در تنظیمات می‌توانید تغییر دهید.</value>
+  </data>
+  <data name="Onb_AccountTitle" xml:space="preserve">
+    <value>اولین حساب شما</value>
+  </data>
+  <data name="Onb_AccountText" xml:space="preserve">
+    <value>با حسابی شروع کنید که بیشتر از همه استفاده می‌کنید. بعداً می‌توانید حساب‌های دیگر را اضافه کنید.</value>
+  </data>
+  <data name="Onb_ZeroHint" xml:space="preserve">
+    <value>شروع با صفر هم مشکلی ندارد؛ هر وقت خواستید موجودی واقعی را وارد کنید.</value>
+  </data>
+  <data name="Onb_Start" xml:space="preserve">
+    <value>شروع</value>
+  </data>
+  <data name="Onb_Step" xml:space="preserve">
+    <value>مرحلهٔ {0} از {1}</value>
+  </data>
+  <data name="Settings_ReportCurrency" xml:space="preserve">
+    <value>ارز گزارش</value>
+  </data>
+  <data name="Settings_Display" xml:space="preserve">
+    <value>نمایش</value>
   </data>
 </root>

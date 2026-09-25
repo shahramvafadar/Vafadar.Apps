@@ -12,11 +12,18 @@
   <ItemGroup Label="MAUI">
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="FluentIcons.Maui" Version="2.1.341" />
   </ItemGroup>
 
   <ItemGroup Label="Syncfusion">
     <PackageVersion Include="Syncfusion.Licensing" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Core" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Buttons" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Calendar" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Charts" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Inputs" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Picker" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.Popup" Version="34.2.9" />
   </ItemGroup>
 
   <ItemGroup Label="Data">

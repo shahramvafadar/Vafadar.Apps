@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Accounts.AccountEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    x:DataType="local:AccountEditorViewModel"
+    Title="{Binding Title}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}" />
+            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <local:AccountFormView BindingContext="{Binding Form}" />
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{v:Translate Account_IsDefault}" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                </Border>
+
+                <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
+                       IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
+
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_Archive}" Command="{Binding ToggleArchiveCommand}"
+                        IsVisible="{Binding IsExisting}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsArchived}" Value="True">
+                            <Setter Property="Text" Value="{v:Translate Account_Unarchive}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
+                Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </Grid>
+</ContentPage>

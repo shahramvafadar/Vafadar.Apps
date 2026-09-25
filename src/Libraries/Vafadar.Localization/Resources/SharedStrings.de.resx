@@ -109,4 +109,55 @@
   <data name="Backup_Never" xml:space="preserve">
     <value>Noch keine Sicherung vorhanden</value>
   </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="Common_Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Common_Undo" xml:space="preserve">
+    <value>Rückgängig</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="Common_Today" xml:space="preserve">
+    <value>Heute</value>
+  </data>
+  <data name="Common_DiscardTitle" xml:space="preserve">
+    <value>Änderungen verwerfen?</value>
+  </data>
+  <data name="Common_DiscardMessage" xml:space="preserve">
+    <value>Ihre Änderungen wurden nicht gespeichert.</value>
+  </data>
+  <data name="Common_Discard" xml:space="preserve">
+    <value>Verwerfen</value>
+  </data>
+  <data name="Common_KeepEditing" xml:space="preserve">
+    <value>Weiter bearbeiten</value>
+  </data>
+  <data name="Common_SaveFailed" xml:space="preserve">
+    <value>Speichern fehlgeschlagen. Ihre Eingaben bleiben erhalten – bitte erneut versuchen.</value>
+  </data>
+  <data name="Common_Saved" xml:space="preserve">
+    <value>Gespeichert</value>
+  </data>
+  <data name="Common_SelectDate" xml:space="preserve">
+    <value>Datum wählen</value>
+  </data>
 </root>
