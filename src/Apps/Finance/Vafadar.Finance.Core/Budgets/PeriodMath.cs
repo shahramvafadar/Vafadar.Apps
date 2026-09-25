@@ -35,4 +35,14 @@ public static class PeriodMath
 
     /// <summary>Returns the month after (year, month).</summary>
     public static (int Year, int Month) Next(int year, int month) => month == 12 ? (year + 1, 1) : (year, month + 1);
+
+    /// <summary>Returns the month before (year, month).</summary>
+    public static (int Year, int Month) Previous(int year, int month) => month == 1 ? (year - 1, 12) : (year, month - 1);
+
+    /// <summary>Returns the first and last day of the year that contains <paramref name="date"/>.</summary>
+    public static (DateOnly First, DateOnly Last) YearRange(DateOnly date, PeriodCalendar calendar)
+    {
+        var (year, _) = MonthOf(date, calendar);
+        return (MonthRange(year, 1, calendar).First, MonthRange(year, 12, calendar).Last);
+    }
 }

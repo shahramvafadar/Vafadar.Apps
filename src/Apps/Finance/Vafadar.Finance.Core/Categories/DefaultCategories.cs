@@ -8,6 +8,9 @@ public static class DefaultCategories
     /// <summary>Key of the "uncategorized" fallback categories (TX-01).</summary>
     public const string Uncategorized = "Uncategorized";
 
+    /// <summary>Key of the expense category used for transfer fees (FIN-02).</summary>
+    public const string Fees = "Fees";
+
     /// <summary>Gets the default categories as (kind, key, icon, colour).</summary>
     public static IReadOnlyList<(CategoryKind Kind, string Key, string Icon, string Color)> All { get; } =
     [
@@ -27,6 +30,7 @@ public static class DefaultCategories
         (CategoryKind.Expense, "Family", "People", "#AD1457"),
         (CategoryKind.Expense, "Leisure", "Games", "#6A1B9A"),
         (CategoryKind.Expense, "Subscriptions", "ArrowRepeatAll", "#00838F"),
+        (CategoryKind.Expense, Fees, "Receipt", "#6D4C41"),
         (CategoryKind.Expense, "Other", "MoreHorizontal", "#546E7A"),
         (CategoryKind.Expense, Uncategorized, "QuestionCircle", "#78909C"),
     ];

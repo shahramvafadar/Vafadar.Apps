@@ -17,7 +17,9 @@ public partial class App : Application
 
         // Phase 1 ships the light theme only (D-12, UX-08).
         UserAppTheme = AppTheme.Light;
-        services.GetRequiredService<ILocalizationService>().Changed += OnLocalizationChanged;
+        var localization = services.GetRequiredService<ILocalizationService>();
+        localization.Changed += OnLocalizationChanged;
+        this.ApplyToModalPages(localization);
     }
 
     /// <summary>Replaces the root page of the main window, e.g. after onboarding.</summary>

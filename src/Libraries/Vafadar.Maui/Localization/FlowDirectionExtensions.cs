@@ -23,7 +23,19 @@ public static class FlowDirectionExtensions
         return element;
     }
 
-    /// <summary>Applies the current language's direction to the root page of every open window.</summary>
+    /// <summary>
+    /// Gives every modal page the current language's direction before it is shown. Modal pages are not part of
+    /// the window's visual tree, so they do not inherit the direction of the root page. Call once from the
+    /// <see cref="Application"/> constructor.
+    /// </summary>
+    public static void ApplyToModalPages(this Application application, ILocalizationService localization)
+    {
+        ArgumentNullException.ThrowIfNull(application);
+        ArgumentNullException.ThrowIfNull(localization);
+        application.ModalPushing += (_, e) => e.Modal.FlowDirection = localization.GetFlowDirection();
+    }
+
+    /// <summary>Applies the current language's direction to the root page and open modal pages of every window.</summary>
     internal static void ApplyToAllWindows(ILocalizationService localization)
     {
         var direction = localization.GetFlowDirection();
@@ -32,6 +44,10 @@ public static class FlowDirectionExtensions
             if (window.Page is { } page)
             {
                 page.FlowDirection = direction;
+                foreach (var modal in page.Navigation.ModalStack)
+                {
+                    modal.FlowDirection = direction;
+                }
             }
         }
     }

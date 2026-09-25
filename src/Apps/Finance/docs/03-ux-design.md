@@ -8,7 +8,7 @@ Simple by default, power on demand (PR-04, UX-01); numbers are always explainabl
 ## 2. Navigation (D-11)
 
 ```
-TabBar:  Home | Transactions | Plans | More
+TabBar:  Home | Transactions | Plans | More          (Plans arrives with S4)
          └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
 More:    Accounts · Budget · Reports · Categories · Import/Export · Backup & restore · Settings · About
 ```
@@ -78,6 +78,11 @@ More:    Accounts · Budget · Reports · Categories · Import/Export · Backup 
   separators (U+066B, U+066C) look like commas next to Latin digits. Input accepts Persian/Arabic digits and `٫`.
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
   segmented control, so German and Persian labels never scroll or get cut off.
+* Categories in the entry editor are wrapping pills (icon + full name) rather than a fixed grid, so no name is
+  truncated in any language. Filter bars use compact single-line chips that scroll horizontally.
+* Deleting an entry needs no confirmation: the list offers "Undo" for 8 seconds (TX-05).
+* Modal pages get the text direction explicitly before they are shown (they are not part of the window's tree).
+* Amounts are isolated with LRI…PDI plus inner LRM marks, because some renderers (Windows) ignore isolates.
 * Changing language or calendar rebuilds the main shell and returns to the current page, so every cached number,
   date and icon is re-rendered in the new direction.
 

@@ -213,4 +213,326 @@
   <data name="Settings_Display" xml:space="preserve">
     <value>Display</value>
   </data>
+  <data name="Tab_Transactions" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Tx_Title" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Tx_Empty" xml:space="preserve">
+    <value>No transactions yet. Record your first expense or income.</value>
+  </data>
+  <data name="Tx_EmptyFiltered" xml:space="preserve">
+    <value>Nothing matches these filters.</value>
+  </data>
+  <data name="Tx_Search" xml:space="preserve">
+    <value>Search title, payee, note or amount</value>
+  </data>
+  <data name="Tx_Add" xml:space="preserve">
+    <value>Add entry</value>
+  </data>
+  <data name="Tx_Deleted" xml:space="preserve">
+    <value>Entry deleted</value>
+  </data>
+  <data name="Tx_Unreviewed" xml:space="preserve">
+    <value>Needs review</value>
+  </data>
+  <data name="Tx_ClearFilters" xml:space="preserve">
+    <value>Clear filters</value>
+  </data>
+  <data name="Period_ThisMonth" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="Period_LastMonth" xml:space="preserve">
+    <value>Last month</value>
+  </data>
+  <data name="Period_ThisYear" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="Period_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="KindFilter_All" xml:space="preserve">
+    <value>All kinds</value>
+  </data>
+  <data name="KindFilter_Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="KindFilter_Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="KindFilter_Transfers" xml:space="preserve">
+    <value>Transfers</value>
+  </data>
+  <data name="EntryKind_Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="EntryKind_Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="EntryKind_Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="EntryKind_Refund" xml:space="preserve">
+    <value>Refund</value>
+  </data>
+  <data name="EntryKind_IncomeReversal" xml:space="preserve">
+    <value>Income paid back</value>
+  </data>
+  <data name="EntryKind_Adjustment" xml:space="preserve">
+    <value>Balance adjustment</value>
+  </data>
+  <data name="Entry_NewTitle" xml:space="preserve">
+    <value>New entry</value>
+  </data>
+  <data name="Entry_EditTitle" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="Entry_RefundTitle" xml:space="preserve">
+    <value>Refund</value>
+  </data>
+  <data name="Entry_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Entry_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Entry_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Entry_TitlePlaceholder" xml:space="preserve">
+    <value>Optional – the category name is shown otherwise</value>
+  </data>
+  <data name="Entry_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Entry_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Entry_FromAccount" xml:space="preserve">
+    <value>From account</value>
+  </data>
+  <data name="Entry_ToAccount" xml:space="preserve">
+    <value>To account</value>
+  </data>
+  <data name="Entry_ToAmount" xml:space="preserve">
+    <value>Amount received ({0})</value>
+    <comment>{0} = currency code of the destination account</comment>
+  </data>
+  <data name="Entry_Fee" xml:space="preserve">
+    <value>Fee (optional)</value>
+  </data>
+  <data name="Entry_FeeHint" xml:space="preserve">
+    <value>Recorded as an expense of the source account.</value>
+  </data>
+  <data name="Entry_TransferHint" xml:space="preserve">
+    <value>Transfers move money between your accounts – they are neither income nor expense.</value>
+  </data>
+  <data name="Entry_MoreDetails" xml:space="preserve">
+    <value>More details</value>
+  </data>
+  <data name="Entry_Payee" xml:space="preserve">
+    <value>Payee / payer</value>
+  </data>
+  <data name="Entry_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Entry_Foreign" xml:space="preserve">
+    <value>Paid in another currency</value>
+  </data>
+  <data name="Entry_ForeignAmount" xml:space="preserve">
+    <value>Original amount</value>
+  </data>
+  <data name="Entry_ForeignHint" xml:space="preserve">
+    <value>The amount above stays the amount booked on the account.</value>
+  </data>
+  <data name="Entry_NoAccounts" xml:space="preserve">
+    <value>Add an account first.</value>
+  </data>
+  <data name="Entry_RefundOf" xml:space="preserve">
+    <value>Refund of: {0}</value>
+  </data>
+  <data name="Entry_Refundable" xml:space="preserve">
+    <value>Up to {0} can still be refunded.</value>
+  </data>
+  <data name="Entry_Refund" xml:space="preserve">
+    <value>Refund</value>
+  </data>
+  <data name="Entry_Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="Entry_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Entry_Refunds" xml:space="preserve">
+    <value>Refunds</value>
+  </data>
+  <data name="Entry_MarkReviewed" xml:space="preserve">
+    <value>Mark as reviewed</value>
+  </data>
+  <data name="Entry_FromPlan" xml:space="preserve">
+    <value>Recorded from a plan</value>
+  </data>
+  <data name="Entry_Details" xml:space="preserve">
+    <value>Entry</value>
+  </data>
+  <data name="Entry_WithFee" xml:space="preserve">
+    <value>Fee {0}</value>
+  </data>
+  <data name="Entry_NotFound" xml:space="preserve">
+    <value>This entry no longer exists.</value>
+  </data>
+  <data name="LedgerError_AmountMustBePositive" xml:space="preserve">
+    <value>Enter an amount greater than zero. Choose expense or income to set the direction.</value>
+  </data>
+  <data name="LedgerError_UnknownAccount" xml:space="preserve">
+    <value>Choose an account.</value>
+  </data>
+  <data name="LedgerError_AccountArchived" xml:space="preserve">
+    <value>Archived accounts cannot receive new entries.</value>
+  </data>
+  <data name="LedgerError_DestinationRequired" xml:space="preserve">
+    <value>Choose the account the money goes to.</value>
+  </data>
+  <data name="LedgerError_SameAccountTransfer" xml:space="preserve">
+    <value>Source and destination must be different accounts.</value>
+  </data>
+  <data name="LedgerError_DestinationAmountRequired" xml:space="preserve">
+    <value>Enter the amount received in the destination currency.</value>
+  </data>
+  <data name="LedgerError_CategoryKindMismatch" xml:space="preserve">
+    <value>This category does not fit the entry kind.</value>
+  </data>
+  <data name="LedgerError_AdjustmentDirectionRequired" xml:space="preserve">
+    <value>Choose whether the balance goes up or down.</value>
+  </data>
+  <data name="LedgerError_RefundExceedsPurchase" xml:space="preserve">
+    <value>Refunds cannot exceed the purchase amount.</value>
+  </data>
+  <data name="LedgerError_RefundOriginalNotExpense" xml:space="preserve">
+    <value>Only expenses can be refunded.</value>
+  </data>
+  <data name="LedgerError_InvalidOriginalCurrency" xml:space="preserve">
+    <value>Enter the original amount and a currency different from the account currency.</value>
+  </data>
+  <data name="Categories_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Categories_Expense" xml:space="preserve">
+    <value>Expense categories</value>
+  </data>
+  <data name="Categories_Income" xml:space="preserve">
+    <value>Income categories</value>
+  </data>
+  <data name="Categories_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="Categories_Add" xml:space="preserve">
+    <value>Add category</value>
+  </data>
+  <data name="Category_NewTitle" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="Category_EditTitle" xml:space="preserve">
+    <value>Edit category</value>
+  </data>
+  <data name="Category_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Category_NameRequired" xml:space="preserve">
+    <value>Enter a name.</value>
+  </data>
+  <data name="Category_Kind" xml:space="preserve">
+    <value>Used for</value>
+  </data>
+  <data name="Category_Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Category_Color" xml:space="preserve">
+    <value>Colour</value>
+  </data>
+  <data name="Category_Parent" xml:space="preserve">
+    <value>Parent category</value>
+  </data>
+  <data name="Category_NoParent" xml:space="preserve">
+    <value>None (main category)</value>
+  </data>
+  <data name="Category_Archive" xml:space="preserve">
+    <value>Archive category</value>
+  </data>
+  <data name="Category_Unarchive" xml:space="preserve">
+    <value>Restore category</value>
+  </data>
+  <data name="Category_ArchiveMessage" xml:space="preserve">
+    <value>The category disappears from selection lists. Existing entries and reports keep it.</value>
+  </data>
+  <data name="Category_ResetName" xml:space="preserve">
+    <value>Use default name</value>
+  </data>
+  <data name="Category_Salary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="Category_SideIncome" xml:space="preserve">
+    <value>Side income</value>
+  </data>
+  <data name="Category_GiftReceived" xml:space="preserve">
+    <value>Gifts received</value>
+  </data>
+  <data name="Category_Interest" xml:space="preserve">
+    <value>Interest</value>
+  </data>
+  <data name="Category_Uncategorized" xml:space="preserve">
+    <value>Uncategorized</value>
+  </data>
+  <data name="Category_Housing" xml:space="preserve">
+    <value>Housing</value>
+  </data>
+  <data name="Category_Food" xml:space="preserve">
+    <value>Food</value>
+  </data>
+  <data name="Category_Energy" xml:space="preserve">
+    <value>Energy</value>
+  </data>
+  <data name="Category_Communication" xml:space="preserve">
+    <value>Phone &amp; internet</value>
+  </data>
+  <data name="Category_Transport" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="Category_Health" xml:space="preserve">
+    <value>Health</value>
+  </data>
+  <data name="Category_Insurance" xml:space="preserve">
+    <value>Insurance</value>
+  </data>
+  <data name="Category_Education" xml:space="preserve">
+    <value>Education</value>
+  </data>
+  <data name="Category_Family" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Category_Leisure" xml:space="preserve">
+    <value>Leisure</value>
+  </data>
+  <data name="Category_Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="Category_Fees" xml:space="preserve">
+    <value>Fees</value>
+  </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="CategoryKind_Expense" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="CategoryKind_Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Accounts_AllAccounts" xml:space="preserve">
+    <value>All accounts</value>
+  </data>
+  <data name="Entry_Kind" xml:space="preserve">
+    <value>Kind</value>
+  </data>
 </root>

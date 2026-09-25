@@ -9,7 +9,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-01 | Fresh install offline, no login | PR-01, ONB-01 | Manual | S2 | Verified (Windows, Debug snapshot walk-through; device run pending) |
 | AT-02 | Simple income/expense | TX-01, FIN-12 | Unit | S1 | Verified (unit, domain level) |
 | AT-03 | Multiple fast Save taps | TX-06 | Unit (view model) + manual | S3 | Verified (unit, domain level) |
-| AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Planned |
+| AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Implemented (discard confirmation, input kept on error); device check pending |
 | AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
 | AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Verified (unit, domain level) |
@@ -53,7 +53,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Planned |
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |
-| AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Planned |
+| AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Planned |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Planned |

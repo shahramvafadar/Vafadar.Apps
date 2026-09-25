@@ -1,10 +1,14 @@
 using Microsoft.Extensions.Logging;
 using Vafadar.Backup;
 using Vafadar.Finance.App.Features.Accounts;
+using Vafadar.Finance.App.Features.Categories;
+using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Features.Home;
 using Vafadar.Finance.App.Features.More;
 using Vafadar.Finance.App.Features.Onboarding;
 using Vafadar.Finance.App.Features.Settings;
+using Vafadar.Finance.App.Features.Transactions;
+using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.App.Resources.Strings;
 using Vafadar.Finance.Core;
 using Vafadar.Finance.Data;
@@ -34,7 +38,8 @@ public static class MauiProgram
         builder.Services
             .AddFinanceData(Path.Combine(FileSystem.AppDataDirectory, FinanceApp.DatabaseFileName))
             .AddVafadarBackup()
-            .AddTransient<IMauiInitializeService, DatabaseInitializer>();
+            .AddTransient<IMauiInitializeService, DatabaseInitializer>()
+            .AddSingleton<UndoService>();
 
         builder.Services
             .AddTransient<AppShell>()
@@ -43,7 +48,12 @@ public static class MauiProgram
             .AddTransient<AccountsPage>().AddTransient<AccountsViewModel>()
             .AddTransient<AccountEditorPage>().AddTransient<AccountEditorViewModel>()
             .AddTransient<MorePage>().AddTransient<MoreViewModel>()
-            .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
+            .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>()
+            .AddTransient<TransactionsPage>().AddTransient<TransactionsViewModel>()
+            .AddTransient<EntryEditorPage>().AddTransient<EntryEditorViewModel>()
+            .AddTransient<EntryDetailPage>().AddTransient<EntryDetailViewModel>()
+            .AddTransient<CategoriesPage>().AddTransient<CategoriesViewModel>()
+            .AddTransient<CategoryEditorPage>().AddTransient<CategoryEditorViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

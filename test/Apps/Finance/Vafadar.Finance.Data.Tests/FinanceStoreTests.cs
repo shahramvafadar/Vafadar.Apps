@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
@@ -63,7 +64,7 @@ public sealed class FinanceStoreTests : IDisposable
 
         var deleted = await _store.DeleteEntryAsync(entry.Id, Ct);
         Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
-        await _store.RestoreEntryAsync(deleted!, Ct);
+        await _store.RestoreEntriesAsync(deleted, Ct);
 
         var restored = await _store.GetEntryAsync(entry.Id, Ct);
         Assert.NotNull(restored);
@@ -112,6 +113,86 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Defaults_added_later_are_created_without_touching_existing_categories()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var categories = await _store.GetCategoriesAsync(Ct);
+        var food = categories.Single(c => c.SystemKey == "Food");
+        food.Name = "Groceries";
+        await _store.SaveCategoryAsync(food, Ct);
+        var fees = categories.Single(c => c.SystemKey == DefaultCategories.Fees);
+        await _services.GetRequiredService<IDbContextFactory<FinanceDbContext>>().CreateDbContext().Categories.Where(c => c.Id == fees.Id).ExecuteDeleteAsync(Ct);
+
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+
+        categories = await _store.GetCategoriesAsync(Ct);
+        Assert.Equal(DefaultCategories.All.Count, categories.Count);
+        Assert.Equal("Groceries", categories.Single(c => c.SystemKey == "Food").Name);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-08")]
+    public async Task Transfer_and_fee_are_saved_together_and_deleted_together_with_undo()
+    {
+        var checking = await NewAccountAsync();
+        var savings = await NewAccountAsync("Savings");
+        var transfer = new LedgerEntry { Kind = EntryKind.Transfer, AccountId = checking.Id, ToAccountId = savings.Id, Amount = 5_000, Date = new DateOnly(2026, 10, 3) };
+        var fee = EntryActions.SyncTransferFee(transfer, null, 150, null)!;
+
+        Assert.True((await _store.SaveEntriesAsync([transfer, fee], [], Ct)).Succeeded);
+        Assert.Equal(2, (await _store.GetGroupAsync(transfer.GroupId!.Value, Ct)).Count);
+
+        var deleted = await _store.DeleteEntryAsync(transfer.Id, Ct);
+        Assert.Equal(2, deleted.Count);
+        Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
+
+        await _store.RestoreEntriesAsync(deleted, Ct);
+        Assert.Equal(2, (await _store.GetEntriesAsync(cancellationToken: Ct)).Count);
+    }
+
+    [Fact]
+    public async Task Removing_a_fee_deletes_it_in_the_same_save()
+    {
+        var checking = await NewAccountAsync();
+        var savings = await NewAccountAsync("Savings");
+        var transfer = new LedgerEntry { Kind = EntryKind.Transfer, AccountId = checking.Id, ToAccountId = savings.Id, Amount = 5_000, Date = new DateOnly(2026, 10, 3) };
+        var fee = EntryActions.SyncTransferFee(transfer, null, 150, null)!;
+        await _store.SaveEntriesAsync([transfer, fee], [], Ct);
+
+        Assert.True((await _store.SaveEntriesAsync([transfer], [fee.Id], Ct)).Succeeded);
+
+        Assert.Single(await _store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    public async Task An_invalid_entry_in_a_batch_saves_nothing()
+    {
+        var checking = await NewAccountAsync();
+        var valid = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 100, Date = new DateOnly(2026, 10, 3) };
+        var invalid = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 0, Date = new DateOnly(2026, 10, 3) };
+
+        var result = await _store.SaveEntriesAsync([valid, invalid], [], Ct);
+
+        Assert.False(result.Succeeded);
+        Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-15")]
+    public async Task Refunds_are_limited_to_the_purchase_amount()
+    {
+        var checking = await NewAccountAsync();
+        var purchase = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 1_000, Date = new DateOnly(2026, 10, 3) };
+        await _store.SaveEntryAsync(purchase, Ct);
+        await _store.SaveEntryAsync(EntryActions.CreateRefund(purchase, 600, checking.Id, new DateOnly(2026, 10, 4)), Ct);
+
+        var tooMuch = await _store.SaveEntryAsync(EntryActions.CreateRefund(purchase, 500, checking.Id, new DateOnly(2026, 10, 5)), Ct);
+
+        Assert.Contains(LedgerError.RefundExceedsPurchase, tooMuch.Errors);
+        Assert.Single(await _store.GetRefundsAsync(purchase.Id, Ct));
+    }
+
+    [Fact]
     public async Task Settings_are_created_on_first_use_and_persist()
     {
         var settings = await _store.GetSettingsAsync(Ct);
@@ -136,9 +217,9 @@ public sealed class FinanceStoreTests : IDisposable
         Assert.Single(await _store.GetEntriesAsync(cancellationToken: Ct));
     }
 
-    private async Task<Account> NewAccountAsync()
+    private async Task<Account> NewAccountAsync(string name = "Checking")
     {
-        var account = new Account { Name = "Checking", CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 10, 1) };
+        var account = new Account { Name = name, CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 10, 1) };
         await _store.SaveAccountAsync(account, Ct);
         return account;
     }

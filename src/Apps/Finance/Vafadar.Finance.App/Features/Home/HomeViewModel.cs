@@ -69,4 +69,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenAccountsAsync() => Shell.Current.GoToAsync(AppShell.AccountsRoute);
+
+    [RelayCommand]
+    private Task AddEntryAsync() => Shell.Current.GoToAsync(HasAccounts ? AppShell.EntryEditorRoute : AppShell.AccountEditorRoute);
 }

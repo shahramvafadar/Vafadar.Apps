@@ -7,6 +7,7 @@
 
     <v:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     <v:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <v:IsPositiveConverter x:Key="IsPositiveConverter" />
 
     <Color x:Key="IncomeText">#1B5E20</Color>
     <Color x:Key="IncomeBackground">#E8F5E9</Color>

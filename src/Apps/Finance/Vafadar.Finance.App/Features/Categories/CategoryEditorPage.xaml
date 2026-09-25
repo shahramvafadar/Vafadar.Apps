@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Categories.CategoryEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Categories"
+    x:DataType="local:CategoryEditorViewModel"
+    Title="{Binding Title}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}" />
+            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="{v:Translate Category_Name}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <Entry Text="{Binding Name}" Placeholder="{Binding DefaultName}" MaxLength="60"
+                               SemanticProperties.Description="{v:Translate Category_Name}" />
+                        <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <VerticalStackLayout IsVisible="{Binding IsExisting, Converter={StaticResource InvertedBoolConverter}}">
+                            <Label Text="{v:Translate Category_Kind}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout IsVisible="{Binding CanHaveParent}">
+                            <Label Text="{v:Translate Category_Parent}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Parents}" SelectedItem="{Binding Parent}" SemanticProperties.Description="{v:Translate Category_Parent}" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Padding="12">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Category_Color}" Style="{StaticResource Secondary}" Margin="4,0" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Palette}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:Swatch">
+                                    <Border WidthRequest="44" HeightRequest="44" Margin="3" StrokeShape="RoundRectangle 22" StrokeThickness="3"
+                                            Stroke="Transparent" BackgroundColor="{Binding Color}" SemanticProperties.Description="{Binding Key}">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#1F1F1F" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectColorCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+
+                        <Label Text="{v:Translate Category_Icon}" Style="{StaticResource Secondary}" Margin="4,8,4,0" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Icons}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:Swatch">
+                                    <Border WidthRequest="48" HeightRequest="48" Margin="2" StrokeShape="RoundRectangle 12" StrokeThickness="2"
+                                            Stroke="Transparent" SemanticProperties.Description="{Binding Key}">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
+                                                <Setter Property="BackgroundColor" Value="{StaticResource PageBackground}" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectIconCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"
+                                                       ForegroundColor="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Category_Archive}" Command="{Binding ToggleArchiveCommand}"
+                        IsVisible="{Binding IsExisting}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsArchived}" Value="True">
+                            <Setter Property="Text" Value="{v:Translate Category_Unarchive}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
+                Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </Grid>
+</ContentPage>

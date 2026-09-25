@@ -26,17 +26,31 @@ public sealed class ChoiceChips : ContentView
         nameof(AccentColor), typeof(Color), typeof(ChoiceChips), Color.FromArgb("#2E7D32"),
         propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).UpdateStates());
 
+    /// <summary>Identifies the <see cref="IsCompact"/> property.</summary>
+    public static readonly BindableProperty IsCompactProperty = BindableProperty.Create(
+        nameof(IsCompact), typeof(bool), typeof(ChoiceChips), false,
+        propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).CreatePanel());
+
     private static readonly Color Outline = Color.FromArgb("#C8C8C8");
     private static readonly Color Text = Color.FromArgb("#1F1F1F");
 
-    private readonly FlexLayout _panel;
     private readonly List<Border> _chips = [];
+    private Layout _panel = null!;
 
     /// <summary>Creates the control.</summary>
     public ChoiceChips()
     {
-        _panel = new FlexLayout { Wrap = FlexWrap.Wrap, JustifyContent = FlexJustify.Start, AlignItems = FlexAlignItems.Start };
-        Content = _panel;
+        CreatePanel();
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the chips are smaller and stay on one line that scrolls horizontally
+    /// (filter bars) instead of wrapping (form fields).
+    /// </summary>
+    public bool IsCompact
+    {
+        get => (bool)GetValue(IsCompactProperty);
+        set => SetValue(IsCompactProperty, value);
     }
 
     /// <summary>Gets or sets the items to choose from.</summary>
@@ -77,6 +91,22 @@ public sealed class ChoiceChips : ContentView
 
     private void OnItemsChanged(object? sender, NotifyCollectionChangedEventArgs e) => Rebuild();
 
+    private void CreatePanel()
+    {
+        if (IsCompact)
+        {
+            _panel = new HorizontalStackLayout();
+            Content = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility = ScrollBarVisibility.Never, Content = _panel };
+        }
+        else
+        {
+            _panel = new FlexLayout { Wrap = FlexWrap.Wrap, JustifyContent = FlexJustify.Start, AlignItems = FlexAlignItems.Start };
+            Content = _panel;
+        }
+
+        Rebuild();
+    }
+
     private void Rebuild()
     {
         _panel.Children.Clear();
@@ -91,15 +121,15 @@ public sealed class ChoiceChips : ContentView
             var index = i;
             var chip = new Border
             {
-                Padding = new Thickness(16, 10),
-                Margin = new Thickness(0, 0, 8, 8),
+                Padding = IsCompact ? new Thickness(14, 7) : new Thickness(16, 10),
+                Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8),
                 StrokeThickness = 1,
                 StrokeShape = new RoundRectangle { CornerRadius = 20 },
-                MinimumHeightRequest = 44,
+                MinimumHeightRequest = IsCompact ? 36 : 44,
                 Content = new Label
                 {
                     Text = ItemsSource[i]?.ToString(),
-                    FontSize = 15,
+                    FontSize = IsCompact ? 14 : 15,
                     VerticalOptions = LayoutOptions.Center,
                 },
             };

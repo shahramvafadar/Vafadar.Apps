@@ -121,19 +121,25 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         return await db.Categories.AsNoTracking().OrderBy(c => c.Kind).ThenBy(c => c.SortOrder).ToListAsync(cancellationToken);
     }
 
-    /// <summary>Creates the default categories once (CAT-01); later calls do nothing.</summary>
+    /// <summary>
+    /// Creates the default categories (CAT-01). Defaults added in later versions are created on the next start;
+    /// existing ones – renamed or archived by the user – are never touched.
+    /// </summary>
     public async Task EnsureDefaultCategoriesAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.Categories.AnyAsync(cancellationToken))
-        {
-            return;
-        }
+        var existing = (await db.Categories.Where(c => c.SystemKey != null).Select(c => new { c.Kind, c.SystemKey }).ToListAsync(cancellationToken))
+            .Select(c => (c.Kind, c.SystemKey!)).ToHashSet();
 
         var order = 0;
         foreach (var (kind, key, icon, color) in DefaultCategories.All)
         {
-            db.Categories.Add(new Category { Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order++ });
+            if (!existing.Contains((kind, key)))
+            {
+                db.Categories.Add(new Category { Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order });
+            }
+
+            order++;
         }
 
         await db.SaveChangesAsync(cancellationToken);
@@ -181,77 +187,125 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         return await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
+    /// <summary>Returns the refunds linked to a purchase.</summary>
+    public async Task<List<LedgerEntry>> GetRefundsAsync(Guid purchaseId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Entries.AsNoTracking().Where(e => e.RefundOfId == purchaseId).OrderBy(e => e.Date).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Returns the entries sharing a group id (e.g. a transfer and its fee).</summary>
+    public async Task<List<LedgerEntry>> GetGroupAsync(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Entries.AsNoTracking().Where(e => e.GroupId == groupId).ToListAsync(cancellationToken);
+    }
+
     /// <summary>
     /// Validates and saves an entry. Saving the same entry id twice updates it instead of creating a second entry, so
     /// repeated taps on Save cannot duplicate it (TX-06, AT-03).
     /// </summary>
-    public async Task<SaveResult> SaveEntryAsync(LedgerEntry entry, CancellationToken cancellationToken = default)
+    public Task<SaveResult> SaveEntryAsync(LedgerEntry entry, CancellationToken cancellationToken = default) =>
+        SaveEntriesAsync([entry], [], cancellationToken);
+
+    /// <summary>
+    /// Validates and saves related entries in one transaction – e.g. a transfer and its fee – and deletes
+    /// <paramref name="deleteIds"/> (a removed fee). Nothing is saved when any entry is invalid.
+    /// </summary>
+    public async Task<SaveResult> SaveEntriesAsync(
+        IReadOnlyList<LedgerEntry> entries,
+        IReadOnlyCollection<Guid> deleteIds,
+        CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(entry);
+        ArgumentNullException.ThrowIfNull(entries);
+        ArgumentNullException.ThrowIfNull(deleteIds);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
 
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
-        var existing = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == entry.Id, cancellationToken);
+        var ids = entries.Select(e => e.Id).ToList();
+        var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
 
-        LedgerEntry? original = null;
-        long otherRefunds = 0;
-        if (entry.Kind == EntryKind.Refund && entry.RefundOfId is { } originalId)
+        foreach (var entry in entries)
         {
-            original = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == originalId, cancellationToken);
-            otherRefunds = await db.Entries.Where(e => e.RefundOfId == originalId && e.Id != entry.Id).SumAsync(e => e.Amount, cancellationToken);
+            LedgerEntry? original = null;
+            long otherRefunds = 0;
+            if (entry.Kind == EntryKind.Refund && entry.RefundOfId is { } originalId)
+            {
+                original = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == originalId, cancellationToken);
+                otherRefunds = await db.Entries.Where(e => e.RefundOfId == originalId && e.Id != entry.Id).SumAsync(e => e.Amount, cancellationToken);
+            }
+
+            var errors = LedgerValidator.Validate(entry, accounts, categories, original, otherRefunds, isNew: !existing.ContainsKey(entry.Id));
+            if (errors.Count > 0)
+            {
+                return new SaveResult(errors);
+            }
         }
 
-        var errors = LedgerValidator.Validate(entry, accounts, categories, original, otherRefunds, isNew: existing is null);
-        if (errors.Count > 0)
+        foreach (var entry in entries)
         {
-            return new SaveResult(errors);
+            if (entry.Kind != EntryKind.Transfer)
+            {
+                entry.ToAccountId = null;
+                entry.ToAmount = null;
+            }
+
+            if (existing.TryGetValue(entry.Id, out var previous))
+            {
+                entry.CreatedAt = previous.CreatedAt;
+                db.Entries.Update(entry);
+            }
+            else
+            {
+                db.Entries.Add(entry);
+            }
         }
 
-        if (entry.Kind != EntryKind.Transfer)
+        if (deleteIds.Count > 0)
         {
-            entry.ToAccountId = null;
-            entry.ToAmount = null;
-        }
-
-        if (existing is null)
-        {
-            db.Entries.Add(entry);
-        }
-        else
-        {
-            entry.CreatedAt = existing.CreatedAt;
-            db.Entries.Update(entry);
+            db.Entries.RemoveRange(await db.Entries.Where(e => deleteIds.Contains(e.Id) && !ids.Contains(e.Id)).ToListAsync(cancellationToken));
         }
 
         await db.SaveChangesAsync(cancellationToken);
         return SaveResult.Success;
     }
 
-    /// <summary>Deletes an entry and returns it so that it can be restored by <see cref="RestoreEntryAsync"/> (undo).</summary>
-    public async Task<LedgerEntry?> DeleteEntryAsync(Guid id, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Deletes an entry together with the entries of its group (a transfer and its fee) and returns them, so that
+    /// <see cref="RestoreEntriesAsync"/> can undo the deletion. Refunds linked to a deleted purchase are kept.
+    /// </summary>
+    public async Task<IReadOnlyList<LedgerEntry>> DeleteEntryAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var entry = await db.Entries.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (entry is null)
         {
-            return null;
+            return [];
         }
 
-        db.Entries.Remove(entry);
+        List<LedgerEntry> deleted = entry.GroupId is { } group
+            ? await db.Entries.Where(e => e.GroupId == group).ToListAsync(cancellationToken)
+            : [entry];
+
+        db.Entries.RemoveRange(deleted);
         await db.SaveChangesAsync(cancellationToken);
-        return entry;
+        return deleted;
     }
 
-    /// <summary>Re-inserts a deleted entry unchanged (undo of <see cref="DeleteEntryAsync"/>).</summary>
-    public async Task RestoreEntryAsync(LedgerEntry entry, CancellationToken cancellationToken = default)
+    /// <summary>Re-inserts deleted entries unchanged (undo of <see cref="DeleteEntryAsync"/>).</summary>
+    public async Task RestoreEntriesAsync(IEnumerable<LedgerEntry> entries, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(entry);
+        ArgumentNullException.ThrowIfNull(entries);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (!await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
+        foreach (var entry in entries)
         {
-            db.Entries.Add(entry);
-            await db.SaveChangesAsync(cancellationToken);
+            if (!await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
+            {
+                db.Entries.Add(entry);
+            }
         }
+
+        await db.SaveChangesAsync(cancellationToken);
     }
 }

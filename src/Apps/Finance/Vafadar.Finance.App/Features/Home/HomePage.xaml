@@ -9,6 +9,7 @@
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
 
+    <Grid>
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{Binding Today}" Style="{StaticResource Secondary}" />
@@ -44,6 +45,11 @@
                             TextColor="{StaticResource Primary}" HorizontalOptions="End" />
                 </VerticalStackLayout>
             </Border>
+            <BoxView HeightRequest="72" Color="Transparent" />
         </VerticalStackLayout>
     </ScrollView>
+
+    <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddEntryCommand}"
+            SemanticProperties.Description="{v:Translate Tx_Add}" />
+    </Grid>
 </ContentPage>

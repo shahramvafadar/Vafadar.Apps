@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Entries.EntryDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Entries"
+    x:DataType="local:EntryDetailViewModel"
+    Title="{v:Translate Entry_Details}">
+
+    <Grid>
+        <Label Text="{v:Translate Entry_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
+
+        <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
+            <VerticalStackLayout Padding="16" Spacing="8">
+
+                <!-- Summary -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Border WidthRequest="56" HeightRequest="56" StrokeThickness="0" StrokeShape="RoundRectangle 28"
+                                BackgroundColor="{Binding IconBackground}" HorizontalOptions="Center">
+                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="30" ForegroundColor="{Binding IconColor}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding Heading}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding KindText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="30" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Needs review -->
+                <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
+                        IsVisible="{Binding IsUnreviewed}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{v:Translate Tx_Unreviewed}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                        <Button Grid.Column="1" Text="{v:Translate Entry_MarkReviewed}" Command="{Binding MarkReviewedCommand}"
+                                BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                    </Grid>
+                </Border>
+
+                <!-- Fields -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Lines}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:DetailLine">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Label}" Style="{StaticResource Secondary}"
+                                           IsVisible="{Binding Label, Converter={StaticResource IsNotNullConverter}}" />
+                                    <Label Text="{Binding Value}" FontSize="16" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Refunds of this purchase -->
+                <Label Text="{v:Translate Entry_Refunds}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasRefunds}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRefunds}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Refunds}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="p:EntryRow">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenRefundCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label Text="{Binding Subtitle}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{Binding RefundableText}" Style="{StaticResource Secondary}"
+                       IsVisible="{Binding RefundableText, Converter={StaticResource IsNotNullConverter}}" />
+
+                <!-- Actions -->
+                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_Refund}" Command="{Binding RefundCommand}"
+                            IsVisible="{Binding CanRefund}" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_Duplicate}" Command="{Binding DuplicateCommand}" />
+                </Grid>
+                <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
+                        TextColor="{StaticResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

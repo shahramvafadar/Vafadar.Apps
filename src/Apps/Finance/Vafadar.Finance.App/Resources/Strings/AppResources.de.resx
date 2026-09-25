@@ -211,4 +211,325 @@
   <data name="Settings_Display" xml:space="preserve">
     <value>Anzeige</value>
   </data>
+  <data name="Tab_Transactions" xml:space="preserve">
+    <value>Buchungen</value>
+  </data>
+  <data name="Tx_Title" xml:space="preserve">
+    <value>Buchungen</value>
+  </data>
+  <data name="Tx_Empty" xml:space="preserve">
+    <value>Noch keine Buchungen. Erfassen Sie Ihre erste Ausgabe oder Einnahme.</value>
+  </data>
+  <data name="Tx_EmptyFiltered" xml:space="preserve">
+    <value>Keine Buchung passt zu diesen Filtern.</value>
+  </data>
+  <data name="Tx_Search" xml:space="preserve">
+    <value>Titel, Empfänger, Notiz oder Betrag suchen</value>
+  </data>
+  <data name="Tx_Add" xml:space="preserve">
+    <value>Buchung erfassen</value>
+  </data>
+  <data name="Tx_Deleted" xml:space="preserve">
+    <value>Buchung gelöscht</value>
+  </data>
+  <data name="Tx_Unreviewed" xml:space="preserve">
+    <value>Zu prüfen</value>
+  </data>
+  <data name="Tx_ClearFilters" xml:space="preserve">
+    <value>Filter zurücksetzen</value>
+  </data>
+  <data name="Period_ThisMonth" xml:space="preserve">
+    <value>Dieser Monat</value>
+  </data>
+  <data name="Period_LastMonth" xml:space="preserve">
+    <value>Letzter Monat</value>
+  </data>
+  <data name="Period_ThisYear" xml:space="preserve">
+    <value>Dieses Jahr</value>
+  </data>
+  <data name="Period_All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="KindFilter_All" xml:space="preserve">
+    <value>Alle Arten</value>
+  </data>
+  <data name="KindFilter_Expenses" xml:space="preserve">
+    <value>Ausgaben</value>
+  </data>
+  <data name="KindFilter_Income" xml:space="preserve">
+    <value>Einnahmen</value>
+  </data>
+  <data name="KindFilter_Transfers" xml:space="preserve">
+    <value>Umbuchungen</value>
+  </data>
+  <data name="EntryKind_Income" xml:space="preserve">
+    <value>Einnahme</value>
+  </data>
+  <data name="EntryKind_Expense" xml:space="preserve">
+    <value>Ausgabe</value>
+  </data>
+  <data name="EntryKind_Transfer" xml:space="preserve">
+    <value>Umbuchung</value>
+  </data>
+  <data name="EntryKind_Refund" xml:space="preserve">
+    <value>Erstattung</value>
+  </data>
+  <data name="EntryKind_IncomeReversal" xml:space="preserve">
+    <value>Rückzahlung einer Einnahme</value>
+  </data>
+  <data name="EntryKind_Adjustment" xml:space="preserve">
+    <value>Saldokorrektur</value>
+  </data>
+  <data name="Entry_NewTitle" xml:space="preserve">
+    <value>Neue Buchung</value>
+  </data>
+  <data name="Entry_EditTitle" xml:space="preserve">
+    <value>Buchung bearbeiten</value>
+  </data>
+  <data name="Entry_RefundTitle" xml:space="preserve">
+    <value>Erstattung</value>
+  </data>
+  <data name="Entry_Amount" xml:space="preserve">
+    <value>Betrag</value>
+  </data>
+  <data name="Entry_Category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="Entry_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Entry_TitlePlaceholder" xml:space="preserve">
+    <value>Optional – sonst wird der Kategoriename angezeigt</value>
+  </data>
+  <data name="Entry_Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="Entry_Account" xml:space="preserve">
+    <value>Konto</value>
+  </data>
+  <data name="Entry_FromAccount" xml:space="preserve">
+    <value>Von Konto</value>
+  </data>
+  <data name="Entry_ToAccount" xml:space="preserve">
+    <value>Auf Konto</value>
+  </data>
+  <data name="Entry_ToAmount" xml:space="preserve">
+    <value>Erhaltener Betrag ({0})</value>
+  </data>
+  <data name="Entry_Fee" xml:space="preserve">
+    <value>Gebühr (optional)</value>
+  </data>
+  <data name="Entry_FeeHint" xml:space="preserve">
+    <value>Wird als Ausgabe des Quellkontos erfasst.</value>
+  </data>
+  <data name="Entry_TransferHint" xml:space="preserve">
+    <value>Umbuchungen verschieben Geld zwischen Ihren Konten – sie sind weder Einnahme noch Ausgabe.</value>
+  </data>
+  <data name="Entry_MoreDetails" xml:space="preserve">
+    <value>Weitere Angaben</value>
+  </data>
+  <data name="Entry_Payee" xml:space="preserve">
+    <value>Empfänger / Zahler</value>
+  </data>
+  <data name="Entry_Note" xml:space="preserve">
+    <value>Notiz</value>
+  </data>
+  <data name="Entry_Foreign" xml:space="preserve">
+    <value>In anderer Währung bezahlt</value>
+  </data>
+  <data name="Entry_ForeignAmount" xml:space="preserve">
+    <value>Ursprünglicher Betrag</value>
+  </data>
+  <data name="Entry_ForeignHint" xml:space="preserve">
+    <value>Der Betrag oben bleibt der auf dem Konto gebuchte Betrag.</value>
+  </data>
+  <data name="Entry_NoAccounts" xml:space="preserve">
+    <value>Legen Sie zuerst ein Konto an.</value>
+  </data>
+  <data name="Entry_RefundOf" xml:space="preserve">
+    <value>Erstattung für: {0}</value>
+  </data>
+  <data name="Entry_Refundable" xml:space="preserve">
+    <value>Bis zu {0} können noch erstattet werden.</value>
+  </data>
+  <data name="Entry_Refund" xml:space="preserve">
+    <value>Erstattung</value>
+  </data>
+  <data name="Entry_Duplicate" xml:space="preserve">
+    <value>Duplizieren</value>
+  </data>
+  <data name="Entry_Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Entry_Refunds" xml:space="preserve">
+    <value>Erstattungen</value>
+  </data>
+  <data name="Entry_MarkReviewed" xml:space="preserve">
+    <value>Als geprüft markieren</value>
+  </data>
+  <data name="Entry_FromPlan" xml:space="preserve">
+    <value>Aus einer Planung erfasst</value>
+  </data>
+  <data name="Entry_Details" xml:space="preserve">
+    <value>Buchung</value>
+  </data>
+  <data name="Entry_WithFee" xml:space="preserve">
+    <value>Gebühr {0}</value>
+  </data>
+  <data name="Entry_NotFound" xml:space="preserve">
+    <value>Diese Buchung existiert nicht mehr.</value>
+  </data>
+  <data name="LedgerError_AmountMustBePositive" xml:space="preserve">
+    <value>Geben Sie einen Betrag über null ein. Die Richtung legen Sie mit Ausgabe oder Einnahme fest.</value>
+  </data>
+  <data name="LedgerError_UnknownAccount" xml:space="preserve">
+    <value>Wählen Sie ein Konto.</value>
+  </data>
+  <data name="LedgerError_AccountArchived" xml:space="preserve">
+    <value>Archivierte Konten können keine neuen Buchungen erhalten.</value>
+  </data>
+  <data name="LedgerError_DestinationRequired" xml:space="preserve">
+    <value>Wählen Sie das Zielkonto.</value>
+  </data>
+  <data name="LedgerError_SameAccountTransfer" xml:space="preserve">
+    <value>Quell- und Zielkonto müssen verschieden sein.</value>
+  </data>
+  <data name="LedgerError_DestinationAmountRequired" xml:space="preserve">
+    <value>Geben Sie den erhaltenen Betrag in der Zielwährung ein.</value>
+  </data>
+  <data name="LedgerError_CategoryKindMismatch" xml:space="preserve">
+    <value>Diese Kategorie passt nicht zur Buchungsart.</value>
+  </data>
+  <data name="LedgerError_AdjustmentDirectionRequired" xml:space="preserve">
+    <value>Wählen Sie, ob der Saldo steigt oder sinkt.</value>
+  </data>
+  <data name="LedgerError_RefundExceedsPurchase" xml:space="preserve">
+    <value>Erstattungen dürfen den Kaufbetrag nicht übersteigen.</value>
+  </data>
+  <data name="LedgerError_RefundOriginalNotExpense" xml:space="preserve">
+    <value>Nur Ausgaben können erstattet werden.</value>
+  </data>
+  <data name="LedgerError_InvalidOriginalCurrency" xml:space="preserve">
+    <value>Geben Sie den ursprünglichen Betrag und eine andere Währung als die Kontowährung ein.</value>
+  </data>
+  <data name="Categories_Title" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="Categories_Expense" xml:space="preserve">
+    <value>Ausgabenkategorien</value>
+  </data>
+  <data name="Categories_Income" xml:space="preserve">
+    <value>Einnahmenkategorien</value>
+  </data>
+  <data name="Categories_Archived" xml:space="preserve">
+    <value>Archiviert</value>
+  </data>
+  <data name="Categories_Add" xml:space="preserve">
+    <value>Kategorie hinzufügen</value>
+  </data>
+  <data name="Category_NewTitle" xml:space="preserve">
+    <value>Neue Kategorie</value>
+  </data>
+  <data name="Category_EditTitle" xml:space="preserve">
+    <value>Kategorie bearbeiten</value>
+  </data>
+  <data name="Category_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Category_NameRequired" xml:space="preserve">
+    <value>Geben Sie einen Namen ein.</value>
+  </data>
+  <data name="Category_Kind" xml:space="preserve">
+    <value>Verwendet für</value>
+  </data>
+  <data name="Category_Icon" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
+  <data name="Category_Color" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="Category_Parent" xml:space="preserve">
+    <value>Oberkategorie</value>
+  </data>
+  <data name="Category_NoParent" xml:space="preserve">
+    <value>Keine (Hauptkategorie)</value>
+  </data>
+  <data name="Category_Archive" xml:space="preserve">
+    <value>Kategorie archivieren</value>
+  </data>
+  <data name="Category_Unarchive" xml:space="preserve">
+    <value>Kategorie wiederherstellen</value>
+  </data>
+  <data name="Category_ArchiveMessage" xml:space="preserve">
+    <value>Die Kategorie verschwindet aus Auswahllisten. Bestehende Buchungen und Berichte behalten sie.</value>
+  </data>
+  <data name="Category_ResetName" xml:space="preserve">
+    <value>Standardnamen verwenden</value>
+  </data>
+  <data name="Category_Salary" xml:space="preserve">
+    <value>Gehalt</value>
+  </data>
+  <data name="Category_SideIncome" xml:space="preserve">
+    <value>Nebeneinkünfte</value>
+  </data>
+  <data name="Category_GiftReceived" xml:space="preserve">
+    <value>Erhaltene Geschenke</value>
+  </data>
+  <data name="Category_Interest" xml:space="preserve">
+    <value>Zinsen</value>
+  </data>
+  <data name="Category_Uncategorized" xml:space="preserve">
+    <value>Ohne Kategorie</value>
+  </data>
+  <data name="Category_Housing" xml:space="preserve">
+    <value>Wohnen</value>
+  </data>
+  <data name="Category_Food" xml:space="preserve">
+    <value>Lebensmittel</value>
+  </data>
+  <data name="Category_Energy" xml:space="preserve">
+    <value>Energie</value>
+  </data>
+  <data name="Category_Communication" xml:space="preserve">
+    <value>Telefon &amp; Internet</value>
+  </data>
+  <data name="Category_Transport" xml:space="preserve">
+    <value>Mobilität</value>
+  </data>
+  <data name="Category_Health" xml:space="preserve">
+    <value>Gesundheit</value>
+  </data>
+  <data name="Category_Insurance" xml:space="preserve">
+    <value>Versicherungen</value>
+  </data>
+  <data name="Category_Education" xml:space="preserve">
+    <value>Bildung</value>
+  </data>
+  <data name="Category_Family" xml:space="preserve">
+    <value>Familie</value>
+  </data>
+  <data name="Category_Leisure" xml:space="preserve">
+    <value>Freizeit</value>
+  </data>
+  <data name="Category_Subscriptions" xml:space="preserve">
+    <value>Abonnements</value>
+  </data>
+  <data name="Category_Fees" xml:space="preserve">
+    <value>Gebühren</value>
+  </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="CategoryKind_Expense" xml:space="preserve">
+    <value>Ausgaben</value>
+  </data>
+  <data name="CategoryKind_Income" xml:space="preserve">
+    <value>Einnahmen</value>
+  </data>
+  <data name="Accounts_AllAccounts" xml:space="preserve">
+    <value>Alle Konten</value>
+  </data>
+  <data name="Entry_Kind" xml:space="preserve">
+    <value>Art</value>
+  </data>
 </root>

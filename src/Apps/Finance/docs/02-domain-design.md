@@ -45,7 +45,11 @@ Transfers, opening balances and adjustments never carry an income/expense catego
 
 * Gross expense = Σ Expense; refunds = Σ Refund; **net expense = gross − refunds** (may be negative, REF-03).
 * A card purchase is an Expense on the card account; paying the card is a Transfer (ACC-04, AT-07).
-* A transfer fee is a separate Expense entry linked by a shared `GroupId` (FIN-02, AT-08).
+* A transfer fee is a separate Expense entry (category "Fees") linked by a shared `GroupId` (FIN-02, AT-08). The
+  transfer and its fee are saved in one transaction, and deleting either deletes both; undo restores both.
+* Deleting a purchase keeps its refunds (they become refunds without an original, REF-04); undo restores the link.
+* Default categories introduced by later versions are added on start-up by `SystemKey`; categories the user renamed
+  or archived are never changed.
 
 ## 4. Balances and reports (FIN-12, §24)
 

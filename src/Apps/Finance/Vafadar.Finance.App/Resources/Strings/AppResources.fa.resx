@@ -211,4 +211,325 @@
   <data name="Settings_Display" xml:space="preserve">
     <value>نمایش</value>
   </data>
+  <data name="Tab_Transactions" xml:space="preserve">
+    <value>تراکنش‌ها</value>
+  </data>
+  <data name="Tx_Title" xml:space="preserve">
+    <value>تراکنش‌ها</value>
+  </data>
+  <data name="Tx_Empty" xml:space="preserve">
+    <value>هنوز تراکنشی ثبت نشده است. اولین هزینه یا درآمد خود را ثبت کنید.</value>
+  </data>
+  <data name="Tx_EmptyFiltered" xml:space="preserve">
+    <value>موردی با این فیلترها پیدا نشد.</value>
+  </data>
+  <data name="Tx_Search" xml:space="preserve">
+    <value>جستجو در عنوان، طرف حساب، یادداشت یا مبلغ</value>
+  </data>
+  <data name="Tx_Add" xml:space="preserve">
+    <value>ثبت تراکنش</value>
+  </data>
+  <data name="Tx_Deleted" xml:space="preserve">
+    <value>تراکنش حذف شد</value>
+  </data>
+  <data name="Tx_Unreviewed" xml:space="preserve">
+    <value>نیاز به بررسی</value>
+  </data>
+  <data name="Tx_ClearFilters" xml:space="preserve">
+    <value>حذف فیلترها</value>
+  </data>
+  <data name="Period_ThisMonth" xml:space="preserve">
+    <value>این ماه</value>
+  </data>
+  <data name="Period_LastMonth" xml:space="preserve">
+    <value>ماه گذشته</value>
+  </data>
+  <data name="Period_ThisYear" xml:space="preserve">
+    <value>امسال</value>
+  </data>
+  <data name="Period_All" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="KindFilter_All" xml:space="preserve">
+    <value>همه انواع</value>
+  </data>
+  <data name="KindFilter_Expenses" xml:space="preserve">
+    <value>هزینه‌ها</value>
+  </data>
+  <data name="KindFilter_Income" xml:space="preserve">
+    <value>درآمدها</value>
+  </data>
+  <data name="KindFilter_Transfers" xml:space="preserve">
+    <value>انتقال‌ها</value>
+  </data>
+  <data name="EntryKind_Income" xml:space="preserve">
+    <value>درآمد</value>
+  </data>
+  <data name="EntryKind_Expense" xml:space="preserve">
+    <value>هزینه</value>
+  </data>
+  <data name="EntryKind_Transfer" xml:space="preserve">
+    <value>انتقال</value>
+  </data>
+  <data name="EntryKind_Refund" xml:space="preserve">
+    <value>برگشت وجه</value>
+  </data>
+  <data name="EntryKind_IncomeReversal" xml:space="preserve">
+    <value>برگشت درآمد</value>
+  </data>
+  <data name="EntryKind_Adjustment" xml:space="preserve">
+    <value>تعدیل مانده</value>
+  </data>
+  <data name="Entry_NewTitle" xml:space="preserve">
+    <value>تراکنش جدید</value>
+  </data>
+  <data name="Entry_EditTitle" xml:space="preserve">
+    <value>ویرایش تراکنش</value>
+  </data>
+  <data name="Entry_RefundTitle" xml:space="preserve">
+    <value>برگشت وجه</value>
+  </data>
+  <data name="Entry_Amount" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Entry_Category" xml:space="preserve">
+    <value>دسته</value>
+  </data>
+  <data name="Entry_Title" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="Entry_TitlePlaceholder" xml:space="preserve">
+    <value>اختیاری؛ در غیر این صورت نام دسته نمایش داده می‌شود</value>
+  </data>
+  <data name="Entry_Date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
+  <data name="Entry_Account" xml:space="preserve">
+    <value>حساب</value>
+  </data>
+  <data name="Entry_FromAccount" xml:space="preserve">
+    <value>از حساب</value>
+  </data>
+  <data name="Entry_ToAccount" xml:space="preserve">
+    <value>به حساب</value>
+  </data>
+  <data name="Entry_ToAmount" xml:space="preserve">
+    <value>مبلغ دریافتی ({0})</value>
+  </data>
+  <data name="Entry_Fee" xml:space="preserve">
+    <value>کارمزد (اختیاری)</value>
+  </data>
+  <data name="Entry_FeeHint" xml:space="preserve">
+    <value>به‌عنوان هزینهٔ حساب مبدأ ثبت می‌شود.</value>
+  </data>
+  <data name="Entry_TransferHint" xml:space="preserve">
+    <value>انتقال پول را بین حساب‌های خودتان جابه‌جا می‌کند و درآمد یا هزینه حساب نمی‌شود.</value>
+  </data>
+  <data name="Entry_MoreDetails" xml:space="preserve">
+    <value>جزئیات بیشتر</value>
+  </data>
+  <data name="Entry_Payee" xml:space="preserve">
+    <value>طرف حساب</value>
+  </data>
+  <data name="Entry_Note" xml:space="preserve">
+    <value>یادداشت</value>
+  </data>
+  <data name="Entry_Foreign" xml:space="preserve">
+    <value>پرداخت با ارز دیگر</value>
+  </data>
+  <data name="Entry_ForeignAmount" xml:space="preserve">
+    <value>مبلغ اصلی</value>
+  </data>
+  <data name="Entry_ForeignHint" xml:space="preserve">
+    <value>مبلغ بالا همان مبلغی است که از حساب کم یا به آن اضافه شده است.</value>
+  </data>
+  <data name="Entry_NoAccounts" xml:space="preserve">
+    <value>ابتدا یک حساب اضافه کنید.</value>
+  </data>
+  <data name="Entry_RefundOf" xml:space="preserve">
+    <value>برگشت وجهِ: {0}</value>
+  </data>
+  <data name="Entry_Refundable" xml:space="preserve">
+    <value>حداکثر {0} قابل برگشت است.</value>
+  </data>
+  <data name="Entry_Refund" xml:space="preserve">
+    <value>برگشت وجه</value>
+  </data>
+  <data name="Entry_Duplicate" xml:space="preserve">
+    <value>تکثیر</value>
+  </data>
+  <data name="Entry_Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Entry_Refunds" xml:space="preserve">
+    <value>برگشت‌ها</value>
+  </data>
+  <data name="Entry_MarkReviewed" xml:space="preserve">
+    <value>علامت بررسی‌شده</value>
+  </data>
+  <data name="Entry_FromPlan" xml:space="preserve">
+    <value>ثبت‌شده از یک برنامه</value>
+  </data>
+  <data name="Entry_Details" xml:space="preserve">
+    <value>تراکنش</value>
+  </data>
+  <data name="Entry_WithFee" xml:space="preserve">
+    <value>کارمزد {0}</value>
+  </data>
+  <data name="Entry_NotFound" xml:space="preserve">
+    <value>این تراکنش دیگر وجود ندارد.</value>
+  </data>
+  <data name="LedgerError_AmountMustBePositive" xml:space="preserve">
+    <value>مبلغی بزرگ‌تر از صفر وارد کنید. جهت را با انتخاب هزینه یا درآمد مشخص کنید.</value>
+  </data>
+  <data name="LedgerError_UnknownAccount" xml:space="preserve">
+    <value>یک حساب انتخاب کنید.</value>
+  </data>
+  <data name="LedgerError_AccountArchived" xml:space="preserve">
+    <value>برای حساب بایگانی‌شده نمی‌توان تراکنش جدید ثبت کرد.</value>
+  </data>
+  <data name="LedgerError_DestinationRequired" xml:space="preserve">
+    <value>حساب مقصد را انتخاب کنید.</value>
+  </data>
+  <data name="LedgerError_SameAccountTransfer" xml:space="preserve">
+    <value>حساب مبدأ و مقصد باید متفاوت باشند.</value>
+  </data>
+  <data name="LedgerError_DestinationAmountRequired" xml:space="preserve">
+    <value>مبلغ دریافتی را به ارز حساب مقصد وارد کنید.</value>
+  </data>
+  <data name="LedgerError_CategoryKindMismatch" xml:space="preserve">
+    <value>این دسته با نوع تراکنش سازگار نیست.</value>
+  </data>
+  <data name="LedgerError_AdjustmentDirectionRequired" xml:space="preserve">
+    <value>مشخص کنید مانده افزایش یابد یا کاهش.</value>
+  </data>
+  <data name="LedgerError_RefundExceedsPurchase" xml:space="preserve">
+    <value>مجموع برگشت‌ها نمی‌تواند از مبلغ خرید بیشتر باشد.</value>
+  </data>
+  <data name="LedgerError_RefundOriginalNotExpense" xml:space="preserve">
+    <value>فقط هزینه‌ها قابل برگشت هستند.</value>
+  </data>
+  <data name="LedgerError_InvalidOriginalCurrency" xml:space="preserve">
+    <value>مبلغ اصلی و ارزی متفاوت با ارز حساب وارد کنید.</value>
+  </data>
+  <data name="Categories_Title" xml:space="preserve">
+    <value>دسته‌ها</value>
+  </data>
+  <data name="Categories_Expense" xml:space="preserve">
+    <value>دسته‌های هزینه</value>
+  </data>
+  <data name="Categories_Income" xml:space="preserve">
+    <value>دسته‌های درآمد</value>
+  </data>
+  <data name="Categories_Archived" xml:space="preserve">
+    <value>بایگانی‌شده</value>
+  </data>
+  <data name="Categories_Add" xml:space="preserve">
+    <value>افزودن دسته</value>
+  </data>
+  <data name="Category_NewTitle" xml:space="preserve">
+    <value>دستهٔ جدید</value>
+  </data>
+  <data name="Category_EditTitle" xml:space="preserve">
+    <value>ویرایش دسته</value>
+  </data>
+  <data name="Category_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Category_NameRequired" xml:space="preserve">
+    <value>یک نام وارد کنید.</value>
+  </data>
+  <data name="Category_Kind" xml:space="preserve">
+    <value>کاربرد</value>
+  </data>
+  <data name="Category_Icon" xml:space="preserve">
+    <value>نماد</value>
+  </data>
+  <data name="Category_Color" xml:space="preserve">
+    <value>رنگ</value>
+  </data>
+  <data name="Category_Parent" xml:space="preserve">
+    <value>دستهٔ اصلی</value>
+  </data>
+  <data name="Category_NoParent" xml:space="preserve">
+    <value>هیچ (دستهٔ اصلی)</value>
+  </data>
+  <data name="Category_Archive" xml:space="preserve">
+    <value>بایگانی دسته</value>
+  </data>
+  <data name="Category_Unarchive" xml:space="preserve">
+    <value>بازگرداندن دسته</value>
+  </data>
+  <data name="Category_ArchiveMessage" xml:space="preserve">
+    <value>دسته از فهرست‌های انتخاب حذف می‌شود؛ تراکنش‌ها و گزارش‌های موجود آن را حفظ می‌کنند.</value>
+  </data>
+  <data name="Category_ResetName" xml:space="preserve">
+    <value>استفاده از نام پیش‌فرض</value>
+  </data>
+  <data name="Category_Salary" xml:space="preserve">
+    <value>حقوق</value>
+  </data>
+  <data name="Category_SideIncome" xml:space="preserve">
+    <value>درآمد جانبی</value>
+  </data>
+  <data name="Category_GiftReceived" xml:space="preserve">
+    <value>هدیهٔ دریافتی</value>
+  </data>
+  <data name="Category_Interest" xml:space="preserve">
+    <value>سود بانکی</value>
+  </data>
+  <data name="Category_Uncategorized" xml:space="preserve">
+    <value>بدون دسته</value>
+  </data>
+  <data name="Category_Housing" xml:space="preserve">
+    <value>مسکن</value>
+  </data>
+  <data name="Category_Food" xml:space="preserve">
+    <value>خوراک</value>
+  </data>
+  <data name="Category_Energy" xml:space="preserve">
+    <value>انرژی</value>
+  </data>
+  <data name="Category_Communication" xml:space="preserve">
+    <value>تلفن و اینترنت</value>
+  </data>
+  <data name="Category_Transport" xml:space="preserve">
+    <value>حمل‌ونقل</value>
+  </data>
+  <data name="Category_Health" xml:space="preserve">
+    <value>سلامت</value>
+  </data>
+  <data name="Category_Insurance" xml:space="preserve">
+    <value>بیمه</value>
+  </data>
+  <data name="Category_Education" xml:space="preserve">
+    <value>آموزش</value>
+  </data>
+  <data name="Category_Family" xml:space="preserve">
+    <value>خانواده</value>
+  </data>
+  <data name="Category_Leisure" xml:space="preserve">
+    <value>تفریح</value>
+  </data>
+  <data name="Category_Subscriptions" xml:space="preserve">
+    <value>اشتراک‌ها</value>
+  </data>
+  <data name="Category_Fees" xml:space="preserve">
+    <value>کارمزدها</value>
+  </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>سایر</value>
+  </data>
+  <data name="CategoryKind_Expense" xml:space="preserve">
+    <value>هزینه‌ها</value>
+  </data>
+  <data name="CategoryKind_Income" xml:space="preserve">
+    <value>درآمدها</value>
+  </data>
+  <data name="Accounts_AllAccounts" xml:space="preserve">
+    <value>همه حساب‌ها</value>
+  </data>
+  <data name="Entry_Kind" xml:space="preserve">
+    <value>نوع</value>
+  </data>
 </root>

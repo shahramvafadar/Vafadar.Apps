@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Transactions.TransactionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Transactions"
+    x:DataType="local:TransactionsViewModel"
+    Title="{v:Translate Tx_Title}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Search and filters -->
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="8" BackgroundColor="{StaticResource PageBackground}">
+            <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" BackgroundColor="{StaticResource CardBackground}"
+                       SemanticProperties.Description="{v:Translate Common_Search}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{StaticResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
+                        SemanticProperties.Description="{v:Translate Entry_Account}" />
+                <Button Grid.Column="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="18" MinimumHeightRequest="36"
+                        Padding="14,0" FontSize="14" BackgroundColor="{StaticResource WarningBackground}" TextColor="{StaticResource WarningText}"
+                        IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding UnreviewedOnly}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{StaticResource WarningText}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Entries grouped by day -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="local:EntryDayGroup">
+                    <Grid ColumnDefinitions="*,Auto" Padding="16,14,16,6">
+                        <Label Text="{Binding Header}" Style="{StaticResource Secondary}" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="{Binding NetText}" Style="{StaticResource Secondary}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="p:EntryRow">
+                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Margin="16,0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
+                                                  CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{Binding IconBackground}" VerticalOptions="Center">
+                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="22" ForegroundColor="{Binding IconColor}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding Title}" FontSize="16" LineBreakMode="TailTruncation" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{v:Translate Tx_Unreviewed}" FontSize="12" TextColor="{StaticResource WarningText}"
+                                       BackgroundColor="{StaticResource WarningBackground}" Padding="6,1" IsVisible="{Binding IsUnreviewed}" />
+                                <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="16"
+                               FontAttributes="Bold" VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="32,48" Spacing="16">
+                    <fi:SymbolIcon Symbol="Receipt" FontSize="44" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <Label Text="{v:Translate Tx_Empty}" HorizontalTextAlignment="Center" IsVisible="{Binding HasNoEntriesAtAll}" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Tx_Add}" Command="{Binding AddCommand}"
+                            IsVisible="{Binding HasNoEntriesAtAll}" />
+                    <Label Text="{v:Translate Tx_EmptyFiltered}" HorizontalTextAlignment="Center"
+                           IsVisible="{Binding HasNoEntriesAtAll, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Tx_ClearFilters}" Command="{Binding ClearFiltersCommand}"
+                            IsVisible="{Binding HasNoEntriesAtAll, Converter={StaticResource InvertedBoolConverter}}" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.Footer>
+                <BoxView HeightRequest="96" Color="Transparent" />
+            </CollectionView.Footer>
+        </CollectionView>
+
+        <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+                SemanticProperties.Description="{v:Translate Tx_Add}" />
+
+        <!-- Undo after delete -->
+        <Border Grid.Row="1" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,16,88,20" Padding="16,4,8,4"
+                BackgroundColor="#303030" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="{v:Translate Tx_Deleted}" TextColor="White" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoDeleteCommand}" BackgroundColor="Transparent"
+                        TextColor="#A5D6A7" FontAttributes="Bold" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
