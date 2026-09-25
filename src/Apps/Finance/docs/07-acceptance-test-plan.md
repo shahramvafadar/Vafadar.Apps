@@ -7,20 +7,20 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT | Scenario (short) | Requirements | Test type | Slice | Status |
 |---|---|---|---|---|---|
 | AT-01 | Fresh install offline, no login | PR-01, ONB-01 | Manual | S2 | Planned |
-| AT-02 | Simple income/expense | TX-01, FIN-12 | Unit | S1 | Planned |
-| AT-03 | Multiple fast Save taps | TX-06 | Unit (view model) + manual | S3 | Planned |
+| AT-02 | Simple income/expense | TX-01, FIN-12 | Unit | S1 | Verified (unit, domain level) |
+| AT-03 | Multiple fast Save taps | TX-06 | Unit (view model) + manual | S3 | Verified (unit, domain level) |
 | AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Planned |
-| AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Planned |
-| AT-06 | Report only source account | FIN-03 | Unit | S1 | Planned |
-| AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Planned |
-| AT-08 | Transfer fee | FIN-02 | Unit | S1 | Planned |
-| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Planned |
+| AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Verified (unit, domain level) |
+| AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
+| AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Verified (unit, domain level) |
+| AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
+| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Verified (unit, domain level) |
 | AT-10 | Archive account with history/plans | ACC-06 | Unit | S2 | Planned |
-| AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Planned |
-| AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Planned |
-| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Planned |
-| AT-14 | Refund to another account | REF-01 | Unit | S1 | Planned |
-| AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Planned |
+| AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
+| AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
+| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit, domain level) |
+| AT-14 | Refund to another account | REF-01 | Unit | S1 | Verified (unit, domain level) |
+| AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Verified (unit, domain level) |
 | AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Planned |
 | AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Planned |
 | AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Planned |
@@ -44,15 +44,15 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Planned |
 | AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Planned |
-| AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Planned |
-| AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Planned |
+| AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit, domain level) |
+| AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit, domain level) |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Planned |
 | AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Planned |
 | AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Planned |
 | AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Planned |
-| AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Planned |
+| AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Planned |
-| AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Planned |
+| AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Planned |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Planned |
@@ -67,5 +67,5 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Blocked (no sign-in) |
 | AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Planned |
 | AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Planned |
-| AT-62 | Golden data §24 | §24 | Unit | S1 | Planned |
+| AT-62 | Golden data §24 | §24 | Unit | S1 | Verified (unit, domain level) |
 | AT-63..68 | Phase-2 scenarios | F2-* | – | Phase 2 | Not included |

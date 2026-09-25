@@ -37,7 +37,7 @@ privacy policy, Data safety and Financial features declaration match that build.
 
 | Slice | Status |
 |---|---|
-| S1 | Planned |
+| S1 | Implemented – verified (domain + persistence; 59 new tests; migration InitialLedger) |
 | S2 | Planned |
 | S3 | Planned |
 | S4 | Planned |

@@ -41,7 +41,12 @@ public sealed class AuditingSaveChangesInterceptor(TimeProvider time) : SaveChan
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.CreatedAt = now;
+                    // Keep an existing creation time (undo of a delete, restore, import of own data).
+                    if (entry.Entity.CreatedAt == default)
+                    {
+                        entry.Entity.CreatedAt = now;
+                    }
+
                     entry.Entity.UpdatedAt = now;
                     break;
 
