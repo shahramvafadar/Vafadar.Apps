@@ -39,6 +39,8 @@ Migrations are applied automatically when the app starts.
 
 ## Documentation
 
+* [Design documentation](docs/README.md): assessment, domain, UX, phase-1 plan, backlog, privacy matrix, test plan,
+  release checklist
 * [Requirements](docs/requirements.md)
 * [Changelog](CHANGELOG.md)
 * Shared concepts: [architecture](../../../docs/architecture/overview.md), [localization](../../../docs/architecture/localization.md),

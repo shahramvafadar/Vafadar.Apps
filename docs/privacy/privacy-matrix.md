@@ -3,6 +3,8 @@
 One place that records, for every app, what data exists, where it goes and how it maps to the store privacy forms.
 Update it in the same pull request as any change that affects data, permissions or SDKs.
 
+Detailed, code-verified profiles per app: [Finance](../../src/Apps/Finance/docs/06-privacy-matrix.md).
+
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 
 ## 1. Data inventory

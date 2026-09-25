@@ -48,8 +48,8 @@ in `MauiProgram`.
 * Every page sets `x:DataType` (compiled bindings). No logic in code-behind beyond wiring (e.g. `OnAppearing`).
 * View models derive from `ViewModelBase`, use `[ObservableProperty]` on **partial properties** and `[RelayCommand]`.
 * Text via `{v:Translate Key}` or `Translator`; dates via `IDateFormatter`.
-* Colors and styles from `Resources/Styles`; no hard-coded colors in pages. Support light and dark themes
-  (`AppThemeBinding`).
+* Colors and styles from `Resources/Styles`; no hard-coded colors in pages. Apps ship with the light theme only
+  until a dark theme is designed and tested (`Application.UserAppTheme = AppTheme.Light`).
 * Use layouts that work right-to-left (see [localization](../architecture/localization.md#right-to-left-layout-rules)).
 * Syncfusion controls: add the specific `Syncfusion.Maui.*` package to the app (version from `Directory.Packages.props`).
 

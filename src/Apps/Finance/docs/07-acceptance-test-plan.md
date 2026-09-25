@@ -1,0 +1,71 @@
+# 07 – Acceptance test plan
+
+Automated tests live in `test/Apps/Finance/*` and carry the scenario id in their name or a `[Trait("AT", "AT-17")]`.
+Manual scenarios are executed on a real Android device with the **release** build (Gate 1B). The reference device and
+data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S14.
+
+| AT | Scenario (short) | Requirements | Test type | Slice | Status |
+|---|---|---|---|---|---|
+| AT-01 | Fresh install offline, no login | PR-01, ONB-01 | Manual | S2 | Planned |
+| AT-02 | Simple income/expense | TX-01, FIN-12 | Unit | S1 | Planned |
+| AT-03 | Multiple fast Save taps | TX-06 | Unit (view model) + manual | S3 | Planned |
+| AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Planned |
+| AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Planned |
+| AT-06 | Report only source account | FIN-03 | Unit | S1 | Planned |
+| AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Planned |
+| AT-08 | Transfer fee | FIN-02 | Unit | S1 | Planned |
+| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Planned |
+| AT-10 | Archive account with history/plans | ACC-06 | Unit | S2 | Planned |
+| AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Planned |
+| AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Planned |
+| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Planned |
+| AT-14 | Refund to another account | REF-01 | Unit | S1 | Planned |
+| AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Planned |
+| AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Planned |
+| AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Planned |
+| AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Planned |
+| AT-19 | Day 31, last valid day | REC-08/09 | Unit | S4 | Planned |
+| AT-20 | Day 31, skip policy | REC-08 | Unit | S4 | Planned |
+| AT-21 | Last day of month | REC-08 | Unit | S4 | Planned |
+| AT-22 | Leap days Gregorian and Persian | REC-10 | Unit | S4 | Planned |
+| AT-23 | Change display calendar | REC-11, LOC | Unit | S4 | Planned |
+| AT-24 | Persian monthly rule | REC-11 | Unit | S4 | Planned |
+| AT-25 | Amount change from next occurrence | REC-15 | Unit | S4 | Planned |
+| AT-26 | Postpone one occurrence | REC-14 | Unit | S4 | Planned |
+| AT-27 | Skip in 12-occurrence plan | REC-06 | Unit | S4 | Planned |
+| AT-28 | Early confirmation | FIN-07 | Unit | S4 | Planned |
+| AT-29 | Link existing entry to occurrence | REC-17 | Unit | S4 | Planned |
+| AT-30 | Auto-post runs twice | REC-21 | Integration (SQLite) | S4 | Planned |
+| AT-31 | Delete/undo auto-post | REC-18 | Integration | S4 | Planned |
+| AT-32 | Two equal plans | REC-21 | Unit | S4 | Planned |
+| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Planned |
+| AT-34 | Notifications denied/off | REM-02 | Manual | S10 | Planned |
+| AT-35 | Snooze notification | REM-04 | Manual | S10 | Planned |
+| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |
+| AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Planned |
+| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Planned |
+| AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Planned |
+| AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Planned |
+| AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Planned |
+| AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Planned |
+| AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Planned |
+| AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Planned |
+| AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Planned |
+| AT-46 | Change report currency | FX-05 | Unit | S11 | Planned |
+| AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Planned |
+| AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Planned |
+| AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
+| AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Planned |
+| AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Planned |
+| AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Planned |
+| AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Planned |
+| AT-54 | Import failure / cancel | IO-11 | Integration | S12 | Planned |
+| AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit | S12 | Planned |
+| AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Library verified; app Planned |
+| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Planned |
+| AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
+| AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Blocked (no sign-in) |
+| AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Planned |
+| AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Planned |
+| AT-62 | Golden data §24 | §24 | Unit | S1 | Planned |
+| AT-63..68 | Phase-2 scenarios | F2-* | – | Phase 2 | Not included |
