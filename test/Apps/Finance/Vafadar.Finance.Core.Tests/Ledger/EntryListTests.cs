@@ -157,5 +157,28 @@ public sealed class EntryListTests
         Assert.Equal((1405, 12), Budgets.PeriodMath.Previous(1406, 1));
     }
 
+    [Fact]
+    [Trait("AT", "AT-50")]
+    public void Drill_down_list_adds_up_to_the_category_number()
+    {
+        var checking = _ledger.Account("Checking", 100);
+        var hidden = _ledger.Account("Hidden", 0);
+        hidden.IncludeInTotals = false;
+        var food = Guid.CreateVersion7();
+        var bread = Guid.CreateVersion7();
+        var purchase = _ledger.Add(EntryKind.Expense, checking, 40, categoryId: food);
+        _ledger.Add(EntryKind.Expense, checking, 10, categoryId: bread);
+        _ledger.Refund(purchase, checking, 15);
+        _ledger.Add(EntryKind.Expense, hidden, 99, categoryId: food);
+        Guid? Group(Guid? id) => id == bread ? food : id;
+
+        var report = LedgerCalculator.ExpenseByCategory(_ledger.Accounts, _ledger.Entries, new LedgerFilter(LedgerBuilder.Day1, LedgerBuilder.Day1), Group).Single();
+        var list = EntrySearch.Apply(_ledger.Entries, new EntryFilter(LedgerBuilder.Day1, LedgerBuilder.Day1, KindFilter.Expenses, CategoryIds: [food, bread], InTotalsOnly: true), _ => null, AccountsById);
+
+        Assert.Equal(food, report.CategoryId);
+        Assert.Equal(LedgerBuilder.Minor(35), report.Net);
+        Assert.Equal(-report.Net, EntrySearch.NetByCurrency(list, AccountsById)["EUR"]);
+    }
+
     private List<LedgerEntry> Filter(EntryFilter filter) => [.. EntrySearch.Apply(_ledger.Entries, filter, _ => null, AccountsById)];
 }

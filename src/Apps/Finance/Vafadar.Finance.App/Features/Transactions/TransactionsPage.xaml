@@ -31,6 +31,17 @@
                     </Button.Triggers>
                 </Button>
             </Grid>
+
+            <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
+            <Border BackgroundColor="{StaticResource CardBackground}" Stroke="{StaticResource Primary}" StrokeShape="RoundRectangle 18"
+                    Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding CategoryFilterName, Converter={StaticResource IsNotNullConverter}}">
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="{Binding CategoryFilterName}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                            Padding="8,0" MinimumWidthRequest="36" SemanticProperties.Description="{v:Translate Tx_ClearFilters}" />
+                </HorizontalStackLayout>
+            </Border>
+            <Label Text="{Binding SummaryText}" Style="{StaticResource Secondary}" IsVisible="{Binding SummaryText, Converter={StaticResource IsNotNullConverter}}" />
         </VerticalStackLayout>
 
         <!-- Entries grouped by day -->

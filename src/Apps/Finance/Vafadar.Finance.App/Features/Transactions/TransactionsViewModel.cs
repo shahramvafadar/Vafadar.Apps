@@ -41,6 +41,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private CancellationTokenSource? _searchDelay;
     private bool _loading;
     private Guid? _pendingAccount;
+    private IReadOnlyCollection<Guid>? _categoryIds;
+    private bool _inTotalsOnly;
 
     public TransactionsViewModel(FinanceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, UndoService undo)
     {
@@ -100,10 +102,32 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     [ObservableProperty]
     public partial bool ShowUndo { get; set; }
 
-    /// <summary>Accepts <c>unreviewed=true</c> (from Home) and <c>account</c> (from an account).</summary>
+    [ObservableProperty]
+    public partial string? CategoryFilterName { get; set; }
+
+    [ObservableProperty]
+    public partial string? SummaryText { get; set; }
+
+    /// <summary>
+    /// Accepts <c>unreviewed=true</c>, <c>account</c>, and a drill-down from a number (AT-50): <c>period</c> (chip index),
+    /// <c>kind</c> (<see cref="KindFilter"/>), <c>categories</c> (ids), <c>categoryName</c> and <c>inTotals</c>.
+    /// </summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        if (query.ContainsKey("period") || query.ContainsKey("kind") || query.ContainsKey("categories"))
+        {
+            _loading = true;
+            PeriodIndex = query.TryGetValue("period", out var period) && period is int p ? p : 0;
+            KindIndex = query.TryGetValue("kind", out var kind) && kind is KindFilter k ? (int)k : 0;
+            _categoryIds = query.TryGetValue("categories", out var categories) ? categories as IReadOnlyCollection<Guid> : null;
+            CategoryFilterName = _categoryIds is null ? null : query.TryGetValue("categoryName", out var name) ? name?.ToString() : null;
+            _inTotalsOnly = query.TryGetValue("inTotals", out var inTotals) && inTotals is true;
+            UnreviewedOnly = false;
+            SearchText = string.Empty;
+            _loading = false;
+        }
+
         if (query.TryGetValue("unreviewed", out var unreviewed) && unreviewed is "true" or true)
         {
             UnreviewedOnly = true;
@@ -180,10 +204,14 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         }
 
         var (from, to) = PeriodRange();
-        var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, null, UnreviewedOnly, SearchText);
+        var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly);
         var culture = _localization.CurrentCulture;
         var presenter = new EntryPresenter(_accounts, _categories, _translator, culture);
-        var matching = EntrySearch.Apply(_entries, filter, id => _categories.Name(id), _accounts);
+        var matching = EntrySearch.Apply(_entries, filter, id => _categories.Name(id), _accounts).ToList();
+        var filtered = _categoryIds is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
+        SummaryText = filtered && matching.Count > 0
+            ? _translator.Format("Tx_FilterTotal", matching.Count, string.Join("  ", EntrySearch.NetByCurrency(matching, _accounts).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true))))
+            : null;
 
         Days.Clear();
         foreach (var day in EntrySearch.ByDay(matching, _accounts))
@@ -232,8 +260,23 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         UnreviewedOnly = false;
         SearchText = string.Empty;
         SelectedAccount = AccountOptions.FirstOrDefault();
+        ClearCategoryFilterCore();
         _loading = false;
         Refresh();
+    }
+
+    [RelayCommand]
+    private void ClearCategoryFilter()
+    {
+        ClearCategoryFilterCore();
+        Refresh();
+    }
+
+    private void ClearCategoryFilterCore()
+    {
+        _categoryIds = null;
+        _inTotalsOnly = false;
+        CategoryFilterName = null;
     }
 
     [RelayCommand]

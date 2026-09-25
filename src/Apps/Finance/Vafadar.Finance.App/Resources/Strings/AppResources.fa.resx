@@ -64,9 +64,6 @@
   <data name="Home_Title" xml:space="preserve">
     <value>خانه</value>
   </data>
-  <data name="Home_Today" xml:space="preserve">
-    <value>امروز: {0}</value>
-  </data>
   <data name="Tab_Home" xml:space="preserve">
     <value>خانه</value>
   </data>
@@ -870,5 +867,41 @@
   </data>
   <data name="Plan_DeleteMessage" xml:space="preserve">
     <value>این برنامه حذف شود؟ هیچ نوبت ثبت‌شده‌ای ندارد.</value>
+  </data>
+  <data name="Home_Scope" xml:space="preserve">
+    <value>{0} · {1} · ارز گزارش {2}</value>
+  </data>
+  <data name="Home_AccountsInTotals" xml:space="preserve">
+    <value>حساب‌های داخل جمع کل</value>
+  </data>
+  <data name="Home_Unreviewed" xml:space="preserve">
+    <value>{0} تراکنش نیاز به بررسی دارد</value>
+  </data>
+  <data name="Home_Due" xml:space="preserve">
+    <value>{0} موعد نیاز به اقدام دارد</value>
+  </data>
+  <data name="Home_Refunds" xml:space="preserve">
+    <value>هزینه‌ها پس از کسر {0} برگشت وجه</value>
+  </data>
+  <data name="Home_Result" xml:space="preserve">
+    <value>نتیجه</value>
+  </data>
+  <data name="Home_Upcoming" xml:space="preserve">
+    <value>موعدهای نزدیک</value>
+  </data>
+  <data name="Home_ExpenseByCategory" xml:space="preserve">
+    <value>هزینه به تفکیک دسته</value>
+  </data>
+  <data name="Home_NoExpenses" xml:space="preserve">
+    <value>در این دوره هزینه‌ای ثبت نشده است.</value>
+  </data>
+  <data name="Home_OtherCategories" xml:space="preserve">
+    <value>سایر دسته‌ها</value>
+  </data>
+  <data name="Home_ChartCurrency" xml:space="preserve">
+    <value>نمودار فقط حساب‌های {0} را نشان می‌دهد؛ ارزهای دیگر تبدیل نمی‌شوند.</value>
+  </data>
+  <data name="Tx_FilterTotal" xml:space="preserve">
+    <value>{0} تراکنش · جمع {1}</value>
   </data>
 </root>

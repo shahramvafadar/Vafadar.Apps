@@ -22,6 +22,13 @@ public sealed record PeriodTotals(string CurrencyCode, long Income, long IncomeR
     public long Result => NetIncome - NetExpense;
 }
 
+/// <summary>Expense of one category in one currency; <see cref="CategoryId"/> is <see langword="null"/> for entries without category.</summary>
+public sealed record CategoryExpense(string CurrencyCode, Guid? CategoryId, long GrossExpense, long Refunds)
+{
+    /// <summary>Gets gross expense minus refunds; may be negative (REF-03).</summary>
+    public long Net => GrossExpense - Refunds;
+}
+
 /// <summary>Count and sum of unreviewed entries in one currency (FIN-12).</summary>
 public sealed record UnreviewedSummary(string CurrencyCode, int Count, long NetEffect);
 
@@ -118,6 +125,46 @@ public static class LedgerCalculator
         }
 
         return [.. sums.Select(pair => new PeriodTotals(pair.Key, pair.Value[0], pair.Value[1], pair.Value[2], pair.Value[3]))];
+    }
+
+    /// <summary>
+    /// Expense per category and currency for the period: gross expense, refunds and net = gross − refunds (REF-03).
+    /// <paramref name="group"/> maps a category to the one it is reported under, e.g. its parent; entries without a
+    /// category are reported under <see langword="null"/>. Sorted by net expense, largest first.
+    /// </summary>
+    public static IReadOnlyList<CategoryExpense> ExpenseByCategory(
+        IEnumerable<Account> accounts,
+        IEnumerable<LedgerEntry> entries,
+        LedgerFilter filter,
+        Func<Guid?, Guid?> group)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+        ArgumentNullException.ThrowIfNull(group);
+        var scope = InScope(accounts, filter.AccountIds).ToDictionary(a => a.Id);
+        var sums = new Dictionary<(string Currency, Guid? Category), (long Gross, long Refunds)>();
+
+        foreach (var entry in entries)
+        {
+            if (entry.Kind is not (EntryKind.Expense or EntryKind.Refund)
+                || !Matches(entry, filter)
+                || !scope.TryGetValue(entry.AccountId, out var account)
+                || IsBeforeOpening(entry, account))
+            {
+                continue;
+            }
+
+            var key = (account.CurrencyCode, group(entry.CategoryId));
+            var (gross, refunds) = sums.GetValueOrDefault(key);
+            sums[key] = entry.Kind == EntryKind.Expense ? (gross + entry.Amount, refunds) : (gross, refunds + entry.Amount);
+        }
+
+        return
+        [
+            .. sums
+                .Select(pair => new CategoryExpense(pair.Key.Currency, pair.Key.Category, pair.Value.Gross, pair.Value.Refunds))
+                .OrderBy(c => c.CurrencyCode, StringComparer.Ordinal)
+                .ThenByDescending(c => c.Net),
+        ];
     }
 
     /// <summary>Unreviewed entries per currency with their net balance effect on the accounts in scope.</summary>

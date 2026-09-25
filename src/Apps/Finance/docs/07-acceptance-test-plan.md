@@ -38,7 +38,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-30 | Auto-post runs twice | REC-21 | Integration (SQLite) | S4 | Verified (integration, SQLite) |
 | AT-31 | Delete/undo auto-post | REC-18 | Integration | S4 | Verified (integration, SQLite) |
 | AT-32 | Two equal plans | REC-21 | Unit | S4 | Verified (unit) |
-| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Verified (unit) |
+| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Ledger part verified (integration); notification summary with S10 |
 | AT-34 | Notifications denied/off | REM-02 | Manual | S10 | Planned |
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Planned |
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |
@@ -55,7 +55,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
-| AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Planned |
+| AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit: drill-down equals the number); report screens with S8 |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Planned |
 | AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Planned |
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Planned |

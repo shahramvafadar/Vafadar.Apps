@@ -102,6 +102,13 @@ internal static class DebugSnapshots
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
                 await Task.Delay(1500);
                 await CaptureAsync(app, folder, $"{language}-{name}");
+                if (FindScrollView(app.Windows[0].Page) is { } scroll && scroll.ContentSize.Height > scroll.Height + 40)
+                {
+                    await scroll.ScrollToAsync(0, scroll.ContentSize.Height, animated: false);
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-end");
+                }
+
                 if (!route.StartsWith("//", StringComparison.Ordinal))
                 {
                     await Shell.Current.GoToAsync("//home");
@@ -181,6 +188,25 @@ internal static class DebugSnapshots
         var first = Occurrences.Between(rent, states, rentStart, rentStart, today).Single();
         await plans.SettleAsync(first, Occurrences.CreateEntry(first, 95_000, rentStart, ReviewState.Confirmed));
         return (rent.Id, rentStart.AddMonths(1));
+    }
+
+    private static ScrollView? FindScrollView(Page? root)
+    {
+        var page = root is Shell shell ? shell.CurrentPage : root;
+        if (page?.Navigation.ModalStack.LastOrDefault() is { } modal)
+        {
+            page = modal;
+        }
+
+        return page is ContentPage content ? Find(content.Content) : null;
+
+        static ScrollView? Find(IView? view) => view switch
+        {
+            ScrollView scroll when scroll.IsVisible => scroll,
+            Layout layout => layout.Children.Select(Find).FirstOrDefault(s => s is not null),
+            ContentView contentView => Find(contentView.Content),
+            _ => null,
+        };
     }
 
     private static async Task CaptureAsync(App app, string folder, string name)

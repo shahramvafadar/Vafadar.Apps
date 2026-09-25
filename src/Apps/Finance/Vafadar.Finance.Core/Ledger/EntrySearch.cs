@@ -21,15 +21,19 @@ public enum KindFilter
     Transfers = 3,
 }
 
-/// <summary>Filter of the transaction list. <see langword="null"/> values do not filter.</summary>
+/// <summary>
+/// Filter of the transaction list. <see langword="null"/> values do not filter. <see cref="InTotalsOnly"/> limits the
+/// list to accounts included in totals – the scope of dashboard and report numbers, so a drill-down matches them (AT-50).
+/// </summary>
 public sealed record EntryFilter(
     DateOnly? From = null,
     DateOnly? To = null,
     KindFilter Kind = KindFilter.All,
     Guid? AccountId = null,
-    Guid? CategoryId = null,
+    IReadOnlyCollection<Guid>? CategoryIds = null,
     bool UnreviewedOnly = false,
-    string? Text = null);
+    string? Text = null,
+    bool InTotalsOnly = false);
 
 /// <summary>The entries of one day with their net income/expense effect per currency (transfers excluded).</summary>
 public sealed record EntryDay(DateOnly Date, IReadOnlyList<LedgerEntry> Entries, IReadOnlyDictionary<string, long> Net);
@@ -68,9 +72,18 @@ public static class EntrySearch
             && (filter.To is not { } to || e.Date <= to)
             && InKindGroup(e.Kind, filter.Kind)
             && (filter.AccountId is not { } account || e.AccountId == account || e.ToAccountId == account)
-            && (filter.CategoryId is not { } category || e.CategoryId == category)
+            && (filter.CategoryIds is not { } categories || (e.CategoryId is { } category && categories.Contains(category)))
             && (!filter.UnreviewedOnly || e.Review == ReviewState.Unreviewed)
+            && (!filter.InTotalsOnly || (accounts.TryGetValue(e.AccountId, out var owner) && owner.IncludeInTotals && !LedgerCalculator.IsBeforeOpening(e, owner)))
             && (text.Length == 0 || MatchesText(e, text, categoryName, accounts)));
+    }
+
+    /// <summary>Sums the income/expense effect of entries per currency (the total of a filtered list, AT-50).</summary>
+    public static IReadOnlyDictionary<string, long> NetByCurrency(IEnumerable<LedgerEntry> entries, IReadOnlyDictionary<Guid, Account> accounts)
+    {
+        ArgumentNullException.ThrowIfNull(entries);
+        ArgumentNullException.ThrowIfNull(accounts);
+        return DayNet(entries, accounts);
     }
 
     /// <summary>Groups entries by date (newest first) and sums the income/expense effect of each day per currency.</summary>

@@ -64,10 +64,6 @@
   <data name="Home_Title" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Home_Today" xml:space="preserve">
-    <value>Today: {0}</value>
-    <comment>{0} = long date</comment>
-  </data>
   <data name="Tab_Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -873,5 +869,42 @@
   </data>
   <data name="Plan_DeleteMessage" xml:space="preserve">
     <value>Delete this plan? It has no recorded occurrences.</value>
+  </data>
+  <data name="Home_Scope" xml:space="preserve">
+    <value>{0} · {1} · report currency {2}</value>
+    <comment>{0} period, {1} account scope, {2} currency code</comment>
+  </data>
+  <data name="Home_AccountsInTotals" xml:space="preserve">
+    <value>accounts in totals</value>
+  </data>
+  <data name="Home_Unreviewed" xml:space="preserve">
+    <value>{0} entries need review</value>
+  </data>
+  <data name="Home_Due" xml:space="preserve">
+    <value>{0} due items need attention</value>
+  </data>
+  <data name="Home_Refunds" xml:space="preserve">
+    <value>Expenses are net of {0} refunds</value>
+  </data>
+  <data name="Home_Result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Home_Upcoming" xml:space="preserve">
+    <value>Next due</value>
+  </data>
+  <data name="Home_ExpenseByCategory" xml:space="preserve">
+    <value>Expenses by category</value>
+  </data>
+  <data name="Home_NoExpenses" xml:space="preserve">
+    <value>No expenses in this period.</value>
+  </data>
+  <data name="Home_OtherCategories" xml:space="preserve">
+    <value>Other categories</value>
+  </data>
+  <data name="Home_ChartCurrency" xml:space="preserve">
+    <value>The chart shows {0} accounts only; other currencies are not converted.</value>
+  </data>
+  <data name="Tx_FilterTotal" xml:space="preserve">
+    <value>{0} entries · total {1}</value>
   </data>
 </root>
