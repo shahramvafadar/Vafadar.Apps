@@ -14,6 +14,7 @@
 ## Guides
 
 * [Getting started](guides/getting-started.md)
+* [Git setup and identity](guides/git-setup.md)
 * [Building](guides/building.md)
 * [Testing](guides/testing.md)
 * [Coding conventions](guides/coding-conventions.md)

@@ -1,0 +1,22 @@
+#!/bin/sh
+# Guard: commits in this repository must use the personal identity, never the work identity.
+# Enabled with: git config core.hooksPath eng/git-hooks   (see docs/guides/git-setup.md)
+
+expected="shahramvafadar@gmail.com"
+
+author="$(git var GIT_AUTHOR_IDENT)"
+committer="$(git var GIT_COMMITTER_IDENT)"
+
+for ident in "$author" "$committer"; do
+  case "$ident" in
+    *"<$expected>"*) ;;
+    *)
+      echo "pre-commit: this repository must be committed as <$expected>." >&2
+      echo "            current identity: $ident" >&2
+      echo "            fix: git config user.email $expected" >&2
+      exit 1
+      ;;
+  esac
+done
+
+exit 0

@@ -13,7 +13,8 @@ Vafadar.Apps/
 │   └── privacy/                   Privacy policy and privacy matrix
 ├── eng/                           Build infrastructure (MSBuild imports)
 │   ├── AppSecrets.targets         Build-time secrets → AppSecrets class
-│   └── Maui.props                 Common settings of all MAUI projects
+│   ├── Maui.props                 Common settings of all MAUI projects
+│   └── git-hooks/                 Identity guards (pre-commit, pre-push), see guides/git-setup.md
 ├── src/
 │   ├── Directory.Build.props      Settings for production code
 │   ├── Libraries/                 Shared libraries: Vafadar.<Area>[.<Detail>]

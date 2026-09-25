@@ -21,8 +21,10 @@ dotnet workload list
 ## First build
 
 ```powershell
-git clone https://github.com/shahramvafadar/Vafadar.Apps.git
+git clone https://shahramvafadar@github.com/shahramvafadar/Vafadar.Apps.git
 cd Vafadar.Apps
+git config user.email "shahramvafadar@gmail.com"   # identity + guard hooks: see git-setup.md
+git config core.hooksPath eng/git-hooks
 dotnet tool restore                      # dotnet-ef
 copy Directory.Secrets.props.example Directory.Secrets.props
 # edit Directory.Secrets.props: add your Syncfusion license key
@@ -48,6 +50,7 @@ Without a Syncfusion key everything builds and runs; Syncfusion controls show a 
 
 ## Where to go next
 
+* [Git setup and identity](git-setup.md) – keeps this repository separate from other Git accounts on the machine
 * [Architecture overview](../architecture/overview.md) – how everything fits together
 * [Building](building.md) and [testing](testing.md)
 * [Coding conventions](coding-conventions.md)

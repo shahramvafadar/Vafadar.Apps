@@ -1,0 +1,45 @@
+#!/bin/sh
+# Guard: this repository may only be pushed to github.com/shahramvafadar, and only commits made with the personal
+# identity may be pushed. Enabled with: git config core.hooksPath eng/git-hooks   (see docs/guides/git-setup.md)
+
+remote="$1"
+url="$2"
+expected="shahramvafadar@gmail.com"
+
+case "$url" in
+  https://github.com/shahramvafadar/*|https://shahramvafadar@github.com/shahramvafadar/*|git@github.com:shahramvafadar/*) ;;
+  *)
+    echo "pre-push: refusing to push to '$url'." >&2
+    echo "          This repository may only be pushed to github.com/shahramvafadar." >&2
+    exit 1
+    ;;
+esac
+
+fail() {
+  echo "pre-push: $1" >&2
+  echo "          Push aborted." >&2
+  exit 1
+}
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  remote_sha="$(printf '%s' "$remote_sha" | tr -d '\r')"
+
+  # Deleting a remote branch: nothing to check.
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac
+
+  # New remote branch: check every commit the remote does not have yet; otherwise only the new range.
+  # Any git error aborts the push (fail closed).
+  case "$remote_sha" in
+    *[!0]*) commits="$(git rev-list "$remote_sha..$local_sha")" || fail "could not determine the commits to push." ;;
+    *) commits="$(git rev-list "$local_sha" --not --remotes="$remote")" || fail "could not determine the commits to push." ;;
+  esac
+
+  for commit in $commits; do
+    emails="$(git log -1 --format='%ae %ce' "$commit")" || fail "could not read commit $commit."
+    if [ "$emails" != "$expected $expected" ]; then
+      fail "commit $(git log -1 --format='%h (%an <%ae>)' "$commit") was not made with <$expected>. Fix the identity and amend or rewrite the commit."
+    fi
+  done
+done
+
+exit 0
