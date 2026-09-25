@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Backup;
 using Vafadar.Data;
 
 namespace Vafadar.Finance.Data;
@@ -16,5 +17,6 @@ public static class FinanceDataServiceCollectionExtensions
         services.AddLocalDatabase<FinanceDbContext>(databasePath)
             .AddSingleton<FinanceStore>()
             .AddSingleton<PlanStore>()
-            .AddSingleton<AutoPostProcessor>();
+            .AddSingleton<AutoPostProcessor>()
+            .AddSingleton<IBackupSummaryProvider, FinanceBackupSummary>();
 }

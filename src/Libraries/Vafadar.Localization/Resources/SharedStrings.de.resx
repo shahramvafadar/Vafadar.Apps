@@ -160,4 +160,49 @@
   <data name="Common_SelectDate" xml:space="preserve">
     <value>Datum wählen</value>
   </data>
+  <data name="Backup_UsePassword" xml:space="preserve">
+    <value>Mit Passwort schützen (empfohlen)</value>
+  </data>
+  <data name="Backup_Password" xml:space="preserve">
+    <value>Backup-Passwort</value>
+  </data>
+  <data name="Backup_PasswordConfirm" xml:space="preserve">
+    <value>Passwort wiederholen</value>
+  </data>
+  <data name="Backup_PasswordWarning" xml:space="preserve">
+    <value>Bewahren Sie dieses Passwort sicher auf. Ohne es lässt sich das Backup nicht öffnen – niemand, auch nicht der Entwickler, kann es wiederherstellen. Es ist nicht die PIN der App-Sperre.</value>
+  </data>
+  <data name="Backup_NoPasswordWarning" xml:space="preserve">
+    <value>Ohne Passwort kann jeder, der die Datei erhält, Ihre Daten lesen.</value>
+  </data>
+  <data name="Backup_PasswordTooShort" xml:space="preserve">
+    <value>Verwenden Sie mindestens {0} Zeichen.</value>
+  </data>
+  <data name="Backup_PasswordMismatch" xml:space="preserve">
+    <value>Die Passwörter stimmen nicht überein.</value>
+  </data>
+  <data name="Backup_Error_InvalidFormat" xml:space="preserve">
+    <value>Diese Datei ist kein Backup dieser App.</value>
+  </data>
+  <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
+    <value>Für dieses Backup ist eine neuere App-Version nötig.</value>
+  </data>
+  <data name="Backup_Error_PasswordRequired" xml:space="preserve">
+    <value>Dieses Backup ist geschützt. Geben Sie sein Passwort ein.</value>
+  </data>
+  <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
+    <value>Falsches Passwort oder die Datei ist beschädigt. Es wurde nichts geändert.</value>
+  </data>
+  <data name="Backup_Error_Corrupted" xml:space="preserve">
+    <value>Das Backup ist beschädigt. Es wurde nichts geändert.</value>
+  </data>
+  <data name="Backup_Error_WrongApp" xml:space="preserve">
+    <value>Dieses Backup gehört zu einer anderen App. Es wurde nichts geändert.</value>
+  </data>
+  <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
+    <value>Dieses Backup wurde mit einer neueren App-Version erstellt. Aktualisieren Sie zuerst die App.</value>
+  </data>
+  <data name="Backup_Error_Storage" xml:space="preserve">
+    <value>Die Datei konnte nicht gelesen oder geschrieben werden. Prüfen Sie den freien Speicher und versuchen Sie es erneut.</value>
+  </data>
 </root>

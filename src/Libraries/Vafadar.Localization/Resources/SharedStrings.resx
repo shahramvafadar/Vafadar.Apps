@@ -162,4 +162,49 @@
   <data name="Common_SelectDate" xml:space="preserve">
     <value>Select date</value>
   </data>
+  <data name="Backup_UsePassword" xml:space="preserve">
+    <value>Protect with a password (recommended)</value>
+  </data>
+  <data name="Backup_Password" xml:space="preserve">
+    <value>Backup password</value>
+  </data>
+  <data name="Backup_PasswordConfirm" xml:space="preserve">
+    <value>Repeat the password</value>
+  </data>
+  <data name="Backup_PasswordWarning" xml:space="preserve">
+    <value>Keep this password safe. Without it the backup cannot be opened – nobody, including the developer, can recover it. It is not your app lock PIN.</value>
+  </data>
+  <data name="Backup_NoPasswordWarning" xml:space="preserve">
+    <value>Without a password anyone who gets the file can read your data.</value>
+  </data>
+  <data name="Backup_PasswordTooShort" xml:space="preserve">
+    <value>Use at least {0} characters.</value>
+  </data>
+  <data name="Backup_PasswordMismatch" xml:space="preserve">
+    <value>The passwords do not match.</value>
+  </data>
+  <data name="Backup_Error_InvalidFormat" xml:space="preserve">
+    <value>This file is not a backup of this app.</value>
+  </data>
+  <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
+    <value>This backup needs a newer version of the app.</value>
+  </data>
+  <data name="Backup_Error_PasswordRequired" xml:space="preserve">
+    <value>This backup is protected. Enter its password.</value>
+  </data>
+  <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
+    <value>Wrong password, or the file is damaged. Nothing was changed.</value>
+  </data>
+  <data name="Backup_Error_Corrupted" xml:space="preserve">
+    <value>The backup is damaged. Nothing was changed.</value>
+  </data>
+  <data name="Backup_Error_WrongApp" xml:space="preserve">
+    <value>This backup belongs to another app. Nothing was changed.</value>
+  </data>
+  <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
+    <value>This backup was made with a newer version of the app. Update the app first.</value>
+  </data>
+  <data name="Backup_Error_Storage" xml:space="preserve">
+    <value>The file could not be read or written. Check free space and try again.</value>
+  </data>
 </root>

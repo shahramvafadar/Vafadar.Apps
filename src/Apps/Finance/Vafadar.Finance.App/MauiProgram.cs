@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Vafadar.Backup;
 using Vafadar.Finance.App.Features.Accounts;
+using Vafadar.Finance.App.Features.Backup;
 using Vafadar.Finance.App.Features.Categories;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Features.Home;
@@ -58,7 +59,8 @@ public static class MauiProgram
             .AddTransient<PlansPage>().AddTransient<PlansViewModel>()
             .AddTransient<PlanEditorPage>().AddTransient<PlanEditorViewModel>()
             .AddTransient<PlanDetailPage>().AddTransient<PlanDetailViewModel>()
-            .AddTransient<OccurrencePage>().AddTransient<OccurrenceViewModel>();
+            .AddTransient<OccurrencePage>().AddTransient<OccurrenceViewModel>()
+            .AddTransient<BackupPage>().AddTransient<BackupViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

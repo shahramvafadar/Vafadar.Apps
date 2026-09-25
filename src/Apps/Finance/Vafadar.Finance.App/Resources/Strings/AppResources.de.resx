@@ -904,4 +904,70 @@
   <data name="Tx_FilterTotal" xml:space="preserve">
     <value>{0} Buchungen · Summe {1}</value>
   </data>
+  <data name="Backup_Intro" xml:space="preserve">
+    <value>Ihre Daten liegen nur auf diesem Gerät. Eine Backup-Datei schützt sie, wenn das Gerät verloren geht oder ersetzt wird.</value>
+  </data>
+  <data name="Backup_CreateAndShare" xml:space="preserve">
+    <value>Backup-Datei erstellen</value>
+  </data>
+  <data name="Backup_ShareHint" xml:space="preserve">
+    <value>Wählen Sie danach, wo Sie es aufbewahren – z. B. Google Drive, OneDrive, E-Mail oder Ihr Computer.</value>
+  </data>
+  <data name="Backup_Created" xml:space="preserve">
+    <value>Backup erstellt.</value>
+  </data>
+  <data name="Backup_Share" xml:space="preserve">
+    <value>Teilen</value>
+  </data>
+  <data name="Backup_ShareTitle" xml:space="preserve">
+    <value>Backup speichern</value>
+  </data>
+  <data name="Backup_OnDevice" xml:space="preserve">
+    <value>Backups auf diesem Gerät</value>
+  </data>
+  <data name="Backup_OnDeviceHint" xml:space="preserve">
+    <value>Die letzten 10 werden behalten. Mit dem Gerät gehen sie verloren – bewahren Sie eine Kopie woanders auf.</value>
+  </data>
+  <data name="Backup_RestoreIntro" xml:space="preserve">
+    <value>Die Wiederherstellung ersetzt alle Daten auf diesem Gerät durch das Backup. Es wird nicht zusammengeführt; Änderungen seit dem Backup gehen verloren. Zuvor wird eine Sicherheitskopie der aktuellen Daten angelegt.</value>
+  </data>
+  <data name="Backup_PickFile" xml:space="preserve">
+    <value>Backup-Datei wählen</value>
+  </data>
+  <data name="Backup_Check" xml:space="preserve">
+    <value>Datei prüfen</value>
+  </data>
+  <data name="Backup_PreviewCreated" xml:space="preserve">
+    <value>Erstellt: {0}</value>
+  </data>
+  <data name="Backup_PreviewDevice" xml:space="preserve">
+    <value>Gerät: {0} · App-Version {1}</value>
+  </data>
+  <data name="Backup_PreviewCounts" xml:space="preserve">
+    <value>{0} Konten · {1} Buchungen · {2} Planungen</value>
+  </data>
+  <data name="Backup_ReplaceWarning" xml:space="preserve">
+    <value>Alle aktuellen Daten auf diesem Gerät werden durch dieses Backup ersetzt.</value>
+  </data>
+  <data name="Backup_Replace" xml:space="preserve">
+    <value>Daten auf diesem Gerät ersetzen</value>
+  </data>
+  <data name="Backup_ReplaceTitle" xml:space="preserve">
+    <value>Alle Daten ersetzen?</value>
+  </data>
+  <data name="Backup_ReplaceMessage" xml:space="preserve">
+    <value>Zuerst wird eine Sicherheitskopie der aktuellen Daten auf diesem Gerät angelegt.</value>
+  </data>
+  <data name="Backup_Restored" xml:space="preserve">
+    <value>Backup wiederhergestellt</value>
+  </data>
+  <data name="Backup_RestoredMessage" xml:space="preserve">
+    <value>Prüfen Sie Ihre Salden. Erinnerungen werden neu eingerichtet.</value>
+  </data>
+  <data name="Backup_SizeKb" xml:space="preserve">
+    <value>{0} KB</value>
+  </data>
+  <data name="Backup_SizeMb" xml:space="preserve">
+    <value>{0} MB</value>
+  </data>
 </root>

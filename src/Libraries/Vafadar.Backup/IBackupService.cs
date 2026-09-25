@@ -27,6 +27,13 @@ public interface IBackupService
     /// <exception cref="BackupException">The backup cannot be restored (wrong password, other app, damaged, ...).</exception>
     Task<BackupManifest> RestoreAsync(IBackupStorage storage, BackupFileInfo file, string? password = null, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Decrypts and validates a package (password, app, version, checksums) and returns its manifest without
+    /// changing any data – for a preview before a restore (BAK-09).
+    /// </summary>
+    /// <exception cref="BackupException">The backup cannot be restored (wrong password, other app, damaged, ...).</exception>
+    Task<BackupManifest> InspectPackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default);
+
     /// <summary>Restores a backup package (e.g. an imported file), replacing the current data.</summary>
     /// <exception cref="BackupException">The backup cannot be restored (wrong password, other app, damaged, ...).</exception>
     Task<BackupManifest> RestorePackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default);

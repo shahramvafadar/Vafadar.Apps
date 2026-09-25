@@ -30,6 +30,12 @@ public sealed record BackupManifest
 
     /// <summary>Gets the data entries in the package.</summary>
     public required IReadOnlyList<BackupManifestEntry> Entries { get; init; }
+
+    /// <summary>
+    /// Gets an optional summary of the content (see <see cref="IBackupSummaryProvider"/>). Readers of older packages
+    /// get <see langword="null"/>.
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Summary { get; init; }
 }
 
 /// <summary>

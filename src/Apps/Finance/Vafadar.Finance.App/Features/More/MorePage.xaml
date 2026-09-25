@@ -31,6 +31,14 @@
                     <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*">
                         <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCommand}" CommandParameter="backup" />
+                        </Grid.GestureRecognizers>
+                        <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="24" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{v:Translate Backup_Title}" FontSize="16" VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
+                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*">
+                        <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenCommand}" CommandParameter="settings" />
                         </Grid.GestureRecognizers>
                         <fi:SymbolIcon Symbol="Settings" FontSize="24" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />

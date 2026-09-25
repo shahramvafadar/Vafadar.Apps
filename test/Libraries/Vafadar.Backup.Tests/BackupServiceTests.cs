@@ -172,6 +172,32 @@ public sealed class BackupServiceTests : IDisposable
         await Assert.ThrowsAsync<InvalidOperationException>(() => service.CreatePackageAsync(cancellationToken: Ct));
     }
 
+    [Fact]
+    public async Task Inspect_validates_and_shows_the_summary_without_restoring()
+    {
+        var service = new BackupService(
+            [_database],
+            [new FixedSummary(new Dictionary<string, string> { ["entries"] = "42" })],
+            Environment(),
+            _settings,
+            _time,
+            new BackupOptions());
+        var package = await service.CreatePackageAsync("secret", Ct);
+        _database.Content = "db-changed";
+
+        var manifest = await service.InspectPackageAsync(package, "secret", Ct);
+        var wrong = await Assert.ThrowsAsync<BackupException>(() => service.InspectPackageAsync(package, "guess", Ct));
+
+        Assert.Equal("42", manifest.Summary!["entries"]);
+        Assert.Equal(BackupError.InvalidPasswordOrCorrupted, wrong.Error);
+        Assert.Equal("db-changed", _database.Content);
+    }
+
+    private sealed class FixedSummary(IReadOnlyDictionary<string, string> values) : IBackupSummaryProvider
+    {
+        public Task<IReadOnlyDictionary<string, string>> GetSummaryAsync(CancellationToken cancellationToken) => Task.FromResult(values);
+    }
+
     private BackupService CreateService(string appId = AppId, Version? version = null, int maxBackups = 10) =>
         new(
             [_database, _attachments],

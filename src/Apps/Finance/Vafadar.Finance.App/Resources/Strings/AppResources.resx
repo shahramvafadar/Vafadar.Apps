@@ -907,4 +907,70 @@
   <data name="Tx_FilterTotal" xml:space="preserve">
     <value>{0} entries · total {1}</value>
   </data>
+  <data name="Backup_Intro" xml:space="preserve">
+    <value>Your data lives only on this device. A backup file protects it if the device is lost or replaced.</value>
+  </data>
+  <data name="Backup_CreateAndShare" xml:space="preserve">
+    <value>Create backup file</value>
+  </data>
+  <data name="Backup_ShareHint" xml:space="preserve">
+    <value>After creating it, choose where to keep it – for example Google Drive, OneDrive, e-mail or your computer.</value>
+  </data>
+  <data name="Backup_Created" xml:space="preserve">
+    <value>Backup created.</value>
+  </data>
+  <data name="Backup_Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="Backup_ShareTitle" xml:space="preserve">
+    <value>Save your backup</value>
+  </data>
+  <data name="Backup_OnDevice" xml:space="preserve">
+    <value>Backups on this device</value>
+  </data>
+  <data name="Backup_OnDeviceHint" xml:space="preserve">
+    <value>The last 10 are kept. They are lost with the device – keep a copy elsewhere.</value>
+  </data>
+  <data name="Backup_RestoreIntro" xml:space="preserve">
+    <value>Restoring replaces all data on this device with the backup. It does not merge; changes made since the backup are lost. A safety copy of the current data is kept first.</value>
+  </data>
+  <data name="Backup_PickFile" xml:space="preserve">
+    <value>Choose backup file</value>
+  </data>
+  <data name="Backup_Check" xml:space="preserve">
+    <value>Check file</value>
+  </data>
+  <data name="Backup_PreviewCreated" xml:space="preserve">
+    <value>Created: {0}</value>
+  </data>
+  <data name="Backup_PreviewDevice" xml:space="preserve">
+    <value>Device: {0} · app version {1}</value>
+  </data>
+  <data name="Backup_PreviewCounts" xml:space="preserve">
+    <value>{0} accounts · {1} entries · {2} plans</value>
+  </data>
+  <data name="Backup_ReplaceWarning" xml:space="preserve">
+    <value>All current data on this device will be replaced by this backup.</value>
+  </data>
+  <data name="Backup_Replace" xml:space="preserve">
+    <value>Replace data on this device</value>
+  </data>
+  <data name="Backup_ReplaceTitle" xml:space="preserve">
+    <value>Replace all data?</value>
+  </data>
+  <data name="Backup_ReplaceMessage" xml:space="preserve">
+    <value>A safety copy of the current data is kept on this device first.</value>
+  </data>
+  <data name="Backup_Restored" xml:space="preserve">
+    <value>Backup restored</value>
+  </data>
+  <data name="Backup_RestoredMessage" xml:space="preserve">
+    <value>Check your balances. Reminders are set up again.</value>
+  </data>
+  <data name="Backup_SizeKb" xml:space="preserve">
+    <value>{0} KB</value>
+  </data>
+  <data name="Backup_SizeMb" xml:space="preserve">
+    <value>{0} MB</value>
+  </data>
 </root>

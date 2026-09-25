@@ -18,6 +18,7 @@ public sealed class BackupService : IBackupService
     internal const string LastBackupKey = "backup.lastBackupAt";
 
     private readonly IReadOnlyList<IBackupSource> _sources;
+    private readonly IReadOnlyList<IBackupSummaryProvider> _summaries;
     private readonly IAppEnvironment _app;
     private readonly ISettingsStore _settings;
     private readonly TimeProvider _time;
@@ -31,14 +32,28 @@ public sealed class BackupService : IBackupService
         ISettingsStore settings,
         TimeProvider time,
         BackupOptions options)
+        : this(sources, [], app, settings, time, options)
+    {
+    }
+
+    /// <summary>Creates the service with summary providers.</summary>
+    public BackupService(
+        IEnumerable<IBackupSource> sources,
+        IEnumerable<IBackupSummaryProvider> summaries,
+        IAppEnvironment app,
+        ISettingsStore settings,
+        TimeProvider time,
+        BackupOptions options)
     {
         ArgumentNullException.ThrowIfNull(sources);
+        ArgumentNullException.ThrowIfNull(summaries);
         ArgumentNullException.ThrowIfNull(app);
         ArgumentNullException.ThrowIfNull(settings);
         ArgumentNullException.ThrowIfNull(time);
         ArgumentNullException.ThrowIfNull(options);
 
         _sources = [.. sources];
+        _summaries = [.. summaries];
         _app = app;
         _settings = settings;
         _time = time;
@@ -131,6 +146,14 @@ public sealed class BackupService : IBackupService
     }
 
     /// <inheritdoc />
+    public async Task<BackupManifest> InspectPackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(package);
+        var (manifest, _) = await OpenAsync(package, password, cancellationToken);
+        return manifest;
+    }
+
+    /// <inheritdoc />
     public async Task<BackupManifest> RestorePackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(package);
@@ -138,18 +161,7 @@ public sealed class BackupService : IBackupService
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            if (BackupEncryption.IsEncrypted(package))
-            {
-                if (string.IsNullOrEmpty(password))
-                {
-                    throw new BackupException(BackupError.PasswordRequired, "This backup is protected with a password.");
-                }
-
-                package = BackupEncryption.Decrypt(package, password);
-            }
-
-            var (manifest, entries) = await BackupPackage.ReadAsync(package, cancellationToken);
-            Validate(manifest);
+            var (manifest, entries) = await OpenAsync(package, password, cancellationToken);
 
             // Everything is validated; only now is existing data replaced. Sources without an entry (e.g. added in a
             // later app version than the backup) keep their current data.
@@ -186,11 +198,39 @@ public sealed class BackupService : IBackupService
         }
     }
 
+    // Decrypts, reads and validates a package without touching any data.
+    private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenAsync(byte[] package, string? password, CancellationToken cancellationToken)
+    {
+        if (BackupEncryption.IsEncrypted(package))
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new BackupException(BackupError.PasswordRequired, "This backup is protected with a password.");
+            }
+
+            package = BackupEncryption.Decrypt(package, password);
+        }
+
+        var result = await BackupPackage.ReadAsync(package, cancellationToken);
+        Validate(result.Manifest);
+        return result;
+    }
+
     private async Task<byte[]> CreatePackageCoreAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken)
     {
         if (_sources.Count == 0)
         {
             throw new InvalidOperationException("No backup sources are registered.");
+        }
+
+        Dictionary<string, string>? summary = null;
+        foreach (var provider in _summaries)
+        {
+            summary ??= new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var (key, value) in await provider.GetSummaryAsync(cancellationToken))
+            {
+                summary[key] = value;
+            }
         }
 
         var package = await BackupPackage.CreateAsync(
@@ -204,6 +244,7 @@ public sealed class BackupService : IBackupService
                 DeviceName = _app.DeviceName,
                 Platform = _app.Platform,
                 Entries = entries,
+                Summary = summary,
             },
             cancellationToken);
 

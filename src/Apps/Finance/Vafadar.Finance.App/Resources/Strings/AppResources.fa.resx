@@ -904,4 +904,70 @@
   <data name="Tx_FilterTotal" xml:space="preserve">
     <value>{0} تراکنش · جمع {1}</value>
   </data>
+  <data name="Backup_Intro" xml:space="preserve">
+    <value>داده‌های شما فقط روی همین دستگاه است. فایل پشتیبان در صورت گم‌شدن یا تعویض دستگاه از آن محافظت می‌کند.</value>
+  </data>
+  <data name="Backup_CreateAndShare" xml:space="preserve">
+    <value>ساخت فایل پشتیبان</value>
+  </data>
+  <data name="Backup_ShareHint" xml:space="preserve">
+    <value>پس از ساخت، محل نگهداری را انتخاب کنید؛ مثلاً Google Drive، OneDrive، ایمیل یا رایانه.</value>
+  </data>
+  <data name="Backup_Created" xml:space="preserve">
+    <value>پشتیبان ساخته شد.</value>
+  </data>
+  <data name="Backup_Share" xml:space="preserve">
+    <value>اشتراک‌گذاری</value>
+  </data>
+  <data name="Backup_ShareTitle" xml:space="preserve">
+    <value>ذخیرهٔ پشتیبان</value>
+  </data>
+  <data name="Backup_OnDevice" xml:space="preserve">
+    <value>پشتیبان‌های روی این دستگاه</value>
+  </data>
+  <data name="Backup_OnDeviceHint" xml:space="preserve">
+    <value>ده نسخهٔ آخر نگه داشته می‌شود. با از دست رفتن دستگاه این‌ها هم از بین می‌روند؛ یک نسخه جای دیگری نگه دارید.</value>
+  </data>
+  <data name="Backup_RestoreIntro" xml:space="preserve">
+    <value>بازیابی، همهٔ داده‌های این دستگاه را با پشتیبان جایگزین می‌کند؛ ادغام نمی‌کند و تغییرات بعد از پشتیبان از دست می‌رود. پیش از آن یک نسخهٔ ایمن از داده‌های فعلی نگه داشته می‌شود.</value>
+  </data>
+  <data name="Backup_PickFile" xml:space="preserve">
+    <value>انتخاب فایل پشتیبان</value>
+  </data>
+  <data name="Backup_Check" xml:space="preserve">
+    <value>بررسی فایل</value>
+  </data>
+  <data name="Backup_PreviewCreated" xml:space="preserve">
+    <value>ساخته‌شده در: {0}</value>
+  </data>
+  <data name="Backup_PreviewDevice" xml:space="preserve">
+    <value>دستگاه: {0} · نسخهٔ اپ {1}</value>
+  </data>
+  <data name="Backup_PreviewCounts" xml:space="preserve">
+    <value>{0} حساب · {1} تراکنش · {2} برنامه</value>
+  </data>
+  <data name="Backup_ReplaceWarning" xml:space="preserve">
+    <value>همهٔ داده‌های فعلی این دستگاه با این پشتیبان جایگزین می‌شود.</value>
+  </data>
+  <data name="Backup_Replace" xml:space="preserve">
+    <value>جایگزینی داده‌های این دستگاه</value>
+  </data>
+  <data name="Backup_ReplaceTitle" xml:space="preserve">
+    <value>همهٔ داده‌ها جایگزین شود؟</value>
+  </data>
+  <data name="Backup_ReplaceMessage" xml:space="preserve">
+    <value>پیش از آن، نسخهٔ ایمنی از داده‌های فعلی روی همین دستگاه نگه داشته می‌شود.</value>
+  </data>
+  <data name="Backup_Restored" xml:space="preserve">
+    <value>پشتیبان بازیابی شد</value>
+  </data>
+  <data name="Backup_RestoredMessage" xml:space="preserve">
+    <value>مانده‌ها را بررسی کنید. یادآوری‌ها دوباره تنظیم می‌شوند.</value>
+  </data>
+  <data name="Backup_SizeKb" xml:space="preserve">
+    <value>{0} کیلوبایت</value>
+  </data>
+  <data name="Backup_SizeMb" xml:space="preserve">
+    <value>{0} مگابایت</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 using Vafadar.Finance.App.Features.Accounts;
+using Vafadar.Finance.App.Features.Backup;
 using Vafadar.Finance.App.Features.Categories;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Features.Plans;
@@ -38,6 +39,9 @@ public partial class AppShell : Shell
     /// <summary>Route of an occurrence (query: <c>plan</c> and <c>date</c>, the original date).</summary>
     public const string OccurrenceRoute = "occurrence";
 
+    /// <summary>Route of backup and restore.</summary>
+    public const string BackupRoute = "backup";
+
     public AppShell()
     {
         InitializeComponent();
@@ -51,5 +55,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(PlanEditorRoute, typeof(PlanEditorPage));
         Routing.RegisterRoute(PlanDetailRoute, typeof(PlanDetailPage));
         Routing.RegisterRoute(OccurrenceRoute, typeof(OccurrencePage));
+        Routing.RegisterRoute(BackupRoute, typeof(BackupPage));
     }
 }

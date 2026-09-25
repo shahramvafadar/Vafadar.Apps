@@ -61,11 +61,11 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Planned |
 | AT-54 | Import failure / cancel | IO-11 | Integration | S12 | Planned |
 | AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit | S12 | Planned |
-| AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Library verified; app Planned |
-| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Planned |
+| AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
+| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified (integration: fresh install, balances, plans, states) |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Blocked (no sign-in) |
-| AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Planned |
+| AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Verified (integration: first schema with data upgraded to latest; restore migrates older backups); re-run each slice |
 | AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Planned |
 | AT-62 | Golden data §24 | §24 | Unit | S1 | Verified (unit, domain level) |
 | AT-63..68 | Phase-2 scenarios | F2-* | – | Phase 2 | Not included |

@@ -160,4 +160,49 @@
   <data name="Common_SelectDate" xml:space="preserve">
     <value>انتخاب تاریخ</value>
   </data>
+  <data name="Backup_UsePassword" xml:space="preserve">
+    <value>محافظت با رمز (توصیه می‌شود)</value>
+  </data>
+  <data name="Backup_Password" xml:space="preserve">
+    <value>رمز پشتیبان</value>
+  </data>
+  <data name="Backup_PasswordConfirm" xml:space="preserve">
+    <value>تکرار رمز</value>
+  </data>
+  <data name="Backup_PasswordWarning" xml:space="preserve">
+    <value>این رمز را امن نگه دارید. بدون آن پشتیبان باز نمی‌شود و هیچ‌کس، حتی توسعه‌دهنده، نمی‌تواند آن را بازیابی کند. این رمز همان PIN قفل اپ نیست.</value>
+  </data>
+  <data name="Backup_NoPasswordWarning" xml:space="preserve">
+    <value>بدون رمز، هر کسی که فایل را داشته باشد می‌تواند اطلاعات شما را بخواند.</value>
+  </data>
+  <data name="Backup_PasswordTooShort" xml:space="preserve">
+    <value>دست‌کم {0} نویسه وارد کنید.</value>
+  </data>
+  <data name="Backup_PasswordMismatch" xml:space="preserve">
+    <value>رمزها یکسان نیستند.</value>
+  </data>
+  <data name="Backup_Error_InvalidFormat" xml:space="preserve">
+    <value>این فایل پشتیبان این اپ نیست.</value>
+  </data>
+  <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
+    <value>این پشتیبان به نسخهٔ جدیدتری از اپ نیاز دارد.</value>
+  </data>
+  <data name="Backup_Error_PasswordRequired" xml:space="preserve">
+    <value>این پشتیبان رمز دارد. رمز آن را وارد کنید.</value>
+  </data>
+  <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
+    <value>رمز اشتباه است یا فایل آسیب دیده است. چیزی تغییر نکرد.</value>
+  </data>
+  <data name="Backup_Error_Corrupted" xml:space="preserve">
+    <value>پشتیبان آسیب دیده است. چیزی تغییر نکرد.</value>
+  </data>
+  <data name="Backup_Error_WrongApp" xml:space="preserve">
+    <value>این پشتیبان متعلق به اپ دیگری است. چیزی تغییر نکرد.</value>
+  </data>
+  <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
+    <value>این پشتیبان با نسخهٔ جدیدتر اپ ساخته شده است. ابتدا اپ را به‌روز کنید.</value>
+  </data>
+  <data name="Backup_Error_Storage" xml:space="preserve">
+    <value>فایل خوانده یا نوشته نشد. فضای خالی را بررسی و دوباره تلاش کنید.</value>
+  </data>
 </root>
