@@ -535,4 +535,343 @@
   <data name="Entry_Kind" xml:space="preserve">
     <value>Kind</value>
   </data>
+  <data name="Tab_Plans" xml:space="preserve">
+    <value>Plans</value>
+  </data>
+  <data name="Plans_Title" xml:space="preserve">
+    <value>Plans</value>
+  </data>
+  <data name="Plans_Due" xml:space="preserve">
+    <value>Due &amp; overdue</value>
+  </data>
+  <data name="Plans_Upcoming" xml:space="preserve">
+    <value>Upcoming</value>
+  </data>
+  <data name="Plans_All" xml:space="preserve">
+    <value>All plans</value>
+  </data>
+  <data name="Plans_Empty" xml:space="preserve">
+    <value>No plans yet. Add regular income and bills, or a one-time future payment.</value>
+  </data>
+  <data name="Plans_NothingDue" xml:space="preserve">
+    <value>Nothing is due. You are up to date.</value>
+  </data>
+  <data name="Plans_NothingUpcoming" xml:space="preserve">
+    <value>Nothing planned for the next 60 days.</value>
+  </data>
+  <data name="Plans_Add" xml:space="preserve">
+    <value>Add plan</value>
+  </data>
+  <data name="Plans_UnreviewedEntries" xml:space="preserve">
+    <value>Automatically recorded entries need review.</value>
+  </data>
+  <data name="Plans_Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Occurrence_OverdueDays" xml:space="preserve">
+    <value>{0} days overdue</value>
+  </data>
+  <data name="Occurrence_Due" xml:space="preserve">
+    <value>Due today</value>
+  </data>
+  <data name="Occurrence_Future" xml:space="preserve">
+    <value>Upcoming</value>
+  </data>
+  <data name="Occurrence_Overdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
+  <data name="Occurrence_Settled" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Occurrence_Skipped" xml:space="preserve">
+    <value>Skipped</value>
+  </data>
+  <data name="Occurrence_Title" xml:space="preserve">
+    <value>Due item</value>
+  </data>
+  <data name="Occurrence_DueOn" xml:space="preserve">
+    <value>Due {0}</value>
+  </data>
+  <data name="Occurrence_ActualAmount" xml:space="preserve">
+    <value>Actual amount</value>
+  </data>
+  <data name="Occurrence_ActualDate" xml:space="preserve">
+    <value>Actual date</value>
+  </data>
+  <data name="Occurrence_Confirm" xml:space="preserve">
+    <value>Confirm as done</value>
+  </data>
+  <data name="Occurrence_Candidates" xml:space="preserve">
+    <value>Already recorded? Link it instead</value>
+  </data>
+  <data name="Occurrence_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Occurrence_LinkMessage" xml:space="preserve">
+    <value>Link "{0}" ({1}) to this due item? No new entry is created.</value>
+  </data>
+  <data name="Occurrence_Change" xml:space="preserve">
+    <value>Change this time</value>
+  </data>
+  <data name="Occurrence_Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Occurrence_MoveDue" xml:space="preserve">
+    <value>Due date</value>
+  </data>
+  <data name="Occurrence_AmountThisTime" xml:space="preserve">
+    <value>Amount this time</value>
+  </data>
+  <data name="Occurrence_ChangeHint" xml:space="preserve">
+    <value>Changes apply to this occurrence only; the plan stays as it is.</value>
+  </data>
+  <data name="Occurrence_SettledWith" xml:space="preserve">
+    <value>Recorded: {0} on {1}</value>
+  </data>
+  <data name="Occurrence_Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Occurrence_UndoMessage" xml:space="preserve">
+    <value>An entry recorded by the plan is deleted; an entry you recorded yourself is kept and only unlinked. The item becomes open again and will not be recorded automatically.</value>
+  </data>
+  <data name="Plan_NextDue" xml:space="preserve">
+    <value>Next: {0}</value>
+  </data>
+  <data name="Plan_Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="Plan_Ended" xml:space="preserve">
+    <value>Ended</value>
+  </data>
+  <data name="Plan_AmountUnknown" xml:space="preserve">
+    <value>Amount unknown</value>
+  </data>
+  <data name="Rule_Once" xml:space="preserve">
+    <value>Once on {0}</value>
+  </data>
+  <data name="Rule_Daily" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="Rule_EveryNDays" xml:space="preserve">
+    <value>Every {0} days</value>
+  </data>
+  <data name="Rule_Weekly" xml:space="preserve">
+    <value>Every week on {0}</value>
+  </data>
+  <data name="Rule_EveryNWeeks" xml:space="preserve">
+    <value>Every {1} weeks on {0}</value>
+  </data>
+  <data name="Rule_Monthly" xml:space="preserve">
+    <value>Every month {0}</value>
+  </data>
+  <data name="Rule_EveryNMonths" xml:space="preserve">
+    <value>Every {1} months {0}</value>
+  </data>
+  <data name="Rule_Yearly" xml:space="preserve">
+    <value>Every year {0}</value>
+  </data>
+  <data name="Rule_EveryNYears" xml:space="preserve">
+    <value>Every {1} years {0}</value>
+  </data>
+  <data name="Rule_OnDay" xml:space="preserve">
+    <value>on day {0}</value>
+  </data>
+  <data name="Rule_LastDay" xml:space="preserve">
+    <value>on the last day</value>
+  </data>
+  <data name="Rule_OnDate" xml:space="preserve">
+    <value>on {0}</value>
+  </data>
+  <data name="Rule_Until" xml:space="preserve">
+    <value>until {0}</value>
+  </data>
+  <data name="Rule_Times" xml:space="preserve">
+    <value>{0} times</value>
+  </data>
+  <data name="Plan_NewTitle" xml:space="preserve">
+    <value>New plan</value>
+  </data>
+  <data name="Plan_EditTitle" xml:space="preserve">
+    <value>Edit plan</value>
+  </data>
+  <data name="Plan_Details" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="AmountMode_Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="AmountMode_Estimated" xml:space="preserve">
+    <value>Estimated</value>
+  </data>
+  <data name="AmountMode_Unknown" xml:space="preserve">
+    <value>Not known yet</value>
+  </data>
+  <data name="Repeat_Once" xml:space="preserve">
+    <value>Once</value>
+  </data>
+  <data name="Repeat_Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Repeat_TwoWeeks" xml:space="preserve">
+    <value>Every 2 weeks</value>
+  </data>
+  <data name="Repeat_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Repeat_Yearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
+  <data name="Repeat_Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Unit_Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Unit_Weeks" xml:space="preserve">
+    <value>Weeks</value>
+  </data>
+  <data name="Unit_Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="Unit_Years" xml:space="preserve">
+    <value>Years</value>
+  </data>
+  <data name="MissingDay_LastValid" xml:space="preserve">
+    <value>Use the last day of shorter months</value>
+  </data>
+  <data name="MissingDay_Skip" xml:space="preserve">
+    <value>Skip months without this day</value>
+  </data>
+  <data name="End_Never" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="End_OnDate" xml:space="preserve">
+    <value>On a date</value>
+  </data>
+  <data name="End_AfterCount" xml:space="preserve">
+    <value>After a number of times</value>
+  </data>
+  <data name="Past_FromToday" xml:space="preserve">
+    <value>From today on</value>
+  </data>
+  <data name="Past_Include" xml:space="preserve">
+    <value>Also review past dates</value>
+  </data>
+  <data name="DayRule_OnDay" xml:space="preserve">
+    <value>Day {0}</value>
+  </data>
+  <data name="DayRule_LastDay" xml:space="preserve">
+    <value>Last day of the month</value>
+  </data>
+  <data name="Plan_RuleInvalid" xml:space="preserve">
+    <value>Check the repetition settings.</value>
+  </data>
+  <data name="Plan_NoDates" xml:space="preserve">
+    <value>No further dates.</value>
+  </data>
+  <data name="Plan_NameRequired" xml:space="preserve">
+    <value>Enter a name.</value>
+  </data>
+  <data name="Plan_IntervalMustBePositive" xml:space="preserve">
+    <value>The interval must be at least 1.</value>
+  </data>
+  <data name="Plan_EndBeforeStart" xml:space="preserve">
+    <value>The end date must not be before the first date.</value>
+  </data>
+  <data name="Plan_CountMustBePositive" xml:space="preserve">
+    <value>Enter a number of times greater than zero.</value>
+  </data>
+  <data name="Plan_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Plan_NamePlaceholder" xml:space="preserve">
+    <value>e.g. Rent, Salary, Car repair</value>
+  </data>
+  <data name="Plan_AmountMode" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Plan_Start" xml:space="preserve">
+    <value>First due date</value>
+  </data>
+  <data name="Plan_PastStart" xml:space="preserve">
+    <value>The first date is in the past</value>
+  </data>
+  <data name="Plan_Repeat" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="Plan_Every" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="Plan_Calendar" xml:space="preserve">
+    <value>Calendar of this plan</value>
+  </data>
+  <data name="Plan_Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Plan_MissingDay" xml:space="preserve">
+    <value>When a month has no such day</value>
+  </data>
+  <data name="Plan_End" xml:space="preserve">
+    <value>Ends</value>
+  </data>
+  <data name="Plan_Times" xml:space="preserve">
+    <value>times</value>
+  </data>
+  <data name="Plan_Preview" xml:space="preserve">
+    <value>Next dates</value>
+  </data>
+  <data name="Plan_ApplyFrom" xml:space="preserve">
+    <value>Apply changes from</value>
+  </data>
+  <data name="Plan_ApplyFromHint" xml:space="preserve">
+    <value>Earlier occurrences keep their amounts and dates.</value>
+  </data>
+  <data name="Plan_Reminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="Plan_DaysBefore" xml:space="preserve">
+    <value>days before the due date</value>
+  </data>
+  <data name="Plan_ReminderTime" xml:space="preserve">
+    <value>Reminder time</value>
+  </data>
+  <data name="Plan_ReminderText" xml:space="preserve">
+    <value>{0} days before, {1}</value>
+  </data>
+  <data name="Plan_AutoPost" xml:space="preserve">
+    <value>Record automatically when due</value>
+  </data>
+  <data name="Plan_AutoPostHint" xml:space="preserve">
+    <value>Only records the entry in this app for you to review – it does not pay or transfer anything. Available for fixed amounts.</value>
+  </data>
+  <data name="Plan_NextOccurrences" xml:space="preserve">
+    <value>Next dates</value>
+  </data>
+  <data name="Plan_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Plan_ResumeFrom" xml:space="preserve">
+    <value>Resume from</value>
+  </data>
+  <data name="Plan_Resume" xml:space="preserve">
+    <value>Resume plan</value>
+  </data>
+  <data name="Plan_Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Plan_PauseMessage" xml:space="preserve">
+    <value>No occurrences are due while the plan is paused. Past entries stay as they are.</value>
+  </data>
+  <data name="Plan_EndAction" xml:space="preserve">
+    <value>End plan</value>
+  </data>
+  <data name="Plan_EndMessage" xml:space="preserve">
+    <value>The plan ends today. Past entries and history stay.</value>
+  </data>
+  <data name="Plan_Delete" xml:space="preserve">
+    <value>Delete plan</value>
+  </data>
+  <data name="Plan_DeleteMessage" xml:space="preserve">
+    <value>Delete this plan? It has no recorded occurrences.</value>
+  </data>
 </root>

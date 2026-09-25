@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
+using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Core.Settings;
 
 namespace Vafadar.Finance.Data;
@@ -289,6 +290,20 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             : [entry];
 
         db.Entries.RemoveRange(deleted);
+
+        // A deleted settlement reopens its occurrence; automatic posting must not bring it back (REC-18, AT-31).
+        foreach (var settled in deleted.Where(e => e.ScheduleId is not null))
+        {
+            var state = await db.OccurrenceStates.FirstOrDefaultAsync(
+                s => s.ScheduleId == settled.ScheduleId && s.OriginalDate == settled.OccurrenceDate, cancellationToken);
+            if (state is not null)
+            {
+                state.Status = OccurrenceStatus.Open;
+                state.EntryId = null;
+                state.AutoPostSuppressed = true;
+            }
+        }
+
         await db.SaveChangesAsync(cancellationToken);
         return deleted;
     }
@@ -300,9 +315,23 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         foreach (var entry in entries)
         {
-            if (!await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
+            if (await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
             {
-                db.Entries.Add(entry);
+                continue;
+            }
+
+            db.Entries.Add(entry);
+            if (entry.ScheduleId is { } scheduleId && entry.OccurrenceDate is { } original)
+            {
+                var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == scheduleId && s.OriginalDate == original, cancellationToken);
+                if (state is null)
+                {
+                    state = new OccurrenceState { ScheduleId = scheduleId, OriginalDate = original };
+                    db.OccurrenceStates.Add(state);
+                }
+
+                state.Status = OccurrenceStatus.Settled;
+                state.EntryId = entry.Id;
             }
         }
 

@@ -4,6 +4,7 @@ using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
+using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Core.Rates;
 using Vafadar.Finance.Core.Settings;
 
@@ -27,6 +28,12 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
 
     /// <summary>Gets the ledger entries.</summary>
     public DbSet<LedgerEntry> Entries => Set<LedgerEntry>();
+
+    /// <summary>Gets the plans.</summary>
+    public DbSet<Schedule> Schedules => Set<Schedule>();
+
+    /// <summary>Gets the stored states of plan occurrences.</summary>
+    public DbSet<OccurrenceState> OccurrenceStates => Set<OccurrenceState>();
 
     /// <summary>Gets the budgets.</summary>
     public DbSet<Budget> Budgets => Set<Budget>();

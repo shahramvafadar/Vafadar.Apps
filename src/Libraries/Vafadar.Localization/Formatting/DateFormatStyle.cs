@@ -13,4 +13,7 @@ public enum DateFormatStyle
 
     /// <summary>Month and year, e.g. <c>September 2026</c> or <c>مهر 1405</c>.</summary>
     MonthYear = 2,
+
+    /// <summary>Day and month without year, e.g. <c>September 25</c> or <c>3 Mehr</c>.</summary>
+    DayMonth = 3,
 }

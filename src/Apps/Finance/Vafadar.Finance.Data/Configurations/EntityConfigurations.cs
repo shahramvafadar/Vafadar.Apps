@@ -4,6 +4,7 @@ using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
+using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Core.Rates;
 using Vafadar.Finance.Core.Settings;
 
@@ -55,6 +56,46 @@ internal sealed class LedgerEntryConfiguration : IEntityTypeConfiguration<Ledger
         builder.HasIndex(e => new { e.ScheduleId, e.OccurrenceDate })
             .IsUnique()
             .HasFilter("\"ScheduleId\" IS NOT NULL");
+    }
+}
+
+internal sealed class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
+{
+    public void Configure(EntityTypeBuilder<Schedule> builder)
+    {
+        builder.Property(s => s.Name).HasMaxLength(200);
+        builder.Property(s => s.Note).HasMaxLength(4000);
+        builder.Property(s => s.Icon).HasMaxLength(64);
+        builder.HasOne<Account>().WithMany().HasForeignKey(s => s.AccountId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne<Account>().WithMany().HasForeignKey(s => s.ToAccountId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne<Category>().WithMany().HasForeignKey(s => s.CategoryId).OnDelete(DeleteBehavior.Restrict);
+
+        // The rule is a value of the plan: stored as columns of the Schedules table.
+        builder.OwnsOne(s => s.Rule, rule =>
+        {
+            rule.Property(r => r.Frequency).HasColumnName("Frequency");
+            rule.Property(r => r.Interval).HasColumnName("Interval");
+            rule.Property(r => r.Start).HasColumnName("Start");
+            rule.Property(r => r.Calendar).HasColumnName("Calendar");
+            rule.Property(r => r.DayRule).HasColumnName("DayRule");
+            rule.Property(r => r.MissingDay).HasColumnName("MissingDay");
+            rule.Property(r => r.End).HasColumnName("EndKind");
+            rule.Property(r => r.EndDate).HasColumnName("EndDate");
+            rule.Property(r => r.Count).HasColumnName("Count");
+        });
+        builder.Navigation(s => s.Rule).IsRequired();
+    }
+}
+
+internal sealed class OccurrenceStateConfiguration : IEntityTypeConfiguration<OccurrenceState>
+{
+    public void Configure(EntityTypeBuilder<OccurrenceState> builder)
+    {
+        builder.Property(o => o.Note).HasMaxLength(4000);
+        builder.HasOne<Schedule>().WithMany().HasForeignKey(o => o.ScheduleId).OnDelete(DeleteBehavior.Cascade);
+
+        // One state per occurrence (D-06).
+        builder.HasIndex(o => new { o.ScheduleId, o.OriginalDate }).IsUnique();
     }
 }
 

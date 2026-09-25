@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Plans.PlansPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Plans"
+    x:DataType="local:PlansViewModel"
+    Title="{v:Translate Plans_Title}">
+
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="8">
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding SegmentNames}" SelectedIndex="{Binding SegmentIndex}" AccentColor="{StaticResource Primary}" />
+
+            <!-- Automatic entries waiting for review (REC-13) -->
+            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4,8,4"
+                    IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="{v:Translate Plans_UnreviewedEntries}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{v:Translate Plans_Review}" Command="{Binding ReviewEntriesCommand}" BackgroundColor="Transparent"
+                            TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Rows}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:PlanRow">
+                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Margin="16,0,16,1">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:PlansViewModel}}, x:DataType=local:PlansViewModel}"
+                                                  CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{Binding IconBackground}" VerticalOptions="Center">
+                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="22" ForegroundColor="{Binding IconColor}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding Title}" FontSize="16" LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4">
+                            <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="16" FontAttributes="Bold" HorizontalOptions="End" />
+                            <Label Text="{Binding Badge}" FontSize="12" Padding="6,1" HorizontalOptions="End" TextColor="{Binding BadgeText}"
+                                   BackgroundColor="{Binding BadgeBackground}" IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="32,48" Spacing="16">
+                    <fi:SymbolIcon Symbol="CalendarClock" FontSize="44" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <Label Text="{Binding EmptyText}" HorizontalTextAlignment="Center" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Plans_Add}" Command="{Binding AddCommand}" IsVisible="{Binding HasNoPlans}" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.Header>
+                <BoxView HeightRequest="8" Color="Transparent" />
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <BoxView HeightRequest="96" Color="Transparent" />
+            </CollectionView.Footer>
+        </CollectionView>
+
+        <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+                SemanticProperties.Description="{v:Translate Plans_Add}" />
+    </Grid>
+</ContentPage>

@@ -21,24 +21,24 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit, domain level) |
 | AT-14 | Refund to another account | REF-01 | Unit | S1 | Verified (unit, domain level) |
 | AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Verified (unit, domain level) |
-| AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Planned |
-| AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Planned |
-| AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Planned |
-| AT-19 | Day 31, last valid day | REC-08/09 | Unit | S4 | Planned |
-| AT-20 | Day 31, skip policy | REC-08 | Unit | S4 | Planned |
-| AT-21 | Last day of month | REC-08 | Unit | S4 | Planned |
-| AT-22 | Leap days Gregorian and Persian | REC-10 | Unit | S4 | Planned |
-| AT-23 | Change display calendar | REC-11, LOC | Unit | S4 | Planned |
-| AT-24 | Persian monthly rule | REC-11 | Unit | S4 | Planned |
-| AT-25 | Amount change from next occurrence | REC-15 | Unit | S4 | Planned |
-| AT-26 | Postpone one occurrence | REC-14 | Unit | S4 | Planned |
-| AT-27 | Skip in 12-occurrence plan | REC-06 | Unit | S4 | Planned |
-| AT-28 | Early confirmation | FIN-07 | Unit | S4 | Planned |
-| AT-29 | Link existing entry to occurrence | REC-17 | Unit | S4 | Planned |
-| AT-30 | Auto-post runs twice | REC-21 | Integration (SQLite) | S4 | Planned |
-| AT-31 | Delete/undo auto-post | REC-18 | Integration | S4 | Planned |
-| AT-32 | Two equal plans | REC-21 | Unit | S4 | Planned |
-| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Planned |
+| AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Verified (unit) |
+| AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Verified (unit) |
+| AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Engine verified (AT-17); budget sum with S7 |
+| AT-19 | Day 31, last valid day | REC-08/09 | Unit | S4 | Verified (unit) |
+| AT-20 | Day 31, skip policy | REC-08 | Unit | S4 | Verified (unit) |
+| AT-21 | Last day of month | REC-08 | Unit | S4 | Verified (unit) |
+| AT-22 | Leap days Gregorian and Persian | REC-10 | Unit | S4 | Verified (unit) |
+| AT-23 | Change display calendar | REC-11, LOC | Unit | S4 | Verified (unit) |
+| AT-24 | Persian monthly rule | REC-11 | Unit | S4 | Verified (unit) |
+| AT-25 | Amount change from next occurrence | REC-15 | Unit | S4 | Verified (unit) |
+| AT-26 | Postpone one occurrence | REC-14 | Unit | S4 | Verified (unit) |
+| AT-27 | Skip in 12-occurrence plan | REC-06 | Unit | S4 | Verified (unit) |
+| AT-28 | Early confirmation | FIN-07 | Unit | S4 | Verified (unit) |
+| AT-29 | Link existing entry to occurrence | REC-17 | Unit | S4 | Verified (unit) |
+| AT-30 | Auto-post runs twice | REC-21 | Integration (SQLite) | S4 | Verified (integration, SQLite) |
+| AT-31 | Delete/undo auto-post | REC-18 | Integration | S4 | Verified (integration, SQLite) |
+| AT-32 | Two equal plans | REC-21 | Unit | S4 | Verified (unit) |
+| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Verified (unit) |
 | AT-34 | Notifications denied/off | REM-02 | Manual | S10 | Planned |
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Planned |
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |

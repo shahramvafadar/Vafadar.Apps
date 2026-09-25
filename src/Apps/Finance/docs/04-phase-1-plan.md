@@ -40,7 +40,7 @@ privacy policy, Data safety and Financial features declaration match that build.
 | S1 | Implemented – verified (domain + persistence; 59 new tests; migration InitialLedger) |
 | S2 | Implemented – verified (Android/Windows builds; en/de/fa screens reviewed via Debug snapshots; AT-10 history part unit-tested, plan part follows S4) |
 | S3 | Implemented – verified (entry editor, list with search/filters, detail, refund, duplicate, delete with undo, categories; 27 new tests; en/de/fa snapshots reviewed) |
-| S4 | Planned |
+| S4 | Implemented – verified (recurrence engine Gregorian/Persian, plans, occurrences, review/confirm/link/skip/move, "this and future" split, pause/resume/end, auto-post processor; 37 new tests; en/de/fa snapshots) |
 | S5 | Planned |
 | S6 | Planned |
 | S7–S15 | Planned |

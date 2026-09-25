@@ -26,6 +26,12 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
         var culture = localization.CurrentCulture;
         var dateTime = date.ToDateTime(TimeOnly.MinValue);
 
+        // Dates outside the calendar's range (e.g. an unset default value) must never crash the UI.
+        if (dateTime < Persian.MinSupportedDateTime || dateTime > Persian.MaxSupportedDateTime)
+        {
+            return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
+
         if (localization.CurrentCalendar == CalendarSystem.Persian && culture.DateTimeFormat.Calendar is not PersianCalendar)
         {
             return FormatPersianWithLatinNames(dateTime, style, culture);
@@ -35,6 +41,7 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
         {
             DateFormatStyle.Long => "D",
             DateFormatStyle.MonthYear => "Y",
+            DateFormatStyle.DayMonth => "M",
             _ => "d",
         };
 
@@ -58,6 +65,7 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
                 CultureInfo.InvariantCulture,
                 $"{culture.DateTimeFormat.GetDayName(dateTime.DayOfWeek)}, {day} {monthName} {year}"),
             DateFormatStyle.MonthYear => string.Create(CultureInfo.InvariantCulture, $"{monthName} {year}"),
+            DateFormatStyle.DayMonth => string.Create(CultureInfo.InvariantCulture, $"{day} {monthName}"),
             _ => string.Create(CultureInfo.InvariantCulture, $"{year:0000}/{month:00}/{day:00}"),
         };
     }

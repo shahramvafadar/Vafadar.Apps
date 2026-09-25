@@ -8,6 +8,7 @@
     xmlns:home="clr-namespace:Vafadar.Finance.App.Features.Home"
     xmlns:more="clr-namespace:Vafadar.Finance.App.Features.More"
     xmlns:tx="clr-namespace:Vafadar.Finance.App.Features.Transactions"
+    xmlns:plans="clr-namespace:Vafadar.Finance.App.Features.Plans"
     Title="{v:Translate App_Name}"
     Shell.TabBarForegroundColor="{StaticResource Primary}"
     Shell.TabBarTitleColor="{StaticResource Primary}"
@@ -24,6 +25,11 @@
             Icon="{icx:SymbolImageSource Symbol=ReceiptMoney}"
             ContentTemplate="{DataTemplate tx:TransactionsPage}"
             Route="transactions" />
+        <ShellContent
+            Title="{v:Translate Tab_Plans}"
+            Icon="{icx:SymbolImageSource Symbol=CalendarClock}"
+            ContentTemplate="{DataTemplate plans:PlansPage}"
+            Route="plans" />
         <ShellContent
             Title="{v:Translate Tab_More}"
             Icon="{icx:SymbolImageSource Symbol=MoreHorizontal}"

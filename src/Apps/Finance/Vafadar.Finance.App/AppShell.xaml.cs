@@ -1,6 +1,7 @@
 using Vafadar.Finance.App.Features.Accounts;
 using Vafadar.Finance.App.Features.Categories;
 using Vafadar.Finance.App.Features.Entries;
+using Vafadar.Finance.App.Features.Plans;
 using Vafadar.Finance.App.Features.Settings;
 
 namespace Vafadar.Finance.App;
@@ -28,6 +29,15 @@ public partial class AppShell : Shell
     /// <summary>Route of the category editor (query: <c>id</c> for an existing category).</summary>
     public const string CategoryEditorRoute = "category";
 
+    /// <summary>Route of the plan editor (query: <c>id</c> for an existing plan).</summary>
+    public const string PlanEditorRoute = "plan";
+
+    /// <summary>Route of the plan details (query: <c>id</c>).</summary>
+    public const string PlanDetailRoute = "plandetail";
+
+    /// <summary>Route of an occurrence (query: <c>plan</c> and <c>date</c>, the original date).</summary>
+    public const string OccurrenceRoute = "occurrence";
+
     public AppShell()
     {
         InitializeComponent();
@@ -38,5 +48,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(EntryDetailRoute, typeof(EntryDetailPage));
         Routing.RegisterRoute(CategoriesRoute, typeof(CategoriesPage));
         Routing.RegisterRoute(CategoryEditorRoute, typeof(CategoryEditorPage));
+        Routing.RegisterRoute(PlanEditorRoute, typeof(PlanEditorPage));
+        Routing.RegisterRoute(PlanDetailRoute, typeof(PlanDetailPage));
+        Routing.RegisterRoute(OccurrenceRoute, typeof(OccurrencePage));
     }
 }

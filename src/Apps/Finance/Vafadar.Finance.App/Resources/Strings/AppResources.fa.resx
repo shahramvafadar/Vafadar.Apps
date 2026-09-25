@@ -532,4 +532,343 @@
   <data name="Entry_Kind" xml:space="preserve">
     <value>نوع</value>
   </data>
+  <data name="Tab_Plans" xml:space="preserve">
+    <value>برنامه‌ها</value>
+  </data>
+  <data name="Plans_Title" xml:space="preserve">
+    <value>برنامه‌ها</value>
+  </data>
+  <data name="Plans_Due" xml:space="preserve">
+    <value>سررسید و معوق</value>
+  </data>
+  <data name="Plans_Upcoming" xml:space="preserve">
+    <value>پیش رو</value>
+  </data>
+  <data name="Plans_All" xml:space="preserve">
+    <value>همه برنامه‌ها</value>
+  </data>
+  <data name="Plans_Empty" xml:space="preserve">
+    <value>هنوز برنامه‌ای ندارید. درآمدها و قبض‌های تکراری یا یک پرداخت آیندهٔ یک‌باره را اضافه کنید.</value>
+  </data>
+  <data name="Plans_NothingDue" xml:space="preserve">
+    <value>موردی سررسید نشده است. همه‌چیز به‌روز است.</value>
+  </data>
+  <data name="Plans_NothingUpcoming" xml:space="preserve">
+    <value>برای ۶۰ روز آینده برنامه‌ای نیست.</value>
+  </data>
+  <data name="Plans_Add" xml:space="preserve">
+    <value>افزودن برنامه</value>
+  </data>
+  <data name="Plans_UnreviewedEntries" xml:space="preserve">
+    <value>ثبت‌های خودکار نیاز به بررسی دارند.</value>
+  </data>
+  <data name="Plans_Review" xml:space="preserve">
+    <value>بررسی</value>
+  </data>
+  <data name="Occurrence_OverdueDays" xml:space="preserve">
+    <value>{0} روز معوق</value>
+  </data>
+  <data name="Occurrence_Due" xml:space="preserve">
+    <value>سررسید امروز</value>
+  </data>
+  <data name="Occurrence_Future" xml:space="preserve">
+    <value>پیش رو</value>
+  </data>
+  <data name="Occurrence_Overdue" xml:space="preserve">
+    <value>معوق</value>
+  </data>
+  <data name="Occurrence_Settled" xml:space="preserve">
+    <value>انجام‌شده</value>
+  </data>
+  <data name="Occurrence_Skipped" xml:space="preserve">
+    <value>ردشده</value>
+  </data>
+  <data name="Occurrence_Title" xml:space="preserve">
+    <value>موعد</value>
+  </data>
+  <data name="Occurrence_DueOn" xml:space="preserve">
+    <value>سررسید: {0}</value>
+  </data>
+  <data name="Occurrence_ActualAmount" xml:space="preserve">
+    <value>مبلغ واقعی</value>
+  </data>
+  <data name="Occurrence_ActualDate" xml:space="preserve">
+    <value>تاریخ واقعی</value>
+  </data>
+  <data name="Occurrence_Confirm" xml:space="preserve">
+    <value>تأیید انجام</value>
+  </data>
+  <data name="Occurrence_Candidates" xml:space="preserve">
+    <value>قبلاً ثبت کرده‌اید؟ به‌جای ثبت دوباره متصلش کنید</value>
+  </data>
+  <data name="Occurrence_Link" xml:space="preserve">
+    <value>اتصال</value>
+  </data>
+  <data name="Occurrence_LinkMessage" xml:space="preserve">
+    <value>«{0}» ({1}) به این موعد متصل شود؟ تراکنش جدیدی ساخته نمی‌شود.</value>
+  </data>
+  <data name="Occurrence_Change" xml:space="preserve">
+    <value>تغییر همین نوبت</value>
+  </data>
+  <data name="Occurrence_Skip" xml:space="preserve">
+    <value>رد کردن</value>
+  </data>
+  <data name="Occurrence_MoveDue" xml:space="preserve">
+    <value>تاریخ سررسید</value>
+  </data>
+  <data name="Occurrence_AmountThisTime" xml:space="preserve">
+    <value>مبلغ این نوبت</value>
+  </data>
+  <data name="Occurrence_ChangeHint" xml:space="preserve">
+    <value>تغییرات فقط برای همین نوبت است و برنامه تغییر نمی‌کند.</value>
+  </data>
+  <data name="Occurrence_SettledWith" xml:space="preserve">
+    <value>ثبت‌شده: {0} در {1}</value>
+  </data>
+  <data name="Occurrence_Undo" xml:space="preserve">
+    <value>برگرداندن</value>
+  </data>
+  <data name="Occurrence_UndoMessage" xml:space="preserve">
+    <value>تراکنشی که برنامه ثبت کرده حذف می‌شود؛ تراکنشی که خودتان ثبت کرده‌اید حفظ و فقط از موعد جدا می‌شود. موعد دوباره باز می‌شود و خودکار ثبت نخواهد شد.</value>
+  </data>
+  <data name="Plan_NextDue" xml:space="preserve">
+    <value>بعدی: {0}</value>
+  </data>
+  <data name="Plan_Paused" xml:space="preserve">
+    <value>متوقف</value>
+  </data>
+  <data name="Plan_Ended" xml:space="preserve">
+    <value>پایان‌یافته</value>
+  </data>
+  <data name="Plan_AmountUnknown" xml:space="preserve">
+    <value>مبلغ نامعلوم</value>
+  </data>
+  <data name="Rule_Once" xml:space="preserve">
+    <value>یک‌بار در {0}</value>
+  </data>
+  <data name="Rule_Daily" xml:space="preserve">
+    <value>هر روز</value>
+  </data>
+  <data name="Rule_EveryNDays" xml:space="preserve">
+    <value>هر {0} روز</value>
+  </data>
+  <data name="Rule_Weekly" xml:space="preserve">
+    <value>هر هفته، {0}</value>
+  </data>
+  <data name="Rule_EveryNWeeks" xml:space="preserve">
+    <value>هر {1} هفته، {0}</value>
+  </data>
+  <data name="Rule_Monthly" xml:space="preserve">
+    <value>هر ماه {0}</value>
+  </data>
+  <data name="Rule_EveryNMonths" xml:space="preserve">
+    <value>هر {1} ماه {0}</value>
+  </data>
+  <data name="Rule_Yearly" xml:space="preserve">
+    <value>هر سال {0}</value>
+  </data>
+  <data name="Rule_EveryNYears" xml:space="preserve">
+    <value>هر {1} سال {0}</value>
+  </data>
+  <data name="Rule_OnDay" xml:space="preserve">
+    <value>روز {0}</value>
+  </data>
+  <data name="Rule_LastDay" xml:space="preserve">
+    <value>روز آخر</value>
+  </data>
+  <data name="Rule_OnDate" xml:space="preserve">
+    <value>در {0}</value>
+  </data>
+  <data name="Rule_Until" xml:space="preserve">
+    <value>تا {0}</value>
+  </data>
+  <data name="Rule_Times" xml:space="preserve">
+    <value>{0} نوبت</value>
+  </data>
+  <data name="Plan_NewTitle" xml:space="preserve">
+    <value>برنامهٔ جدید</value>
+  </data>
+  <data name="Plan_EditTitle" xml:space="preserve">
+    <value>ویرایش برنامه</value>
+  </data>
+  <data name="Plan_Details" xml:space="preserve">
+    <value>برنامه</value>
+  </data>
+  <data name="AmountMode_Fixed" xml:space="preserve">
+    <value>ثابت</value>
+  </data>
+  <data name="AmountMode_Estimated" xml:space="preserve">
+    <value>تخمینی</value>
+  </data>
+  <data name="AmountMode_Unknown" xml:space="preserve">
+    <value>هنوز نامعلوم</value>
+  </data>
+  <data name="Repeat_Once" xml:space="preserve">
+    <value>یک‌بار</value>
+  </data>
+  <data name="Repeat_Weekly" xml:space="preserve">
+    <value>هفتگی</value>
+  </data>
+  <data name="Repeat_TwoWeeks" xml:space="preserve">
+    <value>هر ۲ هفته</value>
+  </data>
+  <data name="Repeat_Monthly" xml:space="preserve">
+    <value>ماهانه</value>
+  </data>
+  <data name="Repeat_Yearly" xml:space="preserve">
+    <value>سالانه</value>
+  </data>
+  <data name="Repeat_Custom" xml:space="preserve">
+    <value>سفارشی</value>
+  </data>
+  <data name="Unit_Days" xml:space="preserve">
+    <value>روز</value>
+  </data>
+  <data name="Unit_Weeks" xml:space="preserve">
+    <value>هفته</value>
+  </data>
+  <data name="Unit_Months" xml:space="preserve">
+    <value>ماه</value>
+  </data>
+  <data name="Unit_Years" xml:space="preserve">
+    <value>سال</value>
+  </data>
+  <data name="MissingDay_LastValid" xml:space="preserve">
+    <value>در ماه‌های کوتاه‌تر، روز آخر ماه</value>
+  </data>
+  <data name="MissingDay_Skip" xml:space="preserve">
+    <value>رد کردن ماه‌هایی که این روز را ندارند</value>
+  </data>
+  <data name="End_Never" xml:space="preserve">
+    <value>بدون پایان</value>
+  </data>
+  <data name="End_OnDate" xml:space="preserve">
+    <value>در تاریخ مشخص</value>
+  </data>
+  <data name="End_AfterCount" xml:space="preserve">
+    <value>پس از چند نوبت</value>
+  </data>
+  <data name="Past_FromToday" xml:space="preserve">
+    <value>از امروز به بعد</value>
+  </data>
+  <data name="Past_Include" xml:space="preserve">
+    <value>بررسی موعدهای گذشته هم</value>
+  </data>
+  <data name="DayRule_OnDay" xml:space="preserve">
+    <value>روز {0}</value>
+  </data>
+  <data name="DayRule_LastDay" xml:space="preserve">
+    <value>آخرین روز ماه</value>
+  </data>
+  <data name="Plan_RuleInvalid" xml:space="preserve">
+    <value>تنظیمات تکرار را بررسی کنید.</value>
+  </data>
+  <data name="Plan_NoDates" xml:space="preserve">
+    <value>موعد دیگری وجود ندارد.</value>
+  </data>
+  <data name="Plan_NameRequired" xml:space="preserve">
+    <value>یک نام وارد کنید.</value>
+  </data>
+  <data name="Plan_IntervalMustBePositive" xml:space="preserve">
+    <value>فاصلهٔ تکرار باید دست‌کم ۱ باشد.</value>
+  </data>
+  <data name="Plan_EndBeforeStart" xml:space="preserve">
+    <value>تاریخ پایان نباید پیش از تاریخ شروع باشد.</value>
+  </data>
+  <data name="Plan_CountMustBePositive" xml:space="preserve">
+    <value>تعداد نوبت باید بیشتر از صفر باشد.</value>
+  </data>
+  <data name="Plan_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Plan_NamePlaceholder" xml:space="preserve">
+    <value>مثلاً اجاره، حقوق، تعمیر خودرو</value>
+  </data>
+  <data name="Plan_AmountMode" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Plan_Start" xml:space="preserve">
+    <value>اولین سررسید</value>
+  </data>
+  <data name="Plan_PastStart" xml:space="preserve">
+    <value>اولین سررسید در گذشته است</value>
+  </data>
+  <data name="Plan_Repeat" xml:space="preserve">
+    <value>تکرار</value>
+  </data>
+  <data name="Plan_Every" xml:space="preserve">
+    <value>هر</value>
+  </data>
+  <data name="Plan_Calendar" xml:space="preserve">
+    <value>تقویم این برنامه</value>
+  </data>
+  <data name="Plan_Day" xml:space="preserve">
+    <value>روز</value>
+  </data>
+  <data name="Plan_MissingDay" xml:space="preserve">
+    <value>وقتی ماه چنین روزی ندارد</value>
+  </data>
+  <data name="Plan_End" xml:space="preserve">
+    <value>پایان</value>
+  </data>
+  <data name="Plan_Times" xml:space="preserve">
+    <value>نوبت</value>
+  </data>
+  <data name="Plan_Preview" xml:space="preserve">
+    <value>موعدهای بعدی</value>
+  </data>
+  <data name="Plan_ApplyFrom" xml:space="preserve">
+    <value>اعمال تغییرات از</value>
+  </data>
+  <data name="Plan_ApplyFromHint" xml:space="preserve">
+    <value>نوبت‌های قبلی مبلغ و تاریخ خود را حفظ می‌کنند.</value>
+  </data>
+  <data name="Plan_Reminder" xml:space="preserve">
+    <value>یادآوری</value>
+  </data>
+  <data name="Plan_DaysBefore" xml:space="preserve">
+    <value>روز پیش از سررسید</value>
+  </data>
+  <data name="Plan_ReminderTime" xml:space="preserve">
+    <value>ساعت یادآوری</value>
+  </data>
+  <data name="Plan_ReminderText" xml:space="preserve">
+    <value>{0} روز قبل، {1}</value>
+  </data>
+  <data name="Plan_AutoPost" xml:space="preserve">
+    <value>ثبت خودکار در سررسید</value>
+  </data>
+  <data name="Plan_AutoPostHint" xml:space="preserve">
+    <value>فقط تراکنش را برای بررسی شما در همین اپ ثبت می‌کند و هیچ پرداخت یا انتقالی انجام نمی‌دهد. فقط برای مبلغ ثابت.</value>
+  </data>
+  <data name="Plan_NextOccurrences" xml:space="preserve">
+    <value>موعدهای بعدی</value>
+  </data>
+  <data name="Plan_History" xml:space="preserve">
+    <value>سابقه</value>
+  </data>
+  <data name="Plan_ResumeFrom" xml:space="preserve">
+    <value>ادامه از</value>
+  </data>
+  <data name="Plan_Resume" xml:space="preserve">
+    <value>ادامهٔ برنامه</value>
+  </data>
+  <data name="Plan_Pause" xml:space="preserve">
+    <value>توقف موقت</value>
+  </data>
+  <data name="Plan_PauseMessage" xml:space="preserve">
+    <value>در مدت توقف، موعدی ایجاد نمی‌شود. تراکنش‌های گذشته تغییری نمی‌کنند.</value>
+  </data>
+  <data name="Plan_EndAction" xml:space="preserve">
+    <value>پایان برنامه</value>
+  </data>
+  <data name="Plan_EndMessage" xml:space="preserve">
+    <value>برنامه از امروز پایان می‌یابد. تراکنش‌ها و سابقهٔ گذشته حفظ می‌شوند.</value>
+  </data>
+  <data name="Plan_Delete" xml:space="preserve">
+    <value>حذف برنامه</value>
+  </data>
+  <data name="Plan_DeleteMessage" xml:space="preserve">
+    <value>این برنامه حذف شود؟ هیچ نوبت ثبت‌شده‌ای ندارد.</value>
+  </data>
 </root>

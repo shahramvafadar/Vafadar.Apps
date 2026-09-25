@@ -4,6 +4,7 @@ using Vafadar.Finance.App.Features.Onboarding;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
+using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 
@@ -71,6 +72,7 @@ internal static class DebugSnapshots
         }
 
         var (expenseId, foodId) = await SeedAsync(services);
+        var (planId, planDate) = await SeedPlansAsync(services);
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
         {
             ("home", "//home", null),
@@ -78,6 +80,11 @@ internal static class DebugSnapshots
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
+            ("plans", "//plans", null),
+            ("plan-new", AppShell.PlanEditorRoute, null),
+            ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
+            ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
+            ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("account", AppShell.AccountEditorRoute, null),
             ("categories", AppShell.CategoriesRoute, null),
@@ -125,6 +132,55 @@ internal static class DebugSnapshots
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         return (groceries.Id, Category("Food"));
+    }
+
+    // A monthly rent with an overdue occurrence, an estimated phone bill and a salary that posts automatically.
+    private static async Task<(Guid PlanId, DateOnly OverdueDate)> SeedPlansAsync(IServiceProvider services)
+    {
+        var finance = services.GetRequiredService<FinanceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        var categories = await finance.GetCategoriesAsync();
+        Guid Category(string key) => categories.First(c => c.SystemKey == key).Id;
+        var checking = (await finance.GetAccountsAsync()).First();
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var rentStart = today.AddDays(-3).AddMonths(-2);
+
+        var rent = new Schedule
+        {
+            Name = "Rent",
+            AccountId = checking.Id,
+            CategoryId = Category("Housing"),
+            Amount = 95_000,
+            Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = rentStart },
+            ReminderEnabled = true,
+        };
+        var phone = new Schedule
+        {
+            Name = "Phone bill",
+            AccountId = checking.Id,
+            CategoryId = Category("Communication"),
+            AmountMode = AmountMode.Estimated,
+            Amount = 2_990,
+            Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = today.AddDays(9) },
+        };
+        var salary = new Schedule
+        {
+            Name = "Salary",
+            Kind = EntryKind.Income,
+            AccountId = checking.Id,
+            CategoryId = Category("Salary"),
+            Amount = 250_000,
+            Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = today.AddDays(20), DayRule = MonthDayRule.LastDayOfMonth },
+            AutoPost = true,
+            AutoPostFrom = today,
+        };
+        await plans.SaveSchedulesAsync([rent, phone, salary]);
+
+        // Settle the first rent so that the plan has history.
+        var states = await plans.GetStatesAsync(rent.Id);
+        var first = Occurrences.Between(rent, states, rentStart, rentStart, today).Single();
+        await plans.SettleAsync(first, Occurrences.CreateEntry(first, 95_000, rentStart, ReviewState.Confirmed));
+        return (rent.Id, rentStart.AddMonths(1));
     }
 
     private static async Task CaptureAsync(App app, string folder, string name)

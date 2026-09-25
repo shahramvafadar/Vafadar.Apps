@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Plans.PlanDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:entries="clr-namespace:Vafadar.Finance.App.Features.Entries"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Plans"
+    x:DataType="local:PlanDetailViewModel"
+    Title="{v:Translate Plan_Details}">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="OccurrenceTemplate" x:DataType="local:OccurrenceRow">
+            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:PlanDetailViewModel}}, x:DataType=local:PlanDetailViewModel}"
+                                          CommandParameter="{Binding .}" />
+                </Grid.GestureRecognizers>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                    <Label Text="{Binding DateText}" FontSize="15" />
+                    <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
+                </VerticalStackLayout>
+                <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Label Text="{v:Translate Entry_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
+
+        <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" />
+                        <Label Text="{Binding AmountText}" Style="{StaticResource AmountLarge}" />
+                        <Label Text="{Binding RuleText}" Style="{StaticResource Secondary}" />
+                        <Label Text="{v:Translate Plan_Paused}" TextColor="{StaticResource WarningText}" IsVisible="{Binding IsPaused}" />
+                        <Label Text="{v:Translate Plan_Ended}" Style="{StaticResource Secondary}" IsVisible="{Binding IsEnded}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Lines}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="entries:DetailLine">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Value}" FontSize="15" VerticalOptions="Center" HorizontalTextAlignment="End" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{v:Translate Plan_NextOccurrences}" Style="{StaticResource SectionHeader}" IsVisible="{Binding IsActive}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsActive}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}" BindableLayout.ItemTemplate="{StaticResource OccurrenceTemplate}" />
+                </Border>
+
+                <Label Text="{v:Translate Plan_History}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasHistory}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasHistory}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding History}" BindableLayout.ItemTemplate="{StaticResource OccurrenceTemplate}" />
+                </Border>
+
+                <!-- Resume with a preview of the restart date (REC-16) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsPaused}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Plan_ResumeFrom}" Style="{StaticResource Secondary}" />
+                        <v:DateField Date="{Binding ResumeFrom}" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Plan_Resume}" Command="{Binding ResumeCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0"
+                        IsVisible="{Binding IsEnded, Converter={StaticResource InvertedBoolConverter}}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsActive}">
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Plan_Pause}" Command="{Binding PauseCommand}" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Plan_EndAction}" Command="{Binding EndCommand}" />
+                </Grid>
+                <Button Text="{v:Translate Plan_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
+                        TextColor="{StaticResource ExpenseText}" IsVisible="{Binding CanDelete}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

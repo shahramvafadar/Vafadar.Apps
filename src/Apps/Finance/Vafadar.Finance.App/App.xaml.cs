@@ -45,6 +45,37 @@ public partial class App : Application
         return window;
     }
 
+    protected override void OnStart()
+    {
+        base.OnStart();
+        RunAutoPost();
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+        RunAutoPost();
+    }
+
+    // Due plan occurrences are recorded whenever the app comes to the foreground; correctness never depends on
+    // background execution (REC-22). Failures are not fatal: the occurrences stay open for review.
+    private void RunAutoPost()
+    {
+        var processor = _services.GetRequiredService<AutoPostProcessor>();
+        var today = DateOnly.FromDateTime(_services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await processor.RunAsync(today);
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                System.Diagnostics.Debug.WriteLine($"Automatic posting failed: {ex}");
+            }
+        });
+    }
+
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
     // reliable on every platform. Rebuilding the shell gives a clean result; the user stays on the current page.
     private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>

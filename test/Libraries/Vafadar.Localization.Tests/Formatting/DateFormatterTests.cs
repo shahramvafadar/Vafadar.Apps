@@ -16,6 +16,7 @@ public sealed class DateFormatterTests : IDisposable
     [InlineData(DateFormatStyle.Short, "1405/07/03")]
     [InlineData(DateFormatStyle.Long, "Friday, 3 Mehr 1405")]
     [InlineData(DateFormatStyle.MonthYear, "Mehr 1405")]
+    [InlineData(DateFormatStyle.DayMonth, "3 Mehr")]
     public void English_with_Persian_calendar_uses_transliterated_month_names(DateFormatStyle style, string expected)
     {
         var formatter = CreateFormatter(AppLanguages.English, CalendarSystem.Persian);
@@ -27,6 +28,7 @@ public sealed class DateFormatterTests : IDisposable
     [InlineData(DateFormatStyle.Short, "1405/07/03")]
     [InlineData(DateFormatStyle.Long, "جمعه 3 مهر 1405")]
     [InlineData(DateFormatStyle.MonthYear, "مهر 1405")]
+    [InlineData(DateFormatStyle.DayMonth, "3 مهر")]
     public void Persian_with_Persian_calendar_uses_conventional_Persian_patterns(DateFormatStyle style, string expected)
     {
         var formatter = CreateFormatter(AppLanguages.Persian, CalendarSystem.Persian);
@@ -58,6 +60,14 @@ public sealed class DateFormatterTests : IDisposable
         var formatter = CreateFormatter(AppLanguages.German, CalendarSystem.Persian);
 
         Assert.Equal("Freitag, 3 Mehr 1405", formatter.Format(Date, DateFormatStyle.Long));
+    }
+
+    [Fact]
+    public void Dates_outside_the_Persian_range_do_not_throw()
+    {
+        var formatter = CreateFormatter(AppLanguages.Persian, CalendarSystem.Persian);
+
+        Assert.Equal("0001-01-01", formatter.Format(DateOnly.MinValue, DateFormatStyle.Long));
     }
 
     private static DateFormatter CreateFormatter(AppLanguage language, CalendarSystem calendar)

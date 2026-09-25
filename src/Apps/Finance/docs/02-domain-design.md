@@ -76,7 +76,13 @@ MissingDayPolicy (LastValidDay – default – or Skip), End (Never, OnDate, Aft
   31st that moved to the 28th returns to the 31st next month (REC-09, AT-19).
 * Persian months use `System.Globalization.PersianCalendar` (month lengths 31/30/29-30, leap Esfand) (AT-22, AT-24).
 * `AfterCount` counts generated occurrences; skipping or postponing does not add occurrences (REC-06, AT-27).
-* Past start dates generate no entries automatically; the user chooses "from today" or reviews past occurrences (REC-07).
+* Past start dates generate no entries automatically; the user chooses "from today" (the plan's `ActiveFrom` is set to
+  today) or reviews past occurrences (REC-07). Enabling auto-post sets `AutoPostFrom`, so older occurrences are never
+  posted automatically.
+* A plan owns the slice [`ActiveFrom`, `ActiveUntil`] of its rule. "This and future" edits, resume after a pause and
+  ending a plan all work on this window; the continuation plan keeps the same anchor, so dates and occurrence numbers
+  continue exactly (REC-15, REC-16). States and settling entries from the split date on move to the continuation.
+* Deleting a settling entry reopens its occurrence with `AutoPostSuppressed`; undo settles it again.
 
 ## 6. Occurrence lifecycle (REC-13..18)
 
