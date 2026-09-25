@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Test helpers shared by the test projects (fake HTTP handler, temporary directories, repository paths).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Authentication\Vafadar.Authentication.csproj" />
+  </ItemGroup>
+
+</Project>

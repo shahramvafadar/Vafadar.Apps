@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Settings.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Settings"
+    x:DataType="local:SettingsViewModel"
+    Title="{v:Translate Settings_Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <Label FontAttributes="Bold" Text="{v:Translate Settings_Language}" />
+            <Picker ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" />
+
+            <Label FontAttributes="Bold" Text="{v:Translate Settings_Calendar}" />
+            <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}" />
+            <Label Text="{Binding CalendarPreview}" />
+
+            <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Gray200}" />
+
+            <Label FontAttributes="Bold" Text="{v:Translate Settings_About}" />
+            <Label Text="{Binding VersionText}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

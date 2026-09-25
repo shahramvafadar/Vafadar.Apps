@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Vafadar Finance domain model and use cases. Platform independent; shared by the mobile app and a future web app.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Core\Vafadar.Core.csproj" />
+  </ItemGroup>
+
+</Project>

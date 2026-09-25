@@ -1,0 +1,38 @@
+Copyright (c) 2026 Shahram Vafadar. All rights reserved.
+
+This repository and its contents (source code, documentation, images and other
+material, together the "Material") are made publicly visible for transparency
+and reference only. The Material is NOT open source.
+
+No license or other right is granted to use, copy, modify, merge, publish,
+distribute, sublicense, sell, or create derivative works of the Material, in
+whole or in part, except as expressly permitted below or with the prior written
+permission of the copyright holder.
+
+Permitted without further permission:
+
+  1. Viewing the Material on GitHub, and forking this repository on GitHub, to
+     the extent required by the GitHub Terms of Service. A fork does not grant
+     any additional rights.
+
+  2. Using the official releases of the apps obtained through official
+     distribution channels (such as Google Play, the Apple App Store or
+     vafadar.pro), subject to the terms of those channels.
+
+  3. Submitting issues and pull requests to this repository. By submitting a
+     contribution, you grant the copyright holder a perpetual, worldwide,
+     non-exclusive, royalty-free, irrevocable license to use, modify and
+     distribute your contribution under any terms, and you confirm that you
+     have the right to grant this license.
+
+Third-party components referenced by or included in this repository remain
+subject to their own licenses.
+
+THE MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+MATERIAL OR THE USE OR OTHER DEALINGS IN THE MATERIAL.
+
+For permission requests, please open an issue in this repository.

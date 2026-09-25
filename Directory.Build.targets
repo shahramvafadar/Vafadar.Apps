@@ -1,0 +1,10 @@
+<Project>
+
+  <!-- Every production assembly exposes its internals to its matching test project (Foo -> Foo.Tests). -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
+  <Import Project="$(RepoRoot)eng\AppSecrets.targets" />
+
+</Project>

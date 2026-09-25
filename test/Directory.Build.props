@@ -1,0 +1,31 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!--
+    Settings for everything under test/.
+    Test projects are named "<ProjectUnderTest>.Tests"; other projects here (e.g. Vafadar.Testing) are helper libraries.
+  -->
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>$(MSBuildProjectName.EndsWith('.Tests'))</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <!--
+    xunit.v3 runs on Microsoft.Testing.Platform: every test project is a small executable.
+    Run with "dotnet test" (opted in via global.json), from Test Explorer, or directly with "dotnet run".
+    Code coverage and TRX reports are available through the two extensions below; see docs/guides/testing.md.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

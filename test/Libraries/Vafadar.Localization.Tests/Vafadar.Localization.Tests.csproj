@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Localization\Vafadar.Localization.csproj" />
+    <ProjectReference Include="..\..\Shared\Vafadar.Testing\Vafadar.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

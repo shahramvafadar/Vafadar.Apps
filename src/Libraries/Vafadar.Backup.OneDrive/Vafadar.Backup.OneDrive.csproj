@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Stores backups in the app folder of the user's own OneDrive (Microsoft Graph).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Authentication\Vafadar.Authentication.csproj" />
+    <ProjectReference Include="..\Vafadar.Backup\Vafadar.Backup.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<Project>
+
+  <!--
+    Common settings for every .NET MAUI project (apps and libraries). Import at the top of the project file:
+
+      <Import Project="$(RepoRoot)eng\Maui.props" />
+  -->
+
+  <PropertyGroup>
+    <TargetFrameworks>$(VafadarMauiTargetFrameworks)</TargetFrameworks>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+
+    <!-- Generate C# from XAML at compile time (faster startup, compile-time errors, trimming friendly). -->
+    <MauiXamlInflator>SourceGen</MauiXamlInflator>
+
+    <!-- Minimum OS versions. Android 7.0 (API 24) covers practically all active devices. -->
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" />
+  </ItemGroup>
+
+</Project>

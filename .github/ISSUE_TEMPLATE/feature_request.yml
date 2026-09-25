@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an idea for one of the apps.
+labels: [enhancement, triage]
+body:
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options:
+        - Finance
+        - Other / shared
+        - New app idea
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: How could it work?
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered

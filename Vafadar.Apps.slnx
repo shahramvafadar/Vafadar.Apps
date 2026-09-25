@@ -1,0 +1,57 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Secrets.props.example" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/eng/">
+    <File Path="eng/AppSecrets.targets" />
+    <File Path="eng/Maui.props" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/codeql.yml" />
+    <File Path=".github/workflows/release-android.yml" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Apps/" />
+  <Folder Name="/src/Apps/Finance/">
+    <Project Path="src/Apps/Finance/Vafadar.Finance.App/Vafadar.Finance.App.csproj" />
+    <Project Path="src/Apps/Finance/Vafadar.Finance.Core/Vafadar.Finance.Core.csproj" />
+    <Project Path="src/Apps/Finance/Vafadar.Finance.Data/Vafadar.Finance.Data.csproj" />
+  </Folder>
+  <Folder Name="/src/Libraries/">
+    <Project Path="src/Libraries/Vafadar.Authentication/Vafadar.Authentication.csproj" />
+    <Project Path="src/Libraries/Vafadar.Backup.GoogleDrive/Vafadar.Backup.GoogleDrive.csproj" />
+    <Project Path="src/Libraries/Vafadar.Backup.OneDrive/Vafadar.Backup.OneDrive.csproj" />
+    <Project Path="src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
+    <Project Path="src/Libraries/Vafadar.Core/Vafadar.Core.csproj" />
+    <Project Path="src/Libraries/Vafadar.Data/Vafadar.Data.csproj" />
+    <Project Path="src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <Project Path="src/Libraries/Vafadar.Maui/Vafadar.Maui.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+  <Folder Name="/test/Apps/" />
+  <Folder Name="/test/Apps/Finance/">
+    <Project Path="test/Apps/Finance/Vafadar.Finance.Core.Tests/Vafadar.Finance.Core.Tests.csproj" />
+    <Project Path="test/Apps/Finance/Vafadar.Finance.Data.Tests/Vafadar.Finance.Data.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Libraries/">
+    <Project Path="test/Libraries/Vafadar.Backup.GoogleDrive.Tests/Vafadar.Backup.GoogleDrive.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Backup.OneDrive.Tests/Vafadar.Backup.OneDrive.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Backup.Tests/Vafadar.Backup.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Core.Tests/Vafadar.Core.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Data.Tests/Vafadar.Data.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Localization.Tests/Vafadar.Localization.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Shared/">
+    <Project Path="test/Shared/Vafadar.Testing/Vafadar.Testing.csproj" />
+  </Folder>
+</Solution>

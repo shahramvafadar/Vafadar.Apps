@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Foundation types shared by all Vafadar apps: entity base types, app environment and settings abstractions.</Description>
+  </PropertyGroup>
+
+</Project>

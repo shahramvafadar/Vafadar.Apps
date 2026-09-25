@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(RepoRoot)eng\Maui.props" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Vafadar.Finance.App</RootNamespace>
+    <Description>Vafadar Finance: personal income and expense tracking with reports (Android, iOS, Windows).</Description>
+
+    <!-- Display name (localized at runtime through resources; this is the installer / launcher fallback). -->
+    <ApplicationTitle>Finance</ApplicationTitle>
+
+    <!-- App identifier: NEVER change after the first store release. Must match FinanceApp.AppId. -->
+    <ApplicationId>pro.vafadar.finance</ApplicationId>
+
+    <!--
+      Versions. ApplicationDisplayVersion is the user-visible version (semantic: major.minor.patch).
+      ApplicationVersion is the store build number (Android versionCode / iOS CFBundleVersion) and must increase with
+      every store upload. See docs/guides/release-and-publishing.md.
+    -->
+    <ApplicationDisplayVersion>0.1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <!-- Windows: unpackaged .exe for development and personal use. -->
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
+
+  <ItemGroup Label="Build-time secrets (see eng/AppSecrets.targets)">
+    <AppSecret Include="SyncfusionLicenseKey" Value="$(SyncfusionLicenseKey)" />
+  </ItemGroup>
+
+  <ItemGroup Label="MAUI resources">
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1B5E20" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1B5E20" BaseSize="128,128" />
+    <MauiImage Include="Resources\Images\*" />
+    <MauiFont Include="Resources\Fonts\*" />
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Backup\Vafadar.Backup.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Maui\Vafadar.Maui.csproj" />
+    <ProjectReference Include="..\Vafadar.Finance.Core\Vafadar.Finance.Core.csproj" />
+    <ProjectReference Include="..\Vafadar.Finance.Data\Vafadar.Finance.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+  </ItemGroup>
+
+</Project>

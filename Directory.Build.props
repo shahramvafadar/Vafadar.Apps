@@ -1,0 +1,53 @@
+<Project>
+
+  <!--
+    Shared MSBuild settings for every project in the repository.
+    Project-type specific settings live in src/Directory.Build.props and test/Directory.Build.props.
+  -->
+
+  <!-- Local, git-ignored secrets. See docs/guides/secrets-and-configuration.md. -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Secrets.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)Directory.Secrets.props')" />
+
+  <PropertyGroup Label="Repository">
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <Authors>Shahram Vafadar</Authors>
+    <Company>Vafadar</Company>
+    <Product>Vafadar Apps</Product>
+    <Copyright>Copyright © Shahram Vafadar. All rights reserved.</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Target frameworks">
+    <!-- Plain .NET libraries, tests and (future) web projects. -->
+    <VafadarTargetFramework>net10.0</VafadarTargetFramework>
+
+    <!--
+      MAUI apps and libraries. Android is always built; iOS needs macOS (or a paired Mac) and is skipped on Linux;
+      Windows is only built on Windows. Mac Catalyst is intentionally not targeted.
+      Override for a single platform with -p:VafadarMauiTargetFrameworks=net10.0-android (see docs/guides/building.md).
+    -->
+    <VafadarMauiTargetFrameworks>net10.0-android</VafadarMauiTargetFrameworks>
+    <VafadarMauiTargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(VafadarMauiTargetFrameworks);net10.0-ios</VafadarMauiTargetFrameworks>
+    <VafadarMauiTargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(VafadarMauiTargetFrameworks);net10.0-windows10.0.19041.0</VafadarMauiTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="C#">
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Build">
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <TreatWarningsAsErrors Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <!-- Nothing in this repository is published as a NuGet package. -->
+    <IsPackable>false</IsPackable>
+    <!-- Only ship satellite (translation) assemblies of referenced packages for the languages the apps support. -->
+    <SatelliteResourceLanguages>en;fa;de</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+</Project>

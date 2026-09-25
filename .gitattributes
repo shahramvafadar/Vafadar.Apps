@@ -1,0 +1,40 @@
+# Normalize line endings in the repository; check out with the platform default.
+* text=auto
+
+# Always LF (executed on Linux/macOS)
+*.sh text eol=lf
+
+# Always CRLF (Windows-only tooling)
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Source and markup
+*.cs text diff=csharp
+*.xaml text
+*.razor text
+*.csproj text
+*.props text
+*.targets text
+*.slnx text
+*.slnf text
+*.resx text
+*.json text
+*.md text diff=markdown
+*.yml text
+*.yaml text
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.keystore binary
+*.jks binary
+*.db binary
+*.sqlite binary

@@ -1,0 +1,92 @@
+name: Release (Android)
+
+# Builds a signed Android App Bundle (.aab) for upload to Google Play.
+# Requires the secrets listed in docs/guides/release-and-publishing.md, stored in the "production" environment.
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: App project
+        type: choice
+        options:
+          - src/Apps/Finance/Vafadar.Finance.App/Vafadar.Finance.App.csproj
+      version:
+        description: Display version, e.g. 1.2.0
+        required: true
+      build-number:
+        description: Store build number (Android versionCode), higher than the last upload
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  bundle:
+    name: Signed App Bundle
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      APP_PROJECT: ${{ inputs.app }}
+      APP_VERSION: ${{ inputs.version }}
+      APP_BUILD_NUMBER: ${{ inputs.build-number }}
+      SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+    steps:
+      - name: Validate inputs
+        run: |
+          [[ "$APP_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::version must look like 1.2.0"; exit 1; }
+          [[ "$APP_BUILD_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo "::error::build-number must be a positive integer"; exit 1; }
+          [[ -n "$ANDROID_KEYSTORE_BASE64" && -n "$SyncfusionLicenseKey" ]] || { echo "::error::signing or license secrets are missing"; exit 1; }
+
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: microsoft
+          java-version: '17'
+
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
+
+      - name: Restore upload keystore
+        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.keystore"
+
+      - name: Publish
+        run: >
+          dotnet publish "$APP_PROJECT" --configuration Release --framework net10.0-android
+          -p:VafadarMauiTargetFrameworks=net10.0-android
+          -p:ApplicationDisplayVersion="$APP_VERSION"
+          -p:ApplicationVersion="$APP_BUILD_NUMBER"
+          -p:AndroidPackageFormats=aab
+          -p:AndroidKeyStore=true
+          -p:AndroidSigningKeyStore="$RUNNER_TEMP/upload.keystore"
+          -p:AndroidSigningKeyAlias="$ANDROID_KEY_ALIAS"
+          -p:AndroidSigningStorePass=env:ANDROID_KEYSTORE_PASSWORD
+          -p:AndroidSigningKeyPass=env:ANDROID_KEY_PASSWORD
+          --output "$RUNNER_TEMP/publish"
+
+      - name: Remove keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.keystore"
+
+      # NOTE: artifacts of a public repository can be downloaded by any signed-in GitHub user.
+      # Keep the retention short; upload to Google Play and delete the artifact afterwards.
+      - name: Upload App Bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-${{ inputs.version }}-${{ inputs.build-number }}
+          path: ${{ runner.temp }}/publish/*-Signed.aab
+          if-no-files-found: error
+          retention-days: 3

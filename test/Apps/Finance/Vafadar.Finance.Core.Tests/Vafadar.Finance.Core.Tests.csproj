@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Apps\Finance\Vafadar.Finance.Core\Vafadar.Finance.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Vafadar.Testing\Vafadar.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

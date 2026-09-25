@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(RepoRoot)eng\Maui.props" />
+
+  <PropertyGroup>
+    <Description>Shared .NET MAUI infrastructure: app bootstrap (UseVafadar), preferences, localization in XAML, right-to-left layout, Syncfusion setup and MVVM base types.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Core\Vafadar.Core.csproj" />
+    <ProjectReference Include="..\Vafadar.Localization\Vafadar.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Syncfusion.Licensing" />
+    <PackageReference Include="Syncfusion.Maui.Core" />
+  </ItemGroup>
+
+</Project>

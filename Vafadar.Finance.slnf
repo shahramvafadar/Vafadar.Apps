@@ -1,0 +1,27 @@
+{
+  "solution": {
+    "path": "Vafadar.Apps.slnx",
+    "projects": [
+      "src\\Apps\\Finance\\Vafadar.Finance.App\\Vafadar.Finance.App.csproj",
+      "src\\Apps\\Finance\\Vafadar.Finance.Core\\Vafadar.Finance.Core.csproj",
+      "src\\Apps\\Finance\\Vafadar.Finance.Data\\Vafadar.Finance.Data.csproj",
+      "src\\Libraries\\Vafadar.Authentication\\Vafadar.Authentication.csproj",
+      "src\\Libraries\\Vafadar.Backup.GoogleDrive\\Vafadar.Backup.GoogleDrive.csproj",
+      "src\\Libraries\\Vafadar.Backup.OneDrive\\Vafadar.Backup.OneDrive.csproj",
+      "src\\Libraries\\Vafadar.Backup\\Vafadar.Backup.csproj",
+      "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
+      "src\\Libraries\\Vafadar.Data\\Vafadar.Data.csproj",
+      "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",
+      "src\\Libraries\\Vafadar.Maui\\Vafadar.Maui.csproj",
+      "test\\Apps\\Finance\\Vafadar.Finance.Core.Tests\\Vafadar.Finance.Core.Tests.csproj",
+      "test\\Apps\\Finance\\Vafadar.Finance.Data.Tests\\Vafadar.Finance.Data.Tests.csproj",
+      "test\\Libraries\\Vafadar.Backup.GoogleDrive.Tests\\Vafadar.Backup.GoogleDrive.Tests.csproj",
+      "test\\Libraries\\Vafadar.Backup.OneDrive.Tests\\Vafadar.Backup.OneDrive.Tests.csproj",
+      "test\\Libraries\\Vafadar.Backup.Tests\\Vafadar.Backup.Tests.csproj",
+      "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
+      "test\\Libraries\\Vafadar.Data.Tests\\Vafadar.Data.Tests.csproj",
+      "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
+      "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
+    ]
+  }
+}

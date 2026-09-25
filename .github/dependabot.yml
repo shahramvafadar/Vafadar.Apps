@@ -1,0 +1,37 @@
+version: 2
+
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    groups:
+      dotnet:
+        patterns: ["Microsoft.*", "System.*", "dotnet-ef"]
+      syncfusion:
+        patterns: ["Syncfusion.*"]
+      community-toolkit:
+        patterns: ["CommunityToolkit.*"]
+      testing:
+        patterns: ["xunit*"]
+    ignore:
+      # Syncfusion license keys are tied to a major version: a new major needs a new key first.
+      - dependency-name: "Syncfusion.*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: dotnet-sdk
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Authentication abstractions: signing in with external accounts (Google, Microsoft) and acquiring access tokens.</Description>
+  </PropertyGroup>
+
+</Project>

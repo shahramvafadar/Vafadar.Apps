@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Vafadar.Finance.App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:home="clr-namespace:Vafadar.Finance.App.Features.Home"
+    xmlns:settings="clr-namespace:Vafadar.Finance.App.Features.Settings"
+    Title="{v:Translate App_Name}">
+
+    <TabBar>
+        <ShellContent
+            Title="{v:Translate Home_Title}"
+            ContentTemplate="{DataTemplate home:HomePage}"
+            Route="home" />
+        <ShellContent
+            Title="{v:Translate Settings_Title}"
+            ContentTemplate="{DataTemplate settings:SettingsPage}"
+            Route="settings" />
+    </TabBar>
+
+</Shell>

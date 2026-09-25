@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Vafadar Finance persistence: EF Core SQLite database, entity configurations and migrations.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Data\Vafadar.Data.csproj" />
+    <ProjectReference Include="..\Vafadar.Finance.Core\Vafadar.Finance.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Design-time only (dotnet ef migrations ...); not shipped with the app. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
