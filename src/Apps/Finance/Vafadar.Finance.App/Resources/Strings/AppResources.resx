@@ -973,4 +973,101 @@
   <data name="Backup_SizeMb" xml:space="preserve">
     <value>{0} MB</value>
   </data>
+  <data name="Budget_Title" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="Budget_EditTitle" xml:space="preserve">
+    <value>Monthly budget</value>
+  </data>
+  <data name="Budget_Currency" xml:space="preserve">
+    <value>{0} · {1} months</value>
+    <comment>{0} currency code, {1} calendar name</comment>
+  </data>
+  <data name="Budget_PreviousMonth" xml:space="preserve">
+    <value>Previous month</value>
+  </data>
+  <data name="Budget_NextMonth" xml:space="preserve">
+    <value>Next month</value>
+  </data>
+  <data name="Budget_None" xml:space="preserve">
+    <value>No budget for this month. A budget is optional – it helps you see how much is left.</value>
+  </data>
+  <data name="Budget_Create" xml:space="preserve">
+    <value>Create budget</value>
+  </data>
+  <data name="Budget_CopyPrevious" xml:space="preserve">
+    <value>Copy last month's budget</value>
+  </data>
+  <data name="Budget_Total" xml:space="preserve">
+    <value>Overall</value>
+  </data>
+  <data name="Budget_Of" xml:space="preserve">
+    <value>of {0}</value>
+  </data>
+  <data name="Budget_Left" xml:space="preserve">
+    <value>{0} left · {1} % used</value>
+  </data>
+  <data name="Budget_Over" xml:space="preserve">
+    <value>Over budget by {0}</value>
+  </data>
+  <data name="Budget_ZeroLimit" xml:space="preserve">
+    <value>Limit 0 – no spending planned</value>
+  </data>
+  <data name="Budget_Categories" xml:space="preserve">
+    <value>Category limits</value>
+  </data>
+  <data name="Budget_CategoriesHint" xml:space="preserve">
+    <value>Optional. A category limit looks at the same expenses as the overall limit – nothing is counted twice.</value>
+  </data>
+  <data name="Budget_ConfirmedOnly" xml:space="preserve">
+    <value>Confirmed entries only</value>
+  </data>
+  <data name="Budget_IncludesUnreviewed" xml:space="preserve">
+    <value>Includes {0} entries that still need review.</value>
+  </data>
+  <data name="Budget_Planned" xml:space="preserve">
+    <value>Planned expenses this month: {0} ({1} due items)</value>
+  </data>
+  <data name="Budget_PlannedUnknown" xml:space="preserve">
+    <value>{0} with unknown amount</value>
+  </data>
+  <data name="Budget_Equivalent" xml:space="preserve">
+    <value>Yearly and other non-monthly plans correspond to about {0} per month (for comparison only).</value>
+  </data>
+  <data name="Budget_CopyNext" xml:space="preserve">
+    <value>Copy to next month</value>
+  </data>
+  <data name="Budget_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Budget_CopyMessage" xml:space="preserve">
+    <value>Create the budget for {0} with the same limits?</value>
+  </data>
+  <data name="Budget_CopyReplaceMessage" xml:space="preserve">
+    <value>{0} already has a budget. Replace it with these limits?</value>
+  </data>
+  <data name="Budget_Delete" xml:space="preserve">
+    <value>Delete budget</value>
+  </data>
+  <data name="Budget_DeleteMessage" xml:space="preserve">
+    <value>Delete the budget of this month? Entries are not affected.</value>
+  </data>
+  <data name="Budget_TotalLimit" xml:space="preserve">
+    <value>Overall monthly limit</value>
+  </data>
+  <data name="Budget_NoLimit" xml:space="preserve">
+    <value>No overall limit</value>
+  </data>
+  <data name="Budget_ScopeHint" xml:space="preserve">
+    <value>Counts expenses minus refunds of the accounts in totals in this currency. Transfers, opening balances and adjustments never count.</value>
+  </data>
+  <data name="Budget_Alerts" xml:space="preserve">
+    <value>Notify me at 80 % and when exceeded</value>
+  </data>
+  <data name="Budget_NothingToSave" xml:space="preserve">
+    <value>Enter an overall limit or at least one category limit.</value>
+  </data>
+  <data name="Home_BudgetLeft" xml:space="preserve">
+    <value>{0} left of {1}</value>
+  </data>
 </root>

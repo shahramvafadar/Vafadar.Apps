@@ -43,4 +43,5 @@ privacy policy, Data safety and Financial features declaration match that build.
 | S4 | Implemented – verified (recurrence engine Gregorian/Persian, plans, occurrences, review/confirm/link/skip/move, "this and future" split, pause/resume/end, auto-post processor; 37 new tests; en/de/fa snapshots) |
 | S5 | Implemented – verified (scope header, recorded balance, attention card, period income/expense/result, next due, expense donut with table, drill-down to entries with the same filter; AT-50 unit-tested) |
 | S6 | Implemented – verified (encrypted backup file shared to any destination, last 10 kept on device, restore from file or device with password check, preview with counts, safety copy, auto-post after restore; AT-56/57 integration-tested) |
-| S7–S15 | Planned |
+| S7 | Implemented – verified (monthly budget per calendar and currency, overall and category limits, zero/over/no-budget states, confirmed-only switch, plans of the month with exact occurrence counts and monthly equivalents, copy to next month, Home card; alerts delivered with S10) |
+| S8–S15 | Planned |

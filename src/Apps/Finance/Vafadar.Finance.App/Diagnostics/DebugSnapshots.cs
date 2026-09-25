@@ -73,6 +73,7 @@ internal static class DebugSnapshots
 
         var (expenseId, foodId) = await SeedAsync(services);
         var (planId, planDate) = await SeedPlansAsync(services);
+        await SeedBudgetAsync(services, foodId);
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
@@ -91,6 +92,7 @@ internal static class DebugSnapshots
             ("account", AppShell.AccountEditorRoute, null),
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
+            ("budget", AppShell.BudgetRoute, null),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("more", "//more", null),
@@ -142,6 +144,16 @@ internal static class DebugSnapshots
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         return (groceries.Id, Category("Food"));
+    }
+
+    private static async Task SeedBudgetAsync(IServiceProvider services, Guid foodId)
+    {
+        var store = services.GetRequiredService<FinanceStore>();
+        var settings = await store.GetSettingsAsync();
+        var (year, month) = Core.Budgets.PeriodMath.MonthOf(DateOnly.FromDateTime(DateTime.Today), settings.BudgetCalendar);
+        var budget = new Core.Budgets.Budget { Year = year, Month = month, Calendar = settings.BudgetCalendar, CurrencyCode = settings.ReportCurrencyCode, TotalLimit = 120_000 };
+        budget.CategoryLimits.Add(new Core.Budgets.BudgetCategoryLimit { CategoryId = foodId, Limit = 4_000 });
+        await store.SaveBudgetAsync(budget);
     }
 
     // A monthly rent with an overdue occurrence, an estimated phone bill and a salary that posts automatically.

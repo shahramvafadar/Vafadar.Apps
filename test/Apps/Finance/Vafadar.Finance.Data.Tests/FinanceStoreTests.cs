@@ -193,6 +193,29 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Budget_limits_are_replaced_on_save_and_budgets_are_found_by_period()
+    {
+        var food = Guid.CreateVersion7();
+        var housing = Guid.CreateVersion7();
+        var budget = new Vafadar.Finance.Core.Budgets.Budget { Year = 1406, Month = 1, Calendar = Vafadar.Finance.Core.Budgets.PeriodCalendar.Persian, CurrencyCode = "EUR", TotalLimit = 100_000 };
+        budget.CategoryLimits.Add(new() { CategoryId = food, Limit = 30_000 });
+        await _store.SaveBudgetAsync(budget, Ct);
+
+        budget.TotalLimit = 120_000;
+        budget.CategoryLimits = [new() { CategoryId = housing, Limit = 50_000 }];
+        await _store.SaveBudgetAsync(budget, Ct);
+
+        var reloaded = await _store.GetBudgetAsync(1406, 1, Vafadar.Finance.Core.Budgets.PeriodCalendar.Persian, "EUR", Ct);
+        Assert.NotNull(reloaded);
+        Assert.Equal(120_000, reloaded.TotalLimit);
+        Assert.Equal(housing, reloaded.CategoryLimits.Single().CategoryId);
+        Assert.Null(await _store.GetBudgetAsync(1406, 1, Vafadar.Finance.Core.Budgets.PeriodCalendar.Gregorian, "EUR", Ct));
+
+        await _store.DeleteBudgetAsync(budget.Id, Ct);
+        Assert.Empty(await _store.GetBudgetsAsync(Ct));
+    }
+
+    [Fact]
     public async Task Settings_are_created_on_first_use_and_persist()
     {
         var settings = await _store.GetSettingsAsync(Ct);

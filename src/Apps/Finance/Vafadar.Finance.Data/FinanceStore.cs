@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Finance.Core.Accounts;
+using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Plans;
@@ -161,6 +162,55 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <summary>Returns the budget of a month in a calendar and currency, if one exists.</summary>
+    public async Task<Budget?> GetBudgetAsync(int year, int month, PeriodCalendar calendar, string currencyCode, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Budgets.AsNoTracking()
+            .FirstOrDefaultAsync(b => b.Year == year && b.Month == month && b.Calendar == calendar && b.CurrencyCode == currencyCode, cancellationToken);
+    }
+
+    /// <summary>Returns all budgets, newest period first.</summary>
+    public async Task<List<Budget>> GetBudgetsAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Budgets.AsNoTracking().OrderByDescending(b => b.Year).ThenByDescending(b => b.Month).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Inserts or updates a budget including its category limits.</summary>
+    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(budget);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var existing = await db.Budgets.FirstOrDefaultAsync(b => b.Id == budget.Id, cancellationToken);
+        if (existing is null)
+        {
+            db.Budgets.Add(budget);
+        }
+        else
+        {
+            // Owned limits are replaced as a whole; the tracked instance keeps EF's owned-entity bookkeeping right.
+            existing.TotalLimit = budget.TotalLimit;
+            existing.AccountIds = [.. budget.AccountIds];
+            existing.AlertsEnabled = budget.AlertsEnabled;
+            existing.CategoryLimits.Clear();
+            existing.CategoryLimits.AddRange(budget.CategoryLimits.Select(l => new BudgetCategoryLimit { CategoryId = l.CategoryId, Limit = l.Limit }));
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <summary>Deletes a budget; entries are not affected.</summary>
+    public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == id, cancellationToken) is { } budget)
+        {
+            db.Budgets.Remove(budget);
+            await db.SaveChangesAsync(cancellationToken);
+        }
     }
 
     /// <summary>Returns entries between two dates (inclusive), newest first.</summary>

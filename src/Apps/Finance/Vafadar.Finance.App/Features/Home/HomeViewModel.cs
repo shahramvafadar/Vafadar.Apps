@@ -100,6 +100,18 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? ChartNote { get; set; }
 
+    [ObservableProperty]
+    public partial bool HasBudget { get; set; }
+
+    [ObservableProperty]
+    public partial string? BudgetText { get; set; }
+
+    [ObservableProperty]
+    public partial double BudgetProgress { get; set; }
+
+    [ObservableProperty]
+    public partial Color? BudgetColor { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
@@ -149,6 +161,7 @@ public sealed partial class HomeViewModel : ViewModelBase
                 refunds));
         }
 
+        await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
         await LoadPlansAsync(byId, categories, today);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
@@ -161,6 +174,36 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         HasAttention = UnreviewedCount > 0 || DueCount > 0;
+    }
+
+    // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
+    private async Task LoadBudgetAsync(PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
+    {
+        var (year, month) = PeriodMath.MonthOf(today, calendar);
+        if (PeriodIndex == 1)
+        {
+            (year, month) = PeriodMath.Previous(year, month);
+        }
+
+        var budget = await _store.GetBudgetAsync(year, month, calendar, _reportCurrency);
+        HasBudget = budget?.TotalLimit is not null;
+        if (budget?.TotalLimit is not { } limit)
+        {
+            return;
+        }
+
+        var (from, to) = PeriodMath.MonthRange(year, month, calendar);
+        var status = new BudgetStatus(limit, BudgetCalculator.NetExpense(accounts, entries, from, to, _reportCurrency, budget.AccountIds.Count > 0 ? budget.AccountIds : null));
+        BudgetText = status.IsOver
+            ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _reportCurrency, culture))
+            : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _reportCurrency, culture), MoneyText.Format(limit, _reportCurrency, culture));
+        BudgetProgress = limit > 0 ? Math.Clamp((double)status.Spent / limit, 0, 1) : status.Spent > 0 ? 1 : 0;
+        BudgetColor = status.Alert switch
+        {
+            BudgetAlert.Exceeded => EntryPresenter.ExpenseColor,
+            BudgetAlert.Near => Color.FromArgb("#F9A825"),
+            _ => Color.FromArgb("#2E7D32"),
+        };
     }
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, DateOnly today)
@@ -279,6 +322,9 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenDueAsync() => Shell.Current.GoToAsync("//plans");
+
+    [RelayCommand]
+    private Task OpenBudgetAsync() => Shell.Current.GoToAsync(AppShell.BudgetRoute);
 
     [RelayCommand]
     private Task OpenOccurrenceAsync(PlanRow row) =>

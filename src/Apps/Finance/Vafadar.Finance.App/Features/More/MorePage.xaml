@@ -23,6 +23,14 @@
                     <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*">
                         <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCommand}" CommandParameter="budget" />
+                        </Grid.GestureRecognizers>
+                        <fi:SymbolIcon Symbol="Target" FontSize="24" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{v:Translate Budget_Title}" FontSize="16" VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
+                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*">
+                        <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenCommand}" CommandParameter="categories" />
                         </Grid.GestureRecognizers>
                         <fi:SymbolIcon Symbol="Tag" FontSize="24" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />

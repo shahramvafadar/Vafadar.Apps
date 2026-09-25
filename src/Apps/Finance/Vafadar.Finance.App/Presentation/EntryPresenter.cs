@@ -30,6 +30,9 @@ internal sealed class EntryPresenter(
     public static readonly Color ExpenseColor = Color.FromArgb("#B71C1C");
     public static readonly Color NeutralColor = Color.FromArgb("#37474F");
 
+    // The arrow points from the source to the destination in the reading direction.
+    private string Arrow => culture.TextInfo.IsRightToLeft ? "←" : "→";
+
     public string AccountName(Guid? id) => id is { } value && accounts.TryGetValue(value, out var account) ? account.Name : "?";
 
     public string CurrencyOf(Guid id) => accounts.TryGetValue(id, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
@@ -44,7 +47,7 @@ internal sealed class EntryPresenter(
 
     public string Subtitle(LedgerEntry entry) => entry.Kind switch
     {
-        EntryKind.Transfer => $"{AccountName(entry.AccountId)} → {AccountName(entry.ToAccountId)}",
+        EntryKind.Transfer => $"{AccountName(entry.AccountId)} {Arrow} {AccountName(entry.ToAccountId)}",
         EntryKind.Refund => $"{translator["EntryKind_Refund"]} · {categories.Name(entry.CategoryId)} · {AccountName(entry.AccountId)}",
         EntryKind.IncomeReversal => $"{translator["EntryKind_IncomeReversal"]} · {AccountName(entry.AccountId)}",
         EntryKind.Adjustment => AccountName(entry.AccountId),

@@ -96,6 +96,18 @@
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
 
+                <!-- Budget remaining (only when a budget exists) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenBudgetCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Budget_Title}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding BudgetText}" FontSize="16" FontAttributes="Bold" />
+                        <ProgressBar Progress="{Binding BudgetProgress}" ProgressColor="{Binding BudgetColor}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Next due items -->
                 <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasUpcoming}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">

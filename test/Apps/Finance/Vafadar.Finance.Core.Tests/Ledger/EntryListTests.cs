@@ -1,3 +1,4 @@
+using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Ledger;
 
 namespace Vafadar.Finance.Core.Tests.Ledger;
@@ -150,11 +151,11 @@ public sealed class EntryListTests
     [Fact]
     public void Persian_year_runs_from_nowruz_to_nowruz()
     {
-        var (first, last) = Budgets.PeriodMath.YearRange(new DateOnly(2026, 9, 26), Budgets.PeriodCalendar.Persian);
+        var (first, last) = PeriodMath.YearRange(new DateOnly(2026, 9, 26), PeriodCalendar.Persian);
 
         Assert.Equal(new DateOnly(2026, 3, 21), first);
         Assert.Equal(new DateOnly(2027, 3, 20), last);
-        Assert.Equal((1405, 12), Budgets.PeriodMath.Previous(1406, 1));
+        Assert.Equal((1405, 12), PeriodMath.Previous(1406, 1));
     }
 
     [Fact]

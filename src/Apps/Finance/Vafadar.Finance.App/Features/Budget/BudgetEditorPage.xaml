@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Budget.BudgetEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Budget"
+    x:DataType="local:BudgetEditorViewModel"
+    Title="{v:Translate Budget_EditTitle}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}" />
+            <Label Grid.Column="1" Text="{v:Translate Budget_EditTitle}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="{v:Translate Budget_TotalLimit}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Entry Text="{Binding TotalText}" Keyboard="Numeric" Placeholder="{v:Translate Budget_NoLimit}" FontSize="22" FontAttributes="Bold"
+                                   SemanticProperties.Description="{v:Translate Budget_TotalLimit}" />
+                            <Label Grid.Column="1" Text="{Binding CurrencyCode}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
+                        </Grid>
+                        <Label Text="{v:Translate Budget_ScopeHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0" />
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Budget_Alerts}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{StaticResource Primary}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{v:Translate Budget_Categories}" Style="{StaticResource SectionHeader}" />
+                <Label Text="{v:Translate Budget_CategoriesHint}" Style="{StaticResource Secondary}" />
+                <Border Style="{StaticResource Card}" Padding="16,4">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Limits}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:LimitInput">
+                                <Grid ColumnDefinitions="Auto,*,120" ColumnSpacing="10" MinimumHeightRequest="52">
+                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding Color}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
+                                    <Entry Grid.Column="2" Text="{Binding Text}" Keyboard="Numeric" Placeholder="–" HorizontalTextAlignment="End"
+                                           SemanticProperties.Description="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" />
+    </Grid>
+</ContentPage>

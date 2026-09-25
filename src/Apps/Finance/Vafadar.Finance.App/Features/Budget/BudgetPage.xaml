@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Budget.BudgetPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Budget"
+    x:DataType="local:BudgetViewModel"
+    Title="{v:Translate Budget_Title}">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="LineTemplate" x:DataType="local:BudgetLine">
+            <VerticalStackLayout Spacing="6" Padding="0,8">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalOptions="Center" />
+                    <HorizontalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{Binding SpentText}" FontAttributes="Bold" />
+                        <Label Text="{Binding LimitText}" Style="{StaticResource Secondary}" />
+                    </HorizontalStackLayout>
+                </Grid>
+                <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+
+            <!-- Month -->
+            <Grid ColumnDefinitions="48,*,48">
+                <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PreviousCommand}" />
+                    </Border.GestureRecognizers>
+                    <fi:SymbolIcon Symbol="{Binding PreviousIcon}" FontSize="22" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding PeriodText}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding CurrencyText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+                <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextCommand}" />
+                    </Border.GestureRecognizers>
+                    <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+
+            <!-- No budget is not a zero budget (BUD-01) -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget, Converter={StaticResource InvertedBoolConverter}}">
+                <VerticalStackLayout Spacing="12">
+                    <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <Label Text="{v:Translate Budget_None}" HorizontalTextAlignment="Center" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Budget_Create}" Command="{Binding EditCommand}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyPrevious}" Command="{Binding CopyPreviousCommand}"
+                            IsVisible="{Binding CanCopyPrevious}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Overall limit -->
+            <Border Style="{StaticResource Card}" Padding="16,4" IsVisible="{Binding HasTotal}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding TotalLines}" BindableLayout.ItemTemplate="{StaticResource LineTemplate}" />
+            </Border>
+
+            <!-- Category limits: an analysis of the same expenses, never added to the total (AT-40) -->
+            <Label Text="{v:Translate Budget_Categories}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasCategoryLines}" />
+            <Border Style="{StaticResource Card}" Padding="16,4" IsVisible="{Binding HasCategoryLines}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoryLines}" BindableLayout.ItemTemplate="{StaticResource LineTemplate}" />
+            </Border>
+
+            <!-- Unreviewed entries are visible in the numbers (BUD-04) -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{v:Translate Budget_ConfirmedOnly}" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                    <Label Text="{Binding UnreviewedText}" TextColor="{StaticResource WarningText}"
+                           IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Plans of this month -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding PlannedText, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="{Binding PlannedText}" />
+                    <Label Text="{Binding EquivalentText}" Style="{StaticResource Secondary}"
+                           IsVisible="{Binding EquivalentText, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasBudget}" Margin="0,8,0,0">
+                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyNext}" Command="{Binding CopyToNextCommand}" />
+                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

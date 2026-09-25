@@ -970,4 +970,100 @@
   <data name="Backup_SizeMb" xml:space="preserve">
     <value>{0} مگابایت</value>
   </data>
+  <data name="Budget_Title" xml:space="preserve">
+    <value>بودجه</value>
+  </data>
+  <data name="Budget_EditTitle" xml:space="preserve">
+    <value>بودجهٔ ماهانه</value>
+  </data>
+  <data name="Budget_Currency" xml:space="preserve">
+    <value>ماه‌های {1} · {0}</value>
+  </data>
+  <data name="Budget_PreviousMonth" xml:space="preserve">
+    <value>ماه قبل</value>
+  </data>
+  <data name="Budget_NextMonth" xml:space="preserve">
+    <value>ماه بعد</value>
+  </data>
+  <data name="Budget_None" xml:space="preserve">
+    <value>برای این ماه بودجه‌ای تعریف نشده است. بودجه اختیاری است و کمک می‌کند ببینید چقدر باقی مانده است.</value>
+  </data>
+  <data name="Budget_Create" xml:space="preserve">
+    <value>ساخت بودجه</value>
+  </data>
+  <data name="Budget_CopyPrevious" xml:space="preserve">
+    <value>کپی بودجهٔ ماه قبل</value>
+  </data>
+  <data name="Budget_Total" xml:space="preserve">
+    <value>کل</value>
+  </data>
+  <data name="Budget_Of" xml:space="preserve">
+    <value>از {0}</value>
+  </data>
+  <data name="Budget_Left" xml:space="preserve">
+    <value>باقی‌مانده {0} · مصرف {1}٪</value>
+  </data>
+  <data name="Budget_Over" xml:space="preserve">
+    <value>بیش از بودجه: {0}</value>
+  </data>
+  <data name="Budget_ZeroLimit" xml:space="preserve">
+    <value>سقف صفر؛ هزینه‌ای پیش‌بینی نشده</value>
+  </data>
+  <data name="Budget_Categories" xml:space="preserve">
+    <value>سقف دسته‌ها</value>
+  </data>
+  <data name="Budget_CategoriesHint" xml:space="preserve">
+    <value>اختیاری. سقف دسته همان هزینه‌های سقف کل را بررسی می‌کند و چیزی دوبار شمرده نمی‌شود.</value>
+  </data>
+  <data name="Budget_ConfirmedOnly" xml:space="preserve">
+    <value>فقط تراکنش‌های تأییدشده</value>
+  </data>
+  <data name="Budget_IncludesUnreviewed" xml:space="preserve">
+    <value>شامل {0} تراکنشی که هنوز بررسی نشده است.</value>
+  </data>
+  <data name="Budget_Planned" xml:space="preserve">
+    <value>هزینه‌های برنامه‌ریزی‌شدهٔ این ماه: {0} ({1} موعد)</value>
+  </data>
+  <data name="Budget_PlannedUnknown" xml:space="preserve">
+    <value>{0} مورد با مبلغ نامعلوم</value>
+  </data>
+  <data name="Budget_Equivalent" xml:space="preserve">
+    <value>برنامه‌های سالانه و غیرماهانه حدوداً معادل {0} در ماه است (فقط برای مقایسه).</value>
+  </data>
+  <data name="Budget_CopyNext" xml:space="preserve">
+    <value>کپی به ماه بعد</value>
+  </data>
+  <data name="Budget_Copy" xml:space="preserve">
+    <value>کپی</value>
+  </data>
+  <data name="Budget_CopyMessage" xml:space="preserve">
+    <value>بودجهٔ {0} با همین سقف‌ها ساخته شود؟</value>
+  </data>
+  <data name="Budget_CopyReplaceMessage" xml:space="preserve">
+    <value>{0} از قبل بودجه دارد. با این سقف‌ها جایگزین شود؟</value>
+  </data>
+  <data name="Budget_Delete" xml:space="preserve">
+    <value>حذف بودجه</value>
+  </data>
+  <data name="Budget_DeleteMessage" xml:space="preserve">
+    <value>بودجهٔ این ماه حذف شود؟ تراکنش‌ها تغییری نمی‌کنند.</value>
+  </data>
+  <data name="Budget_TotalLimit" xml:space="preserve">
+    <value>سقف کل ماه</value>
+  </data>
+  <data name="Budget_NoLimit" xml:space="preserve">
+    <value>بدون سقف کل</value>
+  </data>
+  <data name="Budget_ScopeHint" xml:space="preserve">
+    <value>هزینه‌ها منهای برگشت وجه در حساب‌های داخل جمع کل با این ارز حساب می‌شود. انتقال، موجودی آغازین و تعدیل هرگز حساب نمی‌شوند.</value>
+  </data>
+  <data name="Budget_Alerts" xml:space="preserve">
+    <value>اعلان در ۸۰٪ و هنگام عبور از سقف</value>
+  </data>
+  <data name="Budget_NothingToSave" xml:space="preserve">
+    <value>یک سقف کل یا دست‌کم یک سقف دسته وارد کنید.</value>
+  </data>
+  <data name="Home_BudgetLeft" xml:space="preserve">
+    <value>باقی‌مانده {0} از {1}</value>
+  </data>
 </root>

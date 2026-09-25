@@ -970,4 +970,100 @@
   <data name="Backup_SizeMb" xml:space="preserve">
     <value>{0} MB</value>
   </data>
+  <data name="Budget_Title" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="Budget_EditTitle" xml:space="preserve">
+    <value>Monatsbudget</value>
+  </data>
+  <data name="Budget_Currency" xml:space="preserve">
+    <value>{0} · {1} Monate</value>
+  </data>
+  <data name="Budget_PreviousMonth" xml:space="preserve">
+    <value>Vorheriger Monat</value>
+  </data>
+  <data name="Budget_NextMonth" xml:space="preserve">
+    <value>Nächster Monat</value>
+  </data>
+  <data name="Budget_None" xml:space="preserve">
+    <value>Für diesen Monat gibt es kein Budget. Ein Budget ist optional – es zeigt, wie viel noch übrig ist.</value>
+  </data>
+  <data name="Budget_Create" xml:space="preserve">
+    <value>Budget anlegen</value>
+  </data>
+  <data name="Budget_CopyPrevious" xml:space="preserve">
+    <value>Budget des Vormonats übernehmen</value>
+  </data>
+  <data name="Budget_Total" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
+  <data name="Budget_Of" xml:space="preserve">
+    <value>von {0}</value>
+  </data>
+  <data name="Budget_Left" xml:space="preserve">
+    <value>{0} übrig · {1} % verbraucht</value>
+  </data>
+  <data name="Budget_Over" xml:space="preserve">
+    <value>Budget um {0} überschritten</value>
+  </data>
+  <data name="Budget_ZeroLimit" xml:space="preserve">
+    <value>Limit 0 – keine Ausgaben geplant</value>
+  </data>
+  <data name="Budget_Categories" xml:space="preserve">
+    <value>Kategorie-Limits</value>
+  </data>
+  <data name="Budget_CategoriesHint" xml:space="preserve">
+    <value>Optional. Ein Kategorie-Limit betrachtet dieselben Ausgaben wie das Gesamtlimit – nichts wird doppelt gezählt.</value>
+  </data>
+  <data name="Budget_ConfirmedOnly" xml:space="preserve">
+    <value>Nur bestätigte Buchungen</value>
+  </data>
+  <data name="Budget_IncludesUnreviewed" xml:space="preserve">
+    <value>Enthält {0} noch zu prüfende Buchungen.</value>
+  </data>
+  <data name="Budget_Planned" xml:space="preserve">
+    <value>Geplante Ausgaben diesen Monat: {0} ({1} Fälligkeiten)</value>
+  </data>
+  <data name="Budget_PlannedUnknown" xml:space="preserve">
+    <value>{0} mit unbekanntem Betrag</value>
+  </data>
+  <data name="Budget_Equivalent" xml:space="preserve">
+    <value>Jährliche und andere nicht monatliche Planungen entsprechen etwa {0} pro Monat (nur zum Vergleich).</value>
+  </data>
+  <data name="Budget_CopyNext" xml:space="preserve">
+    <value>In den nächsten Monat übernehmen</value>
+  </data>
+  <data name="Budget_Copy" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="Budget_CopyMessage" xml:space="preserve">
+    <value>Budget für {0} mit denselben Limits anlegen?</value>
+  </data>
+  <data name="Budget_CopyReplaceMessage" xml:space="preserve">
+    <value>{0} hat bereits ein Budget. Durch diese Limits ersetzen?</value>
+  </data>
+  <data name="Budget_Delete" xml:space="preserve">
+    <value>Budget löschen</value>
+  </data>
+  <data name="Budget_DeleteMessage" xml:space="preserve">
+    <value>Budget dieses Monats löschen? Buchungen bleiben unverändert.</value>
+  </data>
+  <data name="Budget_TotalLimit" xml:space="preserve">
+    <value>Gesamtlimit pro Monat</value>
+  </data>
+  <data name="Budget_NoLimit" xml:space="preserve">
+    <value>Kein Gesamtlimit</value>
+  </data>
+  <data name="Budget_ScopeHint" xml:space="preserve">
+    <value>Zählt Ausgaben abzüglich Erstattungen der Konten in Summen in dieser Währung. Umbuchungen, Anfangssalden und Korrekturen zählen nie.</value>
+  </data>
+  <data name="Budget_Alerts" xml:space="preserve">
+    <value>Bei 80 % und bei Überschreitung benachrichtigen</value>
+  </data>
+  <data name="Budget_NothingToSave" xml:space="preserve">
+    <value>Geben Sie ein Gesamtlimit oder mindestens ein Kategorie-Limit ein.</value>
+  </data>
+  <data name="Home_BudgetLeft" xml:space="preserve">
+    <value>{0} von {1} übrig</value>
+  </data>
 </root>

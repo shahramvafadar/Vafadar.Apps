@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Finance.App.Features.Accounts;
 using Vafadar.Finance.App.Features.Settings;
 using Vafadar.Finance.Core.Accounts;
+using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
@@ -139,6 +140,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
             var settings = await _store.GetSettingsAsync();
             settings.ReportCurrencyCode = ReportCurrency;
             settings.DefaultAccountId = account.Id;
+
+            // Budget months follow the calendar chosen here; later changes apply to future budgets only (BUD-08).
+            settings.BudgetCalendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
             settings.OnboardingCompleted = true;
             await _store.SaveSettingsAsync(settings);
 

@@ -55,6 +55,13 @@ public static class VafadarMauiAppBuilderExtensions
         // Fluent UI System Icons (MIT), bundled offline (VIS-03).
         builder.UseFluentIcons();
 
+#if WINDOWS
+        // WinUI detects a text's base direction from its first strong character, so a Persian sentence that starts
+        // with an amount would be laid out left-to-right. Use the element's flow direction instead, as Android does.
+        Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("VafadarReadingOrder", (handler, _) =>
+            handler.PlatformView.TextReadingOrder = Microsoft.UI.Xaml.TextReadingOrder.UseFlowDirection);
+#endif
+
         var services = builder.Services;
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton(Preferences.Default);

@@ -23,7 +23,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Verified (unit, domain level) |
 | AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Verified (unit) |
 | AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Verified (unit) |
-| AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Engine verified (AT-17); budget sum with S7 |
+| AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Verified (unit) |
 | AT-19 | Day 31, last valid day | REC-08/09 | Unit | S4 | Verified (unit) |
 | AT-20 | Day 31, skip policy | REC-08 | Unit | S4 | Verified (unit) |
 | AT-21 | Last day of month | REC-08 | Unit | S4 | Verified (unit) |
@@ -44,9 +44,9 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Planned |
 | AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Planned |
-| AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit, domain level) |
-| AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit, domain level) |
-| AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Planned |
+| AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit + budget screen) |
+| AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit + budget screen) |
+| AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
 | AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Planned |
 | AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Planned |
 | AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Planned |
