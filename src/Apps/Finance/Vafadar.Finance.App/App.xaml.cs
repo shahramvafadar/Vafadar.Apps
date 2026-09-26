@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Finance.App.Features.Onboarding;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Localization;
@@ -20,6 +21,10 @@ public partial class App : Application
         var localization = services.GetRequiredService<ILocalizationService>();
         localization.Changed += OnLocalizationChanged;
         this.ApplyToModalPages(localization);
+
+        var reminders = services.GetRequiredService<ReminderService>();
+        reminders.WatchChanges();
+        reminders.Scheduler.Tapped += OnReminderTapped;
     }
 
     /// <summary>Replaces the root page of the main window, e.g. after onboarding.</summary>
@@ -48,20 +53,21 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
-        RunAutoPost();
+        RunForegroundWork();
     }
 
     protected override void OnResume()
     {
         base.OnResume();
-        RunAutoPost();
+        RunForegroundWork();
     }
 
-    // Due plan occurrences are recorded whenever the app comes to the foreground; correctness never depends on
-    // background execution (REC-22). Failures are not fatal: the occurrences stay open for review.
-    private void RunAutoPost()
+    // Due plan occurrences are recorded whenever the app comes to the foreground, then reminders are rebuilt;
+    // correctness never depends on background execution (REC-22). Failures are not fatal: occurrences stay open.
+    private void RunForegroundWork()
     {
         var processor = _services.GetRequiredService<AutoPostProcessor>();
+        var reminders = _services.GetRequiredService<ReminderService>();
         var today = DateOnly.FromDateTime(_services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
         _ = Task.Run(async () =>
         {
@@ -73,13 +79,37 @@ public partial class App : Application
             {
                 System.Diagnostics.Debug.WriteLine($"Automatic posting failed: {ex}");
             }
+
+            await reminders.RefreshAsync();
         });
     }
+
+    // A tapped reminder opens its occurrence; several taps or an old notification never record anything (REM-04, REM-06).
+    private void OnReminderTapped(object? sender, string link) => Dispatcher.Dispatch(async () =>
+    {
+        var parts = link.Split('|');
+        if (Shell.Current is null)
+        {
+            return;
+        }
+
+        if (parts is ["occurrence", var plan, var date] && Guid.TryParse(plan, out var planId)
+            && DateOnly.TryParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var original))
+        {
+            await Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = planId, ["date"] = original });
+        }
+        else if (parts is ["budget"])
+        {
+            await Shell.Current.GoToAsync(AppShell.BudgetRoute);
+        }
+    });
 
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
     // reliable on every platform. Rebuilding the shell gives a clean result; the user stays on the current page.
     private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>
     {
+        // Reminder texts are translated when they are scheduled (REM-07).
+        _services.GetRequiredService<ReminderService>().RefreshSoon();
         if (Windows.FirstOrDefault() is not { Page: AppShell shell } window)
         {
             return;

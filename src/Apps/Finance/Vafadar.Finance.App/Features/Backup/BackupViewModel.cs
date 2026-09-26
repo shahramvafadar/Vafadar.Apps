@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Backup;
 using Vafadar.Backup.Security;
 using Vafadar.Backup.Storage;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
@@ -25,6 +26,7 @@ public sealed partial class BackupViewModel : ViewModelBase
 
     private readonly IBackupService _backup;
     private readonly AutoPostProcessor _autoPost;
+    private readonly ReminderService _reminders;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
@@ -33,8 +35,9 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly LocalFolderBackupStorage _safety;
     private byte[]? _package;
 
-    public BackupViewModel(IBackupService backup, AutoPostProcessor autoPost, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public BackupViewModel(IBackupService backup, AutoPostProcessor autoPost, ReminderService reminders, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
+        _reminders = reminders;
         _backup = backup;
         _autoPost = autoPost;
         _translator = translator;
@@ -248,6 +251,7 @@ public sealed partial class BackupViewModel : ViewModelBase
 
             // Due occurrences are processed again; settled ones are not recreated (BAK-11).
             await _autoPost.RunAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime));
+            await _reminders.RefreshAsync();
             ResetRestore();
             await Shell.Current.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
             (Application.Current as App)?.ShowMainShell();

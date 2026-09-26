@@ -29,6 +29,35 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Notifications (REM-01, REM-03, REM-05) -->
+            <Label Text="{v:Translate Settings_Notifications}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{v:Translate Reminder_NotOnThisDevice}" Style="{StaticResource Secondary}"
+                           IsVisible="{Binding NotificationsSupported, Converter={StaticResource InvertedBoolConverter}}" />
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding NotificationsSupported}">
+                        <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding NotificationsEnabled, Converter={StaticResource InvertedBoolConverter}}">
+                            <Label Text="{v:Translate Reminder_PermissionDenied}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableNotificationsCommand}"
+                                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Settings_ShowDetails}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ShowDetails}" OnColor="{StaticResource Primary}" />
+                        </Grid>
+                        <Label Text="{v:Translate Settings_ShowDetailsHint}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                    <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
+                    <Label Text="{v:Translate Settings_ReminderDefaults}" Style="{StaticResource Secondary}" />
+                    <Grid ColumnDefinitions="70,*" ColumnSpacing="8">
+                        <Entry Text="{Binding ReminderDaysText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
+                               SemanticProperties.Description="{v:Translate Plan_DaysBefore}" />
+                        <Label Grid.Column="1" Text="{v:Translate Plan_DaysBefore}" VerticalOptions="Center" />
+                    </Grid>
+                    <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
+                </VerticalStackLayout>
+            </Border>
+
             <Label Text="{v:Translate Settings_About}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <Label Text="{Binding VersionText}" />

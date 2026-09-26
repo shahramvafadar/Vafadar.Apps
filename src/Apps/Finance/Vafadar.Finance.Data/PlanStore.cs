@@ -10,6 +10,9 @@ namespace Vafadar.Finance.Data;
 /// </summary>
 public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory, FinanceStore finance)
 {
+    /// <summary>Raised after plans or occurrence states were written.</summary>
+    public event EventHandler? Changed;
+
     /// <summary>Returns all plans, active first.</summary>
     public async Task<List<Schedule>> GetSchedulesAsync(CancellationToken cancellationToken = default)
     {
@@ -55,6 +58,8 @@ public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
 
     /// <summary>Inserts or updates one plan.</summary>
@@ -76,12 +81,14 @@ public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory
         db.Schedules.Update(previous);
         db.Schedules.Add(next);
         await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from)
             .ExecuteUpdateAsync(s => s.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from)
             .ExecuteUpdateAsync(e => e.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         await transaction.CommitAsync(cancellationToken);
+        OnChanged();
     }
 
     /// <summary>Returns whether any occurrence of the plan was settled or skipped.</summary>
@@ -104,6 +111,7 @@ public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await db.OccurrenceStates.Where(s => s.ScheduleId == scheduleId).ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.Where(s => s.Id == scheduleId).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
         return true;
     }
 
@@ -212,5 +220,8 @@ public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory
 
         change(state);
         await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
     }
+
+    private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);
 }

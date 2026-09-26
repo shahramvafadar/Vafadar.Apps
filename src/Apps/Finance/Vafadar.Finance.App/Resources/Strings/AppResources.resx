@@ -1211,4 +1211,34 @@
   <data name="Forecast_Disclaimer" xml:space="preserve">
     <value>Only recorded plans and entries are included. Everyday purchases you have not planned, income changes and other unrecorded items are not. Budgets are not subtracted. This is an estimate, not money that is safe to spend.</value>
   </data>
+  <data name="Reminder_Generic" xml:space="preserve">
+    <value>A financial item needs your attention.</value>
+  </data>
+  <data name="Reminder_Details" xml:space="preserve">
+    <value>{0} due on {1}</value>
+  </data>
+  <data name="Reminder_BudgetGeneric" xml:space="preserve">
+    <value>Your budget needs attention.</value>
+  </data>
+  <data name="Reminder_NotOnThisDevice" xml:space="preserve">
+    <value>Reminders are not shown as notifications on this device. Due items are always listed under Plans.</value>
+  </data>
+  <data name="Reminder_PermissionDenied" xml:space="preserve">
+    <value>Notifications are off. Due items are still listed under Plans.</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Settings_Enable" xml:space="preserve">
+    <value>Turn on</value>
+  </data>
+  <data name="Settings_ShowDetails" xml:space="preserve">
+    <value>Show names and amounts</value>
+  </data>
+  <data name="Settings_ShowDetailsHint" xml:space="preserve">
+    <value>Off: notifications only say that something needs attention, so nothing private appears on the lock screen.</value>
+  </data>
+  <data name="Settings_ReminderDefaults" xml:space="preserve">
+    <value>Default for new reminders</value>
+  </data>
 </root>

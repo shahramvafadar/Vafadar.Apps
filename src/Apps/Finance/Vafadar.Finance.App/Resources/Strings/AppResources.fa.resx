@@ -1207,4 +1207,34 @@
   <data name="Forecast_Disclaimer" xml:space="preserve">
     <value>فقط برنامه‌ها و تراکنش‌های ثبت‌شده لحاظ شده‌اند؛ خریدهای روزمرهٔ برنامه‌ریزی‌نشده، تغییر درآمد و سایر موارد ثبت‌نشده در آن نیستند. بودجه کسر نمی‌شود. این یک برآورد است، نه پولی که خرجش امن باشد.</value>
   </data>
+  <data name="Reminder_Generic" xml:space="preserve">
+    <value>یک مورد مالی نیاز به بررسی دارد.</value>
+  </data>
+  <data name="Reminder_Details" xml:space="preserve">
+    <value>{0} · سررسید {1}</value>
+  </data>
+  <data name="Reminder_BudgetGeneric" xml:space="preserve">
+    <value>بودجهٔ شما نیاز به توجه دارد.</value>
+  </data>
+  <data name="Reminder_NotOnThisDevice" xml:space="preserve">
+    <value>یادآوری‌ها در این دستگاه به‌صورت اعلان نمایش داده نمی‌شوند. موعدها همیشه در بخش برنامه‌ها فهرست شده‌اند.</value>
+  </data>
+  <data name="Reminder_PermissionDenied" xml:space="preserve">
+    <value>اعلان‌ها خاموش است. موعدها همچنان در بخش برنامه‌ها فهرست شده‌اند.</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>اعلان‌ها</value>
+  </data>
+  <data name="Settings_Enable" xml:space="preserve">
+    <value>روشن کردن</value>
+  </data>
+  <data name="Settings_ShowDetails" xml:space="preserve">
+    <value>نمایش نام و مبلغ</value>
+  </data>
+  <data name="Settings_ShowDetailsHint" xml:space="preserve">
+    <value>خاموش: اعلان فقط می‌گوید موردی نیاز به بررسی دارد تا چیز خصوصی روی صفحهٔ قفل دیده نشود.</value>
+  </data>
+  <data name="Settings_ReminderDefaults" xml:space="preserve">
+    <value>پیش‌فرض یادآوری‌های جدید</value>
+  </data>
 </root>

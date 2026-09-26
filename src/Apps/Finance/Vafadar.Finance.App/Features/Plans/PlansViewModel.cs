@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Plans;
@@ -46,13 +47,15 @@ public sealed partial class PlansViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
+    private readonly ReminderService _reminders;
     private List<Schedule> _schedules = [];
     private List<OccurrenceState> _states = [];
     private Dictionary<Guid, Account> _accounts = [];
     private CategoryLookup? _categories;
 
-    public PlansViewModel(FinanceStore finance, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time)
+    public PlansViewModel(FinanceStore finance, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders)
     {
+        _reminders = reminders;
         _finance = finance;
         _plans = plans;
         _translator = translator;
@@ -81,6 +84,9 @@ public sealed partial class PlansViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasNoPlans { get; set; }
 
+    [ObservableProperty]
+    public partial bool RemindersOff { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     public async Task LoadAsync()
@@ -91,6 +97,11 @@ public sealed partial class PlansViewModel : ViewModelBase
         _categories = new CategoryLookup(await _finance.GetCategoriesAsync(), _translator);
         UnreviewedCount = (await _finance.GetEntriesAsync()).Count(e => e.Review == ReviewState.Unreviewed);
         HasNoPlans = _schedules.Count == 0;
+
+        // Reminders were chosen but notifications are not allowed: say so, the plans themselves keep working (AT-34).
+        RemindersOff = _reminders.Scheduler.IsSupported
+            && _schedules.Any(s => s.ReminderEnabled && s.State == ScheduleState.Active)
+            && !await _reminders.Scheduler.AreEnabledAsync();
         Refresh();
     }
 
@@ -226,6 +237,13 @@ public sealed partial class PlansViewModel : ViewModelBase
     {
         var hasAccounts = (await _finance.GetAccountsAsync(includeArchived: false)).Count > 0;
         await Shell.Current.GoToAsync(hasAccounts ? AppShell.PlanEditorRoute : AppShell.AccountEditorRoute);
+    }
+
+    [RelayCommand]
+    private async Task EnableRemindersAsync()
+    {
+        RemindersOff = !await _reminders.EnsurePermissionAsync();
+        _reminders.RefreshSoon();
     }
 
     [RelayCommand]

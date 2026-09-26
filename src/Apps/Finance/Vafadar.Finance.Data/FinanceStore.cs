@@ -24,6 +24,9 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 /// </summary>
 public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFactory)
 {
+    /// <summary>Raised after data was written, e.g. to refresh reminders.</summary>
+    public event EventHandler? Changed;
+
     /// <summary>
     /// Returns the settings synchronously – for startup code on the UI thread, where blocking on async code could
     /// deadlock. Returns defaults (not saved) when no settings exist yet.
@@ -47,6 +50,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         settings = new FinanceSettings();
         db.Settings.Add(settings);
         await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
         return settings;
     }
 
@@ -70,6 +74,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
 
     /// <summary>Returns all accounts ordered for display.</summary>
@@ -106,6 +112,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
         return true;
     }
 
@@ -145,6 +153,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
 
     /// <summary>Inserts or updates a category.</summary>
@@ -162,6 +172,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
 
     /// <summary>Returns the budget of a month in a calendar and currency, if one exists.</summary>
@@ -200,6 +212,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
 
     /// <summary>Deletes a budget; entries are not affected.</summary>
@@ -210,6 +224,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         {
             db.Budgets.Remove(budget);
             await db.SaveChangesAsync(cancellationToken);
+            OnChanged();
         }
     }
 
@@ -319,6 +334,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
         return SaveResult.Success;
     }
 
@@ -355,6 +372,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
         return deleted;
     }
 
@@ -386,5 +405,9 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        OnChanged();
     }
+
+    private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);
 }

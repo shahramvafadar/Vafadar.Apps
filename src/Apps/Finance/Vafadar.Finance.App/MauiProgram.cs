@@ -1,4 +1,7 @@
 using Microsoft.Extensions.Logging;
+#if ANDROID || IOS
+using Plugin.LocalNotification;
+#endif
 using Vafadar.Backup;
 using Vafadar.Finance.App.Features.Accounts;
 using Vafadar.Finance.App.Features.Backup;
@@ -14,6 +17,7 @@ using Vafadar.Finance.App.Features.Reports;
 using Vafadar.Finance.App.Features.Settings;
 using Vafadar.Finance.App.Features.Transactions;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.App.Resources.Strings;
 using Vafadar.Finance.Core;
 using Vafadar.Finance.Data;
@@ -44,7 +48,15 @@ public static class MauiProgram
             .AddFinanceData(Path.Combine(FileSystem.AppDataDirectory, FinanceApp.DatabaseFileName))
             .AddVafadarBackup()
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
-            .AddSingleton<UndoService>();
+            .AddSingleton<UndoService>()
+            .AddSingleton<ReminderService>();
+
+#if ANDROID || IOS
+        builder.UseLocalNotification();
+        builder.Services.AddSingleton<IReminderScheduler, LocalNotificationScheduler>();
+#else
+        builder.Services.AddSingleton<IReminderScheduler, NoReminderScheduler>();
+#endif
 
         builder.Services
             .AddTransient<AppShell>()

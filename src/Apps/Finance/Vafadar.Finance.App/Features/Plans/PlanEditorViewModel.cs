@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
@@ -35,6 +36,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private readonly ILocalizationService _localization;
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
+    private readonly ReminderService _reminders;
     private Schedule? _existing;
     private bool _hasHistory;
     private string _snapshot = string.Empty;
@@ -42,8 +44,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private CategoryLookup _categories;
     private Dictionary<Guid, Account> _accounts = [];
 
-    public PlanEditorViewModel(FinanceStore finance, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time)
+    public PlanEditorViewModel(FinanceStore finance, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders)
     {
+        _reminders = reminders;
         _finance = finance;
         _plans = plans;
         _translator = translator;
@@ -201,6 +204,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     [ObservableProperty]
     public partial bool HasNoAccounts { get; set; }
+
+    [ObservableProperty]
+    public partial string? ReminderNote { get; set; }
 
     public bool IsTransfer => Kind == EntryKind.Transfer;
 
@@ -392,6 +398,25 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     partial void OnCountTextChanged(string value) => Update();
 
     partial void OnPastIndexChanged(int value) => Update();
+
+    // Permission is asked for only when the user turns a reminder on (REM-03); without it the plan still works.
+    async partial void OnReminderEnabledChanged(bool value)
+    {
+        ReminderNote = null;
+        if (!value || _loading)
+        {
+            return;
+        }
+
+        if (!_reminders.Scheduler.IsSupported)
+        {
+            ReminderNote = _translator["Reminder_NotOnThisDevice"];
+        }
+        else if (!await _reminders.EnsurePermissionAsync())
+        {
+            ReminderNote = _translator["Reminder_PermissionDenied"];
+        }
+    }
 
     // Refreshes every dependent visibility and the preview of the next dates.
     private void Update()

@@ -20,14 +20,14 @@ Statuses: Implemented – verified / Implemented – unverified / Planned / Not 
 | DF-05 | OneDrive backup | Encrypted package, account identity | User's OneDrive app folder | Not included in phase-1 release until sign-in exists | BAK-14 |
 | DF-06 | CSV export / share | Selected columns, notes optional | App chosen by the user | Planned | Warning dialog, temp file cleanup |
 | DF-07 | CSV import | Selected file | Local processing only | Planned | No upload |
-| DF-08 | Reminders | Occurrence id, generic text by default | Device notification service | Planned | Lock-screen text (REM-05) |
+| DF-08 | Reminders | Occurrence id and generic text by default; plan name, amount and due date only if the user turns on "Show names and amounts" | Device notification service (Android/iOS, local only; no push) | Implemented – verified (unit; device check pending) | Lock-screen text (REM-05); permission asked only when a reminder is turned on (REM-03); Android: POST_NOTIFICATIONS, RECEIVE_BOOT_COMPLETED, no exact alarms |
 | DF-09 | App lock | Lock enabled flag; device credential handled by OS | Device | Planned | Not part of backups |
 | DF-10 | Diagnostics / logs | Debug logger only in Debug builds; no crash reporting SDK | Local debug output | Implemented – unverified | Verify release build has no logging provider sending data |
 | DF-11 | Ads / tracking | – | – | Not included | No SDK in `Directory.Packages.props` |
 | DF-12 | Billing | – | – | Not included in phase 1 | – |
 | DF-13 | AI | – | – | Not included | – |
 | DF-14 | Sync / household | – | – | Not included | – |
-| DF-15 | Online rates / bank sync | – | – | Not included | – |
+| DF-15 | Online rates / bank sync / any network | – | – | Not included | The Android release build declares no INTERNET permission in phase 1 |
 | DF-16 | **Android Auto Backup** | App database and preferences | User's Google account backup (Google) | Implemented – unverified (`allowBackup=true`, owner decision D-16) | Disclose in policy and Data safety; verify restore on new device |
 | DF-17 | **iOS device / iCloud backup** | App data | User's iCloud / computer backup (Apple) | Implemented – unverified (OS default) | Disclose; iOS release later |
 | DF-18 | Preferences (language, calendar) | UI settings | Local preferences | Implemented – verified | – |

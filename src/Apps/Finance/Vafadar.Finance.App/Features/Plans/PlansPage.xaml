@@ -13,6 +13,16 @@
         <VerticalStackLayout Padding="16,8,16,4" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding SegmentNames}" SelectedIndex="{Binding SegmentIndex}" AccentColor="{StaticResource Primary}" />
 
+            <!-- Notifications not allowed (REM-02, AT-34) -->
+            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4,8,4"
+                    IsVisible="{Binding RemindersOff}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="{v:Translate Reminder_PermissionDenied}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableRemindersCommand}" BackgroundColor="Transparent"
+                            TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                </Grid>
+            </Border>
+
             <!-- Automatic entries waiting for review (REC-13) -->
             <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4,8,4"
                     IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">

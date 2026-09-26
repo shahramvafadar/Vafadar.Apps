@@ -1207,4 +1207,34 @@
   <data name="Forecast_Disclaimer" xml:space="preserve">
     <value>Enthalten sind nur erfasste Planungen und Buchungen – nicht geplante Alltagskäufe, Einkommensänderungen und andere nicht erfasste Posten. Budgets werden nicht abgezogen. Dies ist eine Schätzung, kein sicher ausgebbares Geld.</value>
   </data>
+  <data name="Reminder_Generic" xml:space="preserve">
+    <value>Ein finanzieller Posten braucht Ihre Aufmerksamkeit.</value>
+  </data>
+  <data name="Reminder_Details" xml:space="preserve">
+    <value>{0} fällig am {1}</value>
+  </data>
+  <data name="Reminder_BudgetGeneric" xml:space="preserve">
+    <value>Ihr Budget braucht Aufmerksamkeit.</value>
+  </data>
+  <data name="Reminder_NotOnThisDevice" xml:space="preserve">
+    <value>Erinnerungen werden auf diesem Gerät nicht als Mitteilung angezeigt. Fälligkeiten stehen immer unter Planung.</value>
+  </data>
+  <data name="Reminder_PermissionDenied" xml:space="preserve">
+    <value>Mitteilungen sind aus. Fälligkeiten stehen weiterhin unter Planung.</value>
+  </data>
+  <data name="Settings_Notifications" xml:space="preserve">
+    <value>Mitteilungen</value>
+  </data>
+  <data name="Settings_Enable" xml:space="preserve">
+    <value>Einschalten</value>
+  </data>
+  <data name="Settings_ShowDetails" xml:space="preserve">
+    <value>Namen und Beträge anzeigen</value>
+  </data>
+  <data name="Settings_ShowDetailsHint" xml:space="preserve">
+    <value>Aus: Mitteilungen sagen nur, dass etwas zu prüfen ist – nichts Privates erscheint auf dem Sperrbildschirm.</value>
+  </data>
+  <data name="Settings_ReminderDefaults" xml:space="preserve">
+    <value>Standard für neue Erinnerungen</value>
+  </data>
 </root>

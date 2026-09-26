@@ -172,6 +172,8 @@
                                 <Label Grid.Column="1" Text="{v:Translate Plan_DaysBefore}" VerticalOptions="Center" />
                             </Grid>
                             <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
+                            <Label Text="{Binding ReminderNote}" TextColor="{StaticResource WarningText}" FontSize="13"
+                                   IsVisible="{Binding ReminderNote, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
 
                         <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />

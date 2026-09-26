@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
+	<!-- Phase 1 works fully offline: no network permission (privacy matrix DF-15). Debug builds add INTERNET for the debugger. -->
+	<!-- Reminders (REM-01): asking is done only when the user turns a reminder on (REM-03). -->
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<!-- Scheduled reminders are restored after a restart (REM-07). No exact-alarm permission is needed (REM-09). -->
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>

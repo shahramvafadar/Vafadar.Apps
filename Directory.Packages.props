@@ -15,6 +15,10 @@
     <PackageVersion Include="FluentIcons.Maui" Version="2.1.341" />
   </ItemGroup>
 
+  <ItemGroup Label="Notifications">
+    <PackageVersion Include="Plugin.LocalNotification" Version="14.1.2" />
+  </ItemGroup>
+
   <ItemGroup Label="Syncfusion">
     <PackageVersion Include="Syncfusion.Licensing" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Core" Version="34.2.9" />

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Core.Hosting;
+using Vafadar.Finance.App.Reminders;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
@@ -17,6 +18,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly TimeProvider _time;
     private readonly IAppEnvironment _app;
     private readonly FinanceStore _store;
+    private readonly ReminderService _reminders;
     private bool _refreshing;
 
     public SettingsViewModel(
@@ -25,8 +27,10 @@ public sealed partial class SettingsViewModel : ViewModelBase
         IDateFormatter dates,
         TimeProvider time,
         IAppEnvironment app,
-        FinanceStore store)
+        FinanceStore store,
+        ReminderService reminders)
     {
+        _reminders = reminders;
         _localization = localization;
         _translator = translator;
         _dates = dates;
@@ -36,6 +40,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
         Languages = [.. localization.SupportedLanguages];
         ReportCurrency = string.Empty;
+        ReminderDaysText = "3";
+        NotificationsSupported = reminders.Scheduler.IsSupported;
         Refresh();
     }
 
@@ -46,13 +52,33 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string ReportCurrency { get; set; }
 
+    [ObservableProperty]
+    public partial bool NotificationsSupported { get; set; }
+
+    [ObservableProperty]
+    public partial bool NotificationsEnabled { get; set; }
+
+    [ObservableProperty]
+    public partial bool ShowDetails { get; set; }
+
+    [ObservableProperty]
+    public partial string ReminderDaysText { get; set; }
+
+    [ObservableProperty]
+    public partial TimeSpan? ReminderTime { get; set; }
+
     /// <summary>Loads the finance settings.</summary>
     public async Task LoadAsync()
     {
         _refreshing = true;
         try
         {
-            ReportCurrency = (await _store.GetSettingsAsync()).ReportCurrencyCode;
+            var settings = await _store.GetSettingsAsync();
+            ReportCurrency = settings.ReportCurrencyCode;
+            ShowDetails = settings.NotificationsShowDetails;
+            ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            ReminderTime = settings.ReminderTime.ToTimeSpan();
+            NotificationsEnabled = NotificationsSupported && await _reminders.Scheduler.AreEnabledAsync();
         }
         finally
         {
@@ -76,6 +102,38 @@ public sealed partial class SettingsViewModel : ViewModelBase
             await _store.SaveSettingsAsync(settings);
         }
     }
+
+    partial void OnShowDetailsChanged(bool value) => _ = SaveNotificationSettingsAsync();
+
+    partial void OnReminderDaysTextChanged(string value) => _ = SaveNotificationSettingsAsync();
+
+    partial void OnReminderTimeChanged(TimeSpan? value) => _ = SaveNotificationSettingsAsync();
+
+    // Reminder defaults apply to new plans; the lock-screen choice applies to all notifications (REM-01, REM-05).
+    private async Task SaveNotificationSettingsAsync()
+    {
+        if (_refreshing)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        settings.NotificationsShowDetails = ShowDetails;
+        if (int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days))
+        {
+            settings.ReminderDaysBefore = Math.Clamp(days, 0, 60);
+        }
+
+        if (ReminderTime is { } time)
+        {
+            settings.ReminderTime = TimeOnly.FromTimeSpan(time);
+        }
+
+        await _store.SaveSettingsAsync(settings);
+    }
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private async Task EnableNotificationsAsync() => NotificationsEnabled = await _reminders.EnsurePermissionAsync();
 
     [ObservableProperty]
     public partial AppLanguage? SelectedLanguage { get; set; }

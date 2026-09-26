@@ -38,12 +38,12 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-30 | Auto-post runs twice | REC-21 | Integration (SQLite) | S4 | Verified (integration, SQLite) |
 | AT-31 | Delete/undo auto-post | REC-18 | Integration | S4 | Verified (integration, SQLite) |
 | AT-32 | Two equal plans | REC-21 | Unit | S4 | Verified (unit) |
-| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Ledger part verified (integration); notification summary with S10 |
-| AT-34 | Notifications denied/off | REM-02 | Manual | S10 | Planned |
-| AT-35 | Snooze notification | REM-04 | Manual | S10 | Planned |
-| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Planned |
-| AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Planned |
-| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Planned |
+| AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Verified (integration: ledger; unit: no missed reminders sent later, pending capped) |
+| AT-34 | Notifications denied/off | REM-02 | Manual | S10 | Implemented (due centre and banner without permission); device check pending |
+| AT-35 | Snooze notification | REM-04 | Manual | S10 | Verified (unit: moving a due date moves the reminder, same id) |
+| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Verified (unit: settled or skipped occurrences have no reminder; taps only open the occurrence) |
+| AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Implemented (rebuild on start/resume/restore/language, boot receiver, local time); device check pending |
+| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Implemented (generic text by default); device check pending; app lock with S13 |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
