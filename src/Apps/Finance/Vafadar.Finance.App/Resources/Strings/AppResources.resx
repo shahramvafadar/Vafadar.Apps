@@ -1943,4 +1943,16 @@
   <data name="Split_EnterAll" xml:space="preserve">
     <value>Enter an amount for every part, or remove empty parts.</value>
   </data>
+  <data name="Occurrence_PayPart" xml:space="preserve">
+    <value>Record as part payment</value>
+  </data>
+  <data name="Occurrence_PayPartHint" xml:space="preserve">
+    <value>A part payment keeps the item open with the rest; paying the rest settles it.</value>
+  </data>
+  <data name="Occurrence_PaidSoFar" xml:space="preserve">
+    <value>Paid so far {0} · outstanding {1}</value>
+  </data>
+  <data name="Occurrence_PaidSoFarUnknown" xml:space="preserve">
+    <value>Paid so far {0}; the total amount is unknown.</value>
+  </data>
 </root>

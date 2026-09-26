@@ -79,6 +79,15 @@ public sealed partial class OccurrenceViewModel(
     [ObservableProperty]
     public partial string? SettledText { get; set; }
 
+    // Partial payments (F2-TX-02): what was paid so far and what is still outstanding.
+    public ObservableCollection<EntryRow> Payments { get; } = [];
+
+    [ObservableProperty]
+    public partial string? PaidText { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasPayments { get; set; }
+
     [ObservableProperty]
     public partial string? Error { get; set; }
 
@@ -134,7 +143,8 @@ public sealed partial class OccurrenceViewModel(
 
         // Paying early or late keeps the real date (FIN-07); the default is today, or the due date when it is past.
         ActualDate = occurrence.DueDate < Today ? occurrence.DueDate : Today;
-        ActualAmountText = occurrence.Amount is { } amount ? MoneyText.ForInput(amount, _currency, culture) : string.Empty;
+        var expected = occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount;
+        ActualAmountText = expected is { } amount and > 0 ? MoneyText.ForInput(amount, _currency, culture) : string.Empty;
         DueDate = occurrence.DueDate;
         OverrideAmountText = occurrence.State?.Amount is { } overridden ? MoneyText.ForInput(overridden, _currency, culture) : string.Empty;
         OccurrenceNote = occurrence.State?.Note ?? string.Empty;
@@ -156,7 +166,57 @@ public sealed partial class OccurrenceViewModel(
         }
 
         HasCandidates = Candidates.Count > 0;
+
+        Payments.Clear();
+        foreach (var payment in await plans.GetPartialPaymentsAsync(occurrence))
+        {
+            Payments.Add(presenter.Row(payment) with { Subtitle = dates.Format(payment.Date, DateFormatStyle.Long) });
+        }
+
+        HasPayments = Payments.Count > 0;
+        PaidText = occurrence.Paid <= 0 ? null
+            : occurrence.Outstanding is { } outstanding
+                ? translator.Format("Occurrence_PaidSoFar", MoneyText.Format(occurrence.Paid, _currency, culture), MoneyText.Format(outstanding, _currency, culture))
+                : translator.Format("Occurrence_PaidSoFarUnknown", MoneyText.Format(occurrence.Paid, _currency, culture));
     }
+
+    // F2-TX-02: records part of the amount; the occurrence stays open (and reminded) until the rest is paid.
+    [RelayCommand]
+    private async Task PayPartAsync()
+    {
+        if (_occurrence is null || IsBusy)
+        {
+            return;
+        }
+
+        Error = null;
+        if (!MoneyAmount.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
+        {
+            Error = translator["LedgerError_AmountMustBePositive"];
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var entry = Occurrences.CreateEntry(_occurrence, amount, ActualDate, ReviewState.Confirmed);
+            var result = await plans.PayPartAsync(_occurrence, entry);
+            if (!result.Succeeded)
+            {
+                Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"]));
+                return;
+            }
+
+            await LoadAsync();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private Task OpenPaymentAsync(EntryRow row) => Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
     private async Task ConfirmAsync()

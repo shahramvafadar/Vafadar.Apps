@@ -53,10 +53,11 @@ internal sealed class LedgerEntryConfiguration : IEntityTypeConfiguration<Ledger
         builder.HasIndex(e => new { e.AccountId, e.Date });
         builder.HasIndex(e => e.GroupId);
 
-        // One settlement per plan occurrence – a second automatic posting is impossible (D-07, REC-21).
+        // One full settlement per plan occurrence – a second automatic posting is impossible (D-07, REC-21). Partial
+        // payments (F2-TX-02) are excluded, so several of them can pay one occurrence.
         builder.HasIndex(e => new { e.ScheduleId, e.OccurrenceDate })
             .IsUnique()
-            .HasFilter("\"ScheduleId\" IS NOT NULL");
+            .HasFilter("\"ScheduleId\" IS NOT NULL AND \"IsPartialPayment\" = 0");
     }
 }
 

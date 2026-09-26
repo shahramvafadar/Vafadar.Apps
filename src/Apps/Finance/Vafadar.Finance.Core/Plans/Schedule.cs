@@ -158,6 +158,9 @@ public sealed class OccurrenceState : Entity, IAuditableEntity
     /// <summary>Gets or sets the settling entry.</summary>
     public Guid? EntryId { get; set; }
 
+    /// <summary>Gets or sets the sum of partial payments recorded for this occurrence (F2-TX-02).</summary>
+    public long PaidAmount { get; set; }
+
     /// <summary>Gets or sets a note.</summary>
     public string? Note { get; set; }
 

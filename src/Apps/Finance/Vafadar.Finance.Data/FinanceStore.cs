@@ -627,12 +627,13 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             }
         }
 
-        if (deleteIds.Count > 0)
-        {
-            db.Entries.RemoveRange(await db.Entries.Where(e => deleteIds.Contains(e.Id) && !ids.Contains(e.Id)).ToListAsync(cancellationToken));
-        }
+        var removed = deleteIds.Count > 0
+            ? await db.Entries.Where(e => deleteIds.Contains(e.Id) && !ids.Contains(e.Id)).ToListAsync(cancellationToken)
+            : [];
+        db.Entries.RemoveRange(removed);
 
         await db.SaveChangesAsync(cancellationToken);
+        await UpdatePaidAmountsAsync(db, entries.Concat(existing.Values).Concat(removed), cancellationToken);
 
         OnChanged();
         return SaveResult.Success;
@@ -657,8 +658,9 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
 
         db.Entries.RemoveRange(deleted);
 
-        // A deleted settlement reopens its occurrence; automatic posting must not bring it back (REC-18, AT-31).
-        foreach (var settled in deleted.Where(e => e.ScheduleId is not null))
+        // A deleted settlement reopens its occurrence; automatic posting must not bring it back (REC-18, AT-31). A deleted
+        // partial payment only lowers the paid amount (F2-TX-02).
+        foreach (var settled in deleted.Where(e => e.ScheduleId is not null && !e.IsPartialPayment))
         {
             var state = await db.OccurrenceStates.FirstOrDefaultAsync(
                 s => s.ScheduleId == settled.ScheduleId && s.OriginalDate == settled.OccurrenceDate, cancellationToken);
@@ -671,6 +673,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+        await UpdatePaidAmountsAsync(db, deleted, cancellationToken);
 
         OnChanged();
         return deleted;
@@ -680,8 +683,9 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
     public async Task RestoreEntriesAsync(IEnumerable<LedgerEntry> entries, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entries);
+        var list = entries.ToList();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        foreach (var entry in entries)
+        foreach (var entry in list)
         {
             if (await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
             {
@@ -689,7 +693,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             }
 
             db.Entries.Add(entry);
-            if (entry.ScheduleId is { } scheduleId && entry.OccurrenceDate is { } original)
+            if (!entry.IsPartialPayment && entry.ScheduleId is { } scheduleId && entry.OccurrenceDate is { } original)
             {
                 var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == scheduleId && s.OriginalDate == original, cancellationToken);
                 if (state is null)
@@ -704,9 +708,44 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         }
 
         await db.SaveChangesAsync(cancellationToken);
+        await UpdatePaidAmountsAsync(db, list, cancellationToken);
 
         OnChanged();
     }
 
     private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);
+
+    // Keeps OccurrenceState.PaidAmount equal to the sum of the partial payments of every touched occurrence (F2-TX-02).
+    private static async Task UpdatePaidAmountsAsync(FinanceDbContext db, IEnumerable<LedgerEntry> touched, CancellationToken cancellationToken)
+    {
+        var keys = touched
+            .Where(e => e.IsPartialPayment && e.ScheduleId is not null && e.OccurrenceDate is not null)
+            .Select(e => (ScheduleId: e.ScheduleId!.Value, Date: e.OccurrenceDate!.Value))
+            .Distinct()
+            .ToList();
+        if (keys.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var (scheduleId, date) in keys)
+        {
+            var paid = await db.Entries
+                .Where(e => e.ScheduleId == scheduleId && e.OccurrenceDate == date && e.IsPartialPayment)
+                .SumAsync(e => e.Amount, cancellationToken);
+            var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == scheduleId && s.OriginalDate == date, cancellationToken);
+            if (state is null)
+            {
+                state = new OccurrenceState { ScheduleId = scheduleId, OriginalDate = date };
+                db.OccurrenceStates.Add(state);
+            }
+
+            state.PaidAmount = paid;
+
+            // Automatic posting of the full amount would pay twice once part is paid (REC-21).
+            state.AutoPostSuppressed |= paid > 0;
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+    }
 }

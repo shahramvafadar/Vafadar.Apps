@@ -70,5 +70,5 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Implemented (lock on start/leave, taps after unlock, export/backup/restore confirmation); device check pending |
 | AT-62 | Golden data §24 | §24 | Unit | S1 | Verified (unit, domain level) |
 | AT-65 | Allocate money to two goals | F2-GOAL-02/05 | Unit | P2-1 | Verified (unit: funded money never exceeds the balance; lower priority loses funding first; completed goals release their earmark) |
-| AT-66 | Splits, partial payments, final settlement | F2-TX-01/02 | Unit | P2-3 | Split part verified (unit: balance changes once, each category budget sees its share, exact sum enforced); partial payments not built |
+| AT-66 | Splits, partial payments, final settlement | F2-TX-01/02 | Unit | P2-3 | Verified (unit: split changes the balance once, each budget sees its share; data: partial payments keep the occurrence open with the outstanding rest, the forecast expects only the rest, the final payment settles, auto-post never pays twice, delete and undo adjust the paid amount) |
 | AT-63, 64, 67, 68 | Other phase-2 scenarios | F2-* | – | Phase 2 | Not included |

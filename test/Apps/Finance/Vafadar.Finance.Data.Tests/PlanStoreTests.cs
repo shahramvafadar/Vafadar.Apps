@@ -162,6 +162,53 @@ public sealed class PlanStoreTests : IDisposable
         Assert.Single(await _plans.GetSchedulesAsync(Ct));
     }
 
+    [Fact]
+    [Trait("AT", "AT-66")]
+    public async Task Partial_payments_keep_the_occurrence_open_with_the_outstanding_rest_until_the_final_payment()
+    {
+        var plan = await NewPlanAsync(autoPost: false);
+        async Task<Occurrence> MarchAsync() =>
+            Occurrences.Between(plan, await _plans.GetStatesAsync(plan.Id, Ct), new DateOnly(2027, 3, 1), new DateOnly(2027, 3, 31), Today).Single();
+
+        await _plans.PayPartAsync(await MarchAsync(), Occurrences.CreateEntry(await MarchAsync(), 40_000, new DateOnly(2027, 3, 2), ReviewState.Confirmed), Ct);
+        await _plans.PayPartAsync(await MarchAsync(), Occurrences.CreateEntry(await MarchAsync(), 30_000, new DateOnly(2027, 3, 4), ReviewState.Confirmed), Ct);
+
+        var march = await MarchAsync();
+        Assert.True(march.IsOpen);
+        Assert.Equal(70_000, march.Paid);
+        Assert.Equal(25_000, march.Outstanding);
+        Assert.Equal(2, (await _plans.GetPartialPaymentsAsync(march, Ct)).Count);
+
+        // The forecast only expects the outstanding rest, since the parts are already in the ledger.
+        var forecast = Core.Forecasts.ForecastCalculator.Compute(await _finance.GetAccountsAsync(cancellationToken: Ct), await _finance.GetEntriesAsync(cancellationToken: Ct), [plan], await _plans.GetStatesAsync(plan.Id, Ct), Today, new DateOnly(2027, 3, 31));
+        Assert.Equal(-25_000, forecast.Single().Items.Single(i => i.OriginalDate == new DateOnly(2027, 3, 5)).Effect);
+
+        // A payment reaching the rest settles it; the automatic posting never adds the full amount on top.
+        await _plans.PayPartAsync(march, Occurrences.CreateEntry(march, 25_000, new DateOnly(2027, 3, 6), ReviewState.Confirmed), Ct);
+        Assert.Equal(OccurrenceView.Settled, (await MarchAsync()).Status);
+        Assert.Equal(95_000, (await _finance.GetEntriesAsync(cancellationToken: Ct)).Where(e => e.OccurrenceDate == new DateOnly(2027, 3, 5)).Sum(e => e.Amount));
+    }
+
+    [Fact]
+    public async Task Deleting_or_restoring_a_partial_payment_changes_only_the_paid_amount_and_blocks_auto_post()
+    {
+        var plan = await NewPlanAsync(autoPost: true, autoPostFrom: new DateOnly(2027, 3, 1));
+        async Task<Occurrence> MarchAsync() =>
+            Occurrences.Between(plan, await _plans.GetStatesAsync(plan.Id, Ct), new DateOnly(2027, 3, 1), new DateOnly(2027, 3, 31), Today).Single();
+        var part = Occurrences.CreateEntry(await MarchAsync(), 10_000, new DateOnly(2027, 3, 1), ReviewState.Confirmed);
+        await _plans.PayPartAsync(await MarchAsync(), part, Ct);
+
+        Assert.Equal(0, (await _processor.RunAsync(Today, Ct)).Posted);
+
+        var deleted = await _finance.DeleteEntryAsync(part.Id, Ct);
+        Assert.Equal(0, (await MarchAsync()).Paid);
+        Assert.True((await MarchAsync()).IsOpen);
+
+        await _finance.RestoreEntriesAsync(deleted, Ct);
+        Assert.Equal(10_000, (await MarchAsync()).Paid);
+        Assert.True((await MarchAsync()).IsOpen);
+    }
+
     private async Task<Schedule> NewPlanAsync(bool autoPost, AmountMode mode = AmountMode.Fixed, DateOnly? autoPostFrom = null)
     {
         var account = new Account { Name = "Checking", CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 12, 1) };

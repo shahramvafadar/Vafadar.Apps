@@ -150,7 +150,7 @@ public sealed partial class PlanDetailViewModel(
             OccurrenceView.Settled => EntryPresenter.IncomeColor,
             _ => EntryPresenter.NeutralColor,
         };
-        return new OccurrenceRow(occurrence.OriginalDate, text.Date(occurrence.DueDate), text.Amount(occurrence.Amount, occurrence.AmountMode, currency), text.Status(occurrence.Status), color);
+        return new OccurrenceRow(occurrence.OriginalDate, text.Date(occurrence.DueDate), text.Amount(occurrence.IsOpen && occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, currency), text.Status(occurrence.Status), color);
     }
 
     [RelayCommand]

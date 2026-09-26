@@ -1939,4 +1939,16 @@
   <data name="Split_EnterAll" xml:space="preserve">
     <value>برای هر سهم مبلغ وارد کنید یا سهم‌های خالی را حذف کنید.</value>
   </data>
+  <data name="Occurrence_PayPart" xml:space="preserve">
+    <value>ثبت به‌عنوان پرداخت بخشی</value>
+  </data>
+  <data name="Occurrence_PayPartHint" xml:space="preserve">
+    <value>پرداخت بخشی، این مورد را با باقی‌مانده باز نگه می‌دارد؛ با پرداخت باقی‌مانده تسویه می‌شود.</value>
+  </data>
+  <data name="Occurrence_PaidSoFar" xml:space="preserve">
+    <value>پرداخت‌شده تاکنون: {0} · باقی‌مانده: {1}</value>
+  </data>
+  <data name="Occurrence_PaidSoFarUnknown" xml:space="preserve">
+    <value>پرداخت‌شده تاکنون: {0}؛ مبلغ کل نامعلوم است.</value>
+  </data>
 </root>

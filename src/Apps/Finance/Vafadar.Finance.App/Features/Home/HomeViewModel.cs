@@ -312,7 +312,7 @@ public sealed partial class HomeViewModel : ViewModelBase
                 occurrence.OriginalDate,
                 schedule.Name,
                 text.Date(occurrence.DueDate),
-                text.Amount(occurrence.Amount, occurrence.AmountMode, accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : _reportCurrency),
+                text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : _reportCurrency),
                 schedule.Kind == EntryKind.Income ? EntryPresenter.IncomeColor : schedule.Kind == EntryKind.Expense ? EntryPresenter.ExpenseColor : EntryPresenter.NeutralColor,
                 schedule.Kind == EntryKind.Transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(schedule.Icon, categories.Icon(schedule.CategoryId)),
                 color,

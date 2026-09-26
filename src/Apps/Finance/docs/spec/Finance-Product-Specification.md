@@ -1229,9 +1229,9 @@ This section records what the repository actually contains. It is evidence-based
 | Phase 1A (ledger, accounts, entries, categories, plans, Home, local backup) | Implemented – verified. |
 | Phase 1B (budget, reports, forecast, reminders, multi-currency, CSV import/export, Simple/Advanced, app lock, hardening) | Implemented – verified, except cloud backup. |
 | Cloud backup to Google Drive / OneDrive (BAK-13, BAK-14, AT-59) | Blocked: needs OAuth client ids and a real sign-in test. The destination is hidden; encrypted backup files are shared to any destination with the system share sheet instead. |
-| Phase 2A | Started after Phase 1: savings goals with earmarked funding, coverage by account balances, priority-based shortfalls and suggested contributions (F2-GOAL-01..05, BUD-11/12, AT-65); budget rollover of surplus or surplus and deficit across consecutive months, used identically on the budget page, Home and alerts (§10.3); splitting an income or expense across categories with parts that add up exactly, editable and joinable again (F2-TX-01) – implemented, verified by unit and data tests. Envelope/flex budgets and partial payments of an occurrence (F2-TX-02) are not yet built. |
+| Phase 2A | Started after Phase 1: savings goals with earmarked funding, coverage by account balances, priority-based shortfalls and suggested contributions (F2-GOAL-01..05, BUD-11/12, AT-65); budget rollover of surplus or surplus and deficit across consecutive months, used identically on the budget page, Home and alerts (§10.3); splitting an income or expense across categories with parts that add up exactly, editable and joinable again (F2-TX-01); partial payments of a plan occurrence that keep it open with the outstanding rest until the final payment settles it, with forecast, lists and reminders following the rest and automatic posting never paying twice (F2-TX-02) – implemented, verified by unit and data tests. Envelope/flex budgets are not yet built. |
 | Phase 2B | Not started; each online service needs its own decision (Section 27.5). |
-| Automated tests | 309 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
+| Automated tests | 311 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
 
 ### 31.2. Status by Requirement Area
 

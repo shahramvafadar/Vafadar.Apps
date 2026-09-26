@@ -1939,4 +1939,16 @@
   <data name="Split_EnterAll" xml:space="preserve">
     <value>Geben Sie für jeden Teil einen Betrag ein oder entfernen Sie leere Teile.</value>
   </data>
+  <data name="Occurrence_PayPart" xml:space="preserve">
+    <value>Als Teilzahlung erfassen</value>
+  </data>
+  <data name="Occurrence_PayPartHint" xml:space="preserve">
+    <value>Eine Teilzahlung lässt den Posten mit dem Rest offen; die Zahlung des Rests erledigt ihn.</value>
+  </data>
+  <data name="Occurrence_PaidSoFar" xml:space="preserve">
+    <value>Bisher bezahlt {0} · offen {1}</value>
+  </data>
+  <data name="Occurrence_PaidSoFarUnknown" xml:space="preserve">
+    <value>Bisher bezahlt {0}; der Gesamtbetrag ist unbekannt.</value>
+  </data>
 </root>

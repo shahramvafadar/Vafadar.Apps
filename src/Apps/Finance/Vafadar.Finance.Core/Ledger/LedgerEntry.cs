@@ -128,6 +128,12 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
     /// <summary>Gets or sets an id shared by related entries, e.g. a transfer and its fee.</summary>
     public Guid? GroupId { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this entry pays only part of its plan occurrence (F2-TX-02). Partial
+    /// payments keep the occurrence open; only one full settlement per occurrence is possible (D-07).
+    /// </summary>
+    public bool IsPartialPayment { get; set; }
+
     /// <summary>Gets or sets the plan this entry settles.</summary>
     public Guid? ScheduleId { get; set; }
 

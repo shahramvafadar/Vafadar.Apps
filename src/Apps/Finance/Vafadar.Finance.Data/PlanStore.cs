@@ -139,6 +139,44 @@ public sealed class PlanStore(IDbContextFactory<FinanceDbContext> contextFactory
         return result;
     }
 
+    /// <summary>
+    /// Records a partial payment of an occurrence (F2-TX-02). The occurrence stays open with the outstanding rest; a
+    /// payment that reaches or exceeds the rest settles it instead, so the final payment is an ordinary settlement and an
+    /// overpayment is visible as a larger actual amount.
+    /// </summary>
+    public async Task<SaveResult> PayPartAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(occurrence);
+        ArgumentNullException.ThrowIfNull(entry);
+        if (occurrence.Outstanding is { } outstanding && entry.Amount >= outstanding)
+        {
+            entry.IsPartialPayment = false;
+            return await SettleAsync(occurrence, entry, cancellationToken);
+        }
+
+        entry.ScheduleId = occurrence.Schedule.Id;
+        entry.OccurrenceDate = occurrence.OriginalDate;
+        entry.IsPartialPayment = true;
+        var result = await finance.SaveEntryAsync(entry, cancellationToken);
+        if (result.Succeeded)
+        {
+            OnChanged();
+        }
+
+        return result;
+    }
+
+    /// <summary>Returns the partial payments of an occurrence, oldest first.</summary>
+    public async Task<List<LedgerEntry>> GetPartialPaymentsAsync(Occurrence occurrence, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(occurrence);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var list = await db.Entries.AsNoTracking()
+            .Where(e => e.ScheduleId == occurrence.Schedule.Id && e.OccurrenceDate == occurrence.OriginalDate && e.IsPartialPayment)
+            .ToListAsync(cancellationToken);
+        return [.. list.OrderBy(e => e.Date).ThenBy(e => e.CreatedAt)];
+    }
+
     /// <summary>Settles an occurrence with an existing entry instead of creating a second one (REC-17, AT-29).</summary>
     public async Task LinkAsync(Occurrence occurrence, Guid entryId, CancellationToken cancellationToken = default)
     {

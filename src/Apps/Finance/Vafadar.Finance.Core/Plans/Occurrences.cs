@@ -41,6 +41,15 @@ public sealed record Occurrence(
     /// <summary>Gets a value indicating whether the occurrence still needs to be settled or skipped.</summary>
     public bool IsOpen => Status is OccurrenceView.Future or OccurrenceView.Due or OccurrenceView.Overdue;
 
+    /// <summary>Gets the sum of partial payments so far (F2-TX-02).</summary>
+    public long Paid => State?.PaidAmount ?? 0;
+
+    /// <summary>
+    /// Gets what is still to pay: the amount minus partial payments, never negative; <see langword="null"/> when the
+    /// amount is unknown. An open occurrence reflects only this outstanding amount (AT-66).
+    /// </summary>
+    public long? Outstanding => Amount is { } amount ? Math.Max(0, amount - Paid) : null;
+
     /// <summary>Gets the amount mode that applies: a changed amount of an estimated plan counts as known.</summary>
     public AmountMode AmountMode => State?.Amount is not null ? AmountMode.Fixed : Schedule.AmountMode;
 }

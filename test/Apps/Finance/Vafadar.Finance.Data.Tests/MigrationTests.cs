@@ -38,12 +38,17 @@ public sealed class MigrationTests : IDisposable
         }
 
         var store = services.GetRequiredService<FinanceStore>();
-        var account = new Account { Name = "Checking", CurrencyCode = "EUR", OpeningBalance = 1_000, OpeningDate = new DateOnly(2026, 1, 1) };
+        // Rows are written with the columns of the first schema: the current model has columns the old tables lack.
+        var accountId = Guid.CreateVersion7();
+        var entryId = Guid.CreateVersion7();
         await using (var db = await factory.CreateDbContextAsync(Ct))
         {
-            db.Accounts.Add(account);
-            db.Entries.Add(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 250, Date = new DateOnly(2026, 2, 1) });
-            await db.SaveChangesAsync(Ct);
+            await db.Database.ExecuteSqlAsync(
+                $"INSERT INTO Accounts (Id, Name, Type, CurrencyCode, OpeningBalance, OpeningDate, OpeningBalanceKnown, IncludeInTotals, IsArchived, SortOrder, CreatedAt, UpdatedAt) VALUES ({accountId}, 'Checking', 0, 'EUR', 1000, '2026-01-01', 1, 1, 0, 0, 0, 0)",
+                Ct);
+            await db.Database.ExecuteSqlAsync(
+                $"INSERT INTO Entries (Id, Kind, Date, AccountId, Amount, Review, Source, CreatedAt, UpdatedAt) VALUES ({entryId}, {(int)EntryKind.Expense}, '2026-02-01', {accountId}, 250, 0, 0, 0, 0)",
+                Ct);
         }
 
         services.MigrateLocalDatabase<FinanceDbContext>();

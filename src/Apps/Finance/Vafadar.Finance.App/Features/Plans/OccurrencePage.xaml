@@ -20,6 +20,21 @@
                         <Label Text="{Binding DueText}" Style="{StaticResource Secondary}" />
                         <Label Text="{Binding PlannedAmountText}" Style="{StaticResource AmountLarge}" />
                         <Label Text="{Binding StatusText}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding PaidText}" TextColor="{StaticResource WarningText}" IsVisible="{Binding PaidText, Converter={StaticResource IsNotNullConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Payments}" IsVisible="{Binding HasPayments}" Margin="0,4,0,0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="p:EntryRow">
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,4">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenPaymentCommand, Source={RelativeSource AncestorType={x:Type local:OccurrenceViewModel}}, x:DataType=local:OccurrenceViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+                                        <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
+                                        <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                         <Button Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" BackgroundColor="Transparent"
                                 TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" />
                     </VerticalStackLayout>
@@ -40,6 +55,9 @@
                                IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Occurrence_Confirm}" Command="{Binding ConfirmCommand}"
                                 IsEnabled="{Binding IsNotBusy}" Margin="0,16,0,0" />
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Occurrence_PayPart}" Command="{Binding PayPartCommand}"
+                                IsEnabled="{Binding IsNotBusy}" />
+                        <Label Text="{v:Translate Occurrence_PayPartHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>
 

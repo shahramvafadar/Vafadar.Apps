@@ -172,7 +172,7 @@ public sealed partial class PlansViewModel : ViewModelBase
             occurrence.OriginalDate,
             schedule.Name,
             text.Date(occurrence.DueDate),
-            text.Amount(occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId)),
+            text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId)),
             AmountColor(schedule.Kind),
             icon,
             color,

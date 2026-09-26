@@ -173,7 +173,8 @@ public static class ForecastCalculator
                     date = assumed < baseDate ? baseDate : assumed;
                 }
 
-                var amount = occurrence.Amount;
+                // Partial payments are already in the ledger; only the outstanding rest is still to come (AT-66).
+                var amount = occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount;
                 var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, schedule.ToAmount, scope, null);
                 foreach (var (currency, effect) in effects)
                 {

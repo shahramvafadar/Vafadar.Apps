@@ -8,7 +8,7 @@ possible (SC-01).
 | Item | Requirements | Model hook already present |
 |---|---|---|
 | Savings goals, sinking funds, rollover, envelope/flex budgets | F2-GOAL-01..05, BUD-11/12, §10.3 | **P2-1 done:** goals, earmarks per account, coverage and shortfall by priority, suggested contribution (Goals page in More). **P2-2 done:** budget rollover (surplus, or surplus and deficit; consecutive months, max 24). Envelope/flex budgets still open |
-| Split transactions, partial payments of an occurrence | F2-TX-01/02 | **P2-3 done:** splits as grouped entries that add up exactly (split editor from the entry details; join again). Partial payments (F2-TX-02) still open |
+| Split transactions, partial payments of an occurrence | F2-TX-01/02 | **P2-3 done:** splits as grouped entries that add up exactly (split editor from the entry details; join again). **P2-4 done:** partial payments of an occurrence (open with the outstanding rest; the final payment settles; overpayment shows as a larger actual amount) |
 | Reimbursable expenses, tags, attachments, bulk operations, rules | F2-TX-03/04 | Payee and note already separate |
 | Contracts, price changes, cancellation deadlines, business-day rules | F2-CON-01..05 | Series split (D-08) keeps history |
 | Debts, loans, assets | F2-DEBT-01/02, F2-ASSET-01/02 | Account types enumerated |
