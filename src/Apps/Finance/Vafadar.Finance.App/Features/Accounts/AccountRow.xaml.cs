@@ -11,7 +11,7 @@ public partial class AccountRow : Grid
     {
         if (BindingContext is AccountItem item)
         {
-            await Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["id"] = item.Id });
+            await Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = item.Id });
         }
     }
 }

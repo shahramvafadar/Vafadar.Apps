@@ -1474,4 +1474,70 @@
   <data name="Settings_Licences" xml:space="preserve">
     <value>اجزای شخص ثالث</value>
   </data>
+  <data name="Account_ConfirmedOnly" xml:space="preserve">
+    <value>فقط تأییدشده: {0}</value>
+  </data>
+  <data name="Account_ShowEntries" xml:space="preserve">
+    <value>تراکنش‌ها</value>
+  </data>
+  <data name="Account_ChooseIcon" xml:space="preserve">
+    <value>انتخاب نماد</value>
+  </data>
+  <data name="Account_ArchiveWithPlans" xml:space="preserve">
+    <value>{0} برنامهٔ فعال از این حساب استفاده می‌کند ({1}). با بایگانی، از امروز پایان می‌یابند؛ تراکنش‌ها و سابقهٔ گذشته حفظ می‌شوند.</value>
+  </data>
+  <data name="Reconcile_Title" xml:space="preserve">
+    <value>تطبیق مانده</value>
+  </data>
+  <data name="Reconcile_Intro" xml:space="preserve">
+    <value>مانده‌ای را که می‌بینید (مثلاً در اپ بانک) وارد کنید تا با ثبت‌های شما مقایسه شود.</value>
+  </data>
+  <data name="Reconcile_Observed" xml:space="preserve">
+    <value>مانده‌ای که می‌بینید</value>
+  </data>
+  <data name="Reconcile_Compare" xml:space="preserve">
+    <value>مقایسه</value>
+  </data>
+  <data name="Reconcile_Match" xml:space="preserve">
+    <value>مانده ثبت‌شده مطابقت دارد.</value>
+  </data>
+  <data name="Reconcile_Difference" xml:space="preserve">
+    <value>ثبت‌شده {0} · اختلاف {1}</value>
+  </data>
+  <data name="Reconcile_Unreviewed" xml:space="preserve">
+    <value>{0} تراکنش این حساب هنوز بررسی نشده است.</value>
+  </data>
+  <data name="Reconcile_Duplicates" xml:space="preserve">
+    <value>{0} تراکنش تاریخ و مبلغ یکسان دارند؛ تکراری‌بودن را بررسی کنید.</value>
+  </data>
+  <data name="Reconcile_Missing" xml:space="preserve">
+    <value>آیا تراکنشی جا افتاده یا در حساب دیگری ثبت شده؟ فقط اگر نه، تعدیل ثبت کنید.</value>
+  </data>
+  <data name="Reconcile_Reason" xml:space="preserve">
+    <value>دلیل تعدیل</value>
+  </data>
+  <data name="Reconcile_ReasonRequired" xml:space="preserve">
+    <value>دلیل تعدیل را وارد کنید.</value>
+  </data>
+  <data name="Reconcile_Adjust" xml:space="preserve">
+    <value>ثبت تعدیل</value>
+  </data>
+  <data name="Reconcile_AdjustMessage" xml:space="preserve">
+    <value>تعدیل فقط مانده را تغییر می‌دهد؛ درآمد یا هزینه نیست و در بودجه حساب نمی‌شود.</value>
+  </data>
+  <data name="Reconcile_Done" xml:space="preserve">
+    <value>تعدیل ثبت شد و مانده‌ها اکنون یکسان‌اند.</value>
+  </data>
+  <data name="Entry_Icon" xml:space="preserve">
+    <value>نماد این تراکنش</value>
+  </data>
+  <data name="Entry_MakeRecurring" xml:space="preserve">
+    <value>تبدیل به برنامه</value>
+  </data>
+  <data name="Entry_PayBack" xml:space="preserve">
+    <value>برگشت درآمد</value>
+  </data>
+  <data name="Home_ConfirmedOnly" xml:space="preserve">
+    <value>شامل {0} تراکنش بررسی‌نشده · فقط تأییدشده: {1}</value>
+  </data>
 </root>

@@ -55,6 +55,12 @@ public sealed partial class EntryDetailViewModel(
     public partial bool CanRefund { get; set; }
 
     [ObservableProperty]
+    public partial bool CanPayBack { get; set; }
+
+    [ObservableProperty]
+    public partial bool CanMakeRecurring { get; set; }
+
+    [ObservableProperty]
     public partial bool IsUnreviewed { get; set; }
 
     [ObservableProperty]
@@ -99,6 +105,8 @@ public sealed partial class EntryDetailViewModel(
         IconColor = row.IconColor;
         IconBackground = row.IconBackground;
         IsUnreviewed = row.IsUnreviewed;
+        CanPayBack = entry.Kind == EntryKind.Income;
+        CanMakeRecurring = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && entry.ScheduleId is null;
 
         Lines.Clear();
         Lines.Add(new DetailLine(translator["Entry_Date"], dates.Format(entry.Date, DateFormatStyle.Long)));
@@ -180,6 +188,13 @@ public sealed partial class EntryDetailViewModel(
 
     [RelayCommand]
     private Task DuplicateAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["duplicate"] = _id });
+
+    [RelayCommand]
+    private Task PayBackAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = nameof(EntryKind.IncomeReversal), ["of"] = _id });
+
+    // TX-04: an entry becomes the template of a plan; the entry itself stays as it is.
+    [RelayCommand]
+    private Task MakeRecurringAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute, new Dictionary<string, object> { ["fromEntry"] = _id });
 
     [RelayCommand]
     private Task OpenRefundAsync(EntryRow row) => Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });

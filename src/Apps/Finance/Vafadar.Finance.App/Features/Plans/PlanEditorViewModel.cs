@@ -289,6 +289,20 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                 var states = await _plans.GetStatesAsync(id);
                 ApplyFrom = Occurrences.NextOpen(schedule, states, Today, Today)?.OriginalDate ?? Today;
             }
+            else if (query.TryGetValue("fromEntry", out var entryValue) && entryValue is Guid entryId && await _finance.GetEntryAsync(entryId) is { } entry)
+            {
+                // A plan from an existing entry (TX-04): same values, first due date one month later.
+                CanChangeKind = true;
+                KindIndex = Math.Max(0, Array.IndexOf(Kinds, entry.Kind));
+                Name = entry.Title ?? _categories.Name(entry.CategoryId);
+                Accounts = EnsureChoice(Accounts, entry.AccountId);
+                Account = Accounts.FirstOrDefault(a => a.Id == entry.AccountId);
+                ToAccount = entry.ToAccountId is { } to ? Accounts.FirstOrDefault(a => a.Id == to) : Accounts.FirstOrDefault(a => a.Id != entry.AccountId);
+                AmountText = MoneyText.ForInput(entry.Amount, CurrencyOf(entry.AccountId), _localization.CurrentCulture);
+                Start = entry.Date.AddMonths(1);
+                Note = entry.Note ?? string.Empty;
+                BuildCategories(entry.CategoryId);
+            }
             else
             {
                 CanChangeKind = true;

@@ -155,6 +155,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string? RefundInfo { get; set; }
 
+    /// <summary>Gets or sets an icon for this entry only; <see langword="null"/> uses the category icon (VIS-03).</summary>
+    [ObservableProperty]
+    public partial string? IconKey { get; set; }
+
     [ObservableProperty]
     public partial string? AmountError { get; set; }
 
@@ -225,6 +229,20 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 var refundable = EntryActions.Refundable(purchase, await _store.GetRefundsAsync(purchase.Id));
                 _entry = EntryActions.CreateRefund(purchase, refundable, purchase.AccountId, Today);
                 Title = _translator["Entry_RefundTitle"];
+                LoadFrom(_entry);
+            }
+            else if (query.TryGetValue("kind", out var reversalKind) && reversalKind?.ToString() == nameof(EntryKind.IncomeReversal))
+            {
+                // Paying income back reduces income; it is not an expense (REF-05).
+                var defaultAccount = active.FirstOrDefault(a => a.Id == settings.DefaultAccountId) ?? active.FirstOrDefault();
+                _entry = new LedgerEntry { Kind = EntryKind.IncomeReversal, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
+                if (Get(query, "of") is { } incomeId && await _store.GetEntryAsync(incomeId) is { } income)
+                {
+                    _entry.AccountId = income.AccountId;
+                    _entry.CategoryId = income.CategoryId;
+                    _entry.Title = income.Title;
+                }
+
                 LoadFrom(_entry);
             }
             else
@@ -304,7 +322,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             ForeignAmountText = MoneyText.ForInput(original, originalCurrency, culture);
         }
 
-        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled;
+        IconKey = entry.Icon;
+        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null;
         BuildCategories(entry.CategoryId);
     }
 
@@ -482,6 +501,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             _entry.OriginalAmount = foreignAmount;
             _entry.OriginalCurrencyCode = foreignAmount is null ? null : ForeignCurrency;
             _entry.Review = ReviewState.Confirmed;
+            _entry.Icon = IconKey;
 
             var deleteIds = new List<Guid>();
             var batch = new List<LedgerEntry> { _entry };
@@ -554,5 +574,5 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     private string Snapshot() => string.Join('|',
         KindIndex, AmountText, EntryTitle, Date, Account?.Id, ToAccount?.Id, ToAmountText, FeeText, Payee, Note,
-        ForeignEnabled, ForeignCurrency, ForeignAmountText, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        ForeignEnabled, ForeignCurrency, ForeignAmountText, IconKey, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

@@ -20,6 +20,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
     public const string AccountEditorRoute = "account";
 
+    /// <summary>Route of the account details and reconciliation (query: <c>id</c>).</summary>
+    public const string AccountDetailRoute = "accountdetail";
+
     /// <summary>Route of the settings page.</summary>
     public const string SettingsRoute = "settings";
 
@@ -70,6 +73,7 @@ public partial class AppShell : Shell
         InitializeComponent();
         Routing.RegisterRoute(AccountsRoute, typeof(AccountsPage));
         Routing.RegisterRoute(AccountEditorRoute, typeof(AccountEditorPage));
+        Routing.RegisterRoute(AccountDetailRoute, typeof(AccountDetailPage));
         Routing.RegisterRoute(SettingsRoute, typeof(SettingsPage));
         Routing.RegisterRoute(EntryEditorRoute, typeof(EntryEditorPage));
         Routing.RegisterRoute(EntryDetailRoute, typeof(EntryDetailPage));

@@ -84,6 +84,12 @@
                             IsVisible="{Binding CanRefund}" />
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_Duplicate}" Command="{Binding DuplicateCommand}" />
                 </Grid>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_MakeRecurring}" Command="{Binding MakeRecurringCommand}"
+                            IsVisible="{Binding CanMakeRecurring}" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_PayBack}" Command="{Binding PayBackCommand}"
+                            IsVisible="{Binding CanPayBack}" />
+                </Grid>
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
                         TextColor="{StaticResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
             </VerticalStackLayout>

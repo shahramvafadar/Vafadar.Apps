@@ -10,14 +10,18 @@ namespace Vafadar.Finance.App.Features.Accounts;
 public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttributable
 {
     private readonly FinanceStore _store;
+    private readonly PlanStore _plans;
+    private readonly TimeProvider _time;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private Account _account;
     private string _snapshot = string.Empty;
 
-    public AccountEditorViewModel(FinanceStore store, Translator translator, ILocalizationService localization, TimeProvider time)
+    public AccountEditorViewModel(FinanceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time)
     {
         _store = store;
+        _plans = plans;
+        _time = time;
         _translator = translator;
         _localization = localization;
         Form = new AccountFormModel(translator, time);
@@ -104,11 +108,28 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     {
         if (!IsArchived)
         {
-            var confirmed = await Shell.Current.DisplayAlertAsync(
-                _translator["Account_Archive"], _translator["Account_ArchiveMessage"], _translator["Account_Archive"], _translator["Common_Cancel"]);
+            // Future plans must not silently lose their account (ACC-06, AT-10): they are ended with the archive.
+            var active = (await _plans.GetSchedulesAsync())
+                .Where(s => s.State != Core.Plans.ScheduleState.Ended && (s.AccountId == _account.Id || s.ToAccountId == _account.Id))
+                .ToList();
+            var message = active.Count == 0
+                ? _translator["Account_ArchiveMessage"]
+                : _translator.Format("Account_ArchiveWithPlans", active.Count, string.Join(", ", active.Select(s => s.Name).Take(5)));
+            var confirmed = await Shell.Current.DisplayAlertAsync(_translator["Account_Archive"], message, _translator["Account_Archive"], _translator["Common_Cancel"]);
             if (!confirmed)
             {
                 return;
+            }
+
+            var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
+            foreach (var schedule in active)
+            {
+                Core.Plans.PlanActions.End(schedule, today);
+            }
+
+            if (active.Count > 0)
+            {
+                await _plans.SaveSchedulesAsync(active);
             }
         }
 

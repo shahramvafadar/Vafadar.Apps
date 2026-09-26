@@ -68,6 +68,7 @@ public static class MauiProgram
             .AddTransient<HomePage>().AddTransient<HomeViewModel>()
             .AddTransient<AccountsPage>().AddTransient<AccountsViewModel>()
             .AddTransient<AccountEditorPage>().AddTransient<AccountEditorViewModel>()
+            .AddTransient<AccountDetailPage>().AddTransient<AccountDetailViewModel>()
             .AddTransient<MorePage>().AddTransient<MoreViewModel>()
             .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>()
             .AddTransient<TransactionsPage>().AddTransient<TransactionsViewModel>()

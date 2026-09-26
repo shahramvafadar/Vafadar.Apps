@@ -74,6 +74,7 @@ internal static class DebugSnapshots
         var (expenseId, foodId) = await SeedAsync(services);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
+        var accountId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
@@ -89,6 +90,7 @@ internal static class DebugSnapshots
             ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
+            ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("account", AppShell.AccountEditorRoute, null),
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),

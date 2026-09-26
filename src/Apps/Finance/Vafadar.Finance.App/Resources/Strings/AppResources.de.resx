@@ -1474,4 +1474,70 @@
   <data name="Settings_Licences" xml:space="preserve">
     <value>Komponenten von Drittanbietern</value>
   </data>
+  <data name="Account_ConfirmedOnly" xml:space="preserve">
+    <value>Nur bestätigt: {0}</value>
+  </data>
+  <data name="Account_ShowEntries" xml:space="preserve">
+    <value>Buchungen</value>
+  </data>
+  <data name="Account_ChooseIcon" xml:space="preserve">
+    <value>Symbol wählen</value>
+  </data>
+  <data name="Account_ArchiveWithPlans" xml:space="preserve">
+    <value>{0} aktive Planungen nutzen dieses Konto ({1}). Mit dem Archivieren enden sie ab heute; vergangene Buchungen und Verlauf bleiben.</value>
+  </data>
+  <data name="Reconcile_Title" xml:space="preserve">
+    <value>Abgleichen</value>
+  </data>
+  <data name="Reconcile_Intro" xml:space="preserve">
+    <value>Geben Sie den Saldo ein, den Sie sehen – z. B. in Ihrer Banking-App –, um ihn mit Ihren Buchungen zu vergleichen.</value>
+  </data>
+  <data name="Reconcile_Observed" xml:space="preserve">
+    <value>Angezeigter Saldo</value>
+  </data>
+  <data name="Reconcile_Compare" xml:space="preserve">
+    <value>Vergleichen</value>
+  </data>
+  <data name="Reconcile_Match" xml:space="preserve">
+    <value>Der erfasste Saldo stimmt überein.</value>
+  </data>
+  <data name="Reconcile_Difference" xml:space="preserve">
+    <value>Erfasst {0} · Differenz {1}</value>
+  </data>
+  <data name="Reconcile_Unreviewed" xml:space="preserve">
+    <value>{0} Buchungen dieses Kontos sind noch zu prüfen.</value>
+  </data>
+  <data name="Reconcile_Duplicates" xml:space="preserve">
+    <value>{0} Buchungen haben dasselbe Datum und denselben Betrag – auf Duplikate prüfen.</value>
+  </data>
+  <data name="Reconcile_Missing" xml:space="preserve">
+    <value>Fehlt eine Buchung oder steht sie auf einem anderen Konto? Nur wenn nicht, eine Korrektur erfassen.</value>
+  </data>
+  <data name="Reconcile_Reason" xml:space="preserve">
+    <value>Grund der Korrektur</value>
+  </data>
+  <data name="Reconcile_ReasonRequired" xml:space="preserve">
+    <value>Geben Sie einen Grund für die Korrektur ein.</value>
+  </data>
+  <data name="Reconcile_Adjust" xml:space="preserve">
+    <value>Korrektur erfassen</value>
+  </data>
+  <data name="Reconcile_AdjustMessage" xml:space="preserve">
+    <value>Die Korrektur ändert nur den Saldo; sie ist weder Einnahme noch Ausgabe und zählt nicht fürs Budget.</value>
+  </data>
+  <data name="Reconcile_Done" xml:space="preserve">
+    <value>Korrektur erfasst. Die Salden stimmen jetzt überein.</value>
+  </data>
+  <data name="Entry_Icon" xml:space="preserve">
+    <value>Symbol für diese Buchung</value>
+  </data>
+  <data name="Entry_MakeRecurring" xml:space="preserve">
+    <value>Wiederkehrend machen</value>
+  </data>
+  <data name="Entry_PayBack" xml:space="preserve">
+    <value>Zurückzahlen</value>
+  </data>
+  <data name="Home_ConfirmedOnly" xml:space="preserve">
+    <value>Enthält {0} ungeprüfte Buchungen · nur bestätigt: {1}</value>
+  </data>
 </root>

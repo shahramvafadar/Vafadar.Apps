@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Accounts.AccountDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:reports="clr-namespace:Vafadar.Finance.App.Features.Reports"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    x:DataType="local:AccountDetailViewModel"
+    Title="{Binding Name}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+
+            <!-- Balance (FIN-12) -->
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="32" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                        <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding BalanceText}" Style="{StaticResource AmountLarge}" Margin="0,6,0,0" />
+                        <Label Text="{Binding ConfirmedText}" Style="{StaticResource Secondary}" IsVisible="{Binding ConfirmedText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Accounts_Archived}" TextColor="{StaticResource WarningText}" IsVisible="{Binding IsArchived}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
+                <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
+            </Grid>
+
+            <!-- This month -->
+            <Label Text="{Binding MonthText}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Movement}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="reports:AmountLine">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
+                                            <Setter Property="FontAttributes" Value="Bold" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Reconcile (ACC-08) -->
+            <Label Text="{v:Translate Reconcile_Title}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="{v:Translate Reconcile_Intro}" Style="{StaticResource Secondary}" />
+                    <Label Text="{v:Translate Reconcile_Observed}" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding ObservedText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Reconcile_Observed}" />
+                    <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
+                    <v:DateField Date="{Binding ReconcileDate}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Reconcile_Compare}" Command="{Binding CompareCommand}" Margin="0,12,0,0" />
+                    <Label Text="{Binding ResultText}" FontAttributes="Bold" Margin="0,12,0,0" IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" />
+                    <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,8,0,0"
+                            IsVisible="{Binding HintText, Converter={StaticResource IsNotNullConverter}}">
+                        <Label Text="{Binding HintText}" TextColor="{StaticResource WarningText}" />
+                    </Border>
+                    <VerticalStackLayout IsVisible="{Binding CanAdjust}" Spacing="0">
+                        <Label Text="{v:Translate Reconcile_Reason}" Style="{StaticResource FieldLabel}" />
+                        <Entry Text="{Binding Reason}" MaxLength="200" SemanticProperties.Description="{v:Translate Reconcile_Reason}" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Reconcile_Adjust}" Command="{Binding AdjustCommand}" Margin="0,12,0,0" />
+                    </VerticalStackLayout>
+                    <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

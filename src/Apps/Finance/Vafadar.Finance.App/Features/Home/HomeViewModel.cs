@@ -102,6 +102,9 @@ public sealed partial class HomeViewModel : ViewModelBase
     public partial string? ChartNote { get; set; }
 
     [ObservableProperty]
+    public partial string? ConfirmedBalanceText { get; set; }
+
+    [ObservableProperty]
     public partial string? CombinedText { get; set; }
 
     [ObservableProperty]
@@ -172,6 +175,12 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var unreviewed = LedgerCalculator.Unreviewed(allAccounts, entries);
         UnreviewedCount = unreviewed.Sum(u => u.Count);
+
+        // "Posted balance – includes unreviewed entries" with the confirmed-only value next to it (FIN-12).
+        ConfirmedBalanceText = UnreviewedCount > 0
+            ? _translator.Format("Home_ConfirmedOnly", UnreviewedCount, string.Join("  ", LedgerCalculator.TotalBalances(allAccounts, entries, today, confirmedOnly: true)
+                .Select(b => MoneyText.Format(b.Value, b.Key, culture))))
+            : null;
         UnreviewedText = UnreviewedCount > 0 ? _translator.Format("Home_Unreviewed", UnreviewedCount) : null;
 
         // Income and expense of the period.

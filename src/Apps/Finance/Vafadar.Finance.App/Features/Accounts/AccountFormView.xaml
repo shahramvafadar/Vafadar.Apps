@@ -5,6 +5,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
     x:DataType="local:AccountFormModel"
     Spacing="0">
@@ -42,6 +43,10 @@
     <Label Text="{v:Translate Account_OpeningDate}" Style="{StaticResource FieldLabel}" />
     <v:DateField Date="{Binding OpeningDate}" />
     <Label Text="{v:Translate Account_OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
+
+    <Button Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}" BackgroundColor="Transparent"
+            TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
+    <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" />
 
     <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
         <Label Text="{v:Translate Account_IncludeInTotals}" VerticalOptions="Center" />

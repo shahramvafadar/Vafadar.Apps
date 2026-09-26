@@ -55,6 +55,16 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool CurrencyLocked { get; set; }
 
+    /// <summary>Gets or sets the chosen icon; <see langword="null"/> uses the icon of the account type (ACC-01).</summary>
+    [ObservableProperty]
+    public partial string? IconKey { get; set; }
+
+    [ObservableProperty]
+    public partial bool ShowIconPicker { get; set; }
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleIconPicker() => ShowIconPicker = !ShowIconPicker;
+
     [ObservableProperty]
     public partial string? NameError { get; set; }
 
@@ -80,6 +90,7 @@ public sealed partial class AccountFormModel : ObservableObject
         OpeningDate = account.OpeningDate;
         IncludeInTotals = account.IncludeInTotals;
         CurrencyLocked = currencyLocked;
+        IconKey = account.Icon;
     }
 
     /// <summary>Validates the input and writes it to <paramref name="target"/>.</summary>
@@ -108,9 +119,10 @@ public sealed partial class AccountFormModel : ObservableObject
         target.OpeningDate = OpeningDate;
         target.OpeningBalanceKnown = true;
         target.IncludeInTotals = IncludeInTotals;
+        target.Icon = IconKey;
         return true;
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningDate, IncludeInTotals);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningDate, IncludeInTotals, IconKey);
 }

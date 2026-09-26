@@ -1478,4 +1478,70 @@
   <data name="Settings_Licences" xml:space="preserve">
     <value>Third-party components</value>
   </data>
+  <data name="Account_ConfirmedOnly" xml:space="preserve">
+    <value>Confirmed only: {0}</value>
+  </data>
+  <data name="Account_ShowEntries" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="Account_ChooseIcon" xml:space="preserve">
+    <value>Choose icon</value>
+  </data>
+  <data name="Account_ArchiveWithPlans" xml:space="preserve">
+    <value>{0} active plans use this account ({1}). Archiving ends them from today; past entries and history stay.</value>
+  </data>
+  <data name="Reconcile_Title" xml:space="preserve">
+    <value>Reconcile</value>
+  </data>
+  <data name="Reconcile_Intro" xml:space="preserve">
+    <value>Enter the balance you see, for example in your banking app, to compare it with what you recorded.</value>
+  </data>
+  <data name="Reconcile_Observed" xml:space="preserve">
+    <value>Balance you see</value>
+  </data>
+  <data name="Reconcile_Compare" xml:space="preserve">
+    <value>Compare</value>
+  </data>
+  <data name="Reconcile_Match" xml:space="preserve">
+    <value>The recorded balance matches.</value>
+  </data>
+  <data name="Reconcile_Difference" xml:space="preserve">
+    <value>Recorded {0} · difference {1}</value>
+  </data>
+  <data name="Reconcile_Unreviewed" xml:space="preserve">
+    <value>{0} entries of this account still need review.</value>
+  </data>
+  <data name="Reconcile_Duplicates" xml:space="preserve">
+    <value>{0} entries share date and amount with another one – check for duplicates.</value>
+  </data>
+  <data name="Reconcile_Missing" xml:space="preserve">
+    <value>Is an entry missing or recorded on another account? Only if not, record an adjustment.</value>
+  </data>
+  <data name="Reconcile_Reason" xml:space="preserve">
+    <value>Reason for the adjustment</value>
+  </data>
+  <data name="Reconcile_ReasonRequired" xml:space="preserve">
+    <value>Enter a reason for the adjustment.</value>
+  </data>
+  <data name="Reconcile_Adjust" xml:space="preserve">
+    <value>Record adjustment</value>
+  </data>
+  <data name="Reconcile_AdjustMessage" xml:space="preserve">
+    <value>The adjustment changes the balance only; it is not income or an expense and does not count for budgets.</value>
+  </data>
+  <data name="Reconcile_Done" xml:space="preserve">
+    <value>Adjustment recorded. The balances match now.</value>
+  </data>
+  <data name="Entry_Icon" xml:space="preserve">
+    <value>Icon for this entry</value>
+  </data>
+  <data name="Entry_MakeRecurring" xml:space="preserve">
+    <value>Make recurring</value>
+  </data>
+  <data name="Entry_PayBack" xml:space="preserve">
+    <value>Pay back</value>
+  </data>
+  <data name="Home_ConfirmedOnly" xml:space="preserve">
+    <value>Includes {0} unreviewed entries · confirmed only: {1}</value>
+  </data>
 </root>
