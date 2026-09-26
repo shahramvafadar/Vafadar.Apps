@@ -2,6 +2,7 @@
 
 **Version:** 1.1  
 **Baseline date:** `2026-09-25` (v1.0); revised `2026-09-26` (v1.1: aligned with the implemented Phase 1, see Section 31)  
+**Product name:** Zanance (decided 2026-09-26; "Finance" is the working name used in this document and in the code)  
 **Existing application ID:** `pro.vafadar.finance`  
 **Primary audience:** The product owner and the development team, for detailed design, planning, and incremental implementation  
 **Status:** Product baseline. Section 31 summarizes the implementation status; it is not a confirmation of release readiness  

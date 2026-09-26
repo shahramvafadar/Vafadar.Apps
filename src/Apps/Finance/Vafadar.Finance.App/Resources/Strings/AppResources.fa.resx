@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="App_Name" xml:space="preserve">
-    <value>مدیریت مالی</value>
+    <value>Zanance</value>
   </data>
   <data name="Home_Title" xml:space="preserve">
     <value>خانه</value>
@@ -1445,7 +1445,7 @@
     <value>باز کردن قفل</value>
   </data>
   <data name="Lock_Reason" xml:space="preserve">
-    <value>باز کردن قفل برنامهٔ مالی</value>
+    <value>باز کردن قفل Zanance</value>
   </data>
   <data name="Lock_EnableReason" xml:space="preserve">
     <value>فعال‌کردن قفل برنامه</value>

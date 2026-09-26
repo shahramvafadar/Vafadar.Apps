@@ -8,7 +8,7 @@
     <Description>Vafadar Finance: personal income and expense tracking with reports (Android, iOS, Windows).</Description>
 
     <!-- Display name (localized at runtime through resources; this is the installer / launcher fallback). -->
-    <ApplicationTitle>Finance</ApplicationTitle>
+    <ApplicationTitle>Zanance</ApplicationTitle>
 
     <!-- App identifier: NEVER change after the first store release. Must match FinanceApp.AppId. -->
     <ApplicationId>pro.vafadar.finance</ApplicationId>

@@ -14,7 +14,7 @@ English, Persian (فارسی) and German, and back up their data to the user's o
 
 | App | Description | Platforms | Status |
 |---|---|---|---|
-| [Finance](src/Apps/Finance/README.md) | Personal income and expense tracking with reports | Android · iOS · Windows | 🚧 In development |
+| [Zanance](src/Apps/Finance/README.md) | Personal finance manager: income, expenses, plans, budgets and reports | Android · iOS · Windows | 🚧 In development |
 
 ## Shared libraries
 

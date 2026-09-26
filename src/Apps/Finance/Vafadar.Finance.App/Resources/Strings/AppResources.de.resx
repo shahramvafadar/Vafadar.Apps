@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="App_Name" xml:space="preserve">
-    <value>Finanzen</value>
+    <value>Zanance</value>
   </data>
   <data name="Home_Title" xml:space="preserve">
     <value>Start</value>
@@ -1445,7 +1445,7 @@
     <value>Entsperren</value>
   </data>
   <data name="Lock_Reason" xml:space="preserve">
-    <value>Finanzen entsperren</value>
+    <value>Zanance entsperren</value>
   </data>
   <data name="Lock_EnableReason" xml:space="preserve">
     <value>App-Sperre einschalten</value>

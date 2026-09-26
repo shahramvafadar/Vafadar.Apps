@@ -1,4 +1,7 @@
-# Finance – requirements
+# Zanance – requirements
+
+The product is named **Zanance**; the specification and the code use the working name *Finance*
+(`src/Apps/Finance`, `Vafadar.Finance.*`, app id `pro.vafadar.finance`).
 
 The requirements are defined by the owner's *Finance Product Specification*, kept in this repository:
 

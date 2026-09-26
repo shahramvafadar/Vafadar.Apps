@@ -1,4 +1,4 @@
-# Finance – design documentation
+# Zanance – design documentation
 
 The accepted product baseline is the owner's [*Finance Product Specification*](spec/Finance-Product-Specification.md)
 (v1.1, 2026-09-26) and its [privacy matrix starter](spec/Finance-Privacy-Matrix-Starter.md). Requirement identifiers used here and in tests (`FIN-01`, `TX-01`, `REC-13`, `AT-17`, …) are the

@@ -29,6 +29,7 @@
 - [ ] Data safety form completed from the matrix (PRI-04)
 - [ ] Financial features declaration completed per current Play guidance (REL-01)
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
-- [ ] Final app name, icon (placeholder replaced), store texts and screenshots in en/fa/de with fictitious data (REL-03/04)
+- [x] Final app name: **Zanance** (owner decision 2026-09-26)
+- [ ] Icon (placeholder replaced), store texts and screenshots in en/fa/de with fictitious data (REL-03/04)
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track

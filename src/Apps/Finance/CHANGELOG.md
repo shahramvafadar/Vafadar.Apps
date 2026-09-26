@@ -1,6 +1,6 @@
-# Changelog – Vafadar Finance
+# Changelog – Zanance
 
-All notable changes to the Finance app. The format follows [Keep a Changelog](https://keepachangelog.com/),
+All notable changes to Zanance (project `src/Apps/Finance`). The format follows [Keep a Changelog](https://keepachangelog.com/),
 versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]

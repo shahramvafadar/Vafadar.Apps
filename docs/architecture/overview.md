@@ -79,7 +79,7 @@ A library is created when a second app needs the same thing, or when the concern
 
 | App | Folder | Platforms | Status |
 |---|---|---|---|
-| Finance – personal income / expense tracking and reports | [`src/Apps/Finance`](../../src/Apps/Finance/README.md) | Android, iOS, Windows | 🚧 phase 1 feature-complete except cloud backup; device tests and store release pending |
+| Zanance (project Finance) – personal finance manager | [`src/Apps/Finance`](../../src/Apps/Finance/README.md) | Android, iOS, Windows | 🚧 phase 1 feature-complete except cloud backup; device tests and store release pending |
 
 Every app uses the same project structure ([ADR 0004](../adr/0004-project-structure-per-app.md)):
 

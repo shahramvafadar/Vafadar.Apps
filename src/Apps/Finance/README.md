@@ -1,4 +1,4 @@
-# Vafadar Finance
+# Zanance
 
 Personal finance manager: record income and expenses, organize them into accounts and categories, and understand
 where the money goes with reports. Local-first and offline, multilingual (English, Persian, German, with Gregorian or Persian calendar) and backed up
@@ -6,6 +6,7 @@ with encrypted files the user keeps wherever they like (Google Drive, OneDrive, 
 
 | | |
 |---|---|
+| Product name | **Zanance** (shown in the app, stores and notifications; the code and folders keep the technical name *Finance*) |
 | App id | `pro.vafadar.finance` (permanent) |
 | Platforms | Android (first), iOS, Windows |
 | Status | 🚧 Phase 1 feature-complete except cloud backup (needs Google/Microsoft sign-in): accounts, entries, transfers, refunds, categories, plans with Gregorian/Persian recurrence and automatic posting, Home dashboard, budget, reports, forecast, reminders, manual exchange rates, CSV import/export, encrypted backup files, Simple/Advanced, app lock. Status per slice: [phase 1 plan](docs/04-phase-1-plan.md). |
