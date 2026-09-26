@@ -44,6 +44,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     /// <summary>Gets the settings (one row).</summary>
     public DbSet<FinanceSettings> Settings => Set<FinanceSettings>();
 
+    /// <summary>Gets the quick entry templates (TX-04).</summary>
+    public DbSet<EntryTemplate> Templates => Set<EntryTemplate>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

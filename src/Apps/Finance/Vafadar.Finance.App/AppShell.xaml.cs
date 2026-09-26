@@ -68,6 +68,9 @@ public partial class AppShell : Shell
     /// <summary>Route of CSV import and export.</summary>
     public const string ImportExportRoute = "importexport";
 
+    /// <summary>Route of the quick templates (TX-04).</summary>
+    public const string TemplatesRoute = "templates";
+
     public AppShell()
     {
         InitializeComponent();
@@ -89,5 +92,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
+        Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
     }
 }

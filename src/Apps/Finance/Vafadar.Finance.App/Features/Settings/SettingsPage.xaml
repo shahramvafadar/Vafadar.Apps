@@ -23,6 +23,15 @@
                             SemanticProperties.Description="{v:Translate Settings_Calendar}" />
                     <Label Text="{Binding CalendarPreview}" Style="{StaticResource Secondary}" />
 
+                    <Label Text="{v:Translate Settings_Region}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding Regions}" SelectedItem="{Binding SelectedRegion}"
+                            SemanticProperties.Description="{v:Translate Settings_Region}" />
+                    <Label Text="{v:Translate Settings_RegionHint}" Style="{StaticResource Secondary}" />
+
+                    <Label Text="{v:Translate Settings_WeekStart}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
+                            SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
+
                     <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
                     <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />

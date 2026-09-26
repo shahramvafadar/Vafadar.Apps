@@ -90,6 +90,8 @@
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_PayBack}" Command="{Binding PayBackCommand}"
                             IsVisible="{Binding CanPayBack}" />
                 </Grid>
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Templates_SaveAction}" Command="{Binding SaveAsTemplateCommand}"
+                        IsVisible="{Binding CanSaveTemplate}" />
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
                         TextColor="{StaticResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
             </VerticalStackLayout>

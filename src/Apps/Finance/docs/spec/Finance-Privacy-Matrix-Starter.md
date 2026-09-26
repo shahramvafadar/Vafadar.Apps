@@ -28,7 +28,7 @@
 
 | ID | Capability/flow | Potential data | Intended destination in the design | Status (2026-09-26) | Required evidence |
 |---|---|---|---|---|---|
-| DF-01 | Accounts and transactions | Amount, currency, date, account name, category, title, payee, notes. | Local app database. | Implemented — verified (automated tests). | Storage location (app-private), OS backup behavior (DF-16/17), device check. "Delete all data on this device" (Settings, confirmed twice) empties the database; shared backup files, exports and OS backups are not affected, and the app says so. |
+| DF-01 | Accounts and transactions | Amount, currency, date, account name, category, title, payee, notes; quick templates (title, payee, optional amount). | Local app database. | Implemented — verified (automated tests). | Storage location (app-private), OS backup behavior (DF-16/17), device check. "Delete all data on this device" (Settings, confirmed twice) empties the database; shared backup files, exports and OS backups are not affected, and the app says so. |
 | DF-02 | Schedules and budgets | Due dates, amounts, income/expense plans, limits, exchange rates. | Local. | Implemented — verified (automated tests). | No transmission: no network SDK, no INTERNET permission on Android. |
 | DF-03 | Local backup | Complete ledger package, finance settings and content counts; AES-256-GCM with a user password. | Kept on the device (last 10) and shared by the user to a destination of their choice. | Implemented — verified (library and fresh-install integration tests); device check pending. | Temporary files, restore on a new device. |
 | DF-04 | Google Drive backup | Encrypted package and connection metadata. | User-selected cloud storage. | Not included in the Phase 1 release: hidden until real sign-in exists. | Authorization scopes, identity data, upload/download, deletion, account switching. |
@@ -45,7 +45,7 @@
 | DF-15 | Online exchange rates / Bank Sync | None; rates are entered manually. | — | Not included. | The Android manifest declares no INTERNET permission. |
 | DF-16 | Android Auto Backup | App database and preferences. | The user's Google account backup. | Implemented — unverified (enabled by owner decision). | Disclose in the Privacy Policy and Data Safety; test restore on a new device. |
 | DF-17 | iOS device / iCloud backup | App data. | The user's iCloud or computer backup. | Implemented — unverified (operating-system default). | Disclose; verify with the iOS release. |
-| DF-18 | Preferences | Language, calendar, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
+| DF-18 | Preferences | Language, calendar, optional region, first day of the week, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
 | DF-19 | Syncfusion license validation | License key compiled into the app (build secret, never in the repository). | Local check. | Implemented — offline validation verified by an automated test. | Confirm no network call in the release build (none possible on Android without the INTERNET permission). |
 
 ## 4. Per-Flow Detail Form

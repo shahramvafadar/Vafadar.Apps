@@ -257,6 +257,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 ShowDetails = settings.Mode == Core.Settings.ExperienceMode.Advanced;
                 Account = defaultAccount;
                 ToAccount = active.FirstOrDefault(a => a.Id != defaultAccount?.Id);
+
+                // Quick templates fill a new entry only (TX-04).
+                Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? await _store.GetTemplatesAsync() : [];
+                HasTemplates = Templates.Count > 0;
             }
         }
         finally
@@ -268,6 +272,42 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         await UpdateRefundInfoAsync();
         _snapshot = Snapshot();
         query.Clear();
+    }
+
+    [ObservableProperty]
+    public partial IReadOnlyList<EntryTemplate> Templates { get; set; } = [];
+
+    [ObservableProperty]
+    public partial bool HasTemplates { get; set; }
+
+    // Fills the form from a template; the date stays today and nothing is saved until the user taps Save (TX-04).
+    [RelayCommand]
+    private void ApplyTemplate(EntryTemplate template)
+    {
+        var entry = template.CreateEntry(Date == default ? Today : Date);
+        if (Accounts.All(a => a.Id != entry.AccountId))
+        {
+            entry.AccountId = Account?.Id ?? Guid.Empty;
+        }
+
+        if (entry.ToAccountId is { } to && Accounts.All(a => a.Id != to))
+        {
+            entry.ToAccountId = null;
+        }
+
+        _loading = true;
+        try
+        {
+            _entry = entry;
+            LoadFrom(entry);
+            CanChangeKind = true;
+        }
+        finally
+        {
+            _loading = false;
+        }
+
+        UpdateKindState();
     }
 
     private static Guid? Get(IDictionary<string, object> query, string key) =>

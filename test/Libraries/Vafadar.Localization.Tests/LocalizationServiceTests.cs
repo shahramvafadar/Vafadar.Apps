@@ -128,6 +128,59 @@ public sealed class LocalizationServiceTests : IDisposable
         Assert.Throws<ArgumentException>(() => service.SetLanguage(AppLanguages.German));
     }
 
+    [Theory]
+    [InlineData("IR", DayOfWeek.Saturday)]
+    [InlineData("US", DayOfWeek.Sunday)]
+    [InlineData("DE", DayOfWeek.Monday)]
+    public void A_region_suggests_the_first_day_of_the_week(string region, DayOfWeek expected)
+    {
+        var service = CreateService();
+        service.Initialize();
+
+        service.SetRegion(region);
+
+        Assert.Equal(region, service.CurrentRegion);
+        Assert.Equal(expected, service.FirstDayOfWeek);
+        Assert.Equal(expected, service.CurrentCulture.DateTimeFormat.FirstDayOfWeek);
+        Assert.True(service.IsFirstDayOfWeekAutomatic);
+    }
+
+    [Fact]
+    public void A_chosen_first_day_wins_over_the_region_and_survives_a_restart_and_a_language_change()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetRegion("IR");
+        service.SetFirstDayOfWeek(DayOfWeek.Monday);
+
+        var restarted = CreateService();
+        restarted.Initialize();
+        restarted.SetLanguage(AppLanguages.German);
+
+        Assert.Equal("IR", restarted.CurrentRegion);
+        Assert.Equal(DayOfWeek.Monday, restarted.FirstDayOfWeek);
+        Assert.False(restarted.IsFirstDayOfWeekAutomatic);
+
+        restarted.SetFirstDayOfWeek(null);
+        Assert.Equal(DayOfWeek.Saturday, restarted.FirstDayOfWeek);
+    }
+
+    [Fact]
+    public void Region_does_not_change_language_calendar_or_number_format_and_can_be_cleared()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetLanguage(AppLanguages.German);
+        var separator = service.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+        service.SetRegion("US");
+
+        Assert.Equal(AppLanguages.German, service.CurrentLanguage);
+        Assert.Equal(separator, service.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+        service.SetRegion(null);
+        Assert.Null(service.CurrentRegion);
+        Assert.Throws<ArgumentException>(() => service.SetRegion("XX1"));
+    }
     private LocalizationService CreateService(Action<LocalizationOptions>? configure = null)
     {
         var options = new LocalizationOptions();

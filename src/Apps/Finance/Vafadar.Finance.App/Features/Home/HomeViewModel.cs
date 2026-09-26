@@ -119,6 +119,9 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasBudget { get; set; }
 
+    [ObservableProperty]
+    public partial string? IncompleteText { get; set; }
+
     // Guidance after the first entries (ONB-04): one tip at a time, each can be dismissed for good.
     [ObservableProperty]
     public partial bool ShowPlansTip { get; set; }
@@ -156,6 +159,11 @@ public sealed partial class HomeViewModel : ViewModelBase
         var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
 
         HasAccounts = accounts.Count > 0;
+
+        // Data quality (ACC-09): an unknown opening balance makes the total incomplete; say so instead of implying a
+        // complete net worth.
+        var incomplete = accounts.Count(a => a.IncludeInTotals && !a.OpeningBalanceKnown);
+        IncompleteText = incomplete > 0 ? _translator.Format("Home_OpeningUnknown", incomplete) : null;
         HasEntries = entries.Count > 0;
         var periodText = _dates.Format(from, DateFormatStyle.MonthYear);
         ScopeText = _translator.Format("Home_Scope", periodText, _translator["Home_AccountsInTotals"], _reportCurrency);
@@ -214,7 +222,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         {
             var balance = LedgerCalculator.Balance(account, entries, today);
             Accounts.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
-                Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals));
+                Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown));
         }
 
         HasAttention = UnreviewedCount > 0 || DueCount > 0;

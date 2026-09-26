@@ -31,9 +31,6 @@ public sealed class FinanceSettings : Entity, IAuditableEntity
     /// <summary>Gets or sets the calendar of new budgets (default Gregorian, §13.1).</summary>
     public PeriodCalendar BudgetCalendar { get; set; }
 
-    /// <summary>Gets or sets the first day of the week.</summary>
-    public DayOfWeek WeekStart { get; set; } = DayOfWeek.Monday;
-
     /// <summary>Gets or sets the default reminder lead time in days (REM-01, default 3).</summary>
     public int ReminderDaysBefore { get; set; } = 3;
 

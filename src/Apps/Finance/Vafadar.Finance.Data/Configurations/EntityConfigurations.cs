@@ -124,6 +124,19 @@ internal sealed class ExchangeRateConfiguration : IEntityTypeConfiguration<Excha
     }
 }
 
+internal sealed class EntryTemplateConfiguration : IEntityTypeConfiguration<EntryTemplate>
+{
+    public void Configure(EntityTypeBuilder<EntryTemplate> builder)
+    {
+        builder.ToTable("Templates");
+        builder.Property(t => t.Name).HasMaxLength(60);
+        builder.Property(t => t.Title).HasMaxLength(200);
+        builder.Property(t => t.Payee).HasMaxLength(200);
+        builder.Property(t => t.Icon).HasMaxLength(64);
+        builder.HasIndex(t => t.SortOrder);
+    }
+}
+
 internal sealed class FinanceSettingsConfiguration : IEntityTypeConfiguration<FinanceSettings>
 {
     public void Configure(EntityTypeBuilder<FinanceSettings> builder)

@@ -41,6 +41,12 @@
                         </VerticalStackLayout>
                         <Label Text="{Binding ConfirmedBalanceText}" TextColor="{StaticResource WarningText}" FontSize="13"
                                IsVisible="{Binding ConfirmedBalanceText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding IncompleteText}" TextColor="{StaticResource WarningText}" FontSize="13"
+                               IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenAccountsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
                         <Label Text="{Binding CombinedText}" FontSize="14" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenRatesCommand}" />

@@ -86,6 +86,7 @@ public static class MauiProgram
             .AddTransient<ReportsPage>().AddTransient<ReportsViewModel>()
             .AddTransient<ForecastPage>().AddTransient<ForecastViewModel>()
             .AddTransient<RatesPage>().AddTransient<RatesViewModel>()
+            .AddTransient<Features.Templates.TemplatesPage>().AddTransient<Features.Templates.TemplatesViewModel>()
             .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>();
 
 #if DEBUG

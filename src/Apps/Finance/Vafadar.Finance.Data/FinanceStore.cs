@@ -332,6 +332,40 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>Returns the quick entry templates in their order (TX-04).</summary>
+    public async Task<List<EntryTemplate>> GetTemplatesAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Templates.AsNoTracking().OrderBy(t => t.SortOrder).ThenBy(t => t.Name).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Adds a template at the end, or updates an existing one.</summary>
+    public async Task SaveTemplateAsync(EntryTemplate template, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(template);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (await db.Templates.AnyAsync(t => t.Id == template.Id, cancellationToken))
+        {
+            db.Templates.Update(template);
+        }
+        else
+        {
+            template.SortOrder = await db.Templates.Select(t => (int?)t.SortOrder).MaxAsync(cancellationToken) + 1 ?? 0;
+            db.Templates.Add(template);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes a template; entries created from it are not affected.</summary>
+    public async Task DeleteTemplateAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Templates.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+    }
+
     /// <summary>Deletes a rate; recorded amounts are never affected (FX-04).</summary>
     public async Task DeleteRateAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -362,6 +396,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Entries.Where(e => e.CategoryId == sourceId).ExecuteUpdateAsync(e => e.SetProperty(x => x.CategoryId, targetId), cancellationToken);
         await db.Schedules.Where(s => s.CategoryId == sourceId).ExecuteUpdateAsync(s => s.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        await db.Templates.Where(t => t.CategoryId == sourceId).ExecuteUpdateAsync(t => t.SetProperty(x => x.CategoryId, targetId), cancellationToken);
 
         // One level only: children of the source go under the target's main category.
         var newParent = target.ParentId ?? target.Id;
@@ -428,6 +463,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
+        await db.Templates.ExecuteDeleteAsync(cancellationToken);
         await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.ExecuteDeleteAsync(cancellationToken);
         db.Budgets.RemoveRange(await db.Budgets.ToListAsync(cancellationToken));

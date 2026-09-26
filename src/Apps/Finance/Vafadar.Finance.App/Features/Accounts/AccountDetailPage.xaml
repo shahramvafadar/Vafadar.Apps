@@ -23,6 +23,8 @@
                         <Label Text="{Binding BalanceText}" Style="{StaticResource AmountLarge}" Margin="0,6,0,0" />
                         <Label Text="{Binding ConfirmedText}" Style="{StaticResource Secondary}" IsVisible="{Binding ConfirmedText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Accounts_Archived}" TextColor="{StaticResource WarningText}" IsVisible="{Binding IsArchived}" />
+                        <Label Text="{Binding IncompleteText}" TextColor="{StaticResource WarningText}" FontSize="13"
+                               IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>

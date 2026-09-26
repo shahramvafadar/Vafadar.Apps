@@ -46,6 +46,9 @@ public sealed partial class AccountDetailViewModel(
     public partial string? BalanceText { get; set; }
 
     [ObservableProperty]
+    public partial string? IncompleteText { get; set; }
+
+    [ObservableProperty]
     public partial string? ConfirmedText { get; set; }
 
     [ObservableProperty]
@@ -106,6 +109,7 @@ public sealed partial class AccountDetailViewModel(
         TypeName = translator[$"AccountType_{account.Type}"];
         Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
         IsArchived = account.IsArchived;
+        IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);
@@ -188,6 +192,14 @@ public sealed partial class AccountDetailViewModel(
 
         HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null;
         CanAdjust = _result.Difference != 0;
+
+        // A matching balance confirms the account, so an unknown opening balance no longer makes it incomplete.
+        if (_result.Difference == 0 && !account.OpeningBalanceKnown)
+        {
+            account.OpeningBalanceKnown = true;
+            await store.SaveAccountAsync(account);
+            IncompleteText = null;
+        }
     }
 
     [RelayCommand]
@@ -212,6 +224,13 @@ public sealed partial class AccountDetailViewModel(
                 Error = string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"]));
                 return;
             }
+        }
+
+        // A reconciled balance is known from its date on, so the account is no longer incomplete (ACC-09).
+        if (!_account.OpeningBalanceKnown)
+        {
+            _account.OpeningBalanceKnown = true;
+            await store.SaveAccountAsync(_account);
         }
 
         ObservedText = string.Empty;

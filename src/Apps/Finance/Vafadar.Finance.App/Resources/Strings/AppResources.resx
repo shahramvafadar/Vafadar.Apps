@@ -1548,7 +1548,7 @@
     <value>Merge</value>
   </data>
   <data name="Category_MergeMessage" xml:space="preserve">
-    <value>All entries, plans and budget limits of this category move to "{0}", and this category is removed.</value>
+    <value>All entries, plans, templates and budget limits of this category move to "{0}". This category is then archived.</value>
   </data>
   <data name="Category_MergeInto" xml:space="preserve">
     <value>Merge into another category</value>
@@ -1660,5 +1660,53 @@
   </data>
   <data name="Plan_ReminderAlsoDue" xml:space="preserve">
     <value>and on the due date</value>
+  </data>
+  <data name="Account_OpeningUnknown" xml:space="preserve">
+    <value>I don't know the opening balance</value>
+  </data>
+  <data name="Account_OpeningUnknownHint" xml:space="preserve">
+    <value>The balance starts at zero and is marked as incomplete. Compare it with your bank balance later in the account details to complete it.</value>
+  </data>
+  <data name="Account_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="Account_IncompleteHint" xml:space="preserve">
+    <value>Opening balance unknown: this balance may be incomplete. Compare it with your actual balance below.</value>
+  </data>
+  <data name="Home_OpeningUnknown" xml:space="preserve">
+    <value>Incomplete: the opening balance of {0} account(s) is unknown.</value>
+  </data>
+  <data name="Templates_Title" xml:space="preserve">
+    <value>Quick templates</value>
+  </data>
+  <data name="Templates_Intro" xml:space="preserve">
+    <value>A template fills a new entry with account, category, title and, if you like, the amount. You still check and save the entry yourself.</value>
+  </data>
+  <data name="Templates_Empty" xml:space="preserve">
+    <value>No templates yet. Open an entry and choose "Save as template".</value>
+  </data>
+  <data name="Templates_Delete" xml:space="preserve">
+    <value>Delete template?</value>
+  </data>
+  <data name="Templates_SaveAction" xml:space="preserve">
+    <value>Save as template</value>
+  </data>
+  <data name="Templates_SaveTitle" xml:space="preserve">
+    <value>Quick template</value>
+  </data>
+  <data name="Templates_NamePrompt" xml:space="preserve">
+    <value>Name of the template</value>
+  </data>
+  <data name="Templates_KeepAmount" xml:space="preserve">
+    <value>Keep the amount {0} in the template? Choose "Ask each time" for amounts that vary.</value>
+  </data>
+  <data name="Templates_KeepAmountYes" xml:space="preserve">
+    <value>Keep amount</value>
+  </data>
+  <data name="Templates_KeepAmountNo" xml:space="preserve">
+    <value>Ask each time</value>
+  </data>
+  <data name="Templates_Saved" xml:space="preserve">
+    <value>"{0}" is available when you add a new entry.</value>
   </data>
 </root>

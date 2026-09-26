@@ -22,6 +22,7 @@
         <HorizontalStackLayout Spacing="8">
             <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
             <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" IsVisible="{Binding NotInTotals}" />
+            <Label Text="{v:Translate Account_Incomplete}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
     <Label Grid.Column="2" Text="{Binding BalanceText}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">

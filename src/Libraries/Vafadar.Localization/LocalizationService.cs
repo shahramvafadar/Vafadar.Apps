@@ -11,6 +11,8 @@ public sealed class LocalizationService : ILocalizationService
 {
     internal const string LanguageKey = "localization.language";
     internal const string CalendarKey = "localization.calendar";
+    internal const string RegionKey = "localization.region";
+    internal const string FirstDayKey = "localization.firstDayOfWeek";
 
     private readonly LocalizationOptions _options;
     private readonly ISettingsStore _settings;
@@ -65,6 +67,32 @@ public sealed class LocalizationService : ILocalizationService
     public bool IsRightToLeft => CurrentLanguage.IsRightToLeft;
 
     /// <inheritdoc />
+    public string? CurrentRegion { get; private set; }
+
+    /// <inheritdoc />
+    public string? SuggestedRegion
+    {
+        get
+        {
+            try
+            {
+                var code = new RegionInfo(_deviceCulture.Name).TwoLetterISORegionName;
+                return Regions.IsKnown(code) ? code.ToUpperInvariant() : null;
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+        }
+    }
+
+    /// <inheritdoc />
+    public DayOfWeek FirstDayOfWeek => CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+
+    /// <inheritdoc />
+    public bool IsFirstDayOfWeekAutomatic => SavedFirstDay() is null;
+
+    /// <inheritdoc />
     public void Initialize()
     {
         var language = FindLanguage(_settings.Get(LanguageKey))
@@ -73,6 +101,8 @@ public sealed class LocalizationService : ILocalizationService
             ?? FindLanguage(_options.DefaultLanguage.CultureName)
             ?? SupportedLanguages[0];
 
+        var region = _settings.Get(RegionKey);
+        CurrentRegion = Regions.IsKnown(region) ? region!.ToUpperInvariant() : null;
         Apply(language, SavedCalendar() ?? _options.DefaultCalendar(language));
     }
 
@@ -104,9 +134,35 @@ public sealed class LocalizationService : ILocalizationService
         Apply(CurrentLanguage, calendar);
     }
 
+    /// <inheritdoc />
+    public void SetRegion(string? region)
+    {
+        if (!string.IsNullOrEmpty(region) && !Regions.IsKnown(region))
+        {
+            throw new ArgumentException($"Unknown region '{region}'.", nameof(region));
+        }
+
+        CurrentRegion = string.IsNullOrEmpty(region) ? null : region.ToUpperInvariant();
+        _settings.Set(RegionKey, CurrentRegion);
+        Apply(CurrentLanguage, CurrentCalendar);
+    }
+
+    /// <inheritdoc />
+    public void SetFirstDayOfWeek(DayOfWeek? day)
+    {
+        if (day is { } value && !Enum.IsDefined(value))
+        {
+            throw new ArgumentOutOfRangeException(nameof(day), day, "Unknown day of the week.");
+        }
+
+        _settings.Set(FirstDayKey, day?.ToString());
+        Apply(CurrentLanguage, CurrentCalendar);
+    }
+
     private void Apply(AppLanguage language, CalendarSystem calendar)
     {
         var culture = CultureFactory.Create(language, calendar);
+        culture.DateTimeFormat.FirstDayOfWeek = SavedFirstDay() ?? Regions.FirstDayOfWeek(CurrentRegion, culture);
 
         CurrentLanguage = language;
         CurrentCalendar = calendar;
@@ -125,6 +181,9 @@ public sealed class LocalizationService : ILocalizationService
         string.IsNullOrEmpty(cultureName)
             ? null
             : SupportedLanguages.FirstOrDefault(l => string.Equals(l.CultureName, cultureName, StringComparison.OrdinalIgnoreCase));
+
+    private DayOfWeek? SavedFirstDay() =>
+        Enum.TryParse<DayOfWeek>(_settings.Get(FirstDayKey), ignoreCase: true, out var day) && Enum.IsDefined(day) ? day : null;
 
     private CalendarSystem? SavedCalendar() =>
         Enum.TryParse<CalendarSystem>(_settings.Get(CalendarKey), ignoreCase: true, out var calendar) && Enum.IsDefined(calendar)

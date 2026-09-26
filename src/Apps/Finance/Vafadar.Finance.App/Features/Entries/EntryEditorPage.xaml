@@ -7,6 +7,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Entries"
+    xmlns:ledger="clr-namespace:Vafadar.Finance.Core.Ledger;assembly=Vafadar.Finance.Core"
     x:DataType="local:EntryEditorViewModel"
     Title="{Binding Title}"
     Shell.PresentationMode="ModalAnimated">
@@ -30,6 +31,19 @@
 
         <ScrollView Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
+
+                <!-- Quick templates (TX-04), new entries only -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasTemplates}">
+                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Templates}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="ledger:EntryTemplate">
+                                <Button Text="{Binding Name}" Style="{StaticResource SecondaryButton}" Padding="14,0" HeightRequest="40" CornerRadius="20"
+                                        Command="{Binding ApplyTemplateCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
+                                        CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </ScrollView>
 
                 <!-- Kind and amount -->
                 <Border Style="{StaticResource Card}">

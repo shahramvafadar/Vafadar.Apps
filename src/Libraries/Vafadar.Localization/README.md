@@ -7,7 +7,8 @@ integration is in Vafadar.Maui). Design: [docs/architecture/localization.md](../
 |---|---|
 | `AppLanguage`, `AppLanguages` | Supported languages (`en`, `fa`, `de`), native names, RTL flag |
 | `CalendarSystem` | `Gregorian`, `Persian` |
-| `ILocalizationService` / `LocalizationService` | Current language and calendar; persists the choice; applies cultures; `Changed` event |
+| `ILocalizationService` / `LocalizationService` | Current language, calendar, optional region and first day of the week; persists the choice; applies cultures; `Changed` event |
+| `Regions` | Region codes and names, and the conventional first day of the week per region (a region only suggests formats, never location) |
 | `Translator` | String lookup (app resources → shared strings), refreshes bindings on language change |
 | `Formatting.IDateFormatter` | Calendar-aware date formatting (`Short`, `Long`, `MonthYear`) |
 | `Resources/SharedStrings*.resx` | Strings shared by all apps (`Common_*`, `Settings_*`, `Calendar_*`, `Backup_*`) |

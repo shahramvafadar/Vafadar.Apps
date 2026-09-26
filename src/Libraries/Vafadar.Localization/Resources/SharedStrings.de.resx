@@ -205,4 +205,22 @@
   <data name="Backup_Error_Storage" xml:space="preserve">
     <value>Die Datei konnte nicht gelesen oder geschrieben werden. Prüfen Sie den freien Speicher und versuchen Sie es erneut.</value>
   </data>
+  <data name="Settings_Region" xml:space="preserve">
+    <value>Land oder Region</value>
+  </data>
+  <data name="Settings_RegionNotSet" xml:space="preserve">
+    <value>Nicht festgelegt</value>
+  </data>
+  <data name="Settings_RegionSuggested" xml:space="preserve">
+    <value>Nicht festgelegt (Gerät: {0})</value>
+  </data>
+  <data name="Settings_RegionHint" xml:space="preserve">
+    <value>Schlägt nur den ersten Wochentag vor. Sprache, Währung und Kalender bleiben wie gewählt; es wird kein Standort verwendet.</value>
+  </data>
+  <data name="Settings_WeekStart" xml:space="preserve">
+    <value>Erster Wochentag</value>
+  </data>
+  <data name="Settings_WeekStartAutomatic" xml:space="preserve">
+    <value>Automatisch ({0})</value>
+  </data>
 </root>

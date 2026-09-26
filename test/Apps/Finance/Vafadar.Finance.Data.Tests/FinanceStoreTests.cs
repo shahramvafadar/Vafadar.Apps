@@ -275,6 +275,28 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Templates_are_kept_in_order_follow_a_category_merge_and_are_deleted_with_all_data()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var account = await NewAccountAsync();
+        var categories = (await _store.GetCategoriesAsync(Ct)).Where(c => c.Kind == CategoryKind.Expense).ToList();
+        await _store.SaveTemplateAsync(new EntryTemplate { Name = "Fuel", Kind = EntryKind.Expense, AccountId = account.Id, CategoryId = categories[0].Id }, Ct);
+        await _store.SaveTemplateAsync(new EntryTemplate { Name = "Coffee", Kind = EntryKind.Expense, AccountId = account.Id, CategoryId = categories[1].Id, Amount = 350 }, Ct);
+
+        var templates = await _store.GetTemplatesAsync(Ct);
+        Assert.Equal(["Fuel", "Coffee"], templates.Select(t => t.Name));
+
+        await _store.MergeCategoryAsync(categories[1].Id, categories[0].Id, Ct);
+        Assert.All(await _store.GetTemplatesAsync(Ct), t => Assert.Equal(categories[0].Id, t.CategoryId));
+
+        await _store.DeleteTemplateAsync(templates[0].Id, Ct);
+        Assert.Equal("Coffee", Assert.Single(await _store.GetTemplatesAsync(Ct)).Name);
+
+        await _store.DeleteAllDataAsync(Ct);
+        Assert.Empty(await _store.GetTemplatesAsync(Ct));
+    }
+
+    [Fact]
     public async Task Deleting_all_data_leaves_an_empty_database()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

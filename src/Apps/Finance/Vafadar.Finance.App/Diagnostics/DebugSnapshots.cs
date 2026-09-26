@@ -97,6 +97,7 @@ internal static class DebugSnapshots
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
+            ("templates", AppShell.TemplatesRoute, null),
             ("importexport", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
@@ -153,6 +154,8 @@ internal static class DebugSnapshots
         var fee = EntryActions.SyncTransferFee(transfer, null, 150, Category(DefaultCategories.Fees))!;
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
+        await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
+        await store.SaveTemplateAsync(new EntryTemplate { Name = "Coffee", Kind = EntryKind.Expense, AccountId = checking.Id, CategoryId = Category("Food"), Amount = 350 });
         return (groceries.Id, Category("Food"));
     }
 

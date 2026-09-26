@@ -1544,7 +1544,7 @@
     <value>ادغام</value>
   </data>
   <data name="Category_MergeMessage" xml:space="preserve">
-    <value>همه تراکنش‌ها، برنامه‌ها و سقف‌های بودجه این دسته به «{0}» منتقل می‌شوند و این دسته حذف می‌شود.</value>
+    <value>همهٔ تراکنش‌ها، برنامه‌ها، الگوها و سقف‌های بودجهٔ این دسته به «{0}» منتقل می‌شوند و سپس این دسته بایگانی می‌شود.</value>
   </data>
   <data name="Category_MergeInto" xml:space="preserve">
     <value>ادغام با دسته‌ای دیگر</value>
@@ -1656,5 +1656,53 @@
   </data>
   <data name="Plan_ReminderAlsoDue" xml:space="preserve">
     <value>و در روز سررسید</value>
+  </data>
+  <data name="Account_OpeningUnknown" xml:space="preserve">
+    <value>موجودی آغازین را نمی‌دانم</value>
+  </data>
+  <data name="Account_OpeningUnknownHint" xml:space="preserve">
+    <value>موجودی از صفر شروع می‌شود و ناقص علامت می‌خورد. بعداً در جزئیات حساب آن را با موجودی بانک مقایسه کنید تا کامل شود.</value>
+  </data>
+  <data name="Account_Incomplete" xml:space="preserve">
+    <value>ناقص</value>
+  </data>
+  <data name="Account_IncompleteHint" xml:space="preserve">
+    <value>موجودی آغازین نامعلوم است و این موجودی ممکن است ناقص باشد. آن را در پایین با موجودی واقعی مقایسه کنید.</value>
+  </data>
+  <data name="Home_OpeningUnknown" xml:space="preserve">
+    <value>ناقص: موجودی آغازین {0} حساب نامعلوم است.</value>
+  </data>
+  <data name="Templates_Title" xml:space="preserve">
+    <value>الگوهای سریع</value>
+  </data>
+  <data name="Templates_Intro" xml:space="preserve">
+    <value>هر الگو یک تراکنش جدید را با حساب، دسته، عنوان و در صورت تمایل مبلغ پر می‌کند. بررسی و ذخیرهٔ تراکنش همچنان با خودتان است.</value>
+  </data>
+  <data name="Templates_Empty" xml:space="preserve">
+    <value>هنوز الگویی ندارید. یک تراکنش را باز کنید و «ذخیره به‌عنوان الگو» را بزنید.</value>
+  </data>
+  <data name="Templates_Delete" xml:space="preserve">
+    <value>الگو حذف شود؟</value>
+  </data>
+  <data name="Templates_SaveAction" xml:space="preserve">
+    <value>ذخیره به‌عنوان الگو</value>
+  </data>
+  <data name="Templates_SaveTitle" xml:space="preserve">
+    <value>الگوی سریع</value>
+  </data>
+  <data name="Templates_NamePrompt" xml:space="preserve">
+    <value>نام الگو</value>
+  </data>
+  <data name="Templates_KeepAmount" xml:space="preserve">
+    <value>مبلغ {0} در الگو بماند؟ برای مبالغ متغیر «هر بار بپرس» را انتخاب کنید.</value>
+  </data>
+  <data name="Templates_KeepAmountYes" xml:space="preserve">
+    <value>مبلغ بماند</value>
+  </data>
+  <data name="Templates_KeepAmountNo" xml:space="preserve">
+    <value>هر بار بپرس</value>
+  </data>
+  <data name="Templates_Saved" xml:space="preserve">
+    <value>«{0}» هنگام افزودن تراکنش جدید در دسترس است.</value>
   </data>
 </root>

@@ -61,6 +61,9 @@ public sealed partial class EntryDetailViewModel(
     public partial bool CanMakeRecurring { get; set; }
 
     [ObservableProperty]
+    public partial bool CanSaveTemplate { get; set; }
+
+    [ObservableProperty]
     public partial bool IsUnreviewed { get; set; }
 
     [ObservableProperty]
@@ -107,6 +110,7 @@ public sealed partial class EntryDetailViewModel(
         IsUnreviewed = row.IsUnreviewed;
         CanPayBack = entry.Kind == EntryKind.Income;
         CanMakeRecurring = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && entry.ScheduleId is null;
+        CanSaveTemplate = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer;
 
         Lines.Clear();
         Lines.Add(new DetailLine(translator["Entry_Date"], dates.Format(entry.Date, DateFormatStyle.Long)));
@@ -191,6 +195,30 @@ public sealed partial class EntryDetailViewModel(
 
     [RelayCommand]
     private Task PayBackAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = nameof(EntryKind.IncomeReversal), ["of"] = _id });
+
+    // TX-04: a quick template fills the entry form later; it never creates an entry by itself.
+    [RelayCommand]
+    private async Task SaveAsTemplateAsync()
+    {
+        if (_entry is null || !CanSaveTemplate)
+        {
+            return;
+        }
+
+        var name = await Shell.Current.DisplayPromptAsync(
+            translator["Templates_SaveTitle"], translator["Templates_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"],
+            initialValue: Heading ?? string.Empty, maxLength: 60);
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
+        var keepAmount = _entry.Amount > 0 && await Shell.Current.DisplayAlertAsync(
+            translator["Templates_SaveTitle"], translator.Format("Templates_KeepAmount", AmountText ?? string.Empty),
+            translator["Templates_KeepAmountYes"], translator["Templates_KeepAmountNo"]);
+        await store.SaveTemplateAsync(EntryTemplate.From(_entry, name, keepAmount));
+        await Shell.Current.DisplayAlertAsync(translator["Templates_SaveTitle"], translator.Format("Templates_Saved", name.Trim()), translator["Common_Ok"]);
+    }
 
     // TX-04: an entry becomes the template of a plan; the entry itself stays as it is.
     [RelayCommand]

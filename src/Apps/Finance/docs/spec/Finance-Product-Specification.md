@@ -1229,14 +1229,14 @@ This section records what the repository actually contains. It is evidence-based
 | Phase 1B (budget, reports, forecast, reminders, multi-currency, CSV import/export, Simple/Advanced, app lock, hardening) | Implemented – verified, except cloud backup. |
 | Cloud backup to Google Drive / OneDrive (BAK-13, BAK-14, AT-59) | Blocked: needs OAuth client ids and a real sign-in test. The destination is hidden; encrypted backup files are shared to any destination with the system share sheet instead. |
 | Phase 2 | Not started, as intended. |
-| Automated tests | 280 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
+| Automated tests | 288 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
 
 ### 31.2. Status by Requirement Area
 
 | Area | Status and notes |
 |---|---|
-| FIN, ACC | Implemented – verified. Transfers are single entries; opening balance with a baseline date; balance adjustment with reason; manual reconciliation shows the difference, unreviewed entries and possible duplicates before offering an adjustment (ACC-08); archiving ends active plans (ACC-06); account currency cannot be relabelled once used (ACC-07). |
-| TX | Implemented – verified: short form with optional details, title/payee/note separated, search and filters (period, type, account, category, review status; amounts through search), edit, delete with undo, duplicate without the occurrence link, "Make recurring". **Open:** quick templates (TX-04) are not implemented; "Duplicate" covers the need for now. |
+| FIN, ACC | Implemented – verified. Transfers are single entries; opening balance with a baseline date; balance adjustment with reason; manual reconciliation shows the difference, unreviewed entries and possible duplicates before offering an adjustment (ACC-08); archiving ends active plans (ACC-06); account currency cannot be relabelled once used (ACC-07); an unknown opening balance marks the account and the Home total as incomplete until a matching reconciliation (ACC-09). |
+| TX | Implemented – verified: short form with optional details, title/payee/note separated, search and filters (period, type, account, category, review status; amounts through search), edit, delete with undo, duplicate without the occurrence link, "Make recurring". Quick templates, saved from an entry with or without its amount, fill new entries and never save by themselves (TX-04). |
 | CAT | Implemented – verified: starter set, custom categories with one sub-level, colors and icons, ordering, archiving, merging into another category of the same kind (entries, plans and budget limits move; nothing is deleted). |
 | VIS | Implemented – verified: light theme, semantic colors plus signs, labels and icons, offline Fluent UI icon set, icons per category, account and entry. |
 | REF | Implemented – verified: full and partial refunds linked to the purchase, refund to another account, refunds larger than the purchase are prevented, refunds of earlier months shown separately. |
@@ -1245,7 +1245,7 @@ This section records what the repository actually contains. It is evidence-based
 | BUD | Implemented – verified: monthly budget per calendar and currency, overall and category limits, optional account scope (Advanced) shown in Simple mode as a note, alerts at 80/100 %, copy to next month, plans of the month and monthly equivalents (BUD-09). |
 | FOR | Implemented – verified: end of month / 30 / 90 days, open occurrences only, overdue items assumed at the base date and labelled, unknown amounts make the result incomplete, daily path with lowest balance and shortfall warning; items can be left out or assumed on another date for the current view only (FOR-04). |
 | DASH, REP | Implemented – verified: one filter set per screen with visible scope, actionable review/due items, gross spending chart with refunds card and net table, income and expense, 6/12-month trend with partial months marked, account movement, planned versus posted with open occurrences, variance of settled occurrences and monthly equivalents; every number drills down to its entries. |
-| LOC | Implemented – verified: English, German and Persian complete (resource tests); RTL layout; Persian, Arabic and Latin digits accepted; Gregorian and Persian display calendars. **Open:** region and first day of the week have no settings UI yet (the week start is stored with a Monday default). |
+| LOC | Implemented – verified: English, German and Persian complete (resource tests); RTL layout; Persian, Arabic and Latin digits accepted; Gregorian and Persian display calendars. Optional country/region (the device region is only suggested) and first day of the week (automatic from region or language, or chosen); the region changes nothing else and uses no location (PR-05, LOC-05). |
 | FX | Implemented – verified: original amount and currency on entries, manual dated rates with inverse use, report currency, combined totals only when every rate exists, otherwise marked incomplete. |
 | UX | Implemented – verified: Simple and Advanced are views over the same data; hidden settings that affect a number are summarised; empty, incomplete and error states are distinct. |
 | ONB | Implemented – verified: no login, language/currency/calendar choice, first account, default categories; dismissible guidance for plans and budget after the first entries (ONB-04). |
@@ -1262,9 +1262,6 @@ This section records what the repository actually contains. It is evidence-based
 | REM-01 (multiple reminders) | Advanced mode offers one reminder plus an optional second one on the due date, not an arbitrary number. | Covers the common cases with a simple UI; can be extended without data loss. |
 | REM on Windows | Windows builds show no system notifications; the in-app due-date center works. | Windows is a development and personal-use target in Phase 1. |
 | SEC-02 (recent-app preview) | The recent-apps preview is hidden only while the app lock is enabled. | Owner decision pending: hiding it always also blocks screenshots. |
-| TX-04 (quick templates) | Not implemented. | Planned as a small follow-up; "Duplicate" and plans cover most uses. |
-| ACC-09 (incomplete data) | The model stores whether an opening balance is known, but the UI does not yet offer "unknown" or show a data-quality indicator. | Planned as a small follow-up. |
-| PR-05, LOC (region, week start) | No settings UI for region or first day of the week. | Planned as a small follow-up; no location access is involved. |
 | BAK-13/14 | Cloud backup blocked (31.1). | Needs OAuth client ids. |
 
 ### 31.4. Build and Licensing Notes

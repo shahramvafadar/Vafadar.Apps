@@ -1544,7 +1544,7 @@
     <value>Zusammenführen</value>
   </data>
   <data name="Category_MergeMessage" xml:space="preserve">
-    <value>Alle Buchungen, Pläne und Budgetgrenzen dieser Kategorie gehen an „{0}“ über, und diese Kategorie wird entfernt.</value>
+    <value>Alle Buchungen, Pläne, Vorlagen und Budgetgrenzen dieser Kategorie gehen an „{0}“ über. Danach wird diese Kategorie archiviert.</value>
   </data>
   <data name="Category_MergeInto" xml:space="preserve">
     <value>Mit anderer Kategorie zusammenführen</value>
@@ -1656,5 +1656,53 @@
   </data>
   <data name="Plan_ReminderAlsoDue" xml:space="preserve">
     <value>und am Fälligkeitstag</value>
+  </data>
+  <data name="Account_OpeningUnknown" xml:space="preserve">
+    <value>Anfangssaldo unbekannt</value>
+  </data>
+  <data name="Account_OpeningUnknownHint" xml:space="preserve">
+    <value>Der Saldo beginnt bei null und wird als unvollständig markiert. Gleichen Sie ihn später in den Kontodetails mit Ihrem Banksaldo ab.</value>
+  </data>
+  <data name="Account_Incomplete" xml:space="preserve">
+    <value>Unvollständig</value>
+  </data>
+  <data name="Account_IncompleteHint" xml:space="preserve">
+    <value>Anfangssaldo unbekannt: Dieser Saldo ist möglicherweise unvollständig. Gleichen Sie ihn unten mit dem tatsächlichen Saldo ab.</value>
+  </data>
+  <data name="Home_OpeningUnknown" xml:space="preserve">
+    <value>Unvollständig: Der Anfangssaldo von {0} Konto/Konten ist unbekannt.</value>
+  </data>
+  <data name="Templates_Title" xml:space="preserve">
+    <value>Schnellvorlagen</value>
+  </data>
+  <data name="Templates_Intro" xml:space="preserve">
+    <value>Eine Vorlage füllt eine neue Buchung mit Konto, Kategorie, Titel und auf Wunsch dem Betrag. Prüfen und speichern Sie die Buchung weiterhin selbst.</value>
+  </data>
+  <data name="Templates_Empty" xml:space="preserve">
+    <value>Noch keine Vorlagen. Öffnen Sie eine Buchung und wählen Sie „Als Vorlage speichern“.</value>
+  </data>
+  <data name="Templates_Delete" xml:space="preserve">
+    <value>Vorlage löschen?</value>
+  </data>
+  <data name="Templates_SaveAction" xml:space="preserve">
+    <value>Als Vorlage speichern</value>
+  </data>
+  <data name="Templates_SaveTitle" xml:space="preserve">
+    <value>Schnellvorlage</value>
+  </data>
+  <data name="Templates_NamePrompt" xml:space="preserve">
+    <value>Name der Vorlage</value>
+  </data>
+  <data name="Templates_KeepAmount" xml:space="preserve">
+    <value>Betrag {0} in der Vorlage behalten? Wählen Sie „Jedes Mal fragen“ für wechselnde Beträge.</value>
+  </data>
+  <data name="Templates_KeepAmountYes" xml:space="preserve">
+    <value>Betrag behalten</value>
+  </data>
+  <data name="Templates_KeepAmountNo" xml:space="preserve">
+    <value>Jedes Mal fragen</value>
+  </data>
+  <data name="Templates_Saved" xml:space="preserve">
+    <value>„{0}“ steht beim Hinzufügen einer neuen Buchung zur Verfügung.</value>
   </data>
 </root>

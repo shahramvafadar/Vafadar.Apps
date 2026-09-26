@@ -46,6 +46,10 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool OpeningIsNegative { get; set; }
 
+    // The opening balance may be unknown; balances are then marked incomplete until a reconciliation (ACC-09).
+    [ObservableProperty]
+    public partial bool OpeningUnknown { get; set; }
+
     [ObservableProperty]
     public partial DateOnly OpeningDate { get; set; }
 
@@ -87,6 +91,7 @@ public sealed partial class AccountFormModel : ObservableObject
         CurrencyCode = account.CurrencyCode;
         OpeningText = account.OpeningBalance == 0 ? string.Empty : MoneyText.ForInput(account.OpeningBalance, account.CurrencyCode, culture);
         OpeningIsNegative = account.OpeningBalance < 0;
+        OpeningUnknown = !account.OpeningBalanceKnown;
         OpeningDate = account.OpeningDate;
         IncludeInTotals = account.IncludeInTotals;
         CurrencyLocked = currencyLocked;
@@ -102,7 +107,7 @@ public sealed partial class AccountFormModel : ObservableObject
 
         long opening = 0;
         AmountError = null;
-        if (!string.IsNullOrWhiteSpace(OpeningText) && !MoneyAmount.TryParse(OpeningText, Currencies.Get(CurrencyCode), culture, out opening))
+        if (!OpeningUnknown && !string.IsNullOrWhiteSpace(OpeningText) && !MoneyAmount.TryParse(OpeningText, Currencies.Get(CurrencyCode), culture, out opening))
         {
             AmountError = _translator["Amount_Invalid"];
         }
@@ -117,12 +122,16 @@ public sealed partial class AccountFormModel : ObservableObject
         target.CurrencyCode = CurrencyCode;
         target.OpeningBalance = OpeningIsNegative ? -opening : opening;
         target.OpeningDate = OpeningDate;
-        target.OpeningBalanceKnown = true;
+        target.OpeningBalanceKnown = !OpeningUnknown;
+        if (OpeningUnknown)
+        {
+            target.OpeningBalance = 0;
+        }
         target.IncludeInTotals = IncludeInTotals;
         target.Icon = IconKey;
         return true;
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningDate, IncludeInTotals, IconKey);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey);
 }

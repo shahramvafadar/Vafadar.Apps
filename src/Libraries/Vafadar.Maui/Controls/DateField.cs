@@ -86,6 +86,7 @@ public sealed class DateField : ContentView
         var calendar = Localization?.CurrentCalendar ?? CalendarSystem.Gregorian;
         _calendar.Identifier = calendar == CalendarSystem.Persian ? CalendarIdentifier.Persian : CalendarIdentifier.Gregorian;
         _calendar.FlowDirection = FlowDirection;
+        _calendar.MonthView.FirstDayOfWeek = Localization?.FirstDayOfWeek ?? DayOfWeek.Monday;
         _calendar.SelectedDate = Date.ToDateTime(TimeOnly.MinValue);
         _calendar.DisplayDate = Date.ToDateTime(TimeOnly.MinValue);
         _calendar.IsOpen = true;

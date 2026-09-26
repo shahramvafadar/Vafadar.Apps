@@ -3,7 +3,7 @@ using System.Globalization;
 namespace Vafadar.Localization;
 
 /// <summary>
-/// Owns the current UI language and calendar, persists the user's choice and applies it to the running app.
+/// Owns the current UI language, calendar, region and first day of the week, persists the user's choice and applies it to the running app.
 /// </summary>
 public interface ILocalizationService
 {
@@ -22,7 +22,19 @@ public interface ILocalizationService
     /// <summary>Gets a value indicating whether the current language is right-to-left.</summary>
     bool IsRightToLeft { get; }
 
-    /// <summary>Raised after the language or calendar changed.</summary>
+    /// <summary>Gets the chosen region (ISO 3166-1 alpha-2), or <see langword="null"/> when none was chosen.</summary>
+    string? CurrentRegion { get; }
+
+    /// <summary>Gets the device's region, offered as a suggestion; never applied without the user's choice.</summary>
+    string? SuggestedRegion { get; }
+
+    /// <summary>Gets the first day of the week used by calendars and week-based displays.</summary>
+    DayOfWeek FirstDayOfWeek { get; }
+
+    /// <summary>Gets a value indicating whether the first day of the week follows the region or language.</summary>
+    bool IsFirstDayOfWeekAutomatic { get; }
+
+    /// <summary>Raised after the language, calendar, region or first day of the week changed.</summary>
     event EventHandler? Changed;
 
     /// <summary>
@@ -36,4 +48,10 @@ public interface ILocalizationService
 
     /// <summary>Switches the calendar and saves the choice.</summary>
     void SetCalendar(CalendarSystem calendar);
+
+    /// <summary>Sets or clears the region and saves the choice (PR-05).</summary>
+    void SetRegion(string? region);
+
+    /// <summary>Sets the first day of the week, or <see langword="null"/> to follow the region or language.</summary>
+    void SetFirstDayOfWeek(DayOfWeek? day);
 }

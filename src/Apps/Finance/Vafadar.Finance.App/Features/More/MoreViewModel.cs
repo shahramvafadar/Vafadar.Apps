@@ -39,6 +39,7 @@ public sealed partial class MoreViewModel : ViewModelBase
             new(_translator["Report_Title"], Symbol.DataPie, AppShell.ReportsRoute),
             new(_translator["Forecast_Title"], Symbol.DataTrending, AppShell.ForecastRoute),
             new(_translator["Categories_Title"], Symbol.Tag, AppShell.CategoriesRoute),
+            new(_translator["Templates_Title"], Symbol.Flash, AppShell.TemplatesRoute),
             new(_translator["Rates_Title"], Symbol.ArrowSwap, AppShell.RatesRoute),
             new(_translator["ImportExport_Title"], Symbol.DocumentTable, AppShell.ImportExportRoute),
             new(_translator["Backup_Title"], Symbol.ShieldCheckmark, AppShell.BackupRoute),

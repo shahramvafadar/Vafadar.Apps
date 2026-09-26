@@ -12,7 +12,7 @@ using Vafadar.Maui.Mvvm;
 namespace Vafadar.Finance.App.Features.Accounts;
 
 /// <summary>An account as shown in lists.</summary>
-public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol Icon, string BalanceText, bool IsNegative, bool NotInTotals);
+public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol Icon, string BalanceText, bool IsNegative, bool NotInTotals, bool OpeningUnknown = false);
 
 /// <summary>A total per currency.</summary>
 public sealed record CurrencyTotal(string CurrencyCode, string Text);
@@ -52,7 +52,8 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
                 Icons.Parse(account.Icon, Icons.For(account.Type)),
                 MoneyText.Format(balance, account.CurrencyCode, culture),
                 balance < 0,
-                !account.IncludeInTotals);
+                !account.IncludeInTotals,
+                !account.OpeningBalanceKnown);
             (account.IsArchived ? Archived : Active).Add(item);
         }
 

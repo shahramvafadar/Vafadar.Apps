@@ -205,4 +205,22 @@
   <data name="Backup_Error_Storage" xml:space="preserve">
     <value>فایل خوانده یا نوشته نشد. فضای خالی را بررسی و دوباره تلاش کنید.</value>
   </data>
+  <data name="Settings_Region" xml:space="preserve">
+    <value>کشور یا منطقه</value>
+  </data>
+  <data name="Settings_RegionNotSet" xml:space="preserve">
+    <value>تعیین نشده</value>
+  </data>
+  <data name="Settings_RegionSuggested" xml:space="preserve">
+    <value>تعیین نشده (دستگاه: {0})</value>
+  </data>
+  <data name="Settings_RegionHint" xml:space="preserve">
+    <value>فقط روز اول هفته را پیشنهاد می‌دهد. زبان، ارز و تقویم همان‌طور که انتخاب کرده‌اید می‌مانند و از موقعیت مکانی استفاده نمی‌شود.</value>
+  </data>
+  <data name="Settings_WeekStart" xml:space="preserve">
+    <value>روز اول هفته</value>
+  </data>
+  <data name="Settings_WeekStartAutomatic" xml:space="preserve">
+    <value>خودکار ({0})</value>
+  </data>
 </root>

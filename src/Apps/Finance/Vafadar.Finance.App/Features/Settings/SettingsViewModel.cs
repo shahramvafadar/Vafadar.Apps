@@ -234,6 +234,44 @@ public sealed partial class SettingsViewModel : ViewModelBase
         Refresh();
     }
 
+    // Region and first day of the week (PR-05, §13): a region only suggests the week start; nothing else follows it.
+    [ObservableProperty]
+    public partial RegionOption[] Regions { get; set; } = [];
+
+    [ObservableProperty]
+    public partial RegionOption? SelectedRegion { get; set; }
+
+    [ObservableProperty]
+    public partial WeekStartOption[] WeekStarts { get; set; } = [];
+
+    [ObservableProperty]
+    public partial WeekStartOption? SelectedWeekStart { get; set; }
+
+    partial void OnSelectedRegionChanged(RegionOption? value)
+    {
+        if (_refreshing || value is null || value.Code == _localization.CurrentRegion)
+        {
+            return;
+        }
+
+        _localization.SetRegion(value.Code);
+        Refresh();
+    }
+
+    partial void OnSelectedWeekStartChanged(WeekStartOption? value)
+    {
+        var unchanged = value?.Day is null
+            ? _localization.IsFirstDayOfWeekAutomatic
+            : !_localization.IsFirstDayOfWeekAutomatic && value.Day == _localization.FirstDayOfWeek;
+        if (_refreshing || value is null || unchanged)
+        {
+            return;
+        }
+
+        _localization.SetFirstDayOfWeek(value.Day);
+        Refresh();
+    }
+
     partial void OnSelectedCalendarChanged(CalendarOption? value)
     {
         if (_refreshing || value is null || value.Calendar == _localization.CurrentCalendar)
@@ -259,6 +297,28 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ];
             SelectedCalendar = Calendars.First(option => option.Calendar == _localization.CurrentCalendar);
             SelectedLanguage = _localization.CurrentLanguage;
+
+            var culture = _localization.CurrentCulture;
+            var suggested = _localization.SuggestedRegion;
+            var notSet = suggested is null
+                ? _translator["Settings_RegionNotSet"]
+                : _translator.Format("Settings_RegionSuggested", Vafadar.Localization.Regions.DisplayName(suggested));
+            Regions =
+            [
+                new RegionOption(null, notSet),
+                .. Vafadar.Localization.Regions.All
+                    .Select(code => new RegionOption(code, Vafadar.Localization.Regions.DisplayName(code)))
+                    .OrderBy(option => option.DisplayName, StringComparer.Create(culture, ignoreCase: true)),
+            ];
+            SelectedRegion = Regions.FirstOrDefault(option => option.Code == _localization.CurrentRegion) ?? Regions[0];
+
+            var automatic = Vafadar.Localization.Regions.FirstDayOfWeek(_localization.CurrentRegion, System.Globalization.CultureInfo.GetCultureInfo(_localization.CurrentLanguage.CultureName));
+            WeekStarts =
+            [
+                new WeekStartOption(null, _translator.Format("Settings_WeekStartAutomatic", culture.DateTimeFormat.GetDayName(automatic))),
+                .. new[] { DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }.Select(day => new WeekStartOption(day, culture.DateTimeFormat.GetDayName(day))),
+            ];
+            SelectedWeekStart = _localization.IsFirstDayOfWeekAutomatic ? WeekStarts[0] : WeekStarts.FirstOrDefault(o => o.Day == _localization.FirstDayOfWeek) ?? WeekStarts[0];
             CalendarPreview = _dates.Format(DateOnly.FromDateTime(_time.GetLocalNow().DateTime), DateFormatStyle.Long);
             VersionText = _translator.Format("Settings_Version", _app.Version);
         }
@@ -267,6 +327,18 @@ public sealed partial class SettingsViewModel : ViewModelBase
             _refreshing = false;
         }
     }
+}
+
+/// <summary>A region choice; <see cref="Code"/> is <see langword="null"/> for "not set".</summary>
+public sealed record RegionOption(string? Code, string DisplayName)
+{
+    public override string ToString() => DisplayName;
+}
+
+/// <summary>A first-day-of-week choice; <see cref="Day"/> is <see langword="null"/> for "automatic".</summary>
+public sealed record WeekStartOption(DayOfWeek? Day, string DisplayName)
+{
+    public override string ToString() => DisplayName;
 }
 
 /// <summary>A calendar choice with its display name in the current language.</summary>
