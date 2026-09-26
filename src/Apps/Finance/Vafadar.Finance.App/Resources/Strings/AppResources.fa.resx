@@ -1867,4 +1867,7 @@
   <data name="Goal_DeleteMessage" xml:space="preserve">
     <value>هدف و مبالغ کنار گذاشته برای آن حذف می‌شوند. حساب‌ها و تراکنش‌ها تغییری نمی‌کنند.</value>
   </data>
+  <data name="Account_Earmarked" xml:space="preserve">
+    <value>کنار گذاشته برای اهداف: {0} · آزاد: {1}</value>
+  </data>
 </root>

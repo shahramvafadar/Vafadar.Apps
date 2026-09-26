@@ -22,6 +22,7 @@ namespace Vafadar.Finance.App.Features.Accounts;
 /// </summary>
 public sealed partial class AccountDetailViewModel(
     FinanceStore store,
+    GoalStore goals,
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
@@ -47,6 +48,9 @@ public sealed partial class AccountDetailViewModel(
 
     [ObservableProperty]
     public partial string? IncompleteText { get; set; }
+
+    [ObservableProperty]
+    public partial string? EarmarkText { get; set; }
 
     [ObservableProperty]
     public partial string? ConfirmedText { get; set; }
@@ -115,6 +119,12 @@ public sealed partial class AccountDetailViewModel(
         var balance = LedgerCalculator.Balance(account, entries, today);
         var confirmed = LedgerCalculator.Balance(account, entries, today, confirmedOnly: true);
         BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
+        // Money set aside for goals in this account and what is still free (F2-GOAL-05).
+        var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
+            .FirstOrDefault(e => e.AccountId == account.Id);
+        EarmarkText = earmark is null ? null
+            : translator.Format("Account_Earmarked", MoneyText.Format(earmark.Earmarked, account.CurrencyCode, culture), MoneyText.Format(earmark.Unallocated, account.CurrencyCode, culture))
+              + (earmark.Shortfall > 0 ? " · " + translator.Format("Goals_Shortfall", MoneyText.Format(earmark.Shortfall, account.CurrencyCode, culture)) : string.Empty);
         ConfirmedText = confirmed != balance
             ? translator.Format("Account_ConfirmedOnly", MoneyText.Format(confirmed, account.CurrencyCode, culture))
             : null;

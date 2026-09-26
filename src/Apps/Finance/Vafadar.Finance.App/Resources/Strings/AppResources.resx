@@ -1871,4 +1871,7 @@
   <data name="Goal_DeleteMessage" xml:space="preserve">
     <value>The goal and what was set aside for it are removed. Accounts and entries stay unchanged.</value>
   </data>
+  <data name="Account_Earmarked" xml:space="preserve">
+    <value>Set aside for goals: {0} · free: {1}</value>
+  </data>
 </root>

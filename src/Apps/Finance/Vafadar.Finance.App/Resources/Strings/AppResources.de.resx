@@ -1867,4 +1867,7 @@
   <data name="Goal_DeleteMessage" xml:space="preserve">
     <value>Das Ziel und die Reservierungen dafür werden entfernt. Konten und Buchungen bleiben unverändert.</value>
   </data>
+  <data name="Account_Earmarked" xml:space="preserve">
+    <value>Für Ziele zurückgelegt: {0} · frei: {1}</value>
+  </data>
 </root>
