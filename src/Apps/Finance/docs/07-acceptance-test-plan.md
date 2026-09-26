@@ -43,7 +43,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Verified (unit: moving a due date moves the reminder, same id) |
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Verified (unit: settled or skipped occurrences have no reminder; taps only open the occurrence) |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | Implemented (rebuild on start/resume/restore/language, boot receiver, local time); device check pending |
-| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Implemented (generic text by default); device check pending; app lock with S13 |
+| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | Implemented (generic text by default, lock respected on tap); device check pending |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |

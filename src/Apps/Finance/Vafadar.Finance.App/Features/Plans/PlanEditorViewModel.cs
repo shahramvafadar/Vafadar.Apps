@@ -37,6 +37,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
     private readonly ReminderService _reminders;
+    private readonly IReadOnlyList<string> _allPresets;
     private Schedule? _existing;
     private bool _hasHistory;
     private string _snapshot = string.Empty;
@@ -57,7 +58,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
         KindNames = [.. Kinds.Select(k => translator[$"EntryKind_{k}"])];
         AmountModeNames = [translator["AmountMode_Fixed"], translator["AmountMode_Estimated"], translator["AmountMode_Unknown"]];
-        PresetNames = [translator["Repeat_Once"], translator["Repeat_Weekly"], translator["Repeat_TwoWeeks"], translator["Repeat_Monthly"], translator["Repeat_Yearly"], translator["Repeat_Custom"]];
+        _allPresets = [translator["Repeat_Once"], translator["Repeat_Weekly"], translator["Repeat_TwoWeeks"], translator["Repeat_Monthly"], translator["Repeat_Yearly"], translator["Repeat_Custom"]];
+        PresetNames = _allPresets;
         UnitNames = [translator["Unit_Days"], translator["Unit_Weeks"], translator["Unit_Months"], translator["Unit_Years"]];
         CalendarNames = [translator["Calendar_Gregorian"], translator["Calendar_Persian"]];
         MissingDayNames = [translator["MissingDay_LastValid"], translator["MissingDay_Skip"]];
@@ -87,7 +89,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     public IReadOnlyList<string> AmountModeNames { get; }
 
-    public IReadOnlyList<string> PresetNames { get; }
+    [ObservableProperty]
+    public partial IReadOnlyList<string> PresetNames { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
+
+    [ObservableProperty]
+    public partial string? AdvancedSummary { get; set; }
 
     public IReadOnlyList<string> UnitNames { get; }
 
@@ -216,11 +225,11 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     public bool ShowCustom => PresetIndex == PresetCustom;
 
-    public bool ShowMonthOptions => Frequency is Frequency.Monthly or Frequency.Yearly;
+    public bool ShowMonthOptions => IsAdvanced && Frequency is Frequency.Monthly or Frequency.Yearly;
 
     public bool ShowMissingDay => ShowMonthOptions && DayRuleIndex == 0 && AnchorDay > 28;
 
-    public bool ShowEnd => Frequency != Frequency.Once;
+    public bool ShowEnd => IsAdvanced && Frequency != Frequency.Once;
 
     public bool ShowEndDate => EndIndex == 1;
 
@@ -269,6 +278,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
             HasNoAccounts = Accounts.Count == 0;
             var settings = await _finance.GetSettingsAsync();
+            IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
 
             if (query.TryGetValue("id", out var value) && value is Guid id && await _plans.GetScheduleAsync(id) is { } schedule)
             {
@@ -295,6 +305,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         }
 
         ShowApplyFrom = _existing is not null && _hasHistory;
+
+        // Simple offers the common repeats; a custom repeat that is already set stays visible (UX-02).
+        PresetNames = IsAdvanced || PresetIndex == PresetCustom ? _allPresets : [.. _allPresets.Take(PresetCustom)];
         Update();
         _snapshot = Snapshot();
         query.Clear();
@@ -440,8 +453,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         OnPropertyChanged(nameof(ShowCount));
         OnPropertyChanged(nameof(ShowPastChoice));
 
+        // Hidden settings that change the dates are summarised in Simple mode (UX-02).
+        var current = BuildRule();
+        AdvancedSummary = !IsAdvanced && (current.End != EndKind.Never || current.DayRule != MonthDayRule.SpecificDay || current.MissingDay != MissingDayPolicy.LastValidDay)
+            ? _translator.Format("Plan_AdvancedSummary", new PlanText(_translator, _dates, _localization.CurrentCulture).Rule(current))
+            : null;
+
         Preview.Clear();
-        var rule = BuildRule();
+        var rule = current;
         if (Recurrence.Validate(rule) is not null)
         {
             Preview.Add(_translator["Plan_RuleInvalid"]);

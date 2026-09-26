@@ -234,6 +234,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 _entry = new LedgerEntry { Kind = kind, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
                 CanChangeKind = true;
                 KindIndex = Math.Max(0, Array.IndexOf(ChipKinds, kind));
+
+                // Advanced shows payee, note and foreign amount directly; Simple keeps them one tap away (§14).
+                ShowDetails = settings.Mode == Core.Settings.ExperienceMode.Advanced;
                 Account = defaultAccount;
                 ToAccount = active.FirstOrDefault(a => a.Id != defaultAccount?.Id);
             }

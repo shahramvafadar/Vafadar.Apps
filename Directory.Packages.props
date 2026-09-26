@@ -15,6 +15,11 @@
     <PackageVersion Include="FluentIcons.Maui" Version="2.1.341" />
   </ItemGroup>
 
+  <ItemGroup Label="Android">
+    <!-- Keep in line with the AndroidX versions used by .NET MAUI; newer builds pull incompatible AndroidX packages. -->
+    <PackageVersion Include="Xamarin.AndroidX.Biometric" Version="1.1.0.30" />
+  </ItemGroup>
+
   <ItemGroup Label="Notifications">
     <PackageVersion Include="Plugin.LocalNotification" Version="14.1.2" />
   </ItemGroup>

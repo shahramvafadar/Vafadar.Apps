@@ -108,6 +108,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     public partial bool CombinedIncomplete { get; set; }
 
     [ObservableProperty]
+    public partial string? ForecastText { get; set; }
+
+    [ObservableProperty]
+    public partial Color? ForecastColor { get; set; }
+
+    [ObservableProperty]
     public partial bool HasBudget { get; set; }
 
     [ObservableProperty]
@@ -183,6 +189,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
         await LoadPlansAsync(byId, categories, today);
+        await LoadForecastAsync(settings.Mode, allAccounts, entries, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
         Accounts.Clear();
@@ -225,6 +232,33 @@ public sealed partial class HomeViewModel : ViewModelBase
             _ => Color.FromArgb("#2E7D32"),
         };
     }
+
+    // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08).
+    private async Task LoadForecastAsync(Core.Settings.ExperienceMode mode, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
+    {
+        ForecastText = null;
+        if (mode != Core.Settings.ExperienceMode.Advanced)
+        {
+            return;
+        }
+
+        var (year, month) = PeriodMath.MonthOf(today, Calendar);
+        var end = PeriodMath.MonthRange(year, month, Calendar).Last;
+        var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), today, end)
+            .FirstOrDefault(f => string.Equals(f.CurrencyCode, _reportCurrency, StringComparison.OrdinalIgnoreCase));
+        if (forecast is null)
+        {
+            return;
+        }
+
+        ForecastText = _translator.Format("Home_Forecast", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture),
+            MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short))
+            + (forecast.IsIncomplete ? " · " + _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : string.Empty);
+        ForecastColor = forecast.GoesNegative ? EntryPresenter.ExpenseColor : Color.FromArgb("#1F1F1F");
+    }
+
+    [RelayCommand]
+    private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, DateOnly today)
     {

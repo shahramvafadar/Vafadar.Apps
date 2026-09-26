@@ -106,6 +106,17 @@
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
 
+                <!-- Forecast (Advanced) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding ForecastText, Converter={StaticResource IsNotNullConverter}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenForecastCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding ForecastText}" TextColor="{Binding ForecastColor}" FontSize="15" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Budget remaining (only when a budget exists) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
                     <Border.GestureRecognizers>

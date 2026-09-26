@@ -162,6 +162,10 @@ internal static class DebugSnapshots
         var budget = new Core.Budgets.Budget { Year = year, Month = month, Calendar = settings.BudgetCalendar, CurrencyCode = settings.ReportCurrencyCode, TotalLimit = 120_000 };
         budget.CategoryLimits.Add(new Core.Budgets.BudgetCategoryLimit { CategoryId = foodId, Limit = 4_000 });
         await store.SaveBudgetAsync(budget);
+
+        // Snapshots show the Advanced screens; Simple hides options but not data.
+        settings.Mode = Core.Settings.ExperienceMode.Advanced;
+        await store.SaveSettingsAsync(settings);
     }
 
     // A monthly rent with an overdue occurrence, an estimated phone bill and a salary that posts automatically.

@@ -1414,4 +1414,61 @@
   <data name="Import_UndoMessage" xml:space="preserve">
     <value>تراکنش‌های این ورود حذف شوند؟ تراکنش‌های قبلی دست نمی‌خورند.</value>
   </data>
+  <data name="Settings_Experience" xml:space="preserve">
+    <value>تجربهٔ کاربری</value>
+  </data>
+  <data name="Mode_Simple" xml:space="preserve">
+    <value>ساده</value>
+  </data>
+  <data name="Mode_Advanced" xml:space="preserve">
+    <value>پیشرفته</value>
+  </data>
+  <data name="Mode_Hint" xml:space="preserve">
+    <value>هر دو همان داده و محاسبات را نشان می‌دهند. حالت پیشرفته گزینه‌های بیشتری را مستقیم نشان می‌دهد و بازگشت به ساده چیزی را پاک نمی‌کند.</value>
+  </data>
+  <data name="Settings_Security" xml:space="preserve">
+    <value>حریم خصوصی و امنیت</value>
+  </data>
+  <data name="Lock_Setting" xml:space="preserve">
+    <value>قفل برنامه</value>
+  </data>
+  <data name="Lock_Hint" xml:space="preserve">
+    <value>از اثر انگشت، چهره یا قفل صفحهٔ دستگاه استفاده می‌کند. هنگام خروج، برنامه پوشانده می‌شود و پس از ۳۰ ثانیه دوباره می‌پرسد. قفل، برنامه را پنهان می‌کند و داده‌های روی دستگاه را رمزنگاری نمی‌کند.</value>
+  </data>
+  <data name="Lock_NotAvailableHint" xml:space="preserve">
+    <value>برای استفاده از قفل برنامه، ابتدا قفل صفحه را روی دستگاه فعال کنید.</value>
+  </data>
+  <data name="Lock_Message" xml:space="preserve">
+    <value>برای دیدن اطلاعات مالی، قفل را باز کنید.</value>
+  </data>
+  <data name="Lock_Unlock" xml:space="preserve">
+    <value>باز کردن قفل</value>
+  </data>
+  <data name="Lock_Reason" xml:space="preserve">
+    <value>باز کردن قفل برنامهٔ مالی</value>
+  </data>
+  <data name="Lock_EnableReason" xml:space="preserve">
+    <value>فعال‌کردن قفل برنامه</value>
+  </data>
+  <data name="Lock_DisableReason" xml:space="preserve">
+    <value>غیرفعال‌کردن قفل برنامه</value>
+  </data>
+  <data name="Lock_ConfirmExport" xml:space="preserve">
+    <value>تأیید خروجی گرفتن</value>
+  </data>
+  <data name="Lock_ConfirmBackup" xml:space="preserve">
+    <value>تأیید ساخت پشتیبان</value>
+  </data>
+  <data name="Lock_ConfirmRestore" xml:space="preserve">
+    <value>تأیید بازیابی</value>
+  </data>
+  <data name="Plan_AdvancedSummary" xml:space="preserve">
+    <value>این برنامه از این تنظیم استفاده می‌کند: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
+  </data>
+  <data name="Budget_HiddenLimits" xml:space="preserve">
+    <value>{0} سقف دسته حفظ شده است. برای ویرایش، حالت پیشرفته را در تنظیمات فعال کنید.</value>
+  </data>
+  <data name="Home_Forecast" xml:space="preserve">
+    <value>پایان ماه ≈ {0} · کمترین {1} در {2}</value>
+  </data>
 </root>

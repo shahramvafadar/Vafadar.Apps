@@ -10,6 +10,8 @@ public partial class SettingsPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    private async void OnLockToggled(object? sender, ToggledEventArgs e) => await _viewModel.SetLockAsync(e.Value);
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();

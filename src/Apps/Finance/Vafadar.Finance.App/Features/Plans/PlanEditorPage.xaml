@@ -138,6 +138,9 @@
                             </Grid>
                         </VerticalStackLayout>
 
+                        <Label Text="{Binding AdvancedSummary}" Style="{StaticResource Secondary}" Margin="0,12,0,0"
+                               IsVisible="{Binding AdvancedSummary, Converter={StaticResource IsNotNullConverter}}" />
+
                         <!-- Preview of the next dates (REC-04) -->
                         <Label Text="{v:Translate Plan_Preview}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
                         <Border BackgroundColor="{StaticResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">

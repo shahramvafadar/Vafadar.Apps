@@ -3,7 +3,7 @@
   <Import Project="$(RepoRoot)eng\Maui.props" />
 
   <PropertyGroup>
-    <Description>Shared .NET MAUI infrastructure: app bootstrap (UseVafadar), preferences, localization in XAML, right-to-left layout, Syncfusion setup and MVVM base types.</Description>
+    <Description>Shared .NET MAUI infrastructure: app bootstrap (UseVafadar), preferences, localization in XAML, right-to-left layout, Syncfusion setup, MVVM base types, shared controls and device authentication.</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +17,11 @@
     <PackageReference Include="Syncfusion.Licensing" />
     <PackageReference Include="Syncfusion.Maui.Calendar" />
     <PackageReference Include="Syncfusion.Maui.Core" />
+  </ItemGroup>
+
+  <!-- Device authentication for the app lock (Security/DeviceAuthenticator). -->
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <PackageReference Include="Xamarin.AndroidX.Biometric" />
   </ItemGroup>
 
 </Project>

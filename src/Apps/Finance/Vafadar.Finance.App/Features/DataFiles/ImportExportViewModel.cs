@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.App.Security;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.DataFiles;
@@ -36,12 +37,14 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
+    private readonly AppLockService _lock;
     private IReadOnlyList<IReadOnlyList<string>> _rows = [];
     private IReadOnlyList<ImportRow> _preview = [];
     private bool _ownFormat;
 
-    public ImportExportViewModel(FinanceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public ImportExportViewModel(FinanceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, AppLockService appLock)
     {
+        _lock = appLock;
         _store = store;
         _translator = translator;
         _dates = dates;
@@ -173,6 +176,12 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExportAsync()
     {
+        // Exports leave the app unencrypted: with the app lock on, the owner confirms first (SEC-02, AT-61).
+        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
+        {
+            return;
+        }
+
         IsBusy = true;
         try
         {

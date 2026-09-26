@@ -41,3 +41,4 @@ Statuses: Implemented – verified / Implemented – unverified / Planned / Not 
 | POST_NOTIFICATIONS | Planned (S10) | Requested when the user enables a reminder |
 
 Any change to SDKs, permissions, backup destinations, sign-in, billing or AI must update this file (MAT-05).
+| DF-20 | App lock | No PIN or biometric data stored by the app; the OS confirms the device owner | Device (BiometricPrompt, LocalAuthentication, Windows Hello) | Implemented – device check pending | The lock hides the UI and blocks screenshots on Android; it does not encrypt the database (SEC-03) |

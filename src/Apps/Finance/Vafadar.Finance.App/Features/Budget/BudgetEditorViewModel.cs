@@ -50,6 +50,12 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
     [ObservableProperty]
     public partial string? Error { get; set; }
 
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
+
+    [ObservableProperty]
+    public partial string? HiddenLimitsText { get; set; }
+
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -61,6 +67,11 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         query.Clear();
 
         _budget = await store.GetBudgetAsync(_year, _month, _calendar, _currency);
+        IsAdvanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+
+        // Category limits are an Advanced option; in Simple they stay saved and are summarised (BUD-02, UX-02).
+        var limitCount = _budget?.CategoryLimits.Count ?? 0;
+        HiddenLimitsText = !IsAdvanced && limitCount > 0 ? translator.Format("Budget_HiddenLimits", limitCount) : null;
         var culture = localization.CurrentCulture;
         TotalText = _budget?.TotalLimit is { } total ? MoneyText.ForInput(total, _currency, culture) : string.Empty;
         AlertsEnabled = _budget?.AlertsEnabled ?? true;

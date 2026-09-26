@@ -1414,4 +1414,61 @@
   <data name="Import_UndoMessage" xml:space="preserve">
     <value>Buchungen dieses Imports entfernen? Vorher vorhandene Buchungen bleiben unberührt.</value>
   </data>
+  <data name="Settings_Experience" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="Mode_Simple" xml:space="preserve">
+    <value>Einfach</value>
+  </data>
+  <data name="Mode_Advanced" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
+  <data name="Mode_Hint" xml:space="preserve">
+    <value>Beide zeigen dieselben Daten und Berechnungen. Erweitert zeigt mehr Optionen direkt; ein Zurückwechseln entfernt nichts.</value>
+  </data>
+  <data name="Settings_Security" xml:space="preserve">
+    <value>Datenschutz &amp; Sicherheit</value>
+  </data>
+  <data name="Lock_Setting" xml:space="preserve">
+    <value>App sperren</value>
+  </data>
+  <data name="Lock_Hint" xml:space="preserve">
+    <value>Nutzt Fingerabdruck, Gesicht oder Displaysperre des Geräts. Beim Verlassen wird die App verdeckt und fragt nach 30 Sekunden erneut. Die Sperre verbirgt die App; sie verschlüsselt die Daten auf dem Gerät nicht.</value>
+  </data>
+  <data name="Lock_NotAvailableHint" xml:space="preserve">
+    <value>Richten Sie eine Displaysperre ein, um die App-Sperre zu nutzen.</value>
+  </data>
+  <data name="Lock_Message" xml:space="preserve">
+    <value>Entsperren, um Ihre Finanzen zu sehen.</value>
+  </data>
+  <data name="Lock_Unlock" xml:space="preserve">
+    <value>Entsperren</value>
+  </data>
+  <data name="Lock_Reason" xml:space="preserve">
+    <value>Finanzen entsperren</value>
+  </data>
+  <data name="Lock_EnableReason" xml:space="preserve">
+    <value>App-Sperre einschalten</value>
+  </data>
+  <data name="Lock_DisableReason" xml:space="preserve">
+    <value>App-Sperre ausschalten</value>
+  </data>
+  <data name="Lock_ConfirmExport" xml:space="preserve">
+    <value>Export bestätigen</value>
+  </data>
+  <data name="Lock_ConfirmBackup" xml:space="preserve">
+    <value>Backup bestätigen</value>
+  </data>
+  <data name="Lock_ConfirmRestore" xml:space="preserve">
+    <value>Wiederherstellung bestätigen</value>
+  </data>
+  <data name="Plan_AdvancedSummary" xml:space="preserve">
+    <value>Diese Planung nutzt: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um diese Optionen zu ändern.</value>
+  </data>
+  <data name="Budget_HiddenLimits" xml:space="preserve">
+    <value>{0} Kategorie-Limits bleiben erhalten. Wechseln Sie zu Erweitert, um sie zu bearbeiten.</value>
+  </data>
+  <data name="Home_Forecast" xml:space="preserve">
+    <value>Monatsende ≈ {0} · tiefster Stand {1} am {2}</value>
+  </data>
 </root>

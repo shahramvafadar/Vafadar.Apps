@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Finance.App.Features.Onboarding;
 using Vafadar.Finance.App.Reminders;
+using Vafadar.Finance.App.Security;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Localization;
@@ -53,12 +54,20 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
+        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().StartAsync());
         RunForegroundWork();
+    }
+
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
     }
 
     protected override void OnResume()
     {
         base.OnResume();
+        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
         RunForegroundWork();
     }
 
@@ -85,7 +94,10 @@ public partial class App : Application
     }
 
     // A tapped reminder opens its occurrence; several taps or an old notification never record anything (REM-04, REM-06).
-    private void OnReminderTapped(object? sender, string link) => Dispatcher.Dispatch(async () =>
+    private void OnReminderTapped(object? sender, string link) => Dispatcher.Dispatch(() =>
+        _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => OpenLinkAsync(link)));
+
+    private async Task OpenLinkAsync(string link)
     {
         var parts = link.Split('|');
         if (Shell.Current is null)
@@ -102,7 +114,7 @@ public partial class App : Application
         {
             await Shell.Current.GoToAsync(AppShell.BudgetRoute);
         }
-    });
+    }
 
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
     // reliable on every platform. Rebuilding the shell gives a clean result; the user stays on the current page.

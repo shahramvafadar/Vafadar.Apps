@@ -5,6 +5,7 @@ using Vafadar.Backup;
 using Vafadar.Backup.Security;
 using Vafadar.Backup.Storage;
 using Vafadar.Finance.App.Reminders;
+using Vafadar.Finance.App.Security;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
@@ -27,6 +28,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly IBackupService _backup;
     private readonly AutoPostProcessor _autoPost;
     private readonly ReminderService _reminders;
+    private readonly AppLockService _lock;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
@@ -35,8 +37,9 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly LocalFolderBackupStorage _safety;
     private byte[]? _package;
 
-    public BackupViewModel(IBackupService backup, AutoPostProcessor autoPost, ReminderService reminders, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public BackupViewModel(IBackupService backup, AutoPostProcessor autoPost, ReminderService reminders, AppLockService appLock, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
+        _lock = appLock;
         _reminders = reminders;
         _backup = backup;
         _autoPost = autoPost;
@@ -129,6 +132,11 @@ public sealed partial class BackupViewModel : ViewModelBase
                 CreateError = _translator["Backup_PasswordMismatch"];
                 return;
             }
+        }
+
+        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmBackup"]))
+        {
+            return;
         }
 
         IsBusy = true;
@@ -237,7 +245,8 @@ public sealed partial class BackupViewModel : ViewModelBase
             return;
         }
 
-        if (!await Shell.Current.DisplayAlertAsync(_translator["Backup_ReplaceTitle"], _translator["Backup_ReplaceMessage"], _translator["Backup_Replace"], _translator["Common_Cancel"]))
+        if (!await Shell.Current.DisplayAlertAsync(_translator["Backup_ReplaceTitle"], _translator["Backup_ReplaceMessage"], _translator["Backup_Replace"], _translator["Common_Cancel"])
+            || !await _lock.ConfirmAsync(_translator["Lock_ConfirmRestore"]))
         {
             return;
         }

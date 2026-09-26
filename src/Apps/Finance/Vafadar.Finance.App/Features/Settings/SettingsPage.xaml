@@ -29,6 +29,29 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Experience (UX-01) -->
+            <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" AccentColor="{StaticResource Primary}" />
+                    <Label Text="{v:Translate Mode_Hint}" Style="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Privacy and security (SEC-01..03) -->
+            <Label Text="{v:Translate Settings_Security}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding LockAvailable}">
+                        <Label Text="{v:Translate Lock_Setting}" VerticalOptions="Center" />
+                        <Switch x:Name="LockSwitch" Grid.Column="1" IsToggled="{Binding LockEnabled}" OnColor="{StaticResource Primary}" Toggled="OnLockToggled" />
+                    </Grid>
+                    <Label Text="{v:Translate Lock_NotAvailableHint}" Style="{StaticResource Secondary}"
+                           IsVisible="{Binding LockAvailable, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Label Text="{v:Translate Lock_Hint}" Style="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+            </Border>
+
             <!-- Notifications (REM-01, REM-03, REM-05) -->
             <Label Text="{v:Translate Settings_Notifications}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">

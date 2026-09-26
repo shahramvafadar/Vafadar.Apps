@@ -20,6 +20,7 @@ using Vafadar.Finance.App.Features.Settings;
 using Vafadar.Finance.App.Features.Transactions;
 using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.App.Reminders;
+using Vafadar.Finance.App.Security;
 using Vafadar.Finance.App.Resources.Strings;
 using Vafadar.Finance.Core;
 using Vafadar.Finance.Data;
@@ -51,7 +52,8 @@ public static class MauiProgram
             .AddVafadarBackup()
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
             .AddSingleton<UndoService>()
-            .AddSingleton<ReminderService>();
+            .AddSingleton<ReminderService>()
+            .AddSingleton<AppLockService>();
 
 #if ANDROID || IOS
         builder.UseLocalNotification();

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Core.Hosting;
 using Vafadar.Finance.App.Reminders;
+using Vafadar.Finance.App.Security;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
@@ -19,6 +20,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly IAppEnvironment _app;
     private readonly FinanceStore _store;
     private readonly ReminderService _reminders;
+    private readonly AppLockService _lock;
     private bool _refreshing;
 
     public SettingsViewModel(
@@ -28,9 +30,12 @@ public sealed partial class SettingsViewModel : ViewModelBase
         TimeProvider time,
         IAppEnvironment app,
         FinanceStore store,
-        ReminderService reminders)
+        ReminderService reminders,
+        AppLockService appLock)
     {
         _reminders = reminders;
+        _lock = appLock;
+        ModeNames = [translator["Mode_Simple"], translator["Mode_Advanced"]];
         _localization = localization;
         _translator = translator;
         _dates = dates;
@@ -51,6 +56,17 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial string ReportCurrency { get; set; }
+
+    public IReadOnlyList<string> ModeNames { get; }
+
+    [ObservableProperty]
+    public partial int ModeIndex { get; set; }
+
+    [ObservableProperty]
+    public partial bool LockAvailable { get; set; }
+
+    [ObservableProperty]
+    public partial bool LockEnabled { get; set; }
 
     [ObservableProperty]
     public partial bool NotificationsSupported { get; set; }
@@ -76,6 +92,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
             var settings = await _store.GetSettingsAsync();
             ReportCurrency = settings.ReportCurrencyCode;
             ShowDetails = settings.NotificationsShowDetails;
+            ModeIndex = (int)settings.Mode;
+            LockEnabled = settings.AppLockEnabled;
+            LockAvailable = settings.AppLockEnabled || await _lock.Authenticator.IsAvailableAsync();
             ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
             ReminderTime = settings.ReminderTime.ToTimeSpan();
             NotificationsEnabled = NotificationsSupported && await _reminders.Scheduler.AreEnabledAsync();
@@ -101,6 +120,33 @@ public sealed partial class SettingsViewModel : ViewModelBase
             settings.ReportCurrencyCode = value;
             await _store.SaveSettingsAsync(settings);
         }
+    }
+
+    // Simple and Advanced show the same data and calculations; switching never removes anything (UX-01, UX-02).
+    async partial void OnModeIndexChanged(int value)
+    {
+        if (_refreshing)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        settings.Mode = (Core.Settings.ExperienceMode)value;
+        await _store.SaveSettingsAsync(settings);
+    }
+
+    /// <summary>Turns the app lock on or off after the device owner confirmed it (SEC-01).</summary>
+    public async Task SetLockAsync(bool enabled)
+    {
+        if (_refreshing || enabled == _lock.IsEnabled)
+        {
+            return;
+        }
+
+        var result = await _lock.SetEnabledAsync(enabled);
+        _refreshing = true;
+        LockEnabled = result;
+        _refreshing = false;
     }
 
     partial void OnShowDetailsChanged(bool value) => _ = SaveNotificationSettingsAsync();
