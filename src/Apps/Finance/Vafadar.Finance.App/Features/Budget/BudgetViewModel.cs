@@ -24,7 +24,8 @@ public sealed record BudgetLine(
     string StatusText,
     Color StatusColor,
     double Progress,
-    Color ProgressColor);
+    Color ProgressColor,
+    string? CarryText = null);
 
 /// <summary>
 /// The monthly budget (UI-10). A missing budget is shown as "no budget", never as zero (BUD-01); a zero limit has no
@@ -148,16 +149,21 @@ public sealed partial class BudgetViewModel : ViewModelBase
         if (_budget is { } budget)
         {
             var accountIds = budget.AccountIds.Count > 0 ? budget.AccountIds : null;
+
+            // Rollover (§10.3): the limits of this month plus what the previous months passed on.
+            var carry = await _store.GetBudgetCarryAsync(budget);
             if (budget.TotalLimit is { } limit)
             {
                 var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, confirmedOnly: ConfirmedOnly);
-                TotalLines.Add(Line(_translator["Budget_Total"], Symbol.Wallet, Good, new BudgetStatus(limit, spent), culture));
+                TotalLines.Add(Line(_translator["Budget_Total"], Symbol.Wallet, Good, new BudgetStatus(limit + carry.Total, spent), culture) with { CarryText = Carry(carry.Total, limit, culture) });
             }
 
             foreach (var categoryLimit in budget.CategoryLimits.OrderBy(l => lookup.Get(l.CategoryId)?.SortOrder ?? int.MaxValue))
             {
                 var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, [categoryLimit.CategoryId], categories, ConfirmedOnly);
-                CategoryLines.Add(Line(lookup.Name(categoryLimit.CategoryId), lookup.Icon(categoryLimit.CategoryId), lookup.Color(categoryLimit.CategoryId), new BudgetStatus(categoryLimit.Limit, spent), culture));
+                var categoryCarry = carry.For(categoryLimit.CategoryId);
+                CategoryLines.Add(Line(lookup.Name(categoryLimit.CategoryId), lookup.Icon(categoryLimit.CategoryId), lookup.Color(categoryLimit.CategoryId), new BudgetStatus(categoryLimit.Limit + categoryCarry, spent), culture)
+                    with { CarryText = Carry(categoryCarry, categoryLimit.Limit, culture) });
             }
         }
 
@@ -178,6 +184,10 @@ public sealed partial class BudgetViewModel : ViewModelBase
             .Sum(v => v ?? 0);
         EquivalentText = equivalent > 0 ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
     }
+
+    private string? Carry(long carry, long limit, CultureInfo culture) => carry == 0
+        ? null
+        : _translator.Format(carry > 0 ? "Rollover_Carried" : "Rollover_Deducted", MoneyText.Format(Math.Abs(carry), _currency, culture), MoneyText.Format(limit, _currency, culture));
 
     private BudgetLine Line(string name, Symbol icon, Color iconColor, BudgetStatus status, CultureInfo culture)
     {

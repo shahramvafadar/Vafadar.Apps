@@ -12,6 +12,19 @@ public enum PeriodCalendar
     Persian = 1,
 }
 
+/// <summary>What happens with the rest of the previous month (§10.3, Phase 2A).</summary>
+public enum BudgetRollover
+{
+    /// <summary>Every month starts with its own limit.</summary>
+    None,
+
+    /// <summary>Money not spent last month is added to this month.</summary>
+    Surplus,
+
+    /// <summary>Unspent money is added and overspending is taken from this month.</summary>
+    SurplusAndDeficit,
+}
+
 /// <summary>
 /// A monthly spending budget (BUD-01). Limits are in <see cref="CurrencyCode"/> and never relabelled (BUD-08).
 /// </summary>
@@ -37,6 +50,9 @@ public sealed class Budget : Entity, IAuditableEntity
 
     /// <summary>Gets the category limits.</summary>
     public List<BudgetCategoryLimit> CategoryLimits { get; set; } = [];
+
+    /// <summary>Gets or sets how the rest of the previous month is carried into this month (§10.3).</summary>
+    public BudgetRollover Rollover { get; set; }
 
     /// <summary>Gets or sets a value indicating whether the 80 %/100 % alerts are enabled (BUD-06).</summary>
     public bool AlertsEnabled { get; set; } = true;

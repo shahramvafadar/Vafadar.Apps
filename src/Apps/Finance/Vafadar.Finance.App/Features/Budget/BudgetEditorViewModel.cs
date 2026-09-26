@@ -69,6 +69,13 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
     [ObservableProperty]
     public partial string? HiddenLimitsText { get; set; }
 
+    // Rollover (§10.3) is an Advanced option; in Simple mode an active rollover stays and is summarised (UX-02).
+    [ObservableProperty]
+    public partial IReadOnlyList<string> RolloverNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int RolloverIndex { get; set; }
+
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -88,6 +95,12 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         var culture = localization.CurrentCulture;
         TotalText = _budget?.TotalLimit is { } total ? MoneyText.ForInput(total, _currency, culture) : string.Empty;
         AlertsEnabled = _budget?.AlertsEnabled ?? true;
+        RolloverNames = [translator["Rollover_None"], translator["Rollover_Surplus"], translator["Rollover_Both"]];
+        RolloverIndex = (int)(_budget?.Rollover ?? BudgetRollover.None);
+        if (!IsAdvanced && RolloverIndex != 0)
+        {
+            HiddenLimitsText = string.Join(Environment.NewLine, new[] { HiddenLimitsText, translator[$"Rollover_Active_{(BudgetRollover)RolloverIndex}"] }.Where(t => t is not null));
+        }
 
         // Default scope: accounts in totals with the budget currency; an explicit list narrows it (BUD-03).
         ScopeAccounts.Clear();
@@ -154,6 +167,7 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         budget.TotalLimit = total;
         budget.CategoryLimits = limits;
         budget.AlertsEnabled = AlertsEnabled;
+        budget.Rollover = (BudgetRollover)Math.Clamp(RolloverIndex, 0, 2);
         budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
         await store.SaveBudgetAsync(budget);
         await Shell.Current.GoToAsync("..");

@@ -202,6 +202,53 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         return await db.Budgets.AsNoTracking().OrderByDescending(b => b.Year).ThenByDescending(b => b.Month).ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Returns what the previous consecutive months pass on to <paramref name="budget"/> (§10.3). Only budgets of the same
+    /// calendar and currency count; a month without a budget ends the chain. Spending includes unreviewed entries.
+    /// </summary>
+    public async Task<BudgetCarry> GetBudgetCarryAsync(Budget budget, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(budget);
+        if (budget.Rollover == BudgetRollover.None)
+        {
+            return BudgetCarry.None;
+        }
+
+        var budgets = (await GetBudgetsAsync(cancellationToken))
+            .Where(b => b.Calendar == budget.Calendar && string.Equals(b.CurrencyCode, budget.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+            .ToDictionary(b => (b.Year, b.Month));
+        var chain = new List<Budget>();
+        var (year, month) = PeriodMath.Previous(budget.Year, budget.Month);
+        while (chain.Count < BudgetRolloverCalculator.MaxMonths && budgets.TryGetValue((year, month), out var previous))
+        {
+            chain.Insert(0, previous);
+            (year, month) = PeriodMath.Previous(year, month);
+        }
+
+        if (chain.Count == 0)
+        {
+            return BudgetCarry.None;
+        }
+
+        var from = PeriodMath.MonthRange(chain[0].Year, chain[0].Month, budget.Calendar).First;
+        var to = PeriodMath.MonthRange(chain[^1].Year, chain[^1].Month, budget.Calendar).Last;
+        var accounts = await GetAccountsAsync(cancellationToken: cancellationToken);
+        var entries = await GetEntriesAsync(from, to, cancellationToken);
+        var categories = await GetCategoriesAsync(cancellationToken);
+        var months = chain.Select(b =>
+        {
+            var (start, end) = PeriodMath.MonthRange(b.Year, b.Month, b.Calendar);
+            var scope = b.AccountIds.Count > 0 ? b.AccountIds : null;
+            return new BudgetMonth(
+                b.Rollover,
+                b.TotalLimit,
+                BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope),
+                b.CategoryLimits.ToDictionary(l => l.CategoryId, l => l.Limit),
+                b.CategoryLimits.ToDictionary(l => l.CategoryId, l => BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope, [l.CategoryId], categories)));
+        }).ToList();
+        return BudgetRolloverCalculator.CarryInto(months, budget.Rollover);
+    }
+
     /// <summary>Inserts or updates a budget including its category limits.</summary>
     public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default)
     {
@@ -218,6 +265,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             existing.TotalLimit = budget.TotalLimit;
             existing.AccountIds = [.. budget.AccountIds];
             existing.AlertsEnabled = budget.AlertsEnabled;
+            existing.Rollover = budget.Rollover;
             existing.CategoryLimits.Clear();
             existing.CategoryLimits.AddRange(budget.CategoryLimits.Select(l => new BudgetCategoryLimit { CategoryId = l.CategoryId, Limit = l.Limit }));
         }

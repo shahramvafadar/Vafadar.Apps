@@ -239,11 +239,13 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var budget = await _store.GetBudgetAsync(year, month, calendar, _reportCurrency);
         HasBudget = budget?.TotalLimit is not null;
-        if (budget?.TotalLimit is not { } limit)
+        if (budget?.TotalLimit is not { } ownLimit)
         {
             return;
         }
 
+        // The same limit as on the budget page, including rollover (§10.3, Q-05).
+        var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
         var (from, to) = PeriodMath.MonthRange(year, month, calendar);
         var status = new BudgetStatus(limit, BudgetCalculator.NetExpense(accounts, entries, from, to, _reportCurrency, budget.AccountIds.Count > 0 ? budget.AccountIds : null));
         BudgetText = status.IsOver

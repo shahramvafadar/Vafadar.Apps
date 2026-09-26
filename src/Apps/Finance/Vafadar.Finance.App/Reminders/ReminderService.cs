@@ -183,10 +183,12 @@ public sealed class ReminderService(
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar);
         var budget = await finance.GetBudgetAsync(year, month, settings.BudgetCalendar, settings.ReportCurrencyCode);
-        if (budget is not { AlertsEnabled: true, TotalLimit: { } limit })
+        if (budget is not { AlertsEnabled: true, TotalLimit: { } ownLimit })
         {
             return;
         }
+
+        var limit = ownLimit + (await finance.GetBudgetCarryAsync(budget)).Total;
 
         var (from, to) = PeriodMath.MonthRange(year, month, settings.BudgetCalendar);
         var entries = await finance.GetEntriesAsync(from, to);

@@ -95,6 +95,7 @@ public static class BudgetPlanning
             AccountIds = [.. source.AccountIds],
             CategoryLimits = [.. source.CategoryLimits.Select(l => new BudgetCategoryLimit { CategoryId = l.CategoryId, Limit = l.Limit })],
             AlertsEnabled = source.AlertsEnabled,
+            Rollover = source.Rollover,
         };
     }
 }

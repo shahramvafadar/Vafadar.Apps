@@ -22,6 +22,7 @@
                 </Grid>
                 <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
                 <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
+                <Label Text="{Binding CarryText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CarryText, Converter={StaticResource IsNotNullConverter}}" />
             </VerticalStackLayout>
         </DataTemplate>
     </ContentPage.Resources>

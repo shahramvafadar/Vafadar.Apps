@@ -1874,4 +1874,31 @@
   <data name="Account_Earmarked" xml:space="preserve">
     <value>Set aside for goals: {0} · free: {1}</value>
   </data>
+  <data name="Rollover_Title" xml:space="preserve">
+    <value>Rest of last month</value>
+  </data>
+  <data name="Rollover_None" xml:space="preserve">
+    <value>Start fresh</value>
+  </data>
+  <data name="Rollover_Surplus" xml:space="preserve">
+    <value>Add what was left</value>
+  </data>
+  <data name="Rollover_Both" xml:space="preserve">
+    <value>Add rest, deduct overspending</value>
+  </data>
+  <data name="Rollover_Hint" xml:space="preserve">
+    <value>Uses the budgets of the previous months without gaps. No money is moved; only this month's limits change.</value>
+  </data>
+  <data name="Rollover_Carried" xml:space="preserve">
+    <value>Includes {0} left from last month (own limit {1})</value>
+  </data>
+  <data name="Rollover_Deducted" xml:space="preserve">
+    <value>{0} overspent last month is deducted (own limit {1})</value>
+  </data>
+  <data name="Rollover_Active_Surplus" xml:space="preserve">
+    <value>The rest of last month is added to this budget.</value>
+  </data>
+  <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
+    <value>The rest of last month is added and overspending is deducted.</value>
+  </data>
 </root>

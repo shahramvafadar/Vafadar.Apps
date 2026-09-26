@@ -1870,4 +1870,31 @@
   <data name="Account_Earmarked" xml:space="preserve">
     <value>Für Ziele zurückgelegt: {0} · frei: {1}</value>
   </data>
+  <data name="Rollover_Title" xml:space="preserve">
+    <value>Rest des Vormonats</value>
+  </data>
+  <data name="Rollover_None" xml:space="preserve">
+    <value>Neu beginnen</value>
+  </data>
+  <data name="Rollover_Surplus" xml:space="preserve">
+    <value>Rest hinzufügen</value>
+  </data>
+  <data name="Rollover_Both" xml:space="preserve">
+    <value>Rest addieren, Überziehung abziehen</value>
+  </data>
+  <data name="Rollover_Hint" xml:space="preserve">
+    <value>Nutzt die Budgets der Vormonate ohne Lücke. Es wird kein Geld bewegt; nur die Grenzen dieses Monats ändern sich.</value>
+  </data>
+  <data name="Rollover_Carried" xml:space="preserve">
+    <value>Enthält {0} Rest aus dem Vormonat (eigene Grenze {1})</value>
+  </data>
+  <data name="Rollover_Deducted" xml:space="preserve">
+    <value>{0} Überziehung aus dem Vormonat abgezogen (eigene Grenze {1})</value>
+  </data>
+  <data name="Rollover_Active_Surplus" xml:space="preserve">
+    <value>Der Rest des Vormonats wird diesem Budget hinzugefügt.</value>
+  </data>
+  <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
+    <value>Der Rest des Vormonats wird addiert und Überziehung abgezogen.</value>
+  </data>
 </root>

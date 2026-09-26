@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
 using Vafadar.Finance.Core.Accounts;
+using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Testing;
@@ -313,6 +314,23 @@ public sealed class FinanceStoreTests : IDisposable
         await _store.DeleteAllDataAsync(Ct);
         Assert.Empty(await goals.GetGoalsAsync(Ct));
         Assert.Empty(await goals.GetAllocationsAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    public async Task Budget_rollover_carries_the_rest_of_the_previous_months()
+    {
+        var account = await NewAccountAsync();
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 300_00, Date = new DateOnly(2026, 10, 5) }, Ct);
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 450_00, Date = new DateOnly(2026, 11, 5) }, Ct);
+        Budget Month(int month, BudgetRollover rollover) => new() { Year = 2026, Month = month, Calendar = PeriodCalendar.Gregorian, CurrencyCode = account.CurrencyCode, TotalLimit = 500_00, Rollover = rollover };
+        await _store.SaveBudgetAsync(Month(10, BudgetRollover.None), Ct);
+        await _store.SaveBudgetAsync(Month(11, BudgetRollover.Surplus), Ct);
+        var december = Month(12, BudgetRollover.Surplus);
+        await _store.SaveBudgetAsync(december, Ct);
+
+        // October leaves 200, November receives it and leaves 250 for December.
+        Assert.Equal(250_00, (await _store.GetBudgetCarryAsync(december, Ct)).Total);
+        Assert.Equal(BudgetRollover.Surplus, (await _store.GetBudgetAsync(2026, 12, PeriodCalendar.Gregorian, account.CurrencyCode, Ct))!.Rollover);
     }
 
     [Fact]

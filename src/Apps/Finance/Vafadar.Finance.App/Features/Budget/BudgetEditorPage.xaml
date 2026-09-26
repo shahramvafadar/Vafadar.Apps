@@ -32,6 +32,11 @@
                             <Label Text="{v:Translate Budget_Alerts}" VerticalOptions="Center" />
                             <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{StaticResource Primary}" />
                         </Grid>
+                        <VerticalStackLayout IsVisible="{Binding IsAdvanced}" Spacing="4" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
+                            <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" AccentColor="{StaticResource Primary}" />
+                            <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
