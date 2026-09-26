@@ -1586,4 +1586,79 @@
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
     <value>Confirm deleting all data</value>
   </data>
+  <data name="Home_TipPlansTitle" xml:space="preserve">
+    <value>Add your regular payments</value>
+  </data>
+  <data name="Home_TipPlansText" xml:space="preserve">
+    <value>Rent, salary, subscriptions or instalments: with a plan you get a reminder and see what is coming.</value>
+  </data>
+  <data name="Home_TipPlansAction" xml:space="preserve">
+    <value>Add a plan</value>
+  </data>
+  <data name="Home_TipBudgetTitle" xml:space="preserve">
+    <value>Set a monthly budget</value>
+  </data>
+  <data name="Home_TipBudgetText" xml:space="preserve">
+    <value>Choose how much you want to spend this month and see what is left at a glance.</value>
+  </data>
+  <data name="Home_TipBudgetAction" xml:space="preserve">
+    <value>Set a budget</value>
+  </data>
+  <data name="Home_TipDismiss" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="Forecast_WhatIfHint" xml:space="preserve">
+    <value>Tap a plan item to leave it out or assume another date. This only changes this view.</value>
+  </data>
+  <data name="Forecast_WhatIfActive" xml:space="preserve">
+    <value>What-if changes are applied</value>
+  </data>
+  <data name="Forecast_WhatIfReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Forecast_LeftOut" xml:space="preserve">
+    <value>Left out of this forecast</value>
+  </data>
+  <data name="Forecast_DateAssumed" xml:space="preserve">
+    <value>Another date assumed</value>
+  </data>
+  <data name="Forecast_OpenOccurrence" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Forecast_LeaveOut" xml:space="preserve">
+    <value>Leave out of this forecast</value>
+  </data>
+  <data name="Forecast_IncludeAgain" xml:space="preserve">
+    <value>Include again</value>
+  </data>
+  <data name="Forecast_AssumeDate" xml:space="preserve">
+    <value>Assume another date</value>
+  </data>
+  <data name="Forecast_AssumeDateMessage" xml:space="preserve">
+    <value>Move by how many days? Use a minus sign for earlier.</value>
+  </data>
+  <data name="Forecast_RestoreDate" xml:space="preserve">
+    <value>Use the planned date again</value>
+  </data>
+  <data name="Reminder_Summary" xml:space="preserve">
+    <value>{0} payments due</value>
+  </data>
+  <data name="Reminder_ListSeparator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="Report_PlanOpen" xml:space="preserve">
+    <value>{0} open</value>
+  </data>
+  <data name="Report_PlanVariance" xml:space="preserve">
+    <value>difference {0}</value>
+  </data>
+  <data name="Report_PlanMonthly" xml:space="preserve">
+    <value>per month {0}</value>
+  </data>
+  <data name="Plan_ReminderOnDueDate" xml:space="preserve">
+    <value>Remind me again on the due date</value>
+  </data>
+  <data name="Plan_ReminderAlsoDue" xml:space="preserve">
+    <value>and on the due date</value>
+  </data>
 </root>

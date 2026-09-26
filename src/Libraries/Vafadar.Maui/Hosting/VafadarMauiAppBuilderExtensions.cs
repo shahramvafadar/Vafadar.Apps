@@ -1,7 +1,6 @@
 using FluentIcons.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Syncfusion.Licensing;
 using Syncfusion.Maui.Core.Hosting;
 using Vafadar.Core.Hosting;
 using Vafadar.Core.Settings;
@@ -45,10 +44,7 @@ public static class VafadarMauiAppBuilderExtensions
         }
 
         // Must happen before any Syncfusion control is created.
-        if (!string.IsNullOrWhiteSpace(options.SyncfusionLicenseKey))
-        {
-            SyncfusionLicenseProvider.RegisterLicense(options.SyncfusionLicenseKey);
-        }
+        SyncfusionLicense.Register(options.SyncfusionLicenseKey);
 
         builder.ConfigureSyncfusionCore();
 

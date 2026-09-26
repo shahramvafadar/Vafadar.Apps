@@ -68,8 +68,18 @@ public sealed class ReminderService(
             var culture = localization.CurrentCulture;
             var planned = ReminderPlanner.Plan(await plans.GetSchedulesAsync(), await plans.GetStatesAsync(), time.GetLocalNow().DateTime);
 
-            var notifications = planned.Select(reminder =>
+            var notifications = ReminderPlanner.GroupByTime(planned).Select(group =>
             {
+                if (group.Count > 1)
+                {
+                    // One summary for items due at the same time (REM-10); names only when details are allowed.
+                    var body = settings.NotificationsShowDetails
+                        ? string.Join(translator["Reminder_ListSeparator"], group.Select(r => r.Occurrence.Schedule.Name))
+                        : translator["Reminder_Generic"];
+                    return new ReminderNotification(group[0].Id, translator.Format("Reminder_Summary", group.Count), body, group[0].NotifyAt, "plans");
+                }
+
+                var reminder = group[0];
                 var occurrence = reminder.Occurrence;
                 var link = string.Create(CultureInfo.InvariantCulture, $"occurrence|{occurrence.Schedule.Id}|{occurrence.OriginalDate:yyyy-MM-dd}");
                 if (!settings.NotificationsShowDetails)

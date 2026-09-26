@@ -26,6 +26,8 @@ public enum ForecastSource
 /// <param name="IsEstimate">Whether the amount is an estimate.</param>
 /// <param name="ScheduleId">The plan, for plan items.</param>
 /// <param name="OriginalDate">The occurrence, for plan items.</param>
+/// <param name="IsExcluded">Whether the item is left out by a what-if scenario; it is listed but moves nothing.</param>
+/// <param name="IsMoved">Whether a what-if scenario assumes another date for the item.</param>
 public sealed record ForecastItem(
     DateOnly Date,
     string Name,
@@ -34,7 +36,59 @@ public sealed record ForecastItem(
     ForecastSource Source,
     bool IsEstimate,
     Guid? ScheduleId,
-    DateOnly? OriginalDate);
+    DateOnly? OriginalDate,
+    bool IsExcluded = false,
+    bool IsMoved = false);
+
+/// <summary>
+/// A temporary what-if for the forecast view (FOR-04): plan occurrences left out or assumed on another date. It is
+/// never saved and never changes plans or entries.
+/// </summary>
+public sealed class ForecastScenario
+{
+    private readonly HashSet<(Guid, DateOnly)> _excluded = [];
+    private readonly Dictionary<(Guid, DateOnly), DateOnly> _moved = [];
+
+    /// <summary>Gets a value indicating whether the scenario changes anything.</summary>
+    public bool IsEmpty => _excluded.Count == 0 && _moved.Count == 0;
+
+    /// <summary>Leaves an occurrence out, or includes it again.</summary>
+    public void SetExcluded(Guid scheduleId, DateOnly originalDate, bool excluded)
+    {
+        if (excluded)
+        {
+            _excluded.Add((scheduleId, originalDate));
+        }
+        else
+        {
+            _excluded.Remove((scheduleId, originalDate));
+        }
+    }
+
+    /// <summary>Assumes another date for an occurrence; <see langword="null"/> restores its due date.</summary>
+    public void SetDate(Guid scheduleId, DateOnly originalDate, DateOnly? date)
+    {
+        if (date is { } d)
+        {
+            _moved[(scheduleId, originalDate)] = d;
+        }
+        else
+        {
+            _moved.Remove((scheduleId, originalDate));
+        }
+    }
+
+    /// <summary>Removes every change.</summary>
+    public void Clear()
+    {
+        _excluded.Clear();
+        _moved.Clear();
+    }
+
+    internal bool IsExcluded(Guid scheduleId, DateOnly originalDate) => _excluded.Contains((scheduleId, originalDate));
+
+    internal DateOnly? DateOf(Guid scheduleId, DateOnly originalDate) => _moved.TryGetValue((scheduleId, originalDate), out var date) ? date : null;
+}
 
 /// <summary>One day of the forecast path.</summary>
 public readonly record struct ForecastPoint(DateOnly Date, long Balance);
@@ -50,7 +104,7 @@ public sealed record CurrencyForecast(
     IReadOnlyList<ForecastItem> Items)
 {
     /// <summary>Gets the number of items whose amount is unknown; the result is then incomplete (FOR-05).</summary>
-    public int UnknownCount => Items.Count(i => i.Effect is null);
+    public int UnknownCount => Items.Count(i => i.Effect is null && !i.IsExcluded);
 
     /// <summary>Gets a value indicating whether the result is incomplete.</summary>
     public bool IsIncomplete => UnknownCount > 0;
@@ -73,6 +127,7 @@ public static class ForecastCalculator
     /// <param name="baseDate">The base date (today).</param>
     /// <param name="horizon">The last day of the forecast.</param>
     /// <param name="accountIds">Accounts in scope; <see langword="null"/> = accounts included in totals.</param>
+    /// <param name="scenario">A temporary what-if for plan occurrences (FOR-04).</param>
     public static IReadOnlyList<CurrencyForecast> Compute(
         IEnumerable<Account> accounts,
         IReadOnlyCollection<LedgerEntry> entries,
@@ -80,7 +135,8 @@ public static class ForecastCalculator
         IEnumerable<OccurrenceState> states,
         DateOnly baseDate,
         DateOnly horizon,
-        IReadOnlyCollection<Guid>? accountIds = null)
+        IReadOnlyCollection<Guid>? accountIds = null,
+        ForecastScenario? scenario = null)
     {
         ArgumentNullException.ThrowIfNull(accounts);
         ArgumentNullException.ThrowIfNull(entries);
@@ -107,6 +163,16 @@ public static class ForecastCalculator
             {
                 var overdue = occurrence.DueDate < baseDate;
                 var date = overdue ? baseDate : occurrence.DueDate;
+                var excluded = scenario?.IsExcluded(schedule.Id, occurrence.OriginalDate) == true;
+                var moved = scenario?.DateOf(schedule.Id, occurrence.OriginalDate);
+                if (moved is { } assumed)
+                {
+                    // A date beyond the horizon takes the item out of this forecast but keeps it listed, so it can be
+                    // moved back; one in the past means today.
+                    excluded |= assumed > horizon;
+                    date = assumed < baseDate ? baseDate : assumed;
+                }
+
                 var amount = occurrence.Amount;
                 var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, schedule.ToAmount, scope, null);
                 foreach (var (currency, effect) in effects)
@@ -119,7 +185,9 @@ public static class ForecastCalculator
                         overdue ? ForecastSource.OverduePlan : ForecastSource.Plan,
                         occurrence.AmountMode == AmountMode.Estimated,
                         schedule.Id,
-                        occurrence.OriginalDate));
+                        occurrence.OriginalDate,
+                        excluded,
+                        moved is not null));
                 }
             }
         }
@@ -130,7 +198,7 @@ public static class ForecastCalculator
         {
             var start = scope.Values.Where(a => Same(a.CurrencyCode, currency)).Sum(a => LedgerCalculator.Balance(a, entries, baseDate));
             var currencyItems = items.Where(i => Same(i.CurrencyCode, currency)).OrderBy(i => i.Date).ToList();
-            var byDay = currencyItems.Where(i => i.Effect is not null).GroupBy(i => i.Date).ToDictionary(g => g.Key, g => g.Sum(i => i.Effect!.Value));
+            var byDay = currencyItems.Where(i => i.Effect is not null && !i.IsExcluded).GroupBy(i => i.Date).ToDictionary(g => g.Key, g => g.Sum(i => i.Effect!.Value));
 
             var path = new List<ForecastPoint>();
             var balance = start;

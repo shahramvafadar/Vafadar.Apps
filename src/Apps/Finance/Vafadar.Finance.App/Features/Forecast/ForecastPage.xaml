@@ -13,6 +13,15 @@
         <VerticalStackLayout Padding="16" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" AccentColor="{StaticResource Primary}" />
             <Label Text="{Binding BasisText}" Style="{StaticResource Secondary}" />
+            <Label Text="{v:Translate Forecast_WhatIfHint}" Style="{StaticResource Secondary}" FontSize="12" />
+            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4"
+                    IsVisible="{Binding HasScenario}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="{v:Translate Forecast_WhatIfActive}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{v:Translate Forecast_WhatIfReset}" Command="{Binding ResetScenarioCommand}"
+                            BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                </Grid>
+            </Border>
             <Label Text="{Binding UnreviewedText}" TextColor="{StaticResource WarningText}" FontSize="13"
                    IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
 
@@ -57,7 +66,7 @@
                                     </BindableLayout.EmptyView>
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="local:ForecastRow">
-                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Opacity="{Binding Opacity}">
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding OpenItemCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}"
                                                                           CommandParameter="{Binding .}" />

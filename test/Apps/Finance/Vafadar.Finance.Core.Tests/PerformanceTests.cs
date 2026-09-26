@@ -8,7 +8,7 @@ using Vafadar.Finance.Core.Reports;
 namespace Vafadar.Finance.Core.Tests;
 
 /// <summary>
-/// The calculations behind Home, Transactions, Reports and Forecast stay fast with 10,000 entries (Q-02). Limits are
+/// The calculations behind Home, Transactions, Reports and Forecast stay fast with 10,000 entries, 20 accounts and 100 plans (Q-02). Limits are
 /// generous so slow CI machines do not fail; they catch accidental quadratic behaviour.
 /// </summary>
 public sealed class PerformanceTests
@@ -18,10 +18,10 @@ public sealed class PerformanceTests
     private static readonly TimeSpan Limit = TimeSpan.FromSeconds(2);
 
     [Fact]
-    public void Ten_thousand_entries_are_calculated_quickly()
+    public void Ten_thousand_entries_twenty_accounts_and_a_hundred_plans_are_calculated_quickly()
     {
         var ledger = new LedgerBuilder();
-        var accounts = Enumerable.Range(0, 5).Select(i => ledger.Account($"Account {i}", 1_000, openingDate: new DateOnly(2024, 1, 1))).ToList();
+        var accounts = Enumerable.Range(0, 20).Select(i => ledger.Account($"Account {i}", 1_000, openingDate: new DateOnly(2024, 1, 1))).ToList();
         var categories = Enumerable.Range(0, 20).Select(_ => Guid.CreateVersion7()).ToList();
         var random = new Random(42);
         for (var i = 0; i < EntryCount; i++)
@@ -38,7 +38,7 @@ public sealed class PerformanceTests
 
         var byId = ledger.Accounts.ToDictionary(a => a.Id);
         var month = new LedgerFilter(new DateOnly(2027, 6, 1), new DateOnly(2027, 6, 30));
-        var plans = Enumerable.Range(0, 30).Select(i => new Schedule
+        var plans = Enumerable.Range(0, 100).Select(i => new Schedule
         {
             Name = $"Plan {i}",
             AccountId = accounts[i % accounts.Count].Id,

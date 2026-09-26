@@ -40,17 +40,42 @@ public static class ReminderPlanner
             var to = today.AddDays(HorizonDays + Math.Max(0, schedule.ReminderDaysBefore));
             foreach (var occurrence in Occurrences.Between(schedule, stateList, from, to, today).Where(o => o.IsOpen))
             {
-                var notifyAt = NotifyAt(occurrence.DueDate, schedule.ReminderDaysBefore, schedule.ReminderTime);
+                var id = StableId(schedule.Id, occurrence.OriginalDate);
+                Add(id, NotifyAt(occurrence.DueDate, schedule.ReminderDaysBefore, schedule.ReminderTime), occurrence);
 
-                // Only future reminders: missed ones are shown in the app, not as a burst of notifications (AT-33).
-                if (notifyAt > now && notifyAt <= now.AddDays(HorizonDays))
+                // The optional second reminder on the due date gets its own stable id (REM-01).
+                if (schedule.ReminderOnDueDate && schedule.ReminderDaysBefore > 0)
                 {
-                    reminders.Add(new PlannedReminder(StableId(schedule.Id, occurrence.OriginalDate), notifyAt, occurrence));
+                    Add(DueDateId(id), NotifyAt(occurrence.DueDate, 0, schedule.ReminderTime), occurrence);
                 }
             }
         }
 
         return [.. reminders.OrderBy(r => r.NotifyAt).Take(MaxPending)];
+
+        // Only future reminders: missed ones are shown in the app, not as a burst of notifications (AT-33).
+        void Add(int id, DateTime notifyAt, Occurrence occurrence)
+        {
+            if (notifyAt > now && notifyAt <= now.AddDays(HorizonDays))
+            {
+                reminders.Add(new PlannedReminder(id, notifyAt, occurrence));
+            }
+        }
+    }
+
+    /// <summary>Returns the id of the second reminder on the due date; positive and different from the first.</summary>
+    public static int DueDateId(int firstId) => (firstId ^ 0x2000_0000) | 1;
+
+    /// <summary>
+    /// Groups reminders that fire at the same minute, so several due items produce one summary notification instead
+    /// of a burst (REM-10). Groups keep the order of <paramref name="reminders"/>.
+    /// </summary>
+    public static IReadOnlyList<IReadOnlyList<PlannedReminder>> GroupByTime(IEnumerable<PlannedReminder> reminders)
+    {
+        ArgumentNullException.ThrowIfNull(reminders);
+        return [.. reminders
+            .GroupBy(r => new DateTime(r.NotifyAt.Year, r.NotifyAt.Month, r.NotifyAt.Day, r.NotifyAt.Hour, r.NotifyAt.Minute, 0, r.NotifyAt.Kind))
+            .Select(g => (IReadOnlyList<PlannedReminder>)[.. g])];
     }
 
     /// <summary>

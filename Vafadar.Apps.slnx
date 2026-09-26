@@ -50,6 +50,7 @@
     <Project Path="test/Libraries/Vafadar.Core.Tests/Vafadar.Core.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Data.Tests/Vafadar.Data.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Localization.Tests/Vafadar.Localization.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.SyncfusionLicense.Tests/Vafadar.SyncfusionLicense.Tests.csproj" />
   </Folder>
   <Folder Name="/test/Shared/">
     <Project Path="test/Shared/Vafadar.Testing/Vafadar.Testing.csproj" />

@@ -199,6 +199,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial TimeSpan? ReminderTime { get; set; }
 
+    // A second reminder on the due date (REM-01); editable in Advanced mode, kept as it is in Simple mode.
+    [ObservableProperty]
+    public partial bool ReminderOnDueDate { get; set; }
+
     [ObservableProperty]
     public partial string Note { get; set; }
 
@@ -370,6 +374,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         ReminderEnabled = schedule.ReminderEnabled;
         ReminderDaysText = schedule.ReminderDaysBefore.ToString(CultureInfo.InvariantCulture);
         ReminderTime = schedule.ReminderTime.ToTimeSpan();
+        ReminderOnDueDate = schedule.ReminderOnDueDate;
         Note = schedule.Note ?? string.Empty;
         BuildCategories(schedule.CategoryId);
     }
@@ -611,6 +616,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             target.ReminderEnabled = ReminderEnabled;
             target.ReminderDaysBefore = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), NumberStyles.None, CultureInfo.InvariantCulture, out var days) ? Math.Clamp(days, 0, 60) : 3;
             target.ReminderTime = TimeOnly.FromTimeSpan(ReminderTime ?? new TimeSpan(9, 0, 0));
+            target.ReminderOnDueDate = ReminderOnDueDate;
 
             if (_existing is null && ShowPastChoice && PastIndex == 0)
             {
@@ -667,5 +673,5 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private string Snapshot() => string.Join('|',
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
         CalendarIndex, DayRuleIndex, MissingDayIndex, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
-        ReminderTime, Note, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        ReminderTime, ReminderOnDueDate, Note, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

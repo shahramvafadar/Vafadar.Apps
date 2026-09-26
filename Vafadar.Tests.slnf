@@ -19,6 +19,7 @@
       "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
       "test\\Libraries\\Vafadar.Data.Tests\\Vafadar.Data.Tests.csproj",
       "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
+      "test\\Libraries\\Vafadar.SyncfusionLicense.Tests\\Vafadar.SyncfusionLicense.Tests.csproj",
       "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
     ]
   }

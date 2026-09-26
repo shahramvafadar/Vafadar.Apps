@@ -14,8 +14,9 @@ public sealed class VafadarMauiOptions
     public string AppId { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the Syncfusion license key. Pass <c>AppSecrets.SyncfusionLicenseKey</c>; never hard-code it.
-    /// When empty, Syncfusion controls run unlicensed and show a license banner.
+    /// Gets or sets the Syncfusion license key. Pass <c>AppSecrets.SyncfusionLicenseKey</c>, which every MAUI app gets
+    /// from eng/AppSecrets.targets; never hard-code it. An app that needs another key sets its own
+    /// <c>SyncfusionLicenseKey</c> MSBuild property. When empty, Syncfusion controls show a license notice.
     /// </summary>
     public string? SyncfusionLicenseKey { get; set; }
 

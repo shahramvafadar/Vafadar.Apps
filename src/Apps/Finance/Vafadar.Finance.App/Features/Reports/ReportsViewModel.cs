@@ -326,7 +326,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         {
             var currency = byId.TryGetValue(row.Schedule.AccountId, out var account) ? account.CurrencyCode : _currency;
             var details = _translator.Format("Report_PlanDetails", row.SettledCount, row.PlannedCount)
-                + (row.UnknownCount > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", row.UnknownCount) : string.Empty);
+                + (row.UnknownCount > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", row.UnknownCount) : string.Empty)
+                + (row.OpenCount > 0 ? " · " + _translator.Format("Report_PlanOpen", row.OpenCount) : string.Empty)
+                + (row.Variance is { } variance and not 0 ? " · " + _translator.Format("Report_PlanVariance", MoneyText.Format(variance, currency, culture, showPlus: true)) : string.Empty)
+                + (BudgetPlanning.MonthlyEquivalent(row.Schedule) is { } monthly ? " · " + _translator.Format("Report_PlanMonthly", MoneyText.Format(monthly, currency, culture, approximate: true)) : string.Empty);
             PlanRows.Add(new PlanReportRow(row.Schedule.Name, MoneyText.Format(row.Planned, currency, culture), MoneyText.Format(row.Actual, currency, culture), details));
         }
 

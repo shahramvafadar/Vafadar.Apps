@@ -102,6 +102,12 @@ public sealed class Schedule : Entity, IAuditableEntity
     /// <summary>Gets or sets the local time of the reminder.</summary>
     public TimeOnly ReminderTime { get; set; } = new(9, 0);
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a second reminder fires on the due date itself, at the same time
+    /// (REM-01, Advanced mode). It has no effect when the first reminder is already on the due date.
+    /// </summary>
+    public bool ReminderOnDueDate { get; set; }
+
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; set; }
 

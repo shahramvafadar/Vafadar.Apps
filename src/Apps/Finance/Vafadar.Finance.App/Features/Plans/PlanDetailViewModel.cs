@@ -114,7 +114,8 @@ public sealed partial class PlanDetailViewModel(
         Lines.Add(new DetailLine(translator["Plan_AutoPost"], translator[schedule.AutoPost ? "Common_Yes" : "Common_No"]));
         if (schedule.ReminderEnabled)
         {
-            Lines.Add(new DetailLine(translator["Plan_Reminder"], translator.Format("Plan_ReminderText", schedule.ReminderDaysBefore, schedule.ReminderTime.ToString("t", localization.CurrentCulture))));
+            Lines.Add(new DetailLine(translator["Plan_Reminder"], translator.Format("Plan_ReminderText", schedule.ReminderDaysBefore, schedule.ReminderTime.ToString("t", localization.CurrentCulture))
+                + (schedule.ReminderOnDueDate && schedule.ReminderDaysBefore > 0 ? " · " + translator["Plan_ReminderAlsoDue"] : string.Empty)));
         }
 
         if (!string.IsNullOrEmpty(schedule.Note))

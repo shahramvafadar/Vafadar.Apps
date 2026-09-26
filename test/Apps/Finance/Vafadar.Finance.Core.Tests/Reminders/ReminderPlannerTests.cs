@@ -81,6 +81,37 @@ public sealed class ReminderPlannerTests
         Assert.True(ReminderPlanner.StableId(id, new DateOnly(2027, 3, 15)) > 0);
     }
 
+    [Fact]
+    public void An_optional_second_reminder_fires_on_the_due_date_with_its_own_id()
+    {
+        var rent = Plan(new DateOnly(2027, 3, 15));
+        rent.ReminderOnDueDate = true;
+
+        var march = ReminderPlanner.Plan([rent], [], Now).Where(r => r.Occurrence.DueDate.Month == 3).ToList();
+
+        Assert.Equal([new DateTime(2027, 3, 12, 9, 0, 0), new DateTime(2027, 3, 15, 9, 0, 0)], march.Select(r => r.NotifyAt));
+        Assert.NotEqual(march[0].Id, march[1].Id);
+        Assert.True(march[1].Id > 0);
+
+        rent.ReminderDaysBefore = 0;
+        Assert.Single(ReminderPlanner.Plan([rent], [], Now), r => r.Occurrence.DueDate.Month == 3);
+    }
+
+    [Fact]
+    public void Reminders_at_the_same_time_are_grouped_into_one_summary()
+    {
+        var rent = Plan(new DateOnly(2027, 3, 15));
+        var phone = Plan(new DateOnly(2027, 3, 15));
+        var gym = Plan(new DateOnly(2027, 3, 15));
+        gym.ReminderTime = new TimeOnly(18, 0);
+
+        var groups = ReminderPlanner.GroupByTime(ReminderPlanner.Plan([rent, phone, gym], [], Now).Where(r => r.Occurrence.DueDate.Month == 3));
+
+        Assert.Equal(2, groups.Count);
+        Assert.Equal(2, groups[0].Count);
+        Assert.Single(groups[1]);
+    }
+
     private static Schedule Plan(DateOnly start) => new()
     {
         Name = "Rent",

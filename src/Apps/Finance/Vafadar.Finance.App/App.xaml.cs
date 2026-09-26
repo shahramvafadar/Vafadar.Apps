@@ -119,6 +119,10 @@ public partial class App : Application
         {
             await Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = planId, ["date"] = original });
         }
+        else if (parts is ["plans"])
+        {
+            await Shell.Current.GoToAsync("//plans");
+        }
         else if (parts is ["budget"])
         {
             await Shell.Current.GoToAsync(AppShell.BudgetRoute);

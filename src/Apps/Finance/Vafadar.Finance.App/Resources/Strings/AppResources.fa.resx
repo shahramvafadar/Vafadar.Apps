@@ -1582,4 +1582,79 @@
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
     <value>حذف همه داده‌ها را تأیید کنید</value>
   </data>
+  <data name="Home_TipPlansTitle" xml:space="preserve">
+    <value>پرداخت‌های تکراری را اضافه کنید</value>
+  </data>
+  <data name="Home_TipPlansText" xml:space="preserve">
+    <value>اجاره، حقوق، اشتراک یا قسط: با یک برنامه یادآوری می‌گیرید و موارد پیش رو را می‌بینید.</value>
+  </data>
+  <data name="Home_TipPlansAction" xml:space="preserve">
+    <value>افزودن برنامه</value>
+  </data>
+  <data name="Home_TipBudgetTitle" xml:space="preserve">
+    <value>بودجه ماهانه تعیین کنید</value>
+  </data>
+  <data name="Home_TipBudgetText" xml:space="preserve">
+    <value>تعیین کنید این ماه چقدر می‌خواهید خرج کنید و باقی‌مانده را یک‌جا ببینید.</value>
+  </data>
+  <data name="Home_TipBudgetAction" xml:space="preserve">
+    <value>تعیین بودجه</value>
+  </data>
+  <data name="Home_TipDismiss" xml:space="preserve">
+    <value>فعلاً نه</value>
+  </data>
+  <data name="Forecast_WhatIfHint" xml:space="preserve">
+    <value>روی یک مورد برنامه بزنید تا آن را کنار بگذارید یا تاریخ دیگری فرض کنید. این فقط همین نما را تغییر می‌دهد.</value>
+  </data>
+  <data name="Forecast_WhatIfActive" xml:space="preserve">
+    <value>تغییرات فرضی اعمال شده است</value>
+  </data>
+  <data name="Forecast_WhatIfReset" xml:space="preserve">
+    <value>بازنشانی</value>
+  </data>
+  <data name="Forecast_LeftOut" xml:space="preserve">
+    <value>از این پیش‌بینی کنار گذاشته شده</value>
+  </data>
+  <data name="Forecast_DateAssumed" xml:space="preserve">
+    <value>تاریخ دیگری فرض شده</value>
+  </data>
+  <data name="Forecast_OpenOccurrence" xml:space="preserve">
+    <value>باز کردن</value>
+  </data>
+  <data name="Forecast_LeaveOut" xml:space="preserve">
+    <value>کنار گذاشتن از این پیش‌بینی</value>
+  </data>
+  <data name="Forecast_IncludeAgain" xml:space="preserve">
+    <value>دوباره در نظر گرفتن</value>
+  </data>
+  <data name="Forecast_AssumeDate" xml:space="preserve">
+    <value>فرض تاریخ دیگر</value>
+  </data>
+  <data name="Forecast_AssumeDateMessage" xml:space="preserve">
+    <value>چند روز جابه‌جا شود؟ برای زودتر، علامت منفی بگذارید.</value>
+  </data>
+  <data name="Forecast_RestoreDate" xml:space="preserve">
+    <value>بازگشت به تاریخ برنامه</value>
+  </data>
+  <data name="Reminder_Summary" xml:space="preserve">
+    <value>سررسید {0} پرداخت</value>
+  </data>
+  <data name="Reminder_ListSeparator" xml:space="preserve">
+    <value>، </value>
+  </data>
+  <data name="Report_PlanOpen" xml:space="preserve">
+    <value>باز: {0}</value>
+  </data>
+  <data name="Report_PlanVariance" xml:space="preserve">
+    <value>اختلاف {0}</value>
+  </data>
+  <data name="Report_PlanMonthly" xml:space="preserve">
+    <value>ماهانه {0}</value>
+  </data>
+  <data name="Plan_ReminderOnDueDate" xml:space="preserve">
+    <value>در روز سررسید هم یادآوری شود</value>
+  </data>
+  <data name="Plan_ReminderAlsoDue" xml:space="preserve">
+    <value>و در روز سررسید</value>
+  </data>
 </root>

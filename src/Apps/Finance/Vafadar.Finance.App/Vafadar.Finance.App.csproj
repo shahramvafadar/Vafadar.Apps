@@ -25,10 +25,6 @@
     <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
 
-  <ItemGroup Label="Build-time secrets (see eng/AppSecrets.targets)">
-    <AppSecret Include="SyncfusionLicenseKey" Value="$(SyncfusionLicenseKey)" />
-  </ItemGroup>
-
   <ItemGroup Label="MAUI resources">
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1B5E20" />
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1B5E20" BaseSize="128,128" />

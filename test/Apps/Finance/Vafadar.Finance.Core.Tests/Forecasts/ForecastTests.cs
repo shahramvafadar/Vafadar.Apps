@@ -106,8 +106,49 @@ public sealed class ForecastTests
         Assert.Equal(ForecastSource.FutureEntry, forecast.Items.Single().Source);
     }
 
-    private IReadOnlyList<CurrencyForecast> Compute(IEnumerable<Schedule> plans, IEnumerable<OccurrenceState>? states = null) =>
-        ForecastCalculator.Compute(_ledger.Accounts, _ledger.Entries, plans, states ?? [], Today, EndOfMonth);
+    [Fact]
+    // FOR-04: what-if changes are temporary.
+    public void A_scenario_can_leave_an_item_out_without_changing_the_plan()
+    {
+        var checking = _ledger.Account("Checking", 1_000);
+        var rent = Plan("Rent", EntryKind.Expense, checking.Id, 800, new DateOnly(2026, 10, 15));
+        var scenario = new ForecastScenario();
+        scenario.SetExcluded(rent.Id, new DateOnly(2026, 10, 15), true);
+
+        var forecast = Compute([rent], scenario: scenario).Single();
+
+        var item = Assert.Single(forecast.Items);
+        Assert.True(item.IsExcluded);
+        Assert.Equal(LedgerBuilder.Minor(1_000), forecast.EndBalance);
+        Assert.Equal(LedgerBuilder.Minor(200), Compute([rent]).Single().EndBalance);
+    }
+
+    [Fact]
+    public void A_scenario_can_assume_another_date_and_a_date_after_the_horizon_leaves_the_item_out()
+    {
+        var checking = _ledger.Account("Checking", 300);
+        var rent = Plan("Rent", EntryKind.Expense, checking.Id, 800, new DateOnly(2026, 10, 15));
+        var salary = Plan("Salary", EntryKind.Income, checking.Id, 2_000, new DateOnly(2026, 10, 28));
+        var scenario = new ForecastScenario();
+        scenario.SetDate(rent.Id, new DateOnly(2026, 10, 15), new DateOnly(2026, 10, 29));
+
+        var moved = Compute([rent, salary], scenario: scenario).Single();
+        Assert.False(moved.GoesNegative);
+        Assert.True(moved.Items.Single(i => i.ScheduleId == rent.Id).IsMoved);
+        Assert.Equal(LedgerBuilder.Minor(1_500), moved.EndBalance);
+
+        scenario.SetDate(rent.Id, new DateOnly(2026, 10, 15), new DateOnly(2026, 11, 5));
+        var later = Compute([rent, salary], scenario: scenario).Single();
+        Assert.True(later.Items.Single(i => i.ScheduleId == rent.Id).IsExcluded);
+        Assert.Equal(LedgerBuilder.Minor(2_300), later.EndBalance);
+
+        scenario.Clear();
+        Assert.True(scenario.IsEmpty);
+        Assert.True(Compute([rent, salary], scenario: scenario).Single().GoesNegative);
+    }
+
+    private IReadOnlyList<CurrencyForecast> Compute(IEnumerable<Schedule> plans, IEnumerable<OccurrenceState>? states = null, ForecastScenario? scenario = null) =>
+        ForecastCalculator.Compute(_ledger.Accounts, _ledger.Entries, plans, states ?? [], Today, EndOfMonth, scenario: scenario);
 
     private static Schedule Plan(string name, EntryKind kind, Guid accountId, decimal? amount, DateOnly date) => new()
     {

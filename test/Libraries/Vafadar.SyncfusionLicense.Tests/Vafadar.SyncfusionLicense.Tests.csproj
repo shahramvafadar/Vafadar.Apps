@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Checks the configured Syncfusion license key against the Syncfusion package version in Directory.Packages.props,
+    so an outdated or wrong key is found before an app is published. The key comes from the same build secret as the
+    apps; without it the test is skipped.
+  -->
+  <PropertyGroup>
+    <RootNamespace>Vafadar.SyncfusionLicense.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Licensing" />
+  </ItemGroup>
+
+  <ItemGroup Label="Build-time secrets (see eng/AppSecrets.targets)">
+    <AppSecret Include="SyncfusionLicenseKey" Value="$(SyncfusionLicenseKey)" />
+  </ItemGroup>
+
+</Project>

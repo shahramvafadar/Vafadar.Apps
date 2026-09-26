@@ -78,5 +78,9 @@ public sealed class ReportCalculatorTests
         Assert.Equal(2, result.PlannedCount);
         Assert.Equal(3_250, result.Actual);
         Assert.Equal(1, result.SettledCount);
+        Assert.Equal(1, result.OpenCount);
+
+        // Only the settled occurrence counts toward the variance; the open one is not a saving.
+        Assert.Equal(250, result.Variance);
     }
 }

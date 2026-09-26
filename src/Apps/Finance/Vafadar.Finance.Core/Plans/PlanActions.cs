@@ -173,5 +173,6 @@ public static class PlanActions
         ReminderEnabled = schedule.ReminderEnabled,
         ReminderDaysBefore = schedule.ReminderDaysBefore,
         ReminderTime = schedule.ReminderTime,
+        ReminderOnDueDate = schedule.ReminderOnDueDate,
     };
 }

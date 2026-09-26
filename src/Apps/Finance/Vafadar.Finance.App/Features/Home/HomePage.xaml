@@ -131,6 +131,28 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Guidance (ONB-04) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowPlansTip}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Home_TipPlansTitle}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate Home_TipPlansText}" Style="{StaticResource Secondary}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipPlansAction}" Command="{Binding AddPlanCommand}" />
+                            <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="plans"
+                                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowBudgetTip}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Home_TipBudgetTitle}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate Home_TipBudgetText}" Style="{StaticResource Secondary}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipBudgetAction}" Command="{Binding AddBudgetCommand}" />
+                            <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="budget"
+                                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
                 <!-- Next due items -->
                 <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasUpcoming}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">

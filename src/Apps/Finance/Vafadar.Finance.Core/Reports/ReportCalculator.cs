@@ -35,8 +35,19 @@ public sealed record MonthTotals(int Year, int Month, DateOnly From, DateOnly To
     public long Result => NetIncome - NetExpense;
 }
 
-/// <summary>Planned and recorded amounts of one plan in a period.</summary>
-public sealed record PlanActual(Schedule Schedule, long Planned, int PlannedCount, int UnknownCount, long Actual, int SettledCount);
+/// <summary>Planned and recorded amounts of one plan in a period (REP: planned versus posted).</summary>
+/// <param name="Schedule">The plan.</param>
+/// <param name="Planned">Sum of the known planned amounts.</param>
+/// <param name="PlannedCount">Occurrences due in the period, skipped ones excluded.</param>
+/// <param name="UnknownCount">Occurrences without a known amount.</param>
+/// <param name="Actual">Sum of the entries that settled those occurrences.</param>
+/// <param name="SettledCount">Entries that settled them.</param>
+/// <param name="OpenCount">Occurrences still open.</param>
+/// <param name="Variance">
+/// Recorded minus planned for the settled occurrences only, so open ones never look like savings; <see langword="null"/>
+/// when nothing is settled or a settled occurrence had no known amount.
+/// </param>
+public sealed record PlanActual(Schedule Schedule, long Planned, int PlannedCount, int UnknownCount, long Actual, int SettledCount, int OpenCount = 0, long? Variance = null);
 
 /// <summary>Calculations of the report screens (UI-11). They reuse the ledger formulas, so every number matches (Q-05).</summary>
 public static class ReportCalculator
@@ -139,8 +150,9 @@ public static class ReportCalculator
 
         foreach (var schedule in schedules)
         {
-            long planned = 0, actual = 0;
-            int plannedCount = 0, unknown = 0, settled = 0;
+            long planned = 0, actual = 0, settledPlanned = 0;
+            int plannedCount = 0, unknown = 0, settled = 0, open = 0;
+            var varianceKnown = true;
             foreach (var occurrence in Occurrences.Between(schedule, stateList, from, to, today).Where(o => o.Status != OccurrenceView.Skipped))
             {
                 plannedCount++;
@@ -153,7 +165,19 @@ public static class ReportCalculator
                     unknown++;
                 }
 
-                foreach (var entry in bySettlement[(schedule.Id, occurrence.OriginalDate)])
+                if (occurrence.IsOpen)
+                {
+                    open++;
+                }
+
+                var settlements = bySettlement[(schedule.Id, occurrence.OriginalDate)].ToList();
+                if (settlements.Count > 0)
+                {
+                    settledPlanned += occurrence.Amount ?? 0;
+                    varianceKnown &= occurrence.Amount is not null;
+                }
+
+                foreach (var entry in settlements)
                 {
                     actual += entry.Amount;
                     settled++;
@@ -162,7 +186,7 @@ public static class ReportCalculator
 
             if (plannedCount > 0)
             {
-                result.Add(new PlanActual(schedule, planned, plannedCount, unknown, actual, settled));
+                result.Add(new PlanActual(schedule, planned, plannedCount, unknown, actual, settled, open, settled > 0 && varianceKnown ? actual - settledPlanned : null));
             }
         }
 

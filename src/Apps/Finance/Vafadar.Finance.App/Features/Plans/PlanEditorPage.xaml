@@ -175,6 +175,10 @@
                                 <Label Grid.Column="1" Text="{v:Translate Plan_DaysBefore}" VerticalOptions="Center" />
                             </Grid>
                             <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
+                            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsAdvanced}">
+                                <Label Text="{v:Translate Plan_ReminderOnDueDate}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ReminderOnDueDate}" OnColor="{StaticResource Primary}" />
+                            </Grid>
                             <Label Text="{Binding ReminderNote}" TextColor="{StaticResource WarningText}" FontSize="13"
                                    IsVisible="{Binding ReminderNote, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>

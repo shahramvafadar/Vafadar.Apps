@@ -57,6 +57,12 @@ jobs:
           distribution: microsoft
           java-version: '17'
 
+      # An outdated or wrong license key (e.g. after a Syncfusion major upgrade) stops the release here.
+      - name: Validate Syncfusion license
+        env:
+          VAFADAR_REQUIRE_SYNCFUSION_LICENSE: "true"
+        run: dotnet test --project test/Libraries/Vafadar.SyncfusionLicense.Tests --configuration Release
+
       - name: Install MAUI Android workload
         run: dotnet workload install maui-android
 

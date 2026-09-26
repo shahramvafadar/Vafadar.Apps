@@ -119,6 +119,13 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasBudget { get; set; }
 
+    // Guidance after the first entries (ONB-04): one tip at a time, each can be dismissed for good.
+    [ObservableProperty]
+    public partial bool ShowPlansTip { get; set; }
+
+    [ObservableProperty]
+    public partial bool ShowBudgetTip { get; set; }
+
     [ObservableProperty]
     public partial string? BudgetText { get; set; }
 
@@ -198,6 +205,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
         await LoadPlansAsync(byId, categories, today);
+        await LoadTipsAsync(entries.Count);
         await LoadForecastAsync(settings.Mode, allAccounts, entries, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
@@ -372,6 +380,30 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         return PeriodMath.MonthRange(year, month, Calendar);
+    }
+
+    private const string PlansTipKey = "home.tip.plans.dismissed";
+    private const string BudgetTipKey = "home.tip.budget.dismissed";
+
+    private async Task LoadTipsAsync(int entryCount)
+    {
+        var ready = HasAccounts && entryCount >= 3;
+        ShowPlansTip = ready && !Preferences.Default.Get(PlansTipKey, false) && (await _plans.GetSchedulesAsync()).Count == 0;
+        ShowBudgetTip = ready && !ShowPlansTip && !Preferences.Default.Get(BudgetTipKey, false) && (await _store.GetBudgetsAsync()).Count == 0;
+    }
+
+    [RelayCommand]
+    private Task AddPlanAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute);
+
+    [RelayCommand]
+    private Task AddBudgetAsync() => Shell.Current.GoToAsync(AppShell.BudgetRoute);
+
+    [RelayCommand]
+    private void DismissTip(string tip)
+    {
+        Preferences.Default.Set(tip == "plans" ? PlansTipKey : BudgetTipKey, true);
+        ShowPlansTip = false;
+        ShowBudgetTip = false;
     }
 
     [RelayCommand]
