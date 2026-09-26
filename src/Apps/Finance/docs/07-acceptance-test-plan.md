@@ -54,7 +54,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Verified (unit: incomplete totals, no relabelling; budgets keep their currency) |
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, incl. conversion between 0- and 3-digit currencies) |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
-| AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
+| AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Implemented (mode never deletes data; hidden plan and budget settings summarised); manual check pending |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Verified (unit) |
 | AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Verified (unit) |
@@ -66,6 +66,6 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Blocked (no sign-in) |
 | AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Verified (integration: first schema with data upgraded to latest; restore migrates older backups); re-run each slice |
-| AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Planned |
+| AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | Implemented (lock on start/leave, taps after unlock, export/backup/restore confirmation); device check pending |
 | AT-62 | Golden data §24 | §24 | Unit | S1 | Verified (unit, domain level) |
 | AT-63..68 | Phase-2 scenarios | F2-* | – | Phase 2 | Not included |
