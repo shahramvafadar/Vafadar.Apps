@@ -1283,4 +1283,139 @@
   <data name="Home_CombinedIncomplete" xml:space="preserve">
     <value>Combined total incomplete – missing rate for {0}</value>
   </data>
+  <data name="ImportExport_Title" xml:space="preserve">
+    <value>Import &amp; export</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>Export entries (CSV)</value>
+  </data>
+  <data name="Export_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Export_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Export_IncludeNotes" xml:space="preserve">
+    <value>Include notes and payees</value>
+  </data>
+  <data name="Export_Warning" xml:space="preserve">
+    <value>The file contains financial data and is not encrypted. Share it only with people and services you trust. It is not a backup: plans, budgets and settings are not included.</value>
+  </data>
+  <data name="Export_Button" xml:space="preserve">
+    <value>Export and share</value>
+  </data>
+  <data name="Export_Done" xml:space="preserve">
+    <value>{0} entries exported.</value>
+  </data>
+  <data name="Import_Title" xml:space="preserve">
+    <value>Import entries (CSV)</value>
+  </data>
+  <data name="Import_Intro" xml:space="preserve">
+    <value>Files exported by this app keep their ids, so importing them twice creates nothing twice. For other files you choose the columns and formats. Imported entries are marked for review.</value>
+  </data>
+  <data name="Import_Pick" xml:space="preserve">
+    <value>Choose CSV file</value>
+  </data>
+  <data name="Import_Empty" xml:space="preserve">
+    <value>The file has no rows.</value>
+  </data>
+  <data name="Import_NoColumn" xml:space="preserve">
+    <value>– not in the file –</value>
+  </data>
+  <data name="Import_Account" xml:space="preserve">
+    <value>Import into account</value>
+  </data>
+  <data name="Import_DateColumn" xml:space="preserve">
+    <value>Date column</value>
+  </data>
+  <data name="Import_DateFormat" xml:space="preserve">
+    <value>Date format</value>
+  </data>
+  <data name="Import_AmountColumn" xml:space="preserve">
+    <value>Amount column</value>
+  </data>
+  <data name="Import_DecimalPoint" xml:space="preserve">
+    <value>Decimal point 1,234.56</value>
+  </data>
+  <data name="Import_DecimalComma" xml:space="preserve">
+    <value>Decimal comma 1.234,56</value>
+  </data>
+  <data name="Import_Sign" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Import_SignNegativeExpense" xml:space="preserve">
+    <value>Negative = expense</value>
+  </data>
+  <data name="Import_SignAllExpenses" xml:space="preserve">
+    <value>All expenses</value>
+  </data>
+  <data name="Import_SignAllIncome" xml:space="preserve">
+    <value>All income</value>
+  </data>
+  <data name="Import_TitleColumn" xml:space="preserve">
+    <value>Title column (optional)</value>
+  </data>
+  <data name="Import_CategoryColumn" xml:space="preserve">
+    <value>Category column (optional)</value>
+  </data>
+  <data name="Import_NoteColumn" xml:space="preserve">
+    <value>Note column (optional)</value>
+  </data>
+  <data name="Import_PreviewButton" xml:space="preserve">
+    <value>Show preview</value>
+  </data>
+  <data name="Import_MappingIncomplete" xml:space="preserve">
+    <value>Choose the account, the date and amount columns and the date format.</value>
+  </data>
+  <data name="Import_Preview" xml:space="preserve">
+    <value>{0} new · {1} already imported (skipped) · {2} not readable</value>
+  </data>
+  <data name="Import_InvalidLine" xml:space="preserve">
+    <value>Line {0}: {1}</value>
+  </data>
+  <data name="Import_Error_Id" xml:space="preserve">
+    <value>id is missing</value>
+  </data>
+  <data name="Import_Error_Date" xml:space="preserve">
+    <value>date not readable in this format</value>
+  </data>
+  <data name="Import_Error_Kind" xml:space="preserve">
+    <value>unknown kind</value>
+  </data>
+  <data name="Import_Error_Account" xml:space="preserve">
+    <value>account not found</value>
+  </data>
+  <data name="Import_Error_Amount" xml:space="preserve">
+    <value>amount not readable or ambiguous</value>
+  </data>
+  <data name="Import_Duplicates" xml:space="preserve">
+    <value>{0} rows have the same date and amount as existing entries. They may still be real separate purchases.</value>
+  </data>
+  <data name="Import_BeforeOpening" xml:space="preserve">
+    <value>{0} rows are dated before the account's opening date and will not change its balance. Move the opening date if they should count.</value>
+  </data>
+  <data name="Import_SkipDuplicates" xml:space="preserve">
+    <value>Leave out these possible duplicates</value>
+  </data>
+  <data name="Import_Button" xml:space="preserve">
+    <value>Import {0} entries</value>
+  </data>
+  <data name="Import_Rejected" xml:space="preserve">
+    <value>Nothing was imported: {0} rows are not valid ({1}).</value>
+  </data>
+  <data name="Import_Done" xml:space="preserve">
+    <value>{0} entries imported, {1} skipped. Review them under Transactions.</value>
+  </data>
+  <data name="Import_History" xml:space="preserve">
+    <value>Past imports</value>
+  </data>
+  <data name="Import_Batch" xml:space="preserve">
+    <value>{0} · {1} entries</value>
+  </data>
+  <data name="Import_Undo" xml:space="preserve">
+    <value>Undo import</value>
+  </data>
+  <data name="Import_UndoMessage" xml:space="preserve">
+    <value>Remove the entries of this import? Entries that existed before are not touched.</value>
+  </data>
 </root>

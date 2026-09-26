@@ -1279,4 +1279,139 @@
   <data name="Home_CombinedIncomplete" xml:space="preserve">
     <value>جمع کل ناقص است؛ نرخ {0} موجود نیست</value>
   </data>
+  <data name="ImportExport_Title" xml:space="preserve">
+    <value>ورود و خروج داده</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>خروجی تراکنش‌ها (CSV)</value>
+  </data>
+  <data name="Export_From" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="Export_To" xml:space="preserve">
+    <value>تا</value>
+  </data>
+  <data name="Export_IncludeNotes" xml:space="preserve">
+    <value>شامل یادداشت و طرف حساب</value>
+  </data>
+  <data name="Export_Warning" xml:space="preserve">
+    <value>این فایل شامل داده‌های مالی است و رمزنگاری نشده است. فقط با افراد و سرویس‌های مورد اعتماد به اشتراک بگذارید. این فایل پشتیبان نیست؛ برنامه‌ها، بودجه‌ها و تنظیمات در آن نیستند.</value>
+  </data>
+  <data name="Export_Button" xml:space="preserve">
+    <value>خروجی و اشتراک‌گذاری</value>
+  </data>
+  <data name="Export_Done" xml:space="preserve">
+    <value>{0} تراکنش خروجی گرفته شد.</value>
+  </data>
+  <data name="Import_Title" xml:space="preserve">
+    <value>ورود تراکنش‌ها (CSV)</value>
+  </data>
+  <data name="Import_Intro" xml:space="preserve">
+    <value>فایل‌های خروجی همین اپ شناسهٔ خود را حفظ می‌کنند و ورود دوباره تکراری نمی‌سازد. برای فایل‌های دیگر ستون‌ها و قالب‌ها را خودتان تعیین می‌کنید. تراکنش‌های واردشده برای بررسی علامت می‌خورند.</value>
+  </data>
+  <data name="Import_Pick" xml:space="preserve">
+    <value>انتخاب فایل CSV</value>
+  </data>
+  <data name="Import_Empty" xml:space="preserve">
+    <value>فایل سطری ندارد.</value>
+  </data>
+  <data name="Import_NoColumn" xml:space="preserve">
+    <value>– در فایل نیست –</value>
+  </data>
+  <data name="Import_Account" xml:space="preserve">
+    <value>ورود به حساب</value>
+  </data>
+  <data name="Import_DateColumn" xml:space="preserve">
+    <value>ستون تاریخ</value>
+  </data>
+  <data name="Import_DateFormat" xml:space="preserve">
+    <value>قالب تاریخ</value>
+  </data>
+  <data name="Import_AmountColumn" xml:space="preserve">
+    <value>ستون مبلغ</value>
+  </data>
+  <data name="Import_DecimalPoint" xml:space="preserve">
+    <value>ممیز نقطه 1,234.56</value>
+  </data>
+  <data name="Import_DecimalComma" xml:space="preserve">
+    <value>ممیز ویرگول 1.234,56</value>
+  </data>
+  <data name="Import_Sign" xml:space="preserve">
+    <value>جهت</value>
+  </data>
+  <data name="Import_SignNegativeExpense" xml:space="preserve">
+    <value>منفی = هزینه</value>
+  </data>
+  <data name="Import_SignAllExpenses" xml:space="preserve">
+    <value>همه هزینه</value>
+  </data>
+  <data name="Import_SignAllIncome" xml:space="preserve">
+    <value>همه درآمد</value>
+  </data>
+  <data name="Import_TitleColumn" xml:space="preserve">
+    <value>ستون عنوان (اختیاری)</value>
+  </data>
+  <data name="Import_CategoryColumn" xml:space="preserve">
+    <value>ستون دسته (اختیاری)</value>
+  </data>
+  <data name="Import_NoteColumn" xml:space="preserve">
+    <value>ستون یادداشت (اختیاری)</value>
+  </data>
+  <data name="Import_PreviewButton" xml:space="preserve">
+    <value>نمایش پیش‌نمایش</value>
+  </data>
+  <data name="Import_MappingIncomplete" xml:space="preserve">
+    <value>حساب، ستون تاریخ و مبلغ و قالب تاریخ را انتخاب کنید.</value>
+  </data>
+  <data name="Import_Preview" xml:space="preserve">
+    <value>{0} جدید · {1} قبلاً واردشده (رد می‌شود) · {2} ناخوانا</value>
+  </data>
+  <data name="Import_InvalidLine" xml:space="preserve">
+    <value>سطر {0}: {1}</value>
+  </data>
+  <data name="Import_Error_Id" xml:space="preserve">
+    <value>شناسه موجود نیست</value>
+  </data>
+  <data name="Import_Error_Date" xml:space="preserve">
+    <value>تاریخ با این قالب خوانده نشد</value>
+  </data>
+  <data name="Import_Error_Kind" xml:space="preserve">
+    <value>نوع نامعلوم</value>
+  </data>
+  <data name="Import_Error_Account" xml:space="preserve">
+    <value>حساب پیدا نشد</value>
+  </data>
+  <data name="Import_Error_Amount" xml:space="preserve">
+    <value>مبلغ ناخوانا یا مبهم است</value>
+  </data>
+  <data name="Import_Duplicates" xml:space="preserve">
+    <value>{0} سطر با تراکنش‌های موجود تاریخ و مبلغ یکسان دارد؛ ممکن است واقعاً خریدهای جداگانه باشند.</value>
+  </data>
+  <data name="Import_BeforeOpening" xml:space="preserve">
+    <value>{0} سطر پیش از تاریخ آغاز حساب است و در مانده اثر نمی‌گذارد. اگر باید حساب شوند، تاریخ آغاز را جابه‌جا کنید.</value>
+  </data>
+  <data name="Import_SkipDuplicates" xml:space="preserve">
+    <value>کنار گذاشتن موارد احتمالاً تکراری</value>
+  </data>
+  <data name="Import_Button" xml:space="preserve">
+    <value>ورود {0} تراکنش</value>
+  </data>
+  <data name="Import_Rejected" xml:space="preserve">
+    <value>چیزی وارد نشد: {0} سطر معتبر نیست ({1}).</value>
+  </data>
+  <data name="Import_Done" xml:space="preserve">
+    <value>{0} تراکنش وارد شد و {1} مورد رد شد. آنها را در تراکنش‌ها بررسی کنید.</value>
+  </data>
+  <data name="Import_History" xml:space="preserve">
+    <value>ورودهای قبلی</value>
+  </data>
+  <data name="Import_Batch" xml:space="preserve">
+    <value>{0} · {1} تراکنش</value>
+  </data>
+  <data name="Import_Undo" xml:space="preserve">
+    <value>لغو ورود</value>
+  </data>
+  <data name="Import_UndoMessage" xml:space="preserve">
+    <value>تراکنش‌های این ورود حذف شوند؟ تراکنش‌های قبلی دست نمی‌خورند.</value>
+  </data>
 </root>

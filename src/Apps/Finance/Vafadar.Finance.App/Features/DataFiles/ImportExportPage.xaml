@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.DataFiles.ImportExportPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.DataFiles"
+    x:DataType="local:ImportExportViewModel"
+    Title="{v:Translate ImportExport_Title}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="8">
+
+                <!-- Export (IO-01..06) -->
+                <Label Text="{v:Translate Export_Title}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="{v:Translate Export_From}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <v:DateField Date="{Binding ExportFrom}" />
+                        <Label Text="{v:Translate Export_To}" Style="{StaticResource FieldLabel}" />
+                        <v:DateField Date="{Binding ExportTo}" />
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Export_IncludeNotes}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{StaticResource Primary}" />
+                        </Grid>
+                        <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Export_Warning}" TextColor="{StaticResource WarningText}" />
+                        </Border>
+                        <Label Text="{Binding ExportResult}" TextColor="{StaticResource IncomeText}" Margin="0,8,0,0"
+                               IsVisible="{Binding ExportResult, Converter={StaticResource IsNotNullConverter}}" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Export_Button}" Command="{Binding ExportCommand}"
+                                IsEnabled="{Binding IsNotBusy}" Margin="0,12,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Import (IO-07..13) -->
+                <Label Text="{v:Translate Import_Title}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Import_Intro}" Style="{StaticResource Secondary}" />
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Import_Pick}" Command="{Binding PickCommand}" IsEnabled="{Binding IsNotBusy}" />
+                        <Label Text="{Binding FileName}" FontAttributes="Bold" IsVisible="{Binding FileName, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <!-- Mapping for other files: nothing ambiguous is guessed (IO-08) -->
+                        <VerticalStackLayout Spacing="0" IsVisible="{Binding ShowMapping}">
+                            <Label Text="{v:Translate Import_Account}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" SemanticProperties.Description="{v:Translate Import_Account}" />
+                            <Label Text="{v:Translate Import_DateColumn}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding DateColumn}" SemanticProperties.Description="{v:Translate Import_DateColumn}" />
+                            <Label Text="{v:Translate Import_DateFormat}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" SemanticProperties.Description="{v:Translate Import_DateFormat}" />
+                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{StaticResource Primary}" Margin="0,8,0,0" />
+                            <Label Text="{v:Translate Import_AmountColumn}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding AmountColumn}" SemanticProperties.Description="{v:Translate Import_AmountColumn}" />
+                            <v:ChoiceChips ItemsSource="{Binding SeparatorNames}" SelectedIndex="{Binding SeparatorIndex}" AccentColor="{StaticResource Primary}" Margin="0,8,0,0" />
+                            <Label Text="{v:Translate Import_Sign}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding SignNames}" SelectedIndex="{Binding SignIndex}" AccentColor="{StaticResource Primary}" />
+                            <Label Text="{v:Translate Import_TitleColumn}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding TitleColumn}" SemanticProperties.Description="{v:Translate Import_TitleColumn}" />
+                            <Label Text="{v:Translate Import_CategoryColumn}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding CategoryColumn}" SemanticProperties.Description="{v:Translate Import_CategoryColumn}" />
+                            <Label Text="{v:Translate Import_NoteColumn}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding NoteColumn}" SemanticProperties.Description="{v:Translate Import_NoteColumn}" />
+                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Import_PreviewButton}" Command="{Binding PreviewCommand}" Margin="0,12,0,0" />
+                        </VerticalStackLayout>
+
+                        <Label Text="{Binding ImportError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ImportError, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <!-- Preview before anything is saved (IO-09) -->
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
+                            <Border BackgroundColor="{StaticResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding PreviewText}" />
+                                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding InvalidLines}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Label Text="{Binding .}" Style="{StaticResource ErrorText}" FontSize="13" />
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
+                                    IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}">
+                                <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" />
+                            </Border>
+                            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasDuplicates}">
+                                <Label Text="{v:Translate Import_SkipDuplicates}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{StaticResource Primary}" />
+                            </Grid>
+                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding ImportCommand}" IsEnabled="{Binding IsNotBusy}"
+                                    Text="{Binding ImportButtonText}" />
+                        </VerticalStackLayout>
+
+                        <Label Text="{Binding ImportResult}" TextColor="{StaticResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Past imports can be undone as a whole (IO-11) -->
+                <Label Text="{v:Translate Import_History}" Style="{StaticResource SectionHeader}" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Batches}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:BatchRow">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding Text}" VerticalOptions="Center" />
+                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}"
+                                            Command="{Binding UndoCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Primary}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

@@ -2,6 +2,7 @@ using Vafadar.Finance.App.Features.Accounts;
 using Vafadar.Finance.App.Features.Backup;
 using Vafadar.Finance.App.Features.Budget;
 using Vafadar.Finance.App.Features.Categories;
+using Vafadar.Finance.App.Features.DataFiles;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Features.Forecast;
 using Vafadar.Finance.App.Features.Plans;
@@ -61,6 +62,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the manual exchange rates.</summary>
     public const string RatesRoute = "rates";
 
+    /// <summary>Route of CSV import and export.</summary>
+    public const string ImportExportRoute = "importexport";
+
     public AppShell()
     {
         InitializeComponent();
@@ -80,5 +84,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
         Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
+        Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
     }
 }

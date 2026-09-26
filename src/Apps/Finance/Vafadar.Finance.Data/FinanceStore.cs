@@ -9,6 +9,16 @@ using Vafadar.Finance.Core.Settings;
 
 namespace Vafadar.Finance.Data;
 
+/// <summary>The result of an import.</summary>
+/// <param name="BatchId">The batch that can be undone; <see langword="null"/> when nothing was imported.</param>
+/// <param name="Imported">Entries saved.</param>
+/// <param name="Skipped">Entries skipped because they exist already.</param>
+/// <param name="Errors">Invalid entries by id; when not empty, nothing was saved.</param>
+public sealed record ImportResult(Guid? BatchId, int Imported, int Skipped, IReadOnlyDictionary<Guid, IReadOnlyList<LedgerError>> Errors);
+
+/// <summary>A past import that can be undone.</summary>
+public sealed record ImportBatchInfo(Guid BatchId, int Count, DateTimeOffset ImportedAt);
+
 /// <summary>The result of saving an entry.</summary>
 /// <param name="Errors">Validation problems; empty when saved.</param>
 public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
@@ -227,6 +237,67 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             await db.SaveChangesAsync(cancellationToken);
             OnChanged();
         }
+    }
+
+    /// <summary>
+    /// Imports entries as one batch in a single transaction (IO-11, AT-54): either all valid entries are saved or none.
+    /// Entries whose id exists already are skipped (IO-10). Invalid entries are reported and nothing is saved.
+    /// </summary>
+    public async Task<ImportResult> ImportAsync(IReadOnlyList<LedgerEntry> entries, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(entries);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
+        var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
+        var ids = entries.Select(e => e.Id).ToList();
+        var existing = (await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
+
+        var batchId = Guid.CreateVersion7();
+        var errors = new Dictionary<Guid, IReadOnlyList<LedgerError>>();
+        var toAdd = new List<LedgerEntry>();
+        foreach (var entry in entries.Where(e => !existing.Contains(e.Id)))
+        {
+            var problems = LedgerValidator.Validate(entry, accounts, categories);
+            if (problems.Count > 0)
+            {
+                errors[entry.Id] = problems;
+                continue;
+            }
+
+            entry.ImportBatchId = batchId;
+            entry.Source = EntrySource.Import;
+            toAdd.Add(entry);
+        }
+
+        if (errors.Count > 0 || toAdd.Count == 0)
+        {
+            return new ImportResult(null, 0, entries.Count - toAdd.Count - errors.Count, errors);
+        }
+
+        db.Entries.AddRange(toAdd);
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+        return new ImportResult(batchId, toAdd.Count, existing.Count, errors);
+    }
+
+    /// <summary>Returns the import batches, newest first.</summary>
+    public async Task<List<ImportBatchInfo>> GetImportBatchesAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var rows = await db.Entries.AsNoTracking().Where(e => e.ImportBatchId != null)
+            .Select(e => new { e.ImportBatchId, e.CreatedAt }).ToListAsync(cancellationToken);
+        return [.. rows.GroupBy(r => r.ImportBatchId!.Value)
+            .Select(g => new ImportBatchInfo(g.Key, g.Count(), g.Min(r => r.CreatedAt)))
+            .OrderByDescending(b => b.ImportedAt)];
+    }
+
+    /// <summary>Removes the entries of one import batch only; data that existed before is untouched (IO-11).</summary>
+    public async Task<int> UndoImportAsync(Guid batchId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var removed = await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+        return removed;
     }
 
     /// <summary>Returns all manual exchange rates, newest first.</summary>

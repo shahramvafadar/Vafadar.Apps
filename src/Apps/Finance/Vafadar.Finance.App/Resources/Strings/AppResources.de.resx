@@ -1279,4 +1279,139 @@
   <data name="Home_CombinedIncomplete" xml:space="preserve">
     <value>Gesamtsumme unvollständig – Kurs für {0} fehlt</value>
   </data>
+  <data name="ImportExport_Title" xml:space="preserve">
+    <value>Import &amp; Export</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>Buchungen exportieren (CSV)</value>
+  </data>
+  <data name="Export_From" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="Export_To" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="Export_IncludeNotes" xml:space="preserve">
+    <value>Notizen und Empfänger einbeziehen</value>
+  </data>
+  <data name="Export_Warning" xml:space="preserve">
+    <value>Die Datei enthält Finanzdaten und ist nicht verschlüsselt. Teilen Sie sie nur mit vertrauenswürdigen Personen und Diensten. Sie ist kein Backup: Planungen, Budgets und Einstellungen fehlen.</value>
+  </data>
+  <data name="Export_Button" xml:space="preserve">
+    <value>Exportieren und teilen</value>
+  </data>
+  <data name="Export_Done" xml:space="preserve">
+    <value>{0} Buchungen exportiert.</value>
+  </data>
+  <data name="Import_Title" xml:space="preserve">
+    <value>Buchungen importieren (CSV)</value>
+  </data>
+  <data name="Import_Intro" xml:space="preserve">
+    <value>Von dieser App exportierte Dateien behalten ihre IDs – doppelter Import erzeugt nichts doppelt. Bei anderen Dateien wählen Sie Spalten und Formate. Importierte Buchungen werden zur Prüfung markiert.</value>
+  </data>
+  <data name="Import_Pick" xml:space="preserve">
+    <value>CSV-Datei wählen</value>
+  </data>
+  <data name="Import_Empty" xml:space="preserve">
+    <value>Die Datei enthält keine Zeilen.</value>
+  </data>
+  <data name="Import_NoColumn" xml:space="preserve">
+    <value>– nicht in der Datei –</value>
+  </data>
+  <data name="Import_Account" xml:space="preserve">
+    <value>In Konto importieren</value>
+  </data>
+  <data name="Import_DateColumn" xml:space="preserve">
+    <value>Datumsspalte</value>
+  </data>
+  <data name="Import_DateFormat" xml:space="preserve">
+    <value>Datumsformat</value>
+  </data>
+  <data name="Import_AmountColumn" xml:space="preserve">
+    <value>Betragsspalte</value>
+  </data>
+  <data name="Import_DecimalPoint" xml:space="preserve">
+    <value>Dezimalpunkt 1,234.56</value>
+  </data>
+  <data name="Import_DecimalComma" xml:space="preserve">
+    <value>Dezimalkomma 1.234,56</value>
+  </data>
+  <data name="Import_Sign" xml:space="preserve">
+    <value>Richtung</value>
+  </data>
+  <data name="Import_SignNegativeExpense" xml:space="preserve">
+    <value>Negativ = Ausgabe</value>
+  </data>
+  <data name="Import_SignAllExpenses" xml:space="preserve">
+    <value>Alles Ausgaben</value>
+  </data>
+  <data name="Import_SignAllIncome" xml:space="preserve">
+    <value>Alles Einnahmen</value>
+  </data>
+  <data name="Import_TitleColumn" xml:space="preserve">
+    <value>Titelspalte (optional)</value>
+  </data>
+  <data name="Import_CategoryColumn" xml:space="preserve">
+    <value>Kategoriespalte (optional)</value>
+  </data>
+  <data name="Import_NoteColumn" xml:space="preserve">
+    <value>Notizspalte (optional)</value>
+  </data>
+  <data name="Import_PreviewButton" xml:space="preserve">
+    <value>Vorschau anzeigen</value>
+  </data>
+  <data name="Import_MappingIncomplete" xml:space="preserve">
+    <value>Wählen Sie Konto, Datums- und Betragsspalte sowie das Datumsformat.</value>
+  </data>
+  <data name="Import_Preview" xml:space="preserve">
+    <value>{0} neu · {1} bereits importiert (übersprungen) · {2} nicht lesbar</value>
+  </data>
+  <data name="Import_InvalidLine" xml:space="preserve">
+    <value>Zeile {0}: {1}</value>
+  </data>
+  <data name="Import_Error_Id" xml:space="preserve">
+    <value>ID fehlt</value>
+  </data>
+  <data name="Import_Error_Date" xml:space="preserve">
+    <value>Datum in diesem Format nicht lesbar</value>
+  </data>
+  <data name="Import_Error_Kind" xml:space="preserve">
+    <value>unbekannte Art</value>
+  </data>
+  <data name="Import_Error_Account" xml:space="preserve">
+    <value>Konto nicht gefunden</value>
+  </data>
+  <data name="Import_Error_Amount" xml:space="preserve">
+    <value>Betrag nicht lesbar oder mehrdeutig</value>
+  </data>
+  <data name="Import_Duplicates" xml:space="preserve">
+    <value>{0} Zeilen haben dasselbe Datum und denselben Betrag wie vorhandene Buchungen. Es können trotzdem echte, getrennte Käufe sein.</value>
+  </data>
+  <data name="Import_BeforeOpening" xml:space="preserve">
+    <value>{0} Zeilen liegen vor dem Eröffnungsdatum des Kontos und ändern den Saldo nicht. Verschieben Sie das Eröffnungsdatum, wenn sie zählen sollen.</value>
+  </data>
+  <data name="Import_SkipDuplicates" xml:space="preserve">
+    <value>Mögliche Duplikate auslassen</value>
+  </data>
+  <data name="Import_Button" xml:space="preserve">
+    <value>{0} Buchungen importieren</value>
+  </data>
+  <data name="Import_Rejected" xml:space="preserve">
+    <value>Nichts importiert: {0} Zeilen sind ungültig ({1}).</value>
+  </data>
+  <data name="Import_Done" xml:space="preserve">
+    <value>{0} Buchungen importiert, {1} übersprungen. Prüfen Sie sie unter Buchungen.</value>
+  </data>
+  <data name="Import_History" xml:space="preserve">
+    <value>Frühere Importe</value>
+  </data>
+  <data name="Import_Batch" xml:space="preserve">
+    <value>{0} · {1} Buchungen</value>
+  </data>
+  <data name="Import_Undo" xml:space="preserve">
+    <value>Import rückgängig</value>
+  </data>
+  <data name="Import_UndoMessage" xml:space="preserve">
+    <value>Buchungen dieses Imports entfernen? Vorher vorhandene Buchungen bleiben unberührt.</value>
+  </data>
 </root>

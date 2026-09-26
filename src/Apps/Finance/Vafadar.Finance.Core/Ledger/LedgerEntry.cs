@@ -63,6 +63,17 @@ public enum AdjustmentDirection
 /// </summary>
 public sealed class LedgerEntry : Entity, IAuditableEntity
 {
+    /// <summary>Creates an entry with a new id.</summary>
+    public LedgerEntry()
+    {
+    }
+
+    /// <summary>Creates an entry with an existing id, e.g. when importing the app's own export (IO-10).</summary>
+    public LedgerEntry(Guid id)
+        : base(id)
+    {
+    }
+
     /// <summary>Gets or sets the kind.</summary>
     public EntryKind Kind { get; set; }
 

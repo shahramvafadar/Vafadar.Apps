@@ -56,11 +56,11 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
-| AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Planned |
-| AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Planned |
-| AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Planned |
-| AT-54 | Import failure / cancel | IO-11 | Integration | S12 | Planned |
-| AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit | S12 | Planned |
+| AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Verified (unit) |
+| AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Verified (unit) |
+| AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Verified (unit) |
+| AT-54 | Import failure / cancel | IO-11 | Integration | S12 | Verified (integration, SQLite) |
+| AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit | S12 | Verified (unit) |
 | AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
 | AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified (integration: fresh install, balances, plans, states) |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |

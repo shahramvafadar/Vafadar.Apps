@@ -216,6 +216,30 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    [Trait("AT", "AT-54")]
+    public async Task Import_is_all_or_nothing_skips_known_ids_and_can_be_undone()
+    {
+        var account = await NewAccountAsync();
+        var before = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 100, Date = new DateOnly(2026, 10, 2) };
+        await _store.SaveEntryAsync(before, Ct);
+        var first = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 200, Date = new DateOnly(2026, 10, 3) };
+        var invalid = new LedgerEntry { Kind = EntryKind.Expense, AccountId = Guid.CreateVersion7(), Amount = 300, Date = new DateOnly(2026, 10, 3) };
+
+        var rejected = await _store.ImportAsync([first, invalid], Ct);
+        Assert.Null(rejected.BatchId);
+        Assert.Single(rejected.Errors);
+        Assert.Single(await _store.GetEntriesAsync(cancellationToken: Ct));
+
+        var imported = await _store.ImportAsync([first, new LedgerEntry(before.Id) { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 100, Date = new DateOnly(2026, 10, 2) }], Ct);
+        Assert.Equal(1, imported.Imported);
+        Assert.Equal(1, imported.Skipped);
+        Assert.Single(await _store.GetImportBatchesAsync(Ct));
+
+        Assert.Equal(1, await _store.UndoImportAsync(imported.BatchId!.Value, Ct));
+        Assert.Equal(before.Id, (await _store.GetEntriesAsync(cancellationToken: Ct)).Single().Id);
+    }
+
+    [Fact]
     public async Task Settings_are_created_on_first_use_and_persist()
     {
         var settings = await _store.GetSettingsAsync(Ct);

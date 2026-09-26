@@ -95,6 +95,7 @@ internal static class DebugSnapshots
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
+            ("importexport", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
             ("report-trend", AppShell.ReportsRoute, new() { ["report"] = 2 }),
