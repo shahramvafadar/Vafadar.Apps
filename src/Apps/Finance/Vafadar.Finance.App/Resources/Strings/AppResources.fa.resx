@@ -1711,4 +1711,160 @@
   <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
     <value>فردا</value>
   </data>
+  <data name="Goals_Title" xml:space="preserve">
+    <value>اهداف پس‌انداز</value>
+  </data>
+  <data name="Goals_Add" xml:space="preserve">
+    <value>افزودن هدف</value>
+  </data>
+  <data name="Goals_EmptyTitle" xml:space="preserve">
+    <value>برای چیزهای مهم پس‌انداز کنید</value>
+  </data>
+  <data name="Goals_Intro" xml:space="preserve">
+    <value>صندوق اضطراری، سفر یا بیمهٔ سال بعد: هدف را تعیین کنید، در حساب‌هایتان پول کنار بگذارید و ببینید هر ماه چقدر باید پس‌انداز کنید.</value>
+  </data>
+  <data name="Goals_Note" xml:space="preserve">
+    <value>کنار گذاشتن پول فقط آن را نشانه‌گذاری می‌کند؛ پولی جابه‌جا نمی‌شود و هزینه هم حساب نمی‌شود. برای جابه‌جایی پول انتقال و هنگام خرج کردن هزینه ثبت کنید.</value>
+  </data>
+  <data name="Goals_Finished" xml:space="preserve">
+    <value>تکمیل‌شده و بایگانی‌شده</value>
+  </data>
+  <data name="Goals_Earmarked" xml:space="preserve">
+    <value>کنار گذاشته: {0} · اختصاص‌نیافته: {1}</value>
+  </data>
+  <data name="Goals_Shortfall" xml:space="preserve">
+    <value>بیش از موجودی‌ها: {0}</value>
+  </data>
+  <data name="Goal_Funded" xml:space="preserve">
+    <value>پوشش‌داده: {0} از {1}</value>
+  </data>
+  <data name="Goal_By" xml:space="preserve">
+    <value>موعد: {0}</value>
+  </data>
+  <data name="Goal_Reached" xml:space="preserve">
+    <value>به هدف رسیدید</value>
+  </data>
+  <data name="Goal_SuggestMonthly" xml:space="preserve">
+    <value>ماهانه {0} کنار بگذارید ({1} نوبت مانده)</value>
+  </data>
+  <data name="Goal_SuggestWeekly" xml:space="preserve">
+    <value>هفتگی {0} کنار بگذارید ({1} نوبت مانده)</value>
+  </data>
+  <data name="Goal_SuggestNow" xml:space="preserve">
+    <value>هنوز {0} لازم است</value>
+  </data>
+  <data name="Goal_Unfunded" xml:space="preserve">
+    <value>بدون پشتوانه: {0} کنار گذاشته شده ولی موجودی حساب آن را پوشش نمی‌دهد.</value>
+  </data>
+  <data name="Goal_Overdue" xml:space="preserve">
+    <value>موعد هدف گذشته است.</value>
+  </data>
+  <data name="GoalState_Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="GoalState_Completed" xml:space="preserve">
+    <value>تکمیل‌شده</value>
+  </data>
+  <data name="GoalState_Archived" xml:space="preserve">
+    <value>بایگانی‌شده</value>
+  </data>
+  <data name="Goal_NewTitle" xml:space="preserve">
+    <value>هدف جدید</value>
+  </data>
+  <data name="Goal_EditTitle" xml:space="preserve">
+    <value>ویرایش هدف</value>
+  </data>
+  <data name="Goal_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Goal_NamePlaceholder" xml:space="preserve">
+    <value>مثلاً صندوق اضطراری</value>
+  </data>
+  <data name="Goal_NameRequired" xml:space="preserve">
+    <value>لطفاً یک نام وارد کنید.</value>
+  </data>
+  <data name="Goal_Target" xml:space="preserve">
+    <value>مبلغ هدف</value>
+  </data>
+  <data name="Goal_HasDate" xml:space="preserve">
+    <value>تا تاریخ مشخصی لازم است</value>
+  </data>
+  <data name="Goal_Frequency" xml:space="preserve">
+    <value>پول کنار می‌گذارم</value>
+  </data>
+  <data name="Goal_Monthly" xml:space="preserve">
+    <value>ماهانه</value>
+  </data>
+  <data name="Goal_Weekly" xml:space="preserve">
+    <value>هفتگی</value>
+  </data>
+  <data name="Goal_Priority" xml:space="preserve">
+    <value>اولویت</value>
+  </data>
+  <data name="GoalPriority_High" xml:space="preserve">
+    <value>بالا</value>
+  </data>
+  <data name="GoalPriority_Normal" xml:space="preserve">
+    <value>عادی</value>
+  </data>
+  <data name="GoalPriority_Low" xml:space="preserve">
+    <value>پایین</value>
+  </data>
+  <data name="Goal_PriorityHint" xml:space="preserve">
+    <value>اگر موجودی حساب از مبلغ کنار گذاشته کمتر شود، اول اهداف با اولویت پایین‌تر پشتوانه‌شان را از دست می‌دهند.</value>
+  </data>
+  <data name="Goal_Details" xml:space="preserve">
+    <value>هدف</value>
+  </data>
+  <data name="Goal_NotFound" xml:space="preserve">
+    <value>این هدف دیگر وجود ندارد.</value>
+  </data>
+  <data name="Goal_InAccount" xml:space="preserve">
+    <value>در {1}: {0}</value>
+  </data>
+  <data name="Goal_SetAside" xml:space="preserve">
+    <value>کنار گذاشتن</value>
+  </data>
+  <data name="Goal_Release" xml:space="preserve">
+    <value>آزاد کردن</value>
+  </data>
+  <data name="Goal_SetAsideIn" xml:space="preserve">
+    <value>کنار گذاشته در {0}</value>
+  </data>
+  <data name="Goal_ReleasedFrom" xml:space="preserve">
+    <value>آزادشده از {0}</value>
+  </data>
+  <data name="Goal_Free" xml:space="preserve">
+    <value>اختصاص‌نیافته به اهداف: {0}</value>
+  </data>
+  <data name="Goal_NoAccounts" xml:space="preserve">
+    <value>حساب فعالی با ارز {0} ندارید. برای کنار گذاشتن پول یک حساب اضافه کنید.</value>
+  </data>
+  <data name="Goal_SetAsideHint" xml:space="preserve">
+    <value>این فقط پول را در حساب نشانه‌گذاری می‌کند. برای انتقال پول به حساب پس‌انداز یک انتقال ثبت کنید.</value>
+  </data>
+  <data name="Goal_History" xml:space="preserve">
+    <value>سابقه</value>
+  </data>
+  <data name="Goal_NoHistory" xml:space="preserve">
+    <value>هنوز چیزی کنار گذاشته نشده.</value>
+  </data>
+  <data name="Goal_DeleteAllocation" xml:space="preserve">
+    <value>این مورد حذف شود؟</value>
+  </data>
+  <data name="Goal_Complete" xml:space="preserve">
+    <value>علامت تکمیل</value>
+  </data>
+  <data name="Goal_Reactivate" xml:space="preserve">
+    <value>فعال کردن دوباره</value>
+  </data>
+  <data name="Goal_Archive" xml:space="preserve">
+    <value>بایگانی</value>
+  </data>
+  <data name="Goal_Delete" xml:space="preserve">
+    <value>حذف هدف</value>
+  </data>
+  <data name="Goal_DeleteMessage" xml:space="preserve">
+    <value>هدف و مبالغ کنار گذاشته برای آن حذف می‌شوند. حساب‌ها و تراکنش‌ها تغییری نمی‌کنند.</value>
+  </data>
 </root>

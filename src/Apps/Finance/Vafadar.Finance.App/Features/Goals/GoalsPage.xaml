@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Goals.GoalsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Goals"
+    x:DataType="local:GoalsViewModel"
+    Title="{v:Translate Goals_Title}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="16,16,16,96" Spacing="8">
+                <!-- Empty state: what a goal is and what it is not (BUD-11) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
+                    <VerticalStackLayout Spacing="8">
+                        <fi:SymbolIcon Symbol="Savings" FontSize="40" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                        <Label Text="{v:Translate Goals_EmptyTitle}" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        <Label Text="{v:Translate Goals_Intro}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Goals_Add}" Command="{Binding AddCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Earmarks}" Spacing="2">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:EarmarkLine">
+                            <Label Text="{Binding Text}" Style="{StaticResource Secondary}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Active}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:GoalRow">
+                                <Border Style="{StaticResource Card}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{StaticResource Primary}" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                            <Label Text="{Binding FundedText}" />
+                                            <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                                            <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding SuggestionText}" TextColor="{StaticResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="{v:Translate Goals_Finished}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasFinished}" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Finished}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:GoalRow">
+                                <Border Style="{StaticResource Card}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{StaticResource Primary}" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                            <Label Text="{Binding FundedText}" />
+                                            <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                                            <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding SuggestionText}" TextColor="{StaticResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="{v:Translate Goals_Note}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,8,0,0"
+                       IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}" SemanticProperties.Description="{v:Translate Goals_Add}"
+                IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
+    </Grid>
+</ContentPage>

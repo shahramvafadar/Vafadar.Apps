@@ -1,13 +1,13 @@
 # 05 – Phase 2 backlog
 
-Nothing here is built in phase 1, not even behind a disabled flag (HAND-05). The phase-1 model keeps each item
+Nothing here was built in phase 1, not even behind a disabled flag (HAND-05). Phase 2A started on 2026-09-26; finished items are marked below. The phase-1 model keeps each item
 possible (SC-01).
 
 ## Phase 2A – local, in suggested order
 
 | Item | Requirements | Model hook already present |
 |---|---|---|
-| Savings goals, sinking funds, rollover, envelope/flex budgets | F2-GOAL-01..05, BUD-11/12, §10.3 | Budgets are per period with explicit currency |
+| Savings goals, sinking funds, rollover, envelope/flex budgets | F2-GOAL-01..05, BUD-11/12, §10.3 | **P2-1 done:** goals, earmarks per account, coverage and shortfall by priority, suggested contribution (Goals page in More). Rollover and envelope/flex budgets still open |
 | Split transactions, partial payments of an occurrence | F2-TX-01/02 | Entries have ids; occurrence ↔ entry link can become 1:n |
 | Reimbursable expenses, tags, attachments, bulk operations, rules | F2-TX-03/04 | Payee and note already separate |
 | Contracts, price changes, cancellation deadlines, business-day rules | F2-CON-01..05 | Series split (D-08) keeps history |

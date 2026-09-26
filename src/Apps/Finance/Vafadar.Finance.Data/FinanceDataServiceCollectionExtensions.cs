@@ -17,6 +17,7 @@ public static class FinanceDataServiceCollectionExtensions
         services.AddLocalDatabase<FinanceDbContext>(databasePath)
             .AddSingleton<FinanceStore>()
             .AddSingleton<PlanStore>()
+            .AddSingleton<GoalStore>()
             .AddSingleton<AutoPostProcessor>()
             .AddSingleton<IBackupSummaryProvider, FinanceBackupSummary>();
 }

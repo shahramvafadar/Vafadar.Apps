@@ -1229,8 +1229,9 @@ This section records what the repository actually contains. It is evidence-based
 | Phase 1A (ledger, accounts, entries, categories, plans, Home, local backup) | Implemented – verified. |
 | Phase 1B (budget, reports, forecast, reminders, multi-currency, CSV import/export, Simple/Advanced, app lock, hardening) | Implemented – verified, except cloud backup. |
 | Cloud backup to Google Drive / OneDrive (BAK-13, BAK-14, AT-59) | Blocked: needs OAuth client ids and a real sign-in test. The destination is hidden; encrypted backup files are shared to any destination with the system share sheet instead. |
-| Phase 2 | Not started, as intended. |
-| Automated tests | 291 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
+| Phase 2A | Started after Phase 1: savings goals with earmarked funding, coverage by account balances, priority-based shortfalls and suggested contributions (F2-GOAL-01..05, BUD-11/12, AT-65) – implemented, verified by unit and data tests. Rollover and envelope budgets are not yet built. |
+| Phase 2B | Not started; each online service needs its own decision (Section 27.5). |
+| Automated tests | 302 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
 
 ### 31.2. Status by Requirement Area
 

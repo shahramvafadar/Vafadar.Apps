@@ -464,6 +464,8 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
         await db.Templates.ExecuteDeleteAsync(cancellationToken);
+        await db.GoalAllocations.ExecuteDeleteAsync(cancellationToken);
+        await db.Goals.ExecuteDeleteAsync(cancellationToken);
         await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.ExecuteDeleteAsync(cancellationToken);
         db.Budgets.RemoveRange(await db.Budgets.ToListAsync(cancellationToken));

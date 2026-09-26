@@ -71,6 +71,15 @@ public partial class AppShell : Shell
     /// <summary>Route of the quick templates (TX-04).</summary>
     public const string TemplatesRoute = "templates";
 
+    /// <summary>Route of the savings goals (F2-GOAL).</summary>
+    public const string GoalsRoute = "goals";
+
+    /// <summary>Route of the goal editor.</summary>
+    public const string GoalEditorRoute = "goal";
+
+    /// <summary>Route of one goal.</summary>
+    public const string GoalDetailRoute = "goaldetail";
+
     public AppShell()
     {
         InitializeComponent();
@@ -93,5 +102,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
+        Routing.RegisterRoute(GoalsRoute, typeof(Features.Goals.GoalsPage));
+        Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));
+        Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
     }
 }

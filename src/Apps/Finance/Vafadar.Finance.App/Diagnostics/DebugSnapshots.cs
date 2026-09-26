@@ -74,6 +74,7 @@ internal static class DebugSnapshots
         var (expenseId, foodId) = await SeedAsync(services);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
+        var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;
         var accountId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
@@ -98,6 +99,9 @@ internal static class DebugSnapshots
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
             ("templates", AppShell.TemplatesRoute, null),
+            ("goals", AppShell.GoalsRoute, null),
+            ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),
+            ("goal-edit", AppShell.GoalEditorRoute, new() { ["id"] = goalId }),
             ("importexport", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
@@ -143,7 +147,7 @@ internal static class DebugSnapshots
         var categories = await store.GetCategoriesAsync();
         Guid Category(string key) => categories.First(c => c.SystemKey == key).Id;
         var checking = (await store.GetAccountsAsync()).First();
-        var savings = new Account { Name = "Savings", Type = AccountType.Savings, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate };
+        var savings = new Account { Name = "Savings", Type = AccountType.Savings, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate.AddDays(-7), OpeningBalance = 300_00 };
         await store.SaveAccountAsync(savings);
 
         var today = DateOnly.FromDateTime(DateTime.Today);
@@ -155,6 +159,13 @@ internal static class DebugSnapshots
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
+        var goalStore = services.GetRequiredService<GoalStore>();
+        var travel = new Core.Goals.Goal { Name = "Travel", TargetAmount = 1_200_00, CurrencyCode = checking.CurrencyCode, TargetDate = today.AddMonths(5), Icon = "Airplane" };
+        var insurance = new Core.Goals.Goal { Name = "Car insurance", TargetAmount = 720_00, CurrencyCode = checking.CurrencyCode, TargetDate = today.AddMonths(2), Priority = Core.Goals.GoalPriority.High, Icon = "VehicleCar" };
+        await goalStore.SaveGoalAsync(travel);
+        await goalStore.SaveGoalAsync(insurance);
+        await goalStore.AddAllocationAsync(new Core.Goals.GoalAllocation { GoalId = insurance.Id, AccountId = savings.Id, Amount = 180_00, Date = today });
+        await goalStore.AddAllocationAsync(new Core.Goals.GoalAllocation { GoalId = travel.Id, AccountId = savings.Id, Amount = 300_00, Date = today });
         await store.SaveTemplateAsync(new EntryTemplate { Name = "Coffee", Kind = EntryKind.Expense, AccountId = checking.Id, CategoryId = Category("Food"), Amount = 350 });
         return (groceries.Id, Category("Food"));
     }

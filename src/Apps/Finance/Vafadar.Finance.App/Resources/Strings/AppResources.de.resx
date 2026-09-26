@@ -1711,4 +1711,160 @@
   <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
     <value>Morgen</value>
   </data>
+  <data name="Goals_Title" xml:space="preserve">
+    <value>Sparziele</value>
+  </data>
+  <data name="Goals_Add" xml:space="preserve">
+    <value>Ziel hinzufügen</value>
+  </data>
+  <data name="Goals_EmptyTitle" xml:space="preserve">
+    <value>Für das sparen, was zählt</value>
+  </data>
+  <data name="Goals_Intro" xml:space="preserve">
+    <value>Notgroschen, Reise oder die Versicherung im nächsten Jahr: Legen Sie ein Ziel fest, reservieren Sie Geld auf Ihren Konten und sehen Sie, wie viel Sie monatlich sparen sollten.</value>
+  </data>
+  <data name="Goals_Note" xml:space="preserve">
+    <value>Reservieren markiert Geld nur; es bewegt kein Geld und zählt nicht als Ausgabe. Buchen Sie eine Überweisung, um Geld zu bewegen, und eine Ausgabe, wenn Sie es ausgeben.</value>
+  </data>
+  <data name="Goals_Finished" xml:space="preserve">
+    <value>Erreicht und archiviert</value>
+  </data>
+  <data name="Goals_Earmarked" xml:space="preserve">
+    <value>Reserviert {0} · nicht zugeordnet {1}</value>
+  </data>
+  <data name="Goals_Shortfall" xml:space="preserve">
+    <value>{0} mehr als die Salden</value>
+  </data>
+  <data name="Goal_Funded" xml:space="preserve">
+    <value>{0} von {1}</value>
+  </data>
+  <data name="Goal_By" xml:space="preserve">
+    <value>Benötigt bis {0}</value>
+  </data>
+  <data name="Goal_Reached" xml:space="preserve">
+    <value>Ziel erreicht</value>
+  </data>
+  <data name="Goal_SuggestMonthly" xml:space="preserve">
+    <value>Monatlich {0} zurücklegen (noch {1}-mal)</value>
+  </data>
+  <data name="Goal_SuggestWeekly" xml:space="preserve">
+    <value>Wöchentlich {0} zurücklegen (noch {1}-mal)</value>
+  </data>
+  <data name="Goal_SuggestNow" xml:space="preserve">
+    <value>Jetzt noch {0} nötig</value>
+  </data>
+  <data name="Goal_Unfunded" xml:space="preserve">
+    <value>Nicht gedeckt: {0} ist reserviert, aber nicht durch den Kontostand gedeckt.</value>
+  </data>
+  <data name="Goal_Overdue" xml:space="preserve">
+    <value>Das Zieldatum ist vorbei.</value>
+  </data>
+  <data name="GoalState_Active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="GoalState_Completed" xml:space="preserve">
+    <value>Erreicht</value>
+  </data>
+  <data name="GoalState_Archived" xml:space="preserve">
+    <value>Archiviert</value>
+  </data>
+  <data name="Goal_NewTitle" xml:space="preserve">
+    <value>Neues Ziel</value>
+  </data>
+  <data name="Goal_EditTitle" xml:space="preserve">
+    <value>Ziel bearbeiten</value>
+  </data>
+  <data name="Goal_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Goal_NamePlaceholder" xml:space="preserve">
+    <value>z. B. Notgroschen</value>
+  </data>
+  <data name="Goal_NameRequired" xml:space="preserve">
+    <value>Bitte einen Namen eingeben.</value>
+  </data>
+  <data name="Goal_Target" xml:space="preserve">
+    <value>Zielbetrag</value>
+  </data>
+  <data name="Goal_HasDate" xml:space="preserve">
+    <value>Bis zu einem Datum benötigt</value>
+  </data>
+  <data name="Goal_Frequency" xml:space="preserve">
+    <value>Ich lege Geld zurück</value>
+  </data>
+  <data name="Goal_Monthly" xml:space="preserve">
+    <value>Monatlich</value>
+  </data>
+  <data name="Goal_Weekly" xml:space="preserve">
+    <value>Wöchentlich</value>
+  </data>
+  <data name="Goal_Priority" xml:space="preserve">
+    <value>Priorität</value>
+  </data>
+  <data name="GoalPriority_High" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="GoalPriority_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="GoalPriority_Low" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="Goal_PriorityHint" xml:space="preserve">
+    <value>Enthält ein Konto weniger als reserviert, verlieren Ziele mit niedrigerer Priorität zuerst ihre Deckung.</value>
+  </data>
+  <data name="Goal_Details" xml:space="preserve">
+    <value>Ziel</value>
+  </data>
+  <data name="Goal_NotFound" xml:space="preserve">
+    <value>Dieses Ziel gibt es nicht mehr.</value>
+  </data>
+  <data name="Goal_InAccount" xml:space="preserve">
+    <value>{0} auf {1}</value>
+  </data>
+  <data name="Goal_SetAside" xml:space="preserve">
+    <value>Zurücklegen</value>
+  </data>
+  <data name="Goal_Release" xml:space="preserve">
+    <value>Freigeben</value>
+  </data>
+  <data name="Goal_SetAsideIn" xml:space="preserve">
+    <value>Zurückgelegt auf {0}</value>
+  </data>
+  <data name="Goal_ReleasedFrom" xml:space="preserve">
+    <value>Freigegeben von {0}</value>
+  </data>
+  <data name="Goal_Free" xml:space="preserve">
+    <value>Keinem Ziel zugeordnet: {0}</value>
+  </data>
+  <data name="Goal_NoAccounts" xml:space="preserve">
+    <value>Kein aktives Konto in {0}. Legen Sie eines an, um Geld zurückzulegen.</value>
+  </data>
+  <data name="Goal_SetAsideHint" xml:space="preserve">
+    <value>Das markiert nur Geld auf dem Konto. Um Geld auf ein Sparkonto zu bewegen, buchen Sie eine Überweisung.</value>
+  </data>
+  <data name="Goal_History" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="Goal_NoHistory" xml:space="preserve">
+    <value>Noch nichts zurückgelegt.</value>
+  </data>
+  <data name="Goal_DeleteAllocation" xml:space="preserve">
+    <value>Diesen Eintrag entfernen?</value>
+  </data>
+  <data name="Goal_Complete" xml:space="preserve">
+    <value>Als erreicht markieren</value>
+  </data>
+  <data name="Goal_Reactivate" xml:space="preserve">
+    <value>Wieder aktivieren</value>
+  </data>
+  <data name="Goal_Archive" xml:space="preserve">
+    <value>Archivieren</value>
+  </data>
+  <data name="Goal_Delete" xml:space="preserve">
+    <value>Ziel löschen</value>
+  </data>
+  <data name="Goal_DeleteMessage" xml:space="preserve">
+    <value>Das Ziel und die Reservierungen dafür werden entfernt. Konten und Buchungen bleiben unverändert.</value>
+  </data>
 </root>

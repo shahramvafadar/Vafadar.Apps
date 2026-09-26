@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
+using Vafadar.Finance.Core.Goals;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Core.Rates;
@@ -134,6 +135,27 @@ internal sealed class EntryTemplateConfiguration : IEntityTypeConfiguration<Entr
         builder.Property(t => t.Payee).HasMaxLength(200);
         builder.Property(t => t.Icon).HasMaxLength(64);
         builder.HasIndex(t => t.SortOrder);
+    }
+}
+
+internal sealed class GoalConfiguration : IEntityTypeConfiguration<Goal>
+{
+    public void Configure(EntityTypeBuilder<Goal> builder)
+    {
+        builder.Property(g => g.Name).HasMaxLength(100);
+        builder.Property(g => g.CurrencyCode).HasMaxLength(3);
+        builder.Property(g => g.Icon).HasMaxLength(64);
+        builder.Property(g => g.Note).HasMaxLength(1000);
+    }
+}
+
+internal sealed class GoalAllocationConfiguration : IEntityTypeConfiguration<GoalAllocation>
+{
+    public void Configure(EntityTypeBuilder<GoalAllocation> builder)
+    {
+        builder.Property(a => a.Note).HasMaxLength(200);
+        builder.HasIndex(a => a.GoalId);
+        builder.HasIndex(a => a.AccountId);
     }
 }
 

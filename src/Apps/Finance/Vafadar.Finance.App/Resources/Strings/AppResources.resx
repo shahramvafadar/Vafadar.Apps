@@ -1715,4 +1715,160 @@
   <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
     <value>Tomorrow</value>
   </data>
+  <data name="Goals_Title" xml:space="preserve">
+    <value>Savings goals</value>
+  </data>
+  <data name="Goals_Add" xml:space="preserve">
+    <value>Add goal</value>
+  </data>
+  <data name="Goals_EmptyTitle" xml:space="preserve">
+    <value>Save for what matters</value>
+  </data>
+  <data name="Goals_Intro" xml:space="preserve">
+    <value>An emergency fund, a trip or next year's insurance: set a target, set money aside in your accounts and see how much to save each month.</value>
+  </data>
+  <data name="Goals_Note" xml:space="preserve">
+    <value>Setting money aside only earmarks it; it does not move money or count as spending. Record a transfer to move money and an expense when you spend it.</value>
+  </data>
+  <data name="Goals_Finished" xml:space="preserve">
+    <value>Completed and archived</value>
+  </data>
+  <data name="Goals_Earmarked" xml:space="preserve">
+    <value>Set aside {0} · not assigned {1}</value>
+  </data>
+  <data name="Goals_Shortfall" xml:space="preserve">
+    <value>{0} more than the balances</value>
+  </data>
+  <data name="Goal_Funded" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="Goal_By" xml:space="preserve">
+    <value>Needed by {0}</value>
+  </data>
+  <data name="Goal_Reached" xml:space="preserve">
+    <value>Target reached</value>
+  </data>
+  <data name="Goal_SuggestMonthly" xml:space="preserve">
+    <value>Set aside {0} per month ({1} times left)</value>
+  </data>
+  <data name="Goal_SuggestWeekly" xml:space="preserve">
+    <value>Set aside {0} per week ({1} times left)</value>
+  </data>
+  <data name="Goal_SuggestNow" xml:space="preserve">
+    <value>{0} still needed now</value>
+  </data>
+  <data name="Goal_Unfunded" xml:space="preserve">
+    <value>Unfunded: {0} is set aside but not covered by the account balance.</value>
+  </data>
+  <data name="Goal_Overdue" xml:space="preserve">
+    <value>The target date has passed.</value>
+  </data>
+  <data name="GoalState_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="GoalState_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="GoalState_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="Goal_NewTitle" xml:space="preserve">
+    <value>New goal</value>
+  </data>
+  <data name="Goal_EditTitle" xml:space="preserve">
+    <value>Edit goal</value>
+  </data>
+  <data name="Goal_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Goal_NamePlaceholder" xml:space="preserve">
+    <value>e.g. Emergency fund</value>
+  </data>
+  <data name="Goal_NameRequired" xml:space="preserve">
+    <value>Please enter a name.</value>
+  </data>
+  <data name="Goal_Target" xml:space="preserve">
+    <value>Target amount</value>
+  </data>
+  <data name="Goal_HasDate" xml:space="preserve">
+    <value>Needed by a date</value>
+  </data>
+  <data name="Goal_Frequency" xml:space="preserve">
+    <value>I set money aside</value>
+  </data>
+  <data name="Goal_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Goal_Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Goal_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="GoalPriority_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="GoalPriority_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="GoalPriority_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Goal_PriorityHint" xml:space="preserve">
+    <value>If an account holds less than is set aside, lower-priority goals lose their funding first.</value>
+  </data>
+  <data name="Goal_Details" xml:space="preserve">
+    <value>Goal</value>
+  </data>
+  <data name="Goal_NotFound" xml:space="preserve">
+    <value>This goal no longer exists.</value>
+  </data>
+  <data name="Goal_InAccount" xml:space="preserve">
+    <value>{0} in {1}</value>
+  </data>
+  <data name="Goal_SetAside" xml:space="preserve">
+    <value>Set aside</value>
+  </data>
+  <data name="Goal_Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="Goal_SetAsideIn" xml:space="preserve">
+    <value>Set aside in {0}</value>
+  </data>
+  <data name="Goal_ReleasedFrom" xml:space="preserve">
+    <value>Released from {0}</value>
+  </data>
+  <data name="Goal_Free" xml:space="preserve">
+    <value>Not assigned to goals: {0}</value>
+  </data>
+  <data name="Goal_NoAccounts" xml:space="preserve">
+    <value>No active account in {0}. Add one to set money aside.</value>
+  </data>
+  <data name="Goal_SetAsideHint" xml:space="preserve">
+    <value>This only earmarks money in the account. To move money to a savings account, record a transfer.</value>
+  </data>
+  <data name="Goal_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Goal_NoHistory" xml:space="preserve">
+    <value>Nothing set aside yet.</value>
+  </data>
+  <data name="Goal_DeleteAllocation" xml:space="preserve">
+    <value>Remove this entry?</value>
+  </data>
+  <data name="Goal_Complete" xml:space="preserve">
+    <value>Mark as completed</value>
+  </data>
+  <data name="Goal_Reactivate" xml:space="preserve">
+    <value>Make active again</value>
+  </data>
+  <data name="Goal_Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="Goal_Delete" xml:space="preserve">
+    <value>Delete goal</value>
+  </data>
+  <data name="Goal_DeleteMessage" xml:space="preserve">
+    <value>The goal and what was set aside for it are removed. Accounts and entries stay unchanged.</value>
+  </data>
 </root>

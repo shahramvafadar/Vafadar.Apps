@@ -297,6 +297,25 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Goals_and_allocations_are_stored_without_touching_balances_and_are_deleted_with_all_data()
+    {
+        var goals = _services.GetRequiredService<GoalStore>();
+        var account = await NewAccountAsync();
+        var goal = new Vafadar.Finance.Core.Goals.Goal { Name = "Travel", TargetAmount = 1_000_00, CurrencyCode = account.CurrencyCode };
+        await goals.SaveGoalAsync(goal, Ct);
+        await goals.AddAllocationAsync(new Vafadar.Finance.Core.Goals.GoalAllocation { GoalId = goal.Id, AccountId = account.Id, Amount = 300_00, Date = new DateOnly(2026, 10, 1) }, Ct);
+        await goals.AddAllocationAsync(new Vafadar.Finance.Core.Goals.GoalAllocation { GoalId = goal.Id, AccountId = account.Id, Amount = -50_00, Date = new DateOnly(2026, 10, 2) }, Ct);
+
+        Assert.Equal(250_00, (await goals.GetAllocationsAsync(goal.Id, Ct)).Sum(a => a.Amount));
+        Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
+        await Assert.ThrowsAsync<ArgumentException>(() => goals.AddAllocationAsync(new Vafadar.Finance.Core.Goals.GoalAllocation { GoalId = goal.Id, AccountId = account.Id, Amount = 0 }, Ct));
+
+        await _store.DeleteAllDataAsync(Ct);
+        Assert.Empty(await goals.GetGoalsAsync(Ct));
+        Assert.Empty(await goals.GetAllocationsAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
     public async Task Deleting_all_data_leaves_an_empty_database()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

@@ -3,6 +3,7 @@ using Vafadar.Data;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
+using Vafadar.Finance.Core.Goals;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Plans;
 using Vafadar.Finance.Core.Rates;
@@ -46,6 +47,12 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
 
     /// <summary>Gets the quick entry templates (TX-04).</summary>
     public DbSet<EntryTemplate> Templates => Set<EntryTemplate>();
+
+    /// <summary>Gets the savings goals (F2-GOAL-01).</summary>
+    public DbSet<Goal> Goals => Set<Goal>();
+
+    /// <summary>Gets the money earmarked for goals (F2-GOAL-02).</summary>
+    public DbSet<GoalAllocation> GoalAllocations => Set<GoalAllocation>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)

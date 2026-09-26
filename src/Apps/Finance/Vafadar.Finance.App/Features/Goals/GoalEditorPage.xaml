@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Goals.GoalEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Goals"
+    x:DataType="local:GoalEditorViewModel"
+    Title="{Binding Title}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" />
+            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="{v:Translate Goal_Name}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <Entry Text="{Binding Name}" Placeholder="{v:Translate Goal_NamePlaceholder}" MaxLength="100" SemanticProperties.Description="{v:Translate Goal_Name}" />
+                        <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}" IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <Label Text="{v:Translate Goal_Target}" Style="{StaticResource FieldLabel}" />
+                        <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
+                            <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" SemanticProperties.Description="{v:Translate Goal_Target}" />
+                            <Picker Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}"
+                                    IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
+                                    SemanticProperties.Description="{v:Translate Account_Currency}" />
+                        </Grid>
+                        <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Goal_HasDate}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding HasTargetDate}" OnColor="{StaticResource Primary}" />
+                        </Grid>
+                        <VerticalStackLayout IsVisible="{Binding HasTargetDate}" Spacing="4">
+                            <v:DateField Date="{Binding TargetDate}" />
+                            <Label Text="{v:Translate Goal_Frequency}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding FrequencyNames}" SelectedIndex="{Binding FrequencyIndex}" AccentColor="{StaticResource Primary}" />
+                        </VerticalStackLayout>
+
+                        <Label Text="{v:Translate Goal_Priority}" Style="{StaticResource FieldLabel}" />
+                        <v:ChoiceChips ItemsSource="{Binding PriorityNames}" SelectedIndex="{Binding PriorityIndex}" AccentColor="{StaticResource Primary}" />
+                        <Label Text="{v:Translate Goal_PriorityHint}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate Category_Icon}" Style="{StaticResource Secondary}" />
+                        <p:IconPicker SelectedKey="{Binding IconKey}" />
+                        <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />
+                        <Editor Text="{Binding Note}" AutoSize="TextChanges" MaxLength="1000" SemanticProperties.Description="{v:Translate Entry_Note}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
+                Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </Grid>
+</ContentPage>
