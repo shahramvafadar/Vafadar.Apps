@@ -63,6 +63,16 @@ public sealed partial class EntryDetailViewModel(
     [ObservableProperty]
     public partial bool CanSaveTemplate { get; set; }
 
+    // Split across categories (F2-TX-01): offered for a single entry, and as "Edit split" for a part of one.
+    [ObservableProperty]
+    public partial bool CanSplit { get; set; }
+
+    [ObservableProperty]
+    public partial string? SplitText { get; set; }
+
+    [ObservableProperty]
+    public partial string? SplitActionText { get; set; }
+
     [ObservableProperty]
     public partial bool IsUnreviewed { get; set; }
 
@@ -111,6 +121,13 @@ public sealed partial class EntryDetailViewModel(
         CanPayBack = entry.Kind == EntryKind.Income;
         CanMakeRecurring = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && entry.ScheduleId is null;
         CanSaveTemplate = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer;
+        var related = entry.GroupId is { } groupId ? await store.GetGroupAsync(groupId) : [entry];
+        CanSplit = EntryActions.CanSplit(related);
+        var isSplit = EntryActions.IsSplit(related);
+        SplitActionText = translator[isSplit ? "Split_Edit" : "Split_Action"];
+        SplitText = isSplit
+            ? translator.Format("Split_PartOf", MoneyText.Format(related.Sum(e => e.Amount), presenter.CurrencyOf(entry.AccountId), culture), related.Count)
+            : null;
 
         Lines.Clear();
         Lines.Add(new DetailLine(translator["Entry_Date"], dates.Format(entry.Date, DateFormatStyle.Long)));
@@ -192,6 +209,9 @@ public sealed partial class EntryDetailViewModel(
 
     [RelayCommand]
     private Task DuplicateAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["duplicate"] = _id });
+
+    [RelayCommand]
+    private Task SplitAsync() => Shell.Current.GoToAsync(AppShell.SplitRoute, new Dictionary<string, object> { ["id"] = _id });
 
     [RelayCommand]
     private Task PayBackAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = nameof(EntryKind.IncomeReversal), ["of"] = _id });

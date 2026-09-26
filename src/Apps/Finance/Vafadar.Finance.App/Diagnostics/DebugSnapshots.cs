@@ -85,6 +85,7 @@ internal static class DebugSnapshots
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
+            ("split", AppShell.SplitRoute, new() { ["id"] = expenseId }),
             ("plans", "//plans", null),
             ("plan-new", AppShell.PlanEditorRoute, null),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),

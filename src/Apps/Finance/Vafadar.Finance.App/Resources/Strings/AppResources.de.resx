@@ -1897,4 +1897,46 @@
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
     <value>Der Rest des Vormonats wird addiert und Überziehung abgezogen.</value>
   </data>
+  <data name="Split_Title" xml:space="preserve">
+    <value>Auf Kategorien aufteilen</value>
+  </data>
+  <data name="Split_Action" xml:space="preserve">
+    <value>Auf Kategorien aufteilen</value>
+  </data>
+  <data name="Split_Edit" xml:space="preserve">
+    <value>Aufteilung bearbeiten</value>
+  </data>
+  <data name="Split_Total" xml:space="preserve">
+    <value>Aufzuteilender Betrag</value>
+  </data>
+  <data name="Split_Hint" xml:space="preserve">
+    <value>Der Kontostand ändert sich einmal um diesen Betrag; jede Kategorie und ihr Budget sehen nur ihren Teil.</value>
+  </data>
+  <data name="Split_Remaining" xml:space="preserve">
+    <value>Noch zuzuordnen: {0}</value>
+  </data>
+  <data name="Split_TooMuch" xml:space="preserve">
+    <value>Zu viel zugeordnet: {0}</value>
+  </data>
+  <data name="Split_Balanced" xml:space="preserve">
+    <value>Die Teile ergeben genau den Betrag.</value>
+  </data>
+  <data name="Split_AddPart" xml:space="preserve">
+    <value>Teil hinzufügen</value>
+  </data>
+  <data name="Split_RemovePart" xml:space="preserve">
+    <value>Teil entfernen</value>
+  </data>
+  <data name="Split_Join" xml:space="preserve">
+    <value>Zu einer Buchung zusammenfassen</value>
+  </data>
+  <data name="Split_NotPossible" xml:space="preserve">
+    <value>Nur Einnahmen oder Ausgaben ohne Plan- oder Erstattungsbezug können aufgeteilt werden.</value>
+  </data>
+  <data name="Split_PartOf" xml:space="preserve">
+    <value>Teil einer Aufteilung: insgesamt {0} in {1} Teilen. Löschen entfernt alle Teile.</value>
+  </data>
+  <data name="Split_EnterAll" xml:space="preserve">
+    <value>Geben Sie für jeden Teil einen Betrag ein oder entfernen Sie leere Teile.</value>
+  </data>
 </root>

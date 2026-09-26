@@ -56,6 +56,8 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <Label Text="{Binding SplitText}" Style="{StaticResource Secondary}" IsVisible="{Binding SplitText, Converter={StaticResource IsNotNullConverter}}" />
+
                 <!-- Refunds of this purchase -->
                 <Label Text="{v:Translate Entry_Refunds}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasRefunds}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRefunds}">
@@ -90,6 +92,8 @@
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_PayBack}" Command="{Binding PayBackCommand}"
                             IsVisible="{Binding CanPayBack}" />
                 </Grid>
+                <Button Style="{StaticResource SecondaryButton}" Text="{Binding SplitActionText}" Command="{Binding SplitCommand}"
+                        IsVisible="{Binding CanSplit}" />
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Templates_SaveAction}" Command="{Binding SaveAsTemplateCommand}"
                         IsVisible="{Binding CanSaveTemplate}" />
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"

@@ -1897,4 +1897,46 @@
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
     <value>باقی‌ماندهٔ ماه قبل اضافه و اضافه‌خرج آن کسر می‌شود.</value>
   </data>
+  <data name="Split_Title" xml:space="preserve">
+    <value>تقسیم بین دسته‌ها</value>
+  </data>
+  <data name="Split_Action" xml:space="preserve">
+    <value>تقسیم بین دسته‌ها</value>
+  </data>
+  <data name="Split_Edit" xml:space="preserve">
+    <value>ویرایش تقسیم</value>
+  </data>
+  <data name="Split_Total" xml:space="preserve">
+    <value>مبلغ قابل تقسیم</value>
+  </data>
+  <data name="Split_Hint" xml:space="preserve">
+    <value>موجودی حساب فقط یک بار به همین مبلغ تغییر می‌کند و هر دسته و بودجه‌اش فقط سهم خودش را می‌بیند.</value>
+  </data>
+  <data name="Split_Remaining" xml:space="preserve">
+    <value>باقی‌مانده برای تقسیم: {0}</value>
+  </data>
+  <data name="Split_TooMuch" xml:space="preserve">
+    <value>بیش از مبلغ: {0}</value>
+  </data>
+  <data name="Split_Balanced" xml:space="preserve">
+    <value>مجموع سهم‌ها دقیقاً برابر است.</value>
+  </data>
+  <data name="Split_AddPart" xml:space="preserve">
+    <value>افزودن سهم</value>
+  </data>
+  <data name="Split_RemovePart" xml:space="preserve">
+    <value>حذف سهم</value>
+  </data>
+  <data name="Split_Join" xml:space="preserve">
+    <value>یکی کردن دوباره</value>
+  </data>
+  <data name="Split_NotPossible" xml:space="preserve">
+    <value>فقط درآمد یا هزینه‌ای که به برنامه یا بازپرداخت وصل نیست قابل تقسیم است.</value>
+  </data>
+  <data name="Split_PartOf" xml:space="preserve">
+    <value>بخشی از یک تقسیم: جمع {0} در {1} سهم. حذف، همهٔ سهم‌ها را پاک می‌کند.</value>
+  </data>
+  <data name="Split_EnterAll" xml:space="preserve">
+    <value>برای هر سهم مبلغ وارد کنید یا سهم‌های خالی را حذف کنید.</value>
+  </data>
 </root>

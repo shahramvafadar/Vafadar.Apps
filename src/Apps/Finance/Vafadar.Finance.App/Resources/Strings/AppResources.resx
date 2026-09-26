@@ -1901,4 +1901,46 @@
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
     <value>The rest of last month is added and overspending is deducted.</value>
   </data>
+  <data name="Split_Title" xml:space="preserve">
+    <value>Split across categories</value>
+  </data>
+  <data name="Split_Action" xml:space="preserve">
+    <value>Split across categories</value>
+  </data>
+  <data name="Split_Edit" xml:space="preserve">
+    <value>Edit split</value>
+  </data>
+  <data name="Split_Total" xml:space="preserve">
+    <value>Amount to split</value>
+  </data>
+  <data name="Split_Hint" xml:space="preserve">
+    <value>The account balance changes once by this amount; each category and its budget see only its part.</value>
+  </data>
+  <data name="Split_Remaining" xml:space="preserve">
+    <value>Still to assign: {0}</value>
+  </data>
+  <data name="Split_TooMuch" xml:space="preserve">
+    <value>Too much assigned: {0}</value>
+  </data>
+  <data name="Split_Balanced" xml:space="preserve">
+    <value>The parts add up exactly.</value>
+  </data>
+  <data name="Split_AddPart" xml:space="preserve">
+    <value>Add part</value>
+  </data>
+  <data name="Split_RemovePart" xml:space="preserve">
+    <value>Remove part</value>
+  </data>
+  <data name="Split_Join" xml:space="preserve">
+    <value>Join into one entry</value>
+  </data>
+  <data name="Split_NotPossible" xml:space="preserve">
+    <value>Only income or expense entries without a plan or refund link can be split.</value>
+  </data>
+  <data name="Split_PartOf" xml:space="preserve">
+    <value>Part of a split: total {0} in {1} parts. Deleting removes all parts.</value>
+  </data>
+  <data name="Split_EnterAll" xml:space="preserve">
+    <value>Enter an amount for every part, or remove empty parts.</value>
+  </data>
 </root>

@@ -80,6 +80,9 @@ public partial class AppShell : Shell
     /// <summary>Route of one goal.</summary>
     public const string GoalDetailRoute = "goaldetail";
 
+    /// <summary>Route of the split editor (F2-TX-01).</summary>
+    public const string SplitRoute = "split";
+
     public AppShell()
     {
         InitializeComponent();
@@ -105,5 +108,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(GoalsRoute, typeof(Features.Goals.GoalsPage));
         Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
+        Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Vafadar.Finance.Core.Ledger;
+namespace Vafadar.Finance.Core.Ledger;
 
 /// <summary>Creates derived entries: duplicates, refunds and transfer fees (TX-05, REF-01..04, FIN-02).</summary>
 public static class EntryActions
@@ -104,5 +104,98 @@ public static class EntryActions
         return transfer.GroupId is { } group
             ? entries.FirstOrDefault(e => e.GroupId == group && e.Id != transfer.Id && e.Kind == EntryKind.Expense)
             : null;
+    }
+
+    /// <summary>
+    /// Returns whether an event can be split across categories (F2-TX-01): one income or expense without plan or refund
+    /// link, or the parts of an earlier split. A transfer fee (grouped with its transfer) cannot be split.
+    /// </summary>
+    /// <param name="group">The entry and, when it belongs to a group, all entries of that group.</param>
+    public static bool CanSplit(IReadOnlyCollection<LedgerEntry> group)
+    {
+        ArgumentNullException.ThrowIfNull(group);
+        return group.Count > 0
+            && group.All(e => e.Kind is EntryKind.Expense or EntryKind.Income && e.ScheduleId is null && e.RefundOfId is null)
+            && (group.Count == 1 ? group.First().GroupId is null : IsSplit(group));
+    }
+
+    /// <summary>Returns whether a group of entries is a split purchase or income rather than a transfer with a fee.</summary>
+    public static bool IsSplit(IReadOnlyCollection<LedgerEntry> group)
+    {
+        ArgumentNullException.ThrowIfNull(group);
+        return group.Count >= 2 && group.All(e => e.Kind == group.First().Kind && e.Kind is EntryKind.Expense or EntryKind.Income);
+    }
+
+    /// <summary>
+    /// Splits an event across categories (F2-TX-01): the parts share one group, date, account, title and payee and sum
+    /// exactly to the event amount, so the balance changes by the same total and every category budget sees its share.
+    /// The first part keeps the original entry id, so refunds and links to it stay valid.
+    /// </summary>
+    /// <param name="parts">The existing entries of the event: one entry, or all parts of an earlier split.</param>
+    /// <param name="shares">Category and amount of each part, at least two, each greater than zero.</param>
+    /// <returns>The entries to save and the ids of parts to delete.</returns>
+    public static (IReadOnlyList<LedgerEntry> Save, IReadOnlyList<Guid> Delete) Split(IReadOnlyList<LedgerEntry> parts, IReadOnlyList<(Guid? CategoryId, long Amount)> shares)
+    {
+        ArgumentNullException.ThrowIfNull(parts);
+        ArgumentNullException.ThrowIfNull(shares);
+        if (!CanSplit(parts))
+        {
+            throw new ArgumentException("Only income or expense entries without plan or refund links can be split.", nameof(parts));
+        }
+
+        if (shares.Count < 2 || shares.Any(s => s.Amount <= 0))
+        {
+            throw new ArgumentException("A split needs at least two parts with positive amounts.", nameof(shares));
+        }
+
+        var total = parts.Sum(p => p.Amount);
+        if (shares.Sum(s => s.Amount) != total)
+        {
+            throw new ArgumentException("The parts must add up exactly to the amount.", nameof(shares));
+        }
+
+        var first = parts[0];
+        var group = first.GroupId ?? Guid.CreateVersion7();
+        var save = new List<LedgerEntry>();
+        for (var i = 0; i < shares.Count; i++)
+        {
+            var part = i < parts.Count ? parts[i] : new LedgerEntry
+            {
+                Kind = first.Kind,
+                AccountId = first.AccountId,
+                Date = first.Date,
+                Title = first.Title,
+                Payee = first.Payee,
+                Note = first.Note,
+                Icon = first.Icon,
+                Review = first.Review,
+                Source = first.Source,
+            };
+            part.GroupId = group;
+            part.CategoryId = shares[i].CategoryId;
+            part.Amount = shares[i].Amount;
+
+            // A foreign amount belongs to the whole event and cannot be divided exactly; parts keep only the account amount.
+            part.OriginalAmount = null;
+            part.OriginalCurrencyCode = null;
+            save.Add(part);
+        }
+
+        return (save, [.. parts.Skip(shares.Count).Select(p => p.Id)]);
+    }
+
+    /// <summary>Joins the parts of a split into one entry with the total amount, keeping the first part's id and category.</summary>
+    public static (LedgerEntry Save, IReadOnlyList<Guid> Delete) Join(IReadOnlyList<LedgerEntry> parts)
+    {
+        ArgumentNullException.ThrowIfNull(parts);
+        if (!IsSplit(parts))
+        {
+            throw new ArgumentException("These entries are not a split.", nameof(parts));
+        }
+
+        var first = parts[0];
+        first.Amount = parts.Sum(p => p.Amount);
+        first.GroupId = null;
+        return (first, [.. parts.Skip(1).Select(p => p.Id)]);
     }
 }

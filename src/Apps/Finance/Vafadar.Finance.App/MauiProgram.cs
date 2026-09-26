@@ -88,6 +88,7 @@ public static class MauiProgram
             .AddTransient<ForecastPage>().AddTransient<ForecastViewModel>()
             .AddTransient<RatesPage>().AddTransient<RatesViewModel>()
             .AddTransient<Features.Templates.TemplatesPage>().AddTransient<Features.Templates.TemplatesViewModel>()
+            .AddTransient<SplitEditorPage>().AddTransient<SplitEditorViewModel>()
             .AddTransient<Features.Goals.GoalPresenter>()
             .AddTransient<Features.Goals.GoalsPage>().AddTransient<Features.Goals.GoalsViewModel>()
             .AddTransient<Features.Goals.GoalEditorPage>().AddTransient<Features.Goals.GoalEditorViewModel>()
