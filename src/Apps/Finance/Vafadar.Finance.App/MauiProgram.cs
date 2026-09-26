@@ -53,6 +53,7 @@ public static class MauiProgram
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
+            .AddTransient<IMauiInitializeService, ReminderInitializer>()
             .AddSingleton<AppLockService>();
 
 #if ANDROID || IOS

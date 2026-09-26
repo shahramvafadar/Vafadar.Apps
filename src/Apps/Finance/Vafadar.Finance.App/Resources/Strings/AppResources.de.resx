@@ -1705,4 +1705,10 @@
   <data name="Templates_Saved" xml:space="preserve">
     <value>„{0}“ steht beim Hinzufügen einer neuen Buchung zur Verfügung.</value>
   </data>
+  <data name="Reminder_SnoozeHour" xml:space="preserve">
+    <value>In 1 Stunde</value>
+  </data>
+  <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
+    <value>Morgen</value>
+  </data>
 </root>

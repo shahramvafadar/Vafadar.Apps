@@ -1229,7 +1229,7 @@ This section records what the repository actually contains. It is evidence-based
 | Phase 1B (budget, reports, forecast, reminders, multi-currency, CSV import/export, Simple/Advanced, app lock, hardening) | Implemented – verified, except cloud backup. |
 | Cloud backup to Google Drive / OneDrive (BAK-13, BAK-14, AT-59) | Blocked: needs OAuth client ids and a real sign-in test. The destination is hidden; encrypted backup files are shared to any destination with the system share sheet instead. |
 | Phase 2 | Not started, as intended. |
-| Automated tests | 288 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
+| Automated tests | 291 tests (domain, data, libraries, localization resources, license check), run in CI on every push. |
 
 ### 31.2. Status by Requirement Area
 
@@ -1241,7 +1241,7 @@ This section records what the repository actually contains. It is evidence-based
 | VIS | Implemented – verified: light theme, semantic colors plus signs, labels and icons, offline Fluent UI icon set, icons per category, account and entry. |
 | REF | Implemented – verified: full and partial refunds linked to the purchase, refund to another account, refunds larger than the purchase are prevented, refunds of earlier months shown separately. |
 | REC | Implemented – verified: recurrence engine for Gregorian and Persian calendars, month-end and leap-day rules, "this and future" changes as a new plan slice, skip/move/link/confirm, pause/resume/end, idempotent automatic posting. |
-| REM | Implemented – verified at unit level: local reminders on Android/iOS, rebuilt on start, resume, every change, restore and language change; generic lock-screen text unless details are allowed; permission requested only when reminders are enabled; one summary when several reminders share a time (REM-10); optional second reminder on the due date in Advanced mode (REM-01). Deviations in 31.3. |
+| REM | Implemented – verified at unit level: local reminders on Android/iOS, rebuilt on start, resume, every change, restore and language change; generic lock-screen text unless details are allowed; permission requested only when reminders are enabled; one summary when several reminders share a time (REM-10); optional second reminder on the due date in Advanced mode (REM-01); "In 1 hour" and "Tomorrow" snooze actions that work without opening the app, never change the due date and end when the occurrence is settled or skipped (REM-04). Deviations in 31.3. |
 | BUD | Implemented – verified: monthly budget per calendar and currency, overall and category limits, optional account scope (Advanced) shown in Simple mode as a note, alerts at 80/100 %, copy to next month, plans of the month and monthly equivalents (BUD-09). |
 | FOR | Implemented – verified: end of month / 30 / 90 days, open occurrences only, overdue items assumed at the base date and labelled, unknown amounts make the result incomplete, daily path with lowest balance and shortfall warning; items can be left out or assumed on another date for the current view only (FOR-04). |
 | DASH, REP | Implemented – verified: one filter set per screen with visible scope, actionable review/due items, gross spending chart with refunds card and net table, income and expense, 6/12-month trend with partial months marked, account movement, planned versus posted with open occurrences, variance of settled occurrences and monthly equivalents; every number drills down to its entries. |
@@ -1258,7 +1258,6 @@ This section records what the repository actually contains. It is evidence-based
 
 | Requirement | Deviation | Reason / next step |
 |---|---|---|
-| REM-04 (snooze) | Notifications have no snooze action. Moving the occurrence moves its reminder (same id); the due date never changes by itself. | Platform snooze actions differ between Android and iOS; to be added after device tests. |
 | REM-01 (multiple reminders) | Advanced mode offers one reminder plus an optional second one on the due date, not an arbitrary number. | Covers the common cases with a simple UI; can be extended without data loss. |
 | REM on Windows | Windows builds show no system notifications; the in-app due-date center works. | Windows is a development and personal-use target in Phase 1. |
 | SEC-02 (recent-app preview) | The recent-apps preview is hidden only while the app lock is enabled. | Owner decision pending: hiding it always also blocks screenshots. |

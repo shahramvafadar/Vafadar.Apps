@@ -1705,4 +1705,10 @@
   <data name="Templates_Saved" xml:space="preserve">
     <value>«{0}» هنگام افزودن تراکنش جدید در دسترس است.</value>
   </data>
+  <data name="Reminder_SnoozeHour" xml:space="preserve">
+    <value>یک ساعت دیگر</value>
+  </data>
+  <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
+    <value>فردا</value>
+  </data>
 </root>

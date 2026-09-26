@@ -1709,4 +1709,10 @@
   <data name="Templates_Saved" xml:space="preserve">
     <value>"{0}" is available when you add a new entry.</value>
   </data>
+  <data name="Reminder_SnoozeHour" xml:space="preserve">
+    <value>In 1 hour</value>
+  </data>
+  <data name="Reminder_SnoozeTomorrow" xml:space="preserve">
+    <value>Tomorrow</value>
+  </data>
 </root>

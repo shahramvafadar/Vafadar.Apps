@@ -25,6 +25,7 @@ public sealed class ReminderService(
     TimeProvider time)
 {
     private const string BudgetAlertKey = "budget.alert.";
+    private const string SnoozeKey = "reminders.snoozed";
     private readonly SemaphoreSlim _gate = new(1, 1);
     private CancellationTokenSource? _pending;
 
@@ -36,6 +37,30 @@ public sealed class ReminderService(
     {
         finance.Changed += (_, _) => RefreshSoon();
         plans.Changed += (_, _) => RefreshSoon();
+    }
+
+    /// <summary>
+    /// Handles snooze actions. Registered at app start, so it also works when Android starts the process only to deliver
+    /// the action (the app is not opened).
+    /// </summary>
+    public void WatchSnoozes() => scheduler.SnoozeRequested += (_, request) => _ = SnoozeAsync(request);
+
+    // REM-04: a snooze repeats the reminder; the occurrence and its due date stay unchanged.
+    private async Task SnoozeAsync(SnoozeRequest request)
+    {
+        try
+        {
+            var original = request.Notification;
+            var snooze = new SnoozedReminder(
+                ReminderSnoozes.IdFor(original.Id), original.Link, original.Title, original.Body,
+                ReminderSnoozes.NotifyAt(request.Choice, time.GetLocalNow().DateTime));
+            preferences.Set(SnoozeKey, ReminderSnoozes.Serialize(ReminderSnoozes.Add(ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)), snooze)));
+            await scheduler.ShowAsync(new ReminderNotification(snooze.Id, snooze.Title, snooze.Body, snooze.NotifyAt, snooze.Link, CanSnooze: true));
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            System.Diagnostics.Debug.WriteLine($"Snooze failed: {ex}");
+        }
     }
 
     /// <summary>Schedules a refresh after a short delay; later calls within the delay replace earlier ones.</summary>
@@ -66,7 +91,11 @@ public sealed class ReminderService(
             var settings = await finance.GetSettingsAsync();
             var accounts = (await finance.GetAccountsAsync()).ToDictionary(a => a.Id);
             var culture = localization.CurrentCulture;
-            var planned = ReminderPlanner.Plan(await plans.GetSchedulesAsync(), await plans.GetStatesAsync(), time.GetLocalNow().DateTime);
+            scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
+            var schedules = await plans.GetSchedulesAsync();
+            var states = await plans.GetStatesAsync();
+            var now = time.GetLocalNow().DateTime;
+            var planned = ReminderPlanner.Plan(schedules, states, now);
 
             var notifications = ReminderPlanner.GroupByTime(planned).Select(group =>
             {
@@ -76,7 +105,7 @@ public sealed class ReminderService(
                     var body = settings.NotificationsShowDetails
                         ? string.Join(translator["Reminder_ListSeparator"], group.Select(r => r.Occurrence.Schedule.Name))
                         : translator["Reminder_Generic"];
-                    return new ReminderNotification(group[0].Id, translator.Format("Reminder_Summary", group.Count), body, group[0].NotifyAt, "plans");
+                    return new ReminderNotification(group[0].Id, translator.Format("Reminder_Summary", group.Count), body, group[0].NotifyAt, "plans", CanSnooze: true);
                 }
 
                 var reminder = group[0];
@@ -85,7 +114,7 @@ public sealed class ReminderService(
                 if (!settings.NotificationsShowDetails)
                 {
                     // Nothing about amounts, accounts or names on the lock screen unless the user chose it (REM-05, AT-38).
-                    return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_Generic"], reminder.NotifyAt, link);
+                    return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_Generic"], reminder.NotifyAt, link, CanSnooze: true);
                 }
 
                 var currency = accounts.TryGetValue(occurrence.Schedule.AccountId, out var account) ? account.CurrencyCode : settings.ReportCurrencyCode;
@@ -95,8 +124,34 @@ public sealed class ReminderService(
                     occurrence.Schedule.Name,
                     translator.Format("Reminder_Details", amount, dates.Format(occurrence.DueDate, DateFormatStyle.Long)),
                     reminder.NotifyAt,
-                    link);
+                    link,
+                    CanSnooze: true);
             }).ToList();
+
+            // Snoozed reminders survive the rebuild while their occurrence is still open (REM-04, AT-36).
+            bool IsOpen(string link)
+            {
+                if (link == "plans")
+                {
+                    return true;
+                }
+
+                if (link.Split('|') is not ["occurrence", var plan, var date] || !Guid.TryParse(plan, out var planId)
+                    || !DateOnly.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var original))
+                {
+                    return false;
+                }
+
+                var state = states.FirstOrDefault(s => s.ScheduleId == planId && s.OriginalDate == original);
+                return schedules.Any(s => s.Id == planId && s.State == Core.Plans.ScheduleState.Active)
+                    && state?.Status is not (Core.Plans.OccurrenceStatus.Settled or Core.Plans.OccurrenceStatus.Skipped);
+            }
+
+            var snoozes = ReminderSnoozes.Keep(ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)), now, IsOpen);
+            preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
+            notifications.AddRange(snoozes
+                .Where(s => notifications.All(n => n.Id != s.Id))
+                .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
 
             await scheduler.ReplaceAllAsync(notifications);
             await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
