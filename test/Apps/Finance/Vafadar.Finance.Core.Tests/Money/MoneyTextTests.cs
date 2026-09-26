@@ -32,6 +32,10 @@ public sealed class MoneyTextTests
     }
 
     [Fact]
+    public void Approximate_sign_stays_inside_the_isolated_amount() =>
+        Assert.Equal("\u2066\u200E≈ \u22123.00\u00A0EUR\u200E\u2069", MoneyText.Format(-300, "EUR", English, approximate: true));
+
+    [Fact]
     public void Input_text_has_no_grouping_sign_or_currency() =>
         Assert.Equal("1234.50", MoneyText.ForInput(-123_450, "EUR", English));
 

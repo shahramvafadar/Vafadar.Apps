@@ -1159,4 +1159,52 @@
   <data name="Report_PlanDetails" xml:space="preserve">
     <value>{0} از {1} انجام‌شده</value>
   </data>
+  <data name="Forecast_Title" xml:space="preserve">
+    <value>پیش‌بینی</value>
+  </data>
+  <data name="Forecast_EndOfMonth" xml:space="preserve">
+    <value>پایان ماه</value>
+  </data>
+  <data name="Forecast_30Days" xml:space="preserve">
+    <value>۳۰ روز</value>
+  </data>
+  <data name="Forecast_90Days" xml:space="preserve">
+    <value>۹۰ روز</value>
+  </data>
+  <data name="Forecast_Basis" xml:space="preserve">
+    <value>حساب‌های داخل جمع کل · از {0} تا {1}</value>
+  </data>
+  <data name="Forecast_Unreviewed" xml:space="preserve">
+    <value>شامل {0} تراکنشی که هنوز بررسی نشده است.</value>
+  </data>
+  <data name="Forecast_EndBalance" xml:space="preserve">
+    <value>برآورد مانده پس از برنامه‌های ثبت‌شده</value>
+  </data>
+  <data name="Forecast_Lowest" xml:space="preserve">
+    <value>کمترین: {0} در {1}</value>
+  </data>
+  <data name="Forecast_Shortfall" xml:space="preserve">
+    <value>ممکن است حدود {0} مانده منفی شود.</value>
+  </data>
+  <data name="Forecast_Incomplete" xml:space="preserve">
+    <value>ناقص: {0} مورد برنامه‌ریزی‌شده هنوز مبلغ ندارد.</value>
+  </data>
+  <data name="Forecast_Path" xml:space="preserve">
+    <value>برآورد مانده روزانه</value>
+  </data>
+  <data name="Forecast_NoItems" xml:space="preserve">
+    <value>در این بازه موردی برنامه‌ریزی نشده است.</value>
+  </data>
+  <data name="Forecast_OverdueAssumed" xml:space="preserve">
+    <value>معوق؛ امروز فرض شده</value>
+  </data>
+  <data name="Forecast_Recorded" xml:space="preserve">
+    <value>از قبل ثبت‌شده</value>
+  </data>
+  <data name="Forecast_RecordedEntry" xml:space="preserve">
+    <value>تراکنش ثبت‌شده</value>
+  </data>
+  <data name="Forecast_Disclaimer" xml:space="preserve">
+    <value>فقط برنامه‌ها و تراکنش‌های ثبت‌شده لحاظ شده‌اند؛ خریدهای روزمرهٔ برنامه‌ریزی‌نشده، تغییر درآمد و سایر موارد ثبت‌نشده در آن نیستند. بودجه کسر نمی‌شود. این یک برآورد است، نه پولی که خرجش امن باشد.</value>
+  </data>
 </root>

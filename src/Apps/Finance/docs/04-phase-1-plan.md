@@ -45,4 +45,5 @@ privacy policy, Data safety and Financial features declaration match that build.
 | S6 | Implemented – verified (encrypted backup file shared to any destination, last 10 kept on device, restore from file or device with password check, preview with counts, safety copy, auto-post after restore; AT-56/57 integration-tested) |
 | S7 | Implemented – verified (monthly budget per calendar and currency, overall and category limits, zero/over/no-budget states, confirmed-only switch, plans of the month with exact occurrence counts and monthly equivalents, copy to next month, Home card; alerts delivered with S10) |
 | S8 | Implemented – verified (expenses by category with gross chart, refunds card and net table; income and expense with savings share; 6/12-month trend with partial months marked; account movement from opening to closing balance; plan vs actual; drill-down with the same period and scope) |
-| S9–S15 | Planned |
+| S9 | Implemented – verified (end of month / 30 / 90 days, start from recorded balance, open occurrences only, overdue assumed at base date, future-dated entries, unknown amounts mark the result incomplete, daily path with minimum and shortfall warning; AT-42–44 unit-tested) |
+| S10–S15 | Planned |

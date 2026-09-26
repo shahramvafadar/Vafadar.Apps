@@ -1159,4 +1159,52 @@
   <data name="Report_PlanDetails" xml:space="preserve">
     <value>{0} von {1} erledigt</value>
   </data>
+  <data name="Forecast_Title" xml:space="preserve">
+    <value>Prognose</value>
+  </data>
+  <data name="Forecast_EndOfMonth" xml:space="preserve">
+    <value>Monatsende</value>
+  </data>
+  <data name="Forecast_30Days" xml:space="preserve">
+    <value>30 Tage</value>
+  </data>
+  <data name="Forecast_90Days" xml:space="preserve">
+    <value>90 Tage</value>
+  </data>
+  <data name="Forecast_Basis" xml:space="preserve">
+    <value>Konten in Summen · von {0} bis {1}</value>
+  </data>
+  <data name="Forecast_Unreviewed" xml:space="preserve">
+    <value>Enthält {0} noch zu prüfende Buchungen.</value>
+  </data>
+  <data name="Forecast_EndBalance" xml:space="preserve">
+    <value>Geschätzter Saldo nach erfassten Planungen</value>
+  </data>
+  <data name="Forecast_Lowest" xml:space="preserve">
+    <value>Tiefster Stand: {0} am {1}</value>
+  </data>
+  <data name="Forecast_Shortfall" xml:space="preserve">
+    <value>Der Saldo könnte um den {0} unter null fallen.</value>
+  </data>
+  <data name="Forecast_Incomplete" xml:space="preserve">
+    <value>Unvollständig: {0} geplante Posten haben noch keinen Betrag.</value>
+  </data>
+  <data name="Forecast_Path" xml:space="preserve">
+    <value>Geschätzter Saldo pro Tag</value>
+  </data>
+  <data name="Forecast_NoItems" xml:space="preserve">
+    <value>Keine geplanten Posten in diesem Zeitraum.</value>
+  </data>
+  <data name="Forecast_OverdueAssumed" xml:space="preserve">
+    <value>Überfällig – für heute angenommen</value>
+  </data>
+  <data name="Forecast_Recorded" xml:space="preserve">
+    <value>Bereits erfasst</value>
+  </data>
+  <data name="Forecast_RecordedEntry" xml:space="preserve">
+    <value>Erfasste Buchung</value>
+  </data>
+  <data name="Forecast_Disclaimer" xml:space="preserve">
+    <value>Enthalten sind nur erfasste Planungen und Buchungen – nicht geplante Alltagskäufe, Einkommensänderungen und andere nicht erfasste Posten. Budgets werden nicht abgezogen. Dies ist eine Schätzung, kein sicher ausgebbares Geld.</value>
+  </data>
 </root>

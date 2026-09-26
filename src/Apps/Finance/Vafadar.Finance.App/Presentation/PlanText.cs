@@ -43,7 +43,7 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
     public string Amount(long? amount, AmountMode mode, string currencyCode) => (amount, mode) switch
     {
         (null, _) or (_, AmountMode.Unknown) => translator["Plan_AmountUnknown"],
-        ({ } value, AmountMode.Estimated) => "≈ " + MoneyText.Format(value, currencyCode, culture),
+        ({ } value, AmountMode.Estimated) => MoneyText.Format(value, currencyCode, culture, approximate: true),
         ({ } value, _) => MoneyText.Format(value, currencyCode, culture),
     };
 

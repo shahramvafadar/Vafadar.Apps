@@ -47,9 +47,9 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit | S1/S7 | Verified (unit + budget screen) |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
-| AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Planned |
-| AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Planned |
-| AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Planned |
+| AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Verified (unit) |
+| AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Verified (unit) |
+| AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Verified (unit) |
 | AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Planned |
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |

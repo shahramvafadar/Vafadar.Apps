@@ -3,6 +3,7 @@ using Vafadar.Finance.App.Features.Backup;
 using Vafadar.Finance.App.Features.Budget;
 using Vafadar.Finance.App.Features.Categories;
 using Vafadar.Finance.App.Features.Entries;
+using Vafadar.Finance.App.Features.Forecast;
 using Vafadar.Finance.App.Features.Plans;
 using Vafadar.Finance.App.Features.Reports;
 using Vafadar.Finance.App.Features.Settings;
@@ -53,6 +54,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the reports.</summary>
     public const string ReportsRoute = "reports";
 
+    /// <summary>Route of the forecast.</summary>
+    public const string ForecastRoute = "forecast";
+
     public AppShell()
     {
         InitializeComponent();
@@ -70,5 +74,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(BudgetRoute, typeof(BudgetPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
         Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
+        Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
     }
 }

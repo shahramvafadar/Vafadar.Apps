@@ -1163,4 +1163,52 @@
   <data name="Report_PlanDetails" xml:space="preserve">
     <value>{0} of {1} done</value>
   </data>
+  <data name="Forecast_Title" xml:space="preserve">
+    <value>Forecast</value>
+  </data>
+  <data name="Forecast_EndOfMonth" xml:space="preserve">
+    <value>End of month</value>
+  </data>
+  <data name="Forecast_30Days" xml:space="preserve">
+    <value>30 days</value>
+  </data>
+  <data name="Forecast_90Days" xml:space="preserve">
+    <value>90 days</value>
+  </data>
+  <data name="Forecast_Basis" xml:space="preserve">
+    <value>Accounts in totals · from {0} to {1}</value>
+  </data>
+  <data name="Forecast_Unreviewed" xml:space="preserve">
+    <value>Includes {0} entries that still need review.</value>
+  </data>
+  <data name="Forecast_EndBalance" xml:space="preserve">
+    <value>Estimated balance after recorded plans</value>
+  </data>
+  <data name="Forecast_Lowest" xml:space="preserve">
+    <value>Lowest: {0} on {1}</value>
+  </data>
+  <data name="Forecast_Shortfall" xml:space="preserve">
+    <value>The balance may fall below zero around {0}.</value>
+  </data>
+  <data name="Forecast_Incomplete" xml:space="preserve">
+    <value>Incomplete: {0} planned items have no amount yet.</value>
+  </data>
+  <data name="Forecast_Path" xml:space="preserve">
+    <value>Estimated balance per day</value>
+  </data>
+  <data name="Forecast_NoItems" xml:space="preserve">
+    <value>No planned items in this period.</value>
+  </data>
+  <data name="Forecast_OverdueAssumed" xml:space="preserve">
+    <value>Overdue – assumed today</value>
+  </data>
+  <data name="Forecast_Recorded" xml:space="preserve">
+    <value>Already recorded</value>
+  </data>
+  <data name="Forecast_RecordedEntry" xml:space="preserve">
+    <value>Recorded entry</value>
+  </data>
+  <data name="Forecast_Disclaimer" xml:space="preserve">
+    <value>Only recorded plans and entries are included. Everyday purchases you have not planned, income changes and other unrecorded items are not. Budgets are not subtracted. This is an estimate, not money that is safe to spend.</value>
+  </data>
 </root>

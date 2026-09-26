@@ -23,13 +23,15 @@ public static class MoneyText
     /// <param name="culture">Formatting culture (digits, separators).</param>
     /// <param name="showPlus">Whether positive amounts get a leading "+" (income).</param>
     /// <param name="showCurrency">Whether the currency code is appended.</param>
-    public static string Format(long minor, string currencyCode, CultureInfo culture, bool showPlus = false, bool showCurrency = true)
+    /// <param name="approximate">Whether the amount is an estimate; "≈" is placed inside the isolated amount so it stays in front in any text direction.</param>
+    public static string Format(long minor, string currencyCode, CultureInfo culture, bool showPlus = false, bool showCurrency = true, bool approximate = false)
     {
         ArgumentNullException.ThrowIfNull(culture);
         var currency = Currencies.TryGet(currencyCode, out var known) ? known : new Currency(currencyCode, 2);
         var number = MoneyAmount.Format(Math.Abs(minor), currency, culture);
         var sign = minor < 0 ? Minus.ToString() : showPlus && minor > 0 ? "+" : string.Empty;
-        var text = showCurrency ? $"{sign}{number} {currency.Code}" : sign + number;
+        var prefix = approximate ? "≈ " : string.Empty;
+        var text = showCurrency ? $"{prefix}{sign}{number} {currency.Code}" : prefix + sign + number;
         return $"{LeftToRightIsolate}{LeftToRightMark}{text}{LeftToRightMark}{PopDirectionalIsolate}";
     }
 

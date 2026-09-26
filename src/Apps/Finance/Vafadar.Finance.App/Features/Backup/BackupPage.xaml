@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Backup.BackupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Backup"
+    x:DataType="local:BackupViewModel"
+    Title="{v:Translate Backup_Title}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="8">
+
+                <!-- Status -->
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="32" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding LastBackupText}" FontSize="15" />
+                            <Label Text="{v:Translate Backup_Intro}" Style="{StaticResource Secondary}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Create -->
+                <Label Text="{v:Translate Backup_Create}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Backup_UsePassword}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding UsePassword}" OnColor="{StaticResource Primary}" />
+                        </Grid>
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding UsePassword}">
+                            <Entry Text="{Binding Password}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"
+                                   SemanticProperties.Description="{v:Translate Backup_Password}" />
+                            <Entry Text="{Binding PasswordConfirm}" IsPassword="True" Placeholder="{v:Translate Backup_PasswordConfirm}"
+                                   SemanticProperties.Description="{v:Translate Backup_PasswordConfirm}" />
+                            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <Label Text="{v:Translate Backup_PasswordWarning}" TextColor="{StaticResource WarningText}" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Backup_NoPasswordWarning}" Style="{StaticResource Secondary}"
+                               IsVisible="{Binding UsePassword, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Label Text="{Binding CreateError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding CreateError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding CreateResult}" TextColor="{StaticResource IncomeText}"
+                               IsVisible="{Binding CreateResult, Converter={StaticResource IsNotNullConverter}}" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Backup_CreateAndShare}" Command="{Binding CreateCommand}"
+                                IsEnabled="{Binding IsNotBusy}" />
+                        <Label Text="{v:Translate Backup_ShareHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Backups kept on this device -->
+                <Label Text="{v:Translate Backup_OnDevice}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasLocalBackups}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasLocalBackups}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding LocalBackups}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:LocalBackup">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <fi:SymbolIcon Symbol="Archive" FontSize="22" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" />
+                                    <Label Grid.Column="2" Text="{Binding Details}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{v:Translate Backup_OnDeviceHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasLocalBackups}" />
+
+                <!-- Restore -->
+                <Label Text="{v:Translate Backup_Restore}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Backup_RestoreIntro}" Style="{StaticResource Secondary}" />
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Backup_PickFile}" Command="{Binding PickFileCommand}"
+                                IsEnabled="{Binding IsNotBusy}" />
+
+                        <Label Text="{Binding PickedName}" FontAttributes="Bold" IsVisible="{Binding PickedName, Converter={StaticResource IsNotNullConverter}}" />
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding NeedsRestorePassword}">
+                            <Entry Text="{Binding RestorePassword}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"
+                                   SemanticProperties.Description="{v:Translate Backup_Password}" />
+                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Backup_Check}" Command="{Binding CheckCommand}"
+                                    IsVisible="{Binding HasPreview, Converter={StaticResource InvertedBoolConverter}}" />
+                        </VerticalStackLayout>
+                        <Label Text="{Binding RestoreError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding RestoreError, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <!-- Preview before anything is replaced (BAK-09) -->
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
+                            <Border BackgroundColor="{StaticResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <Label Text="{Binding PreviewText}" />
+                            </Border>
+                            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <Label Text="{v:Translate Backup_ReplaceWarning}" TextColor="{StaticResource WarningText}" />
+                            </Border>
+                            <Button Text="{v:Translate Backup_Replace}" Command="{Binding RestoreCommand}" IsEnabled="{Binding IsNotBusy}"
+                                    BackgroundColor="{StaticResource ExpenseText}" TextColor="White" CornerRadius="24" MinimumHeightRequest="48" FontAttributes="Bold" />
+                            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelRestoreCommand}" BackgroundColor="Transparent"
+                                    TextColor="{StaticResource Primary}" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Primary}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
