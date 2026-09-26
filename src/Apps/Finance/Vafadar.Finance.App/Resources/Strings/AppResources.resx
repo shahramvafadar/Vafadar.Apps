@@ -1475,4 +1475,7 @@
   <data name="Home_Forecast" xml:space="preserve">
     <value>End of month ≈ {0} · lowest {1} on {2}</value>
   </data>
+  <data name="Settings_Licences" xml:space="preserve">
+    <value>Third-party components</value>
+  </data>
 </root>

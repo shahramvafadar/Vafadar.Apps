@@ -59,6 +59,16 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     public IReadOnlyList<string> ModeNames { get; }
 
+    /// <summary>Gets the third-party components shipped with the app and their licences.</summary>
+    public string LicencesText { get; } = string.Join(Environment.NewLine,
+        ".NET, .NET MAUI, EF Core, CommunityToolkit.Mvvm – MIT",
+        "SQLite – public domain",
+        "Syncfusion Essential Studio for .NET MAUI – commercial licence",
+        "Fluent UI System Icons (FluentIcons.Maui) – MIT",
+        "Plugin.LocalNotification – MIT",
+        "AndroidX (Biometric and others) – Apache 2.0",
+        "Open Sans font – SIL Open Font License 1.1");
+
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
 

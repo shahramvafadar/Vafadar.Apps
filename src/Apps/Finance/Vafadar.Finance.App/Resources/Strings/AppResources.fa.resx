@@ -1471,4 +1471,7 @@
   <data name="Home_Forecast" xml:space="preserve">
     <value>پایان ماه ≈ {0} · کمترین {1} در {2}</value>
   </data>
+  <data name="Settings_Licences" xml:space="preserve">
+    <value>اجزای شخص ثالث</value>
+  </data>
 </root>

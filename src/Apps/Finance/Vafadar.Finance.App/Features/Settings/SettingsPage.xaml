@@ -83,7 +83,11 @@
 
             <Label Text="{v:Translate Settings_About}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
-                <Label Text="{Binding VersionText}" />
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding VersionText}" />
+                    <Label Text="{v:Translate Settings_Licences}" Style="{StaticResource Secondary}" FontAttributes="Bold" Margin="0,8,0,0" />
+                    <Label Text="{Binding LicencesText}" Style="{StaticResource Secondary}" FontSize="13" FlowDirection="LeftToRight" />
+                </VerticalStackLayout>
             </Border>
 
         </VerticalStackLayout>
