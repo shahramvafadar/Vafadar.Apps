@@ -42,7 +42,7 @@
 | D-18 | CSV writer/reader are implemented in `Finance.Core` (no dependency) with formula-injection protection | IO-06 |
 | D-19 | Temporary placeholder branding: neutral green icon with a simple ledger glyph; final name/logo pending | PR-10 |
 | D-20 | If no online feature ships in the first release, the `INTERNET` permission is removed from that release | PRI-01, privacy |
-| D-21 | Product name **Zanance** (owner, 2026-09-26), shown untranslated in every language. Code, folders and the app id keep the working name *Finance* (pro.vafadar.finance) | PR-10 |
+| D-21 | Product name **Zanance** (owner, 2026-09-26), shown untranslated in every language; Android package and iOS bundle id `pro.vafadar.zanance` (replaces the unpublished `pro.vafadar.finance`). Code and folders keep the working name *Finance* | PR-10 |
 
 ## 3. Conflicts found and their resolution
 

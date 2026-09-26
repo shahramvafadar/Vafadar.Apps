@@ -2,7 +2,7 @@
 
 **Document version:** 1.1  
 **Date:** 2026-09-25 (v1.0); revised 2026-09-26 (v1.1: statuses reviewed against the repository)  
-**App:** `pro.vafadar.finance`  
+**App:** `pro.vafadar.zanance`  
 **Product reference:** `Finance-Product-Specification.md`, particularly Sections 17–20 and 22  
 **File status:** Review template with statuses verified against the repository; not a submission-ready Data Safety declaration. The maintained app profile is `src/Apps/Finance/docs/06-privacy-matrix.md` in the repository.
 
@@ -22,7 +22,7 @@
 
 | App | Primary online account | Local ledger | Ads / Analytics / AI | Pro | Privacy Policy | Data Safety |
 |---|---|---|---|---|---|---|
-| Finance / pro.vafadar.finance | None in Phase 1; the app has no sign-in. | SQLite in app-private storage; complete Phase 1 ledger, plans, budgets and rates. | Not included; no such SDK is referenced. | Future plan; no payments in Phase 1. | Draft exists; must be published at a stable URL before release. | Must be completed from the release build. |
+| Finance / pro.vafadar.zanance | None in Phase 1; the app has no sign-in. | SQLite in app-private storage; complete Phase 1 ledger, plans, budgets and rates. | Not included; no such SDK is referenced. | Future plan; no payments in Phase 1. | Draft exists; must be published at a stable URL before release. | Must be completed from the release build. |
 
 ## 3. Data Flows to Review
 

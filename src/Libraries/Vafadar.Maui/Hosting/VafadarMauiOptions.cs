@@ -8,7 +8,7 @@ namespace Vafadar.Maui.Hosting;
 public sealed class VafadarMauiOptions
 {
     /// <summary>
-    /// Gets or sets the stable app id, identical on all platforms (e.g. <c>pro.vafadar.finance</c>).
+    /// Gets or sets the stable app id, identical on all platforms (e.g. <c>pro.vafadar.zanance</c>).
     /// It identifies the app's backups, so it must never change once the app is released.
     /// </summary>
     public string AppId { get; set; } = string.Empty;

@@ -7,7 +7,7 @@
 
 This policy covers the apps published by Shahram Vafadar ("I", "me") under the name *Vafadar*, currently:
 
-* **Finance** (`pro.vafadar.finance`)
+* **Zanance** (`pro.vafadar.zanance`)
 
 ## Summary
 

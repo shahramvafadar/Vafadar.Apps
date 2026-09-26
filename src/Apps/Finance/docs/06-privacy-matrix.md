@@ -1,6 +1,6 @@
 # 06 – Finance privacy matrix
 
-App `pro.vafadar.finance`, version 0.1.0 (development). Reviewed against the repository on 2026-09-26.
+App `pro.vafadar.zanance`, version 0.1.0 (development). Reviewed against the repository on 2026-09-26.
 Statuses: Implemented – verified / Implemented – unverified / Planned / Not included / Unknown – needs verification.
 "Verified" means covered by automated tests or a reviewed build artifact; **device checks** (release APK on a real
 phone) are still pending for every row and are a release gate (08).

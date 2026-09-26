@@ -9,7 +9,7 @@ public sealed class FinanceAppTests
     public void App_id_is_the_released_package_name()
     {
         // Changing the app id creates a different app in the stores and orphans existing backups.
-        Assert.Equal("pro.vafadar.finance", FinanceApp.AppId);
+        Assert.Equal("pro.vafadar.zanance", FinanceApp.AppId);
     }
 
     [Fact]

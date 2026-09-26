@@ -9,7 +9,7 @@ public static class FinanceApp
     /// The app id: Android package name, iOS bundle id and backup identifier.
     /// It can never change after the first store release.
     /// </summary>
-    public const string AppId = "pro.vafadar.finance";
+    public const string AppId = "pro.vafadar.zanance";
 
     /// <summary>The file name of the on-device database.</summary>
     public const string DatabaseFileName = "finance.db";

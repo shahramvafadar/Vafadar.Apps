@@ -83,7 +83,7 @@ public sealed class FinanceBackupTests : IDisposable
         var services = new ServiceCollection()
             .AddFinanceData(_directory.Combine(Path.Combine(name, "finance.db")))
             .AddVafadarBackup()
-            .AddSingleton<IAppEnvironment>(new StaticAppEnvironment("pro.vafadar.finance", "Finance", new Version(1, 0, 0), name, "Tests"))
+            .AddSingleton<IAppEnvironment>(new StaticAppEnvironment("pro.vafadar.zanance", "Finance", new Version(1, 0, 0), name, "Tests"))
             .AddSingleton<ISettingsStore, InMemorySettingsStore>()
             .BuildServiceProvider();
         services.MigrateLocalDatabase<FinanceDbContext>();

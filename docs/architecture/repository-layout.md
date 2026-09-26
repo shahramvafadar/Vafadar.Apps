@@ -54,7 +54,7 @@ Vafadar.Apps/
 | Shared library | `Vafadar.<Area>[.<Detail>]` | `Vafadar.Backup.GoogleDrive` |
 | App project | `Vafadar.<App>.<Layer>` with layers `Core`, `Data`, `App` (+ `Web`, `Api`, `Contracts`) | `Vafadar.Finance.Data` |
 | Test project | `<ProjectUnderTest>.Tests` | `Vafadar.Finance.Data.Tests` |
-| App id (Android package, iOS bundle id, backup id) | `pro.vafadar.<app>` – **permanent** | `pro.vafadar.finance` |
+| App id (Android package, iOS bundle id, backup id) | `pro.vafadar.<app>` – **permanent** | `pro.vafadar.zanance` |
 | Namespaces | Match folders | `Vafadar.Finance.App.Features.Settings` |
 | Solution filter | `Vafadar.<Product>.slnf` | `Vafadar.Finance.slnf` |
 | Web addresses | `vafadar.pro/<app>` or `<app>.vafadar.pro` | `vafadar.pro/finance/privacy` |

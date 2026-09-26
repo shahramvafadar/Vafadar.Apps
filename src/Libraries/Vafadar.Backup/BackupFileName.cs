@@ -5,7 +5,7 @@ namespace Vafadar.Backup;
 
 /// <summary>
 /// Builds and parses backup file names: <c>{appId}_{yyyyMMdd'T'HHmmss'Z'}.vbak</c>,
-/// e.g. <c>pro.vafadar.finance_20260925T143000Z.vbak</c>.
+/// e.g. <c>pro.vafadar.zanance_20260925T143000Z.vbak</c>.
 /// </summary>
 /// <remarks>
 /// The app id prefix lets several apps share one storage location (for example, all apps registered in the same

@@ -40,7 +40,7 @@ migration, never drop user data silently.
 
 ### What a backup is
 
-A backup is a single file, `pro.vafadar.finance_20260925T143000Z.vbak`:
+A backup is a single file, `pro.vafadar.zanance_20260925T143000Z.vbak`:
 
 ```text
 ┌────────────────────────── .vbak ───────────────────────────┐

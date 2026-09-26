@@ -11,7 +11,7 @@
     <ApplicationTitle>Zanance</ApplicationTitle>
 
     <!-- App identifier: NEVER change after the first store release. Must match FinanceApp.AppId. -->
-    <ApplicationId>pro.vafadar.finance</ApplicationId>
+    <ApplicationId>pro.vafadar.zanance</ApplicationId>
 
     <!--
       Versions. ApplicationDisplayVersion is the user-visible version (semantic: major.minor.patch).

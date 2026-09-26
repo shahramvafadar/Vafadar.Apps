@@ -8,7 +8,7 @@ namespace Vafadar.Core.Hosting;
 /// </remarks>
 public interface IAppEnvironment
 {
-    /// <summary>Gets the stable app identifier, e.g. <c>pro.vafadar.finance</c> (the Android package name).</summary>
+    /// <summary>Gets the stable app identifier, e.g. <c>pro.vafadar.zanance</c> (the Android package name).</summary>
     string AppId { get; }
 
     /// <summary>Gets the user-facing app name.</summary>
