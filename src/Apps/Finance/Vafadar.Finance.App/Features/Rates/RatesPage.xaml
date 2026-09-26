@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Rates.RatesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Rates"
+    x:DataType="local:RatesViewModel"
+    Title="{v:Translate Rates_Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+            <Label Text="{v:Translate Rates_Intro}" Style="{StaticResource Secondary}" />
+            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,10"
+                    IsVisible="{Binding MissingText, Converter={StaticResource IsNotNullConverter}}">
+                <Label Text="{Binding MissingText}" TextColor="{StaticResource WarningText}" />
+            </Border>
+
+            <!-- Add a rate -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto,*" ColumnSpacing="8">
+                        <Label Text="1" FontSize="18" VerticalOptions="Center" />
+                        <Picker Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding FromCurrency}"
+                                SemanticProperties.Description="{v:Translate Rates_From}" />
+                        <Label Grid.Column="2" Text="=" FontSize="18" VerticalOptions="Center" />
+                        <Picker Grid.Column="3" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ToCurrency}"
+                                SemanticProperties.Description="{v:Translate Rates_To}" />
+                    </Grid>
+                    <Label Text="{v:Translate Rates_Rate}" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="0.92" SemanticProperties.Description="{v:Translate Rates_Rate}" />
+                    <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
+                    <v:DateField Date="{Binding Date}" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                        <Label Text="{v:Translate Rates_Estimate}" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsEstimate}" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                    <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" Margin="0,12,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Stored rates -->
+            <Label Text="{v:Translate Rates_Stored}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasRates}" />
+            <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRates}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rates}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:RateRow">
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RatesViewModel}}, x:DataType=local:RatesViewModel}"
+                                                          CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Text}" FontSize="15" FlowDirection="LeftToRight" HorizontalOptions="Start" />
+                                    <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" Text="{v:Translate Rates_EstimateBadge}" FontSize="12" Padding="6,1" VerticalOptions="Center"
+                                       TextColor="{StaticResource WarningText}" BackgroundColor="{StaticResource WarningBackground}" IsVisible="{Binding IsEstimate}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

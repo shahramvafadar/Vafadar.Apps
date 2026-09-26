@@ -51,8 +51,8 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Verified (unit) |
 | AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Verified (unit) |
 | AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
-| AT-46 | Change report currency | FX-05 | Unit | S11 | Planned |
-| AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |
+| AT-46 | Change report currency | FX-05 | Unit | S11 | Verified (unit: incomplete totals, no relabelling; budgets keep their currency) |
+| AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, incl. conversion between 0- and 3-digit currencies) |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |

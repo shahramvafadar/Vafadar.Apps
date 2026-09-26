@@ -9,6 +9,7 @@ using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Core.Plans;
+using Vafadar.Finance.Core.Rates;
 using Vafadar.Finance.Data;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
@@ -101,6 +102,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     public partial string? ChartNote { get; set; }
 
     [ObservableProperty]
+    public partial string? CombinedText { get; set; }
+
+    [ObservableProperty]
+    public partial bool CombinedIncomplete { get; set; }
+
+    [ObservableProperty]
     public partial bool HasBudget { get; set; }
 
     [ObservableProperty]
@@ -142,6 +149,19 @@ public sealed partial class HomeViewModel : ViewModelBase
         foreach (var (currency, total) in LedgerCalculator.TotalBalances(allAccounts, entries, today))
         {
             Balances.Add(new CurrencyTotal(currency, MoneyText.Format(total, currency, culture)));
+        }
+
+        // With several currencies, a combined total only when every rate exists (FX-02, FX-05).
+        var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
+        CombinedText = null;
+        CombinedIncomplete = false;
+        if (balances.Count > 1)
+        {
+            var combined = new RateTable(await _store.GetRatesAsync()).Combine(balances, _reportCurrency, today);
+            CombinedIncomplete = !combined.IsComplete;
+            CombinedText = combined.IsComplete
+                ? _translator.Format("Home_Combined", MoneyText.Format(combined.Total!.Value, _reportCurrency, culture), combined.OldestRateDate is { } rateDate ? _dates.Format(rateDate, DateFormatStyle.Short) : "-")
+                : _translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies));
         }
 
         var unreviewed = LedgerCalculator.Unreviewed(allAccounts, entries);
@@ -322,6 +342,9 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenDueAsync() => Shell.Current.GoToAsync("//plans");
+
+    [RelayCommand]
+    private Task OpenRatesAsync() => Shell.Current.GoToAsync(AppShell.RatesRoute);
 
     [RelayCommand]
     private Task OpenBudgetAsync() => Shell.Current.GoToAsync(AppShell.BudgetRoute);

@@ -4,6 +4,7 @@ using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Plans;
+using Vafadar.Finance.Core.Rates;
 using Vafadar.Finance.Core.Settings;
 
 namespace Vafadar.Finance.Data;
@@ -226,6 +227,46 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             await db.SaveChangesAsync(cancellationToken);
             OnChanged();
         }
+    }
+
+    /// <summary>Returns all manual exchange rates, newest first.</summary>
+    public async Task<List<ExchangeRate>> GetRatesAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.ExchangeRates.AsNoTracking().OrderByDescending(r => r.Date).ThenBy(r => r.FromCurrencyCode).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Saves a rate; a rate for the same date and currency pair is replaced.</summary>
+    public async Task SaveRateAsync(ExchangeRate rate, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(rate);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var existing = await db.ExchangeRates.FirstOrDefaultAsync(
+            r => r.Id == rate.Id || (r.Date == rate.Date && r.FromCurrencyCode == rate.FromCurrencyCode && r.ToCurrencyCode == rate.ToCurrencyCode),
+            cancellationToken);
+        if (existing is null)
+        {
+            db.ExchangeRates.Add(rate);
+        }
+        else
+        {
+            existing.Date = rate.Date;
+            existing.FromCurrencyCode = rate.FromCurrencyCode;
+            existing.ToCurrencyCode = rate.ToCurrencyCode;
+            existing.Rate = rate.Rate;
+            existing.IsEstimate = rate.IsEstimate;
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes a rate; recorded amounts are never affected (FX-04).</summary>
+    public async Task DeleteRateAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.ExchangeRates.Where(r => r.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
     }
 
     /// <summary>Returns entries between two dates (inclusive), newest first.</summary>

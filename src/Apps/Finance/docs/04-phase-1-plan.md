@@ -47,4 +47,5 @@ privacy policy, Data safety and Financial features declaration match that build.
 | S8 | Implemented – verified (expenses by category with gross chart, refunds card and net table; income and expense with savings share; 6/12-month trend with partial months marked; account movement from opening to closing balance; plan vs actual; drill-down with the same period and scope) |
 | S9 | Implemented – verified (end of month / 30 / 90 days, start from recorded balance, open occurrences only, overdue assumed at base date, future-dated entries, unknown amounts mark the result incomplete, daily path with minimum and shortfall warning; AT-42–44 unit-tested) |
 | S10 | Implemented – verified (reminder planner: future reminders only, capped, stable ids; rebuilt on start, resume, every change, restore and language change; generic lock-screen text unless details are allowed; permission on demand; tap opens the occurrence; budget alerts once per level; Windows keeps the in-app due centre) |
-| S11–S15 | Planned |
+| S11 | Implemented – verified (manual rates with date and estimate flag, latest rate on or before a date, inverse rates, combined balance on Home only when every rate exists with the rate date shown, missing rates listed; recorded amounts, budgets and history never converted) |
+| S12–S15 | Planned |

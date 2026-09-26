@@ -94,6 +94,7 @@ internal static class DebugSnapshots
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
+            ("rates", AppShell.RatesRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
             ("report-trend", AppShell.ReportsRoute, new() { ["report"] = 2 }),

@@ -39,6 +39,16 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
+                        <Label Text="{Binding CombinedText}" FontSize="14" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenRatesCommand}" />
+                            </Label.GestureRecognizers>
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding CombinedIncomplete}" Value="True">
+                                    <Setter Property="TextColor" Value="{StaticResource WarningText}" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                         <Label Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>
