@@ -7,7 +7,8 @@
 - [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57) – fresh-install integration test passes; device check pending
 - [ ] No known critical bug in balances, conversion, double counting, restore or data exposure (Q-01)
-- [ ] Performance measured on the reference device with 10,000 entries (Q-02) and recorded – calculation budget test with 10,000 entries passes
+- [ ] Performance measured on the reference device with 10,000 entries (Q-02) and recorded – calculation budget test with 10,000 entries, 20 accounts and 100 plans passes
+- [ ] Deviations in spec Section 31.3 accepted by the owner or resolved
 
 ## Privacy and security
 
@@ -17,6 +18,11 @@
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked
 - [ ] No financial data, notes, tokens or passwords in logs (SEC-04)
 - [ ] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview hidden when the app lock is on (FLAG_SECURE); decide whether to hide it without the lock
+
+## Build secrets
+
+- [ ] GitHub repository secret `SYNCFUSION_LICENSE_KEY` set; `Vafadar.SyncfusionLicense.Tests` passes in CI (the release workflow requires it)
+- [ ] Android signing secrets in the `production` environment
 
 ## Store
 

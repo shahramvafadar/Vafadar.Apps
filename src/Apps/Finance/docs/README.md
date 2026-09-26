@@ -1,7 +1,7 @@
 # Finance – design documentation
 
-The accepted product baseline is the owner's *Finance Product Specification* (v1.0, 2026-09-25) and its privacy
-matrix starter. Requirement identifiers used here and in tests (`FIN-01`, `TX-01`, `REC-13`, `AT-17`, …) are the
+The accepted product baseline is the owner's [*Finance Product Specification*](spec/Finance-Product-Specification.md)
+(v1.1, 2026-09-26) and its [privacy matrix starter](spec/Finance-Privacy-Matrix-Starter.md). Requirement identifiers used here and in tests (`FIN-01`, `TX-01`, `REC-13`, `AT-17`, …) are the
 identifiers of that specification. These documents translate the specification into a design that fits this
 repository and track what is actually implemented.
 
@@ -15,6 +15,7 @@ repository and track what is actually implemented.
 | [06 – Privacy matrix](06-privacy-matrix.md) | Data flows verified against the code |
 | [07 – Acceptance test plan](07-acceptance-test-plan.md) | Mapping of the 68 acceptance scenarios to tests |
 | [08 – Release checklist](08-release-checklist.md) | Gates for the first public release |
+| [Specification](spec/Finance-Product-Specification.md) | The owner's requirements; Section 31 = implementation status and deviations |
 
 Status words used everywhere: **Implemented – verified** (behaviour tested), **Implemented – unverified**,
 **Planned**, **Not included**, **Unknown – needs verification**. Nothing is reported as done without evidence.
