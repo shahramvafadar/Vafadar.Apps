@@ -18,7 +18,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-10 | Archive account with history/plans | ACC-06 | Unit | S2/S4 | History: verified (unit); plans: with S4 |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
-| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit, domain level) |
+| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit + report screen: gross chart never negative) |
 | AT-14 | Refund to another account | REF-01 | Unit | S1 | Verified (unit, domain level) |
 | AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Verified (unit, domain level) |
 | AT-16 | One-time future plan | FIN-07, REC-02 | Unit | S4 | Verified (unit) |
@@ -55,7 +55,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, domain level) |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Partly verified (unit: digits, separators, search; snapshots en/de/fa); full pass in S14 |
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Planned |
-| AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit: drill-down equals the number); report screens with S8 |
+| AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Planned |
 | AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Planned |
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Planned |

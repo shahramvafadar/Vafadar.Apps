@@ -1066,4 +1066,97 @@
   <data name="Home_BudgetLeft" xml:space="preserve">
     <value>باقی‌مانده {0} از {1}</value>
   </data>
+  <data name="Report_Title" xml:space="preserve">
+    <value>گزارش‌ها</value>
+  </data>
+  <data name="Report_Month" xml:space="preserve">
+    <value>ماه</value>
+  </data>
+  <data name="Report_Year" xml:space="preserve">
+    <value>سال</value>
+  </data>
+  <data name="Report_Expenses" xml:space="preserve">
+    <value>هزینه‌ها</value>
+  </data>
+  <data name="Report_IncomeExpense" xml:space="preserve">
+    <value>درآمد و هزینه</value>
+  </data>
+  <data name="Report_Trend" xml:space="preserve">
+    <value>روند</value>
+  </data>
+  <data name="Report_Accounts" xml:space="preserve">
+    <value>حساب‌ها</value>
+  </data>
+  <data name="Report_Plans" xml:space="preserve">
+    <value>برنامه و واقعی</value>
+  </data>
+  <data name="Report_SoFar" xml:space="preserve">
+    <value>تا امروز</value>
+  </data>
+  <data name="Report_Empty" xml:space="preserve">
+    <value>هنوز چیزی ثبت نشده است. گزارش‌ها پس از ثبت تراکنش نمایش داده می‌شوند.</value>
+  </data>
+  <data name="Report_NoData" xml:space="preserve">
+    <value>در این دوره درآمد یا هزینه‌ای ثبت نشده است.</value>
+  </data>
+  <data name="Report_GrossByCategory" xml:space="preserve">
+    <value>هزینهٔ ناخالص به تفکیک دسته (پیش از برگشت وجه)</value>
+  </data>
+  <data name="Report_RefundsTotal" xml:space="preserve">
+    <value>برگشت وجه دریافتی در این دوره: {0}</value>
+  </data>
+  <data name="Report_Gross" xml:space="preserve">
+    <value>ناخالص</value>
+  </data>
+  <data name="Report_Refunds" xml:space="preserve">
+    <value>برگشت</value>
+  </data>
+  <data name="Report_Net" xml:space="preserve">
+    <value>خالص</value>
+  </data>
+  <data name="Report_NetExpense" xml:space="preserve">
+    <value>هزینه (خالص)</value>
+  </data>
+  <data name="Report_OfWhichRefunds" xml:space="preserve">
+    <value>برگشت وجه کسرشده</value>
+  </data>
+  <data name="Report_SavingsRate" xml:space="preserve">
+    <value>سهم پس‌انداز از درآمد</value>
+  </data>
+  <data name="Report_BalanceHint" xml:space="preserve">
+    <value>تغییر مانده حساب‌ها ممکن است متفاوت باشد؛ انتقال، موجودی آغازین و تعدیل، درآمد یا هزینه نیستند. گزارش حساب‌ها را ببینید.</value>
+  </data>
+  <data name="Report_PartialHint" xml:space="preserve">
+    <value>* ماه جاری هنوز تمام نشده است؛ آن را با ماه کامل مقایسه نکنید.</value>
+  </data>
+  <data name="Report_Opening" xml:space="preserve">
+    <value>مانده در ابتدای دوره</value>
+  </data>
+  <data name="Report_OpeningBalance" xml:space="preserve">
+    <value>موجودی آغازین</value>
+  </data>
+  <data name="Report_TransfersIn" xml:space="preserve">
+    <value>انتقال ورودی</value>
+  </data>
+  <data name="Report_TransfersOut" xml:space="preserve">
+    <value>انتقال خروجی</value>
+  </data>
+  <data name="Report_Adjustments" xml:space="preserve">
+    <value>تعدیل‌ها</value>
+  </data>
+  <data name="Report_Closing" xml:space="preserve">
+    <value>مانده در پایان دوره</value>
+  </data>
+  <data name="Report_NoPlans" xml:space="preserve">
+    <value>در این دوره برنامه‌ای سررسید ندارد.</value>
+  </data>
+  <data name="Report_Planned" xml:space="preserve">
+    <value>برنامه</value>
+  </data>
+  <data name="Report_Actual" xml:space="preserve">
+    <value>ثبت‌شده</value>
+  </data>
+  <data name="Report_PlanDetails" xml:space="preserve">
+    <value>{0} از {1} انجام‌شده</value>
+  </data>
 </root>

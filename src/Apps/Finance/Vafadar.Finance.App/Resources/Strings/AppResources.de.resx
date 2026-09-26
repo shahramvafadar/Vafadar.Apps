@@ -1066,4 +1066,97 @@
   <data name="Home_BudgetLeft" xml:space="preserve">
     <value>{0} von {1} übrig</value>
   </data>
+  <data name="Report_Title" xml:space="preserve">
+    <value>Berichte</value>
+  </data>
+  <data name="Report_Month" xml:space="preserve">
+    <value>Monat</value>
+  </data>
+  <data name="Report_Year" xml:space="preserve">
+    <value>Jahr</value>
+  </data>
+  <data name="Report_Expenses" xml:space="preserve">
+    <value>Ausgaben</value>
+  </data>
+  <data name="Report_IncomeExpense" xml:space="preserve">
+    <value>Einnahmen &amp; Ausgaben</value>
+  </data>
+  <data name="Report_Trend" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="Report_Accounts" xml:space="preserve">
+    <value>Konten</value>
+  </data>
+  <data name="Report_Plans" xml:space="preserve">
+    <value>Plan und Ist</value>
+  </data>
+  <data name="Report_SoFar" xml:space="preserve">
+    <value>bisher</value>
+  </data>
+  <data name="Report_Empty" xml:space="preserve">
+    <value>Noch nichts erfasst. Berichte erscheinen, sobald Buchungen vorhanden sind.</value>
+  </data>
+  <data name="Report_NoData" xml:space="preserve">
+    <value>Keine Einnahmen oder Ausgaben in diesem Zeitraum.</value>
+  </data>
+  <data name="Report_GrossByCategory" xml:space="preserve">
+    <value>Bruttoausgaben nach Kategorie (vor Erstattungen)</value>
+  </data>
+  <data name="Report_RefundsTotal" xml:space="preserve">
+    <value>Erhaltene Erstattungen in diesem Zeitraum: {0}</value>
+  </data>
+  <data name="Report_Gross" xml:space="preserve">
+    <value>Brutto</value>
+  </data>
+  <data name="Report_Refunds" xml:space="preserve">
+    <value>Erstattungen</value>
+  </data>
+  <data name="Report_Net" xml:space="preserve">
+    <value>Netto</value>
+  </data>
+  <data name="Report_NetExpense" xml:space="preserve">
+    <value>Ausgaben (netto)</value>
+  </data>
+  <data name="Report_OfWhichRefunds" xml:space="preserve">
+    <value>Bereits abgezogene Erstattungen</value>
+  </data>
+  <data name="Report_SavingsRate" xml:space="preserve">
+    <value>Behaltener Anteil der Einnahmen</value>
+  </data>
+  <data name="Report_BalanceHint" xml:space="preserve">
+    <value>Kontosalden können sich anders verändern: Umbuchungen, Anfangssalden und Korrekturen sind keine Einnahmen oder Ausgaben. Siehe Bericht Konten.</value>
+  </data>
+  <data name="Report_PartialHint" xml:space="preserve">
+    <value>* Der aktuelle Monat ist noch nicht vorbei – nicht wie einen vollen Monat vergleichen.</value>
+  </data>
+  <data name="Report_Opening" xml:space="preserve">
+    <value>Saldo zu Beginn</value>
+  </data>
+  <data name="Report_OpeningBalance" xml:space="preserve">
+    <value>Anfangssaldo</value>
+  </data>
+  <data name="Report_TransfersIn" xml:space="preserve">
+    <value>Umbuchungen eingehend</value>
+  </data>
+  <data name="Report_TransfersOut" xml:space="preserve">
+    <value>Umbuchungen ausgehend</value>
+  </data>
+  <data name="Report_Adjustments" xml:space="preserve">
+    <value>Korrekturen</value>
+  </data>
+  <data name="Report_Closing" xml:space="preserve">
+    <value>Saldo am Ende</value>
+  </data>
+  <data name="Report_NoPlans" xml:space="preserve">
+    <value>In diesem Zeitraum ist keine Planung fällig.</value>
+  </data>
+  <data name="Report_Planned" xml:space="preserve">
+    <value>Geplant</value>
+  </data>
+  <data name="Report_Actual" xml:space="preserve">
+    <value>Erfasst</value>
+  </data>
+  <data name="Report_PlanDetails" xml:space="preserve">
+    <value>{0} von {1} erledigt</value>
+  </data>
 </root>

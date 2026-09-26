@@ -42,6 +42,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private bool _loading;
     private Guid? _pendingAccount;
     private IReadOnlyCollection<Guid>? _categoryIds;
+    private (DateOnly From, DateOnly To)? _customPeriod;
     private bool _inTotalsOnly;
 
     public TransactionsViewModel(FinanceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, UndoService undo)
@@ -108,6 +109,9 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     [ObservableProperty]
     public partial string? SummaryText { get; set; }
 
+    [ObservableProperty]
+    public partial string? CustomPeriodText { get; set; }
+
     /// <summary>
     /// Accepts <c>unreviewed=true</c>, <c>account</c>, and a drill-down from a number (AT-50): <c>period</c> (chip index),
     /// <c>kind</c> (<see cref="KindFilter"/>), <c>categories</c> (ids), <c>categoryName</c> and <c>inTotals</c>.
@@ -115,10 +119,22 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        if (query.ContainsKey("period") || query.ContainsKey("kind") || query.ContainsKey("categories"))
+        if (query.ContainsKey("period") || query.ContainsKey("kind") || query.ContainsKey("categories") || query.ContainsKey("from"))
         {
             _loading = true;
             PeriodIndex = query.TryGetValue("period", out var period) && period is int p ? p : 0;
+            if (query.TryGetValue("from", out var from) && from is DateOnly start && query.TryGetValue("to", out var to) && to is DateOnly end)
+            {
+                _customPeriod = (start, end);
+                CustomPeriodText = $"{_dates.Format(start, DateFormatStyle.Short)} – {_dates.Format(end, DateFormatStyle.Short)}";
+                PeriodIndex = -1;
+            }
+            else
+            {
+                _customPeriod = null;
+                CustomPeriodText = null;
+            }
+
             KindIndex = query.TryGetValue("kind", out var kind) && kind is KindFilter k ? (int)k : 0;
             _categoryIds = query.TryGetValue("categories", out var categories) ? categories as IReadOnlyCollection<Guid> : null;
             CategoryFilterName = _categoryIds is null ? null : query.TryGetValue("categoryName", out var name) ? name?.ToString() : null;
@@ -179,7 +195,17 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         Refresh();
     }
 
-    partial void OnPeriodIndexChanged(int value) => Refresh();
+    partial void OnPeriodIndexChanged(int value)
+    {
+        // Choosing a period chip replaces a range that came from a report.
+        if (value >= 0 && !_loading)
+        {
+            _customPeriod = null;
+            CustomPeriodText = null;
+        }
+
+        Refresh();
+    }
 
     partial void OnKindIndexChanged(int value) => Refresh();
 
@@ -208,7 +234,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         var culture = _localization.CurrentCulture;
         var presenter = new EntryPresenter(_accounts, _categories, _translator, culture);
         var matching = EntrySearch.Apply(_entries, filter, id => _categories.Name(id), _accounts).ToList();
-        var filtered = _categoryIds is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
+        var filtered = _categoryIds is not null || _customPeriod is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
         SummaryText = filtered && matching.Count > 0
             ? _translator.Format("Tx_FilterTotal", matching.Count, string.Join("  ", EntrySearch.NetByCurrency(matching, _accounts).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true))))
             : null;
@@ -225,6 +251,11 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     private (DateOnly? From, DateOnly? To) PeriodRange()
     {
+        if (_customPeriod is { } custom)
+        {
+            return (custom.From, custom.To);
+        }
+
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
         var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, calendar);
@@ -274,6 +305,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     private void ClearCategoryFilterCore()
     {
+        if (_customPeriod is not null)
+        {
+            _customPeriod = null;
+            CustomPeriodText = null;
+            PeriodIndex = 0;
+        }
+
         _categoryIds = null;
         _inTotalsOnly = false;
         CategoryFilterName = null;

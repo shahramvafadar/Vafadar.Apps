@@ -4,6 +4,7 @@ using Vafadar.Finance.App.Features.Budget;
 using Vafadar.Finance.App.Features.Categories;
 using Vafadar.Finance.App.Features.Entries;
 using Vafadar.Finance.App.Features.Plans;
+using Vafadar.Finance.App.Features.Reports;
 using Vafadar.Finance.App.Features.Settings;
 
 namespace Vafadar.Finance.App;
@@ -49,6 +50,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the budget editor (query: <c>year</c>, <c>month</c>, <c>calendar</c>, <c>currency</c>).</summary>
     public const string BudgetEditorRoute = "budgeteditor";
 
+    /// <summary>Route of the reports.</summary>
+    public const string ReportsRoute = "reports";
+
     public AppShell()
     {
         InitializeComponent();
@@ -65,5 +69,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(BackupRoute, typeof(BackupPage));
         Routing.RegisterRoute(BudgetRoute, typeof(BudgetPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
+        Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
     }
 }
