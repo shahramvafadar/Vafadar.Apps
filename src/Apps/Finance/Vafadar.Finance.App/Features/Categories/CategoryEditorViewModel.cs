@@ -105,6 +105,12 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     [ObservableProperty]
     public partial Color SelectedColor { get; set; }
 
+    [ObservableProperty]
+    public partial IReadOnlyList<ParentChoice> MergeTargets { get; set; } = [];
+
+    [ObservableProperty]
+    public partial ParentChoice? MergeTarget { get; set; }
+
     public bool IsDirty => Snapshot() != _snapshot;
 
     private CategoryKind Kind => KindIndex == 1 ? CategoryKind.Income : CategoryKind.Expense;
@@ -129,6 +135,10 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
 
         // Only one level (CAT-02): a category with children, and the fallback category, cannot get a parent.
         CanHaveParent = _category.SystemKey != DefaultCategories.Uncategorized && !categories.Any(c => c.ParentId == _category.Id);
+        MergeTargets = [.. categories
+            .Where(c => IsExisting && c.Kind == _category.Kind && c.Id != _category.Id && !c.IsArchived)
+            .OrderBy(c => c.SortOrder)
+            .Select(c => new ParentChoice(c.Id, CategoryLookup.NameOf(c, _translator)))];
         BuildParents(categories);
         query.Clear();
         _snapshot = Snapshot();
@@ -224,6 +234,33 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         _category.IsArchived = !IsArchived;
         await _store.SaveCategoryAsync(_category);
         await Shell.Current.GoToAsync("..");
+    }
+
+    // CAT-02: merging keeps every entry; the source is archived afterwards.
+    [RelayCommand]
+    private async Task MergeAsync()
+    {
+        if (MergeTarget?.Id is not { } target || !await Shell.Current.DisplayAlertAsync(
+                _translator["Category_Merge"], _translator.Format("Category_MergeMessage", MergeTarget.Name), _translator["Category_Merge"], _translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        await _store.MergeCategoryAsync(_category.Id, target);
+        await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    private Task MoveUpAsync() => MoveAsync(-1);
+
+    [RelayCommand]
+    private Task MoveDownAsync() => MoveAsync(1);
+
+    // The new position is taken over, so a later Save does not restore the old one.
+    private async Task MoveAsync(int step)
+    {
+        await _store.MoveCategoryAsync(_category.Id, step);
+        _category.SortOrder = (await _store.GetCategoriesAsync()).First(c => c.Id == _category.Id).SortOrder;
     }
 
     [RelayCommand]

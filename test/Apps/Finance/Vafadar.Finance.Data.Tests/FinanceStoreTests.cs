@@ -240,6 +240,57 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Merging_categories_moves_entries_and_limits_and_archives_the_source()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var categories = await _store.GetCategoriesAsync(Ct);
+        var food = categories.Single(c => c.SystemKey == "Food");
+        var leisure = categories.Single(c => c.SystemKey == "Leisure");
+        var account = await NewAccountAsync();
+        var entry = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 100, Date = new DateOnly(2026, 10, 2), CategoryId = leisure.Id };
+        await _store.SaveEntryAsync(entry, Ct);
+        var budget = new Vafadar.Finance.Core.Budgets.Budget { Year = 2026, Month = 10, CurrencyCode = "EUR" };
+        budget.CategoryLimits.Add(new() { CategoryId = leisure.Id, Limit = 5_000 });
+        budget.CategoryLimits.Add(new() { CategoryId = food.Id, Limit = 20_000 });
+        await _store.SaveBudgetAsync(budget, Ct);
+
+        await _store.MergeCategoryAsync(leisure.Id, food.Id, Ct);
+
+        Assert.Equal(food.Id, (await _store.GetEntryAsync(entry.Id, Ct))!.CategoryId);
+        Assert.True((await _store.GetCategoriesAsync(Ct)).Single(c => c.Id == leisure.Id).IsArchived);
+        Assert.Equal(25_000, (await _store.GetBudgetsAsync(Ct)).Single().CategoryLimits.Single().Limit);
+    }
+
+    [Fact]
+    public async Task Categories_can_be_reordered()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var expense = (await _store.GetCategoriesAsync(Ct)).Where(c => c.Kind == CategoryKind.Expense).OrderBy(c => c.SortOrder).ToList();
+
+        await _store.MoveCategoryAsync(expense[1].Id, -1, Ct);
+
+        var reordered = (await _store.GetCategoriesAsync(Ct)).Where(c => c.Kind == CategoryKind.Expense).OrderBy(c => c.SortOrder).ToList();
+        Assert.Equal(expense[1].Id, reordered[0].Id);
+        Assert.Equal(expense[0].Id, reordered[1].Id);
+    }
+
+    [Fact]
+    public async Task Deleting_all_data_leaves_an_empty_database()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var account = await NewAccountAsync();
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Income, AccountId = account.Id, Amount = 1, Date = new DateOnly(2026, 10, 2) }, Ct);
+        await _store.SaveSettingsAsync(await _store.GetSettingsAsync(Ct), Ct);
+
+        await _store.DeleteAllDataAsync(Ct);
+
+        Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
+        Assert.Empty(await _store.GetAccountsAsync(cancellationToken: Ct));
+        Assert.Empty(await _store.GetCategoriesAsync(Ct));
+        Assert.False(_store.GetSettings().OnboardingCompleted);
+    }
+
+    [Fact]
     public async Task Settings_are_created_on_first_use_and_persist()
     {
         var settings = await _store.GetSettingsAsync(Ct);

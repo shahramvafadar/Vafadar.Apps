@@ -40,6 +40,8 @@
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding PeriodText}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                     <Label Text="{Binding CurrencyText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ScopeText}" TextColor="{StaticResource WarningText}" FontSize="13" HorizontalTextAlignment="Center"
+                           IsVisible="{Binding ScopeText, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
                 <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
                     <Border.GestureRecognizers>

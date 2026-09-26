@@ -340,6 +340,107 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>
+    /// Merges <paramref name="sourceId"/> into <paramref name="targetId"/> (CAT-02): entries, plans, budget limits and
+    /// sub-categories move to the target, then the source is archived. No entry is deleted.
+    /// </summary>
+    public async Task MergeCategoryAsync(Guid sourceId, Guid targetId, CancellationToken cancellationToken = default)
+    {
+        if (sourceId == targetId)
+        {
+            return;
+        }
+
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var source = await db.Categories.FirstAsync(c => c.Id == sourceId, cancellationToken);
+        var target = await db.Categories.FirstAsync(c => c.Id == targetId, cancellationToken);
+        if (source.Kind != target.Kind)
+        {
+            throw new InvalidOperationException("Only categories of the same kind can be merged.");
+        }
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.Entries.Where(e => e.CategoryId == sourceId).ExecuteUpdateAsync(e => e.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        await db.Schedules.Where(s => s.CategoryId == sourceId).ExecuteUpdateAsync(s => s.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+
+        // One level only: children of the source go under the target's main category.
+        var newParent = target.ParentId ?? target.Id;
+        await db.Categories.Where(c => c.ParentId == sourceId && c.Id != targetId).ExecuteUpdateAsync(c => c.SetProperty(x => x.ParentId, newParent), cancellationToken);
+
+        foreach (var budget in await db.Budgets.ToListAsync(cancellationToken))
+        {
+            var limit = budget.CategoryLimits.FirstOrDefault(l => l.CategoryId == sourceId);
+            if (limit is null)
+            {
+                continue;
+            }
+
+            budget.CategoryLimits.Remove(limit);
+            if (budget.CategoryLimits.FirstOrDefault(l => l.CategoryId == targetId) is { } existing)
+            {
+                existing.Limit += limit.Limit;
+            }
+            else
+            {
+                budget.CategoryLimits.Add(new BudgetCategoryLimit { CategoryId = targetId, Limit = limit.Limit });
+            }
+        }
+
+        source.IsArchived = true;
+        source.ParentId = null;
+        await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Moves a category one place earlier (<paramref name="step"/> = -1) or later (+1) among its siblings.</summary>
+    public async Task MoveCategoryAsync(Guid id, int step, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var category = await db.Categories.FirstAsync(c => c.Id == id, cancellationToken);
+        var siblings = await db.Categories
+            .Where(c => c.Kind == category.Kind && c.ParentId == category.ParentId && !c.IsArchived)
+            .OrderBy(c => c.SortOrder).ToListAsync(cancellationToken);
+        var index = siblings.FindIndex(c => c.Id == id);
+        var other = index + step;
+        if (index < 0 || other < 0 || other >= siblings.Count)
+        {
+            return;
+        }
+
+        // Renumber so that equal sort orders never make the move a no-op.
+        (siblings[index], siblings[other]) = (siblings[other], siblings[index]);
+        for (var i = 0; i < siblings.Count; i++)
+        {
+            siblings[i].SortOrder = siblings.Min(s => s.SortOrder) + i;
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>
+    /// Deletes all Finance data on this device (SEC-05, BAK-15): entries, plans, budgets, rates, categories, accounts
+    /// and settings. Backup files and copies outside the database are not touched.
+    /// </summary>
+    public async Task DeleteAllDataAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.Entries.ExecuteDeleteAsync(cancellationToken);
+        await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);
+        await db.Schedules.ExecuteDeleteAsync(cancellationToken);
+        db.Budgets.RemoveRange(await db.Budgets.ToListAsync(cancellationToken));
+        await db.SaveChangesAsync(cancellationToken);
+        await db.ExchangeRates.ExecuteDeleteAsync(cancellationToken);
+        await db.Categories.Where(c => c.ParentId != null).ExecuteDeleteAsync(cancellationToken);
+        await db.Categories.ExecuteDeleteAsync(cancellationToken);
+        await db.Accounts.ExecuteDeleteAsync(cancellationToken);
+        await db.Settings.ExecuteDeleteAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        OnChanged();
+    }
+
     /// <summary>Returns entries between two dates (inclusive), newest first.</summary>
     public async Task<List<LedgerEntry>> GetEntriesAsync(DateOnly? from = null, DateOnly? to = null, CancellationToken cancellationToken = default)
     {

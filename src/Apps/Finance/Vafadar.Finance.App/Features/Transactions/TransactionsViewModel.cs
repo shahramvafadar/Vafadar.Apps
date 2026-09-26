@@ -86,6 +86,12 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     public partial bool ShowAccountFilter { get; set; }
 
     [ObservableProperty]
+    public partial IReadOnlyList<AccountFilterOption> CategoryOptions { get; set; } = [];
+
+    [ObservableProperty]
+    public partial AccountFilterOption? SelectedCategory { get; set; }
+
+    [ObservableProperty]
     public partial bool UnreviewedOnly { get; set; }
 
     [ObservableProperty]
@@ -183,6 +189,14 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             AccountOptions = [new AccountFilterOption(null, _translator["Accounts_AllAccounts"]), .. accounts.Select(a => new AccountFilterOption(a.Id, a.Name))];
             SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == selected) ?? AccountOptions[0];
             ShowAccountFilter = accounts.Count > 1;
+
+            // Category filter (TX-05); a main category includes its sub-categories.
+            var selectedCategory = SelectedCategory?.Id;
+            CategoryOptions = [new AccountFilterOption(null, _translator["Tx_AllCategories"]), .. _categories.All
+                .Where(c => !c.IsArchived && c.ParentId is null)
+                .OrderBy(c => c.Kind).ThenBy(c => c.SortOrder)
+                .Select(c => new AccountFilterOption(c.Id, CategoryLookup.NameOf(c, _translator)))];
+            SelectedCategory = CategoryOptions.FirstOrDefault(o => o.Id == selectedCategory) ?? CategoryOptions[0];
             HasNoAccounts = accounts.Count == 0;
             HasNoEntriesAtAll = _entries.Count == 0;
             UnreviewedCount = _entries.Count(e => e.Review == ReviewState.Unreviewed);
@@ -210,6 +224,18 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     partial void OnKindIndexChanged(int value) => Refresh();
 
     partial void OnSelectedAccountChanged(AccountFilterOption? value) => Refresh();
+
+    partial void OnSelectedCategoryChanged(AccountFilterOption? value)
+    {
+        if (_loading || _categories is null)
+        {
+            return;
+        }
+
+        _categoryIds = value?.Id is { } id ? [.. _categories.All.Where(c => c.Id == id || c.ParentId == id).Select(c => c.Id)] : null;
+        CategoryFilterName = null;
+        Refresh();
+    }
 
     partial void OnUnreviewedOnlyChanged(bool value) => Refresh();
 
@@ -312,6 +338,10 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             PeriodIndex = 0;
         }
 
+        var loading = _loading;
+        _loading = true;
+        SelectedCategory = CategoryOptions.FirstOrDefault();
+        _loading = loading;
         _categoryIds = null;
         _inTotalsOnly = false;
         CategoryFilterName = null;

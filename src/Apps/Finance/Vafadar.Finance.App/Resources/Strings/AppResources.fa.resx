@@ -1540,4 +1540,46 @@
   <data name="Home_ConfirmedOnly" xml:space="preserve">
     <value>شامل {0} تراکنش بررسی‌نشده · فقط تأییدشده: {1}</value>
   </data>
+  <data name="Category_Merge" xml:space="preserve">
+    <value>ادغام</value>
+  </data>
+  <data name="Category_MergeMessage" xml:space="preserve">
+    <value>همه تراکنش‌ها، برنامه‌ها و سقف‌های بودجه این دسته به «{0}» منتقل می‌شوند و این دسته حذف می‌شود.</value>
+  </data>
+  <data name="Category_MergeInto" xml:space="preserve">
+    <value>ادغام با دسته‌ای دیگر</value>
+  </data>
+  <data name="Category_MoveUp" xml:space="preserve">
+    <value>بالاتر</value>
+  </data>
+  <data name="Category_MoveDown" xml:space="preserve">
+    <value>پایین‌تر</value>
+  </data>
+  <data name="Budget_Accounts" xml:space="preserve">
+    <value>حساب‌های این بودجه</value>
+  </data>
+  <data name="Budget_ScopeLimited" xml:space="preserve">
+    <value>فقط {0} حساب انتخاب‌شده در این بودجه حساب می‌شوند.</value>
+  </data>
+  <data name="Tx_AllCategories" xml:space="preserve">
+    <value>همه دسته‌ها</value>
+  </data>
+  <data name="Settings_DangerZone" xml:space="preserve">
+    <value>حذف داده‌ها</value>
+  </data>
+  <data name="Settings_DeleteAll" xml:space="preserve">
+    <value>حذف همه داده‌ها در این دستگاه</value>
+  </data>
+  <data name="Settings_DeleteAllHint" xml:space="preserve">
+    <value>همه حساب‌ها، تراکنش‌ها، برنامه‌ها، بودجه‌ها و تنظیمات را از این دستگاه پاک می‌کند. فایل‌های پشتیبانی که جای دیگری ذخیره کرده‌اید دست نمی‌خورند.</value>
+  </data>
+  <data name="Settings_DeleteAllTitle" xml:space="preserve">
+    <value>همه چیز حذف شود؟</value>
+  </data>
+  <data name="Settings_DeleteAllMessage" xml:space="preserve">
+    <value>این کار برگشت‌پذیر نیست. اگر ممکن است دوباره به داده‌ها نیاز داشته باشید، اول پشتیبان بگیرید.</value>
+  </data>
+  <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
+    <value>حذف همه داده‌ها را تأیید کنید</value>
+  </data>
 </root>

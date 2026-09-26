@@ -188,6 +188,23 @@ public sealed partial class SettingsViewModel : ViewModelBase
         await _store.SaveSettingsAsync(settings);
     }
 
+    // SEC: deletes every record on this device after two confirmations; onboarding starts again.
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private async Task DeleteAllDataAsync()
+    {
+        if (Shell.Current is null
+            || !await Shell.Current.DisplayAlertAsync(_translator["Settings_DeleteAllTitle"], _translator["Settings_DeleteAllMessage"], _translator["Settings_DeleteAll"], _translator["Common_Cancel"])
+            || !await _lock.ConfirmAsync(_translator["Lock_ConfirmDeleteAll"]))
+        {
+            return;
+        }
+
+        await _store.DeleteAllDataAsync();
+        await _lock.SetEnabledAsync(false);
+        await _reminders.RefreshAsync();
+        (Application.Current as App)?.ShowOnboarding();
+    }
+
     [CommunityToolkit.Mvvm.Input.RelayCommand]
     private async Task EnableNotificationsAsync() => NotificationsEnabled = await _reminders.EnsurePermissionAsync();
 

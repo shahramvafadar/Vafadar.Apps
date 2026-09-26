@@ -17,10 +17,12 @@
                        SemanticProperties.Description="{v:Translate Common_Search}" />
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{StaticResource Primary}" />
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}" />
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
+                <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
+                        SemanticProperties.Description="{v:Translate Entry_Category}" />
                 <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
                         SemanticProperties.Description="{v:Translate Entry_Account}" />
-                <Button Grid.Column="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="18" MinimumHeightRequest="36"
+                <Button Grid.Column="2" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="18" MinimumHeightRequest="36"
                         Padding="14,0" FontSize="14" BackgroundColor="{StaticResource WarningBackground}" TextColor="{StaticResource WarningText}"
                         IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                     <Button.Triggers>

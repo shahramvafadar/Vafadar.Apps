@@ -1540,4 +1540,46 @@
   <data name="Home_ConfirmedOnly" xml:space="preserve">
     <value>Enthält {0} ungeprüfte Buchungen · nur bestätigt: {1}</value>
   </data>
+  <data name="Category_Merge" xml:space="preserve">
+    <value>Zusammenführen</value>
+  </data>
+  <data name="Category_MergeMessage" xml:space="preserve">
+    <value>Alle Buchungen, Pläne und Budgetgrenzen dieser Kategorie gehen an „{0}“ über, und diese Kategorie wird entfernt.</value>
+  </data>
+  <data name="Category_MergeInto" xml:space="preserve">
+    <value>Mit anderer Kategorie zusammenführen</value>
+  </data>
+  <data name="Category_MoveUp" xml:space="preserve">
+    <value>Nach oben</value>
+  </data>
+  <data name="Category_MoveDown" xml:space="preserve">
+    <value>Nach unten</value>
+  </data>
+  <data name="Budget_Accounts" xml:space="preserve">
+    <value>Konten in diesem Budget</value>
+  </data>
+  <data name="Budget_ScopeLimited" xml:space="preserve">
+    <value>Nur {0} ausgewählte Konten zählen zu diesem Budget.</value>
+  </data>
+  <data name="Tx_AllCategories" xml:space="preserve">
+    <value>Alle Kategorien</value>
+  </data>
+  <data name="Settings_DangerZone" xml:space="preserve">
+    <value>Daten löschen</value>
+  </data>
+  <data name="Settings_DeleteAll" xml:space="preserve">
+    <value>Alle Daten auf diesem Gerät löschen</value>
+  </data>
+  <data name="Settings_DeleteAllHint" xml:space="preserve">
+    <value>Entfernt alle Konten, Buchungen, Pläne, Budgets und Einstellungen von diesem Gerät. Anderswo gespeicherte Sicherungsdateien bleiben erhalten.</value>
+  </data>
+  <data name="Settings_DeleteAllTitle" xml:space="preserve">
+    <value>Alles löschen?</value>
+  </data>
+  <data name="Settings_DeleteAllMessage" xml:space="preserve">
+    <value>Das kann nicht rückgängig gemacht werden. Erstellen Sie vorher eine Sicherung, falls Sie die Daten noch brauchen.</value>
+  </data>
+  <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
+    <value>Löschen aller Daten bestätigen</value>
+  </data>
 </root>

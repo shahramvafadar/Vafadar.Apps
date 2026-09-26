@@ -70,6 +70,9 @@ public sealed partial class BudgetViewModel : ViewModelBase
     public partial string? CurrencyText { get; set; }
 
     [ObservableProperty]
+    public partial string? ScopeText { get; set; }
+
+    [ObservableProperty]
     public partial bool HasBudget { get; set; }
 
     [ObservableProperty]
@@ -130,6 +133,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
         _budget = await _store.GetBudgetAsync(_year, _month, _calendar, _currency);
         HasBudget = _budget is not null;
+        ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
         var (py, pm) = PeriodMath.Previous(_year, _month);
         CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(py, pm, _calendar, _currency) is not null;
 

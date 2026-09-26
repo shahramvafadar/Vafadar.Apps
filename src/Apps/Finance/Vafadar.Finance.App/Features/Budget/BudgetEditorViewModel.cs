@@ -27,6 +27,17 @@ public sealed partial class LimitInput(Guid categoryId, string name, Symbol icon
     public partial string Text { get; set; } = string.Empty;
 }
 
+/// <summary>An account that the budget may cover (BUD-03).</summary>
+public sealed partial class ScopeAccount(Guid id, string name) : ObservableObject
+{
+    public Guid Id { get; } = id;
+
+    public string Name { get; } = name;
+
+    [ObservableProperty]
+    public partial bool IsIncluded { get; set; } = true;
+}
+
 /// <summary>Creates or edits the budget of one month (BUD-01, BUD-02). Other months are never changed (BUD-07).</summary>
 public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable
 {
@@ -37,6 +48,8 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
     private string _currency = Currencies.Euro.Code;
 
     public ObservableCollection<LimitInput> Limits { get; } = [];
+
+    public ObservableCollection<ScopeAccount> ScopeAccounts { get; } = [];
 
     [ObservableProperty]
     public partial string TotalText { get; set; } = string.Empty;
@@ -75,6 +88,16 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         var culture = localization.CurrentCulture;
         TotalText = _budget?.TotalLimit is { } total ? MoneyText.ForInput(total, _currency, culture) : string.Empty;
         AlertsEnabled = _budget?.AlertsEnabled ?? true;
+
+        // Default scope: accounts in totals with the budget currency; an explicit list narrows it (BUD-03).
+        ScopeAccounts.Clear();
+        foreach (var account in (await store.GetAccountsAsync(includeArchived: false)).Where(a => a.IncludeInTotals && a.CurrencyCode == _currency))
+        {
+            ScopeAccounts.Add(new ScopeAccount(account.Id, account.Name)
+            {
+                IsIncluded = _budget is not { AccountIds.Count: > 0 } || _budget.AccountIds.Contains(account.Id),
+            });
+        }
 
         var lookup = new CategoryLookup(await store.GetCategoriesAsync(), translator);
         Limits.Clear();
@@ -131,6 +154,7 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         budget.TotalLimit = total;
         budget.CategoryLimits = limits;
         budget.AlertsEnabled = AlertsEnabled;
+        budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
         await store.SaveBudgetAsync(budget);
         await Shell.Current.GoToAsync("..");
     }

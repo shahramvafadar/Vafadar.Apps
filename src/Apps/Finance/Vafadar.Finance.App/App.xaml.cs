@@ -37,6 +37,15 @@ public partial class App : Application
         }
     }
 
+    /// <summary>Shows onboarding again, e.g. after all data was deleted.</summary>
+    public void ShowOnboarding()
+    {
+        if (Windows.FirstOrDefault() is { } window)
+        {
+            window.Page = _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        }
+    }
+
     protected override Window CreateWindow(IActivationState? activationState)
     {
         var settings = _services.GetRequiredService<FinanceStore>().GetSettings();

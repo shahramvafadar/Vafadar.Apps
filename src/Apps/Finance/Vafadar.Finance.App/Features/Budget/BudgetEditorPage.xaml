@@ -35,6 +35,21 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Accounts covered (BUD-03, Advanced) -->
+                <Label Text="{v:Translate Budget_Accounts}" Style="{StaticResource SectionHeader}" IsVisible="{Binding IsAdvanced}" />
+                <Border Style="{StaticResource Card}" Padding="16,4" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding ScopeAccounts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:ScopeAccount">
+                                <Grid ColumnDefinitions="Auto,*" MinimumHeightRequest="48">
+                                    <CheckBox IsChecked="{Binding IsIncluded}" Color="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
                 <Label Text="{Binding HiddenLimitsText}" Style="{StaticResource Secondary}" IsVisible="{Binding HiddenLimitsText, Converter={StaticResource IsNotNullConverter}}" />
                 <Label Text="{v:Translate Budget_Categories}" Style="{StaticResource SectionHeader}" IsVisible="{Binding IsAdvanced}" />
                 <Label Text="{v:Translate Budget_CategoriesHint}" Style="{StaticResource Secondary}" IsVisible="{Binding IsAdvanced}" />

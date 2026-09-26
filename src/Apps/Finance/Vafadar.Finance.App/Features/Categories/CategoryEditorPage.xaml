@@ -86,6 +86,20 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Order and merge (CAT-02) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsExisting}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Category_MoveUp}" Command="{Binding MoveUpCommand}" />
+                            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Category_MoveDown}" Command="{Binding MoveDownCommand}" />
+                        </Grid>
+                        <Label Text="{v:Translate Category_MergeInto}" Style="{StaticResource FieldLabel}" />
+                        <Picker ItemsSource="{Binding MergeTargets}" SelectedItem="{Binding MergeTarget}" SemanticProperties.Description="{v:Translate Category_MergeInto}" />
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Category_Merge}" Command="{Binding MergeCommand}"
+                                IsEnabled="{Binding MergeTarget, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Category_Archive}" Command="{Binding ToggleArchiveCommand}"
                         IsVisible="{Binding IsExisting}">
                     <Button.Triggers>

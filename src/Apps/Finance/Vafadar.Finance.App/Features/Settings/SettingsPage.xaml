@@ -90,6 +90,15 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Label Text="{v:Translate Settings_DangerZone}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{v:Translate Settings_DeleteAllHint}" Style="{StaticResource Secondary}" />
+                    <Button Text="{v:Translate Settings_DeleteAll}" Command="{Binding DeleteAllDataCommand}" BackgroundColor="Transparent"
+                            TextColor="{StaticResource ExpenseText}" BorderColor="{StaticResource ExpenseText}" BorderWidth="1" />
+                </VerticalStackLayout>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 

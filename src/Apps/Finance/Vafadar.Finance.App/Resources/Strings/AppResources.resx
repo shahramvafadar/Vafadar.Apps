@@ -1544,4 +1544,46 @@
   <data name="Home_ConfirmedOnly" xml:space="preserve">
     <value>Includes {0} unreviewed entries · confirmed only: {1}</value>
   </data>
+  <data name="Category_Merge" xml:space="preserve">
+    <value>Merge</value>
+  </data>
+  <data name="Category_MergeMessage" xml:space="preserve">
+    <value>All entries, plans and budget limits of this category move to "{0}", and this category is removed.</value>
+  </data>
+  <data name="Category_MergeInto" xml:space="preserve">
+    <value>Merge into another category</value>
+  </data>
+  <data name="Category_MoveUp" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="Category_MoveDown" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="Budget_Accounts" xml:space="preserve">
+    <value>Accounts in this budget</value>
+  </data>
+  <data name="Budget_ScopeLimited" xml:space="preserve">
+    <value>Only {0} selected accounts count toward this budget.</value>
+  </data>
+  <data name="Tx_AllCategories" xml:space="preserve">
+    <value>All categories</value>
+  </data>
+  <data name="Settings_DangerZone" xml:space="preserve">
+    <value>Delete data</value>
+  </data>
+  <data name="Settings_DeleteAll" xml:space="preserve">
+    <value>Delete all data on this device</value>
+  </data>
+  <data name="Settings_DeleteAllHint" xml:space="preserve">
+    <value>Removes all accounts, entries, plans, budgets and settings from this device. Backup files you saved elsewhere are not affected.</value>
+  </data>
+  <data name="Settings_DeleteAllTitle" xml:space="preserve">
+    <value>Delete everything?</value>
+  </data>
+  <data name="Settings_DeleteAllMessage" xml:space="preserve">
+    <value>This cannot be undone. Create a backup first if you may need the data again.</value>
+  </data>
+  <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
+    <value>Confirm deleting all data</value>
+  </data>
 </root>
