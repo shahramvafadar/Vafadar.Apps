@@ -83,6 +83,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? DueText { get; set; }
 
+    // The next contract date within 30 days, e.g. the last day to cancel a subscription (F2-CON-01).
+    [ObservableProperty]
+    public partial string? ContractText { get; set; }
+
+    private Guid? _contractPlanId;
+
     [ObservableProperty]
     public partial bool HasAttention { get; set; }
 
@@ -225,7 +231,7 @@ public sealed partial class HomeViewModel : ViewModelBase
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown));
         }
 
-        HasAttention = UnreviewedCount > 0 || DueCount > 0;
+        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -296,6 +302,13 @@ public sealed partial class HomeViewModel : ViewModelBase
         var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start)).ToList();
         DueCount = due.Count;
         DueText = DueCount > 0 ? _translator.Format("Home_Due", DueCount) : null;
+
+        var contracts = Core.Reminders.ContractReminderPlanner.Upcoming(await _plans.GetSchedulesAsync(), today);
+        _contractPlanId = contracts.Count > 0 ? contracts[0].Schedule.Id : null;
+        ContractText = contracts.Count == 0 ? null
+            : _translator.Format(contracts[0].Kind == Core.Reminders.ContractDateKind.Cancellation ? "Home_CancelBy" : "Home_ReviewOn",
+                contracts[0].Schedule.Name, _dates.Format(contracts[0].Date, DateFormatStyle.Long))
+              + (contracts.Count > 1 ? " " + _translator.Format("Home_MoreContracts", contracts.Count - 1) : string.Empty);
 
         Upcoming.Clear();
         foreach (var occurrence in schedules
@@ -424,6 +437,11 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenUnreviewedAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });
+
+    [RelayCommand]
+    private Task OpenContractAsync() => _contractPlanId is { } id
+        ? Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = id })
+        : Task.CompletedTask;
 
     [RelayCommand]
     private Task OpenDueAsync() => Shell.Current.GoToAsync("//plans");

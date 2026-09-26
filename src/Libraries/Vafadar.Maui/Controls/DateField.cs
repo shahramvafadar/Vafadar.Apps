@@ -7,14 +7,16 @@ namespace Vafadar.Maui.Controls;
 
 /// <summary>
 /// A date input that shows the date in the user's display calendar and opens a calendar dialog in the same calendar
-/// (Gregorian or Persian). The value is always a Gregorian <see cref="DateOnly"/>.
+/// (Gregorian or Persian). The value is always a Gregorian <see cref="DateOnly"/>. An unset value (before 1900, e.g.
+/// <c>default(DateOnly)</c>) becomes today: the native calendars cannot show such dates.
 /// </summary>
 public sealed class DateField : ContentView
 {
     /// <summary>Identifies the <see cref="Date"/> property.</summary>
     public static readonly BindableProperty DateProperty = BindableProperty.Create(
         nameof(Date), typeof(DateOnly), typeof(DateField), DateOnly.FromDateTime(DateTime.Today), BindingMode.TwoWay,
-        propertyChanged: (bindable, _, _) => ((DateField)bindable).UpdateText());
+        propertyChanged: (bindable, _, _) => ((DateField)bindable).UpdateText(),
+        coerceValue: (_, value) => value is DateOnly { Year: < 1900 } ? DateOnly.FromDateTime(DateTime.Today) : value);
 
     private readonly Label _text;
     private readonly SfCalendar _calendar;

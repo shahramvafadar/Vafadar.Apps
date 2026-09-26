@@ -67,6 +67,9 @@ internal sealed class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
     {
         builder.Property(s => s.Name).HasMaxLength(200);
         builder.Property(s => s.Note).HasMaxLength(4000);
+        builder.Property(s => s.ContractProvider).HasMaxLength(200);
+        builder.Property(s => s.ContractReference).HasMaxLength(100);
+        builder.Ignore(s => s.HasContract);
         builder.Property(s => s.Icon).HasMaxLength(64);
         builder.HasOne<Account>().WithMany().HasForeignKey(s => s.AccountId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<Account>().WithMany().HasForeignKey(s => s.ToAccountId).OnDelete(DeleteBehavior.Restrict);

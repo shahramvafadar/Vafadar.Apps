@@ -118,6 +118,32 @@ public sealed partial class PlanDetailViewModel(
                 + (schedule.ReminderOnDueDate && schedule.ReminderDaysBefore > 0 ? " · " + translator["Plan_ReminderAlsoDue"] : string.Empty)));
         }
 
+        // Contract details (F2-CON-01); the deadline is to cancel, not to pay.
+        if (schedule.ContractProvider is { } provider)
+        {
+            Lines.Add(new DetailLine(translator["Contract_Provider"], provider));
+        }
+
+        if (schedule.ContractReference is { } reference)
+        {
+            Lines.Add(new DetailLine(translator["Contract_Reference"], reference));
+        }
+
+        if (schedule.ContractEnd is { } contractEnd)
+        {
+            Lines.Add(new DetailLine(translator["Contract_End"], dates.Format(contractEnd, DateFormatStyle.Long) + (schedule.ContractRenews ? " · " + translator["Contract_RenewsShort"] : string.Empty)));
+        }
+
+        if (schedule.CancellationDeadline is { } deadline)
+        {
+            Lines.Add(new DetailLine(translator["Contract_Deadline"], dates.Format(deadline, DateFormatStyle.Long)));
+        }
+
+        if (schedule.ReviewDate is { } review)
+        {
+            Lines.Add(new DetailLine(translator["Contract_Review"], dates.Format(review, DateFormatStyle.Long)));
+        }
+
         if (!string.IsNullOrEmpty(schedule.Note))
         {
             Lines.Add(new DetailLine(translator["Entry_Note"], schedule.Note));

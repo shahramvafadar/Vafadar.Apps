@@ -209,6 +209,9 @@ internal static class DebugSnapshots
         };
         var phone = new Schedule
         {
+            ContractProvider = "Mobile Co.",
+            CancellationDeadline = today.AddDays(20),
+            ReviewDate = today.AddMonths(4),
             Name = "Phone bill",
             AccountId = checking.Id,
             CategoryId = Category("Communication"),

@@ -1951,4 +1951,49 @@
   <data name="Occurrence_PaidSoFarUnknown" xml:space="preserve">
     <value>Bisher bezahlt {0}; der Gesamtbetrag ist unbekannt.</value>
   </data>
+  <data name="Contract_Title" xml:space="preserve">
+    <value>Vertragsdetails</value>
+  </data>
+  <data name="Contract_Provider" xml:space="preserve">
+    <value>Anbieter</value>
+  </data>
+  <data name="Contract_Reference" xml:space="preserve">
+    <value>Vertrags- oder Kundennummer</value>
+  </data>
+  <data name="Contract_End" xml:space="preserve">
+    <value>Vertragslaufzeit endet</value>
+  </data>
+  <data name="Contract_Renews" xml:space="preserve">
+    <value>Verlängert sich automatisch</value>
+  </data>
+  <data name="Contract_RenewsShort" xml:space="preserve">
+    <value>verlängert sich automatisch</value>
+  </data>
+  <data name="Contract_Deadline" xml:space="preserve">
+    <value>Letzter Kündigungstag</value>
+  </data>
+  <data name="Contract_Review" xml:space="preserve">
+    <value>Überprüfen am</value>
+  </data>
+  <data name="Contract_Hint" xml:space="preserve">
+    <value>Sie werden 14 Tage vor dem letzten Kündigungstag und am Tag selbst erinnert. Zanance erinnert nur; kündigen müssen Sie selbst, und der Plan läuft weiter, bis Sie ihn beenden.</value>
+  </data>
+  <data name="Reminder_ContractGeneric" xml:space="preserve">
+    <value>Ein Vertragstermin steht bevor.</value>
+  </data>
+  <data name="Reminder_CancelBy" xml:space="preserve">
+    <value>Letzter Kündigungstag: {0}</value>
+  </data>
+  <data name="Reminder_ReviewOn" xml:space="preserve">
+    <value>Zeit, den Vertrag zu überprüfen ({0})</value>
+  </data>
+  <data name="Home_CancelBy" xml:space="preserve">
+    <value>{0}: letzter Kündigungstag ist {1}</value>
+  </data>
+  <data name="Home_ReviewOn" xml:space="preserve">
+    <value>{0}: Vertrag am {1} überprüfen</value>
+  </data>
+  <data name="Home_MoreContracts" xml:space="preserve">
+    <value>(+{0} weitere)</value>
+  </data>
 </root>

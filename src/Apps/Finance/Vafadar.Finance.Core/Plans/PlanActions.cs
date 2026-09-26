@@ -174,5 +174,11 @@ public static class PlanActions
         ReminderDaysBefore = schedule.ReminderDaysBefore,
         ReminderTime = schedule.ReminderTime,
         ReminderOnDueDate = schedule.ReminderOnDueDate,
+        ContractProvider = schedule.ContractProvider,
+        ContractReference = schedule.ContractReference,
+        ContractEnd = schedule.ContractEnd,
+        ContractRenews = schedule.ContractRenews,
+        CancellationDeadline = schedule.CancellationDeadline,
+        ReviewDate = schedule.ReviewDate,
     };
 }

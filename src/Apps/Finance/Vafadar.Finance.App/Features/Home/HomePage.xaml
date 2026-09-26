@@ -71,6 +71,13 @@
                             <fi:SymbolIcon Symbol="CalendarClock" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding DueText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenContractCommand}" />
+                            </Grid.GestureRecognizers>
+                            <fi:SymbolIcon Symbol="DocumentText" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding ContractText}" FontSize="15" VerticalOptions="Center" />
+                        </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenUnreviewedCommand}" />

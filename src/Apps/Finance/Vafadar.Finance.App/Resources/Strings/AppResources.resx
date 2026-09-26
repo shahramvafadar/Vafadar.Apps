@@ -1955,4 +1955,49 @@
   <data name="Occurrence_PaidSoFarUnknown" xml:space="preserve">
     <value>Paid so far {0}; the total amount is unknown.</value>
   </data>
+  <data name="Contract_Title" xml:space="preserve">
+    <value>Contract details</value>
+  </data>
+  <data name="Contract_Provider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="Contract_Reference" xml:space="preserve">
+    <value>Contract or customer number</value>
+  </data>
+  <data name="Contract_End" xml:space="preserve">
+    <value>Contract term ends</value>
+  </data>
+  <data name="Contract_Renews" xml:space="preserve">
+    <value>Renews automatically</value>
+  </data>
+  <data name="Contract_RenewsShort" xml:space="preserve">
+    <value>renews automatically</value>
+  </data>
+  <data name="Contract_Deadline" xml:space="preserve">
+    <value>Last day to cancel</value>
+  </data>
+  <data name="Contract_Review" xml:space="preserve">
+    <value>Review on</value>
+  </data>
+  <data name="Contract_Hint" xml:space="preserve">
+    <value>You get a reminder 14 days before the last day to cancel and on the day itself. Zanance only reminds you; cancelling is up to you, and the plan keeps running until you end it.</value>
+  </data>
+  <data name="Reminder_ContractGeneric" xml:space="preserve">
+    <value>A contract date is coming up.</value>
+  </data>
+  <data name="Reminder_CancelBy" xml:space="preserve">
+    <value>Last day to cancel: {0}</value>
+  </data>
+  <data name="Reminder_ReviewOn" xml:space="preserve">
+    <value>Time to review the contract ({0})</value>
+  </data>
+  <data name="Home_CancelBy" xml:space="preserve">
+    <value>{0}: last day to cancel is {1}</value>
+  </data>
+  <data name="Home_ReviewOn" xml:space="preserve">
+    <value>{0}: review the contract on {1}</value>
+  </data>
+  <data name="Home_MoreContracts" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
 </root>

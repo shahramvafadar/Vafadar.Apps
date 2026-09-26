@@ -192,6 +192,49 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Contract details (F2-CON-01), Advanced -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout Spacing="4">
+                        <Button Text="{v:Translate Contract_Title}" Command="{Binding ToggleContractCommand}" BackgroundColor="Transparent"
+                                TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" />
+                        <VerticalStackLayout IsVisible="{Binding ShowContract}" Spacing="4">
+                            <Label Text="{v:Translate Contract_Provider}" Style="{StaticResource FieldLabel}" />
+                            <Entry Text="{Binding ContractProvider}" MaxLength="200" SemanticProperties.Description="{v:Translate Contract_Provider}" />
+                            <Label Text="{v:Translate Contract_Reference}" Style="{StaticResource FieldLabel}" />
+                            <Entry Text="{Binding ContractReference}" MaxLength="100" SemanticProperties.Description="{v:Translate Contract_Reference}" />
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                <Label Text="{v:Translate Contract_End}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{StaticResource Primary}" />
+                            </Grid>
+                            <VerticalStackLayout IsVisible="{Binding HasContractEnd}" Spacing="4">
+                                <v:DateField Date="{Binding ContractEnd}" />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{v:Translate Contract_Renews}" VerticalOptions="Center" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{StaticResource Primary}" />
+                                </Grid>
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                <Label Text="{v:Translate Contract_Deadline}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{StaticResource Primary}" />
+                            </Grid>
+                            <VerticalStackLayout IsVisible="{Binding HasCancellationDeadline}">
+                                <v:DateField Date="{Binding CancellationDeadline}" />
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                <Label Text="{v:Translate Contract_Review}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{StaticResource Primary}" />
+                            </Grid>
+                            <VerticalStackLayout IsVisible="{Binding HasReviewDate}">
+                                <v:DateField Date="{Binding ReviewDate}" />
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate Contract_Hint}" Style="{StaticResource Secondary}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />

@@ -77,6 +77,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         CurrencyCode = Currencies.Euro.Code;
         Accounts = [];
         Start = Today;
+        ContractEnd = Today.AddYears(1);
+        CancellationDeadline = Today.AddMonths(11);
+        ReviewDate = Today.AddMonths(6);
         EndDate = Today.AddYears(1);
         ApplyFrom = Today;
         ReminderDaysText = "3";
@@ -205,6 +208,40 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     [ObservableProperty]
     public partial string Note { get; set; }
+
+    // Contract details (F2-CON-01), Advanced mode; kept as they are in Simple mode.
+    [ObservableProperty]
+    public partial bool ShowContract { get; set; }
+
+    [ObservableProperty]
+    public partial string ContractProvider { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string ContractReference { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool HasContractEnd { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly ContractEnd { get; set; }
+
+    [ObservableProperty]
+    public partial bool ContractRenews { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasCancellationDeadline { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly CancellationDeadline { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasReviewDate { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly ReviewDate { get; set; }
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleContract() => ShowContract = !ShowContract;
 
     [ObservableProperty]
     public partial DateOnly ApplyFrom { get; set; }
@@ -376,6 +413,16 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         ReminderTime = schedule.ReminderTime.ToTimeSpan();
         ReminderOnDueDate = schedule.ReminderOnDueDate;
         Note = schedule.Note ?? string.Empty;
+        ContractProvider = schedule.ContractProvider ?? string.Empty;
+        ContractReference = schedule.ContractReference ?? string.Empty;
+        HasContractEnd = schedule.ContractEnd is not null;
+        ContractEnd = schedule.ContractEnd ?? Today.AddYears(1);
+        ContractRenews = schedule.ContractRenews;
+        HasCancellationDeadline = schedule.CancellationDeadline is not null;
+        CancellationDeadline = schedule.CancellationDeadline ?? Today.AddMonths(11);
+        HasReviewDate = schedule.ReviewDate is not null;
+        ReviewDate = schedule.ReviewDate ?? Today.AddMonths(6);
+        ShowContract = schedule.HasContract;
         BuildCategories(schedule.CategoryId);
     }
 
@@ -613,6 +660,12 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             target.Amount = amount;
             target.Rule = rule;
             target.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.Trim();
+            target.ContractProvider = string.IsNullOrWhiteSpace(ContractProvider) ? null : ContractProvider.Trim();
+            target.ContractReference = string.IsNullOrWhiteSpace(ContractReference) ? null : ContractReference.Trim();
+            target.ContractEnd = HasContractEnd ? ContractEnd : null;
+            target.ContractRenews = HasContractEnd && ContractRenews;
+            target.CancellationDeadline = HasCancellationDeadline ? CancellationDeadline : null;
+            target.ReviewDate = HasReviewDate ? ReviewDate : null;
             target.ReminderEnabled = ReminderEnabled;
             target.ReminderDaysBefore = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), NumberStyles.None, CultureInfo.InvariantCulture, out var days) ? Math.Clamp(days, 0, 60) : 3;
             target.ReminderTime = TimeOnly.FromTimeSpan(ReminderTime ?? new TimeSpan(9, 0, 0));
@@ -673,5 +726,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private string Snapshot() => string.Join('|',
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
         CalendarIndex, DayRuleIndex, MissingDayIndex, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
-        ReminderTime, ReminderOnDueDate, Note, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,
+        HasCancellationDeadline, CancellationDeadline, HasReviewDate, ReviewDate, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

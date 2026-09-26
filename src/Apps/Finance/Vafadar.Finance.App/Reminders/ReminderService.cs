@@ -128,6 +128,19 @@ public sealed class ReminderService(
                     CanSnooze: true);
             }).ToList();
 
+            // Contract dates (F2-CON-01): cancellation deadlines and review dates; names only when details are allowed.
+            notifications.AddRange(ContractReminderPlanner.Plan(schedules, now).Select(reminder =>
+            {
+                var link = string.Create(CultureInfo.InvariantCulture, $"plan|{reminder.Schedule.Id}");
+                if (!settings.NotificationsShowDetails)
+                {
+                    return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_ContractGeneric"], reminder.NotifyAt, link);
+                }
+
+                var key = reminder.Kind == ContractDateKind.Cancellation ? "Reminder_CancelBy" : "Reminder_ReviewOn";
+                return new ReminderNotification(reminder.Id, reminder.Schedule.Name, translator.Format(key, dates.Format(reminder.Date, DateFormatStyle.Long)), reminder.NotifyAt, link);
+            }));
+
             // Snoozed reminders survive the rebuild while their occurrence is still open (REM-04, AT-36).
             bool IsOpen(string link)
             {

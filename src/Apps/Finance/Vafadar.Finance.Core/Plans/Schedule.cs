@@ -102,6 +102,31 @@ public sealed class Schedule : Entity, IAuditableEntity
     /// <summary>Gets or sets the local time of the reminder.</summary>
     public TimeOnly ReminderTime { get; set; } = new(9, 0);
 
+    /// <summary>Gets or sets the contract partner, e.g. the provider of a subscription (F2-CON-01).</summary>
+    public string? ContractProvider { get; set; }
+
+    /// <summary>Gets or sets the contract or customer number.</summary>
+    public string? ContractReference { get; set; }
+
+    /// <summary>Gets or sets the end of the current contract term.</summary>
+    public DateOnly? ContractEnd { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether the contract renews automatically at <see cref="ContractEnd"/>.</summary>
+    public bool ContractRenews { get; set; }
+
+    /// <summary>
+    /// Gets or sets the last day to cancel. It is not a payment due date, and the app only reminds; it never marks a
+    /// contract as cancelled by itself (F2-CON-01, F2-CON-03).
+    /// </summary>
+    public DateOnly? CancellationDeadline { get; set; }
+
+    /// <summary>Gets or sets a date to review the contract, e.g. to compare prices.</summary>
+    public DateOnly? ReviewDate { get; set; }
+
+    /// <summary>Gets a value indicating whether any contract detail is set.</summary>
+    public bool HasContract => ContractProvider is not null || ContractReference is not null || ContractEnd is not null
+        || CancellationDeadline is not null || ReviewDate is not null;
+
     /// <summary>
     /// Gets or sets a value indicating whether a second reminder fires on the due date itself, at the same time
     /// (REM-01, Advanced mode). It has no effect when the first reminder is already on the due date.
