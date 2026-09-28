@@ -181,6 +181,11 @@ public sealed partial class EntryDetailViewModel(
             Lines.Add(new DetailLine(translator["Entry_Note"], entry.Note));
         }
 
+        if (entry.Tags.Count > 0)
+        {
+            Lines.Add(new DetailLine(translator["Entry_Tags"], string.Join("  ", entry.Tags.Select(EntryTags.Display))));
+        }
+
         if (entry.Source == EntrySource.Schedule)
         {
             Lines.Add(new DetailLine(string.Empty, translator["Entry_FromPlan"]));

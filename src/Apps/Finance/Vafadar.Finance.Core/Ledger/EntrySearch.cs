@@ -131,6 +131,7 @@ public static class EntrySearch
     private static bool MatchesText(LedgerEntry entry, string text, Func<Guid, string?> categoryName, IReadOnlyDictionary<Guid, Account> accounts)
     {
         if (Contains(entry.Title, text) || Contains(entry.Payee, text) || Contains(entry.Note, text)
+            || entry.Tags.Any(tag => Contains(tag, text.TrimStart('#')))
             || (entry.CategoryId is { } category && Contains(categoryName(category), text)))
         {
             return true;

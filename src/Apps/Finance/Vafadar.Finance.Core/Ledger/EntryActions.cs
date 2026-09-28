@@ -26,6 +26,7 @@ public static class EntryActions
             Icon = source.Icon,
             OriginalAmount = source.OriginalAmount,
             OriginalCurrencyCode = source.OriginalCurrencyCode,
+            Tags = [.. source.Tags],
             Review = ReviewState.Confirmed,
             Source = EntrySource.Manual,
         };
@@ -170,6 +171,7 @@ public static class EntryActions
                 Icon = first.Icon,
                 Review = first.Review,
                 Source = first.Source,
+                Tags = [.. first.Tags],
             };
             part.GroupId = group;
             part.CategoryId = shares[i].CategoryId;

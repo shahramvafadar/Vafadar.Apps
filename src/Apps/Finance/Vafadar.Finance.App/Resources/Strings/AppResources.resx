@@ -2051,4 +2051,22 @@
   <data name="Home_Reimbursements" xml:space="preserve">
     <value>{0} expenses still to be paid back</value>
   </data>
+  <data name="Entry_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Entry_TagsPlaceholder" xml:space="preserve">
+    <value>e.g. vacation, car (comma-separated)</value>
+  </data>
+  <data name="Report_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Report_NoTags" xml:space="preserve">
+    <value>No tagged spending in this period. Add tags in an entry's details.</value>
+  </data>
+  <data name="Report_TagCount" xml:space="preserve">
+    <value>{0} entries</value>
+  </data>
+  <data name="Report_TagsNote" xml:space="preserve">
+    <value>An entry with several tags appears under each of them, so the tags do not add up to your total spending.</value>
+  </data>
 </root>

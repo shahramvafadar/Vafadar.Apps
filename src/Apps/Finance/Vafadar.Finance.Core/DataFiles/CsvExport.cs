@@ -23,7 +23,7 @@ public static class CsvExport
     ];
 
     /// <summary>All columns written by this version.</summary>
-    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by"];
+    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by", "tags"];
 
     /// <summary>Returns the CSV text.</summary>
     /// <param name="entries">Entries to export (already filtered by period and accounts).</param>
@@ -69,6 +69,7 @@ public static class CsvExport
                 entry.GroupId?.ToString("D", CultureInfo.InvariantCulture) ?? string.Empty,
                 entry.ReimbursableAmount is { } reimbursable ? Amount(reimbursable, currency) : string.Empty,
                 includeNotes ? Csv.Text(entry.ReimbursedBy) : string.Empty,
+                Csv.Text(EntryTags.Format(entry.Tags)),
             ]);
         }
 

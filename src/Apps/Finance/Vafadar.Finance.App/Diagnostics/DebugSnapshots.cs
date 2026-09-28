@@ -110,6 +110,7 @@ internal static class DebugSnapshots
             ("report-trend", AppShell.ReportsRoute, new() { ["report"] = 2 }),
             ("report-accounts", AppShell.ReportsRoute, new() { ["report"] = 3 }),
             ("report-plans", AppShell.ReportsRoute, new() { ["report"] = 4 }),
+            ("report-tags", AppShell.ReportsRoute, new() { ["report"] = 5 }),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("more", "//more", null),
@@ -153,12 +154,12 @@ internal static class DebugSnapshots
         await store.SaveAccountAsync(savings);
 
         var today = DateOnly.FromDateTime(DateTime.Today);
-        var groceries = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 4_380, Date = today, CategoryId = Category("Food"), Title = "Groceries", Payee = "Market" };
+        var groceries = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 4_380, Date = today, CategoryId = Category("Food"), Title = "Groceries", Payee = "Market", Tags = ["home"] };
         var salary = new LedgerEntry { Kind = EntryKind.Income, AccountId = checking.Id, Amount = 250_000, Date = today, CategoryId = Category("Salary") };
         var rent = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 95_000, Date = today.AddDays(-1), CategoryId = Category("Housing"), Title = "Rent" };
         var transfer = new LedgerEntry { Kind = EntryKind.Transfer, AccountId = checking.Id, ToAccountId = savings.Id, Amount = 20_000, Date = today.AddDays(-1) };
         var fee = EntryActions.SyncTransferFee(transfer, null, 150, Category(DefaultCategories.Fees))!;
-        var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 18_000, Date = today.AddDays(-2), CategoryId = Category("Other"), Title = "Hotel", ReimbursableAmount = 18_000, ReimbursedBy = "Employer" };
+        var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 18_000, Date = today.AddDays(-2), CategoryId = Category("Other"), Title = "Hotel", ReimbursableAmount = 18_000, ReimbursedBy = "Employer", Tags = ["work trip"] };
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee, hotel], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));

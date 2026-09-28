@@ -30,6 +30,9 @@ public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines)
 public sealed record TrendPoint(string Label, double Income, double Expense, string IncomeText, string ExpenseText, string ResultText);
 
 /// <summary>A plan with planned and recorded amounts.</summary>
+/// <summary>Spending of one tag.</summary>
+public sealed record TagReportRow(string Tag, string Name, string AmountText, string Details);
+
 public sealed record PlanReportRow(string Name, string PlannedText, string ActualText, string Details);
 
 /// <summary>
@@ -62,7 +65,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         _localization = localization;
         _time = time;
         PeriodKindNames = [translator["Report_Month"], translator["Report_Year"]];
-        ReportNames = [translator["Report_Expenses"], translator["Report_IncomeExpense"], translator["Report_Trend"], translator["Report_Accounts"], translator["Report_Plans"]];
+        ReportNames = [translator["Report_Expenses"], translator["Report_IncomeExpense"], translator["Report_Trend"], translator["Report_Accounts"], translator["Report_Plans"], translator["Report_Tags"]];
         PeriodText = string.Empty;
     }
 
@@ -124,6 +127,14 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public bool ShowPlans => ReportIndex == 4;
 
+    public bool ShowTags => ReportIndex == 5;
+
+    // Spending per tag (F2-TX-04, REP-08). An entry with several tags appears under each, so tags do not add up.
+    public ObservableCollection<TagReportRow> TagRows { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasTagRows { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
@@ -137,6 +148,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         OnPropertyChanged(nameof(ShowTrend));
         OnPropertyChanged(nameof(ShowAccounts));
         OnPropertyChanged(nameof(ShowPlans));
+        OnPropertyChanged(nameof(ShowTags));
         _ = LoadAsync();
     }
 
@@ -189,8 +201,11 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             case 3:
                 BuildAccounts(accounts, entries, culture);
                 break;
-            default:
+            case 4:
                 await BuildPlansAsync(accounts, entries, culture);
+                break;
+            default:
+                BuildTags(accounts, entries, culture);
                 break;
         }
     }
@@ -316,6 +331,27 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             Accounts.Add(new AccountReport(account.Name, lines));
         }
     }
+
+    private void BuildTags(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
+    {
+        TagRows.Clear();
+        var inPeriod = entries.Where(e => e.Date >= _from && e.Date <= _to && e.Tags.Count > 0).ToList();
+        foreach (var tag in EntryTags.InUse(inPeriod))
+        {
+            var tagged = inPeriod.Where(e => e.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase)).ToList();
+            var spent = Core.Budgets.BudgetCalculator.NetExpense(accounts, tagged, _from, _to, _currency);
+            if (spent != 0)
+            {
+                TagRows.Add(new TagReportRow(tag, EntryTags.Display(tag), MoneyText.Format(spent, _currency, culture), _translator.Format("Report_TagCount", tagged.Count)));
+            }
+        }
+
+        HasTagRows = TagRows.Count > 0;
+    }
+
+    [RelayCommand]
+    private Task OpenTagAsync(TagReportRow row) =>
+        Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["from"] = _from, ["to"] = _to, ["kind"] = KindFilter.Expenses, ["inTotals"] = true, ["search"] = "#" + row.Tag });
 
     private async Task BuildPlansAsync(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
     {

@@ -2047,4 +2047,22 @@
   <data name="Home_Reimbursements" xml:space="preserve">
     <value>بازپرداخت {0} هزینه هنوز مانده است</value>
   </data>
+  <data name="Entry_Tags" xml:space="preserve">
+    <value>برچسب‌ها</value>
+  </data>
+  <data name="Entry_TagsPlaceholder" xml:space="preserve">
+    <value>مثلاً سفر، ماشین (با ویرگول جدا کنید)</value>
+  </data>
+  <data name="Report_Tags" xml:space="preserve">
+    <value>برچسب‌ها</value>
+  </data>
+  <data name="Report_NoTags" xml:space="preserve">
+    <value>در این دوره هزینهٔ برچسب‌دار نیست. برچسب را در جزئیات تراکنش اضافه کنید.</value>
+  </data>
+  <data name="Report_TagCount" xml:space="preserve">
+    <value>تعداد: {0}</value>
+  </data>
+  <data name="Report_TagsNote" xml:space="preserve">
+    <value>تراکنشی با چند برچسب زیر هر کدام دیده می‌شود، پس جمع برچسب‌ها با کل هزینه برابر نیست.</value>
+  </data>
 </root>

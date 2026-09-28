@@ -181,6 +181,26 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string ReimbursedBy { get; set; } = string.Empty;
 
+    // Tags (F2-TX-04): typed comma-separated, with the most used tags one tap away.
+    [ObservableProperty]
+    public partial string TagsText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial IReadOnlyList<string> TagSuggestions { get; set; } = [];
+
+    private IReadOnlyList<string> _tagsInUse = [];
+
+    partial void OnTagsTextChanged(string value) => UpdateTagSuggestions();
+
+    private void UpdateTagSuggestions()
+    {
+        var current = EntryTags.Parse(TagsText);
+        TagSuggestions = [.. _tagsInUse.Where(t => !current.Contains(t, StringComparer.CurrentCultureIgnoreCase)).Take(8)];
+    }
+
+    [RelayCommand]
+    private void AddTag(string tag) => TagsText = EntryTags.Format(EntryTags.Normalize([.. EntryTags.Parse(TagsText), tag]));
+
     [ObservableProperty]
     public partial bool ShowCategories { get; set; }
 
@@ -344,6 +364,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
         ToAccounts = Accounts;
         HasNoAccounts = Accounts.Count == 0;
+        _tagsInUse = EntryTags.InUse(await _store.GetEntriesAsync(Today.AddYears(-2), Today.AddYears(1)));
+        UpdateTagSuggestions();
     }
 
     private void LoadFrom(LedgerEntry entry)
@@ -389,7 +411,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ReimbursableEnabled = entry.ReimbursableAmount is > 0;
         ReimbursableText = entry.ReimbursableAmount is { } reimbursable ? MoneyText.ForInput(reimbursable, currency, culture) : string.Empty;
         ReimbursedBy = entry.ReimbursedBy ?? string.Empty;
-        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled;
+        TagsText = EntryTags.Format(entry.Tags);
+        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled || entry.Tags.Count > 0;
         BuildCategories(entry.CategoryId);
     }
 
@@ -579,6 +602,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             var kind = Kind;
             _entry.Kind = kind;
             _entry.ReimbursableAmount = reimbursableAmount;
+            _entry.Tags = EntryTags.Parse(TagsText);
             _entry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
             _entry.Amount = amount;
             _entry.AccountId = Account.Id;

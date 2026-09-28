@@ -2047,4 +2047,22 @@
   <data name="Home_Reimbursements" xml:space="preserve">
     <value>{0} Ausgaben werden noch erstattet</value>
   </data>
+  <data name="Entry_Tags" xml:space="preserve">
+    <value>Schlagwörter</value>
+  </data>
+  <data name="Entry_TagsPlaceholder" xml:space="preserve">
+    <value>z. B. Urlaub, Auto (durch Komma getrennt)</value>
+  </data>
+  <data name="Report_Tags" xml:space="preserve">
+    <value>Schlagwörter</value>
+  </data>
+  <data name="Report_NoTags" xml:space="preserve">
+    <value>Keine verschlagworteten Ausgaben in diesem Zeitraum. Schlagwörter fügen Sie in den Details einer Buchung hinzu.</value>
+  </data>
+  <data name="Report_TagCount" xml:space="preserve">
+    <value>{0} Buchungen</value>
+  </data>
+  <data name="Report_TagsNote" xml:space="preserve">
+    <value>Eine Buchung mit mehreren Schlagwörtern erscheint unter jedem, daher ergeben die Schlagwörter nicht die Gesamtausgaben.</value>
+  </data>
 </root>

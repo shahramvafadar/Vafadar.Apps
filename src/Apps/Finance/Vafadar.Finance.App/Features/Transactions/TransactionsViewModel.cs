@@ -146,7 +146,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             CategoryFilterName = _categoryIds is null ? null : query.TryGetValue("categoryName", out var name) ? name?.ToString() : null;
             _inTotalsOnly = query.TryGetValue("inTotals", out var inTotals) && inTotals is true;
             UnreviewedOnly = false;
-            SearchText = string.Empty;
+            SearchText = query.TryGetValue("search", out var search) && search is string text ? text : string.Empty;
             _loading = false;
         }
 

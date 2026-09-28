@@ -132,6 +132,8 @@ public static class CsvImport
                 entry.ReimbursedBy = Empty(Cell(19));
             }
 
+            entry.Tags = EntryTags.Parse(Cell(20));
+
             if (kind == EntryKind.Transfer)
             {
                 if (!byName.TryGetValue(Cell(6), out var destination))

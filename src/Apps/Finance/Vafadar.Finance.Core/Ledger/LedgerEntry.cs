@@ -143,6 +143,12 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
     /// <summary>Gets or sets who pays the <see cref="ReimbursableAmount"/> back.</summary>
     public string? ReimbursedBy { get; set; }
 
+    /// <summary>
+    /// Gets or sets free tags such as "vacation 2027" or "car" (F2-TX-04). Tags cut across categories; see
+    /// <see cref="EntryTags"/> for their rules.
+    /// </summary>
+    public List<string> Tags { get; set; } = [];
+
     /// <summary>Gets or sets the plan this entry settles.</summary>
     public Guid? ScheduleId { get; set; }
 
