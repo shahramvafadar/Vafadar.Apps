@@ -27,7 +27,9 @@
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
             </Border>
-            <Label Text="{Binding VersionText}" Style="{StaticResource Secondary}" HorizontalOptions="Center" Margin="0,16" />
+            <Image Source="zanance_symbol.png" HeightRequest="40" WidthRequest="38" HorizontalOptions="Center" Aspect="AspectFit" Margin="0,24,0,0"
+                   SemanticProperties.Description="Zanance" />
+            <Label Text="{Binding VersionText}" Style="{StaticResource Secondary}" HorizontalOptions="Center" Margin="0,4,0,16" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,0 +1,8 @@
+# Brand files are stored byte for byte: their SHA-256 hashes are recorded in reports/manifest.json and SHA256SUMS.txt.
+exports/** -text
+source/** -text
+platform-candidates/** -text
+references/** -text
+previews/** -text
+SHA256SUMS.txt -text
+SOURCE_AUDIT.json -text

@@ -26,8 +26,21 @@
   </PropertyGroup>
 
   <ItemGroup Label="MAUI resources">
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1B5E20" />
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1B5E20" BaseSize="128,128" />
+    <!--
+      Brand assets (D-26), generated from the approved master by branding/zanance/scripts/integrate.mjs.
+      Launcher icon: neutral light background + the colour symbol. The foreground keeps the symbol inside the Android
+      adaptive safe circle; iOS and Windows have no such mask, so the same foreground is scaled up there.
+      Splash: Android 12+ crops the splash image to a circle, so Android shows the symbol only; iOS shows symbol +
+      wordmark. The unpackaged Windows app shows no splash screen.
+    -->
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F4F6F8"
+              Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F4F6F8" ForegroundScale="1.35"
+              Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F4F6F8" BaseSize="128,128"
+                      Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+    <MauiSplashScreen Include="Resources\Splash\splashlockup.svg" Color="#F4F6F8" BaseSize="256,75"
+                      Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
     <MauiImage Include="Resources\Images\*" />
     <MauiFont Include="Resources\Fonts\*" />
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />

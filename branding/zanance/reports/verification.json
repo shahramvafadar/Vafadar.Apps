@@ -1,0 +1,19 @@
+{
+ "browser": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe 153.0.4234.32",
+ "rendererComparison": {
+  "renderers": [
+   "resvg 2.6.2",
+   "Chromium (Microsoft Edge 153.0.4234.32)"
+  ],
+  "size": [
+   800,
+   832
+  ],
+  "sizesMatch": true,
+  "meanAbsDifference": 0.202,
+  "maxDifference": 62.7,
+  "pixelsOver8": 1864,
+  "pixelsOver8Share": 0.0028
+ },
+ "contrastFailures": []
+}

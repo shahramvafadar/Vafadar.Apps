@@ -1,0 +1,43 @@
+{
+ "approvedGeometry": "ffae7f2ee01a0705",
+ "background": "#F4F6F8",
+ "layout": {
+  "adaptiveForegroundFill": 0.4883,
+  "androidSplashFill": 0.5113,
+  "lockupViewBox": [
+   1419.321,
+   416
+  ]
+ },
+ "wordmark": {
+  "font": "Urbanist Bold",
+  "version": "Version 1.303",
+  "license": "OFL-1.1"
+ },
+ "written": [
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/AppIcon/appicon.svg",
+   "sha256": "887a3f584326133b7243146d8c98a1cd36be860d81a42a468a5e96243d5eb1a9"
+  },
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/AppIcon/appiconfg.svg",
+   "sha256": "321a7e421dc134c603d3f927d0c6e4e6529c5a23c845f6949f12b1ab6751df6a"
+  },
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Splash/splash.svg",
+   "sha256": "e664090e455e4e83d41af44a114f8a9fb1f3809f18d99e4b2475b1af511df60a"
+  },
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Splash/splashlockup.svg",
+   "sha256": "75ca90c2ae91e834f6a7fdca399fe234a213a3368a4cfa091467e46095b75ae4"
+  },
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Images/zanance_symbol.svg",
+   "sha256": "0736bc5186cd3ee7b3d6013521f64b9c8701d3071cf8965604f374ff266d4f16"
+  },
+  {
+   "path": "src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/Resources/drawable/ic_stat_zanance.xml",
+   "sha256": "1ed2dd04d13303b3db6b5ce35fd9ca8e0f7db024a218c719e3626f45295e2c1a"
+  }
+ ]
+}

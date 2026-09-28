@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
-    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:loc="clr-namespace:Vafadar.Localization;assembly=Vafadar.Localization"
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Onboarding"
@@ -19,7 +18,9 @@
 
                 <!-- Step 1: welcome and language -->
                 <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="12">
-                    <fi:SymbolIcon Symbol="Wallet" FontSize="56" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Start" />
+                    <!-- The Zanance symbol (D-26); an image, so it is never mirrored in right-to-left layouts. -->
+                    <Image Source="zanance_symbol.png" HeightRequest="72" WidthRequest="69" HorizontalOptions="Start" Aspect="AspectFit"
+                           SemanticProperties.Description="Zanance" />
                     <Label Text="{v:Translate Onb_WelcomeTitle}" FontSize="28" FontAttributes="Bold" />
                     <Label Text="{v:Translate Onb_WelcomeText}" FontSize="16" />
                     <Label Text="{v:Translate Settings_Language}" Style="{StaticResource FieldLabel}" />

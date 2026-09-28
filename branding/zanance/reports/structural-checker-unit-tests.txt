@@ -1,0 +1,15 @@
+test_active_content (test_check_svg_structure.SvgPolicyTests.test_active_content) ... ok
+test_doctype_rejected (test_check_svg_structure.SvgPolicyTests.test_doctype_rejected) ... ok
+test_external_use (test_check_svg_structure.SvgPolicyTests.test_external_use) ... ok
+test_font_dependent_text (test_check_svg_structure.SvgPolicyTests.test_font_dependent_text) ... ok
+test_missing_reference (test_check_svg_structure.SvgPolicyTests.test_missing_reference) ... ok
+test_partial_alpha_not_flat (test_check_svg_structure.SvgPolicyTests.test_partial_alpha_not_flat) ... ok
+test_solid_shape (test_check_svg_structure.SvgPolicyTests.test_solid_shape) ... ok
+test_two_color_not_flat (test_check_svg_structure.SvgPolicyTests.test_two_color_not_flat) ... ok
+test_vector_gradient (test_check_svg_structure.SvgPolicyTests.test_vector_gradient) ... ok
+test_wrapped_bitmap (test_check_svg_structure.SvgPolicyTests.test_wrapped_bitmap) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+OK

@@ -1,0 +1,585 @@
+{
+ "status": "candidate — owner review required",
+ "source": {
+  "reference": "references/approved/zanance-symbol-reference.png",
+  "referenceSha256": "192395dd05dc263835c6540b19182c301e324791aa8e1bb1de8b124083a40d27",
+  "geometry": "source/geometry.json",
+  "geometryHash": "ffae7f2ee01a0705"
+ },
+ "symbolSize": [
+  400,
+  416
+ ],
+ "symbolOriginInReference": [
+  51,
+  29
+ ],
+ "pngLayout": {
+  "symbolFillOfCanvas": 0.9,
+  "favicon": 0.94,
+  "androidAdaptive": 0.4883,
+  "iosAppIcon": 0.72
+ },
+ "tools": {
+  "node": "v24.21.0",
+  "@fontsource/outfit": "5.2.6",
+  "@fontsource/urbanist": "5.2.6",
+  "@resvg/resvg-js": "2.6.2",
+  "opentype.js": "1.3.4",
+  "pdfjs-dist": "5.4.149",
+  "pdfkit": "0.17.2",
+  "potrace": "2.1.8",
+  "sharp": "0.34.4",
+  "svg-to-pdfkit": "0.1.8",
+  "renderer": "@resvg/resvg-js 2.6.2"
+ },
+ "wordmarks": {
+  "urbanist": {
+   "font": "Urbanist Bold",
+   "version": "Version 1.303",
+   "package": "@fontsource/urbanist@5.2.6",
+   "license": "OFL-1.1"
+  },
+  "outfit": {
+   "font": "Outfit SemiBold",
+   "version": "Version 1.100;gftools[0.9.27]",
+   "package": "@fontsource/outfit@5.2.6",
+   "license": "OFL-1.1"
+  }
+ },
+ "metrics": {
+  "color": {
+   "iou": 0.9950647580095433,
+   "meanAbsError": 4.070452981616474,
+   "comparedPixels": 109482
+  },
+  "flat": {
+   "iou": 0.9950647580095433,
+   "meanAbsError": 26.05782990202404,
+   "comparedPixels": 109482
+  }
+ },
+ "referencesUnchanged": true,
+ "referenceHashes": {
+  "references/approved/zanance-symbol-reference.png": "192395dd05dc263835c6540b19182c301e324791aa8e1bb1de8b124083a40d27",
+  "references/supplemental/zanance_brand_identity_system.png": "8f361b2d12d4b4645f00173cdc1fcab38176b2587ec028c47fb630c23148c300",
+  "references/supplemental/glossy_blue_ribbon_z_logo.png": "9bde117b14e0d17c825b8cc71041c85981e6d89a413ce51f44da54cbd5861966",
+  "references/supplemental/zanance_glossy_ribbon_logo.png": "2d66b90ca4218d138f1257f0ac3fe8b0e0adbf832f985d35f9a2bc2296e7394d",
+  "references/supplemental/glossy_charcoal_ribbon_z_emblem.png": "3cb7a8715186217133c8ab65e428b4705d8f6540daf7c01f423d8cb1d375af3a",
+  "references/supplemental/white_ribbon_z_emblem.png": "a7855214f57f40e80b545235748ed97664f239aea490879cdfa6397f1ec98e86",
+  "references/supplemental/zanance_brand_identity_system_board.png": "9f17417c8086d11cee087f5f9ae4af4d71da4a09b2e704ff2e00394fadf31e92",
+  "references/supplemental/zanance_brand_guidelines_board.png": "2929c1ebabb4e96d950d13fd0b5a14840e13ee3a092302b65adf5f34e67f9385"
+ },
+ "outputs": [
+  {
+   "path": "exports/eps/zanance-symbol-flat-blue.eps",
+   "sha256": "79e46c2ad8364b3ee07563a03ea08940d140e8a97b82321e67f6ba469daa373c",
+   "bytes": 7565,
+   "status": "candidate — owner review required",
+   "kind": "eps"
+  },
+  {
+   "path": "exports/eps/zanance-symbol-mono-black.eps",
+   "sha256": "c9deac489da952ad1d7b7c302117f270d53fe64a4b1c1f928a878c5e65c0f0db",
+   "bytes": 1947,
+   "status": "candidate — owner review required",
+   "kind": "eps"
+  },
+  {
+   "path": "exports/ico/zanance-favicon-16.png",
+   "sha256": "7db555378ab92e1a24ae59e3b5a7d18df17fd24f275575e507eec1738e699653",
+   "bytes": 822,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 16,
+   "height": 16,
+   "alpha": true
+  },
+  {
+   "path": "exports/ico/zanance-favicon-256.png",
+   "sha256": "d0776865b374e16b151d7ceb0b69e67c4049b8c65bce94a4cc0a97e426915627",
+   "bytes": 35821,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 256,
+   "height": 256,
+   "alpha": true
+  },
+  {
+   "path": "exports/ico/zanance-favicon-32.png",
+   "sha256": "5f51b59ee14c7ede8db73af83cc121346d68b074b3da91b8f1bd4a62d8f5d3c6",
+   "bytes": 1933,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 32,
+   "height": 32,
+   "alpha": true
+  },
+  {
+   "path": "exports/ico/zanance-favicon-48.png",
+   "sha256": "f248ca800c4a156b07d94a8ae194e9d0fd74a23c745bb99d1581b180ef0d1a7c",
+   "bytes": 3303,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 48,
+   "height": 48,
+   "alpha": true
+  },
+  {
+   "path": "exports/ico/zanance-favicon.ico",
+   "sha256": "b034f0d73c49814306f3776216767989f83b26e94db9d1b900cd7e6d1ee5e4f7",
+   "bytes": 41949,
+   "status": "candidate — owner review required",
+   "kind": "ico",
+   "sizes": [
+    16,
+    32,
+    48,
+    256
+   ]
+  },
+  {
+   "path": "exports/pdf/zanance-symbol-mono-black.pdf",
+   "sha256": "20546f8a2438a32b5a9f1ed2f0a7ee1160438dcf8670a0d82cfffd889aac1890",
+   "bytes": 2878,
+   "status": "candidate — owner review required",
+   "kind": "pdf",
+   "page": [
+    442,
+    458
+   ]
+  },
+  {
+   "path": "exports/pdf/zanance-symbol.pdf",
+   "sha256": "c32115524d32bc74b362de0cb53bf11ead1e7ed1a33a38c67e116fcdbdcee006",
+   "bytes": 31903,
+   "status": "candidate — owner review required",
+   "kind": "pdf",
+   "page": [
+    442,
+    458
+   ]
+  },
+  {
+   "path": "exports/png/lockup/zanance-lockup-horizontal-on-dark-1200w.png",
+   "sha256": "503e148cdded4489ef12e926c6b65e7f210ddcc4d7283f6d0db4ed4a1a1f1089",
+   "bytes": 85481,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1200,
+   "alpha": true
+  },
+  {
+   "path": "exports/png/lockup/zanance-lockup-horizontal-on-light-1200w.png",
+   "sha256": "c3a30c9b5583bc361a9a330b0cc8babe22372b708df73c8b196101b97ce76089",
+   "bytes": 85489,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1200,
+   "alpha": true
+  },
+  {
+   "path": "exports/png/zanance-symbol-1024-on-dark.png",
+   "sha256": "14a002cea4672d8c87fb1f5c6dd19d7753d897703b1379b115db4f6d1a4410f2",
+   "bytes": 280105,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": false,
+   "background": "#1F2329"
+  },
+  {
+   "path": "exports/png/zanance-symbol-1024-on-white.png",
+   "sha256": "6af2850c3753acdcb1e2a4a96d9acc4f6badc0d75b719fab9ec68c0ba25c4ae0",
+   "bytes": 280121,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": false,
+   "background": "#FFFFFF"
+  },
+  {
+   "path": "exports/png/zanance-symbol-1024.png",
+   "sha256": "17a3babf1fa89d263d9fd09f11e84c58cd1d843cd24616ee2e6569c04d297618",
+   "bytes": 282182,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-128.png",
+   "sha256": "3ded077ccbe359baa6a4033ae510caa6c31a22fdca0e83916b2613442e821838",
+   "bytes": 11943,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 128,
+   "height": 128,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-2048.png",
+   "sha256": "ef5c48b2340d767bcf9465410613fd6934f15c54f4de5dc1d83b7043506fedfd",
+   "bytes": 723399,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 2048,
+   "height": 2048,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-256.png",
+   "sha256": "617a4c1e84b3778d2a3b63448f51686cca9950de2f71978e1e3ef8e6a053480f",
+   "bytes": 33668,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 256,
+   "height": 256,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-4096.png",
+   "sha256": "9eb4edf9caa3aa93907a71b90c9dbd5417ab995d5f0042b88df6a4d7eaf3c497",
+   "bytes": 1800249,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 4096,
+   "height": 4096,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-512.png",
+   "sha256": "f6fbebb702399472d4fc02f822bad567c84d7cab4c6b05da640d8c47dbff2df1",
+   "bytes": 103020,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 512,
+   "height": 512,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-64.png",
+   "sha256": "bce3c3b026d6dfb02e5285006a22780ad1adf85664114de66e22affa3947a94a",
+   "bytes": 4592,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 64,
+   "height": 64,
+   "alpha": true,
+   "symbolFill": 0.9
+  },
+  {
+   "path": "exports/png/zanance-symbol-flat-blue-1024.png",
+   "sha256": "401d307b0db597b1fcf2960ab9cec41f31e655560a6157aee96707d7f7327646",
+   "bytes": 33899,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": true
+  },
+  {
+   "path": "exports/png/zanance-symbol-mono-black-1024.png",
+   "sha256": "a37227dab199a447ed97297eb29bc9245fd01ac9fa69e921d67896a1a8daf12e",
+   "bytes": 20615,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": true
+  },
+  {
+   "path": "exports/png/zanance-symbol-mono-white-1024.png",
+   "sha256": "1a21cd16f97d76b903ee7dabe890ca157a70698b6eea29126f4a522ffeeaaed4",
+   "bytes": 23790,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": true
+  },
+  {
+   "path": "exports/svg/zanance-lockup-horizontal-on-dark-alt-outfit.svg",
+   "sha256": "ddbae79ac9454b0b9c60de71f230e57c1fad36af46f58987226ee5cddc650554",
+   "bytes": 15776,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "wordmark": {
+    "font": "Outfit SemiBold",
+    "version": "Version 1.100;gftools[0.9.27]",
+    "package": "@fontsource/outfit@5.2.6",
+    "license": "OFL-1.1"
+   }
+  },
+  {
+   "path": "exports/svg/zanance-lockup-horizontal-on-dark.svg",
+   "sha256": "fa2bf2c439ab99e972427481ce01753e1dd0a1be55345a0044f14ec7d7358719",
+   "bytes": 16596,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "wordmark": {
+    "font": "Urbanist Bold",
+    "version": "Version 1.303",
+    "package": "@fontsource/urbanist@5.2.6",
+    "license": "OFL-1.1"
+   }
+  },
+  {
+   "path": "exports/svg/zanance-lockup-horizontal-on-light-alt-outfit.svg",
+   "sha256": "c71193d3ba5489d4e03c00475d8c502216b729b657a8fe2ad63ee42994668ae8",
+   "bytes": 15776,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "wordmark": {
+    "font": "Outfit SemiBold",
+    "version": "Version 1.100;gftools[0.9.27]",
+    "package": "@fontsource/outfit@5.2.6",
+    "license": "OFL-1.1"
+   }
+  },
+  {
+   "path": "exports/svg/zanance-lockup-horizontal-on-light.svg",
+   "sha256": "5833c1c0a6216dad5867610570a827f42b3b0b984737e05f85f1d6d2e98899d1",
+   "bytes": 16596,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "wordmark": {
+    "font": "Urbanist Bold",
+    "version": "Version 1.303",
+    "package": "@fontsource/urbanist@5.2.6",
+    "license": "OFL-1.1"
+   }
+  },
+  {
+   "path": "exports/svg/zanance-symbol-flat-blue.svg",
+   "sha256": "e795c1ef511ffdc8935ff392c0a17ad7973b0ed235516f70216df094e4662efb",
+   "bytes": 6787,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "viewBox": "0 0 400 416"
+  },
+  {
+   "path": "exports/svg/zanance-symbol-mono-black.svg",
+   "sha256": "c57dbed043e865e32104486d9417e0e290945a80021b5f6141c48d07e81cc28d",
+   "bytes": 1884,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "viewBox": "0 0 400 416"
+  },
+  {
+   "path": "exports/svg/zanance-symbol-mono-white.svg",
+   "sha256": "80924f67c92f1fb793640d3cb5911a271302d641289536045fcf67a415ba13c5",
+   "bytes": 1884,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "viewBox": "0 0 400 416"
+  },
+  {
+   "path": "exports/svg/zanance-symbol.svg",
+   "sha256": "9581171708aa05d5aa131aab5b2dbc007646ea17cd82956177d4381da945e5d1",
+   "bytes": 12735,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "viewBox": "0 0 400 416"
+  },
+  {
+   "path": "exports/webp/zanance-symbol-1024.webp",
+   "sha256": "091586e4be8e806e7b5420d4786df62765dad88945e1756307dda89c4e0698ab",
+   "bytes": 55832,
+   "status": "candidate — owner review required",
+   "kind": "webp",
+   "width": 1024,
+   "height": 1024,
+   "alpha": true,
+   "lossless": true
+  },
+  {
+   "path": "exports/webp/zanance-symbol-2048.webp",
+   "sha256": "fd8ef80f80c1941c4f28a3fa9e9cc47b9297e47029aef2063567c06b59d8d024",
+   "bytes": 111266,
+   "status": "candidate — owner review required",
+   "kind": "webp",
+   "width": 2048,
+   "height": 2048,
+   "alpha": true,
+   "lossless": true
+  },
+  {
+   "path": "exports/webp/zanance-symbol-256.webp",
+   "sha256": "8c25e9ce4fa780b9b7663e248be584f8c42712332f512aabd517edbf71e50c1b",
+   "bytes": 13558,
+   "status": "candidate — owner review required",
+   "kind": "webp",
+   "width": 256,
+   "height": 256,
+   "alpha": true,
+   "lossless": true
+  },
+  {
+   "path": "exports/webp/zanance-symbol-512.webp",
+   "sha256": "f3e2c0f213713875a1b4d9f19d860013f203b7229b8c7883113e4ff692e9e095",
+   "bytes": 28652,
+   "status": "candidate — owner review required",
+   "kind": "webp",
+   "width": 512,
+   "height": 512,
+   "alpha": true,
+   "lossless": true
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-background-dark-432.png",
+   "sha256": "175e36ba293aca5f6ab61ba27415e5aad9c6f46249070381dd7474f595d142de",
+   "bytes": 1653,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 432,
+   "height": 432
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-background-dark.svg",
+   "sha256": "2eb83314d6cb23d72d98f5028a13c5bfaf273b6ad28b180cecd0068b83474750",
+   "bytes": 267,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "background": "#111827"
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-background-light-432.png",
+   "sha256": "16285137264843217307a7cef9cb46be3846c621d53e111ed2de50e7be3616b1",
+   "bytes": 1652,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 432,
+   "height": 432
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-background-light.svg",
+   "sha256": "5c0b00af5abedc8ba2a72e7415efe8509c284dbf6d0c4fefe5de3259db5f895c",
+   "bytes": 268,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "background": "#F4F6F8"
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-foreground-432.png",
+   "sha256": "172c7b35af16af5130abafdb5c8fd13e9d6e5153de321c765b93e16544d90c7b",
+   "bytes": 31274,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 432,
+   "height": 432,
+   "alpha": true
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-foreground.svg",
+   "sha256": "501b07e28eb1d751cdede20f2f649d7895bf1a693e8ffd8cd336707512024d2b",
+   "bytes": 12794,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "note": "symbol fill 0.488 (inside the 66 dp safe circle)"
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-monochrome-432.png",
+   "sha256": "b1dea7821165ebe0ff13f603f7a0a14752484cf983a04f55ad851ae5f3f8892e",
+   "bytes": 5076,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 432,
+   "height": 432,
+   "alpha": true
+  },
+  {
+   "path": "platform-candidates/android/zanance-adaptive-monochrome.svg",
+   "sha256": "8a064baa2e078e4a3ef3ebcc795e48ba03661eece6c6ea7ac8120a19e6fe8a14",
+   "bytes": 1944,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "note": "symbol fill 0.488 (inside the 66 dp safe circle)"
+  },
+  {
+   "path": "platform-candidates/ios/zanance-appicon-dark-1024.png",
+   "sha256": "434422999902beccb3e3f84bbba601491471f5330311a43526c9d9e034ef48c7",
+   "bytes": 74773,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": false,
+   "background": "#111827"
+  },
+  {
+   "path": "platform-candidates/ios/zanance-appicon-light-1024.png",
+   "sha256": "1f668b330e9aa2c144854acbb86fad430ce35906c55ec3e240af3f9ce64929f5",
+   "bytes": 74200,
+   "status": "candidate — owner review required",
+   "kind": "png",
+   "width": 1024,
+   "height": 1024,
+   "alpha": false,
+   "background": "#F4F6F8"
+  },
+  {
+   "path": "platform-candidates/maui/appicon.svg",
+   "sha256": "ef2369a50ed5a8efa233636a8e6a05c376b1bb9f385f4e3a2537b6eed61bdbdd",
+   "bytes": 257,
+   "status": "candidate — owner review required",
+   "kind": "svg"
+  },
+  {
+   "path": "platform-candidates/maui/appiconfg.svg",
+   "sha256": "4ac82f74f109db40f5d64fa0090506770498afc6c9cc5858f760936cea7f4cfd",
+   "bytes": 12794,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "note": "MauiIcon ForegroundFile candidate"
+  },
+  {
+   "path": "platform-candidates/maui/splash.svg",
+   "sha256": "19017eaacfe00fc463b006adbfee1792c3ffb35cee5f5f6ecdfdf70163b83c97",
+   "bytes": 12790,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "note": "MauiSplashScreen candidate"
+  },
+  {
+   "path": "previews/difference-color.png",
+   "sha256": "390f26f0cadfb100833b15558e1b6070375f39f1d53ac1cff09267bda9a85994",
+   "kind": "png",
+   "status": "candidate — owner review required",
+   "note": "error heat map; red = silhouette mismatch"
+  },
+  {
+   "path": "source/geometry.json",
+   "sha256": "ffae7f2ee01a070545785edbf326832e6e5f2df4de4276aa40c6197163032a38",
+   "bytes": 15398,
+   "status": "candidate — owner review required",
+   "kind": "geometry",
+   "note": "single geometric source of every output"
+  },
+  {
+   "path": "source/zanance-lockup-horizontal-editable.svg",
+   "sha256": "e724f29495390acd6d1b5201c84a420476b85a560f01387fbd104bc55b3bd8f1",
+   "bytes": 12832,
+   "status": "candidate — owner review required",
+   "kind": "svg-editable",
+   "note": "live text; Urbanist 700 must be installed; not for distribution"
+  },
+  {
+   "path": "source/zanance-symbol-master.svg",
+   "sha256": "9581171708aa05d5aa131aab5b2dbc007646ea17cd82956177d4381da945e5d1",
+   "bytes": 12735,
+   "status": "candidate — owner review required",
+   "kind": "svg",
+   "viewBox": "0 0 400 416"
+  }
+ ]
+}

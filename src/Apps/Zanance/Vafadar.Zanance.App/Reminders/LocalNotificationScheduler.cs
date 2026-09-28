@@ -3,8 +3,8 @@ using Plugin.LocalNotification;
 using Plugin.LocalNotification.Core.Models;
 using Plugin.LocalNotification.Core.Models.AndroidOption;
 using Plugin.LocalNotification.Core.Models.AppleOption;
-using Vafadar.Zanance.Core.Reminders;
 using Plugin.LocalNotification.EventArgs;
+using Vafadar.Zanance.Core.Reminders;
 
 namespace Vafadar.Zanance.App.Reminders;
 
@@ -90,6 +90,10 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
             ReturningData = reminder.Link,
             CategoryType = reminder.CanSnooze ? NotificationCategoryType.Reminder : NotificationCategoryType.None,
         };
+
+        // Android status bar: the white Zanance silhouette (only its alpha is used) with the brand colour as accent (D-26).
+        request.Android.IconSmallName = new AndroidIcon("ic_stat_zanance");
+        request.Android.Color = new AndroidColor(unchecked((int)0xFF0C44A8));
 
         if (reminder.NotifyAt is { } at)
         {

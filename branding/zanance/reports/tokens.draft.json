@@ -1,0 +1,411 @@
+{
+ "status": "draft — owner review required; no UI, XAML or theme has been changed",
+ "brand": {
+  "Brand.Deep": "#0C44A8",
+  "Brand.Mid": "#298FFD",
+  "Brand.Light": "#AAE4FD",
+  "note": "logo and limited brand moments only; never full-page backgrounds"
+ },
+ "light": {
+  "Neutral.Background": "#F7F8FA",
+  "Neutral.Surface": "#FFFFFF",
+  "Neutral.Border": "#D0D5DD",
+  "Text.Primary": "#111827",
+  "Text.Secondary": "#4B5563",
+  "Action.Primary": "#1463D1",
+  "Action.OnPrimary": "#FFFFFF",
+  "Status.Success": "#15803D",
+  "Status.Error": "#B42318",
+  "Status.Warning.Foreground": "#8A4B08",
+  "Status.Warning.Background": "#FEF3C7",
+  "Status.Info": "#0E7490",
+  "Premium.Optional": "#6D28D9",
+  "Financial.Inflow": "#15803D",
+  "Financial.Outflow": "#B42318",
+  "Financial.Transfer": "#475467"
+ },
+ "dark": {
+  "Neutral.Background": "#0F1115",
+  "Neutral.Surface": "#171A21",
+  "Neutral.Border": "#343A46",
+  "Text.Primary": "#F3F4F6",
+  "Text.Secondary": "#A9B0BC",
+  "Action.Primary": "#6AA8FF",
+  "Action.OnPrimary": "#0B1220",
+  "Status.Success": "#4ADE80",
+  "Status.Error": "#F97066",
+  "Status.Warning.Foreground": "#FDB022",
+  "Status.Warning.Background": "#3A2A0A",
+  "Status.Info": "#22D3EE",
+  "Premium.Optional": "#B692F6",
+  "Financial.Inflow": "#4ADE80",
+  "Financial.Outflow": "#F97066",
+  "Financial.Transfer": "#C0C6D0"
+ },
+ "contrast": [
+  {
+   "theme": "light",
+   "foreground": "Text.Primary",
+   "background": "Neutral.Background",
+   "colors": [
+    "#111827",
+    "#F7F8FA"
+   ],
+   "ratio": 16.69,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Text.Primary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#111827",
+    "#FFFFFF"
+   ],
+   "ratio": 17.74,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Text.Secondary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#4B5563",
+    "#FFFFFF"
+   ],
+   "ratio": 7.56,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Action.Primary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#1463D1",
+    "#FFFFFF"
+   ],
+   "ratio": 5.62,
+   "required": 4.5,
+   "kind": "link text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Action.OnPrimary",
+   "background": "Action.Primary",
+   "colors": [
+    "#FFFFFF",
+    "#1463D1"
+   ],
+   "ratio": 5.62,
+   "required": 4.5,
+   "kind": "button label",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Status.Success",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#15803D",
+    "#FFFFFF"
+   ],
+   "ratio": 5.02,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Status.Error",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#B42318",
+    "#FFFFFF"
+   ],
+   "ratio": 6.57,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Status.Warning.Foreground",
+   "background": "Status.Warning.Background",
+   "colors": [
+    "#8A4B08",
+    "#FEF3C7"
+   ],
+   "ratio": 6.1,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Status.Info",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#0E7490",
+    "#FFFFFF"
+   ],
+   "ratio": 5.36,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Premium.Optional",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#6D28D9",
+    "#FFFFFF"
+   ],
+   "ratio": 7.1,
+   "required": 4.5,
+   "kind": "badge text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Financial.Inflow",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#15803D",
+    "#FFFFFF"
+   ],
+   "ratio": 5.02,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Financial.Outflow",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#B42318",
+    "#FFFFFF"
+   ],
+   "ratio": 6.57,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Financial.Transfer",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#475467",
+    "#FFFFFF"
+   ],
+   "ratio": 7.69,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "light",
+   "foreground": "Neutral.Border",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#D0D5DD",
+    "#FFFFFF"
+   ],
+   "ratio": 1.47,
+   "required": 1,
+   "kind": "decorative border (no requirement)",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Text.Primary",
+   "background": "Neutral.Background",
+   "colors": [
+    "#F3F4F6",
+    "#0F1115"
+   ],
+   "ratio": 17.17,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Text.Primary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#F3F4F6",
+    "#171A21"
+   ],
+   "ratio": 15.82,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Text.Secondary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#A9B0BC",
+    "#171A21"
+   ],
+   "ratio": 7.98,
+   "required": 4.5,
+   "kind": "body text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Action.Primary",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#6AA8FF",
+    "#171A21"
+   ],
+   "ratio": 7.18,
+   "required": 4.5,
+   "kind": "link text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Action.OnPrimary",
+   "background": "Action.Primary",
+   "colors": [
+    "#0B1220",
+    "#6AA8FF"
+   ],
+   "ratio": 7.72,
+   "required": 4.5,
+   "kind": "button label",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Status.Success",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#4ADE80",
+    "#171A21"
+   ],
+   "ratio": 9.99,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Status.Error",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#F97066",
+    "#171A21"
+   ],
+   "ratio": 6.25,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Status.Warning.Foreground",
+   "background": "Status.Warning.Background",
+   "colors": [
+    "#FDB022",
+    "#3A2A0A"
+   ],
+   "ratio": 7.53,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Status.Info",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#22D3EE",
+    "#171A21"
+   ],
+   "ratio": 9.63,
+   "required": 4.5,
+   "kind": "status text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Premium.Optional",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#B692F6",
+    "#171A21"
+   ],
+   "ratio": 6.99,
+   "required": 4.5,
+   "kind": "badge text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Financial.Inflow",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#4ADE80",
+    "#171A21"
+   ],
+   "ratio": 9.99,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Financial.Outflow",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#F97066",
+    "#171A21"
+   ],
+   "ratio": 6.25,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Financial.Transfer",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#C0C6D0",
+    "#171A21"
+   ],
+   "ratio": 10.14,
+   "required": 4.5,
+   "kind": "amount text",
+   "pass": true
+  },
+  {
+   "theme": "dark",
+   "foreground": "Neutral.Border",
+   "background": "Neutral.Surface",
+   "colors": [
+    "#343A46",
+    "#171A21"
+   ],
+   "ratio": 1.53,
+   "required": 1,
+   "kind": "decorative border (no requirement)",
+   "pass": true
+  }
+ ]
+}
