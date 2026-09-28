@@ -58,7 +58,7 @@ public static class CsvImport
     public static bool IsOwnFormat(IReadOnlyList<string> header)
     {
         ArgumentNullException.ThrowIfNull(header);
-        return header.Count >= CsvExport.Columns.Count && CsvExport.Columns.Select((c, i) => string.Equals(header[i].Trim(), c, StringComparison.OrdinalIgnoreCase)).All(x => x);
+        return header.Count >= CsvExport.BaseColumns.Count && CsvExport.BaseColumns.Select((c, i) => string.Equals(header[i].Trim(), c, StringComparison.OrdinalIgnoreCase)).All(x => x);
     }
 
     /// <summary>Builds the preview of the app's own export: ids are kept so that importing twice creates nothing twice.</summary>
@@ -124,6 +124,13 @@ public static class CsvImport
                 GroupId = Guid.TryParse(Cell(17), out var group) ? group : null,
                 Source = EntrySource.Import,
             };
+
+            // Appended columns (older exports do not have them).
+            if (kind == EntryKind.Expense && TryAmount(Cell(18), account.CurrencyCode, '.', out var reimbursable) && reimbursable > 0 && reimbursable <= amount)
+            {
+                entry.ReimbursableAmount = reimbursable;
+                entry.ReimbursedBy = Empty(Cell(19));
+            }
 
             if (kind == EntryKind.Transfer)
             {

@@ -2000,4 +2000,55 @@
   <data name="Home_MoreContracts" xml:space="preserve">
     <value>(+{0} more)</value>
   </data>
+  <data name="Entry_Reimbursable" xml:space="preserve">
+    <value>Someone will pay me back</value>
+  </data>
+  <data name="Entry_ReimbursableAmount" xml:space="preserve">
+    <value>Amount paid back</value>
+  </data>
+  <data name="Entry_ReimbursableAll" xml:space="preserve">
+    <value>The whole amount</value>
+  </data>
+  <data name="Entry_ReimbursedBy" xml:space="preserve">
+    <value>Paid back by</value>
+  </data>
+  <data name="Entry_ReimbursedByPlaceholder" xml:space="preserve">
+    <value>e.g. employer, a friend</value>
+  </data>
+  <data name="Entry_ReimbursableHint" xml:space="preserve">
+    <value>The money you get back is recorded as a refund of this expense, not as income. Until then it is shown as open.</value>
+  </data>
+  <data name="Entry_ReimbursableInvalid" xml:space="preserve">
+    <value>The amount paid back must be greater than zero and not more than the expense.</value>
+  </data>
+  <data name="Entry_ReimbursementOpen" xml:space="preserve">
+    <value>{1} pays back {0}; still open: {2}</value>
+  </data>
+  <data name="Entry_ReimbursementDone" xml:space="preserve">
+    <value>{1} paid back {0} in full.</value>
+  </data>
+  <data name="Entry_ReimbursedBySomeone" xml:space="preserve">
+    <value>Someone</value>
+  </data>
+  <data name="Entry_RecordReimbursement" xml:space="preserve">
+    <value>Record money received</value>
+  </data>
+  <data name="Entry_ReimbursementTitle" xml:space="preserve">
+    <value>Money paid back</value>
+  </data>
+  <data name="Reimbursements_Title" xml:space="preserve">
+    <value>Owed to me</value>
+  </data>
+  <data name="Reimbursements_Intro" xml:space="preserve">
+    <value>Expenses that others will pay back. Open one to record the money you received.</value>
+  </data>
+  <data name="Reimbursements_Empty" xml:space="preserve">
+    <value>Nobody owes you money right now.</value>
+  </data>
+  <data name="Reimbursements_Total" xml:space="preserve">
+    <value>Still to receive</value>
+  </data>
+  <data name="Home_Reimbursements" xml:space="preserve">
+    <value>{0} expenses still to be paid back</value>
+  </data>
 </root>

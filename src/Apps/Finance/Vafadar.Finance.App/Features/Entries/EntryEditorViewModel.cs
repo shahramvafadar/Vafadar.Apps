@@ -168,6 +168,19 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial bool IsTransfer { get; set; }
 
+    // Reimbursable part of an expense (F2-TX-03).
+    [ObservableProperty]
+    public partial bool IsExpense { get; set; }
+
+    [ObservableProperty]
+    public partial bool ReimbursableEnabled { get; set; }
+
+    [ObservableProperty]
+    public partial string ReimbursableText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string ReimbursedBy { get; set; } = string.Empty;
+
     [ObservableProperty]
     public partial bool ShowCategories { get; set; }
 
@@ -226,9 +239,19 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             else if (Get(query, "refundOf") is { } purchaseId && await _store.GetEntryAsync(purchaseId) is { } purchase)
             {
                 _refundOf = purchase;
-                var refundable = EntryActions.Refundable(purchase, await _store.GetRefundsAsync(purchase.Id));
-                _entry = EntryActions.CreateRefund(purchase, refundable, purchase.AccountId, Today);
-                Title = _translator["Entry_RefundTitle"];
+                var refunds = await _store.GetRefundsAsync(purchase.Id);
+                var refundable = EntryActions.Refundable(purchase, refunds);
+                if (query.ContainsKey("reimburse") && EntryActions.OpenReimbursement(purchase, refunds) is > 0 and var open)
+                {
+                    // Being paid back settles the receivable; it is a refund of the expense, not income (F2-TX-03).
+                    _entry = EntryActions.CreateReimbursement(purchase, open, purchase.AccountId, Today);
+                    Title = _translator["Entry_ReimbursementTitle"];
+                }
+                else
+                {
+                    _entry = EntryActions.CreateRefund(purchase, refundable, purchase.AccountId, Today);
+                    Title = _translator["Entry_RefundTitle"];
+                }
                 LoadFrom(_entry);
             }
             else if (query.TryGetValue("kind", out var reversalKind) && reversalKind?.ToString() == nameof(EntryKind.IncomeReversal))
@@ -363,7 +386,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         IconKey = entry.Icon;
-        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null;
+        ReimbursableEnabled = entry.ReimbursableAmount is > 0;
+        ReimbursableText = entry.ReimbursableAmount is { } reimbursable ? MoneyText.ForInput(reimbursable, currency, culture) : string.Empty;
+        ReimbursedBy = entry.ReimbursedBy ?? string.Empty;
+        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled;
         BuildCategories(entry.CategoryId);
     }
 
@@ -390,6 +416,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private void UpdateKindState()
     {
         IsTransfer = Kind == EntryKind.Transfer;
+        IsExpense = Kind == EntryKind.Expense;
         ShowCategories = Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Refund or EntryKind.IncomeReversal;
         if (_refundOf is not null && _accounts.TryGetValue(_refundOf.AccountId, out var purchaseAccount))
         {
@@ -527,11 +554,32 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             foreignAmount = parsedForeign;
         }
 
+        long? reimbursableAmount = null;
+        if (ReimbursableEnabled && Kind == EntryKind.Expense)
+        {
+            // Empty means the whole amount is paid back.
+            if (string.IsNullOrWhiteSpace(ReimbursableText))
+            {
+                reimbursableAmount = amount;
+            }
+            else if (!MoneyAmount.TryParse(ReimbursableText, Currencies.Get(Account.CurrencyCode), culture, out var parsedReimbursable) || parsedReimbursable <= 0 || parsedReimbursable > amount)
+            {
+                SaveError = _translator["Entry_ReimbursableInvalid"];
+                return;
+            }
+            else
+            {
+                reimbursableAmount = parsedReimbursable;
+            }
+        }
+
         IsBusy = true;
         try
         {
             var kind = Kind;
             _entry.Kind = kind;
+            _entry.ReimbursableAmount = reimbursableAmount;
+            _entry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
             _entry.Amount = amount;
             _entry.AccountId = Account.Id;
             _entry.Date = Date;

@@ -198,4 +198,47 @@ public static class EntryActions
         first.GroupId = null;
         return (first, [.. parts.Skip(1).Select(p => p.Id)]);
     }
+
+    /// <summary>
+    /// Returns what is still to be paid back for a reimbursable expense (F2-TX-03): the reimbursable amount minus the
+    /// refunds linked to it, never negative; 0 for other entries.
+    /// </summary>
+    public static long OpenReimbursement(LedgerEntry expense, IEnumerable<LedgerEntry> entries)
+    {
+        ArgumentNullException.ThrowIfNull(expense);
+        ArgumentNullException.ThrowIfNull(entries);
+        if (expense.Kind != EntryKind.Expense || expense.ReimbursableAmount is not { } reimbursable)
+        {
+            return 0;
+        }
+
+        var received = entries.Where(e => e.Kind == EntryKind.Refund && e.RefundOfId == expense.Id).Sum(e => e.Amount);
+        return Math.Max(0, reimbursable - received);
+    }
+
+    /// <summary>Returns the reimbursable expenses that are not fully paid back, oldest first.</summary>
+    public static IReadOnlyList<(LedgerEntry Expense, long Open)> OpenReimbursements(IReadOnlyCollection<LedgerEntry> entries)
+    {
+        ArgumentNullException.ThrowIfNull(entries);
+        return
+        [
+            .. entries
+                .Where(e => e.Kind == EntryKind.Expense && e.ReimbursableAmount is > 0)
+                .Select(e => (Expense: e, Open: OpenReimbursement(e, entries)))
+                .Where(x => x.Open > 0)
+                .OrderBy(x => x.Expense.Date),
+        ];
+    }
+
+    /// <summary>
+    /// Creates the repayment of a reimbursable expense: a refund linked to it with the open amount, so collecting the
+    /// money settles the receivable instead of creating fictitious income (F2-TX-03).
+    /// </summary>
+    public static LedgerEntry CreateReimbursement(LedgerEntry expense, long open, Guid accountId, DateOnly date)
+    {
+        ArgumentNullException.ThrowIfNull(expense);
+        var refund = CreateRefund(expense, open, accountId, date);
+        refund.Payee = expense.ReimbursedBy ?? expense.Payee;
+        return refund;
+    }
 }

@@ -76,6 +76,14 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Border>
+                <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
+                        IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding ReimbursementText}" TextColor="{StaticResource WarningText}" />
+                        <Button Text="{v:Translate Entry_RecordReimbursement}" Command="{Binding RecordReimbursementCommand}" IsVisible="{Binding CanRecordReimbursement}"
+                                BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" HorizontalOptions="Start" Padding="0" />
+                    </VerticalStackLayout>
+                </Border>
                 <Label Text="{Binding RefundableText}" Style="{StaticResource Secondary}"
                        IsVisible="{Binding RefundableText, Converter={StaticResource IsNotNullConverter}}" />
 

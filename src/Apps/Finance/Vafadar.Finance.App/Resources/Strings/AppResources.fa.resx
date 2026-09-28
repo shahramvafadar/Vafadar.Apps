@@ -1996,4 +1996,55 @@
   <data name="Home_MoreContracts" xml:space="preserve">
     <value>(+{0} مورد دیگر)</value>
   </data>
+  <data name="Entry_Reimbursable" xml:space="preserve">
+    <value>کسی این مبلغ را به من برمی‌گرداند</value>
+  </data>
+  <data name="Entry_ReimbursableAmount" xml:space="preserve">
+    <value>مبلغ قابل بازپرداخت</value>
+  </data>
+  <data name="Entry_ReimbursableAll" xml:space="preserve">
+    <value>کل مبلغ</value>
+  </data>
+  <data name="Entry_ReimbursedBy" xml:space="preserve">
+    <value>پرداخت‌کننده</value>
+  </data>
+  <data name="Entry_ReimbursedByPlaceholder" xml:space="preserve">
+    <value>مثلاً کارفرما، یک دوست</value>
+  </data>
+  <data name="Entry_ReimbursableHint" xml:space="preserve">
+    <value>پولی که پس می‌گیرید به‌عنوان برگشت همین هزینه ثبت می‌شود، نه درآمد. تا آن موقع به‌صورت باز نمایش داده می‌شود.</value>
+  </data>
+  <data name="Entry_ReimbursableInvalid" xml:space="preserve">
+    <value>مبلغ بازپرداخت باید بیشتر از صفر و حداکثر برابر هزینه باشد.</value>
+  </data>
+  <data name="Entry_ReimbursementOpen" xml:space="preserve">
+    <value>بازپرداخت {0} توسط {1}؛ باقی‌مانده: {2}</value>
+  </data>
+  <data name="Entry_ReimbursementDone" xml:space="preserve">
+    <value>{0} به‌طور کامل توسط {1} بازپرداخت شد.</value>
+  </data>
+  <data name="Entry_ReimbursedBySomeone" xml:space="preserve">
+    <value>کسی</value>
+  </data>
+  <data name="Entry_RecordReimbursement" xml:space="preserve">
+    <value>ثبت پول دریافتی</value>
+  </data>
+  <data name="Entry_ReimbursementTitle" xml:space="preserve">
+    <value>پول بازپرداخت‌شده</value>
+  </data>
+  <data name="Reimbursements_Title" xml:space="preserve">
+    <value>طلب‌های من</value>
+  </data>
+  <data name="Reimbursements_Intro" xml:space="preserve">
+    <value>هزینه‌هایی که دیگران برمی‌گردانند. برای ثبت پول دریافتی، هر مورد را باز کنید.</value>
+  </data>
+  <data name="Reimbursements_Empty" xml:space="preserve">
+    <value>در حال حاضر کسی به شما بدهکار نیست.</value>
+  </data>
+  <data name="Reimbursements_Total" xml:space="preserve">
+    <value>هنوز دریافت نشده</value>
+  </data>
+  <data name="Home_Reimbursements" xml:space="preserve">
+    <value>بازپرداخت {0} هزینه هنوز مانده است</value>
+  </data>
 </root>

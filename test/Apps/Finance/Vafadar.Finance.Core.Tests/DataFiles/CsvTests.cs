@@ -32,6 +32,22 @@ public sealed class CsvTests
     }
 
     [Fact]
+    public void Reimbursable_amounts_round_trip_and_older_exports_without_them_are_still_recognised()
+    {
+        var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = _checking.Id, Amount = 30_000, Date = new DateOnly(2026, 5, 2), ReimbursableAmount = 25_000, ReimbursedBy = "Employer" };
+        var rows = Csv.Read(CsvExport.Write([hotel], Accounts, _ => string.Empty, includeNotes: true), ',');
+
+        var imported = CsvImport.PreviewOwn(rows, [_checking, _savings], [_food], _ => "Food", []).Single().Entry!;
+        Assert.Equal(25_000, imported.ReimbursableAmount);
+        Assert.Equal("Employer", imported.ReimbursedBy);
+
+        // An export of an earlier version ends after group_id.
+        var old = rows.Select(r => (IReadOnlyList<string>)[.. r.Take(CsvExport.BaseColumns.Count)]).ToList();
+        Assert.True(CsvImport.IsOwnFormat(old[0]));
+        Assert.Null(CsvImport.PreviewOwn(old, [_checking, _savings], [_food], _ => "Food", []).Single().Entry!.ReimbursableAmount);
+    }
+
+    [Fact]
     [Trait("AT", "AT-52")]
     public void The_own_export_is_recognised_and_re_import_is_marked_as_already_imported()
     {

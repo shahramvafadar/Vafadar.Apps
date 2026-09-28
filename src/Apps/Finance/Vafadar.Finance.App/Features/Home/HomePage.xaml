@@ -71,6 +71,13 @@
                             <fi:SymbolIcon Symbol="CalendarClock" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding DueText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenReimbursementsCommand}" />
+                            </Grid.GestureRecognizers>
+                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding ReimbursementText}" FontSize="15" VerticalOptions="Center" />
+                        </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenContractCommand}" />

@@ -147,6 +147,23 @@
                         <Label Text="{v:Translate Entry_Payee}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
                         <Entry Text="{Binding Payee}" MaxLength="120" SemanticProperties.Description="{v:Translate Entry_Payee}" />
 
+                        <!-- Reimbursable (F2-TX-03) -->
+                        <VerticalStackLayout IsVisible="{Binding IsExpense}" Margin="0,12,0,0">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{v:Translate Entry_Reimbursable}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ReimbursableEnabled}" OnColor="{StaticResource Primary}" />
+                            </Grid>
+                            <VerticalStackLayout IsVisible="{Binding ReimbursableEnabled}" Spacing="0">
+                                <Label Text="{v:Translate Entry_ReimbursableAmount}" Style="{StaticResource FieldLabel}" />
+                                <Entry Text="{Binding ReimbursableText}" Keyboard="Numeric" Placeholder="{v:Translate Entry_ReimbursableAll}"
+                                       SemanticProperties.Description="{v:Translate Entry_ReimbursableAmount}" />
+                                <Label Text="{v:Translate Entry_ReimbursedBy}" Style="{StaticResource FieldLabel}" />
+                                <Entry Text="{Binding ReimbursedBy}" MaxLength="120" Placeholder="{v:Translate Entry_ReimbursedByPlaceholder}"
+                                       SemanticProperties.Description="{v:Translate Entry_ReimbursedBy}" />
+                                <Label Text="{v:Translate Entry_ReimbursableHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />
                         <Editor Text="{Binding Note}" AutoSize="TextChanges" MinimumHeightRequest="80" MaxLength="2000"
                                 SemanticProperties.Description="{v:Translate Entry_Note}" />

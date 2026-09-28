@@ -67,6 +67,13 @@ public sealed partial class EntryDetailViewModel(
     [ObservableProperty]
     public partial bool CanSplit { get; set; }
 
+    // Reimbursable expense (F2-TX-03): what is still to be paid back.
+    [ObservableProperty]
+    public partial string? ReimbursementText { get; set; }
+
+    [ObservableProperty]
+    public partial bool CanRecordReimbursement { get; set; }
+
     [ObservableProperty]
     public partial string? SplitText { get; set; }
 
@@ -189,6 +196,20 @@ public sealed partial class EntryDetailViewModel(
             }
 
             var refundable = EntryActions.Refundable(entry, refunds);
+            if (entry.ReimbursableAmount is { } reimbursable)
+            {
+                var open = EntryActions.OpenReimbursement(entry, refunds);
+                var currency = presenter.CurrencyOf(entry.AccountId);
+                ReimbursementText = translator.Format(open > 0 ? "Entry_ReimbursementOpen" : "Entry_ReimbursementDone",
+                    MoneyText.Format(reimbursable, currency, culture), entry.ReimbursedBy ?? translator["Entry_ReimbursedBySomeone"], MoneyText.Format(open, currency, culture));
+                CanRecordReimbursement = open > 0 && accounts.ContainsKey(entry.AccountId);
+            }
+            else
+            {
+                ReimbursementText = null;
+                CanRecordReimbursement = false;
+            }
+
             CanRefund = refundable > 0 && accounts.ContainsKey(entry.AccountId);
             RefundableText = refunds.Count > 0 ? translator.Format("Entry_Refundable", MoneyText.Format(refundable, presenter.CurrencyOf(entry.AccountId), culture)) : null;
         }
@@ -203,6 +224,9 @@ public sealed partial class EntryDetailViewModel(
 
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+
+    [RelayCommand]
+    private Task RecordReimbursementAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["refundOf"] = _id, ["reimburse"] = true });
 
     [RelayCommand]
     private Task RefundAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["refundOf"] = _id });

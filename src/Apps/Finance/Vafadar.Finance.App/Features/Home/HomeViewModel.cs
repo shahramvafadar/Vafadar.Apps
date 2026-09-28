@@ -89,6 +89,10 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private Guid? _contractPlanId;
 
+    // Money others still owe for reimbursable expenses (F2-TX-03).
+    [ObservableProperty]
+    public partial string? ReimbursementText { get; set; }
+
     [ObservableProperty]
     public partial bool HasAttention { get; set; }
 
@@ -231,7 +235,9 @@ public sealed partial class HomeViewModel : ViewModelBase
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown));
         }
 
-        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null;
+        var owed = EntryActions.OpenReimbursements(entries);
+        ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
+        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -437,6 +443,9 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenUnreviewedAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });
+
+    [RelayCommand]
+    private Task OpenReimbursementsAsync() => Shell.Current.GoToAsync(AppShell.ReimbursementsRoute);
 
     [RelayCommand]
     private Task OpenContractAsync() => _contractPlanId is { } id

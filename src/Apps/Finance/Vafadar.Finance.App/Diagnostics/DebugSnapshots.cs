@@ -86,6 +86,7 @@ internal static class DebugSnapshots
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
             ("split", AppShell.SplitRoute, new() { ["id"] = expenseId }),
+            ("reimbursements", AppShell.ReimbursementsRoute, null),
             ("plans", "//plans", null),
             ("plan-new", AppShell.PlanEditorRoute, null),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
@@ -157,7 +158,8 @@ internal static class DebugSnapshots
         var rent = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 95_000, Date = today.AddDays(-1), CategoryId = Category("Housing"), Title = "Rent" };
         var transfer = new LedgerEntry { Kind = EntryKind.Transfer, AccountId = checking.Id, ToAccountId = savings.Id, Amount = 20_000, Date = today.AddDays(-1) };
         var fee = EntryActions.SyncTransferFee(transfer, null, 150, Category(DefaultCategories.Fees))!;
-        await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee], []);
+        var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 18_000, Date = today.AddDays(-2), CategoryId = Category("Other"), Title = "Hotel", ReimbursableAmount = 18_000, ReimbursedBy = "Employer" };
+        await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee, hotel], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
         var goalStore = services.GetRequiredService<GoalStore>();

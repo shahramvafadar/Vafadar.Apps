@@ -40,6 +40,7 @@ internal sealed class LedgerEntryConfiguration : IEntityTypeConfiguration<Ledger
         builder.ToTable("Entries");
         builder.Property(e => e.Title).HasMaxLength(200);
         builder.Property(e => e.Payee).HasMaxLength(200);
+        builder.Property(e => e.ReimbursedBy).HasMaxLength(200);
         builder.Property(e => e.Note).HasMaxLength(4000);
         builder.Property(e => e.Icon).HasMaxLength(64);
         builder.Property(e => e.OriginalCurrencyCode).HasMaxLength(3);

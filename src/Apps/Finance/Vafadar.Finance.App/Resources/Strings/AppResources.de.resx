@@ -1996,4 +1996,55 @@
   <data name="Home_MoreContracts" xml:space="preserve">
     <value>(+{0} weitere)</value>
   </data>
+  <data name="Entry_Reimbursable" xml:space="preserve">
+    <value>Jemand zahlt mir das zurück</value>
+  </data>
+  <data name="Entry_ReimbursableAmount" xml:space="preserve">
+    <value>Erstatteter Betrag</value>
+  </data>
+  <data name="Entry_ReimbursableAll" xml:space="preserve">
+    <value>Der ganze Betrag</value>
+  </data>
+  <data name="Entry_ReimbursedBy" xml:space="preserve">
+    <value>Erstattet von</value>
+  </data>
+  <data name="Entry_ReimbursedByPlaceholder" xml:space="preserve">
+    <value>z. B. Arbeitgeber, ein Freund</value>
+  </data>
+  <data name="Entry_ReimbursableHint" xml:space="preserve">
+    <value>Das zurückerhaltene Geld wird als Erstattung dieser Ausgabe erfasst, nicht als Einnahme. Bis dahin wird es als offen angezeigt.</value>
+  </data>
+  <data name="Entry_ReimbursableInvalid" xml:space="preserve">
+    <value>Der erstattete Betrag muss größer als null und höchstens die Ausgabe sein.</value>
+  </data>
+  <data name="Entry_ReimbursementOpen" xml:space="preserve">
+    <value>{1} erstattet {0}; noch offen: {2}</value>
+  </data>
+  <data name="Entry_ReimbursementDone" xml:space="preserve">
+    <value>{1} hat {0} vollständig erstattet.</value>
+  </data>
+  <data name="Entry_ReimbursedBySomeone" xml:space="preserve">
+    <value>Jemand</value>
+  </data>
+  <data name="Entry_RecordReimbursement" xml:space="preserve">
+    <value>Erhaltenes Geld erfassen</value>
+  </data>
+  <data name="Entry_ReimbursementTitle" xml:space="preserve">
+    <value>Erstattetes Geld</value>
+  </data>
+  <data name="Reimbursements_Title" xml:space="preserve">
+    <value>Mir geschuldet</value>
+  </data>
+  <data name="Reimbursements_Intro" xml:space="preserve">
+    <value>Ausgaben, die andere zurückzahlen. Öffnen Sie eine, um erhaltenes Geld zu erfassen.</value>
+  </data>
+  <data name="Reimbursements_Empty" xml:space="preserve">
+    <value>Derzeit schuldet Ihnen niemand Geld.</value>
+  </data>
+  <data name="Reimbursements_Total" xml:space="preserve">
+    <value>Noch zu erhalten</value>
+  </data>
+  <data name="Home_Reimbursements" xml:space="preserve">
+    <value>{0} Ausgaben werden noch erstattet</value>
+  </data>
 </root>

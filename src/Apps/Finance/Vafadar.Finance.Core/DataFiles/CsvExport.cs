@@ -12,12 +12,18 @@ namespace Vafadar.Finance.Core.DataFiles;
 /// </summary>
 public static class CsvExport
 {
-    /// <summary>Column names of the app's own format; the importer recognises files by them.</summary>
-    public static readonly IReadOnlyList<string> Columns =
+    /// <summary>
+    /// Leading column names of the app's own format; the importer recognises files by them. Later versions only append
+    /// columns, so older exports stay importable.
+    /// </summary>
+    public static readonly IReadOnlyList<string> BaseColumns =
     [
         "id", "date", "kind", "amount", "currency", "account", "to_account", "to_amount", "to_currency",
         "category", "title", "payee", "note", "original_amount", "original_currency", "review", "refund_of", "group_id",
     ];
+
+    /// <summary>All columns written by this version.</summary>
+    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by"];
 
     /// <summary>Returns the CSV text.</summary>
     /// <param name="entries">Entries to export (already filtered by period and accounts).</param>
@@ -61,6 +67,8 @@ public static class CsvExport
                 entry.Review.ToString(),
                 entry.RefundOfId?.ToString("D", CultureInfo.InvariantCulture) ?? string.Empty,
                 entry.GroupId?.ToString("D", CultureInfo.InvariantCulture) ?? string.Empty,
+                entry.ReimbursableAmount is { } reimbursable ? Amount(reimbursable, currency) : string.Empty,
+                includeNotes ? Csv.Text(entry.ReimbursedBy) : string.Empty,
             ]);
         }
 

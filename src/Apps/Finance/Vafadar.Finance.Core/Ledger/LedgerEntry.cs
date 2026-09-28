@@ -134,6 +134,15 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
     /// </summary>
     public bool IsPartialPayment { get; set; }
 
+    /// <summary>
+    /// Gets or sets the part of an expense someone else will pay back, e.g. an employer or a friend (F2-TX-03). The
+    /// repayment is recorded as a refund linked to this expense, so it lowers the net expense and is never income.
+    /// </summary>
+    public long? ReimbursableAmount { get; set; }
+
+    /// <summary>Gets or sets who pays the <see cref="ReimbursableAmount"/> back.</summary>
+    public string? ReimbursedBy { get; set; }
+
     /// <summary>Gets or sets the plan this entry settles.</summary>
     public Guid? ScheduleId { get; set; }
 
