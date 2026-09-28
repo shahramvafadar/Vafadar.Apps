@@ -93,6 +93,7 @@ public sealed partial class PlanDetailViewModel(
         Name = schedule.Name;
         AmountText = text.Amount(schedule.Amount, schedule.AmountMode, currency);
         RuleText = text.Rule(schedule.Rule);
+        CanSettle = schedule.Kind == Core.Ledger.EntryKind.Expense && schedule.Rule.Frequency != Frequency.Once;
         IsActive = schedule.State == ScheduleState.Active;
         IsPaused = schedule.State == ScheduleState.Paused;
         IsEnded = schedule.State == ScheduleState.Ended;
@@ -185,6 +186,13 @@ public sealed partial class PlanDetailViewModel(
 
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+
+    // Final settlement of advance payments (F2-CON-04), for expense plans.
+    [ObservableProperty]
+    public partial bool CanSettle { get; set; }
+
+    [RelayCommand]
+    private Task SettleAsync() => Shell.Current.GoToAsync(AppShell.SettlementRoute, new Dictionary<string, object> { ["id"] = _id });
 
     [RelayCommand]
     private async Task PauseAsync()

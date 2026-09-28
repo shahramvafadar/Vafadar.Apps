@@ -90,6 +90,7 @@ public static class MauiProgram
             .AddTransient<RatesPage>().AddTransient<RatesViewModel>()
             .AddTransient<Features.Templates.TemplatesPage>().AddTransient<Features.Templates.TemplatesViewModel>()
             .AddTransient<SplitEditorPage>().AddTransient<SplitEditorViewModel>()
+            .AddTransient<SettlementPage>().AddTransient<SettlementViewModel>()
             .AddTransient<ReimbursementsPage>().AddTransient<ReimbursementsViewModel>()
             .AddTransient<Features.Categories.RulesPage>().AddTransient<Features.Categories.RulesViewModel>()
             .AddTransient<Features.Goals.GoalPresenter>()

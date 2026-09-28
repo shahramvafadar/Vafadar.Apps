@@ -78,6 +78,8 @@
                     <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Plan_Pause}" Command="{Binding PauseCommand}" />
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Plan_EndAction}" Command="{Binding EndCommand}" />
                 </Grid>
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Settlement_Title}" Command="{Binding SettleCommand}"
+                        IsVisible="{Binding CanSettle}" />
                 <Button Text="{v:Translate Plan_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
                         TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding CanDelete}" />
             </VerticalStackLayout>

@@ -96,6 +96,7 @@ internal static class DebugSnapshots
             ("plan-new", AppShell.PlanEditorRoute, null),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
             ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
+            ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),

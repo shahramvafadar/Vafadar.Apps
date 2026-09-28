@@ -2197,4 +2197,40 @@
   <data name="Weekend_AfterShort" xml:space="preserve">
     <value>پس از آخر هفته</value>
   </data>
+  <data name="Settlement_Title" xml:space="preserve">
+    <value>تسویهٔ نهایی پیش‌پرداخت‌ها</value>
+  </data>
+  <data name="Settlement_Intro" xml:space="preserve">
+    <value>برای پیش‌پرداخت‌هایی مثل برق یا گرمایش: مبلغ واقعی صورت‌حساب دوره را وارد کنید. فقط اختلاف ثبت می‌شود تا صورت‌حساب دوبار حساب نشود.</value>
+  </data>
+  <data name="Settlement_From" xml:space="preserve">
+    <value>دوره از</value>
+  </data>
+  <data name="Settlement_To" xml:space="preserve">
+    <value>تا</value>
+  </data>
+  <data name="Settlement_Actual" xml:space="preserve">
+    <value>مبلغ واقعی صورت‌حساب</value>
+  </data>
+  <data name="Settlement_Advances" xml:space="preserve">
+    <value>پیش‌پرداخت‌های پرداخت‌شده ({0} مورد): {1}</value>
+  </data>
+  <data name="Settlement_Extra" xml:space="preserve">
+    <value>پرداخت اضافه: {0} (به‌عنوان هزینه ثبت می‌شود)</value>
+  </data>
+  <data name="Settlement_Back" xml:space="preserve">
+    <value>برگشت پول: {0} (به‌عنوان برگشت پیش‌پرداخت‌ها ثبت می‌شود)</value>
+  </data>
+  <data name="Settlement_Even" xml:space="preserve">
+    <value>پیش‌پرداخت‌ها دقیقاً برابر صورت‌حساب است؛ چیزی ثبت نمی‌شود.</value>
+  </data>
+  <data name="Settlement_Save" xml:space="preserve">
+    <value>ثبت اختلاف</value>
+  </data>
+  <data name="Settlement_ExtraTitle" xml:space="preserve">
+    <value>{0}: پرداخت اضافه</value>
+  </data>
+  <data name="Settlement_BackTitle" xml:space="preserve">
+    <value>{0}: برگشت پول</value>
+  </data>
 </root>

@@ -2201,4 +2201,40 @@
   <data name="Weekend_AfterShort" xml:space="preserve">
     <value>after weekends</value>
   </data>
+  <data name="Settlement_Title" xml:space="preserve">
+    <value>Final bill for advances</value>
+  </data>
+  <data name="Settlement_Intro" xml:space="preserve">
+    <value>For advances like electricity or heating: enter the actual bill of the period. Only the difference is recorded, so the bill is not counted twice.</value>
+  </data>
+  <data name="Settlement_From" xml:space="preserve">
+    <value>Period from</value>
+  </data>
+  <data name="Settlement_To" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Settlement_Actual" xml:space="preserve">
+    <value>Actual bill</value>
+  </data>
+  <data name="Settlement_Advances" xml:space="preserve">
+    <value>{0} advances paid: {1}</value>
+  </data>
+  <data name="Settlement_Extra" xml:space="preserve">
+    <value>Extra payment: {0} (recorded as an expense)</value>
+  </data>
+  <data name="Settlement_Back" xml:space="preserve">
+    <value>Money back: {0} (recorded as refunds of the advances)</value>
+  </data>
+  <data name="Settlement_Even" xml:space="preserve">
+    <value>The advances cover the bill exactly; nothing to record.</value>
+  </data>
+  <data name="Settlement_Save" xml:space="preserve">
+    <value>Record the difference</value>
+  </data>
+  <data name="Settlement_ExtraTitle" xml:space="preserve">
+    <value>{0}: extra payment</value>
+  </data>
+  <data name="Settlement_BackTitle" xml:space="preserve">
+    <value>{0}: money back</value>
+  </data>
 </root>

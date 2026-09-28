@@ -89,6 +89,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the categorization rules (F2-TX-04).</summary>
     public const string RulesRoute = "rules";
 
+    /// <summary>Route of the final settlement of advance payments (F2-CON-04).</summary>
+    public const string SettlementRoute = "settlement";
+
     public AppShell()
     {
         InitializeComponent();
@@ -117,5 +120,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
         Routing.RegisterRoute(ReimbursementsRoute, typeof(ReimbursementsPage));
         Routing.RegisterRoute(RulesRoute, typeof(Features.Categories.RulesPage));
+        Routing.RegisterRoute(SettlementRoute, typeof(SettlementPage));
     }
 }
