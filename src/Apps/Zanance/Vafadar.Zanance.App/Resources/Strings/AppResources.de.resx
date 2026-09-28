@@ -1931,7 +1931,7 @@
     <value>Zu einer Buchung zusammenfassen</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>Nur Einnahmen oder Ausgaben ohne Bezug zu einer Planung oder Erstattung können aufgeteilt werden.</value>
+    <value>Nur Einnahmen oder Ausgaben ohne Planung, Erstattung oder zu erstattenden Betrag können aufgeteilt werden.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>Teil einer Aufteilung: insgesamt {0} in {1} Teilen. Löschen entfernt alle Teile.</value>
@@ -2541,5 +2541,8 @@
   </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}, ausgewählt</value>
+  </data>
+  <data name="Plan_SplitConflict" xml:space="preserve">
+    <value>Fälligkeiten nach diesem Datum sind bereits erfasst und passen nicht zu den neuen Terminen. Wählen Sie ein späteres „Änderungen gelten ab“ oder behalten Sie den Tag.</value>
   </data>
 </root>

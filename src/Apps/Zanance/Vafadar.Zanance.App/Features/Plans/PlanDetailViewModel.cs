@@ -215,7 +215,9 @@ public sealed partial class PlanDetailViewModel(
             return;
         }
 
-        await plans.SaveSchedulesAsync([_schedule, continuation]);
+        // Occurrences recorded for the resume date or later (e.g. settled in advance) move to the continuation, so they
+        // are never posted again (same as a "this and future" change).
+        await plans.SaveSplitAsync(_schedule, continuation);
         _id = continuation.Id;
         await LoadAsync();
     }

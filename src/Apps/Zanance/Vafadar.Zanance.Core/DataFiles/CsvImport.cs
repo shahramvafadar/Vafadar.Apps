@@ -133,6 +133,10 @@ public static class CsvImport
             }
 
             entry.Tags = EntryTags.Parse(Cell(20));
+            if (kind == EntryKind.Adjustment && Enum.TryParse<AdjustmentDirection>(Cell(21), true, out var direction))
+            {
+                entry.Direction = direction;
+            }
 
             if (kind == EntryKind.Transfer)
             {
@@ -298,8 +302,34 @@ public static class CsvImport
             return false;
         }
 
-        var negative = ascii[0] is '-' or '−' || (ascii.StartsWith('(') && ascii.EndsWith(')'));
-        ascii = ascii.Trim('(', ')', '-', '−', '+');
+        // One sign at most, leading ("-12.50") or trailing ("12.50-", common in bank exports), or parentheses without a
+        // sign ("(12.50)"); anything else ("+-5", "--5", "(-5)") is rejected instead of guessed.
+        var negative = false;
+        var parenthesised = ascii.Length > 1 && ascii[0] == '(' && ascii[^1] == ')';
+        if (parenthesised)
+        {
+            negative = true;
+            ascii = ascii[1..^1];
+        }
+
+        static bool IsSign(char c) => c is '-' or '−' or '+';
+        var signs = ascii.Count(IsSign);
+        if (signs > 1 || (signs == 1 && parenthesised))
+        {
+            return false;
+        }
+
+        if (signs == 1)
+        {
+            if (IsSign(ascii[0])) { negative = ascii[0] != '+'; ascii = ascii[1..]; }
+            else if (IsSign(ascii[^1])) { negative = ascii[^1] != '+'; ascii = ascii[..^1]; }
+            else return false;
+        }
+
+        if (ascii.Length == 0 || ascii.Contains('(') || ascii.Contains(')'))
+        {
+            return false;
+        }
         var group = decimalSeparator == '.' ? ',' : '.';
         var parts = ascii.Split(decimalSeparator);
         if (parts.Length > 2)
@@ -327,6 +357,12 @@ public static class CsvImport
 
         var currency = Currencies.TryGet(currencyCode, out var known) ? known : new Currency(currencyCode, 2);
         if (decimal.Round(value, currency.MinorDigits) != value)
+        {
+            return false;
+        }
+
+        // An amount beyond what minor units can hold is invalid, not a crash.
+        if (Math.Abs(value) * currency.MinorFactor > long.MaxValue)
         {
             return false;
         }

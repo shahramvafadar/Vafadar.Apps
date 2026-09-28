@@ -170,16 +170,14 @@ public static class ReportCalculator
                     open++;
                 }
 
+                // Only fully settled occurrences count: an open occurrence with partial payments is not "cheaper than
+                // planned" – its rest is still due (F2-TX-02). A settled one includes its earlier partial payments.
                 var settlements = bySettlement[(schedule.Id, occurrence.OriginalDate)].ToList();
-                if (settlements.Count > 0)
+                if (settlements.Any(e => !e.IsPartialPayment))
                 {
                     settledPlanned += occurrence.Amount ?? 0;
                     varianceKnown &= occurrence.Amount is not null;
-                }
-
-                foreach (var entry in settlements)
-                {
-                    actual += entry.Amount;
+                    actual += settlements.Sum(e => e.Amount);
                     settled++;
                 }
             }

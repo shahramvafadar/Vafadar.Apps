@@ -75,7 +75,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
         query.Clear();
         _parts = entry.GroupId is { } group ? [.. (await store.GetGroupAsync(group)).OrderBy(e => e.Id == entry.Id ? 0 : 1).ThenBy(e => e.CreatedAt)] : [entry];
-        if (!EntryActions.CanSplit(_parts))
+        if (!EntryActions.CanSplit(_parts) || EntryActions.HasPaybacks(_parts, await store.GetEntriesAsync()))
         {
             Error = translator["Split_NotPossible"];
             return;

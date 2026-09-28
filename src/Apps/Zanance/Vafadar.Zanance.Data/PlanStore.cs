@@ -67,10 +67,16 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         SaveSchedulesAsync([schedule], cancellationToken);
 
     /// <summary>
-    /// Saves a "this and future" split (<see cref="PlanActions.SplitFrom"/>): occurrences from the split date on – their
+    /// Saves a "this and future" split (<see cref="PlanActions.SplitFrom"/>) or a resume (<see cref="PlanActions.Resume"/>):
+    /// occurrences from the split date on – their
     /// states and settling entries – move to the new plan, everything earlier stays with the old one.
     /// </summary>
-    public async Task SaveSplitAsync(Schedule previous, Schedule next, CancellationToken cancellationToken = default)
+    /// <returns>
+    /// <see langword="false"/> (nothing saved) when an occurrence recorded on or after the split date – settled, skipped,
+    /// moved, overridden or partly paid – is not a date of the new rule: moving it would orphan the record, and the new
+    /// plan would post that period again.
+    /// </returns>
+    public async Task<bool> SaveSplitAsync(Schedule previous, Schedule next, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(previous);
         ArgumentNullException.ThrowIfNull(next);
@@ -78,10 +84,21 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var recorded = (await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from).Select(s => s.OriginalDate).ToListAsync(cancellationToken))
+            .Concat(await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from).Select(e => e.OccurrenceDate!.Value).ToListAsync(cancellationToken))
+            .Distinct().ToList();
+        if (recorded.Count > 0)
+        {
+            var newDates = Recurrence.Between(next.Rule, from, recorded.Max()).Select(d => d.Date).ToHashSet();
+            if (!recorded.All(newDates.Contains))
+            {
+                return false;
+            }
+        }
+
         db.Schedules.Update(previous);
         db.Schedules.Add(next);
         await db.SaveChangesAsync(cancellationToken);
-        OnChanged();
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from)
             .ExecuteUpdateAsync(s => s.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
@@ -89,6 +106,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             .ExecuteUpdateAsync(e => e.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         OnChanged();
+        return true;
     }
 
     /// <summary>Returns whether any occurrence of the plan was settled or skipped.</summary>
@@ -129,6 +147,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         var result = await store.SaveEntryAsync(entry, cancellationToken);
         if (result.Succeeded)
         {
+            // The entry and the state are two writes; if the second one is lost (app killed, disk error), the next
+            // RepairSettlementsAsync restores it from the entry, so the occurrence can never stay open next to its entry.
             await UpdateStateAsync(occurrence, state =>
             {
                 state.Status = OccurrenceStatus.Settled;
@@ -137,6 +157,51 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Makes every occurrence that has a settling entry (not a partial payment) settled with that entry. Idempotent; run
+    /// before automatic posting. Reopening an occurrence deletes or unlinks its entry first, so it is never undone here.
+    /// </summary>
+    /// <returns>The number of states repaired.</returns>
+    public async Task<int> RepairSettlementsAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var settling = await db.Entries.AsNoTracking()
+            .Where(e => e.ScheduleId != null && e.OccurrenceDate != null && !e.IsPartialPayment)
+            .Select(e => new { e.Id, ScheduleId = e.ScheduleId!.Value, Date = e.OccurrenceDate!.Value })
+            .ToListAsync(cancellationToken);
+        if (settling.Count == 0)
+        {
+            return 0;
+        }
+
+        var states = (await db.OccurrenceStates.ToListAsync(cancellationToken)).ToDictionary(s => (s.ScheduleId, s.OriginalDate));
+        var repaired = 0;
+        foreach (var e in settling)
+        {
+            if (!states.TryGetValue((e.ScheduleId, e.Date), out var state))
+            {
+                state = new OccurrenceState { ScheduleId = e.ScheduleId, OriginalDate = e.Date };
+                db.OccurrenceStates.Add(state);
+                states[(e.ScheduleId, e.Date)] = state;
+            }
+
+            if (state.Status != OccurrenceStatus.Settled || state.EntryId != e.Id)
+            {
+                state.Status = OccurrenceStatus.Settled;
+                state.EntryId = e.Id;
+                repaired++;
+            }
+        }
+
+        if (repaired > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            OnChanged();
+        }
+
+        return repaired;
     }
 
     /// <summary>

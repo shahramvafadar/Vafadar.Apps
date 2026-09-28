@@ -17,6 +17,13 @@ public interface IBackupService
     /// <param name="cancellationToken">Cancels the operation.</param>
     Task<BackupFileInfo> CreateBackupAsync(IBackupStorage storage, string? password = null, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Creates an unencrypted safety copy of the current data (e.g. before a restore) and applies the retention policy.
+    /// Unlike <see cref="CreateBackupAsync"/> it does not count as a backup: <see cref="LastBackupAt"/> and the automatic
+    /// backup schedule are not changed, because the copy stays on the device and is never shared.
+    /// </summary>
+    Task<BackupFileInfo> CreateSafetyCopyAsync(IBackupStorage storage, CancellationToken cancellationToken = default);
+
     /// <summary>Creates a backup package in memory, e.g. to export or share it as a file.</summary>
     Task<byte[]> CreatePackageAsync(string? password = null, CancellationToken cancellationToken = default);
 

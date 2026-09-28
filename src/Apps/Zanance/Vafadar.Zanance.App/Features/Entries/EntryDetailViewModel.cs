@@ -154,7 +154,7 @@ public sealed partial class EntryDetailViewModel(
             ? translator.Format("Rule_Always", match, categories.Name(entry.CategoryId))
             : null;
         var related = entry.GroupId is { } groupId ? await store.GetGroupAsync(groupId) : [entry];
-        CanSplit = EntryActions.CanSplit(related);
+        CanSplit = EntryActions.CanSplit(related) && !EntryActions.HasPaybacks(related, await store.GetEntriesAsync());
         var isSplit = EntryActions.IsSplit(related);
         SplitActionText = translator[isSplit ? "Split_Edit" : "Split_Action"];
         SplitText = isSplit

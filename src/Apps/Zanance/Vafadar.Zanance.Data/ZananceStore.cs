@@ -601,7 +601,13 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await db.Templates.Where(t => t.CategoryId == sourceId).ExecuteUpdateAsync(t => t.SetProperty(x => x.CategoryId, targetId), cancellationToken);
         await db.CategoryRules.Where(r => r.CategoryId == sourceId).ExecuteUpdateAsync(r => r.SetProperty(x => x.CategoryId, targetId), cancellationToken);
 
-        // One level only: children of the source go under the target's main category.
+        // One level only: children of the source go under the target's main category. Merging a main category into one
+        // of its own children makes that child the main category, so nothing stays under the archived source.
+        if (target.ParentId == sourceId)
+        {
+            target.ParentId = null;
+        }
+
         var newParent = target.ParentId ?? target.Id;
         await db.Categories.Where(c => c.ParentId == sourceId && c.Id != targetId).ExecuteUpdateAsync(c => c.SetProperty(x => x.ParentId, newParent), cancellationToken);
 
@@ -790,8 +796,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             : [];
         db.Entries.RemoveRange(removed);
 
+        // Entries and the paid amounts of their occurrences change together or not at all.
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, entries.Concat(existing.Values).Concat(removed), cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         OnChanged();
         return SaveResult.Success;
@@ -830,8 +839,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             }
         }
 
+        // The deletion, the reopened occurrences and the paid amounts change together or not at all.
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, deleted, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         OnChanged();
         return deleted;

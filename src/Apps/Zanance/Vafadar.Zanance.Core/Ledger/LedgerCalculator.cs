@@ -175,10 +175,11 @@ public static class LedgerCalculator
 
         foreach (var entry in entries.Where(e => e.Review == ReviewState.Unreviewed))
         {
-            foreach (var account in scope.Where(a => a.Id == entry.AccountId || a.Id == entry.ToAccountId))
+            // Once per entry and currency: a transfer between two accounts in scope is one unreviewed entry with net 0.
+            foreach (var currency in scope.Where(a => a.Id == entry.AccountId || a.Id == entry.ToAccountId).GroupBy(a => a.CurrencyCode))
             {
-                var current = result.GetValueOrDefault(account.CurrencyCode);
-                result[account.CurrencyCode] = (current.Count + 1, current.Sum + entry.EffectOn(account.Id));
+                var current = result.GetValueOrDefault(currency.Key);
+                result[currency.Key] = (current.Count + 1, current.Sum + currency.Sum(a => entry.EffectOn(a.Id)));
             }
         }
 

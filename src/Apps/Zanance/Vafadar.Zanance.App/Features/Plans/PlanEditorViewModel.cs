@@ -750,7 +750,12 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
             if (_existing is not null && _hasHistory)
             {
-                await _plans.SaveSplitAsync(_existing, target);
+                if (!await _plans.SaveSplitAsync(_existing, target))
+                {
+                    // Recorded occurrences after the change date do not fit the new dates (e.g. another day of the month).
+                    SaveError = _translator["Plan_SplitConflict"];
+                    return;
+                }
             }
             else
             {

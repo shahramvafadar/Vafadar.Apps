@@ -209,6 +209,62 @@ public sealed class PlanStoreTests : IDisposable
         Assert.True((await MarchAsync()).IsOpen);
     }
 
+    [Fact]
+    public async Task Resuming_a_plan_keeps_an_occurrence_settled_in_advance_and_never_posts_it_again()
+    {
+        var plan = await NewPlanAsync(autoPost: true);
+        var april = Occurrences.Between(plan, [], new DateOnly(2027, 4, 1), new DateOnly(2027, 4, 30), Today).Single();
+        Assert.True((await _plans.SettleAsync(april, Occurrences.CreateEntry(april, 95_000, Today, ReviewState.Confirmed), Ct)).Succeeded);
+
+        PlanActions.Pause(plan, new DateOnly(2027, 3, 25));
+        await _plans.SaveScheduleAsync(plan, Ct);
+        var continuation = PlanActions.Resume(plan, new DateOnly(2027, 4, 1))!;
+        Assert.True(await _plans.SaveSplitAsync(plan, continuation, Ct));
+
+        await _processor.RunAsync(new DateOnly(2027, 5, 10), Ct);
+        var entries = await _store.GetEntriesAsync(cancellationToken: Ct);
+        Assert.Single(entries, e => e.OccurrenceDate == new DateOnly(2027, 4, 5));
+        Assert.Single(entries, e => e.OccurrenceDate == new DateOnly(2027, 5, 5) && e.ScheduleId == continuation.Id);
+        Assert.Equal(continuation.Id, entries.Single(e => e.OccurrenceDate == new DateOnly(2027, 4, 5)).ScheduleId);
+    }
+
+    [Fact]
+    public async Task A_this_and_future_change_is_refused_when_recorded_occurrences_would_not_fit_the_new_dates()
+    {
+        var plan = await NewPlanAsync(autoPost: false);
+        var april = Occurrences.Between(plan, [], new DateOnly(2027, 4, 1), new DateOnly(2027, 4, 30), Today).Single();
+        await _plans.SettleAsync(april, Occurrences.CreateEntry(april, 95_000, Today, ReviewState.Confirmed), Ct);
+
+        // Another day of the month: April 5 is no longer a date of the plan, so the change is refused and nothing moves.
+        var moved = PlanActions.SplitFrom(plan, new DateOnly(2027, 3, 21));
+        moved.Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = new DateOnly(2027, 1, 10) };
+        Assert.False(await _plans.SaveSplitAsync(plan, moved, Ct));
+        Assert.Single(await _plans.GetSchedulesAsync(Ct));
+
+        // The same dates with a new amount are fine.
+        var reloaded = (await _plans.GetSchedulesAsync(Ct)).Single();
+        var priced = PlanActions.SplitFrom(reloaded, new DateOnly(2027, 3, 21));
+        priced.Amount = 99_000;
+        Assert.True(await _plans.SaveSplitAsync(reloaded, priced, Ct));
+        Assert.Equal(priced.Id, (await _store.GetEntriesAsync(cancellationToken: Ct)).Single().ScheduleId);
+    }
+
+    [Fact]
+    public async Task A_settlement_entry_without_its_state_is_repaired_and_not_posted_again()
+    {
+        var plan = await NewPlanAsync(autoPost: true);
+        // An interrupted settle: the entry is saved, the state is not.
+        var march = Occurrences.Between(plan, [], new DateOnly(2027, 3, 1), new DateOnly(2027, 3, 31), Today).Single();
+        var entry = Occurrences.CreateEntry(march, 95_000, march.DueDate, ReviewState.Confirmed);
+        entry.ScheduleId = plan.Id; entry.OccurrenceDate = march.OriginalDate;
+        Assert.True((await _store.SaveEntryAsync(entry, Ct)).Succeeded);
+
+        Assert.Equal(1, await _plans.RepairSettlementsAsync(Ct));
+        Assert.Equal(0, await _plans.RepairSettlementsAsync(Ct));
+        await _processor.RunAsync(Today, Ct);
+        Assert.Single(await _store.GetEntriesAsync(cancellationToken: Ct), e => e.OccurrenceDate == march.OriginalDate);
+    }
+
     private async Task<Schedule> NewPlanAsync(bool autoPost, AmountMode mode = AmountMode.Fixed, DateOnly? autoPostFrom = null)
     {
         var account = new Account { Name = "Checking", CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 12, 1) };

@@ -23,7 +23,7 @@ public static class CsvExport
     ];
 
     /// <summary>All columns written by this version.</summary>
-    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by", "tags"];
+    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by", "tags", "direction"];
 
     /// <summary>Returns the CSV text.</summary>
     /// <param name="entries">Entries to export (already filtered by period and accounts).</param>
@@ -70,6 +70,8 @@ public static class CsvExport
                 entry.ReimbursableAmount is { } reimbursable ? Amount(reimbursable, currency) : string.Empty,
                 includeNotes ? Csv.Text(entry.ReimbursedBy) : string.Empty,
                 Csv.Text(EntryTags.Format(entry.Tags)),
+                // Adjustments need their direction to be re-imported (an increase and a decrease share the amount sign).
+                entry.Kind == EntryKind.Adjustment && entry.Direction is { } direction ? direction.ToString() : string.Empty,
             ]);
         }
 

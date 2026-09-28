@@ -157,6 +157,12 @@ public sealed class BackupServiceTests : IDisposable
 
         _time.Advance(TimeSpan.FromDays(1));
         Assert.True(service.IsAutomaticBackupDue());
+
+        // A safety copy before a restore stays on the device; it is not a backup and does not reset the schedule.
+        var before = service.LastBackupAt;
+        await service.CreateSafetyCopyAsync(_storage, Ct);
+        Assert.Equal(before, service.LastBackupAt);
+        Assert.True(service.IsAutomaticBackupDue());
     }
 
     [Fact]

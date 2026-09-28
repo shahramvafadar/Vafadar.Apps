@@ -72,7 +72,14 @@ public sealed class BackupService : IBackupService
         && (LastBackupAt is not { } last || _time.GetUtcNow() - last >= interval);
 
     /// <inheritdoc />
-    public async Task<BackupFileInfo> CreateBackupAsync(IBackupStorage storage, string? password = null, CancellationToken cancellationToken = default)
+    public Task<BackupFileInfo> CreateBackupAsync(IBackupStorage storage, string? password = null, CancellationToken cancellationToken = default) =>
+        CreateCoreAsync(storage, password, recordAsBackup: true, cancellationToken);
+
+    /// <inheritdoc />
+    public Task<BackupFileInfo> CreateSafetyCopyAsync(IBackupStorage storage, CancellationToken cancellationToken = default) =>
+        CreateCoreAsync(storage, null, recordAsBackup: false, cancellationToken);
+
+    private async Task<BackupFileInfo> CreateCoreAsync(IBackupStorage storage, string? password, bool recordAsBackup, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(storage);
 
@@ -88,7 +95,11 @@ public sealed class BackupService : IBackupService
                 file = await storage.UploadAsync(BackupFileName.Create(_app.AppId, createdAt), content, cancellationToken);
             }
 
-            _settings.Set(LastBackupKey, createdAt.ToString("O", CultureInfo.InvariantCulture));
+            if (recordAsBackup)
+            {
+                _settings.Set(LastBackupKey, createdAt.ToString("O", CultureInfo.InvariantCulture));
+            }
+
             await ApplyRetentionCoreAsync(storage, cancellationToken);
             return file;
         }

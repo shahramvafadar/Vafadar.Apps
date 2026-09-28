@@ -118,6 +118,12 @@ public static class MoneyAmount
             return false;
         }
 
+        // An amount beyond what minor units can hold is invalid input, not a crash.
+        if (amount * currency.MinorFactor > long.MaxValue)
+        {
+            return false;
+        }
+
         minor = ToMinor(amount, currency);
         return true;
     }

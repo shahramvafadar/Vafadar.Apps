@@ -1931,7 +1931,7 @@
     <value>یکی کردن دوباره</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>فقط درآمد یا هزینه‌ای که به برنامه یا برگشت وجه وصل نیست قابل تقسیم است.</value>
+    <value>فقط درآمد یا هزینه‌ای که به برنامه، برگشت وجه یا مبلغ قابل بازپرداخت وصل نیست قابل تقسیم است.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>بخشی از یک تقسیم: جمع {0} در {1} سهم. حذف، همهٔ سهم‌ها را پاک می‌کند.</value>
@@ -2541,5 +2541,8 @@
   </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}، انتخاب‌شده</value>
+  </data>
+  <data name="Plan_SplitConflict" xml:space="preserve">
+    <value>موعدهای بعد از این تاریخ ثبت شده‌اند و با تاریخ‌های جدید جور درنمی‌آیند. تاریخ «تغییرات از» را دیرتر انتخاب کنید یا روز را تغییر ندهید.</value>
   </data>
 </root>

@@ -255,7 +255,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         try
         {
             // Keep a safety copy of the current data first (BAK-02, BAK-09).
-            await _backup.CreateBackupAsync(_safety);
+            await _backup.CreateSafetyCopyAsync(_safety);
             await _backup.RestorePackageAsync(_package, NeedsRestorePassword ? RestorePassword : null);
 
             // Due occurrences are processed again; settled ones are not recreated (BAK-11).

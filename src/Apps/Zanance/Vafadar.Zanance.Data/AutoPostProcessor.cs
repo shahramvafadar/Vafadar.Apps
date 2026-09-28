@@ -25,6 +25,8 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
         await _gate.WaitAsync(cancellationToken);
         try
         {
+            // An entry saved without its state (interrupted settle) must not look open, or it would be posted again.
+            await plans.RepairSettlementsAsync(cancellationToken);
             var accounts = (await store.GetAccountsAsync(cancellationToken: cancellationToken)).ToDictionary(a => a.Id);
             var schedules = await plans.GetSchedulesAsync(cancellationToken);
             var states = await plans.GetStatesAsync(cancellationToken: cancellationToken);
@@ -68,6 +70,9 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
                         {
                             throw;
                         }
+
+                        // The entry exists; make sure its state says so too.
+                        await plans.RepairSettlementsAsync(cancellationToken);
                     }
                 }
             }
@@ -83,6 +88,6 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
     private async Task<bool> IsSettledAsync(Occurrence occurrence, CancellationToken cancellationToken)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        return await db.Entries.AnyAsync(e => e.ScheduleId == occurrence.Schedule.Id && e.OccurrenceDate == occurrence.OriginalDate, cancellationToken);
+        return await db.Entries.AnyAsync(e => e.ScheduleId == occurrence.Schedule.Id && e.OccurrenceDate == occurrence.OriginalDate && !e.IsPartialPayment, cancellationToken);
     }
 }

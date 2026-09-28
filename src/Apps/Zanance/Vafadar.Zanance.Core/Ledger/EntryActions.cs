@@ -120,6 +120,20 @@ public static class EntryActions
             && (group.Count == 1 ? group.First().GroupId is null : IsSplit(group));
     }
 
+    /// <summary>
+    /// Returns whether a purchase already has refunds or an amount still to be paid back. Such an entry is not split:
+    /// the refund or the reimbursable amount would stay on one part and could exceed it (REF rules, F2-TX-03).
+    /// </summary>
+    /// <param name="group">The entry and the entries of its group.</param>
+    /// <param name="entries">All entries (to find refunds that point at the group).</param>
+    public static bool HasPaybacks(IReadOnlyCollection<LedgerEntry> group, IEnumerable<LedgerEntry> entries)
+    {
+        ArgumentNullException.ThrowIfNull(group);
+        ArgumentNullException.ThrowIfNull(entries);
+        var ids = group.Select(e => e.Id).ToHashSet();
+        return group.Any(e => e.ReimbursableAmount is > 0) || entries.Any(e => e.RefundOfId is { } of && ids.Contains(of));
+    }
+
     /// <summary>Returns whether a group of entries is a split purchase or income rather than a transfer with a fee.</summary>
     public static bool IsSplit(IReadOnlyCollection<LedgerEntry> group)
     {

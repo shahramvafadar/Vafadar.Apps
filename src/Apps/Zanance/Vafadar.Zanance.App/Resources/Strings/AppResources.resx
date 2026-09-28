@@ -1935,7 +1935,7 @@
     <value>Join into one entry</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>Only income or expense entries without a plan or refund link can be split.</value>
+    <value>Only income or expenses without a plan, refunds or an amount to be paid back can be split.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>Part of a split: total {0} in {1} parts. Deleting removes all parts.</value>
@@ -2545,5 +2545,8 @@
   </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}, selected</value>
+  </data>
+  <data name="Plan_SplitConflict" xml:space="preserve">
+    <value>Occurrences after this date are already recorded and would not match the new dates. Choose a later "changes apply from" date, or keep the day.</value>
   </data>
 </root>

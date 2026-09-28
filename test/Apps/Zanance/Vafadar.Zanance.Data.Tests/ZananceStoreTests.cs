@@ -276,6 +276,24 @@ public sealed class ZananceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Merging_a_main_category_into_its_own_child_makes_the_child_a_main_category()
+    {
+        var food = new Category { Kind = CategoryKind.Expense, Name = "Food" };
+        await _store.SaveCategoryAsync(food, Ct);
+        var groceries = new Category { Kind = CategoryKind.Expense, Name = "Groceries", ParentId = food.Id };
+        var restaurants = new Category { Kind = CategoryKind.Expense, Name = "Restaurants", ParentId = food.Id };
+        await _store.SaveCategoryAsync(groceries, Ct);
+        await _store.SaveCategoryAsync(restaurants, Ct);
+
+        await _store.MergeCategoryAsync(food.Id, groceries.Id, Ct);
+
+        var all = await _store.GetCategoriesAsync(Ct);
+        Assert.Null(all.Single(c => c.Id == groceries.Id).ParentId);
+        Assert.Equal(groceries.Id, all.Single(c => c.Id == restaurants.Id).ParentId);
+        Assert.True(all.Single(c => c.Id == food.Id).IsArchived);
+    }
+
+    [Fact]
     public async Task Templates_are_kept_in_order_follow_a_category_merge_and_are_deleted_with_all_data()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);
