@@ -316,7 +316,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             if (row.GrossExpense > 0)
             {
                 var brush = new SolidColorBrush(color);
-                Slices.Add(new CategorySlice(ids, name, (double)MoneyAmount.ToDecimal(row.GrossExpense, currency), MoneyText.Format(row.GrossExpense, _currency, culture),
+                Slices.Add(new CategorySlice(ids, name, (double)MoneyText.ToDecimal(row.GrossExpense, currency), MoneyText.Format(row.GrossExpense, _currency, culture),
                     ((double)row.GrossExpense / gross).ToString("P0", culture), color, brush));
                 SliceBrushes.Add(brush);
             }
@@ -375,8 +375,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             var label = _dates.Format(month.From, DateFormatStyle.MonthYear) + (month.IsPartial ? " *" : string.Empty);
             Trend.Add(new TrendPoint(
                 label,
-                (double)MoneyAmount.ToDecimal(month.NetIncome, currency),
-                (double)MoneyAmount.ToDecimal(Math.Max(0, month.NetExpense), currency),
+                (double)MoneyText.ToDecimal(month.NetIncome, currency),
+                (double)MoneyText.ToDecimal(Math.Max(0, month.NetExpense), currency),
                 MoneyText.Format(month.NetIncome, _currency, culture),
                 MoneyText.Format(month.NetExpense, _currency, culture),
                 MoneyText.Format(month.Result, _currency, culture, showPlus: true)));

@@ -4,10 +4,12 @@
      variant at run time, so colors are used as DynamicResource. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:v="http://vafadar.pro/schemas/maui">
+                    xmlns:v="http://vafadar.pro/schemas/maui"
+                    xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation">
 
     <v:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     <v:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <p:CurrencyUnitConverter x:Key="CurrencyUnitConverter" />
     <v:IsPositiveConverter x:Key="IsPositiveConverter" />
 
     <Color x:Key="IncomeText">#1B5E20</Color>

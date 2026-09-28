@@ -136,7 +136,7 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         long? total = null;
         if (!string.IsNullOrWhiteSpace(TotalText))
         {
-            if (!MoneyAmount.TryParse(TotalText, currency, culture, out var parsed) || parsed < 0)
+            if (!MoneyText.TryParse(TotalText, currency, culture, out var parsed) || parsed < 0)
             {
                 Error = translator["Amount_Invalid"];
                 return;
@@ -148,7 +148,7 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         var limits = new List<BudgetCategoryLimit>();
         foreach (var input in Limits.Where(l => !string.IsNullOrWhiteSpace(l.Text)))
         {
-            if (!MoneyAmount.TryParse(input.Text, currency, culture, out var limit) || limit < 0)
+            if (!MoneyText.TryParse(input.Text, currency, culture, out var limit) || limit < 0)
             {
                 Error = $"{input.Name}: {translator["Amount_Invalid"]}";
                 return;

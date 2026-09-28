@@ -150,7 +150,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 forecast.GoesNegative ? Palette.ExpenseText : Palette.SecondaryText,
                 warning,
                 forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null,
-                [.. forecast.Path.Select(p => new PathPoint(p.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyAmount.ToDecimal(p.Balance, currency)))],
+                [.. forecast.Path.Select(p => new PathPoint(p.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyText.ToDecimal(p.Balance, currency)))],
                 rows));
         }
     }

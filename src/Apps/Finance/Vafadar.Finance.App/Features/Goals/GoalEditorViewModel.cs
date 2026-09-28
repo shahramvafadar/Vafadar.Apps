@@ -114,7 +114,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     private async Task SaveAsync()
     {
         NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Goal_NameRequired"] : null;
-        AmountError = MoneyAmount.TryParse(AmountText, Currencies.Get(CurrencyCode), _localization.CurrentCulture, out var amount) && amount > 0
+        AmountError = MoneyText.TryParse(AmountText, Currencies.Get(CurrencyCode), _localization.CurrentCulture, out var amount) && amount > 0
             ? null
             : _translator["Amount_Invalid"];
         if (NameError is not null || AmountError is not null || IsBusy)

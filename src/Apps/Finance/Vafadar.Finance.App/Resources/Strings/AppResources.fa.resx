@@ -2377,4 +2377,40 @@
   <data name="Rule_YearWeekday" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
+  <data name="Unit_Title" xml:space="preserve">
+    <value>واحد نمایش ارز</value>
+  </data>
+  <data name="Unit_Intro" xml:space="preserve">
+    <value>مبالغ یک ارز را با واحد رایج روزمره نمایش دهید و وارد کنید، مثلاً تومان به جای ریال. مبالغ همچنان به خود ارز ذخیره، خروجی و تبدیل می‌شوند.</value>
+  </data>
+  <data name="Unit_Add" xml:space="preserve">
+    <value>تعریف واحد</value>
+  </data>
+  <data name="Unit_Name" xml:space="preserve">
+    <value>نام واحد</value>
+  </data>
+  <data name="Unit_Factor" xml:space="preserve">
+    <value>هر واحد برابر است با (به ارز)</value>
+  </data>
+  <data name="Unit_Definition" xml:space="preserve">
+    <value>هر {0} برابر {1}</value>
+  </data>
+  <data name="Unit_Example" xml:space="preserve">
+    <value>نمونه: {0} به صورت {1} نمایش داده می‌شود</value>
+  </data>
+  <data name="Unit_Invalid" xml:space="preserve">
+    <value>یک ارز انتخاب کنید و نامی تا ۲۰ نویسه، بدون | و ; وارد کنید.</value>
+  </data>
+  <data name="Unit_Remove" xml:space="preserve">
+    <value>واحد حذف شود؟</value>
+  </data>
+  <data name="Unit_UseToman" xml:space="preserve">
+    <value>استفاده از تومان برای ریال ایران (هر تومان = ۱۰ ریال)</value>
+  </data>
+  <data name="Unit_TomanName" xml:space="preserve">
+    <value>تومان</value>
+  </data>
+  <data name="Unit_Note" xml:space="preserve">
+    <value>واحد فقط شیوهٔ نمایش و ورود مبالغ را تغییر می‌دهد. نرخ‌های تبدیل و فایل‌های CSV همیشه ارز استاندارد را به کار می‌برند.</value>
+  </data>
 </root>

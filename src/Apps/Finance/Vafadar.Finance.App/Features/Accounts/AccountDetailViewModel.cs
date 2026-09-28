@@ -275,7 +275,7 @@ public sealed partial class AccountDetailViewModel(
         var currency = Currencies.TryGet(account.CurrencyCode, out var known) ? known : Currencies.Euro;
         var text = ObservedText.Trim();
         var negative = text.StartsWith('-') || text.StartsWith('−');
-        if (!MoneyAmount.TryParse(text.TrimStart('-', '−'), currency, localization.CurrentCulture, out var observed))
+        if (!MoneyText.TryParse(text.TrimStart('-', '−'), currency, localization.CurrentCulture, out var observed))
         {
             Error = translator["Amount_Invalid"];
             return;

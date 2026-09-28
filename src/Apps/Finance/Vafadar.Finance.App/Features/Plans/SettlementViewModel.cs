@@ -86,7 +86,7 @@ public sealed partial class SettlementViewModel(FinanceStore finance, PlanStore 
 
         var culture = localization.CurrentCulture;
         var currency = Currencies.Get(_currency);
-        var actual = MoneyAmount.TryParse(ActualText, currency, culture, out var parsed) && parsed >= 0 ? parsed : (long?)null;
+        var actual = MoneyText.TryParse(ActualText, currency, culture, out var parsed) && parsed >= 0 ? parsed : (long?)null;
         _result = AdvanceSettlement.Compute(_plan, _entries, From, To, actual ?? 0);
         AdvancesText = translator.Format("Settlement_Advances", _result.Advances.Count, MoneyText.Format(_result.Paid, _currency, culture));
         if (actual is null)

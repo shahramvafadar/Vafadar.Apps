@@ -426,7 +426,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (entry.OriginalAmount is { } original && entry.OriginalCurrencyCode is { } originalCurrency)
         {
             ForeignCurrency = originalCurrency;
-            ForeignAmountText = MoneyText.ForInput(original, originalCurrency, culture);
+            ForeignAmountText = MoneyText.ForInput(original, originalCurrency, culture, useUnit: false);
         }
 
         IconKey = entry.Icon;
@@ -622,7 +622,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
         var culture = _localization.CurrentCulture;
         var currency = Currencies.TryGet(Account.CurrencyCode, out var known) ? known : Currencies.Euro;
-        var parsed = MoneyAmount.TryParse(AmountText, currency, culture, out var amount);
+        var parsed = MoneyText.TryParse(AmountText, currency, culture, out var amount);
         if (!parsed || amount <= 0)
         {
             AmountError = parsed || string.IsNullOrWhiteSpace(AmountText) ? _translator["LedgerError_AmountMustBePositive"] : _translator["Amount_Invalid"];
@@ -630,7 +630,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         long fee = 0;
-        if (IsTransfer && !string.IsNullOrWhiteSpace(FeeText) && !MoneyAmount.TryParse(FeeText, currency, culture, out fee))
+        if (IsTransfer && !string.IsNullOrWhiteSpace(FeeText) && !MoneyText.TryParse(FeeText, currency, culture, out fee))
         {
             SaveError = _translator["Amount_Invalid"];
             return;
@@ -639,7 +639,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         long? toAmount = null;
         if (ShowToAmount && ToAccount is not null)
         {
-            if (!MoneyAmount.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
+            if (!MoneyText.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
             {
                 SaveError = _translator["LedgerError_DestinationAmountRequired"];
                 return;
@@ -668,7 +668,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             {
                 reimbursableAmount = amount;
             }
-            else if (!MoneyAmount.TryParse(ReimbursableText, Currencies.Get(Account.CurrencyCode), culture, out var parsedReimbursable) || parsedReimbursable <= 0 || parsedReimbursable > amount)
+            else if (!MoneyText.TryParse(ReimbursableText, Currencies.Get(Account.CurrencyCode), culture, out var parsedReimbursable) || parsedReimbursable <= 0 || parsedReimbursable > amount)
             {
                 SaveError = _translator["Entry_ReimbursableInvalid"];
                 return;

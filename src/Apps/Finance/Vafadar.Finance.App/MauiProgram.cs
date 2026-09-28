@@ -108,7 +108,8 @@ public static class MauiProgram
             .AddTransient<Features.Goals.GoalsPage>().AddTransient<Features.Goals.GoalsViewModel>()
             .AddTransient<Features.Goals.GoalEditorPage>().AddTransient<Features.Goals.GoalEditorViewModel>()
             .AddTransient<Features.Goals.GoalDetailPage>().AddTransient<Features.Goals.GoalDetailViewModel>()
-            .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>();
+            .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>()
+            .AddTransient<DisplayUnitsPage>().AddTransient<DisplayUnitsViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

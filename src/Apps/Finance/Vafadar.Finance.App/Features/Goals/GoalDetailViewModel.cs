@@ -158,7 +158,7 @@ public sealed partial class GoalDetailViewModel(
             return;
         }
 
-        if (!MoneyAmount.TryParse(AmountText, Currencies.Get(_goal.CurrencyCode), localization.CurrentCulture, out var amount) || amount <= 0)
+        if (!MoneyText.TryParse(AmountText, Currencies.Get(_goal.CurrencyCode), localization.CurrentCulture, out var amount) || amount <= 0)
         {
             AmountError = translator["Amount_Invalid"];
             return;

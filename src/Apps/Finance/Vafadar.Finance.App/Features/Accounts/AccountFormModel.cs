@@ -153,7 +153,7 @@ public sealed partial class AccountFormModel : ObservableObject
 
         long opening = 0;
         AmountError = null;
-        if (!OpeningUnknown && !string.IsNullOrWhiteSpace(OpeningText) && !MoneyAmount.TryParse(OpeningText, Currencies.Get(CurrencyCode), culture, out opening))
+        if (!OpeningUnknown && !string.IsNullOrWhiteSpace(OpeningText) && !MoneyText.TryParse(OpeningText, Currencies.Get(CurrencyCode), culture, out opening))
         {
             AmountError = _translator["Amount_Invalid"];
         }
@@ -171,7 +171,7 @@ public sealed partial class AccountFormModel : ObservableObject
                 TermsError = rate is null ? _translator["Account_RateInvalid"] : null;
             }
 
-            if (!string.IsNullOrWhiteSpace(InstallmentText) && !MoneyAmount.TryParse(InstallmentText, Currencies.Get(CurrencyCode), culture, out installment))
+            if (!string.IsNullOrWhiteSpace(InstallmentText) && !MoneyText.TryParse(InstallmentText, Currencies.Get(CurrencyCode), culture, out installment))
             {
                 TermsError = _translator["Amount_Invalid"];
             }

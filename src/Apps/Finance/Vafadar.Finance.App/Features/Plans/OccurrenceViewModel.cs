@@ -190,7 +190,7 @@ public sealed partial class OccurrenceViewModel(
         }
 
         Error = null;
-        if (!MoneyAmount.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
+        if (!MoneyText.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
         {
             Error = translator["LedgerError_AmountMustBePositive"];
             return;
@@ -227,7 +227,7 @@ public sealed partial class OccurrenceViewModel(
         }
 
         Error = null;
-        if (!MoneyAmount.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
+        if (!MoneyText.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
         {
             Error = translator["LedgerError_AmountMustBePositive"];
             return;
@@ -292,7 +292,7 @@ public sealed partial class OccurrenceViewModel(
         long? amount = null;
         if (!string.IsNullOrWhiteSpace(OverrideAmountText))
         {
-            if (!MoneyAmount.TryParse(OverrideAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var parsed) || parsed <= 0)
+            if (!MoneyText.TryParse(OverrideAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var parsed) || parsed <= 0)
             {
                 Error = translator["Amount_Invalid"];
                 return;

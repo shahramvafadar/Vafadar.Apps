@@ -392,7 +392,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         Slices.Add(new CategorySlice(
             ids,
             name,
-            (double)MoneyAmount.ToDecimal(net, currencyInfo),
+            (double)MoneyText.ToDecimal(net, currencyInfo),
             MoneyText.Format(net, currency, culture),
             ((double)net / total).ToString("P0", culture),
             color,

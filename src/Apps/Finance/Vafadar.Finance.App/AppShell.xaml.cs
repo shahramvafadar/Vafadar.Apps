@@ -65,6 +65,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the manual exchange rates.</summary>
     public const string RatesRoute = "rates";
 
+    /// <summary>Route of the display units such as the toman (FX-07).</summary>
+    public const string DisplayUnitsRoute = "displayunits";
+
     /// <summary>Route of CSV import and export.</summary>
     public const string ImportExportRoute = "importexport";
 
@@ -115,6 +118,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
         Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
+        Routing.RegisterRoute(DisplayUnitsRoute, typeof(DisplayUnitsPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
         Routing.RegisterRoute(GoalsRoute, typeof(Features.Goals.GoalsPage));

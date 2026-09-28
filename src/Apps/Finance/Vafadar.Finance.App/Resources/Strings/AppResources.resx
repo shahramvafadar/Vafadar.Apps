@@ -2381,4 +2381,40 @@
   <data name="Rule_YearWeekday" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
+  <data name="Unit_Title" xml:space="preserve">
+    <value>Currency units</value>
+  </data>
+  <data name="Unit_Intro" xml:space="preserve">
+    <value>Show and enter amounts of a currency in an everyday unit, for example toman instead of rial. Amounts are still stored, exported and converted in the currency itself.</value>
+  </data>
+  <data name="Unit_Add" xml:space="preserve">
+    <value>Define a unit</value>
+  </data>
+  <data name="Unit_Name" xml:space="preserve">
+    <value>Name of the unit</value>
+  </data>
+  <data name="Unit_Factor" xml:space="preserve">
+    <value>One unit equals (in the currency)</value>
+  </data>
+  <data name="Unit_Definition" xml:space="preserve">
+    <value>1 {0} = {1}</value>
+  </data>
+  <data name="Unit_Example" xml:space="preserve">
+    <value>{0} is shown as {1}</value>
+  </data>
+  <data name="Unit_Invalid" xml:space="preserve">
+    <value>Choose a currency and enter a name of up to 20 characters without | or ;.</value>
+  </data>
+  <data name="Unit_Remove" xml:space="preserve">
+    <value>Remove unit?</value>
+  </data>
+  <data name="Unit_UseToman" xml:space="preserve">
+    <value>Use toman for the Iranian rial (1 toman = 10 rial)</value>
+  </data>
+  <data name="Unit_TomanName" xml:space="preserve">
+    <value>Toman</value>
+  </data>
+  <data name="Unit_Note" xml:space="preserve">
+    <value>A unit only changes how amounts are shown and entered. Exchange rates and CSV files always use the ISO currency.</value>
+  </data>
 </root>

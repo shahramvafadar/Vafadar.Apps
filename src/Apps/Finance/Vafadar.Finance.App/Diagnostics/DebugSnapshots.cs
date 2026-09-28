@@ -76,6 +76,7 @@ internal static class DebugSnapshots
         }
 
         var (expenseId, foodId) = await SeedAsync(services);
+        Presentation.DisplayUnitPreferences.Save([new Core.Money.DisplayUnit("IRR", "Toman", 1)]);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
         var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;
@@ -112,6 +113,7 @@ internal static class DebugSnapshots
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
+            ("display-units", AppShell.DisplayUnitsRoute, null),
             ("templates", AppShell.TemplatesRoute, null),
             ("goals", AppShell.GoalsRoute, null),
             ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),

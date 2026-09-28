@@ -139,7 +139,7 @@ public sealed partial class SplitEditorViewModel(FinanceStore store, Translator 
         var valid = true;
         foreach (var part in Parts)
         {
-            if (!MoneyAmount.TryParse(part.AmountText, _currency, localization.CurrentCulture, out var amount) || amount <= 0)
+            if (!MoneyText.TryParse(part.AmountText, _currency, localization.CurrentCulture, out var amount) || amount <= 0)
             {
                 valid = false;
                 continue;
@@ -174,7 +174,7 @@ public sealed partial class SplitEditorViewModel(FinanceStore store, Translator 
         {
             var shares = Parts.Select(p =>
             {
-                MoneyAmount.TryParse(p.AmountText, _currency, localization.CurrentCulture, out var amount);
+                MoneyText.TryParse(p.AmountText, _currency, localization.CurrentCulture, out var amount);
                 return (p.Category?.Id, amount);
             }).ToList();
             var (save, delete) = EntryActions.Split(_parts, shares);

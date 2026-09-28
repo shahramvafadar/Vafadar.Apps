@@ -17,6 +17,9 @@ public partial class App : Application
         _services = services;
         InitializeComponent();
 
+        // Display units (e.g. toman) the user defined, before any amount is shown (FX-07).
+        Presentation.DisplayUnitPreferences.Load();
+
         // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors reload with the shell.
         var theme = services.GetRequiredService<Presentation.ThemeService>();
         theme.Initialize(this);

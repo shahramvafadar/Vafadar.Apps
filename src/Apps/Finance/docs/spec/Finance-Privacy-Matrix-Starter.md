@@ -45,7 +45,7 @@
 | DF-15 | Online exchange rates / Bank Sync | None; rates are entered manually. | — | Not included. | The Android manifest declares no INTERNET permission. |
 | DF-16 | Android Auto Backup | App database and preferences. | The user's Google account backup. | Implemented — unverified (enabled by owner decision). | Disclose in the Privacy Policy and Data Safety; test restore on a new device. |
 | DF-17 | iOS device / iCloud backup | App data. | The user's iCloud or computer backup. | Implemented — unverified (operating-system default). | Disclose; verify with the iOS release. |
-| DF-18 | Preferences | Language, calendar, optional region, first day of the week, theme, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
+| DF-18 | Preferences | Language, calendar, optional region, first day of the week, theme, currency display units, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
 | DF-20 | Attachments | Receipt photos and PDF files the user picks for an entry; photos re-encoded as JPEG without metadata. | App database, the encrypted backup and OS backups; never in exports; opened with an app the user chooses. | Implemented — verified. | Uses the system file picker without any camera, storage or photo permission; removed with their entry. |
 | DF-19 | Syncfusion license validation | License key compiled into the app (build secret, never in the repository). | Local check. | Implemented — offline validation verified by an automated test. | Confirm no network call in the release build (none possible on Android without the INTERNET permission). |
 

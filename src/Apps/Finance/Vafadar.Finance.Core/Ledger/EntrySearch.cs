@@ -142,7 +142,8 @@ public static class EntrySearch
             && decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var searched))
         {
             var currency = Currencies.TryGet(account.CurrencyCode, out var known) ? known : new Currency(account.CurrencyCode, 2);
-            return MoneyAmount.ToDecimal(entry.Amount, currency) == searched;
+            // The amount as stored or as shown in the user's display unit (FX-07).
+        return MoneyAmount.ToDecimal(entry.Amount, currency) == searched || MoneyText.ToDecimal(entry.Amount, currency) == searched;
         }
 
         return false;

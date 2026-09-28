@@ -671,7 +671,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         long? amount = null;
         if (ShowAmount)
         {
-            if (!MoneyAmount.TryParse(AmountText, Currencies.Get(Account.CurrencyCode), culture, out var parsed) || parsed <= 0)
+            if (!MoneyText.TryParse(AmountText, Currencies.Get(Account.CurrencyCode), culture, out var parsed) || parsed <= 0)
             {
                 SaveError = _translator["LedgerError_AmountMustBePositive"];
                 return;
@@ -691,7 +691,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
             if (ShowToAmount)
             {
-                if (!MoneyAmount.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
+                if (!MoneyText.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
                 {
                     SaveError = _translator["LedgerError_DestinationAmountRequired"];
                     return;
