@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Settings.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Settings"
     x:DataType="local:SettingsViewModel"
@@ -33,7 +34,7 @@
                             SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
 
                     <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency}"
+                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
                 </VerticalStackLayout>
             </Border>

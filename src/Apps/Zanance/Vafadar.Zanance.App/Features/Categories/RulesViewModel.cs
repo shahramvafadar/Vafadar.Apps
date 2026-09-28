@@ -80,7 +80,7 @@ public sealed partial class RulesViewModel(ZananceStore store, Translator transl
     [RelayCommand]
     private async Task DeleteAsync(RuleRow row)
     {
-        if (await Shell.Current.DisplayAlertAsync(translator["Rule_Delete"], $"{row.Match} → {row.CategoryName}", translator["Common_Delete"], translator["Common_Cancel"]))
+        if (await Shell.Current.DisplayAlertAsync(translator["Rule_Delete"], translator.Format("Rule_Summary", row.Match, row.CategoryName), translator["Common_Delete"], translator["Common_Cancel"]))
         {
             await store.DeleteCategoryRuleAsync(row.Id);
             await LoadAsync();

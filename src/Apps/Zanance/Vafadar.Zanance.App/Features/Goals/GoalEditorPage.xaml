@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Goals.GoalEditorPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Goals"
@@ -27,7 +28,7 @@
                         <Label Text="{v:Translate Goal_Target}" Style="{StaticResource FieldLabel}" />
                         <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" SemanticProperties.Description="{v:Translate Goal_Target}" />
-                            <Picker Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}"
+                            <inputs:SfComboBox Style="{StaticResource CurrencyBox}" Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
                                     IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
                                     SemanticProperties.Description="{v:Translate Account_Currency}" />
                         </Grid>

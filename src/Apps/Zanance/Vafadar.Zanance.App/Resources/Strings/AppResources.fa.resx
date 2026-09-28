@@ -149,7 +149,7 @@
     <value>در جمع کل حساب شود</value>
   </data>
   <data name="Account_IsDefault" xml:space="preserve">
-    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+    <value>حساب پیش‌فرض برای تراکنش‌های جدید</value>
   </data>
   <data name="Account_Archive" xml:space="preserve">
     <value>بایگانی حساب</value>
@@ -221,7 +221,7 @@
     <value>موردی با این فیلترها پیدا نشد.</value>
   </data>
   <data name="Tx_Search" xml:space="preserve">
-    <value>جستجو در عنوان، طرف حساب، یادداشت یا مبلغ</value>
+    <value>جست‌وجو در عنوان، طرف حساب، یادداشت یا مبلغ</value>
   </data>
   <data name="Tx_Add" xml:space="preserve">
     <value>ثبت تراکنش</value>
@@ -557,7 +557,7 @@
     <value>افزودن برنامه</value>
   </data>
   <data name="Plans_UnreviewedEntries" xml:space="preserve">
-    <value>ثبت‌های خودکار نیاز به بررسی دارند.</value>
+    <value>تراکنش‌های ثبت‌شدهٔ خودکار نیاز به بررسی دارند.</value>
   </data>
   <data name="Plans_Review" xml:space="preserve">
     <value>بررسی</value>
@@ -617,7 +617,7 @@
     <value>مبلغ این نوبت</value>
   </data>
   <data name="Occurrence_ChangeHint" xml:space="preserve">
-    <value>تغییرات فقط برای همین نوبت است و برنامه تغییر نمی‌کند.</value>
+    <value>تغییرات فقط برای همین موعد است و برنامه تغییر نمی‌کند.</value>
   </data>
   <data name="Occurrence_SettledWith" xml:space="preserve">
     <value>ثبت‌شده: {0} در {1}</value>
@@ -818,7 +818,7 @@
     <value>اعمال تغییرات از</value>
   </data>
   <data name="Plan_ApplyFromHint" xml:space="preserve">
-    <value>نوبت‌های قبلی مبلغ و تاریخ خود را حفظ می‌کنند.</value>
+    <value>موعدهای قبلی مبلغ و تاریخ خود را حفظ می‌کنند.</value>
   </data>
   <data name="Plan_Reminder" xml:space="preserve">
     <value>یادآوری</value>
@@ -866,7 +866,7 @@
     <value>حذف برنامه</value>
   </data>
   <data name="Plan_DeleteMessage" xml:space="preserve">
-    <value>این برنامه حذف شود؟ هیچ نوبت ثبت‌شده‌ای ندارد.</value>
+    <value>این برنامه حذف شود؟ هیچ موعد ثبت‌شده‌ای ندارد.</value>
   </data>
   <data name="Home_Scope" xml:space="preserve">
     <value>{0} · {1} · ارز گزارش {2}</value>
@@ -1151,7 +1151,7 @@
     <value>در این دوره برنامه‌ای سررسید ندارد.</value>
   </data>
   <data name="Report_Planned" xml:space="preserve">
-    <value>برنامه</value>
+    <value>برنامه‌ریزی‌شده</value>
   </data>
   <data name="Report_Actual" xml:space="preserve">
     <value>ثبت‌شده</value>
@@ -1211,7 +1211,7 @@
     <value>یک مورد مالی نیاز به بررسی دارد.</value>
   </data>
   <data name="Reminder_Details" xml:space="preserve">
-    <value>{0} · سررسید {1}</value>
+    <value>مبلغ {0} · سررسید {1}</value>
   </data>
   <data name="Reminder_BudgetGeneric" xml:space="preserve">
     <value>بودجهٔ شما نیاز به توجه دارد.</value>
@@ -1244,7 +1244,7 @@
     <value>نرخ‌هایی که وارد می‌کنید فقط برای نمایش جمع کل به ارز گزارش استفاده می‌شوند. مبالغ ثبت‌شده، بودجه‌ها و تاریخچه هرگز تغییر نمی‌کنند.</value>
   </data>
   <data name="Rates_Missing" xml:space="preserve">
-    <value>هنوز نرخی برای {0} ← {1} ثبت نشده است. تا افزودن نرخ، جمع به {1} ناقص می‌ماند.</value>
+    <value>هنوز نرخی از {0} به {1} ثبت نشده است. تا افزودن نرخ، جمع به {1} ناقص می‌ماند.</value>
   </data>
   <data name="Rates_From" xml:space="preserve">
     <value>از ارز</value>
@@ -1343,7 +1343,7 @@
     <value>منفی = هزینه</value>
   </data>
   <data name="Import_SignAllExpenses" xml:space="preserve">
-    <value>همه هزینه</value>
+    <value>همه هزینه هستند</value>
   </data>
   <data name="Import_SignAllIncome" xml:space="preserve">
     <value>همه درآمد</value>
@@ -1400,7 +1400,7 @@
     <value>چیزی وارد نشد: {0} سطر معتبر نیست ({1}).</value>
   </data>
   <data name="Import_Done" xml:space="preserve">
-    <value>{0} تراکنش وارد شد و {1} مورد رد شد. آنها را در تراکنش‌ها بررسی کنید.</value>
+    <value>{0} تراکنش وارد شد و {1} مورد رد شد. آن‌ها را در تراکنش‌ها بررسی کنید.</value>
   </data>
   <data name="Import_History" xml:space="preserve">
     <value>ورودهای قبلی</value>
@@ -1430,13 +1430,13 @@
     <value>حریم خصوصی و امنیت</value>
   </data>
   <data name="Lock_Setting" xml:space="preserve">
-    <value>قفل برنامه</value>
+    <value>قفل اپ</value>
   </data>
   <data name="Lock_Hint" xml:space="preserve">
-    <value>از اثر انگشت، چهره یا قفل صفحهٔ دستگاه استفاده می‌کند. هنگام خروج، برنامه پوشانده می‌شود و پس از ۳۰ ثانیه دوباره می‌پرسد. قفل، برنامه را پنهان می‌کند و داده‌های روی دستگاه را رمزنگاری نمی‌کند.</value>
+    <value>از اثر انگشت، چهره یا قفل صفحهٔ دستگاه استفاده می‌کند. هنگام خروج، اپ پوشانده می‌شود و پس از ۳۰ ثانیه دوباره می‌پرسد. قفل، اپ را پنهان می‌کند و داده‌های روی دستگاه را رمزنگاری نمی‌کند.</value>
   </data>
   <data name="Lock_NotAvailableHint" xml:space="preserve">
-    <value>برای استفاده از قفل برنامه، ابتدا قفل صفحه را روی دستگاه فعال کنید.</value>
+    <value>برای استفاده از قفل اپ، ابتدا قفل صفحه را روی دستگاه فعال کنید.</value>
   </data>
   <data name="Lock_Message" xml:space="preserve">
     <value>برای دیدن اطلاعات مالی، قفل را باز کنید.</value>
@@ -1448,10 +1448,10 @@
     <value>باز کردن قفل Zanance</value>
   </data>
   <data name="Lock_EnableReason" xml:space="preserve">
-    <value>فعال‌کردن قفل برنامه</value>
+    <value>فعال‌کردن قفل اپ</value>
   </data>
   <data name="Lock_DisableReason" xml:space="preserve">
-    <value>غیرفعال‌کردن قفل برنامه</value>
+    <value>غیرفعال‌کردن قفل اپ</value>
   </data>
   <data name="Lock_ConfirmExport" xml:space="preserve">
     <value>تأیید خروجی گرفتن</value>
@@ -1739,7 +1739,7 @@
     <value>پوشش‌داده: {0} از {1}</value>
   </data>
   <data name="Goal_By" xml:space="preserve">
-    <value>موعد: {0}</value>
+    <value>لازم تا {0}</value>
   </data>
   <data name="Goal_Reached" xml:space="preserve">
     <value>به هدف رسیدید</value>
@@ -1931,7 +1931,7 @@
     <value>یکی کردن دوباره</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>فقط درآمد یا هزینه‌ای که به برنامه یا بازپرداخت وصل نیست قابل تقسیم است.</value>
+    <value>فقط درآمد یا هزینه‌ای که به برنامه یا برگشت وجه وصل نیست قابل تقسیم است.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>بخشی از یک تقسیم: جمع {0} در {1} سهم. حذف، همهٔ سهم‌ها را پاک می‌کند.</value>
@@ -2021,7 +2021,7 @@
     <value>بازپرداخت {0} توسط {1}؛ باقی‌مانده: {2}</value>
   </data>
   <data name="Entry_ReimbursementDone" xml:space="preserve">
-    <value>{0} به‌طور کامل توسط {1} بازپرداخت شد.</value>
+    <value>مبلغ {0} به‌طور کامل توسط {1} بازپرداخت شد.</value>
   </data>
   <data name="Entry_ReimbursedBySomeone" xml:space="preserve">
     <value>کسی</value>
@@ -2138,7 +2138,7 @@
     <value>دارایی</value>
   </data>
   <data name="Account_AssetHint" xml:space="preserve">
-    <value>خودرو، ملک یا چیز باارزش دیگر با ارزشی که خودتان تخمین می‌زنید. ارزش جدید را با اصلاح موجودی در جزئیات حساب ثبت کنید؛ این هیچ‌وقت درآمد یا هزینه نیست و تخمین، پول نقد نیست.</value>
+    <value>خودرو، ملک یا چیز باارزش دیگر با ارزشی که خودتان تخمین می‌زنید. ارزش جدید را با تعدیل مانده در جزئیات حساب ثبت کنید؛ این هیچ‌وقت درآمد یا هزینه نیست و تخمین، پول نقد نیست.</value>
   </data>
   <data name="Accounts_AssetsValue" xml:space="preserve">
     <value>دارایی‌های تخمینی: {0}</value>
@@ -2156,7 +2156,7 @@
     <value>تراکنش‌های انتخاب‌شده</value>
   </data>
   <data name="Bulk_Reviewed" xml:space="preserve">
-    <value>بازبینی شد</value>
+    <value>بررسی شد</value>
   </data>
   <data name="Bulk_Tag" xml:space="preserve">
     <value>برچسب</value>
@@ -2228,10 +2228,10 @@
     <value>ثبت اختلاف</value>
   </data>
   <data name="Settlement_ExtraTitle" xml:space="preserve">
-    <value>{0}: پرداخت اضافه</value>
+    <value>پرداخت اضافهٔ «{0}»</value>
   </data>
   <data name="Settlement_BackTitle" xml:space="preserve">
-    <value>{0}: برگشت پول</value>
+    <value>برگشت پول «{0}»</value>
   </data>
   <data name="Plan_SecondDay" xml:space="preserve">
     <value>هر ماه یک روز دیگر هم</value>
@@ -2438,7 +2438,7 @@
     <value>حذف یک فیلتر ذخیره‌شده</value>
   </data>
   <data name="Filter_NameMessage" xml:space="preserve">
-    <value>نام، مثلاً «خرید خانه این ماه». بازه، نوع، حساب، دسته، جستجو و وضعیت بازبینی ذخیره می‌شوند.</value>
+    <value>نام، مثلاً «خرید خانه این ماه». بازه، نوع، حساب، دسته، جست‌وجو و وضعیت بررسی ذخیره می‌شوند.</value>
   </data>
   <data name="Filter_Replace" xml:space="preserve">
     <value>فیلتری با نام «{0}» وجود دارد. جایگزین شود؟</value>
@@ -2526,5 +2526,20 @@
   </data>
   <data name="Attachment_PhotoFailed" xml:space="preserve">
     <value>عکس آماده نشد و پیوست نشد. یک تصویر JPEG یا PNG یا یک فایل PDF امتحان کنید.</value>
+  </data>
+  <data name="Chart_Total" xml:space="preserve">
+    <value>جمع</value>
+  </data>
+  <data name="Rule_Summary" xml:space="preserve">
+    <value>«{0}»: {1}</value>
+  </data>
+  <data name="Category_ColorOption" xml:space="preserve">
+    <value>رنگ {0}</value>
+  </data>
+  <data name="Category_IconOption" xml:space="preserve">
+    <value>آیکن {0}</value>
+  </data>
+  <data name="Common_SelectedItem" xml:space="preserve">
+    <value>{0}، انتخاب‌شده</value>
   </data>
 </root>

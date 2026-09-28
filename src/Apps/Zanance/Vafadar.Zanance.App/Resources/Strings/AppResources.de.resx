@@ -1343,7 +1343,7 @@
     <value>Negativ = Ausgabe</value>
   </data>
   <data name="Import_SignAllExpenses" xml:space="preserve">
-    <value>Alles Ausgaben</value>
+    <value>Alle sind Ausgaben</value>
   </data>
   <data name="Import_SignAllIncome" xml:space="preserve">
     <value>Alles Einnahmen</value>
@@ -1466,7 +1466,7 @@
     <value>Diese Planung nutzt: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um diese Optionen zu ändern.</value>
   </data>
   <data name="Budget_HiddenLimits" xml:space="preserve">
-    <value>{0} Kategorie-Limits bleiben erhalten. Wechseln Sie zu Erweitert, um sie zu bearbeiten.</value>
+    <value>{0} Kategorie-Limits bleiben erhalten. Wechseln Sie in den Einstellungen zu Erweitert, um sie zu bearbeiten.</value>
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>Monatsende ≈ {0} · tiefster Stand {1} am {2}</value>
@@ -1544,7 +1544,7 @@
     <value>Zusammenführen</value>
   </data>
   <data name="Category_MergeMessage" xml:space="preserve">
-    <value>Alle Buchungen, Pläne, Vorlagen und Budgetgrenzen dieser Kategorie gehen an „{0}“ über. Danach wird diese Kategorie archiviert.</value>
+    <value>Alle Buchungen, Planungen, Vorlagen und Budget-Limits dieser Kategorie gehen an „{0}“ über. Danach wird diese Kategorie archiviert.</value>
   </data>
   <data name="Category_MergeInto" xml:space="preserve">
     <value>Mit anderer Kategorie zusammenführen</value>
@@ -1571,7 +1571,7 @@
     <value>Alle Daten auf diesem Gerät löschen</value>
   </data>
   <data name="Settings_DeleteAllHint" xml:space="preserve">
-    <value>Entfernt alle Konten, Buchungen, Pläne, Budgets und Einstellungen von diesem Gerät. Anderswo gespeicherte Sicherungsdateien bleiben erhalten.</value>
+    <value>Entfernt alle Konten, Buchungen, Planungen, Budgets und Einstellungen von diesem Gerät. Anderswo gespeicherte Sicherungsdateien bleiben erhalten.</value>
   </data>
   <data name="Settings_DeleteAllTitle" xml:space="preserve">
     <value>Alles löschen?</value>
@@ -1586,10 +1586,10 @@
     <value>Regelmäßige Zahlungen hinzufügen</value>
   </data>
   <data name="Home_TipPlansText" xml:space="preserve">
-    <value>Miete, Gehalt, Abos oder Raten: Mit einem Plan werden Sie erinnert und sehen, was ansteht.</value>
+    <value>Miete, Gehalt, Abos oder Raten: Mit einer Planung werden Sie erinnert und sehen, was ansteht.</value>
   </data>
   <data name="Home_TipPlansAction" xml:space="preserve">
-    <value>Plan hinzufügen</value>
+    <value>Planung hinzufügen</value>
   </data>
   <data name="Home_TipBudgetTitle" xml:space="preserve">
     <value>Monatsbudget festlegen</value>
@@ -1604,7 +1604,7 @@
     <value>Nicht jetzt</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
-    <value>Tippen Sie auf einen Plan-Eintrag, um ihn auszulassen oder ein anderes Datum oder einen anderen Betrag anzunehmen, z. B. ein späteres Gehalt oder eine höhere Rechnung. Das ändert nur diese Ansicht.</value>
+    <value>Tippen Sie auf einen Planungseintrag, um ihn auszulassen oder ein anderes Datum oder einen anderen Betrag anzunehmen, z. B. ein späteres Gehalt oder eine höhere Rechnung. Das ändert nur diese Ansicht.</value>
   </data>
   <data name="Forecast_WhatIfActive" xml:space="preserve">
     <value>Was-wäre-wenn-Änderungen aktiv</value>
@@ -1724,7 +1724,7 @@
     <value>Notgroschen, Reise oder die Versicherung im nächsten Jahr: Legen Sie ein Ziel fest, reservieren Sie Geld auf Ihren Konten und sehen Sie, wie viel Sie monatlich sparen sollten.</value>
   </data>
   <data name="Goals_Note" xml:space="preserve">
-    <value>Reservieren markiert Geld nur; es bewegt kein Geld und zählt nicht als Ausgabe. Buchen Sie eine Überweisung, um Geld zu bewegen, und eine Ausgabe, wenn Sie es ausgeben.</value>
+    <value>Reservieren markiert Geld nur; es bewegt kein Geld und zählt nicht als Ausgabe. Buchen Sie eine Umbuchung, um Geld zu bewegen, und eine Ausgabe, wenn Sie es ausgeben.</value>
   </data>
   <data name="Goals_Finished" xml:space="preserve">
     <value>Erreicht und archiviert</value>
@@ -1754,7 +1754,7 @@
     <value>Jetzt noch {0} nötig</value>
   </data>
   <data name="Goal_Unfunded" xml:space="preserve">
-    <value>Nicht gedeckt: {0} ist reserviert, aber nicht durch den Kontostand gedeckt.</value>
+    <value>Nicht gedeckt: {0} ist reserviert, aber nicht durch den Saldo gedeckt.</value>
   </data>
   <data name="Goal_Overdue" xml:space="preserve">
     <value>Das Zieldatum ist vorbei.</value>
@@ -1841,7 +1841,7 @@
     <value>Kein aktives Konto in {0}. Legen Sie eines an, um Geld zurückzulegen.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Das markiert nur Geld auf dem Konto. Um Geld auf ein Sparkonto zu bewegen, buchen Sie eine Überweisung.</value>
+    <value>Das markiert nur Geld auf dem Konto. Um Geld auf ein Sparkonto zu bewegen, buchen Sie eine Umbuchung.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Verlauf</value>
@@ -1883,13 +1883,13 @@
     <value>Rest addieren, Überziehung abziehen</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
-    <value>Nutzt die Budgets der Vormonate ohne Lücke. Es wird kein Geld bewegt; nur die Grenzen dieses Monats ändern sich.</value>
+    <value>Nutzt die Budgets der Vormonate ohne Lücke. Es wird kein Geld bewegt; nur die Limits dieses Monats ändern sich.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
-    <value>Enthält {0} Rest aus dem Vormonat (eigene Grenze {1})</value>
+    <value>Enthält {0} Rest aus dem Vormonat (eigenes Limit {1})</value>
   </data>
   <data name="Rollover_Deducted" xml:space="preserve">
-    <value>{0} Überziehung aus dem Vormonat abgezogen (eigene Grenze {1})</value>
+    <value>{0} Überziehung aus dem Vormonat abgezogen (eigenes Limit {1})</value>
   </data>
   <data name="Rollover_Active_Surplus" xml:space="preserve">
     <value>Der Rest des Vormonats wird diesem Budget hinzugefügt.</value>
@@ -1910,7 +1910,7 @@
     <value>Aufzuteilender Betrag</value>
   </data>
   <data name="Split_Hint" xml:space="preserve">
-    <value>Der Kontostand ändert sich einmal um diesen Betrag; jede Kategorie und ihr Budget sehen nur ihren Teil.</value>
+    <value>Der Saldo ändert sich einmal um diesen Betrag; jede Kategorie und ihr Budget sehen nur ihren Teil.</value>
   </data>
   <data name="Split_Remaining" xml:space="preserve">
     <value>Noch zuzuordnen: {0}</value>
@@ -1931,7 +1931,7 @@
     <value>Zu einer Buchung zusammenfassen</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>Nur Einnahmen oder Ausgaben ohne Plan- oder Erstattungsbezug können aufgeteilt werden.</value>
+    <value>Nur Einnahmen oder Ausgaben ohne Bezug zu einer Planung oder Erstattung können aufgeteilt werden.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>Teil einer Aufteilung: insgesamt {0} in {1} Teilen. Löschen entfernt alle Teile.</value>
@@ -1976,7 +1976,7 @@
     <value>Überprüfen am</value>
   </data>
   <data name="Contract_Hint" xml:space="preserve">
-    <value>Sie werden 14 Tage vor dem letzten Kündigungstag und am Tag selbst erinnert. Zanance erinnert nur; kündigen müssen Sie selbst, und der Plan läuft weiter, bis Sie ihn beenden.</value>
+    <value>Sie werden 14 Tage vor dem letzten Kündigungstag und am Tag selbst erinnert. Zanance erinnert nur; kündigen müssen Sie selbst, und die Planung läuft weiter, bis Sie sie beenden.</value>
   </data>
   <data name="Reminder_ContractGeneric" xml:space="preserve">
     <value>Ein Vertragstermin steht bevor.</value>
@@ -2000,7 +2000,7 @@
     <value>Jemand zahlt mir das zurück</value>
   </data>
   <data name="Entry_ReimbursableAmount" xml:space="preserve">
-    <value>Erstatteter Betrag</value>
+    <value>Zu erstattender Betrag</value>
   </data>
   <data name="Entry_ReimbursableAll" xml:space="preserve">
     <value>Der ganze Betrag</value>
@@ -2102,10 +2102,10 @@
     <value>Verliehenes Geld</value>
   </data>
   <data name="Account_LoanHint" xml:space="preserve">
-    <value>Geld, das Sie schulden. Erhalt und Rückzahlung sind Überweisungen zu und von Ihrem Konto, keine Einnahmen oder Ausgaben. Zinsen und Gebühren buchen Sie als Ausgaben.</value>
+    <value>Geld, das Sie schulden. Erhalt und Rückzahlung sind Umbuchungen zu und von Ihrem Konto, keine Einnahmen oder Ausgaben. Zinsen und Gebühren buchen Sie als Ausgaben.</value>
   </data>
   <data name="Account_LentHint" xml:space="preserve">
-    <value>Geld, das Ihnen jemand schuldet. Verleihen und Zurückbekommen sind Überweisungen, keine Ausgaben oder Einnahmen.</value>
+    <value>Geld, das Ihnen jemand schuldet. Verleihen und Zurückbekommen sind Umbuchungen, keine Ausgaben oder Einnahmen.</value>
   </data>
   <data name="Account_Counterparty" xml:space="preserve">
     <value>Kreditgeber oder -nehmer</value>
@@ -2117,7 +2117,7 @@
     <value>Geliehen von {0}</value>
   </data>
   <data name="Account_BorrowedBy" xml:space="preserve">
-    <value>Geliehen an {0}</value>
+    <value>Verliehen an {0}</value>
   </data>
   <data name="Account_RecordRepayment" xml:space="preserve">
     <value>Rückzahlung erfassen</value>
@@ -2165,7 +2165,7 @@
     <value>Kategorie für die ausgewählten Buchungen</value>
   </data>
   <data name="Bulk_CategoryMixed" xml:space="preserve">
-    <value>Wählen Sie nur Ausgaben oder nur Einnahmen, um die Kategorie gemeinsam zu ändern. Überweisungen haben keine Kategorie.</value>
+    <value>Wählen Sie nur Ausgaben oder nur Einnahmen, um die Kategorie gemeinsam zu ändern. Umbuchungen haben keine Kategorie.</value>
   </data>
   <data name="Bulk_AddTag" xml:space="preserve">
     <value>Schlagwort hinzufügen</value>
@@ -2456,13 +2456,13 @@
     <value>Umschläge</value>
   </data>
   <data name="Budget_MethodHint" xml:space="preserve">
-    <value>Bei Umschlägen ist jedes Kategorielimit Geld, das Sie aus Ihrem Guthaben zuweisen; das Budget zeigt, was noch nicht zugewiesen ist. Zuweisen bewegt oder verbraucht kein Geld.</value>
+    <value>Bei Umschlägen ist jedes Kategorie-Limit Geld, das Sie aus Ihrem Saldo zuweisen; das Budget zeigt, was noch nicht zugewiesen ist. Zuweisen bewegt oder verbraucht kein Geld.</value>
   </data>
   <data name="Envelope_Unassigned" xml:space="preserve">
     <value>Noch nicht zugewiesen</value>
   </data>
   <data name="Envelope_Available" xml:space="preserve">
-    <value>Guthaben Ihrer Konten heute</value>
+    <value>Saldo Ihrer Konten heute</value>
   </data>
   <data name="Envelope_ForGoals" xml:space="preserve">
     <value>Für Ziele zurückgelegt</value>
@@ -2474,10 +2474,10 @@
     <value>Es ist mehr zugewiesen, als Ihre Konten enthalten. Senken Sie einen Umschlag oder ein Ziel.</value>
   </data>
   <data name="Envelope_Overspent" xml:space="preserve">
-    <value>Umschläge sind um {0} überzogen; dieses Geld ist bereits vom Guthaben abgegangen.</value>
+    <value>Umschläge sind um {0} überzogen; dieses Geld ist bereits vom Saldo abgegangen.</value>
   </data>
   <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
-    <value>Nicht zugewiesenes Geld wird für den laufenden Monat anhand des heutigen Guthabens angezeigt.</value>
+    <value>Nicht zugewiesenes Geld wird für den laufenden Monat anhand des heutigen Saldos angezeigt.</value>
   </data>
   <data name="Envelope_Hint" xml:space="preserve">
     <value>Es zählen nur Konten in Währung und Umfang dieses Budgets; Kredite, verliehenes Geld und Vermögenswerte nicht.</value>
@@ -2489,7 +2489,7 @@
     <value>Startseite anpassen</value>
   </data>
   <data name="HomeLayout_Intro" xml:space="preserve">
-    <value>Wählen Sie, welche Bereiche die Startseite in welcher Reihenfolge zeigt. Kontostand und offene Hinweise bleiben immer oben.</value>
+    <value>Wählen Sie, welche Bereiche die Startseite in welcher Reihenfolge zeigt. Saldo und offene Hinweise bleiben immer oben.</value>
   </data>
   <data name="HomeLayout_Up" xml:space="preserve">
     <value>Nach oben</value>
@@ -2526,5 +2526,20 @@
   </data>
   <data name="Attachment_PhotoFailed" xml:space="preserve">
     <value>Das Foto konnte nicht vorbereitet werden und wurde nicht angehängt. Versuchen Sie ein JPEG- oder PNG-Bild oder eine PDF-Datei.</value>
+  </data>
+  <data name="Chart_Total" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
+  <data name="Rule_Summary" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="Category_ColorOption" xml:space="preserve">
+    <value>Farbe {0}</value>
+  </data>
+  <data name="Category_IconOption" xml:space="preserve">
+    <value>Symbol {0}</value>
+  </data>
+  <data name="Common_SelectedItem" xml:space="preserve">
+    <value>{0}, ausgewählt</value>
   </data>
 </root>

@@ -11,7 +11,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Categories;
 
 /// <summary>A selectable icon or colour swatch.</summary>
-public sealed partial class Swatch(string key, Symbol icon, Color color) : ObservableObject
+public sealed partial class Swatch(string key, Symbol icon, Color color, string label = "", string selectedLabel = "") : ObservableObject
 {
     public string Key { get; } = key;
 
@@ -19,7 +19,11 @@ public sealed partial class Swatch(string key, Symbol icon, Color color) : Obser
 
     public Color Color { get; } = color;
 
+    /// <summary>Gets what a screen reader says, e.g. "Colour 3, selected" – never a hex code or an icon key.</summary>
+    public string Description => IsSelected && selectedLabel.Length > 0 ? selectedLabel : label;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Description))]
     public partial bool IsSelected { get; set; }
 }
 
@@ -59,8 +63,8 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         Name = string.Empty;
         KindNames = [translator["CategoryKind_Expense"], translator["CategoryKind_Income"]];
         Parents = [];
-        Icons = [.. IconKeys.Select(key => new Swatch(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent))];
-        Palette = [.. ColorKeys.Select(key => new Swatch(key, Symbol.Circle, Color.FromArgb(key)))];
+        Icons = [.. IconKeys.Select((key, i) => Labelled(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent, "Category_IconOption", i))];
+        Palette = [.. ColorKeys.Select((key, i) => Labelled(key, Symbol.Circle, Color.FromArgb(key), "Category_ColorOption", i))];
         SelectedColor = Color.FromArgb(ColorKeys[0]);
         Select(Icons, "Tag");
         Select(Palette, ColorKeys[0]);
@@ -172,6 +176,12 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         {
             swatch.IsSelected = string.Equals(swatch.Key, key, StringComparison.OrdinalIgnoreCase);
         }
+    }
+
+    private Swatch Labelled(string key, Symbol icon, Color color, string labelKey, int index)
+    {
+        var label = _translator.Format(labelKey, index + 1);
+        return new Swatch(key, icon, color, label, _translator.Format("Common_SelectedItem", label));
     }
 
     [RelayCommand]

@@ -46,11 +46,17 @@
                         <Label Text="{v:Translate Report_GrossByCategory}" Style="{StaticResource Secondary}" />
                         <Label Text="{v:Translate Home_NoExpenses}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
                                IsVisible="{Binding HasSlices, Converter={StaticResource InvertedBoolConverter}}" />
-                        <chart:SfCircularChart HeightRequest="220" IsVisible="{Binding HasSlices}" FlowDirection="LeftToRight"
+                        <Grid IsVisible="{Binding HasSlices}">
+                            <chart:SfCircularChart HeightRequest="220" FlowDirection="LeftToRight"
                                                SemanticProperties.Description="{v:Translate Report_GrossByCategory}">
                             <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
-                                                  PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.6" StrokeWidth="2" Stroke="{DynamicResource CardBackground}" />
+                                                  PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.6" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
                         </chart:SfCircularChart>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
+                                <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
                         <Label Text="{Binding CurrencyNote}" Style="{StaticResource Secondary}" FontSize="12"
                                IsVisible="{Binding CurrencyNote, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
@@ -65,25 +71,22 @@
 
                 <Border Style="{StaticResource Card}" Padding="12">
                     <VerticalStackLayout Spacing="0">
-                        <Grid ColumnDefinitions="*,84,76,84" ColumnSpacing="6" Padding="0,0,0,6">
+                        <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,4">
                             <Label Text="{v:Translate Entry_Category}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="1" Text="{v:Translate Report_Gross}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="End" />
-                            <Label Grid.Column="2" Text="{v:Translate Report_Refunds}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="End" />
-                            <Label Grid.Column="3" Text="{v:Translate Report_Net}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="End" />
+                            <Label Grid.Column="1" Text="{v:Translate Report_Net}" Style="{StaticResource Secondary}" FontSize="12" />
                         </Grid>
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoryRows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryReportRow">
-                                    <Grid ColumnDefinitions="Auto,*,84,76,84" ColumnSpacing="6" MinimumHeightRequest="40">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" Padding="0,6">
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding OpenCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
                                                                   CommandParameter="{Binding .}" />
                                         </Grid.GestureRecognizers>
                                         <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{Binding Color}" VerticalOptions="Center" />
                                         <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                        <Label Grid.Column="2" Text="{Binding GrossText}" VerticalOptions="Center" FontSize="13" HorizontalTextAlignment="End" />
-                                        <Label Grid.Column="3" Text="{Binding RefundsText}" VerticalOptions="Center" FontSize="13" TextColor="{DynamicResource IncomeText}" HorizontalTextAlignment="End" />
-                                        <Label Grid.Column="4" Text="{Binding NetText}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" TextColor="{Binding NetColor}" HorizontalTextAlignment="End" />
+                                        <Label Grid.Column="2" Text="{Binding NetText}" VerticalOptions="Center" FontAttributes="Bold" TextColor="{Binding NetColor}" />
+                                        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Style="{StaticResource Secondary}" FontSize="12" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

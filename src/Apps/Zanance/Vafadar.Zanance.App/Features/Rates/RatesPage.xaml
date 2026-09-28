@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Rates.RatesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Rates"
     x:DataType="local:RatesViewModel"
@@ -21,10 +22,10 @@
                 <VerticalStackLayout Spacing="0">
                     <Grid ColumnDefinitions="Auto,*,Auto,*" ColumnSpacing="8">
                         <Label Text="1" FontSize="18" VerticalOptions="Center" />
-                        <Picker Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding FromCurrency}"
+                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding FromCurrency, Mode=TwoWay}"
                                 SemanticProperties.Description="{v:Translate Rates_From}" />
                         <Label Grid.Column="2" Text="=" FontSize="18" VerticalOptions="Center" />
-                        <Picker Grid.Column="3" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ToCurrency}"
+                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" Grid.Column="3" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ToCurrency, Mode=TwoWay}"
                                 SemanticProperties.Description="{v:Translate Rates_To}" />
                     </Grid>
                     <Label Text="{v:Translate Rates_Rate}" Style="{StaticResource FieldLabel}" />

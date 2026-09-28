@@ -34,6 +34,7 @@
     <PackageVersion Include="Syncfusion.Maui.Inputs" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Picker" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Popup" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Maui.ProgressBar" Version="34.2.9" />
   </ItemGroup>
 
   <ItemGroup Label="Data">

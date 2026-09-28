@@ -168,11 +168,11 @@
 
         <!-- Undo after delete -->
         <Border Grid.Row="1" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,16,88,20" Padding="16,4,8,4"
-                BackgroundColor="#303030" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                BackgroundColor="{DynamicResource SnackbarBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8">
             <Grid ColumnDefinitions="*,Auto">
-                <Label Text="{v:Translate Tx_Deleted}" TextColor="White" VerticalOptions="Center" />
+                <Label Text="{v:Translate Tx_Deleted}" TextColor="{DynamicResource SnackbarText}" VerticalOptions="Center" />
                 <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoDeleteCommand}" BackgroundColor="Transparent"
-                        TextColor="#A5D6A7" FontAttributes="Bold" />
+                        TextColor="{DynamicResource SnackbarAction}" FontAttributes="Bold" />
             </Grid>
         </Border>
     </Grid>

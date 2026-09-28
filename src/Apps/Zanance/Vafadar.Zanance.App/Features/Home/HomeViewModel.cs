@@ -145,6 +145,10 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial double BudgetProgress { get; set; }
 
+    // The total in the middle of the doughnut, so the chart answers "how much in total" at a glance.
+    [ObservableProperty]
+    public partial string? SliceTotalText { get; set; }
+
     [ObservableProperty]
     public partial Color? BudgetColor { get; set; }
 
@@ -362,6 +366,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var positive = byCategory.Where(c => c.CurrencyCode == currency && c.Net > 0).ToList();
         var total = positive.Sum(c => c.Net);
+        SliceTotalText = total > 0 ? MoneyText.Format(total, currency, culture) : null;
         if (total <= 0)
         {
             HasSlices = false;

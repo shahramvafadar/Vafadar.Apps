@@ -2004,7 +2004,7 @@
     <value>Someone will pay me back</value>
   </data>
   <data name="Entry_ReimbursableAmount" xml:space="preserve">
-    <value>Amount paid back</value>
+    <value>Amount to be paid back</value>
   </data>
   <data name="Entry_ReimbursableAll" xml:space="preserve">
     <value>The whole amount</value>
@@ -2530,5 +2530,20 @@
   </data>
   <data name="Attachment_PhotoFailed" xml:space="preserve">
     <value>The photo could not be prepared, so it was not attached. Try a JPEG or PNG image, or a PDF.</value>
+  </data>
+  <data name="Chart_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Rule_Summary" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="Category_ColorOption" xml:space="preserve">
+    <value>Colour {0}</value>
+  </data>
+  <data name="Category_IconOption" xml:space="preserve">
+    <value>Icon {0}</value>
+  </data>
+  <data name="Common_SelectedItem" xml:space="preserve">
+    <value>{0}, selected</value>
   </data>
 </root>

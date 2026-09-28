@@ -9,6 +9,7 @@
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     xmlns:plans="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Home"
+    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
 
@@ -75,7 +76,7 @@
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenReimbursementsCommand}" />
                             </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
                             <Label Grid.Column="1" Text="{Binding ReimbursementText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
@@ -177,7 +178,7 @@
                         <VerticalStackLayout Spacing="6">
                             <Label Text="{v:Translate Budget_Title}" Style="{StaticResource Secondary}" />
                             <Label Text="{Binding BudgetText}" FontSize="16" FontAttributes="Bold" />
-                            <ProgressBar Progress="{Binding BudgetProgress}" ProgressColor="{Binding BudgetColor}" />
+                            <progress:SfLinearProgressBar Progress="{Binding BudgetProgress}" ProgressFill="{Binding BudgetColor}" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
@@ -222,11 +223,17 @@
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate Home_NoExpenses}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
                                    IsVisible="{Binding HasSlices, Converter={StaticResource InvertedBoolConverter}}" />
-                            <chart:SfCircularChart HeightRequest="200" IsVisible="{Binding HasSlices}" FlowDirection="LeftToRight" BackgroundColor="Transparent"
+                            <Grid IsVisible="{Binding HasSlices}">
+                            <chart:SfCircularChart HeightRequest="200" FlowDirection="LeftToRight" BackgroundColor="Transparent"
                                                    SemanticProperties.Description="{v:Translate Home_ExpenseByCategory}">
                                 <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
-                                                      PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.62" StrokeWidth="2" Stroke="{DynamicResource CardBackground}" />
+                                                      PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.62" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
                             </chart:SfCircularChart>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
+                                <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Slices}" IsVisible="{Binding HasSlices}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="local:CategorySlice">

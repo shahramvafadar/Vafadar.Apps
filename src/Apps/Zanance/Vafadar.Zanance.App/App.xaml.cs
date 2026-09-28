@@ -29,6 +29,11 @@ public partial class App : Application
         theme.Changed += OnLocalizationChanged;
         var localization = services.GetRequiredService<ILocalizationService>();
         localization.Changed += OnLocalizationChanged;
+
+        // Progress bars are drawn left to right on every platform; in right-to-left languages they are mirrored, so they
+        // fill in the reading direction.
+        Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
+        localization.Changed += (_, _) => Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
         this.ApplyToModalPages(localization);
 
         var reminders = services.GetRequiredService<ReminderService>();

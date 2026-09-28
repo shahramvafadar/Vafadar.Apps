@@ -5,7 +5,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:v="http://vafadar.pro/schemas/maui"
-                    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation">
+                    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+                    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+                    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs">
 
     <v:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     <v:IsNotNullConverter x:Key="IsNotNullConverter" />
@@ -31,6 +33,40 @@
 
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
         <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
+    </Style>
+
+    <!-- Budget and goal progress (0–1): rounded bar on a visible track, filled in the reading direction. -->
+    <Style TargetType="progress:SfLinearProgressBar">
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Maximum" Value="1" />
+        <Setter Property="TrackHeight" Value="8" />
+        <Setter Property="ProgressHeight" Value="8" />
+        <Setter Property="TrackFill" Value="{DynamicResource DividerColor}" />
+        <!-- Rounded ends on the phones; the Windows renderer draws artefacts at rounded ends, so it keeps square ones. -->
+        <Setter Property="TrackCornerRadius" Value="{OnPlatform Default=4, WinUI=0}" />
+        <Setter Property="ProgressCornerRadius" Value="{OnPlatform Default=4, WinUI=0}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="AnimationDuration" Value="400" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+        <Setter Property="ScaleX" Value="{DynamicResource ReadingScaleX}" />
+    </Style>
+
+    <!-- Currency selection: about 50 codes, so typing filters the list ("IR" finds IRR). -->
+    <Style x:Key="CurrencyBox" TargetType="inputs:SfComboBox">
+        <Setter Property="IsEditable" Value="True" />
+        <Setter Property="IsFilteringEnabled" Value="True" />
+        <Setter Property="TextSearchMode" Value="StartsWith" />
+        <Setter Property="IsClearButtonVisible" Value="False" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MaxDropDownHeight" Value="280" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        <Setter Property="Stroke" Value="{DynamicResource DividerColor}" />
+        <Setter Property="DropDownBackground" Value="{DynamicResource CardBackground}" />
+        <Setter Property="DropDownItemTextColor" Value="{DynamicResource AmountText}" />
+        <Setter Property="DropDownIconColor" Value="{DynamicResource SecondaryText}" />
+        <Setter Property="SelectedDropDownItemBackground" Value="{DynamicResource IncomeBackground}" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
     </Style>
 
     <Style x:Key="Card" TargetType="Border">

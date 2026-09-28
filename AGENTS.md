@@ -91,6 +91,9 @@ older CI runs; that is expected.
 * Right to left: amounts go through `MoneyText` (isolates and marks keep their order on every platform); a Persian
   sentence must not start with an amount or a Latin value – rephrase or quote it (« »); show tags with
   `EntryTags.Display`. Windows ignores Unicode isolates without marks.
+* Controls: follow D-25 (Syncfusion charts, calendar, progress bars, currency search; native or own controls elsewhere).
+  Syncfusion controls that draw themselves do not follow the page direction: mirror them for right to left as
+  `SfLinearProgressBar` does (`ReadingScaleX`), and give them explicit semantic colors for the dark theme.
 * Colors: only the semantic keys of `Presentation/Palette.cs`, used as `{DynamicResource Key}` in XAML and via
   `Palette.X` in code – no color literals, so light and dark themes both work.
 * MAUI: compiled bindings (`x:DataType` everywhere; `RelativeSource` bindings need their own `x:DataType`);

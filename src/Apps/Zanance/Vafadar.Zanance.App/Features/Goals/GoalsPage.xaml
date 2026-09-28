@@ -6,6 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Goals"
+    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:GoalsViewModel"
     Title="{v:Translate Goals_Title}">
 
@@ -43,7 +44,7 @@
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
-                                            <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                                            <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
@@ -69,7 +70,7 @@
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
-                                            <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                                            <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />

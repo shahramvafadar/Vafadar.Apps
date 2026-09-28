@@ -98,16 +98,16 @@
     <value>پشتیبان‌گیری</value>
   </data>
   <data name="Backup_Create" xml:space="preserve">
-    <value>تهیه نسخه پشتیبان</value>
+    <value>تهیهٔ نسخهٔ پشتیبان</value>
   </data>
   <data name="Backup_Restore" xml:space="preserve">
-    <value>بازیابی نسخه پشتیبان</value>
+    <value>بازیابی نسخهٔ پشتیبان</value>
   </data>
   <data name="Backup_LastBackup" xml:space="preserve">
     <value>آخرین پشتیبان: {0}</value>
   </data>
   <data name="Backup_Never" xml:space="preserve">
-    <value>هنوز نسخه پشتیبانی تهیه نشده است</value>
+    <value>هنوز نسخهٔ پشتیبانی تهیه نشده است</value>
   </data>
   <data name="Common_Next" xml:space="preserve">
     <value>بعدی</value>

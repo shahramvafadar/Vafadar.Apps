@@ -6,6 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Goals"
+    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:GoalDetailViewModel"
     Title="{v:Translate Goal_Details}">
 
@@ -19,7 +20,7 @@
                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                             <Label Text="{Binding Summary.Name}" FontSize="18" FontAttributes="Bold" />
                             <Label Text="{Binding Summary.FundedText}" FontSize="16" />
-                            <ProgressBar Progress="{Binding Summary.Progress}" ProgressColor="{Binding Summary.ProgressColor}" />
+                            <progress:SfLinearProgressBar Progress="{Binding Summary.Progress}" ProgressFill="{Binding Summary.ProgressColor}" />
                             <Label Text="{Binding Summary.DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.DateText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />

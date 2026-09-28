@@ -18,7 +18,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Reports;
 
 /// <summary>A category row of the expense table: gross, refunds and net (REP-02).</summary>
-public sealed record CategoryReportRow(IReadOnlyCollection<Guid> CategoryIds, string Name, Color Color, string GrossText, string RefundsText, string NetText, Color NetColor);
+public sealed record CategoryReportRow(IReadOnlyCollection<Guid> CategoryIds, string Name, Color Color, string GrossText, string RefundsText, string NetText, Color NetColor, string DetailText);
 
 /// <summary>A labelled amount, e.g. one line of an account movement.</summary>
 public sealed record AmountLine(string Label, string Amount, bool IsTotal);
@@ -180,6 +180,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [ObservableProperty]
     public partial string? RefundsText { get; set; }
 
+    // The total in the middle of the doughnut, so the chart answers "how much in total" at a glance.
+    [ObservableProperty]
+    public partial string? SliceTotalText { get; set; }
+
     [ObservableProperty]
     public partial string? CurrencyNote { get; set; }
 
@@ -307,6 +311,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         CurrencyNote = otherCurrencies ? _translator.Format("Home_ChartCurrency", _currency) : null;
 
         var gross = rows.Sum(r => r.GrossExpense);
+        SliceTotalText = gross > 0 ? MoneyText.Format(gross, _currency, culture) : null;
         var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
         foreach (var row in rows)
         {
@@ -328,7 +333,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 MoneyText.Format(row.GrossExpense, _currency, culture),
                 row.Refunds > 0 ? MoneyText.Format(-row.Refunds, _currency, culture) : "–",
                 MoneyText.Format(row.Net, _currency, culture),
-                row.Net < 0 ? EntryPresenter.IncomeColor : EntryPresenter.ExpenseColor));
+                row.Net < 0 ? EntryPresenter.IncomeColor : EntryPresenter.ExpenseColor,
+                $"{_translator["Report_Gross"]} {MoneyText.Format(row.GrossExpense, _currency, culture)}"
+                    + (row.Refunds > 0 ? $" · {_translator["Report_Refunds"]} {MoneyText.Format(-row.Refunds, _currency, culture)}" : string.Empty)));
         }
 
         var refunds = rows.Sum(r => r.Refunds);

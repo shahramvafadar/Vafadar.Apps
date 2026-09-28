@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Rates.DisplayUnitsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Rates"
     x:DataType="local:DisplayUnitsViewModel"
@@ -36,7 +37,7 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="0">
                     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}" SemanticProperties.Description="{v:Translate Account_Currency}" />
+                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}" SemanticProperties.Description="{v:Translate Account_Currency}" />
                     <Label Text="{v:Translate Unit_Name}" Style="{StaticResource FieldLabel}" />
                     <Entry Text="{Binding Name}" MaxLength="20" SemanticProperties.Description="{v:Translate Unit_Name}" />
                     <Label Text="{v:Translate Unit_Factor}" Style="{StaticResource FieldLabel}" />

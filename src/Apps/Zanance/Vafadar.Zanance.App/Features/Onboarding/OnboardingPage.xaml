@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Onboarding.OnboardingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:loc="clr-namespace:Vafadar.Localization;assembly=Vafadar.Localization"
@@ -48,7 +49,7 @@
                 <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="8">
                     <Label Text="{v:Translate Onb_CurrencyTitle}" FontSize="24" FontAttributes="Bold" />
                     <Label Text="{v:Translate Onb_CurrencyText}" />
-                    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency}"
+                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />
                     <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" />
                     <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"

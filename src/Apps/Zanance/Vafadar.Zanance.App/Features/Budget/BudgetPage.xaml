@@ -7,6 +7,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Budget"
     xmlns:reports="clr-namespace:Vafadar.Zanance.App.Features.Reports"
+    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:BudgetViewModel"
     Title="{v:Translate Budget_Title}">
 
@@ -21,7 +22,7 @@
                         <Label Text="{Binding LimitText}" Style="{StaticResource Secondary}" />
                     </HorizontalStackLayout>
                 </Grid>
-                <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
+                <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                 <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
                 <Label Text="{Binding CarryText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CarryText, Converter={StaticResource IsNotNullConverter}}" />
             </VerticalStackLayout>

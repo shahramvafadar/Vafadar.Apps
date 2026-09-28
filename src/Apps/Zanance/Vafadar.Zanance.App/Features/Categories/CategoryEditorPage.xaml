@@ -46,7 +46,7 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:Swatch">
                                     <Border WidthRequest="44" HeightRequest="44" Margin="3" StrokeShape="RoundRectangle 22" StrokeThickness="3"
-                                            Stroke="Transparent" BackgroundColor="{Binding Color}" SemanticProperties.Description="{Binding Key}">
+                                            Stroke="Transparent" BackgroundColor="{Binding Color}" SemanticProperties.Description="{Binding Description}">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="{DynamicResource AmountText}" />
@@ -66,7 +66,7 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:Swatch">
                                     <Border WidthRequest="48" HeightRequest="48" Margin="2" StrokeShape="RoundRectangle 12" StrokeThickness="2"
-                                            Stroke="Transparent" SemanticProperties.Description="{Binding Key}">
+                                            Stroke="Transparent" SemanticProperties.Description="{Binding Description}">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />

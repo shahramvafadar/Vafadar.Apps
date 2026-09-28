@@ -4,6 +4,7 @@
     x:Class="Vafadar.Zanance.App.Features.Accounts.AccountFormView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
@@ -21,7 +22,7 @@
                    AccentColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_Type}" />
 
     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
-    <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}"
+    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
             IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
             SemanticProperties.Description="{v:Translate Account_Currency}" />
     <Label Text="{v:Translate Account_CurrencyLocked}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}" />
