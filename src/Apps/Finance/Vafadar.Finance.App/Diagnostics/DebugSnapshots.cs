@@ -153,6 +153,16 @@ internal static class DebugSnapshots
                     await reports.LoadAsync();
                 }
 
+                // A what-if with a higher amount of the first plan item (FOR-10).
+                if (Shell.Current.CurrentPage?.BindingContext is Features.Forecast.ForecastViewModel forecast
+                    && forecast.Cards.SelectMany(c => c.Rows).FirstOrDefault(r => r.PlanAmount is > 0) is { PlanAmount: { } planned } row)
+                {
+                    await forecast.AssumeAmountAsync(row, planned * 6 / 5);
+                    await Task.Delay(800);
+                    await CaptureAsync(app, folder, $"{language}-{name}-scenario");
+                    await forecast.ResetScenarioCommand.ExecuteAsync(null);
+                }
+
                 // The bulk selection of the transactions list (F2-TX-04).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
                 {

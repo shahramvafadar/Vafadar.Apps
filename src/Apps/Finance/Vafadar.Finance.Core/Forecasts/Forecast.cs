@@ -28,6 +28,7 @@ public enum ForecastSource
 /// <param name="OriginalDate">The occurrence, for plan items.</param>
 /// <param name="IsExcluded">Whether the item is left out by a what-if scenario; it is listed but moves nothing.</param>
 /// <param name="IsMoved">Whether a what-if scenario assumes another date for the item.</param>
+/// <param name="IsAmountAssumed">Whether a what-if scenario assumes another amount for the item (FOR-10).</param>
 public sealed record ForecastItem(
     DateOnly Date,
     string Name,
@@ -38,19 +39,35 @@ public sealed record ForecastItem(
     Guid? ScheduleId,
     DateOnly? OriginalDate,
     bool IsExcluded = false,
-    bool IsMoved = false);
+    bool IsMoved = false,
+    bool IsAmountAssumed = false);
 
 /// <summary>
-/// A temporary what-if for the forecast view (FOR-04): plan occurrences left out or assumed on another date. It is
-/// never saved and never changes plans or entries.
+/// A temporary what-if for the forecast view (FOR-04, FOR-10): plan occurrences left out, assumed on another date
+/// (e.g. a delayed salary) or with another amount (e.g. a higher bill). It is never saved and never changes plans or
+/// entries; every assumption is labelled in the list.
 /// </summary>
 public sealed class ForecastScenario
 {
     private readonly HashSet<(Guid, DateOnly)> _excluded = [];
     private readonly Dictionary<(Guid, DateOnly), DateOnly> _moved = [];
+    private readonly Dictionary<(Guid, DateOnly), long> _amounts = [];
 
     /// <summary>Gets a value indicating whether the scenario changes anything.</summary>
-    public bool IsEmpty => _excluded.Count == 0 && _moved.Count == 0;
+    public bool IsEmpty => _excluded.Count == 0 && _moved.Count == 0 && _amounts.Count == 0;
+
+    /// <summary>Assumes another amount (positive minor units of the plan) for an occurrence; <see langword="null"/> restores it.</summary>
+    public void SetAmount(Guid scheduleId, DateOnly originalDate, long? amount)
+    {
+        if (amount is > 0)
+        {
+            _amounts[(scheduleId, originalDate)] = amount.Value;
+        }
+        else
+        {
+            _amounts.Remove((scheduleId, originalDate));
+        }
+    }
 
     /// <summary>Leaves an occurrence out, or includes it again.</summary>
     public void SetExcluded(Guid scheduleId, DateOnly originalDate, bool excluded)
@@ -83,9 +100,12 @@ public sealed class ForecastScenario
     {
         _excluded.Clear();
         _moved.Clear();
+        _amounts.Clear();
     }
 
     internal bool IsExcluded(Guid scheduleId, DateOnly originalDate) => _excluded.Contains((scheduleId, originalDate));
+
+    internal long? AmountOf(Guid scheduleId, DateOnly originalDate) => _amounts.TryGetValue((scheduleId, originalDate), out var amount) ? amount : null;
 
     internal DateOnly? DateOf(Guid scheduleId, DateOnly originalDate) => _moved.TryGetValue((scheduleId, originalDate), out var date) ? date : null;
 }
@@ -174,8 +194,14 @@ public static class ForecastCalculator
                 }
 
                 // Partial payments are already in the ledger; only the outstanding rest is still to come (AT-66).
-                var amount = occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount;
-                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, schedule.ToAmount, scope, null);
+                // An assumed amount replaces what is still to come, also an unknown one (FOR-10); the other side of a
+                // transfer between currencies changes in proportion.
+                var assumedAmount = scenario?.AmountOf(schedule.Id, occurrence.OriginalDate);
+                var amount = assumedAmount ?? (occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount);
+                var toAmount = assumedAmount is { } a && schedule.ToAmount is { } to && occurrence.Amount is > 0
+                    ? (long)Math.Round((decimal)to * a / occurrence.Amount.Value, MidpointRounding.AwayFromZero)
+                    : schedule.ToAmount;
+                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null);
                 foreach (var (currency, effect) in effects)
                 {
                     items.Add(new ForecastItem(
@@ -184,11 +210,12 @@ public static class ForecastCalculator
                         currency,
                         amount is null ? null : effect,
                         overdue ? ForecastSource.OverduePlan : ForecastSource.Plan,
-                        occurrence.AmountMode == AmountMode.Estimated,
+                        assumedAmount is null && occurrence.AmountMode == AmountMode.Estimated,
                         schedule.Id,
                         occurrence.OriginalDate,
                         excluded,
-                        moved is not null));
+                        moved is not null,
+                        assumedAmount is not null));
                 }
             }
         }

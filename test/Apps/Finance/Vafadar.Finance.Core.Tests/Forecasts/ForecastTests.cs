@@ -124,6 +124,28 @@ public sealed class ForecastTests
     }
 
     [Fact]
+    [Trait("Requirement", "FOR-10")]
+    public void A_scenario_can_assume_another_amount_labelled_as_an_assumption()
+    {
+        var checking = _ledger.Account("Checking", 1_000);
+        var rent = Plan("Rent", EntryKind.Expense, checking.Id, 800, new DateOnly(2026, 10, 15));
+        var scenario = new ForecastScenario();
+        scenario.SetAmount(rent.Id, new DateOnly(2026, 10, 15), LedgerBuilder.Minor(950));
+
+        var forecast = Compute([rent], scenario: scenario).Single();
+        var item = Assert.Single(forecast.Items);
+        Assert.True(item.IsAmountAssumed);
+        Assert.False(item.IsEstimate);
+        Assert.Equal(LedgerBuilder.Minor(50), forecast.EndBalance);
+
+        // Restoring the amount, or never setting one, leaves the plan's amount.
+        scenario.SetAmount(rent.Id, new DateOnly(2026, 10, 15), null);
+        Assert.True(scenario.IsEmpty);
+        Assert.Equal(LedgerBuilder.Minor(200), Compute([rent], scenario: scenario).Single().EndBalance);
+        Assert.Equal(800_00, rent.Amount);
+    }
+
+    [Fact]
     public void A_scenario_can_assume_another_date_and_a_date_after_the_horizon_leaves_the_item_out()
     {
         var checking = _ledger.Account("Checking", 300);

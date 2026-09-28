@@ -1604,7 +1604,7 @@
     <value>فعلاً نه</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
-    <value>روی یک مورد برنامه بزنید تا آن را کنار بگذارید یا تاریخ دیگری فرض کنید. این فقط همین نما را تغییر می‌دهد.</value>
+    <value>روی یک مورد برنامه بزنید تا آن را کنار بگذارید یا تاریخ یا مبلغ دیگری فرض کنید، مثلاً حقوق دیرتر یا قبض گران‌تر. این فقط همین نما را تغییر می‌دهد.</value>
   </data>
   <data name="Forecast_WhatIfActive" xml:space="preserve">
     <value>تغییرات فرضی اعمال شده است</value>
@@ -2412,5 +2412,20 @@
   </data>
   <data name="Unit_Note" xml:space="preserve">
     <value>واحد فقط شیوهٔ نمایش و ورود مبالغ را تغییر می‌دهد. نرخ‌های تبدیل و فایل‌های CSV همیشه ارز استاندارد را به کار می‌برند.</value>
+  </data>
+  <data name="Forecast_AssumeAmount" xml:space="preserve">
+    <value>فرض مبلغ دیگر</value>
+  </data>
+  <data name="Forecast_RestoreAmount" xml:space="preserve">
+    <value>استفاده از مبلغ برنامه</value>
+  </data>
+  <data name="Forecast_AssumeAmountMessage" xml:space="preserve">
+    <value>مبلغ به {0}، فقط برای همین نما. برنامه تغییر نمی‌کند.</value>
+  </data>
+  <data name="Forecast_AmountAssumed" xml:space="preserve">
+    <value>مبلغ فرضی</value>
+  </data>
+  <data name="Forecast_DateAndAmountAssumed" xml:space="preserve">
+    <value>تاریخ و مبلغ فرضی</value>
   </data>
 </root>

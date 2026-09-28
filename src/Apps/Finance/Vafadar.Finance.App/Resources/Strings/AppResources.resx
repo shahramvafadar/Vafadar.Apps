@@ -1608,7 +1608,7 @@
     <value>Not now</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
-    <value>Tap a plan item to leave it out or assume another date. This only changes this view.</value>
+    <value>Tap a plan item to leave it out or assume another date or amount, e.g. a delayed salary or a higher bill. This only changes this view.</value>
   </data>
   <data name="Forecast_WhatIfActive" xml:space="preserve">
     <value>What-if changes are applied</value>
@@ -2416,5 +2416,20 @@
   </data>
   <data name="Unit_Note" xml:space="preserve">
     <value>A unit only changes how amounts are shown and entered. Exchange rates and CSV files always use the ISO currency.</value>
+  </data>
+  <data name="Forecast_AssumeAmount" xml:space="preserve">
+    <value>Assume another amount</value>
+  </data>
+  <data name="Forecast_RestoreAmount" xml:space="preserve">
+    <value>Use the planned amount</value>
+  </data>
+  <data name="Forecast_AssumeAmountMessage" xml:space="preserve">
+    <value>Amount in {0} for this view only. The plan is not changed.</value>
+  </data>
+  <data name="Forecast_AmountAssumed" xml:space="preserve">
+    <value>Amount assumed</value>
+  </data>
+  <data name="Forecast_DateAndAmountAssumed" xml:space="preserve">
+    <value>Date and amount assumed</value>
   </data>
 </root>

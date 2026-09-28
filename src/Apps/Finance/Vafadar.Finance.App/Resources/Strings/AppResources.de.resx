@@ -1604,7 +1604,7 @@
     <value>Nicht jetzt</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
-    <value>Tippen Sie auf einen Plan-Eintrag, um ihn auszulassen oder ein anderes Datum anzunehmen. Das ändert nur diese Ansicht.</value>
+    <value>Tippen Sie auf einen Plan-Eintrag, um ihn auszulassen oder ein anderes Datum oder einen anderen Betrag anzunehmen, z. B. ein späteres Gehalt oder eine höhere Rechnung. Das ändert nur diese Ansicht.</value>
   </data>
   <data name="Forecast_WhatIfActive" xml:space="preserve">
     <value>Was-wäre-wenn-Änderungen aktiv</value>
@@ -2412,5 +2412,20 @@
   </data>
   <data name="Unit_Note" xml:space="preserve">
     <value>Eine Einheit ändert nur Anzeige und Eingabe. Wechselkurse und CSV-Dateien verwenden immer die ISO-Währung.</value>
+  </data>
+  <data name="Forecast_AssumeAmount" xml:space="preserve">
+    <value>Anderen Betrag annehmen</value>
+  </data>
+  <data name="Forecast_RestoreAmount" xml:space="preserve">
+    <value>Geplanten Betrag verwenden</value>
+  </data>
+  <data name="Forecast_AssumeAmountMessage" xml:space="preserve">
+    <value>Betrag in {0}, nur für diese Ansicht. Die Planung bleibt unverändert.</value>
+  </data>
+  <data name="Forecast_AmountAssumed" xml:space="preserve">
+    <value>Betrag angenommen</value>
+  </data>
+  <data name="Forecast_DateAndAmountAssumed" xml:space="preserve">
+    <value>Datum und Betrag angenommen</value>
   </data>
 </root>
