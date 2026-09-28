@@ -79,9 +79,10 @@ public sealed partial class AccountFormModel : ObservableObject
         {
             AccountType.Loan => _translator["Account_LoanHint"],
             AccountType.Lent => _translator["Account_LentHint"],
+            AccountType.Asset => _translator["Account_AssetHint"],
             _ => null,
         };
-        if (_isNew && IsDebtType)
+        if (_isNew && Type.IsOutsideCash())
         {
             IncludeInTotals = false;
             OpeningIsNegative = Type == AccountType.Loan;

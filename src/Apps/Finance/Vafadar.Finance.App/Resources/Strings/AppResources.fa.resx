@@ -2126,12 +2126,21 @@
     <value>ثبت پول پس‌گرفته</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
-    <value>وام‌ها و قرض‌های داده‌شده</value>
+    <value>وام‌ها، قرض‌ها و دارایی‌ها</value>
   </data>
   <data name="Accounts_IOwe" xml:space="preserve">
     <value>بدهی من: {0}</value>
   </data>
   <data name="Accounts_OwedToMe" xml:space="preserve">
     <value>طلب من: {0}</value>
+  </data>
+  <data name="AccountType_Asset" xml:space="preserve">
+    <value>دارایی</value>
+  </data>
+  <data name="Account_AssetHint" xml:space="preserve">
+    <value>خودرو، ملک یا چیز باارزش دیگر با ارزشی که خودتان تخمین می‌زنید. ارزش جدید را با اصلاح موجودی در جزئیات حساب ثبت کنید؛ این هیچ‌وقت درآمد یا هزینه نیست و تخمین، پول نقد نیست.</value>
+  </data>
+  <data name="Accounts_AssetsValue" xml:space="preserve">
+    <value>دارایی‌های تخمینی: {0}</value>
   </data>
 </root>

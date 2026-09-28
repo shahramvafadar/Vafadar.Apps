@@ -31,5 +31,8 @@ public sealed class LoanTests
         Assert.True(AccountType.Loan.IsDebt());
         Assert.True(AccountType.Lent.IsDebt());
         Assert.False(AccountType.Savings.IsDebt());
+        Assert.True(AccountType.Asset.IsOutsideCash());
+        Assert.False(AccountType.Asset.IsDebt());
+        Assert.False(AccountType.Checking.IsOutsideCash());
     }
 }

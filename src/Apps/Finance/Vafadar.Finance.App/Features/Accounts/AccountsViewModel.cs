@@ -54,6 +54,7 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
         Debts.Clear();
         var owed = new Dictionary<string, long>();
         var lent = new Dictionary<string, long>();
+        var assets = new Dictionary<string, long>();
 
         foreach (var account in accounts)
         {
@@ -71,10 +72,10 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
             {
                 Archived.Add(item);
             }
-            else if (account.Type.IsDebt())
+            else if (account.Type.IsOutsideCash())
             {
                 Debts.Add(item);
-                var target = balance < 0 ? owed : lent;
+                var target = account.Type == AccountType.Asset ? assets : balance < 0 ? owed : lent;
                 target[account.CurrencyCode] = target.GetValueOrDefault(account.CurrencyCode) + Math.Abs(balance);
             }
             else
@@ -97,6 +98,11 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
         if (lent.Values.Any(v => v != 0))
         {
             parts.Add(translator.Format("Accounts_OwedToMe", string.Join(" · ", lent.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
+        }
+
+        if (assets.Values.Any(v => v != 0))
+        {
+            parts.Add(translator.Format("Accounts_AssetsValue", string.Join(" · ", assets.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
         }
 
         DebtSummary = parts.Count > 0 ? string.Join(Environment.NewLine, parts) : null;

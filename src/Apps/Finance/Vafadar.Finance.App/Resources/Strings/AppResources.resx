@@ -2130,12 +2130,21 @@
     <value>Record money received back</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
-    <value>Loans and money lent</value>
+    <value>Loans, lent money and assets</value>
   </data>
   <data name="Accounts_IOwe" xml:space="preserve">
     <value>I owe: {0}</value>
   </data>
   <data name="Accounts_OwedToMe" xml:space="preserve">
     <value>Owed to me: {0}</value>
+  </data>
+  <data name="AccountType_Asset" xml:space="preserve">
+    <value>Asset</value>
+  </data>
+  <data name="Account_AssetHint" xml:space="preserve">
+    <value>A car, a property or another valuable thing, at a value you estimate. Record a new value with a balance adjustment in the account details; it is never income or spending, and an estimate is not cash.</value>
+  </data>
+  <data name="Accounts_AssetsValue" xml:space="preserve">
+    <value>Estimated assets: {0}</value>
   </data>
 </root>

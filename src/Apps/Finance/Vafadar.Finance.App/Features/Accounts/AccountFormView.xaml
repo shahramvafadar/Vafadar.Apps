@@ -26,8 +26,9 @@
             SemanticProperties.Description="{v:Translate Account_Currency}" />
     <Label Text="{v:Translate Account_CurrencyLocked}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}" />
 
+    <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0"
+           IsVisible="{Binding DebtHint, Converter={StaticResource IsNotNullConverter}}" />
     <VerticalStackLayout IsVisible="{Binding IsDebtType}">
-        <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0" />
         <Label Text="{v:Translate Account_Counterparty}" Style="{StaticResource FieldLabel}" />
         <Entry Text="{Binding Counterparty}" MaxLength="100" Placeholder="{v:Translate Account_CounterpartyPlaceholder}"
                SemanticProperties.Description="{v:Translate Account_Counterparty}" />

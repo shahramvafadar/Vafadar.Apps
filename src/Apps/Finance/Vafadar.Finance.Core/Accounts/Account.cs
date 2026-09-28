@@ -25,6 +25,12 @@ public enum AccountType
 
     /// <summary>Money lent to someone; the balance is what they still owe. Lending and getting it back are transfers.</summary>
     Lent = 5,
+
+    /// <summary>
+    /// A non-cash asset with a manual valuation, e.g. a car or a property (F2-ASSET-01). A new valuation is a balance
+    /// adjustment, never income or spending; an estimated value is not cash.
+    /// </summary>
+    Asset = 6,
 }
 
 /// <summary>Helpers for account types.</summary>
@@ -32,6 +38,9 @@ public static class AccountTypes
 {
     /// <summary>Returns whether the type tracks a debt or a receivable rather than money at hand (ACC-05).</summary>
     public static bool IsDebt(this AccountType type) => type is AccountType.Loan or AccountType.Lent;
+
+    /// <summary>Returns whether the account is not money at hand: debts, receivables and valued assets (ACC-05).</summary>
+    public static bool IsOutsideCash(this AccountType type) => type.IsDebt() || type == AccountType.Asset;
 }
 
 /// <summary>

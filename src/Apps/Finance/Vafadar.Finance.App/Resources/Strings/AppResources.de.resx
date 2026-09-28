@@ -2126,12 +2126,21 @@
     <value>Zurückerhaltenes Geld erfassen</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
-    <value>Kredite und verliehenes Geld</value>
+    <value>Kredite, Verliehenes und Vermögenswerte</value>
   </data>
   <data name="Accounts_IOwe" xml:space="preserve">
     <value>Ich schulde: {0}</value>
   </data>
   <data name="Accounts_OwedToMe" xml:space="preserve">
     <value>Mir geschuldet: {0}</value>
+  </data>
+  <data name="AccountType_Asset" xml:space="preserve">
+    <value>Vermögenswert</value>
+  </data>
+  <data name="Account_AssetHint" xml:space="preserve">
+    <value>Ein Auto, eine Immobilie oder ein anderer Wert, zu einem von Ihnen geschätzten Wert. Einen neuen Wert erfassen Sie als Saldokorrektur in den Kontodetails; er ist nie Einnahme oder Ausgabe, und eine Schätzung ist kein Bargeld.</value>
+  </data>
+  <data name="Accounts_AssetsValue" xml:space="preserve">
+    <value>Geschätzte Vermögenswerte: {0}</value>
   </data>
 </root>
