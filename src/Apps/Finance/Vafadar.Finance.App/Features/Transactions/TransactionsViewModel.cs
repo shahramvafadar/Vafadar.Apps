@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
+using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Data;
@@ -269,7 +270,12 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         foreach (var day in EntrySearch.ByDay(matching, _accounts))
         {
             var net = string.Join("  ", day.Net.Where(n => n.Value != 0).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true)));
-            Days.Add(new EntryDayGroup(_dates.Format(day.Date, DateFormatStyle.Long), net, day.Entries.Select(presenter.Row)));
+            Days.Add(new EntryDayGroup(_dates.Format(day.Date, DateFormatStyle.Long), net, day.Entries.Select(e =>
+            {
+                var row = presenter.Row(e);
+                row.Selection.IsSelected = _selected.Contains(e.Id);
+                return row;
+            })));
         }
 
         IsEmpty = Days.Count == 0;
@@ -306,7 +312,164 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private Task AddAsync() => Shell.Current.GoToAsync(HasNoAccounts ? AppShell.AccountEditorRoute : AppShell.EntryEditorRoute);
 
     [RelayCommand]
-    private Task OpenAsync(EntryRow row) => Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    private Task OpenAsync(EntryRow row)
+    {
+        if (IsSelecting)
+        {
+            ToggleSelection(row);
+            return Task.CompletedTask;
+        }
+
+        return Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    }
+
+    // Bulk operations (F2-TX-04): select several entries, then mark them reviewed, change their category, add a tag or
+    // delete them with undo. Every change goes through the normal validation.
+    private readonly HashSet<Guid> _selected = [];
+
+    [ObservableProperty]
+    public partial bool IsSelecting { get; set; }
+
+    [ObservableProperty]
+    public partial string? SelectionText { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasSelection { get; set; }
+
+    [RelayCommand]
+    private void StartSelecting()
+    {
+        IsSelecting = true;
+        UpdateSelectionText();
+    }
+
+    [RelayCommand]
+    private void StopSelecting()
+    {
+        IsSelecting = false;
+        _selected.Clear();
+        foreach (var row in Days.SelectMany(d => d))
+        {
+            row.Selection.IsSelected = false;
+        }
+
+        UpdateSelectionText();
+    }
+
+    [RelayCommand]
+    private void SelectAll()
+    {
+        foreach (var row in Days.SelectMany(d => d))
+        {
+            _selected.Add(row.Id);
+            row.Selection.IsSelected = true;
+        }
+
+        UpdateSelectionText();
+    }
+
+    private void ToggleSelection(EntryRow row)
+    {
+        row.Selection.IsSelected = _selected.Add(row.Id) || !_selected.Remove(row.Id);
+        UpdateSelectionText();
+    }
+
+    private void UpdateSelectionText()
+    {
+        HasSelection = _selected.Count > 0;
+        SelectionText = _translator.Format("Bulk_Selected", _selected.Count);
+    }
+
+    private List<LedgerEntry> SelectedEntries() => [.. _entries.Where(e => _selected.Contains(e.Id))];
+
+    private async Task SaveBulkAsync(List<LedgerEntry> changed)
+    {
+        if (changed.Count == 0)
+        {
+            return;
+        }
+
+        var result = await _store.SaveEntriesAsync(changed, []);
+        if (!result.Succeeded)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Bulk_Title"], string.Join(Environment.NewLine, result.Errors.Distinct().Select(e => _translator[$"LedgerError_{e}"])), _translator["Common_Ok"]);
+            return;
+        }
+
+        StopSelecting();
+        await LoadAsync();
+    }
+
+    [RelayCommand]
+    private Task BulkReviewedAsync()
+    {
+        var changed = SelectedEntries().Where(e => e.Review == ReviewState.Unreviewed).ToList();
+        changed.ForEach(e => e.Review = ReviewState.Confirmed);
+        return SaveBulkAsync(changed);
+    }
+
+    [RelayCommand]
+    private async Task BulkCategoryAsync()
+    {
+        var entries = SelectedEntries().Where(e => e.Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Refund or EntryKind.IncomeReversal).ToList();
+        var kinds = entries.Select(e => e.Kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense).Distinct().ToList();
+        if (_categories is null || kinds.Count != 1)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Bulk_Title"], _translator["Bulk_CategoryMixed"], _translator["Common_Ok"]);
+            return;
+        }
+
+        var options = _categories.All.Where(c => c.Kind == kinds[0] && !c.IsArchived).OrderBy(c => c.ParentId is null ? c.SortOrder : _categories.Get(c.ParentId)?.SortOrder ?? 0).ThenBy(c => c.ParentId is null ? 0 : 1)
+            .Select(c => (c.Id, Name: _categories.Name(c.Id))).ToList();
+        var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Bulk_ChooseCategory"], _translator["Common_Cancel"], null, [.. options.Select(o => o.Name)]);
+        var picked = options.FindIndex(o => o.Name == choice);
+        if (choice is null || picked < 0)
+        {
+            return;
+        }
+
+        entries.ForEach(e => e.CategoryId = options[picked].Id);
+        await SaveBulkAsync(entries);
+    }
+
+    [RelayCommand]
+    private async Task BulkTagAsync()
+    {
+        var tag = EntryTags.Parse(await Shell.Current.DisplayPromptAsync(_translator["Bulk_AddTag"], _translator["Bulk_AddTagMessage"], _translator["Common_Ok"], _translator["Common_Cancel"], maxLength: EntryTags.MaxLength)).FirstOrDefault();
+        if (tag is null)
+        {
+            return;
+        }
+
+        var entries = SelectedEntries();
+        entries.ForEach(e => e.Tags = EntryTags.Normalize([.. e.Tags, tag]));
+        await SaveBulkAsync(entries);
+    }
+
+    [RelayCommand]
+    private async Task BulkDeleteAsync()
+    {
+        var ids = _selected.ToList();
+        if (ids.Count == 0 || !await Shell.Current.DisplayAlertAsync(_translator["Bulk_Title"], _translator.Format("Bulk_DeleteMessage", ids.Count), _translator["Common_Delete"], _translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        var deleted = new List<LedgerEntry>();
+        foreach (var id in ids.Where(id => deleted.All(d => d.Id != id)))
+        {
+            deleted.AddRange(await _store.DeleteEntryAsync(id));
+        }
+
+        if (deleted.Count > 0)
+        {
+            Undo.Offer(deleted);
+        }
+
+        StopSelecting();
+        await LoadAsync();
+        UpdateUndo();
+    }
 
     [RelayCommand]
     private void ClearFilters()

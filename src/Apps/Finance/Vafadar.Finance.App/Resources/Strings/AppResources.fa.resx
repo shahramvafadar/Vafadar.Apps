@@ -2143,4 +2143,37 @@
   <data name="Accounts_AssetsValue" xml:space="preserve">
     <value>دارایی‌های تخمینی: {0}</value>
   </data>
+  <data name="Bulk_Select" xml:space="preserve">
+    <value>انتخاب</value>
+  </data>
+  <data name="Bulk_SelectAll" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="Bulk_Selected" xml:space="preserve">
+    <value>انتخاب‌شده: {0}</value>
+  </data>
+  <data name="Bulk_Title" xml:space="preserve">
+    <value>تراکنش‌های انتخاب‌شده</value>
+  </data>
+  <data name="Bulk_Reviewed" xml:space="preserve">
+    <value>بازبینی شد</value>
+  </data>
+  <data name="Bulk_Tag" xml:space="preserve">
+    <value>برچسب</value>
+  </data>
+  <data name="Bulk_ChooseCategory" xml:space="preserve">
+    <value>دسته برای تراکنش‌های انتخاب‌شده</value>
+  </data>
+  <data name="Bulk_CategoryMixed" xml:space="preserve">
+    <value>برای تغییر گروهی دسته، فقط هزینه‌ها یا فقط درآمدها را انتخاب کنید. انتقال‌ها دسته ندارند.</value>
+  </data>
+  <data name="Bulk_AddTag" xml:space="preserve">
+    <value>افزودن برچسب</value>
+  </data>
+  <data name="Bulk_AddTagMessage" xml:space="preserve">
+    <value>این برچسب به همهٔ تراکنش‌های انتخاب‌شده اضافه می‌شود.</value>
+  </data>
+  <data name="Bulk_DeleteMessage" xml:space="preserve">
+    <value>{0} تراکنش حذف شود؟ تا چند ثانیه قابل برگشت است.</value>
+  </data>
 </root>

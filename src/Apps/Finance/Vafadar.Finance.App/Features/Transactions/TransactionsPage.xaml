@@ -17,7 +17,10 @@
                        SemanticProperties.Description="{v:Translate Common_Search}" />
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{DynamicResource Primary}" />
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}" />
-            <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
+            <Grid ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="8">
+                <Button Grid.Column="3" Text="{v:Translate Bulk_Select}" Command="{Binding StartSelectingCommand}" CornerRadius="18" MinimumHeightRequest="36"
+                        Padding="14,0" FontSize="14" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" BorderColor="{DynamicResource Primary}" BorderWidth="1"
+                        IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
                 <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
                         SemanticProperties.Description="{v:Translate Entry_Category}" />
                 <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
@@ -67,6 +70,11 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="p:EntryRow">
                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Margin="16,0">
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding Selection.IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{DynamicResource IncomeBackground}" />
+                            </DataTrigger>
+                        </Grid.Triggers>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
                                                   CommandParameter="{Binding .}" />
@@ -86,6 +94,8 @@
                         </VerticalStackLayout>
                         <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="16"
                                FontAttributes="Bold" VerticalOptions="Center" />
+                        <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"
+                                       Margin="-6,-4,0,0" IsVisible="{Binding Selection.IsSelected}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -107,7 +117,28 @@
         </CollectionView>
 
         <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
-                SemanticProperties.Description="{v:Translate Tx_Add}" />
+                SemanticProperties.Description="{v:Translate Tx_Add}" IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
+
+        <!-- Bulk actions (F2-TX-04) -->
+        <Border Grid.Row="1" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
+                BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 16">
+            <VerticalStackLayout Spacing="6">
+                <Grid ColumnDefinitions="*,Auto,Auto">
+                    <Label Text="{Binding SelectionText}" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{v:Translate Bulk_SelectAll}" Command="{Binding SelectAllCommand}" BackgroundColor="Transparent"
+                            TextColor="{DynamicResource Primary}" Padding="8,0" />
+                    <Button Grid.Column="2" Text="{v:Translate Common_Cancel}" Command="{Binding StopSelectingCommand}" BackgroundColor="Transparent"
+                            TextColor="{DynamicResource Primary}" Padding="8,0" />
+                </Grid>
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6" IsEnabled="{Binding HasSelection}">
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Reviewed}" Command="{Binding BulkReviewedCommand}" FontSize="12" Padding="4,0" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_Category}" Command="{Binding BulkCategoryCommand}" FontSize="12" Padding="4,0" />
+                    <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Tag}" Command="{Binding BulkTagCommand}" FontSize="12" Padding="4,0" />
+                    <Button Grid.Column="3" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Delete}" Command="{Binding BulkDeleteCommand}" FontSize="12" Padding="4,0"
+                            TextColor="{DynamicResource ExpenseText}" BorderColor="{DynamicResource ExpenseText}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
 
         <!-- Undo after delete -->
         <Border Grid.Row="1" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,16,88,20" Padding="16,4,8,4"

@@ -2147,4 +2147,37 @@
   <data name="Accounts_AssetsValue" xml:space="preserve">
     <value>Estimated assets: {0}</value>
   </data>
+  <data name="Bulk_Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Bulk_SelectAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Bulk_Selected" xml:space="preserve">
+    <value>{0} selected</value>
+  </data>
+  <data name="Bulk_Title" xml:space="preserve">
+    <value>Selected entries</value>
+  </data>
+  <data name="Bulk_Reviewed" xml:space="preserve">
+    <value>Reviewed</value>
+  </data>
+  <data name="Bulk_Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Bulk_ChooseCategory" xml:space="preserve">
+    <value>Category for the selected entries</value>
+  </data>
+  <data name="Bulk_CategoryMixed" xml:space="preserve">
+    <value>Select only expenses or only income to change the category together. Transfers keep no category.</value>
+  </data>
+  <data name="Bulk_AddTag" xml:space="preserve">
+    <value>Add a tag</value>
+  </data>
+  <data name="Bulk_AddTagMessage" xml:space="preserve">
+    <value>The tag is added to every selected entry.</value>
+  </data>
+  <data name="Bulk_DeleteMessage" xml:space="preserve">
+    <value>Delete {0} entries? You can undo this for a few seconds.</value>
+  </data>
 </root>

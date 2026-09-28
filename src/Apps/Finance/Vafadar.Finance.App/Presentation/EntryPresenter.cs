@@ -17,7 +17,18 @@ public sealed record EntryRow(
     Color IconBackground,
     string AmountText,
     Color AmountColor,
-    bool IsUnreviewed);
+    bool IsUnreviewed)
+{
+    /// <summary>Gets the selection state of the row in lists that allow selecting several entries (F2-TX-04).</summary>
+    public RowSelection Selection { get; init; } = new();
+}
+
+/// <summary>Whether a list row is selected; observable so a tap does not rebuild the list.</summary>
+public sealed partial class RowSelection : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+{
+    [CommunityToolkit.Mvvm.ComponentModel.ObservableProperty]
+    public partial bool IsSelected { get; set; }
+}
 
 /// <summary>Formats entries for display.</summary>
 internal sealed class EntryPresenter(

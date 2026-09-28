@@ -137,6 +137,16 @@ internal static class DebugSnapshots
                     await CaptureAsync(app, folder, $"{language}-{name}-end");
                 }
 
+                // The bulk selection of the transactions list (F2-TX-04).
+                if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
+                {
+                    transactions.StartSelectingCommand.Execute(null);
+                    transactions.SelectAllCommand.Execute(null);
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-select");
+                    transactions.StopSelectingCommand.Execute(null);
+                }
+
                 if (!route.StartsWith("//", StringComparison.Ordinal))
                 {
                     await Shell.Current.GoToAsync("//home");
