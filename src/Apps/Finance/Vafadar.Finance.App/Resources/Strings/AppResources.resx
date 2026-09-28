@@ -2486,4 +2486,40 @@
   <data name="Envelope_Hint" xml:space="preserve">
     <value>Only accounts in this budget's currency and scope count; loans, money lent and assets do not.</value>
   </data>
+  <data name="HomeLayout_Title" xml:space="preserve">
+    <value>Customize Home</value>
+  </data>
+  <data name="HomeLayout_Customize" xml:space="preserve">
+    <value>Customize Home</value>
+  </data>
+  <data name="HomeLayout_Intro" xml:space="preserve">
+    <value>Choose which sections Home shows and in which order. The balance and items that need attention always stay on top.</value>
+  </data>
+  <data name="HomeLayout_Up" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="HomeLayout_Down" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="HomeLayout_Reset" xml:space="preserve">
+    <value>Restore the default</value>
+  </data>
+  <data name="HomeSection_Period" xml:space="preserve">
+    <value>Income and expense</value>
+  </data>
+  <data name="HomeSection_Forecast" xml:space="preserve">
+    <value>Forecast (Advanced)</value>
+  </data>
+  <data name="HomeSection_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="HomeSection_Upcoming" xml:space="preserve">
+    <value>Upcoming</value>
+  </data>
+  <data name="HomeSection_Categories" xml:space="preserve">
+    <value>Expense by category</value>
+  </data>
+  <data name="HomeSection_Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
 </root>

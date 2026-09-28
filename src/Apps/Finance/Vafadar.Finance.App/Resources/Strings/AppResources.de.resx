@@ -2482,4 +2482,40 @@
   <data name="Envelope_Hint" xml:space="preserve">
     <value>Es zählen nur Konten in Währung und Umfang dieses Budgets; Kredite, verliehenes Geld und Vermögenswerte nicht.</value>
   </data>
+  <data name="HomeLayout_Title" xml:space="preserve">
+    <value>Startseite anpassen</value>
+  </data>
+  <data name="HomeLayout_Customize" xml:space="preserve">
+    <value>Startseite anpassen</value>
+  </data>
+  <data name="HomeLayout_Intro" xml:space="preserve">
+    <value>Wählen Sie, welche Bereiche die Startseite in welcher Reihenfolge zeigt. Kontostand und offene Hinweise bleiben immer oben.</value>
+  </data>
+  <data name="HomeLayout_Up" xml:space="preserve">
+    <value>Nach oben</value>
+  </data>
+  <data name="HomeLayout_Down" xml:space="preserve">
+    <value>Nach unten</value>
+  </data>
+  <data name="HomeLayout_Reset" xml:space="preserve">
+    <value>Standard wiederherstellen</value>
+  </data>
+  <data name="HomeSection_Period" xml:space="preserve">
+    <value>Einnahmen und Ausgaben</value>
+  </data>
+  <data name="HomeSection_Forecast" xml:space="preserve">
+    <value>Prognose (Erweitert)</value>
+  </data>
+  <data name="HomeSection_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="HomeSection_Upcoming" xml:space="preserve">
+    <value>Demnächst fällig</value>
+  </data>
+  <data name="HomeSection_Categories" xml:space="preserve">
+    <value>Ausgaben nach Kategorie</value>
+  </data>
+  <data name="HomeSection_Accounts" xml:space="preserve">
+    <value>Konten</value>
+  </data>
 </root>

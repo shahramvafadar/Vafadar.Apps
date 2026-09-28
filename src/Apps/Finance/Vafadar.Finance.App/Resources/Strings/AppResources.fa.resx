@@ -2482,4 +2482,40 @@
   <data name="Envelope_Hint" xml:space="preserve">
     <value>فقط حساب‌های هم‌ارز و داخل محدودهٔ این بودجه حساب می‌شوند؛ وام، قرض داده‌شده و دارایی نه.</value>
   </data>
+  <data name="HomeLayout_Title" xml:space="preserve">
+    <value>چیدمان خانه</value>
+  </data>
+  <data name="HomeLayout_Customize" xml:space="preserve">
+    <value>تنظیم چیدمان خانه</value>
+  </data>
+  <data name="HomeLayout_Intro" xml:space="preserve">
+    <value>انتخاب کنید صفحهٔ خانه کدام بخش‌ها را و به چه ترتیبی نشان دهد. موجودی و مواردی که نیاز به اقدام دارند همیشه بالای صفحه می‌مانند.</value>
+  </data>
+  <data name="HomeLayout_Up" xml:space="preserve">
+    <value>بالاتر</value>
+  </data>
+  <data name="HomeLayout_Down" xml:space="preserve">
+    <value>پایین‌تر</value>
+  </data>
+  <data name="HomeLayout_Reset" xml:space="preserve">
+    <value>بازگشت به حالت پیش‌فرض</value>
+  </data>
+  <data name="HomeSection_Period" xml:space="preserve">
+    <value>درآمد و هزینه</value>
+  </data>
+  <data name="HomeSection_Forecast" xml:space="preserve">
+    <value>پیش‌بینی (پیشرفته)</value>
+  </data>
+  <data name="HomeSection_Budget" xml:space="preserve">
+    <value>بودجه</value>
+  </data>
+  <data name="HomeSection_Upcoming" xml:space="preserve">
+    <value>سررسیدهای پیش رو</value>
+  </data>
+  <data name="HomeSection_Categories" xml:space="preserve">
+    <value>هزینه بر اساس دسته</value>
+  </data>
+  <data name="HomeSection_Accounts" xml:space="preserve">
+    <value>حساب‌ها</value>
+  </data>
 </root>

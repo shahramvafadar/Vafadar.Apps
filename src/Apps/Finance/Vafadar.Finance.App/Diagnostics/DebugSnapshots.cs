@@ -114,6 +114,7 @@ internal static class DebugSnapshots
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
             ("display-units", AppShell.DisplayUnitsRoute, null),
+            ("home-layout", AppShell.HomeLayoutRoute, null),
             ("templates", AppShell.TemplatesRoute, null),
             ("goals", AppShell.GoalsRoute, null),
             ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),

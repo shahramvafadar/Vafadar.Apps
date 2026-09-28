@@ -65,6 +65,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the manual exchange rates.</summary>
     public const string RatesRoute = "rates";
 
+    /// <summary>Route of the Home customisation (§21.5).</summary>
+    public const string HomeLayoutRoute = "homelayout";
+
     /// <summary>Route of the display units such as the toman (FX-07).</summary>
     public const string DisplayUnitsRoute = "displayunits";
 
@@ -118,6 +121,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
         Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
+        Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
         Routing.RegisterRoute(DisplayUnitsRoute, typeof(DisplayUnitsPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));

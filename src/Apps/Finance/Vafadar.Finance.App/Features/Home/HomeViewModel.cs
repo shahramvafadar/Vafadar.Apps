@@ -459,6 +459,9 @@ public sealed partial class HomeViewModel : ViewModelBase
     private Task OpenRatesAsync() => Shell.Current.GoToAsync(AppShell.RatesRoute);
 
     [RelayCommand]
+    private Task CustomizeAsync() => Shell.Current.GoToAsync(AppShell.HomeLayoutRoute);
+
+    [RelayCommand]
     private Task OpenBudgetAsync() => Shell.Current.GoToAsync(AppShell.BudgetRoute);
 
     [RelayCommand]
