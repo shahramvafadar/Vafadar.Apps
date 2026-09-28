@@ -2347,4 +2347,34 @@
   <data name="Loan_OtherAmount" xml:space="preserve">
     <value>ثبت مبلغ دیگر</value>
   </data>
+  <data name="Ordinal_1" xml:space="preserve">
+    <value>اولین</value>
+  </data>
+  <data name="Ordinal_2" xml:space="preserve">
+    <value>دومین</value>
+  </data>
+  <data name="Ordinal_3" xml:space="preserve">
+    <value>سومین</value>
+  </data>
+  <data name="Ordinal_4" xml:space="preserve">
+    <value>چهارمین</value>
+  </data>
+  <data name="Ordinal_5" xml:space="preserve">
+    <value>پنجمین</value>
+  </data>
+  <data name="DayRule_NthWeekday" xml:space="preserve">
+    <value>{0} {1} ماه</value>
+  </data>
+  <data name="DayRule_LastWeekday" xml:space="preserve">
+    <value>آخرین {0} ماه</value>
+  </data>
+  <data name="Rule_NthWeekday" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Rule_LastWeekday" xml:space="preserve">
+    <value>آخرین {0}</value>
+  </data>
+  <data name="Rule_YearWeekday" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
 </root>

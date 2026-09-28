@@ -2347,4 +2347,34 @@
   <data name="Loan_OtherAmount" xml:space="preserve">
     <value>Anderen Betrag erfassen</value>
   </data>
+  <data name="Ordinal_1" xml:space="preserve">
+    <value>ersten</value>
+  </data>
+  <data name="Ordinal_2" xml:space="preserve">
+    <value>zweiten</value>
+  </data>
+  <data name="Ordinal_3" xml:space="preserve">
+    <value>dritten</value>
+  </data>
+  <data name="Ordinal_4" xml:space="preserve">
+    <value>vierten</value>
+  </data>
+  <data name="Ordinal_5" xml:space="preserve">
+    <value>fünften</value>
+  </data>
+  <data name="DayRule_NthWeekday" xml:space="preserve">
+    <value>Am {0} {1}</value>
+  </data>
+  <data name="DayRule_LastWeekday" xml:space="preserve">
+    <value>Am letzten {0}</value>
+  </data>
+  <data name="Rule_NthWeekday" xml:space="preserve">
+    <value>am {0} {1}</value>
+  </data>
+  <data name="Rule_LastWeekday" xml:space="preserve">
+    <value>am letzten {0}</value>
+  </data>
+  <data name="Rule_YearWeekday" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
 </root>

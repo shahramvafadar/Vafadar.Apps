@@ -29,6 +29,25 @@ public enum MonthDayRule
 
     /// <summary>Always the last day of the month.</summary>
     LastDayOfMonth = 1,
+
+    /// <summary>
+    /// The same weekday and week of the month as the start date, e.g. the second Monday (REC-12). A start in the fifth
+    /// week means the last such weekday, as not every month has a fifth one.
+    /// </summary>
+    NthWeekday = 2,
+
+    /// <summary>The last weekday of the month that the start date falls on, e.g. the last Friday (REC-12).</summary>
+    LastWeekday = 3,
+}
+
+/// <summary>Helpers for weekday rules.</summary>
+public static class MonthDayRules
+{
+    /// <summary>Returns the week of the month (1–5) of a day of the month: days 1–7 are the first week.</summary>
+    public static int WeekOf(int dayOfMonth) => ((dayOfMonth - 1) / 7) + 1;
+
+    /// <summary>Returns whether the rule picks a weekday rather than a day number.</summary>
+    public static bool IsWeekday(this MonthDayRule rule) => rule is MonthDayRule.NthWeekday or MonthDayRule.LastWeekday;
 }
 
 /// <summary>What happens when the anchor day does not exist in a month, e.g. the 31st in April (REC-08, REC-10).</summary>

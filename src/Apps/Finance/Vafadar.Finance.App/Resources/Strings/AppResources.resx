@@ -2351,4 +2351,34 @@
   <data name="Loan_OtherAmount" xml:space="preserve">
     <value>Record another amount</value>
   </data>
+  <data name="Ordinal_1" xml:space="preserve">
+    <value>first</value>
+  </data>
+  <data name="Ordinal_2" xml:space="preserve">
+    <value>second</value>
+  </data>
+  <data name="Ordinal_3" xml:space="preserve">
+    <value>third</value>
+  </data>
+  <data name="Ordinal_4" xml:space="preserve">
+    <value>fourth</value>
+  </data>
+  <data name="Ordinal_5" xml:space="preserve">
+    <value>fifth</value>
+  </data>
+  <data name="DayRule_NthWeekday" xml:space="preserve">
+    <value>The {0} {1}</value>
+  </data>
+  <data name="DayRule_LastWeekday" xml:space="preserve">
+    <value>The last {0}</value>
+  </data>
+  <data name="Rule_NthWeekday" xml:space="preserve">
+    <value>on the {0} {1}</value>
+  </data>
+  <data name="Rule_LastWeekday" xml:space="preserve">
+    <value>on the last {0}</value>
+  </data>
+  <data name="Rule_YearWeekday" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
 </root>

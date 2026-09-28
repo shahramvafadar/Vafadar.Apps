@@ -131,7 +131,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     partial void OnSecondDayTextChanged(string value) => Update();
 
-    public bool ShowSecondDay => ShowMonthOptions && Frequency == Frequency.Monthly;
+    public bool ShowSecondDay => ShowMonthOptions && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday();
 
     partial void OnWeekendIndexChanged(int value) => Update();
 
@@ -202,6 +202,18 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     [ObservableProperty]
     public partial int DayRuleIndex { get; set; }
+
+    // The day rules offered for the start date: a start in the fifth week has no "n-th weekday" apart from the last (REC-12).
+    private List<MonthDayRule> _dayRules = DayRulesFor(1);
+
+    private MonthDayRule SelectedDayRule => DayRuleIndex >= 0 && DayRuleIndex < _dayRules.Count ? _dayRules[DayRuleIndex] : MonthDayRule.SpecificDay;
+
+    private static List<MonthDayRule> DayRulesFor(int anchorDay) => MonthDayRules.WeekOf(anchorDay) <= 4
+        ? [MonthDayRule.SpecificDay, MonthDayRule.LastDayOfMonth, MonthDayRule.NthWeekday, MonthDayRule.LastWeekday]
+        : [MonthDayRule.SpecificDay, MonthDayRule.LastDayOfMonth, MonthDayRule.LastWeekday];
+
+    private int IndexOfDayRule(MonthDayRule rule) =>
+        _dayRules.IndexOf(rule == MonthDayRule.NthWeekday && !_dayRules.Contains(rule) ? MonthDayRule.LastWeekday : rule) is var index and >= 0 ? index : 0;
 
     [ObservableProperty]
     public partial int MissingDayIndex { get; set; }
@@ -430,7 +442,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         IntervalText = rule.Interval.ToString(CultureInfo.InvariantCulture);
         Start = rule.Start;
         CalendarIndex = rule.Calendar == PeriodCalendar.Persian ? 1 : 0;
-        DayRuleIndex = (int)rule.DayRule;
+        _dayRules = DayRulesFor(AnchorDay);
+        DayRuleIndex = IndexOfDayRule(rule.DayRule);
         MissingDayIndex = (int)rule.MissingDay;
         WeekendIndex = (int)rule.WeekendShift;
         HasSecondDay = rule.SecondDay is not null;
@@ -538,7 +551,21 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
         CurrencyCode = Account?.CurrencyCode ?? Currencies.Euro.Code;
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
-        DayRuleNames = [_translator.Format("DayRule_OnDay", AnchorDay), _translator["DayRule_LastDay"]];
+        var selected = SelectedDayRule;
+        _dayRules = DayRulesFor(AnchorDay);
+        var weekday = _localization.CurrentCulture.DateTimeFormat.GetDayName(Start.DayOfWeek);
+        DayRuleNames = [.. _dayRules.Select(r => r switch
+        {
+            MonthDayRule.LastDayOfMonth => _translator["DayRule_LastDay"],
+            MonthDayRule.NthWeekday => _translator.Format("DayRule_NthWeekday", _translator[$"Ordinal_{MonthDayRules.WeekOf(AnchorDay)}"], weekday),
+            MonthDayRule.LastWeekday => _translator.Format("DayRule_LastWeekday", weekday),
+            _ => _translator.Format("DayRule_OnDay", AnchorDay),
+        })];
+        if (IndexOfDayRule(selected) is var dayIndex && dayIndex != DayRuleIndex)
+        {
+            DayRuleIndex = dayIndex;
+        }
+
         OnPropertyChanged(nameof(IsTransfer));
         OnPropertyChanged(nameof(ShowAmount));
         OnPropertyChanged(nameof(CanAutoPost));
@@ -584,10 +611,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         Interval = Interval,
         Start = Start,
         Calendar = Calendar,
-        DayRule = (MonthDayRule)DayRuleIndex,
+        DayRule = SelectedDayRule,
         MissingDay = (MissingDayPolicy)MissingDayIndex,
         WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
-        SecondDay = HasSecondDay && Frequency == Frequency.Monthly && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
+        SecondDay = HasSecondDay && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday() && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
         WeekendDays = WeekendIndex == 0 ? 0 : RecurrenceRule.MaskOf(_weekend),
         End = Frequency == Frequency.Once ? EndKind.Never : (EndKind)EndIndex,
         EndDate = EndIndex == 1 ? EndDate : null,

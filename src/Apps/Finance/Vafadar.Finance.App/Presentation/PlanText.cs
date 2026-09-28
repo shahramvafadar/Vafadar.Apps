@@ -64,12 +64,26 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
     public string Date(DateOnly date) => dates.Format(date, DateFormatStyle.Long);
 
     private string DayText(RecurrenceRule rule) =>
-        rule.DayRule == MonthDayRule.LastDayOfMonth
+        rule.DayRule.IsWeekday() ? WeekdayText(rule)
+        : rule.DayRule == MonthDayRule.LastDayOfMonth
             ? translator["Rule_LastDay"]
             : translator.Format("Rule_OnDay", rule.Calendar == PeriodCalendar.Persian ? Persian.GetDayOfMonth(rule.Start.ToDateTime(TimeOnly.MinValue)) : rule.Start.Day);
 
+    // "on the 2nd Monday" or "on the last Friday"; a start in the fifth week is the last weekday (REC-12).
+    private string WeekdayText(RecurrenceRule rule)
+    {
+        var weekday = culture.DateTimeFormat.GetDayName(rule.Start.DayOfWeek);
+        var day = rule.Calendar == PeriodCalendar.Persian ? Persian.GetDayOfMonth(rule.Start.ToDateTime(TimeOnly.MinValue)) : rule.Start.Day;
+        var week = MonthDayRules.WeekOf(day);
+        return rule.DayRule == MonthDayRule.NthWeekday && week <= 4
+            ? translator.Format("Rule_NthWeekday", translator[$"Ordinal_{week}"], weekday)
+            : translator.Format("Rule_LastWeekday", weekday);
+    }
+
+    // A yearly weekday rule names the month through the start date, e.g. "on the 4th Thursday (26 November)".
     private string YearDayText(RecurrenceRule rule) =>
-        rule.DayRule == MonthDayRule.LastDayOfMonth
+        rule.DayRule.IsWeekday() ? translator.Format("Rule_YearWeekday", WeekdayText(rule), dates.Format(rule.Start, DateFormatStyle.DayMonth))
+        : rule.DayRule == MonthDayRule.LastDayOfMonth
             ? translator["Rule_LastDay"]
             : translator.Format("Rule_OnDate", dates.Format(rule.Start, DateFormatStyle.DayMonth));
 }

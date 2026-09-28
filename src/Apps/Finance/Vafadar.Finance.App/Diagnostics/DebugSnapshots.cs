@@ -80,6 +80,7 @@ internal static class DebugSnapshots
         await SeedBudgetAsync(services, foodId);
         var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;
         var accountId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
+        var weekdayPlanId = (await services.GetRequiredService<PlanStore>().GetSchedulesAsync()).First(s => s.Rule.DayRule == MonthDayRule.LastWeekday).Id;
         var loanId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
@@ -97,6 +98,7 @@ internal static class DebugSnapshots
             ("plan-new", AppShell.PlanEditorRoute, null),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
             ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
+            ("plan-weekday", AppShell.PlanDetailRoute, new() { ["id"] = weekdayPlanId }),
             ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
@@ -250,7 +252,7 @@ internal static class DebugSnapshots
             CategoryId = Category("Communication"),
             AmountMode = AmountMode.Estimated,
             Amount = 2_990,
-            Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = today.AddDays(9) },
+            Rule = new RecurrenceRule { Frequency = Frequency.Monthly, Start = today.AddDays(9), DayRule = MonthDayRule.LastWeekday },
         };
         var salary = new Schedule
         {

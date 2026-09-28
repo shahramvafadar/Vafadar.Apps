@@ -24,7 +24,7 @@ public static class Recurrence
             return "IntervalMustBePositive";
         }
 
-        if (rule.SecondDay is { } second && (rule.Frequency != Frequency.Monthly || second is < 1 or > 31))
+        if (rule.SecondDay is { } second && (rule.Frequency != Frequency.Monthly || second is < 1 or > 31 || rule.DayRule.IsWeekday()))
         {
             return "SecondDayInvalid";
         }
@@ -173,7 +173,11 @@ public static class Recurrence
         var daysInMonth = rule.Calendar == PeriodCalendar.Persian ? Persian.GetDaysInMonth(year, month) : DateTime.DaysInMonth(year, month);
         var anchorDay = fixedDay ?? DayOf(rule.Start, rule.Calendar);
         int day;
-        if (rule.DayRule == MonthDayRule.LastDayOfMonth && fixedDay is null)
+        if (rule.DayRule.IsWeekday() && fixedDay is null)
+        {
+            day = WeekdayIn(rule, year, month, daysInMonth, anchorDay);
+        }
+        else if (rule.DayRule == MonthDayRule.LastDayOfMonth && fixedDay is null)
         {
             day = daysInMonth;
         }
@@ -193,6 +197,24 @@ public static class Recurrence
         return rule.Calendar == PeriodCalendar.Persian
             ? DateOnly.FromDateTime(Persian.ToDateTime(year, month, day, 0, 0, 0, 0))
             : new DateOnly(year, month, day);
+    }
+
+    // The day of the month with the weekday of the start date: in the same week of the month, or the last one (REC-12).
+    // Weekdays are the same in both calendars, so the month's first day gives the offset.
+    private static int WeekdayIn(RecurrenceRule rule, int year, int month, int daysInMonth, int anchorDay)
+    {
+        var first = rule.Calendar == PeriodCalendar.Persian
+            ? DateOnly.FromDateTime(Persian.ToDateTime(year, month, 1, 0, 0, 0, 0))
+            : new DateOnly(year, month, 1);
+        var weekday = rule.Start.DayOfWeek;
+        var firstMatch = 1 + (((int)weekday - (int)first.DayOfWeek + 7) % 7);
+        var week = MonthDayRules.WeekOf(anchorDay);
+        if (rule.DayRule == MonthDayRule.NthWeekday && week <= 4)
+        {
+            return firstMatch + ((week - 1) * 7);
+        }
+
+        return firstMatch + (((daysInMonth - firstMatch) / 7) * 7);
     }
 
     // A skipped month still has a first day; once that is past the range end, no later step can be inside it.
