@@ -1,0 +1,2 @@
+/* Face ID prompt for the optional app lock (SEC-01). */
+"NSFaceIDUsageDescription" = "برای باز کردن قفل اپ، وقتی قفل روشن است، Zanance از Face ID استفاده می‌کند.";

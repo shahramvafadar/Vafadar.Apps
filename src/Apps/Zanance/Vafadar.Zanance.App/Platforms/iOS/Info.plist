@@ -34,6 +34,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Face ID for the optional app lock (SEC-01); iOS ends the app without this text. Localised in *.lproj/InfoPlist.strings. -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Zanance uses Face ID to unlock the app when the app lock is on.</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+		<string>fa</string>
+	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 </dict>
