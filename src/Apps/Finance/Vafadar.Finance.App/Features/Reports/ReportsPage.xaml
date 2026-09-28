@@ -35,6 +35,9 @@
             </Grid>
 
             <Label Text="{v:Translate Report_Empty}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,24" IsVisible="{Binding IsEmpty}" />
+            <Button Text="{v:Translate Report_SharePdf}" Command="{Binding SharePdfCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="Transparent"
+                    TextColor="{DynamicResource Primary}" HorizontalOptions="End" Padding="8,0"
+                    IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
 
             <!-- Expenses by category: gross chart, refunds card, net table (REP-02) -->
             <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowExpenses}">

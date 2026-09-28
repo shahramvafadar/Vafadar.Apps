@@ -138,6 +138,13 @@ internal static class DebugSnapshots
                     await CaptureAsync(app, folder, $"{language}-{name}-end");
                 }
 
+                // The PDF of the reports screen (REP-07), written next to the screenshots.
+                if (name == "reports" && Shell.Current.CurrentPage?.BindingContext is Features.Reports.ReportsViewModel reports)
+                {
+                    await File.WriteAllBytesAsync(Path.Combine(folder, $"{language}-report.pdf"), await reports.CreatePdfAsync());
+                    await reports.LoadAsync();
+                }
+
                 // The bulk selection of the transactions list (F2-TX-04).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
                 {

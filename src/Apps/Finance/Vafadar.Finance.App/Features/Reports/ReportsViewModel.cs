@@ -56,8 +56,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private DateOnly _to;
     private string _currency = Currencies.Euro.Code;
 
-    public ReportsViewModel(FinanceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public ReportsViewModel(FinanceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Security.AppLockService appLock)
     {
+        _lock = appLock;
         _store = store;
         _plans = plans;
         _translator = translator;
@@ -72,6 +73,86 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     public IReadOnlyList<string> PeriodKindNames { get; }
 
     public IReadOnlyList<string> ReportNames { get; }
+
+    private readonly Security.AppLockService _lock;
+
+    // PDF of the period (REP-07): every report of the screen in one file, clearly marked as not official.
+    [RelayCommand]
+    private async Task SharePdfAsync()
+    {
+        if (IsBusy || !await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
+        {
+            return;
+        }
+
+        IsBusy = true;
+        var shown = ReportIndex;
+        try
+        {
+            var pdf = await CreatePdfAsync();
+            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-report-{_from:yyyy-MM}.pdf"));
+            await File.WriteAllBytesAsync(path, pdf);
+            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
+        }
+        finally
+        {
+            IsBusy = false;
+            ReportIndex = shown;
+            await LoadAsync();
+        }
+    }
+
+    /// <summary>Creates the PDF of the current period with all reports; the screen must be reloaded afterwards.</summary>
+    public async Task<byte[]> CreatePdfAsync()
+    {
+        {
+            var accounts = await _store.GetAccountsAsync();
+            var entries = await _store.GetEntriesAsync();
+            var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+            var culture = _localization.CurrentCulture;
+            BuildExpenses(accounts, entries, categories, culture);
+            BuildIncomeExpense(accounts, entries, culture);
+            BuildAccounts(accounts, entries, culture);
+            await BuildPlansAsync(accounts, entries, culture);
+            BuildTags(accounts, entries, culture);
+
+            var tables = new List<Vafadar.Finance.Reports.ReportTable>();
+            if (CategoryRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_GrossByCategory"], [_translator["Entry_Category"], _translator["Report_Gross"], _translator["Report_Refunds"], _translator["Report_Net"]],
+                    [.. CategoryRows.Select(r => (IReadOnlyList<string>)[r.Name, r.GrossText, r.RefundsText, r.NetText])], new HashSet<int> { 1, 2, 3 }));
+            }
+
+            if (Accounts.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Accounts"], [_translator["Entry_Account"], _translator["Report_Opening"], _translator["Report_Closing"]],
+                    [.. Accounts.Select(a => (IReadOnlyList<string>)[a.Name, a.Lines.FirstOrDefault()?.Amount ?? string.Empty, a.Lines.LastOrDefault()?.Amount ?? string.Empty])], new HashSet<int> { 1, 2 }));
+            }
+
+            if (PlanRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Plans"], [_translator["Plan_Name"], _translator["Report_Planned"], _translator["Report_Actual"]],
+                    [.. PlanRows.Select(p => (IReadOnlyList<string>)[p.Name, p.PlannedText, p.ActualText])], new HashSet<int> { 1, 2 }));
+            }
+
+            if (TagRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Tags"], [_translator["Entry_Tags"], _translator["Report_Net"]],
+                    [.. TagRows.Select(t => (IReadOnlyList<string>)["#" + t.Tag, t.AmountText])], new HashSet<int> { 1 }));
+            }
+
+            var document = new Vafadar.Finance.Reports.ReportDocument(
+                _translator.Format("Report_PdfTitle", _translator["App_Name"]),
+                PeriodText,
+                _translator.Format("Report_PdfScope", _currency),
+                _translator.Format("Report_PdfCreated", _dates.Format(Today, DateFormatStyle.Long)),
+                _translator["Report_PdfDisclaimer"],
+                _localization.IsRightToLeft,
+                [.. IncomeExpenseLines.Select(l => new Vafadar.Finance.Reports.ReportLine(l.Label, l.Amount))],
+                tables);
+            return await Task.Run(() => Vafadar.Finance.Reports.PdfReport.Write(document));
+        }
+    }
 
     public ObservableCollection<CategorySlice> Slices { get; } = [];
 

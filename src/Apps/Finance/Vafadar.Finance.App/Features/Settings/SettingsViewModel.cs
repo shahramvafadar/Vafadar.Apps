@@ -70,7 +70,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
         "Fluent UI System Icons (FluentIcons.Maui) – MIT",
         "Plugin.LocalNotification – MIT",
         "AndroidX (Biometric and others) – Apache 2.0",
-        "Open Sans font – SIL Open Font License 1.1");
+        "Open Sans font – SIL Open Font License 1.1",
+        "Vazirmatn font (PDF reports) – SIL Open Font License 1.1");
 
     [ObservableProperty]
     public partial int ModeIndex { get; set; }

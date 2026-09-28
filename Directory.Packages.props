@@ -26,6 +26,7 @@
 
   <ItemGroup Label="Syncfusion">
     <PackageVersion Include="Syncfusion.Licensing" Version="34.2.9" />
+    <PackageVersion Include="Syncfusion.Pdf.Net.Core" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Core" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Buttons" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Calendar" Version="34.2.9" />

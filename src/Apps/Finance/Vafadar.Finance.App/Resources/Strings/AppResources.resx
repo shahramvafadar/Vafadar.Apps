@@ -2246,4 +2246,19 @@
   <data name="Rule_AlsoOnDay" xml:space="preserve">
     <value>also on day {0}</value>
   </data>
+  <data name="Report_SharePdf" xml:space="preserve">
+    <value>Share as PDF</value>
+  </data>
+  <data name="Report_PdfTitle" xml:space="preserve">
+    <value>{0} – financial report</value>
+  </data>
+  <data name="Report_PdfScope" xml:space="preserve">
+    <value>Accounts included in totals · report currency {0}</value>
+  </data>
+  <data name="Report_PdfCreated" xml:space="preserve">
+    <value>Created on {0}</value>
+  </data>
+  <data name="Report_PdfDisclaimer" xml:space="preserve">
+    <value>Created with Zanance from your own entries. This is not an official statement of a bank or tax authority.</value>
+  </data>
 </root>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>PDF reports of Zanance (REP-07). Platform independent; the fonts are embedded so Persian text renders without system fonts.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" />
+  </ItemGroup>
+
+  <ItemGroup Label="Vazirmatn (SIL Open Font License 1.1, see Fonts/Vazirmatn-OFL.txt)">
+    <EmbeddedResource Include="Fonts\Vazirmatn-Regular.ttf" LogicalName="Vazirmatn-Regular.ttf" />
+    <EmbeddedResource Include="Fonts\Vazirmatn-Bold.ttf" LogicalName="Vazirmatn-Bold.ttf" />
+    <None Include="Fonts\Vazirmatn-OFL.txt" />
+  </ItemGroup>
+
+</Project>

@@ -38,6 +38,7 @@
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Maui\Vafadar.Maui.csproj" />
     <ProjectReference Include="..\Vafadar.Finance.Core\Vafadar.Finance.Core.csproj" />
     <ProjectReference Include="..\Vafadar.Finance.Data\Vafadar.Finance.Data.csproj" />
+    <ProjectReference Include="..\Vafadar.Finance.Reports\Vafadar.Finance.Reports.csproj" />
   </ItemGroup>
 
   <ItemGroup>

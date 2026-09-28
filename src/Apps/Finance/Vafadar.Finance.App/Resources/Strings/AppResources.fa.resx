@@ -2242,4 +2242,19 @@
   <data name="Rule_AlsoOnDay" xml:space="preserve">
     <value>و روز {0}</value>
   </data>
+  <data name="Report_SharePdf" xml:space="preserve">
+    <value>اشتراک به‌صورت PDF</value>
+  </data>
+  <data name="Report_PdfTitle" xml:space="preserve">
+    <value>گزارش مالی {0}</value>
+  </data>
+  <data name="Report_PdfScope" xml:space="preserve">
+    <value>حساب‌های داخل جمع کل · ارز گزارش {0}</value>
+  </data>
+  <data name="Report_PdfCreated" xml:space="preserve">
+    <value>تهیه‌شده در {0}</value>
+  </data>
+  <data name="Report_PdfDisclaimer" xml:space="preserve">
+    <value>با Zanance از ثبت‌های خودتان تهیه شده است. این سند رسمی بانک یا مرجع مالیاتی نیست.</value>
+  </data>
 </root>
