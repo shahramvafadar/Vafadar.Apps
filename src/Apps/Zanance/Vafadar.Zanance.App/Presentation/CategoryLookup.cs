@@ -1,6 +1,6 @@
 using FluentIcons.Common;
-using Vafadar.Zanance.Core.Categories;
 using Vafadar.Localization;
+using Vafadar.Zanance.Core.Categories;
 
 namespace Vafadar.Zanance.App.Presentation;
 

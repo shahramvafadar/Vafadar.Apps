@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Entries;
 
@@ -49,6 +49,9 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
     [ObservableProperty]
     public partial string? RemainingText { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
 
     [ObservableProperty]
     public partial Color RemainingColor { get; set; } = Palette.SecondaryText;
@@ -82,6 +85,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         _currency = Currencies.TryGet(accounts.FirstOrDefault(a => a.Id == entry.AccountId)?.CurrencyCode ?? string.Empty, out var currency) ? currency : Currencies.Euro;
         _total = _parts.Sum(p => p.Amount);
         TotalText = MoneyText.Format(_total, _currency.Code, localization.CurrentCulture);
+        UnitNote = DisplayUnitNote.For(translator, _currency.Code);
         IsSplit = _parts.Count > 1;
 
         var kind = entry.Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
@@ -179,6 +183,12 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
             }).ToList();
             var (save, delete) = EntryActions.Split(_parts, shares);
             var result = await store.SaveEntriesAsync(save, [.. delete]);
+        if (result.Succeeded)
+        {
+            // Receipts of parts that no longer exist stay with the first part.
+            await store.MoveAttachmentsAsync([.. delete], save[0].Id);
+        }
+
             if (!result.Succeeded)
             {
                 Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"]));
@@ -206,6 +216,11 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         {
             var (save, delete) = EntryActions.Join(_parts);
             var result = await store.SaveEntriesAsync([save], [.. delete]);
+        if (result.Succeeded)
+        {
+            await store.MoveAttachmentsAsync([.. delete], save.Id);
+        }
+
             if (result.Succeeded)
             {
                 await Shell.Current.GoToAsync("..");

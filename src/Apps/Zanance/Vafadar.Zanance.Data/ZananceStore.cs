@@ -392,8 +392,8 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     }
 
     /// <summary>
-    /// Removes attachments whose entry no longer exists. Deleting an entry keeps them briefly so undo restores them;
-    /// this runs at app start, so receipts of deleted entries do not stay on the device.
+    /// Removes attachments whose entry no longer exists. Deleting an entry keeps them so undo restores them; the app
+    /// runs this when it starts (undo does not survive a restart), so receipts of deleted entries do not stay on the device.
     /// </summary>
     public async Task<int> PurgeOrphanAttachmentsAsync(CancellationToken cancellationToken = default)
     {
@@ -434,6 +434,22 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await db.Attachments.Where(a => a.Id == id).ExecuteDeleteAsync(cancellationToken);
         OnChanged();
+    }
+
+    /// <summary>
+    /// Moves the attachments of <paramref name="fromEntryIds"/> to another entry, e.g. when split parts are joined or
+    /// fewer parts remain, so no receipt is lost with a removed part.
+    /// </summary>
+    public async Task MoveAttachmentsAsync(IReadOnlyCollection<Guid> fromEntryIds, Guid toEntryId, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(fromEntryIds);
+        if (fromEntryIds.Count == 0)
+        {
+            return;
+        }
+
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Attachments.Where(a => fromEntryIds.Contains(a.EntryId)).ExecuteUpdateAsync(a => a.SetProperty(x => x.EntryId, toEntryId), cancellationToken);
     }
 
     /// <summary>Returns the categorization rules sorted by their text (F2-TX-04).</summary>

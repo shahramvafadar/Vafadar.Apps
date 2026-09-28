@@ -5,8 +5,13 @@ namespace Vafadar.Zanance.Core.Money;
 /// </summary>
 public sealed record Currency(string Code, int MinorDigits)
 {
-    /// <summary>Gets the factor between major and minor units (100 for EUR).</summary>
-    public long MinorFactor => MinorDigits switch { 0 => 1, 1 => 10, 2 => 100, 3 => 1000, 4 => 10000, _ => throw new InvalidOperationException() };
+    /// <summary>
+    /// Gets the factor between major and minor units (100 for EUR). Display units (FX-07) read amounts with up to nine
+    /// digits, so any count from 0 to 18 is supported.
+    /// </summary>
+    public long MinorFactor => MinorDigits is >= 0 and <= 18
+        ? Enumerable.Repeat(10L, MinorDigits).Aggregate(1L, (factor, ten) => factor * ten)
+        : throw new InvalidOperationException($"{MinorDigits} minor digits are not supported.");
 
     /// <inheritdoc />
     public override string ToString() => Code;

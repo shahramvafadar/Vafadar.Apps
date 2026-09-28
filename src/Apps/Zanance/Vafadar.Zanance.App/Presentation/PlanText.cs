@@ -1,9 +1,9 @@
 using System.Globalization;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
 
 namespace Vafadar.Zanance.App.Presentation;
 

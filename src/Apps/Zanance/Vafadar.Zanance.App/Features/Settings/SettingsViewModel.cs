@@ -1,13 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Core.Hosting;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Settings;
 
@@ -221,6 +221,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
 
         await _store.DeleteAllDataAsync();
+        Presentation.AttachmentFiles.ClearCache();
+        Presentation.DisplayUnitPreferences.Clear();
+        Presentation.HomeLayoutPreferences.Clear();
         await _lock.SetEnabledAsync(false);
         await _reminders.RefreshAsync();
         (Application.Current as App)?.ShowOnboarding();

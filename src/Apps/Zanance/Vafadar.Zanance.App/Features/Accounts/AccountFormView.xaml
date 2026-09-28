@@ -45,6 +45,7 @@
             </VerticalStackLayout>
         </Grid>
         <Label Text="{v:Translate Account_TermsHint}" Style="{StaticResource Secondary}" />
+        <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding TermsError}" Style="{StaticResource ErrorText}"
                IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
     </VerticalStackLayout>
@@ -53,6 +54,7 @@
     <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
            IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
            SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
+    <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0">
         <CheckBox IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
                   SemanticProperties.Description="{v:Translate Account_OpeningUnknown}" />

@@ -17,6 +17,13 @@ internal static class DisplayUnitPreferences
     /// <summary>Applies the stored units; called once at start.</summary>
     public static void Load() => DisplayUnits.Set(Parse(Preferences.Default.Get(Key, string.Empty)));
 
+    /// <summary>Removes every unit, e.g. with "Delete all data".</summary>
+    public static void Clear()
+    {
+        DisplayUnits.Set([]);
+        Preferences.Default.Remove(Key);
+    }
+
     /// <summary>Stores and applies the units.</summary>
     public static void Save(IEnumerable<DisplayUnit> units)
     {

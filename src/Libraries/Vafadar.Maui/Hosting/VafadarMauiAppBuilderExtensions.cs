@@ -1,6 +1,6 @@
 using FluentIcons.Maui;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using Syncfusion.Maui.Core.Hosting;
 using Vafadar.Core.Hosting;
 using Vafadar.Core.Settings;

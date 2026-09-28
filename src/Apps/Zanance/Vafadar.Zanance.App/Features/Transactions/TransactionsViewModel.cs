@@ -1,6 +1,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
@@ -8,9 +11,6 @@ using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Transactions;
 
@@ -560,6 +560,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             CategoryIds = _categoryIds is null ? [] : [.. _categoryIds],
             CategoryName = CategoryFilterName,
             UnreviewedOnly = UnreviewedOnly,
+            InTotalsOnly = _inTotalsOnly,
             Search = string.IsNullOrWhiteSpace(SearchText) ? null : SearchText.Trim(),
         });
         await LoadSavedFiltersAsync();
@@ -587,12 +588,14 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             KindIndex = Math.Clamp(filter.Kind, 0, KindNames.Count - 1);
             SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == filter.AccountId) ?? AccountOptions.FirstOrDefault();
 
-            // A category from the picker selects it again; a drill-down keeps its categories and label.
+            // A category from the picker selects it again; a drill-down keeps its categories and label. A category that
+            // no longer exists is shown as such, so the filter is never active without a visible chip to clear it.
             var ids = filter.CategoryIds.Count > 0 ? filter.CategoryIds : null;
             var picked = filter.CategoryName is null && ids is not null ? CategoryOptions.FirstOrDefault(o => o.Id is { } id && ids.Contains(id)) : null;
             SelectedCategory = picked ?? CategoryOptions.FirstOrDefault();
             _categoryIds = ids;
-            CategoryFilterName = picked is null ? filter.CategoryName : null;
+            CategoryFilterName = picked is not null ? null : filter.CategoryName ?? (ids is null ? null : _translator["Filter_CategoryMissing"]);
+            _inTotalsOnly = filter.InTotalsOnly;
             UnreviewedOnly = filter.UnreviewedOnly;
             SearchText = filter.Search ?? string.Empty;
         }

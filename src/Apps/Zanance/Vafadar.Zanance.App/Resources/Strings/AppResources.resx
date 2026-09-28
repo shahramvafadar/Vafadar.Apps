@@ -2522,4 +2522,13 @@
   <data name="HomeSection_Accounts" xml:space="preserve">
     <value>Accounts</value>
   </data>
+  <data name="Unit_AmountsIn" xml:space="preserve">
+    <value>Amounts in {0} ({0} = {1})</value>
+  </data>
+  <data name="Filter_CategoryMissing" xml:space="preserve">
+    <value>A category that no longer exists</value>
+  </data>
+  <data name="Attachment_PhotoFailed" xml:space="preserve">
+    <value>The photo could not be prepared, so it was not attached. Try a JPEG or PNG image, or a PDF.</value>
+  </data>
 </root>

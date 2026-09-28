@@ -1,6 +1,6 @@
-using Vafadar.Zanance.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Security;
+using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Security;
 

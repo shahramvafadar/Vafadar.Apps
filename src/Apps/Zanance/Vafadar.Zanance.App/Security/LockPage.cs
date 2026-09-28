@@ -1,8 +1,8 @@
 using FluentIcons.Common;
 using FluentIcons.Maui;
-using Vafadar.Zanance.App.Presentation;
 using Vafadar.Localization;
 using Vafadar.Maui.Security;
+using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App.Security;
 

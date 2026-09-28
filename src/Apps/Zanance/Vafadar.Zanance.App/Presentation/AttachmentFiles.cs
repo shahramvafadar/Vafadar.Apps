@@ -33,19 +33,48 @@ internal static class AttachmentFiles
         await stream.CopyToAsync(buffer);
         var data = buffer.ToArray();
         var contentType = string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType;
-        if (contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase) && Shrink(data) is { } smaller)
+        if (contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
         {
-            return (Path.ChangeExtension(file.FileName, ".jpg"), "image/jpeg", smaller);
+            if (Shrink(data) is { } smaller)
+            {
+                return (Path.ChangeExtension(file.FileName, ".jpg"), "image/jpeg", smaller);
+            }
+
+#if ANDROID || IOS
+            // A photo that cannot be re-encoded would keep its metadata (e.g. the location): it is not stored.
+            throw new InvalidDataException("The photo could not be re-encoded.");
+#endif
         }
 
         return (file.FileName, contentType, data);
+    }
+
+    private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");
+
+    /// <summary>
+    /// Removes the copies written for opening attachments. They are plain files, so they are deleted on every start and
+    /// after "Delete all data" instead of staying in the cache.
+    /// </summary>
+    public static void ClearCache()
+    {
+        try
+        {
+            if (Directory.Exists(CacheFolder))
+            {
+                Directory.Delete(CacheFolder, recursive: true);
+            }
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            // A file still open in another app is removed on a later start.
+        }
     }
 
     /// <summary>Writes the attachment to the cache and opens it with the app the device chooses.</summary>
     public static async Task OpenAsync(EntryAttachment attachment)
     {
         ArgumentNullException.ThrowIfNull(attachment);
-        var folder = Path.Combine(FileSystem.CacheDirectory, "attachments");
+        var folder = CacheFolder;
         Directory.CreateDirectory(folder);
         var path = Path.Combine(folder, $"{attachment.Id:N}{Path.GetExtension(attachment.FileName)}");
         await File.WriteAllBytesAsync(path, attachment.Data);

@@ -1,10 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Localization;
+using Vafadar.Maui.Localization;
 using Vafadar.Zanance.App.Features.Onboarding;
 using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Maui.Localization;
 
 namespace Vafadar.Zanance.App;
 
@@ -19,6 +19,9 @@ public partial class App : Application
 
         // Display units (e.g. toman) the user defined, before any amount is shown (FX-07).
         Presentation.DisplayUnitPreferences.Load();
+
+        // Copies of opened receipts do not outlive the session that opened them (F2-TX-04).
+        Presentation.AttachmentFiles.ClearCache();
 
         // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors reload with the shell.
         var theme = services.GetRequiredService<Presentation.ThemeService>();
@@ -69,7 +72,7 @@ public partial class App : Application
     {
         base.OnStart();
         Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().StartAsync());
-        RunForegroundWork();
+        RunForegroundWork(starting: true);
     }
 
     protected override void OnSleep()
@@ -82,12 +85,12 @@ public partial class App : Application
     {
         base.OnResume();
         Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
-        RunForegroundWork();
+        RunForegroundWork(starting: false);
     }
 
     // Due plan occurrences are recorded whenever the app comes to the foreground, then reminders are rebuilt;
     // correctness never depends on background execution (REC-22). Failures are not fatal: occurrences stay open.
-    private void RunForegroundWork()
+    private void RunForegroundWork(bool starting)
     {
         var processor = _services.GetRequiredService<AutoPostProcessor>();
         var reminders = _services.GetRequiredService<ReminderService>();
@@ -106,7 +109,13 @@ public partial class App : Application
 
             await reminders.RefreshAsync();
 
-            // Attachments of entries deleted for good (after undo expired) are removed as well (F2-TX-04).
+            // Receipts of deleted entries are removed at start only: undo is kept in memory, so after a restart no
+            // deleted entry can come back, while on resume an undo may still be pending (F2-TX-04).
+            if (!starting)
+            {
+                return;
+            }
+
             try
             {
                 await store.PurgeOrphanAttachmentsAsync();

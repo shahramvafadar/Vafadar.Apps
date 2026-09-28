@@ -3,6 +3,9 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Home;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
@@ -11,9 +14,6 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Reports;
 

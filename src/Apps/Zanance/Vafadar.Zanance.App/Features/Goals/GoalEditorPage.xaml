@@ -31,6 +31,7 @@
                                     IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
                                     SemanticProperties.Description="{v:Translate Account_Currency}" />
                         </Grid>
+                        <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">

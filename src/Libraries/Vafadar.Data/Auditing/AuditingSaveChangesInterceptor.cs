@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Vafadar.Core.Domain;
 
 namespace Vafadar.Data.Auditing;

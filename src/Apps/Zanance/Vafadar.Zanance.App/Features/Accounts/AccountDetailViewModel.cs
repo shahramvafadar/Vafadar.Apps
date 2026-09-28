@@ -2,6 +2,9 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Reports;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
@@ -11,9 +14,6 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
 
@@ -46,6 +46,9 @@ public sealed partial class AccountDetailViewModel(
 
     [ObservableProperty]
     public partial string? BalanceText { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
 
     [ObservableProperty]
     public partial string? IncompleteText { get; set; }
@@ -137,6 +140,7 @@ public sealed partial class AccountDetailViewModel(
         }
 
         Name = account.Name;
+        UnitNote = DisplayUnitNote.For(translator, account.CurrencyCode);
         TypeName = translator[$"AccountType_{account.Type}"];
         Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
         IsArchived = account.IsArchived;

@@ -1,14 +1,14 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Goals;
 
@@ -73,6 +73,9 @@ public sealed partial class GoalDetailViewModel(
 
     [ObservableProperty]
     public partial string? NoAccountsText { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
 
     [ObservableProperty]
     public partial string? CompleteText { get; set; }
@@ -96,6 +99,8 @@ public sealed partial class GoalDetailViewModel(
         {
             return;
         }
+
+        UnitNote = DisplayUnitNote.For(translator, goal.CurrencyCode);
 
         var today = Today;
         var accounts = await store.GetAccountsAsync();

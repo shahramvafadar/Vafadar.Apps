@@ -21,6 +21,7 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Split_Total}" Style="{StaticResource Secondary}" />
                         <Label Text="{Binding TotalText}" Style="{StaticResource AmountLarge}" />
+                        <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding RemainingText}" TextColor="{Binding RemainingColor}" FontAttributes="Bold" />
                         <Label Text="{v:Translate Split_Hint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>

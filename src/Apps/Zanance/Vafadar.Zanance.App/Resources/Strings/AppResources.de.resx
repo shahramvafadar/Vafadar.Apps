@@ -2518,4 +2518,13 @@
   <data name="HomeSection_Accounts" xml:space="preserve">
     <value>Konten</value>
   </data>
+  <data name="Unit_AmountsIn" xml:space="preserve">
+    <value>Beträge in {0} ({0} = {1})</value>
+  </data>
+  <data name="Filter_CategoryMissing" xml:space="preserve">
+    <value>Eine nicht mehr vorhandene Kategorie</value>
+  </data>
+  <data name="Attachment_PhotoFailed" xml:space="preserve">
+    <value>Das Foto konnte nicht vorbereitet werden und wurde nicht angehängt. Versuchen Sie ein JPEG- oder PNG-Bild oder eine PDF-Datei.</value>
+  </data>
 </root>

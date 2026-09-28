@@ -1,11 +1,11 @@
 using System.Globalization;
 using Vafadar.Core.Settings;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
 
 namespace Vafadar.Zanance.App.Reminders;
 

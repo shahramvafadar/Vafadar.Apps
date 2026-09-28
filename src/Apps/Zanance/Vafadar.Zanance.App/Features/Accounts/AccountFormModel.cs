@@ -1,9 +1,10 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Core.Text;
+using Vafadar.Localization;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Money;
-using Vafadar.Localization;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
 
@@ -76,6 +77,10 @@ public sealed partial class AccountFormModel : ObservableObject
 
     [ObservableProperty]
     public partial string? TermsError { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
+    partial void OnCurrencyCodeChanged(string value) => UnitNote = DisplayUnitNote.For(_translator, value);
 
     [ObservableProperty]
     public partial string? DebtHint { get; set; }
@@ -138,7 +143,7 @@ public sealed partial class AccountFormModel : ObservableObject
         CurrencyLocked = currencyLocked;
         IconKey = account.Icon;
         Counterparty = account.Counterparty ?? string.Empty;
-        RateText = account.InterestRate is { } rate ? rate.ToString("0.###", culture) : string.Empty;
+        RateText = account.InterestRate is { } rate ? rate.ToString("0.##########", culture) : string.Empty;
         InstallmentText = account.Installment is { } installment ? MoneyText.ForInput(installment, account.CurrencyCode, culture) : string.Empty;
         _isNew = false;
         OnTypeIndexChanged(TypeIndex);

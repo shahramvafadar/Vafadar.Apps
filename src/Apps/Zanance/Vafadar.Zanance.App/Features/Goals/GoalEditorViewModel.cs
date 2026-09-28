@@ -1,11 +1,12 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Goals;
 
@@ -56,6 +57,10 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
 
     [ObservableProperty]
     public partial string CurrencyCode { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
+    partial void OnCurrencyCodeChanged(string value) => UnitNote = DisplayUnitNote.For(_translator, value);
 
     [ObservableProperty]
     public partial bool CurrencyLocked { get; set; }

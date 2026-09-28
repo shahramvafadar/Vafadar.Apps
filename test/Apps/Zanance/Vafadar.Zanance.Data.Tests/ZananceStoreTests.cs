@@ -1,12 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
+using Vafadar.Testing;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
-using Vafadar.Testing;
 
 namespace Vafadar.Zanance.Data.Tests;
 
@@ -358,7 +358,7 @@ public sealed class ZananceStoreTests : IDisposable
     {
         var category = Guid.NewGuid();
         await _store.SaveSavedFilterAsync(new SavedFilter { Name = "Groceries", Period = 1, Kind = 1, CategoryIds = [category], Search = "#home" }, Ct);
-        await _store.SaveSavedFilterAsync(new SavedFilter { Name = "Trip", From = new DateOnly(2026, 7, 1), To = new DateOnly(2026, 7, 20), UnreviewedOnly = true }, Ct);
+        await _store.SaveSavedFilterAsync(new SavedFilter { Name = "Trip", From = new DateOnly(2026, 7, 1), To = new DateOnly(2026, 7, 20), UnreviewedOnly = true, InTotalsOnly = true }, Ct);
         await _store.SaveSavedFilterAsync(new SavedFilter { Name = " groceries ", Period = 2, Kind = 1, CategoryIds = [category] }, Ct);
 
         var filters = await _store.GetSavedFiltersAsync(Ct);
@@ -367,6 +367,8 @@ public sealed class ZananceStoreTests : IDisposable
         Assert.Null(filters[0].Search);
         Assert.True(filters[1].HasCustomRange);
         Assert.True(filters[1].UnreviewedOnly);
+        Assert.True(filters[1].InTotalsOnly);
+        Assert.False(filters[0].InTotalsOnly);
 
         await _store.DeleteSavedFilterAsync(filters[1].Id, Ct);
         Assert.Single(await _store.GetSavedFiltersAsync(Ct));
@@ -397,6 +399,21 @@ public sealed class ZananceStoreTests : IDisposable
         Assert.Equal(4.95m, stored.InterestRate);
         Assert.Equal(18_500, stored.Installment);
         Assert.Null((await NewAccountAsync()).InterestRate);
+    }
+
+    [Fact]
+    public async Task Receipts_of_removed_split_parts_move_to_the_remaining_part()
+    {
+        var account = await NewAccountAsync();
+        var kept = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 1_000, Date = new DateOnly(2026, 10, 1) };
+        var removed = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 500, Date = new DateOnly(2026, 10, 1) };
+        await _store.SaveEntriesAsync([kept, removed], [], Ct);
+        await _store.AddAttachmentAsync(new EntryAttachment { EntryId = removed.Id, FileName = "receipt.pdf", ContentType = "application/pdf", Data = [1] }, Ct);
+
+        await _store.SaveEntriesAsync([kept], [removed.Id], Ct);
+        await _store.MoveAttachmentsAsync([removed.Id], kept.Id, Ct);
+        Assert.Equal(0, await _store.PurgeOrphanAttachmentsAsync(Ct));
+        Assert.Single(await _store.GetAttachmentsAsync(kept.Id, Ct));
     }
 
     [Fact]

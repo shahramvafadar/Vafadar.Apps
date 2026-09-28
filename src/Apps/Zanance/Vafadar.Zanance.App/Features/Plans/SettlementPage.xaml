@@ -27,6 +27,7 @@
                         <Label Text="{Binding AdvancesText}" FontAttributes="Bold" Margin="0,8,0,0" />
                         <Label Text="{v:Translate Settlement_Actual}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding ActualText}" Keyboard="Numeric" Placeholder="0" FontSize="20" SemanticProperties.Description="{v:Translate Settlement_Actual}" />
+                        <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding ResultText}" TextColor="{DynamicResource WarningText}" FontSize="16" FontAttributes="Bold"
                                IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />

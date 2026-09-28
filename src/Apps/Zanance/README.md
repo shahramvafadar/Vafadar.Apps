@@ -6,10 +6,10 @@ with encrypted files the user keeps wherever they like (Google Drive, OneDrive, 
 
 | | |
 |---|---|
-| Product name | **Zanance** (shown in the app, stores and notifications; the code and folders keep the technical name *Zanance*) |
+| Product name | **Zanance** – shown untranslated in the app, stores and notifications; code and folders use the same name (D-24) |
 | App id | `pro.vafadar.zanance` – Android package and iOS bundle id (permanent once published) |
 | Platforms | Android (first), iOS, Windows |
-| Status | 🚧 Phase 1 feature-complete except cloud backup (needs Google/Microsoft sign-in): accounts, entries, transfers, refunds, categories, plans with Gregorian/Persian recurrence and automatic posting, Home dashboard, budget, reports, forecast, reminders, manual exchange rates, CSV import/export, encrypted backup files, Simple/Advanced, app lock. Status per slice: [phase 1 plan](docs/04-phase-1-plan.md). |
+| Status | 🚧 Phase 1 feature-complete except cloud backup (needs Google/Microsoft sign-in): accounts, entries, transfers, refunds, categories, plans with Gregorian/Persian recurrence and automatic posting, Home dashboard, budget, reports, forecast, reminders, manual exchange rates, CSV import/export, encrypted backup files, Simple/Advanced, app lock. Phase 2A in progress: goals, rollover and envelope budgets, splits, partial payments, contracts, reimbursements, tags, rules, loans with a repayment estimate, assets, receipts, weekday rules, display units such as the toman, forecast scenarios, saved filters, PDF reports, a customizable Home and a dark theme. Status: [phase 1 plan](docs/04-phase-1-plan.md), [phase 2 backlog](docs/05-phase-2-backlog.md). |
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
 
 ## Projects
@@ -18,6 +18,7 @@ with encrypted files the user keeps wherever they like (Google Drive, OneDrive, 
 |---|---|
 | [`Vafadar.Zanance.Core`](Vafadar.Zanance.Core) | Domain model and calculations (platform independent): ledger, plans and recurrence, budget, reports, forecast, reminders, rates, CSV |
 | [`Vafadar.Zanance.Data`](Vafadar.Zanance.Data) | `ZananceDbContext`, migrations, stores, automatic posting, backup summary |
+| [`Vafadar.Zanance.Reports`](Vafadar.Zanance.Reports) | PDF reports with the embedded Vazirmatn font (right-to-left aware) |
 | [`Vafadar.Zanance.App`](Vafadar.Zanance.App) | .NET MAUI app: pages, view models, platform code |
 
 Tests: [`test/Apps/Zanance`](../../../test/Apps/Zanance).
@@ -33,19 +34,22 @@ dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-windows10.0.
 
 ```powershell
 dotnet tool restore
-dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data
+dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data --startup-project src/Apps/Zanance/Vafadar.Zanance.Data
 ```
 
 Migrations are applied automatically when the app starts. They must only add to the schema (AT-60, tested).
 
 ## Reviewing screens without a device
 
-Debug builds can walk through every screen in English, German and Persian and save screenshots:
+Debug builds can walk through every screen in English, German and Persian, in the light or dark theme, and save
+screenshots (plus the report PDF) to `artifacts/snapshots`:
 
 ```powershell
-$env:VAFADAR_SNAPSHOTS = "C:\temp\snapshots"; $env:VAFADAR_SNAPSHOT_LANGUAGES = "en,fa"
-# start the Windows Debug build with an empty database; the app seeds sample data, saves PNGs and closes
+./eng/scripts/Run-Snapshots.ps1 -Languages fa,en [-Theme dark]
 ```
+
+The script builds the Windows Debug app, resets only its own development database, seeds fictitious data and closes
+the app when done (`Diagnostics/DebugSnapshots.cs`).
 
 ## Documentation
 

@@ -66,7 +66,9 @@ public static class MoneyText
 
     /// <summary>
     /// Parses a user-entered amount like <see cref="MoneyAmount.TryParse"/>; with a display unit the text is in that
-    /// unit (FX-07) and up to two decimals of it are accepted. The result is always in minor units of the currency.
+    /// unit (FX-07). Up to two decimals are read first, so "1,250" stays a grouped thousand; only when that fails are
+    /// as many decimals accepted as one minor unit needs (what <see cref="ForInput"/> writes). The result is always in
+    /// minor units of the currency.
     /// </summary>
     public static bool TryParse(string? text, Currency currency, CultureInfo culture, out long minor)
     {
@@ -83,7 +85,11 @@ public static class MoneyText
         minor = 0;
         if (!MoneyAmount.TryParse(text, new Currency(currency.Code, accepted), culture, out var parsed))
         {
-            return false;
+            accepted = digits;
+            if (!MoneyAmount.TryParse(text, new Currency(currency.Code, accepted), culture, out parsed))
+            {
+                return false;
+            }
         }
 
         try

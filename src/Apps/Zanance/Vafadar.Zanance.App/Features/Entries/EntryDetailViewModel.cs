@@ -2,13 +2,13 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Entries;
 
@@ -283,6 +283,13 @@ public sealed partial class EntryDetailViewModel(
                 return;
             }
 
+            if (picked.Data.Length == 0)
+            {
+                // E.g. a cloud file that is not downloaded yet.
+                await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_Failed"], translator["Common_Ok"]);
+                return;
+            }
+
             if (picked.Data.Length > EntryAttachment.MaxBytes)
             {
                 await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_TooLarge"], translator["Common_Ok"]);
@@ -292,8 +299,13 @@ public sealed partial class EntryDetailViewModel(
             await store.AddAttachmentAsync(new EntryAttachment { EntryId = _id, FileName = picked.Name, ContentType = picked.ContentType, Data = picked.Data });
             await LoadAttachmentsAsync();
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException)
+        catch (InvalidDataException)
         {
+            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_PhotoFailed"], translator["Common_Ok"]);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException or ArgumentException or InvalidOperationException)
+        {
+            // Also an entry deleted meanwhile, or a file the store rejects.
             await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_Failed"], translator["Common_Ok"]);
         }
     }

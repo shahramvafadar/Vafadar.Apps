@@ -1,11 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Plans;
 
@@ -35,6 +36,9 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
 
     [ObservableProperty]
     public partial string? AdvancesText { get; set; }
+    // Amounts are typed in the currency's display unit when one is defined (FX-07).
+    [ObservableProperty]
+    public partial string? UnitNote { get; set; }
 
     [ObservableProperty]
     public partial string? ResultText { get; set; }
@@ -64,6 +68,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
 
         var account = (await store.GetAccountsAsync()).FirstOrDefault(a => a.Id == _plan.AccountId);
         _currency = account?.CurrencyCode ?? Currencies.Euro.Code;
+        UnitNote = DisplayUnitNote.For(translator, _currency);
         _entries = await store.GetEntriesAsync();
         PlanName = _plan.Name;
         To = Today;

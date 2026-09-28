@@ -2518,4 +2518,13 @@
   <data name="HomeSection_Accounts" xml:space="preserve">
     <value>حساب‌ها</value>
   </data>
+  <data name="Unit_AmountsIn" xml:space="preserve">
+    <value>مبالغ به {0} (هر {0} = {1})</value>
+  </data>
+  <data name="Filter_CategoryMissing" xml:space="preserve">
+    <value>دسته‌ای که دیگر وجود ندارد</value>
+  </data>
+  <data name="Attachment_PhotoFailed" xml:space="preserve">
+    <value>عکس آماده نشد و پیوست نشد. یک تصویر JPEG یا PNG یا یک فایل PDF امتحان کنید.</value>
+  </data>
 </root>

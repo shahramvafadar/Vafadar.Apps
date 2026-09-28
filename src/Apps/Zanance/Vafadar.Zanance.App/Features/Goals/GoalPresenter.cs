@@ -1,11 +1,11 @@
 using FluentIcons.Common;
+using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
-using Vafadar.Localization;
-using Vafadar.Localization.Formatting;
 
 namespace Vafadar.Zanance.App.Features.Goals;
 

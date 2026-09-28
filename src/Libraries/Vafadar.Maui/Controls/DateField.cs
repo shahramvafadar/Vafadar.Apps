@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Syncfusion.Maui.Calendar;
-using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
+using Vafadar.Localization;
 
 namespace Vafadar.Maui.Controls;
 

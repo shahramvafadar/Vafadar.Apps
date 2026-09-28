@@ -40,8 +40,25 @@ public sealed class DisplayUnitTests : IDisposable
         Assert.True(MoneyText.TryParse("۱۲۵۰٫۵", Rial, CultureInfo.GetCultureInfo("fa-IR"), out var parsed));
         Assert.Equal(12_505_00, parsed);
 
-        // More than two toman decimals are rejected rather than rounded.
-        Assert.False(MoneyText.TryParse("1.255", Rial, English, out _));
+        // A third toman decimal is a whole number of rial minor units; a fourth is rejected rather than rounded.
+        Assert.True(MoneyText.TryParse("1.255", Rial, English, out var fine));
+        Assert.Equal(12_55, fine);
+        Assert.False(MoneyText.TryParse("1.2555", Rial, English, out _));
+        Assert.True(MoneyText.TryParse("1,250", Rial, English, out var grouped));
+        Assert.Equal(12_500_00, grouped);
+    }
+
+    [Fact]
+    public void A_value_written_for_input_is_read_back_unchanged_with_a_large_factor()
+    {
+        // One unit of a million rial: 12,345,000 rial is shown as 12.345 and must save unchanged.
+        DisplayUnits.Set([new DisplayUnit("IRR", "Million", 6)]);
+        foreach (var culture in new[] { English, CultureInfo.GetCultureInfo("de-DE") })
+        {
+            var text = MoneyText.ForInput(12_345_000_00, "IRR", culture);
+            Assert.True(MoneyText.TryParse(text, Rial, culture, out var parsed), text);
+            Assert.Equal(12_345_000_00, parsed);
+        }
     }
 
     [Fact]

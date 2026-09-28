@@ -128,7 +128,7 @@ public static class MauiProgram
         var legacy = Path.Combine(folder, ZananceApp.LegacyDatabaseFileName);
         if (!File.Exists(path) && File.Exists(legacy))
         {
-            foreach (var suffix in new[] { string.Empty, "-wal", "-shm" })
+            foreach (var suffix in new[] { string.Empty, "-wal", "-shm", "-journal" })
             {
                 if (File.Exists(legacy + suffix))
                 {

@@ -1,11 +1,11 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization;
+using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
-using Vafadar.Localization;
-using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.Rates;
 
@@ -26,7 +26,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
 
     public IReadOnlyList<string> CurrencyCodes { get; } = [.. Currencies.All.Select(c => c.Code)];
 
-    public IReadOnlyList<string> FactorNames { get; } = [.. Exponents.Select(e => Math.Pow(10, e).ToString("N0", System.Globalization.CultureInfo.CurrentCulture))];
+    public IReadOnlyList<string> FactorNames { get; } = [.. Exponents.Select(e => Math.Pow(10, e).ToString("N0", localization.CurrentCulture))];
 
     [ObservableProperty]
     public partial string? CurrencyCode { get; set; }

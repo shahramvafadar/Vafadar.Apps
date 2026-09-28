@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Vafadar.Zanance.Core.Goals;
-using Vafadar.Zanance.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
+using Vafadar.Zanance.Core.Goals;
+using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Goals;
 

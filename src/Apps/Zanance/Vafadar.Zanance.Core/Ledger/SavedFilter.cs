@@ -35,6 +35,9 @@ public sealed class SavedFilter : Entity, IAuditableEntity
     /// <summary>Gets or sets the label of the categories, e.g. the drill-down it came from.</summary>
     public string? CategoryName { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether only accounts included in totals count, as in a report drill-down.</summary>
+    public bool InTotalsOnly { get; set; }
+
     /// <summary>Gets or sets a value indicating whether only unreviewed entries are shown.</summary>
     public bool UnreviewedOnly { get; set; }
 

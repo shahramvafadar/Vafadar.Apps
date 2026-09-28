@@ -1,9 +1,9 @@
 using System.Globalization;
 using FluentIcons.Common;
+using Vafadar.Localization;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
-using Vafadar.Localization;
 
 namespace Vafadar.Zanance.App.Presentation;
 

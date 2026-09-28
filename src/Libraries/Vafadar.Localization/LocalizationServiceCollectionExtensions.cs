@@ -1,5 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Localization.Formatting;
 
 namespace Vafadar.Localization;
