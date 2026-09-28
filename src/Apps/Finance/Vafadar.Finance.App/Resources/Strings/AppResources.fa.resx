@@ -2257,4 +2257,22 @@
   <data name="Report_PdfDisclaimer" xml:space="preserve">
     <value>با Zanance از ثبت‌های خودتان تهیه شده است. این سند رسمی بانک یا مرجع مالیاتی نیست.</value>
   </data>
+  <data name="Attachment_Title" xml:space="preserve">
+    <value>رسیدها و مدارک</value>
+  </data>
+  <data name="Attachment_Add" xml:space="preserve">
+    <value>پیوست عکس یا PDF</value>
+  </data>
+  <data name="Attachment_Pick" xml:space="preserve">
+    <value>انتخاب رسید</value>
+  </data>
+  <data name="Attachment_Delete" xml:space="preserve">
+    <value>پیوست حذف شود؟</value>
+  </data>
+  <data name="Attachment_TooLarge" xml:space="preserve">
+    <value>حجم فایل بیشتر از ۵ مگابایت است.</value>
+  </data>
+  <data name="Attachment_Failed" xml:space="preserve">
+    <value>فایل خوانده نشد.</value>
+  </data>
 </root>

@@ -12,6 +12,12 @@ using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Finance.App.Features.Entries;
 
+/// <summary>An attachment in the entry details; images get a preview.</summary>
+public sealed record AttachmentRow(Guid Id, string Name, string Details, ImageSource? Preview)
+{
+    public bool HasPreview => Preview is not null;
+}
+
 /// <summary>A labelled value in the entry details.</summary>
 public sealed record DetailLine(string Label, string Value);
 
@@ -29,6 +35,12 @@ public sealed partial class EntryDetailViewModel(
     public ObservableCollection<DetailLine> Lines { get; } = [];
 
     public ObservableCollection<EntryRow> Refunds { get; } = [];
+
+    // Receipts and documents (F2-TX-04).
+    public ObservableCollection<AttachmentRow> Attachments { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasAttachments { get; set; }
 
     [ObservableProperty]
     public partial string? Heading { get; set; }
@@ -238,6 +250,71 @@ public sealed partial class EntryDetailViewModel(
         }
 
         HasRefunds = Refunds.Count > 0;
+        await LoadAttachmentsAsync();
+    }
+
+    private async Task LoadAttachmentsAsync()
+    {
+        Attachments.Clear();
+        foreach (var info in await store.GetAttachmentsAsync(_id))
+        {
+            ImageSource? preview = null;
+            if (info.IsImage && await store.GetAttachmentAsync(info.Id) is { } image)
+            {
+                var bytes = image.Data;
+                preview = ImageSource.FromStream(() => new MemoryStream(bytes));
+            }
+
+            // Size and date form one left-to-right run; isolates and marks keep the order in right-to-left layouts.
+            var size = info.Size >= 1024 * 1024 ? $"{info.Size / 1024d / 1024d:0.0} MB" : $"{Math.Max(1, info.Size / 1024)} KB";
+            Attachments.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview));
+        }
+
+        HasAttachments = Attachments.Count > 0;
+    }
+
+    [RelayCommand]
+    private async Task AddAttachmentAsync()
+    {
+        try
+        {
+            if (await AttachmentFiles.PickAsync(translator["Attachment_Pick"]) is not { } picked)
+            {
+                return;
+            }
+
+            if (picked.Data.Length > EntryAttachment.MaxBytes)
+            {
+                await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_TooLarge"], translator["Common_Ok"]);
+                return;
+            }
+
+            await store.AddAttachmentAsync(new EntryAttachment { EntryId = _id, FileName = picked.Name, ContentType = picked.ContentType, Data = picked.Data });
+            await LoadAttachmentsAsync();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException)
+        {
+            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_Failed"], translator["Common_Ok"]);
+        }
+    }
+
+    [RelayCommand]
+    private async Task OpenAttachmentAsync(AttachmentRow row)
+    {
+        if (await store.GetAttachmentAsync(row.Id) is { } attachment)
+        {
+            await AttachmentFiles.OpenAsync(attachment);
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteAttachmentAsync(AttachmentRow row)
+    {
+        if (await Shell.Current.DisplayAlertAsync(translator["Attachment_Delete"], row.Name, translator["Common_Delete"], translator["Common_Cancel"]))
+        {
+            await store.DeleteAttachmentAsync(row.Id);
+            await LoadAttachmentsAsync();
+        }
     }
 
     [RelayCommand]

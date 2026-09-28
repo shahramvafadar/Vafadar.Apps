@@ -380,6 +380,61 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>Returns the attachments of an entry without their content (for lists), oldest first.</summary>
+    public async Task<List<AttachmentInfo>> GetAttachmentsAsync(Guid entryId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var list = await db.Attachments.AsNoTracking().Where(a => a.EntryId == entryId)
+            .Select(a => new AttachmentInfo(a.Id, a.EntryId, a.FileName, a.ContentType, a.Data.Length, a.CreatedAt))
+            .ToListAsync(cancellationToken);
+        return [.. list.OrderBy(a => a.CreatedAt)];
+    }
+
+    /// <summary>
+    /// Removes attachments whose entry no longer exists. Deleting an entry keeps them briefly so undo restores them;
+    /// this runs at app start, so receipts of deleted entries do not stay on the device.
+    /// </summary>
+    public async Task<int> PurgeOrphanAttachmentsAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Attachments.Where(a => !db.Entries.Any(e => e.Id == a.EntryId)).ExecuteDeleteAsync(cancellationToken);
+    }
+
+    /// <summary>Returns one attachment with its content.</summary>
+    public async Task<EntryAttachment?> GetAttachmentAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Attachments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+    }
+
+    /// <summary>Adds an attachment to an existing entry (F2-TX-04).</summary>
+    public async Task AddAttachmentAsync(EntryAttachment attachment, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(attachment);
+        if (attachment.Data.Length is 0 or > EntryAttachment.MaxBytes)
+        {
+            throw new ArgumentException("An attachment must not be empty or larger than the limit.", nameof(attachment));
+        }
+
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (!await db.Entries.AnyAsync(e => e.Id == attachment.EntryId, cancellationToken))
+        {
+            throw new InvalidOperationException("The entry does not exist.");
+        }
+
+        db.Attachments.Add(attachment);
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes an attachment.</summary>
+    public async Task DeleteAttachmentAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Attachments.Where(a => a.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+    }
+
     /// <summary>Returns the categorization rules sorted by their text (F2-TX-04).</summary>
     public async Task<List<CategoryRule>> GetCategoryRulesAsync(CancellationToken cancellationToken = default)
     {
@@ -557,6 +612,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
         await db.Templates.ExecuteDeleteAsync(cancellationToken);
         await db.CategoryRules.ExecuteDeleteAsync(cancellationToken);
+        await db.Attachments.ExecuteDeleteAsync(cancellationToken);
         await db.GoalAllocations.ExecuteDeleteAsync(cancellationToken);
         await db.Goals.ExecuteDeleteAsync(cancellationToken);
         await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);

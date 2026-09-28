@@ -2257,4 +2257,22 @@
   <data name="Report_PdfDisclaimer" xml:space="preserve">
     <value>Mit Zanance aus Ihren eigenen Buchungen erstellt. Dies ist kein offizieller Beleg einer Bank oder Steuerbehörde.</value>
   </data>
+  <data name="Attachment_Title" xml:space="preserve">
+    <value>Belege und Dokumente</value>
+  </data>
+  <data name="Attachment_Add" xml:space="preserve">
+    <value>Foto oder PDF anhängen</value>
+  </data>
+  <data name="Attachment_Pick" xml:space="preserve">
+    <value>Beleg auswählen</value>
+  </data>
+  <data name="Attachment_Delete" xml:space="preserve">
+    <value>Anhang entfernen?</value>
+  </data>
+  <data name="Attachment_TooLarge" xml:space="preserve">
+    <value>Die Datei ist größer als 5 MB.</value>
+  </data>
+  <data name="Attachment_Failed" xml:space="preserve">
+    <value>Die Datei konnte nicht gelesen werden.</value>
+  </data>
 </root>

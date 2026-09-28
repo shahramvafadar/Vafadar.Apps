@@ -57,6 +57,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     /// <summary>Gets the local categorization rules (F2-TX-04).</summary>
     public DbSet<CategoryRule> CategoryRules => Set<CategoryRule>();
 
+    /// <summary>Gets the receipt photos and documents of entries (F2-TX-04).</summary>
+    public DbSet<EntryAttachment> Attachments => Set<EntryAttachment>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

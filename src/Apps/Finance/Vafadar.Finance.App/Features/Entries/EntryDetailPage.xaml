@@ -87,6 +87,39 @@
                 <Label Text="{Binding RefundableText}" Style="{StaticResource Secondary}"
                        IsVisible="{Binding RefundableText, Converter={StaticResource IsNotNullConverter}}" />
 
+                <!-- Receipts and documents (F2-TX-04) -->
+                <Label Text="{v:Translate Attachment_Title}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}" Padding="0">
+                    <VerticalStackLayout>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Attachments}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AttachmentRow">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+                                        <Grid WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
+                                            <Image Source="{Binding Preview}" Aspect="AspectFill" IsVisible="{Binding HasPreview}" />
+                                            <fi:SymbolIcon Symbol="Document" FontSize="28" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center"
+                                                           IsVisible="{Binding HasPreview, Converter={StaticResource InvertedBoolConverter}}" />
+                                        </Grid>
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" />
+                                            <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
+                                        </VerticalStackLayout>
+                                        <Button Grid.Column="2" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                                Command="{Binding DeleteAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Button Text="{v:Translate Attachment_Add}" Command="{Binding AddAttachmentCommand}" BackgroundColor="Transparent"
+                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="16,8" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Actions -->
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8">

@@ -177,6 +177,18 @@ internal sealed class CategoryRuleConfiguration : IEntityTypeConfiguration<Categ
     }
 }
 
+internal sealed class EntryAttachmentConfiguration : IEntityTypeConfiguration<EntryAttachment>
+{
+    public void Configure(EntityTypeBuilder<EntryAttachment> builder)
+    {
+        builder.ToTable("Attachments");
+        builder.Property(a => a.FileName).HasMaxLength(200);
+        builder.Property(a => a.ContentType).HasMaxLength(100);
+        builder.Ignore(a => a.IsImage);
+        builder.HasIndex(a => a.EntryId);
+    }
+}
+
 internal sealed class FinanceSettingsConfiguration : IEntityTypeConfiguration<FinanceSettings>
 {
     public void Configure(EntityTypeBuilder<FinanceSettings> builder)

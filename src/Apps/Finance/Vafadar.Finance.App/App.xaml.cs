@@ -88,6 +88,7 @@ public partial class App : Application
     {
         var processor = _services.GetRequiredService<AutoPostProcessor>();
         var reminders = _services.GetRequiredService<ReminderService>();
+        var store = _services.GetRequiredService<FinanceStore>();
         var today = DateOnly.FromDateTime(_services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
         _ = Task.Run(async () =>
         {
@@ -101,6 +102,16 @@ public partial class App : Application
             }
 
             await reminders.RefreshAsync();
+
+            // Attachments of entries deleted for good (after undo expired) are removed as well (F2-TX-04).
+            try
+            {
+                await store.PurgeOrphanAttachmentsAsync();
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                System.Diagnostics.Debug.WriteLine($"Attachment cleanup failed: {ex}");
+            }
         });
     }
 

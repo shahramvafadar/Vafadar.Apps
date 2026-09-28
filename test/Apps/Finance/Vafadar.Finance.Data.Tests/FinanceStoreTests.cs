@@ -354,6 +354,31 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Attachments_are_listed_without_content_survive_undo_and_are_purged_with_their_entry()
+    {
+        var account = await NewAccountAsync();
+        var entry = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 1_250, Date = new DateOnly(2026, 10, 1) };
+        await _store.SaveEntryAsync(entry, Ct);
+        await _store.AddAttachmentAsync(new EntryAttachment { EntryId = entry.Id, FileName = "receipt.jpg", ContentType = "image/jpeg", Data = [1, 2, 3] }, Ct);
+        await Assert.ThrowsAsync<ArgumentException>(() => _store.AddAttachmentAsync(new EntryAttachment { EntryId = entry.Id, FileName = "empty", ContentType = "text/plain" }, Ct));
+
+        var info = Assert.Single(await _store.GetAttachmentsAsync(entry.Id, Ct));
+        Assert.Equal(3, info.Size);
+        Assert.True(info.IsImage);
+        Assert.Equal([1, 2, 3], (await _store.GetAttachmentAsync(info.Id, Ct))!.Data);
+
+        // Deleted and restored within the undo time: the receipt is still there.
+        var deleted = await _store.DeleteEntryAsync(entry.Id, Ct);
+        await _store.RestoreEntriesAsync(deleted, Ct);
+        Assert.Equal(0, await _store.PurgeOrphanAttachmentsAsync(Ct));
+        Assert.Single(await _store.GetAttachmentsAsync(entry.Id, Ct));
+
+        await _store.DeleteEntryAsync(entry.Id, Ct);
+        Assert.Equal(1, await _store.PurgeOrphanAttachmentsAsync(Ct));
+        Assert.Empty(await _store.GetAttachmentsAsync(entry.Id, Ct));
+    }
+
+    [Fact]
     public async Task Deleting_all_data_leaves_an_empty_database()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

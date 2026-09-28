@@ -186,6 +186,7 @@ internal static class DebugSnapshots
         var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 18_000, Date = today.AddDays(-2), CategoryId = Category("Other"), Title = "Hotel", ReimbursableAmount = 18_000, ReimbursedBy = "Employer", Tags = ["work trip"] };
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee, hotel], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
+        await store.AddAttachmentAsync(new EntryAttachment { EntryId = groceries.Id, FileName = "Market receipt.pdf", ContentType = "application/pdf", Data = new byte[48_000] });
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
         await store.SaveCategoryRuleAsync(new Core.Categories.CategoryRule { Match = "Market", CategoryId = Category("Food"), Kind = Core.Categories.CategoryKind.Expense });
         var goalStore = services.GetRequiredService<GoalStore>();

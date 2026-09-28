@@ -2261,4 +2261,22 @@
   <data name="Report_PdfDisclaimer" xml:space="preserve">
     <value>Created with Zanance from your own entries. This is not an official statement of a bank or tax authority.</value>
   </data>
+  <data name="Attachment_Title" xml:space="preserve">
+    <value>Receipts and documents</value>
+  </data>
+  <data name="Attachment_Add" xml:space="preserve">
+    <value>Attach a photo or PDF</value>
+  </data>
+  <data name="Attachment_Pick" xml:space="preserve">
+    <value>Choose a receipt</value>
+  </data>
+  <data name="Attachment_Delete" xml:space="preserve">
+    <value>Remove attachment?</value>
+  </data>
+  <data name="Attachment_TooLarge" xml:space="preserve">
+    <value>The file is larger than 5 MB.</value>
+  </data>
+  <data name="Attachment_Failed" xml:space="preserve">
+    <value>The file could not be read.</value>
+  </data>
 </root>
