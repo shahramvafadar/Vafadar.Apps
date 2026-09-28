@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Finance.App.Features.Accounts.LoanSchedulePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Accounts"
+    x:DataType="local:LoanScheduleViewModel"
+    Title="{v:Translate Loan_ScheduleTitle}">
+
+    <CollectionView ItemsSource="{Binding Rows}" SelectionMode="None">
+        <CollectionView.Header>
+            <VerticalStackLayout Padding="16,16,16,8" Spacing="6">
+                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                <Label Text="{Binding SummaryText}" />
+                <Label Text="{v:Translate Loan_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" />
+            </VerticalStackLayout>
+        </CollectionView.Header>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="local:LoanRow">
+                <!-- Each line sizes its own columns: the title shares its line only with the short payment. -->
+                <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto" Margin="16,0">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label Text="{Binding Title}" />
+                        <Label Grid.Column="1" Text="{Binding Payment}" FontAttributes="Bold" />
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label Text="{Binding Split}" Style="{StaticResource Secondary}" />
+                        <Label Grid.Column="1" Text="{Binding Remaining}" Style="{StaticResource Secondary}" />
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

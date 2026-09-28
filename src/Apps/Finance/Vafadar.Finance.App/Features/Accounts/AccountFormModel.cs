@@ -1,5 +1,6 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Vafadar.Core.Text;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Localization;
@@ -66,6 +67,16 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool IsDebtType { get; set; }
 
+    // Optional loan terms for the repayment estimate (F2-DEBT-02).
+    [ObservableProperty]
+    public partial string RateText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string InstallmentText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string? TermsError { get; set; }
+
     [ObservableProperty]
     public partial string? DebtHint { get; set; }
 
@@ -127,6 +138,8 @@ public sealed partial class AccountFormModel : ObservableObject
         CurrencyLocked = currencyLocked;
         IconKey = account.Icon;
         Counterparty = account.Counterparty ?? string.Empty;
+        RateText = account.InterestRate is { } rate ? rate.ToString("0.###", culture) : string.Empty;
+        InstallmentText = account.Installment is { } installment ? MoneyText.ForInput(installment, account.CurrencyCode, culture) : string.Empty;
         _isNew = false;
         OnTypeIndexChanged(TypeIndex);
     }
@@ -145,7 +158,26 @@ public sealed partial class AccountFormModel : ObservableObject
             AmountError = _translator["Amount_Invalid"];
         }
 
-        if (NameError is not null || AmountError is not null)
+        decimal? rate = null;
+        long installment = 0;
+        TermsError = null;
+        if (Type.IsDebt())
+        {
+            // A rate is a plain number with the culture's or a Latin decimal point, in any digit script.
+            var rateText = Digits.ToAscii(RateText.Trim()).Replace(culture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('٫', '.').TrimEnd('%', '٪').Trim();
+            if (rateText.Length > 0)
+            {
+                rate = decimal.TryParse(rateText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsed) && parsed <= 100 ? parsed : null;
+                TermsError = rate is null ? _translator["Account_RateInvalid"] : null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(InstallmentText) && !MoneyAmount.TryParse(InstallmentText, Currencies.Get(CurrencyCode), culture, out installment))
+            {
+                TermsError = _translator["Amount_Invalid"];
+            }
+        }
+
+        if (NameError is not null || AmountError is not null || TermsError is not null)
         {
             return false;
         }
@@ -163,9 +195,11 @@ public sealed partial class AccountFormModel : ObservableObject
         target.IncludeInTotals = IncludeInTotals;
         target.Icon = IconKey;
         target.Counterparty = Type.IsDebt() && !string.IsNullOrWhiteSpace(Counterparty) ? Counterparty.Trim() : null;
+        target.InterestRate = Type.IsDebt() ? rate : null;
+        target.Installment = Type.IsDebt() && installment > 0 ? installment : null;
         return true;
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText);
 }

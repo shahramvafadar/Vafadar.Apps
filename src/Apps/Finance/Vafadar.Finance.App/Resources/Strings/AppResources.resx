@@ -2279,4 +2279,76 @@
   <data name="Attachment_Failed" xml:space="preserve">
     <value>The file could not be read.</value>
   </data>
+  <data name="Account_InterestRate" xml:space="preserve">
+    <value>Interest rate (% a year)</value>
+  </data>
+  <data name="Account_Installment" xml:space="preserve">
+    <value>Monthly installment</value>
+  </data>
+  <data name="Account_TermsHint" xml:space="preserve">
+    <value>Optional. Used only to estimate the remaining installments.</value>
+  </data>
+  <data name="Account_RateInvalid" xml:space="preserve">
+    <value>Enter a rate between 0 and 100.</value>
+  </data>
+  <data name="Loan_Title" xml:space="preserve">
+    <value>Repayment estimate</value>
+  </data>
+  <data name="Loan_Next" xml:space="preserve">
+    <value>Next installment {0}: principal {1}, interest {2}</value>
+  </data>
+  <data name="Loan_Payoff" xml:space="preserve">
+    <value>Repaid after {0} installments, around {1}. Interest remaining: {2}</value>
+  </data>
+  <data name="Loan_NeverPaidOff" xml:space="preserve">
+    <value>At this installment the balance is not repaid within 50 years.</value>
+  </data>
+  <data name="Loan_Disclaimer" xml:space="preserve">
+    <value>Estimate from the rate and installment you entered, with monthly interest on the balance. Your contract may calculate differently.</value>
+  </data>
+  <data name="Loan_AddTerms" xml:space="preserve">
+    <value>Add the interest rate and monthly installment under Edit to see how the balance goes down.</value>
+  </data>
+  <data name="Loan_RecordInstallment" xml:space="preserve">
+    <value>Record installment</value>
+  </data>
+  <data name="Loan_ShowSchedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Loan_ScheduleTitle" xml:space="preserve">
+    <value>Repayment schedule</value>
+  </data>
+  <data name="Loan_NoCashAccount" xml:space="preserve">
+    <value>There is no account in this currency for the installment.</value>
+  </data>
+  <data name="Loan_PayFrom" xml:space="preserve">
+    <value>Pay from</value>
+  </data>
+  <data name="Loan_ReceiveInto" xml:space="preserve">
+    <value>Received into</value>
+  </data>
+  <data name="Loan_ConfirmPay" xml:space="preserve">
+    <value>Principal {0} is recorded as a transfer and interest {1} as an expense of {2}.</value>
+  </data>
+  <data name="Loan_ConfirmReceive" xml:space="preserve">
+    <value>Principal {0} is recorded as a transfer and interest {1} as income of {2}.</value>
+  </data>
+  <data name="Loan_InterestTitle" xml:space="preserve">
+    <value>Interest – {0}</value>
+  </data>
+  <data name="Loan_ScheduleSummary" xml:space="preserve">
+    <value>Outstanding {0} · {1} installments · interest {2} in total</value>
+  </data>
+  <data name="Loan_Row" xml:space="preserve">
+    <value>Installment {0} · {1}</value>
+  </data>
+  <data name="Loan_RowSplit" xml:space="preserve">
+    <value>Principal {0} · Interest {1}</value>
+  </data>
+  <data name="Loan_RowRemaining" xml:space="preserve">
+    <value>Remaining {0}</value>
+  </data>
+  <data name="Loan_OtherAmount" xml:space="preserve">
+    <value>Record another amount</value>
+  </data>
 </root>

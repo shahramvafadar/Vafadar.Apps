@@ -354,6 +354,18 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Loan_terms_are_stored_with_the_account()
+    {
+        var loan = new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 1, 1), OpeningBalance = -500_000, InterestRate = 4.95m, Installment = 18_500 };
+        await _store.SaveAccountAsync(loan, Ct);
+
+        var stored = (await _store.GetAccountsAsync(cancellationToken: Ct)).Single(a => a.Id == loan.Id);
+        Assert.Equal(4.95m, stored.InterestRate);
+        Assert.Equal(18_500, stored.Installment);
+        Assert.Null((await NewAccountAsync()).InterestRate);
+    }
+
+    [Fact]
     public async Task Attachments_are_listed_without_content_survive_undo_and_are_purged_with_their_entry()
     {
         var account = await NewAccountAsync();

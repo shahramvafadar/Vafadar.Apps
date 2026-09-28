@@ -34,7 +34,26 @@
             </Border>
 
             <Button Style="{StaticResource PrimaryButton}" Text="{Binding DebtActionText}" Command="{Binding DebtActionCommand}"
-                    IsVisible="{Binding DebtActionText, Converter={StaticResource IsNotNullConverter}}" />
+                    IsVisible="{Binding ShowDebtAction}" />
+            <!-- Repayment estimate (F2-DEBT-02) -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding IsDebt}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{v:Translate Loan_Title}" FontAttributes="Bold" />
+                    <VerticalStackLayout Spacing="6" IsVisible="{Binding HasLoanTerms}">
+                        <Label Text="{Binding LoanNextText}" />
+                        <Label Text="{Binding LoanPayoffText}" Style="{StaticResource Secondary}" />
+                        <Label Text="{v:Translate Loan_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Loan_RecordInstallment}" Command="{Binding RecordInstallmentCommand}" />
+                            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Loan_ShowSchedule}" Command="{Binding ShowScheduleCommand}" />
+                        </Grid>
+                        <Button Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" BackgroundColor="Transparent"
+                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0,4" />
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding HasLoanTerms, Converter={StaticResource InvertedBoolConverter}}" />
+                </VerticalStackLayout>
+            </Border>
+
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
                 <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />

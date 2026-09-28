@@ -80,6 +80,7 @@ internal static class DebugSnapshots
         await SeedBudgetAsync(services, foodId);
         var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;
         var accountId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
+        var loanId = (await services.GetRequiredService<FinanceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
@@ -100,6 +101,9 @@ internal static class DebugSnapshots
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
+            ("loan-detail", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
+            ("loan-schedule", AppShell.LoanScheduleRoute, new() { ["id"] = loanId }),
+            ("loan-edit", AppShell.AccountEditorRoute, new() { ["id"] = loanId }),
             ("account", AppShell.AccountEditorRoute, null),
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
@@ -175,7 +179,7 @@ internal static class DebugSnapshots
         var checking = (await store.GetAccountsAsync()).First(a => a.Type == AccountType.Checking);
         var savings = new Account { Name = "Savings", Type = AccountType.Savings, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate.AddDays(-7), OpeningBalance = 300_00 };
         await store.SaveAccountAsync(savings);
-        await store.SaveAccountAsync(new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate, OpeningBalance = -4_000_00, IncludeInTotals = false, Counterparty = "Bank" });
+        await store.SaveAccountAsync(new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate, OpeningBalance = -4_000_00, IncludeInTotals = false, Counterparty = "Bank", InterestRate = 4.9m, Installment = 185_00 });
 
         var today = DateOnly.FromDateTime(DateTime.Today);
         var groceries = new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 4_380, Date = today, CategoryId = Category("Food"), Title = "Groceries", Payee = "Market", Tags = ["home"] };

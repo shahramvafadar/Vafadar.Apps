@@ -2275,4 +2275,76 @@
   <data name="Attachment_Failed" xml:space="preserve">
     <value>Die Datei konnte nicht gelesen werden.</value>
   </data>
+  <data name="Account_InterestRate" xml:space="preserve">
+    <value>Zinssatz (% p. a.)</value>
+  </data>
+  <data name="Account_Installment" xml:space="preserve">
+    <value>Monatliche Rate</value>
+  </data>
+  <data name="Account_TermsHint" xml:space="preserve">
+    <value>Optional. Nur für eine Schätzung der restlichen Raten.</value>
+  </data>
+  <data name="Account_RateInvalid" xml:space="preserve">
+    <value>Geben Sie einen Zinssatz zwischen 0 und 100 ein.</value>
+  </data>
+  <data name="Loan_Title" xml:space="preserve">
+    <value>Tilgungsschätzung</value>
+  </data>
+  <data name="Loan_Next" xml:space="preserve">
+    <value>Nächste Rate {0}: Tilgung {1}, Zinsen {2}</value>
+  </data>
+  <data name="Loan_Payoff" xml:space="preserve">
+    <value>Getilgt nach {0} Raten, etwa {1}. Restliche Zinsen: {2}</value>
+  </data>
+  <data name="Loan_NeverPaidOff" xml:space="preserve">
+    <value>Mit dieser Rate wird der Saldo nicht innerhalb von 50 Jahren getilgt.</value>
+  </data>
+  <data name="Loan_Disclaimer" xml:space="preserve">
+    <value>Schätzung aus dem eingegebenen Zinssatz und der Rate, mit monatlichen Zinsen auf den Saldo. Ihr Vertrag kann anders rechnen.</value>
+  </data>
+  <data name="Loan_AddTerms" xml:space="preserve">
+    <value>Tragen Sie unter „Bearbeiten“ Zinssatz und Monatsrate ein, um den Verlauf zu sehen.</value>
+  </data>
+  <data name="Loan_RecordInstallment" xml:space="preserve">
+    <value>Rate erfassen</value>
+  </data>
+  <data name="Loan_ShowSchedule" xml:space="preserve">
+    <value>Tilgungsplan</value>
+  </data>
+  <data name="Loan_ScheduleTitle" xml:space="preserve">
+    <value>Tilgungsplan</value>
+  </data>
+  <data name="Loan_NoCashAccount" xml:space="preserve">
+    <value>Es gibt kein Konto in dieser Währung für die Rate.</value>
+  </data>
+  <data name="Loan_PayFrom" xml:space="preserve">
+    <value>Bezahlen von</value>
+  </data>
+  <data name="Loan_ReceiveInto" xml:space="preserve">
+    <value>Eingang auf</value>
+  </data>
+  <data name="Loan_ConfirmPay" xml:space="preserve">
+    <value>Tilgung {0} wird als Umbuchung und Zinsen {1} als Ausgabe von {2} erfasst.</value>
+  </data>
+  <data name="Loan_ConfirmReceive" xml:space="preserve">
+    <value>Tilgung {0} wird als Umbuchung und Zinsen {1} als Einnahme von {2} erfasst.</value>
+  </data>
+  <data name="Loan_InterestTitle" xml:space="preserve">
+    <value>Zinsen – {0}</value>
+  </data>
+  <data name="Loan_ScheduleSummary" xml:space="preserve">
+    <value>Offen {0} · {1} Raten · Zinsen insgesamt {2}</value>
+  </data>
+  <data name="Loan_Row" xml:space="preserve">
+    <value>Rate {0} · {1}</value>
+  </data>
+  <data name="Loan_RowSplit" xml:space="preserve">
+    <value>Tilgung {0} · Zinsen {1}</value>
+  </data>
+  <data name="Loan_RowRemaining" xml:space="preserve">
+    <value>Rest {0}</value>
+  </data>
+  <data name="Loan_OtherAmount" xml:space="preserve">
+    <value>Anderen Betrag erfassen</value>
+  </data>
 </root>

@@ -51,6 +51,14 @@ public sealed class Account : Entity, IAuditableEntity
     /// <summary>Gets or sets the lender or borrower of a loan or lent money (F2-DEBT-01).</summary>
     public string? Counterparty { get; set; }
 
+    /// <summary>
+    /// Gets or sets the nominal annual interest rate in percent of a loan or money lent, used only for the repayment
+    /// estimate and the split of installments (F2-DEBT-02); <see langword="null"/> when unknown.
+    /// </summary>
+    public decimal? InterestRate { get; set; }
+
+    /// <summary>Gets or sets the agreed monthly installment in minor units (F2-DEBT-02); <see langword="null"/> when unknown.</summary>
+    public long? Installment { get; set; }
     /// <summary>Gets or sets the user-given name.</summary>
     public required string Name { get; set; }
 

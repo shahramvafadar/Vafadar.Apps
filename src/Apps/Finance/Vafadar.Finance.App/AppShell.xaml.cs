@@ -83,6 +83,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the split editor (F2-TX-01).</summary>
     public const string SplitRoute = "split";
 
+    /// <summary>Route of the estimated repayment schedule of a loan (F2-DEBT-02).</summary>
+    public const string LoanScheduleRoute = "loanschedule";
+
     /// <summary>Route of the open reimbursements (F2-TX-03).</summary>
     public const string ReimbursementsRoute = "reimbursements";
 
@@ -119,6 +122,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
         Routing.RegisterRoute(ReimbursementsRoute, typeof(ReimbursementsPage));
+        Routing.RegisterRoute(LoanScheduleRoute, typeof(LoanSchedulePage));
         Routing.RegisterRoute(RulesRoute, typeof(Features.Categories.RulesPage));
         Routing.RegisterRoute(SettlementRoute, typeof(SettlementPage));
     }

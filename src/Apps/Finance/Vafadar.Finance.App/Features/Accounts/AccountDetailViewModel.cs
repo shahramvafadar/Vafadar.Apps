@@ -6,6 +6,7 @@ using Vafadar.Finance.App.Features.Reports;
 using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
+using Vafadar.Finance.Core.Categories;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Core.Reports;
@@ -58,6 +59,25 @@ public sealed partial class AccountDetailViewModel(
 
     [ObservableProperty]
     public partial string? CounterpartyText { get; set; }
+
+    // Repayment estimate from the rate and installment the user entered (F2-DEBT-02).
+    [ObservableProperty]
+    public partial bool IsDebt { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasLoanTerms { get; set; }
+
+    // With known terms the installment is the main action; a repayment of another amount stays available in the card.
+    [ObservableProperty]
+    public partial bool ShowDebtAction { get; set; }
+
+    [ObservableProperty]
+    public partial string? LoanNextText { get; set; }
+
+    [ObservableProperty]
+    public partial string? LoanPayoffText { get; set; }
+
+    private long _outstanding;
 
     [ObservableProperty]
     public partial string? ConfirmedText { get; set; }
@@ -128,11 +148,13 @@ public sealed partial class AccountDetailViewModel(
         };
         CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
         IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
+        IsDebt = account.Type.IsDebt() && !account.IsArchived;
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);
         var confirmed = LedgerCalculator.Balance(account, entries, today, confirmedOnly: true);
         BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
+        LoadLoanEstimate(account, balance, today, culture);
         // Money set aside for goals in this account and what is still free (F2-GOAL-05).
         var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
             .FirstOrDefault(e => e.AccountId == account.Id);
@@ -169,6 +191,76 @@ public sealed partial class AccountDetailViewModel(
         Add("Report_Adjustments", movement.Adjustments);
         Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true));
     }
+
+    private void LoadLoanEstimate(Account account, long balance, DateOnly today, System.Globalization.CultureInfo culture)
+    {
+        _outstanding = LoanCalculator.Outstanding(account.Type, balance);
+        HasLoanTerms = IsDebt && account.Installment is > 0 && _outstanding > 0;
+        ShowDebtAction = DebtActionText is not null && !HasLoanTerms;
+        LoanNextText = LoanPayoffText = null;
+        if (!HasLoanTerms)
+        {
+            return;
+        }
+
+        string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
+        var rate = account.InterestRate ?? 0;
+        var (interest, principal) = LoanCalculator.Split(_outstanding, rate, account.Installment!.Value);
+        LoanNextText = translator.Format("Loan_Next", Money(interest + principal), Money(principal), Money(interest));
+        var schedule = LoanCalculator.Schedule(_outstanding, rate, account.Installment.Value, today.AddMonths(1));
+        LoanPayoffText = schedule.LastDate is { } last
+            ? translator.Format("Loan_Payoff", schedule.Installments.Count, dates.Format(last, DateFormatStyle.MonthYear), Money(schedule.TotalInterest))
+            : translator["Loan_NeverPaidOff"];
+    }
+
+    // One installment as a principal transfer and a separate interest entry, after the user chose the account (F2-DEBT-02).
+    [RelayCommand]
+    private async Task RecordInstallmentAsync()
+    {
+        if (_account is not { Installment: > 0 } account || _outstanding <= 0)
+        {
+            return;
+        }
+
+        var cash = (await store.GetAccountsAsync())
+            .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && a.CurrencyCode == account.CurrencyCode).ToList();
+        if (cash.Count == 0)
+        {
+            await Shell.Current.DisplayAlertAsync(translator["Loan_RecordInstallment"], translator["Loan_NoCashAccount"], translator["Common_Ok"]);
+            return;
+        }
+
+        var loan = account.Type == AccountType.Loan;
+        var chosen = cash.Count == 1 ? cash[0].Name
+            : await Shell.Current.DisplayActionSheetAsync(translator[loan ? "Loan_PayFrom" : "Loan_ReceiveInto"], translator["Common_Cancel"], null, [.. cash.Select(a => a.Name)]);
+        if (cash.FirstOrDefault(a => a.Name == chosen) is not { } from)
+        {
+            return;
+        }
+
+        var culture = localization.CurrentCulture;
+        string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
+        var rate = account.InterestRate ?? 0;
+        var (interest, principal) = LoanCalculator.Split(_outstanding, rate, account.Installment.Value);
+        var message = translator.Format(loan ? "Loan_ConfirmPay" : "Loan_ConfirmReceive", Money(principal), Money(interest), from.Name);
+        if (!await Shell.Current.DisplayAlertAsync(translator["Loan_RecordInstallment"], message, translator["Common_Save"], translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        var categories = await store.GetCategoriesAsync();
+        var category = loan
+            ? categories.First(c => c.Kind == CategoryKind.Expense && c.SystemKey == DefaultCategories.Fees)
+            : categories.FirstOrDefault(c => c.Kind == CategoryKind.Income && c.SystemKey == "Interest")
+              ?? categories.First(c => c.Kind == CategoryKind.Income && c.SystemKey == DefaultCategories.Uncategorized);
+        var entries = LoanCalculator.CreateInstallment(account, from.Id, _outstanding, rate, account.Installment.Value, Today, category.Id, translator.Format("Loan_InterestTitle", account.Name));
+        var saved = await store.SaveEntriesAsync(entries, []);
+        Error = saved.Succeeded ? null : string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"]));
+        await LoadAsync();
+    }
+
+    [RelayCommand]
+    private Task ShowScheduleAsync() => Shell.Current.GoToAsync(AppShell.LoanScheduleRoute, new Dictionary<string, object> { ["id"] = _id });
 
     [RelayCommand]
     private async Task CompareAsync()

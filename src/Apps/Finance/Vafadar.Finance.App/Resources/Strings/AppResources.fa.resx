@@ -2275,4 +2275,76 @@
   <data name="Attachment_Failed" xml:space="preserve">
     <value>فایل خوانده نشد.</value>
   </data>
+  <data name="Account_InterestRate" xml:space="preserve">
+    <value>نرخ سود (٪ سالانه)</value>
+  </data>
+  <data name="Account_Installment" xml:space="preserve">
+    <value>قسط ماهانه</value>
+  </data>
+  <data name="Account_TermsHint" xml:space="preserve">
+    <value>اختیاری. فقط برای برآورد اقساط باقی‌مانده به کار می‌رود.</value>
+  </data>
+  <data name="Account_RateInvalid" xml:space="preserve">
+    <value>نرخی بین ۰ تا ۱۰۰ وارد کنید.</value>
+  </data>
+  <data name="Loan_Title" xml:space="preserve">
+    <value>برآورد بازپرداخت</value>
+  </data>
+  <data name="Loan_Next" xml:space="preserve">
+    <value>قسط بعدی {0}، شامل اصل {1} و سود {2}</value>
+  </data>
+  <data name="Loan_Payoff" xml:space="preserve">
+    <value>تسویه پس از {0} قسط، حدود {1}. سود باقی‌مانده: {2}</value>
+  </data>
+  <data name="Loan_NeverPaidOff" xml:space="preserve">
+    <value>با این قسط، مانده در ۵۰ سال تسویه نمی‌شود.</value>
+  </data>
+  <data name="Loan_Disclaimer" xml:space="preserve">
+    <value>برآورد بر پایهٔ نرخ و قسطی که وارد کرده‌اید، با سود ماهانه روی مانده. قرارداد شما ممکن است طور دیگری محاسبه کند.</value>
+  </data>
+  <data name="Loan_AddTerms" xml:space="preserve">
+    <value>برای دیدن روند کاهش مانده، نرخ سود و قسط ماهانه را در «ویرایش» وارد کنید.</value>
+  </data>
+  <data name="Loan_RecordInstallment" xml:space="preserve">
+    <value>ثبت قسط</value>
+  </data>
+  <data name="Loan_ShowSchedule" xml:space="preserve">
+    <value>جدول اقساط</value>
+  </data>
+  <data name="Loan_ScheduleTitle" xml:space="preserve">
+    <value>جدول بازپرداخت</value>
+  </data>
+  <data name="Loan_NoCashAccount" xml:space="preserve">
+    <value>حسابی با این ارز برای قسط وجود ندارد.</value>
+  </data>
+  <data name="Loan_PayFrom" xml:space="preserve">
+    <value>پرداخت از</value>
+  </data>
+  <data name="Loan_ReceiveInto" xml:space="preserve">
+    <value>دریافت در</value>
+  </data>
+  <data name="Loan_ConfirmPay" xml:space="preserve">
+    <value>اصل {0} به صورت انتقال و سود {1} به صورت هزینهٔ «{2}» ثبت می‌شود.</value>
+  </data>
+  <data name="Loan_ConfirmReceive" xml:space="preserve">
+    <value>اصل {0} به صورت انتقال و سود {1} به صورت درآمد «{2}» ثبت می‌شود.</value>
+  </data>
+  <data name="Loan_InterestTitle" xml:space="preserve">
+    <value>سود «{0}»</value>
+  </data>
+  <data name="Loan_ScheduleSummary" xml:space="preserve">
+    <value>مانده {0}‏ · {1} قسط · مجموع سود {2}</value>
+  </data>
+  <data name="Loan_Row" xml:space="preserve">
+    <value>قسط {0} · {1}</value>
+  </data>
+  <data name="Loan_RowSplit" xml:space="preserve">
+    <value>اصل {0} · سود {1}</value>
+  </data>
+  <data name="Loan_RowRemaining" xml:space="preserve">
+    <value>مانده {0}</value>
+  </data>
+  <data name="Loan_OtherAmount" xml:space="preserve">
+    <value>ثبت مبلغ دیگر</value>
+  </data>
 </root>

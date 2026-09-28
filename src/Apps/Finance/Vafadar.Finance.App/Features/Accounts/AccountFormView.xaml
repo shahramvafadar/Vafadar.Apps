@@ -32,6 +32,21 @@
         <Label Text="{v:Translate Account_Counterparty}" Style="{StaticResource FieldLabel}" />
         <Entry Text="{Binding Counterparty}" MaxLength="100" Placeholder="{v:Translate Account_CounterpartyPlaceholder}"
                SemanticProperties.Description="{v:Translate Account_Counterparty}" />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+            <VerticalStackLayout>
+                <Label Text="{v:Translate Account_InterestRate}" Style="{StaticResource FieldLabel}" />
+                <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="0" MaxLength="8"
+                       SemanticProperties.Description="{v:Translate Account_InterestRate}" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1">
+                <Label Text="{v:Translate Account_Installment}" Style="{StaticResource FieldLabel}" />
+                <Entry Text="{Binding InstallmentText}" Keyboard="Numeric" MaxLength="20"
+                       SemanticProperties.Description="{v:Translate Account_Installment}" />
+            </VerticalStackLayout>
+        </Grid>
+        <Label Text="{v:Translate Account_TermsHint}" Style="{StaticResource Secondary}" />
+        <Label Text="{Binding TermsError}" Style="{StaticResource ErrorText}"
+               IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
     </VerticalStackLayout>
 
     <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
