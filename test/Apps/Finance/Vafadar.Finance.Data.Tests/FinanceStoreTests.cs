@@ -334,6 +334,26 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task A_rule_text_has_one_category_rules_follow_a_merge_and_are_deleted_with_all_data()
+    {
+        await _store.EnsureDefaultCategoriesAsync(Ct);
+        var expense = (await _store.GetCategoriesAsync(Ct)).Where(c => c.Kind == CategoryKind.Expense).ToList();
+        await _store.SaveCategoryRuleAsync(new CategoryRule { Match = "Market", CategoryId = expense[0].Id, Kind = CategoryKind.Expense }, Ct);
+        await _store.SaveCategoryRuleAsync(new CategoryRule { Match = " market ", CategoryId = expense[1].Id, Kind = CategoryKind.Expense }, Ct);
+
+        var rule = Assert.Single(await _store.GetCategoryRulesAsync(Ct));
+        Assert.Equal(expense[1].Id, rule.CategoryId);
+        Assert.Equal("market", rule.Match);
+        await Assert.ThrowsAsync<ArgumentException>(() => _store.SaveCategoryRuleAsync(new CategoryRule { Match = "x", CategoryId = expense[0].Id }, Ct));
+
+        await _store.MergeCategoryAsync(expense[1].Id, expense[2].Id, Ct);
+        Assert.Equal(expense[2].Id, Assert.Single(await _store.GetCategoryRulesAsync(Ct)).CategoryId);
+
+        await _store.DeleteAllDataAsync(Ct);
+        Assert.Empty(await _store.GetCategoryRulesAsync(Ct));
+    }
+
+    [Fact]
     public async Task Deleting_all_data_leaves_an_empty_database()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

@@ -62,4 +62,7 @@ public sealed partial class CategoriesViewModel(FinanceStore store, Translator t
 
     [RelayCommand]
     private Task AddAsync() => Shell.Current.GoToAsync(AppShell.CategoryEditorRoute);
+
+    [RelayCommand]
+    private Task OpenRulesAsync() => Shell.Current.GoToAsync(AppShell.RulesRoute);
 }

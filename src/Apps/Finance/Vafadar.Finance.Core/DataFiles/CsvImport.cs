@@ -174,10 +174,12 @@ public static class CsvImport
         IReadOnlyCollection<Account> accounts,
         IReadOnlyCollection<Category> categories,
         Func<Category, string> categoryName,
-        IReadOnlyCollection<LedgerEntry> existing)
+        IReadOnlyCollection<LedgerEntry> existing,
+        IReadOnlyCollection<CategoryRule>? rules = null)
     {
         ArgumentNullException.ThrowIfNull(rows);
         ArgumentNullException.ThrowIfNull(mapping);
+        var byId = categories.ToDictionary(c => c.Id);
         var account = accounts.FirstOrDefault(a => a.Id == mapping.AccountId);
         var existingKeys = existing.Where(e => e.AccountId == mapping.AccountId).Select(e => (e.Date, e.Amount, e.Kind)).ToHashSet();
         var result = new List<ImportRow>();
@@ -228,6 +230,9 @@ public static class CsvImport
             var category = Empty(Cell(mapping.CategoryColumn)) is { } name
                 ? categories.FirstOrDefault(c => c.Kind == categoryKind && string.Equals(categoryName(c), name, StringComparison.OrdinalIgnoreCase))
                 : null;
+
+            // Without a category in the file, a categorization rule may suggest one; imported rows stay unreviewed (F2-TX-04).
+            category ??= rules is null ? null : CategoryRules.Suggest(rules, byId, categoryKind, null, entry.Title) is { } rule ? byId[rule.CategoryId] : null;
             entry.CategoryId = category?.Id ?? categories.FirstOrDefault(c => c.Kind == categoryKind && c.SystemKey == DefaultCategories.Uncategorized)?.Id;
 
             // Equal date and amount is only a hint: two real purchases can look the same (AT-53).

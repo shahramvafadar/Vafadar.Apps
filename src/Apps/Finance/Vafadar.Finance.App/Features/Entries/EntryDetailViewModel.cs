@@ -74,6 +74,12 @@ public sealed partial class EntryDetailViewModel(
     [ObservableProperty]
     public partial bool CanRecordReimbursement { get; set; }
 
+    // "Always use this category for …" creates a categorization rule from this entry (F2-TX-04).
+    [ObservableProperty]
+    public partial string? RuleActionText { get; set; }
+
+    private string? _ruleMatch;
+
     [ObservableProperty]
     public partial string? SplitText { get; set; }
 
@@ -128,6 +134,13 @@ public sealed partial class EntryDetailViewModel(
         CanPayBack = entry.Kind == EntryKind.Income;
         CanMakeRecurring = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && entry.ScheduleId is null;
         CanSaveTemplate = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer;
+        _ruleMatch = entry.Kind is EntryKind.Income or EntryKind.Expense && entry.CategoryId is { } ruleCategory
+            && categories.Get(ruleCategory) is { SystemKey: not Core.Categories.DefaultCategories.Uncategorized }
+                ? (entry.Payee ?? entry.Title)?.Trim()
+                : null;
+        RuleActionText = _ruleMatch is { Length: >= Core.Categories.CategoryRules.MinLength } match
+            ? translator.Format("Rule_Always", match, categories.Name(entry.CategoryId))
+            : null;
         var related = entry.GroupId is { } groupId ? await store.GetGroupAsync(groupId) : [entry];
         CanSplit = EntryActions.CanSplit(related);
         var isSplit = EntryActions.IsSplit(related);
@@ -238,6 +251,23 @@ public sealed partial class EntryDetailViewModel(
 
     [RelayCommand]
     private Task DuplicateAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["duplicate"] = _id });
+
+    [RelayCommand]
+    private async Task SaveRuleAsync()
+    {
+        if (_entry is not { CategoryId: { } categoryId } || _ruleMatch is null)
+        {
+            return;
+        }
+
+        await store.SaveCategoryRuleAsync(new Core.Categories.CategoryRule
+        {
+            Match = _ruleMatch,
+            CategoryId = categoryId,
+            Kind = _entry.Kind == EntryKind.Income ? Core.Categories.CategoryKind.Income : Core.Categories.CategoryKind.Expense,
+        });
+        await Shell.Current.DisplayAlertAsync(translator["Rules_Title"], translator.Format("Rule_Saved", _ruleMatch), translator["Common_Ok"]);
+    }
 
     [RelayCommand]
     private Task SplitAsync() => Shell.Current.GoToAsync(AppShell.SplitRoute, new Dictionary<string, object> { ["id"] = _id });

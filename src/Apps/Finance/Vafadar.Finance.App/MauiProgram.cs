@@ -90,6 +90,7 @@ public static class MauiProgram
             .AddTransient<Features.Templates.TemplatesPage>().AddTransient<Features.Templates.TemplatesViewModel>()
             .AddTransient<SplitEditorPage>().AddTransient<SplitEditorViewModel>()
             .AddTransient<ReimbursementsPage>().AddTransient<ReimbursementsViewModel>()
+            .AddTransient<Features.Categories.RulesPage>().AddTransient<Features.Categories.RulesViewModel>()
             .AddTransient<Features.Goals.GoalPresenter>()
             .AddTransient<Features.Goals.GoalsPage>().AddTransient<Features.Goals.GoalsViewModel>()
             .AddTransient<Features.Goals.GoalEditorPage>().AddTransient<Features.Goals.GoalEditorViewModel>()

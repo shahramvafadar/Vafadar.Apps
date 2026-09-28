@@ -102,6 +102,8 @@
                 </Grid>
                 <Button Style="{StaticResource SecondaryButton}" Text="{Binding SplitActionText}" Command="{Binding SplitCommand}"
                         IsVisible="{Binding CanSplit}" />
+                <Button Style="{StaticResource SecondaryButton}" Text="{Binding RuleActionText}" Command="{Binding SaveRuleCommand}"
+                        IsVisible="{Binding RuleActionText, Converter={StaticResource IsNotNullConverter}}" LineBreakMode="WordWrap" />
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Templates_SaveAction}" Command="{Binding SaveAsTemplateCommand}"
                         IsVisible="{Binding CanSaveTemplate}" />
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"

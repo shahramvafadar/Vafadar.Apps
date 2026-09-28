@@ -2065,4 +2065,34 @@
   <data name="Report_TagsNote" xml:space="preserve">
     <value>Eine Buchung mit mehreren Schlagwörtern erscheint unter jedem, daher ergeben die Schlagwörter nicht die Gesamtausgaben.</value>
   </data>
+  <data name="Rules_Title" xml:space="preserve">
+    <value>Kategorisierungsregeln</value>
+  </data>
+  <data name="Rules_Open" xml:space="preserve">
+    <value>Kategorisierungsregeln</value>
+  </data>
+  <data name="Rules_Intro" xml:space="preserve">
+    <value>Enthält Empfänger oder Titel einer neuen Buchung den Text, wird die Kategorie vorgeschlagen. Sie sehen den Vorschlag immer und können ihn ändern; gespeicherte Buchungen ändern sich nie.</value>
+  </data>
+  <data name="Rule_Match" xml:space="preserve">
+    <value>Empfänger oder Titel enthält</value>
+  </data>
+  <data name="Rule_MatchPlaceholder" xml:space="preserve">
+    <value>z. B. Markt</value>
+  </data>
+  <data name="Rule_TextRequired" xml:space="preserve">
+    <value>Geben Sie mindestens zwei Zeichen ein und wählen Sie eine Kategorie.</value>
+  </data>
+  <data name="Rule_Delete" xml:space="preserve">
+    <value>Regel löschen?</value>
+  </data>
+  <data name="Rule_Always" xml:space="preserve">
+    <value>Für „{0}“ immer {1} vorschlagen</value>
+  </data>
+  <data name="Rule_Saved" xml:space="preserve">
+    <value>Neue Buchungen mit „{0}“ bekommen diese Kategorie vorgeschlagen.</value>
+  </data>
+  <data name="Entry_RuleSuggested" xml:space="preserve">
+    <value>Kategorie per Regel für „{0}“ vorgeschlagen</value>
+  </data>
 </root>

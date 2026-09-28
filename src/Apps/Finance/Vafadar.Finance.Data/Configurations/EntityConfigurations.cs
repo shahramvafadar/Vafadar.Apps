@@ -164,6 +164,15 @@ internal sealed class GoalAllocationConfiguration : IEntityTypeConfiguration<Goa
     }
 }
 
+internal sealed class CategoryRuleConfiguration : IEntityTypeConfiguration<CategoryRule>
+{
+    public void Configure(EntityTypeBuilder<CategoryRule> builder)
+    {
+        builder.Property(r => r.Match).HasMaxLength(100);
+        builder.HasIndex(r => r.CategoryId);
+    }
+}
+
 internal sealed class FinanceSettingsConfiguration : IEntityTypeConfiguration<FinanceSettings>
 {
     public void Configure(EntityTypeBuilder<FinanceSettings> builder)

@@ -86,6 +86,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the open reimbursements (F2-TX-03).</summary>
     public const string ReimbursementsRoute = "reimbursements";
 
+    /// <summary>Route of the categorization rules (F2-TX-04).</summary>
+    public const string RulesRoute = "rules";
+
     public AppShell()
     {
         InitializeComponent();
@@ -113,5 +116,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
         Routing.RegisterRoute(ReimbursementsRoute, typeof(ReimbursementsPage));
+        Routing.RegisterRoute(RulesRoute, typeof(Features.Categories.RulesPage));
     }
 }

@@ -54,6 +54,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     /// <summary>Gets the money earmarked for goals (F2-GOAL-02).</summary>
     public DbSet<GoalAllocation> GoalAllocations => Set<GoalAllocation>();
 
+    /// <summary>Gets the local categorization rules (F2-TX-04).</summary>
+    public DbSet<CategoryRule> CategoryRules => Set<CategoryRule>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -380,6 +380,49 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>Returns the categorization rules sorted by their text (F2-TX-04).</summary>
+    public async Task<List<CategoryRule>> GetCategoryRulesAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var rules = await db.CategoryRules.AsNoTracking().ToListAsync(cancellationToken);
+        return [.. rules.OrderBy(r => r.Match, StringComparer.CurrentCultureIgnoreCase)];
+    }
+
+    /// <summary>Saves a rule; a rule with the same text and kind is replaced, so a text always has one category.</summary>
+    public async Task SaveCategoryRuleAsync(CategoryRule rule, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(rule);
+        rule.Match = rule.Match.Trim();
+        if (rule.Match.Length < Core.Categories.CategoryRules.MinLength)
+        {
+            throw new ArgumentException("The text of a rule is too short.", nameof(rule));
+        }
+
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var same = (await db.CategoryRules.Where(r => r.Kind == rule.Kind && r.Id != rule.Id).ToListAsync(cancellationToken))
+            .Where(r => string.Equals(r.Match, rule.Match, StringComparison.CurrentCultureIgnoreCase));
+        db.CategoryRules.RemoveRange(same);
+        if (await db.CategoryRules.AnyAsync(r => r.Id == rule.Id, cancellationToken))
+        {
+            db.CategoryRules.Update(rule);
+        }
+        else
+        {
+            db.CategoryRules.Add(rule);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes a rule; saved entries keep their categories.</summary>
+    public async Task DeleteCategoryRuleAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.CategoryRules.Where(r => r.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+    }
+
     /// <summary>Returns the quick entry templates in their order (TX-04).</summary>
     public async Task<List<EntryTemplate>> GetTemplatesAsync(CancellationToken cancellationToken = default)
     {
@@ -445,6 +488,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await db.Entries.Where(e => e.CategoryId == sourceId).ExecuteUpdateAsync(e => e.SetProperty(x => x.CategoryId, targetId), cancellationToken);
         await db.Schedules.Where(s => s.CategoryId == sourceId).ExecuteUpdateAsync(s => s.SetProperty(x => x.CategoryId, targetId), cancellationToken);
         await db.Templates.Where(t => t.CategoryId == sourceId).ExecuteUpdateAsync(t => t.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        await db.CategoryRules.Where(r => r.CategoryId == sourceId).ExecuteUpdateAsync(r => r.SetProperty(x => x.CategoryId, targetId), cancellationToken);
 
         // One level only: children of the source go under the target's main category.
         var newParent = target.ParentId ?? target.Id;
@@ -512,6 +556,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
         await db.Templates.ExecuteDeleteAsync(cancellationToken);
+        await db.CategoryRules.ExecuteDeleteAsync(cancellationToken);
         await db.GoalAllocations.ExecuteDeleteAsync(cancellationToken);
         await db.Goals.ExecuteDeleteAsync(cancellationToken);
         await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);

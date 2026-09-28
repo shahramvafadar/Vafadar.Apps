@@ -365,6 +365,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ToAccounts = Accounts;
         HasNoAccounts = Accounts.Count == 0;
         _tagsInUse = EntryTags.InUse(await _store.GetEntriesAsync(Today.AddYears(-2), Today.AddYears(1)));
+        _rules = await _store.GetCategoryRulesAsync();
         UpdateTagSuggestions();
     }
 
@@ -512,10 +513,71 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [RelayCommand]
     private void SelectCategory(CategoryChoice choice)
     {
+        _categoryChosen = true;
+        RuleHint = null;
         foreach (var category in Categories)
         {
             category.IsSelected = ReferenceEquals(category, choice) && !category.IsSelected;
         }
+    }
+
+    // Categorization rules (F2-TX-04): a new entry gets the category of the best matching rule until the user picks a
+    // category; the suggestion is shown and can be undone.
+    private IReadOnlyList<CategoryRule> _rules = [];
+    private bool _categoryChosen;
+    private Guid? _beforeSuggestion;
+
+    [ObservableProperty]
+    public partial string? RuleHint { get; set; }
+
+    partial void OnPayeeChanged(string value) => SuggestCategory();
+
+    partial void OnEntryTitleChanged(string value) => SuggestCategory();
+
+    private void SuggestCategory()
+    {
+        if (_loading || _categoryChosen || !CanChangeKind || !(Kind is EntryKind.Expense or EntryKind.Income) || _categories is null)
+        {
+            return;
+        }
+
+        var kind = Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
+        var rule = CategoryRules.Suggest(_rules, _categories.All.ToDictionary(c => c.Id), kind, Payee, EntryTitle);
+        var current = Categories.FirstOrDefault(c => c.IsSelected)?.Id;
+        if (rule is null)
+        {
+            if (RuleHint is not null)
+            {
+                SelectById(_beforeSuggestion);
+                RuleHint = null;
+            }
+
+            return;
+        }
+
+        if (RuleHint is null)
+        {
+            _beforeSuggestion = current;
+        }
+
+        SelectById(rule.CategoryId);
+        RuleHint = _translator.Format("Entry_RuleSuggested", rule.Match);
+    }
+
+    private void SelectById(Guid? id)
+    {
+        foreach (var category in Categories)
+        {
+            category.IsSelected = category.Id == id;
+        }
+    }
+
+    [RelayCommand]
+    private void UndoSuggestion()
+    {
+        SelectById(_beforeSuggestion);
+        RuleHint = null;
+        _categoryChosen = true;
     }
 
     [RelayCommand]

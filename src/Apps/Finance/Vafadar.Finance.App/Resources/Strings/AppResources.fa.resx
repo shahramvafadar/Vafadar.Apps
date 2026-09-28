@@ -2065,4 +2065,34 @@
   <data name="Report_TagsNote" xml:space="preserve">
     <value>تراکنشی با چند برچسب زیر هر کدام دیده می‌شود، پس جمع برچسب‌ها با کل هزینه برابر نیست.</value>
   </data>
+  <data name="Rules_Title" xml:space="preserve">
+    <value>قوانین دسته‌بندی</value>
+  </data>
+  <data name="Rules_Open" xml:space="preserve">
+    <value>قوانین دسته‌بندی</value>
+  </data>
+  <data name="Rules_Intro" xml:space="preserve">
+    <value>وقتی طرف حساب یا عنوان تراکنش جدید شامل این متن باشد، دستهٔ آن پیشنهاد می‌شود. پیشنهاد همیشه دیده می‌شود و قابل تغییر است؛ تراکنش‌های ذخیره‌شده تغییر نمی‌کنند.</value>
+  </data>
+  <data name="Rule_Match" xml:space="preserve">
+    <value>طرف حساب یا عنوان شامل</value>
+  </data>
+  <data name="Rule_MatchPlaceholder" xml:space="preserve">
+    <value>مثلاً Market</value>
+  </data>
+  <data name="Rule_TextRequired" xml:space="preserve">
+    <value>حداقل دو حرف وارد کنید و یک دسته انتخاب کنید.</value>
+  </data>
+  <data name="Rule_Delete" xml:space="preserve">
+    <value>قانون حذف شود؟</value>
+  </data>
+  <data name="Rule_Always" xml:space="preserve">
+    <value>همیشه برای «{0}» دستهٔ {1} پیشنهاد شود</value>
+  </data>
+  <data name="Rule_Saved" xml:space="preserve">
+    <value>برای تراکنش‌های جدید با «{0}» این دسته پیشنهاد می‌شود.</value>
+  </data>
+  <data name="Entry_RuleSuggested" xml:space="preserve">
+    <value>دسته با قانون «{0}» پیشنهاد شد</value>
+  </data>
 </root>

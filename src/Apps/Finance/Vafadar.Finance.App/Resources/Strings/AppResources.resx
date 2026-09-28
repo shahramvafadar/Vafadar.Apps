@@ -2069,4 +2069,34 @@
   <data name="Report_TagsNote" xml:space="preserve">
     <value>An entry with several tags appears under each of them, so the tags do not add up to your total spending.</value>
   </data>
+  <data name="Rules_Title" xml:space="preserve">
+    <value>Categorization rules</value>
+  </data>
+  <data name="Rules_Open" xml:space="preserve">
+    <value>Categorization rules</value>
+  </data>
+  <data name="Rules_Intro" xml:space="preserve">
+    <value>When the payee or title of a new entry contains the text, its category is suggested. You always see the suggestion and can change it; saved entries never change.</value>
+  </data>
+  <data name="Rule_Match" xml:space="preserve">
+    <value>Payee or title contains</value>
+  </data>
+  <data name="Rule_MatchPlaceholder" xml:space="preserve">
+    <value>e.g. Market</value>
+  </data>
+  <data name="Rule_TextRequired" xml:space="preserve">
+    <value>Enter at least two characters and choose a category.</value>
+  </data>
+  <data name="Rule_Delete" xml:space="preserve">
+    <value>Delete rule?</value>
+  </data>
+  <data name="Rule_Always" xml:space="preserve">
+    <value>Always suggest {1} for "{0}"</value>
+  </data>
+  <data name="Rule_Saved" xml:space="preserve">
+    <value>New entries with "{0}" get this category suggested.</value>
+  </data>
+  <data name="Entry_RuleSuggested" xml:space="preserve">
+    <value>Category suggested by the rule for "{0}"</value>
+  </data>
 </root>

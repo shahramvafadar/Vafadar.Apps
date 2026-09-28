@@ -32,6 +32,20 @@ public sealed class CsvTests
     }
 
     [Fact]
+    public void A_categorization_rule_suggests_the_category_of_imported_rows_without_one()
+    {
+        var rows = Csv.Read("date,amount,title\n2026-05-02,-12.50,MARKET HALL 44\n2026-05-03,-3.00,Kiosk", ',');
+        var mapping = new ImportMapping(_checking.Id, 0, "yyyy-MM-dd", PeriodCalendar.Gregorian, 1, '.', SignMode.NegativeIsExpense, TitleColumn: 2);
+        var rule = new CategoryRule { Match = "market", CategoryId = _food.Id, Kind = CategoryKind.Expense };
+
+        var preview = CsvImport.PreviewGeneric(rows, mapping, [_checking], [_food, _uncategorized], c => c.SystemKey ?? string.Empty, [], [rule]);
+
+        Assert.Equal(_food.Id, preview[0].Entry!.CategoryId);
+        Assert.Equal(_uncategorized.Id, preview[1].Entry!.CategoryId);
+        Assert.All(preview, r => Assert.Equal(ReviewState.Unreviewed, r.Entry!.Review));
+    }
+
+    [Fact]
     public void Reimbursable_amounts_round_trip_and_older_exports_without_them_are_still_recognised()
     {
         var hotel = new LedgerEntry { Kind = EntryKind.Expense, AccountId = _checking.Id, Amount = 30_000, Date = new DateOnly(2026, 5, 2), ReimbursableAmount = 25_000, ReimbursedBy = "Employer" };

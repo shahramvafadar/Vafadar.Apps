@@ -87,6 +87,7 @@ internal static class DebugSnapshots
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
             ("split", AppShell.SplitRoute, new() { ["id"] = expenseId }),
             ("reimbursements", AppShell.ReimbursementsRoute, null),
+            ("rules", AppShell.RulesRoute, null),
             ("plans", "//plans", null),
             ("plan-new", AppShell.PlanEditorRoute, null),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
@@ -163,6 +164,7 @@ internal static class DebugSnapshots
         await store.SaveEntriesAsync([groceries, salary, rent, transfer, fee, hotel], []);
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
+        await store.SaveCategoryRuleAsync(new Core.Categories.CategoryRule { Match = "Market", CategoryId = Category("Food"), Kind = Core.Categories.CategoryKind.Expense });
         var goalStore = services.GetRequiredService<GoalStore>();
         var travel = new Core.Goals.Goal { Name = "Travel", TargetAmount = 1_200_00, CurrencyCode = checking.CurrencyCode, TargetDate = today.AddMonths(5), Icon = "Airplane" };
         var insurance = new Core.Goals.Goal { Name = "Car insurance", TargetAmount = 720_00, CurrencyCode = checking.CurrencyCode, TargetDate = today.AddMonths(2), Priority = Core.Goals.GoalPriority.High, Icon = "VehicleCar" };

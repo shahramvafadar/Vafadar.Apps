@@ -273,7 +273,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
             var mapping = new ImportMapping(Account.Id, date, DateFormat, CalendarIndex == 1 ? PeriodCalendar.Persian : PeriodCalendar.Gregorian, amount,
                 SeparatorIndex == 1 ? ',' : '.', (SignMode)SignIndex, TitleColumn?.Index, CategoryColumn?.Index, NoteColumn?.Index);
-            _preview = CsvImport.PreviewGeneric(_rows, mapping, accounts, categories, Name, existing);
+            _preview = CsvImport.PreviewGeneric(_rows, mapping, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
         }
 
         var valid = _preview.Count(r => r.Entry is not null && !r.AlreadyImported);
