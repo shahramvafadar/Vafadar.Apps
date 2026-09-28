@@ -36,6 +36,9 @@
                             <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
                             <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" AccentColor="{DynamicResource Primary}" />
                             <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
+                            <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" AccentColor="{DynamicResource Primary}" />
+                            <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>

@@ -2450,4 +2450,40 @@
   <data name="Filter_Hint" xml:space="preserve">
     <value>Save filters you use often</value>
   </data>
+  <data name="Budget_Method" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="Budget_MethodLimits" xml:space="preserve">
+    <value>Spending limits</value>
+  </data>
+  <data name="Budget_MethodEnvelopes" xml:space="preserve">
+    <value>Envelopes</value>
+  </data>
+  <data name="Budget_MethodHint" xml:space="preserve">
+    <value>With envelopes, each category limit is money you assign from your balance; the budget shows what is not assigned yet. Nothing is moved or spent by assigning.</value>
+  </data>
+  <data name="Envelope_Unassigned" xml:space="preserve">
+    <value>Not assigned yet</value>
+  </data>
+  <data name="Envelope_Available" xml:space="preserve">
+    <value>Balance of your accounts today</value>
+  </data>
+  <data name="Envelope_ForGoals" xml:space="preserve">
+    <value>Set aside for goals</value>
+  </data>
+  <data name="Envelope_InEnvelopes" xml:space="preserve">
+    <value>Still in envelopes</value>
+  </data>
+  <data name="Envelope_OverAssigned" xml:space="preserve">
+    <value>More is assigned than your accounts hold. Lower an envelope or a goal.</value>
+  </data>
+  <data name="Envelope_Overspent" xml:space="preserve">
+    <value>Envelopes are overspent by {0}; that money is already gone from the balance.</value>
+  </data>
+  <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
+    <value>Money not assigned yet is shown for the current month, based on today's balance.</value>
+  </data>
+  <data name="Envelope_Hint" xml:space="preserve">
+    <value>Only accounts in this budget's currency and scope count; loans, money lent and assets do not.</value>
+  </data>
 </root>

@@ -76,6 +76,13 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
     [ObservableProperty]
     public partial int RolloverIndex { get; set; }
 
+    // Envelopes (§10.3) are an optional Advanced way of reading the same limits (BUD-12).
+    [ObservableProperty]
+    public partial IReadOnlyList<string> MethodNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int MethodIndex { get; set; }
+
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -97,6 +104,8 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         AlertsEnabled = _budget?.AlertsEnabled ?? true;
         RolloverNames = [translator["Rollover_None"], translator["Rollover_Surplus"], translator["Rollover_Both"]];
         RolloverIndex = (int)(_budget?.Rollover ?? BudgetRollover.None);
+        MethodNames = [translator["Budget_MethodLimits"], translator["Budget_MethodEnvelopes"]];
+        MethodIndex = (int)(_budget?.Method ?? BudgetMethod.Limits);
         if (!IsAdvanced && RolloverIndex != 0)
         {
             HiddenLimitsText = string.Join(Environment.NewLine, new[] { HiddenLimitsText, translator[$"Rollover_Active_{(BudgetRollover)RolloverIndex}"] }.Where(t => t is not null));
@@ -168,6 +177,7 @@ public sealed partial class BudgetEditorViewModel(FinanceStore store, Translator
         budget.CategoryLimits = limits;
         budget.AlertsEnabled = AlertsEnabled;
         budget.Rollover = (BudgetRollover)Math.Clamp(RolloverIndex, 0, 2);
+        budget.Method = (BudgetMethod)Math.Clamp(MethodIndex, 0, 1);
         budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
         await store.SaveBudgetAsync(budget);
         await Shell.Current.GoToAsync("..");

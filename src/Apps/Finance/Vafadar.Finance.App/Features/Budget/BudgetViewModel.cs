@@ -3,7 +3,9 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Finance.App.Features.Reports;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Money;
@@ -39,6 +41,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
     private readonly FinanceStore _store;
     private readonly PlanStore _plans;
+    private readonly GoalStore _goals;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
@@ -49,10 +52,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
     private int _year;
     private int _month;
 
-    public BudgetViewModel(FinanceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public BudgetViewModel(FinanceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
         _store = store;
         _plans = plans;
+        _goals = goals;
         _translator = translator;
         _dates = dates;
         _localization = localization;
@@ -97,6 +101,24 @@ public sealed partial class BudgetViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? EquivalentText { get; set; }
 
+    // Envelopes (§10.3, BUD-11/12): money at hand that is not assigned to an envelope or a goal yet.
+    [ObservableProperty]
+    public partial bool IsEnvelopes { get; set; }
+
+    [ObservableProperty]
+    public partial string? UnassignedText { get; set; }
+
+    [ObservableProperty]
+    public partial Color? UnassignedColor { get; set; }
+
+    [ObservableProperty]
+    public partial string? EnvelopeNote { get; set; }
+
+    [ObservableProperty]
+    public partial string? CategoriesHeader { get; set; }
+
+    public ObservableCollection<AmountLine> EnvelopeLines { get; } = [];
+
     [ObservableProperty]
     public partial Symbol PreviousIcon { get; set; }
 
@@ -106,6 +128,17 @@ public sealed partial class BudgetViewModel : ViewModelBase
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     partial void OnConfirmedOnlyChanged(bool value) => _ = LoadAsync();
+
+    /// <summary>Switches the budget of the shown month between limits and envelopes (used by the snapshot walk-through).</summary>
+    internal async Task SetMethodAsync(BudgetMethod method)
+    {
+        if (_budget is { } budget)
+        {
+            budget.Method = method;
+            await _store.SaveBudgetAsync(budget);
+            await LoadAsync();
+        }
+    }
 
     public async Task LoadAsync()
     {
@@ -146,6 +179,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
         CategoryLines.Clear();
         TotalLines.Clear();
+        EnvelopeLines.Clear();
+        IsEnvelopes = _budget?.Method == BudgetMethod.Envelopes;
+        CategoriesHeader = _translator[IsEnvelopes ? "Budget_MethodEnvelopes" : "Budget_Categories"];
+        UnassignedText = EnvelopeNote = null;
+        var envelopes = new List<BudgetStatus>();
         if (_budget is { } budget)
         {
             var accountIds = budget.AccountIds.Count > 0 ? budget.AccountIds : null;
@@ -162,9 +200,15 @@ public sealed partial class BudgetViewModel : ViewModelBase
             {
                 var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, [categoryLimit.CategoryId], categories, ConfirmedOnly);
                 var categoryCarry = carry.For(categoryLimit.CategoryId);
+                envelopes.Add(new BudgetStatus(categoryLimit.Limit + categoryCarry, spent));
                 CategoryLines.Add(Line(lookup.Name(categoryLimit.CategoryId), lookup.Icon(categoryLimit.CategoryId), lookup.Color(categoryLimit.CategoryId), new BudgetStatus(categoryLimit.Limit + categoryCarry, spent), culture)
                     with { CarryText = Carry(categoryCarry, categoryLimit.Limit, culture) });
             }
+        }
+
+        if (IsEnvelopes && _budget is { } envelopeBudget)
+        {
+            await LoadEnvelopesAsync(envelopeBudget, accounts, envelopes, from, to, culture);
         }
 
         HasTotal = TotalLines.Count > 0;
@@ -183,6 +227,40 @@ public sealed partial class BudgetViewModel : ViewModelBase
             .Select(BudgetPlanning.MonthlyEquivalent)
             .Sum(v => v ?? 0);
         EquivalentText = equivalent > 0 ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
+    }
+
+    // The balance at hand is today's, so the summary is shown for the current month only.
+    private async Task LoadEnvelopesAsync(Core.Budgets.Budget budget, IReadOnlyList<Account> accounts, List<BudgetStatus> envelopes, DateOnly from, DateOnly to, CultureInfo culture)
+    {
+        var today = Today;
+        if (today < from || today > to)
+        {
+            EnvelopeNote = _translator["Envelope_CurrentMonthOnly"];
+            return;
+        }
+
+        var cash = LedgerCalculator.InScope(accounts, budget.AccountIds.Count > 0 ? budget.AccountIds : null)
+            .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        var allEntries = await _store.GetEntriesAsync();
+        var balances = cash.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, allEntries, today));
+        var earmarked = Core.Goals.GoalCalculator.Accounts(await _goals.GetGoalsAsync(), await _goals.GetAllocationsAsync(), balances)
+            .Sum(e => Math.Clamp(e.Earmarked, 0, Math.Max(0, e.Balance)));
+        var summary = EnvelopeCalculator.Summarize(balances.Values.Sum(), earmarked, envelopes);
+
+        string Money(long value) => MoneyText.Format(value, _currency, culture);
+        UnassignedText = Money(summary.Unassigned);
+        UnassignedColor = summary.IsOverAssigned ? Over : Good;
+        EnvelopeLines.Add(new AmountLine(_translator["Envelope_Available"], Money(summary.Available), false));
+        if (summary.Earmarked > 0)
+        {
+            EnvelopeLines.Add(new AmountLine(_translator["Envelope_ForGoals"], Money(-summary.Earmarked), false));
+        }
+
+        EnvelopeLines.Add(new AmountLine(_translator["Envelope_InEnvelopes"], Money(-summary.InEnvelopes), false));
+        EnvelopeNote = summary.IsOverAssigned ? _translator["Envelope_OverAssigned"]
+            : summary.Overspent > 0 ? _translator.Format("Envelope_Overspent", Money(summary.Overspent))
+            : null;
     }
 
     private string? Carry(long carry, long limit, CultureInfo culture) => carry == 0

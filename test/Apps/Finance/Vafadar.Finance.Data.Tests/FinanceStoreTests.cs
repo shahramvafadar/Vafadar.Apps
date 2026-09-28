@@ -375,6 +375,19 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task The_budget_method_is_kept_when_a_budget_is_updated()
+    {
+        var budget = new Budget { Year = 2026, Month = 10, CurrencyCode = "EUR", CategoryLimits = [new BudgetCategoryLimit { CategoryId = Guid.NewGuid(), Limit = 400_00 }] };
+        await _store.SaveBudgetAsync(budget, Ct);
+        budget.Method = BudgetMethod.Envelopes;
+        await _store.SaveBudgetAsync(budget, Ct);
+
+        var stored = await _store.GetBudgetAsync(2026, 10, PeriodCalendar.Gregorian, "EUR", Ct);
+        Assert.Equal(BudgetMethod.Envelopes, stored!.Method);
+        Assert.Equal(BudgetMethod.Envelopes, BudgetPlanning.CopyTo(stored, 2026, 11).Method);
+    }
+
+    [Fact]
     public async Task Loan_terms_are_stored_with_the_account()
     {
         var loan = new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 1, 1), OpeningBalance = -500_000, InterestRate = 4.95m, Installment = 18_500 };

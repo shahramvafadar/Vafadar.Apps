@@ -153,6 +153,15 @@ internal static class DebugSnapshots
                     await reports.LoadAsync();
                 }
 
+                // The same budget read as envelopes (§10.3).
+                if (name == "budget" && Shell.Current.CurrentPage?.BindingContext is Features.Budget.BudgetViewModel budget)
+                {
+                    await budget.SetMethodAsync(Core.Budgets.BudgetMethod.Envelopes);
+                    await Task.Delay(800);
+                    await CaptureAsync(app, folder, $"{language}-{name}-envelopes");
+                    await budget.SetMethodAsync(Core.Budgets.BudgetMethod.Limits);
+                }
+
                 // A what-if with a higher amount of the first plan item (FOR-10).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Forecast.ForecastViewModel forecast
                     && forecast.Cards.SelectMany(c => c.Rows).FirstOrDefault(r => r.PlanAmount is > 0) is { PlanAmount: { } planned } row)

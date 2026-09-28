@@ -266,6 +266,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
             existing.AccountIds = [.. budget.AccountIds];
             existing.AlertsEnabled = budget.AlertsEnabled;
             existing.Rollover = budget.Rollover;
+            existing.Method = budget.Method;
             existing.CategoryLimits.Clear();
             existing.CategoryLimits.AddRange(budget.CategoryLimits.Select(l => new BudgetCategoryLimit { CategoryId = l.CategoryId, Limit = l.Limit }));
         }

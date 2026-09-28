@@ -2446,4 +2446,40 @@
   <data name="Filter_Hint" xml:space="preserve">
     <value>Häufige Filter speichern</value>
   </data>
+  <data name="Budget_Method" xml:space="preserve">
+    <value>Methode</value>
+  </data>
+  <data name="Budget_MethodLimits" xml:space="preserve">
+    <value>Ausgabenlimits</value>
+  </data>
+  <data name="Budget_MethodEnvelopes" xml:space="preserve">
+    <value>Umschläge</value>
+  </data>
+  <data name="Budget_MethodHint" xml:space="preserve">
+    <value>Bei Umschlägen ist jedes Kategorielimit Geld, das Sie aus Ihrem Guthaben zuweisen; das Budget zeigt, was noch nicht zugewiesen ist. Zuweisen bewegt oder verbraucht kein Geld.</value>
+  </data>
+  <data name="Envelope_Unassigned" xml:space="preserve">
+    <value>Noch nicht zugewiesen</value>
+  </data>
+  <data name="Envelope_Available" xml:space="preserve">
+    <value>Guthaben Ihrer Konten heute</value>
+  </data>
+  <data name="Envelope_ForGoals" xml:space="preserve">
+    <value>Für Ziele zurückgelegt</value>
+  </data>
+  <data name="Envelope_InEnvelopes" xml:space="preserve">
+    <value>Noch in Umschlägen</value>
+  </data>
+  <data name="Envelope_OverAssigned" xml:space="preserve">
+    <value>Es ist mehr zugewiesen, als Ihre Konten enthalten. Senken Sie einen Umschlag oder ein Ziel.</value>
+  </data>
+  <data name="Envelope_Overspent" xml:space="preserve">
+    <value>Umschläge sind um {0} überzogen; dieses Geld ist bereits vom Guthaben abgegangen.</value>
+  </data>
+  <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
+    <value>Nicht zugewiesenes Geld wird für den laufenden Monat anhand des heutigen Guthabens angezeigt.</value>
+  </data>
+  <data name="Envelope_Hint" xml:space="preserve">
+    <value>Es zählen nur Konten in Währung und Umfang dieses Budgets; Kredite, verliehenes Geld und Vermögenswerte nicht.</value>
+  </data>
 </root>

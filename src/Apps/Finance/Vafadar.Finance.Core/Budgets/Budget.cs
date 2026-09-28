@@ -25,6 +25,19 @@ public enum BudgetRollover
     SurplusAndDeficit,
 }
 
+/// <summary>How the limits of a budget are read (§10.3, BUD-11/12).</summary>
+public enum BudgetMethod
+{
+    /// <summary>Limits are spending caps (Phase 1).</summary>
+    Limits = 0,
+
+    /// <summary>
+    /// Category limits are envelopes: money assigned to them from the balances at hand. The budget shows what is not
+    /// assigned yet; nothing is moved or spent by assigning (BUD-11).
+    /// </summary>
+    Envelopes = 1,
+}
+
 /// <summary>
 /// A monthly spending budget (BUD-01). Limits are in <see cref="CurrencyCode"/> and never relabelled (BUD-08).
 /// </summary>
@@ -53,6 +66,9 @@ public sealed class Budget : Entity, IAuditableEntity
 
     /// <summary>Gets or sets how the rest of the previous month is carried into this month (§10.3).</summary>
     public BudgetRollover Rollover { get; set; }
+
+    /// <summary>Gets or sets how the limits are read; envelopes are optional and never forced on anyone (BUD-12).</summary>
+    public BudgetMethod Method { get; set; }
 
     /// <summary>Gets or sets a value indicating whether the 80 %/100 % alerts are enabled (BUD-06).</summary>
     public bool AlertsEnabled { get; set; } = true;

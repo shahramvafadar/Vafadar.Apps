@@ -2446,4 +2446,40 @@
   <data name="Filter_Hint" xml:space="preserve">
     <value>فیلترهای پرکاربرد را ذخیره کنید</value>
   </data>
+  <data name="Budget_Method" xml:space="preserve">
+    <value>روش</value>
+  </data>
+  <data name="Budget_MethodLimits" xml:space="preserve">
+    <value>سقف هزینه</value>
+  </data>
+  <data name="Budget_MethodEnvelopes" xml:space="preserve">
+    <value>پاکت‌ها</value>
+  </data>
+  <data name="Budget_MethodHint" xml:space="preserve">
+    <value>در روش پاکت‌ها، سقف هر دسته پولی است که از موجودی به آن اختصاص می‌دهید و بودجه نشان می‌دهد چه مقدار هنوز اختصاص نیافته. با اختصاص دادن، پولی جابه‌جا یا خرج نمی‌شود.</value>
+  </data>
+  <data name="Envelope_Unassigned" xml:space="preserve">
+    <value>هنوز اختصاص نیافته</value>
+  </data>
+  <data name="Envelope_Available" xml:space="preserve">
+    <value>موجودی حساب‌ها امروز</value>
+  </data>
+  <data name="Envelope_ForGoals" xml:space="preserve">
+    <value>کنار گذاشته برای هدف‌ها</value>
+  </data>
+  <data name="Envelope_InEnvelopes" xml:space="preserve">
+    <value>باقی‌مانده در پاکت‌ها</value>
+  </data>
+  <data name="Envelope_OverAssigned" xml:space="preserve">
+    <value>بیش از موجودی حساب‌ها اختصاص داده شده است. یک پاکت یا هدف را کم کنید.</value>
+  </data>
+  <data name="Envelope_Overspent" xml:space="preserve">
+    <value>پاکت‌ها به اندازهٔ {0} بیش از سهمشان خرج شده‌اند؛ این پول از موجودی کم شده است.</value>
+  </data>
+  <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
+    <value>مبلغ اختصاص‌نیافته فقط برای ماه جاری و بر پایهٔ موجودی امروز نمایش داده می‌شود.</value>
+  </data>
+  <data name="Envelope_Hint" xml:space="preserve">
+    <value>فقط حساب‌های هم‌ارز و داخل محدودهٔ این بودجه حساب می‌شوند؛ وام، قرض داده‌شده و دارایی نه.</value>
+  </data>
 </root>
