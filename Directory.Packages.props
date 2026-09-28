@@ -28,18 +28,13 @@
     <PackageVersion Include="Syncfusion.Licensing" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Pdf.Net.Core" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Core" Version="34.2.9" />
-    <PackageVersion Include="Syncfusion.Maui.Buttons" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Calendar" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Charts" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.Inputs" Version="34.2.9" />
-    <PackageVersion Include="Syncfusion.Maui.Picker" Version="34.2.9" />
-    <PackageVersion Include="Syncfusion.Maui.Popup" Version="34.2.9" />
     <PackageVersion Include="Syncfusion.Maui.ProgressBar" Version="34.2.9" />
   </ItemGroup>
 
   <ItemGroup Label="Data">
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.12" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12" />
   </ItemGroup>
@@ -47,7 +42,6 @@
   <ItemGroup Label="Microsoft.Extensions">
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.10.0" />
   </ItemGroup>

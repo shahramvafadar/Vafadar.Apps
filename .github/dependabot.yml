@@ -20,6 +20,8 @@ updates:
       # Syncfusion license keys are tied to a major version: a new major needs a new key first.
       - dependency-name: "Syncfusion.*"
         update-types: ["version-update:semver-major"]
+      # Pinned on purpose in Directory.Packages.props (see the comment there); update only by hand.
+      - dependency-name: "Xamarin.AndroidX.Biometric"
 
   - package-ecosystem: dotnet-sdk
     directory: /
