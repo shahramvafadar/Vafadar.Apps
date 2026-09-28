@@ -1,12 +1,12 @@
 # 06 – Zanance privacy matrix
 
-App `pro.vafadar.zanance`, version 0.1.0 (development). Reviewed against the repository on 2026-09-26.
+App `pro.vafadar.zanance`, version 0.1.0 (development). Reviewed against the repository on 2026-09-28.
 Statuses: Implemented – verified / Implemented – unverified / Planned / Not included / Unknown – needs verification.
 "Verified" means covered by automated tests or a reviewed build artifact; **device checks** (release APK on a real
 phone) are still pending for every row and are a release gate (08).
 
 This is the app's privacy profile required by MAT-01..04. The owner's starter template is
-`spec/Zanance-Privacy-Matrix-Starter.md`; its flow ids DF-01..DF-15 are kept, DF-16..DF-20 were added here.
+`spec/Zanance-Privacy-Matrix-Starter.md`; its flow ids DF-01..DF-15 are kept, DF-16..DF-20 were added here and are mirrored in the starter.
 
 ## Portfolio summary
 
@@ -47,6 +47,6 @@ This is the app's privacy profile required by MAT-01..04. The owner's starter te
 | RECEIVE_BOOT_COMPLETED | Present | Scheduled reminders are restored after a restart (REM-07) |
 | INTERNET, ACCESS_NETWORK_STATE | Removed (D-20) | No online feature in phase 1; Debug builds add INTERNET for the debugger |
 | Exact alarms | Not requested | Reminders are inexact (REM-09) |
-| Biometric | Not declared by the app | BiometricPrompt uses the system dialog; verify the merged release manifest |
+| USE_BIOMETRIC, USE_FINGERPRINT | Merged from AndroidX Biometric | App lock (SEC-01); the system dialog handles the credential, the app never sees it. Listed in the merged manifest (`obj/…/AndroidManifest.xml`); normal permissions, no runtime prompt |
 
 Any change to SDKs, permissions, backup destinations, sign-in, billing or AI must update this file (MAT-05).

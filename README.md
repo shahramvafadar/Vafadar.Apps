@@ -5,7 +5,8 @@
 
 A collection of personal productivity apps by **Shahram Vafadar**, built with .NET 10 and .NET MAUI for Android,
 iOS and Windows (and the web where it makes sense). The apps are local-first, private by design, available in
-English, Persian (فارسی) and German, and back up their data to the user's own Google Drive or OneDrive.
+English, Persian (فارسی) and German, and keep the user's data on the device, with encrypted backup files the user
+controls.
 
 > **Source available, not open source.** The code is public for transparency and reference. All rights are
 > reserved; see [LICENSE](LICENSE).
@@ -32,11 +33,12 @@ English, Persian (فارسی) and German, and back up their data to the user's o
 ## Repository layout
 
 ```text
+├── branding/       Brand masters and the scripts that generate app icons
 ├── docs/           Architecture, decisions (ADRs), guides, privacy
 ├── eng/            Build infrastructure
 ├── src/
 │   ├── Libraries/  Shared libraries (Vafadar.*)
-│   └── Apps/       One folder per app (Vafadar.<App>.Core / .Data / .App)
+│   └── Apps/       One folder per app (Vafadar.<App>.Core / .Data / .App, Zanance also .Reports)
 ├── test/           Tests, mirroring src/
 └── Vafadar.Apps.slnx + solution filters (*.slnf)
 ```

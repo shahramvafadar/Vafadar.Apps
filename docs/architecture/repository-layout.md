@@ -6,6 +6,7 @@
 Vafadar.Apps/
 ├── .config/dotnet-tools.json      Local .NET tools (dotnet-ef)          → dotnet tool restore
 ├── .github/                       CI workflows, Dependabot, issue / PR templates
+├── branding/<app>/                Brand masters, exports and the scripts that generate app icons (Zanance: D-26)
 ├── docs/                          Repository-wide documentation
 │   ├── adr/                       Architecture decision records
 │   ├── architecture/              How the system is designed
@@ -14,7 +15,8 @@ Vafadar.Apps/
 ├── eng/                           Build infrastructure (MSBuild imports)
 │   ├── AppSecrets.targets         Build-time secrets → AppSecrets class
 │   ├── Maui.props                 Common settings of all MAUI projects
-│   └── git-hooks/                 Identity guards (pre-commit, pre-push), see guides/git-setup.md
+│   ├── git-hooks/                 Identity guards (pre-commit, pre-push), see guides/git-setup.md
+│   └── scripts/                   Developer scripts (Add-Strings.ps1, Run-Snapshots.ps1)
 ├── src/
 │   ├── Directory.Build.props      Settings for production code
 │   ├── Libraries/                 Shared libraries: Vafadar.<Area>[.<Detail>]
@@ -26,6 +28,7 @@ Vafadar.Apps/
 │           ├── docs/              App-specific documentation (requirements, design)
 │           ├── Vafadar.Zanance.Core/
 │           ├── Vafadar.Zanance.Data/
+│           ├── Vafadar.Zanance.Reports/  PDF reports
 │           └── Vafadar.Zanance.App/
 ├── test/
 │   ├── Directory.Build.props      Settings for test projects

@@ -1,8 +1,9 @@
 # Data and backup
 
 Apps are **local-first**: all data is stored in a SQLite database on the device and the app works without network.
-To make sure data is never lost, the app backs it up to cloud storage **owned by the user** (Google Drive or
-OneDrive), optionally encrypted with a password only the user knows.
+To make sure data is never lost, the app creates encrypted backup packages (password known only to the user) that the
+user keeps or shares. The libraries can also store them in cloud storage **owned by the user** (Google Drive or
+OneDrive); Zanance hides these destinations until sign-in is implemented and verified (D-17).
 
 ## Local database
 
@@ -128,9 +129,9 @@ Both are free for the user within their existing quota and cost the developer no
 ### Android system backup
 
 Android's built-in Auto Backup (`android:allowBackup="true"`) additionally backs up app data to the user's Google
-account and restores it on a new phone. It is kept enabled as an extra safety net; whether financial data should be
-excluded from it (via data extraction rules) is decided per app before release and documented in the
-[privacy matrix](../privacy/privacy-matrix.md).
+account and restores it on a new phone. It is kept enabled as an extra safety net (Zanance: owner decision D-16, including the financial data) and
+disclosed in the privacy policy and the [privacy matrix](../privacy/privacy-matrix.md). iOS includes app data in
+iCloud / computer backups by default.
 
 ### Limits and future work
 

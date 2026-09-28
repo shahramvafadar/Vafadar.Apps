@@ -41,6 +41,25 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Forecast scenarios with assumed dates and amounts, saved transaction filters, a customizable Home, a PDF report and
   a dark theme.
 
+### Added – Brand
+
+- The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
+  (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
+
+### Fixed
+
+- "This and future" changes and resuming a plan are refused when recorded payments or states after the change date
+  would no longer match the new dates; a settlement lost in an interrupted posting is repaired on the next start.
+- Saving or deleting entries updates the paid amounts of plan occurrences in the same transaction.
+- Merging a category into its own sub-category keeps the target as a top-level category.
+- Adjustments keep their direction through CSV export and import; CSV amounts with two signs or too many digits are
+  rejected instead of being misread.
+- A purchase with refunds or an amount to be paid back can no longer be split.
+- Plans versus actual counts only fully settled occurrences; a transfer between two accounts counts once in the
+  unreviewed summary.
+- The safety copy made before a restore no longer counts as the last backup.
+- iOS: Face ID usage text in English, German and Persian, and a complete privacy manifest.
+
 ### Not yet included
 
 - Backup to Google Drive or OneDrive (needs the sign-in configuration), public-holiday calendars, widgets and OCR.

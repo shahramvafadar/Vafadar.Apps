@@ -13,7 +13,7 @@
 ## Privacy and security
 
 - [ ] Privacy matrix (06) reviewed against the release APK/AAB: package list, merged manifest permissions, network traffic
-- [x] `INTERNET` permission removed if no online feature ships (D-20) – Android manifest declares only notifications and boot
+- [x] `INTERNET` permission removed if no online feature ships (D-20) – the merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric)
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked
 - [ ] No financial data, notes, tokens or passwords in logs (SEC-04)
@@ -30,6 +30,7 @@
 - [ ] Financial features declaration completed per current Play guidance (REL-01)
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
 - [x] Final app name: **Zanance** (owner decision 2026-09-26)
-- [ ] Icon (placeholder replaced), store texts and screenshots in en/fa/de with fictitious data (REL-03/04)
+- [x] Icon, splash and notification icon from the approved brand master (D-26)
+- [ ] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04)
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track

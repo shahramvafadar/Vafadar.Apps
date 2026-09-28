@@ -15,7 +15,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Verified (unit, domain level) |
 | AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Verified (unit, domain level) |
-| AT-10 | Archive account with history/plans | ACC-06 | Unit | S2/S4 | History: verified (unit); plans: with S4 |
+| AT-10 | Archive account with history/plans | ACC-06 | Unit | S2/S4 | Verified (unit): history stays in reports; active plans are ended with the archive (confirmation lists them) |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
 | AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit + report screen: gross chart never negative) |
