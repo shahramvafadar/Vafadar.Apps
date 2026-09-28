@@ -47,6 +47,19 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Loans and money lent (F2-DEBT-01) -->
+                <Label Text="{v:Translate Accounts_Debts}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasDebts}" />
+                <Label Text="{Binding DebtSummary}" Style="{StaticResource Secondary}" IsVisible="{Binding DebtSummary, Converter={StaticResource IsNotNullConverter}}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasDebts}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Debts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:AccountItem">
+                                <local:AccountRow />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Archived accounts -->
                 <Label Text="{v:Translate Accounts_Archived}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasArchived}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasArchived}">

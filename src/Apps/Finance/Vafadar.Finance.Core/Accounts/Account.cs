@@ -16,6 +16,22 @@ public enum AccountType
 
     /// <summary>Simple credit card: purchases increase the debt, payments are transfers (ACC-04).</summary>
     CreditCard = 3,
+
+    /// <summary>
+    /// Money borrowed, e.g. a loan or money owed to a friend (F2-DEBT-01). The balance is negative; receiving the money
+    /// and repaying the principal are transfers, never income or spending. Interest and fees are expenses.
+    /// </summary>
+    Loan = 4,
+
+    /// <summary>Money lent to someone; the balance is what they still owe. Lending and getting it back are transfers.</summary>
+    Lent = 5,
+}
+
+/// <summary>Helpers for account types.</summary>
+public static class AccountTypes
+{
+    /// <summary>Returns whether the type tracks a debt or a receivable rather than money at hand (ACC-05).</summary>
+    public static bool IsDebt(this AccountType type) => type is AccountType.Loan or AccountType.Lent;
 }
 
 /// <summary>
@@ -23,6 +39,9 @@ public enum AccountType
 /// </summary>
 public sealed class Account : Entity, IAuditableEntity
 {
+    /// <summary>Gets or sets the lender or borrower of a loan or lent money (F2-DEBT-01).</summary>
+    public string? Counterparty { get; set; }
+
     /// <summary>Gets or sets the user-given name.</summary>
     public required string Name { get; set; }
 

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Vafadar.Finance.App.Presentation;
+using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Ledger;
 using Vafadar.Finance.Core.Money;
 using Vafadar.Finance.Data;
@@ -25,6 +26,15 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
 
     public ObservableCollection<CurrencyTotal> Totals { get; } = [];
 
+    // Loans and money lent are listed apart from the money at hand (ACC-05, F2-DEBT-01).
+    public ObservableCollection<AccountItem> Debts { get; } = [];
+
+    [ObservableProperty]
+    public partial string? DebtSummary { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasDebts { get; set; }
+
     [ObservableProperty]
     public partial bool IsEmpty { get; set; }
 
@@ -41,6 +51,9 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
         Active.Clear();
         Archived.Clear();
         Totals.Clear();
+        Debts.Clear();
+        var owed = new Dictionary<string, long>();
+        var lent = new Dictionary<string, long>();
 
         foreach (var account in accounts)
         {
@@ -54,7 +67,20 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
                 balance < 0,
                 !account.IncludeInTotals,
                 !account.OpeningBalanceKnown);
-            (account.IsArchived ? Archived : Active).Add(item);
+            if (account.IsArchived)
+            {
+                Archived.Add(item);
+            }
+            else if (account.Type.IsDebt())
+            {
+                Debts.Add(item);
+                var target = balance < 0 ? owed : lent;
+                target[account.CurrencyCode] = target.GetValueOrDefault(account.CurrencyCode) + Math.Abs(balance);
+            }
+            else
+            {
+                Active.Add(item);
+            }
         }
 
         foreach (var (currency, total) in LedgerCalculator.TotalBalances(accounts.Where(a => !a.IsArchived), entries, today))
@@ -62,6 +88,19 @@ public sealed partial class AccountsViewModel(FinanceStore store, Translator tra
             Totals.Add(new CurrencyTotal(currency, MoneyText.Format(total, currency, culture)));
         }
 
+        var parts = new List<string>();
+        if (owed.Count > 0)
+        {
+            parts.Add(translator.Format("Accounts_IOwe", string.Join(" · ", owed.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
+        }
+
+        if (lent.Values.Any(v => v != 0))
+        {
+            parts.Add(translator.Format("Accounts_OwedToMe", string.Join(" · ", lent.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
+        }
+
+        DebtSummary = parts.Count > 0 ? string.Join(Environment.NewLine, parts) : null;
+        HasDebts = Debts.Count > 0;
         IsEmpty = accounts.Count == 0;
         HasArchived = Archived.Count > 0;
     }

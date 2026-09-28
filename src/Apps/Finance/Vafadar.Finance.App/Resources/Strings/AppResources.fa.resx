@@ -2095,4 +2095,43 @@
   <data name="Entry_RuleSuggested" xml:space="preserve">
     <value>دسته با قانون «{0}» پیشنهاد شد</value>
   </data>
+  <data name="AccountType_Loan" xml:space="preserve">
+    <value>وام / بدهی</value>
+  </data>
+  <data name="AccountType_Lent" xml:space="preserve">
+    <value>قرض داده‌شده</value>
+  </data>
+  <data name="Account_LoanHint" xml:space="preserve">
+    <value>پولی که بدهکارید. دریافت و بازپرداخت آن انتقال به حساب و از حساب شماست، نه درآمد یا هزینه. سود و کارمزد را به‌عنوان هزینه ثبت کنید.</value>
+  </data>
+  <data name="Account_LentHint" xml:space="preserve">
+    <value>پولی که کسی به شما بدهکار است. قرض دادن و پس گرفتن آن انتقال است، نه هزینه یا درآمد.</value>
+  </data>
+  <data name="Account_Counterparty" xml:space="preserve">
+    <value>طرف قرض</value>
+  </data>
+  <data name="Account_CounterpartyPlaceholder" xml:space="preserve">
+    <value>مثلاً بانک، یک دوست</value>
+  </data>
+  <data name="Account_LentBy" xml:space="preserve">
+    <value>قرض‌دهنده: {0}</value>
+  </data>
+  <data name="Account_BorrowedBy" xml:space="preserve">
+    <value>قرض‌گیرنده: {0}</value>
+  </data>
+  <data name="Account_RecordRepayment" xml:space="preserve">
+    <value>ثبت بازپرداخت</value>
+  </data>
+  <data name="Account_RecordReturn" xml:space="preserve">
+    <value>ثبت پول پس‌گرفته</value>
+  </data>
+  <data name="Accounts_Debts" xml:space="preserve">
+    <value>وام‌ها و قرض‌های داده‌شده</value>
+  </data>
+  <data name="Accounts_IOwe" xml:space="preserve">
+    <value>بدهی من: {0}</value>
+  </data>
+  <data name="Accounts_OwedToMe" xml:space="preserve">
+    <value>طلب من: {0}</value>
+  </data>
 </root>

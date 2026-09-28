@@ -16,6 +16,7 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
     public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.Property(a => a.Name).HasMaxLength(100);
+        builder.Property(a => a.Counterparty).HasMaxLength(100);
         builder.Property(a => a.CurrencyCode).HasMaxLength(3);
         builder.Property(a => a.Icon).HasMaxLength(64);
     }

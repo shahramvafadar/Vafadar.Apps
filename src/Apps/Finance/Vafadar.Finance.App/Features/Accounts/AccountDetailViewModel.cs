@@ -52,6 +52,13 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial string? EarmarkText { get; set; }
 
+    // Loans and lent money (F2-DEBT-01): repayments are transfers; the button prepares one.
+    [ObservableProperty]
+    public partial string? DebtActionText { get; set; }
+
+    [ObservableProperty]
+    public partial string? CounterpartyText { get; set; }
+
     [ObservableProperty]
     public partial string? ConfirmedText { get; set; }
 
@@ -113,6 +120,13 @@ public sealed partial class AccountDetailViewModel(
         TypeName = translator[$"AccountType_{account.Type}"];
         Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
         IsArchived = account.IsArchived;
+        DebtActionText = account.IsArchived ? null : account.Type switch
+        {
+            AccountType.Loan => translator["Account_RecordRepayment"],
+            AccountType.Lent => translator["Account_RecordReturn"],
+            _ => null,
+        };
+        CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
         IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
@@ -249,6 +263,19 @@ public sealed partial class AccountDetailViewModel(
         HintText = null;
         CanAdjust = false;
         await LoadAsync();
+    }
+
+    [RelayCommand]
+    private Task DebtActionAsync()
+    {
+        if (_account is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var query = new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Transfer) };
+        query[_account.Type == AccountType.Loan ? "to" : "from"] = _account.Id;
+        return Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
     }
 
     [RelayCommand]

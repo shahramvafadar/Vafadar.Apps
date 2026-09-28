@@ -2099,4 +2099,43 @@
   <data name="Entry_RuleSuggested" xml:space="preserve">
     <value>Category suggested by the rule for "{0}"</value>
   </data>
+  <data name="AccountType_Loan" xml:space="preserve">
+    <value>Loan</value>
+  </data>
+  <data name="AccountType_Lent" xml:space="preserve">
+    <value>Money lent</value>
+  </data>
+  <data name="Account_LoanHint" xml:space="preserve">
+    <value>Money you owe. Receiving it and repaying it are transfers to and from your account, not income or spending. Record interest and fees as expenses.</value>
+  </data>
+  <data name="Account_LentHint" xml:space="preserve">
+    <value>Money someone owes you. Lending it and getting it back are transfers, not spending or income.</value>
+  </data>
+  <data name="Account_Counterparty" xml:space="preserve">
+    <value>Lender or borrower</value>
+  </data>
+  <data name="Account_CounterpartyPlaceholder" xml:space="preserve">
+    <value>e.g. bank, a friend</value>
+  </data>
+  <data name="Account_LentBy" xml:space="preserve">
+    <value>Lent by {0}</value>
+  </data>
+  <data name="Account_BorrowedBy" xml:space="preserve">
+    <value>Borrowed by {0}</value>
+  </data>
+  <data name="Account_RecordRepayment" xml:space="preserve">
+    <value>Record a repayment</value>
+  </data>
+  <data name="Account_RecordReturn" xml:space="preserve">
+    <value>Record money received back</value>
+  </data>
+  <data name="Accounts_Debts" xml:space="preserve">
+    <value>Loans and money lent</value>
+  </data>
+  <data name="Accounts_IOwe" xml:space="preserve">
+    <value>I owe: {0}</value>
+  </data>
+  <data name="Accounts_OwedToMe" xml:space="preserve">
+    <value>Owed to me: {0}</value>
+  </data>
 </root>

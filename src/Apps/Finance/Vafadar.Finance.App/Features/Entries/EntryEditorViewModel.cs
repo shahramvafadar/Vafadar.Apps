@@ -301,6 +301,27 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 Account = defaultAccount;
                 ToAccount = active.FirstOrDefault(a => a.Id != defaultAccount?.Id);
 
+                // A prepared transfer, e.g. repaying a loan or getting lent money back (F2-DEBT-01).
+                if (Get(query, "from") is { } fromId && active.FirstOrDefault(a => a.Id == fromId) is { } from)
+                {
+                    Account = from;
+                    _entry.AccountId = from.Id;
+                    if (ToAccount?.Id == from.Id)
+                    {
+                        ToAccount = active.FirstOrDefault(a => a.Id != from.Id);
+                    }
+                }
+
+                if (Get(query, "to") is { } toId && active.FirstOrDefault(a => a.Id == toId) is { } to)
+                {
+                    ToAccount = to;
+                    if (Account?.Id == to.Id)
+                    {
+                        Account = active.FirstOrDefault(a => a.Id != to.Id);
+                        _entry.AccountId = Account?.Id ?? Guid.Empty;
+                    }
+                }
+
                 // Quick templates fill a new entry only (TX-04).
                 Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? await _store.GetTemplatesAsync() : [];
                 HasTemplates = Templates.Count > 0;

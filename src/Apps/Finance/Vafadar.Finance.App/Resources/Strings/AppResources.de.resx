@@ -2095,4 +2095,43 @@
   <data name="Entry_RuleSuggested" xml:space="preserve">
     <value>Kategorie per Regel für „{0}“ vorgeschlagen</value>
   </data>
+  <data name="AccountType_Loan" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="AccountType_Lent" xml:space="preserve">
+    <value>Verliehenes Geld</value>
+  </data>
+  <data name="Account_LoanHint" xml:space="preserve">
+    <value>Geld, das Sie schulden. Erhalt und Rückzahlung sind Überweisungen zu und von Ihrem Konto, keine Einnahmen oder Ausgaben. Zinsen und Gebühren buchen Sie als Ausgaben.</value>
+  </data>
+  <data name="Account_LentHint" xml:space="preserve">
+    <value>Geld, das Ihnen jemand schuldet. Verleihen und Zurückbekommen sind Überweisungen, keine Ausgaben oder Einnahmen.</value>
+  </data>
+  <data name="Account_Counterparty" xml:space="preserve">
+    <value>Kreditgeber oder -nehmer</value>
+  </data>
+  <data name="Account_CounterpartyPlaceholder" xml:space="preserve">
+    <value>z. B. Bank, ein Freund</value>
+  </data>
+  <data name="Account_LentBy" xml:space="preserve">
+    <value>Geliehen von {0}</value>
+  </data>
+  <data name="Account_BorrowedBy" xml:space="preserve">
+    <value>Geliehen an {0}</value>
+  </data>
+  <data name="Account_RecordRepayment" xml:space="preserve">
+    <value>Rückzahlung erfassen</value>
+  </data>
+  <data name="Account_RecordReturn" xml:space="preserve">
+    <value>Zurückerhaltenes Geld erfassen</value>
+  </data>
+  <data name="Accounts_Debts" xml:space="preserve">
+    <value>Kredite und verliehenes Geld</value>
+  </data>
+  <data name="Accounts_IOwe" xml:space="preserve">
+    <value>Ich schulde: {0}</value>
+  </data>
+  <data name="Accounts_OwedToMe" xml:space="preserve">
+    <value>Mir geschuldet: {0}</value>
+  </data>
 </root>

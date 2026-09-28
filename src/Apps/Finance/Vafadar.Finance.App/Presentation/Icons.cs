@@ -16,6 +16,8 @@ internal static class Icons
         AccountType.Cash => Symbol.Money,
         AccountType.Savings => Symbol.Savings,
         AccountType.CreditCard => Symbol.Payment,
+        AccountType.Loan => Symbol.Receipt,
+        AccountType.Lent => Symbol.Handshake,
         _ => Symbol.BuildingBank,
     };
 }

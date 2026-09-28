@@ -11,7 +11,7 @@ possible (SC-01).
 | Split transactions, partial payments of an occurrence | F2-TX-01/02 | **P2-3 done:** splits as grouped entries that add up exactly (split editor from the entry details; join again). **P2-4 done:** partial payments of an occurrence (open with the outstanding rest; the final payment settles; overpayment shows as a larger actual amount) |
 | Reimbursable expenses, tags, attachments, bulk operations, rules | F2-TX-03/04 | **P2-6 done:** reimbursable expenses (F2-TX-03). **P2-7 done:** tags with search and a tag report. **P2-8 done:** categorization rules for new entries and generic imports. Attachments and bulk operations still open |
 | Contracts, price changes, cancellation deadlines, business-day rules | F2-CON-01..05 | **P2-5 done:** contract details, reminders for the last day to cancel and the review date, Home attention (F2-CON-01/03); price changes via "this and future" (F2-CON-02). Advance-payment settlement (F2-CON-04) and business-day rules (F2-CON-05) still open |
-| Debts, loans, assets | F2-DEBT-01/02, F2-ASSET-01/02 | Account types enumerated |
+| Debts, loans, assets | F2-DEBT-01/02, F2-ASSET-01/02 | **P2-9 done:** loan and money-lent accounts with counterparty, separate from the liquid total, repayment shortcut (F2-DEBT-01). Principal/interest engine (F2-DEBT-02) and assets (F2-ASSET) still open |
 | Several days per month, weekday rules, holidays | REC-05, REC-12 | Rule is a value object |
 | Dark theme, widgets, saved reports, PDF, OCR, scenarios | §21.5, FOR-10, REP-07/08 | Colour tokens (03 §6) |
 | Unofficial currency units (e.g. Toman) | FX-07 | Currency table |

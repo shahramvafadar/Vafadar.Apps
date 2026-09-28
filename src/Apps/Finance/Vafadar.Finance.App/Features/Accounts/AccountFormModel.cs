@@ -59,6 +59,35 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool CurrencyLocked { get; set; }
 
+    // Loans and lent money (F2-DEBT-01).
+    [ObservableProperty]
+    public partial string Counterparty { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsDebtType { get; set; }
+
+    [ObservableProperty]
+    public partial string? DebtHint { get; set; }
+
+    private bool _isNew = true;
+
+    // A new loan starts as money owed and outside the liquid total; both remain changeable (ACC-05).
+    partial void OnTypeIndexChanged(int value)
+    {
+        IsDebtType = Type.IsDebt();
+        DebtHint = Type switch
+        {
+            AccountType.Loan => _translator["Account_LoanHint"],
+            AccountType.Lent => _translator["Account_LentHint"],
+            _ => null,
+        };
+        if (_isNew && IsDebtType)
+        {
+            IncludeInTotals = false;
+            OpeningIsNegative = Type == AccountType.Loan;
+        }
+    }
+
     /// <summary>Gets or sets the chosen icon; <see langword="null"/> uses the icon of the account type (ACC-01).</summary>
     [ObservableProperty]
     public partial string? IconKey { get; set; }
@@ -96,6 +125,9 @@ public sealed partial class AccountFormModel : ObservableObject
         IncludeInTotals = account.IncludeInTotals;
         CurrencyLocked = currencyLocked;
         IconKey = account.Icon;
+        Counterparty = account.Counterparty ?? string.Empty;
+        _isNew = false;
+        OnTypeIndexChanged(TypeIndex);
     }
 
     /// <summary>Validates the input and writes it to <paramref name="target"/>.</summary>
@@ -129,9 +161,10 @@ public sealed partial class AccountFormModel : ObservableObject
         }
         target.IncludeInTotals = IncludeInTotals;
         target.Icon = IconKey;
+        target.Counterparty = Type.IsDebt() && !string.IsNullOrWhiteSpace(Counterparty) ? Counterparty.Trim() : null;
         return true;
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty);
 }
