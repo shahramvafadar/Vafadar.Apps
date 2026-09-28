@@ -1,0 +1,10 @@
+#!/bin/sh
+# Guard: commit messages carry no attribution trailers or notes for tools or assistants (see AGENTS.md).
+# Enabled with: git config core.hooksPath eng/git-hooks   (see docs/guides/git-setup.md)
+
+if grep -iqE '^co-authored-by:|generated with ' "$1"; then
+  echo "commit-msg: attribution trailers and notes are not allowed in this repository." >&2
+  exit 1
+fi
+
+exit 0

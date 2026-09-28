@@ -8,7 +8,7 @@ here. Separation is enforced in layers, so a single mistake is not enough to mix
 |---|---|---|
 | 1. Repository identity | `user.name` / `user.email` set in this repository's own config | This clone |
 | 2. Account in the remote URL | `https://shahramvafadar@github.com/...` makes Git Credential Manager use the `shahramvafadar` login, never another stored GitHub account | This clone |
-| 3. Guard hooks (`eng/git-hooks`) | `pre-commit` rejects commits with any other e-mail; `pre-push` rejects pushes to any other server or account and any commit with a foreign identity | This clone (versioned in the repo) |
+| 3. Guard hooks (`eng/git-hooks`) | `pre-commit` rejects commits with any other e-mail, forbidden files (secrets, databases, keystores, build output), attribution lines and ignored source files; `commit-msg` rejects attribution trailers; `pre-push` rejects pushes to any other server or account and any commit with a foreign identity | This clone (versioned in the repo) |
 | 4. Conditional global config (optional) | `includeIf` applies the personal identity automatically to every clone of `github.com/shahramvafadar/*` | The machine |
 
 Layers 1–3 are set per clone; layer 4 makes new clones correct automatically.

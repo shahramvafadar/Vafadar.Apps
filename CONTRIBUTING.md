@@ -19,6 +19,7 @@ By submitting a contribution you agree to the contribution terms in the [LICENSE
 
 ## Development workflow
 
+* Working rules: [AGENTS.md](AGENTS.md) – identity, no attribution, secrets, verification and documentation duties.
 * Setup: [getting started](docs/guides/getting-started.md).
 * Conventions: [coding conventions](docs/guides/coding-conventions.md) – English only in code and docs, all UI
   strings in every language, tests for new behavior, no warnings.

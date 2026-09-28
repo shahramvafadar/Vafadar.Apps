@@ -19,4 +19,28 @@ for ident in "$author" "$committer"; do
   esac
 done
 
+# Guard: no secrets, databases, keystores or build output in commits.
+forbidden=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '(^|/)(bin|obj)/|Directory\.Secrets\.props$|\.(keystore|jks|db|db-wal|db-shm)$' || true)
+if [ -n "$forbidden" ]; then
+  echo "pre-commit: these files must not be committed:" >&2
+  echo "$forbidden" >&2
+  exit 1
+fi
+
+# Guard: no attribution lines for tools or assistants anywhere in the repository (see AGENTS.md).
+attribution=$(git diff --cached -U0 -- . ':(exclude)eng/git-hooks/*' ':(exclude)AGENTS.md' | grep -iE '^\+.*(co-authored-by:|generated with )' || true)
+if [ -n "$attribution" ]; then
+  echo "pre-commit: attribution lines are not allowed in this repository:" >&2
+  echo "$attribution" | head -5 >&2
+  exit 1
+fi
+
+# Guard: source files hidden by an ignore rule compile locally but are missing in CI.
+ignored=$(git status --ignored --porcelain src test docs eng | grep '^!!' | grep -vE '/(bin|obj)/|\.user$' || true)
+if [ -n "$ignored" ]; then
+  echo "pre-commit: source files are ignored by a .gitignore rule:" >&2
+  echo "$ignored" >&2
+  exit 1
+fi
+
 exit 0

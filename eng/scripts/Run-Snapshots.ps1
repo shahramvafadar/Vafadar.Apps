@@ -1,0 +1,39 @@
+﻿<#
+.SYNOPSIS
+    Builds the Windows app in Debug and walks through every screen, saving screenshots (and the report PDF).
+
+.DESCRIPTION
+    The Debug-only walk-through (src/Apps/Finance/Vafadar.Finance.App/Diagnostics/DebugSnapshots.cs) starts when
+    VAFADAR_SNAPSHOTS points to a folder. It resets the development database, seeds fictitious data, sets Advanced mode
+    and captures each route per language, plus "-end" shots of scrolled pages. Look at the Persian (right-to-left) and
+    the dark variants after every UI change.
+
+.EXAMPLE
+    ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark
+#>
+param(
+    [string]$Languages = 'fa',
+    [ValidateSet('light', 'dark')] [string]$Theme = 'light',
+    [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\snapshots'),
+    [int]$TimeoutSeconds = 240)
+$ErrorActionPreference = 'Stop'
+$root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
+Set-Location $root
+
+# Only the development build of this repository is stopped and only its own database is reset.
+Get-Process Vafadar.Finance.App -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$root\*" } | Stop-Process -Force
+Start-Sleep 1
+$data = Join-Path $env:LOCALAPPDATA 'Shahram Vafadar\pro.vafadar.zanance\Data'
+if (Test-Path $data) { Get-ChildItem $data -Filter 'finance.db*' | ForEach-Object { [IO.File]::Delete($_.FullName) } }
+New-Item -ItemType Directory -Force $Output | Out-Null
+Get-ChildItem $Output -File | ForEach-Object { [IO.File]::Delete($_.FullName) }
+
+dotnet build src\Apps\Finance\Vafadar.Finance.App -f net10.0-windows10.0.19041.0 -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
+$exe = Get-ChildItem 'src\Apps\Finance\Vafadar.Finance.App\bin\Debug\net10.0-windows10.0.19041.0' -Recurse -Filter 'Vafadar.Finance.App.exe' | Select-Object -First 1
+$env:VAFADAR_SNAPSHOTS = (Resolve-Path $Output)
+$env:VAFADAR_SNAPSHOT_LANGUAGES = $Languages
+$env:VAFADAR_SNAPSHOT_THEME = $Theme
+$process = Start-Process $exe.FullName -PassThru
+if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
+if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }
+"$((Get-ChildItem $Output -Filter *.png).Count) screenshots in $Output"

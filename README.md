@@ -73,7 +73,8 @@ xUnit v3 · GitHub Actions
 ## Feedback and support
 
 Bug reports and ideas are welcome as [issues](../../issues). Security problems: see [SECURITY.md](SECURITY.md).
-See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and [AGENTS.md](AGENTS.md) for the complete
+working rules of this repository.
 
 ## License
 

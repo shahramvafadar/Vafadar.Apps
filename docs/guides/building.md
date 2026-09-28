@@ -12,6 +12,12 @@
 | Build as CI does (warnings are errors) | add `-p:ContinuousIntegrationBuild=true` |
 | Restore local tools | `dotnet tool restore` |
 
+## Helper scripts
+
+| Script | Purpose |
+|---|---|
+| `eng/scripts/Add-Strings.ps1 -JsonPath strings.json` | Adds or updates UI strings in all languages (en, fa, de) of a `.resx` set in one step |
+| `eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark]` | Builds the Windows Debug app, resets its development database and saves screenshots of every screen to `artifacts/snapshots` |
 ## Target frameworks
 
 * Plain libraries, tests and (future) web projects: `$(VafadarTargetFramework)` = `net10.0`.
