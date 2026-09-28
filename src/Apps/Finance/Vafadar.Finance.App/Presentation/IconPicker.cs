@@ -25,7 +25,7 @@ public sealed class IconPicker : ContentView
         nameof(SelectedKey), typeof(string), typeof(IconPicker), null, BindingMode.TwoWay,
         propertyChanged: (bindable, _, _) => ((IconPicker)bindable).UpdateStates());
 
-    private static readonly Color Accent = Color.FromArgb("#2E7D32");
+    private static Color Accent => Palette.Primary;
     private readonly List<(string? Key, Border Tile)> _tiles = [];
 
     public IconPicker()
@@ -67,7 +67,7 @@ public sealed class IconPicker : ContentView
         {
             var selected = key == SelectedKey;
             tile.Stroke = selected ? Accent : Colors.Transparent;
-            tile.BackgroundColor = selected ? Color.FromArgb("#E8F5E9") : Colors.Transparent;
+            tile.BackgroundColor = selected ? Palette.IncomeBackground : Colors.Transparent;
         }
     }
 }

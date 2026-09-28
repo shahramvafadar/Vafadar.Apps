@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.Core.Accounts;
 using Vafadar.Finance.Core.Goals;
 using Vafadar.Finance.Core.Money;
@@ -128,7 +129,7 @@ public sealed partial class GoalDetailViewModel(
                 translator.Format(release ? "Goal_ReleasedFrom" : "Goal_SetAsideIn", names.GetValueOrDefault(allocation.AccountId, "?")),
                 dates.Format(allocation.Date, DateFormatStyle.Short),
                 MoneyText.Format(allocation.Amount, goal.CurrencyCode, localization.CurrentCulture, showPlus: true),
-                release ? Color.FromArgb("#5F6368") : Color.FromArgb("#1B5E20")));
+                release ? Palette.SecondaryText : Palette.IncomeText));
         }
 
         // Only accounts in the goal's currency can hold its money; free money is shown to avoid double earmarking.

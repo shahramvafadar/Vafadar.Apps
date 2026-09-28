@@ -12,9 +12,9 @@
     Shell.PresentationMode="ModalAnimated">
 
     <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
             <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{StaticResource Primary}" />
+                    TextColor="{DynamicResource Primary}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -31,7 +31,7 @@
                 <!-- What -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
-                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}"
+                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}"
                                        IsEnabled="{Binding CanChangeKind}" SemanticProperties.Description="{v:Translate Entry_Kind}" />
 
                         <Label Text="{v:Translate Plan_Name}" Style="{StaticResource FieldLabel}" />
@@ -41,7 +41,7 @@
                                IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <Label Text="{v:Translate Plan_AmountMode}" Style="{StaticResource FieldLabel}" />
-                        <v:ChoiceChips ItemsSource="{Binding AmountModeNames}" SelectedIndex="{Binding AmountModeIndex}" AccentColor="{StaticResource Primary}" />
+                        <v:ChoiceChips ItemsSource="{Binding AmountModeNames}" SelectedIndex="{Binding AmountModeIndex}" AccentColor="{DynamicResource Primary}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding ShowAmount}">
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" FontAttributes="Bold"
                                    SemanticProperties.Description="{v:Translate Entry_Amount}" />
@@ -66,8 +66,8 @@
                         <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="entries:CategoryChoice">
-                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{StaticResource DividerColor}"
-                                            StrokeShape="RoundRectangle 22" BackgroundColor="{StaticResource CardBackground}" MinimumHeightRequest="44"
+                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
+                                            StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44"
                                             SemanticProperties.Description="{Binding Name}">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
@@ -102,34 +102,34 @@
 
                         <VerticalStackLayout IsVisible="{Binding ShowPastChoice}">
                             <Label Text="{v:Translate Plan_PastStart}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding PastNames}" SelectedIndex="{Binding PastIndex}" AccentColor="{StaticResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding PastNames}" SelectedIndex="{Binding PastIndex}" AccentColor="{DynamicResource Primary}" />
                         </VerticalStackLayout>
 
                         <Label Text="{v:Translate Plan_Repeat}" Style="{StaticResource FieldLabel}" />
-                        <v:ChoiceChips ItemsSource="{Binding PresetNames}" SelectedIndex="{Binding PresetIndex}" AccentColor="{StaticResource Primary}" />
+                        <v:ChoiceChips ItemsSource="{Binding PresetNames}" SelectedIndex="{Binding PresetIndex}" AccentColor="{DynamicResource Primary}" />
 
                         <Grid ColumnDefinitions="Auto,80,*" ColumnSpacing="8" IsVisible="{Binding ShowCustom}">
                             <Label Text="{v:Translate Plan_Every}" VerticalOptions="Center" />
                             <Entry Grid.Column="1" Text="{Binding IntervalText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
                                    SemanticProperties.Description="{v:Translate Plan_Every}" />
                             <v:ChoiceChips Grid.Column="2" IsCompact="True" ItemsSource="{Binding UnitNames}" SelectedIndex="{Binding UnitIndex}"
-                                           AccentColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                           AccentColor="{DynamicResource Primary}" VerticalOptions="Center" />
                         </Grid>
 
                         <VerticalStackLayout IsVisible="{Binding ShowMonthOptions}">
                             <Label Text="{v:Translate Plan_Calendar}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{StaticResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{DynamicResource Primary}" />
                             <Label Text="{v:Translate Plan_Day}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding DayRuleNames}" SelectedIndex="{Binding DayRuleIndex}" AccentColor="{StaticResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding DayRuleNames}" SelectedIndex="{Binding DayRuleIndex}" AccentColor="{DynamicResource Primary}" />
                             <VerticalStackLayout IsVisible="{Binding ShowMissingDay}">
                                 <Label Text="{v:Translate Plan_MissingDay}" Style="{StaticResource FieldLabel}" />
-                                <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" AccentColor="{StaticResource Primary}" />
+                                <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" AccentColor="{DynamicResource Primary}" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding ShowEnd}">
                             <Label Text="{v:Translate Plan_End}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding EndNames}" SelectedIndex="{Binding EndIndex}" AccentColor="{StaticResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding EndNames}" SelectedIndex="{Binding EndIndex}" AccentColor="{DynamicResource Primary}" />
                             <v:DateField Date="{Binding EndDate}" IsVisible="{Binding ShowEndDate}" />
                             <Grid ColumnDefinitions="100,*" ColumnSpacing="8" IsVisible="{Binding ShowCount}">
                                 <Entry Text="{Binding CountText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
@@ -143,7 +143,7 @@
 
                         <!-- Preview of the next dates (REC-04) -->
                         <Label Text="{v:Translate Plan_Preview}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
-                        <Border BackgroundColor="{StaticResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                        <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
                             <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Preview}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
@@ -166,7 +166,7 @@
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Text="{v:Translate Plan_Reminder}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding ReminderEnabled}" OnColor="{StaticResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ReminderEnabled}" OnColor="{DynamicResource Primary}" />
                         </Grid>
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding ReminderEnabled}">
                             <Grid ColumnDefinitions="70,*" ColumnSpacing="8">
@@ -177,16 +177,16 @@
                             <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsAdvanced}">
                                 <Label Text="{v:Translate Plan_ReminderOnDueDate}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ReminderOnDueDate}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ReminderOnDueDate}" OnColor="{DynamicResource Primary}" />
                             </Grid>
-                            <Label Text="{Binding ReminderNote}" TextColor="{StaticResource WarningText}" FontSize="13"
+                            <Label Text="{Binding ReminderNote}" TextColor="{DynamicResource WarningText}" FontSize="13"
                                    IsVisible="{Binding ReminderNote, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
 
-                        <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
+                        <BoxView HeightRequest="1" Color="{DynamicResource DividerColor}" />
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Text="{v:Translate Plan_AutoPost}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding AutoPost}" IsEnabled="{Binding CanAutoPost}" OnColor="{StaticResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding AutoPost}" IsEnabled="{Binding CanAutoPost}" OnColor="{DynamicResource Primary}" />
                         </Grid>
                         <Label Text="{v:Translate Plan_AutoPostHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>
@@ -196,7 +196,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsAdvanced}">
                     <VerticalStackLayout Spacing="4">
                         <Button Text="{v:Translate Contract_Title}" Command="{Binding ToggleContractCommand}" BackgroundColor="Transparent"
-                                TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" />
+                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" />
                         <VerticalStackLayout IsVisible="{Binding ShowContract}" Spacing="4">
                             <Label Text="{v:Translate Contract_Provider}" Style="{StaticResource FieldLabel}" />
                             <Entry Text="{Binding ContractProvider}" MaxLength="200" SemanticProperties.Description="{v:Translate Contract_Provider}" />
@@ -205,19 +205,19 @@
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_End}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasContractEnd}" Spacing="4">
                                 <v:DateField Date="{Binding ContractEnd}" />
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Text="{v:Translate Contract_Renews}" VerticalOptions="Center" />
-                                    <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{StaticResource Primary}" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{DynamicResource Primary}" />
                                 </Grid>
                             </VerticalStackLayout>
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_Deadline}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasCancellationDeadline}">
                                 <v:DateField Date="{Binding CancellationDeadline}" />
@@ -225,7 +225,7 @@
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_Review}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasReviewDate}">
                                 <v:DateField Date="{Binding ReviewDate}" />

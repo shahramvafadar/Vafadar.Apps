@@ -37,7 +37,7 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         if (status is null)
         {
             // Completed or archived: no funding, only the history.
-            return new GoalRow(goal.Id, goal.Name, icon, Money(goal.TargetAmount, goal.CurrencyCode), 1, Color.FromArgb("#9E9E9E"),
+            return new GoalRow(goal.Id, goal.Name, icon, Money(goal.TargetAmount, goal.CurrencyCode), 1, Palette.Muted,
                 null, null, null, translator[$"GoalState_{goal.State}"]);
         }
 
@@ -66,7 +66,7 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
             warnings.Add(translator["Goal_Overdue"]);
         }
 
-        var color = status.IsReached ? Color.FromArgb("#1B5E20") : status.Unfunded > 0 ? Color.FromArgb("#8D5B00") : Color.FromArgb("#2E7D32");
+        var color = status.IsReached ? Palette.IncomeText : status.Unfunded > 0 ? Palette.WarningText : Palette.Primary;
         return new GoalRow(goal.Id, goal.Name, icon, funded, status.Progress, color, date, suggestion,
             warnings.Count > 0 ? string.Join(Environment.NewLine, warnings) : null, null);
     }

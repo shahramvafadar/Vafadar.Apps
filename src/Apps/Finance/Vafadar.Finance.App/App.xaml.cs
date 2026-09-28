@@ -17,8 +17,10 @@ public partial class App : Application
         _services = services;
         InitializeComponent();
 
-        // Phase 1 ships the light theme only (D-12, UX-08).
-        UserAppTheme = AppTheme.Light;
+        // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors reload with the shell.
+        var theme = services.GetRequiredService<Presentation.ThemeService>();
+        theme.Initialize(this);
+        theme.Changed += OnLocalizationChanged;
         var localization = services.GetRequiredService<ILocalizationService>();
         localization.Changed += OnLocalizationChanged;
         this.ApplyToModalPages(localization);

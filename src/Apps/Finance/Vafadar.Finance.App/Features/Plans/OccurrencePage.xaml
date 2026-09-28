@@ -20,7 +20,7 @@
                         <Label Text="{Binding DueText}" Style="{StaticResource Secondary}" />
                         <Label Text="{Binding PlannedAmountText}" Style="{StaticResource AmountLarge}" />
                         <Label Text="{Binding StatusText}" Style="{StaticResource Secondary}" />
-                        <Label Text="{Binding PaidText}" TextColor="{StaticResource WarningText}" IsVisible="{Binding PaidText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding PaidText}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding PaidText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Payments}" IsVisible="{Binding HasPayments}" Margin="0,4,0,0">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="p:EntryRow">
@@ -36,7 +36,7 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
                         <Button Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" BackgroundColor="Transparent"
-                                TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" />
+                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" />
                     </VerticalStackLayout>
                 </Border>
 

@@ -15,7 +15,7 @@
                 <!-- Empty state: what a goal is and what it is not (BUD-11) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
                     <VerticalStackLayout Spacing="8">
-                        <fi:SymbolIcon Symbol="Savings" FontSize="40" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                        <fi:SymbolIcon Symbol="Savings" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                         <Label Text="{v:Translate Goals_EmptyTitle}" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                         <Label Text="{v:Translate Goals_Intro}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Goals_Add}" Command="{Binding AddCommand}" />
@@ -39,14 +39,14 @@
                                                               CommandParameter="{Binding .}" />
                                     </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{StaticResource Primary}" />
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{DynamicResource Primary}" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
                                             <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding SuggestionText}" TextColor="{StaticResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                     </Grid>
@@ -65,14 +65,14 @@
                                                               CommandParameter="{Binding .}" />
                                     </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{StaticResource Primary}" />
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{DynamicResource Primary}" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
                                             <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding SuggestionText}" TextColor="{StaticResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                     </Grid>

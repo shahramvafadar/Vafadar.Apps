@@ -32,7 +32,7 @@
                                     <Label Text="{Binding Match}" FontSize="16" />
                                     <Label Text="{Binding CategoryName}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Button Grid.Column="1" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}"
+                                <Button Grid.Column="1" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RulesViewModel}}, x:DataType=local:RulesViewModel}"
                                         CommandParameter="{Binding .}" />
                             </Grid>

@@ -267,8 +267,8 @@ public sealed partial class HomeViewModel : ViewModelBase
         BudgetColor = status.Alert switch
         {
             BudgetAlert.Exceeded => EntryPresenter.ExpenseColor,
-            BudgetAlert.Near => Color.FromArgb("#F9A825"),
-            _ => Color.FromArgb("#2E7D32"),
+            BudgetAlert.Near => Palette.NearLimit,
+            _ => Palette.Primary,
         };
     }
 
@@ -293,7 +293,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         ForecastText = _translator.Format("Home_Forecast", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture),
             MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short))
             + (forecast.IsIncomplete ? " · " + _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : string.Empty);
-        ForecastColor = forecast.GoesNegative ? EntryPresenter.ExpenseColor : Color.FromArgb("#1F1F1F");
+        ForecastColor = forecast.GoesNegative ? EntryPresenter.ExpenseColor : Palette.AmountText;
     }
 
     [RelayCommand]
@@ -337,8 +337,8 @@ public sealed partial class HomeViewModel : ViewModelBase
                 color,
                 color.WithAlpha(0.12f),
                 overdue ? text.Status(OccurrenceView.Overdue) : occurrence.Status == OccurrenceView.Due ? text.Status(OccurrenceView.Due) : null,
-                overdue ? EntryPresenter.ExpenseColor : Color.FromArgb("#8D5B00"),
-                overdue ? Color.FromArgb("#FFEBEE") : Color.FromArgb("#FFF4E0")));
+                overdue ? EntryPresenter.ExpenseColor : Palette.WarningText,
+                overdue ? Palette.ExpenseBackground : Palette.WarningBackground));
         }
 
         HasUpcoming = Upcoming.Count > 0;
@@ -379,7 +379,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         if (rest.Count > 0)
         {
             var ids = rest.SelectMany(r => categories.All.Where(c => c.Id == r.CategoryId || c.ParentId == r.CategoryId)).Select(c => c.Id).ToList();
-            AddSlice(ids, _translator["Home_OtherCategories"], rest.Sum(r => r.Net), total, currency, Color.FromArgb("#9E9E9E"), culture);
+            AddSlice(ids, _translator["Home_OtherCategories"], rest.Sum(r => r.Net), total, currency, Palette.Muted, culture);
         }
 
         HasSlices = Slices.Count > 0;

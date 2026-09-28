@@ -31,8 +31,6 @@ public sealed class ChoiceChips : ContentView
         nameof(IsCompact), typeof(bool), typeof(ChoiceChips), false,
         propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).CreatePanel());
 
-    private static readonly Color Outline = Color.FromArgb("#C8C8C8");
-    private static readonly Color Text = Color.FromArgb("#1F1F1F");
 
     private readonly List<Border> _chips = [];
     private Layout _panel = null!;
@@ -148,9 +146,9 @@ public sealed class ChoiceChips : ContentView
         {
             var selected = i == SelectedIndex;
             var chip = _chips[i];
-            chip.BackgroundColor = selected ? AccentColor : Colors.White;
-            chip.Stroke = selected ? AccentColor : Outline;
-            ((Label)chip.Content!).TextColor = selected ? Colors.White : Text;
+            chip.BackgroundColor = selected ? AccentColor : Colors.Transparent;
+            chip.Stroke = selected ? AccentColor : ThemeColors.Outline;
+            ((Label)chip.Content!).TextColor = selected ? ThemeColors.OnColor(AccentColor) : ThemeColors.Text;
         }
     }
 }

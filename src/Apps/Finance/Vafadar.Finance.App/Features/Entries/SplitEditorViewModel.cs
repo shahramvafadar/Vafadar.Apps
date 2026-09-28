@@ -51,7 +51,7 @@ public sealed partial class SplitEditorViewModel(FinanceStore store, Translator 
     public partial string? RemainingText { get; set; }
 
     [ObservableProperty]
-    public partial Color RemainingColor { get; set; } = Color.FromArgb("#5F6368");
+    public partial Color RemainingColor { get; set; } = Palette.SecondaryText;
 
     [ObservableProperty]
     public partial bool CanSave { get; set; }
@@ -157,7 +157,7 @@ public sealed partial class SplitEditorViewModel(FinanceStore store, Translator 
             _ when !valid => translator["Split_EnterAll"],
             _ => translator["Split_Balanced"],
         };
-        RemainingColor = rest == 0 && valid ? Color.FromArgb("#1B5E20") : Color.FromArgb("#8D5B00");
+        RemainingColor = rest == 0 && valid ? Palette.IncomeText : Palette.WarningText;
         CanSave = valid && rest == 0 && Parts.Count >= 2;
     }
 

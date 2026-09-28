@@ -15,7 +15,7 @@
 
             <Border Style="{StaticResource Card}" IsVisible="{Binding HasTemplates, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="8">
-                    <fi:SymbolIcon Symbol="Flash" FontSize="36" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <fi:SymbolIcon Symbol="Flash" FontSize="36" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                     <Label Text="{v:Translate Templates_Empty}" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </Border>
@@ -25,12 +25,12 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:TemplateRow">
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" VerticalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" VerticalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                     <Label Text="{Binding Name}" FontSize="16" />
                                     <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Button Grid.Column="2" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}"
+                                <Button Grid.Column="2" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:TemplatesViewModel}}, x:DataType=local:TemplatesViewModel}"
                                         CommandParameter="{Binding .}" />
                             </Grid>

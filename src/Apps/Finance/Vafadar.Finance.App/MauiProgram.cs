@@ -53,6 +53,7 @@ public static class MauiProgram
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
+            .AddSingleton<Presentation.ThemeService>()
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
             .AddSingleton<AppLockService>();
 

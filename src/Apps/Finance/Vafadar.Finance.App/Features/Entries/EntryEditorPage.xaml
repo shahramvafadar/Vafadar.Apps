@@ -14,16 +14,16 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Header -->
-        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
             <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{StaticResource Primary}" />
+                    TextColor="{DynamicResource Primary}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
         <!-- No account yet -->
         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding HasNoAccounts}">
             <VerticalStackLayout Spacing="12">
-                <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                 <Label Text="{v:Translate Entry_NoAccounts}" HorizontalTextAlignment="Center" />
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Accounts_Add}" Command="{Binding AddAccountCommand}" />
             </VerticalStackLayout>
@@ -48,13 +48,13 @@
                 <!-- Kind and amount -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
-                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}"
+                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}"
                                        IsVisible="{Binding CanChangeKind}" SemanticProperties.Description="{v:Translate Entry_Kind}" />
                         <Label Text="{Binding FixedKindText}" FontAttributes="Bold" FontSize="16"
                                IsVisible="{Binding FixedKindText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
+                        <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                 IsVisible="{Binding RefundInfo, Converter={StaticResource IsNotNullConverter}}">
-                            <Label Text="{Binding RefundInfo}" TextColor="{StaticResource WarningText}" />
+                            <Label Text="{Binding RefundInfo}" TextColor="{DynamicResource WarningText}" />
                         </Border>
 
                         <Label Text="{v:Translate Entry_Amount}" Style="{StaticResource FieldLabel}" />
@@ -75,14 +75,14 @@
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding RuleHint, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding RuleHint}" Style="{StaticResource Secondary}" FontSize="13" VerticalOptions="Center" />
                             <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" BackgroundColor="Transparent"
-                                    TextColor="{StaticResource Primary}" Padding="8,0" />
+                                    TextColor="{DynamicResource Primary}" Padding="8,0" />
                         </Grid>
                         <Label Text="{v:Translate Entry_Category}" Style="{StaticResource Secondary}" Margin="4,0" />
                         <FlexLayout Wrap="Wrap" JustifyContent="Start" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryChoice">
-                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{StaticResource DividerColor}"
-                                            StrokeShape="RoundRectangle 22" BackgroundColor="{StaticResource CardBackground}" MinimumHeightRequest="44"
+                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
+                                            StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44"
                                             SemanticProperties.Description="{Binding Name}">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
@@ -146,7 +146,7 @@
 
                 <!-- More details -->
                 <Button Text="{v:Translate Entry_MoreDetails}" Command="{Binding ToggleDetailsCommand}" BackgroundColor="Transparent"
-                        TextColor="{StaticResource Primary}" HorizontalOptions="Start" />
+                        TextColor="{DynamicResource Primary}" HorizontalOptions="Start" />
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowDetails}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Entry_Payee}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
@@ -160,7 +160,7 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <Button Text="{Binding ., StringFormat='+ {0}'}" FontSize="13" Padding="10,0" HeightRequest="34" Margin="0,0,6,6" CornerRadius="17"
-                                            BackgroundColor="{StaticResource PageBackground}" TextColor="{StaticResource Primary}"
+                                            BackgroundColor="{DynamicResource PageBackground}" TextColor="{DynamicResource Primary}"
                                             Command="{Binding AddTagCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
                                             CommandParameter="{Binding .}" />
                                 </DataTemplate>
@@ -171,7 +171,7 @@
                         <VerticalStackLayout IsVisible="{Binding IsExpense}" Margin="0,12,0,0">
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Text="{v:Translate Entry_Reimbursable}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ReimbursableEnabled}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ReimbursableEnabled}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ReimbursableEnabled}" Spacing="0">
                                 <Label Text="{v:Translate Entry_ReimbursableAmount}" Style="{StaticResource FieldLabel}" />
@@ -196,7 +196,7 @@
                         <VerticalStackLayout IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}">
                             <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
                                 <Label Text="{v:Translate Entry_Foreign}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ForeignEnabled}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ForeignEnabled}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ForeignEnabled}">
                                 <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" />

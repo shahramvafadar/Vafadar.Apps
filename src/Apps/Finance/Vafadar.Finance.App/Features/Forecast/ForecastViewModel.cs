@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Finance.App.Presentation;
 using Vafadar.Finance.Core.Budgets;
 using Vafadar.Finance.Core.Forecasts;
 using Vafadar.Finance.Core.Ledger;
@@ -124,7 +125,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 _dates.Format(item.Date, DateFormatStyle.Short),
                 string.IsNullOrEmpty(item.Name) ? _translator["Forecast_RecordedEntry"] : item.Name,
                 item.Effect is { } effect ? MoneyText.Format(effect, forecast.CurrencyCode, culture, showPlus: true, approximate: item.IsEstimate) : _translator["Plan_AmountUnknown"],
-                item.Effect is null ? Color.FromArgb("#8D5B00") : item.Effect < 0 ? Color.FromArgb("#B71C1C") : Color.FromArgb("#1B5E20"),
+                item.Effect is null ? Palette.WarningText : item.Effect < 0 ? Palette.ExpenseText : Palette.IncomeText,
                 item.IsExcluded ? _translator["Forecast_LeftOut"]
                     : item.IsMoved ? _translator["Forecast_DateAssumed"]
                     : item.Source switch
@@ -146,7 +147,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 forecast.CurrencyCode,
                 MoneyText.Format(forecast.EndBalance, forecast.CurrencyCode, culture),
                 _translator.Format("Forecast_Lowest", MoneyText.Format(forecast.Minimum, forecast.CurrencyCode, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short)),
-                forecast.GoesNegative ? Color.FromArgb("#B71C1C") : Color.FromArgb("#5F6368"),
+                forecast.GoesNegative ? Palette.ExpenseText : Palette.SecondaryText,
                 warning,
                 forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null,
                 [.. forecast.Path.Select(p => new PathPoint(p.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyAmount.ToDecimal(p.Balance, currency)))],

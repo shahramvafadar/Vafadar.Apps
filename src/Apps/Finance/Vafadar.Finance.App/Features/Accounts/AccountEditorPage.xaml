@@ -11,9 +11,9 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Header -->
-        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{StaticResource CardBackground}">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
             <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{StaticResource Primary}" />
+                    TextColor="{DynamicResource Primary}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -26,7 +26,7 @@
                 <Border Style="{StaticResource Card}">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Account_IsDefault}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{StaticResource Primary}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{DynamicResource Primary}" />
                     </Grid>
                 </Border>
 

@@ -11,18 +11,18 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" AccentColor="{StaticResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" AccentColor="{DynamicResource Primary}" />
             <Label Text="{Binding BasisText}" Style="{StaticResource Secondary}" />
             <Label Text="{v:Translate Forecast_WhatIfHint}" Style="{StaticResource Secondary}" FontSize="12" />
-            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4"
+            <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4"
                     IsVisible="{Binding HasScenario}">
                 <Grid ColumnDefinitions="*,Auto">
-                    <Label Text="{v:Translate Forecast_WhatIfActive}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                    <Label Text="{v:Translate Forecast_WhatIfActive}" TextColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                     <Button Grid.Column="1" Text="{v:Translate Forecast_WhatIfReset}" Command="{Binding ResetScenarioCommand}"
-                            BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                            BackgroundColor="Transparent" TextColor="{DynamicResource WarningText}" FontAttributes="Bold" />
                 </Grid>
             </Border>
-            <Label Text="{Binding UnreviewedText}" TextColor="{StaticResource WarningText}" FontSize="13"
+            <Label Text="{Binding UnreviewedText}" TextColor="{DynamicResource WarningText}" FontSize="13"
                    IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
 
             <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Cards}">
@@ -34,13 +34,13 @@
                                     <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
                                     <Label Text="{Binding EndText}" Style="{StaticResource AmountLarge}" />
                                     <Label Text="{Binding MinimumText}" TextColor="{Binding MinimumColor}" />
-                                    <Border BackgroundColor="{StaticResource ExpenseBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
+                                    <Border BackgroundColor="{DynamicResource ExpenseBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                             IsVisible="{Binding Warning, Converter={StaticResource IsNotNullConverter}}">
-                                        <Label Text="{Binding Warning}" TextColor="{StaticResource ExpenseText}" />
+                                        <Label Text="{Binding Warning}" TextColor="{DynamicResource ExpenseText}" />
                                     </Border>
-                                    <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
+                                    <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                             IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}">
-                                        <Label Text="{Binding IncompleteText}" TextColor="{StaticResource WarningText}" />
+                                        <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" />
                                     </Border>
                                     <chart:SfCartesianChart HeightRequest="180" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Forecast_Path}">
                                         <chart:SfCartesianChart.XAxes>
@@ -54,7 +54,7 @@
                                             <chart:NumericalAxis />
                                         </chart:SfCartesianChart.YAxes>
                                         <chart:StepLineSeries ItemsSource="{Binding Path}" XBindingPath="Date" YBindingPath="Balance"
-                                                              Fill="{StaticResource Primary}" StrokeWidth="2" />
+                                                              Fill="{DynamicResource Primary}" StrokeWidth="2" />
                                     </chart:SfCartesianChart>
                                 </VerticalStackLayout>
                             </Border>
@@ -74,7 +74,7 @@
                                                 <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                                     <Label Text="{Binding Name}" />
-                                                    <Label Text="{Binding Badge}" FontSize="12" TextColor="{StaticResource WarningText}"
+                                                    <Label Text="{Binding Badge}" FontSize="12" TextColor="{DynamicResource WarningText}"
                                                            IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}" />
                                                 </VerticalStackLayout>
                                                 <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" VerticalOptions="Center" />

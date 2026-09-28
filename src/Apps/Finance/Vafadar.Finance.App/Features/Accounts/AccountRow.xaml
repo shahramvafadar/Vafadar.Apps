@@ -16,19 +16,19 @@
     </Grid.GestureRecognizers>
 
     <fi:SymbolIcon Grid.Column="0" Symbol="{Binding Icon}" FontSize="24" VerticalOptions="Center"
-                   ForegroundColor="{StaticResource Primary}" />
+                   ForegroundColor="{DynamicResource Primary}" />
     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
         <Label Text="{Binding Name}" FontSize="16" />
         <HorizontalStackLayout Spacing="8">
             <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
             <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" IsVisible="{Binding NotInTotals}" />
-            <Label Text="{v:Translate Account_Incomplete}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
+            <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
     <Label Grid.Column="2" Text="{Binding BalanceText}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
         <Label.Triggers>
             <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
-                <Setter Property="TextColor" Value="{StaticResource ExpenseText}" />
+                <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
             </DataTrigger>
         </Label.Triggers>
     </Label>

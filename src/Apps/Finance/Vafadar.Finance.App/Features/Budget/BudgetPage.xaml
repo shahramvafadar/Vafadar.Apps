@@ -36,26 +36,26 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding PreviousCommand}" />
                     </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding PreviousIcon}" FontSize="22" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <fi:SymbolIcon Symbol="{Binding PreviousIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding PeriodText}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                     <Label Text="{Binding CurrencyText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
-                    <Label Text="{Binding ScopeText}" TextColor="{StaticResource WarningText}" FontSize="13" HorizontalTextAlignment="Center"
+                    <Label Text="{Binding ScopeText}" TextColor="{DynamicResource WarningText}" FontSize="13" HorizontalTextAlignment="Center"
                            IsVisible="{Binding ScopeText, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
                 <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NextCommand}" />
                     </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
             </Grid>
 
             <!-- No budget is not a zero budget (BUD-01) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="12">
-                    <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                     <Label Text="{v:Translate Budget_None}" HorizontalTextAlignment="Center" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Budget_Create}" Command="{Binding EditCommand}" />
                     <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyPrevious}" Command="{Binding CopyPreviousCommand}"
@@ -79,9 +79,9 @@
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Budget_ConfirmedOnly}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{StaticResource Primary}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" />
                     </Grid>
-                    <Label Text="{Binding UnreviewedText}" TextColor="{StaticResource WarningText}"
+                    <Label Text="{Binding UnreviewedText}" TextColor="{DynamicResource WarningText}"
                            IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
             </Border>
@@ -98,7 +98,7 @@
             <VerticalStackLayout Spacing="8" IsVisible="{Binding HasBudget}" Margin="0,8,0,0">
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyNext}" Command="{Binding CopyToNextCommand}" />
-                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}" />
+                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

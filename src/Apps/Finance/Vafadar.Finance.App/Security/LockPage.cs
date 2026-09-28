@@ -1,5 +1,6 @@
 using FluentIcons.Common;
 using FluentIcons.Maui;
+using Vafadar.Finance.App.Presentation;
 using Vafadar.Localization;
 using Vafadar.Maui.Security;
 
@@ -19,14 +20,14 @@ internal sealed class LockPage : ContentPage
         _lock = appLock;
         _translator = translator;
         _promptOnAppearing = promptOnAppearing;
-        BackgroundColor = Color.FromArgb("#F6F7F6");
+        BackgroundColor = Palette.PageBackground;
         FlowDirection = Application.Current?.Windows.FirstOrDefault()?.Page?.FlowDirection ?? FlowDirection.MatchParent;
 
         _message = new Label { Text = translator["Lock_Message"], FontSize = 16, HorizontalTextAlignment = TextAlignment.Center };
         var unlock = new Button
         {
             Text = translator["Lock_Unlock"],
-            BackgroundColor = Color.FromArgb("#2E7D32"),
+            BackgroundColor = Palette.Primary,
             TextColor = Colors.White,
             CornerRadius = 24,
             MinimumHeightRequest = 48,
@@ -41,7 +42,7 @@ internal sealed class LockPage : ContentPage
             VerticalOptions = LayoutOptions.Center,
             Children =
             {
-                new SymbolIcon { Symbol = Symbol.LockClosed, FontSize = 56, ForegroundColor = Color.FromArgb("#2E7D32"), HorizontalOptions = LayoutOptions.Center },
+                new SymbolIcon { Symbol = Symbol.LockClosed, FontSize = 56, ForegroundColor = Palette.Primary, HorizontalOptions = LayoutOptions.Center },
                 new Label { Text = translator["App_Name"], FontSize = 22, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment = TextAlignment.Center },
                 _message,
                 unlock,

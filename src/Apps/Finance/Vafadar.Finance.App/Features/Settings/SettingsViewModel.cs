@@ -21,6 +21,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly FinanceStore _store;
     private readonly ReminderService _reminders;
     private readonly AppLockService _lock;
+    private readonly Presentation.ThemeService _theme;
     private bool _refreshing;
 
     public SettingsViewModel(
@@ -31,10 +32,12 @@ public sealed partial class SettingsViewModel : ViewModelBase
         IAppEnvironment app,
         FinanceStore store,
         ReminderService reminders,
-        AppLockService appLock)
+        AppLockService appLock,
+        Presentation.ThemeService theme)
     {
         _reminders = reminders;
         _lock = appLock;
+        _theme = theme;
         ModeNames = [translator["Mode_Simple"], translator["Mode_Advanced"]];
         _localization = localization;
         _translator = translator;
@@ -72,6 +75,21 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
 
+    // Theme (UX-08): follow the device, light or dark.
+    [ObservableProperty]
+    public partial IReadOnlyList<string> ThemeNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int ThemeIndex { get; set; }
+
+    partial void OnThemeIndexChanged(int value)
+    {
+        if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value) && (Presentation.ThemeChoice)value != _theme.Choice)
+        {
+            _theme.Set((Presentation.ThemeChoice)value);
+        }
+    }
+
     [ObservableProperty]
     public partial bool LockAvailable { get; set; }
 
@@ -103,6 +121,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ReportCurrency = settings.ReportCurrencyCode;
             ShowDetails = settings.NotificationsShowDetails;
             ModeIndex = (int)settings.Mode;
+            ThemeNames = [_translator["Theme_System"], _translator["Theme_Light"], _translator["Theme_Dark"]];
+            ThemeIndex = (int)_theme.Choice;
             LockEnabled = settings.AppLockEnabled;
             LockAvailable = settings.AppLockEnabled || await _lock.Authenticator.IsAvailableAsync();
             ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);

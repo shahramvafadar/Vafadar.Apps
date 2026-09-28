@@ -15,14 +15,14 @@
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <fi:SymbolIcon Symbol="{Binding Summary.Icon, FallbackValue=Savings}" FontSize="32" VerticalOptions="Start" ForegroundColor="{StaticResource Primary}" />
+                        <fi:SymbolIcon Symbol="{Binding Summary.Icon, FallbackValue=Savings}" FontSize="32" VerticalOptions="Start" ForegroundColor="{DynamicResource Primary}" />
                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                             <Label Text="{Binding Summary.Name}" FontSize="18" FontAttributes="Bold" />
                             <Label Text="{Binding Summary.FundedText}" FontSize="16" />
                             <ProgressBar Progress="{Binding Summary.Progress}" ProgressColor="{Binding Summary.ProgressColor}" />
                             <Label Text="{Binding Summary.DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.DateText, Converter={StaticResource IsNotNullConverter}}" />
-                            <Label Text="{Binding Summary.SuggestionText}" TextColor="{StaticResource Primary}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
-                            <Label Text="{Binding Summary.WarningText}" TextColor="{StaticResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding Summary.WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.StateText, Converter={StaticResource IsNotNullConverter}}" />
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding PerAccount}">
                                 <BindableLayout.ItemTemplate>
@@ -38,8 +38,8 @@
                 <!-- Set aside or release (F2-GOAL-02); this never moves money -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsActive}">
                     <VerticalStackLayout Spacing="4">
-                        <v:ChoiceChips ItemsSource="{Binding DirectionNames}" SelectedIndex="{Binding DirectionIndex}" AccentColor="{StaticResource Primary}" />
-                        <Label Text="{Binding NoAccountsText}" TextColor="{StaticResource WarningText}" IsVisible="{Binding NoAccountsText, Converter={StaticResource IsNotNullConverter}}" />
+                        <v:ChoiceChips ItemsSource="{Binding DirectionNames}" SelectedIndex="{Binding DirectionIndex}" AccentColor="{DynamicResource Primary}" />
+                        <Label Text="{Binding NoAccountsText}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding NoAccountsText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout IsVisible="{Binding HasFundingAccounts}" Spacing="4">
                             <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" SemanticProperties.Description="{v:Translate Entry_Account}" />
@@ -82,7 +82,7 @@
                     <Button Style="{StaticResource SecondaryButton}" Text="{Binding CompleteText}" Command="{Binding ToggleCompleteCommand}" />
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Archive}" Command="{Binding ArchiveCommand}" IsVisible="{Binding IsActive}" />
                 </Grid>
-                <Button Text="{v:Translate Goal_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}" />
+                <Button Text="{v:Translate Goal_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

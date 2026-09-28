@@ -26,9 +26,9 @@ internal sealed class EntryPresenter(
     Translator translator,
     CultureInfo culture)
 {
-    public static readonly Color IncomeColor = Color.FromArgb("#1B5E20");
-    public static readonly Color ExpenseColor = Color.FromArgb("#B71C1C");
-    public static readonly Color NeutralColor = Color.FromArgb("#37474F");
+    public static Color IncomeColor => Palette.IncomeText;
+    public static Color ExpenseColor => Palette.ExpenseText;
+    public static Color NeutralColor => Palette.TransferText;
 
     // The arrow points from the source to the destination in the reading direction.
     private string Arrow => culture.TextInfo.IsRightToLeft ? "←" : "→";

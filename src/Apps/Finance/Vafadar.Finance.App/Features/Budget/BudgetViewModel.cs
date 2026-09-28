@@ -33,9 +33,9 @@ public sealed record BudgetLine(
 /// </summary>
 public sealed partial class BudgetViewModel : ViewModelBase
 {
-    private static readonly Color Good = Color.FromArgb("#2E7D32");
-    private static readonly Color Near = Color.FromArgb("#F9A825");
-    private static readonly Color Over = Color.FromArgb("#B71C1C");
+    private static Color Good => Palette.Primary;
+    private static Color Near => Palette.NearLimit;
+    private static Color Over => Palette.ExpenseText;
 
     private readonly FinanceStore _store;
     private readonly PlanStore _plans;
@@ -220,7 +220,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
             MoneyText.Format(status.Spent, _currency, culture),
             _translator.Format("Budget_Of", MoneyText.Format(status.Limit, _currency, culture)),
             statusText,
-            status.IsOver ? Over : Color.FromArgb("#5F6368"),
+            status.IsOver ? Over : Palette.SecondaryText,
             progress,
             color);
     }

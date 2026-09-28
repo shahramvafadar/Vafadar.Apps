@@ -223,4 +223,16 @@
   <data name="Settings_WeekStartAutomatic" xml:space="preserve">
     <value>خودکار ({0})</value>
   </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>ظاهر</value>
+  </data>
+  <data name="Theme_System" xml:space="preserve">
+    <value>مثل دستگاه</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>روشن</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>تیره</value>
+  </data>
 </root>

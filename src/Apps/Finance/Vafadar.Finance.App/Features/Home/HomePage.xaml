@@ -17,7 +17,7 @@
             <VerticalStackLayout Padding="16" Spacing="8">
 
                 <!-- Scope of every number on this page (DASH-01) -->
-                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{StaticResource Primary}" />
+                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{DynamicResource Primary}" />
                 <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" />
 
                 <!-- Welcome without accounts -->
@@ -39,9 +39,9 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Label Text="{Binding ConfirmedBalanceText}" TextColor="{StaticResource WarningText}" FontSize="13"
+                        <Label Text="{Binding ConfirmedBalanceText}" TextColor="{DynamicResource WarningText}" FontSize="13"
                                IsVisible="{Binding ConfirmedBalanceText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Label Text="{Binding IncompleteText}" TextColor="{StaticResource WarningText}" FontSize="13"
+                        <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontSize="13"
                                IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenAccountsCommand}" />
@@ -53,7 +53,7 @@
                             </Label.GestureRecognizers>
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label" Binding="{Binding CombinedIncomplete}" Value="True">
-                                    <Setter Property="TextColor" Value="{StaticResource WarningText}" />
+                                    <Setter Property="TextColor" Value="{DynamicResource WarningText}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -68,28 +68,28 @@
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenDueCommand}" />
                             </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="CalendarClock" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Symbol="CalendarClock" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding DueText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenReimbursementsCommand}" />
                             </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding ReimbursementText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenContractCommand}" />
                             </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="DocumentText" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Symbol="DocumentText" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding ContractText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenUnreviewedCommand}" />
                             </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="Eye" FontSize="22" ForegroundColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Symbol="Eye" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding UnreviewedText}" FontSize="15" VerticalOptions="Center" />
                         </Grid>
                     </VerticalStackLayout>
@@ -106,16 +106,16 @@
                                             <TapGestureRecognizer Command="{Binding OpenIncomeCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}" />
                                         </VerticalStackLayout.GestureRecognizers>
                                         <Label Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" />
-                                        <Label Text="{Binding IncomeText}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource IncomeText}" />
+                                        <Label Text="{Binding IncomeText}" FontSize="18" FontAttributes="Bold" TextColor="{DynamicResource IncomeText}" />
                                     </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="1">
                                         <VerticalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding OpenExpenseCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}" />
                                         </VerticalStackLayout.GestureRecognizers>
                                         <Label Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" />
-                                        <Label Text="{Binding ExpenseText}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource ExpenseText}" />
+                                        <Label Text="{Binding ExpenseText}" FontSize="18" FontAttributes="Bold" TextColor="{DynamicResource ExpenseText}" />
                                     </VerticalStackLayout>
-                                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="{StaticResource DividerColor}" />
+                                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="{DynamicResource DividerColor}" />
                                     <Label Grid.Row="2" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                     <VerticalStackLayout Grid.Row="2" Grid.Column="1">
                                         <Label Text="{Binding ResultText}" FontSize="16" FontAttributes="Bold" TextColor="{Binding ResultColor}" />
@@ -159,7 +159,7 @@
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipPlansAction}" Command="{Binding AddPlanCommand}" />
                             <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="plans"
-                                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" />
+                                    BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowBudgetTip}">
@@ -169,7 +169,7 @@
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipBudgetAction}" Command="{Binding AddBudgetCommand}" />
                             <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="budget"
-                                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" />
+                                    BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
@@ -213,7 +213,7 @@
                         <chart:SfCircularChart HeightRequest="200" IsVisible="{Binding HasSlices}" FlowDirection="LeftToRight"
                                                SemanticProperties.Description="{v:Translate Home_ExpenseByCategory}">
                             <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
-                                                  PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.62" StrokeWidth="2" Stroke="White" />
+                                                  PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.62" StrokeWidth="2" Stroke="{DynamicResource CardBackground}" />
                         </chart:SfCircularChart>
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Slices}" IsVisible="{Binding HasSlices}">
                             <BindableLayout.ItemTemplate>
@@ -248,7 +248,7 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
                         <Button Text="{v:Translate Accounts_Title}" Command="{Binding OpenAccountsCommand}" BackgroundColor="Transparent"
-                                TextColor="{StaticResource Primary}" HorizontalOptions="End" />
+                                TextColor="{DynamicResource Primary}" HorizontalOptions="End" />
                     </VerticalStackLayout>
                 </Border>
 

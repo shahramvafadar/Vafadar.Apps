@@ -12,42 +12,42 @@
 
     <Grid RowDefinitions="Auto,*">
         <!-- Search and filters -->
-        <VerticalStackLayout Padding="16,8,16,4" Spacing="8" BackgroundColor="{StaticResource PageBackground}">
-            <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" BackgroundColor="{StaticResource CardBackground}"
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" BackgroundColor="{DynamicResource CardBackground}"
                        SemanticProperties.Description="{v:Translate Common_Search}" />
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{StaticResource Primary}" />
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{StaticResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{DynamicResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}" />
             <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
                 <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
                         SemanticProperties.Description="{v:Translate Entry_Category}" />
                 <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
                         SemanticProperties.Description="{v:Translate Entry_Account}" />
                 <Button Grid.Column="2" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="18" MinimumHeightRequest="36"
-                        Padding="14,0" FontSize="14" BackgroundColor="{StaticResource WarningBackground}" TextColor="{StaticResource WarningText}"
+                        Padding="14,0" FontSize="14" BackgroundColor="{DynamicResource WarningBackground}" TextColor="{DynamicResource WarningText}"
                         IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding UnreviewedOnly}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{StaticResource WarningText}" />
-                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource WarningText}" />
+                            <Setter Property="TextColor" Value="{DynamicResource CardBackground}" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
             </Grid>
 
             <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
-            <Border BackgroundColor="{StaticResource CardBackground}" Stroke="{StaticResource Primary}" StrokeShape="RoundRectangle 18"
+            <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"
                     Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding CategoryFilterName, Converter={StaticResource IsNotNullConverter}}">
                 <HorizontalStackLayout Spacing="4">
-                    <Label Text="{Binding CategoryFilterName}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                    <Label Text="{Binding CategoryFilterName}" TextColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}"
                             Padding="8,0" MinimumWidthRequest="36" SemanticProperties.Description="{v:Translate Tx_ClearFilters}" />
                 </HorizontalStackLayout>
             </Border>
-            <Border BackgroundColor="{StaticResource CardBackground}" Stroke="{StaticResource Primary}" StrokeShape="RoundRectangle 18"
+            <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"
                     Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding CustomPeriodText, Converter={StaticResource IsNotNullConverter}}">
                 <HorizontalStackLayout Spacing="4">
-                    <Label Text="{Binding CustomPeriodText}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                    <Label Text="{Binding CustomPeriodText}" TextColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}"
                             Padding="8,0" MinimumWidthRequest="36" SemanticProperties.Description="{v:Translate Tx_ClearFilters}" />
                 </HorizontalStackLayout>
             </Border>
@@ -79,8 +79,8 @@
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
                             <Label Text="{Binding Title}" FontSize="16" LineBreakMode="TailTruncation" />
                             <HorizontalStackLayout Spacing="6">
-                                <Label Text="{v:Translate Tx_Unreviewed}" FontSize="12" TextColor="{StaticResource WarningText}"
-                                       BackgroundColor="{StaticResource WarningBackground}" Padding="6,1" IsVisible="{Binding IsUnreviewed}" />
+                                <Label Text="{v:Translate Tx_Unreviewed}" FontSize="12" TextColor="{DynamicResource WarningText}"
+                                       BackgroundColor="{DynamicResource WarningBackground}" Padding="6,1" IsVisible="{Binding IsUnreviewed}" />
                                 <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
@@ -91,7 +91,7 @@
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="32,48" Spacing="16">
-                    <fi:SymbolIcon Symbol="Receipt" FontSize="44" HorizontalOptions="Center" ForegroundColor="{StaticResource Primary}" />
+                    <fi:SymbolIcon Symbol="Receipt" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
                     <Label Text="{v:Translate Tx_Empty}" HorizontalTextAlignment="Center" IsVisible="{Binding HasNoEntriesAtAll}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Tx_Add}" Command="{Binding AddCommand}"
                             IsVisible="{Binding HasNoEntriesAtAll}" />

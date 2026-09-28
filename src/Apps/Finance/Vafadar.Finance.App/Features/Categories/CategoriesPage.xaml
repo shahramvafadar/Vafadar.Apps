@@ -34,7 +34,7 @@
         <ScrollView>
             <VerticalStackLayout Padding="16,0,16,16" Spacing="4">
                 <Button Text="{v:Translate Rules_Open}" Command="{Binding OpenRulesCommand}" BackgroundColor="Transparent"
-                        TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
+                        TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
                 <Label Text="{v:Translate Categories_Expense}" Style="{StaticResource SectionHeader}" />
                 <Border Style="{StaticResource Card}" Padding="0">
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Expense}" BindableLayout.ItemTemplate="{StaticResource CategoryRow}" />

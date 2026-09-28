@@ -35,7 +35,7 @@
                         <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" />
                         <Label Text="{Binding AmountText}" Style="{StaticResource AmountLarge}" />
                         <Label Text="{Binding RuleText}" Style="{StaticResource Secondary}" />
-                        <Label Text="{v:Translate Plan_Paused}" TextColor="{StaticResource WarningText}" IsVisible="{Binding IsPaused}" />
+                        <Label Text="{v:Translate Plan_Paused}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding IsPaused}" />
                         <Label Text="{v:Translate Plan_Ended}" Style="{StaticResource Secondary}" IsVisible="{Binding IsEnded}" />
                     </VerticalStackLayout>
                 </Border>
@@ -79,7 +79,7 @@
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Plan_EndAction}" Command="{Binding EndCommand}" />
                 </Grid>
                 <Button Text="{v:Translate Plan_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
-                        TextColor="{StaticResource ExpenseText}" IsVisible="{Binding CanDelete}" />
+                        TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding CanDelete}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

@@ -34,12 +34,12 @@ public sealed partial class PlansViewModel : ViewModelBase
 {
     private const int UpcomingDays = 60;
 
-    private static readonly Color WarningText = Color.FromArgb("#8D5B00");
-    private static readonly Color WarningBackground = Color.FromArgb("#FFF4E0");
-    private static readonly Color OverdueText = Color.FromArgb("#B71C1C");
-    private static readonly Color OverdueBackground = Color.FromArgb("#FFEBEE");
-    private static readonly Color NeutralText = Color.FromArgb("#37474F");
-    private static readonly Color NeutralBackground = Color.FromArgb("#ECEFF1");
+    private static Color WarningText => Palette.WarningText;
+    private static Color WarningBackground => Palette.WarningBackground;
+    private static Color OverdueText => Palette.ExpenseText;
+    private static Color OverdueBackground => Palette.ExpenseBackground;
+    private static Color NeutralText => Palette.TransferText;
+    private static Color NeutralBackground => Palette.TransferBackground;
 
     private readonly FinanceStore _finance;
     private readonly PlanStore _plans;

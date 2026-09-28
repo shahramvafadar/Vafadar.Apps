@@ -32,12 +32,12 @@
                 </Border>
 
                 <!-- Needs review -->
-                <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
+                <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
                         IsVisible="{Binding IsUnreviewed}">
                     <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="{v:Translate Tx_Unreviewed}" TextColor="{StaticResource WarningText}" VerticalOptions="Center" />
+                        <Label Text="{v:Translate Tx_Unreviewed}" TextColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                         <Button Grid.Column="1" Text="{v:Translate Entry_MarkReviewed}" Command="{Binding MarkReviewedCommand}"
-                                BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" />
+                                BackgroundColor="Transparent" TextColor="{DynamicResource WarningText}" FontAttributes="Bold" />
                     </Grid>
                 </Border>
 
@@ -76,12 +76,12 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Border>
-                <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
+                <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,8"
                         IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding ReimbursementText}" TextColor="{StaticResource WarningText}" />
+                        <Label Text="{Binding ReimbursementText}" TextColor="{DynamicResource WarningText}" />
                         <Button Text="{v:Translate Entry_RecordReimbursement}" Command="{Binding RecordReimbursementCommand}" IsVisible="{Binding CanRecordReimbursement}"
-                                BackgroundColor="Transparent" TextColor="{StaticResource WarningText}" FontAttributes="Bold" HorizontalOptions="Start" Padding="0" />
+                                BackgroundColor="Transparent" TextColor="{DynamicResource WarningText}" FontAttributes="Bold" HorizontalOptions="Start" Padding="0" />
                     </VerticalStackLayout>
                 </Border>
                 <Label Text="{Binding RefundableText}" Style="{StaticResource Secondary}"
@@ -107,7 +107,7 @@
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Templates_SaveAction}" Command="{Binding SaveAsTemplateCommand}"
                         IsVisible="{Binding CanSaveTemplate}" />
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
-                        TextColor="{StaticResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
+                        TextColor="{DynamicResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

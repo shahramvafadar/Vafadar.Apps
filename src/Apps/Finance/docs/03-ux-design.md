@@ -73,7 +73,7 @@ More:    Accounts · Budget · Reports · Categories · Import/Export · Backup 
 * Colour is never the only carrier: sign, icon and text label accompany it.
 * Direction-dependent icons (back, chevrons) mirror in RTL; charts, logos and money icons do not.
 * Every icon has an accessible name (`SemanticProperties.Description`); charts have a table alternative (UX-06).
-* Light theme only in phase 1 (D-12).
+* Light and dark theme (D-22): the semantic color tokens have a light and a dark variant (`Presentation/Palette.cs`) and are used as `DynamicResource`, so switching recolors open pages; code reads colors from the palette, never as literals. Settings offers "like the device", light and dark.
 * Digits are Latin in every language for now; Persian uses the Latin separators `.` and `,` because the Arabic
   separators (U+066B, U+066C) look like commas next to Latin digits. Input accepts Persian/Arabic digits and `٫`.
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a

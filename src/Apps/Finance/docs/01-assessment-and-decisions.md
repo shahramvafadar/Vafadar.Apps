@@ -33,7 +33,7 @@
 | D-09 | Review state: Confirmed / Unreviewed; manual entries are Confirmed, automatic postings are Unreviewed | FIN-11..14 |
 | D-10 | Balances and reports are computed on the fly from the ledger (no stored running balances) | FIN-09 consistency; fast enough for 10,000 entries (to be measured, Q-02) |
 | D-11 | Navigation: Home, Transactions, Plans, More + a persistent "Add" action | Specification §14.2 |
-| D-12 | Phase 1 uses the light theme only (`UserAppTheme = Light`) | UX-08 |
+| D-12 | Phase 1 uses the light theme only (`UserAppTheme = Light`); superseded by D-22 in phase 2A | UX-08 |
 | D-13 | Syncfusion controls are used where they add value: Charts (reports, forecast), Segmented control (kind/mode selectors), Calendar/Date picker (if Persian calendar support is verified), Numeric entry, Busy indicator, Popup, Chips | Owner decision; licensed |
 | D-14 | Icons: Fluent UI System Icons font (MIT), bundled offline | VIS-03/04 |
 | D-15 | Reminders: local notifications via `Plugin.LocalNotification` (MIT), no exact-alarm permission | REM-09 |
@@ -42,6 +42,7 @@
 | D-18 | CSV writer/reader are implemented in `Finance.Core` (no dependency) with formula-injection protection | IO-06 |
 | D-19 | Temporary placeholder branding: neutral green icon with a simple ledger glyph; final name/logo pending | PR-10 |
 | D-20 | If no online feature ships in the first release, the `INTERNET` permission is removed from that release | PRI-01, privacy |
+| D-22 | Phase 2A adds a dark theme: semantic colors (Presentation/Palette.cs) in a light and a dark variant used as dynamic resources, a Settings choice "like the device / light / dark" stored as a local preference, shared controls follow the platform theme | UX-08 |
 | D-21 | Product name **Zanance** (owner, 2026-09-26), shown untranslated in every language; Android package and iOS bundle id `pro.vafadar.zanance` (replaces the unpublished `pro.vafadar.finance`). Code and folders keep the working name *Finance* | PR-10 |
 
 ## 3. Conflicts found and their resolution

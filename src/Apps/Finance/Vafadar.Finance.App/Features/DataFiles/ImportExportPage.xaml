@@ -22,12 +22,12 @@
                         <v:DateField Date="{Binding ExportTo}" />
                         <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                             <Label Text="{v:Translate Export_IncludeNotes}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{StaticResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{DynamicResource Primary}" />
                         </Grid>
-                        <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,12,0,0">
-                            <Label Text="{v:Translate Export_Warning}" TextColor="{StaticResource WarningText}" />
+                        <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,12,0,0">
+                            <Label Text="{v:Translate Export_Warning}" TextColor="{DynamicResource WarningText}" />
                         </Border>
-                        <Label Text="{Binding ExportResult}" TextColor="{StaticResource IncomeText}" Margin="0,8,0,0"
+                        <Label Text="{Binding ExportResult}" TextColor="{DynamicResource IncomeText}" Margin="0,8,0,0"
                                IsVisible="{Binding ExportResult, Converter={StaticResource IsNotNullConverter}}" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Export_Button}" Command="{Binding ExportCommand}"
                                 IsEnabled="{Binding IsNotBusy}" Margin="0,12,0,0" />
@@ -50,12 +50,12 @@
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding DateColumn}" SemanticProperties.Description="{v:Translate Import_DateColumn}" />
                             <Label Text="{v:Translate Import_DateFormat}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" SemanticProperties.Description="{v:Translate Import_DateFormat}" />
-                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{StaticResource Primary}" Margin="0,8,0,0" />
+                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{DynamicResource Primary}" Margin="0,8,0,0" />
                             <Label Text="{v:Translate Import_AmountColumn}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding AmountColumn}" SemanticProperties.Description="{v:Translate Import_AmountColumn}" />
-                            <v:ChoiceChips ItemsSource="{Binding SeparatorNames}" SelectedIndex="{Binding SeparatorIndex}" AccentColor="{StaticResource Primary}" Margin="0,8,0,0" />
+                            <v:ChoiceChips ItemsSource="{Binding SeparatorNames}" SelectedIndex="{Binding SeparatorIndex}" AccentColor="{DynamicResource Primary}" Margin="0,8,0,0" />
                             <Label Text="{v:Translate Import_Sign}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding SignNames}" SelectedIndex="{Binding SignIndex}" AccentColor="{StaticResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding SignNames}" SelectedIndex="{Binding SignIndex}" AccentColor="{DynamicResource Primary}" />
                             <Label Text="{v:Translate Import_TitleColumn}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding TitleColumn}" SemanticProperties.Description="{v:Translate Import_TitleColumn}" />
                             <Label Text="{v:Translate Import_CategoryColumn}" Style="{StaticResource FieldLabel}" />
@@ -69,7 +69,7 @@
 
                         <!-- Preview before anything is saved (IO-09) -->
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
-                            <Border BackgroundColor="{StaticResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                            <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
                                 <VerticalStackLayout Spacing="4">
                                     <Label Text="{Binding PreviewText}" />
                                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding InvalidLines}">
@@ -81,19 +81,19 @@
                                     </VerticalStackLayout>
                                 </VerticalStackLayout>
                             </Border>
-                            <Border BackgroundColor="{StaticResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
+                            <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                     IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}">
-                                <Label Text="{Binding WarningText}" TextColor="{StaticResource WarningText}" />
+                                <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" />
                             </Border>
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasDuplicates}">
                                 <Label Text="{v:Translate Import_SkipDuplicates}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{StaticResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <Button Style="{StaticResource PrimaryButton}" Command="{Binding ImportCommand}" IsEnabled="{Binding IsNotBusy}"
                                     Text="{Binding ImportButtonText}" />
                         </VerticalStackLayout>
 
-                        <Label Text="{Binding ImportResult}" TextColor="{StaticResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding ImportResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -105,7 +105,7 @@
                             <DataTemplate x:DataType="local:BatchRow">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
                                     <Label Text="{Binding Text}" VerticalOptions="Center" />
-                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" BackgroundColor="Transparent" TextColor="{StaticResource ExpenseText}"
+                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
                                             Command="{Binding UndoCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>
@@ -116,7 +116,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Primary}"
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
                            HorizontalOptions="Center" VerticalOptions="Center" />
     </Grid>
 </ContentPage>

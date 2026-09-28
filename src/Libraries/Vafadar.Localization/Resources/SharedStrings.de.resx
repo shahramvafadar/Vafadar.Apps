@@ -223,4 +223,16 @@
   <data name="Settings_WeekStartAutomatic" xml:space="preserve">
     <value>Automatisch ({0})</value>
   </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Darstellung</value>
+  </data>
+  <data name="Theme_System" xml:space="preserve">
+    <value>Wie das Gerät</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
 </root>

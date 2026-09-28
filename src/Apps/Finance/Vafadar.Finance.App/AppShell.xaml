@@ -10,9 +10,13 @@
     xmlns:tx="clr-namespace:Vafadar.Finance.App.Features.Transactions"
     xmlns:plans="clr-namespace:Vafadar.Finance.App.Features.Plans"
     Title="{v:Translate App_Name}"
-    Shell.TabBarForegroundColor="{StaticResource Primary}"
-    Shell.TabBarTitleColor="{StaticResource Primary}"
-    Shell.TabBarUnselectedColor="#5F6368">
+    Shell.TabBarForegroundColor="{DynamicResource Primary}"
+    Shell.TabBarTitleColor="{DynamicResource Primary}"
+    Shell.TabBarUnselectedColor="{DynamicResource SecondaryText}"
+    Shell.TabBarBackgroundColor="{DynamicResource CardBackground}"
+    Shell.BackgroundColor="{DynamicResource CardBackground}"
+    Shell.ForegroundColor="{DynamicResource Primary}"
+    Shell.TitleColor="{DynamicResource AmountText}">
 
     <TabBar>
         <ShellContent

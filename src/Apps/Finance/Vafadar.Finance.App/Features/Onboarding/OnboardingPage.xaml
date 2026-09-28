@@ -18,7 +18,7 @@
 
                 <!-- Step 1: welcome and language -->
                 <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="12">
-                    <fi:SymbolIcon Symbol="Wallet" FontSize="56" ForegroundColor="{StaticResource Primary}" HorizontalOptions="Start" />
+                    <fi:SymbolIcon Symbol="Wallet" FontSize="56" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Start" />
                     <Label Text="{v:Translate Onb_WelcomeTitle}" FontSize="28" FontAttributes="Bold" />
                     <Label Text="{v:Translate Onb_WelcomeText}" FontSize="16" />
                     <Label Text="{v:Translate Settings_Language}" Style="{StaticResource FieldLabel}" />
@@ -32,7 +32,7 @@
                                             <VisualState Name="Normal" />
                                             <VisualState Name="Selected">
                                                 <VisualState.Setters>
-                                                    <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                                     <Setter Property="StrokeThickness" Value="2" />
                                                 </VisualState.Setters>
                                             </VisualState>

@@ -18,7 +18,7 @@
 
     <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
     <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
-                   AccentColor="{StaticResource Primary}" SemanticProperties.Description="{v:Translate Account_Type}" />
+                   AccentColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_Type}" />
 
     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
     <Picker ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode}"
@@ -39,7 +39,7 @@
            IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
            SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0">
-        <CheckBox IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{StaticResource Primary}"
+        <CheckBox IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
                   SemanticProperties.Description="{v:Translate Account_OpeningUnknown}" />
         <Label Grid.Column="1" Text="{v:Translate Account_OpeningUnknown}" VerticalOptions="Center" LineBreakMode="WordWrap" />
     </Grid>
@@ -47,7 +47,7 @@
     <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
            IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0" IsVisible="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}">
-        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{StaticResource Primary}" />
+        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{DynamicResource Primary}" />
         <Label Grid.Column="1" Text="{v:Translate Account_OpeningNegative}" VerticalOptions="Center" LineBreakMode="WordWrap">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnNegativeLabelTapped" />
@@ -60,11 +60,11 @@
     <Label Text="{v:Translate Account_OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
 
     <Button Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}" BackgroundColor="Transparent"
-            TextColor="{StaticResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
+            TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
     <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" />
 
     <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
         <Label Text="{v:Translate Account_IncludeInTotals}" VerticalOptions="Center" />
-        <Switch Grid.Column="1" IsToggled="{Binding IncludeInTotals}" OnColor="{StaticResource Primary}" />
+        <Switch Grid.Column="1" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}" />
     </Grid>
 </VerticalStackLayout>

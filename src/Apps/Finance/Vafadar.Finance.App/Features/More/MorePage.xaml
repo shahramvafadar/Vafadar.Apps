@@ -20,7 +20,7 @@
                                     <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:MoreViewModel}}, x:DataType=local:MoreViewModel}"
                                                           CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
-                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" ForegroundColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
                                 <Label Grid.Column="1" Text="{Binding Title}" FontSize="16" VerticalOptions="Center" />
                             </Grid>
                         </DataTemplate>

@@ -40,7 +40,7 @@ public sealed class DateField : ContentView
         {
             Padding = new Thickness(12, 10),
             StrokeThickness = 1,
-            Stroke = Color.FromArgb("#C8C8C8"),
+            Stroke = ThemeColors.Outline,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
             Content = _text,
             MinimumHeightRequest = 48,
