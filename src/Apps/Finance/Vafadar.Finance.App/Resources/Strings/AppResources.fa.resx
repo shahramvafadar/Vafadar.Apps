@@ -2233,4 +2233,13 @@
   <data name="Settlement_BackTitle" xml:space="preserve">
     <value>{0}: برگشت پول</value>
   </data>
+  <data name="Plan_SecondDay" xml:space="preserve">
+    <value>هر ماه یک روز دیگر هم</value>
+  </data>
+  <data name="Plan_SecondDayNumber" xml:space="preserve">
+    <value>روز ماه</value>
+  </data>
+  <data name="Rule_AlsoOnDay" xml:space="preserve">
+    <value>و روز {0}</value>
+  </data>
 </root>

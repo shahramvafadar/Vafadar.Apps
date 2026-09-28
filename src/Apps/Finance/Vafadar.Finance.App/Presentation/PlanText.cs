@@ -31,6 +31,11 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
             text += " · " + translator["Calendar_Persian"];
         }
 
+        if (rule.SecondDay is { } second)
+        {
+            text += " · " + translator.Format("Rule_AlsoOnDay", second);
+        }
+
         if (rule.WeekendShift != WeekendShift.None && rule.WeekendDays != 0)
         {
             text += " · " + translator[rule.WeekendShift == WeekendShift.Before ? "Weekend_BeforeShort" : "Weekend_AfterShort"];

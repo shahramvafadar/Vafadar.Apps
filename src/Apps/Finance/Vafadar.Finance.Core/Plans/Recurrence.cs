@@ -24,6 +24,11 @@ public static class Recurrence
             return "IntervalMustBePositive";
         }
 
+        if (rule.SecondDay is { } second && (rule.Frequency != Frequency.Monthly || second is < 1 or > 31))
+        {
+            return "SecondDayInvalid";
+        }
+
         return rule.End switch
         {
             EndKind.OnDate when rule.EndDate is not { } end || end < rule.Start => "EndBeforeStart",
@@ -48,7 +53,8 @@ public static class Recurrence
         var number = 0;
         for (var step = 0; step < MaxSteps; step++)
         {
-            if (Candidate(rule, step) is not { } date)
+            var dates = Candidates(rule, step);
+            if (dates.Count == 0)
             {
                 // The anchor day does not exist in this month and the policy is Skip (AT-20).
                 if (StepBeyond(rule, step, to))
@@ -59,20 +65,23 @@ public static class Recurrence
                 continue;
             }
 
-            if (date > to || (rule.End == EndKind.OnDate && date > rule.EndDate))
+            foreach (var date in dates)
             {
-                yield break;
-            }
+                if (date > to || (rule.End == EndKind.OnDate && date > rule.EndDate))
+                {
+                    yield break;
+                }
 
-            number++;
-            if (rule.End == EndKind.AfterCount && number > rule.Count)
-            {
-                yield break;
-            }
+                number++;
+                if (rule.End == EndKind.AfterCount && number > rule.Count)
+                {
+                    yield break;
+                }
 
-            if (date >= from)
-            {
-                yield return new ScheduledDate(number, date);
+                if (date >= from)
+                {
+                    yield return new ScheduledDate(number, date);
+                }
             }
 
             if (rule.Frequency == Frequency.Once)
@@ -95,10 +104,34 @@ public static class Recurrence
         {
             Frequency.Daily => 365.25m / interval,
             Frequency.Weekly => 365.25m / 7 / interval,
-            Frequency.Monthly => 12m / interval,
+            Frequency.Monthly => (rule.SecondDay is null ? 12m : 24m) / interval,
             Frequency.Yearly => 1m / interval,
             _ => 0,
         };
+    }
+
+    // The dates of one step: one, or for a monthly plan with a second day up to two, in order and without duplicates
+    // (both days can fall on the same last day of a short month). The first date of the plan is its start.
+    private static List<DateOnly> Candidates(RecurrenceRule rule, int step)
+    {
+        var dates = new List<DateOnly>(2);
+        if (Candidate(rule, step) is { } main)
+        {
+            dates.Add(main);
+        }
+
+        if (rule.Frequency == Frequency.Monthly && rule.SecondDay is { } second)
+        {
+            var (year, month) = MonthOf(rule.Start, rule.Calendar);
+            var total = (year * 12) + (month - 1) + (step * rule.Interval);
+            if (DayIn(rule, total / 12, (total % 12) + 1, second) is { } extra && extra >= rule.Start && !dates.Contains(extra))
+            {
+                dates.Add(extra);
+            }
+        }
+
+        dates.Sort();
+        return dates;
     }
 
     private static DateOnly? Candidate(RecurrenceRule rule, int step)
@@ -130,7 +163,7 @@ public static class Recurrence
     private static DateOnly? AddDays(DateOnly start, long days) =>
         days > DateOnly.MaxValue.DayNumber - start.DayNumber ? null : start.AddDays((int)days);
 
-    private static DateOnly? DayIn(RecurrenceRule rule, int year, int month)
+    private static DateOnly? DayIn(RecurrenceRule rule, int year, int month, int? fixedDay = null)
     {
         if (!IsSupportedYear(year, rule.Calendar))
         {
@@ -138,9 +171,9 @@ public static class Recurrence
         }
 
         var daysInMonth = rule.Calendar == PeriodCalendar.Persian ? Persian.GetDaysInMonth(year, month) : DateTime.DaysInMonth(year, month);
-        var anchorDay = DayOf(rule.Start, rule.Calendar);
+        var anchorDay = fixedDay ?? DayOf(rule.Start, rule.Calendar);
         int day;
-        if (rule.DayRule == MonthDayRule.LastDayOfMonth)
+        if (rule.DayRule == MonthDayRule.LastDayOfMonth && fixedDay is null)
         {
             day = daysInMonth;
         }

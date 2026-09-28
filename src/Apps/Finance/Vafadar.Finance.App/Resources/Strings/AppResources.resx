@@ -2237,4 +2237,13 @@
   <data name="Settlement_BackTitle" xml:space="preserve">
     <value>{0}: money back</value>
   </data>
+  <data name="Plan_SecondDay" xml:space="preserve">
+    <value>Also on another day each month</value>
+  </data>
+  <data name="Plan_SecondDayNumber" xml:space="preserve">
+    <value>day of the month</value>
+  </data>
+  <data name="Rule_AlsoOnDay" xml:space="preserve">
+    <value>also on day {0}</value>
+  </data>
 </root>

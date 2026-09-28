@@ -120,6 +120,19 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial int WeekendIndex { get; set; }
 
+    // A second day each month, e.g. the 1st and the 15th (Phase 2A, monthly plans in Advanced mode).
+    [ObservableProperty]
+    public partial bool HasSecondDay { get; set; }
+
+    [ObservableProperty]
+    public partial string SecondDayText { get; set; } = "15";
+
+    partial void OnHasSecondDayChanged(bool value) => Update();
+
+    partial void OnSecondDayTextChanged(string value) => Update();
+
+    public bool ShowSecondDay => ShowMonthOptions && Frequency == Frequency.Monthly;
+
     partial void OnWeekendIndexChanged(int value) => Update();
 
     public IReadOnlyList<string> EndNames { get; }
@@ -420,6 +433,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         DayRuleIndex = (int)rule.DayRule;
         MissingDayIndex = (int)rule.MissingDay;
         WeekendIndex = (int)rule.WeekendShift;
+        HasSecondDay = rule.SecondDay is not null;
+        SecondDayText = (rule.SecondDay ?? 15).ToString(CultureInfo.InvariantCulture);
         EndIndex = (int)rule.End;
         EndDate = rule.EndDate ?? Today.AddYears(1);
         CountText = (rule.Count ?? 12).ToString(CultureInfo.InvariantCulture);
@@ -529,6 +544,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         OnPropertyChanged(nameof(CanAutoPost));
         OnPropertyChanged(nameof(ShowCustom));
         OnPropertyChanged(nameof(ShowMonthOptions));
+        OnPropertyChanged(nameof(ShowSecondDay));
         OnPropertyChanged(nameof(ShowMissingDay));
         OnPropertyChanged(nameof(ShowEnd));
         OnPropertyChanged(nameof(ShowEndDate));
@@ -571,6 +587,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         DayRule = (MonthDayRule)DayRuleIndex,
         MissingDay = (MissingDayPolicy)MissingDayIndex,
         WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
+        SecondDay = HasSecondDay && Frequency == Frequency.Monthly && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
         WeekendDays = WeekendIndex == 0 ? 0 : RecurrenceRule.MaskOf(_weekend),
         End = Frequency == Frequency.Once ? EndKind.Never : (EndKind)EndIndex,
         EndDate = EndIndex == 1 ? EndDate : null,
@@ -743,7 +760,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     private string Snapshot() => string.Join('|',
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
-        CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
+        CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, HasSecondDay, SecondDayText, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
         ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,
         HasCancellationDeadline, CancellationDeadline, HasReviewDate, ReviewDate, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

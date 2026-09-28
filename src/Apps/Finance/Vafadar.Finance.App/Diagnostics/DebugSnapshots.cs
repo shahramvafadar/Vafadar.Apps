@@ -165,7 +165,7 @@ internal static class DebugSnapshots
         await store.EnsureDefaultCategoriesAsync();
         var categories = await store.GetCategoriesAsync();
         Guid Category(string key) => categories.First(c => c.SystemKey == key).Id;
-        var checking = (await store.GetAccountsAsync()).First();
+        var checking = (await store.GetAccountsAsync()).First(a => a.Type == AccountType.Checking);
         var savings = new Account { Name = "Savings", Type = AccountType.Savings, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate.AddDays(-7), OpeningBalance = 300_00 };
         await store.SaveAccountAsync(savings);
         await store.SaveAccountAsync(new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate, OpeningBalance = -4_000_00, IncludeInTotals = false, Counterparty = "Bank" });
@@ -215,7 +215,7 @@ internal static class DebugSnapshots
         var plans = services.GetRequiredService<PlanStore>();
         var categories = await finance.GetCategoriesAsync();
         Guid Category(string key) => categories.First(c => c.SystemKey == key).Id;
-        var checking = (await finance.GetAccountsAsync()).First();
+        var checking = (await finance.GetAccountsAsync()).First(a => a.Type == AccountType.Checking);
         var today = DateOnly.FromDateTime(DateTime.Today);
         var rentStart = today.AddDays(-3).AddMonths(-2);
 

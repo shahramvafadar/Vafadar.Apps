@@ -120,6 +120,12 @@ public sealed class RecurrenceRule
     /// <summary>Gets or sets what happens when the anchor day does not exist.</summary>
     public MissingDayPolicy MissingDay { get; set; }
 
+    /// <summary>
+    /// Gets or sets a second day of the month for monthly plans, e.g. salary on the 1st and the 15th (Phase 2A). Each day
+    /// is its own occurrence; a day missing in a month follows <see cref="MissingDay"/>.
+    /// </summary>
+    public int? SecondDay { get; set; }
+
     /// <summary>Gets or sets the end kind.</summary>
     public EndKind End { get; set; }
 

@@ -125,6 +125,17 @@
                                 <Label Text="{v:Translate Plan_MissingDay}" Style="{StaticResource FieldLabel}" />
                                 <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" AccentColor="{DynamicResource Primary}" />
                             </VerticalStackLayout>
+                            <VerticalStackLayout IsVisible="{Binding ShowSecondDay}">
+                                <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                    <Label Text="{v:Translate Plan_SecondDay}" VerticalOptions="Center" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding HasSecondDay}" OnColor="{DynamicResource Primary}" />
+                                </Grid>
+                                <Grid ColumnDefinitions="70,*" ColumnSpacing="8" IsVisible="{Binding HasSecondDay}">
+                                    <Entry Text="{Binding SecondDayText}" Keyboard="Numeric" MaxLength="2" HorizontalTextAlignment="Center"
+                                           SemanticProperties.Description="{v:Translate Plan_SecondDayNumber}" />
+                                    <Label Grid.Column="1" Text="{v:Translate Plan_SecondDayNumber}" VerticalOptions="Center" />
+                                </Grid>
+                            </VerticalStackLayout>
                             <Label Text="{v:Translate Weekend_Title}" Style="{StaticResource FieldLabel}" />
                             <v:ChoiceChips ItemsSource="{Binding WeekendNames}" SelectedIndex="{Binding WeekendIndex}" AccentColor="{DynamicResource Primary}" />
                             <Label Text="{Binding WeekendHint}" Style="{StaticResource Secondary}" FontSize="12" />

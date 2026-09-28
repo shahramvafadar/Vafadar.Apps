@@ -91,6 +91,7 @@ internal sealed class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
             rule.Property(r => r.Count).HasColumnName("Count");
             rule.Property(r => r.WeekendShift).HasColumnName("WeekendShift");
             rule.Property(r => r.WeekendDays).HasColumnName("WeekendDays");
+            rule.Property(r => r.SecondDay).HasColumnName("SecondDay");
         });
         builder.Navigation(s => s.Rule).IsRequired();
     }

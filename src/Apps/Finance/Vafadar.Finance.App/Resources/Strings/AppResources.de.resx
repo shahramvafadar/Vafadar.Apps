@@ -2233,4 +2233,13 @@
   <data name="Settlement_BackTitle" xml:space="preserve">
     <value>{0}: Rückzahlung</value>
   </data>
+  <data name="Plan_SecondDay" xml:space="preserve">
+    <value>Zusätzlich an einem anderen Tag im Monat</value>
+  </data>
+  <data name="Plan_SecondDayNumber" xml:space="preserve">
+    <value>Tag des Monats</value>
+  </data>
+  <data name="Rule_AlsoOnDay" xml:space="preserve">
+    <value>auch am {0}.</value>
+  </data>
 </root>
