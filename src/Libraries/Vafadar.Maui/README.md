@@ -22,7 +22,7 @@ builder
     .UseMauiApp<App>()
     .UseVafadar(options =>
     {
-        options.AppId = FinanceApp.AppId;                              // permanent, same on all platforms
+        options.AppId = ZananceApp.AppId;                              // permanent, same on all platforms
         options.SyncfusionLicenseKey = AppSecrets.SyncfusionLicenseKey; // build-time secret
         options.ConfigureLocalization = l => l.Resources.Add(AppStrings.ResourceManager);
     });

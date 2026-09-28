@@ -4,7 +4,7 @@
 
 ## Affected apps / libraries
 
-- [ ] Finance
+- [ ] Zanance
 - [ ] Shared libraries (`src/Libraries`)
 - [ ] Build / CI / docs only
 

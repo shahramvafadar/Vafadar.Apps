@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup Label="Build-time secrets (see eng/AppSecrets.targets)">
+    <AppSecret Include="SyncfusionLicenseKey" Value="$(SyncfusionLicenseKey)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Reports\Vafadar.Zanance.Reports.csproj" />
+  </ItemGroup>
+
+</Project>

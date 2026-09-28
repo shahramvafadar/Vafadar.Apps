@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Adds or updates UI strings in all languages of a .resx set (neutral/en, fa, de) in one step.
 
@@ -6,7 +6,7 @@
     Every UI string must exist in every language (a test enforces it). The input is a UTF-8 JSON file:
 
     {
-      "target": "src/Apps/Finance/Vafadar.Finance.App/Resources/Strings/AppResources",
+      "target": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources",
       "remove": ["Old_Key"],
       "entries": [ { "key": "Goal_Title", "en": "Goal", "fa": "هدف", "de": "Ziel", "comment": "optional" } ]
     }

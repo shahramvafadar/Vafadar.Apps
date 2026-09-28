@@ -10,7 +10,7 @@ on:
         description: App project
         type: choice
         options:
-          - src/Apps/Finance/Vafadar.Finance.App/Vafadar.Finance.App.csproj
+          - src/Apps/Zanance/Vafadar.Zanance.App/Vafadar.Zanance.App.csproj
       version:
         description: Display version, e.g. 1.2.0
         required: true

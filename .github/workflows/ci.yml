@@ -81,7 +81,7 @@ jobs:
 
       - name: Install Android SDK dependencies
         run: >
-          dotnet build src/Apps/Finance/Vafadar.Finance.App/Vafadar.Finance.App.csproj
+          dotnet build src/Apps/Zanance/Vafadar.Zanance.App/Vafadar.Zanance.App.csproj
           -t:InstallAndroidDependencies -f net10.0-android
           -p:VafadarMauiTargetFrameworks=net10.0-android
           -p:AndroidSdkDirectory="$ANDROID_HOME" -p:AcceptAndroidSDKLicenses=True

@@ -68,7 +68,7 @@ The repository has two kinds of code:
 | [Vafadar.Authentication](../../src/Libraries/Vafadar.Authentication/README.md) | Sign-in and access-token abstractions for Google / Microsoft accounts | – | ✅ abstractions |
 | [Vafadar.Maui](../../src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap (`UseVafadar`), preferences, `{v:Translate}`, RTL, date field and chips, device authentication for app locks, Syncfusion setup, MVVM base | Core, Localization | ✅ |
 | Vafadar.Authentication.Maui | Google and Microsoft sign-in on Android / iOS / Windows (MSAL, Google OAuth) | Authentication | 🔜 planned |
-| Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Finance has its own backup screen; extract when a second app needs it) |
+| Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Zanance has its own backup screen; extract when a second app needs it) |
 | Vafadar.Monetization | "Pro" unlock and tip jar via Google Play Billing / StoreKit | – | 🔜 planned ([details](monetization.md)) |
 | Vafadar.Web | Shared Blazor components, layout, localization for web apps | Localization | 🔜 when the first web app starts |
 
@@ -79,7 +79,7 @@ A library is created when a second app needs the same thing, or when the concern
 
 | App | Folder | Platforms | Status |
 |---|---|---|---|
-| Zanance (project Finance) – personal finance manager | [`src/Apps/Finance`](../../src/Apps/Finance/README.md) | Android, iOS, Windows | 🚧 phase 1 feature-complete except cloud backup; device tests and store release pending |
+| Zanance – personal finance manager | [`src/Apps/Zanance`](../../src/Apps/Zanance/README.md) | Android, iOS, Windows | 🚧 phase 1 feature-complete except cloud backup; device tests and store release pending |
 
 Every app uses the same project structure ([ADR 0004](../adr/0004-project-structure-per-app.md)):
 
@@ -98,9 +98,9 @@ Core and Data are plain .NET, so they are unit-testable without devices and reus
 ```mermaid
 flowchart TD
     subgraph apps["Apps (src/Apps)"]
-        FA["Vafadar.Finance.App<br/><i>MAUI</i>"]
-        FD[Vafadar.Finance.Data]
-        FC[Vafadar.Finance.Core]
+        FA["Vafadar.Zanance.App<br/><i>MAUI</i>"]
+        FD[Vafadar.Zanance.Data]
+        FC[Vafadar.Zanance.Core]
     end
     subgraph libs["Shared libraries (src/Libraries)"]
         VM["Vafadar.Maui<br/><i>MAUI</i>"]
@@ -143,7 +143,7 @@ flowchart TD
 ## Inside a MAUI app
 
 ```text
-Vafadar.Finance.App/
+Vafadar.Zanance.App/
 ├── MauiProgram.cs            Composition root: UseVafadar(), data, backup, pages, view models
 ├── App.xaml(.cs)             Application; creates the window with the right flow direction
 ├── AppShell.xaml             Navigation structure (tabs / flyout, routes)

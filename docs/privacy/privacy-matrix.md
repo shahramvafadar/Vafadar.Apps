@@ -3,13 +3,13 @@
 One place that records, for every app, what data exists, where it goes and how it maps to the store privacy forms.
 Update it in the same pull request as any change that affects data, permissions or SDKs.
 
-Detailed, code-verified profiles per app: [Finance](../../src/Apps/Finance/docs/06-privacy-matrix.md).
+Detailed, code-verified profiles per app: [Zanance](../../src/Apps/Zanance/docs/06-privacy-matrix.md).
 
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 
 ## 1. Data inventory
 
-| Data | Finance | Stored where | Leaves the device? | Who can read it |
+| Data | Zanance | Stored where | Leaves the device? | Who can read it |
 |---|---|---|---|---|
 | Financial entries (accounts, transactions, categories, notes) | ✅ 🔜 | On-device SQLite | ⚙️ only in backups / exports | The user |
 | App settings (language, calendar, backup preferences) | ✅ | On-device preferences | ⚙️ Android system backup | The user |
@@ -23,7 +23,7 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 
 ## 2. Permissions
 
-| Permission | Finance | Why |
+| Permission | Zanance | Why |
 |---|---|---|
 | Android `INTERNET` | ✅ | Cloud backup (Google Drive / OneDrive) |
 | Android `ACCESS_NETWORK_STATE` | ✅ | Skip automatic backups while offline |
@@ -31,7 +31,7 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 
 ## 3. Third-party services and SDKs
 
-| Service / SDK | Finance | Data involved | Notes |
+| Service / SDK | Zanance | Data involved | Notes |
 |---|---|---|---|
 | Google Drive API | ⚙️ 🔜 | Backup files | Scope `drive.appdata` (own folder only) |
 | Microsoft Graph (OneDrive) | ⚙️ 🔜 | Backup files | Scope `Files.ReadWrite.AppFolder` (own folder only) |
@@ -44,7 +44,7 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 Google's definitions decide what counts as "collected" (transmitted off the device) and "shared". Re-check the
 current Play Console help texts before submitting; when in doubt, declare conservatively.
 
-| Question | Finance (draft) |
+| Question | Zanance (draft) |
 |---|---|
 | Does the app collect or share user data? | Backups are sent, at the user's request, to the user's own cloud account. Declare **Financial info → Other financial info** as collected, **optional**, purpose *App functionality* / *Account management (backup)*, unless Google's current guidance says this is not collection |
 | Is data encrypted in transit? | ✅ (HTTPS; optionally also end-to-end with the user's password) |
@@ -54,7 +54,7 @@ current Play Console help texts before submitting; when in doubt, declare conser
 
 ## 5. Apple App Privacy (draft answers, for the iOS release)
 
-| Question | Finance (draft) |
+| Question | Zanance (draft) |
 |---|---|
 | Data used to track you | ❌ None |
 | Data linked to you | Financial info – only inside backups the user sends to their own Google Drive / OneDrive, if enabled; re-check Apple's definitions at submission |

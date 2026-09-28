@@ -14,7 +14,7 @@ English, Persian (فارسی) and German, and back up their data to the user's o
 
 | App | Description | Platforms | Status |
 |---|---|---|---|
-| [Zanance](src/Apps/Finance/README.md) | Personal finance manager: income, expenses, plans, budgets and reports | Android · iOS · Windows | 🚧 In development |
+| [Zanance](src/Apps/Zanance/README.md) | Personal finance manager: income, expenses, plans, budgets and reports | Android · iOS · Windows | 🚧 In development |
 
 ## Shared libraries
 
@@ -52,7 +52,7 @@ dotnet tool restore
 copy Directory.Secrets.props.example Directory.Secrets.props   # optional: add your Syncfusion license key
 dotnet build Vafadar.Apps.slnx
 dotnet test --solution Vafadar.Apps.slnx
-dotnet build src/Apps/Finance/Vafadar.Finance.App -t:Run -f net10.0-android
+dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-android
 ```
 
 ## Technology

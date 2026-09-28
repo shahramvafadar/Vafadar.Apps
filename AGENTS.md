@@ -8,11 +8,11 @@ collects the rules the owner has set so far; follow them without being reminded.
 * Monorepo of personal .NET apps by Shahram Vafadar: brand **Vafadar**, domain vafadar.pro, repository
   https://github.com/shahramvafadar/Vafadar.Apps (branch `main`). Public, but **all rights reserved** (not open source).
 * First app: **Zanance** – a local-first personal finance manager (.NET 10, .NET MAUI; Android first, then iOS;
-  Windows for development). Code and folders use the working name *Finance* (`src/Apps/Finance`,
-  `Vafadar.Finance.*`). App id / Android package / iOS bundle id: **`pro.vafadar.zanance`** (permanent once published).
+  Windows for development). Code and folders use the same name (`src/Apps/Zanance`, `Vafadar.Zanance.*`; the
+  earlier working name "Finance" was replaced, D-24). App id / Android package / iOS bundle id: **`pro.vafadar.zanance`** (permanent once published).
   The product name "Zanance" is shown untranslated in every language.
-* Requirements: `src/Apps/Finance/docs/spec/Finance-Product-Specification.md` (the owner's specification; Section 31
-  records the implementation status) and the design documents `src/Apps/Finance/docs/01…08`.
+* Requirements: `src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md` (the owner's specification; Section 31
+  records the implementation status) and the design documents `src/Apps/Zanance/docs/01…08`.
 
 ## 2. Communication with the owner
 
@@ -40,7 +40,7 @@ collects the rules the owner has set so far; follow them without being reminded.
 * **Never run `git clean`** – it once deleted every uncommitted file. Remove build output with `dotnet clean` or by
   deleting `bin`/`obj` folders explicitly.
 * One commit per finished, verified step. Messages follow [Conventional Commits](CONTRIBUTING.md), e.g.
-  `feat(finance): add savings goals`, then a blank line and bullet points on what changed and why. Push after each
+  `feat(zanance): add savings goals`, then a blank line and bullet points on what changed and why. Push after each
   commit.
 
 ## 5. Secrets and data
@@ -60,11 +60,11 @@ collects the rules the owner has set so far; follow them without being reminded.
 ## 6. Build, test, verify
 
 ```powershell
-dotnet build src/Apps/Finance/Vafadar.Finance.App -f net10.0-windows10.0.19041.0   # Windows (dev)
-dotnet build src/Apps/Finance/Vafadar.Finance.App -f net10.0-android               # Android
-dotnet build src/Apps/Finance/Vafadar.Finance.App -f net10.0-ios                   # iOS (workload required)
+dotnet build src/Apps/Zanance/Vafadar.Zanance.App -f net10.0-windows10.0.19041.0   # Windows (dev)
+dotnet build src/Apps/Zanance/Vafadar.Zanance.App -f net10.0-android               # Android
+dotnet build src/Apps/Zanance/Vafadar.Zanance.App -f net10.0-ios                   # iOS (workload required)
 dotnet test --solution Vafadar.Tests.slnf                                          # all tests without MAUI
-dotnet ef migrations add <Name> --project src/Apps/Finance/Vafadar.Finance.Data --startup-project src/Apps/Finance/Vafadar.Finance.Data
+dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data --startup-project src/Apps/Zanance/Vafadar.Zanance.Data
 ./eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark]                       # screenshots of every screen
 ./eng/scripts/Add-Strings.ps1 -JsonPath strings.json                               # strings in en, fa and de
 ```
@@ -86,7 +86,7 @@ older CI runs; that is expected.
 * Every schema change needs an EF Core migration. Changes are additive; the migration test writes first-schema rows
   with raw SQL, so it keeps working when entities grow.
 * UI strings: every key in **all** of `.resx` en/fa/de (tests enforce it) – use `eng/scripts/Add-Strings.ps1`.
-  App strings: `Vafadar.Finance.App/Resources/Strings/AppResources`; shared strings:
+  App strings: `Vafadar.Zanance.App/Resources/Strings/AppResources`; shared strings:
   `Vafadar.Localization/Resources/SharedStrings`.
 * Right to left: amounts go through `MoneyText` (isolates and marks keep their order on every platform); a Persian
   sentence must not start with an amount or a Latin value – rephrase or quote it (« »); show tags with
@@ -107,12 +107,12 @@ older CI runs; that is expected.
 
 When behaviour, data flows or decisions change, update in the same commit:
 
-* `src/Apps/Finance/docs/spec/Finance-Product-Specification.md` – Section 31 (status, deviations, test count);
-* `src/Apps/Finance/docs/04-phase-1-plan.md` / `05-phase-2-backlog.md` – slice status;
-* `src/Apps/Finance/docs/06-privacy-matrix.md` and `docs/spec/Finance-Privacy-Matrix-Starter.md` – any new data,
+* `src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md` – Section 31 (status, deviations, test count);
+* `src/Apps/Zanance/docs/04-phase-1-plan.md` / `05-phase-2-backlog.md` – slice status;
+* `src/Apps/Zanance/docs/06-privacy-matrix.md` and `docs/spec/Zanance-Privacy-Matrix-Starter.md` – any new data,
   permission, export or SDK;
-* `src/Apps/Finance/docs/07-acceptance-test-plan.md` – scenario status;
-* `src/Apps/Finance/docs/01-assessment-and-decisions.md` – every owner decision as `D-xx`;
+* `src/Apps/Zanance/docs/07-acceptance-test-plan.md` – scenario status;
+* `src/Apps/Zanance/docs/01-assessment-and-decisions.md` – every owner decision as `D-xx`;
 * `08-release-checklist.md`, READMEs and guides where affected.
 
 The repository copy of the specification is the source of truth; the owner may keep another copy outside the

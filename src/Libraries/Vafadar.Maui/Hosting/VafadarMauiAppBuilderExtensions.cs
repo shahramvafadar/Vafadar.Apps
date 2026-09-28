@@ -24,7 +24,7 @@ public static class VafadarMauiAppBuilderExtensions
     ///     .UseMauiApp&lt;App&gt;()
     ///     .UseVafadar(options =>
     ///     {
-    ///         options.AppId = FinanceApp.AppId;
+    ///         options.AppId = ZananceApp.AppId;
     ///         options.SyncfusionLicenseKey = AppSecrets.SyncfusionLicenseKey;
     ///         options.ConfigureLocalization = l => l.Resources.Add(AppStrings.ResourceManager);
     ///     });

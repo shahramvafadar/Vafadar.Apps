@@ -4,13 +4,13 @@
 
 - [x] Repository structure, central build configuration, `.slnx` solution and solution filters
 - [x] Shared libraries: Core, Localization, Data, Backup (+ Google Drive, OneDrive storage), Authentication abstractions, Maui
-- [x] Finance app skeleton (Android / iOS / Windows) with runtime language + calendar switching and RTL
+- [x] Zanance app skeleton (Android / iOS / Windows) with runtime language + calendar switching and RTL
 - [x] Tests (xUnit v3 / MTP), CI (Linux, Windows, macOS on demand), CodeQL, Dependabot, release workflow for Android
 - [x] Architecture documentation, ADRs, guides, privacy policy draft and privacy matrix
 
-## Phase 1 – Finance MVP (Android)
+## Phase 1 – Zanance MVP (Android)
 
-- [ ] Requirements: collect in [`src/Apps/Finance/docs/requirements.md`](../src/Apps/Finance/docs/requirements.md)
+- [ ] Requirements: collect in [`src/Apps/Zanance/docs/requirements.md`](../src/Apps/Zanance/docs/requirements.md)
 - [ ] Domain model: accounts, categories, transactions (income / expense / transfer), currencies
 - [ ] Money type (`long` minor units + currency) and amount input that accepts Persian and Latin digits
 - [ ] Screens: dashboard, transaction list and editor, categories, accounts
@@ -27,7 +27,7 @@
 - [ ] Google Play developer account, app listing (en / fa / de), Data safety form
 - [ ] Google OAuth consent screen verification; Microsoft Entra app registration
 - [ ] Upload keystore, `production` environment secrets, internal → closed → production track
-- [ ] Decide whether Android Auto Backup should exclude the Finance database
+- [ ] Decide whether Android Auto Backup should exclude the Zanance database
 
 ## Phase 3 – iOS
 
@@ -51,7 +51,7 @@
 
 | Question | Needed for |
 |---|---|
-| Finance feature details (accounts, currencies such as IRR / Toman / EUR, budgets, recurring entries, reports) | Phase 1 |
+| Zanance feature details (accounts, currencies such as IRR / Toman / EUR, budgets, recurring entries, reports) | Phase 1 |
 | Final app names and branding per language | Phase 1 |
 | Recommended Google sign-in approach on Android at implementation time | Phase 1 |
 | Contact e-mail for privacy / support (e.g. `privacy@vafadar.pro`) | Phase 2 |

@@ -7,7 +7,7 @@ body:
     attributes:
       label: App
       options:
-        - Finance
+        - Zanance
         - Other / shared
         - New app idea
     validations:

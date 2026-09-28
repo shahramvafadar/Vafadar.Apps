@@ -39,7 +39,7 @@ check.
 | `DbContext` | Never injected; create short-lived instances with `IDbContextFactory<T>` |
 | HTTP clients | `IHttpClientFactory` (named or typed clients) |
 
-Register an app's services in extension methods (`AddFinanceData()`) close to the implementation, and compose them
+Register an app's services in extension methods (`AddZananceData()`) close to the implementation, and compose them
 in `MauiProgram`.
 
 ## MAUI and MVVM
@@ -66,7 +66,7 @@ in `MauiProgram`.
 * `main` is always releasable; work on short-lived branches: `feature/<app>-<topic>`, `fix/<app>-<topic>`,
   `chore/<topic>`, `docs/<topic>`.
 * Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/):
-  `feat(finance): add monthly report`, `fix(backup): retry OneDrive upload`, `docs: update release guide`.
+  `feat(zanance): add monthly report`, `fix(backup): retry OneDrive upload`, `docs: update release guide`.
   Scope = app or library name.
 * Pull requests (even when working alone) so that CI runs before merging; squash-merge into `main`.
-* Release tags: `<app>/v<version>`, e.g. `finance/v1.0.0`.
+* Release tags: `<app>/v<version>`, e.g. `zanance/v1.0.0`.

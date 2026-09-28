@@ -1,7 +1,7 @@
 # Adding a new app
 
-This checklist creates a new app `<App>` (PascalCase, e.g. `Habits`) with the same structure as Finance. Copying
-the Finance projects and renaming is the quickest route; the steps below list everything that must change.
+This checklist creates a new app `<App>` (PascalCase, e.g. `Habits`) with the same structure as Zanance. Copying
+the Zanance projects and renaming is the quickest route; the steps below list everything that must change.
 
 ## 1. Decide the identity (permanent!)
 
@@ -15,9 +15,9 @@ the Finance projects and renaming is the quickest route; the steps below list ev
 ```text
 src/Apps/<App>/
 ├── README.md, CHANGELOG.md, docs/requirements.md
-├── Vafadar.<App>.Core/      (copy of Vafadar.Finance.Core: <App>App.cs with AppId + DatabaseFileName)
-├── Vafadar.<App>.Data/      (copy of Vafadar.Finance.Data: <App>DbContext, design-time factory, DI extension)
-└── Vafadar.<App>.App/       (copy of Vafadar.Finance.App)
+├── Vafadar.<App>.Core/      (copy of Vafadar.Zanance.Core: <App>App.cs with AppId + DatabaseFileName)
+├── Vafadar.<App>.Data/      (copy of Vafadar.Zanance.Data: <App>DbContext, design-time factory, DI extension)
+└── Vafadar.<App>.App/       (copy of Vafadar.Zanance.App)
 test/Apps/<App>/
 ├── Vafadar.<App>.Core.Tests/
 └── Vafadar.<App>.Data.Tests/
@@ -37,7 +37,7 @@ In the copied app project:
 ## 3. Wire it into the repository
 
 - [ ] `dotnet sln Vafadar.Apps.slnx add <all new projects>`
-- [ ] Create `Vafadar.<App>.slnf` (copy `Vafadar.Finance.slnf`, replace the app projects)
+- [ ] Create `Vafadar.<App>.slnf` (copy `Vafadar.Zanance.slnf`, replace the app projects)
 - [ ] Add the non-MAUI projects to `Vafadar.Tests.slnf`
 - [ ] Add the app project to the `app` choices in `.github/workflows/release-android.yml`
 - [ ] Add the app to the tables in the root `README.md` and `docs/architecture/overview.md`

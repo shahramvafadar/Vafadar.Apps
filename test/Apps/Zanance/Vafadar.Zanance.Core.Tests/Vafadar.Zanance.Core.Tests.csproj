@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Core\Vafadar.Zanance.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Vafadar.Testing\Vafadar.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

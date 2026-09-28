@@ -14,7 +14,7 @@ body:
     attributes:
       label: App
       options:
-        - Finance
+        - Zanance
         - Other / shared
     validations:
       required: true

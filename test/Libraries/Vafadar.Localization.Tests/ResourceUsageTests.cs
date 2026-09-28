@@ -10,7 +10,7 @@ namespace Vafadar.Localization.Tests;
 /// </summary>
 public sealed partial class ResourceUsageTests
 {
-    public static TheoryData<string> AppFolders() => ["src/Apps/Finance"];
+    public static TheoryData<string> AppFolders() => ["src/Apps/Zanance"];
 
     [Theory]
     [MemberData(nameof(AppFolders))]

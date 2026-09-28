@@ -10,15 +10,15 @@ On-device SQLite databases with EF Core. Design: [docs/architecture/data-and-bac
 | `DataServiceCollectionExtensions` | `AddLocalDatabase<TContext>(path)`, `MigrateLocalDatabase<TContext>()` |
 
 ```csharp
-public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options) : LocalDbContext(options)
+public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options) : LocalDbContext(options)
 {
     public DbSet<Account> Accounts => Set<Account>();
 }
 
-services.AddLocalDatabase<FinanceDbContext>(Path.Combine(FileSystem.AppDataDirectory, "finance.db"));
+services.AddLocalDatabase<ZananceDbContext>(Path.Combine(FileSystem.AppDataDirectory, "zanance.db"));
 
 // startup (synchronous, safe on the UI thread)
-serviceProvider.MigrateLocalDatabase<FinanceDbContext>();
+serviceProvider.MigrateLocalDatabase<ZananceDbContext>();
 
 // usage
 await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);

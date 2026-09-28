@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Vafadar.Zanance.App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:icx="clr-namespace:FluentIcons.Maui.Markup;assembly=FluentIcons.Maui"
+    xmlns:home="clr-namespace:Vafadar.Zanance.App.Features.Home"
+    xmlns:more="clr-namespace:Vafadar.Zanance.App.Features.More"
+    xmlns:tx="clr-namespace:Vafadar.Zanance.App.Features.Transactions"
+    xmlns:plans="clr-namespace:Vafadar.Zanance.App.Features.Plans"
+    Title="{v:Translate App_Name}"
+    Shell.TabBarForegroundColor="{DynamicResource Primary}"
+    Shell.TabBarTitleColor="{DynamicResource Primary}"
+    Shell.TabBarUnselectedColor="{DynamicResource SecondaryText}"
+    Shell.TabBarBackgroundColor="{DynamicResource CardBackground}"
+    Shell.BackgroundColor="{DynamicResource CardBackground}"
+    Shell.ForegroundColor="{DynamicResource Primary}"
+    Shell.TitleColor="{DynamicResource AmountText}">
+
+    <TabBar>
+        <ShellContent
+            Title="{v:Translate Tab_Home}"
+            Icon="{icx:SymbolImageSource Symbol=Home}"
+            ContentTemplate="{DataTemplate home:HomePage}"
+            Route="home" />
+        <ShellContent
+            Title="{v:Translate Tab_Transactions}"
+            Icon="{icx:SymbolImageSource Symbol=ReceiptMoney}"
+            ContentTemplate="{DataTemplate tx:TransactionsPage}"
+            Route="transactions" />
+        <ShellContent
+            Title="{v:Translate Tab_Plans}"
+            Icon="{icx:SymbolImageSource Symbol=CalendarClock}"
+            ContentTemplate="{DataTemplate plans:PlansPage}"
+            Route="plans" />
+        <ShellContent
+            Title="{v:Translate Tab_More}"
+            Icon="{icx:SymbolImageSource Symbol=MoreHorizontal}"
+            ContentTemplate="{DataTemplate more:MorePage}"
+            Route="more" />
+    </TabBar>
+
+</Shell>

@@ -44,7 +44,7 @@ The data conventions already make a later sync possible without migrating identi
 | API + web, low traffic | Azure App Service / Azure Container Apps (free or low tiers), or a small VPS with Docker |
 | Database | Azure SQL (serverless free offer), PostgreSQL (managed or on the VPS) |
 | Identity | Microsoft Entra External ID or ASP.NET Core Identity ([authentication.md](authentication.md)) |
-| Domain | Subdomains of `vafadar.pro`, e.g. `finance.vafadar.pro`, `api.finance.vafadar.pro` |
+| Domain | Subdomains of `vafadar.pro`, e.g. `zanance.vafadar.pro`, `api.zanance.vafadar.pro` |
 
 A backend changes the privacy situation (the developer now stores user data): the app's privacy matrix and privacy
 policy must be updated before it goes live.

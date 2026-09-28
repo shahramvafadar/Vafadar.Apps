@@ -40,8 +40,8 @@ discovers and runs them as usual.
 Some tests protect the repository as a whole:
 
 * `ResourceCompletenessTests` – every translated `.resx` in `src/` has the same keys and placeholders as the neutral one.
-* `FinanceAppTests` – the Finance app id in code matches `ApplicationId` in the app project (the id is permanent).
-* `FinanceDataTests.Startup_migration_creates_the_database` – the app's startup migration works, which also fails
+* `ZananceAppTests` – the Zanance app id in code matches `ApplicationId` in the app project (the id is permanent).
+* `ZananceDataTests.Startup_migration_creates_the_database` – the app's startup migration works, which also fails
   when the model changed without adding a migration.
 
 ## What is not unit-tested

@@ -26,10 +26,10 @@ OneDrive), optionally encrypted with a password only the user knows.
 ```powershell
 # Add a migration (run from the repository root)
 dotnet tool restore
-dotnet ef migrations add <Name> --project src/Apps/Finance/Vafadar.Finance.Data
+dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data
 
 # Inspect the SQL a migration produces
-dotnet ef migrations script --project src/Apps/Finance/Vafadar.Finance.Data
+dotnet ef migrations script --project src/Apps/Zanance/Vafadar.Zanance.Data
 ```
 
 The `*.Data` projects contain an `IDesignTimeDbContextFactory`, so the EF tools do not need to start the MAUI app.
@@ -101,7 +101,7 @@ sequenceDiagram
 * A backup from an **older** app version is restored and then migrated to the current schema.
 * A backup from a **newer** app version is refused ("update the app first"), because an older schema could lose data.
 * Backups restore across platforms (Android ↔ iOS ↔ Windows): the app id is configured explicitly
-  (`FinanceApp.AppId`), not taken from the platform package name.
+  (`ZananceApp.AppId`), not taken from the platform package name.
 
 ### Storage providers compared
 

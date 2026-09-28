@@ -32,4 +32,4 @@
 
 * [Roadmap](roadmap.md)
 
-App-specific documentation lives with each app, e.g. [`src/Apps/Finance`](../src/Apps/Finance/README.md).
+App-specific documentation lives with each app, e.g. [`src/Apps/Zanance`](../src/Apps/Zanance/README.md).

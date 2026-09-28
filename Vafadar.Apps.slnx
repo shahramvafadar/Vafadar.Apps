@@ -22,11 +22,11 @@
   </Folder>
   <Folder Name="/src/" />
   <Folder Name="/src/Apps/" />
-  <Folder Name="/src/Apps/Finance/">
-    <Project Path="src/Apps/Finance/Vafadar.Finance.App/Vafadar.Finance.App.csproj" />
-    <Project Path="src/Apps/Finance/Vafadar.Finance.Core/Vafadar.Finance.Core.csproj" />
-    <Project Path="src/Apps/Finance/Vafadar.Finance.Data/Vafadar.Finance.Data.csproj" />
-    <Project Path="src/Apps/Finance/Vafadar.Finance.Reports/Vafadar.Finance.Reports.csproj" />
+  <Folder Name="/src/Apps/Zanance/">
+    <Project Path="src/Apps/Zanance/Vafadar.Zanance.App/Vafadar.Zanance.App.csproj" />
+    <Project Path="src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <Project Path="src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <Project Path="src/Apps/Zanance/Vafadar.Zanance.Reports/Vafadar.Zanance.Reports.csproj" />
   </Folder>
   <Folder Name="/src/Libraries/">
     <Project Path="src/Libraries/Vafadar.Authentication/Vafadar.Authentication.csproj" />
@@ -40,10 +40,10 @@
   </Folder>
   <Folder Name="/test/" />
   <Folder Name="/test/Apps/" />
-  <Folder Name="/test/Apps/Finance/">
-    <Project Path="test/Apps/Finance/Vafadar.Finance.Core.Tests/Vafadar.Finance.Core.Tests.csproj" />
-    <Project Path="test/Apps/Finance/Vafadar.Finance.Data.Tests/Vafadar.Finance.Data.Tests.csproj" />
-    <Project Path="test/Apps/Finance/Vafadar.Finance.Reports.Tests/Vafadar.Finance.Reports.Tests.csproj" />
+  <Folder Name="/test/Apps/Zanance/">
+    <Project Path="test/Apps/Zanance/Vafadar.Zanance.Core.Tests/Vafadar.Zanance.Core.Tests.csproj" />
+    <Project Path="test/Apps/Zanance/Vafadar.Zanance.Data.Tests/Vafadar.Zanance.Data.Tests.csproj" />
+    <Project Path="test/Apps/Zanance/Vafadar.Zanance.Reports.Tests/Vafadar.Zanance.Reports.Tests.csproj" />
   </Folder>
   <Folder Name="/test/Libraries/">
     <Project Path="test/Libraries/Vafadar.Backup.GoogleDrive.Tests/Vafadar.Backup.GoogleDrive.Tests.csproj" />

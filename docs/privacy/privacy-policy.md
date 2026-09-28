@@ -20,7 +20,7 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 
 ## Data the apps store
 
-Each app stores the information you enter (for example, in Finance: accounts, transactions, categories and notes) in
+Each app stores the information you enter (for example, in Zanance: accounts, transactions, categories and notes) in
 a database on your device, together with your settings (language, calendar, backup preferences). This data does not
 leave your device unless you use backup or export.
 

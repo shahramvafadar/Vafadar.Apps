@@ -5,10 +5,10 @@
 | Task | Command |
 |---|---|
 | Build everything | `dotnet build Vafadar.Apps.slnx` |
-| Build one product | `dotnet build Vafadar.Finance.slnf` |
+| Build one product | `dotnet build Vafadar.Zanance.slnf` |
 | Build without MAUI (no workloads needed) | `dotnet build Vafadar.Tests.slnf` |
 | MAUI projects for one platform only | `dotnet build Vafadar.Apps.slnx -p:VafadarMauiTargetFrameworks=net10.0-android` |
-| Release build of an app for Android | `dotnet build src/Apps/Finance/Vafadar.Finance.App -c Release -f net10.0-android` |
+| Release build of an app for Android | `dotnet build src/Apps/Zanance/Vafadar.Zanance.App -c Release -f net10.0-android` |
 | Build as CI does (warnings are errors) | add `-p:ContinuousIntegrationBuild=true` |
 | Restore local tools | `dotnet tool restore` |
 

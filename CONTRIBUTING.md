@@ -24,7 +24,7 @@ By submitting a contribution you agree to the contribution terms in the [LICENSE
 * Conventions: [coding conventions](docs/guides/coding-conventions.md) – English only in code and docs, all UI
   strings in every language, tests for new behavior, no warnings.
 * Branches: `feature/<app>-<topic>`, `fix/<app>-<topic>`, `docs/<topic>`, `chore/<topic>`.
-* Commits: [Conventional Commits](https://www.conventionalcommits.org/), e.g. `fix(finance): correct monthly total`.
+* Commits: [Conventional Commits](https://www.conventionalcommits.org/), e.g. `fix(zanance): correct monthly total`.
 * Before opening a pull request:
 
   ```powershell

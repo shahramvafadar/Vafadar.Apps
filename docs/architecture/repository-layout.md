@@ -20,18 +20,18 @@ Vafadar.Apps/
 │   ├── Libraries/                 Shared libraries: Vafadar.<Area>[.<Detail>]
 │   │   └── Vafadar.Backup/        … each with its own README.md
 │   └── Apps/
-│       └── Finance/               One folder per app
+│       └── Zanance/               One folder per app
 │           ├── README.md          App overview
 │           ├── CHANGELOG.md       App release notes
 │           ├── docs/              App-specific documentation (requirements, design)
-│           ├── Vafadar.Finance.Core/
-│           ├── Vafadar.Finance.Data/
-│           └── Vafadar.Finance.App/
+│           ├── Vafadar.Zanance.Core/
+│           ├── Vafadar.Zanance.Data/
+│           └── Vafadar.Zanance.App/
 ├── test/
 │   ├── Directory.Build.props      Settings for test projects
 │   ├── Shared/Vafadar.Testing/    Test helpers
 │   ├── Libraries/                 Vafadar.<Library>.Tests (mirrors src/Libraries)
-│   └── Apps/Finance/              Vafadar.Finance.<Project>.Tests (mirrors src/Apps)
+│   └── Apps/Zanance/              Vafadar.Zanance.<Project>.Tests (mirrors src/Apps)
 ├── Directory.Build.props          Settings for every project
 ├── Directory.Build.targets        Targets for every project
 ├── Directory.Packages.props       All NuGet package versions (central package management)
@@ -39,7 +39,7 @@ Vafadar.Apps/
 ├── global.json                    .NET SDK version and test runner
 ├── nuget.config                   Package sources
 ├── Vafadar.Apps.slnx              The solution (all projects)
-├── Vafadar.Finance.slnf           Solution filter: Finance app + libraries + tests
+├── Vafadar.Zanance.slnf           Solution filter: Zanance app + libraries + tests
 ├── Vafadar.Libraries.slnf         Solution filter: shared libraries + tests
 ├── Vafadar.Tests.slnf             Solution filter: everything except MAUI projects (used by CI)
 ├── README.md, LICENSE, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md
@@ -52,13 +52,13 @@ Vafadar.Apps/
 |---|---|---|
 | Brand / root namespace | `Vafadar` | `Vafadar.Backup` |
 | Shared library | `Vafadar.<Area>[.<Detail>]` | `Vafadar.Backup.GoogleDrive` |
-| App project | `Vafadar.<App>.<Layer>` with layers `Core`, `Data`, `App` (+ `Web`, `Api`, `Contracts`) | `Vafadar.Finance.Data` |
-| Test project | `<ProjectUnderTest>.Tests` | `Vafadar.Finance.Data.Tests` |
+| App project | `Vafadar.<App>.<Layer>` with layers `Core`, `Data`, `App` (+ `Web`, `Api`, `Contracts`) | `Vafadar.Zanance.Data` |
+| Test project | `<ProjectUnderTest>.Tests` | `Vafadar.Zanance.Data.Tests` |
 | App id (Android package, iOS bundle id, backup id) | `pro.vafadar.<app>` – **permanent** | `pro.vafadar.zanance` |
-| Namespaces | Match folders | `Vafadar.Finance.App.Features.Settings` |
-| Solution filter | `Vafadar.<Product>.slnf` | `Vafadar.Finance.slnf` |
-| Web addresses | `vafadar.pro/<app>` or `<app>.vafadar.pro` | `vafadar.pro/finance/privacy` |
-| Git tags | `<app>/v<version>` | `finance/v1.0.0` |
+| Namespaces | Match folders | `Vafadar.Zanance.App.Features.Settings` |
+| Solution filter | `Vafadar.<Product>.slnf` | `Vafadar.Zanance.slnf` |
+| Web addresses | `vafadar.pro/<app>` or `<app>.vafadar.pro` | `vafadar.pro/zanance/privacy` |
+| Git tags | `<app>/v<version>` | `zanance/v1.0.0` |
 
 ## Where does new code go?
 

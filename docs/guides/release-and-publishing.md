@@ -11,7 +11,7 @@ Each app is versioned independently.
 
 * The values in the project file are for development; release builds pass them in (the release workflow asks for
   both).
-* Tag every store release: `finance/v1.2.0`, and add the changes to the app's `CHANGELOG.md`.
+* Tag every store release: `zanance/v1.2.0`, and add the changes to the app's `CHANGELOG.md`.
 * Backups record the app version; a backup can only be restored by the same or a newer version.
 
 ## One-time setup: Google Play
@@ -59,7 +59,7 @@ Each app is versioned independently.
 3. Approve the `production` environment deployment.
 4. Download the `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
-5. Tag the commit: `git tag finance/v1.2.0 && git push origin finance/v1.2.0`.
+5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.
 
 Future improvement: upload directly to the Play internal track from the workflow (Google Play Developer API with a
 service account), so no artifact is needed.

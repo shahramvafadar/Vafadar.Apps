@@ -36,16 +36,16 @@ Without a Syncfusion key everything builds and runs; Syncfusion controls show a 
 
 ## Running an app
 
-* **Visual Studio**: open `Vafadar.Finance.slnf`, set `Vafadar.Finance.App` as the startup project, pick the target
+* **Visual Studio**: open `Vafadar.Zanance.slnf`, set `Vafadar.Zanance.App` as the startup project, pick the target
   (Android emulator, a device, or *Windows Machine*) and press F5.
 * **Command line**:
 
   ```powershell
   # Android (emulator or device must be running / connected)
-  dotnet build src/Apps/Finance/Vafadar.Finance.App -t:Run -f net10.0-android
+  dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-android
 
   # Windows
-  dotnet build src/Apps/Finance/Vafadar.Finance.App -t:Run -f net10.0-windows10.0.19041.0
+  dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-windows10.0.19041.0
   ```
 
 ## Where to go next
