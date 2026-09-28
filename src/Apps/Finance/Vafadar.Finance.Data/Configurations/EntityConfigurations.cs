@@ -89,6 +89,8 @@ internal sealed class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
             rule.Property(r => r.End).HasColumnName("EndKind");
             rule.Property(r => r.EndDate).HasColumnName("EndDate");
             rule.Property(r => r.Count).HasColumnName("Count");
+            rule.Property(r => r.WeekendShift).HasColumnName("WeekendShift");
+            rule.Property(r => r.WeekendDays).HasColumnName("WeekendDays");
         });
         builder.Navigation(s => s.Rule).IsRequired();
     }

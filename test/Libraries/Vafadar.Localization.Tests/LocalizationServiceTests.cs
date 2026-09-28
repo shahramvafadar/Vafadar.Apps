@@ -166,6 +166,16 @@ public sealed class LocalizationServiceTests : IDisposable
     }
 
     [Fact]
+    public void Weekend_days_follow_the_region_or_a_persian_ui()
+    {
+        var english = CultureInfo.GetCultureInfo("en");
+        Assert.Equal([DayOfWeek.Friday], Regions.WeekendDays("IR", english));
+        Assert.Equal([DayOfWeek.Saturday, DayOfWeek.Sunday], Regions.WeekendDays("DE", english));
+        Assert.Equal([DayOfWeek.Friday], Regions.WeekendDays(null, CultureInfo.GetCultureInfo("fa")));
+        Assert.Equal([DayOfWeek.Saturday, DayOfWeek.Sunday], Regions.WeekendDays(null, english));
+    }
+
+    [Fact]
     public void Region_does_not_change_language_calendar_or_number_format_and_can_be_cleared()
     {
         var service = CreateService();

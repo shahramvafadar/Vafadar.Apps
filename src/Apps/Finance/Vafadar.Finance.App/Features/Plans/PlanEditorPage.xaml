@@ -125,6 +125,9 @@
                                 <Label Text="{v:Translate Plan_MissingDay}" Style="{StaticResource FieldLabel}" />
                                 <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" AccentColor="{DynamicResource Primary}" />
                             </VerticalStackLayout>
+                            <Label Text="{v:Translate Weekend_Title}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding WeekendNames}" SelectedIndex="{Binding WeekendIndex}" AccentColor="{DynamicResource Primary}" />
+                            <Label Text="{Binding WeekendHint}" Style="{StaticResource Secondary}" FontSize="12" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding ShowEnd}">

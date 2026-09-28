@@ -144,7 +144,9 @@ public static class Occurrences
 
     private static Occurrence Create(Schedule schedule, ScheduledDate scheduled, OccurrenceState? state, DateOnly today)
     {
-        var due = state?.DueDate ?? scheduled.Date;
+        // A moved occurrence keeps its date; otherwise the weekend rule may shift it (F2-CON-05). Its identity stays the
+        // rule date, so reminders, settlements and states still find it.
+        var due = state?.DueDate ?? schedule.Rule.ApplyWeekend(scheduled.Date);
         var amount = state?.Amount ?? (schedule.AmountMode == AmountMode.Unknown ? null : schedule.Amount);
         var status = state?.Status switch
         {

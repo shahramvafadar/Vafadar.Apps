@@ -54,12 +54,54 @@ public enum EndKind
     AfterCount = 2,
 }
 
+/// <summary>What happens with a due date on a weekend day (F2-CON-05).</summary>
+public enum WeekendShift
+{
+    /// <summary>The due date stays.</summary>
+    None,
+
+    /// <summary>The last working day before the weekend.</summary>
+    Before,
+
+    /// <summary>The first working day after the weekend.</summary>
+    After,
+}
+
 /// <summary>
 /// A recurrence rule (docs/02-domain-design.md §5). The calendar is fixed when the plan is created, so changing the
 /// display calendar never moves a due date (REC-11, AT-23).
 /// </summary>
 public sealed class RecurrenceRule
 {
+    /// <summary>
+    /// Gets or sets what happens when a due date falls on a weekend day (F2-CON-05). Only weekends are considered, not
+    /// public or bank holidays, so the rule stays explainable without a holiday calendar.
+    /// </summary>
+    public WeekendShift WeekendShift { get; set; }
+
+    /// <summary>Gets or sets the weekend days as a bit mask (bit n = <see cref="DayOfWeek"/> n), fixed when the plan is saved.</summary>
+    public int WeekendDays { get; set; }
+
+    /// <summary>Returns the due date of an occurrence scheduled on <paramref name="date"/> after the weekend rule.</summary>
+    public DateOnly ApplyWeekend(DateOnly date)
+    {
+        if (WeekendShift == WeekendShift.None || WeekendDays == 0 || (WeekendDays & 0x7F) == 0x7F)
+        {
+            return date;
+        }
+
+        var step = WeekendShift == WeekendShift.Before ? -1 : 1;
+        while ((WeekendDays & (1 << (int)date.DayOfWeek)) != 0)
+        {
+            date = date.AddDays(step);
+        }
+
+        return date;
+    }
+
+    /// <summary>Returns the bit mask for weekend days.</summary>
+    public static int MaskOf(IEnumerable<DayOfWeek> days) => days.Aggregate(0, (mask, day) => mask | (1 << (int)day));
+
     /// <summary>Gets or sets the frequency.</summary>
     public Frequency Frequency { get; set; }
 

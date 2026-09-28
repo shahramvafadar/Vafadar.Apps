@@ -2176,4 +2176,25 @@
   <data name="Bulk_DeleteMessage" xml:space="preserve">
     <value>{0} تراکنش حذف شود؟ تا چند ثانیه قابل برگشت است.</value>
   </data>
+  <data name="Weekend_Title" xml:space="preserve">
+    <value>اگر تاریخ به آخر هفته بیفتد</value>
+  </data>
+  <data name="Weekend_Keep" xml:space="preserve">
+    <value>بماند</value>
+  </data>
+  <data name="Weekend_Before" xml:space="preserve">
+    <value>روز کاری قبل</value>
+  </data>
+  <data name="Weekend_After" xml:space="preserve">
+    <value>روز کاری بعد</value>
+  </data>
+  <data name="Weekend_Hint" xml:space="preserve">
+    <value>آخر هفتهٔ اینجا: {0} (بر اساس منطقه؛ در تنظیمات قابل تغییر). تعطیلات رسمی در نظر گرفته نمی‌شوند.</value>
+  </data>
+  <data name="Weekend_BeforeShort" xml:space="preserve">
+    <value>پیش از آخر هفته</value>
+  </data>
+  <data name="Weekend_AfterShort" xml:space="preserve">
+    <value>پس از آخر هفته</value>
+  </data>
 </root>

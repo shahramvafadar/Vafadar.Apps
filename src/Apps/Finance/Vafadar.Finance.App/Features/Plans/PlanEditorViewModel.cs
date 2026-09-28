@@ -63,6 +63,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         UnitNames = [translator["Unit_Days"], translator["Unit_Weeks"], translator["Unit_Months"], translator["Unit_Years"]];
         CalendarNames = [translator["Calendar_Gregorian"], translator["Calendar_Persian"]];
         MissingDayNames = [translator["MissingDay_LastValid"], translator["MissingDay_Skip"]];
+        WeekendNames = [translator["Weekend_Keep"], translator["Weekend_Before"], translator["Weekend_After"]];
+        _weekend = Regions.WeekendDays(localization.CurrentRegion, System.Globalization.CultureInfo.GetCultureInfo(localization.CurrentLanguage.CultureName));
+        WeekendHint = translator.Format("Weekend_Hint", string.Join(translator["Reminder_ListSeparator"], _weekend.Select(d => localization.CurrentCulture.DateTimeFormat.GetDayName(d))));
         EndNames = [translator["End_Never"], translator["End_OnDate"], translator["End_AfterCount"]];
         PastNames = [translator["Past_FromToday"], translator["Past_Include"]];
         DayRuleNames = [];
@@ -106,6 +109,18 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     public IReadOnlyList<string> CalendarNames { get; }
 
     public IReadOnlyList<string> MissingDayNames { get; }
+
+    // Weekend rule (F2-CON-05): weekends only, from the region; no holiday or bank-day calendar is claimed.
+    private readonly IReadOnlyList<DayOfWeek> _weekend;
+
+    public IReadOnlyList<string> WeekendNames { get; }
+
+    public string WeekendHint { get; }
+
+    [ObservableProperty]
+    public partial int WeekendIndex { get; set; }
+
+    partial void OnWeekendIndexChanged(int value) => Update();
 
     public IReadOnlyList<string> EndNames { get; }
 
@@ -404,6 +419,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         CalendarIndex = rule.Calendar == PeriodCalendar.Persian ? 1 : 0;
         DayRuleIndex = (int)rule.DayRule;
         MissingDayIndex = (int)rule.MissingDay;
+        WeekendIndex = (int)rule.WeekendShift;
         EndIndex = (int)rule.End;
         EndDate = rule.EndDate ?? Today.AddYears(1);
         CountText = (rule.Count ?? 12).ToString(CultureInfo.InvariantCulture);
@@ -537,7 +553,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         var from = _existing is not null || (ShowPastChoice && PastIndex == 0) ? Today : rule.Start;
         foreach (var date in Recurrence.Next(rule, from, 6))
         {
-            Preview.Add(_dates.Format(date.Date, DateFormatStyle.Long));
+            Preview.Add(_dates.Format(rule.ApplyWeekend(date.Date), DateFormatStyle.Long));
         }
 
         if (Preview.Count == 0)
@@ -554,6 +570,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         Calendar = Calendar,
         DayRule = (MonthDayRule)DayRuleIndex,
         MissingDay = (MissingDayPolicy)MissingDayIndex,
+        WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
+        WeekendDays = WeekendIndex == 0 ? 0 : RecurrenceRule.MaskOf(_weekend),
         End = Frequency == Frequency.Once ? EndKind.Never : (EndKind)EndIndex,
         EndDate = EndIndex == 1 ? EndDate : null,
         Count = EndIndex == 2 && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(CountText), NumberStyles.None, CultureInfo.InvariantCulture, out var count) ? count : null,
@@ -725,7 +743,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     private string Snapshot() => string.Join('|',
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
-        CalendarIndex, DayRuleIndex, MissingDayIndex, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
+        CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
         ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,
         HasCancellationDeadline, CancellationDeadline, HasReviewDate, ReviewDate, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

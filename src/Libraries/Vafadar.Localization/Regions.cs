@@ -58,6 +58,23 @@ public static class Regions
             : DayOfWeek.Monday;
     }
 
+    /// <summary>
+    /// Returns the usual weekend days: Friday in Iran, Thursday and Friday in Afghanistan, Friday and Saturday in several
+    /// Arab countries, otherwise Saturday and Sunday. Without a region, a Persian UI means the Iranian weekend.
+    /// </summary>
+    public static IReadOnlyList<DayOfWeek> WeekendDays(string? region, CultureInfo languageCulture)
+    {
+        ArgumentNullException.ThrowIfNull(languageCulture);
+        var code = string.IsNullOrEmpty(region) ? (languageCulture.TwoLetterISOLanguageName == "fa" ? "IR" : null) : region.ToUpperInvariant();
+        return code switch
+        {
+            "IR" => [DayOfWeek.Friday],
+            "AF" => [DayOfWeek.Thursday, DayOfWeek.Friday],
+            "SA" or "EG" or "QA" or "KW" or "BH" or "OM" or "JO" or "IQ" or "DZ" or "LY" or "SD" or "YE" or "SY" => [DayOfWeek.Friday, DayOfWeek.Saturday],
+            _ => [DayOfWeek.Saturday, DayOfWeek.Sunday],
+        };
+    }
+
     private static RegionInfo? TryRegion(string name)
     {
         try

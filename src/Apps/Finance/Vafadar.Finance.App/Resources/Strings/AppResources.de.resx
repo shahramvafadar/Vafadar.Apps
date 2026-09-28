@@ -2176,4 +2176,25 @@
   <data name="Bulk_DeleteMessage" xml:space="preserve">
     <value>{0} Buchungen löschen? Sie können das einige Sekunden lang rückgängig machen.</value>
   </data>
+  <data name="Weekend_Title" xml:space="preserve">
+    <value>Fällt der Termin aufs Wochenende</value>
+  </data>
+  <data name="Weekend_Keep" xml:space="preserve">
+    <value>Beibehalten</value>
+  </data>
+  <data name="Weekend_Before" xml:space="preserve">
+    <value>Werktag davor</value>
+  </data>
+  <data name="Weekend_After" xml:space="preserve">
+    <value>Werktag danach</value>
+  </data>
+  <data name="Weekend_Hint" xml:space="preserve">
+    <value>Wochenende hier: {0} (aus Ihrer Region, einstellbar in den Einstellungen). Feiertage werden nicht berücksichtigt.</value>
+  </data>
+  <data name="Weekend_BeforeShort" xml:space="preserve">
+    <value>vor dem Wochenende</value>
+  </data>
+  <data name="Weekend_AfterShort" xml:space="preserve">
+    <value>nach dem Wochenende</value>
+  </data>
 </root>
