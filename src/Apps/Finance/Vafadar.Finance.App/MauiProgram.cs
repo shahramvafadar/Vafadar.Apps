@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 #if ANDROID || IOS
 using Plugin.LocalNotification;
 #endif
@@ -56,6 +57,15 @@ public static class MauiProgram
             .AddSingleton<Presentation.ThemeService>()
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
             .AddSingleton<AppLockService>();
+
+#if IOS
+        // The app switcher snapshot is covered (SEC-02, D-23); Android uses FLAG_SECURE in MainActivity.
+        builder.ConfigureLifecycleEvents(events => events.AddiOS(ios => ios
+            .OnResignActivation(_ => PrivacyCover.Show())
+            .SceneOnResignActivation(_ => PrivacyCover.Show())
+            .OnActivated(_ => PrivacyCover.Hide())
+            .SceneOnActivated(_ => PrivacyCover.Hide())));
+#endif
 
 #if ANDROID || IOS
         builder.UseLocalNotification();

@@ -17,7 +17,7 @@
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked
 - [ ] No financial data, notes, tokens or passwords in logs (SEC-04)
-- [ ] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview hidden when the app lock is on (FLAG_SECURE); decide whether to hide it without the lock
+- [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always hidden (Android FLAG_SECURE, iOS cover; D-23). Device check pending
 
 ## Build secrets
 

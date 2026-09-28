@@ -142,19 +142,11 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, FinanceSt
         await root.Navigation.PushModalAsync(_page, animated: false);
     }
 
-    // Android: no screenshots and a blank recent-apps preview while the lock is on (SEC-02).
-    private void ApplySecureWindow()
+    // Android: no screenshots and a blank recent-apps preview, always (SEC-02, D-23); MainActivity sets it first.
+    private static void ApplySecureWindow()
     {
 #if ANDROID
-        var window = Platform.CurrentActivity?.Window;
-        if (IsEnabled)
-        {
-            window?.AddFlags(Android.Views.WindowManagerFlags.Secure);
-        }
-        else
-        {
-            window?.ClearFlags(Android.Views.WindowManagerFlags.Secure);
-        }
+        Platform.CurrentActivity?.Window?.AddFlags(Android.Views.WindowManagerFlags.Secure);
 #endif
     }
 }

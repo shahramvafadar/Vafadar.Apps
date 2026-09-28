@@ -43,6 +43,7 @@
 | D-19 | Temporary placeholder branding: neutral green icon with a simple ledger glyph; final name/logo pending | PR-10 |
 | D-20 | If no online feature ships in the first release, the `INTERNET` permission is removed from that release | PRI-01, privacy |
 | D-22 | Phase 2A adds a dark theme: semantic colors (Presentation/Palette.cs) in a light and a dark variant used as dynamic resources, a Settings choice "like the device / light / dark" stored as a local preference, shared controls follow the platform theme | UX-08 |
+| D-23 | The recent-apps preview never shows the app content: Android sets FLAG_SECURE always (this also blocks screenshots), iOS covers the window while inactive (owner, 2026-09-28) | SEC-02 |
 | D-21 | Product name **Zanance** (owner, 2026-09-26), shown untranslated in every language; Android package and iOS bundle id `pro.vafadar.zanance` (replaces the unpublished `pro.vafadar.finance`). Code and folders keep the working name *Finance* | PR-10 |
 
 ## 3. Conflicts found and their resolution

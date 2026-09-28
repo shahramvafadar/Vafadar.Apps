@@ -1253,7 +1253,7 @@ This section records what the repository actually contains. It is evidence-based
 | ONB | Implemented – verified: no login, language/currency/calendar choice, first account, default categories; dismissible guidance for plans and budget after the first entries (ONB-04). |
 | IO | Implemented – verified: CSV export with formula neutralisation and sensitivity warning, re-import of own files without duplicates, generic import with explicit mapping and preview, atomic batch with undo. |
 | BAK | Implemented – verified for local encrypted backup files (password, preview, safety copy before restore, last 10 kept, restore on a fresh install, migrations of older backups). Cloud destinations blocked (31.1). "Delete all data on this device" is a separate, confirmed action (BAK-15, SEC-05). |
-| SEC, PRI | Implemented: optional app lock with device biometrics or credential, lock on return, notification taps and exports after unlock, Android `FLAG_SECURE` while the lock is on; no analytics, ads or network SDKs; privacy matrix maintained in `06-privacy-matrix.md`. Device checks pending. |
+| SEC, PRI | Implemented: optional app lock with device biometrics or credential, lock on return, notification taps and exports after unlock, the recent-apps preview is always hidden (Android `FLAG_SECURE`, which also blocks screenshots; an iOS cover) (D-23); no analytics, ads or network SDKs; privacy matrix maintained in `06-privacy-matrix.md`. Device checks pending. |
 | REL, MON | Release checklist in `08-release-checklist.md`; no billing implemented (Section 28). |
 
 ### 31.3. Deviations from This Specification
@@ -1262,7 +1262,6 @@ This section records what the repository actually contains. It is evidence-based
 |---|---|---|
 | REM-01 (multiple reminders) | Advanced mode offers one reminder plus an optional second one on the due date, not an arbitrary number. | Covers the common cases with a simple UI; can be extended without data loss. |
 | REM on Windows | Windows builds show no system notifications; the in-app due-date center works. | Windows is a development and personal-use target in Phase 1. |
-| SEC-02 (recent-app preview) | The recent-apps preview is hidden only while the app lock is enabled. | Owner decision pending: hiding it always also blocks screenshots. |
 | BAK-13/14 | Cloud backup blocked (31.1). | Needs OAuth client ids. |
 
 ### 31.4. Build and Licensing Notes
@@ -1273,7 +1272,7 @@ The Syncfusion license key is a build secret: every MAUI app receives it from `e
 
 1. Run the manual acceptance scenarios (AT-01, 04, 34, 37, 38, 49, 61 and the device parts of the others) on a physical Android device with the release build.
 2. Add the `SYNCFUSION_LICENSE_KEY` repository secret and the Android signing secrets in GitHub.
-3. Decide on the recent-apps preview (31.3) and, if cloud backup is wanted in the first release, provide the OAuth client ids.
+3. If cloud backup is wanted in the first release, provide the OAuth client ids.
 4. Confirm that the privacy policy, Data safety form and Financial features declaration match that build (`06-privacy-matrix.md`, `08-release-checklist.md`).
 
 ---
