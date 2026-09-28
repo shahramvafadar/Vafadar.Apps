@@ -42,6 +42,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     /// <summary>Gets the manual exchange rates.</summary>
     public DbSet<ExchangeRate> ExchangeRates => Set<ExchangeRate>();
 
+    /// <summary>Gets the saved transaction list filters (REP-08).</summary>
+    public DbSet<SavedFilter> SavedFilters => Set<SavedFilter>();
+
     /// <summary>Gets the settings (one row).</summary>
     public DbSet<FinanceSettings> Settings => Set<FinanceSettings>();
 

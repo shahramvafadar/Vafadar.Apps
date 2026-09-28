@@ -44,6 +44,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private Guid? _pendingAccount;
     private IReadOnlyCollection<Guid>? _categoryIds;
     private (DateOnly From, DateOnly To)? _customPeriod;
+    private List<SavedFilter> _savedFilters = [];
+
+    /// <summary>Gets the saved filters for one-tap use (REP-08).</summary>
+    public ObservableCollection<SavedFilter> SavedFilters { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasSavedFilters { get; set; }
     private bool _inTotalsOnly;
 
     public TransactionsViewModel(FinanceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, UndoService undo)
@@ -201,6 +208,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             HasNoAccounts = accounts.Count == 0;
             HasNoEntriesAtAll = _entries.Count == 0;
             UnreviewedCount = _entries.Count(e => e.Review == ReviewState.Unreviewed);
+            await LoadSavedFiltersAsync();
         }
         finally
         {
@@ -489,6 +497,110 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private void ClearCategoryFilter()
     {
         ClearCategoryFilterCore();
+        Refresh();
+    }
+
+    private async Task LoadSavedFiltersAsync()
+    {
+        _savedFilters = await _store.GetSavedFiltersAsync();
+        SavedFilters.Clear();
+        foreach (var filter in _savedFilters)
+        {
+            SavedFilters.Add(filter);
+        }
+
+        HasSavedFilters = SavedFilters.Count > 0;
+    }
+
+    // Saved filters (REP-08): the current combination under a name, applied again with one tap; entries never change.
+    [RelayCommand]
+    private async Task SavedFilterMenuAsync()
+    {
+        var save = _translator["Filter_SaveCurrent"];
+        var remove = _translator["Filter_Remove"];
+        string[] actions = _savedFilters.Count > 0 ? [save, remove] : [save];
+        var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Filter_Title"], _translator["Common_Cancel"], null, actions);
+        if (choice == save)
+        {
+            await SaveCurrentFilterAsync();
+        }
+        else if (choice == remove)
+        {
+            var name = await Shell.Current.DisplayActionSheetAsync(remove, _translator["Common_Cancel"], null, [.. _savedFilters.Select(f => f.Name)]);
+            if (_savedFilters.FirstOrDefault(f => f.Name == name) is { } filter)
+            {
+                await _store.DeleteSavedFilterAsync(filter.Id);
+                await LoadSavedFiltersAsync();
+            }
+        }
+    }
+
+    private async Task SaveCurrentFilterAsync()
+    {
+        var name = (await Shell.Current.DisplayPromptAsync(_translator["Filter_SaveCurrent"], _translator["Filter_NameMessage"], _translator["Common_Save"], _translator["Common_Cancel"], maxLength: SavedFilter.MaxNameLength))?.Trim();
+        if (string.IsNullOrEmpty(name))
+        {
+            return;
+        }
+
+        if (_savedFilters.Any(f => string.Equals(f.Name, name, StringComparison.CurrentCultureIgnoreCase))
+            && !await Shell.Current.DisplayAlertAsync(_translator["Filter_SaveCurrent"], _translator.Format("Filter_Replace", name), _translator["Common_Save"], _translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        await _store.SaveSavedFilterAsync(new SavedFilter
+        {
+            Name = name,
+            Period = Math.Max(0, PeriodIndex),
+            From = _customPeriod?.From,
+            To = _customPeriod?.To,
+            Kind = KindIndex,
+            AccountId = SelectedAccount?.Id,
+            CategoryIds = _categoryIds is null ? [] : [.. _categoryIds],
+            CategoryName = CategoryFilterName,
+            UnreviewedOnly = UnreviewedOnly,
+            Search = string.IsNullOrWhiteSpace(SearchText) ? null : SearchText.Trim(),
+        });
+        await LoadSavedFiltersAsync();
+    }
+
+    [RelayCommand]
+    private void ApplySavedFilter(SavedFilter filter)
+    {
+        _loading = true;
+        try
+        {
+            if (filter.HasCustomRange)
+            {
+                _customPeriod = (filter.From!.Value, filter.To!.Value);
+                CustomPeriodText = $"{_dates.Format(filter.From.Value, DateFormatStyle.Short)} – {_dates.Format(filter.To.Value, DateFormatStyle.Short)}";
+                PeriodIndex = -1;
+            }
+            else
+            {
+                _customPeriod = null;
+                CustomPeriodText = null;
+                PeriodIndex = Math.Clamp(filter.Period, 0, PeriodNames.Count - 1);
+            }
+
+            KindIndex = Math.Clamp(filter.Kind, 0, KindNames.Count - 1);
+            SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == filter.AccountId) ?? AccountOptions.FirstOrDefault();
+
+            // A category from the picker selects it again; a drill-down keeps its categories and label.
+            var ids = filter.CategoryIds.Count > 0 ? filter.CategoryIds : null;
+            var picked = filter.CategoryName is null && ids is not null ? CategoryOptions.FirstOrDefault(o => o.Id is { } id && ids.Contains(id)) : null;
+            SelectedCategory = picked ?? CategoryOptions.FirstOrDefault();
+            _categoryIds = ids;
+            CategoryFilterName = picked is null ? filter.CategoryName : null;
+            UnreviewedOnly = filter.UnreviewedOnly;
+            SearchText = filter.Search ?? string.Empty;
+        }
+        finally
+        {
+            _loading = false;
+        }
+
         Refresh();
     }
 

@@ -2428,4 +2428,22 @@
   <data name="Forecast_DateAndAmountAssumed" xml:space="preserve">
     <value>تاریخ و مبلغ فرضی</value>
   </data>
+  <data name="Filter_Title" xml:space="preserve">
+    <value>فیلترهای ذخیره‌شده</value>
+  </data>
+  <data name="Filter_SaveCurrent" xml:space="preserve">
+    <value>ذخیرهٔ فیلترهای فعلی</value>
+  </data>
+  <data name="Filter_Remove" xml:space="preserve">
+    <value>حذف یک فیلتر ذخیره‌شده</value>
+  </data>
+  <data name="Filter_NameMessage" xml:space="preserve">
+    <value>نام، مثلاً «خرید خانه این ماه». بازه، نوع، حساب، دسته، جستجو و وضعیت بازبینی ذخیره می‌شوند.</value>
+  </data>
+  <data name="Filter_Replace" xml:space="preserve">
+    <value>فیلتری با نام «{0}» وجود دارد. جایگزین شود؟</value>
+  </data>
+  <data name="Filter_Hint" xml:space="preserve">
+    <value>فیلترهای پرکاربرد را ذخیره کنید</value>
+  </data>
 </root>

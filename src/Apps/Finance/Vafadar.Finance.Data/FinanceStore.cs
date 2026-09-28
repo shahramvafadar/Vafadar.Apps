@@ -512,6 +512,45 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>Returns the saved transaction list filters in their order (REP-08).</summary>
+    public async Task<List<SavedFilter>> GetSavedFiltersAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.SavedFilters.AsNoTracking().OrderBy(f => f.SortOrder).ThenBy(f => f.Name).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Adds a filter at the end, or replaces the one with the same id or the same name.</summary>
+    public async Task SaveSavedFilterAsync(SavedFilter filter, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+        filter.Name = filter.Name.Trim();
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var existing = (await db.SavedFilters.ToListAsync(cancellationToken))
+            .FirstOrDefault(f => f.Id == filter.Id || string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase));
+        if (existing is not null)
+        {
+            filter.SortOrder = existing.SortOrder;
+            db.SavedFilters.Remove(existing);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+            filter.SortOrder = await db.SavedFilters.Select(f => (int?)f.SortOrder).MaxAsync(cancellationToken) + 1 ?? 0;
+        }
+
+        db.SavedFilters.Add(filter);
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes a saved filter; entries are never affected.</summary>
+    public async Task DeleteSavedFilterAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.SavedFilters.Where(f => f.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+    }
+
     /// <summary>Deletes a rate; recorded amounts are never affected (FX-04).</summary>
     public async Task DeleteRateAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -611,6 +650,7 @@ public sealed class FinanceStore(IDbContextFactory<FinanceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
         await db.Templates.ExecuteDeleteAsync(cancellationToken);
+        await db.SavedFilters.ExecuteDeleteAsync(cancellationToken);
         await db.CategoryRules.ExecuteDeleteAsync(cancellationToken);
         await db.Attachments.ExecuteDeleteAsync(cancellationToken);
         await db.GoalAllocations.ExecuteDeleteAsync(cancellationToken);

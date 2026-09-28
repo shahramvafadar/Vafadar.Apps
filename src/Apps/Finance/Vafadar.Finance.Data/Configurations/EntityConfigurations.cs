@@ -134,6 +134,18 @@ internal sealed class ExchangeRateConfiguration : IEntityTypeConfiguration<Excha
     }
 }
 
+internal sealed class SavedFilterConfiguration : IEntityTypeConfiguration<SavedFilter>
+{
+    public void Configure(EntityTypeBuilder<SavedFilter> builder)
+    {
+        builder.ToTable("SavedFilters");
+        builder.Property(f => f.Name).HasMaxLength(SavedFilter.MaxNameLength);
+        builder.Property(f => f.CategoryName).HasMaxLength(200);
+        builder.Property(f => f.Search).HasMaxLength(200);
+        builder.Ignore(f => f.HasCustomRange);
+    }
+}
+
 internal sealed class EntryTemplateConfiguration : IEntityTypeConfiguration<EntryTemplate>
 {
     public void Configure(EntityTypeBuilder<EntryTemplate> builder)

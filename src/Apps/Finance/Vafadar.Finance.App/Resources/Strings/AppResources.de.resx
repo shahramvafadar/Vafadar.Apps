@@ -2428,4 +2428,22 @@
   <data name="Forecast_DateAndAmountAssumed" xml:space="preserve">
     <value>Datum und Betrag angenommen</value>
   </data>
+  <data name="Filter_Title" xml:space="preserve">
+    <value>Gespeicherte Filter</value>
+  </data>
+  <data name="Filter_SaveCurrent" xml:space="preserve">
+    <value>Aktuelle Filter speichern</value>
+  </data>
+  <data name="Filter_Remove" xml:space="preserve">
+    <value>Gespeicherten Filter entfernen</value>
+  </data>
+  <data name="Filter_NameMessage" xml:space="preserve">
+    <value>Name, z. B. „Lebensmittel diesen Monat“. Zeitraum, Art, Konto, Kategorie, Suche und Prüfstatus werden gespeichert.</value>
+  </data>
+  <data name="Filter_Replace" xml:space="preserve">
+    <value>Ein Filter „{0}“ existiert. Ersetzen?</value>
+  </data>
+  <data name="Filter_Hint" xml:space="preserve">
+    <value>Häufige Filter speichern</value>
+  </data>
 </root>

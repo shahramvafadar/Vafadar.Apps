@@ -171,6 +171,14 @@ internal static class DebugSnapshots
                     await Task.Delay(500);
                     await CaptureAsync(app, folder, $"{language}-{name}-select");
                     transactions.StopSelectingCommand.Execute(null);
+
+                    // A saved filter applied with one tap (REP-08).
+                    if (transactions.SavedFilters.FirstOrDefault() is { } saved)
+                    {
+                        transactions.ApplySavedFilterCommand.Execute(saved);
+                        await Task.Delay(800);
+                        await CaptureAsync(app, folder, $"{language}-{name}-filter");
+                    }
                 }
 
                 if (!route.StartsWith("//", StringComparison.Ordinal))
@@ -206,6 +214,8 @@ internal static class DebugSnapshots
         await store.SaveEntryAsync(EntryActions.CreateRefund(groceries, 1_200, checking.Id, today));
         await store.AddAttachmentAsync(new EntryAttachment { EntryId = groceries.Id, FileName = "Market receipt.pdf", ContentType = "application/pdf", Data = new byte[48_000] });
         await store.SaveTemplateAsync(EntryTemplate.From(groceries, "Groceries", keepAmount: false));
+        await store.SaveSavedFilterAsync(new SavedFilter { Name = "Food", Kind = 1, CategoryIds = [Category("Food")] });
+        await store.SaveSavedFilterAsync(new SavedFilter { Name = "Work trip", Period = 3, Search = "#work trip" });
         await store.SaveCategoryRuleAsync(new Core.Categories.CategoryRule { Match = "Market", CategoryId = Category("Food"), Kind = Core.Categories.CategoryKind.Expense });
         var goalStore = services.GetRequiredService<GoalStore>();
         var travel = new Core.Goals.Goal { Name = "Travel", TargetAmount = 1_200_00, CurrencyCode = checking.CurrencyCode, TargetDate = today.AddMonths(5), Icon = "Airplane" };

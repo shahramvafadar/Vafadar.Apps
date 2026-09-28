@@ -7,6 +7,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:p="clr-namespace:Vafadar.Finance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Finance.App.Features.Transactions"
+    xmlns:ledger="clr-namespace:Vafadar.Finance.Core.Ledger;assembly=Vafadar.Finance.Core"
     x:DataType="local:TransactionsViewModel"
     Title="{v:Translate Tx_Title}">
 
@@ -36,6 +37,31 @@
                     </Button.Triggers>
                 </Button>
             </Grid>
+
+            <!-- Saved filters (REP-08): the menu saves or removes; a chip applies one -->
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="8">
+                    <Border StrokeShape="RoundRectangle 18" Stroke="{DynamicResource Primary}" StrokeThickness="1" HeightRequest="36" WidthRequest="44"
+                            BackgroundColor="Transparent" SemanticProperties.Description="{v:Translate Filter_Title}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SavedFilterMenuCommand}" />
+                        </Border.GestureRecognizers>
+                        <fi:SymbolIcon Symbol="Bookmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SavedFilters}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="ledger:SavedFilter">
+                                <Button Text="{Binding Name}" CornerRadius="18" MinimumHeightRequest="36" Padding="14,0" FontSize="14"
+                                        BackgroundColor="{DynamicResource CardBackground}" TextColor="{DynamicResource Primary}"
+                                        Command="{Binding ApplySavedFilterCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
+                                        CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                    <Label Text="{v:Translate Filter_Hint}" Style="{StaticResource Secondary}" VerticalOptions="Center"
+                           IsVisible="{Binding HasSavedFilters, Converter={StaticResource InvertedBoolConverter}}" />
+                </HorizontalStackLayout>
+            </ScrollView>
 
             <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
             <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"

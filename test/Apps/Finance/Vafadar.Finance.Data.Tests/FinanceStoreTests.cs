@@ -354,6 +354,27 @@ public sealed class FinanceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Saved_filters_keep_their_settings_and_a_second_save_with_the_same_name_replaces_the_first()
+    {
+        var category = Guid.NewGuid();
+        await _store.SaveSavedFilterAsync(new SavedFilter { Name = "Groceries", Period = 1, Kind = 1, CategoryIds = [category], Search = "#home" }, Ct);
+        await _store.SaveSavedFilterAsync(new SavedFilter { Name = "Trip", From = new DateOnly(2026, 7, 1), To = new DateOnly(2026, 7, 20), UnreviewedOnly = true }, Ct);
+        await _store.SaveSavedFilterAsync(new SavedFilter { Name = " groceries ", Period = 2, Kind = 1, CategoryIds = [category] }, Ct);
+
+        var filters = await _store.GetSavedFiltersAsync(Ct);
+        Assert.Equal(["groceries", "Trip"], filters.Select(f => f.Name));
+        Assert.Equal((2, 1, category), (filters[0].Period, filters[0].Kind, filters[0].CategoryIds.Single()));
+        Assert.Null(filters[0].Search);
+        Assert.True(filters[1].HasCustomRange);
+        Assert.True(filters[1].UnreviewedOnly);
+
+        await _store.DeleteSavedFilterAsync(filters[1].Id, Ct);
+        Assert.Single(await _store.GetSavedFiltersAsync(Ct));
+        await _store.DeleteAllDataAsync(Ct);
+        Assert.Empty(await _store.GetSavedFiltersAsync(Ct));
+    }
+
+    [Fact]
     public async Task Loan_terms_are_stored_with_the_account()
     {
         var loan = new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 1, 1), OpeningBalance = -500_000, InterestRate = 4.95m, Installment = 18_500 };
