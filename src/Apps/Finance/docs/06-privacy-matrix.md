@@ -35,7 +35,7 @@ This is the app's privacy profile required by MAT-01..04. The owner's starter te
 | DF-15 | Online rates / bank sync / any network | – | – | Not included | Exchange rates are entered manually; the Android manifest declares no INTERNET permission |
 | DF-16 | **Android Auto Backup** | App database and preferences | User's Google account backup (Google) | Implemented – unverified (`allowBackup=true`, owner decision D-16) | Disclose in policy and Data safety; verify restore on a new device |
 | DF-17 | **iOS device / iCloud backup** | App data | User's iCloud or computer backup (Apple) | Implemented – unverified (OS default) | Disclose; iOS release later |
-| DF-18 | Preferences | Language, calendar, optional region (never from location), first day of the week, budget alert levels, dismissed Home guidance | Local preferences | Implemented – verified | Included in OS backups (DF-16/17), not in the app's backup package |
+| DF-18 | Preferences | Language, calendar, optional region (never from location), first day of the week, theme, budget alert levels, dismissed Home guidance | Local preferences | Implemented – verified | Included in OS backups (DF-16/17), not in the app's backup package |
 | DF-19 | Syncfusion license validation | License key compiled into the app (build secret via `eng/AppSecrets.targets`, never tracked) | Local check | Implemented – verified (offline validation test `Vafadar.SyncfusionLicense.Tests`) | Confirm no network call in the release build (none possible without INTERNET on Android) |
 
 ## Permissions (Android manifest)
