@@ -200,7 +200,7 @@ public sealed class ReminderService(
     private async Task CheckBudgetAsync(Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture)
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
-        var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar);
+        var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar, settings.MonthStartDay);
         var budget = await store.GetBudgetAsync(year, month, settings.BudgetCalendar, settings.ReportCurrencyCode);
         if (budget is not { AlertsEnabled: true, TotalLimit: { } ownLimit })
         {
@@ -209,7 +209,7 @@ public sealed class ReminderService(
 
         var limit = ownLimit + (await store.GetBudgetCarryAsync(budget)).Total;
 
-        var (from, to) = PeriodMath.MonthRange(year, month, settings.BudgetCalendar);
+        var (from, to) = PeriodMath.MonthRange(year, month, settings.BudgetCalendar, settings.MonthStartDay);
         var entries = await store.GetEntriesAsync(from, to);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await store.GetCategoriesAsync(), from, to));
         var key = BudgetAlertKey + budget.Id.ToString("N");

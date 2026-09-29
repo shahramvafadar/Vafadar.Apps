@@ -101,12 +101,13 @@ public sealed partial class ForecastViewModel : ViewModelBase
     {
         var today = Today;
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
-        var (year, month) = PeriodMath.MonthOf(today, calendar);
+        var startDay = (await _store.GetSettingsAsync()).MonthStartDay;
+        var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var horizon = HorizonIndex switch
         {
             1 => today.AddDays(30),
             2 => today.AddDays(90),
-            _ => PeriodMath.MonthRange(year, month, calendar).Last,
+            _ => PeriodMath.MonthRange(year, month, calendar, startDay).Last,
         };
 
         var accounts = await _store.GetAccountsAsync();

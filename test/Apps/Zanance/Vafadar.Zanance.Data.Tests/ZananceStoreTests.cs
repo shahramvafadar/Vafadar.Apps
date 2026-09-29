@@ -352,6 +352,25 @@ public sealed class ZananceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Budget_rollover_follows_the_financial_month()
+    {
+        var account = await NewAccountAsync();
+        var settings = await _store.GetSettingsAsync(Ct);
+        Assert.Equal(1, settings.MonthStartDay);
+        settings.MonthStartDay = 25;
+        await _store.SaveSettingsAsync(settings, Ct);
+
+        // 20 November belongs to the month that started on 25 October.
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 400_00, Date = new DateOnly(2026, 11, 20) }, Ct);
+        await _store.SaveBudgetAsync(new Budget { Year = 2026, Month = 10, Calendar = PeriodCalendar.Gregorian, CurrencyCode = account.CurrencyCode, TotalLimit = 500_00 }, Ct);
+        var november = new Budget { Year = 2026, Month = 11, Calendar = PeriodCalendar.Gregorian, CurrencyCode = account.CurrencyCode, TotalLimit = 500_00, Rollover = BudgetRollover.Surplus };
+        await _store.SaveBudgetAsync(november, Ct);
+
+        Assert.Equal(100_00, (await _store.GetBudgetCarryAsync(november, Ct)).Total);
+        Assert.Equal(25, (await _store.GetSettingsAsync(Ct)).MonthStartDay);
+    }
+
+    [Fact]
     public async Task A_rule_text_has_one_category_rules_follow_a_merge_and_are_deleted_with_all_data()
     {
         await _store.EnsureDefaultCategoriesAsync(Ct);

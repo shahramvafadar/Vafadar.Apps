@@ -51,6 +51,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
     private readonly TimeProvider _time;
     private Core.Budgets.Budget? _budget;
     private PeriodCalendar _calendar;
+    private int _startDay = 1;
     private string _currency = Currencies.Euro.Code;
     private int _year;
     private int _month;
@@ -171,10 +172,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
     public async Task LoadAsync()
     {
         var settings = await _store.GetSettingsAsync();
+        _startDay = settings.MonthStartDay;
         if (_year == 0)
         {
             _calendar = settings.BudgetCalendar;
-            (_year, _month) = PeriodMath.MonthOf(Today, _calendar);
+            (_year, _month) = PeriodMath.MonthOf(Today, _calendar, _startDay);
         }
 
         _currency = settings.ReportCurrencyCode;
@@ -183,11 +185,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
         PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
         NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
 
-        var (from, to) = PeriodMath.MonthRange(_year, _month, _calendar);
+        var (from, to) = PeriodMath.MonthRange(_year, _month, _calendar, _startDay);
         PeriodText = _dates.Format(from, DateFormatStyle.MonthYear);
-        if ((_calendar == PeriodCalendar.Persian) != (_localization.CurrentCalendar == CalendarSystem.Persian))
+        if (_startDay > 1 || (_calendar == PeriodCalendar.Persian) != (_localization.CurrentCalendar == CalendarSystem.Persian))
         {
-            // The budget months follow another calendar than the display: show the exact date range instead.
+            // A month with its own start day, or budget months in another calendar than the display: show the exact range.
             PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
         }
 
@@ -412,7 +414,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
         }
 
         var (ny, nm) = PeriodMath.Next(_year, _month);
-        var (nextFrom, _) = PeriodMath.MonthRange(ny, nm, _calendar);
+        var (nextFrom, _) = PeriodMath.MonthRange(ny, nm, _calendar, _startDay);
         var target = _dates.Format(nextFrom, DateFormatStyle.MonthYear);
         var existing = await _store.GetBudgetAsync(ny, nm, _calendar, _currency);
         var message = _translator.Format(existing is null ? "Budget_CopyMessage" : "Budget_CopyReplaceMessage", target);

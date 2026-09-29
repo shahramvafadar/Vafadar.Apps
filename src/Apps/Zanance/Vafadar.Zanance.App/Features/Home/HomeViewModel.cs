@@ -38,6 +38,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
     private string _reportCurrency = Currencies.Euro.Code;
+    private int _startDay = 1;
 
     public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
@@ -172,9 +173,10 @@ public sealed partial class HomeViewModel : ViewModelBase
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
-        var (from, to) = PeriodRange(today);
         var settings = await _store.GetSettingsAsync();
         _reportCurrency = settings.ReportCurrencyCode;
+        _startDay = settings.MonthStartDay;
+        var (from, to) = PeriodRange(today);
 
         var allAccounts = await _store.GetAccountsAsync();
         var accounts = allAccounts.Where(a => !a.IsArchived).ToList();
@@ -189,7 +191,10 @@ public sealed partial class HomeViewModel : ViewModelBase
         var incomplete = accounts.Count(a => a.IncludeInTotals && !a.OpeningBalanceKnown);
         IncompleteText = incomplete > 0 ? _translator.Format("Home_OpeningUnknown", incomplete) : null;
         HasEntries = entries.Count > 0;
-        var periodText = _dates.Format(from, DateFormatStyle.MonthYear);
+        // A month with its own start day (pay cycle) shows its exact range (DASH-01).
+        var periodText = _startDay > 1
+            ? $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}"
+            : _dates.Format(from, DateFormatStyle.MonthYear);
         ScopeText = _translator.Format("Home_Scope", periodText, _translator["Home_AccountsInTotals"], _reportCurrency);
 
         // Recorded balance (FIN-13) per currency; totals always follow the accounts included in totals.
@@ -257,7 +262,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
     private async Task LoadBudgetAsync(PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
     {
-        var (year, month) = PeriodMath.MonthOf(today, calendar);
+        var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         if (PeriodIndex == 1)
         {
             (year, month) = PeriodMath.Previous(year, month);
@@ -272,7 +277,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
         var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
-        var (from, to) = PeriodMath.MonthRange(year, month, calendar);
+        var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await _store.GetCategoriesAsync(), from, to));
         BudgetText = status.IsOver
             ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _reportCurrency, culture))
@@ -295,8 +300,8 @@ public sealed partial class HomeViewModel : ViewModelBase
             return;
         }
 
-        var (year, month) = PeriodMath.MonthOf(today, Calendar);
-        var end = PeriodMath.MonthRange(year, month, Calendar).Last;
+        var (year, month) = PeriodMath.MonthOf(today, Calendar, _startDay);
+        var end = PeriodMath.MonthRange(year, month, Calendar, _startDay).Last;
         var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), today, end)
             .FirstOrDefault(f => string.Equals(f.CurrencyCode, _reportCurrency, StringComparison.OrdinalIgnoreCase));
         if (forecast is null)
@@ -428,13 +433,13 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private (DateOnly From, DateOnly To) PeriodRange(DateOnly today)
     {
-        var (year, month) = PeriodMath.MonthOf(today, Calendar);
+        var (year, month) = PeriodMath.MonthOf(today, Calendar, _startDay);
         if (PeriodIndex == 1)
         {
             (year, month) = PeriodMath.Previous(year, month);
         }
 
-        return PeriodMath.MonthRange(year, month, Calendar);
+        return PeriodMath.MonthRange(year, month, Calendar, _startDay);
     }
 
     private const string PlansTipKey = "home.tip.plans.dismissed";

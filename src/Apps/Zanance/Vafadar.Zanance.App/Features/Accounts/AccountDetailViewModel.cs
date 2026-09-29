@@ -175,9 +175,12 @@ public sealed partial class AccountDetailViewModel(
             : null;
 
         var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
-        var (year, month) = PeriodMath.MonthOf(today, calendar);
-        var (from, to) = PeriodMath.MonthRange(year, month, calendar);
-        MonthText = dates.Format(from, DateFormatStyle.MonthYear);
+        var startDay = (await store.GetSettingsAsync()).MonthStartDay;
+        var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
+        var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);
+        MonthText = startDay > 1
+            ? $"{dates.Format(from, DateFormatStyle.Short)} – {dates.Format(to, DateFormatStyle.Short)}"
+            : dates.Format(from, DateFormatStyle.MonthYear);
         var movement = ReportCalculator.AccountMovements([account], entries, from, to).Single();
         string Format(long value, bool plus = false) => MoneyText.Format(value, account.CurrencyCode, culture, showPlus: plus);
         Movement.Clear();

@@ -31,6 +31,12 @@ public sealed class ZananceSettings : Entity, IAuditableEntity
     /// <summary>Gets or sets the calendar of new budgets (default Gregorian, §13.1).</summary>
     public PeriodCalendar BudgetCalendar { get; set; }
 
+    /// <summary>
+    /// Gets or sets the day the financial month starts on (1–28, §10.3 pay-cycle periods). Budgets, Home, reports and the
+    /// transaction filters use this month; plans keep their calendar dates.
+    /// </summary>
+    public int MonthStartDay { get; set; } = 1;
+
     /// <summary>Gets or sets the default reminder lead time in days (REM-01, default 3).</summary>
     public int ReminderDaysBefore { get; set; } = 3;
 

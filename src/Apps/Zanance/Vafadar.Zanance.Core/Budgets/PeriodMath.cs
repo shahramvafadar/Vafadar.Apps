@@ -7,6 +7,33 @@ public static class PeriodMath
 {
     private static readonly PersianCalendar Persian = new();
 
+    /// <summary>The latest day a financial month can start on, so that it exists in every month.</summary>
+    public const int MaxStartDay = 28;
+
+    /// <summary>
+    /// Returns the first and last day of a financial month (§10.3, pay-cycle periods). With a start day above 1 the month
+    /// runs from that day to the day before it in the next month and is named after the month it starts in: with the
+    /// 25th, "September" is 25 September to 24 October.
+    /// </summary>
+    public static (DateOnly First, DateOnly Last) MonthRange(int year, int month, PeriodCalendar calendar, int startDay)
+    {
+        var day = Math.Clamp(startDay, 1, MaxStartDay);
+        if (day == 1)
+        {
+            return MonthRange(year, month, calendar);
+        }
+
+        var (nextYear, nextMonth) = Next(year, month);
+        return (MonthRange(year, month, calendar).First.AddDays(day - 1), MonthRange(nextYear, nextMonth, calendar).First.AddDays(day - 2));
+    }
+
+    /// <summary>Returns the financial month (year, month) that contains <paramref name="date"/>.</summary>
+    public static (int Year, int Month) MonthOf(DateOnly date, PeriodCalendar calendar, int startDay)
+    {
+        var (year, month) = MonthOf(date, calendar);
+        return date < MonthRange(year, month, calendar, startDay).First ? Previous(year, month) : (year, month);
+    }
+
     /// <summary>Returns the first and last day of a month.</summary>
     public static (DateOnly First, DateOnly Last) MonthRange(int year, int month, PeriodCalendar calendar)
     {

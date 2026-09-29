@@ -52,6 +52,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private readonly TimeProvider _time;
     private int _year;
     private int _month;
+    private int _startDay = 1;
     private DateOnly _from;
     private DateOnly _to;
     private string _currency = Currencies.Euro.Code;
@@ -253,23 +254,28 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public async Task LoadAsync()
     {
+        var settings = await _store.GetSettingsAsync();
+        _startDay = settings.MonthStartDay;
         if (_year == 0)
         {
-            (_year, _month) = PeriodMath.MonthOf(Today, Calendar);
+            (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
         }
 
         PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
         NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
 
-        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
-        PeriodText = PeriodKind == 0 ? _dates.Format(_from, DateFormatStyle.MonthYear) : _year.ToString(CultureInfo.InvariantCulture);
+        // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
+        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
+        PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
+            : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
+            : _dates.Format(_from, DateFormatStyle.MonthYear);
         if (_to >= Today && _from <= Today)
         {
             // A running period is labelled as such, so it is not compared as if it were complete (REP-05).
             PeriodText += " · " + _translator["Report_SoFar"];
         }
 
-        _currency = (await _store.GetSettingsAsync()).ReportCurrencyCode;
+        _currency = settings.ReportCurrencyCode;
         var accounts = await _store.GetAccountsAsync();
         var entries = await _store.GetEntriesAsync();
         var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
@@ -381,7 +387,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         Trend.Clear();
         var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
         var end = _to < Today ? _to : Today;
-        foreach (var month in ReportCalculator.MonthlyTrend(accounts, entries, end, PeriodKind == 0 ? TrendMonths : 12, Calendar, _currency))
+        foreach (var month in ReportCalculator.MonthlyTrend(accounts, entries, end, PeriodKind == 0 ? TrendMonths : 12, Calendar, _currency, _startDay))
         {
             var label = _dates.Format(month.From, DateFormatStyle.MonthYear) + (month.IsPartial ? " *" : string.Empty);
             Trend.Add(new TrendPoint(

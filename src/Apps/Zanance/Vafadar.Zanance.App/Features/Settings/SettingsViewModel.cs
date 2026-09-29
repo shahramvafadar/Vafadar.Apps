@@ -71,11 +71,34 @@ public sealed partial class SettingsViewModel : ViewModelBase
         "Plugin.LocalNotification – MIT",
         "AndroidX (Biometric and others) – Apache 2.0",
         "Figtree and Urbanist fonts – SIL Open Font License 1.1",
-            "Google ML Kit text recognition (Android) – ML Kit Terms of Service",
+        "Google ML Kit text recognition (Android) – ML Kit Terms of Service",
         "Vazirmatn font – SIL Open Font License 1.1");
 
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
+
+    // The financial month (§10.3 pay-cycle periods): day 1 is the calendar month.
+    [ObservableProperty]
+    public partial IReadOnlyList<string> StartDayNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int StartDayIndex { get; set; }
+
+    async partial void OnStartDayIndexChanged(int value)
+    {
+        if (_refreshing || value < 0)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        var day = Math.Clamp(value + 1, 1, Core.Budgets.PeriodMath.MaxStartDay);
+        if (settings.MonthStartDay != day)
+        {
+            settings.MonthStartDay = day;
+            await _store.SaveSettingsAsync(settings);
+        }
+    }
 
     // Theme (UX-08): follow the device, light or dark.
     [ObservableProperty]
@@ -138,6 +161,14 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ReportCurrency = settings.ReportCurrencyCode;
             ShowDetails = settings.NotificationsShowDetails;
             ModeIndex = (int)settings.Mode;
+            var culture = _localization.CurrentCulture;
+            StartDayNames =
+            [
+                _translator["Settings_MonthStartCalendar"],
+                .. Enumerable.Range(2, Core.Budgets.PeriodMath.MaxStartDay - 1)
+                    .Select(d => Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_MonthStartDay", d.ToString(culture)))!),
+            ];
+            StartDayIndex = Math.Clamp(settings.MonthStartDay, 1, Core.Budgets.PeriodMath.MaxStartDay) - 1;
             ThemeNames = [_translator["Theme_System"], _translator["Theme_Light"], _translator["Theme_Dark"]];
             ThemeIndex = (int)_theme.Choice;
             IsPersian = Presentation.DigitPreferences.IsPersian(_localization);

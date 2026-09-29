@@ -2693,4 +2693,31 @@
   <data name="Plan_SecondDayInvalid" xml:space="preserve">
     <value>A second day is only possible for monthly plans on a fixed day of the month (1–31).</value>
   </data>
+  <data name="Settings_MonthStart" xml:space="preserve">
+    <value>Month starts on</value>
+  </data>
+  <data name="Settings_MonthStartCalendar" xml:space="preserve">
+    <value>1st (calendar month)</value>
+  </data>
+  <data name="Settings_MonthStartDay" xml:space="preserve">
+    <value>Day {0}</value>
+  </data>
+  <data name="Settings_MonthStartHint" xml:space="preserve">
+    <value>For a pay cycle, e.g. the 25th. Budgets, Home, reports and the transaction filters use this month; plans keep their dates.</value>
+  </data>
+  <data name="Budget_Suggestion" xml:space="preserve">
+    <value>Suggestion: {0} – the average of the last {1} months, rounded up.</value>
+  </data>
+  <data name="Budget_SuggestionOne" xml:space="preserve">
+    <value>Suggestion: {0} – last month's spending, rounded up.</value>
+  </data>
+  <data name="Budget_UseSuggestion" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="Budget_FillSuggestions" xml:space="preserve">
+    <value>Fill empty limits with suggestions</value>
+  </data>
+  <data name="Budget_CategoryAverage" xml:space="preserve">
+    <value>Average {0}</value>
+  </data>
 </root>

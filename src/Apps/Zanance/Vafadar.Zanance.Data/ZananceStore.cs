@@ -254,14 +254,16 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             return BudgetCarry.None;
         }
 
-        var from = PeriodMath.MonthRange(chain[0].Year, chain[0].Month, budget.Calendar).First;
-        var to = PeriodMath.MonthRange(chain[^1].Year, chain[^1].Month, budget.Calendar).Last;
+        // Months are financial months: the same start day as the budget page (§10.3).
+        var startDay = (await GetSettingsAsync(cancellationToken)).MonthStartDay;
+        var from = PeriodMath.MonthRange(chain[0].Year, chain[0].Month, budget.Calendar, startDay).First;
+        var to = PeriodMath.MonthRange(chain[^1].Year, chain[^1].Month, budget.Calendar, startDay).Last;
         var accounts = await GetAccountsAsync(cancellationToken: cancellationToken);
         var entries = await GetEntriesAsync(from, to, cancellationToken);
         var categories = await GetCategoriesAsync(cancellationToken);
         var months = chain.Select(b =>
         {
-            var (start, end) = PeriodMath.MonthRange(b.Year, b.Month, b.Calendar);
+            var (start, end) = PeriodMath.MonthRange(b.Year, b.Month, b.Calendar, startDay);
             var scope = b.AccountIds.Count > 0 ? b.AccountIds : null;
             return new BudgetMonth(
                 b.Rollover,

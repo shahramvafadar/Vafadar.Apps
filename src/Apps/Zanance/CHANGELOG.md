@@ -71,6 +71,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one
   limit covers everything flexible. Each expense category can be marked fixed, non-monthly or flexible.
 
+### Added – Pay-cycle months and limit suggestions (§10.3)
+
+- The month can start on any day from the 1st to the 28th (Settings), e.g. on payday. Budgets, Home, reports, the
+  transaction filters and the forecast month end follow it; plans keep their dates.
+- The budget editor suggests limits from the average spending of the last three months, rounded up; they are only
+  filled in when you choose so.
+
 ### Changed – Design (D-27)
 
 - A calm, neutral look in the brand blue, where every colour has one meaning: green for money coming in, red for

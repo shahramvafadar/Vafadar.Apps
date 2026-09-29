@@ -2689,4 +2689,31 @@
   <data name="Plan_SecondDayInvalid" xml:space="preserve">
     <value>Ein zweiter Tag ist nur bei monatlichen Plänen mit festem Tag im Monat (1–31) möglich.</value>
   </data>
+  <data name="Settings_MonthStart" xml:space="preserve">
+    <value>Monat beginnt am</value>
+  </data>
+  <data name="Settings_MonthStartCalendar" xml:space="preserve">
+    <value>1. (Kalendermonat)</value>
+  </data>
+  <data name="Settings_MonthStartDay" xml:space="preserve">
+    <value>{0}. Tag</value>
+  </data>
+  <data name="Settings_MonthStartHint" xml:space="preserve">
+    <value>Für einen Gehaltszyklus, z. B. den 25. Budgets, Start, Berichte und die Buchungsfilter nutzen diesen Monat; Pläne behalten ihre Termine.</value>
+  </data>
+  <data name="Budget_Suggestion" xml:space="preserve">
+    <value>Vorschlag: {0} – der Durchschnitt der letzten {1} Monate, aufgerundet.</value>
+  </data>
+  <data name="Budget_SuggestionOne" xml:space="preserve">
+    <value>Vorschlag: {0} – die Ausgaben des letzten Monats, aufgerundet.</value>
+  </data>
+  <data name="Budget_UseSuggestion" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="Budget_FillSuggestions" xml:space="preserve">
+    <value>Leere Limits mit Vorschlägen füllen</value>
+  </data>
+  <data name="Budget_CategoryAverage" xml:space="preserve">
+    <value>Durchschnitt {0}</value>
+  </data>
 </root>

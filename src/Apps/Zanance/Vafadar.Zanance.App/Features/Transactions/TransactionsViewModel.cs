@@ -32,6 +32,7 @@ public sealed record AccountFilterOption(Guid? Id, string Name)
 public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttributable
 {
     private readonly ZananceStore _store;
+    private int _startDay = 1;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly IDateFormatter _dates;
@@ -199,6 +200,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _loading = true;
         try
         {
+            _startDay = (await _store.GetSettingsAsync()).MonthStartDay;
             var accounts = await _store.GetAccountsAsync();
             _accounts = accounts.ToDictionary(a => a.Id);
             _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
@@ -311,15 +313,15 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
         var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
-        var (year, month) = PeriodMath.MonthOf(today, calendar);
+        var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         switch (PeriodIndex)
         {
             case 0:
-                var current = PeriodMath.MonthRange(year, month, calendar);
+                var current = PeriodMath.MonthRange(year, month, calendar, _startDay);
                 return (current.First, current.Last);
             case 1:
                 var (py, pm) = PeriodMath.Previous(year, month);
-                var previous = PeriodMath.MonthRange(py, pm, calendar);
+                var previous = PeriodMath.MonthRange(py, pm, calendar, _startDay);
                 return (previous.First, previous.Last);
             case 2:
                 var range = PeriodMath.YearRange(today, calendar);

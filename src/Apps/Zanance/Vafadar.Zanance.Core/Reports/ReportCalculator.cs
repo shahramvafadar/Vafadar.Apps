@@ -101,17 +101,19 @@ public static class ReportCalculator
     /// Returns income and expense of the <paramref name="count"/> months up to the month containing
     /// <paramref name="today"/>, oldest first, in one currency. The current month is flagged as partial (REP-05).
     /// </summary>
+    /// <param name="startDay">The day financial months start on (1 = calendar months).</param>
     public static IReadOnlyList<MonthTotals> MonthlyTrend(
         IEnumerable<Account> accounts,
         IReadOnlyCollection<LedgerEntry> entries,
         DateOnly today,
         int count,
         PeriodCalendar calendar,
-        string currencyCode)
+        string currencyCode,
+        int startDay = 1)
     {
         ArgumentNullException.ThrowIfNull(accounts);
         var accountList = accounts.ToList();
-        var (year, month) = PeriodMath.MonthOf(today, calendar);
+        var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var months = new List<(int Year, int Month)>();
         for (var i = 0; i < count; i++)
         {
@@ -123,7 +125,7 @@ public static class ReportCalculator
         [
             .. months.Select(m =>
             {
-                var (from, to) = PeriodMath.MonthRange(m.Year, m.Month, calendar);
+                var (from, to) = PeriodMath.MonthRange(m.Year, m.Month, calendar, startDay);
                 var totals = LedgerCalculator.Totals(accountList, entries, new LedgerFilter(from, to))
                     .FirstOrDefault(t => string.Equals(t.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase));
                 return new MonthTotals(m.Year, m.Month, from, to, totals?.NetIncome ?? 0, totals?.NetExpense ?? 0, to >= today);

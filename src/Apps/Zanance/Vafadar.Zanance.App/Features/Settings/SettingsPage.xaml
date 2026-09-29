@@ -33,6 +33,11 @@
                     <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
                             SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
 
+                    <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />
+                    <Picker ItemsSource="{Binding StartDayNames}" SelectedIndex="{Binding StartDayIndex}"
+                            SemanticProperties.Description="{v:Translate Settings_MonthStart}" />
+                    <Label Text="{v:Translate Settings_MonthStartHint}" Style="{StaticResource Secondary}" />
+
                     <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
                     <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />

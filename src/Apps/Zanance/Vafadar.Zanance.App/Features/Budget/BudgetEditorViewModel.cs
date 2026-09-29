@@ -25,6 +25,12 @@ public sealed partial class LimitInput(Guid categoryId, string name, Symbol icon
 
     [ObservableProperty]
     public partial string Text { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the suggested limit in minor units (§10.3), or <see langword="null"/> without history.</summary>
+    public long? Suggested { get; set; }
+
+    /// <summary>Gets or sets the average spending shown under the limit, e.g. "Average 118.40".</summary>
+    public string? SuggestionText { get; set; }
 }
 
 /// <summary>An account that the budget may cover (BUD-03).</summary>
@@ -69,6 +75,16 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     [ObservableProperty]
     public partial string? HiddenLimitsText { get; set; }
 
+    // Suggestions for adjusting limits (§10.3): shown only, taken over on request.
+    [ObservableProperty]
+    public partial string? TotalSuggestionText { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasCategorySuggestions { get; set; }
+
+    private long? _totalSuggestion;
+    private bool _loaded;
+
     // Rollover (§10.3) is an Advanced option; in Simple mode an active rollover stays and is summarised (UX-02).
     [ObservableProperty]
     public partial IReadOnlyList<string> RolloverNames { get; set; } = [];
@@ -89,19 +105,36 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     /// <summary>Gets a value indicating whether category limits can be edited (Advanced, not with flex).</summary>
     public bool ShowCategoryLimits => IsAdvanced && !IsFlex;
 
+    /// <summary>Gets a value indicating whether empty category limits can be filled with suggestions.</summary>
+    public bool ShowFillSuggestions => ShowCategoryLimits && HasCategorySuggestions;
+
+    partial void OnHasCategorySuggestionsChanged(bool value) => OnPropertyChanged(nameof(ShowFillSuggestions));
+
     partial void OnMethodIndexChanged(int value)
     {
         OnPropertyChanged(nameof(IsFlex));
         OnPropertyChanged(nameof(ShowCategoryLimits));
+        OnPropertyChanged(nameof(ShowFillSuggestions));
+
+        // With flex the overall suggestion covers flexible spending only.
+        if (_loaded)
+        {
+            _ = Presentation.Failures.GuardAsync(LoadSuggestionsAsync);
+        }
     }
 
-    partial void OnIsAdvancedChanged(bool value) => OnPropertyChanged(nameof(ShowCategoryLimits));
+    partial void OnIsAdvancedChanged(bool value)
+    {
+        OnPropertyChanged(nameof(ShowCategoryLimits));
+        OnPropertyChanged(nameof(ShowFillSuggestions));
+    }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
     private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        _loaded = false;
         _year = query.TryGetValue("year", out var year) && year is int y ? y : 0;
         _month = query.TryGetValue("month", out var month) && month is int m ? m : 0;
         _calendar = query.TryGetValue("calendar", out var calendar) && calendar is PeriodCalendar c ? c : PeriodCalendar.Gregorian;
@@ -148,6 +181,70 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
             }
 
             Limits.Add(input);
+        }
+
+        await LoadSuggestionsAsync();
+        _loaded = true;
+    }
+
+    // The average of the last months in the same scope and financial month as the budget page (§10.3).
+    private async Task LoadSuggestionsAsync()
+    {
+        var settings = await store.GetSettingsAsync();
+        var (first, _) = PeriodMath.MonthRange(_year, _month, _calendar, settings.MonthStartDay);
+        var (py, pm) = (_year, _month);
+        for (var i = 0; i < BudgetSuggestions.Months; i++)
+        {
+            (py, pm) = PeriodMath.Previous(py, pm);
+        }
+
+        var from = PeriodMath.MonthRange(py, pm, _calendar, settings.MonthStartDay).First;
+        var suggestion = BudgetSuggestions.Suggest(
+            await store.GetAccountsAsync(),
+            await store.GetEntriesAsync(from, first.AddDays(-1)),
+            await store.GetCategoriesAsync(),
+            _year,
+            _month,
+            _calendar,
+            settings.MonthStartDay,
+            _currency,
+            _budget?.AccountIds,
+            flexibleOnly: IsFlex);
+
+        var culture = localization.CurrentCulture;
+        _totalSuggestion = suggestion.Total?.Suggested;
+        TotalSuggestionText = suggestion.Total is { } total
+            ? translator.Format(total.Months == 1 ? "Budget_SuggestionOne" : "Budget_Suggestion", MoneyText.Format(total.Suggested, _currency, culture), total.Months)
+            : null;
+        foreach (var input in Limits)
+        {
+            if (suggestion.Categories.TryGetValue(input.CategoryId, out var category))
+            {
+                input.Suggested = category.Suggested;
+                input.SuggestionText = translator.Format("Budget_CategoryAverage", MoneyText.Format(category.Average, _currency, culture));
+            }
+        }
+
+        HasCategorySuggestions = Limits.Any(l => l.Suggested is not null);
+    }
+
+    [RelayCommand]
+    private void UseTotalSuggestion()
+    {
+        if (_totalSuggestion is { } total)
+        {
+            TotalText = MoneyText.ForInput(total, _currency, localization.CurrentCulture);
+        }
+    }
+
+    // Fills only empty category limits; limits the user set stay as they are.
+    [RelayCommand]
+    private void FillSuggestions()
+    {
+        var culture = localization.CurrentCulture;
+        foreach (var input in Limits.Where(l => l.Suggested is not null && string.IsNullOrWhiteSpace(l.Text)))
+        {
+            input.Text = MoneyText.ForInput(input.Suggested!.Value, _currency, culture);
         }
     }
 

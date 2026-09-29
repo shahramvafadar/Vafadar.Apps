@@ -28,7 +28,7 @@ All types live in `Vafadar.Zanance.Core` unless stated otherwise. Rules are refe
 | `BudgetCategoryLimit` | BudgetId, CategoryId, Limit | BUD-02 |
 | `ExchangeRate` | Date, From, To, Rate (decimal as string), IsEstimate | FX-02, FX-04 |
 | `ImportBatch` | FileName, ImportedAt, RowCount, State (Applied, Reverted) | IO-11 |
-| `ZananceSettings` | ReportCurrency, DefaultAccountId, Mode (Simple/Advanced), BudgetCalendar, WeekStart, ReminderDefaults, NotificationShowsAmounts, OnboardingCompleted | Stored in the database so they are part of backups (BAK-03) |
+| `ZananceSettings` | ReportCurrency, DefaultAccountId, Mode (Simple/Advanced), BudgetCalendar, MonthStartDay (financial month, 1–28), WeekStart, ReminderDefaults, NotificationShowsAmounts, OnboardingCompleted | Stored in the database so they are part of backups (BAK-03) |
 
 Transfers, opening balances and adjustments never carry an income/expense category.
 

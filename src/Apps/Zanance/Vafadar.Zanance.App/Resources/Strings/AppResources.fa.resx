@@ -2689,4 +2689,31 @@
   <data name="Plan_SecondDayInvalid" xml:space="preserve">
     <value>روز دوم فقط برای برنامه‌های ماهانه با روز مشخصی از ماه (۱ تا ۳۱) ممکن است.</value>
   </data>
+  <data name="Settings_MonthStart" xml:space="preserve">
+    <value>شروع ماه مالی</value>
+  </data>
+  <data name="Settings_MonthStartCalendar" xml:space="preserve">
+    <value>روز ۱ (ماه تقویمی)</value>
+  </data>
+  <data name="Settings_MonthStartDay" xml:space="preserve">
+    <value>روز {0}</value>
+  </data>
+  <data name="Settings_MonthStartHint" xml:space="preserve">
+    <value>برای دورهٔ حقوق، مثلاً روز ۲۵. بودجه، خانه، گزارش‌ها و فیلتر تراکنش‌ها از این ماه استفاده می‌کنند؛ تاریخ برنامه‌ها تغییر نمی‌کند.</value>
+  </data>
+  <data name="Budget_Suggestion" xml:space="preserve">
+    <value>پیشنهاد: {0} – میانگین {1} ماه گذشته، گردشده به بالا.</value>
+  </data>
+  <data name="Budget_SuggestionOne" xml:space="preserve">
+    <value>پیشنهاد: {0} – هزینهٔ ماه گذشته، گردشده به بالا.</value>
+  </data>
+  <data name="Budget_UseSuggestion" xml:space="preserve">
+    <value>استفاده</value>
+  </data>
+  <data name="Budget_FillSuggestions" xml:space="preserve">
+    <value>پر کردن سقف‌های خالی با پیشنهادها</value>
+  </data>
+  <data name="Budget_CategoryAverage" xml:space="preserve">
+    <value>میانگین {0}</value>
+  </data>
 </root>
