@@ -23,7 +23,7 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] Persian digits in the Persian interface (setting)
 - [x] App name (Zanance), icon, splash and colors (D-21, D-22, D-26)
 - [x] App design: meaning colours, Insights tab, calm Home, Persian digits (D-27)
-- [ ] English and German fonts of the design (Figtree, Urbanist); Open Sans until then
+- [x] English and German fonts of the design (Figtree, Urbanist)
 - [x] Local backup: encrypted backup file, restore with safety copy, CSV import / export
 - [ ] Cloud backup (Google Drive / OneDrive) with sign-in – hidden until verified (D-17), moved to a later phase
 - [ ] Device checks of the release build (08 release checklist)

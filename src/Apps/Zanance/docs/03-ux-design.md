@@ -89,7 +89,7 @@ lightened (`CategoryLookup.DisplayColor`).
 | Shape | Cards radius 18, buttons and inputs 14, icon tiles 40 × 40 radius 12, chips fully rounded |
 | Spacing | 4-pt grid; screen padding 16; card padding 16; list row min height 60 |
 | Touch targets | ≥ 44 × 44 (buttons 48) |
-| Typography | Persian: Vazirmatn (OFL); English and German: Open Sans. Page title 24 bold, amount large 32 bold, row title 15, body 14, secondary 13 |
+| Typography | Persian: Vazirmatn (OFL). English and German: Figtree for text, Urbanist Bold (the wordmark's face) for page titles and large amounts (both OFL). Page title 24, amount large 32, row title 15, body 14, secondary 13 |
 
 * Persian digits (۱۲۳) are shown in the Persian interface by default (Settings → "Persian digits"); the separators
   become `٬` and `٫`. Only the displayed text changes (`NativeDigits`, applied to labels); stored values, CSV, PDF,

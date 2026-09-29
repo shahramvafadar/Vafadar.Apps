@@ -63,7 +63,7 @@
     <!-- Title of a root page (the tab pages show it in the content, not in a navigation bar). -->
     <Style x:Key="PageTitle" TargetType="Label">
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="{DynamicResource DisplayFont}" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
     </Style>
 
@@ -105,9 +105,10 @@
         <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
     </Style>
 
+    <!-- The bold display face (Urbanist in English and German, Vazirmatn Bold in Persian), so no synthetic bold. -->
     <Style x:Key="AmountLarge" TargetType="Label">
         <Setter Property="FontSize" Value="32" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="{DynamicResource DisplayFont}" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
     </Style>
 

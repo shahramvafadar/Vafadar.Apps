@@ -44,8 +44,11 @@ public static class MauiProgram
             })
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Figtree-Regular.ttf", "Figtree");
+                fonts.AddFont("Figtree-SemiBold.ttf", "FigtreeSemiBold");
+                fonts.AddFont("Figtree-Bold.ttf", "FigtreeBold");
+                fonts.AddFont("Urbanist-SemiBold.ttf", "UrbanistSemiBold");
+                fonts.AddFont("Urbanist-Bold.ttf", "UrbanistBold");
                 fonts.AddFont("Vazirmatn-Regular.ttf", "Vazirmatn");
                 fonts.AddFont("Vazirmatn-Bold.ttf", "VazirmatnBold");
             });

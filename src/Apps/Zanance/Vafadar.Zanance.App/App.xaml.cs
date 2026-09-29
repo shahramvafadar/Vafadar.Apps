@@ -40,9 +40,10 @@ public partial class App : Application
         Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
         localization.Changed += (_, _) => Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
 
-        // Persian text in Vazirmatn; English and German in Open Sans (D-27).
-        Resources["AppFont"] = FontFor(localization);
-        localization.Changed += (_, _) => Resources["AppFont"] = FontFor(localization);
+        // Persian text in Vazirmatn; English and German in Figtree with Urbanist (the wordmark's face) for titles and
+        // large amounts (D-27).
+        ApplyFonts(localization);
+        localization.Changed += (_, _) => ApplyFonts(localization);
         this.ApplyToModalPages(localization);
 
         var reminders = services.GetRequiredService<ReminderService>();
@@ -50,8 +51,12 @@ public partial class App : Application
         reminders.Scheduler.Tapped += OnReminderTapped;
     }
 
-    private static string FontFor(ILocalizationService localization) =>
-        localization.CurrentCulture.TwoLetterISOLanguageName == "fa" ? "Vazirmatn" : "OpenSansRegular";
+    private void ApplyFonts(ILocalizationService localization)
+    {
+        var persian = localization.CurrentCulture.TwoLetterISOLanguageName == "fa";
+        Resources["AppFont"] = persian ? "Vazirmatn" : "Figtree";
+        Resources["DisplayFont"] = persian ? "VazirmatnBold" : "UrbanistBold";
+    }
 
     /// <summary>Replaces the root page of the main window, e.g. after onboarding.</summary>
     public void ShowMainShell()

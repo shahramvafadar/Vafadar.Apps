@@ -56,7 +56,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   chart and the account list can be turned on in the Home layout.
 - Date tiles for due items, colour tiles for categories and accounts, and a filter button that keeps the less used
   transaction filters out of the way.
-- The Vazirmatn font for Persian, and Persian digits in the Persian interface (can be turned off in Settings).
+- The Vazirmatn font for Persian and Figtree with Urbanist titles for English and German, and Persian digits in the
+  Persian interface (can be turned off in Settings).
 
 ### Fixed
 
