@@ -69,7 +69,8 @@ public static class FlexCalculator
         var categoryList = categories.ToList();
         var stateList = states.ToList();
         var scheduleList = schedules.Where(s => s.Kind == EntryKind.Expense && s.State == ScheduleState.Active).ToList();
-        var byAccount = accountList.ToDictionary(a => a.Id);
+        // Plans count only on the accounts the spending is measured on (the budget scope, or the accounts in totals).
+        var byAccount = LedgerCalculator.InScope(accountList, accountIds is { Count: > 0 } ? accountIds : null).ToDictionary(a => a.Id);
         var fixedIds = CategoriesOf(categoryList, SpendingType.Fixed);
         var nonMonthlyIds = CategoriesOf(categoryList, SpendingType.NonMonthly);
 

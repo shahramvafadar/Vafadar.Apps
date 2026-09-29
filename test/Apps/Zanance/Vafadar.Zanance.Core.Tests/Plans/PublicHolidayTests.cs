@@ -66,6 +66,26 @@ public sealed class PublicHolidayTests
     }
 
     [Fact]
+    public void Moving_before_a_new_year_holiday_crosses_into_the_old_year()
+    {
+        var rule = new RecurrenceRule
+        {
+            Frequency = Frequency.Monthly,
+            Start = new DateOnly(2026, 1, 1),
+            WeekendShift = WeekendShift.Before,
+            WeekendDays = RecurrenceRule.MaskOf([DayOfWeek.Saturday, DayOfWeek.Sunday]),
+            HolidayRegion = "DE",
+        };
+
+        // Friday 1 January 2027 is New Year: the working day before is Thursday 31 December 2026.
+        Assert.Equal(new DateOnly(2026, 12, 31), rule.ApplyWeekend(new DateOnly(2027, 1, 1)));
+    }
+
+    [Fact]
+    public void Years_outside_the_hijri_range_have_no_holidays_instead_of_an_error() =>
+        Assert.False(PublicHolidays.IsHoliday("IR", new DateOnly(100, 3, 21)));
+
+    [Fact]
     public void Without_a_holiday_region_only_weekends_move_a_due_date()
     {
         var rule = new RecurrenceRule

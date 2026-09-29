@@ -56,6 +56,18 @@ public sealed class FlexCalculatorTests
     }
 
     [Fact]
+    public void Plans_on_accounts_outside_the_budget_scope_are_not_expected()
+    {
+        var savings = new Account { Name = "Savings", CurrencyCode = "EUR", OpeningDate = new DateOnly(2027, 1, 1) };
+        var rent = Plan(_housing, Frequency.Monthly, new DateOnly(2027, 1, 1), 90_000);
+        rent.AccountId = savings.Id;
+
+        var flex = FlexCalculator.Summarize(40_000, [_account, savings], [], [rent], [], [_housing, _food], From, To, "EUR", Today, [_account.Id]);
+
+        Assert.Equal(0, flex.Fixed.Planned);
+    }
+
+    [Fact]
     public void A_sub_category_follows_its_parent()
     {
         var electricity = new Category { Kind = CategoryKind.Expense, ParentId = _housing.Id, SpendingType = SpendingType.Flexible };

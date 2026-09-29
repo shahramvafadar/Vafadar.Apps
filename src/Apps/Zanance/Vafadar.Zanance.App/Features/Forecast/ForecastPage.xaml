@@ -44,14 +44,14 @@
                                     </Border>
                                     <chart:SfCartesianChart HeightRequest="180" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Forecast_Path}">
                                         <chart:SfCartesianChart.XAxes>
-                                            <chart:DateTimeAxis ShowMajorGridLines="False">
+                                            <chart:DateTimeAxis ShowMajorGridLines="False" LabelCreated="OnAxisLabelCreated">
                                                 <chart:DateTimeAxis.LabelStyle>
                                                     <chart:ChartAxisLabelStyle LabelFormat="d MMM" />
                                                 </chart:DateTimeAxis.LabelStyle>
                                             </chart:DateTimeAxis>
                                         </chart:SfCartesianChart.XAxes>
                                         <chart:SfCartesianChart.YAxes>
-                                            <chart:NumericalAxis />
+                                            <chart:NumericalAxis LabelCreated="OnAxisLabelCreated" />
                                         </chart:SfCartesianChart.YAxes>
                                         <chart:StepLineSeries ItemsSource="{Binding Path}" XBindingPath="Date" YBindingPath="Balance"
                                                               Fill="{DynamicResource Primary}" StrokeWidth="2" />

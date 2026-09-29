@@ -132,7 +132,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 _dates.Format(item.Date, DateFormatStyle.Short),
                 string.IsNullOrEmpty(item.Name) ? _translator["Forecast_RecordedEntry"] : item.Name,
                 item.Effect is { } effect ? MoneyText.Format(effect, forecast.CurrencyCode, culture, showPlus: true, approximate: item.IsEstimate) : _translator["Plan_AmountUnknown"],
-                item.Effect is null ? Palette.WarningText : item.Effect < 0 ? Palette.ExpenseText : Palette.IncomeText,
+                item.Effect is null ? Palette.WarningText : item.Effect < 0 ? EntryPresenter.ExpenseColor : Palette.IncomeText,
                 item.IsExcluded ? _translator["Forecast_LeftOut"]
                     : item.IsMoved && item.IsAmountAssumed ? _translator["Forecast_DateAndAmountAssumed"]
                     : item.IsMoved ? _translator["Forecast_DateAssumed"]

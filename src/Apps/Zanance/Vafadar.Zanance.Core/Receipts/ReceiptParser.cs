@@ -28,13 +28,25 @@ public readonly record struct ReceiptWord(double Top, double Bottom, double Left
 /// </summary>
 public static partial class ReceiptParser
 {
-    private static readonly string[] TotalKeywords =
+    // Whole words or phrases, lower case.
+    private static readonly string[] StrongTotal =
     [
-        "total", "amount due", "to pay", "balance due", "grand total", "summe", "gesamt", "gesamtbetrag", "zu zahlen",
-        "betrag", "endbetrag", "جمع کل", "جمع", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل", "مبلغ", "total due",
+        "total", "grand total", "total due", "amount due", "balance due", "to pay", "summe", "gesamtsumme", "gesamtbetrag",
+        "endbetrag", "zu zahlen", "jumlah", "جمع کل", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل",
     ];
 
-    private static readonly string[] NotMerchant = ["receipt", "rechnung", "beleg", "quittung", "فاکتور", "رسید", "tel", "www", "ust", "vat"];
+    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ"];
+
+    private static readonly string[] NotTotal =
+    [
+        "sub", "subtotal", "zwischensumme", "mwst", "ust", "steuer", "netto", "nettobetrag", "tax", "vat", "rabatt", "ersparnis",
+        "gesamtersparnis", "discount", "items", "artikel", "bar", "gegeben", "rückgeld", "change", "cash", "tip",
+        "تخفیف", "مالیات", "تعداد", "باقیمانده", "دریافتی",
+    ];
+
+    private static readonly string[] NotPrice = ["tel", "telefon", "fax", "plz", "iban", "bic", "nr", "no", "ust", "id", "steuernummer", "تلفن", "کد"];
+
+    private static readonly string[] NotMerchant = ["receipt", "rechnung", "beleg", "quittung", "kassenbon", "bon", "invoice", "tel", "fax", "ust", "vat", "فاکتور", "رسید", "تلفن"];
 
     /// <summary>Reads a receipt text.</summary>
     public static ReceiptSuggestion Parse(string? text)
@@ -53,7 +65,7 @@ public static partial class ReceiptParser
     /// <summary>
     /// Builds the text rows of a receipt from recognised words. OCR engines return text in blocks or columns, so a price
     /// can end up far from its label; words whose vertical centres lie within half a line height form one row, read in
-    /// the order of <see cref="ReceiptWord.Left"/>.
+    /// reading order (by <see cref="ReceiptWord.Left"/>, right to left for rows in Arabic script).
     /// </summary>
     public static string? Rows(IEnumerable<ReceiptWord> words)
     {
@@ -73,7 +85,14 @@ public static partial class ReceiptParser
             }
         }
 
-        return rows.Count == 0 ? null : string.Join('\n', rows.Select(r => string.Join(' ', r.OrderBy(w => w.Left).Select(w => w.Text))));
+        return rows.Count == 0 ? null : string.Join('\n', rows.Select(r => string.Join(' ', (IsRightToLeft(r) ? r.OrderByDescending(w => w.Left) : r.OrderBy(w => w.Left)).Select(w => w.Text))));
+    }
+
+    // A row written mostly in Arabic script (Persian) is read from right to left.
+    private static bool IsRightToLeft(List<ReceiptWord> row)
+    {
+        var text = string.Concat(row.Select(w => w.Text));
+        return text.Count(c => c is >= '\u0600' and <= '\u06FF') > text.Count(char.IsAsciiLetter);
     }
 
     /// <summary>Reads an amount like <c>1.234,56</c>, <c>1,234.56</c>, <c>12,50</c> or <c>125,000</c>.</summary>
@@ -114,17 +133,22 @@ public static partial class ReceiptParser
 
     private static decimal? FindTotal(string[] lines)
     {
-        // Lines with a total keyword, the last one first (a subtotal usually comes before the total).
-        for (var i = lines.Length - 1; i >= 0; i--)
+        // A strong total keyword first, then a weak one; the last matching line wins because a subtotal comes earlier.
+        // Tax, discount, item-count, cash-given and change lines never hold the total.
+        foreach (var keywords in new[] { StrongTotal, WeakTotal })
         {
-            var line = lines[i].ToLowerInvariant();
-            if (TotalKeywords.Any(k => line.Contains(k, StringComparison.Ordinal)) && !line.Contains("sub", StringComparison.Ordinal)
-                && !line.Contains("zwischen", StringComparison.Ordinal))
+            for (var i = lines.Length - 1; i >= 0; i--)
             {
-                var amounts = Amounts(lines[i]).ToList();
-                if (amounts.Count == 0 && i + 1 < lines.Length)
+                var tokens = Tokens(lines[i]);
+                if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(tokens, k)))
                 {
-                    amounts = [.. Amounts(lines[i + 1])];
+                    continue;
+                }
+
+                var amounts = Amounts(lines[i], strict: false).ToList();
+                if (amounts.Count == 0 && i + 1 < lines.Length && !NotTotal.Any(k => Has(Tokens(lines[i + 1]), k)))
+                {
+                    amounts = [.. Amounts(lines[i + 1], strict: false)];
                 }
 
                 if (amounts.Count > 0)
@@ -134,22 +158,35 @@ public static partial class ReceiptParser
             }
         }
 
-        var all = lines.SelectMany(Amounts).ToList();
-        return all.Count > 0 ? all.Max() : null;
+        // No total line: the largest price-like amount, never a postal code, phone number or id.
+        var prices = lines.Where(l => !NotPrice.Any(k => Has(Tokens(l), k))).SelectMany(l => Amounts(l, strict: true)).ToList();
+        return prices.Count > 0 ? prices.Max() : null;
     }
 
-    private static IEnumerable<decimal> Amounts(string line)
+    private static IEnumerable<decimal> Amounts(string line, bool strict)
     {
         // Dates and times are not amounts.
         var text = TimePattern().Replace(DatePattern().Replace(line, " "), " ");
         foreach (Match match in AmountPattern().Matches(text))
         {
+            // Strict: only numbers written like prices (with decimals or thousands groups).
+            if (strict && !match.Value.Contains(',') && !match.Value.Contains('.'))
+            {
+                continue;
+            }
+
             if (TryAmount(match.Value, out var amount) && amount < 100_000_000_000m)
             {
                 yield return amount;
             }
         }
     }
+
+    // The lower-case words of a line, padded with spaces so that whole words and phrases can be found.
+    private static string Tokens(string line) =>
+        " " + string.Join(' ', WordPattern().Matches(line.ToLowerInvariant()).Select(m => m.Value)) + " ";
+
+    private static bool Has(string tokens, string phrase) => tokens.Contains(" " + phrase + " ", StringComparison.Ordinal);
 
     private static DateOnly? FindDate(string[] lines)
     {
@@ -211,9 +248,13 @@ public static partial class ReceiptParser
 
     private static string? FindMerchant(string[] lines) =>
         lines.Take(4).FirstOrDefault(l =>
-            l.Count(char.IsLetter) >= 3
-            && !NotMerchant.Any(k => l.Contains(k, StringComparison.OrdinalIgnoreCase))
-            && !TotalKeywords.Any(k => l.Contains(k, StringComparison.OrdinalIgnoreCase)))?.Trim();
+        {
+            var tokens = Tokens(l);
+            return l.Count(char.IsLetter) >= 3
+                && !NotMerchant.Any(k => Has(tokens, k))
+                && !StrongTotal.Concat(WeakTotal).Any(k => Has(tokens, k))
+                && !l.Contains("www.", StringComparison.OrdinalIgnoreCase) && !l.Contains('@');
+        })?.Trim();
 
     [GeneratedRegex(@"\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{1,2})?|\d+(?:[.,]\d{1,2})?", RegexOptions.CultureInvariant)]
     private static partial Regex AmountPattern();
@@ -226,4 +267,7 @@ public static partial class ReceiptParser
 
     [GeneratedRegex(@"(\d)([.,]) +(\d{2})\b", RegexOptions.CultureInvariant)]
     private static partial Regex SplitDecimals();
+
+    [GeneratedRegex(@"[\p{L}\p{M}\u200C]+", RegexOptions.CultureInvariant)]
+    private static partial Regex WordPattern();
 }

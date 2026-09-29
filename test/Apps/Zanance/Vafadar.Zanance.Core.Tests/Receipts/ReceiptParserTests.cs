@@ -109,5 +109,35 @@ public sealed class ReceiptParserTests
     }
 
     [Fact]
+    public void Tax_discount_and_change_lines_after_the_total_are_not_the_total()
+    {
+        var receipt = ReceiptParser.Parse("Markt\nSUMME EUR 4,10\nNettobetrag 3,83\nMwSt-Betrag 0,27\nGesamtersparnis 1,00\nBar 10,00\nRückgeld 5,90");
+
+        Assert.Equal(4.10m, receipt.Amount);
+    }
+
+    [Fact]
+    public void Without_a_total_line_postal_codes_phone_numbers_and_ids_are_not_amounts()
+    {
+        var receipt = ReceiptParser.Parse("Hotel Adlon\nHauptstr. 12, 10115 Berlin\nTel. 030 1234567\nUSt-IdNr DE123456789\nSUMNE 4,10");
+
+        Assert.Equal(4.10m, receipt.Amount);
+        Assert.Equal("Hotel Adlon", receipt.Merchant);
+    }
+
+    [Fact]
+    public void A_shop_name_containing_a_keyword_is_still_the_shop()
+    {
+        var receipt = ReceiptParser.Parse("TotalEnergies\n10115 Berlin\nSuper E10 45,20\nTotal 45,20");
+
+        Assert.Equal("TotalEnergies", receipt.Merchant);
+        Assert.Equal(45.20m, receipt.Amount);
+    }
+
+    [Fact]
+    public void A_persian_row_is_read_from_right_to_left() =>
+        Assert.Equal("فروشگاه نمونه", ReceiptParser.Rows([new(0, 10, 50, "نمونه"), new(0, 10, 120, "فروشگاه")]));
+
+    [Fact]
     public void An_empty_text_suggests_nothing() => Assert.True(ReceiptParser.Parse("  ").IsEmpty);
 }

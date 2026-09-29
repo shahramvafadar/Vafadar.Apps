@@ -67,7 +67,8 @@ public static class VafadarMauiAppBuilderExtensions
         {
             Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping(key, (handler, label) =>
             {
-                if (!NativeDigits.IsEnabled || label is not Label { FormattedText: null, TextType: TextType.Text } view)
+                // A label set to left-to-right holds Latin text (licences, codes), which keeps its digits.
+                if (!NativeDigits.IsEnabled || label is not Label { FormattedText: null, TextType: TextType.Text } view || view.FlowDirection == FlowDirection.LeftToRight)
                 {
                     return;
                 }

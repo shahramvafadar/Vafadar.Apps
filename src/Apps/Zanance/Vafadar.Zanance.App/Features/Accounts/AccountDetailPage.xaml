@@ -20,7 +20,7 @@
                     <VerticalStackLayout Grid.Column="1" Spacing="2">
                         <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
                         <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
-                        <Label Text="{Binding BalanceText}" Style="{StaticResource AmountLarge}" Margin="0,6,0,0" />
+                        <Label Text="{Binding BalanceText}" Style="{StaticResource AmountLarge}" TextColor="{Binding BalanceColor}" Margin="0,6,0,0" />
                         <Label Text="{Binding ConfirmedText}" Style="{StaticResource Secondary}" IsVisible="{Binding ConfirmedText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Accounts_Archived}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding IsArchived}" />
                         <Label Text="{Binding CounterpartyText}" Style="{StaticResource Secondary}"

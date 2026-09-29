@@ -37,4 +37,8 @@ public sealed class HomeLayoutTests
         var layout = HomeLayout.Parse("Budget, -Budget, Widgets, -Accounts");
         Assert.Equal("Budget,-Accounts,Period,Forecast,Upcoming,-Categories", layout.ToString());
     }
+
+    [Fact]
+    public void The_stored_default_of_earlier_versions_means_the_default() =>
+        Assert.False(HomeLayout.Parse("Period,Forecast,Budget,Upcoming,Categories,Accounts").IsCustomized);
 }

@@ -4,7 +4,9 @@ namespace Vafadar.Localization.Formatting;
 
 /// <summary>
 /// Shows numbers with Persian digits (۰–۹) instead of Latin ones. Formatting and storage always use Latin digits;
-/// this only changes the text a user reads, and input keeps accepting both.
+/// this only changes the text a user reads, and input keeps accepting both. The inverse for parsing is
+/// <see cref="Vafadar.Core.Text.Digits.ToAscii(string)"/>; unlike <see cref="Vafadar.Core.Text.Digits.ToPersian(string)"/> this
+/// also converts the separators between digits.
 /// </summary>
 public static class NativeDigits
 {

@@ -21,7 +21,8 @@ public static class PublicHolidays
 {
     private static readonly ConcurrentDictionary<(string Region, int Year), IReadOnlyList<PublicHoliday>> Cache = new();
     private static readonly PersianCalendar Persian = new();
-    private static readonly HijriCalendar Hijri = new();
+    // No adjustment: the machine's Hijri setting must not move a due date from one device to another.
+    private static readonly HijriCalendar Hijri = new() { HijriAdjustment = 0 };
 
     /// <summary>Gets the regions (ISO 3166 codes) with a holiday calendar.</summary>
     public static IReadOnlyList<string> Regions { get; } = ["DE", "IR"];
@@ -44,11 +45,22 @@ public static class PublicHolidays
     {
         ArgumentNullException.ThrowIfNull(region);
         var key = (region.ToUpperInvariant(), year);
-        return Cache.GetOrAdd(key, k => k.Region switch
+        return Cache.GetOrAdd(key, k =>
         {
-            "DE" => Germany(k.Year),
-            "IR" => Iran(k.Year),
-            _ => [],
+            try
+            {
+                return k.Region switch
+                {
+                    "DE" => Germany(k.Year),
+                    "IR" => Iran(k.Year),
+                    _ => [],
+                };
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // A year outside the range of the Persian or Hijri calendar has no known holidays.
+                return [];
+            }
         });
     }
 

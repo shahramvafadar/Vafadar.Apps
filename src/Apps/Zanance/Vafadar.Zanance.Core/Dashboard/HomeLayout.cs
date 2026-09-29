@@ -55,6 +55,12 @@ public sealed class HomeLayout
     /// <summary>Reads a stored layout.</summary>
     public static HomeLayout Parse(string? text)
     {
+        // The default of versions before D-27 (every section visible) was stored on "Reset"; it means "the default".
+        if (text == "Period,Forecast,Budget,Upcoming,Categories,Accounts")
+        {
+            return Default;
+        }
+
         var sections = new List<HomeSectionState>();
         foreach (var part in (text ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         {

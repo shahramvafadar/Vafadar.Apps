@@ -112,6 +112,10 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial bool IsArchived { get; set; }
 
+    /// <summary>Gets the colour of the balance: red when it is negative, e.g. a loan (D-27).</summary>
+    [ObservableProperty]
+    public partial Color? BalanceColor { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -158,6 +162,7 @@ public sealed partial class AccountDetailViewModel(
         var balance = LedgerCalculator.Balance(account, entries, today);
         var confirmed = LedgerCalculator.Balance(account, entries, today, confirmedOnly: true);
         BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
+        BalanceColor = balance < 0 ? EntryPresenter.DangerColor : Palette.AmountText;
         LoadLoanEstimate(account, balance, today, culture);
         // Money set aside for goals in this account and what is still free (F2-GOAL-05).
         var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
