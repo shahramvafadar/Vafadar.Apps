@@ -46,6 +46,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Added – Public holidays (D-29)
+
+- Plans with a weekend rule can also move off public holidays of Germany (nationwide) or Iran (lunar holidays are
+  calculated and marked as possibly a day off).
+
 ### Added – Flex budgets (D-28)
 
 - A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one

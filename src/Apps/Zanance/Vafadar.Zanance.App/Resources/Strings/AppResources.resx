@@ -2639,4 +2639,19 @@
   <data name="SpendingType_Hint" xml:space="preserve">
     <value>Fixed: the same bill every month, such as rent. Non-monthly: a few times a year, such as insurance. Flexible: everyday spending.</value>
   </data>
+  <data name="Holiday_Skip" xml:space="preserve">
+    <value>Also move off public holidays</value>
+  </data>
+  <data name="Holiday_Hint" xml:space="preserve">
+    <value>Public holidays of {0} count like weekend days.</value>
+  </data>
+  <data name="Holiday_Approximate" xml:space="preserve">
+    <value>Lunar holidays are calculated and can differ by a day from the official announcement.</value>
+  </data>
+  <data name="Holiday_NationwideOnly" xml:space="preserve">
+    <value>Holidays of single states are not included.</value>
+  </data>
+  <data name="Holiday_Short" xml:space="preserve">
+    <value>holidays too</value>
+  </data>
 </root>

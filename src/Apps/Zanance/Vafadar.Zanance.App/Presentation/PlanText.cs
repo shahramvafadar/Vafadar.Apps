@@ -36,9 +36,13 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
             text += " · " + translator.Format("Rule_AlsoOnDay", second);
         }
 
-        if (rule.WeekendShift != WeekendShift.None && rule.WeekendDays != 0)
+        if (rule.WeekendShift != WeekendShift.None && (rule.WeekendDays != 0 || rule.HolidayRegion is not null))
         {
             text += " · " + translator[rule.WeekendShift == WeekendShift.Before ? "Weekend_BeforeShort" : "Weekend_AfterShort"];
+            if (rule.HolidayRegion is not null)
+            {
+                text += " · " + translator["Holiday_Short"];
+            }
         }
 
         return rule.End switch

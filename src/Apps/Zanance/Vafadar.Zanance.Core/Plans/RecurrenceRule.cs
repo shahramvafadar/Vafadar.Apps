@@ -93,24 +93,33 @@ public enum WeekendShift
 public sealed class RecurrenceRule
 {
     /// <summary>
-    /// Gets or sets what happens when a due date falls on a weekend day (F2-CON-05). Only weekends are considered, not
-    /// public or bank holidays, so the rule stays explainable without a holiday calendar.
+    /// Gets or sets what happens when a due date falls on a weekend day (F2-CON-05), and with
+    /// <see cref="HolidayRegion"/> also on a public holiday. Bank business days are not claimed.
     /// </summary>
     public WeekendShift WeekendShift { get; set; }
+
+    /// <summary>
+    /// Gets or sets the region (ISO 3166, e.g. <c>DE</c> or <c>IR</c>) whose public holidays count like weekend days
+    /// (<see cref="PublicHolidays"/>, D-29); <see langword="null"/> = weekends only. Fixed when the plan is saved.
+    /// </summary>
+    public string? HolidayRegion { get; set; }
 
     /// <summary>Gets or sets the weekend days as a bit mask (bit n = <see cref="DayOfWeek"/> n), fixed when the plan is saved.</summary>
     public int WeekendDays { get; set; }
 
-    /// <summary>Returns the due date of an occurrence scheduled on <paramref name="date"/> after the weekend rule.</summary>
+    /// <summary>Returns the due date of an occurrence scheduled on <paramref name="date"/> after the weekend and holiday rule.</summary>
     public DateOnly ApplyWeekend(DateOnly date)
     {
-        if (WeekendShift == WeekendShift.None || WeekendDays == 0 || (WeekendDays & 0x7F) == 0x7F)
+        var holidays = PublicHolidays.IsSupported(HolidayRegion);
+        if (WeekendShift == WeekendShift.None || (WeekendDays == 0 && !holidays) || (WeekendDays & 0x7F) == 0x7F)
         {
             return date;
         }
 
+        // Moves over weekend days and holidays together, e.g. from a Friday holiday over the weekend to Monday. The
+        // limit only guards against a calendar without working days.
         var step = WeekendShift == WeekendShift.Before ? -1 : 1;
-        while ((WeekendDays & (1 << (int)date.DayOfWeek)) != 0)
+        for (var i = 0; i < 31 && ((WeekendDays & (1 << (int)date.DayOfWeek)) != 0 || (holidays && PublicHolidays.IsHoliday(HolidayRegion, date))); i++)
         {
             date = date.AddDays(step);
         }

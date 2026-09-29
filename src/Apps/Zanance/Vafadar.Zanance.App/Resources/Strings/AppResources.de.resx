@@ -2635,4 +2635,19 @@
   <data name="SpendingType_Hint" xml:space="preserve">
     <value>Fest: jeden Monat dieselbe Rechnung, z. B. Miete. Nicht monatlich: einige Male im Jahr, z. B. Versicherung. Flexibel: alltägliche Ausgaben.</value>
   </data>
+  <data name="Holiday_Skip" xml:space="preserve">
+    <value>Auch Feiertage auslassen</value>
+  </data>
+  <data name="Holiday_Hint" xml:space="preserve">
+    <value>Gesetzliche Feiertage in {0} zählen wie Wochenendtage.</value>
+  </data>
+  <data name="Holiday_Approximate" xml:space="preserve">
+    <value>Feiertage nach dem Mondkalender werden berechnet und können um einen Tag von der amtlichen Bekanntgabe abweichen.</value>
+  </data>
+  <data name="Holiday_NationwideOnly" xml:space="preserve">
+    <value>Feiertage einzelner Bundesländer sind nicht enthalten.</value>
+  </data>
+  <data name="Holiday_Short" xml:space="preserve">
+    <value>auch Feiertage</value>
+  </data>
 </root>

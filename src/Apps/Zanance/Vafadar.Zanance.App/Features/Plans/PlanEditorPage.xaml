@@ -139,6 +139,12 @@
                             <Label Text="{v:Translate Weekend_Title}" Style="{StaticResource FieldLabel}" />
                             <v:ChoiceChips ItemsSource="{Binding WeekendNames}" SelectedIndex="{Binding WeekendIndex}" />
                             <Label Text="{Binding WeekendHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                            <!-- Public holidays (D-29) -->
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0" IsVisible="{Binding CanSkipHolidays}">
+                                <Label Text="{v:Translate Holiday_Skip}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SkipHolidays}" SemanticProperties.Description="{v:Translate Holiday_Skip}" />
+                            </Grid>
+                            <Label Text="{Binding HolidayHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CanSkipHolidays}" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding ShowEnd}">

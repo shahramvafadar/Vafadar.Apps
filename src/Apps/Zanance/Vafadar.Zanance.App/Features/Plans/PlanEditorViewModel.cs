@@ -65,6 +65,11 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         MissingDayNames = [translator["MissingDay_LastValid"], translator["MissingDay_Skip"]];
         WeekendNames = [translator["Weekend_Keep"], translator["Weekend_Before"], translator["Weekend_After"]];
         _weekend = Regions.WeekendDays(localization.CurrentRegion, System.Globalization.CultureInfo.GetCultureInfo(localization.CurrentLanguage.CultureName));
+        _holidayRegion = PublicHolidays.IsSupported(localization.CurrentRegion) ? localization.CurrentRegion!.ToUpperInvariant() : null;
+        HolidayHint = _holidayRegion is null ? null
+            : translator.Format("Holiday_Hint", Regions.DisplayName(_holidayRegion))
+              + (PublicHolidays.HasApproximateDates(_holidayRegion) ? " " + translator["Holiday_Approximate"] : string.Empty)
+              + (PublicHolidays.IsNationwideOnly(_holidayRegion) ? " " + translator["Holiday_NationwideOnly"] : string.Empty);
         WeekendHint = translator.Format("Weekend_Hint", string.Join(translator["Reminder_ListSeparator"], _weekend.Select(d => localization.CurrentCulture.DateTimeFormat.GetDayName(d))));
         EndNames = [translator["End_Never"], translator["End_OnDate"], translator["End_AfterCount"]];
         PastNames = [translator["Past_FromToday"], translator["Past_Include"]];
@@ -112,6 +117,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     // Weekend rule (F2-CON-05): weekends only, from the region; no holiday or bank-day calendar is claimed.
     private readonly IReadOnlyList<DayOfWeek> _weekend;
+    private readonly string? _holidayRegion;
 
     public IReadOnlyList<string> WeekendNames { get; }
 
@@ -133,7 +139,23 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     public bool ShowSecondDay => ShowMonthOptions && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday();
 
-    partial void OnWeekendIndexChanged(int value) => Update();
+    partial void OnWeekendIndexChanged(int value)
+    {
+        OnPropertyChanged(nameof(CanSkipHolidays));
+        Update();
+    }
+
+    // Public holidays (F2-CON-05, D-29): only for a region with a holiday calendar, and only with a weekend rule.
+    [ObservableProperty]
+    public partial bool SkipHolidays { get; set; }
+
+    partial void OnSkipHolidaysChanged(bool value) => Update();
+
+    /// <summary>Gets a value indicating whether holidays can be skipped: the region has a calendar and a weekend rule is chosen.</summary>
+    public bool CanSkipHolidays => _holidayRegion is not null && WeekendIndex != 0;
+
+    /// <summary>Gets the explanation of the holiday calendar, or <see langword="null"/> without a supported region.</summary>
+    public string? HolidayHint { get; }
 
     public IReadOnlyList<string> EndNames { get; }
 
@@ -446,6 +468,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         DayRuleIndex = IndexOfDayRule(rule.DayRule);
         MissingDayIndex = (int)rule.MissingDay;
         WeekendIndex = (int)rule.WeekendShift;
+        SkipHolidays = rule.HolidayRegion is not null;
         HasSecondDay = rule.SecondDay is not null;
         SecondDayText = (rule.SecondDay ?? 15).ToString(CultureInfo.InvariantCulture);
         EndIndex = (int)rule.End;
@@ -792,7 +815,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     private string Snapshot() => string.Join('|',
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
-        CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, HasSecondDay, SecondDayText, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
+        CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, SkipHolidays, HasSecondDay, SecondDayText, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
         ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,
         HasCancellationDeadline, CancellationDeadline, HasReviewDate, ReviewDate, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
 }

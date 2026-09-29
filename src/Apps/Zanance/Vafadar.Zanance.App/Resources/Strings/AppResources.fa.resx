@@ -2635,4 +2635,19 @@
   <data name="SpendingType_Hint" xml:space="preserve">
     <value>ثابت: هر ماه همان قبض، مثل اجاره. غیرماهانه: چند بار در سال، مثل بیمه. منعطف: هزینه‌های روزمره.</value>
   </data>
+  <data name="Holiday_Skip" xml:space="preserve">
+    <value>از تعطیلات رسمی هم جابه‌جا شود</value>
+  </data>
+  <data name="Holiday_Hint" xml:space="preserve">
+    <value>تعطیلات رسمی {0} مثل روزهای آخر هفته حساب می‌شوند.</value>
+  </data>
+  <data name="Holiday_Approximate" xml:space="preserve">
+    <value>تعطیلات قمری محاسبه می‌شوند و ممکن است یک روز با اعلام رسمی فرق کنند.</value>
+  </data>
+  <data name="Holiday_NationwideOnly" xml:space="preserve">
+    <value>تعطیلات مخصوص ایالت‌ها در نظر گرفته نمی‌شوند.</value>
+  </data>
+  <data name="Holiday_Short" xml:space="preserve">
+    <value>با تعطیلات</value>
+  </data>
 </root>
