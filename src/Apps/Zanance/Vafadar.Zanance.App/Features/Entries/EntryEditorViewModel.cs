@@ -510,7 +510,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             var name = CategoryLookup.NameOf(category, _translator);
             var parent = _categories.Get(category.ParentId);
             var label = parent is null ? name : $"{CategoryLookup.NameOf(parent, _translator)} › {name}";
-            Categories.Add(new CategoryChoice(category.Id, label, Icons.Parse(category.Icon, Symbol.Tag), CategoryLookup.ParseColor(category.Color))
+            Categories.Add(new CategoryChoice(category.Id, label, Icons.Parse(category.Icon, Symbol.Tag), CategoryLookup.DisplayColor(category.Color))
             {
                 IsSelected = category.Id == selectedId,
             });

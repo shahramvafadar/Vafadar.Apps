@@ -50,12 +50,12 @@
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding DateColumn}" SemanticProperties.Description="{v:Translate Import_DateColumn}" />
                             <Label Text="{v:Translate Import_DateFormat}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" SemanticProperties.Description="{v:Translate Import_DateFormat}" />
-                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" AccentColor="{DynamicResource Primary}" Margin="0,8,0,0" />
+                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" Margin="0,8,0,0" />
                             <Label Text="{v:Translate Import_AmountColumn}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding AmountColumn}" SemanticProperties.Description="{v:Translate Import_AmountColumn}" />
-                            <v:ChoiceChips ItemsSource="{Binding SeparatorNames}" SelectedIndex="{Binding SeparatorIndex}" AccentColor="{DynamicResource Primary}" Margin="0,8,0,0" />
+                            <v:ChoiceChips ItemsSource="{Binding SeparatorNames}" SelectedIndex="{Binding SeparatorIndex}" Margin="0,8,0,0" />
                             <Label Text="{v:Translate Import_Sign}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding SignNames}" SelectedIndex="{Binding SignIndex}" AccentColor="{DynamicResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding SignNames}" SelectedIndex="{Binding SignIndex}" />
                             <Label Text="{v:Translate Import_TitleColumn}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Columns}" SelectedItem="{Binding TitleColumn}" SemanticProperties.Description="{v:Translate Import_TitleColumn}" />
                             <Label Text="{v:Translate Import_CategoryColumn}" Style="{StaticResource FieldLabel}" />

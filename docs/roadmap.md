@@ -19,9 +19,11 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] Screens: Home, transactions, plans, budgets, accounts, categories, settings
 - [x] Reports with Syncfusion charts and PDF export
 - [x] Date input with Persian calendar support
-- [x] Persian text with the system fonts in the app and embedded Vazirmatn in PDF reports
-- [ ] Optional Persian digits in the UI
+- [x] Persian text in Vazirmatn in the app and in PDF reports
+- [x] Persian digits in the Persian interface (setting)
 - [x] App name (Zanance), icon, splash and colors (D-21, D-22, D-26)
+- [x] App design: meaning colours, Insights tab, calm Home, Persian digits (D-27)
+- [ ] English and German fonts of the design (Figtree, Urbanist); Open Sans until then
 - [x] Local backup: encrypted backup file, restore with safety copy, CSV import / export
 - [ ] Cloud backup (Google Drive / OneDrive) with sign-in – hidden until verified (D-17), moved to a later phase
 - [ ] Device checks of the release build (08 release checklist)

@@ -173,7 +173,7 @@ public sealed partial class PlanDetailViewModel(
     {
         var color = occurrence.Status switch
         {
-            OccurrenceView.Overdue => EntryPresenter.ExpenseColor,
+            OccurrenceView.Overdue => EntryPresenter.DangerColor,
             OccurrenceView.Settled => EntryPresenter.IncomeColor,
             _ => EntryPresenter.NeutralColor,
         };

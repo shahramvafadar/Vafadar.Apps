@@ -27,19 +27,38 @@ public sealed record PlanRow(
     Color IconBackground,
     string? Badge,
     Color BadgeText,
-    Color BadgeBackground);
+    Color BadgeBackground)
+{
+    /// <summary>Gets the day of the due date for a date tile; <see langword="null"/> for plan rows, which show an icon.</summary>
+    public string? DayText { get; init; }
+
+    /// <summary>Gets the month of the due date.</summary>
+    public string? MonthText { get; init; }
+
+    /// <summary>Gets the text colour of the date tile: violet for the future, red when overdue, green for income (D-27).</summary>
+    public Color? TileText { get; init; }
+
+    /// <summary>Gets the background of the date tile.</summary>
+    public Color? TileBackground { get; init; }
+
+    /// <summary>Gets the outline of the date or icon tile.</summary>
+    public Color? TileStroke { get; init; }
+
+    /// <summary>Gets the outline of the badge.</summary>
+    public Color? BadgeStroke { get; init; }
+
+    /// <summary>Gets a value indicating whether the row shows a date tile.</summary>
+    public bool HasDate => DayText is not null;
+
+    /// <summary>Gets a value indicating whether the row shows an icon tile.</summary>
+    public bool HasIcon => DayText is null;
+}
 
 /// <summary>The plan centre (UI-07): due and overdue, upcoming and all plans. Works without notification permission (REM-02).</summary>
 public sealed partial class PlansViewModel : ViewModelBase
 {
     private const int UpcomingDays = 60;
 
-    private static Color WarningText => Palette.WarningText;
-    private static Color WarningBackground => Palette.WarningBackground;
-    private static Color OverdueText => Palette.ExpenseText;
-    private static Color OverdueBackground => Palette.ExpenseBackground;
-    private static Color NeutralText => Palette.TransferText;
-    private static Color NeutralBackground => Palette.TransferBackground;
 
     private readonly ZananceStore _store;
     private readonly PlanStore _plans;
@@ -160,26 +179,30 @@ public sealed partial class PlansViewModel : ViewModelBase
     {
         var schedule = occurrence.Schedule;
         var (icon, color) = Look(schedule);
-        var (badge, badgeText, badgeBackground) = occurrence.Status switch
+        var overdue = occurrence.Status == OccurrenceView.Overdue;
+        var (badge, look) = occurrence.Status switch
         {
-            OccurrenceView.Overdue => (_translator.Format("Occurrence_OverdueDays", today.DayNumber - occurrence.DueDate.DayNumber), OverdueText, OverdueBackground),
-            OccurrenceView.Due => (_translator["Occurrence_Due"], WarningText, WarningBackground),
-            _ => ((string?)null, NeutralText, NeutralBackground),
+            OccurrenceView.Overdue => (_translator.Format("Occurrence_OverdueDays", today.DayNumber - occurrence.DueDate.DayNumber), PlanLook.Danger),
+            OccurrenceView.Due => (_translator["Occurrence_Due"], PlanLook.Future),
+            _ => ((string?)null, PlanLook.Neutral),
         };
 
+        // The tile shows the date, so the second line names the weekday and the account.
+        var subtitle = text.Weekday(occurrence.DueDate) + " · " + (_accounts.TryGetValue(schedule.AccountId, out var account) ? account.Name : string.Empty);
         return new PlanRow(
             schedule.Id,
             occurrence.OriginalDate,
             schedule.Name,
-            text.Date(occurrence.DueDate),
+            subtitle,
             text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId)),
             AmountColor(schedule.Kind),
             icon,
             color,
             color.WithAlpha(0.12f),
             badge,
-            badgeText,
-            badgeBackground);
+            look.Text,
+            look.Background) { BadgeStroke = look.Line }
+            .WithDate(text, occurrence.DueDate, overdue, schedule.Kind);
     }
 
     private PlanRow ScheduleRow(Schedule schedule, PlanText text, DateOnly today)
@@ -192,11 +215,11 @@ public sealed partial class PlansViewModel : ViewModelBase
             subtitle += Environment.NewLine + _translator.Format("Plan_NextDue", text.Date(next.DueDate));
         }
 
-        var (badge, badgeText, badgeBackground) = schedule.State switch
+        var (badge, look) = schedule.State switch
         {
-            ScheduleState.Paused => (_translator["Plan_Paused"], WarningText, WarningBackground),
-            ScheduleState.Ended => (_translator["Plan_Ended"], NeutralText, NeutralBackground),
-            _ => ((string?)null, NeutralText, NeutralBackground),
+            ScheduleState.Paused => (_translator["Plan_Paused"], PlanLook.Warning),
+            ScheduleState.Ended => (_translator["Plan_Ended"], PlanLook.Neutral),
+            _ => ((string?)null, PlanLook.Neutral),
         };
 
         return new PlanRow(
@@ -210,8 +233,8 @@ public sealed partial class PlansViewModel : ViewModelBase
             color,
             color.WithAlpha(0.12f),
             badge,
-            badgeText,
-            badgeBackground);
+            look.Text,
+            look.Background) { BadgeStroke = look.Line, TileStroke = color.WithAlpha(0.3f) };
     }
 
     private (Symbol Icon, Color Color) Look(Schedule schedule) => schedule.Kind == EntryKind.Transfer

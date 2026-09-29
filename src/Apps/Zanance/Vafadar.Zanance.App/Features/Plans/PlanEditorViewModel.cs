@@ -635,7 +635,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                      .OrderBy(c => c.SystemKey == DefaultCategories.Uncategorized)
                      .ThenBy(c => c.SortOrder))
         {
-            Categories.Add(new CategoryChoice(category.Id, CategoryLookup.NameOf(category, _translator), Icons.Parse(category.Icon, Symbol.Tag), CategoryLookup.ParseColor(category.Color))
+            Categories.Add(new CategoryChoice(category.Id, CategoryLookup.NameOf(category, _translator), Icons.Parse(category.Icon, Symbol.Tag), CategoryLookup.DisplayColor(category.Color))
             {
                 IsSelected = category.Id == selectedId,
             });

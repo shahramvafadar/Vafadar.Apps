@@ -2545,4 +2545,43 @@
   <data name="Plan_SplitConflict" xml:space="preserve">
     <value>موعدهای بعد از این تاریخ ثبت شده‌اند و با تاریخ‌های جدید جور درنمی‌آیند. تاریخ «تغییرات از» را دیرتر انتخاب کنید یا روز را تغییر ندهید.</value>
   </data>
+  <data name="Tab_Insights" xml:space="preserve">
+    <value>تحلیل</value>
+  </data>
+  <data name="Plan_InDays" xml:space="preserve">
+    <value>{0} روز دیگر</value>
+  </data>
+  <data name="Plan_Tomorrow" xml:space="preserve">
+    <value>فردا</value>
+  </data>
+  <data name="Home_Attention" xml:space="preserve">
+    <value>نیاز به توجه</value>
+  </data>
+  <data name="Home_ThisPeriod" xml:space="preserve">
+    <value>درآمد و هزینه</value>
+  </data>
+  <data name="Home_Details" xml:space="preserve">
+    <value>جزئیات</value>
+  </data>
+  <data name="Home_All" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="Filter_More" xml:space="preserve">
+    <value>فیلترهای بیشتر</value>
+  </data>
+  <data name="More_Money" xml:space="preserve">
+    <value>پول من</value>
+  </data>
+  <data name="More_Organize" xml:space="preserve">
+    <value>نظم‌دهی</value>
+  </data>
+  <data name="More_Currency" xml:space="preserve">
+    <value>ارز</value>
+  </data>
+  <data name="More_DataSecurity" xml:space="preserve">
+    <value>داده و امنیت</value>
+  </data>
+  <data name="Settings_PersianDigits" xml:space="preserve">
+    <value>ارقام فارسی (۱۲۳)</value>
+  </data>
 </root>

@@ -16,7 +16,7 @@
                 <!-- Empty state -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
                     <VerticalStackLayout Spacing="12">
-                        <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
+                        <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                         <Label Text="{v:Translate Accounts_Empty}" HorizontalTextAlignment="Center" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Accounts_Add}" Command="{Binding AddCommand}" />
                     </VerticalStackLayout>

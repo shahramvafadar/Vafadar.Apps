@@ -23,8 +23,23 @@ public sealed class ChoiceChips : ContentView
 
     /// <summary>Identifies the <see cref="AccentColor"/> property.</summary>
     public static readonly BindableProperty AccentColorProperty = BindableProperty.Create(
-        nameof(AccentColor), typeof(Color), typeof(ChoiceChips), Color.FromArgb("#2E7D32"),
+        nameof(AccentColor), typeof(Color), typeof(ChoiceChips), Color.FromArgb("#1D56C9"),
         propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).UpdateStates());
+
+    /// <summary>Identifies the <see cref="SelectedFill"/> property.</summary>
+    public static readonly BindableProperty SelectedFillProperty = CreateColor(nameof(SelectedFill));
+
+    /// <summary>Identifies the <see cref="SelectedOutline"/> property.</summary>
+    public static readonly BindableProperty SelectedOutlineProperty = CreateColor(nameof(SelectedOutline));
+
+    /// <summary>Identifies the <see cref="OutlineColor"/> property.</summary>
+    public static readonly BindableProperty OutlineColorProperty = CreateColor(nameof(OutlineColor));
+
+    /// <summary>Identifies the <see cref="TextColor"/> property.</summary>
+    public static readonly BindableProperty TextColorProperty = CreateColor(nameof(TextColor));
+
+    /// <summary>Identifies the <see cref="ChipBackground"/> property.</summary>
+    public static readonly BindableProperty ChipBackgroundProperty = CreateColor(nameof(ChipBackground));
 
     /// <summary>Identifies the <see cref="IsCompact"/> property.</summary>
     public static readonly BindableProperty IsCompactProperty = BindableProperty.Create(
@@ -71,6 +86,47 @@ public sealed class ChoiceChips : ContentView
         get => (Color)GetValue(AccentColorProperty);
         set => SetValue(AccentColorProperty, value);
     }
+
+    /// <summary>
+    /// Gets or sets the background of the selected chip. When set, the selected chip is a tinted surface with
+    /// <see cref="AccentColor"/> text; otherwise it is filled with <see cref="AccentColor"/>.
+    /// </summary>
+    public Color? SelectedFill
+    {
+        get => (Color?)GetValue(SelectedFillProperty);
+        set => SetValue(SelectedFillProperty, value);
+    }
+
+    /// <summary>Gets or sets the outline of the selected chip (default: <see cref="AccentColor"/>).</summary>
+    public Color? SelectedOutline
+    {
+        get => (Color?)GetValue(SelectedOutlineProperty);
+        set => SetValue(SelectedOutlineProperty, value);
+    }
+
+    /// <summary>Gets or sets the outline of unselected chips (default: the theme outline).</summary>
+    public Color? OutlineColor
+    {
+        get => (Color?)GetValue(OutlineColorProperty);
+        set => SetValue(OutlineColorProperty, value);
+    }
+
+    /// <summary>Gets or sets the text colour of unselected chips (default: the theme text).</summary>
+    public Color? TextColor
+    {
+        get => (Color?)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
+    }
+
+    /// <summary>Gets or sets the background of unselected chips (default: transparent).</summary>
+    public Color? ChipBackground
+    {
+        get => (Color?)GetValue(ChipBackgroundProperty);
+        set => SetValue(ChipBackgroundProperty, value);
+    }
+
+    private static BindableProperty CreateColor(string name) => BindableProperty.Create(
+        name, typeof(Color), typeof(ChoiceChips), null, propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).UpdateStates());
 
     private void OnItemsSourceChanged(IList? oldItems, IList? newItems)
     {
@@ -119,7 +175,7 @@ public sealed class ChoiceChips : ContentView
             var index = i;
             var chip = new Border
             {
-                Padding = IsCompact ? new Thickness(14, 7) : new Thickness(16, 10),
+                Padding = IsCompact ? new Thickness(14, 6) : new Thickness(16, 10),
                 Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8),
                 StrokeThickness = 1,
                 StrokeShape = new RoundRectangle { CornerRadius = 20 },
@@ -127,7 +183,7 @@ public sealed class ChoiceChips : ContentView
                 Content = new Label
                 {
                     Text = ItemsSource[i]?.ToString(),
-                    FontSize = IsCompact ? 14 : 15,
+                    FontSize = IsCompact ? 13 : 14,
                     VerticalOptions = LayoutOptions.Center,
                 },
             };
@@ -146,9 +202,21 @@ public sealed class ChoiceChips : ContentView
         {
             var selected = i == SelectedIndex;
             var chip = _chips[i];
-            chip.BackgroundColor = selected ? AccentColor : Colors.Transparent;
-            chip.Stroke = selected ? AccentColor : ThemeColors.Outline;
-            ((Label)chip.Content!).TextColor = selected ? ThemeColors.OnColor(AccentColor) : ThemeColors.Text;
+            var label = (Label)chip.Content!;
+            if (selected)
+            {
+                chip.BackgroundColor = SelectedFill ?? AccentColor;
+                chip.Stroke = SelectedOutline ?? AccentColor;
+                label.TextColor = SelectedFill is null ? ThemeColors.OnColor(AccentColor) : AccentColor;
+                label.FontAttributes = FontAttributes.Bold;
+            }
+            else
+            {
+                chip.BackgroundColor = ChipBackground ?? Colors.Transparent;
+                chip.Stroke = OutlineColor ?? ThemeColors.Outline;
+                label.TextColor = TextColor ?? ThemeColors.Text;
+                label.FontAttributes = FontAttributes.None;
+            }
         }
     }
 }

@@ -43,10 +43,14 @@
             <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
-                    <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" AccentColor="{DynamicResource Primary}" />
+                    <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" />
                     <Label Text="{v:Translate Mode_Hint}" Style="{StaticResource Secondary}" />
                     <Label Text="{v:Translate Theme_Title}" Style="{StaticResource FieldLabel}" />
-                    <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" AccentColor="{DynamicResource Primary}" />
+                    <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0" IsVisible="{Binding IsPersian}">
+                        <Label Text="{v:Translate Settings_PersianDigits}" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding PersianDigits}" SemanticProperties.Description="{v:Translate Settings_PersianDigits}" />
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
 

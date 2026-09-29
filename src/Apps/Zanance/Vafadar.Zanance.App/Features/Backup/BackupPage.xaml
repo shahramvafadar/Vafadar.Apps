@@ -16,7 +16,7 @@
                 <!-- Status -->
                 <Border Style="{StaticResource Card}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="32" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                        <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="32" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                             <Label Text="{Binding LastBackupText}" FontSize="15" />
                             <Label Text="{v:Translate Backup_Intro}" Style="{StaticResource Secondary}" />
@@ -64,7 +64,7 @@
                                         <TapGestureRecognizer Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
                                                               CommandParameter="{Binding .}" />
                                     </Grid.GestureRecognizers>
-                                    <fi:SymbolIcon Symbol="Archive" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                                    <fi:SymbolIcon Symbol="Archive" FontSize="22" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" />
                                     <Label Grid.Column="2" Text="{Binding Details}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                 </Grid>

@@ -41,7 +41,7 @@
                     <Label Text="{v:Translate Unit_Name}" Style="{StaticResource FieldLabel}" />
                     <Entry Text="{Binding Name}" MaxLength="20" SemanticProperties.Description="{v:Translate Unit_Name}" />
                     <Label Text="{v:Translate Unit_Factor}" Style="{StaticResource FieldLabel}" />
-                    <v:ChoiceChips ItemsSource="{Binding FactorNames}" SelectedIndex="{Binding FactorIndex}" AccentColor="{DynamicResource Primary}" />
+                    <v:ChoiceChips ItemsSource="{Binding FactorNames}" SelectedIndex="{Binding FactorIndex}" />
                     <Label Text="{Binding PreviewText}" Margin="0,8,0,0" IsVisible="{Binding PreviewText, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" Margin="0,12,0,0" />

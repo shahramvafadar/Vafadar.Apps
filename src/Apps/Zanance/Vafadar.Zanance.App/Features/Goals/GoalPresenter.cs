@@ -66,7 +66,8 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
             warnings.Add(translator["Goal_Overdue"]);
         }
 
-        var color = status.IsReached ? Palette.IncomeText : status.Unfunded > 0 ? Palette.WarningText : Palette.Primary;
+        // Savings are teal; amber while money is missing, green once the goal is reached (D-27).
+        var color = status.IsReached ? Palette.IncomeText : status.Unfunded > 0 ? Palette.NearLimit : Palette.SavingText;
         return new GoalRow(goal.Id, goal.Name, icon, funded, status.Progress, color, date, suggestion,
             warnings.Count > 0 ? string.Join(Environment.NewLine, warnings) : null, null);
     }

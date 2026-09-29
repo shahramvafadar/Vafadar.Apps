@@ -93,6 +93,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     [ObservableProperty]
     public partial bool ShowAccountFilter { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether the less used filters (account, category, saved filters, selection) are shown.</summary>
+    [ObservableProperty]
+    public partial bool IsFilterOpen { get; set; }
+
+    [RelayCommand]
+    private void ToggleFilter() => IsFilterOpen = !IsFilterOpen;
+
     [ObservableProperty]
     public partial IReadOnlyList<AccountFilterOption> CategoryOptions { get; set; } = [];
 

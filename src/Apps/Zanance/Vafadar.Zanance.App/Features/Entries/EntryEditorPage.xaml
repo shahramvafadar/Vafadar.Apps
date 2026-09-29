@@ -24,7 +24,7 @@
         <!-- No account yet -->
         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding HasNoAccounts}">
             <VerticalStackLayout Spacing="12">
-                <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
+                <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                 <Label Text="{v:Translate Entry_NoAccounts}" HorizontalTextAlignment="Center" />
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Accounts_Add}" Command="{Binding AddAccountCommand}" />
             </VerticalStackLayout>
@@ -49,7 +49,7 @@
                 <!-- Kind and amount -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
-                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}"
+                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}"
                                        IsVisible="{Binding CanChangeKind}" SemanticProperties.Description="{v:Translate Entry_Kind}" />
                         <Label Text="{Binding FixedKindText}" FontAttributes="Bold" FontSize="16"
                                IsVisible="{Binding FixedKindText, Converter={StaticResource IsNotNullConverter}}" />

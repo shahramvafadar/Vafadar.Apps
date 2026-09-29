@@ -30,7 +30,7 @@ internal sealed class CategoryLookup
 
     public Symbol Icon(Guid? id) => Icons.Parse(Get(id)?.Icon, Symbol.QuestionCircle);
 
-    public Color Color(Guid? id) => ParseColor(Get(id)?.Color);
+    public Color Color(Guid? id) => DisplayColor(Get(id)?.Color);
 
     /// <summary>The "Uncategorized" fallback of a kind (TX-01).</summary>
     public Guid? Uncategorized(CategoryKind kind) =>
@@ -40,6 +40,14 @@ internal sealed class CategoryLookup
     public Guid? Fees() =>
         _byId.Values.FirstOrDefault(c => c.Kind == CategoryKind.Expense && c.SystemKey == DefaultCategories.Fees)?.Id;
 
+    /// <summary>The colour to show: in the dark theme dark category colours are lightened so icons stay readable.</summary>
+    public static Color DisplayColor(string? value)
+    {
+        var color = ParseColor(value);
+        return Palette.IsDark && color.GetLuminosity() < 0.62f ? color.WithLuminosity(0.68f) : color;
+    }
+
+    /// <summary>The stored colour of a category.</summary>
     public static Color ParseColor(string? value) =>
         value is not null && Microsoft.Maui.Graphics.Color.TryParse(value, out var color) ? color : Microsoft.Maui.Graphics.Color.FromArgb("#78909C");
 }

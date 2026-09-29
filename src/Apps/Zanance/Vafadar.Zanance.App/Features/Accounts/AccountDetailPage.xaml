@@ -16,7 +16,7 @@
             <!-- Balance (FIN-12) -->
             <Border Style="{StaticResource Card}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="32" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="32" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                     <VerticalStackLayout Grid.Column="1" Spacing="2">
                         <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
                         <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />

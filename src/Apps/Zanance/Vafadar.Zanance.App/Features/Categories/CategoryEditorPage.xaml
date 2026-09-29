@@ -29,7 +29,7 @@
 
                         <VerticalStackLayout IsVisible="{Binding IsExisting, Converter={StaticResource InvertedBoolConverter}}">
                             <Label Text="{v:Translate Category_Kind}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding CanHaveParent}">

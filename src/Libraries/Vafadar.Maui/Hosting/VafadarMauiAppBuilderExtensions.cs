@@ -5,6 +5,7 @@ using Syncfusion.Maui.Core.Hosting;
 using Vafadar.Core.Hosting;
 using Vafadar.Core.Settings;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Localization;
 
 namespace Vafadar.Maui.Hosting;
@@ -58,6 +59,24 @@ public static class VafadarMauiAppBuilderExtensions
             handler.PlatformView.TextReadingOrder = Microsoft.UI.Xaml.TextReadingOrder.UseFlowDirection);
 #endif
 
+        // Persian digits (NativeDigits) in the text a label shows; the bound value and every input stay Latin. The
+        // platform text is written again by several mappings (text, text type, transform), so each of them converts it.
+        // Label's static constructor replaces these mappings for Controls; run it first so the additions are kept.
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Label).TypeHandle);
+        foreach (var key in new[] { nameof(Label.Text), nameof(Label.TextType), nameof(Label.TextTransform), nameof(Label.FormattedText), "VafadarDigits" })
+        {
+            Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping(key, (handler, label) =>
+            {
+                if (!NativeDigits.IsEnabled || label is not Label { FormattedText: null, TextType: TextType.Text } view)
+                {
+                    return;
+                }
+
+#if ANDROID || IOS || MACCATALYST || WINDOWS
+                handler.PlatformView.Text = NativeDigits.Apply(view.Text);
+#endif
+            });
+        }
         var services = builder.Services;
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton(Preferences.Default);

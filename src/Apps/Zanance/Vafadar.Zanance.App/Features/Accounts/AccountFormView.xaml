@@ -19,7 +19,7 @@
 
     <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
     <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
-                   AccentColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_Type}" />
+                   SemanticProperties.Description="{v:Translate Account_Type}" />
 
     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
     <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"

@@ -49,8 +49,9 @@ in `MauiProgram`.
 * View models derive from `ViewModelBase`, use `[ObservableProperty]` on **partial properties** and `[RelayCommand]`.
 * Text via `{v:Translate Key}` or `Translator`; dates via `IDateFormatter`.
 * Colors and styles from `Resources/Styles`; no hard-coded colors in pages. Semantic colors have a light and a dark
-  variant (Zanance: `Presentation/Palette.cs`, decision D-22) and are used as `DynamicResource`; test every screen in
-  both themes.
+  variant (Zanance: `Presentation/Palette.cs`, decisions D-22 and D-27) and are used as `DynamicResource`; test every
+  screen in both themes. A colour carries one meaning only (Zanance: blue action, green money in, red problem or debt,
+  amber near a limit, violet plans, teal savings, slate transfers, sky refunds); expenses stay neutral.
 * Use layouts that work right-to-left (see [localization](../architecture/localization.md#right-to-left-layout-rules)).
 * Syncfusion controls: add the specific `Syncfusion.Maui.*` package to the app (version from `Directory.Packages.props`).
 

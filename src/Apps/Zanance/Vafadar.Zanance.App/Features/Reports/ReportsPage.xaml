@@ -15,7 +15,7 @@
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Period and report -->
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding ReportNames}" SelectedIndex="{Binding ReportIndex}" AccentColor="{DynamicResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding ReportNames}" SelectedIndex="{Binding ReportIndex}" />
             <Grid ColumnDefinitions="48,*,48,Auto">
                 <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
                     <Border.GestureRecognizers>
@@ -31,7 +31,7 @@
                     <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
                 <v:ChoiceChips Grid.Column="3" IsCompact="True" ItemsSource="{Binding PeriodKindNames}" SelectedIndex="{Binding PeriodKind}"
-                               AccentColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                               VerticalOptions="Center" />
             </Grid>
 
             <Label Text="{v:Translate Report_Empty}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,24" IsVisible="{Binding IsEmpty}" />
@@ -66,7 +66,7 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OpenExpensesCommand}" />
                     </Border.GestureRecognizers>
-                    <Label Text="{Binding RefundsText}" TextColor="{DynamicResource IncomeText}" />
+                    <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" />
                 </Border>
 
                 <Border Style="{StaticResource Card}" Padding="12">
@@ -138,7 +138,7 @@
                         </chart:SfCartesianChart.YAxes>
                         <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Income" Fill="{DynamicResource IncomeText}"
                                             Label="{v:Translate KindFilter_Income}" />
-                        <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Expense" Fill="{DynamicResource ExpenseText}"
+                        <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Expense" Fill="{DynamicResource Muted}"
                                             Label="{v:Translate KindFilter_Expenses}" />
                     </chart:SfCartesianChart>
                 </Border>
@@ -149,7 +149,7 @@
                                 <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" MinimumHeightRequest="36">
                                     <Label Text="{Binding Label}" VerticalOptions="Center" FontSize="13" />
                                     <Label Grid.Column="1" Text="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" VerticalOptions="Center" FontSize="13" />
-                                    <Label Grid.Column="2" Text="{Binding ExpenseText}" TextColor="{DynamicResource ExpenseText}" VerticalOptions="Center" FontSize="13" />
+                                    <Label Grid.Column="2" Text="{Binding ExpenseText}" VerticalOptions="Center" FontSize="13" />
                                     <Label Grid.Column="3" Text="{Binding ResultText}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
                                 </Grid>
                             </DataTemplate>

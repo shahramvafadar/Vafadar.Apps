@@ -12,57 +12,77 @@
     Title="{v:Translate Tx_Title}">
 
     <Grid RowDefinitions="Auto,*">
-        <!-- Search and filters -->
-        <VerticalStackLayout Padding="16,8,16,4" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
-            <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" BackgroundColor="{DynamicResource CardBackground}"
-                       SemanticProperties.Description="{v:Translate Common_Search}" />
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{DynamicResource Primary}" />
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" AccentColor="{DynamicResource Primary}" />
-            <Grid ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="8">
-                <Button Grid.Column="3" Text="{v:Translate Bulk_Select}" Command="{Binding StartSelectingCommand}" CornerRadius="18" MinimumHeightRequest="36"
-                        Padding="14,0" FontSize="14" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" BorderColor="{DynamicResource Primary}" BorderWidth="1"
-                        IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
-                <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
-                        SemanticProperties.Description="{v:Translate Entry_Category}" />
-                <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
-                        SemanticProperties.Description="{v:Translate Entry_Account}" />
-                <Button Grid.Column="2" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="18" MinimumHeightRequest="36"
-                        Padding="14,0" FontSize="14" BackgroundColor="{DynamicResource WarningBackground}" TextColor="{DynamicResource WarningText}"
+        <!-- Search and filters: the period and the kind stay visible, the rest opens with the filter button (D-27) -->
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 14" Padding="4,0">
+                    <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" SemanticProperties.Description="{v:Translate Common_Search}" />
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource IconButton}" WidthRequest="48" HeightRequest="48" SemanticProperties.Description="{v:Translate Filter_More}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleFilterCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsFilterOpen}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
+                            <Setter Property="Stroke" Value="{DynamicResource PrimaryLine}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <fi:SymbolIcon Symbol="Filter" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
+                <Button Grid.Column="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="17" MinimumHeightRequest="34" HeightRequest="34"
+                        Padding="12,0" FontSize="13" BackgroundColor="{DynamicResource RefundBackground}" TextColor="{DynamicResource RefundText}"
+                        BorderColor="{DynamicResource RefundLine}" BorderWidth="1"
                         IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding UnreviewedOnly}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource WarningText}" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource RefundText}" />
                             <Setter Property="TextColor" Value="{DynamicResource CardBackground}" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
             </Grid>
 
+            <!-- More filters -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding IsFilterOpen}">
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Picker ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" IsVisible="{Binding ShowAccountFilter}"
+                            Title="{v:Translate Entry_Account}" SemanticProperties.Description="{v:Translate Entry_Account}" />
+                    <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
+                            Title="{v:Translate Entry_Category}" SemanticProperties.Description="{v:Translate Entry_Category}" />
+                </Grid>
             <!-- Saved filters (REP-08): the menu saves or removes; a chip applies one -->
-            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                <HorizontalStackLayout Spacing="8">
-                    <Border StrokeShape="RoundRectangle 18" Stroke="{DynamicResource Primary}" StrokeThickness="1" HeightRequest="36" WidthRequest="44"
-                            BackgroundColor="Transparent" SemanticProperties.Description="{v:Translate Filter_Title}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SavedFilterMenuCommand}" />
-                        </Border.GestureRecognizers>
-                        <fi:SymbolIcon Symbol="Bookmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SavedFilters}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="ledger:SavedFilter">
-                                <Button Text="{Binding Name}" CornerRadius="18" MinimumHeightRequest="36" Padding="14,0" FontSize="14"
-                                        BackgroundColor="{DynamicResource CardBackground}" TextColor="{DynamicResource Primary}"
-                                        Command="{Binding ApplySavedFilterCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
-                                        CommandParameter="{Binding .}" />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8">
+                        <Border StrokeShape="RoundRectangle 18" Stroke="{DynamicResource Primary}" StrokeThickness="1" HeightRequest="36" WidthRequest="44"
+                                BackgroundColor="Transparent" SemanticProperties.Description="{v:Translate Filter_Title}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SavedFilterMenuCommand}" />
+                            </Border.GestureRecognizers>
+                            <fi:SymbolIcon Symbol="Bookmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SavedFilters}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="ledger:SavedFilter">
+                                    <Button Text="{Binding Name}" CornerRadius="18" MinimumHeightRequest="36" Padding="14,0" FontSize="14"
+                                            BackgroundColor="{DynamicResource CardBackground}" TextColor="{DynamicResource Primary}"
+                                            Command="{Binding ApplySavedFilterCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                        <Label Text="{v:Translate Filter_Hint}" Style="{StaticResource Secondary}" VerticalOptions="Center"
+                               IsVisible="{Binding HasSavedFilters, Converter={StaticResource InvertedBoolConverter}}" />
                     </HorizontalStackLayout>
-                    <Label Text="{v:Translate Filter_Hint}" Style="{StaticResource Secondary}" VerticalOptions="Center"
-                           IsVisible="{Binding HasSavedFilters, Converter={StaticResource InvertedBoolConverter}}" />
-                </HorizontalStackLayout>
-            </ScrollView>
-
+                </ScrollView>
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Select}" Command="{Binding StartSelectingCommand}" HorizontalOptions="Start"
+                        MinimumHeightRequest="40" HeightRequest="40" Padding="16,0" FontSize="14"
+                        IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
+            </VerticalStackLayout>
             <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
             <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"
                     Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding CategoryFilterName, Converter={StaticResource IsNotNullConverter}}">
@@ -98,27 +118,26 @@
                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Margin="16,0">
                         <Grid.Triggers>
                             <DataTrigger TargetType="Grid" Binding="{Binding Selection.IsSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource IncomeBackground}" />
+                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
                             </DataTrigger>
                         </Grid.Triggers>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
                                                   CommandParameter="{Binding .}" />
                         </Grid.GestureRecognizers>
-                        <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0" StrokeShape="RoundRectangle 20"
-                                BackgroundColor="{Binding IconBackground}" VerticalOptions="Center">
-                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="22" ForegroundColor="{Binding IconColor}"
+                        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                            <Label Text="{Binding Title}" FontSize="16" LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
                             <HorizontalStackLayout Spacing="6">
-                                <Label Text="{v:Translate Tx_Unreviewed}" FontSize="12" TextColor="{DynamicResource WarningText}"
-                                       BackgroundColor="{DynamicResource WarningBackground}" Padding="6,1" IsVisible="{Binding IsUnreviewed}" />
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
+                                         SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
                                 <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="16"
+                        <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
                                FontAttributes="Bold" VerticalOptions="Center" />
                         <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"
                                        Margin="-6,-4,0,0" IsVisible="{Binding Selection.IsSelected}" />
@@ -127,7 +146,7 @@
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="32,48" Spacing="16">
-                    <fi:SymbolIcon Symbol="Receipt" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
+                    <fi:SymbolIcon Symbol="Receipt" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                     <Label Text="{v:Translate Tx_Empty}" HorizontalTextAlignment="Center" IsVisible="{Binding HasNoEntriesAtAll}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Tx_Add}" Command="{Binding AddCommand}"
                             IsVisible="{Binding HasNoEntriesAtAll}" />

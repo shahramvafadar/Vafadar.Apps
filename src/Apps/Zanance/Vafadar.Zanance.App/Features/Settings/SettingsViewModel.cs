@@ -71,7 +71,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         "Plugin.LocalNotification – MIT",
         "AndroidX (Biometric and others) – Apache 2.0",
         "Open Sans font – SIL Open Font License 1.1",
-        "Vazirmatn font (PDF reports) – SIL Open Font License 1.1");
+        "Vazirmatn font – SIL Open Font License 1.1");
 
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
@@ -88,6 +88,21 @@ public sealed partial class SettingsViewModel : ViewModelBase
         if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value) && (Presentation.ThemeChoice)value != _theme.Choice)
         {
             _theme.Set((Presentation.ThemeChoice)value);
+        }
+    }
+
+    // Persian digits (D-27), offered only in the Persian interface.
+    [ObservableProperty]
+    public partial bool IsPersian { get; set; }
+
+    [ObservableProperty]
+    public partial bool PersianDigits { get; set; }
+
+    partial void OnPersianDigitsChanged(bool value)
+    {
+        if (!_refreshing && value != Presentation.DigitPreferences.PersianDigits)
+        {
+            Presentation.DigitPreferences.Set(value, _localization);
         }
     }
 
@@ -124,6 +139,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ModeIndex = (int)settings.Mode;
             ThemeNames = [_translator["Theme_System"], _translator["Theme_Light"], _translator["Theme_Dark"]];
             ThemeIndex = (int)_theme.Choice;
+            IsPersian = Presentation.DigitPreferences.IsPersian(_localization);
+            PersianDigits = Presentation.DigitPreferences.PersianDigits;
             LockEnabled = settings.AppLockEnabled;
             LockAvailable = settings.AppLockEnabled || await _lock.Authenticator.IsAvailableAsync();
             ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);

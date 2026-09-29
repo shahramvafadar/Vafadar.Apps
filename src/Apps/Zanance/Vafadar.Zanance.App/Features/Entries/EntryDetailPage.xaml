@@ -101,7 +101,7 @@
                                         </Grid.GestureRecognizers>
                                         <Grid WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
                                             <Image Source="{Binding Preview}" Aspect="AspectFill" IsVisible="{Binding HasPreview}" />
-                                            <fi:SymbolIcon Symbol="Document" FontSize="28" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center"
+                                            <fi:SymbolIcon Symbol="Document" FontSize="28" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center"
                                                            IsVisible="{Binding HasPreview, Converter={StaticResource InvertedBoolConverter}}" />
                                         </Grid>
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
-<!-- Visual system of Zanance (docs/03-ux-design.md §6). Light values here; Presentation/Palette.cs sets the light or dark
-     variant at run time, so colors are used as DynamicResource. -->
+<!-- Visual system of Zanance (docs/03-ux-design.md §6, D-27). Presentation/Palette.cs sets the light or dark colours at start
+     and on every theme change, so colours are always used as DynamicResource. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:v="http://vafadar.pro/schemas/maui"
@@ -13,23 +13,6 @@
     <v:IsNotNullConverter x:Key="IsNotNullConverter" />
     <p:CurrencyUnitConverter x:Key="CurrencyUnitConverter" />
     <v:IsPositiveConverter x:Key="IsPositiveConverter" />
-
-    <Color x:Key="IncomeText">#1B5E20</Color>
-    <Color x:Key="IncomeBackground">#E8F5E9</Color>
-    <Color x:Key="ExpenseText">#B71C1C</Color>
-    <Color x:Key="ExpenseBackground">#FFEBEE</Color>
-    <Color x:Key="TransferText">#37474F</Color>
-    <Color x:Key="TransferBackground">#ECEFF1</Color>
-    <Color x:Key="WarningText">#8D5B00</Color>
-    <Color x:Key="WarningBackground">#FFF4E0</Color>
-    <Color x:Key="PageBackground">#F6F7F6</Color>
-    <Color x:Key="CardBackground">#FFFFFF</Color>
-    <Color x:Key="SecondaryText">#5F6368</Color>
-    <Color x:Key="DividerColor">#E3E6E3</Color>
-    <Color x:Key="OnPrimary">#FFFFFF</Color>
-    <Color x:Key="AmountText">#1F1F1F</Color>
-    <Color x:Key="NearLimit">#F9A825</Color>
-    <Color x:Key="Muted">#9E9E9E</Color>
 
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
         <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
@@ -74,23 +57,45 @@
         <Setter Property="Stroke" Value="{DynamicResource DividerColor}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Padding" Value="16" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+    </Style>
+
+    <!-- Title of a root page (the tab pages show it in the content, not in a navigation bar). -->
+    <Style x:Key="PageTitle" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
     </Style>
 
     <Style x:Key="SectionHeader" TargetType="Label">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
-        <Setter Property="Margin" Value="0,16,0,4" />
+        <Setter Property="Margin" Value="4,16,4,2" />
+    </Style>
+
+    <!-- The small action at the end of a section header ("All", "Details"). -->
+    <Style x:Key="SectionLink" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="Margin" Value="4,16,4,2" />
+    </Style>
+
+    <Style x:Key="RowTitle" TargetType="Label">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
     </Style>
 
     <Style x:Key="Secondary" TargetType="Label">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
     </Style>
 
     <Style x:Key="FieldLabel" TargetType="Label">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
         <Setter Property="Margin" Value="0,12,0,4" />
     </Style>
@@ -101,7 +106,7 @@
     </Style>
 
     <Style x:Key="AmountLarge" TargetType="Label">
-        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontSize" Value="32" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
     </Style>
@@ -111,16 +116,34 @@
         <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="MinimumHeightRequest" Value="48" />
-        <Setter Property="CornerRadius" Value="24" />
+        <Setter Property="CornerRadius" Value="14" />
     </Style>
 
     <Style x:Key="SecondaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
-        <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CardBackground}" />
+        <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        <Setter Property="BorderColor" Value="{DynamicResource StrokeStrong}" />
         <Setter Property="BorderWidth" Value="1" />
         <Setter Property="MinimumHeightRequest" Value="48" />
-        <Setter Property="CornerRadius" Value="24" />
+        <Setter Property="CornerRadius" Value="14" />
+    </Style>
+
+    <!-- Destructive actions (delete, restore over the data): red only where something can be lost. -->
+    <Style x:Key="DangerButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource ExpenseBackground}" />
+        <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+        <Setter Property="BorderColor" Value="{DynamicResource DangerLine}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="14" />
+    </Style>
+
+    <Style x:Key="TextButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
     </Style>
 
     <Style x:Key="FloatingAddButton" TargetType="Button">
@@ -129,17 +152,79 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="WidthRequest" Value="56" />
         <Setter Property="HeightRequest" Value="56" />
-        <Setter Property="CornerRadius" Value="28" />
+        <Setter Property="CornerRadius" Value="18" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Margin" Value="16" />
+        <Setter Property="Margin" Value="20" />
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#1D56C9" Opacity="0.28" Radius="14" Offset="0,6" />
+        </Setter>
     </Style>
 
     <Style x:Key="ListRow" TargetType="Grid">
-        <Setter Property="MinimumHeightRequest" Value="56" />
-        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="MinimumHeightRequest" Value="60" />
+        <Setter Property="Padding" Value="16,10" />
         <Setter Property="ColumnSpacing" Value="12" />
         <Setter Property="BackgroundColor" Value="{DynamicResource CardBackground}" />
+    </Style>
+
+    <!-- Rounded square that carries a row's icon in its meaning colour (background, outline and icon from one family). -->
+    <Style x:Key="IconTile" TargetType="Border">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="IconTileSmall" TargetType="Border" BasedOn="{StaticResource IconTile}">
+        <Setter Property="WidthRequest" Value="32" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+    </Style>
+
+    <!-- Day and month of a due date in a plan row. -->
+    <Style x:Key="DateTile" TargetType="Border">
+        <Setter Property="WidthRequest" Value="46" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Small pill with a status ("2 days overdue", "80%"). -->
+    <Style x:Key="Badge" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Padding" Value="9,2" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="BadgeText" TargetType="Label">
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="IconButton" TargetType="Border">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{DynamicResource DividerColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CardBackground}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="v:ChoiceChips">
+        <Setter Property="AccentColor" Value="{DynamicResource Primary}" />
+        <Setter Property="SelectedFill" Value="{DynamicResource PrimarySoft}" />
+        <Setter Property="SelectedOutline" Value="{DynamicResource PrimaryLine}" />
+        <Setter Property="OutlineColor" Value="{DynamicResource StrokeStrong}" />
+        <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
+        <Setter Property="ChipBackground" Value="{DynamicResource CardBackground}" />
     </Style>
 </ResourceDictionary>

@@ -11,7 +11,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" AccentColor="{DynamicResource Primary}" />
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" />
             <Label Text="{Binding BasisText}" Style="{StaticResource Secondary}" />
             <Label Text="{v:Translate Forecast_WhatIfHint}" Style="{StaticResource Secondary}" FontSize="12" />
             <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,4"

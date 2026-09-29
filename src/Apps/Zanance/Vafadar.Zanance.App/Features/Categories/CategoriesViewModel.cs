@@ -52,7 +52,7 @@ public sealed partial class CategoriesViewModel(ZananceStore store, Translator t
 
     private CategoryItem ToItem(Category category, bool isChild)
     {
-        var color = CategoryLookup.ParseColor(category.Color);
+        var color = CategoryLookup.DisplayColor(category.Color);
         return new CategoryItem(category.Id, CategoryLookup.NameOf(category, translator), Icons.Parse(category.Icon, Symbol.Tag), color, color.WithAlpha(0.12f), isChild);
     }
 

@@ -28,18 +28,30 @@ public partial class App : Application
         theme.Initialize(this);
         theme.Changed += OnLocalizationChanged;
         var localization = services.GetRequiredService<ILocalizationService>();
+
+        // Persian digits in the Persian interface (D-27); applied before the screens are rebuilt for a new language.
+        Presentation.DigitPreferences.Apply(localization);
+        localization.Changed += (_, _) => Presentation.DigitPreferences.Apply(localization);
+        Presentation.DigitPreferences.Changed += OnLocalizationChanged;
         localization.Changed += OnLocalizationChanged;
 
         // Progress bars are drawn left to right on every platform; in right-to-left languages they are mirrored, so they
         // fill in the reading direction.
         Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
         localization.Changed += (_, _) => Resources["ReadingScaleX"] = localization.IsRightToLeft ? -1d : 1d;
+
+        // Persian text in Vazirmatn; English and German in Open Sans (D-27).
+        Resources["AppFont"] = FontFor(localization);
+        localization.Changed += (_, _) => Resources["AppFont"] = FontFor(localization);
         this.ApplyToModalPages(localization);
 
         var reminders = services.GetRequiredService<ReminderService>();
         reminders.WatchChanges();
         reminders.Scheduler.Tapped += OnReminderTapped;
     }
+
+    private static string FontFor(ILocalizationService localization) =>
+        localization.CurrentCulture.TwoLetterISOLanguageName == "fa" ? "Vazirmatn" : "OpenSansRegular";
 
     /// <summary>Replaces the root page of the main window, e.g. after onboarding.</summary>
     public void ShowMainShell()

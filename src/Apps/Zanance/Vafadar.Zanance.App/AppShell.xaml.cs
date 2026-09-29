@@ -4,10 +4,8 @@ using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Categories;
 using Vafadar.Zanance.App.Features.DataFiles;
 using Vafadar.Zanance.App.Features.Entries;
-using Vafadar.Zanance.App.Features.Forecast;
 using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Features.Rates;
-using Vafadar.Zanance.App.Features.Reports;
 using Vafadar.Zanance.App.Features.Settings;
 
 namespace Vafadar.Zanance.App;
@@ -50,17 +48,17 @@ public partial class AppShell : Shell
     /// <summary>Route of backup and restore.</summary>
     public const string BackupRoute = "backup";
 
-    /// <summary>Route of the monthly budget.</summary>
-    public const string BudgetRoute = "budget";
+    /// <summary>Route of the monthly budget (a top tab of Insights).</summary>
+    public const string BudgetRoute = "//insights/budget";
 
     /// <summary>Route of the budget editor (query: <c>year</c>, <c>month</c>, <c>calendar</c>, <c>currency</c>).</summary>
     public const string BudgetEditorRoute = "budgeteditor";
 
-    /// <summary>Route of the reports.</summary>
-    public const string ReportsRoute = "reports";
+    /// <summary>Route of the reports (a top tab of Insights).</summary>
+    public const string ReportsRoute = "//insights/reports";
 
-    /// <summary>Route of the forecast.</summary>
-    public const string ForecastRoute = "forecast";
+    /// <summary>Route of the forecast (a top tab of Insights).</summary>
+    public const string ForecastRoute = "//insights/forecast";
 
     /// <summary>Route of the manual exchange rates.</summary>
     public const string RatesRoute = "rates";
@@ -77,8 +75,8 @@ public partial class AppShell : Shell
     /// <summary>Route of the quick templates (TX-04).</summary>
     public const string TemplatesRoute = "templates";
 
-    /// <summary>Route of the savings goals (F2-GOAL).</summary>
-    public const string GoalsRoute = "goals";
+    /// <summary>Route of the savings goals (F2-GOAL; a top tab of Insights).</summary>
+    public const string GoalsRoute = "//insights/goals";
 
     /// <summary>Route of the goal editor.</summary>
     public const string GoalEditorRoute = "goal";
@@ -116,16 +114,12 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(PlanDetailRoute, typeof(PlanDetailPage));
         Routing.RegisterRoute(OccurrenceRoute, typeof(OccurrencePage));
         Routing.RegisterRoute(BackupRoute, typeof(BackupPage));
-        Routing.RegisterRoute(BudgetRoute, typeof(BudgetPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
-        Routing.RegisterRoute(ReportsRoute, typeof(ReportsPage));
-        Routing.RegisterRoute(ForecastRoute, typeof(ForecastPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
         Routing.RegisterRoute(DisplayUnitsRoute, typeof(DisplayUnitsPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
-        Routing.RegisterRoute(GoalsRoute, typeof(Features.Goals.GoalsPage));
         Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));

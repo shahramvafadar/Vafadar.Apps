@@ -16,13 +16,13 @@
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <fi:SymbolIcon Symbol="{Binding Summary.Icon, FallbackValue=Savings}" FontSize="32" VerticalOptions="Start" ForegroundColor="{DynamicResource Primary}" />
+                        <fi:SymbolIcon Symbol="{Binding Summary.Icon, FallbackValue=Savings}" FontSize="32" VerticalOptions="Start" ForegroundColor="{DynamicResource SavingText}" />
                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                             <Label Text="{Binding Summary.Name}" FontSize="18" FontAttributes="Bold" />
                             <Label Text="{Binding Summary.FundedText}" FontSize="16" />
                             <progress:SfLinearProgressBar Progress="{Binding Summary.Progress}" ProgressFill="{Binding Summary.ProgressColor}" />
                             <Label Text="{Binding Summary.DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.DateText, Converter={StaticResource IsNotNullConverter}}" />
-                            <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource Primary}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.StateText, Converter={StaticResource IsNotNullConverter}}" />
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding PerAccount}">
@@ -39,7 +39,7 @@
                 <!-- Set aside or release (F2-GOAL-02); this never moves money -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsActive}">
                     <VerticalStackLayout Spacing="4">
-                        <v:ChoiceChips ItemsSource="{Binding DirectionNames}" SelectedIndex="{Binding DirectionIndex}" AccentColor="{DynamicResource Primary}" />
+                        <v:ChoiceChips ItemsSource="{Binding DirectionNames}" SelectedIndex="{Binding DirectionIndex}" />
                         <Label Text="{Binding NoAccountsText}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding NoAccountsText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout IsVisible="{Binding HasFundingAccounts}" Spacing="4">
                             <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" />

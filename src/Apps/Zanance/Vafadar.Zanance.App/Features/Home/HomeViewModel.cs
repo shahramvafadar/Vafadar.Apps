@@ -96,6 +96,16 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasAttention { get; set; }
 
+    /// <summary>Gets the colours of the due items row: red when something is overdue, violet otherwise (D-27).</summary>
+    [ObservableProperty]
+    public partial Color? DueTileText { get; set; }
+
+    [ObservableProperty]
+    public partial Color? DueTileBackground { get; set; }
+
+    [ObservableProperty]
+    public partial Color? DueTileLine { get; set; }
+
     [ObservableProperty]
     public partial bool HasAccounts { get; set; }
 
@@ -221,7 +231,7 @@ public sealed partial class HomeViewModel : ViewModelBase
                 MoneyText.Format(totals.NetIncome, totals.CurrencyCode, culture),
                 MoneyText.Format(totals.NetExpense, totals.CurrencyCode, culture),
                 MoneyText.Format(totals.Result, totals.CurrencyCode, culture, showPlus: true),
-                totals.Result < 0 ? EntryPresenter.ExpenseColor : EntryPresenter.IncomeColor,
+                totals.Result < 0 ? EntryPresenter.DangerColor : EntryPresenter.IncomeColor,
                 refunds));
         }
 
@@ -236,7 +246,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         {
             var balance = LedgerCalculator.Balance(account, entries, today);
             Accounts.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
-                Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown));
+                Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown) { Type = account.Type });
         }
 
         var owed = EntryActions.OpenReimbursements(entries);
@@ -270,7 +280,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         BudgetProgress = limit > 0 ? Math.Clamp((double)status.Spent / limit, 0, 1) : status.Spent > 0 ? 1 : 0;
         BudgetColor = status.Alert switch
         {
-            BudgetAlert.Exceeded => EntryPresenter.ExpenseColor,
+            BudgetAlert.Exceeded => EntryPresenter.DangerColor,
             BudgetAlert.Near => Palette.NearLimit,
             _ => Palette.Primary,
         };
@@ -297,11 +307,14 @@ public sealed partial class HomeViewModel : ViewModelBase
         ForecastText = _translator.Format("Home_Forecast", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture),
             MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short))
             + (forecast.IsIncomplete ? " · " + _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : string.Empty);
-        ForecastColor = forecast.GoesNegative ? EntryPresenter.ExpenseColor : Palette.AmountText;
+        ForecastColor = forecast.GoesNegative ? EntryPresenter.DangerColor : Palette.AmountText;
     }
 
     [RelayCommand]
     private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);
+
+    [RelayCommand]
+    private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, DateOnly today)
     {
@@ -312,6 +325,8 @@ public sealed partial class HomeViewModel : ViewModelBase
         var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start)).ToList();
         DueCount = due.Count;
         DueText = DueCount > 0 ? _translator.Format("Home_Due", DueCount) : null;
+        var dueLook = due.Any(o => o.Status == OccurrenceView.Overdue) ? PlanLook.Danger : PlanLook.Future;
+        (DueTileText, DueTileBackground, DueTileLine) = dueLook;
 
         var contracts = Core.Reminders.ContractReminderPlanner.Upcoming(await _plans.GetSchedulesAsync(), today);
         _contractPlanId = contracts.Count > 0 ? contracts[0].Schedule.Id : null;
@@ -330,19 +345,25 @@ public sealed partial class HomeViewModel : ViewModelBase
             var schedule = occurrence.Schedule;
             var color = schedule.Kind == EntryKind.Transfer ? EntryPresenter.NeutralColor : categories.Color(schedule.CategoryId);
             var overdue = occurrence.Status == OccurrenceView.Overdue;
+            var look = overdue ? PlanLook.Danger : PlanLook.Future;
+            var days = occurrence.DueDate.DayNumber - today.DayNumber;
             Upcoming.Add(new PlanRow(
                 schedule.Id,
                 occurrence.OriginalDate,
                 schedule.Name,
-                text.Date(occurrence.DueDate),
+                accounts.TryGetValue(schedule.AccountId, out var planAccount) ? planAccount.Name : string.Empty,
                 text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : _reportCurrency),
                 schedule.Kind == EntryKind.Income ? EntryPresenter.IncomeColor : schedule.Kind == EntryKind.Expense ? EntryPresenter.ExpenseColor : EntryPresenter.NeutralColor,
                 schedule.Kind == EntryKind.Transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(schedule.Icon, categories.Icon(schedule.CategoryId)),
                 color,
                 color.WithAlpha(0.12f),
-                overdue ? text.Status(OccurrenceView.Overdue) : occurrence.Status == OccurrenceView.Due ? text.Status(OccurrenceView.Due) : null,
-                overdue ? EntryPresenter.ExpenseColor : Palette.WarningText,
-                overdue ? Palette.ExpenseBackground : Palette.WarningBackground));
+                overdue ? _translator.Format("Occurrence_OverdueDays", -days)
+                    : days == 0 ? text.Status(OccurrenceView.Due)
+                    : days == 1 ? _translator["Plan_Tomorrow"]
+                    : _translator.Format("Plan_InDays", days),
+                look.Text,
+                look.Background) { BadgeStroke = look.Line }
+                .WithDate(text, occurrence.DueDate, overdue, schedule.Kind));
         }
 
         HasUpcoming = Upcoming.Count > 0;

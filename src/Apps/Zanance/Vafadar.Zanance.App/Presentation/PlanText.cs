@@ -60,6 +60,23 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
     /// <summary>The status label of an occurrence.</summary>
     public string Status(OccurrenceView status) => translator[$"Occurrence_{status}"];
 
+    /// <summary>The day number and the month name of a date for a date tile, in the display calendar.</summary>
+    public (string Day, string Month) DayAndMonth(DateOnly date)
+    {
+        var parts = dates.Format(date, DateFormatStyle.DayMonth).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var dayPart = parts.FirstOrDefault(p => p.Any(char.IsDigit)) ?? string.Empty;
+        var month = string.Join(' ', parts.Where(p => !ReferenceEquals(p, dayPart))).Trim(',', '.');
+        if (!culture.TextInfo.IsRightToLeft && month.Length > 4)
+        {
+            month = month[..3];
+        }
+
+        return (new string([.. dayPart.Where(char.IsDigit)]), month);
+    }
+
+    /// <summary>The weekday of a date, e.g. "Friday".</summary>
+    public string Weekday(DateOnly date) => culture.DateTimeFormat.GetDayName(date.DayOfWeek);
+
     /// <summary>A due date, e.g. "Mon 5 May" plus "today"/"overdue" hints are added by the caller.</summary>
     public string Date(DateOnly date) => dates.Format(date, DateFormatStyle.Long);
 

@@ -57,7 +57,7 @@
             <!-- No budget is not a zero budget (BUD-01) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="12">
-                    <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Primary}" />
+                    <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                     <Label Text="{v:Translate Budget_None}" HorizontalTextAlignment="Center" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Budget_Create}" Command="{Binding EditCommand}" />
                     <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyPrevious}" Command="{Binding CopyPreviousCommand}"

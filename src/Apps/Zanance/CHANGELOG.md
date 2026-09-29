@@ -46,6 +46,18 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Changed – Design (D-27)
+
+- A calm, neutral look in the brand blue, where every colour has one meaning: green for money coming in, red for
+  problems and debt, amber near a limit, violet for plans and due dates, teal for savings, slate for transfers and
+  sky blue for refunds and entries to review. Expenses are shown with "−" instead of in red.
+- A new Insights tab with Budget, Reports, Forecast and Goals; the More tab is sorted into four groups.
+- A quieter Home: balance, what needs attention, income and expenses, budget and the next due items; the category
+  chart and the account list can be turned on in the Home layout.
+- Date tiles for due items, colour tiles for categories and accounts, and a filter button that keeps the less used
+  transaction filters out of the way.
+- The Vazirmatn font for Persian, and Persian digits in the Persian interface (can be turned off in Settings).
+
 ### Fixed
 
 - "This and future" changes and resuming a plan are refused when recorded payments or states after the change date

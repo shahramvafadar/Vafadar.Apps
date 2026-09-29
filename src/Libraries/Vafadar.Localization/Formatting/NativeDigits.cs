@@ -1,0 +1,53 @@
+using System.Text;
+
+namespace Vafadar.Localization.Formatting;
+
+/// <summary>
+/// Shows numbers with Persian digits (۰–۹) instead of Latin ones. Formatting and storage always use Latin digits;
+/// this only changes the text a user reads, and input keeps accepting both.
+/// </summary>
+public static class NativeDigits
+{
+    private const char PersianZero = '۰';
+    private const char ArabicThousandsSeparator = '٬';
+    private const char ArabicDecimalSeparator = '٫';
+
+    /// <summary>Gets or sets a value indicating whether displayed text uses Persian digits.</summary>
+    /// <remarks>Set by the app from the user's choice and the current language; read by the UI when it shows text.</remarks>
+    public static bool IsEnabled { get; set; }
+
+    /// <summary>Returns <paramref name="text"/> with Persian digits when <see cref="IsEnabled"/> is set.</summary>
+    public static string? Apply(string? text) => IsEnabled ? ToPersian(text) : text;
+
+    /// <summary>
+    /// Replaces the Latin digits of <paramref name="text"/> with Persian digits, and a comma or dot between two digits
+    /// with the Persian thousands or decimal separator (۱٬۲۵۰٫۵۰). Other characters, e.g. the slashes of a date, stay.
+    /// </summary>
+    public static string? ToPersian(string? text)
+    {
+        if (string.IsNullOrEmpty(text) || !text.Any(char.IsAsciiDigit))
+        {
+            return text;
+        }
+
+        var result = new StringBuilder(text.Length);
+        for (var i = 0; i < text.Length; i++)
+        {
+            var c = text[i];
+            if (char.IsAsciiDigit(c))
+            {
+                result.Append((char)(PersianZero + (c - '0')));
+            }
+            else if (c is ',' or '.' && i > 0 && i < text.Length - 1 && char.IsAsciiDigit(text[i - 1]) && char.IsAsciiDigit(text[i + 1]))
+            {
+                result.Append(c == ',' ? ArabicThousandsSeparator : ArabicDecimalSeparator);
+            }
+            else
+            {
+                result.Append(c);
+            }
+        }
+
+        return result.ToString();
+    }
+}

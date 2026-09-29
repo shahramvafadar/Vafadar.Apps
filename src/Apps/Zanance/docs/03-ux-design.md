@@ -5,13 +5,19 @@
 Simple by default, power on demand (PR-04, UX-01); numbers are always explainable (REP-01); never shame the user
 (UX-07); every screen works in English, German and Persian (RTL) with runtime switching (LOC-01..03).
 
-## 2. Navigation (D-11)
+## 2. Navigation (D-11, D-27)
 
 ```
-TabBar:  Home | Transactions | Plans | More          (Plans arrives with S4)
-         └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
-More:    Accounts · Budget · Reports · Categories · Import/Export · Backup & restore · Settings · About
+TabBar:   Home | Transactions | Plans | Insights | More
+          └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
+Insights: top tabs Budget · Reports · Forecast · Goals
+More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templates, Categorization rules)
+          · Currency (Exchange rates, Display units) · Data and security (Backup, Import/Export, Settings)
 ```
+
+Home shows only the balance, what needs attention, income and expenses of the period, the forecast (Advanced), the
+budget and the next due items. The category chart and the account list are Home sections that start hidden
+(§21.5 layout), because Insights and Accounts show them in full.
 
 ## 3. Screen inventory
 
@@ -54,28 +60,46 @@ More:    Accounts · Budget · Reports · Categories · Import/Export · Backup 
 * **Refund:** entry detail → "Refund" → amount (≤ refundable), receiving account, date → linked refund.
 * **Month end (§15.4):** Home "needs review" → Plans review → Budget → copy to next month → Backup reminder.
 
-## 6. Visual system (VIS-01..04, UX-06, UX-08)
+## 6. Visual system (VIS-01..04, UX-06, UX-08, D-27)
 
-| Token | Value | Use |
+The ground is neutral; colour appears only where it carries a meaning, and each colour always means the same thing.
+Approved design canvas: "Zanance Design" (foundations, eight screens, dark and English variants). Tokens live in
+`Presentation/Palette.cs` (light / dark) and are used as `DynamicResource`.
+
+| Meaning | Token (light / dark text) | Used for |
 |---|---|---|
-| Primary | `#2E7D32` | Actions, selected states |
-| Income | `#1B5E20` text on `#E8F5E9` | Always with "+" and an arrow-in icon |
-| Expense | `#B71C1C` text on `#FFEBEE` | Always with "−" and an arrow-out icon |
-| Transfer | `#37474F` on `#ECEFF1` | Neutral, swap icon |
-| Warning / incomplete | `#8D5B00` on `#FFF4E0` | Unreviewed, incomplete |
-| Surface / background | `#FFFFFF` / `#F6F7F6` | Cards on light grey |
-| Spacing | 4-pt grid; screen padding 16; card padding 16; list row min height 56 | |
-| Touch targets | ≥ 48 × 48 dp | |
-| Typography | Body 16, secondary 14, amount large 28 semibold; Persian font Vazirmatn (OFL) when added | |
+| Action | `Primary` `#1D56C9` / `#79A6FF`, soft `PrimarySoft` | Primary button, selected chip or tab, links. Never an amount |
+| Money in | `IncomeText` `#16794A` / `#5FCB95` | Income, positive results, "paid" |
+| Problem, debt | `ExpenseText` `#C0392B` / `#FF8E82` (the name is historic) | Negative results and balances, loans, overdue items, exceeded limits, destructive actions |
+| Near a limit | `WarningText` `#945700`, bar `NearLimit` `#E3A21A` | Budget ≥ 80 %, estimates, incomplete data |
+| The future | `PlanText` `#6A4FC4` / `#B6A5FF` | Plans, due dates (date tiles), contracts, the forecast |
+| Savings | `SavingText` `#0E7880` / `#5ED0D7` | Savings accounts, goals, earmarked money |
+| Transfer | `TransferText` `#4A5878` / `#AAB7CF` | Transfers between own accounts, ended plans |
+| Back to me | `RefundText` `#1B72A2` / `#70C2EE` | Refunds, money owed to the user, unreviewed entries |
+| Expenses | `AmountText` (neutral ink) | An expense is shown with "−" and its category icon, not in red, so real warnings stand out |
 
-* Amounts use tabular figures and are isolated with Unicode directional marks so `−12.50 EUR` never breaks in RTL
+Each meaning colour has a text, a background and a line variant (`…Text`, `…Background`, `…Line`): icon tiles and
+badges use all three. Category colours only colour category icons; in the dark theme dark category colours are
+lightened (`CategoryLookup.DisplayColor`).
+
+| Token | Value |
+|---|---|
+| Surfaces | Page `#F4F6F9` / `#0D1219`, card `#FFFFFF` / `#151B24`, line `#E3E8EF` / `#252E3A` |
+| Text | Ink `#0F1B2D`, secondary `#4A5568`, muted `#697586` (dark: `#E9EEF5`, `#AEB8C6`, `#8C97A8`) |
+| Shape | Cards radius 18, buttons and inputs 14, icon tiles 40 × 40 radius 12, chips fully rounded |
+| Spacing | 4-pt grid; screen padding 16; card padding 16; list row min height 60 |
+| Touch targets | ≥ 44 × 44 (buttons 48) |
+| Typography | Persian: Vazirmatn (OFL); English and German: Open Sans. Page title 24 bold, amount large 32 bold, row title 15, body 14, secondary 13 |
+
+* Persian digits (۱۲۳) are shown in the Persian interface by default (Settings → "Persian digits"); the separators
+  become `٬` and `٫`. Only the displayed text changes (`NativeDigits`, applied to labels); stored values, CSV, PDF,
+  backups and input stay Latin, and input accepts Latin, Persian and Arabic digits.* Amounts use tabular figures and are isolated with Unicode directional marks so `−12.50 EUR` never breaks in RTL
   (VIS-02, LOC-03). Currency codes stay Latin.
 * Colour is never the only carrier: sign, icon and text label accompany it.
 * Direction-dependent icons (back, chevrons) mirror in RTL; charts, logos and money icons do not.
 * Every icon has an accessible name (`SemanticProperties.Description`); charts have a table alternative (UX-06).
 * Light and dark theme (D-22): the semantic color tokens have a light and a dark variant (`Presentation/Palette.cs`) and are used as `DynamicResource`, so switching recolors open pages; code reads colors from the palette, never as literals. Settings offers "like the device", light and dark.
-* Digits are Latin in every language for now; Persian uses the Latin separators `.` and `,` because the Arabic
-  separators (U+066B, U+066C) look like commas next to Latin digits. Input accepts Persian/Arabic digits and `٫`.
+
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
   segmented control, so German and Persian labels never scroll or get cut off.
 * Categories in the entry editor are wrapping pills (icon + full name) rather than a fixed grid, so no name is

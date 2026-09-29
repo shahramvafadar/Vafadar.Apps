@@ -42,7 +42,7 @@
     <MauiSplashScreen Include="Resources\Splash\splashlockup.svg" Color="#F4F6F8" BaseSize="256,75"
                       Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
     <MauiImage Include="Resources\Images\*" />
-    <MauiFont Include="Resources\Fonts\*" />
+    <MauiFont Include="Resources\Fonts\*.ttf" />
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 

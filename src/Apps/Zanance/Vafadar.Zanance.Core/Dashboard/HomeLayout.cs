@@ -28,8 +28,8 @@ public readonly record struct HomeSectionState(HomeSection Section, bool IsVisib
 
 /// <summary>
 /// The order and visibility of the Home sections. It is stored as text like <c>Period,Forecast,-Budget</c> (a minus
-/// hides a section); unknown names are ignored and missing sections are added visible at the end, so new sections of
-/// later versions always appear.
+/// hides a section); unknown names are ignored and missing sections are added at the end with their default visibility,
+/// so new sections of later versions appear.
 /// </summary>
 public sealed class HomeLayout
 {
@@ -40,8 +40,14 @@ public sealed class HomeLayout
     /// <summary>Gets the sections in their order.</summary>
     public IReadOnlyList<HomeSectionState> Sections => _sections;
 
-    /// <summary>Gets the default layout: every section visible in the original order.</summary>
-    public static HomeLayout Default => new([.. Enum.GetValues<HomeSection>().Select(s => new HomeSectionState(s, true))]);
+    /// <summary>
+    /// Gets the default layout: every section in the original order; the category chart and the account list start
+    /// hidden, because Insights and Accounts show them (a calm Home, D-27). The user can turn them on.
+    /// </summary>
+    public static HomeLayout Default => new([.. Enum.GetValues<HomeSection>().Select(s => new HomeSectionState(s, IsVisibleByDefault(s)))]);
+
+    /// <summary>Returns whether a section is shown when the user has not chosen otherwise.</summary>
+    public static bool IsVisibleByDefault(HomeSection section) => section is not (HomeSection.Categories or HomeSection.Accounts);
 
     /// <summary>Gets a value indicating whether the layout differs from <see cref="Default"/>.</summary>
     public bool IsCustomized => ToString() != Default.ToString();
@@ -61,7 +67,7 @@ public sealed class HomeLayout
 
         foreach (var section in Enum.GetValues<HomeSection>().Where(s => sections.All(x => x.Section != s)))
         {
-            sections.Add(new HomeSectionState(section, true));
+            sections.Add(new HomeSectionState(section, IsVisibleByDefault(section)));
         }
 
         return new HomeLayout(sections);

@@ -42,11 +42,11 @@
                         <VerticalStackLayout IsVisible="{Binding HasTargetDate}" Spacing="4">
                             <v:DateField Date="{Binding TargetDate}" />
                             <Label Text="{v:Translate Goal_Frequency}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding FrequencyNames}" SelectedIndex="{Binding FrequencyIndex}" AccentColor="{DynamicResource Primary}" />
+                            <v:ChoiceChips ItemsSource="{Binding FrequencyNames}" SelectedIndex="{Binding FrequencyIndex}" />
                         </VerticalStackLayout>
 
                         <Label Text="{v:Translate Goal_Priority}" Style="{StaticResource FieldLabel}" />
-                        <v:ChoiceChips ItemsSource="{Binding PriorityNames}" SelectedIndex="{Binding PriorityIndex}" AccentColor="{DynamicResource Primary}" />
+                        <v:ChoiceChips ItemsSource="{Binding PriorityNames}" SelectedIndex="{Binding PriorityIndex}" />
                         <Label Text="{v:Translate Goal_PriorityHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>
                 </Border>

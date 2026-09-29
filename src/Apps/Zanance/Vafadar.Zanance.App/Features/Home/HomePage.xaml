@@ -13,25 +13,30 @@
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
 
+    <!-- Home (D-27): the balance, what needs attention, then the sections the user keeps (§21.5). One job per card. -->
     <Grid>
         <ScrollView>
-            <VerticalStackLayout x:Name="Sections" Padding="16" Spacing="8">
+            <VerticalStackLayout x:Name="Sections" Padding="16,8,16,16" Spacing="12">
 
                 <!-- Scope of every number on this page (DASH-01) -->
-                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" AccentColor="{DynamicResource Primary}" />
-                <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" />
+                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
+                <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" />
 
                 <!-- Welcome without accounts -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAccounts, Converter={StaticResource InvertedBoolConverter}}">
-                    <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="14">
+                        <Image Source="zanance_symbol.png" HeightRequest="56" WidthRequest="54" HorizontalOptions="Center" SemanticProperties.Description="{v:Translate App_Name}" />
                         <Label Text="{v:Translate Home_NoAccounts}" HorizontalTextAlignment="Center" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Accounts_Add}" Command="{Binding AddEntryCommand}" />
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Recorded balance (FIN-13) -->
+                <!-- Recorded balance (FIN-13); tap for the accounts -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAccounts}">
-                    <VerticalStackLayout Spacing="4">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenAccountsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="6">
                         <Label Text="{v:Translate Home_Balance}" Style="{StaticResource Secondary}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Balances}">
                             <BindableLayout.ItemTemplate>
@@ -40,15 +45,11 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Label Text="{Binding ConfirmedBalanceText}" TextColor="{DynamicResource WarningText}" FontSize="13"
+                        <Label Text="{Binding ConfirmedBalanceText}" TextColor="{DynamicResource WarningText}" FontSize="12.5"
                                IsVisible="{Binding ConfirmedBalanceText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontSize="13"
-                               IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenAccountsCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label Text="{Binding CombinedText}" FontSize="14" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
+                        <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontSize="12.5"
+                               IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding CombinedText}" FontSize="13" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenRatesCommand}" />
                             </Label.GestureRecognizers>
@@ -63,38 +64,54 @@
                 </Border>
 
                 <!-- Needs attention: always an action, never just a red number (DASH-03) -->
-                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasAttention}">
-                    <VerticalStackLayout>
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding DueCount, Converter={StaticResource IsPositiveConverter}}">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenDueCommand}" />
-                            </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="CalendarClock" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="{Binding DueText}" FontSize="15" VerticalOptions="Center" />
-                        </Grid>
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenReimbursementsCommand}" />
-                            </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
-                            <Label Grid.Column="1" Text="{Binding ReimbursementText}" FontSize="15" VerticalOptions="Center" />
-                        </Grid>
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenContractCommand}" />
-                            </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="DocumentText" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="{Binding ContractText}" FontSize="15" VerticalOptions="Center" />
-                        </Grid>
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenUnreviewedCommand}" />
-                            </Grid.GestureRecognizers>
-                            <fi:SymbolIcon Symbol="Eye" FontSize="22" ForegroundColor="{DynamicResource WarningText}" VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="{Binding UnreviewedText}" FontSize="15" VerticalOptions="Center" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
+                <VerticalStackLayout Spacing="0" IsVisible="{Binding HasAttention}">
+                    <Label Text="{v:Translate Home_Attention}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                    <Border Style="{StaticResource Card}" Padding="0">
+                        <VerticalStackLayout>
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding DueCount, Converter={StaticResource IsPositiveConverter}}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenDueCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding DueTileBackground}" Stroke="{Binding DueTileLine}">
+                                    <fi:SymbolIcon Symbol="CalendarClock" FontSize="20" ForegroundColor="{Binding DueTileText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding DueText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                            </Grid>
+
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenUnreviewedCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource RefundBackground}" Stroke="{DynamicResource RefundLine}">
+                                    <fi:SymbolIcon Symbol="Eye" FontSize="20" ForegroundColor="{DynamicResource RefundText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding UnreviewedText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                            </Grid>
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding ReimbursementText, Converter={StaticResource IsNotNullConverter}}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenReimbursementsCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource RefundBackground}" Stroke="{DynamicResource RefundLine}">
+                                    <fi:SymbolIcon Symbol="ArrowUndo" FontSize="20" ForegroundColor="{DynamicResource RefundText}" HorizontalOptions="Center" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding ReimbursementText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                            </Grid>
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding ContractText, Converter={StaticResource IsNotNullConverter}}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenContractCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PlanBackground}" Stroke="{DynamicResource PlanLine}">
+                                    <fi:SymbolIcon Symbol="DocumentText" FontSize="20" ForegroundColor="{DynamicResource PlanText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding ContractText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
 
                 <!-- Guidance (ONB-04) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowPlansTip}">
@@ -103,8 +120,7 @@
                         <Label Text="{v:Translate Home_TipPlansText}" Style="{StaticResource Secondary}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipPlansAction}" Command="{Binding AddPlanCommand}" />
-                            <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="plans"
-                                    BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+                            <Button Grid.Column="1" Style="{StaticResource TextButton}" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="plans" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
@@ -114,39 +130,56 @@
                         <Label Text="{v:Translate Home_TipBudgetText}" Style="{StaticResource Secondary}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipBudgetAction}" Command="{Binding AddBudgetCommand}" />
-                            <Button Grid.Column="1" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="budget"
-                                    BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+                            <Button Grid.Column="1" Style="{StaticResource TextButton}" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="budget" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Sections the user can hide and reorder (§21.5); balance and attention stay on top (DASH-03) -->
-                <VerticalStackLayout x:Name="PeriodSection" Spacing="8">
+                <VerticalStackLayout x:Name="PeriodSection" Spacing="0">
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasEntries}">
+                        <Label Text="{v:Translate Home_ThisPeriod}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Label Grid.Column="1" Text="{v:Translate Report_Title}" Style="{StaticResource SectionLink}" Margin="4,4,4,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenReportsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                     <!-- Income and expense of the period; tap for the entries behind each number -->
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Periods}" Spacing="8" IsVisible="{Binding HasEntries}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:PeriodSummary">
                                 <Border Style="{StaticResource Card}">
-                                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="8">
-                                        <VerticalStackLayout>
-                                            <VerticalStackLayout.GestureRecognizers>
+                                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                            <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding OpenIncomeCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}" />
-                                            </VerticalStackLayout.GestureRecognizers>
-                                            <Label Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" />
-                                            <Label Text="{Binding IncomeText}" FontSize="18" FontAttributes="Bold" TextColor="{DynamicResource IncomeText}" />
-                                        </VerticalStackLayout>
-                                        <VerticalStackLayout Grid.Column="1">
-                                            <VerticalStackLayout.GestureRecognizers>
+                                            </Grid.GestureRecognizers>
+                                            <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource IncomeBackground}" Stroke="{DynamicResource IncomeLine}">
+                                                <fi:SymbolIcon Symbol="ArrowDownLeft" FontSize="17" ForegroundColor="{DynamicResource IncomeText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" />
+                                                <Label Text="{Binding IncomeText}" FontSize="16" FontAttributes="Bold" TextColor="{DynamicResource IncomeText}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <Grid Grid.Column="1" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                            <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding OpenExpenseCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}" />
-                                            </VerticalStackLayout.GestureRecognizers>
-                                            <Label Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" />
-                                            <Label Text="{Binding ExpenseText}" FontSize="18" FontAttributes="Bold" TextColor="{DynamicResource ExpenseText}" />
-                                        </VerticalStackLayout>
-                                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="{DynamicResource DividerColor}" />
+                                            </Grid.GestureRecognizers>
+                                            <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
+                                                <fi:SymbolIcon Symbol="ArrowUpRight" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" />
+                                                <Label Text="{Binding ExpenseText}" FontSize="16" FontAttributes="Bold" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" />
                                         <Label Grid.Row="2" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                         <VerticalStackLayout Grid.Row="2" Grid.Column="1">
-                                            <Label Text="{Binding ResultText}" FontSize="16" FontAttributes="Bold" TextColor="{Binding ResultColor}" />
-                                            <Label Text="{Binding RefundsText}" Style="{StaticResource Secondary}" FontSize="12"
+                                            <Label Text="{Binding ResultText}" FontSize="16" FontAttributes="Bold" TextColor="{Binding ResultColor}" HorizontalOptions="End" />
+                                            <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" FontSize="12" HorizontalOptions="End"
                                                    IsVisible="{Binding RefundsText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                     </Grid>
@@ -156,84 +189,90 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="ForecastSection" Spacing="8">
-                    <!-- Forecast (Advanced) -->
-                    <Border Style="{StaticResource Card}" IsVisible="{Binding ForecastText, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout x:Name="ForecastSection" Spacing="0">
+                    <!-- Forecast (Advanced): the estimate after the recorded plans -->
+                    <Border Style="{StaticResource Card}" Padding="14,12" IsVisible="{Binding ForecastText, Converter={StaticResource IsNotNullConverter}}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenForecastCommand}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
-                            <Label Text="{Binding ForecastText}" TextColor="{Binding ForecastColor}" FontSize="15" />
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource PlanBackground}" Stroke="{DynamicResource PlanLine}">
+                                <fi:SymbolIcon Symbol="DataTrending" FontSize="17" ForegroundColor="{DynamicResource PlanText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
+                                <Label Text="{Binding ForecastText}" TextColor="{Binding ForecastColor}" FontSize="14" />
+                            </VerticalStackLayout>
+                            <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                        </Grid>
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="BudgetSection" Spacing="8">
+                <VerticalStackLayout x:Name="BudgetSection" Spacing="0">
                     <!-- Budget remaining (only when a budget exists) -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasBudget}">
+                        <Label Text="{v:Translate Budget_Title}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Label Grid.Column="1" Text="{v:Translate Home_Details}" Style="{StaticResource SectionLink}" Margin="4,4,4,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenBudgetCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                     <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenBudgetCommand}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="{v:Translate Budget_Title}" Style="{StaticResource Secondary}" />
-                            <Label Text="{Binding BudgetText}" FontSize="16" FontAttributes="Bold" />
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="{Binding BudgetText}" FontSize="15" FontAttributes="Bold" />
                             <progress:SfLinearProgressBar Progress="{Binding BudgetProgress}" ProgressFill="{Binding BudgetColor}" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="UpcomingSection" Spacing="8">
+                <VerticalStackLayout x:Name="UpcomingSection" Spacing="0">
                     <!-- Next due items -->
-                    <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasUpcoming}" />
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasUpcoming}">
+                        <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Label Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Margin="4,4,4,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenDueCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                     <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="plans:PlanRow">
-                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
-                                        <Grid.GestureRecognizers>
+                                    <plans:PlanRowView>
+                                        <plans:PlanRowView.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
                                                                   CommandParameter="{Binding .}" />
-                                        </Grid.GestureRecognizers>
-                                        <Border WidthRequest="36" HeightRequest="36" StrokeThickness="0" StrokeShape="RoundRectangle 18"
-                                                BackgroundColor="{Binding IconBackground}" VerticalOptions="Center">
-                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
-                                                           HorizontalOptions="Center" VerticalOptions="Center" />
-                                        </Border>
-                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                            <Label Text="{Binding Title}" FontSize="15" LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
-                                        </VerticalStackLayout>
-                                        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4">
-                                            <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" HorizontalOptions="End" />
-                                            <Label Text="{Binding Badge}" FontSize="12" Padding="6,1" HorizontalOptions="End" TextColor="{Binding BadgeText}"
-                                                   BackgroundColor="{Binding BadgeBackground}" IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}" />
-                                        </VerticalStackLayout>
-                                    </Grid>
+                                        </plans:PlanRowView.GestureRecognizers>
+                                    </plans:PlanRowView>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="CategoriesSection" Spacing="8">
+                <VerticalStackLayout x:Name="CategoriesSection" Spacing="0">
                     <!-- Expense by category: chart with a table that is also the accessible alternative (UX-06) -->
-                    <Label Text="{v:Translate Home_ExpenseByCategory}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasEntries}" />
+                    <Label Text="{v:Translate Home_ExpenseByCategory}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" IsVisible="{Binding HasEntries}" />
                     <Border Style="{StaticResource Card}" IsVisible="{Binding HasEntries}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate Home_NoExpenses}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
                                    IsVisible="{Binding HasSlices, Converter={StaticResource InvertedBoolConverter}}" />
                             <Grid IsVisible="{Binding HasSlices}">
-                            <chart:SfCircularChart HeightRequest="200" FlowDirection="LeftToRight" BackgroundColor="Transparent"
-                                                   SemanticProperties.Description="{v:Translate Home_ExpenseByCategory}">
-                                <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
-                                                      PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.62" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
-                            </chart:SfCircularChart>
-                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
-                                <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
-                            </VerticalStackLayout>
-                        </Grid>
+                                <chart:SfCircularChart HeightRequest="190" FlowDirection="LeftToRight" BackgroundColor="Transparent"
+                                                       SemanticProperties.Description="{v:Translate Home_ExpenseByCategory}">
+                                    <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
+                                                          PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.66" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
+                                </chart:SfCircularChart>
+                                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
+                                    <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+                            </Grid>
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Slices}" IsVisible="{Binding HasSlices}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="local:CategorySlice">
@@ -242,7 +281,7 @@
                                                 <TapGestureRecognizer Command="{Binding OpenSliceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
                                                                       CommandParameter="{Binding .}" />
                                             </Grid.GestureRecognizers>
-                                            <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="{Binding Color}" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="3" Color="{Binding Color}" VerticalOptions="Center" />
                                             <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                             <Label Grid.Column="2" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
                                             <Label Grid.Column="3" Text="{Binding PercentText}" Style="{StaticResource Secondary}" VerticalOptions="Center" HorizontalTextAlignment="End" />
@@ -256,27 +295,28 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="AccountsSection" Spacing="8">
+                <VerticalStackLayout x:Name="AccountsSection" Spacing="0">
                     <!-- Accounts -->
-                    <Label Text="{v:Translate Home_AccountsSection}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasAccounts}" />
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasAccounts}">
+                        <Label Text="{v:Translate Home_AccountsSection}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Label Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Margin="4,4,4,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenAccountsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                     <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasAccounts}">
-                        <VerticalStackLayout>
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="accounts:AccountItem">
-                                        <accounts:AccountRow />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
-                            <Button Text="{v:Translate Accounts_Title}" Command="{Binding OpenAccountsCommand}" BackgroundColor="Transparent"
-                                    TextColor="{DynamicResource Primary}" HorizontalOptions="End" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="accounts:AccountItem">
+                                    <accounts:AccountRow />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 
-                <Button Text="{v:Translate HomeLayout_Customize}" Command="{Binding CustomizeCommand}" BackgroundColor="Transparent"
-                        TextColor="{DynamicResource Primary}" HorizontalOptions="Center" />
-
+                <Button Style="{StaticResource TextButton}" Text="{v:Translate HomeLayout_Customize}" Command="{Binding CustomizeCommand}" HorizontalOptions="Center" />
 
                 <BoxView HeightRequest="72" Color="Transparent" />
             </VerticalStackLayout>

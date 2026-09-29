@@ -19,6 +19,9 @@ public sealed record EntryRow(
     Color AmountColor,
     bool IsUnreviewed)
 {
+    /// <summary>Gets the outline of the icon tile (the icon colour, lighter).</summary>
+    public Color? IconStroke { get; init; }
+
     /// <summary>Gets the selection state of the row in lists that allow selecting several entries (F2-TX-04).</summary>
     public RowSelection Selection { get; init; } = new();
 }
@@ -38,7 +41,10 @@ internal sealed class EntryPresenter(
     CultureInfo culture)
 {
     public static Color IncomeColor => Palette.IncomeText;
-    public static Color ExpenseColor => Palette.ExpenseText;
+    // Expenses stay neutral (sign and icon carry the meaning); red is kept for problems: negative results, overdue items,
+    // exceeded limits and debt (D-27).
+    public static Color ExpenseColor => Palette.AmountText;
+    public static Color DangerColor => Palette.ExpenseText;
     public static Color NeutralColor => Palette.TransferText;
 
     // The arrow points from the source to the destination in the reading direction.
@@ -81,7 +87,8 @@ internal sealed class EntryPresenter(
 
     public static Color AmountColor(LedgerEntry entry) => entry.Kind switch
     {
-        EntryKind.Income or EntryKind.Refund => IncomeColor,
+        EntryKind.Income => IncomeColor,
+        EntryKind.Refund => Palette.RefundText,
         EntryKind.Expense or EntryKind.IncomeReversal => ExpenseColor,
         _ => NeutralColor,
     };
@@ -109,6 +116,6 @@ internal sealed class EntryPresenter(
             color.WithAlpha(0.12f),
             Amount(entry),
             AmountColor(entry),
-            entry.Review == ReviewState.Unreviewed);
+            entry.Review == ReviewState.Unreviewed) { IconStroke = color.WithAlpha(0.3f) };
     }
 }

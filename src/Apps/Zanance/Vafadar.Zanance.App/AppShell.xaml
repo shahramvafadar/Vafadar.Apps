@@ -9,12 +9,16 @@
     xmlns:more="clr-namespace:Vafadar.Zanance.App.Features.More"
     xmlns:tx="clr-namespace:Vafadar.Zanance.App.Features.Transactions"
     xmlns:plans="clr-namespace:Vafadar.Zanance.App.Features.Plans"
+    xmlns:budget="clr-namespace:Vafadar.Zanance.App.Features.Budget"
+    xmlns:reports="clr-namespace:Vafadar.Zanance.App.Features.Reports"
+    xmlns:forecast="clr-namespace:Vafadar.Zanance.App.Features.Forecast"
+    xmlns:goals="clr-namespace:Vafadar.Zanance.App.Features.Goals"
     Title="{v:Translate App_Name}"
     Shell.TabBarForegroundColor="{DynamicResource Primary}"
     Shell.TabBarTitleColor="{DynamicResource Primary}"
-    Shell.TabBarUnselectedColor="{DynamicResource SecondaryText}"
+    Shell.TabBarUnselectedColor="{DynamicResource Muted}"
     Shell.TabBarBackgroundColor="{DynamicResource CardBackground}"
-    Shell.BackgroundColor="{DynamicResource CardBackground}"
+    Shell.BackgroundColor="{DynamicResource PageBackground}"
     Shell.ForegroundColor="{DynamicResource Primary}"
     Shell.TitleColor="{DynamicResource AmountText}">
 
@@ -34,9 +38,16 @@
             Icon="{icx:SymbolImageSource Symbol=CalendarClock}"
             ContentTemplate="{DataTemplate plans:PlansPage}"
             Route="plans" />
+        <!-- Insights (D-27): budget, reports, forecast and goals as top tabs of one bottom tab. -->
+        <Tab Title="{v:Translate Tab_Insights}" Icon="{icx:SymbolImageSource Symbol=DataPie}" Route="insights">
+            <ShellContent Title="{v:Translate Budget_Title}" ContentTemplate="{DataTemplate budget:BudgetPage}" Route="budget" />
+            <ShellContent Title="{v:Translate Report_Title}" ContentTemplate="{DataTemplate reports:ReportsPage}" Route="reports" />
+            <ShellContent Title="{v:Translate Forecast_Title}" ContentTemplate="{DataTemplate forecast:ForecastPage}" Route="forecast" />
+            <ShellContent Title="{v:Translate Goals_Title}" ContentTemplate="{DataTemplate goals:GoalsPage}" Route="goals" />
+        </Tab>
         <ShellContent
             Title="{v:Translate Tab_More}"
-            Icon="{icx:SymbolImageSource Symbol=MoreHorizontal}"
+            Icon="{icx:SymbolImageSource Symbol=Grid}"
             ContentTemplate="{DataTemplate more:MorePage}"
             Route="more" />
     </TabBar>

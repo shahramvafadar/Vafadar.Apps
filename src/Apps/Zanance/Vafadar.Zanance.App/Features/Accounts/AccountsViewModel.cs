@@ -13,7 +13,28 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Accounts;
 
 /// <summary>An account as shown in lists.</summary>
-public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol Icon, string BalanceText, bool IsNegative, bool NotInTotals, bool OpeningUnknown = false);
+public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol Icon, string BalanceText, bool IsNegative, bool NotInTotals, bool OpeningUnknown = false)
+{
+    /// <summary>Gets the account type, which picks the tile colours: teal for savings, red for loans, sky for money lent (D-27).</summary>
+    public AccountType Type { get; init; }
+
+    /// <summary>Gets the icon colour.</summary>
+    public Color TileText => Look.Text;
+
+    /// <summary>Gets the tile background.</summary>
+    public Color TileBackground => Look.Background;
+
+    /// <summary>Gets the tile outline.</summary>
+    public Color TileStroke => Look.Line;
+
+    private (Color Text, Color Background, Color Line) Look => Type switch
+    {
+        AccountType.Savings => (Palette.SavingText, Palette.SavingBackground, Palette.SavingLine),
+        AccountType.Loan => PlanLook.Danger,
+        AccountType.Lent => (Palette.RefundText, Palette.RefundBackground, Palette.RefundLine),
+        _ => (Palette.SecondaryText, Palette.Get("SurfaceMuted"), Palette.DividerColor),
+    };
+}
 
 /// <summary>A total per currency.</summary>
 public sealed record CurrencyTotal(string CurrencyCode, string Text);
@@ -67,7 +88,7 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
                 MoneyText.Format(balance, account.CurrencyCode, culture),
                 balance < 0,
                 !account.IncludeInTotals,
-                !account.OpeningBalanceKnown);
+                !account.OpeningBalanceKnown) { Type = account.Type };
             if (account.IsArchived)
             {
                 Archived.Add(item);

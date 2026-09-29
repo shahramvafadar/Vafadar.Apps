@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- One occurrence or plan: a date tile for due items (violet, red when overdue, green for income) or the plan's icon,
+     the name, and the amount with its status badge (D-27). The page adds the tap. -->
+<ContentView
+    x:Class="Vafadar.Zanance.App.Features.Plans.PlanRowView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
+    x:DataType="local:PlanRow">
+    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
+        <Border Style="{StaticResource DateTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasDate}">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                <Label Text="{Binding DayText}" FontSize="17" FontAttributes="Bold" TextColor="{Binding TileText}" HorizontalTextAlignment="Center" />
+                <Label Text="{Binding MonthText}" FontSize="10.5" TextColor="{Binding TileText}" HorizontalTextAlignment="Center" LineBreakMode="NoWrap" />
+            </VerticalStackLayout>
+        </Border>
+        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasIcon}">
+            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
+        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
+            <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4">
+            <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+            <Border Style="{StaticResource Badge}" BackgroundColor="{Binding BadgeBackground}" Stroke="{Binding BadgeStroke}"
+                    IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}">
+                <Label Text="{Binding Badge}" Style="{StaticResource BadgeText}" TextColor="{Binding BadgeText}" />
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>
