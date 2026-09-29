@@ -2666,4 +2666,16 @@
   <data name="Receipt_Review" xml:space="preserve">
     <value>From the receipt: {0}. Please check before saving.</value>
   </data>
+  <data name="Import_Error_Currency" xml:space="preserve">
+    <value>the currency does not match the account</value>
+  </data>
+  <data name="Import_Error_Direction" xml:space="preserve">
+    <value>the adjustment has no direction (increase or decrease)</value>
+  </data>
+  <data name="Import_Error_RefundTarget" xml:space="preserve">
+    <value>the purchase of this refund is not in the file or the app</value>
+  </data>
+  <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
+    <value>A refund must go to an account in the currency of the purchase.</value>
+  </data>
 </root>

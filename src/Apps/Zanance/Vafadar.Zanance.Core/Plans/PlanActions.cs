@@ -80,6 +80,17 @@ public static class PlanActions
         return next;
     }
 
+    /// <summary>
+    /// Returns the plans whose open occurrences still count: active and paused plans (a pause only takes the later dates),
+    /// and ended slices of a plan that goes on after a "this and future" change or a resume – their earlier dates are
+    /// still due (REC-15). A plan the user simply ended keeps its history only.
+    /// </summary>
+    public static List<Schedule> InForce(IEnumerable<Schedule> schedules)
+    {
+        var all = schedules.ToList();
+        return [.. all.Where(s => s.State != ScheduleState.Ended || all.Any(n => n.PreviousScheduleId == s.Id))];
+    }
+
     /// <summary>Ends a plan: no occurrences after <paramref name="lastDate"/>.</summary>
     public static void End(Schedule schedule, DateOnly lastDate)
     {

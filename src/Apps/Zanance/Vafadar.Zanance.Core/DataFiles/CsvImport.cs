@@ -92,7 +92,7 @@ public static class CsvImport
                 continue;
             }
 
-            if (!Enum.TryParse<EntryKind>(Cell(2), ignoreCase: true, out var kind))
+            if (!Enum.TryParse<EntryKind>(Cell(2), ignoreCase: true, out var kind) || !Enum.IsDefined(kind) || int.TryParse(Cell(2), out _))
             {
                 result.Add(Invalid(line, "Kind"));
                 continue;
@@ -101,6 +101,13 @@ public static class CsvImport
             if (!byName.TryGetValue(Cell(5), out var account))
             {
                 result.Add(Invalid(line, "Account"));
+                continue;
+            }
+
+            // The file's currency must be the account's: an amount is never relabelled (FX-01).
+            if (Empty(Cell(4)) is { } fileCurrency && !string.Equals(fileCurrency, account.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+            {
+                result.Add(Invalid(line, "Currency"));
                 continue;
             }
 
@@ -119,7 +126,7 @@ public static class CsvImport
                 Title = Empty(Cell(10)),
                 Payee = Empty(Cell(11)),
                 Note = Empty(Cell(12)),
-                Review = Enum.TryParse<ReviewState>(Cell(15), true, out var review) ? review : ReviewState.Confirmed,
+                Review = Enum.TryParse<ReviewState>(Cell(15), true, out var review) && Enum.IsDefined(review) && !int.TryParse(Cell(15), out _) ? review : ReviewState.Confirmed,
                 RefundOfId = Guid.TryParse(Cell(16), out var refundOf) ? refundOf : null,
                 GroupId = Guid.TryParse(Cell(17), out var group) ? group : null,
                 Source = EntrySource.Import,
@@ -133,8 +140,15 @@ public static class CsvImport
             }
 
             entry.Tags = EntryTags.Parse(Cell(20));
-            if (kind == EntryKind.Adjustment && Enum.TryParse<AdjustmentDirection>(Cell(21), true, out var direction))
+            // An adjustment needs its direction; files without the column cannot say which way it went.
+            if (kind == EntryKind.Adjustment)
             {
+                if (!Enum.TryParse<AdjustmentDirection>(Cell(21), true, out var direction) || !Enum.IsDefined(direction) || int.TryParse(Cell(21), out _))
+                {
+                    result.Add(Invalid(line, "Direction"));
+                    continue;
+                }
+
                 entry.Direction = direction;
             }
 
@@ -143,6 +157,12 @@ public static class CsvImport
                 if (!byName.TryGetValue(Cell(6), out var destination))
                 {
                     result.Add(Invalid(line, "Account"));
+                    continue;
+                }
+
+                if (Empty(Cell(8)) is { } toCurrency && !string.Equals(toCurrency, destination.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(Invalid(line, "Currency"));
                     continue;
                 }
 
@@ -362,7 +382,7 @@ public static class CsvImport
         }
 
         // An amount beyond what minor units can hold is invalid, not a crash.
-        if (Math.Abs(value) * currency.MinorFactor > long.MaxValue)
+        if (Math.Abs(value) > long.MaxValue / (decimal)currency.MinorFactor)
         {
             return false;
         }

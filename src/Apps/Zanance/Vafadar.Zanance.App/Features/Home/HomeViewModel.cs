@@ -318,7 +318,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, DateOnly today)
     {
-        var schedules = (await _plans.GetSchedulesAsync()).Where(s => s.State == ScheduleState.Active).ToList();
+        var schedules = PlanActions.InForce(await _plans.GetSchedulesAsync());
         var states = await _plans.GetStatesAsync();
         var text = new PlanText(_translator, _dates, _localization.CurrentCulture);
 

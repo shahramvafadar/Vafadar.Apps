@@ -38,6 +38,9 @@ public enum LedgerError
 
     /// <summary>The foreign amount needs a valid, different currency.</summary>
     InvalidOriginalCurrency,
+
+    /// <summary>A refund goes to an account in another currency than the purchase (REF-02; amounts are never relabelled).</summary>
+    RefundCurrencyMismatch,
 }
 
 /// <summary>
@@ -117,6 +120,12 @@ public static class LedgerValidator
             else if (otherRefundsOfOriginal + entry.Amount > refundOriginal.Amount)
             {
                 errors.Add(LedgerError.RefundExceedsPurchase);
+            }
+
+            if (accounts.TryGetValue(entry.AccountId, out var refundAccount) && accounts.TryGetValue(refundOriginal.AccountId, out var purchaseAccount)
+                && !string.Equals(refundAccount.CurrencyCode, purchaseAccount.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+            {
+                errors.Add(LedgerError.RefundCurrencyMismatch);
             }
         }
 

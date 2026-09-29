@@ -119,7 +119,7 @@ public static class MoneyAmount
         }
 
         // An amount beyond what minor units can hold is invalid input, not a crash.
-        if (amount * currency.MinorFactor > long.MaxValue)
+        if (amount > long.MaxValue / (decimal)currency.MinorFactor)
         {
             return false;
         }

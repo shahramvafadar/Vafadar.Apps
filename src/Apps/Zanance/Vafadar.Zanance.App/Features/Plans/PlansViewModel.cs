@@ -140,7 +140,7 @@ public sealed partial class PlansViewModel : ViewModelBase
         switch (SegmentIndex)
         {
             case 0:
-                foreach (var occurrence in _schedules.Where(s => s.State == ScheduleState.Active)
+                foreach (var occurrence in PlanActions.InForce(_schedules)
                              .SelectMany(s => Occurrences.OpenUpTo(s, _states, today, s.ActiveFrom ?? s.Rule.Start))
                              .OrderBy(o => o.DueDate))
                 {
@@ -151,7 +151,7 @@ public sealed partial class PlansViewModel : ViewModelBase
                 break;
 
             case 1:
-                foreach (var occurrence in _schedules.Where(s => s.State == ScheduleState.Active)
+                foreach (var occurrence in PlanActions.InForce(_schedules)
                              .SelectMany(s => Occurrences.Between(s, _states, today.AddDays(1), today.AddDays(UpcomingDays), today))
                              .Where(o => o.IsOpen)
                              .OrderBy(o => o.DueDate))

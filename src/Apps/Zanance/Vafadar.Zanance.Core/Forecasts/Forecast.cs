@@ -166,17 +166,25 @@ public static class ForecastCalculator
         var stateList = states.ToList();
         var items = new List<ForecastItem>();
 
-        // Entries already recorded for later dates are part of the ledger but not of today's balance.
-        foreach (var entry in entries.Where(e => e.Date > baseDate && e.Date <= horizon))
+        // An account that opens later brings its opening balance on its opening date.
+        foreach (var account in scope.Values.Where(a => a.OpeningDate > baseDate && a.OpeningDate <= horizon && a.OpeningBalance != 0))
         {
-            foreach (var (currency, effect) in Effects(entry.Kind, entry.AccountId, entry.ToAccountId, entry.Amount, entry.ToAmount, scope, entry.Direction))
+            items.Add(new ForecastItem(account.OpeningDate, account.Name, account.CurrencyCode, account.OpeningBalance, ForecastSource.FutureEntry, false, null, null));
+        }
+
+        // Entries already recorded for later dates are part of the ledger but not of today's balance; entries before an
+        // account's opening never count (FIN-09).
+        foreach (var entry in entries.Where(e => e.Date > baseDate && e.Date <= horizon
+                     && !(scope.TryGetValue(e.AccountId, out var entryAccount) && LedgerCalculator.IsBeforeOpening(e, entryAccount))))
+        {
+            foreach (var (currency, effect) in Effects(entry.Kind, entry.AccountId, entry.ToAccountId, entry.Amount, entry.ToAmount, scope, entry.Direction, known: true))
             {
                 items.Add(new ForecastItem(entry.Date, entry.Title ?? string.Empty, currency, effect, ForecastSource.FutureEntry, false, entry.ScheduleId, entry.OccurrenceDate));
             }
         }
 
         // Open occurrences only: a settled one is already in the ledger and must not be counted again (FOR-03, AT-42).
-        foreach (var schedule in schedules.Where(s => s.State == ScheduleState.Active))
+        foreach (var schedule in PlanActions.InForce(schedules))
         {
             var since = schedule.ActiveFrom ?? schedule.Rule.Start;
             foreach (var occurrence in Occurrences.Between(schedule, stateList, since, horizon, baseDate).Where(o => o.IsOpen))
@@ -198,10 +206,12 @@ public static class ForecastCalculator
                 // transfer between currencies changes in proportion.
                 var assumedAmount = scenario?.AmountOf(schedule.Id, occurrence.OriginalDate);
                 var amount = assumedAmount ?? (occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount);
-                var toAmount = assumedAmount is { } a && schedule.ToAmount is { } to && occurrence.Amount is > 0
-                    ? (long)Math.Round((decimal)to * a / occurrence.Amount.Value, MidpointRounding.AwayFromZero)
+                // The other currency follows the plan's rate for whatever amount is still to come (partly paid, a
+                // changed occurrence amount or an assumption).
+                var toAmount = schedule.ToAmount is { } to && schedule.Amount is > 0 && amount is { } used
+                    ? (long)Math.Round((decimal)to * used / schedule.Amount.Value, MidpointRounding.AwayFromZero)
                     : schedule.ToAmount;
-                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null);
+                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null, known: amount is not null);
                 foreach (var (currency, effect) in effects)
                 {
                     items.Add(new ForecastItem(
@@ -259,7 +269,8 @@ public static class ForecastCalculator
         long amount,
         long? toAmount,
         IReadOnlyDictionary<Guid, Account> scope,
-        AdjustmentDirection? direction)
+        AdjustmentDirection? direction,
+        bool known)
     {
         var effects = new List<(string, long)>();
         scope.TryGetValue(accountId, out var source);
@@ -294,7 +305,9 @@ public static class ForecastCalculator
                 break;
         }
 
-        // Opposite effects in the same currency (a transfer inside the scope) cancel out.
-        return [.. effects.GroupBy(e => e.Item1, StringComparer.OrdinalIgnoreCase).Select(g => (g.Key, g.Sum(e => e.Item2))).Where(e => e.Item2 != 0 || effects.Count == 1)];
+        // Opposite effects in the same currency (a transfer inside the scope) cancel out. An unknown amount keeps one
+        // item per affected currency, so each of them is marked incomplete (FOR-06).
+        var perCurrency = effects.GroupBy(e => e.Item1, StringComparer.OrdinalIgnoreCase).Select(g => (g.Key, g.Sum(e => e.Item2))).ToList();
+        return [.. perCurrency.Where(e => e.Item2 != 0 || effects.Count == 1 || (!known && perCurrency.Count > 1))];
     }
 }

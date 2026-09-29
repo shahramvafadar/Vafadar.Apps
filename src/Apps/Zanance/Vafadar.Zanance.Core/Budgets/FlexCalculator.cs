@@ -68,7 +68,7 @@ public static class FlexCalculator
         var entryList = entries.ToList();
         var categoryList = categories.ToList();
         var stateList = states.ToList();
-        var scheduleList = schedules.Where(s => s.Kind == EntryKind.Expense && s.State == ScheduleState.Active).ToList();
+        var scheduleList = PlanActions.InForce(schedules).Where(s => s.Kind == EntryKind.Expense).ToList();
         // Plans count only on the accounts the spending is measured on (the budget scope, or the accounts in totals).
         var byAccount = LedgerCalculator.InScope(accountList, accountIds is { Count: > 0 } ? accountIds : null).ToDictionary(a => a.Id);
         var fixedIds = CategoriesOf(categoryList, SpendingType.Fixed);
@@ -93,8 +93,14 @@ public static class FlexCalculator
                 continue;
             }
 
+            // A share is set aside only for a bill that is still to come within a year (not for a plan that has ended).
             if (BudgetPlanning.MonthlyEquivalent(schedule) is { } share)
             {
+                if (!Occurrences.Between(schedule, stateList, from, from.AddYears(1), today).Any(o => o.Status != OccurrenceView.Skipped))
+                {
+                    continue;
+                }
+
                 nonMonthlyPlanned += share;
                 continue;
             }

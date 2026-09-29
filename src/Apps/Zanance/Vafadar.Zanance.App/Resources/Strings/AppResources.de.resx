@@ -2662,4 +2662,16 @@
   <data name="Receipt_Review" xml:space="preserve">
     <value>Aus dem Beleg: {0}. Bitte vor dem Speichern prüfen.</value>
   </data>
+  <data name="Import_Error_Currency" xml:space="preserve">
+    <value>die Währung passt nicht zum Konto</value>
+  </data>
+  <data name="Import_Error_Direction" xml:space="preserve">
+    <value>die Korrektur hat keine Richtung (Erhöhung oder Minderung)</value>
+  </data>
+  <data name="Import_Error_RefundTarget" xml:space="preserve">
+    <value>der Kauf zu dieser Erstattung ist weder in der Datei noch in der App</value>
+  </data>
+  <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
+    <value>Eine Erstattung muss auf ein Konto in der Währung des Kaufs gehen.</value>
+  </data>
 </root>

@@ -2662,4 +2662,16 @@
   <data name="Receipt_Review" xml:space="preserve">
     <value>از رسید: {0}. لطفاً پیش از ذخیره بررسی کنید.</value>
   </data>
+  <data name="Import_Error_Currency" xml:space="preserve">
+    <value>ارز با ارز حساب یکی نیست</value>
+  </data>
+  <data name="Import_Error_Direction" xml:space="preserve">
+    <value>جهت اصلاح (افزایش یا کاهش) مشخص نیست</value>
+  </data>
+  <data name="Import_Error_RefundTarget" xml:space="preserve">
+    <value>خرید مربوط به این برگشت وجه نه در فایل هست نه در برنامه</value>
+  </data>
+  <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
+    <value>برگشت وجه باید به حسابی با همان ارزِ خرید برود.</value>
+  </data>
 </root>
