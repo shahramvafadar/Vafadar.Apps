@@ -71,7 +71,14 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
     public async Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders)
     {
         ArgumentNullException.ThrowIfNull(reminders);
-        _service.CancelAll();
+        // Only notifications still waiting are replaced; ones already shown (a reminder, the budget alert) stay in the
+        // notification shade until the user clears them.
+        var pending = await _service.GetPendingNotificationList();
+        if (pending.Count > 0)
+        {
+            _service.Cancel([.. pending.Select(p => p.NotificationId)]);
+        }
+
         foreach (var reminder in reminders)
         {
             await _service.Show(Request(reminder));

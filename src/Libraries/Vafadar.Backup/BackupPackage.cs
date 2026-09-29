@@ -75,11 +75,22 @@ internal static class BackupPackage
                     $"The backup uses package format {manifest.FormatVersion}; this app supports up to {BackupManifest.CurrentFormatVersion}. Update the app.");
             }
 
+            if (manifest.Entries is null || manifest.Entries.Any(e => e is null || string.IsNullOrEmpty(e.Name) || e.Sha256 is null))
+            {
+                throw new BackupException(BackupError.InvalidFormat, "The backup manifest is incomplete.");
+            }
+
             var entries = new Dictionary<string, byte[]>(StringComparer.Ordinal);
             foreach (var described in manifest.Entries)
             {
                 var entry = archive.GetEntry(DataFolder + described.Name)
                     ?? throw new BackupException(BackupError.Corrupted, $"The backup entry '{described.Name}' is missing.");
+
+                // The size is checked before reading, so a damaged or hostile package cannot fill the memory.
+                if (entry.Length != described.Length)
+                {
+                    throw new BackupException(BackupError.Corrupted, $"The backup entry '{described.Name}' is damaged.");
+                }
 
                 using var content = new MemoryStream();
                 await using (var entryStream = entry.Open())

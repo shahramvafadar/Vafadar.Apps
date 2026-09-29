@@ -48,6 +48,8 @@ public sealed class ReminderService(
     // REM-04: a snooze repeats the reminder; the occurrence and its due date stay unchanged.
     private async Task SnoozeAsync(SnoozeRequest request)
     {
+        // The same lock as a refresh, which reads and writes the snoozes too.
+        await _gate.WaitAsync();
         try
         {
             var original = request.Notification;
@@ -60,6 +62,10 @@ public sealed class ReminderService(
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             System.Diagnostics.Debug.WriteLine($"Snooze failed: {ex}");
+        }
+        finally
+        {
+            _gate.Release();
         }
     }
 

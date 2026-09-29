@@ -428,8 +428,8 @@ public sealed class ZananceStoreTests : IDisposable
         await _store.SaveEntriesAsync([kept, removed], [], Ct);
         await _store.AddAttachmentAsync(new EntryAttachment { EntryId = removed.Id, FileName = "receipt.pdf", ContentType = "application/pdf", Data = [1] }, Ct);
 
-        await _store.SaveEntriesAsync([kept], [removed.Id], Ct);
-        await _store.MoveAttachmentsAsync([removed.Id], kept.Id, Ct);
+        await _store.SaveEntriesAsync([kept], [removed.Id], kept.Id, Ct);
+
         Assert.Equal(0, await _store.PurgeOrphanAttachmentsAsync(Ct));
         Assert.Single(await _store.GetAttachmentsAsync(kept.Id, Ct));
     }

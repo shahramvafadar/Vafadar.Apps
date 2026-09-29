@@ -97,7 +97,9 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
 
     partial void OnIsAdvancedChanged(bool value) => OnPropertyChanged(nameof(ShowCategoryLimits));
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         _year = query.TryGetValue("year", out var year) && year is int y ? y : 0;

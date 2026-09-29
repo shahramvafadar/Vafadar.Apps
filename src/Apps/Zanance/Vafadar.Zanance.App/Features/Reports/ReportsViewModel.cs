@@ -94,6 +94,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             await File.WriteAllBytesAsync(path, pdf);
             await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
         }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            await Failures.ShowAsync(ex);
+        }
         finally
         {
             IsBusy = false;

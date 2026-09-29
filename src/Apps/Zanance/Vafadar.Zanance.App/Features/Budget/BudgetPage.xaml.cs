@@ -13,6 +13,7 @@ public partial class BudgetPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadAsync();
+        _viewModel.OnShown();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 }

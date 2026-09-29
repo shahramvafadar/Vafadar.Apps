@@ -134,7 +134,9 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
 
     private CategoryKind Kind => KindIndex == 1 ? CategoryKind.Income : CategoryKind.Expense;
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         var categories = await _store.GetCategoriesAsync();
@@ -145,7 +147,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             IsExisting = true;
             IsArchived = category.IsArchived;
             KindIndex = category.Kind == CategoryKind.Income ? 1 : 0;
-        SpendingTypeIndex = (int)category.SpendingType;
+            SpendingTypeIndex = (int)category.SpendingType;
             Name = category.Name ?? string.Empty;
             DefaultName = category.SystemKey is { } key ? _translator[$"Category_{key}"] : null;
             Select(Icons, category.Icon ?? "Tag");

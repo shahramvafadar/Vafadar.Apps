@@ -51,7 +51,9 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         if (!query.TryGetValue("id", out var value) || value is not Guid id)

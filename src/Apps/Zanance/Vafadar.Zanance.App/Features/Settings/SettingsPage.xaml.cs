@@ -10,11 +10,11 @@ public partial class SettingsPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
-    private async void OnLockToggled(object? sender, ToggledEventArgs e) => await _viewModel.SetLockAsync(e.Value);
+    private async void OnLockToggled(object? sender, ToggledEventArgs e) => await Presentation.Failures.GuardAsync(() => _viewModel.SetLockAsync(e.Value));
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 }

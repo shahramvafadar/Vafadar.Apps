@@ -15,15 +15,19 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     // A short switch to another app (e.g. to copy an IBAN) does not ask again.
     private static readonly TimeSpan Grace = TimeSpan.FromSeconds(30);
 
+    private readonly List<Func<Task>> _pending = [];
     private DateTimeOffset? _sleptAt;
-    private Func<Task>? _pending;
     private LockPage? _page;
+    private bool _started;
 
     /// <summary>Gets a value indicating whether the lock is enabled.</summary>
     public bool IsEnabled { get; private set; }
 
-    /// <summary>Gets a value indicating whether the app is currently covered.</summary>
-    public bool IsLocked => _page is not null;
+    /// <summary>
+    /// Gets a value indicating whether the app is covered – or has not read the lock setting yet, so that a link from a
+    /// notification or the widget never opens a screen before the lock could cover it (REM-06).
+    /// </summary>
+    public bool IsLocked => _page is not null || !_started;
 
     /// <summary>Gets the authenticator.</summary>
     public IDeviceAuthenticator Authenticator => authenticator;
@@ -33,11 +37,20 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         IsEnabled = (await store.GetSettingsAsync()).AppLockEnabled;
         ApplySecureWindow();
+        _started = true;
         if (IsEnabled)
         {
             await ShowAsync(prompt: true);
         }
+
+        if (!IsLocked)
+        {
+            await RunPendingAsync();
+        }
     }
+
+    /// <summary>Reads the setting again, e.g. after a restore brought another value.</summary>
+    public async Task ReloadAsync() => IsEnabled = (await store.GetSettingsAsync()).AppLockEnabled;
 
     /// <summary>Covers the app when it leaves the foreground, so the recent-apps preview shows nothing (SEC-02).</summary>
     public async Task SleepAsync()
@@ -57,6 +70,14 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         ApplySecureWindow();
         if (!IsEnabled || _page is null)
         {
+            return;
+        }
+
+        // The cover may have been lost with a rebuilt window; put it back before asking.
+        if (!IsOnScreen(_page))
+        {
+            _page = null;
+            await ShowAsync(prompt: true);
             return;
         }
 
@@ -83,7 +104,11 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             return action();
         }
 
-        _pending = action;
+        lock (_pending)
+        {
+            _pending.Add(action);
+        }
+
         return Task.CompletedTask;
     }
 
@@ -114,17 +139,38 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
 
         _sleptAt = null;
-        if (Interlocked.Exchange(ref _pending, null) is { } pending)
+        await RunPendingAsync();
+    }
+
+    // Links and rebuilds that waited for the unlock, in the order they came.
+    private async Task RunPendingAsync()
+    {
+        List<Func<Task>> actions;
+        lock (_pending)
         {
-            await pending();
+            actions = [.. _pending];
+            _pending.Clear();
+        }
+
+        foreach (var action in actions)
+        {
+            await action();
         }
     }
+
+    private static bool IsOnScreen(Page page) =>
+        Application.Current?.Windows.FirstOrDefault()?.Page?.Navigation.ModalStack.Contains(page) == true;
 
     private async Task ShowAsync(bool prompt)
     {
         if (Application.Current?.Windows.FirstOrDefault()?.Page is not { } root)
         {
             return;
+        }
+
+        if (_page is not null && !IsOnScreen(_page))
+        {
+            _page = null;
         }
 
         if (_page is not null)

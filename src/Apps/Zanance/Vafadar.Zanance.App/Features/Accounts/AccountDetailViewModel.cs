@@ -240,12 +240,16 @@ public sealed partial class AccountDetailViewModel(
         }
 
         var loan = account.Type == AccountType.Loan;
-        var chosen = cash.Count == 1 ? cash[0].Name
-            : await Shell.Current.DisplayActionSheetAsync(translator[loan ? "Loan_PayFrom" : "Loan_ReceiveInto"], translator["Common_Cancel"], null, [.. cash.Select(a => a.Name)]);
-        if (cash.FirstOrDefault(a => a.Name == chosen) is not { } from)
+        // Accounts with the same name are told apart by their position, so the choice maps back to one account.
+        var labels = cash.Select((a, i) => cash.Count(c => c.Name == a.Name) > 1 ? $"{a.Name} ({i + 1})" : a.Name).ToList();
+        var chosen = cash.Count == 1 ? labels[0]
+            : await Shell.Current.DisplayActionSheetAsync(translator[loan ? "Loan_PayFrom" : "Loan_ReceiveInto"], translator["Common_Cancel"], null, [.. labels]);
+        if (labels.IndexOf(chosen) is not (>= 0 and var index))
         {
             return;
         }
+
+        var from = cash[index];
 
         var culture = localization.CurrentCulture;
         string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);

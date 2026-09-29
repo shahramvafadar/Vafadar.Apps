@@ -89,7 +89,9 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial string? AmountError { get; set; }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         var settings = await _store.GetSettingsAsync();

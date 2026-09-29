@@ -41,6 +41,9 @@ public enum LedgerError
 
     /// <summary>A refund goes to an account in another currency than the purchase (REF-02; amounts are never relabelled).</summary>
     RefundCurrencyMismatch,
+
+    /// <summary>The purchase a refund refers to does not exist.</summary>
+    RefundOriginalMissing,
 }
 
 /// <summary>

@@ -15,7 +15,7 @@ public partial class TransactionsPage : ContentPage
         base.OnAppearing();
         _viewModel.Undo.Changed += OnUndoChanged;
         _viewModel.UpdateUndo();
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 
     protected override void OnDisappearing()

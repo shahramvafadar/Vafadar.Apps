@@ -141,6 +141,22 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
     partial void OnConfirmedOnlyChanged(bool value) => _ = LoadAsync();
 
+    private bool _backFromEditor;
+
+    /// <summary>
+    /// Called when the page appears: a new visit (a tab switch, an alert, Home) shows the current month; coming back from
+    /// the editor keeps the edited month.
+    /// </summary>
+    public void OnShown()
+    {
+        if (!_backFromEditor)
+        {
+            _year = 0;
+        }
+
+        _backFromEditor = false;
+    }
+
     /// <summary>Switches the budget of the shown month between limits and envelopes (used by the snapshot walk-through).</summary>
     internal async Task SetMethodAsync(BudgetMethod method)
     {
@@ -364,13 +380,17 @@ public sealed partial class BudgetViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private Task EditAsync() => Shell.Current.GoToAsync(AppShell.BudgetEditorRoute, new Dictionary<string, object>
+    private Task EditAsync()
     {
-        ["year"] = _year,
-        ["month"] = _month,
-        ["calendar"] = _calendar,
-        ["currency"] = _currency,
-    });
+        _backFromEditor = true;
+        return Shell.Current.GoToAsync(AppShell.BudgetEditorRoute, new Dictionary<string, object>
+        {
+            ["year"] = _year,
+            ["month"] = _month,
+            ["calendar"] = _calendar,
+            ["currency"] = _currency,
+        });
+    }
 
     [RelayCommand]
     private async Task CopyPreviousAsync()

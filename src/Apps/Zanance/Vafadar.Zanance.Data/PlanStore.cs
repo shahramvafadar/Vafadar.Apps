@@ -127,8 +127,18 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+
+        // Checked again inside the transaction: an entry settled meanwhile keeps the plan.
+        if (await db.Entries.AnyAsync(e => e.ScheduleId == scheduleId, cancellationToken)
+            || await db.OccurrenceStates.AnyAsync(s => s.ScheduleId == scheduleId && s.Status != OccurrenceStatus.Open, cancellationToken))
+        {
+            return false;
+        }
+
         await db.OccurrenceStates.Where(s => s.ScheduleId == scheduleId).ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.Where(s => s.Id == scheduleId).ExecuteDeleteAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
         OnChanged();
         return true;
     }
@@ -269,6 +279,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         IReadOnlyList<LedgerEntry> deleted = [];
+        Func<ZananceDbContext, Task>? unlink = null;
         if (occurrence.State?.EntryId is { } entryId && await store.GetEntryAsync(entryId, cancellationToken) is { } entry)
         {
             if (entry.Source == EntrySource.Schedule)
@@ -277,8 +288,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             }
             else
             {
-                await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-                await db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
+                // An entry the user recorded stays; it only loses its link, together with the reopened occurrence.
+                unlink = db => db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
                     e => e.SetProperty(x => x.ScheduleId, (Guid?)null).SetProperty(x => x.OccurrenceDate, (DateOnly?)null),
                     cancellationToken);
             }
@@ -289,7 +300,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             state.Status = OccurrenceStatus.Open;
             state.EntryId = null;
             state.AutoPostSuppressed = true;
-        }, cancellationToken);
+        }, cancellationToken, unlink);
         return deleted;
     }
 
@@ -310,9 +321,16 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             state.Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim();
         }, cancellationToken);
 
-    private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken)
+    // alsoInTransaction runs in the same transaction as the state change: both are saved or neither.
+    private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken, Func<ZananceDbContext, Task>? alsoInTransaction = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        if (alsoInTransaction is not null)
+        {
+            await alsoInTransaction(db);
+        }
+
         var state = await db.OccurrenceStates.FirstOrDefaultAsync(
             s => s.ScheduleId == occurrence.Schedule.Id && s.OriginalDate == occurrence.OriginalDate, cancellationToken);
         if (state is null)
@@ -323,6 +341,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
 
         change(state);
         await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
         OnChanged();
     }
 

@@ -217,32 +217,58 @@ public partial class App : Application
         }
     }
 
+    private bool _rebuildQueued;
+
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
-    // reliable on every platform. Rebuilding the shell gives a clean result; the user stays on the current page.
-    private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>
+    // reliable on every platform. Rebuilding the shell gives a clean result. While the app is locked the rebuild waits,
+    // so the lock cover is never lost with the old window content.
+    private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(() =>
     {
         // Reminder texts are translated when they are scheduled (REM-07).
         _services.GetRequiredService<ReminderService>().RefreshSoon();
+        if (_rebuildQueued)
+        {
+            return;
+        }
+
+        _rebuildQueued = true;
+        _ = _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(RebuildShellAsync);
+    });
+
+    private async Task RebuildShellAsync()
+    {
+        _rebuildQueued = false;
         if (Windows.FirstOrDefault() is not { Page: AppShell shell } window)
         {
             return;
         }
 
-        var location = shell.CurrentState?.Location?.OriginalString;
+        // Back to the current tab only: a detail or editor page cannot be rebuilt without its query (an editor would
+        // come back empty and save a copy).
+        var tab = TabRoute(shell);
         window.Page = CreateShell();
-        if (!string.IsNullOrEmpty(location) && Shell.Current is { } current && current.CurrentState?.Location?.OriginalString != location)
+        if (tab is not null && Shell.Current is { } current)
         {
             try
             {
-                await current.GoToAsync(location, animate: false);
+                await current.GoToAsync(tab, animate: false);
             }
             catch (ArgumentException)
             {
                 // The route no longer resolves; staying on the first tab is fine.
             }
         }
-    });
+    }
 
+    private static string? TabRoute(Shell shell)
+    {
+        if (shell.CurrentItem?.CurrentItem is not { } section || section.CurrentItem is not { } content)
+        {
+            return null;
+        }
+
+        return section.Items.Count > 1 ? $"//{section.Route}/{content.Route}" : $"//{content.Route}";
+    }
     private AppShell CreateShell() =>
         _services.GetRequiredService<AppShell>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
 }

@@ -369,7 +369,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     };
 
     /// <summary>Query: <c>id</c> of an existing plan.</summary>
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         _loading = true;

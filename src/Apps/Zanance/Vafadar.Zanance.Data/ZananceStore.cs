@@ -35,6 +35,10 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 /// </summary>
 public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory)
 {
+    // Refund id → purchase id of refunds unlinked by a purchase deletion, until that deletion is undone (this session).
+    private readonly Dictionary<Guid, Guid> _refundLinks = [];
+    private readonly SemaphoreSlim _settingsGate = new(1, 1);
+
     /// <summary>Raised after data was written, e.g. to refresh reminders.</summary>
     public event EventHandler? Changed;
 
@@ -45,22 +49,38 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     public ZananceSettings GetSettings()
     {
         using var db = contextFactory.CreateDbContext();
-        return db.Settings.AsNoTracking().FirstOrDefault() ?? new ZananceSettings();
+        return db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefault() ?? new ZananceSettings();
     }
 
     /// <summary>Returns the settings row, creating it on first use.</summary>
     public async Task<ZananceSettings> GetSettingsAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var settings = await db.Settings.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+        var settings = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);
         if (settings is not null)
         {
             return settings;
         }
 
-        settings = new ZananceSettings();
-        db.Settings.Add(settings);
-        await db.SaveChangesAsync(cancellationToken);
+        // The first calls at start come from several places at once; only one of them creates the row.
+        await _settingsGate.WaitAsync(cancellationToken);
+        try
+        {
+            settings = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);
+            if (settings is not null)
+            {
+                return settings;
+            }
+
+            settings = new ZananceSettings();
+            db.Settings.Add(settings);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+        finally
+        {
+            _settingsGate.Release();
+        }
+
         OnChanged();
         return settings;
     }
@@ -70,7 +90,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(settings);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var existingId = await db.Settings.Select(s => (Guid?)s.Id).FirstOrDefaultAsync(cancellationToken);
+        var existingId = await db.Settings.OrderBy(s => s.CreatedAt).Select(s => (Guid?)s.Id).FirstOrDefaultAsync(cancellationToken);
         if (existingId is null)
         {
             db.Settings.Add(settings);
@@ -310,9 +330,33 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         var batchId = Guid.CreateVersion7();
         var errors = new Dictionary<Guid, IReadOnlyList<LedgerError>>();
         var toAdd = new List<LedgerEntry>();
-        foreach (var entry in entries.Where(e => !existing.Contains(e.Id)))
+        var seen = new HashSet<Guid>();
+
+        // A refund needs its purchase, from the file or already in the app, and may not exceed it (REF-04).
+        var batch = entries.GroupBy(e => e.Id).ToDictionary(g => g.Key, g => g.First());
+        var purchaseIds = entries.Where(e => e.RefundOfId is not null).Select(e => e.RefundOfId!.Value).Distinct().ToList();
+        var storedPurchases = await db.Entries.AsNoTracking().Where(e => purchaseIds.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
+        var refunded = (await db.Entries.AsNoTracking().Where(e => e.RefundOfId != null && purchaseIds.Contains(e.RefundOfId.Value))
+            .Select(e => new { Purchase = e.RefundOfId!.Value, e.Amount }).ToListAsync(cancellationToken))
+            .GroupBy(r => r.Purchase).ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
+
+        // A repeated id in the file (e.g. two overlapping exports pasted together) counts once.
+        foreach (var entry in entries.Where(e => !existing.Contains(e.Id) && seen.Add(e.Id)))
         {
-            var problems = LedgerValidator.Validate(entry, accounts, categories);
+            LedgerEntry? original = null;
+            if (entry.RefundOfId is { } purchaseId && !storedPurchases.TryGetValue(purchaseId, out original) && !batch.TryGetValue(purchaseId, out original))
+            {
+                errors[entry.Id] = [LedgerError.RefundOriginalMissing];
+                continue;
+            }
+
+            var otherRefunds = entry.RefundOfId is { } purchase ? refunded.GetValueOrDefault(purchase) : 0;
+            var problems = LedgerValidator.Validate(entry, accounts, categories, original, otherRefunds);
+            if (problems.Count == 0 && entry.RefundOfId is { } counted)
+            {
+                refunded[counted] = otherRefunds + entry.Amount;
+            }
+
             if (problems.Count > 0)
             {
                 errors[entry.Id] = problems;
@@ -332,7 +376,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         db.Entries.AddRange(toAdd);
         await db.SaveChangesAsync(cancellationToken);
         OnChanged();
-        return new ImportResult(batchId, toAdd.Count, existing.Count, errors);
+        return new ImportResult(batchId, toAdd.Count, entries.Count - toAdd.Count, errors);
     }
 
     /// <summary>Returns the import batches, newest first.</summary>
@@ -548,20 +592,25 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         ArgumentNullException.ThrowIfNull(filter);
         filter.Name = filter.Name.Trim();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var existing = (await db.SavedFilters.ToListAsync(cancellationToken))
-            .FirstOrDefault(f => f.Id == filter.Id || string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase));
-        if (existing is not null)
+        var all = await db.SavedFilters.ToListAsync(cancellationToken);
+        var sameId = all.FirstOrDefault(f => f.Id == filter.Id);
+
+        // Another filter with the same name is replaced (the user confirmed it); the filter itself is updated in place.
+        // One SaveChanges, so nothing is removed unless the whole change is saved.
+        var sameName = all.Where(f => f.Id != filter.Id && string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        filter.SortOrder = sameId?.SortOrder ?? sameName.FirstOrDefault()?.SortOrder ?? (all.Count == 0 ? 0 : all.Max(f => f.SortOrder) + 1);
+        db.SavedFilters.RemoveRange(sameName);
+        if (sameId is not null)
         {
-            filter.SortOrder = existing.SortOrder;
-            db.SavedFilters.Remove(existing);
-            await db.SaveChangesAsync(cancellationToken);
+            var created = sameId.CreatedAt;
+            db.Entry(sameId).CurrentValues.SetValues(filter);
+            sameId.CreatedAt = created;
         }
         else
         {
-            filter.SortOrder = await db.SavedFilters.Select(f => (int?)f.SortOrder).MaxAsync(cancellationToken) + 1 ?? 0;
+            db.SavedFilters.Add(filter);
         }
 
-        db.SavedFilters.Add(filter);
         await db.SaveChangesAsync(cancellationToken);
         OnChanged();
     }
@@ -747,9 +796,21 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     /// Validates and saves related entries in one transaction – e.g. a transfer and its fee – and deletes
     /// <paramref name="deleteIds"/> (a removed fee). Nothing is saved when any entry is invalid.
     /// </summary>
+    public Task<SaveResult> SaveEntriesAsync(
+        IReadOnlyList<LedgerEntry> entries,
+        IReadOnlyCollection<Guid> deleteIds,
+        CancellationToken cancellationToken = default) =>
+        SaveEntriesAsync(entries, deleteIds, null, cancellationToken);
+
+    /// <summary>
+    /// Saves entries like <see cref="SaveEntriesAsync(IReadOnlyList{LedgerEntry}, IReadOnlyCollection{Guid}, CancellationToken)"/>
+    /// and moves the attachments of the deleted entries to <paramref name="moveAttachmentsTo"/> in the same transaction,
+    /// so no receipt is left without an entry (split parts that are joined or removed).
+    /// </summary>
     public async Task<SaveResult> SaveEntriesAsync(
         IReadOnlyList<LedgerEntry> entries,
         IReadOnlyCollection<Guid> deleteIds,
+        Guid? moveAttachmentsTo,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entries);
@@ -806,6 +867,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, entries.Concat(existing.Values).Concat(removed), cancellationToken);
+        if (moveAttachmentsTo is { } target && deleteIds.Count > 0)
+        {
+            await db.Attachments.Where(a => deleteIds.Contains(a.EntryId)).ExecuteUpdateAsync(a => a.SetProperty(x => x.EntryId, target), cancellationToken);
+        }
+
         await transaction.CommitAsync(cancellationToken);
 
         OnChanged();
@@ -828,6 +894,18 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         List<LedgerEntry> deleted = entry.GroupId is { } group
             ? await db.Entries.Where(e => e.GroupId == group).ToListAsync(cancellationToken)
             : [entry];
+
+        // Refunds of a deleted purchase stay, and the database unlinks them; remember the links so undo restores them.
+        var deletedIds = deleted.Select(e => e.Id).ToList();
+        var refundLinks = await db.Entries.Where(e => e.RefundOfId != null && deletedIds.Contains(e.RefundOfId.Value) && !deletedIds.Contains(e.Id))
+            .Select(e => new { e.Id, Purchase = e.RefundOfId!.Value }).ToListAsync(cancellationToken);
+        lock (_refundLinks)
+        {
+            foreach (var link in refundLinks)
+            {
+                _refundLinks[link.Id] = link.Purchase;
+            }
+        }
 
         db.Entries.RemoveRange(deleted);
 
@@ -883,8 +961,31 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             }
         }
 
+        // Refunds that lost their purchase with the deletion are linked again.
+        var restoredIds = list.Select(e => e.Id).ToHashSet();
+        List<KeyValuePair<Guid, Guid>> relink;
+        lock (_refundLinks)
+        {
+            relink = [.. _refundLinks.Where(l => restoredIds.Contains(l.Value))];
+            foreach (var link in relink)
+            {
+                _refundLinks.Remove(link.Key);
+            }
+        }
+
+        foreach (var (refundId, purchaseId) in relink)
+        {
+            if (await db.Entries.FirstOrDefaultAsync(e => e.Id == refundId, cancellationToken) is { RefundOfId: null } refund)
+            {
+                refund.RefundOfId = purchaseId;
+            }
+        }
+
+        // The entries, their occurrences, the refund links and the paid amounts come back together.
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, list, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         OnChanged();
     }

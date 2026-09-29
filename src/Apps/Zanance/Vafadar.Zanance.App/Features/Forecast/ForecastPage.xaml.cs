@@ -13,7 +13,7 @@ public partial class ForecastPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 
     // Chart axes draw their own text, so Persian digits (D-27) are applied to each label.

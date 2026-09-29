@@ -46,7 +46,7 @@ public partial class HomePage : ContentPage
         ApplyLayout();
 
         // Language, calendar or data may have changed elsewhere.
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 
     // The user's order and visibility of the sections (§21.5); balance and attention always stay on top (DASH-03).

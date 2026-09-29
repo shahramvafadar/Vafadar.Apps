@@ -21,7 +21,12 @@ public class MainActivity : MauiAppCompatActivity
     {
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
-        OpenFromWidget(Intent);
+
+        // A recreated activity or a start from the recent apps delivers the old intent again; only a fresh tap counts.
+        if (savedInstanceState is null && Intent is { } intent && !intent.Flags.HasFlag(ActivityFlags.LaunchedFromHistory))
+        {
+            OpenFromWidget(intent);
+        }
     }
 
     protected override void OnNewIntent(Intent? intent)
@@ -48,6 +53,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         if (intent?.Action == QuickAddWidget.Action && intent.GetStringExtra(QuickAddWidget.KindExtra) is { } kind)
         {
+            intent.SetAction(null);
             App.OpenLink("entry|" + kind);
         }
     }

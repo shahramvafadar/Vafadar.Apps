@@ -222,7 +222,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     /// <summary>Query: <c>id</c> (edit), <c>duplicate</c> (copy of an entry), <c>refundOf</c> (refund), <c>kind</c> (new).</summary>
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         _loading = true;

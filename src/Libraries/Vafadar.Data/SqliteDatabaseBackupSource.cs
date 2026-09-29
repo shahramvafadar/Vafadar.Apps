@@ -112,13 +112,17 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
 
     private static void TryDelete(string path)
     {
-        try
+        // The snapshot holds the user's data, so its journal files go as well.
+        foreach (var file in new[] { path, path + "-journal", path + "-wal", path + "-shm" })
         {
-            File.Delete(path);
-        }
-        catch (IOException)
-        {
-            // A leftover temporary file is harmless; the OS cleans the temp folder.
+            try
+            {
+                File.Delete(file);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // A leftover file in the app's temp folder is removed by the OS with the app's cache.
+            }
         }
     }
 }

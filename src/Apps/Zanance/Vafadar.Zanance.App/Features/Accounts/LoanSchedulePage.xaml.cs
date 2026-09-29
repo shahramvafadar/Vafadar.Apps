@@ -13,6 +13,6 @@ public partial class LoanSchedulePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 }

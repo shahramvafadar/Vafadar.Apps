@@ -2674,4 +2674,19 @@
   <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
     <value>برگشت وجه باید به حسابی با همان ارزِ خرید برود.</value>
   </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>مشکلی پیش آمد</value>
+  </data>
+  <data name="Error_Unexpected" xml:space="preserve">
+    <value>این کار انجام نشد. لطفاً دوباره امتحان کنید.</value>
+  </data>
+  <data name="Backup_Error_RestoreFailed" xml:space="preserve">
+    <value>پشتیبان بازیابی نشد. نسخهٔ داده‌های شما از پیش از بازیابی در فهرست پشتیبان‌های این دستگاه نگه داشته شده است.</value>
+  </data>
+  <data name="LedgerError_RefundOriginalMissing" xml:space="preserve">
+    <value>خرید مربوط به این برگشت وجه وجود ندارد.</value>
+  </data>
+  <data name="Plan_SecondDayInvalid" xml:space="preserve">
+    <value>روز دوم فقط برای برنامه‌های ماهانه با روز مشخصی از ماه (۱ تا ۳۱) ممکن است.</value>
+  </data>
 </root>

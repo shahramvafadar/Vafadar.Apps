@@ -92,7 +92,40 @@ internal static class AttachmentFiles
 
     private static byte[]? Shrink(byte[] data)
     {
-#if ANDROID || IOS
+#if ANDROID
+        // Android decodes without the EXIF orientation and the re-encoded file drops it: turn the pixels upright first,
+        // or a portrait photo is stored on its side (and cannot be read as a receipt).
+        try
+        {
+            using var exif = new Android.Media.ExifInterface(new MemoryStream(data));
+            var degrees = exif.GetAttributeInt(Android.Media.ExifInterface.TagOrientation, 1) switch
+            {
+                6 => 90,
+                3 => 180,
+                8 => 270,
+                _ => 0,
+            };
+
+            using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length);
+            if (bitmap is null)
+            {
+                return null;
+            }
+
+            var scale = Math.Min(1f, MaxEdge / (float)Math.Max(bitmap.Width, bitmap.Height));
+            using var matrix = new Android.Graphics.Matrix();
+            matrix.PostScale(scale, scale);
+            matrix.PostRotate(degrees);
+            using var upright = Android.Graphics.Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
+            using var output = new MemoryStream();
+            upright.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 80, output);
+            return output.ToArray();
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            return null;
+        }
+#elif IOS
         try
         {
             using var input = new MemoryStream(data);

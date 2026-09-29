@@ -19,6 +19,24 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
 
+    /// <summary>
+    /// Runs <paramref name="work"/> while no posting run can start, e.g. a restore that replaces the database: a run that
+    /// read the old data must not write into the restored one.
+    /// </summary>
+    public async Task RunExclusiveAsync(Func<Task> work, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(work);
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            await work();
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
     /// <summary>Posts every eligible occurrence due on or before <paramref name="today"/>.</summary>
     public async Task<AutoPostResult> RunAsync(DateOnly today, CancellationToken cancellationToken = default)
     {

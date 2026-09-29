@@ -171,8 +171,15 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
         else if (choice == restore)
         {
-            await using var stream = await _local.OpenReadAsync(backup.File.Id);
-            await PrepareRestoreAsync(stream, backup.Title);
+            try
+            {
+                await using var stream = await _local.OpenReadAsync(backup.File.Id);
+                await PrepareRestoreAsync(stream, backup.Title);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException)
+            {
+                RestoreError = _translator["Backup_Error_Storage"];
+            }
         }
     }
 
@@ -256,11 +263,25 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
             // Keep a safety copy of the current data first (BAK-02, BAK-09).
             await _backup.CreateSafetyCopyAsync(_safety);
-            await _backup.RestorePackageAsync(_package, NeedsRestorePassword ? RestorePassword : null);
+            var package = _package;
+            var password = NeedsRestorePassword ? RestorePassword : null;
+            await _autoPost.RunExclusiveAsync(() => _backup.RestorePackageAsync(package, password));
 
-            // Due occurrences are processed again; settled ones are not recreated (BAK-11).
-            await _autoPost.RunAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime));
-            await _reminders.RefreshAsync();
+            // The restored settings may switch the app lock on or off.
+            await _lock.ReloadAsync();
+
+            // Due occurrences are processed again; settled ones are not recreated (BAK-11). The restore itself succeeded
+            // even if this follow-up fails; it runs again on the next start.
+            try
+            {
+                await _autoPost.RunAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime));
+                await _reminders.RefreshAsync();
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                System.Diagnostics.Debug.WriteLine($"After restore: {ex.GetType().Name}");
+            }
+
             ResetRestore();
             await Shell.Current.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
             (Application.Current as App)?.ShowMainShell();
@@ -272,6 +293,13 @@ public sealed partial class BackupViewModel : ViewModelBase
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             RestoreError = _translator["Backup_Error_Storage"];
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            // E.g. the database could not be replaced or migrated. The safety copy of the data before the restore is kept
+            // on the device and can be restored from the list above.
+            System.Diagnostics.Debug.WriteLine($"Restore failed: {ex}");
+            RestoreError = _translator["Backup_Error_RestoreFailed"];
         }
         finally
         {

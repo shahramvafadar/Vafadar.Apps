@@ -49,7 +49,9 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     /// <summary>Gets a value indicating whether the user changed something.</summary>
     public bool IsDirty => Form.Snapshot() != _snapshot;
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         var settings = await _store.GetSettingsAsync();

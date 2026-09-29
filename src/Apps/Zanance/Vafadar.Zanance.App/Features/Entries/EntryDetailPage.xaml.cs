@@ -15,6 +15,6 @@ public partial class EntryDetailPage : ContentPage
         base.OnAppearing();
 
         // The entry may have been edited, refunded or reviewed in the meantime.
-        await _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
 }

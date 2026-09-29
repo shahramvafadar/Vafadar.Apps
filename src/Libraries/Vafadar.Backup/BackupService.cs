@@ -100,7 +100,16 @@ public sealed class BackupService : IBackupService
                 _settings.Set(LastBackupKey, createdAt.ToString("O", CultureInfo.InvariantCulture));
             }
 
-            await ApplyRetentionCoreAsync(storage, cancellationToken);
+            try
+            {
+                await ApplyRetentionCoreAsync(storage, cancellationToken);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+            {
+                // The backup itself is stored; old files are pruned again after the next backup.
+                System.Diagnostics.Debug.WriteLine($"Backup retention failed: {ex.GetType().Name}");
+            }
+
             return file;
         }
         finally

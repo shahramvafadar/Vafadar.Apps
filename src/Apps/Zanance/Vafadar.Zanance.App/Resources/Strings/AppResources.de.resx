@@ -2674,4 +2674,19 @@
   <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
     <value>Eine Erstattung muss auf ein Konto in der Währung des Kaufs gehen.</value>
   </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Etwas ist schiefgelaufen</value>
+  </data>
+  <data name="Error_Unexpected" xml:space="preserve">
+    <value>Die Aktion konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.</value>
+  </data>
+  <data name="Backup_Error_RestoreFailed" xml:space="preserve">
+    <value>Die Sicherung konnte nicht wiederhergestellt werden. Die Kopie Ihrer Daten von vor der Wiederherstellung bleibt in der Liste der Sicherungen auf diesem Gerät.</value>
+  </data>
+  <data name="LedgerError_RefundOriginalMissing" xml:space="preserve">
+    <value>Der Kauf zu dieser Erstattung existiert nicht.</value>
+  </data>
+  <data name="Plan_SecondDayInvalid" xml:space="preserve">
+    <value>Ein zweiter Tag ist nur bei monatlichen Plänen mit festem Tag im Monat (1–31) möglich.</value>
+  </data>
 </root>

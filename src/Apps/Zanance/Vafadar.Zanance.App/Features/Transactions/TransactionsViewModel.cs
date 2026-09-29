@@ -137,6 +137,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     /// Accepts <c>unreviewed=true</c>, <c>account</c>, and a drill-down from a number (AT-50): <c>period</c> (chip index),
     /// <c>kind</c> (<see cref="KindFilter"/>), <c>categories</c> (ids), <c>categoryName</c> and <c>inTotals</c>.
     /// </summary>
+    private bool _drillDown;
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -162,6 +164,9 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             _inTotalsOnly = query.TryGetValue("inTotals", out var inTotals) && inTotals is true;
             UnreviewedOnly = false;
             SearchText = query.TryGetValue("search", out var search) && search is string text ? text : string.Empty;
+
+            // A drill-down shows exactly the tapped number: earlier account and category choices do not apply (AT-50).
+            _drillDown = true;
             _loading = false;
         }
 
@@ -199,14 +204,15 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
             _entries = await _store.GetEntriesAsync();
 
-            var selected = _pendingAccount ?? SelectedAccount?.Id;
+            var selected = _pendingAccount ?? (_drillDown ? null : SelectedAccount?.Id);
             _pendingAccount = null;
             AccountOptions = [new AccountFilterOption(null, _translator["Accounts_AllAccounts"]), .. accounts.Select(a => new AccountFilterOption(a.Id, a.Name))];
             SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == selected) ?? AccountOptions[0];
             ShowAccountFilter = accounts.Count > 1;
 
             // Category filter (TX-05); a main category includes its sub-categories.
-            var selectedCategory = SelectedCategory?.Id;
+            var selectedCategory = _drillDown ? null : SelectedCategory?.Id;
+            _drillDown = false;
             CategoryOptions = [new AccountFilterOption(null, _translator["Tx_AllCategories"]), .. _categories.All
                 .Where(c => !c.IsArchived && c.ParentId is null)
                 .OrderBy(c => c.Kind).ThenBy(c => c.SortOrder)

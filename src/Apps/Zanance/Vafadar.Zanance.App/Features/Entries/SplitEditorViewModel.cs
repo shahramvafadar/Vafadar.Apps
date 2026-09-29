@@ -65,7 +65,9 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     [ObservableProperty]
     public partial string? Error { get; set; }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
+
+    private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         if (!query.TryGetValue("id", out var value) || value is not Guid id || await store.GetEntryAsync(id) is not { } entry)
@@ -182,12 +184,8 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
                 return (p.Category?.Id, amount);
             }).ToList();
             var (save, delete) = EntryActions.Split(_parts, shares);
-            var result = await store.SaveEntriesAsync(save, [.. delete]);
-        if (result.Succeeded)
-        {
             // Receipts of parts that no longer exist stay with the first part.
-            await store.MoveAttachmentsAsync([.. delete], save[0].Id);
-        }
+            var result = await store.SaveEntriesAsync(save, [.. delete], save[0].Id);
 
             if (!result.Succeeded)
             {
@@ -215,11 +213,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         try
         {
             var (save, delete) = EntryActions.Join(_parts);
-            var result = await store.SaveEntriesAsync([save], [.. delete]);
-        if (result.Succeeded)
-        {
-            await store.MoveAttachmentsAsync([.. delete], save.Id);
-        }
+            var result = await store.SaveEntriesAsync([save], [.. delete], save.Id);
 
             if (result.Succeeded)
             {

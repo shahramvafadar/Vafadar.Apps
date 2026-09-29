@@ -196,6 +196,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             ExportResult = _translator.Format("Export_Done", entries.Count);
             await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Export_Title"], File = new ShareFile(path, "text/csv") });
         }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            await Failures.ShowAsync(ex);
+        }
         finally
         {
             IsBusy = false;
@@ -203,7 +207,9 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task PickAsync()
+    private Task PickAsync() => Failures.GuardAsync(PickFileAsync);
+
+    private async Task PickFileAsync()
     {
         ImportError = null;
         ImportResult = null;
@@ -336,6 +342,11 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             HasPreview = false;
             ShowMapping = false;
             await LoadBatchesAsync();
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            // E.g. a constraint the checks did not catch: the batch is rolled back, nothing was imported.
+            await Failures.ShowAsync(ex);
         }
         finally
         {
