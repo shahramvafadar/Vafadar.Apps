@@ -878,10 +878,10 @@
     <value>accounts in totals</value>
   </data>
   <data name="Home_Unreviewed" xml:space="preserve">
-    <value>{0} entries need review</value>
+    <value>Entries to review: {0}</value>
   </data>
   <data name="Home_Due" xml:space="preserve">
-    <value>{0} due items need attention</value>
+    <value>Due or overdue: {0}</value>
   </data>
   <data name="Home_Refunds" xml:space="preserve">
     <value>Expenses are net of {0} refunds</value>
@@ -1026,7 +1026,7 @@
     <value>Includes {0} entries that still need review.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
-    <value>Planned expenses this month: {0} ({1} due items)</value>
+    <value>Planned expenses this month: {0} (due items: {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
     <value>{0} with unknown amount</value>
@@ -2049,7 +2049,7 @@
     <value>Still to receive</value>
   </data>
   <data name="Home_Reimbursements" xml:space="preserve">
-    <value>{0} expenses still to be paid back</value>
+    <value>Expenses to be paid back: {0}</value>
   </data>
   <data name="Entry_Tags" xml:space="preserve">
     <value>Tags</value>

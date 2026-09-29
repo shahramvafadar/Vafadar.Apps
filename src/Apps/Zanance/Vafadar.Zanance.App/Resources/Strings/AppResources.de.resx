@@ -875,10 +875,10 @@
     <value>Konten in Summen</value>
   </data>
   <data name="Home_Unreviewed" xml:space="preserve">
-    <value>{0} Buchungen sind zu prüfen</value>
+    <value>Zu prüfen: {0}</value>
   </data>
   <data name="Home_Due" xml:space="preserve">
-    <value>{0} Fälligkeiten brauchen Aufmerksamkeit</value>
+    <value>Fällig oder überfällig: {0}</value>
   </data>
   <data name="Home_Refunds" xml:space="preserve">
     <value>Ausgaben abzüglich {0} Erstattungen</value>
@@ -1022,7 +1022,7 @@
     <value>Enthält {0} noch zu prüfende Buchungen.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
-    <value>Geplante Ausgaben diesen Monat: {0} ({1} Fälligkeiten)</value>
+    <value>Geplante Ausgaben diesen Monat: {0} (Fälligkeiten: {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
     <value>{0} mit unbekanntem Betrag</value>
@@ -2045,7 +2045,7 @@
     <value>Noch zu erhalten</value>
   </data>
   <data name="Home_Reimbursements" xml:space="preserve">
-    <value>{0} Ausgaben werden noch erstattet</value>
+    <value>Noch zu erstatten: {0}</value>
   </data>
   <data name="Entry_Tags" xml:space="preserve">
     <value>Schlagwörter</value>

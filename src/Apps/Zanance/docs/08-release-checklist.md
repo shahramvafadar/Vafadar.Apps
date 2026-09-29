@@ -3,7 +3,7 @@
 ## Product and data
 
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
-- [ ] Golden data AT-62 exact in en/fa/de
+- [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
 - [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57) – fresh-install integration test passes; device check pending
 - [ ] No known critical bug in balances, conversion, double counting, restore or data exposure (Q-01)
@@ -17,7 +17,7 @@
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric)
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked
-- [ ] No financial data, notes, tokens or passwords in logs (SEC-04)
+- [x] No financial data, notes, tokens or passwords in logs (SEC-04) – code review 2026-09-29: only `Debug.WriteLine` (removed from release builds) and the debug logger in Debug builds
 - [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always hidden (Android FLAG_SECURE, iOS cover; D-23). Device check pending
 
 ## Build secrets
@@ -32,6 +32,6 @@
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
 - [x] Final app name: **Zanance** (owner decision 2026-09-26)
 - [x] Icon, splash and notification icon from the approved brand master (D-26)
-- [ ] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04)
+- [x] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04) – `docs/store/listing.md`, `docs/store/screenshots/<language>/` (from the Windows development build at phone size; replace with device screenshots if Play asks for a higher resolution)
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track
