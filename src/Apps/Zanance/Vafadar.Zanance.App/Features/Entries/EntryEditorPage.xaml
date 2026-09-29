@@ -33,6 +33,15 @@
         <ScrollView Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
 
+                <!-- Values read from a receipt, waiting for review (D-31) -->
+                <Border BackgroundColor="{DynamicResource RefundBackground}" Stroke="{DynamicResource RefundLine}" StrokeShape="RoundRectangle 14" Padding="14,10"
+                        IsVisible="{Binding ReceiptNote, Converter={StaticResource IsNotNullConverter}}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <fi:SymbolIcon Symbol="ScanText" FontSize="20" ForegroundColor="{DynamicResource RefundText}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{Binding ReceiptNote}" TextColor="{DynamicResource RefundText}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
                 <!-- Quick templates (TX-04), new entries only -->
                 <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasTemplates}">
                     <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Templates}">

@@ -2650,4 +2650,16 @@
   <data name="Holiday_Short" xml:space="preserve">
     <value>auch Feiertage</value>
   </data>
+  <data name="Receipt_Read" xml:space="preserve">
+    <value>Lesen</value>
+  </data>
+  <data name="Receipt_Title" xml:space="preserve">
+    <value>Beleg</value>
+  </data>
+  <data name="Receipt_Nothing" xml:space="preserve">
+    <value>Aus diesem Foto konnten kein Betrag, kein Datum und kein Geschäft gelesen werden.</value>
+  </data>
+  <data name="Receipt_Review" xml:space="preserve">
+    <value>Aus dem Beleg: {0}. Bitte vor dem Speichern prüfen.</value>
+  </data>
 </root>

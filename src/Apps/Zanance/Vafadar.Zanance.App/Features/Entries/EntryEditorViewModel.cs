@@ -335,7 +335,41 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         UpdateKindState();
         await UpdateRefundInfoAsync();
         _snapshot = Snapshot();
+        ApplyReceipt(query);
         query.Clear();
+    }
+
+    /// <summary>Gets the notice shown while values read from a receipt wait for review (D-31).</summary>
+    [ObservableProperty]
+    public partial string? ReceiptNote { get; set; }
+
+    // Values read from a receipt fill the form for review; they count as unsaved changes and nothing is saved until Save.
+    private void ApplyReceipt(IDictionary<string, object> query)
+    {
+        var applied = new List<string>();
+        var culture = _localization.CurrentCulture;
+        if (query.TryGetValue("receiptAmount", out var amount) && amount is string amountText
+            && decimal.TryParse(amountText, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var value))
+        {
+            AmountText = value.ToString("0.##", culture);
+            applied.Add(_translator["Entry_Amount"]);
+        }
+
+        if (query.TryGetValue("receiptDate", out var date) && date is string dateText
+            && DateOnly.TryParseExact(dateText, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var day))
+        {
+            Date = day;
+            applied.Add(_translator["Entry_Date"]);
+        }
+
+        if (query.TryGetValue("receiptPayee", out var payee) && payee is string payeeText && string.IsNullOrWhiteSpace(Payee))
+        {
+            Payee = payeeText;
+            ShowDetails = true;
+            applied.Add(_translator["Entry_Payee"]);
+        }
+
+        ReceiptNote = applied.Count == 0 ? null : _translator.Format("Receipt_Review", string.Join(_translator["Reminder_ListSeparator"], applied));
     }
 
     [ObservableProperty]

@@ -94,7 +94,7 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Attachments}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:AttachmentRow">
-                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto,Auto">
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
                                                                   CommandParameter="{Binding .}" />
@@ -108,7 +108,10 @@
                                             <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" />
                                             <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                         </VerticalStackLayout>
-                                        <Button Grid.Column="2" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                        <Button Grid.Column="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
+                                                Command="{Binding ReadReceiptCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                CommandParameter="{Binding .}" />
+                                        <Button Grid.Column="3" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
                                                 Command="{Binding DeleteAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
                                                 CommandParameter="{Binding .}" />
                                     </Grid>

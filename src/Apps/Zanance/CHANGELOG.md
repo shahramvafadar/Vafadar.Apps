@@ -46,6 +46,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Added – Receipt reading (D-31)
+
+- Read the total, date and shop from a receipt photo on iOS and Windows, on the device; the values open the editor for
+  review before anything is saved.
+
 ### Added – Quick add widget (D-30)
 
 - An Android home-screen widget that opens a new expense, income or transfer in one tap. It shows no amounts.

@@ -16,6 +16,9 @@ namespace Vafadar.Zanance.App.Features.Entries;
 public sealed record AttachmentRow(Guid Id, string Name, string Details, ImageSource? Preview)
 {
     public bool HasPreview => Preview is not null;
+
+    /// <summary>Gets a value indicating whether the receipt can be read on this device (an image of an expense, D-31).</summary>
+    public bool CanRead { get; init; }
 }
 
 /// <summary>A labelled value in the entry details.</summary>
@@ -253,6 +256,53 @@ public sealed partial class EntryDetailViewModel(
         await LoadAttachmentsAsync();
     }
 
+    // On-device text recognition of a receipt photo (D-31). The found values open the editor for review; nothing is
+    // changed until the user saves there.
+    [RelayCommand]
+    private async Task ReadReceiptAsync(AttachmentRow row)
+    {
+        if (IsBusy || await store.GetAttachmentAsync(row.Id) is not { } attachment)
+        {
+            return;
+        }
+
+        string? text;
+        IsBusy = true;
+        try
+        {
+            text = await ReceiptReader.ReadAsync(attachment.Data);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+
+        var receipt = Core.Receipts.ReceiptParser.Parse(text);
+        if (receipt.IsEmpty)
+        {
+            await Shell.Current.DisplayAlertAsync(translator["Receipt_Title"], translator["Receipt_Nothing"], translator["Common_Ok"]);
+            return;
+        }
+
+        var query = new Dictionary<string, object> { ["id"] = _id };
+        if (receipt.Amount is { } amount)
+        {
+            query["receiptAmount"] = amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        if (receipt.Date is { } date)
+        {
+            query["receiptDate"] = date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        if (receipt.Merchant is { } merchant)
+        {
+            query["receiptPayee"] = merchant;
+        }
+
+        await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+    }
+
     private async Task LoadAttachmentsAsync()
     {
         Attachments.Clear();
@@ -267,7 +317,10 @@ public sealed partial class EntryDetailViewModel(
 
             // Size and date form one left-to-right run; isolates and marks keep the order in right-to-left layouts.
             var size = info.Size >= 1024 * 1024 ? $"{info.Size / 1024d / 1024d:0.0} MB" : $"{Math.Max(1, info.Size / 1024)} KB";
-            Attachments.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview));
+            Attachments.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview)
+            {
+                CanRead = info.IsImage && _entry?.Kind == EntryKind.Expense && ReceiptReader.IsSupported,
+            });
         }
 
         HasAttachments = Attachments.Count > 0;
