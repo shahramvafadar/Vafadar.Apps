@@ -62,7 +62,7 @@ public sealed class BackupService : IBackupService
 
     /// <inheritdoc />
     public DateTimeOffset? LastBackupAt =>
-        DateTimeOffset.TryParse(_settings.Get(LastBackupKey), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var value)
+        DateTimeOffset.TryParse(_settings.Get(LastKey()), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var value)
             ? value
             : null;
 
@@ -70,6 +70,25 @@ public sealed class BackupService : IBackupService
     public bool IsAutomaticBackupDue() =>
         _options.AutomaticBackupInterval is { } interval
         && (LastBackupAt is not { } last || _time.GetUtcNow() - last >= interval);
+
+    // The app id in file names, with the backup set when one is used (BackupOptions.FileSet).
+    private string FileAppId()
+    {
+        var set = _options.FileSet?.Invoke();
+        if (string.IsNullOrEmpty(set))
+        {
+            return _app.AppId;
+        }
+
+        if (set.IndexOfAny(['_', '~', '/', '\\']) >= 0)
+        {
+            throw new InvalidOperationException("A backup set must not contain '_', '~', '/' or '\\'.");
+        }
+
+        return $"{_app.AppId}~{set}";
+    }
+
+    private string LastKey() => _options.FileSet?.Invoke() is { Length: > 0 } set ? $"{LastBackupKey}.{set}" : LastBackupKey;
 
     /// <inheritdoc />
     public Task<BackupFileInfo> CreateBackupAsync(IBackupStorage storage, string? password = null, CancellationToken cancellationToken = default) =>
@@ -92,12 +111,12 @@ public sealed class BackupService : IBackupService
             BackupFileInfo file;
             using (var content = new MemoryStream(package, writable: false))
             {
-                file = await storage.UploadAsync(BackupFileName.Create(_app.AppId, createdAt), content, cancellationToken);
+                file = await storage.UploadAsync(BackupFileName.Create(FileAppId(), createdAt), content, cancellationToken);
             }
 
             if (recordAsBackup)
             {
-                _settings.Set(LastBackupKey, createdAt.ToString("O", CultureInfo.InvariantCulture));
+                _settings.Set(LastKey(), createdAt.ToString("O", CultureInfo.InvariantCulture));
             }
 
             try
@@ -138,11 +157,12 @@ public sealed class BackupService : IBackupService
         ArgumentNullException.ThrowIfNull(storage);
 
         var files = await storage.ListAsync(cancellationToken);
+        var fileAppId = FileAppId();
         return
         [
             .. files
                 .Select(file => (File: file, Parsed: BackupFileName.TryParse(file.FileName, out var appId, out var createdAt), AppId: appId, CreatedAt: createdAt))
-                .Where(x => x.Parsed && string.Equals(x.AppId, _app.AppId, StringComparison.Ordinal))
+                .Where(x => x.Parsed && string.Equals(x.AppId, fileAppId, StringComparison.Ordinal))
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(x => x.File),
         ];

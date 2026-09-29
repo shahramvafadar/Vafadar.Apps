@@ -10,6 +10,7 @@ Backup and restore of app data. Design: [docs/architecture/data-and-backup.md](.
 | `BackupManifest` | Content description inside every package (app id, version, entries + SHA-256) |
 | `Security.BackupEncryption` | AES-256-GCM with PBKDF2-SHA256 key derivation and Persian-aware password normalization |
 | `BackupFileName` | `{appId}_{yyyyMMddTHHmmssZ}.vbak` naming and parsing |
+| `BackupOptions.FileSet` | Optional backup set (e.g. a local profile) read at every call: files `{appId}~{set}_{time}.vbak`; listing, retention and the last backup time count only the current set |
 | `BackupException` / `BackupError` | Errors the UI can translate (wrong password, other app, newer version, damaged) |
 
 ```csharp

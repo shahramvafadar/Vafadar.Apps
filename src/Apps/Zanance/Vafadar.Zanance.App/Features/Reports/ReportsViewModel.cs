@@ -387,7 +387,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         Trend.Clear();
         var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
         var end = _to < Today ? _to : Today;
-        foreach (var month in ReportCalculator.MonthlyTrend(accounts, entries, end, PeriodKind == 0 ? TrendMonths : 12, Calendar, _currency, _startDay))
+        foreach (var month in ReportCalculator.MonthlyTrend(accounts, entries, end, PeriodKind == 0 ? TrendMonths : 12, Calendar, _currency, PeriodKind == 0 ? _startDay : 1))
         {
             var label = _dates.Format(month.From, DateFormatStyle.MonthYear) + (month.IsPartial ? " *" : string.Empty);
             Trend.Add(new TrendPoint(

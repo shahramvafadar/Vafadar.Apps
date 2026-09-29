@@ -2760,7 +2760,7 @@
     <value>Keep separate finances on this device, e.g. personal and business. Each profile has its own accounts, entries, settings, app lock and backups.</value>
   </data>
   <data name="Profile_Note" xml:space="preserve">
-    <value>Reminders and budget alerts come from the open profile. The list of profile names is visible to anyone who can open the app.</value>
+    <value>Reminders and budget alerts come from the open profile. A connected cloud storage is shared by the profiles of this device, but each profile sees only its own backups. The list of profile names is visible to anyone who can open the app.</value>
   </data>
   <data name="Profile_Open" xml:space="preserve">
     <value>Open now</value>
@@ -2787,7 +2787,7 @@
     <value>Delete "{0}" with all its accounts, entries, plans and settings?</value>
   </data>
   <data name="Profile_DeleteFinal" xml:space="preserve">
-    <value>This cannot be undone. Only a backup of this profile can bring the data back.</value>
+    <value>This cannot be undone. Its backups on this device are deleted too; backup files you shared or stored in your cloud stay and can bring the data back.</value>
   </data>
   <data name="Profile_UnlockReason" xml:space="preserve">
     <value>Open the protected profile</value>

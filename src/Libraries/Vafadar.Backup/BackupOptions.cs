@@ -16,4 +16,12 @@ public sealed class BackupOptions
     /// <see langword="null"/> disables automatic backups. Defaults to one day.
     /// </summary>
     public TimeSpan? AutomaticBackupInterval { get; set; } = TimeSpan.FromDays(1);
+
+    /// <summary>
+    /// Gets or sets the backup set in use, read at every call, e.g. the open local profile. Backups of different sets
+    /// can share one storage: file names carry the set (<c>{appId}~{set}_{time}.vbak</c>), and listing, retention and
+    /// the last backup time count only the current set. <see langword="null"/> or empty is the default set, whose files
+    /// keep the plain <c>{appId}_{time}.vbak</c> name. A set must not contain <c>_</c>, <c>~</c>, <c>/</c> or <c>\</c>.
+    /// </summary>
+    public Func<string?>? FileSet { get; set; }
 }

@@ -128,7 +128,11 @@ Both are free for the user within their existing quota and cost the developer no
 | Restore | *Show backups* lists the files; tapping one downloads it and runs the normal restore flow (password, preview, safety copy, confirmation) |
 | Disconnect | Signs out and removes the cached tokens (Google: the grant is revoked); backups stay in the user's account |
 
-Backups are per local profile: each profile backs up its own database. There is no automatic cloud backup yet.
+Backups are per local profile: each profile backs up its own database into its own **backup set**
+(`BackupOptions.FileSet`, file names `{appId}~{profile}_{time}.vbak`; the main profile keeps the plain name). Listing,
+retention and the last backup time count only the open profile's set, so one profile never prunes or shows another
+profile's backups, locally or in the shared cloud folder. The cloud connection itself is shared by the profiles of a
+device. There is no automatic cloud backup yet.
 
 ### Scheduling
 

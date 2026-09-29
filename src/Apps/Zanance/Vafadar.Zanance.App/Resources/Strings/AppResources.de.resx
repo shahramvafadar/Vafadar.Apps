@@ -2756,7 +2756,7 @@
     <value>Getrennte Finanzen auf diesem Gerät, z. B. privat und geschäftlich. Jedes Profil hat eigene Konten, Buchungen, Einstellungen, App-Sperre und Sicherungen.</value>
   </data>
   <data name="Profile_Note" xml:space="preserve">
-    <value>Erinnerungen und Budgethinweise kommen aus dem geöffneten Profil. Die Liste der Profilnamen sieht jede Person, die die App öffnen kann.</value>
+    <value>Erinnerungen und Budgethinweise kommen aus dem geöffneten Profil. Ein verbundener Cloud-Speicher gilt für alle Profile dieses Geräts, aber jedes Profil sieht nur seine eigenen Sicherungen. Die Liste der Profilnamen sieht jede Person, die die App öffnen kann.</value>
   </data>
   <data name="Profile_Open" xml:space="preserve">
     <value>Jetzt geöffnet</value>
@@ -2783,7 +2783,7 @@
     <value>„{0}“ mit allen Konten, Buchungen, Plänen und Einstellungen löschen?</value>
   </data>
   <data name="Profile_DeleteFinal" xml:space="preserve">
-    <value>Das lässt sich nicht rückgängig machen. Nur eine Sicherung dieses Profils bringt die Daten zurück.</value>
+    <value>Das lässt sich nicht rückgängig machen. Seine Sicherungen auf diesem Gerät werden ebenfalls gelöscht; geteilte oder in Ihrer Cloud gespeicherte Sicherungsdateien bleiben und können die Daten zurückbringen.</value>
   </data>
   <data name="Profile_UnlockReason" xml:space="preserve">
     <value>Geschütztes Profil öffnen</value>

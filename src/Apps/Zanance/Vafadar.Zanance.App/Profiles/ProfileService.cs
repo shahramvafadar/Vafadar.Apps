@@ -29,6 +29,7 @@ public sealed class ProfileService(
     ZananceStore store,
     UndoService undo,
     AppLockService appLock,
+    AutoPostProcessor autoPost,
     Translator translator)
 {
     private const string ListKey = "profiles.list";
@@ -49,6 +50,16 @@ public sealed class ProfileService(
 
     /// <summary>Gets a value indicating whether there is more than the main profile.</summary>
     public bool HasSeveral => Others().Count > 0;
+
+    /// <summary>
+    /// Returns the backup set of the open profile (<see cref="Vafadar.Backup.BackupOptions.FileSet"/>): its id, or
+    /// <see langword="null"/> for the main profile, whose backups keep the plain file names.
+    /// </summary>
+    public static string? CurrentBackupSet()
+    {
+        var id = CurrentId();
+        return id.Length > 0 && Others().Any(p => p.Id == id) ? id : null;
+    }
 
     /// <summary>Returns the database file to open at start: that of the last open profile, or the main one.</summary>
     public static string StartupDatabasePath(string mainPath)
@@ -104,7 +115,13 @@ public sealed class ProfileService(
         Save([.. Others().Where(p => p.Id != profile.Id)]);
         var path = PathOf(MainPath(), profile.Id);
         Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
-        foreach (var file in new[] { path, path + "-wal", path + "-shm", path + "-journal" })
+
+        // Its backups on this device go too (its backup set, see CurrentBackupSet); cloud backups stay in the account.
+        var backups = new[] { "backups", "backups-safety" }
+            .Select(folder => Path.Combine(Path.GetDirectoryName(MainPath())!, folder))
+            .Where(Directory.Exists)
+            .SelectMany(folder => Directory.EnumerateFiles(folder, $"{ZananceApp.AppId}~{profile.Id}_*"));
+        foreach (var file in new[] { path, path + "-wal", path + "-shm", path + "-journal" }.Concat(backups))
         {
             try
             {
@@ -134,22 +151,31 @@ public sealed class ProfileService(
 
         var previous = location.Path;
         undo.Dismiss();
-        location.MoveTo(PathOf(MainPath(), profile.Id));
-        try
+        var opened = false;
+
+        // Automatic posting never runs while the database moves, so no occurrence is posted into the wrong profile.
+        await autoPost.RunExclusiveAsync(async () =>
         {
-            await services.MigrateLocalDatabaseAsync<ZananceDbContext>();
-            var settings = await store.GetSettingsAsync();
-            if (settings.AppLockEnabled
-                && await appLock.Authenticator.AuthenticateAsync(translator["Profile_UnlockReason"]) != AuthenticationOutcome.Success)
+            location.MoveTo(PathOf(MainPath(), profile.Id));
+            try
             {
-                location.MoveTo(previous);
-                return false;
+                await services.MigrateLocalDatabaseAsync<ZananceDbContext>();
+                var settings = await store.GetSettingsAsync();
+                opened = !settings.AppLockEnabled
+                    || await appLock.Authenticator.AuthenticateAsync(translator["Profile_UnlockReason"]) == AuthenticationOutcome.Success;
             }
-        }
-        catch
+            finally
+            {
+                if (!opened)
+                {
+                    location.MoveTo(previous);
+                }
+            }
+        });
+
+        if (!opened)
         {
-            location.MoveTo(previous);
-            throw;
+            return false;
         }
 
         Preferences.Default.Set(CurrentKey, profile.Id);

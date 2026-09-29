@@ -253,7 +253,9 @@ public sealed partial class BackupViewModel
             : null;
     }
 
-    private static string LastCloudKey(ExternalIdentityProvider provider) => $"backup.cloud.last.{provider}";
+    // Per local profile: every profile has its own backup set in the shared cloud folder (D-34).
+    private static string LastCloudKey(ExternalIdentityProvider provider) =>
+        Vafadar.Zanance.App.Profiles.ProfileService.CurrentBackupSet() is { } set ? $"backup.cloud.last.{provider}.{set}" : $"backup.cloud.last.{provider}";
 
     private async Task ListCloudAsync(CloudAccountRow row)
     {

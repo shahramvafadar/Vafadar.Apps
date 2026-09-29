@@ -204,6 +204,36 @@ public sealed class BackupServiceTests : IDisposable
         public Task<IReadOnlyDictionary<string, string>> GetSummaryAsync(CancellationToken cancellationToken) => Task.FromResult(values);
     }
 
+    [Fact]
+    public async Task Backup_sets_sharing_a_storage_keep_their_own_files_retention_and_last_backup()
+    {
+        string? set = null;
+        var service = new BackupService([_database], Environment(), _settings, _time, new BackupOptions { MaxBackupsToKeep = 2, FileSet = () => set });
+
+        await service.CreateBackupAsync(_storage, cancellationToken: Ct);
+        var mainTime = _time.GetUtcNow();
+        set = "work";
+        for (var i = 0; i < 3; i++)
+        {
+            _time.Advance(TimeSpan.FromMinutes(1));
+            await service.CreateBackupAsync(_storage, cancellationToken: Ct);
+        }
+
+        var work = await service.ListBackupsAsync(_storage, Ct);
+        Assert.Equal(2, work.Count);
+        Assert.All(work, f => Assert.StartsWith($"{AppId}~work_", f.FileName, StringComparison.Ordinal));
+        Assert.Equal(_time.GetUtcNow(), service.LastBackupAt);
+
+        // The default set still has its file (with the plain name) and its own last backup.
+        set = null;
+        var main = Assert.Single(await service.ListBackupsAsync(_storage, Ct));
+        Assert.Equal(BackupFileName.Create(AppId, mainTime), main.FileName);
+        Assert.Equal(mainTime, service.LastBackupAt);
+
+        // A file of any set restores: the package belongs to the same app.
+        await service.RestoreAsync(_storage, work[0], cancellationToken: Ct);
+    }
+
     private BackupService CreateService(string appId = AppId, Version? version = null, int maxBackups = 10) =>
         new(
             [_database, _attachments],

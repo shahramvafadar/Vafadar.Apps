@@ -59,7 +59,8 @@ public static class MauiProgram
         builder.Services
             // The last open local profile (§3); the main profile is the original database.
             .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()))
-            .AddVafadarBackup()
+            // Each local profile keeps its own backups, retention and last-backup time in shared folders (D-34).
+            .AddVafadarBackup(options => options.FileSet = Profiles.ProfileService.CurrentBackupSet)
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
