@@ -45,7 +45,7 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 | Google Drive API + Google Identity (Play services) | ⚙️ | Encrypted backup files; the account e-mail | Only when the user connects Google Drive (Android, D-35); scopes `drive.appdata` (own folder only), `openid`, `email`; tokens kept by Play services |
 | Microsoft Graph (OneDrive) + Microsoft identity (MSAL) | ⚙️ | Encrypted backup files; the account name | Only when the user connects OneDrive (Android, Windows, D-35); scope `Files.ReadWrite.AppFolder` (own folder only); token cache on the device (MSAL storage, DPAPI on Windows) |
 | Google Play Billing / StoreKit | 🔜 | Purchase status | Only if the app gets Pro / tips |
-| Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline |
+| Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline. The `Syncfusion.Telemetry` package they bring is switched off at startup (`Telemetry.Disable()` in `Vafadar.Maui`) |
 | Plugin.LocalNotification | ✅ | Reminder text | Local notifications only, no push service |
 | Google ML Kit text recognition (Android) | ⚙️ | A receipt photo or scanned PDF page the user chooses to read | Runs on the device with a bundled model; in offline builds its usage statistics cannot be sent (no network permission); in builds with cloud backup ML Kit may send usage statistics to Google while online |
 | Android Auto Backup | ✅ | App database and preferences | Operated by Google under the user's account; kept on by owner decision D-16 |
