@@ -27,6 +27,8 @@ controls.
 | [Vafadar.Backup](src/Libraries/Vafadar.Backup/README.md) | Encrypted backup packages, retention, validated restore |
 | [Vafadar.Backup.GoogleDrive](src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backups in the user's Google Drive |
 | [Vafadar.Backup.OneDrive](src/Libraries/Vafadar.Backup.OneDrive/README.md) | Backups in the user's OneDrive |
+| [Vafadar.Documents](src/Libraries/Vafadar.Documents/README.md) | Text rows from word boxes (LTR and RTL), PDF text layer |
+| [Vafadar.Documents.Maui](src/Libraries/Vafadar.Documents.Maui/README.md) | Reading photos and PDFs on the device with the system engines |
 | [Vafadar.Authentication](src/Libraries/Vafadar.Authentication/README.md) | Google / Microsoft sign-in abstractions |
 | [Vafadar.Maui](src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap, XAML localization, RTL, Syncfusion setup, MVVM base |
 

@@ -65,6 +65,8 @@ The repository has two kinds of code:
 | [Vafadar.Backup](../../src/Libraries/Vafadar.Backup/README.md) | Backup package format, AES-GCM encryption, retention, restore validation, local folder storage | Core | ✅ |
 | [Vafadar.Backup.GoogleDrive](../../src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backup storage in the user's Google Drive app data folder | Backup, Authentication | ✅ (needs sign-in implementation) |
 | [Vafadar.Backup.OneDrive](../../src/Libraries/Vafadar.Backup.OneDrive/README.md) | Backup storage in the user's OneDrive app folder | Backup, Authentication | ✅ (needs sign-in implementation) |
+| [Vafadar.Documents](../../src/Libraries/Vafadar.Documents/README.md) | Text rows from word boxes (LTR and RTL), PDF text layer (Syncfusion PDF) | – | ✅ |
+| [Vafadar.Documents.Maui](../../src/Libraries/Vafadar.Documents.Maui/README.md) | Reading photos and PDFs on the device: system OCR engines, system PDF rendering | Documents | ✅ |
 | [Vafadar.Authentication](../../src/Libraries/Vafadar.Authentication/README.md) | Sign-in and access-token abstractions for Google / Microsoft accounts | – | ✅ abstractions |
 | [Vafadar.Maui](../../src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap (`UseVafadar`), preferences, `{v:Translate}`, RTL, date field and chips, device authentication for app locks, Syncfusion setup, MVVM base | Core, Localization | ✅ |
 | Vafadar.Authentication.Maui | Google and Microsoft sign-in on Android / iOS / Windows (MSAL, Google OAuth) | Authentication | 🔜 planned |
@@ -111,12 +113,15 @@ flowchart TD
         OD[Vafadar.Backup.OneDrive]
         VA[Vafadar.Authentication]
         VC[Vafadar.Core]
+        DM["Vafadar.Documents.Maui<br/><i>MAUI</i>"]
+        DO[Vafadar.Documents]
     end
 
     FA --> FD --> FC
     FA --> FC
     FA --> VM
     FA --> VB
+    FA --> DM --> DO
     FD --> VD
     FC --> VC
     VM --> VL --> VC

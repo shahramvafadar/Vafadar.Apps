@@ -2657,7 +2657,7 @@
     <value>رسید</value>
   </data>
   <data name="Receipt_Nothing" xml:space="preserve">
-    <value>از این عکس مبلغ، تاریخ یا فروشگاهی خوانده نشد.</value>
+    <value>از این رسید مبلغ، تاریخ یا فروشگاهی خوانده نشد.</value>
   </data>
   <data name="Receipt_Review" xml:space="preserve">
     <value>از رسید: {0}. لطفاً پیش از ذخیره بررسی کنید.</value>

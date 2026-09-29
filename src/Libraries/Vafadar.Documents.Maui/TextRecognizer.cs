@@ -1,15 +1,13 @@
-using Vafadar.Zanance.Core.Receipts;
-
-namespace Vafadar.Zanance.App.Presentation;
+namespace Vafadar.Documents.Maui;
 
 /// <summary>
-/// On-device text recognition of receipt photos (D-31): Vision on iOS, Windows.Media.Ocr on Windows and ML Kit with its
-/// bundled Latin model on Android (owner decision; Android has no system engine). Nothing leaves the device: the model
-/// ships in the app and the network permissions ML Kit asks for are removed from the release manifest.
+/// On-device text recognition of images with the system engines: Vision on iOS, Windows.Media.Ocr on Windows and ML Kit
+/// with its bundled Latin model on Android (Android has no system engine). Nothing leaves the device: the model ships
+/// in the app, and apps remove the network permissions ML Kit asks for.
 /// </summary>
-internal static class ReceiptReader
+public static class TextRecognizer
 {
-    /// <summary>Gets a value indicating whether this device can read receipts.</summary>
+    /// <summary>Gets a value indicating whether this device can recognise text in images.</summary>
     public static bool IsSupported =>
 #if IOS || MACCATALYST
         OperatingSystem.IsIOSVersionAtLeast(13) || OperatingSystem.IsMacCatalystVersionAtLeast(13);
@@ -19,35 +17,26 @@ internal static class ReceiptReader
         false;
 #endif
 
-    /// <summary>Returns the text of an image, line by line, or <see langword="null"/> when nothing could be read.</summary>
-    public static async Task<string?> ReadAsync(byte[] image)
+    /// <summary>Returns the recognised words of an encoded image (JPEG, PNG …); empty when nothing could be read.</summary>
+    public static async Task<IReadOnlyList<LayoutWord>> RecognizeAsync(byte[] image)
     {
         ArgumentNullException.ThrowIfNull(image);
-        try
-        {
 #if IOS || MACCATALYST
-            return await Task.Run(() => ReadApple(image));
+        return await Task.Run(() => RecognizeApple(image));
 #elif WINDOWS
-            return await ReadWindowsAsync(image);
+        return await RecognizeWindowsAsync(image);
 #elif ANDROID
-            return await ReadAndroidAsync(image);
+        return await RecognizeAndroidAsync(image);
 #else
-            await Task.CompletedTask;
-            return null;
+        await Task.CompletedTask;
+        return [];
 #endif
-        }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            // An unreadable or unsupported image is "nothing found", never a crash.
-            System.Diagnostics.Debug.WriteLine($"Receipt reading failed: {ex.GetType().Name}");
-            return null;
-        }
     }
 
 #if IOS || MACCATALYST
-    private static string? ReadApple(byte[] image)
+    private static List<LayoutWord> RecognizeApple(byte[] image)
     {
-        var words = new List<ReceiptWord>();
+        var words = new List<LayoutWord>();
         using var request = new Vision.VNRecognizeTextRequest((request, error) =>
         {
             foreach (var observation in request.GetResults<Vision.VNRecognizedTextObservation>() ?? [])
@@ -56,7 +45,7 @@ internal static class ReceiptReader
                 {
                     // Vision's origin is the lower left corner; read from the top.
                     var box = observation.BoundingBox;
-                    words.Add(new ReceiptWord(1 - box.Y - box.Height, 1 - box.Y, box.X, text));
+                    words.Add(new LayoutWord(1 - box.Y - box.Height, 1 - box.Y, box.X, text));
                 }
             }
         })
@@ -67,28 +56,23 @@ internal static class ReceiptReader
 
         using var data = Foundation.NSData.FromArray(image);
         using var handler = new Vision.VNImageRequestHandler(data, new Foundation.NSDictionary());
-        if (!handler.Perform([request], out _))
-        {
-            return null;
-        }
-
-        return ReceiptParser.Rows(words);
+        return handler.Perform([request], out _) ? words : [];
     }
 #endif
 
 #if ANDROID
-    private static async Task<string?> ReadAndroidAsync(byte[] image)
+    private static async Task<IReadOnlyList<LayoutWord>> RecognizeAndroidAsync(byte[] image)
     {
         using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(image, 0, image.Length);
         if (bitmap is null)
         {
-            return null;
+            return [];
         }
 
         using var input = Xamarin.Google.MLKit.Vision.Common.InputImage.FromBitmap(bitmap, 0);
         using var recognizer = Xamarin.Google.MLKit.Vision.Text.TextRecognition.GetClient(Xamarin.Google.MLKit.Vision.Text.Latin.TextRecognizerOptions.DefaultOptions);
         var result = await Android.Gms.Extensions.TasksExtensions.AsAsync<Xamarin.Google.MLKit.Vision.Text.Text>(recognizer.Process(input));
-        var words = new List<ReceiptWord>();
+        var words = new List<LayoutWord>();
         foreach (var block in result.TextBlocks)
         {
             foreach (var line in block.Lines)
@@ -97,23 +81,23 @@ internal static class ReceiptReader
                 {
                     if (element.BoundingBox is { } box && !string.IsNullOrEmpty(element.Text))
                     {
-                        words.Add(new ReceiptWord(box.Top, box.Bottom, box.Left, element.Text));
+                        words.Add(new LayoutWord(box.Top, box.Bottom, box.Left, element.Text));
                     }
                 }
             }
         }
 
-        return ReceiptParser.Rows(words);
+        return words;
     }
 #endif
 
 #if WINDOWS
-    private static async Task<string?> ReadWindowsAsync(byte[] image)
+    private static async Task<IReadOnlyList<LayoutWord>> RecognizeWindowsAsync(byte[] image)
     {
         var engine = global::Windows.Media.Ocr.OcrEngine.TryCreateFromUserProfileLanguages();
         if (engine is null)
         {
-            return null;
+            return [];
         }
 
         using var stream = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
@@ -140,7 +124,7 @@ internal static class ReceiptReader
             global::Windows.Graphics.Imaging.ExifOrientationMode.RespectExifOrientation,
             global::Windows.Graphics.Imaging.ColorManagementMode.DoNotColorManage);
         var result = await engine.RecognizeAsync(bitmap);
-        return ReceiptParser.Rows(result.Lines.SelectMany(l => l.Words).Select(w => new ReceiptWord(w.BoundingRect.Y, w.BoundingRect.Y + w.BoundingRect.Height, w.BoundingRect.X, w.Text)));
+        return [.. result.Lines.SelectMany(l => l.Words).Select(w => new LayoutWord(w.BoundingRect.Y, w.BoundingRect.Y + w.BoundingRect.Height, w.BoundingRect.X, w.Text))];
     }
 #endif
 }

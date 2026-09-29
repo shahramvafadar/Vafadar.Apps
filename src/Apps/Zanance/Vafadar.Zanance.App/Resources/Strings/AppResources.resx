@@ -2661,7 +2661,7 @@
     <value>Receipt</value>
   </data>
   <data name="Receipt_Nothing" xml:space="preserve">
-    <value>No amount, date or shop could be read from this photo.</value>
+    <value>No amount, date or shop could be read from this receipt.</value>
   </data>
   <data name="Receipt_Review" xml:space="preserve">
     <value>From the receipt: {0}. Please check before saving.</value>

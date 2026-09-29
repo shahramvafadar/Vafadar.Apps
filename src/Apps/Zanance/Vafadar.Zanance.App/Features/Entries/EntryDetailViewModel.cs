@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Documents.Maui;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -17,7 +18,7 @@ public sealed record AttachmentRow(Guid Id, string Name, string Details, ImageSo
 {
     public bool HasPreview => Preview is not null;
 
-    /// <summary>Gets a value indicating whether the receipt can be read on this device (an image of an expense, D-31).</summary>
+    /// <summary>Gets a value indicating whether the receipt can be read on this device (a photo or PDF of an expense, D-31, D-33).</summary>
     public bool CanRead { get; init; }
 }
 
@@ -256,7 +257,7 @@ public sealed partial class EntryDetailViewModel(
         await LoadAttachmentsAsync();
     }
 
-    // On-device text recognition of a receipt photo (D-31). The found values open the editor for review; nothing is
+    // On-device reading of a receipt photo or PDF (D-31, D-33). The found values open the editor for review; nothing is
     // changed until the user saves there.
     [RelayCommand]
     private async Task ReadReceiptAsync(AttachmentRow row)
@@ -270,7 +271,7 @@ public sealed partial class EntryDetailViewModel(
         IsBusy = true;
         try
         {
-            text = await ReceiptReader.ReadAsync(attachment.Data);
+            text = await DocumentReader.ReadAsync(attachment.Data, attachment.ContentType);
         }
         finally
         {
@@ -319,7 +320,7 @@ public sealed partial class EntryDetailViewModel(
             var size = info.Size >= 1024 * 1024 ? $"{info.Size / 1024d / 1024d:0.0} MB" : $"{Math.Max(1, info.Size / 1024)} KB";
             Attachments.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview)
             {
-                CanRead = info.IsImage && _entry?.Kind == EntryKind.Expense && ReceiptReader.IsSupported,
+                CanRead = _entry?.Kind == EntryKind.Expense && DocumentReader.CanRead(info.ContentType),
             });
         }
 

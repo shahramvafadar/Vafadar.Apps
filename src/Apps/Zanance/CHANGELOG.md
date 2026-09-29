@@ -54,6 +54,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Read the total, date and shop from a receipt photo on the device (iOS, Windows and Android); the values open the editor
   for review before anything is saved.
+- Read PDF invoices and receipts as well (D-33): the text of digital PDFs is taken directly, scanned PDFs are rendered
+  by the system and recognised like photos. Invoice totals ("Rechnungsbetrag", "amount payable") are recognised.
 
 ### Added – Quick add widget (D-30)
 
@@ -98,4 +100,4 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ### Not yet included
 
-- Backup to Google Drive or OneDrive (needs the sign-in configuration), public-holiday calendars, widgets and OCR.
+- Backup to Google Drive or OneDrive (needs the sign-in configuration).

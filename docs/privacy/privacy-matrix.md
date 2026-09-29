@@ -45,7 +45,7 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 | Google Play Billing / StoreKit | 🔜 | Purchase status | Only if the app gets Pro / tips |
 | Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline |
 | Plugin.LocalNotification | ✅ | Reminder text | Local notifications only, no push service |
-| Google ML Kit text recognition (Android) | ⚙️ | A receipt photo the user chooses to read | Runs on the device with a bundled model; its usage statistics cannot be sent because the app has no network permission |
+| Google ML Kit text recognition (Android) | ⚙️ | A receipt photo or scanned PDF page the user chooses to read | Runs on the device with a bundled model; its usage statistics cannot be sent because the app has no network permission |
 | Android Auto Backup | ✅ | App database and preferences | Operated by Google under the user's account; kept on by owner decision D-16 |
 | iOS device / iCloud backup | ✅ | App data | Operated by Apple under the user's account (OS default) |
 

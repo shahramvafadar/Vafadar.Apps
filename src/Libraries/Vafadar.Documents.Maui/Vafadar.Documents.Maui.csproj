@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(RepoRoot)eng\Maui.props" />
+
+  <PropertyGroup>
+    <Description>Reading documents on the device: text recognition with the system engines (Vision on iOS, Windows.Media.Ocr, ML Kit on Android), PDF pages rendered by the system and one reader for photos and PDF files. Nothing leaves the device.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Documents\Vafadar.Documents.csproj" />
+  </ItemGroup>
+
+  <!--
+    ML Kit text recognition with the bundled Latin model (Android has no system engine). The AndroidX Ktx packages are
+    pinned so the versions ML Kit brings in do not conflict with those of MAUI (NU1608).
+  -->
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <PackageReference Include="Xamarin.Google.MLKit.TextRecognition" />
+    <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" />
+    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" />
+  </ItemGroup>
+
+</Project>

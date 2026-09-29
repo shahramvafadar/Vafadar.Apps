@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Text of documents on the device: rows from recognised words (left-to-right and right-to-left) and the text layer of PDF files. Platform independent.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" />
+  </ItemGroup>
+
+</Project>

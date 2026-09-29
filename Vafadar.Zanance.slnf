@@ -12,6 +12,8 @@
       "src\\Libraries\\Vafadar.Backup\\Vafadar.Backup.csproj",
       "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
       "src\\Libraries\\Vafadar.Data\\Vafadar.Data.csproj",
+      "src\\Libraries\\Vafadar.Documents\\Vafadar.Documents.csproj",
+      "src\\Libraries\\Vafadar.Documents.Maui\\Vafadar.Documents.Maui.csproj",
       "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",
       "src\\Libraries\\Vafadar.Maui\\Vafadar.Maui.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Core.Tests\\Vafadar.Zanance.Core.Tests.csproj",
@@ -22,6 +24,7 @@
       "test\\Libraries\\Vafadar.Backup.Tests\\Vafadar.Backup.Tests.csproj",
       "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
       "test\\Libraries\\Vafadar.Data.Tests\\Vafadar.Data.Tests.csproj",
+      "test\\Libraries\\Vafadar.Documents.Tests\\Vafadar.Documents.Tests.csproj",
       "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
       "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
     ]

@@ -14,13 +14,6 @@ public sealed record ReceiptSuggestion(decimal? Amount, DateOnly? Date, string? 
     public bool IsEmpty => Amount is null && Date is null && Merchant is null;
 }
 
-/// <summary>A recognised word or line with its box, in any unit that grows downwards and to the right.</summary>
-public readonly record struct ReceiptWord(double Top, double Bottom, double Left, string Text)
-{
-    /// <summary>Gets the vertical centre.</summary>
-    public double Centre => (Top + Bottom) / 2;
-}
-
 /// <summary>
 /// Reads the total, the date and the merchant from the text of a receipt (on-device OCR, D-31). It prefers a line with a
 /// total keyword (Total, Summe, Gesamt, جمع, مبلغ قابل پرداخت …) and falls back to the largest amount. Persian and
@@ -32,7 +25,8 @@ public static partial class ReceiptParser
     private static readonly string[] StrongTotal =
     [
         "total", "grand total", "total due", "amount due", "balance due", "to pay", "summe", "gesamtsumme", "gesamtbetrag",
-        "endbetrag", "zu zahlen", "jumlah", "جمع کل", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل",
+        "endbetrag", "rechnungsbetrag", "zahlbetrag", "zu zahlen", "invoice total", "amount payable", "jumlah",
+        "جمع کل", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل",
     ];
 
     private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ"];
@@ -60,39 +54,6 @@ public static partial class ReceiptParser
         var normalized = SplitDecimals().Replace(Digits.ToAscii(text).Replace('٫', '.').Replace('٬', ',').Replace('،', ','), "$1$2$3");
         var lines = normalized.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         return new ReceiptSuggestion(FindTotal(lines), FindDate(lines), FindMerchant(lines));
-    }
-
-    /// <summary>
-    /// Builds the text rows of a receipt from recognised words. OCR engines return text in blocks or columns, so a price
-    /// can end up far from its label; words whose vertical centres lie within half a line height form one row, read in
-    /// reading order (by <see cref="ReceiptWord.Left"/>, right to left for rows in Arabic script).
-    /// </summary>
-    public static string? Rows(IEnumerable<ReceiptWord> words)
-    {
-        ArgumentNullException.ThrowIfNull(words);
-        var rows = new List<List<ReceiptWord>>();
-        foreach (var word in words.OrderBy(w => w.Centre))
-        {
-            var height = Math.Max(word.Bottom - word.Top, double.Epsilon);
-            var row = rows.LastOrDefault();
-            if (row is not null && Math.Abs(word.Centre - row.Average(w => w.Centre)) < height / 2)
-            {
-                row.Add(word);
-            }
-            else
-            {
-                rows.Add([word]);
-            }
-        }
-
-        return rows.Count == 0 ? null : string.Join('\n', rows.Select(r => string.Join(' ', (IsRightToLeft(r) ? r.OrderByDescending(w => w.Left) : r.OrderBy(w => w.Left)).Select(w => w.Text))));
-    }
-
-    // A row written mostly in Arabic script (Persian) is read from right to left.
-    private static bool IsRightToLeft(List<ReceiptWord> row)
-    {
-        var text = string.Concat(row.Select(w => w.Text));
-        return text.Count(c => c is >= '\u0600' and <= '\u06FF') > text.Count(char.IsAsciiLetter);
     }
 
     /// <summary>Reads an amount like <c>1.234,56</c>, <c>1,234.56</c>, <c>12,50</c> or <c>125,000</c>.</summary>

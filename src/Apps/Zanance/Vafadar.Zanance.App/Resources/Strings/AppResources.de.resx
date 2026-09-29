@@ -2657,7 +2657,7 @@
     <value>Beleg</value>
   </data>
   <data name="Receipt_Nothing" xml:space="preserve">
-    <value>Aus diesem Foto konnten kein Betrag, kein Datum und kein Geschäft gelesen werden.</value>
+    <value>Aus diesem Beleg konnten kein Betrag, kein Datum und kein Geschäft gelesen werden.</value>
   </data>
   <data name="Receipt_Review" xml:space="preserve">
     <value>Aus dem Beleg: {0}. Bitte vor dem Speichern prüfen.</value>

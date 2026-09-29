@@ -1,3 +1,4 @@
+using Vafadar.Documents;
 using Vafadar.Zanance.Core.Receipts;
 
 namespace Vafadar.Zanance.Core.Tests.Receipts;
@@ -89,7 +90,7 @@ public sealed class ReceiptParserTests
     public void Words_an_ocr_engine_returns_in_columns_are_joined_into_rows()
     {
         // Word boxes as Windows OCR returned them for a rendered receipt: prices come as a separate column, "2,90" split.
-        ReceiptWord[] words =
+        LayoutWord[] words =
         [
             new(55, 81, 42, "Baeckerei"), new(55, 81, 240, "Sonnenschein"), new(236, 266, 399, "1,20"), new(296, 326, 398, "2,"),
             new(296, 321, 437, "90"), new(357, 386, 397, "4,"), new(356, 381, 438, "10"), new(416, 446, 379, "10,ee"),
@@ -99,7 +100,7 @@ public sealed class ReceiptParserTests
             new(357, 381, 162, "EUR"), new(417, 441, 42, "Bar"), new(115, 141, 438, "Berlin"),
         ];
 
-        var text = ReceiptParser.Rows(words);
+        var text = TextLayout.Rows(words);
         var receipt = ReceiptParser.Parse(text);
 
         Assert.Contains("SUMME EUR 4, 10", text, StringComparison.Ordinal);
@@ -136,7 +137,17 @@ public sealed class ReceiptParserTests
 
     [Fact]
     public void A_persian_row_is_read_from_right_to_left() =>
-        Assert.Equal("فروشگاه نمونه", ReceiptParser.Rows([new(0, 10, 50, "نمونه"), new(0, 10, 120, "فروشگاه")]));
+        Assert.Equal("فروشگاه نمونه", TextLayout.Rows([new(0, 10, 50, "نمونه"), new(0, 10, 120, "فروشگاه")]));
+
+    [Fact]
+    public void An_invoice_total_is_the_gross_amount_not_the_net_or_the_tax()
+    {
+        var receipt = ReceiptParser.Parse("Musterfirma GmbH\nRechnungsdatum 28.09.2026\nNettobetrag 100,00 EUR\nUSt 19 % 19,00 EUR\nRechnungsbetrag 119,00 EUR\nZahlbar bis 12.10.2026");
+
+        Assert.Equal(119.00m, receipt.Amount);
+        Assert.Equal(new DateOnly(2026, 9, 28), receipt.Date);
+        Assert.Equal("Musterfirma GmbH", receipt.Merchant);
+    }
 
     [Fact]
     public void An_empty_text_suggests_nothing() => Assert.True(ReceiptParser.Parse("  ").IsEmpty);

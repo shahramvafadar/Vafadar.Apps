@@ -18,7 +18,7 @@
   <ItemGroup Label="Android">
     <!-- Keep in line with the AndroidX versions used by .NET MAUI; newer builds pull incompatible AndroidX packages. -->
     <PackageVersion Include="Xamarin.AndroidX.Biometric" Version="1.1.0.30" />
-    <!-- On-device receipt reading on Android (D-31): ML Kit with the model bundled in the app, no download. -->
+    <!-- On-device text recognition on Android (Vafadar.Documents.Maui, D-31): ML Kit with the model bundled in the app, no download. -->
     <PackageVersion Include="Xamarin.Google.MLKit.TextRecognition" Version="116.0.1.9" />
     <!-- ML Kit brings newer AndroidX libraries; their Kotlin extension packages must match (NU1608). -->
     <PackageVersion Include="Xamarin.AndroidX.Collection.Ktx" Version="1.6.0.1" />

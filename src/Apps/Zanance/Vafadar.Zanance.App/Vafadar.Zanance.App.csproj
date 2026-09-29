@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Backup\Vafadar.Backup.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Documents.Maui\Vafadar.Documents.Maui.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Maui\Vafadar.Maui.csproj" />
     <ProjectReference Include="..\Vafadar.Zanance.Core\Vafadar.Zanance.Core.csproj" />
     <ProjectReference Include="..\Vafadar.Zanance.Data\Vafadar.Zanance.Data.csproj" />
@@ -64,14 +65,6 @@
   <!-- Local notifications on phones only: the Windows build of the plugin needs a newer Windows App SDK than MAUI. -->
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
     <PackageReference Include="Plugin.LocalNotification" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Xamarin.Google.MLKit.TextRecognition" />
-    <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" />
-    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" />
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" />
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" />
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release'">

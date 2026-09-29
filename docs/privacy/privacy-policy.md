@@ -48,9 +48,10 @@ generic text; names and amounts appear only if you turn on "Show names and amoun
 
 ## Reading receipts
 
-If you choose "Read" on a receipt photo, the text is recognised on your device – by the system on iOS and Windows and by
+If you choose "Read" on a receipt photo or PDF file, the text is read on your device. The text of a digital PDF is taken
+from the file itself; a photo or a scanned PDF page is recognised – by the system on iOS and Windows and by
 Google ML Kit, which is built into the app, on Android. The found amount, date and shop only fill the entry form for
-you to check. The photo and the text are not sent anywhere; the app has no internet access.
+you to check. The file and the text are not sent anywhere; the app has no internet access.
 
 ## App lock
 

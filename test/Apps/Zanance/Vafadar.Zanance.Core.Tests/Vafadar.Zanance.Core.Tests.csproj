@@ -4,6 +4,7 @@
     <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Core\Vafadar.Zanance.Core.csproj" />
     <ProjectReference Include="..\..\..\Shared\Vafadar.Testing\Vafadar.Testing.csproj" />
     <ProjectReference Include="..\..\..\..\src\Libraries\Vafadar.Localization\Vafadar.Localization.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Libraries\Vafadar.Documents\Vafadar.Documents.csproj" />
   </ItemGroup>
 
 </Project>
