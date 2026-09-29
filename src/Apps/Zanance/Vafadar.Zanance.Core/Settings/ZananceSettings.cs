@@ -37,6 +37,12 @@ public sealed class ZananceSettings : Entity, IAuditableEntity
     /// </summary>
     public int MonthStartDay { get; set; } = 1;
 
+    /// <summary>
+    /// Gets or sets a day on which a two-week budget period starts (e.g. a payday); the periods repeat every 14 days from
+    /// it. <see langword="null"/> = the start of the current week.
+    /// </summary>
+    public DateOnly? FortnightStart { get; set; }
+
     /// <summary>Gets or sets the default reminder lead time in days (REM-01, default 3).</summary>
     public int ReminderDaysBefore { get; set; } = 3;
 

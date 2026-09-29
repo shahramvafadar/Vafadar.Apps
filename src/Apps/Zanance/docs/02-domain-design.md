@@ -24,11 +24,11 @@ All types live in `Vafadar.Zanance.Core` unless stated otherwise. Rules are refe
 | – links | RefundOfId?, ScheduleId?, OccurrenceDate?, ImportBatchId?, ImportKey? | Unique index on (ScheduleId, OccurrenceDate) (D-07) |
 | `Schedule` | Name, Kind (Income, Expense, Transfer), AccountId, ToAccountId?, CategoryId?, AmountMode (Fixed, Estimated, Unknown), Amount?, ToAmount?, Note, Icon, Rule, Reminder, AutoPost, State (Active, Paused, Ended), PausedFrom?, PreviousScheduleId? | REC-01..22 |
 | `OccurrenceState` | ScheduleId, OriginalDate, Status (Settled, Skipped, Cancelled, Open-with-changes), DueDate override, Amount override, EntryId?, Note, AutoPostSuppressed | Unique (ScheduleId, OriginalDate) (D-06) |
-| `Budget` | Year, Month, Calendar (Gregorian/Persian), Currency, TotalLimit?, AccountScope (all included or explicit list) | BUD-01..08 |
+| `Budget` | Period (month, week, two weeks), Year, Month, PeriodStart (weeks), Calendar (Gregorian/Persian), Currency, TotalLimit?, AccountScope (all included or explicit list) | BUD-01..08, §10.3 |
 | `BudgetCategoryLimit` | BudgetId, CategoryId, Limit | BUD-02 |
 | `ExchangeRate` | Date, From, To, Rate (decimal as string), IsEstimate | FX-02, FX-04 |
 | `ImportBatch` | FileName, ImportedAt, RowCount, State (Applied, Reverted) | IO-11 |
-| `ZananceSettings` | ReportCurrency, DefaultAccountId, Mode (Simple/Advanced), BudgetCalendar, MonthStartDay (financial month, 1–28), WeekStart, ReminderDefaults, NotificationShowsAmounts, OnboardingCompleted | Stored in the database so they are part of backups (BAK-03) |
+| `ZananceSettings` | ReportCurrency, DefaultAccountId, Mode (Simple/Advanced), BudgetCalendar, MonthStartDay (financial month, 1–28), FortnightStart (two-week budgets), WeekStart, ReminderDefaults, NotificationShowsAmounts, OnboardingCompleted | Stored in the database so they are part of backups (BAK-03) |
 
 Transfers, opening balances and adjustments never carry an income/expense category.
 

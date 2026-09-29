@@ -2716,4 +2716,34 @@
   <data name="Budget_CategoryAverage" xml:space="preserve">
     <value>میانگین {0}</value>
   </data>
+  <data name="Budget_PeriodMonth" xml:space="preserve">
+    <value>ماهانه</value>
+  </data>
+  <data name="Budget_PeriodWeek" xml:space="preserve">
+    <value>هفتگی</value>
+  </data>
+  <data name="Budget_PeriodTwoWeeks" xml:space="preserve">
+    <value>هر دو هفته</value>
+  </data>
+  <data name="Budget_FortnightStart" xml:space="preserve">
+    <value>شروع دوره‌های دوهفته‌ای</value>
+  </data>
+  <data name="Budget_PreviousPeriod" xml:space="preserve">
+    <value>دورهٔ قبل</value>
+  </data>
+  <data name="Budget_NextPeriod" xml:space="preserve">
+    <value>دورهٔ بعد</value>
+  </data>
+  <data name="Budget_SuggestionWeeks" xml:space="preserve">
+    <value>پیشنهاد: {0} – میانگین {1} هفتهٔ گذشته، گردشده به بالا.</value>
+  </data>
+  <data name="Budget_SuggestionFortnights" xml:space="preserve">
+    <value>پیشنهاد: {0} – میانگین {1} دورهٔ دوهفته‌ای گذشته، گردشده به بالا.</value>
+  </data>
+  <data name="Budget_SuggestionOnePeriod" xml:space="preserve">
+    <value>پیشنهاد: {0} – هزینهٔ دورهٔ گذشته، گردشده به بالا.</value>
+  </data>
+  <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
+    <value>بودجه‌های هفتگی و دوهفته‌ای با سقف کار می‌کنند؛ پاکت‌ها و Flex روش‌های ماهانه‌اند.</value>
+  </data>
 </root>

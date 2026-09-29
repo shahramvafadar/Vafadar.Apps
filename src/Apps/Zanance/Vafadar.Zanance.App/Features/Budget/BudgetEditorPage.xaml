@@ -44,9 +44,12 @@
                             <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
                             <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" />
                             <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
-                            <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
-                            <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
+                            <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
+                                <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
+                                <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
+                                <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate Budget_WeeklyLimitsOnly}" Style="{StaticResource Secondary}" IsVisible="{Binding IsWeekly}" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>

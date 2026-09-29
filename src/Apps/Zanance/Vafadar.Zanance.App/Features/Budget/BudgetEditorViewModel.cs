@@ -51,6 +51,8 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     private int _year;
     private int _month;
     private PeriodCalendar _calendar;
+    private BudgetPeriod _period;
+    private DateOnly _periodStart;
     private string _currency = Currencies.Euro.Code;
 
     public ObservableCollection<LimitInput> Limits { get; } = [];
@@ -102,6 +104,15 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     /// <summary>Gets a value indicating whether the flex method is chosen: the limit is then for flexible spending only (D-28).</summary>
     public bool IsFlex => MethodIndex == (int)BudgetMethod.Flex;
 
+    /// <summary>Gets a value indicating whether a weekly or two-week budget is edited (limits only).</summary>
+    [ObservableProperty]
+    public partial bool IsWeekly { get; set; }
+
+    /// <summary>Gets a value indicating whether the method can be chosen (monthly budgets in Advanced).</summary>
+    public bool ShowMethods => IsAdvanced && !IsWeekly;
+
+    partial void OnIsWeeklyChanged(bool value) => OnPropertyChanged(nameof(ShowMethods));
+
     /// <summary>Gets a value indicating whether category limits can be edited (Advanced, not with flex).</summary>
     public bool ShowCategoryLimits => IsAdvanced && !IsFlex;
 
@@ -125,6 +136,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
 
     partial void OnIsAdvancedChanged(bool value)
     {
+        OnPropertyChanged(nameof(ShowMethods));
         OnPropertyChanged(nameof(ShowCategoryLimits));
         OnPropertyChanged(nameof(ShowFillSuggestions));
     }
@@ -139,10 +151,15 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         _month = query.TryGetValue("month", out var month) && month is int m ? m : 0;
         _calendar = query.TryGetValue("calendar", out var calendar) && calendar is PeriodCalendar c ? c : PeriodCalendar.Gregorian;
         _currency = query.TryGetValue("currency", out var currency) && currency is string code ? code : Currencies.Euro.Code;
+        _period = query.TryGetValue("period", out var period) && period is BudgetPeriod p ? p : BudgetPeriod.Month;
+        _periodStart = query.TryGetValue("start", out var start) && start is DateOnly s ? s : default;
+        IsWeekly = _period != BudgetPeriod.Month;
         CurrencyCode = _currency;
         query.Clear();
 
-        _budget = await store.GetBudgetAsync(_year, _month, _calendar, _currency);
+        _budget = IsWeekly
+            ? await store.GetBudgetAsync(_period, _periodStart, _currency)
+            : await store.GetBudgetAsync(_year, _month, _calendar, _currency);
         IsAdvanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
 
         // Category limits are an Advanced option; in Simple they stay saved and are summarised (BUD-02, UX-02).
@@ -154,7 +171,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         RolloverNames = [translator["Rollover_None"], translator["Rollover_Surplus"], translator["Rollover_Both"]];
         RolloverIndex = (int)(_budget?.Rollover ?? BudgetRollover.None);
         MethodNames = [translator["Budget_MethodLimits"], translator["Budget_MethodEnvelopes"], translator["Budget_MethodFlex"]];
-        MethodIndex = (int)(_budget?.Method ?? BudgetMethod.Limits);
+        MethodIndex = IsWeekly ? (int)BudgetMethod.Limits : (int)(_budget?.Method ?? BudgetMethod.Limits);
         if (!IsAdvanced && RolloverIndex != 0)
         {
             HiddenLimitsText = string.Join(Environment.NewLine, new[] { HiddenLimitsText, translator[$"Rollover_Active_{(BudgetRollover)RolloverIndex}"] }.Where(t => t is not null));
@@ -191,30 +208,28 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     private async Task LoadSuggestionsAsync()
     {
         var settings = await store.GetSettingsAsync();
-        var (first, _) = PeriodMath.MonthRange(_year, _month, _calendar, settings.MonthStartDay);
-        var (py, pm) = (_year, _month);
-        for (var i = 0; i < BudgetSuggestions.Months; i++)
-        {
-            (py, pm) = PeriodMath.Previous(py, pm);
-        }
-
-        var from = PeriodMath.MonthRange(py, pm, _calendar, settings.MonthStartDay).First;
+        var periods = BudgetPeriods.Before(_period, _year, _month, _periodStart, _calendar, settings.MonthStartDay, BudgetSuggestions.PeriodsFor(_period));
         var suggestion = BudgetSuggestions.Suggest(
             await store.GetAccountsAsync(),
-            await store.GetEntriesAsync(from, first.AddDays(-1)),
+            await store.GetEntriesAsync(periods[^1].First, periods[0].Last),
             await store.GetCategoriesAsync(),
-            _year,
-            _month,
-            _calendar,
-            settings.MonthStartDay,
+            periods,
             _currency,
             _budget?.AccountIds,
             flexibleOnly: IsFlex);
 
         var culture = localization.CurrentCulture;
         _totalSuggestion = suggestion.Total?.Suggested;
+        var key = (_period, suggestion.Total?.Months) switch
+        {
+            (BudgetPeriod.Month, 1) => "Budget_SuggestionOne",
+            (BudgetPeriod.Month, _) => "Budget_Suggestion",
+            (_, 1) => "Budget_SuggestionOnePeriod",
+            (BudgetPeriod.Week, _) => "Budget_SuggestionWeeks",
+            _ => "Budget_SuggestionFortnights",
+        };
         TotalSuggestionText = suggestion.Total is { } total
-            ? translator.Format(total.Months == 1 ? "Budget_SuggestionOne" : "Budget_Suggestion", MoneyText.Format(total.Suggested, _currency, culture), total.Months)
+            ? translator.Format(key, MoneyText.Format(total.Suggested, _currency, culture), total.Months)
             : null;
         foreach (var input in Limits)
         {
@@ -285,12 +300,14 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
             return;
         }
 
-        var budget = _budget ?? new Core.Budgets.Budget { Year = _year, Month = _month, Calendar = _calendar, CurrencyCode = _currency };
+        var budget = _budget ?? (IsWeekly
+            ? new Core.Budgets.Budget { Period = _period, PeriodStart = _periodStart, Calendar = _calendar, CurrencyCode = _currency }
+            : new Core.Budgets.Budget { Year = _year, Month = _month, Calendar = _calendar, CurrencyCode = _currency });
         budget.TotalLimit = total;
         budget.CategoryLimits = limits;
         budget.AlertsEnabled = AlertsEnabled;
         budget.Rollover = (BudgetRollover)Math.Clamp(RolloverIndex, 0, 2);
-        budget.Method = (BudgetMethod)Math.Clamp(MethodIndex, 0, 2);
+        budget.Method = IsWeekly ? BudgetMethod.Limits : (BudgetMethod)Math.Clamp(MethodIndex, 0, 2);
         budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
         await store.SaveBudgetAsync(budget);
         await Shell.Current.GoToAsync("..");

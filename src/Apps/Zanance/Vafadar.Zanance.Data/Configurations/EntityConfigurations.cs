@@ -115,7 +115,7 @@ internal sealed class BudgetConfiguration : IEntityTypeConfiguration<Budget>
     public void Configure(EntityTypeBuilder<Budget> builder)
     {
         builder.Property(b => b.CurrencyCode).HasMaxLength(3);
-        builder.HasIndex(b => new { b.Year, b.Month, b.Calendar, b.CurrencyCode }).IsUnique();
+        builder.HasIndex(b => new { b.Period, b.Year, b.Month, b.PeriodStart, b.Calendar, b.CurrencyCode }).IsUnique();
         builder.OwnsMany(b => b.CategoryLimits, limits =>
         {
             limits.ToTable("BudgetCategoryLimits");

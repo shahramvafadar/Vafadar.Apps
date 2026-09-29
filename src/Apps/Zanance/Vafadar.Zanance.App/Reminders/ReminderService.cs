@@ -196,20 +196,32 @@ public sealed class ReminderService(
         return await scheduler.AreEnabledAsync() || await scheduler.RequestPermissionAsync();
     }
 
-    // One alert per level and month: opening the app again or editing an entry never repeats it (BUD-06).
+    // One alert per level and period: opening the app again or editing an entry never repeats it (BUD-06). The budget
+    // of this month and, when there are any, the weekly and two-week budgets of today are checked.
     private async Task CheckBudgetAsync(Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture)
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar, settings.MonthStartDay);
-        var budget = await store.GetBudgetAsync(year, month, settings.BudgetCalendar, settings.ReportCurrencyCode);
-        if (budget is not { AlertsEnabled: true, TotalLimit: { } ownLimit })
+        Budget?[] budgets =
+        [
+            await store.GetBudgetAsync(year, month, settings.BudgetCalendar, settings.ReportCurrencyCode),
+            await store.GetBudgetAsync(BudgetPeriod.Week, today, settings.ReportCurrencyCode),
+            await store.GetBudgetAsync(BudgetPeriod.TwoWeeks, today, settings.ReportCurrencyCode),
+        ];
+
+        foreach (var budget in budgets)
         {
-            return;
+            if (budget is { AlertsEnabled: true, TotalLimit: not null })
+            {
+                await CheckBudgetAsync(budget, settings, accounts, culture, today);
+            }
         }
+    }
 
-        var limit = ownLimit + (await store.GetBudgetCarryAsync(budget)).Total;
-
-        var (from, to) = PeriodMath.MonthRange(year, month, settings.BudgetCalendar, settings.MonthStartDay);
+    private async Task CheckBudgetAsync(Budget budget, Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture, DateOnly today)
+    {
+        var limit = budget.TotalLimit!.Value + (await store.GetBudgetCarryAsync(budget)).Total;
+        var (from, to) = BudgetPeriods.Range(budget, settings.MonthStartDay);
         var entries = await store.GetEntriesAsync(from, to);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await store.GetCategoriesAsync(), from, to));
         var key = BudgetAlertKey + budget.Id.ToString("N");

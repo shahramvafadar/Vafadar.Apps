@@ -77,6 +77,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   transaction filters and the forecast month end follow it; plans keep their dates.
 - The budget editor suggests limits from the average spending of the last three months, rounded up; they are only
   filled in when you choose so.
+- Weekly and two-week budgets (Advanced) next to the monthly one: the week follows the week start in the settings,
+  two-week periods start on a day you choose (e.g. payday). Limits, alerts, rollover, copying and suggestions work
+  for them too.
 
 ### Changed – Design (D-27)
 

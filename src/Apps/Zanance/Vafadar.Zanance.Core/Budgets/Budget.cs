@@ -44,15 +44,35 @@ public enum BudgetMethod
     Flex = 2,
 }
 
+/// <summary>The length of a budget period (§10.3).</summary>
+public enum BudgetPeriod
+{
+    /// <summary>A (financial) month, identified by <see cref="Budget.Year"/> and <see cref="Budget.Month"/>.</summary>
+    Month = 0,
+
+    /// <summary>Seven days from <see cref="Budget.PeriodStart"/>.</summary>
+    Week = 1,
+
+    /// <summary>Fourteen days from <see cref="Budget.PeriodStart"/> (a two-week pay cycle).</summary>
+    TwoWeeks = 2,
+}
+
 /// <summary>
-/// A monthly spending budget (BUD-01). Limits are in <see cref="CurrencyCode"/> and never relabelled (BUD-08).
+/// A spending budget of a month, a week or two weeks (BUD-01, §10.3). Limits are in <see cref="CurrencyCode"/> and
+/// never relabelled (BUD-08).
 /// </summary>
 public sealed class Budget : Entity, IAuditableEntity
 {
-    /// <summary>Gets or sets the year in <see cref="Calendar"/>.</summary>
+    /// <summary>Gets or sets the period length; months are the default and the only choice in Simple mode.</summary>
+    public BudgetPeriod Period { get; set; }
+
+    /// <summary>Gets or sets the first day of a week or two-week period; unused (default) for months.</summary>
+    public DateOnly PeriodStart { get; set; }
+
+    /// <summary>Gets or sets the year in <see cref="Calendar"/> (0 for weeks).</summary>
     public int Year { get; set; }
 
-    /// <summary>Gets or sets the month (1–12) in <see cref="Calendar"/>.</summary>
+    /// <summary>Gets or sets the month (1–12) in <see cref="Calendar"/> (0 for weeks).</summary>
     public int Month { get; set; }
 
     /// <summary>Gets or sets the period calendar.</summary>

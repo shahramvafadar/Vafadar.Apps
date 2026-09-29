@@ -8,7 +8,7 @@ namespace Vafadar.Zanance.Core.Budgets;
 /// <summary>A suggested limit and what it is based on.</summary>
 /// <param name="Average">The average net spending per month in minor units.</param>
 /// <param name="Suggested">The average rounded up to a round amount.</param>
-/// <param name="Months">The number of past months the average is taken over.</param>
+/// <param name="Months">The number of past periods (months or weeks) the average is taken over.</param>
 public sealed record LimitSuggestion(long Average, long Suggested, int Months);
 
 /// <summary>Suggested limits of a budget month.</summary>
@@ -21,13 +21,16 @@ public sealed record BudgetSuggestion(LimitSuggestion? Total, IReadOnlyDictionar
 }
 
 /// <summary>
-/// Suggestions for adjusting limits (§10.3): the average net spending of the last complete financial months, rounded
+/// Suggestions for adjusting limits (§10.3): the average net spending of the last complete periods (months, weeks), rounded
 /// up. A suggestion is only shown; nothing changes until the user takes it over and saves.
 /// </summary>
 public static class BudgetSuggestions
 {
     /// <summary>The number of past months looked at.</summary>
     public const int Months = 3;
+
+    /// <summary>Returns how many past periods are looked at: three months, four weeks or three two-week periods.</summary>
+    public static int PeriodsFor(BudgetPeriod period) => period == BudgetPeriod.Week ? 4 : Months;
 
     /// <summary>Suggests limits for the budget month (year, month) from the months before it.</summary>
     /// <param name="accountIds">The budget scope; empty or <see langword="null"/> = all accounts in totals.</param>
@@ -42,8 +45,20 @@ public static class BudgetSuggestions
         int startDay,
         string currencyCode,
         IReadOnlyCollection<Guid>? accountIds = null,
+        bool flexibleOnly = false) =>
+        Suggest(accounts, entries, categories, BudgetPeriods.Before(BudgetPeriod.Month, year, month, default, calendar, startDay, Months), currencyCode, accountIds, flexibleOnly);
+
+    /// <summary>Suggests limits from the given past periods (newest first), e.g. the four weeks before a weekly budget.</summary>
+    public static BudgetSuggestion Suggest(
+        IEnumerable<Account> accounts,
+        IEnumerable<LedgerEntry> entries,
+        IEnumerable<Category> categories,
+        IReadOnlyList<(DateOnly First, DateOnly Last)> pastPeriods,
+        string currencyCode,
+        IReadOnlyCollection<Guid>? accountIds = null,
         bool flexibleOnly = false)
     {
+        ArgumentNullException.ThrowIfNull(pastPeriods);
         var accountList = accounts.ToList();
         var entryList = entries.ToList();
         var categoryList = categories.ToList();
@@ -60,19 +75,7 @@ public static class BudgetSuggestions
             return BudgetSuggestion.None;
         }
 
-        var periods = new List<(DateOnly From, DateOnly To)>();
-        var (y, m) = (year, month);
-        for (var i = 0; i < Months; i++)
-        {
-            (y, m) = PeriodMath.Previous(y, m);
-            var period = PeriodMath.MonthRange(y, m, calendar, startDay);
-            if (period.Last < firstExpense)
-            {
-                break;
-            }
-
-            periods.Add(period);
-        }
+        var periods = pastPeriods.TakeWhile(p => p.Last >= firstExpense).Select(p => (From: p.First, To: p.Last)).ToList();
 
         if (periods.Count == 0)
         {

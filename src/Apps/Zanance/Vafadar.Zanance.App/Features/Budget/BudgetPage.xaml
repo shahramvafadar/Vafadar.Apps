@@ -32,9 +32,16 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
 
-            <!-- Month -->
+            <!-- Period length (§10.3, Advanced): month, week or two weeks -->
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" IsVisible="{Binding IsAdvanced}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding IsTwoWeeks}">
+                <Label Text="{v:Translate Budget_FortnightStart}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                <v:DateField Grid.Column="1" Date="{Binding FortnightStart}" SemanticProperties.Description="{v:Translate Budget_FortnightStart}" />
+            </Grid>
+
+            <!-- Period -->
             <Grid ColumnDefinitions="48,*,48">
-                <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
+                <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{Binding PreviousLabel}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding PreviousCommand}" />
                     </Border.GestureRecognizers>
@@ -46,7 +53,7 @@
                     <Label Text="{Binding ScopeText}" TextColor="{DynamicResource WarningText}" FontSize="13" HorizontalTextAlignment="Center"
                            IsVisible="{Binding ScopeText, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
-                <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
+                <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{Binding NextLabel}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NextCommand}" />
                     </Border.GestureRecognizers>

@@ -352,6 +352,26 @@ public sealed class ZananceStoreTests : IDisposable
     }
 
     [Fact]
+    public async Task Weekly_budgets_live_next_to_the_month_and_carry_their_rest_to_the_next_week()
+    {
+        var account = await NewAccountAsync();
+        var monday = new DateOnly(2026, 10, 5);
+        await _store.SaveEntryAsync(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 60_00, Date = monday.AddDays(2) }, Ct);
+        await _store.SaveBudgetAsync(new Budget { Year = 2026, Month = 10, Calendar = PeriodCalendar.Gregorian, CurrencyCode = account.CurrencyCode, TotalLimit = 800_00 }, Ct);
+        await _store.SaveBudgetAsync(new Budget { Period = BudgetPeriod.Week, PeriodStart = monday, CurrencyCode = account.CurrencyCode, TotalLimit = 100_00 }, Ct);
+        var next = new Budget { Period = BudgetPeriod.Week, PeriodStart = monday.AddDays(7), CurrencyCode = account.CurrencyCode, TotalLimit = 100_00, Rollover = BudgetRollover.Surplus };
+        await _store.SaveBudgetAsync(next, Ct);
+
+        // Any day of the week finds its budget; the month budget is separate.
+        Assert.Equal(monday, (await _store.GetBudgetAsync(BudgetPeriod.Week, monday.AddDays(6), account.CurrencyCode, Ct))!.PeriodStart);
+        Assert.Null(await _store.GetBudgetAsync(BudgetPeriod.TwoWeeks, monday, account.CurrencyCode, Ct));
+        Assert.Equal(800_00, (await _store.GetBudgetAsync(2026, 10, PeriodCalendar.Gregorian, account.CurrencyCode, Ct))!.TotalLimit);
+
+        // The first week leaves 40 for the second.
+        Assert.Equal(40_00, (await _store.GetBudgetCarryAsync(next, Ct)).Total);
+    }
+
+    [Fact]
     public async Task Budget_rollover_follows_the_financial_month()
     {
         var account = await NewAccountAsync();

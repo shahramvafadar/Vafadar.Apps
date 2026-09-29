@@ -82,11 +82,22 @@ public static class BudgetPlanning
     /// Copies a budget to another month (BUD-07): same currency, calendar, scope and limits. The source budget is not
     /// changed, so closed months keep their history.
     /// </summary>
-    public static Budget CopyTo(Budget source, int year, int month)
+    public static Budget CopyTo(Budget source, int year, int month) => Copy(source, BudgetPeriod.Month, year, month, default);
+
+    /// <summary>Copies a weekly or two-week budget to the period starting on <paramref name="start"/> (BUD-07).</summary>
+    public static Budget CopyTo(Budget source, DateOnly start)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        return Copy(source, source.Period, 0, 0, start);
+    }
+
+    private static Budget Copy(Budget source, BudgetPeriod period, int year, int month, DateOnly start)
     {
         ArgumentNullException.ThrowIfNull(source);
         return new Budget
         {
+            Period = period,
+            PeriodStart = start,
             Year = year,
             Month = month,
             Calendar = source.Calendar,

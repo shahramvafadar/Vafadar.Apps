@@ -2720,4 +2720,34 @@
   <data name="Budget_CategoryAverage" xml:space="preserve">
     <value>Average {0}</value>
   </data>
+  <data name="Budget_PeriodMonth" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Budget_PeriodWeek" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Budget_PeriodTwoWeeks" xml:space="preserve">
+    <value>Every 2 weeks</value>
+  </data>
+  <data name="Budget_FortnightStart" xml:space="preserve">
+    <value>Two-week periods start on</value>
+  </data>
+  <data name="Budget_PreviousPeriod" xml:space="preserve">
+    <value>Previous period</value>
+  </data>
+  <data name="Budget_NextPeriod" xml:space="preserve">
+    <value>Next period</value>
+  </data>
+  <data name="Budget_SuggestionWeeks" xml:space="preserve">
+    <value>Suggestion: {0} – the average of the last {1} weeks, rounded up.</value>
+  </data>
+  <data name="Budget_SuggestionFortnights" xml:space="preserve">
+    <value>Suggestion: {0} – the average of the last {1} two-week periods, rounded up.</value>
+  </data>
+  <data name="Budget_SuggestionOnePeriod" xml:space="preserve">
+    <value>Suggestion: {0} – the spending of the last period, rounded up.</value>
+  </data>
+  <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
+    <value>Weekly and two-week budgets use limits; envelopes and flex are monthly methods.</value>
+  </data>
 </root>

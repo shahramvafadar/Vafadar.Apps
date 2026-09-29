@@ -2716,4 +2716,34 @@
   <data name="Budget_CategoryAverage" xml:space="preserve">
     <value>Durchschnitt {0}</value>
   </data>
+  <data name="Budget_PeriodMonth" xml:space="preserve">
+    <value>Monatlich</value>
+  </data>
+  <data name="Budget_PeriodWeek" xml:space="preserve">
+    <value>Wöchentlich</value>
+  </data>
+  <data name="Budget_PeriodTwoWeeks" xml:space="preserve">
+    <value>Alle 2 Wochen</value>
+  </data>
+  <data name="Budget_FortnightStart" xml:space="preserve">
+    <value>Zweiwochenzeiträume beginnen am</value>
+  </data>
+  <data name="Budget_PreviousPeriod" xml:space="preserve">
+    <value>Vorheriger Zeitraum</value>
+  </data>
+  <data name="Budget_NextPeriod" xml:space="preserve">
+    <value>Nächster Zeitraum</value>
+  </data>
+  <data name="Budget_SuggestionWeeks" xml:space="preserve">
+    <value>Vorschlag: {0} – der Durchschnitt der letzten {1} Wochen, aufgerundet.</value>
+  </data>
+  <data name="Budget_SuggestionFortnights" xml:space="preserve">
+    <value>Vorschlag: {0} – der Durchschnitt der letzten {1} Zweiwochenzeiträume, aufgerundet.</value>
+  </data>
+  <data name="Budget_SuggestionOnePeriod" xml:space="preserve">
+    <value>Vorschlag: {0} – die Ausgaben des letzten Zeitraums, aufgerundet.</value>
+  </data>
+  <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
+    <value>Wochen- und Zweiwochenbudgets nutzen Limits; Umschläge und Flex sind Monatsmethoden.</value>
+  </data>
 </root>

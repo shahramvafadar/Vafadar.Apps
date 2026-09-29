@@ -55,6 +55,9 @@ public sealed partial class BudgetViewModel : ViewModelBase
     private string _currency = Currencies.Euro.Code;
     private int _year;
     private int _month;
+    private BudgetPeriod _period;
+    private DateOnly _periodStart;
+    private bool _refreshing;
 
     public BudgetViewModel(ZananceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
@@ -138,6 +141,58 @@ public sealed partial class BudgetViewModel : ViewModelBase
     [ObservableProperty]
     public partial Symbol NextIcon { get; set; }
 
+    // Weekly and two-week budgets (§10.3) are an Advanced choice; Simple mode keeps months.
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
+
+    [ObservableProperty]
+    public partial IReadOnlyList<string> PeriodNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int PeriodIndex { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsTwoWeeks { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly FortnightStart { get; set; }
+
+    [ObservableProperty]
+    public partial string PreviousLabel { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string NextLabel { get; set; } = string.Empty;
+
+    partial void OnPeriodIndexChanged(int value)
+    {
+        if (_refreshing || !Enum.IsDefined((BudgetPeriod)value))
+        {
+            return;
+        }
+
+        _period = (BudgetPeriod)value;
+        _periodStart = default;
+        _ = Presentation.Failures.GuardAsync(LoadAsync);
+    }
+
+    // The day two-week periods repeat from (e.g. a payday); changing it shows the period of today on the new grid.
+    async partial void OnFortnightStartChanged(DateOnly value)
+    {
+        if (_refreshing)
+        {
+            return;
+        }
+
+        await Presentation.Failures.GuardAsync(async () =>
+        {
+            var settings = await _store.GetSettingsAsync();
+            settings.FortnightStart = value;
+            await _store.SaveSettingsAsync(settings);
+            _periodStart = default;
+            await LoadAsync();
+        });
+    }
+
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     partial void OnConfirmedOnlyChanged(bool value) => _ = LoadAsync();
@@ -153,6 +208,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
         if (!_backFromEditor)
         {
             _year = 0;
+            _periodStart = default;
         }
 
         _backFromEditor = false;
@@ -180,26 +236,68 @@ public sealed partial class BudgetViewModel : ViewModelBase
         }
 
         _currency = settings.ReportCurrencyCode;
+        IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        if (!IsAdvanced)
+        {
+            _period = BudgetPeriod.Month;
+        }
+
+        _refreshing = true;
+        try
+        {
+            PeriodNames = [_translator["Budget_PeriodMonth"], _translator["Budget_PeriodWeek"], _translator["Budget_PeriodTwoWeeks"]];
+            PeriodIndex = (int)_period;
+            IsTwoWeeks = _period == BudgetPeriod.TwoWeeks;
+            FortnightStart = settings.FortnightStart ?? BudgetPeriods.StartOf(BudgetPeriod.Week, Today, _localization.FirstDayOfWeek);
+        }
+        finally
+        {
+            _refreshing = false;
+        }
 
         // Chevrons point in the reading direction (UX: direction-dependent icons mirror in RTL).
         PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
         NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
+        PreviousLabel = _translator[_period == BudgetPeriod.Month ? "Budget_PreviousMonth" : "Budget_PreviousPeriod"];
+        NextLabel = _translator[_period == BudgetPeriod.Month ? "Budget_NextMonth" : "Budget_NextPeriod"];
 
-        var (from, to) = PeriodMath.MonthRange(_year, _month, _calendar, _startDay);
-        PeriodText = _dates.Format(from, DateFormatStyle.MonthYear);
-        if (_startDay > 1 || (_calendar == PeriodCalendar.Persian) != (_localization.CurrentCalendar == CalendarSystem.Persian))
+        DateOnly from, to;
+        if (_period == BudgetPeriod.Month)
         {
-            // A month with its own start day, or budget months in another calendar than the display: show the exact range.
+            (from, to) = PeriodMath.MonthRange(_year, _month, _calendar, _startDay);
+            PeriodText = _dates.Format(from, DateFormatStyle.MonthYear);
+            if (_startDay > 1 || (_calendar == PeriodCalendar.Persian) != (_localization.CurrentCalendar == CalendarSystem.Persian))
+            {
+                // A month with its own start day, or budget months in another calendar than the display: show the exact range.
+                PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
+            }
+
+            _budget = await _store.GetBudgetAsync(_year, _month, _calendar, _currency);
+            var (py, pm) = PeriodMath.Previous(_year, _month);
+            CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(py, pm, _calendar, _currency) is not null;
+        }
+        else
+        {
+            if (_periodStart == default)
+            {
+                _periodStart = BudgetPeriods.StartOf(_period, Today, _localization.FirstDayOfWeek, settings.FortnightStart);
+            }
+
+            // A budget made before the week start was changed keeps its own dates.
+            _budget = await _store.GetBudgetAsync(_period, _periodStart, _currency);
+            if (_budget is not null)
+            {
+                _periodStart = _budget.PeriodStart;
+            }
+
+            (from, to) = BudgetPeriods.Range(_period, _periodStart);
             PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
+            CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(_period, _periodStart.AddDays(-1), _currency) is not null;
         }
 
         CurrencyText = _translator.Format("Budget_Currency", _currency, _translator[_calendar == PeriodCalendar.Persian ? "Calendar_Persian" : "Calendar_Gregorian"]);
-
-        _budget = await _store.GetBudgetAsync(_year, _month, _calendar, _currency);
         HasBudget = _budget is not null;
         ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
-        var (py, pm) = PeriodMath.Previous(_year, _month);
-        CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(py, pm, _calendar, _currency) is not null;
 
         var accounts = await _store.GetAccountsAsync();
         var entries = await _store.GetEntriesAsync(from, to);
@@ -212,8 +310,9 @@ public sealed partial class BudgetViewModel : ViewModelBase
         EnvelopeLines.Clear();
         FlexLines.Clear();
         FlexTotalText = null;
-        IsEnvelopes = _budget?.Method == BudgetMethod.Envelopes;
-        IsFlex = _budget?.Method == BudgetMethod.Flex;
+        // Envelopes and flex are monthly methods; weekly budgets are read as limits.
+        IsEnvelopes = _period == BudgetPeriod.Month && _budget?.Method == BudgetMethod.Envelopes;
+        IsFlex = _period == BudgetPeriod.Month && _budget?.Method == BudgetMethod.Flex;
         CategoriesHeader = _translator[IsEnvelopes ? "Budget_MethodEnvelopes" : "Budget_Categories"];
         UnassignedText = EnvelopeNote = null;
         var envelopes = new List<BudgetStatus>();
@@ -263,7 +362,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
             .Where(s => s.State == Core.Plans.ScheduleState.Active && s.Kind == EntryKind.Expense && accounts.Any(a => a.Id == s.AccountId && a.CurrencyCode == _currency))
             .Select(BudgetPlanning.MonthlyEquivalent)
             .Sum(v => v ?? 0);
-        EquivalentText = equivalent > 0 ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
+        EquivalentText = equivalent > 0 && _period == BudgetPeriod.Month ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
     }
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
@@ -370,15 +469,27 @@ public sealed partial class BudgetViewModel : ViewModelBase
     [RelayCommand]
     private Task PreviousAsync()
     {
-        (_year, _month) = PeriodMath.Previous(_year, _month);
+        Move(-1);
         return LoadAsync();
     }
 
     [RelayCommand]
     private Task NextAsync()
     {
-        (_year, _month) = PeriodMath.Next(_year, _month);
+        Move(1);
         return LoadAsync();
+    }
+
+    private void Move(int count)
+    {
+        if (_period == BudgetPeriod.Month)
+        {
+            (_year, _month) = count < 0 ? PeriodMath.Previous(_year, _month) : PeriodMath.Next(_year, _month);
+        }
+        else
+        {
+            _periodStart = BudgetPeriods.Step(_period, _periodStart, count);
+        }
     }
 
     [RelayCommand]
@@ -391,12 +502,25 @@ public sealed partial class BudgetViewModel : ViewModelBase
             ["month"] = _month,
             ["calendar"] = _calendar,
             ["currency"] = _currency,
+            ["period"] = _period,
+            ["start"] = _periodStart,
         });
     }
 
     [RelayCommand]
     private async Task CopyPreviousAsync()
     {
+        if (_period != BudgetPeriod.Month)
+        {
+            if (await _store.GetBudgetAsync(_period, _periodStart.AddDays(-1), _currency) is { } previousWeek)
+            {
+                await _store.SaveBudgetAsync(BudgetPlanning.CopyTo(previousWeek, _periodStart));
+                await LoadAsync();
+            }
+
+            return;
+        }
+
         var (py, pm) = PeriodMath.Previous(_year, _month);
         if (await _store.GetBudgetAsync(py, pm, _calendar, _currency) is { } previous)
         {
@@ -414,23 +538,44 @@ public sealed partial class BudgetViewModel : ViewModelBase
         }
 
         var (ny, nm) = PeriodMath.Next(_year, _month);
-        var (nextFrom, _) = PeriodMath.MonthRange(ny, nm, _calendar, _startDay);
-        var target = _dates.Format(nextFrom, DateFormatStyle.MonthYear);
-        var existing = await _store.GetBudgetAsync(ny, nm, _calendar, _currency);
+        var nextStart = _period == BudgetPeriod.Month ? default : BudgetPeriods.Step(_period, _periodStart, 1);
+        string target;
+        Core.Budgets.Budget? existing;
+        if (_period == BudgetPeriod.Month)
+        {
+            var (nextFrom, _) = PeriodMath.MonthRange(ny, nm, _calendar, _startDay);
+            target = _dates.Format(nextFrom, DateFormatStyle.MonthYear);
+            existing = await _store.GetBudgetAsync(ny, nm, _calendar, _currency);
+        }
+        else
+        {
+            var (first, last) = BudgetPeriods.Range(_period, nextStart);
+            target = $"{_dates.Format(first, DateFormatStyle.Short)} – {_dates.Format(last, DateFormatStyle.Short)}";
+            existing = await _store.GetBudgetAsync(_period, nextStart, _currency);
+        }
+
         var message = _translator.Format(existing is null ? "Budget_CopyMessage" : "Budget_CopyReplaceMessage", target);
         if (!await Shell.Current.DisplayAlertAsync(_translator["Budget_CopyNext"], message, _translator["Budget_Copy"], _translator["Common_Cancel"]))
         {
             return;
         }
 
-        var copy = BudgetPlanning.CopyTo(_budget, ny, nm);
+        var copy = _period == BudgetPeriod.Month ? BudgetPlanning.CopyTo(_budget, ny, nm) : BudgetPlanning.CopyTo(_budget, nextStart);
         if (existing is not null)
         {
             await _store.DeleteBudgetAsync(existing.Id);
         }
 
         await _store.SaveBudgetAsync(copy);
-        (_year, _month) = (ny, nm);
+        if (_period == BudgetPeriod.Month)
+        {
+            (_year, _month) = (ny, nm);
+        }
+        else
+        {
+            _periodStart = nextStart;
+        }
+
         await LoadAsync();
     }
 

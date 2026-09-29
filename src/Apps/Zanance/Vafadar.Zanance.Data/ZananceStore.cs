@@ -216,7 +216,21 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         return await db.Budgets.AsNoTracking()
-            .FirstOrDefaultAsync(b => b.Year == year && b.Month == month && b.Calendar == calendar && b.CurrencyCode == currencyCode, cancellationToken);
+            .FirstOrDefaultAsync(b => b.Period == BudgetPeriod.Month && b.Year == year && b.Month == month && b.Calendar == calendar && b.CurrencyCode == currencyCode, cancellationToken);
+    }
+
+    /// <summary>
+    /// Returns the weekly or two-week budget in a currency whose period contains <paramref name="date"/>, if one exists.
+    /// A budget made before the week start or the two-week start day was changed is still found.
+    /// </summary>
+    public async Task<Budget?> GetBudgetAsync(BudgetPeriod period, DateOnly date, string currencyCode, CancellationToken cancellationToken = default)
+    {
+        var earliest = date.AddDays(1 - BudgetPeriods.Days(period));
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Budgets.AsNoTracking()
+            .Where(b => b.Period == period && b.CurrencyCode == currencyCode && b.PeriodStart <= date && b.PeriodStart >= earliest)
+            .OrderByDescending(b => b.PeriodStart)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <summary>Returns all budgets, newest period first.</summary>
@@ -227,8 +241,9 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     }
 
     /// <summary>
-    /// Returns what the previous consecutive months pass on to <paramref name="budget"/> (§10.3). Only budgets of the same
-    /// calendar and currency count; a month without a budget ends the chain. Spending includes unreviewed entries.
+    /// Returns what the previous consecutive periods pass on to <paramref name="budget"/> (§10.3). Only budgets of the same
+    /// period length, calendar and currency count; a period without a budget ends the chain. Spending includes unreviewed
+    /// entries.
     /// </summary>
     public async Task<BudgetCarry> GetBudgetCarryAsync(Budget budget, CancellationToken cancellationToken = default)
     {
@@ -238,15 +253,30 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             return BudgetCarry.None;
         }
 
-        var budgets = (await GetBudgetsAsync(cancellationToken))
-            .Where(b => b.Calendar == budget.Calendar && string.Equals(b.CurrencyCode, budget.CurrencyCode, StringComparison.OrdinalIgnoreCase))
-            .ToDictionary(b => (b.Year, b.Month));
+        var sameKind = (await GetBudgetsAsync(cancellationToken))
+            .Where(b => b.Period == budget.Period && string.Equals(b.CurrencyCode, budget.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+            .ToList();
         var chain = new List<Budget>();
-        var (year, month) = PeriodMath.Previous(budget.Year, budget.Month);
-        while (chain.Count < BudgetRolloverCalculator.MaxMonths && budgets.TryGetValue((year, month), out var previous))
+        if (budget.Period == BudgetPeriod.Month)
         {
-            chain.Insert(0, previous);
-            (year, month) = PeriodMath.Previous(year, month);
+            var budgets = sameKind.Where(b => b.Calendar == budget.Calendar).ToDictionary(b => (b.Year, b.Month));
+            var (year, month) = PeriodMath.Previous(budget.Year, budget.Month);
+            while (chain.Count < BudgetRolloverCalculator.MaxMonths && budgets.TryGetValue((year, month), out var previous))
+            {
+                chain.Insert(0, previous);
+                (year, month) = PeriodMath.Previous(year, month);
+            }
+        }
+        else
+        {
+            // Weeks follow each other without a gap: the previous period ends the day before this one starts.
+            var byStart = sameKind.GroupBy(b => b.PeriodStart).ToDictionary(g => g.Key, g => g.First());
+            var start = BudgetPeriods.Step(budget.Period, budget.PeriodStart, -1);
+            while (chain.Count < BudgetRolloverCalculator.MaxMonths && byStart.TryGetValue(start, out var previous))
+            {
+                chain.Insert(0, previous);
+                start = BudgetPeriods.Step(budget.Period, start, -1);
+            }
         }
 
         if (chain.Count == 0)
@@ -256,14 +286,14 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
         // Months are financial months: the same start day as the budget page (§10.3).
         var startDay = (await GetSettingsAsync(cancellationToken)).MonthStartDay;
-        var from = PeriodMath.MonthRange(chain[0].Year, chain[0].Month, budget.Calendar, startDay).First;
-        var to = PeriodMath.MonthRange(chain[^1].Year, chain[^1].Month, budget.Calendar, startDay).Last;
+        var from = BudgetPeriods.Range(chain[0], startDay).First;
+        var to = BudgetPeriods.Range(chain[^1], startDay).Last;
         var accounts = await GetAccountsAsync(cancellationToken: cancellationToken);
         var entries = await GetEntriesAsync(from, to, cancellationToken);
         var categories = await GetCategoriesAsync(cancellationToken);
         var months = chain.Select(b =>
         {
-            var (start, end) = PeriodMath.MonthRange(b.Year, b.Month, b.Calendar, startDay);
+            var (start, end) = BudgetPeriods.Range(b, startDay);
             var scope = b.AccountIds.Count > 0 ? b.AccountIds : null;
             return new BudgetMonth(
                 b.Rollover,
