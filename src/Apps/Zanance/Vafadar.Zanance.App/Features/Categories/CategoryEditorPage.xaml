@@ -36,6 +36,13 @@
                             <Label Text="{v:Translate Category_Parent}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Parents}" SelectedItem="{Binding Parent}" SemanticProperties.Description="{v:Translate Category_Parent}" />
                         </VerticalStackLayout>
+
+                        <!-- Flex budgets (D-28) -->
+                        <VerticalStackLayout IsVisible="{Binding ShowSpendingType}">
+                            <Label Text="{v:Translate SpendingType_Title}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding SpendingTypeNames}" SelectedIndex="{Binding SpendingTypeIndex}" />
+                            <Label Text="{v:Translate SpendingType_Hint}" Style="{StaticResource Secondary}" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 

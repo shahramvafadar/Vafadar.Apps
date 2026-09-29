@@ -205,7 +205,7 @@ public sealed class ReminderService(
 
         var (from, to) = PeriodMath.MonthRange(year, month, settings.BudgetCalendar);
         var entries = await store.GetEntriesAsync(from, to);
-        var status = new BudgetStatus(limit, BudgetCalculator.NetExpense(accounts, entries, from, to, budget.CurrencyCode, budget.AccountIds.Count > 0 ? budget.AccountIds : null));
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await store.GetCategoriesAsync(), from, to));
         var key = BudgetAlertKey + budget.Id.ToString("N");
         var previous = int.TryParse(preferences.Get(key), NumberStyles.None, CultureInfo.InvariantCulture, out var level) ? level : 0;
         var current = (int)status.Alert;

@@ -29,6 +29,9 @@ public sealed record BudgetLine(
     Color ProgressColor,
     string? CarryText = null);
 
+/// <summary>A bill group of a flex budget (D-28): fixed bills or the monthly share of non-monthly bills.</summary>
+public sealed record FlexLine(string Title, string Detail, Symbol Icon, Color IconColor, Color TileBackground, Color TileStroke);
+
 /// <summary>
 /// The monthly budget (UI-10). A missing budget is shown as "no budget", never as zero (BUD-01); a zero limit has no
 /// percentage (BUD-05); overspending and negative net expense are shown as they are.
@@ -119,6 +122,15 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
     public ObservableCollection<AmountLine> EnvelopeLines { get; } = [];
 
+    // Flex (D-28): the bill groups and the month's whole plan; the total line is the flexible limit.
+    public ObservableCollection<FlexLine> FlexLines { get; } = [];
+
+    [ObservableProperty]
+    public partial bool IsFlex { get; set; }
+
+    [ObservableProperty]
+    public partial string? FlexTotalText { get; set; }
+
     [ObservableProperty]
     public partial Symbol PreviousIcon { get; set; }
 
@@ -180,7 +192,10 @@ public sealed partial class BudgetViewModel : ViewModelBase
         CategoryLines.Clear();
         TotalLines.Clear();
         EnvelopeLines.Clear();
+        FlexLines.Clear();
+        FlexTotalText = null;
         IsEnvelopes = _budget?.Method == BudgetMethod.Envelopes;
+        IsFlex = _budget?.Method == BudgetMethod.Flex;
         CategoriesHeader = _translator[IsEnvelopes ? "Budget_MethodEnvelopes" : "Budget_Categories"];
         UnassignedText = EnvelopeNote = null;
         var envelopes = new List<BudgetStatus>();
@@ -190,13 +205,17 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
             // Rollover (§10.3): the limits of this month plus what the previous months passed on.
             var carry = await _store.GetBudgetCarryAsync(budget);
-            if (budget.TotalLimit is { } limit)
+            if (IsFlex)
+            {
+                await LoadFlexAsync(budget, carry.Total, accounts, entries, categories, from, to, culture);
+            }
+            else if (budget.TotalLimit is { } limit)
             {
                 var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, confirmedOnly: ConfirmedOnly);
                 TotalLines.Add(Line(_translator["Budget_Total"], Symbol.Wallet, Good, new BudgetStatus(limit + carry.Total, spent), culture) with { CarryText = Carry(carry.Total, limit, culture) });
             }
 
-            foreach (var categoryLimit in budget.CategoryLimits.OrderBy(l => lookup.Get(l.CategoryId)?.SortOrder ?? int.MaxValue))
+            foreach (var categoryLimit in budget.CategoryLimits.Where(_ => !IsFlex).OrderBy(l => lookup.Get(l.CategoryId)?.SortOrder ?? int.MaxValue))
             {
                 var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, [categoryLimit.CategoryId], categories, ConfirmedOnly);
                 var categoryCarry = carry.For(categoryLimit.CategoryId);
@@ -228,6 +247,33 @@ public sealed partial class BudgetViewModel : ViewModelBase
             .Sum(v => v ?? 0);
         EquivalentText = equivalent > 0 ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
     }
+
+    // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
+    // monthly share. Every amount is counted in one group only (BUD-12).
+    private async Task LoadFlexAsync(Core.Budgets.Budget budget, long carry, IReadOnlyList<Account> accounts, IReadOnlyList<LedgerEntry> entries,
+        IReadOnlyList<Core.Categories.Category> categories, DateOnly from, DateOnly to, CultureInfo culture)
+    {
+        var limit = (budget.TotalLimit ?? 0) + carry;
+        var flex = FlexCalculator.Summarize(limit, accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), categories,
+            from, to, _currency, Today, budget.AccountIds.Count > 0 ? budget.AccountIds : null, ConfirmedOnly);
+        string Money(long value) => MoneyText.Format(value, _currency, culture);
+
+        if (budget.TotalLimit is { } own)
+        {
+            TotalLines.Add(Line(_translator["Flex_Flexible"], Symbol.Wallet, Good, flex.Flexible, culture) with { CarryText = Carry(carry, own, culture) });
+        }
+
+        var fixedDetail = flex.Fixed.Planned > 0
+            ? _translator.Format("Flex_FixedDetail", Money(flex.Fixed.Spent), Money(flex.Fixed.Planned), Money(flex.Fixed.Open))
+            : _translator.Format("Flex_Paid", Money(flex.Fixed.Spent));
+        FlexLines.Add(new FlexLine(_translator["Flex_Fixed"], fixedDetail + Unknown(flex.Fixed.UnknownCount), Symbol.CalendarClock, Palette.PlanText, Palette.PlanBackground, Palette.PlanLine));
+        FlexLines.Add(new FlexLine(_translator["Flex_NonMonthly"],
+            _translator.Format("Flex_NonMonthlyDetail", Money(flex.NonMonthly.Planned), Money(flex.NonMonthly.Spent)) + Unknown(flex.NonMonthly.UnknownCount),
+            Symbol.Savings, Palette.SavingText, Palette.SavingBackground, Palette.SavingLine));
+        FlexTotalText = _translator.Format("Flex_Total", Money(flex.Total));
+    }
+
+    private string Unknown(int count) => count > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", count) : string.Empty;
 
     // The balance at hand is today's, so the summary is shown for the current month only.
     private async Task LoadEnvelopesAsync(Core.Budgets.Budget budget, IReadOnlyList<Account> accounts, List<BudgetStatus> envelopes, DateOnly from, DateOnly to, CultureInfo culture)

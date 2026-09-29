@@ -36,6 +36,12 @@ public enum BudgetMethod
     /// assigned yet; nothing is moved or spent by assigning (BUD-11).
     /// </summary>
     Envelopes = 1,
+
+    /// <summary>
+    /// Flex budgeting (D-28): fixed bills are expected from the plans, non-monthly bills get a monthly share, and the
+    /// overall limit is one number for everything flexible. Category limits are not used.
+    /// </summary>
+    Flex = 2,
 }
 
 /// <summary>
@@ -55,7 +61,10 @@ public sealed class Budget : Entity, IAuditableEntity
     /// <summary>Gets or sets the budget currency.</summary>
     public required string CurrencyCode { get; set; }
 
-    /// <summary>Gets or sets the overall limit in minor units; <see langword="null"/> = no overall limit.</summary>
+    /// <summary>
+    /// Gets or sets the overall limit in minor units; <see langword="null"/> = no overall limit. With the flex method it is
+    /// the limit of the flexible spending only.
+    /// </summary>
     public long? TotalLimit { get; set; }
 
     /// <summary>Gets or sets the accounts in scope; empty = all accounts included in totals with the budget currency.</summary>

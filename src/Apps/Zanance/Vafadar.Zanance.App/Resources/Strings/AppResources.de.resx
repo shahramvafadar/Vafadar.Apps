@@ -2584,4 +2584,55 @@
   <data name="Settings_PersianDigits" xml:space="preserve">
     <value>Persische Ziffern (۱۲۳)</value>
   </data>
+  <data name="Budget_MethodFlex" xml:space="preserve">
+    <value>Flex</value>
+  </data>
+  <data name="Flex_Flexible" xml:space="preserve">
+    <value>Flexible Ausgaben</value>
+  </data>
+  <data name="Flex_FlexibleLimit" xml:space="preserve">
+    <value>Limit für flexible Ausgaben</value>
+  </data>
+  <data name="Flex_Bills" xml:space="preserve">
+    <value>Rechnungen</value>
+  </data>
+  <data name="Flex_Fixed" xml:space="preserve">
+    <value>Fixkosten</value>
+  </data>
+  <data name="Flex_FixedDetail" xml:space="preserve">
+    <value>{0} von {1} erwartet bezahlt · noch {2}</value>
+  </data>
+  <data name="Flex_Paid" xml:space="preserve">
+    <value>{0} bezahlt · noch keine Pläne für diese Rechnungen</value>
+  </data>
+  <data name="Flex_NonMonthly" xml:space="preserve">
+    <value>Nicht monatliche Kosten</value>
+  </data>
+  <data name="Flex_NonMonthlyDetail" xml:space="preserve">
+    <value>{0} diesen Monat zurücklegen · {1} bezahlt</value>
+  </data>
+  <data name="Flex_Total" xml:space="preserve">
+    <value>Monatsplan: {0}</value>
+  </data>
+  <data name="Flex_Hint" xml:space="preserve">
+    <value>Rechnungen kommen aus Ihren Plänen; das Limit oben gilt nur für flexible Ausgaben. Jeder Betrag zählt einmal.</value>
+  </data>
+  <data name="Flex_EditorHint" xml:space="preserve">
+    <value>Bei Flex ist jede Ausgabenkategorie fest, nicht monatlich oder flexibel (in der Kategorie festgelegt). Kategorielimits werden nicht verwendet.</value>
+  </data>
+  <data name="SpendingType_Title" xml:space="preserve">
+    <value>Im Flex-Budget</value>
+  </data>
+  <data name="SpendingType_Flexible" xml:space="preserve">
+    <value>Flexibel</value>
+  </data>
+  <data name="SpendingType_Fixed" xml:space="preserve">
+    <value>Fest</value>
+  </data>
+  <data name="SpendingType_NonMonthly" xml:space="preserve">
+    <value>Nicht monatlich</value>
+  </data>
+  <data name="SpendingType_Hint" xml:space="preserve">
+    <value>Fest: jeden Monat dieselbe Rechnung, z. B. Miete. Nicht monatlich: einige Male im Jahr, z. B. Versicherung. Flexibel: alltägliche Ausgaben.</value>
+  </data>
 </root>

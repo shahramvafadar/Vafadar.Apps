@@ -62,6 +62,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         Title = translator["Category_NewTitle"];
         Name = string.Empty;
         KindNames = [translator["CategoryKind_Expense"], translator["CategoryKind_Income"]];
+        SpendingTypeNames = [translator["SpendingType_Flexible"], translator["SpendingType_Fixed"], translator["SpendingType_NonMonthly"]];
         Parents = [];
         Icons = [.. IconKeys.Select((key, i) => Labelled(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent, "Category_IconOption", i))];
         Palette = [.. ColorKeys.Select((key, i) => Labelled(key, Symbol.Circle, Color.FromArgb(key), "Category_ColorOption", i))];
@@ -71,6 +72,9 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     }
 
     public IReadOnlyList<string> KindNames { get; }
+
+    /// <summary>Gets the flex spending types (D-28), in the order of <see cref="SpendingType"/>.</summary>
+    public IReadOnlyList<string> SpendingTypeNames { get; }
 
     public IReadOnlyList<Swatch> Icons { get; }
 
@@ -93,6 +97,17 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
 
     [ObservableProperty]
     public partial bool IsExisting { get; set; }
+
+    // Flex budgets (D-28): how a top-level expense category is budgeted; sub-categories follow their parent.
+    [ObservableProperty]
+    public partial int SpendingTypeIndex { get; set; }
+
+    /// <summary>Gets a value indicating whether the spending type can be chosen (a top-level expense category).</summary>
+    public bool ShowSpendingType => Kind == CategoryKind.Expense && (!CanHaveParent || Parent?.Id is null);
+
+    partial void OnParentChanged(ParentChoice? value) => OnPropertyChanged(nameof(ShowSpendingType));
+
+    partial void OnCanHaveParentChanged(bool value) => OnPropertyChanged(nameof(ShowSpendingType));
 
     [ObservableProperty]
     public partial bool IsArchived { get; set; }
@@ -130,6 +145,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             IsExisting = true;
             IsArchived = category.IsArchived;
             KindIndex = category.Kind == CategoryKind.Income ? 1 : 0;
+        SpendingTypeIndex = (int)category.SpendingType;
             Name = category.Name ?? string.Empty;
             DefaultName = category.SystemKey is { } key ? _translator[$"Category_{key}"] : null;
             Select(Icons, category.Icon ?? "Tag");
@@ -164,6 +180,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
 
     partial void OnKindIndexChanged(int value)
     {
+        OnPropertyChanged(nameof(ShowSpendingType));
         if (!IsExisting && _all.Count > 0)
         {
             BuildParents(_all);
@@ -222,6 +239,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             _category.Icon = Icons.FirstOrDefault(i => i.IsSelected)?.Key;
             _category.Color = Palette.FirstOrDefault(c => c.IsSelected)?.Key;
             _category.ParentId = CanHaveParent ? Parent?.Id : null;
+        _category.SpendingType = Enum.IsDefined((SpendingType)SpendingTypeIndex) ? (SpendingType)SpendingTypeIndex : SpendingType.Flexible;
             await _store.SaveCategoryAsync(_category);
             _snapshot = Snapshot();
             await Shell.Current.GoToAsync("..");
@@ -285,6 +303,6 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private string Snapshot() => string.Join('|', Name, KindIndex, Parent?.Id,
+    private string Snapshot() => string.Join('|', Name, KindIndex, SpendingTypeIndex, Parent?.Id,
         Icons.FirstOrDefault(i => i.IsSelected)?.Key, Palette.FirstOrDefault(c => c.IsSelected)?.Key);
 }

@@ -2584,4 +2584,55 @@
   <data name="Settings_PersianDigits" xml:space="preserve">
     <value>ارقام فارسی (۱۲۳)</value>
   </data>
+  <data name="Budget_MethodFlex" xml:space="preserve">
+    <value>منعطف</value>
+  </data>
+  <data name="Flex_Flexible" xml:space="preserve">
+    <value>هزینه‌های منعطف</value>
+  </data>
+  <data name="Flex_FlexibleLimit" xml:space="preserve">
+    <value>سقف هزینه‌های منعطف</value>
+  </data>
+  <data name="Flex_Bills" xml:space="preserve">
+    <value>قبض‌ها</value>
+  </data>
+  <data name="Flex_Fixed" xml:space="preserve">
+    <value>قبض‌های ثابت</value>
+  </data>
+  <data name="Flex_FixedDetail" xml:space="preserve">
+    <value>{0} از {1} پیش‌بینی‌شده پرداخت شد · {2} مانده</value>
+  </data>
+  <data name="Flex_Paid" xml:space="preserve">
+    <value>{0} پرداخت شد · هنوز برنامه‌ای برای این قبض‌ها نیست</value>
+  </data>
+  <data name="Flex_NonMonthly" xml:space="preserve">
+    <value>قبض‌های غیرماهانه</value>
+  </data>
+  <data name="Flex_NonMonthlyDetail" xml:space="preserve">
+    <value>سهم این ماه {0} · پرداخت‌شده {1}</value>
+  </data>
+  <data name="Flex_Total" xml:space="preserve">
+    <value>برنامهٔ این ماه: {0}</value>
+  </data>
+  <data name="Flex_Hint" xml:space="preserve">
+    <value>قبض‌ها از برنامه‌های شما می‌آیند؛ سقف بالا فقط برای هزینه‌های منعطف است. هر مبلغ فقط یک بار شمرده می‌شود.</value>
+  </data>
+  <data name="Flex_EditorHint" xml:space="preserve">
+    <value>در روش منعطف هر دستهٔ هزینه ثابت، غیرماهانه یا منعطف است (در تنظیم دسته). سقف دسته‌ها استفاده نمی‌شود.</value>
+  </data>
+  <data name="SpendingType_Title" xml:space="preserve">
+    <value>در بودجهٔ منعطف</value>
+  </data>
+  <data name="SpendingType_Flexible" xml:space="preserve">
+    <value>منعطف</value>
+  </data>
+  <data name="SpendingType_Fixed" xml:space="preserve">
+    <value>ثابت</value>
+  </data>
+  <data name="SpendingType_NonMonthly" xml:space="preserve">
+    <value>غیرماهانه</value>
+  </data>
+  <data name="SpendingType_Hint" xml:space="preserve">
+    <value>ثابت: هر ماه همان قبض، مثل اجاره. غیرماهانه: چند بار در سال، مثل بیمه. منعطف: هزینه‌های روزمره.</value>
+  </data>
 </root>

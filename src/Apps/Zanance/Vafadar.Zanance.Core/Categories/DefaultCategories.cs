@@ -11,6 +11,14 @@ public static class DefaultCategories
     /// <summary>Key of the expense category used for transfer fees (FIN-02).</summary>
     public const string Fees = "Fees";
 
+    /// <summary>Returns the flex spending type of a default expense category: bills are fixed, insurance comes a few times a year.</summary>
+    public static SpendingType SpendingTypeOf(string key) => key switch
+    {
+        "Housing" or "Energy" or "Communication" or "Subscriptions" => SpendingType.Fixed,
+        "Insurance" => SpendingType.NonMonthly,
+        _ => SpendingType.Flexible,
+    };
+
     /// <summary>Gets the default categories as (kind, key, icon, colour).</summary>
     public static IReadOnlyList<(CategoryKind Kind, string Key, string Icon, string Color)> All { get; } =
     [

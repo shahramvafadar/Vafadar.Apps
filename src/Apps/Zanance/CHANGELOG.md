@@ -46,6 +46,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Added – Flex budgets (D-28)
+
+- A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one
+  limit covers everything flexible. Each expense category can be marked fixed, non-monthly or flexible.
+
 ### Changed – Design (D-27)
 
 - A calm, neutral look in the brand blue, where every colour has one meaning: green for money coming in, red for

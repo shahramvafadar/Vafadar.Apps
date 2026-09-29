@@ -83,6 +83,20 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     [ObservableProperty]
     public partial int MethodIndex { get; set; }
 
+    /// <summary>Gets a value indicating whether the flex method is chosen: the limit is then for flexible spending only (D-28).</summary>
+    public bool IsFlex => MethodIndex == (int)BudgetMethod.Flex;
+
+    /// <summary>Gets a value indicating whether category limits can be edited (Advanced, not with flex).</summary>
+    public bool ShowCategoryLimits => IsAdvanced && !IsFlex;
+
+    partial void OnMethodIndexChanged(int value)
+    {
+        OnPropertyChanged(nameof(IsFlex));
+        OnPropertyChanged(nameof(ShowCategoryLimits));
+    }
+
+    partial void OnIsAdvancedChanged(bool value) => OnPropertyChanged(nameof(ShowCategoryLimits));
+
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -104,7 +118,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         AlertsEnabled = _budget?.AlertsEnabled ?? true;
         RolloverNames = [translator["Rollover_None"], translator["Rollover_Surplus"], translator["Rollover_Both"]];
         RolloverIndex = (int)(_budget?.Rollover ?? BudgetRollover.None);
-        MethodNames = [translator["Budget_MethodLimits"], translator["Budget_MethodEnvelopes"]];
+        MethodNames = [translator["Budget_MethodLimits"], translator["Budget_MethodEnvelopes"], translator["Budget_MethodFlex"]];
         MethodIndex = (int)(_budget?.Method ?? BudgetMethod.Limits);
         if (!IsAdvanced && RolloverIndex != 0)
         {
@@ -177,7 +191,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         budget.CategoryLimits = limits;
         budget.AlertsEnabled = AlertsEnabled;
         budget.Rollover = (BudgetRollover)Math.Clamp(RolloverIndex, 0, 2);
-        budget.Method = (BudgetMethod)Math.Clamp(MethodIndex, 0, 1);
+        budget.Method = (BudgetMethod)Math.Clamp(MethodIndex, 0, 2);
         budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
         await store.SaveBudgetAsync(budget);
         await Shell.Current.GoToAsync("..");

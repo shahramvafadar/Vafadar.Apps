@@ -2588,4 +2588,55 @@
   <data name="Settings_PersianDigits" xml:space="preserve">
     <value>Persian digits (۱۲۳)</value>
   </data>
+  <data name="Budget_MethodFlex" xml:space="preserve">
+    <value>Flex</value>
+  </data>
+  <data name="Flex_Flexible" xml:space="preserve">
+    <value>Flexible spending</value>
+  </data>
+  <data name="Flex_FlexibleLimit" xml:space="preserve">
+    <value>Limit for flexible spending</value>
+  </data>
+  <data name="Flex_Bills" xml:space="preserve">
+    <value>Bills</value>
+  </data>
+  <data name="Flex_Fixed" xml:space="preserve">
+    <value>Fixed bills</value>
+  </data>
+  <data name="Flex_FixedDetail" xml:space="preserve">
+    <value>{0} paid of {1} expected · {2} still to come</value>
+  </data>
+  <data name="Flex_Paid" xml:space="preserve">
+    <value>{0} paid · no plans for these bills yet</value>
+  </data>
+  <data name="Flex_NonMonthly" xml:space="preserve">
+    <value>Non-monthly bills</value>
+  </data>
+  <data name="Flex_NonMonthlyDetail" xml:space="preserve">
+    <value>{0} to set aside this month · {1} paid</value>
+  </data>
+  <data name="Flex_Total" xml:space="preserve">
+    <value>Month plan: {0}</value>
+  </data>
+  <data name="Flex_Hint" xml:space="preserve">
+    <value>Bills come from your plans; the limit above is only for flexible spending. Every amount counts once.</value>
+  </data>
+  <data name="Flex_EditorHint" xml:space="preserve">
+    <value>With flex, each expense category is fixed, non-monthly or flexible (set in the category). Category limits are not used.</value>
+  </data>
+  <data name="SpendingType_Title" xml:space="preserve">
+    <value>In a flex budget</value>
+  </data>
+  <data name="SpendingType_Flexible" xml:space="preserve">
+    <value>Flexible</value>
+  </data>
+  <data name="SpendingType_Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="SpendingType_NonMonthly" xml:space="preserve">
+    <value>Non-monthly</value>
+  </data>
+  <data name="SpendingType_Hint" xml:space="preserve">
+    <value>Fixed: the same bill every month, such as rent. Non-monthly: a few times a year, such as insurance. Flexible: everyday spending.</value>
+  </data>
 </root>

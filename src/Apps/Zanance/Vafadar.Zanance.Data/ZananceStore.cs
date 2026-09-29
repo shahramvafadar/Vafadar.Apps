@@ -157,7 +157,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         {
             if (!existing.Contains((kind, key)))
             {
-                db.Categories.Add(new Category { Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order });
+                db.Categories.Add(new Category
+                {
+                    Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order,
+                    SpendingType = kind == CategoryKind.Expense ? DefaultCategories.SpendingTypeOf(key) : SpendingType.Flexible,
+                });
             }
 
             order++;
@@ -242,7 +246,9 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             return new BudgetMonth(
                 b.Rollover,
                 b.TotalLimit,
-                BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope),
+                b.Method == BudgetMethod.Flex
+                    ? FlexCalculator.FlexibleSpent(accounts, entries, categories, start, end, b.CurrencyCode, scope)
+                    : BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope),
                 b.CategoryLimits.ToDictionary(l => l.CategoryId, l => l.Limit),
                 b.CategoryLimits.ToDictionary(l => l.CategoryId, l => BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope, [l.CategoryId], categories)));
         }).ToList();

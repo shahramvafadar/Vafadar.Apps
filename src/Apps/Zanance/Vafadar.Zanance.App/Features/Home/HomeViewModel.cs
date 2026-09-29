@@ -273,7 +273,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
         var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
         var (from, to) = PeriodMath.MonthRange(year, month, calendar);
-        var status = new BudgetStatus(limit, BudgetCalculator.NetExpense(accounts, entries, from, to, _reportCurrency, budget.AccountIds.Count > 0 ? budget.AccountIds : null));
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await _store.GetCategoriesAsync(), from, to));
         BudgetText = status.IsOver
             ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _reportCurrency, culture))
             : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _reportCurrency, culture), MoneyText.Format(limit, _reportCurrency, culture));

@@ -12,6 +12,19 @@ public enum CategoryKind
     Income = 1,
 }
 
+/// <summary>How an expense category is budgeted with the flex method (§10.3, D-28).</summary>
+public enum SpendingType
+{
+    /// <summary>Day-to-day spending that shares one flexible limit (food, leisure, shopping).</summary>
+    Flexible = 0,
+
+    /// <summary>The same kind of bill every month (rent, energy, phone); expected from the plans.</summary>
+    Fixed = 1,
+
+    /// <summary>Bills that come a few times a year (insurance); a monthly share is set aside.</summary>
+    NonMonthly = 2,
+}
+
 /// <summary>
 /// A category of income or expense with at most one parent (CAT-01..03).
 /// Default categories have a <see cref="SystemKey"/> and a translated name until the user renames them.
@@ -35,6 +48,9 @@ public sealed class Category : Entity, IAuditableEntity
 
     /// <summary>Gets or sets the icon key.</summary>
     public string? Icon { get; set; }
+
+    /// <summary>Gets or sets how the category is budgeted with the flex method; a sub-category follows its parent.</summary>
+    public SpendingType SpendingType { get; set; }
 
     /// <summary>Gets or sets a value indicating whether the category is archived.</summary>
     public bool IsArchived { get; set; }

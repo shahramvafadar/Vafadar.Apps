@@ -160,6 +160,9 @@ internal static class DebugSnapshots
                     await budget.SetMethodAsync(Core.Budgets.BudgetMethod.Envelopes);
                     await Task.Delay(800);
                     await CaptureAsync(app, folder, $"{language}-{name}-envelopes");
+                    await budget.SetMethodAsync(Core.Budgets.BudgetMethod.Flex);
+                    await Task.Delay(800);
+                    await CaptureAsync(app, folder, $"{language}-{name}-flex");
                     await budget.SetMethodAsync(Core.Budgets.BudgetMethod.Limits);
                 }
 
@@ -209,6 +212,10 @@ internal static class DebugSnapshots
         var categories = await store.GetCategoriesAsync();
         Guid Category(string key) => categories.First(c => c.SystemKey == key).Id;
         var checking = (await store.GetAccountsAsync()).First(a => a.Type == AccountType.Checking);
+
+        // The onboarding account opens today; open it earlier so the sample entries of the last days count everywhere.
+        checking.OpeningDate = checking.OpeningDate.AddMonths(-3);
+        await store.SaveAccountAsync(checking);
         var savings = new Account { Name = "Savings", Type = AccountType.Savings, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate.AddDays(-7), OpeningBalance = 300_00 };
         await store.SaveAccountAsync(savings);
         await store.SaveAccountAsync(new Account { Name = "Car loan", Type = AccountType.Loan, CurrencyCode = checking.CurrencyCode, OpeningDate = checking.OpeningDate, OpeningBalance = -4_000_00, IncludeInTotals = false, Counterparty = "Bank", InterestRate = 4.9m, Installment = 185_00 });
