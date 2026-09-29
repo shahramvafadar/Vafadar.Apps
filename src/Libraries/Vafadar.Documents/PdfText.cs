@@ -49,8 +49,12 @@ public static class PdfText
     /// </summary>
     /// <param name="pdf">The file content.</param>
     /// <param name="maxPages">The most pages to read.</param>
+    /// <param name="minimumPerPage">
+    /// The letters and digits a page needs on average to count as a digital page. A scan often carries a small text
+    /// layer (a scanner's watermark); below this it is treated as scanned so its pages are recognised instead.
+    /// </param>
     /// <returns>The rows, or <see langword="null"/> when the file has no usable text layer or cannot be opened.</returns>
-    public static string? Extract(byte[] pdf, int maxPages = 4)
+    public static string? Extract(byte[] pdf, int maxPages = 4, int minimumPerPage = 30)
     {
         ArgumentNullException.ThrowIfNull(pdf);
         try
@@ -60,7 +64,8 @@ public static class PdfText
             try
             {
                 var words = new List<LayoutWord>();
-                foreach (var index in TextLayout.PagesToRead(document.Pages.Count, maxPages))
+                var pages = TextLayout.PagesToRead(document.Pages.Count, maxPages);
+                foreach (var index in pages)
                 {
                     if (document.Pages[index] is not PdfLoadedPage page)
                     {
@@ -86,7 +91,8 @@ public static class PdfText
                 }
 
                 var rows = TextLayout.Rows(words);
-                return TextLayout.HasContent(rows) ? rows : null;
+                var content = rows?.Count(char.IsLetterOrDigit) ?? 0;
+                return TextLayout.HasContent(rows) && content >= minimumPerPage * Math.Max(1, pages.Count) ? rows : null;
             }
             finally
             {

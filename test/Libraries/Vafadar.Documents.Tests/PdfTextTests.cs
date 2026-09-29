@@ -24,11 +24,11 @@ public sealed class PdfTextTests
     [Fact]
     public void Pages_follow_each_other_and_the_last_page_of_a_long_file_is_always_read()
     {
-        var pdf = MinimalPdf.Create([.. Enumerable.Range(1, 7).Select(n => new MinimalPdf.Run[] { new($"Seite {n} von sieben", 40, 40) })]);
+        var pdf = MinimalPdf.Create([.. Enumerable.Range(1, 7).Select(n => new MinimalPdf.Run[] { new($"Seite {n} von sieben der Rechnung Nummer 4711", 40, 40) })]);
 
         var rows = PdfText.Extract(pdf, maxPages: 3)!.Split('\n');
 
-        Assert.Equal(["Seite 1 von sieben", "Seite 2 von sieben", "Seite 7 von sieben"], rows);
+        Assert.Equal([.. new[] { 1, 2, 7 }.Select(n => $"Seite {n} von sieben der Rechnung Nummer 4711")], rows);
         Assert.Equal(7, PdfText.PageCount(pdf));
     }
 
@@ -38,6 +38,15 @@ public sealed class PdfTextTests
         var pdf = MinimalPdf.Create([[]]);
 
         Assert.Null(PdfText.Extract(pdf));
+    }
+
+    [Fact]
+    public void A_scan_with_only_a_watermark_text_counts_as_scanned_but_the_watermark_is_kept_as_a_last_resort()
+    {
+        var pdf = MinimalPdf.Create([[new("Scanned with a scanner app", 40, 800)]]);
+
+        Assert.Null(PdfText.Extract(pdf));
+        Assert.Equal("Scanned with a scanner app", PdfText.Extract(pdf, minimumPerPage: 0));
     }
 
     [Fact]

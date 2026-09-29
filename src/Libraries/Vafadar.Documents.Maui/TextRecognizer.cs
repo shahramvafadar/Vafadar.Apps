@@ -71,7 +71,18 @@ public static class TextRecognizer
 
         using var input = Xamarin.Google.MLKit.Vision.Common.InputImage.FromBitmap(bitmap, 0);
         using var recognizer = Xamarin.Google.MLKit.Vision.Text.TextRecognition.GetClient(Xamarin.Google.MLKit.Vision.Text.Latin.TextRecognizerOptions.DefaultOptions);
-        var result = await Android.Gms.Extensions.TasksExtensions.AsAsync<Xamarin.Google.MLKit.Vision.Text.Text>(recognizer.Process(input));
+        Xamarin.Google.MLKit.Vision.Text.Text result;
+        try
+        {
+            result = await Android.Gms.Extensions.TasksExtensions.AsAsync<Xamarin.Google.MLKit.Vision.Text.Text>(recognizer.Process(input));
+        }
+        finally
+        {
+            // Dispose only releases the .NET handle; the recognizer and the decoded bitmap hold native memory.
+            recognizer.Close();
+            bitmap.Recycle();
+        }
+
         var words = new List<LayoutWord>();
         foreach (var block in result.TextBlocks)
         {

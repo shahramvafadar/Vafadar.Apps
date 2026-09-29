@@ -67,7 +67,17 @@ public sealed partial class BackupViewModel
 
         foreach (var provider in new[] { ExternalIdentityProvider.Google, ExternalIdentityProvider.Microsoft }.Where(_cloud.IsAvailable))
         {
-            var account = await SignIn(provider).GetCurrentAccountAsync();
+            // A damaged token cache means "not connected", never a backup page that does not open.
+            ExternalAccount? account = null;
+            try
+            {
+                account = await SignIn(provider).GetCurrentAccountAsync();
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                System.Diagnostics.Debug.WriteLine($"Cloud account not read: {ex.GetType().Name}");
+            }
+
             var row = new CloudAccountRow(provider, _translator[provider == ExternalIdentityProvider.Google ? "Cloud_GoogleDrive" : "Cloud_OneDrive"])
             {
                 Account = account is null ? null : account.Email ?? account.DisplayName ?? account.Id,
@@ -92,16 +102,27 @@ public sealed partial class BackupViewModel
         {
             var account = await SignIn(row.Provider).SignInAsync(Scopes(row.Provider));
             row.Account = account.Email ?? account.DisplayName ?? account.Id;
-            await ListCloudAsync(row);
         }
         catch (OperationCanceledException)
         {
             // The user closed the sign-in.
+            return;
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             System.Diagnostics.Debug.WriteLine($"Cloud sign-in failed: {ex.GetType().Name}");
             CloudError = _translator.Format("Cloud_Error_SignIn", row.Title);
+            return;
+        }
+
+        // Connected; listing may still fail (e.g. offline), which is reported as such.
+        try
+        {
+            await ListCloudAsync(row);
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            CloudError = CloudProblem(row, ex);
         }
     }
 

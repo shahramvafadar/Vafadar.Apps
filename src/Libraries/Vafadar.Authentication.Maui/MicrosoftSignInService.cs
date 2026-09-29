@@ -56,6 +56,10 @@ public sealed class MicrosoftSignInService : IExternalSignInService
         {
             throw new AuthenticationRequiredException("Microsoft sign-in is needed again.", ex);
         }
+        catch (MsalException ex) when (IsNetworkProblem(ex))
+        {
+            throw new HttpRequestException("Microsoft sign-in could not be reached.", ex);
+        }
     }
 
     /// <inheritdoc />
@@ -75,6 +79,10 @@ public sealed class MicrosoftSignInService : IExternalSignInService
         {
             throw new OperationCanceledException("The sign-in was cancelled.", ex, cancellationToken);
         }
+        catch (MsalException ex) when (IsNetworkProblem(ex))
+        {
+            throw new HttpRequestException("Microsoft sign-in could not be reached.", ex);
+        }
     }
 
     /// <inheritdoc />
@@ -92,6 +100,11 @@ public sealed class MicrosoftSignInService : IExternalSignInService
         await EnsureCacheAsync();
         return (await _client.GetAccountsAsync()).FirstOrDefault();
     }
+
+    // Callers treat HttpRequestException as "offline"; MSAL wraps network failures in its own exceptions.
+    private static bool IsNetworkProblem(MsalException exception) =>
+        exception.InnerException is HttpRequestException or TaskCanceledException or System.Net.Sockets.SocketException
+        || exception.ErrorCode is MsalError.RequestTimeout or "network_not_available";
 
     private static ExternalAccount ToAccount(IAccount account) =>
         new(ExternalIdentityProvider.Microsoft, account.HomeAccountId?.Identifier ?? account.Username, account.Username, null);

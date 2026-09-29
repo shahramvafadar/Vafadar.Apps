@@ -81,24 +81,36 @@ public static class PdfPageImages
         try
         {
             File.WriteAllBytes(path, pdf);
-            using var descriptor = Android.OS.ParcelFileDescriptor.Open(new Java.IO.File(path), Android.OS.ParcelFileMode.ReadOnly);
-            using var renderer = new Android.Graphics.Pdf.PdfRenderer(descriptor!);
-            var images = new List<byte[]>();
-            foreach (var index in TextLayout.PagesToRead(renderer.PageCount, maxPages))
+
+            // Dispose only releases the .NET handles; the renderer, its pages and the descriptor are closed explicitly.
+            using var descriptor = Android.OS.ParcelFileDescriptor.Open(new Java.IO.File(path), Android.OS.ParcelFileMode.ReadOnly)!;
+            try
             {
-                using var page = renderer.OpenPage(index);
-                var (width, height) = SizeOf(page.Width, page.Height);
-                using var bitmap = Android.Graphics.Bitmap.CreateBitmap(width, height, Android.Graphics.Bitmap.Config.Argb8888!);
-                bitmap.EraseColor(Android.Graphics.Color.White);
-                page.Render(bitmap, null, null, Android.Graphics.Pdf.PdfRenderMode.ForDisplay);
-                page.Close();
+                using var renderer = new Android.Graphics.Pdf.PdfRenderer(descriptor);
+                try
+                {
+                    var images = new List<byte[]>();
+                    foreach (var index in TextLayout.PagesToRead(renderer.PageCount, maxPages))
+                    {
+                        using var page = renderer.OpenPage(index);
+                        using var bitmap = RenderPage(page);
+                        using var output = new MemoryStream();
+                        bitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 90, output);
+                        bitmap.Recycle();
+                        images.Add(output.ToArray());
+                    }
 
-                using var output = new MemoryStream();
-                bitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 90, output);
-                images.Add(output.ToArray());
+                    return images;
+                }
+                finally
+                {
+                    renderer.Close();
+                }
             }
-
-            return images;
+            finally
+            {
+                descriptor.Close();
+            }
         }
         catch (Exception ex) when (ex is Java.Lang.Exception or IOException)
         {
@@ -109,6 +121,24 @@ public static class PdfPageImages
         finally
         {
             File.Delete(path);
+        }
+    }
+#endif
+
+#if ANDROID
+    private static Android.Graphics.Bitmap RenderPage(Android.Graphics.Pdf.PdfRenderer.Page page)
+    {
+        try
+        {
+            var (width, height) = SizeOf(page.Width, page.Height);
+            var bitmap = Android.Graphics.Bitmap.CreateBitmap(width, height, Android.Graphics.Bitmap.Config.Argb8888!);
+            bitmap.EraseColor(Android.Graphics.Color.White);
+            page.Render(bitmap, null, null, Android.Graphics.Pdf.PdfRenderMode.ForDisplay);
+            return bitmap;
+        }
+        finally
+        {
+            page.Close();
         }
     }
 #endif

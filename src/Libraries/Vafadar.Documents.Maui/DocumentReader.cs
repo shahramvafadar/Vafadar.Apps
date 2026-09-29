@@ -38,7 +38,7 @@ public static class DocumentReader
 
             if (!TextRecognizer.IsSupported || !PdfPageImages.IsSupported)
             {
-                return null;
+                return await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0));
             }
 
             var pages = new List<string>();
@@ -50,7 +50,10 @@ public static class DocumentReader
                 }
             }
 
-            return pages.Count == 0 ? null : string.Join('\n', pages);
+            // Nothing recognised: a sparse text layer is still better than nothing.
+            return pages.Count > 0
+                ? string.Join('\n', pages)
+                : await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0));
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
