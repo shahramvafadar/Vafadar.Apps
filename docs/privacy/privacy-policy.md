@@ -46,6 +46,12 @@ Apple under your account terms.
 Reminders are local notifications created on your device; no push service is used. By default they show only a
 generic text; names and amounts appear only if you turn on "Show names and amounts".
 
+## Reading receipts
+
+If you choose "Read" on a receipt photo, the text is recognised on your device – by the system on iOS and Windows and by
+Google ML Kit, which is built into the app, on Android. The found amount, date and shop only fill the entry form for
+you to check. The photo and the text are not sent anywhere; the app has no internet access.
+
 ## App lock
 
 If you turn on the app lock, unlocking uses your device's own screen lock, fingerprint or face recognition. The app

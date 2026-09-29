@@ -3,9 +3,9 @@ using Vafadar.Zanance.Core.Receipts;
 namespace Vafadar.Zanance.App.Presentation;
 
 /// <summary>
-/// On-device text recognition of receipt photos (D-31) with the operating system's own engine: Vision on iOS and
-/// Windows.Media.Ocr on Windows. Nothing leaves the device and no library or permission is added. Android has no system
-/// engine, so the feature is not offered there.
+/// On-device text recognition of receipt photos (D-31): Vision on iOS, Windows.Media.Ocr on Windows and ML Kit with its
+/// bundled Latin model on Android (owner decision; Android has no system engine). Nothing leaves the device: the model
+/// ships in the app and the network permissions ML Kit asks for are removed from the release manifest.
 /// </summary>
 internal static class ReceiptReader
 {
@@ -13,7 +13,7 @@ internal static class ReceiptReader
     public static bool IsSupported =>
 #if IOS || MACCATALYST
         OperatingSystem.IsIOSVersionAtLeast(13) || OperatingSystem.IsMacCatalystVersionAtLeast(13);
-#elif WINDOWS
+#elif WINDOWS || ANDROID
         true;
 #else
         false;
@@ -29,6 +29,8 @@ internal static class ReceiptReader
             return await Task.Run(() => ReadApple(image));
 #elif WINDOWS
             return await ReadWindowsAsync(image);
+#elif ANDROID
+            return await ReadAndroidAsync(image);
 #else
             await Task.CompletedTask;
             return null;
@@ -68,6 +70,37 @@ internal static class ReceiptReader
         if (!handler.Perform([request], out _))
         {
             return null;
+        }
+
+        return ReceiptParser.Rows(words);
+    }
+#endif
+
+#if ANDROID
+    private static async Task<string?> ReadAndroidAsync(byte[] image)
+    {
+        using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(image, 0, image.Length);
+        if (bitmap is null)
+        {
+            return null;
+        }
+
+        using var input = Xamarin.Google.MLKit.Vision.Common.InputImage.FromBitmap(bitmap, 0);
+        using var recognizer = Xamarin.Google.MLKit.Vision.Text.TextRecognition.GetClient(Xamarin.Google.MLKit.Vision.Text.Latin.TextRecognizerOptions.DefaultOptions);
+        var result = await Android.Gms.Extensions.TasksExtensions.AsAsync<Xamarin.Google.MLKit.Vision.Text.Text>(recognizer.Process(input));
+        var words = new List<ReceiptWord>();
+        foreach (var block in result.TextBlocks)
+        {
+            foreach (var line in block.Lines)
+            {
+                foreach (var element in line.Elements)
+                {
+                    if (element.BoundingBox is { } box && !string.IsNullOrEmpty(element.Text))
+                    {
+                        words.Add(new ReceiptWord(box.Top, box.Bottom, box.Left, element.Text));
+                    }
+                }
+            }
         }
 
         return ReceiptParser.Rows(words);

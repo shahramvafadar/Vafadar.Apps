@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Merged into the release build only: no network permission, whatever a library asks for (D-20, D-31). -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+	<uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+</manifest>

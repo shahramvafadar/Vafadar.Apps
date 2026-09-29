@@ -71,6 +71,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         "Plugin.LocalNotification – MIT",
         "AndroidX (Biometric and others) – Apache 2.0",
         "Figtree and Urbanist fonts – SIL Open Font License 1.1",
+            "Google ML Kit text recognition (Android) – ML Kit Terms of Service",
         "Vazirmatn font – SIL Open Font License 1.1");
 
     [ObservableProperty]

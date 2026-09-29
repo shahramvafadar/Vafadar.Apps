@@ -52,8 +52,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ### Added – Receipt reading (D-31)
 
-- Read the total, date and shop from a receipt photo on iOS and Windows, on the device; the values open the editor for
-  review before anything is saved.
+- Read the total, date and shop from a receipt photo on the device (iOS, Windows and Android); the values open the editor
+  for review before anything is saved.
 
 ### Added – Quick add widget (D-30)
 

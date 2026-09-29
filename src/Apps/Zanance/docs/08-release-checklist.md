@@ -13,6 +13,7 @@
 ## Privacy and security
 
 - [ ] Privacy matrix (06) reviewed against the release APK/AAB: package list, merged manifest permissions, network traffic
+- [ ] Release manifest still without INTERNET and ACCESS_NETWORK_STATE after package updates (ML Kit asks for both; D-31)
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric)
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked
