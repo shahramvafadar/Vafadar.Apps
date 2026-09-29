@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_expense">+ هزینه</string>
+    <string name="widget_income">+ درآمد</string>
+    <string name="widget_transfer">انتقال</string>
+    <string name="widget_open">باز کردن Zanance</string>
+    <string name="widget_description">ثبت هزینه، درآمد یا انتقال با یک لمس. هیچ مبلغی نشان نمی‌دهد.</string>
+</resources>

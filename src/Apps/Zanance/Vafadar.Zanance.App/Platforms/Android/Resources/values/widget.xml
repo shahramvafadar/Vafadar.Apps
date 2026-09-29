@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colours of the quick add widget: the app's light tokens (D-27); values-night has the dark ones. -->
+<resources>
+    <color name="widget_surface">#FFFFFF</color>
+    <color name="widget_button">#F7F9FC</color>
+    <color name="widget_line">#E3E8EF</color>
+    <color name="widget_ink">#0F1B2D</color>
+    <color name="widget_income">#16794A</color>
+    <color name="widget_transfer">#4A5878</color>
+
+    <style name="ZananceWidgetButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:background">@drawable/widget_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <string name="widget_expense">+ Expense</string>
+    <string name="widget_income">+ Income</string>
+    <string name="widget_transfer">Transfer</string>
+    <string name="widget_open">Open Zanance</string>
+    <string name="widget_description">Add an expense, income or transfer in one tap. Shows no amounts.</string>
+</resources>

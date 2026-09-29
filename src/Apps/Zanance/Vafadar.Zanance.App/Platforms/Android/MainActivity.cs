@@ -1,4 +1,5 @@
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
@@ -19,5 +20,21 @@ public class MainActivity : MauiAppCompatActivity
     {
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
+        OpenFromWidget(Intent);
+    }
+
+    protected override void OnNewIntent(Intent? intent)
+    {
+        base.OnNewIntent(intent);
+        OpenFromWidget(intent);
+    }
+
+    // A tap on the quick add widget (D-30) opens a new entry of that kind, after the app lock.
+    private static void OpenFromWidget(Intent? intent)
+    {
+        if (intent?.Action == QuickAddWidget.Action && intent.GetStringExtra(QuickAddWidget.KindExtra) is { } kind)
+        {
+            App.OpenLink("entry|" + kind);
+        }
     }
 }

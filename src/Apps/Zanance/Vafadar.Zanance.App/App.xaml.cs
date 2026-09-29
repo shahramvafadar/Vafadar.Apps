@@ -93,7 +93,17 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
-        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().StartAsync());
+        Dispatcher.Dispatch(async () =>
+        {
+            await _services.GetRequiredService<AppLockService>().StartAsync();
+
+            // A widget tap that started the app (D-30) opens its screen now that the shell exists.
+            if (_pendingLink is { } link)
+            {
+                _pendingLink = null;
+                OpenLink(link);
+            }
+        });
         RunForegroundWork(starting: true);
     }
 
@@ -149,6 +159,24 @@ public partial class App : Application
         });
     }
 
+    private static string? _pendingLink;
+
+    /// <summary>
+    /// Opens an in-app link, e.g. <c>entry|Expense</c> from the quick add widget (D-30), after the app lock; before the
+    /// shell exists the link waits for the start.
+    /// </summary>
+    public static void OpenLink(string link)
+    {
+        if (Current is App app && Shell.Current is not null)
+        {
+            app.Dispatcher.Dispatch(() => app._services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => app.OpenLinkAsync(link)));
+        }
+        else
+        {
+            _pendingLink = link;
+        }
+    }
+
     // A tapped reminder opens its occurrence; several taps or an old notification never record anything (REM-04, REM-06).
     private void OnReminderTapped(object? sender, string link) => Dispatcher.Dispatch(() =>
         _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => OpenLinkAsync(link)));
@@ -177,6 +205,11 @@ public partial class App : Application
         else if (parts is ["budget"])
         {
             await Shell.Current.GoToAsync(AppShell.BudgetRoute);
+        }
+        else if (parts is ["entry", var kind] && Enum.TryParse<Core.Ledger.EntryKind>(kind, out var entryKind)
+                 && entryKind is Core.Ledger.EntryKind.Expense or Core.Ledger.EntryKind.Income or Core.Ledger.EntryKind.Transfer)
+        {
+            await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = entryKind.ToString() });
         }
     }
 

@@ -46,6 +46,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Added – Quick add widget (D-30)
+
+- An Android home-screen widget that opens a new expense, income or transfer in one tap. It shows no amounts.
+
 ### Added – Public holidays (D-29)
 
 - Plans with a weekend rule can also move off public holidays of Germany (nationwide) or Iran (lunar holidays are

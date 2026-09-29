@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quick add widget (D-30): the symbol and three buttons that open a new entry. It shows no amounts, so nothing
+     financial is visible on the home screen, with or without the app lock. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center_vertical"
+    android:layoutDirection="locale"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/widget_logo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="6dp"
+        android:contentDescription="@string/widget_open"
+        android:src="@mipmap/appicon_round" />
+
+    <TextView
+        android:id="@+id/widget_expense"
+        style="@style/ZananceWidgetButton"
+        android:text="@string/widget_expense"
+        android:textColor="@color/widget_ink" />
+
+    <TextView
+        android:id="@+id/widget_income"
+        style="@style/ZananceWidgetButton"
+        android:text="@string/widget_income"
+        android:textColor="@color/widget_income" />
+
+    <TextView
+        android:id="@+id/widget_transfer"
+        style="@style/ZananceWidgetButton"
+        android:text="@string/widget_transfer"
+        android:textColor="@color/widget_transfer" />
+</LinearLayout>
