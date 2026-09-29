@@ -193,7 +193,7 @@ Vafadar.Zanance.App/
 | Language | C# 14, nullable enabled, implicit usings | – |
 | Mobile / desktop UI | .NET MAUI (XAML) | 10.0.110 |
 | MVVM | CommunityToolkit.Mvvm | 8.4.2 |
-| UI controls | Syncfusion Essential Studio for MAUI (and Blazor for web) | 34.2.9 |
+| UI controls | Syncfusion Essential Studio for MAUI (and Blazor for web) | 35.1.37 |
 | Local database | SQLite via Microsoft.Data.Sqlite + EF Core | 10.0.12 |
 | Serialization | System.Text.Json with source generation | in-box |
 | Tests | xUnit v3 on Microsoft.Testing.Platform | 4.0.1 |
