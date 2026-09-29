@@ -107,7 +107,8 @@ public sealed class GoogleSignInService : IExternalSignInService
 
     private static async Task<AuthorizationResult> AuthorizeAsync(IEnumerable<string> scopes)
     {
-        var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? throw new AuthenticationRequiredException(ExternalIdentityProvider.Google);
+        // Without a visible activity (app in the background) this is a temporary failure, not a signed-out account.
+        var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? throw new InvalidOperationException("No activity for Google authorization.");
         var request = AuthorizationRequest.InvokeBuilder()
             .SetRequestedScopes([.. scopes.Select(s => new Scope(s))])
             .Build();

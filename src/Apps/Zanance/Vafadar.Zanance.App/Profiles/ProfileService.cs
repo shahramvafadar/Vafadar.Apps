@@ -163,6 +163,11 @@ public sealed class ProfileService(
                 var settings = await store.GetSettingsAsync();
                 opened = !settings.AppLockEnabled
                     || await appLock.Authenticator.AuthenticateAsync(translator["Profile_UnlockReason"]) == AuthenticationOutcome.Success;
+                if (opened)
+                {
+                    // Backups and the next start follow the open profile from the same moment on.
+                    Preferences.Default.Set(CurrentKey, profile.Id);
+                }
             }
             finally
             {
@@ -178,7 +183,6 @@ public sealed class ProfileService(
             return false;
         }
 
-        Preferences.Default.Set(CurrentKey, profile.Id);
         store.ResetSession();
         await appLock.ReloadAsync();
         Changed?.Invoke(this, EventArgs.Empty);
