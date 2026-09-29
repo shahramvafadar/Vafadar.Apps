@@ -34,6 +34,10 @@ public partial class App : Application
         localization.Changed += (_, _) => Presentation.DigitPreferences.Apply(localization);
         Presentation.DigitPreferences.Changed += OnLocalizationChanged;
         localization.Changed += OnLocalizationChanged;
+#if ANDROID
+        // Android 13+ per-app language (D-32).
+        AppLocales.Initialize(localization);
+#endif
 
         // Progress bars are drawn left to right on every platform; in right-to-left languages they are mirrored, so they
         // fill in the reading direction.

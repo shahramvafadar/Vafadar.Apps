@@ -50,7 +50,7 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 
 - [ ] More apps (see [adding a new app](guides/adding-a-new-app.md))
 - [ ] Web version / multi-device sync where an app needs it ([web-and-shared-data.md](architecture/web-and-shared-data.md))
-- [ ] Android 13+ per-app language integration
+- [x] Android 13+ per-app language integration (D-32)
 - [ ] Direct upload to Google Play from the release workflow
 
 ## Open questions

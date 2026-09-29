@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:localeConfig="@xml/locales_config"></application>
 	<!-- Phase 1 works fully offline: no network permission (privacy matrix DF-15). Debug builds add INTERNET for the debugger. -->
 	<!-- Reminders (REM-01): asking is done only when the user turns a reminder on (REM-03). -->
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />

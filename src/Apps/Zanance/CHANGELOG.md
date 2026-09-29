@@ -46,6 +46,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The approved Zanance symbol as the app icon on Android (adaptive and themed), iOS and Windows, on the splash screen
   (Android: symbol, iOS: symbol and wordmark), as the Android notification icon and in onboarding and on the More page.
 
+### Added – Per-app language on Android 13+ (D-32)
+
+- The app language can also be chosen in the Android settings; both places stay in step.
+
 ### Added – Receipt reading (D-31)
 
 - Read the total, date and shop from a receipt photo on iOS and Windows, on the device; the values open the editor for

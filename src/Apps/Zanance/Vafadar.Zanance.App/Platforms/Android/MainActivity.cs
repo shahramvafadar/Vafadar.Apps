@@ -11,7 +11,8 @@ namespace Vafadar.Zanance.App;
     MainLauncher = true,
     LaunchMode = LaunchMode.SingleTop,
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode
-        | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+        | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.Locale
+        | ConfigChanges.LayoutDirection)]
 public class MainActivity : MauiAppCompatActivity
 {
     // Financial data never appears in the recent-apps preview or in screenshots, with or without the app lock
@@ -27,6 +28,19 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnNewIntent(intent);
         OpenFromWidget(intent);
+    }
+
+    // The app language chosen in the Android settings (D-32) arrives as a configuration change; the app rebuilds its
+    // screens itself, so the activity is not recreated.
+    public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        if (IPlatformApplication.Current?.Services.GetService<Vafadar.Localization.ILocalizationService>() is { } localization)
+        {
+            AppLocales.FromSystem(localization);
+        }
+
+        QuickAddWidget.Refresh(this);
     }
 
     // A tap on the quick add widget (D-30) opens a new entry of that kind, after the app lock.

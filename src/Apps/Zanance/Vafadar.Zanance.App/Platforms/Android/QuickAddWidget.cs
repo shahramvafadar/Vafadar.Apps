@@ -38,6 +38,18 @@ public sealed class QuickAddWidget : AppWidgetProvider
         appWidgetManager.UpdateAppWidget(appWidgetIds, views);
     }
 
+    /// <summary>Redraws placed widgets, e.g. after the app language changed (their labels follow the app language).</summary>
+    public static void Refresh(Context context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var manager = AppWidgetManager.GetInstance(context);
+        var ids = manager?.GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(QuickAddWidget))));
+        if (manager is not null && ids is { Length: > 0 })
+        {
+            new QuickAddWidget().OnUpdate(context, manager, ids);
+        }
+    }
+
     private static PendingIntent? Open(Context context, string? kind, int requestCode)
     {
         var intent = new Intent(context, typeof(MainActivity)).SetAction(Action).AddFlags(ActivityFlags.NewTask | ActivityFlags.SingleTop);

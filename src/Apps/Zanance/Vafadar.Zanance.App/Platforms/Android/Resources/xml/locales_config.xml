@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The app languages for the per-app language setting of Android 13+ (D-32); keep in sync with AppLanguages.All. -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="fa" />
+    <locale android:name="de" />
+</locale-config>
