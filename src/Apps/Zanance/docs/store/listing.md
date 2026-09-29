@@ -1,7 +1,8 @@
 # Zanance – store listing (REL-03)
 
 Texts for Google Play (and later the App Store) in English, German and Persian. Every claim matches the release build
-and the privacy matrix (06): no account, no internet access, no ads, no tracking. Re-check the limits in Play Console
+and the privacy matrix (06): no account, no internet access, no ads, no tracking (the offline variant; see the end for
+the texts of a release with cloud backup, D-35). Re-check the limits in Play Console
 before publishing: title 30 characters, short description 80, full description 4,000.
 
 Screenshots: `eng/scripts/Run-Snapshots.ps1` with fictitious data, light and dark, one set per language
@@ -25,13 +26,14 @@ What you can do
 • Accounts for cash, bank, savings, credit cards, loans and money you lent
 • Income, expenses, transfers, refunds and money owed to you, with categories and tags
 • Plans for recurring payments with reminders – rent, salary, subscriptions, insurance – including contract deadlines
-• Monthly budgets: limits per category, envelopes, or flex budgeting with fixed bills, non-monthly bills and one
-  flexible limit
+• Budgets per month, week or two weeks, with a month that can start on payday: limits per category, envelopes, or
+  flex budgeting with fixed bills, non-monthly bills and one flexible limit, and suggested limits from your spending
 • Savings goals with earmarked money and suggested contributions
 • Reports with charts, a forecast of your balance, and a PDF of the month
 • Several currencies with your own exchange rates, and display units such as the toman
 • Gregorian and Persian (Solar Hijri) calendar, in English, German and Persian with right-to-left layout
-• Receipt photos attached to entries; read the total, date and shop from a receipt on the device
+• Receipt photos and PDF invoices attached to entries; read the total, date and shop on the device
+• Separate profiles on one phone, e.g. personal and business
 • Quick add widget, dark theme, app lock with fingerprint or face
 • Encrypted backup files you keep yourself, CSV import and export
 
@@ -57,13 +59,15 @@ Was Sie tun können
 • Konten für Bargeld, Bank, Sparen, Kreditkarten, Kredite und verliehenes Geld
 • Einnahmen, Ausgaben, Umbuchungen, Erstattungen und offene Forderungen, mit Kategorien und Schlagwörtern
 • Pläne für wiederkehrende Zahlungen mit Erinnerungen – Miete, Gehalt, Abos, Versicherungen – samt Kündigungsfristen
-• Monatsbudgets: Limits je Kategorie, Umschläge oder Flex-Budget mit Fixkosten, nicht monatlichen Kosten und einem
-  flexiblen Limit; Feiertage in Deutschland werden bei Fälligkeiten berücksichtigt
+• Budgets pro Monat, Woche oder zwei Wochen, auch mit Monatsbeginn am Zahltag: Limits je Kategorie, Umschläge oder
+  Flex-Budget mit Fixkosten, nicht monatlichen Kosten und einem flexiblen Limit, dazu Vorschläge aus Ihren Ausgaben;
+  Feiertage in Deutschland werden bei Fälligkeiten berücksichtigt
 • Sparziele mit zurückgelegtem Geld und vorgeschlagenen Beträgen
 • Berichte mit Diagrammen, eine Vorschau Ihres Kontostands und ein PDF des Monats
 • Mehrere Währungen mit eigenen Wechselkursen
 • Gregorianischer und persischer Kalender, auf Deutsch, Englisch und Persisch
-• Belegfotos an Buchungen; Betrag, Datum und Geschäft direkt auf dem Gerät auslesen
+• Belegfotos und PDF-Rechnungen an Buchungen; Betrag, Datum und Geschäft direkt auf dem Gerät auslesen
+• Getrennte Profile auf einem Handy, z. B. privat und geschäftlich
 • Schnellerfassungs-Widget, dunkles Design, App-Sperre mit Fingerabdruck oder Gesicht
 • Verschlüsselte Sicherungsdateien in Ihrer Hand, CSV-Import und -Export
 
@@ -88,19 +92,35 @@ Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی
 • حساب برای پول نقد، بانک، پس‌انداز، کارت اعتباری، وام و پولی که قرض داده‌اید
 • درآمد، هزینه، انتقال، برگشت وجه و طلب‌ها، با دسته و برچسب
 • برنامه برای پرداخت‌های تکراری با یادآوری – اجاره، حقوق، اشتراک، بیمه – همراه با مهلت لغو قرارداد
-• بودجهٔ ماهانه: سقف هر دسته، پاکت‌ها یا بودجهٔ منعطف با قبض‌های ثابت، قبض‌های غیرماهانه و یک سقف منعطف؛
-  تعطیلات رسمی ایران در سررسیدها در نظر گرفته می‌شود
+• بودجهٔ ماهانه، هفتگی یا دوهفتگی، حتی با شروع ماه از روز حقوق: سقف هر دسته، پاکت‌ها یا بودجهٔ منعطف با قبض‌های ثابت،
+  قبض‌های غیرماهانه و یک سقف منعطف، همراه با پیشنهاد سقف از روی هزینه‌های شما؛ تعطیلات رسمی ایران در سررسیدها در نظر گرفته می‌شود
 • اهداف پس‌انداز با پول کنار گذاشته‌شده و مبلغ پیشنهادی
 • گزارش با نمودار، پیش‌بینی مانده و فایل PDF ماه
 • چند ارز با نرخ‌های خودتان و واحد نمایش مثل تومان
 • تقویم شمسی و میلادی، به فارسی، انگلیسی و آلمانی با چیدمان راست‌به‌چپ و ارقام فارسی
-• عکس رسید کنار تراکنش؛ خواندن مبلغ، تاریخ و فروشگاه روی خود دستگاه
+• عکس رسید و فاکتور PDF کنار تراکنش؛ خواندن مبلغ، تاریخ و فروشگاه روی خود دستگاه
+• پروفایل‌های جدا روی یک گوشی، مثلاً شخصی و کاری
 • ویجت ثبت سریع، تم تیره، قفل اپ با اثر انگشت یا چهره
 • فایل پشتیبان رمزگذاری‌شده در دست خودتان، ورود و خروج CSV
 
 دادهٔ شما مال شماست
 Zanance همه‌چیز را در پایگاه‌داده‌ای روی گوشی شما نگه می‌دارد. پشتیبان‌ها با رمز شما رمزگذاری می‌شوند و فقط به جایی
 می‌روند که خودتان بفرستید. پشتیبان دستگاه اندروید، بسته به تنظیمات شما، ممکن است دادهٔ اپ را هم شامل شود.
+
+## Variant with cloud backup (D-35)
+
+Use these instead of the "no internet" sentences when the release is built with the OAuth clients of cloud backup.
+
+| | Text |
+|---|---|
+| EN short | Private money manager: plans, budgets, reports. No account, no ads. |
+| EN sentence | Everything stays on your device: there is no account, no advertising and no tracking. The app goes online only if you connect your own Google Drive or OneDrive for encrypted backups. |
+| EN bullet | • Encrypted backup files you keep yourself or in your own Google Drive or OneDrive, CSV import and export |
+| DE Satz | Alles bleibt auf Ihrem Gerät: kein Konto, keine Werbung, kein Tracking. Online geht die App nur, wenn Sie Ihr eigenes Google Drive oder OneDrive für verschlüsselte Sicherungen verbinden. |
+| DE Punkt | • Verschlüsselte Sicherungen in Ihrer Hand oder in Ihrem eigenen Google Drive oder OneDrive, CSV-Import und -Export |
+| FA کوتاه | مدیریت خصوصی پول: برنامه، بودجه و گزارش. بدون حساب، بدون تبلیغ. |
+| FA جمله | همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد. اپ فقط وقتی به اینترنت وصل می‌شود که Google Drive یا OneDrive خودتان را برای پشتیبان رمزگذاری‌شده متصل کنید. |
+| FA مورد | • پشتیبان رمزگذاری‌شده در دست خودتان یا در Google Drive یا OneDrive خودتان، ورود و خروج CSV |
 
 ## Screenshots (per language, light theme; one dark)
 

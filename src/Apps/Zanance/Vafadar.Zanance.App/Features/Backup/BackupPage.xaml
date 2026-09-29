@@ -74,6 +74,67 @@
                 </Border>
                 <Label Text="{v:Translate Backup_OnDeviceHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasLocalBackups}" />
 
+                <!-- Cloud backup (D-35): only with configured OAuth clients; an explicit choice of the user -->
+                <Label Text="{v:Translate Cloud_Title}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasCloud}" />
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasCloud}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Cloud_Intro}" Style="{StaticResource Secondary}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding CloudAccounts}" Spacing="12">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:CloudAccountRow">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                            <fi:SymbolIcon Symbol="Cloud" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Title}" FontSize="16" />
+                                                <Label Text="{Binding Account}" Style="{StaticResource Secondary}" FlowDirection="LeftToRight"
+                                                       IsVisible="{Binding IsConnected}" />
+                                                <Label Text="{Binding LastBackupText}" Style="{StaticResource Secondary}" FontSize="12"
+                                                       IsVisible="{Binding LastBackupText, Converter={StaticResource IsNotNullConverter}}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Cloud_Connect}" IsVisible="{Binding IsConnected, Converter={StaticResource InvertedBoolConverter}}"
+                                                Command="{Binding ConnectCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                CommandParameter="{Binding .}" />
+                                        <FlexLayout Wrap="Wrap" IsVisible="{Binding IsConnected}">
+                                            <Button Style="{StaticResource TextButton}" Text="{v:Translate Cloud_BackUpNow}"
+                                                    Command="{Binding BackupToCloudCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                    CommandParameter="{Binding .}" />
+                                            <Button Style="{StaticResource TextButton}" Text="{v:Translate Cloud_ShowBackups}"
+                                                    Command="{Binding ShowCloudBackupsCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                    CommandParameter="{Binding .}" />
+                                            <Button Style="{StaticResource TextButton}" Text="{v:Translate Cloud_Disconnect}"
+                                                    Command="{Binding DisconnectCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                    CommandParameter="{Binding .}" />
+                                        </FlexLayout>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Cloud_PasswordHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Text="{Binding CloudError}" Style="{StaticResource ErrorText}" IsVisible="{Binding CloudError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding CloudResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding CloudResult, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasCloudBackups}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CloudBackups}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:CloudBackup">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" SemanticProperties.Description="{Binding Title}">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCloudCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <fi:SymbolIcon Symbol="CloudArrowDown" FontSize="22" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" />
+                                    <Label Grid.Column="2" Text="{Binding Details}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{v:Translate Cloud_RestoreHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasCloudBackups}" />
+
                 <!-- Restore -->
                 <Label Text="{v:Translate Backup_Restore}" Style="{StaticResource SectionHeader}" />
                 <Border Style="{StaticResource Card}">

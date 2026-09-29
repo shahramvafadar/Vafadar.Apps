@@ -1,7 +1,9 @@
 # Privacy Policy
 
 > **Draft.** Source text for the policy published at `https://vafadar.pro/privacy`. Before publishing: fill in the
-> contact address, the effective date and the list of apps, and remove this note.
+> contact address, the effective date and the list of apps, and remove this note. If the released Zanance build has no
+> cloud backup (no OAuth clients configured, D-35), remove the cloud backup parts and keep "does not connect to the
+> internet".
 
 **Effective date:** _YYYY-MM-DD_
 
@@ -12,9 +14,10 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 ## Summary
 
 * Your data is stored **on your device**.
-* I do **not** operate servers that receive your data, and I cannot see it. Zanance does not connect to the internet.
-* Your data leaves the device only when **you** share a backup or export file, and through the device backup of your
-  phone (Google or Apple), depending on your device settings.
+* I do **not** operate servers that receive your data, and I cannot see it. Zanance connects to the internet only if
+  you connect your own Google Drive or OneDrive for backups, and only for that.
+* Your data leaves the device only when **you** share a backup or export file or store a backup in your own cloud
+  storage, and through the device backup of your phone (Google or Apple), depending on your device settings.
 * Backup files are encrypted with a password you choose; without the password nobody, including me, can read them.
 * The apps contain **no advertising and no analytics or tracking**.
 
@@ -32,8 +35,14 @@ Android and iOS.
   it, the backup cannot be recovered.
 * **CSV and PDF export.** You can export entries (CSV) or a report (PDF) and share them. These files are **not
   encrypted**; where they go is your decision. Attachments are never included in exports.
-* **Cloud backup** to your own Google Drive or OneDrive is not available in the current version. If it is added, this
-  policy will describe it before it is released.
+* **Cloud backup (optional).** You can connect your own Google Drive (Android) or OneDrive (Android, Windows) and store
+  backups there. Nothing is uploaded until you connect and choose "Back up now". Cloud backups are always encrypted
+  with your password, which is never uploaded. The app asks only for access to its own app folder
+  (`drive.appdata`, `Files.ReadWrite.AppFolder`) and, for Google, your e-mail address to show which account is
+  connected. Sign-in happens in Google's or Microsoft's own screen; the app never sees your account password. The
+  files are stored under your Google or Microsoft account terms; I have no access to them. "Disconnect" signs out on
+  the device and removes the stored access; backups already uploaded stay in your account until you delete them
+  (Google Drive: Settings → Manage apps; OneDrive: the folder Apps/Zanance).
 
 ## Device backup (Android and iOS)
 
@@ -51,7 +60,9 @@ generic text; names and amounts appear only if you turn on "Show names and amoun
 If you choose "Read" on a receipt photo or PDF file, the text is read on your device. The text of a digital PDF is taken
 from the file itself; a photo or a scanned PDF page is recognised – by the system on iOS and Windows and by
 Google ML Kit, which is built into the app, on Android. The found amount, date and shop only fill the entry form for
-you to check. The file and the text are not sent anywhere; the app has no internet access.
+you to check. The file and the text are not sent anywhere by the app. On Android, Google ML Kit may send usage
+statistics to Google when the device is online in builds that offer cloud backup; builds without cloud backup
+have no internet permission at all.
 
 ## App lock
 
@@ -67,9 +78,9 @@ the purchased features can be unlocked. Zanance currently has no purchases.
 ## Permissions
 
 The apps request only the permissions they need. Zanance uses notifications (reminders, asked only when you turn
-one on), restarting reminders after the device restarts, and biometric unlock (for the optional app lock). It has no
-internet, location, contacts, camera or photo library permission; attachments are picked with the system file
-picker. Each app's store listing shows the permissions it uses.
+one on), restarting reminders after the device restarts, biometric unlock (for the optional app lock) and, only in
+builds that offer cloud backup, internet access for your own Google Drive or OneDrive. It has no location,
+contacts, camera or photo library permission; attachments are picked with the system file picker. Each app's store listing shows the permissions it uses.
 ## Children
 
 The apps are not directed at children under 13 and do not knowingly collect data from children.

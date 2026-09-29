@@ -25,7 +25,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] App design: meaning colours, Insights tab, calm Home, Persian digits (D-27)
 - [x] English and German fonts of the design (Figtree, Urbanist)
 - [x] Local backup: encrypted backup file, restore with safety copy, CSV import / export
-- [ ] Cloud backup (Google Drive / OneDrive) with sign-in – hidden until verified (D-17), moved to a later phase
+- [x] Cloud backup (OneDrive on Android and Windows, Google Drive on Android) with sign-in (`Vafadar.Authentication.Maui`,
+      D-35) – offered only in builds with OAuth clients; device verification with real clients pending
 - [ ] Device checks of the release build (08 release checklist)
 ## Phase 2 – First store release
 
@@ -39,6 +40,7 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 
 - [ ] Apple Developer Program, Mac build environment
 - [ ] iOS-specific testing (Persian RTL, sign-in flows, backup)
+- [ ] Cloud backup sign-in on iOS: MSAL keychain group entitlement and `msauth` URL scheme, Google iOS OAuth client
 - [ ] App Store listing and privacy details, TestFlight, release
 
 ## Phase 4 – Monetization
@@ -52,10 +54,10 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [ ] Web version / multi-device sync where an app needs it ([web-and-shared-data.md](architecture/web-and-shared-data.md))
 - [x] Android 13+ per-app language integration (D-32)
 - [ ] Direct upload to Google Play from the release workflow
+- [ ] Google Drive backup on Windows (desktop OAuth client) and automatic cloud backups (`Vafadar.Maui.Backup`)
 
 ## Open questions
 
 | Question | Needed for |
 |---|---|
-| Recommended Google sign-in approach on Android at implementation time | Phase 1 |
 | Contact e-mail for privacy / support (e.g. `privacy@vafadar.pro`) | Phase 2 |

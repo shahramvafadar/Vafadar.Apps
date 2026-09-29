@@ -37,8 +37,20 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly LocalFolderBackupStorage _safety;
     private byte[]? _package;
 
-    public BackupViewModel(IBackupService backup, AutoPostProcessor autoPost, ReminderService reminders, AppLockService appLock, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public BackupViewModel(
+        IBackupService backup,
+        AutoPostProcessor autoPost,
+        ReminderService reminders,
+        AppLockService appLock,
+        Translator translator,
+        IDateFormatter dates,
+        ILocalizationService localization,
+        TimeProvider time,
+        Vafadar.Authentication.Maui.CloudSignIn cloud,
+        IServiceProvider services)
     {
+        _cloud = cloud;
+        _services = services;
         _lock = appLock;
         _reminders = reminders;
         _backup = backup;
@@ -112,6 +124,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
 
         HasLocalBackups = LocalBackups.Count > 0;
+        await LoadCloudAsync();
     }
 
     [RelayCommand]
@@ -119,19 +132,10 @@ public sealed partial class BackupViewModel : ViewModelBase
     {
         CreateError = null;
         CreateResult = null;
-        if (UsePassword)
+        if (UsePassword && PasswordProblem() is { } problem)
         {
-            if (Password.Length < MinimumPasswordLength)
-            {
-                CreateError = _translator.Format("Backup_PasswordTooShort", MinimumPasswordLength);
-                return;
-            }
-
-            if (Password != PasswordConfirm)
-            {
-                CreateError = _translator["Backup_PasswordMismatch"];
-                return;
-            }
+            CreateError = problem;
+            return;
         }
 
         if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmBackup"]))
@@ -158,6 +162,11 @@ public sealed partial class BackupViewModel : ViewModelBase
             IsBusy = false;
         }
     }
+
+    private string? PasswordProblem() =>
+        Password.Length < MinimumPasswordLength ? _translator.Format("Backup_PasswordTooShort", MinimumPasswordLength)
+        : Password != PasswordConfirm ? _translator["Backup_PasswordMismatch"]
+        : null;
 
     [RelayCommand]
     private async Task OpenLocalAsync(LocalBackup backup)

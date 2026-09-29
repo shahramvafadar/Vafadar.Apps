@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Merged into the release build only: no network permission, whatever a library asks for (D-20, D-31). -->
+<!-- Merged into release builds without cloud backup only: no network permission, whatever a library asks for (D-20, D-31).
+     A build with the OAuth clients of cloud backup keeps INTERNET for Google Drive and OneDrive (D-35). -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 	<uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 </manifest>

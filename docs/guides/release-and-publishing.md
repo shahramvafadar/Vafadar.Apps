@@ -37,7 +37,9 @@ Each app is versioned independently.
    | `ANDROID_KEYSTORE_PASSWORD` | keystore password |
    | `ANDROID_KEY_PASSWORD` | key password |
 
-   `SYNCFUSION_LICENSE_KEY` must be available too (repository or environment secret).
+   `SYNCFUSION_LICENSE_KEY` must be available too (repository or environment secret). `MICROSOFT_ENTRA_CLIENT_ID` and
+   `GOOGLE_OAUTH_CLIENT_ID_ANDROID` are optional: set them only for a release **with cloud backup** – that release then
+   declares `INTERNET` and needs the matching privacy texts and Data safety answers (Zanance D-35).
 
 ## Per app: first Play Console release
 
@@ -46,7 +48,10 @@ Each app is versioned independently.
       feature graphic, icon (512×512)
 - [ ] App content: privacy policy URL, **Data safety** form (from the [privacy matrix](../privacy/privacy-matrix.md)),
       ads (none), content rating questionnaire, target audience, financial features declaration if applicable
-- [ ] Google OAuth consent screen verified (if the app offers Google Drive backup)
+- [ ] Google OAuth consent screen verified (if the app offers Google Drive backup); the Android OAuth client lists the SHA-1
+      of the Play app signing key as well as of the upload key
+- [ ] With cloud backup: Data safety declares the backup files sent to the user's own Google Drive / OneDrive at the
+      user's request (encrypted, not collected by the developer), and the store texts no longer say "no internet"
 - [ ] Upload to the **internal testing** track first, test on real devices (English and Persian), then promote to
       closed / open testing and production. New personal developer accounts must run a closed test with testers
       for a period before production access is granted – check the current Play Console requirements.

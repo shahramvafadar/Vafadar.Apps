@@ -3,6 +3,7 @@
     "path": "Vafadar.Apps.slnx",
     "projects": [
       "src\\Libraries\\Vafadar.Authentication\\Vafadar.Authentication.csproj",
+      "src\\Libraries\\Vafadar.Authentication.Maui\\Vafadar.Authentication.Maui.csproj",
       "src\\Libraries\\Vafadar.Backup.GoogleDrive\\Vafadar.Backup.GoogleDrive.csproj",
       "src\\Libraries\\Vafadar.Backup.OneDrive\\Vafadar.Backup.OneDrive.csproj",
       "src\\Libraries\\Vafadar.Backup\\Vafadar.Backup.csproj",

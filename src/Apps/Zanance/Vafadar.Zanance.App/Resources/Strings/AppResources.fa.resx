@@ -2791,4 +2791,61 @@
   <data name="Profile_Locked" xml:space="preserve">
     <value>این پروفایل با قفل برنامه محافظت می‌شود و باز نشد.</value>
   </data>
+  <data name="Cloud_Title" xml:space="preserve">
+    <value>پشتیبان ابری</value>
+  </data>
+  <data name="Cloud_Intro" xml:space="preserve">
+    <value>اختیاری: پشتیبان‌های رمزگذاری‌شده را در فضای ابری خودتان نگه دارید. برنامه فقط برای همین کار و فقط پس از اتصال شما به اینترنت وصل می‌شود.</value>
+  </data>
+  <data name="Cloud_GoogleDrive" xml:space="preserve">
+    <value>Google Drive</value>
+  </data>
+  <data name="Cloud_OneDrive" xml:space="preserve">
+    <value>OneDrive</value>
+  </data>
+  <data name="Cloud_Connect" xml:space="preserve">
+    <value>اتصال</value>
+  </data>
+  <data name="Cloud_ConnectMessage" xml:space="preserve">
+    <value>پشتیبان‌ها در پوشهٔ خصوصی برنامه در {0} شما ذخیره می‌شوند. برنامه فقط همان پوشه را می‌بیند؛ پشتیبان‌ها با رمز شما رمزگذاری می‌شوند و رمز هرگز بارگذاری نمی‌شود.</value>
+  </data>
+  <data name="Cloud_Disconnect" xml:space="preserve">
+    <value>قطع اتصال</value>
+  </data>
+  <data name="Cloud_DisconnectMessage" xml:space="preserve">
+    <value>از {0} روی این دستگاه خارج شوید؟ پشتیبان‌هایی که آنجا ذخیره شده‌اند در حساب شما می‌مانند.</value>
+  </data>
+  <data name="Cloud_BackUpNow" xml:space="preserve">
+    <value>اکنون پشتیبان بگیر</value>
+  </data>
+  <data name="Cloud_ShowBackups" xml:space="preserve">
+    <value>نمایش پشتیبان‌ها</value>
+  </data>
+  <data name="Cloud_PasswordHint" xml:space="preserve">
+    <value>پشتیبان ابری همیشه از رمزی استفاده می‌کند که در بخش «ایجاد پشتیبان» وارد کرده‌اید.</value>
+  </data>
+  <data name="Cloud_PasswordRequired" xml:space="preserve">
+    <value>پشتیبان ابری همیشه رمزگذاری می‌شود: رمز را روشن کنید و در بخش «ایجاد پشتیبان» وارد کنید.</value>
+  </data>
+  <data name="Cloud_Uploaded" xml:space="preserve">
+    <value>پشتیبان در {0} ذخیره شد.</value>
+  </data>
+  <data name="Cloud_RestoreHint" xml:space="preserve">
+    <value>روی یک پشتیبان بزنید تا آن را (با رمز و پیش‌نمایش) بازیابی یا از فضای ابری حذف کنید.</value>
+  </data>
+  <data name="Cloud_Error_SignIn" xml:space="preserve">
+    <value>ورود به {0} انجام نشد. لطفاً دوباره تلاش کنید.</value>
+  </data>
+  <data name="Cloud_Error_SignInAgain" xml:space="preserve">
+    <value>لطفاً دوباره به {0} متصل شوید.</value>
+  </data>
+  <data name="Cloud_Error_Offline" xml:space="preserve">
+    <value>دسترسی به {0} ممکن نشد. اتصال اینترنت را بررسی کنید.</value>
+  </data>
+  <data name="Cloud_DeleteTitle" xml:space="preserve">
+    <value>حذف پشتیبان ابری</value>
+  </data>
+  <data name="Cloud_DeleteMessage" xml:space="preserve">
+    <value>«{0}» از فضای ابری شما حذف شود؟ داده‌های این دستگاه تغییری نمی‌کنند.</value>
+  </data>
 </root>

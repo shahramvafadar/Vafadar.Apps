@@ -7,8 +7,8 @@ The repository is public. **Nothing secret or account-specific may ever be commi
 | Value | Used by | Where it lives |
 |---|---|---|
 | Syncfusion license key | All apps (`SyncfusionLicenseKey`) | `Directory.Secrets.props` / GitHub secret `SYNCFUSION_LICENSE_KEY` |
-| Google OAuth client ids | Cloud backup sign-in (planned) | `Directory.Secrets.props` / GitHub secrets |
-| Microsoft Entra client id | Cloud backup sign-in (planned) | `Directory.Secrets.props` / GitHub secrets |
+| Google OAuth client id (Android) | Cloud backup: Google Drive (`GoogleOAuthClientIdAndroid`) | `Directory.Secrets.props` / GitHub secret `GOOGLE_OAUTH_CLIENT_ID_ANDROID` |
+| Microsoft Entra client id | Cloud backup: OneDrive (`MicrosoftEntraClientId`) | `Directory.Secrets.props` / GitHub secret `MICROSOFT_ENTRA_CLIENT_ID` |
 | Android upload keystore + passwords | Release signing | Password manager + GitHub `production` environment secrets |
 | Apple certificates / profiles (later) | iOS release | Keychain + GitHub `production` environment secrets |
 
@@ -41,6 +41,22 @@ Other secrets (e.g. OAuth client ids) are declared by the app that needs them:
   <AppSecret Include="GoogleOAuthClientIdAndroid" Value="$(GoogleOAuthClientIdAndroid)" />
 </ItemGroup>
 ```
+
+### Cloud backup clients (Zanance, D-35)
+
+Both values are optional. **Without them the app has no cloud backup and the Android release build has no
+`INTERNET` permission**; with one of them the provider is offered (as an explicit choice of the user) and the release
+build keeps `INTERNET`.
+
+| Property | Where to create it | Notes |
+|---|---|---|
+| `MicrosoftEntraClientId` | Microsoft Entra admin center → App registrations → *Accounts in any organizational directory and personal Microsoft accounts* | Platform *Mobile and desktop*: redirect `msal{client-id}://auth` (Android, add the package name and the signature hash of the upload and the Play app signing key) and `http://localhost` (Windows). API permission `Files.ReadWrite.AppFolder` (delegated) |
+| `GoogleOAuthClientIdAndroid` | Google Cloud console → APIs & Services → Credentials → OAuth client *Android* | Package name `pro.vafadar.zanance`, SHA-1 of the upload key **and** of the Play app signing key (one client each), Google Drive API enabled, consent screen with `drive.appdata`, `openid`, `email` |
+
+The app reads them through `eng/AppSecrets.targets` (`AppSecrets.MicrosoftEntraClientId`,
+`AppSecrets.GoogleOAuthClientIdAndroid`). A configured Microsoft client also compiles the MSAL redirect activity
+(`CLOUD_MICROSOFT`). The release workflow passes the repository secrets `MICROSOFT_ENTRA_CLIENT_ID` and
+`GOOGLE_OAUTH_CLIENT_ID_ANDROID`; leave them unset for an offline release.
 
 ### Syncfusion license (shared by all apps)
 

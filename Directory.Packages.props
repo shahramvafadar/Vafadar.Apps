@@ -25,6 +25,9 @@
     <PackageVersion Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />
     <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.11.0.1" />
     <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.11.0.1" />
+    <!-- Google Drive sign-in on Android (Vafadar.Authentication.Maui, D-35): the Google Identity authorization API. -->
+    <PackageVersion Include="Xamarin.GooglePlayServices.Auth" Version="122.0.0" />
+    <PackageVersion Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.11.0.1" />
   </ItemGroup>
 
   <ItemGroup Label="Notifications">
@@ -54,6 +57,12 @@
   </ItemGroup>
 
   <!-- Tests run on Microsoft.Testing.Platform (see global.json), not VSTest. -->
+  <ItemGroup Label="Authentication">
+    <!-- OneDrive sign-in (Vafadar.Authentication.Maui, D-35); the extensions keep the token cache with DPAPI on Windows. -->
+    <PackageVersion Include="Microsoft.Identity.Client" Version="4.90.1" />
+    <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.90.1" />
+  </ItemGroup>
+
   <ItemGroup Label="Testing">
     <PackageVersion Include="xunit.v3" Version="4.0.1" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />

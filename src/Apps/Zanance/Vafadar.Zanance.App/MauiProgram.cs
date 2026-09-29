@@ -3,7 +3,10 @@ using Microsoft.Maui.LifecycleEvents;
 #if ANDROID || IOS
 using Plugin.LocalNotification;
 #endif
+using Vafadar.Authentication.Maui;
 using Vafadar.Backup;
+using Vafadar.Backup.GoogleDrive;
+using Vafadar.Backup.OneDrive;
 using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Backup;
 using Vafadar.Zanance.App.Features.Budget;
@@ -73,6 +76,28 @@ public static class MauiProgram
             .OnActivated(_ => PrivacyCover.Hide())
             .SceneOnActivated(_ => PrivacyCover.Hide())));
 #endif
+
+        // Cloud backup to the user's own Google Drive or OneDrive, offered only when the OAuth clients are configured
+        // for the build and the platform supports them (D-35).
+        var cloud = new CloudSignIn(new CloudSignInOptions
+        {
+            MicrosoftClientId = AppSecrets.MicrosoftEntraClientId,
+            GoogleAndroidClientId = AppSecrets.GoogleOAuthClientIdAndroid,
+        });
+        builder.Services.AddVafadarCloudSignIn(options =>
+        {
+            options.MicrosoftClientId = cloud.Options.MicrosoftClientId;
+            options.GoogleAndroidClientId = cloud.Options.GoogleAndroidClientId;
+        });
+        if (cloud.IsGoogleAvailable)
+        {
+            builder.Services.AddGoogleDriveBackupStorage();
+        }
+
+        if (cloud.IsMicrosoftAvailable)
+        {
+            builder.Services.AddOneDriveBackupStorage();
+        }
 
 #if ANDROID || IOS
         builder.UseLocalNotification();

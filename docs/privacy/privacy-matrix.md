@@ -33,7 +33,8 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 | Android `POST_NOTIFICATIONS` | ✅ | Reminders; asked only when the user turns a reminder on |
 | Android `RECEIVE_BOOT_COMPLETED` | ✅ | Restore scheduled reminders after a restart |
 | Android `USE_BIOMETRIC`, `USE_FINGERPRINT` | ✅ (merged from AndroidX Biometric) | Optional app lock; the system dialog handles the credential |
-| Android `INTERNET`, `ACCESS_NETWORK_STATE` | ❌ | No online feature (D-20); only Debug builds add `INTERNET` for the debugger |
+| Android `INTERNET` | ⚙️ | Only in builds with cloud backup clients (D-35), for the user's own Google Drive / OneDrive; offline builds remove it (D-20); Debug builds add it for the debugger |
+| Android `ACCESS_NETWORK_STATE` | ❌ | Removed from every build |
 | iOS Face ID (`NSFaceIDUsageDescription`) | ✅ | Optional app lock |
 | Anything else | ❌ | – |
 
@@ -41,12 +42,12 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 
 | Service / SDK | Zanance | Data involved | Notes |
 |---|---|---|---|
-| Google Drive API | 🔜 | Backup files | Not in this release; scope `drive.appdata` (own folder only) when added |
-| Microsoft Graph (OneDrive) | 🔜 | Backup files | Not in this release; scope `Files.ReadWrite.AppFolder` (own folder only) when added |
+| Google Drive API + Google Identity (Play services) | ⚙️ | Encrypted backup files; the account e-mail | Only when the user connects Google Drive (Android, D-35); scopes `drive.appdata` (own folder only), `openid`, `email`; tokens kept by Play services |
+| Microsoft Graph (OneDrive) + Microsoft identity (MSAL) | ⚙️ | Encrypted backup files; the account name | Only when the user connects OneDrive (Android, Windows, D-35); scope `Files.ReadWrite.AppFolder` (own folder only); token cache on the device (MSAL storage, DPAPI on Windows) |
 | Google Play Billing / StoreKit | 🔜 | Purchase status | Only if the app gets Pro / tips |
 | Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline |
 | Plugin.LocalNotification | ✅ | Reminder text | Local notifications only, no push service |
-| Google ML Kit text recognition (Android) | ⚙️ | A receipt photo or scanned PDF page the user chooses to read | Runs on the device with a bundled model; its usage statistics cannot be sent because the app has no network permission |
+| Google ML Kit text recognition (Android) | ⚙️ | A receipt photo or scanned PDF page the user chooses to read | Runs on the device with a bundled model; in offline builds its usage statistics cannot be sent (no network permission); in builds with cloud backup ML Kit may send usage statistics to Google while online |
 | Android Auto Backup | ✅ | App database and preferences | Operated by Google under the user's account; kept on by owner decision D-16 |
 | iOS device / iCloud backup | ✅ | App data | Operated by Apple under the user's account (OS default) |
 
@@ -57,8 +58,8 @@ the current Play Console help texts before submitting; when in doubt, declare co
 
 | Question | Zanance (draft) |
 |---|---|
-| Does the app collect or share user data? | No: the app has no network access, and files leave the device only when the user shares them through the system share sheet. Android Auto Backup is operated by Google and is not collection by the app; re-check Google's current guidance |
-| Is data encrypted in transit? | – (nothing is transmitted by the app); backup files are encrypted with the user's password |
+| Does the app collect or share user data? | Offline build: No – the app has no network access, and files leave the device only when the user shares them through the system share sheet. Build with cloud backup: backup files are sent, at the user's request and encrypted with the user's password, to the user's own Google Drive / OneDrive – declare them per Google's current definitions (user-initiated transfer to the user's own account; the developer receives nothing); ML Kit usage statistics may count as collected by an SDK. Android Auto Backup is operated by Google and is not collection by the app; re-check Google's current guidance |
+| Is data encrypted in transit? | Offline build: – (nothing is transmitted). With cloud backup: ✅ HTTPS, and the backup files are encrypted with the user's password |
 | Can users request deletion? | ✅ "Delete all data on this device" in Settings (for the open profile), deleting a profile in More › Profiles; uninstalling deletes on-device data |
 | Data shared with third parties | ❌ |
 | Ads | ❌ |
@@ -68,6 +69,6 @@ the current Play Console help texts before submitting; when in doubt, declare co
 | Question | Zanance (draft) |
 |---|---|
 | Data used to track you | ❌ None |
-| Data linked to you | None collected by the app (no network access); re-check Apple's definitions at submission |
+| Data linked to you | None collected by the app; cloud backup on iOS is not offered yet (D-35); re-check Apple's definitions at submission |
 | Data not linked to you | None |
 | Privacy manifest | `Platforms/iOS/Resources/PrivacyInfo.xcprivacy` (no tracking; required-reason API `UserDefaults` declared with reason `CA92.1`) |

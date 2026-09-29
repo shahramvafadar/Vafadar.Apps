@@ -71,6 +71,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one
   limit covers everything flexible. Each expense category can be marked fixed, non-monthly or flexible.
 
+### Added – Cloud backup (D-35)
+
+- Optional backups to your own OneDrive (Android, Windows) or Google Drive (Android): connect, back up now, see and restore
+  or delete cloud backups, disconnect. Cloud backups are always encrypted with your password; the app sees only its own
+  folder. Offered only in builds configured with the OAuth clients; other builds stay fully offline.
+
 ### Added – Local profiles (D-34)
 
 - Several independent profiles on one device (More › Profiles), e.g. personal and business, each with its own data,
@@ -115,4 +121,5 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ### Not yet included
 
-- Backup to Google Drive or OneDrive (needs the sign-in configuration).
+- Cloud backup on iOS and Google Drive on Windows; automatic cloud backups. Cloud backup is not yet verified on a
+  device with real OAuth clients.

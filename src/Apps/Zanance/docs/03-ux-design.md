@@ -45,7 +45,7 @@ budget and the next due items. The category chart and the account list are Home 
 | Empty | Illustration-free icon + one sentence + primary action (e.g. "No transactions yet · Add expense") |
 | Loading | Syncfusion busy indicator only if > 300 ms |
 | Error | Inline message with retry; user input is kept (TX-06, AT-04) |
-| Offline | Nothing changes in phase 1 (all local); cloud features hidden (D-17) |
+| Offline | Nothing changes (all local); cloud backup, when offered (D-35), shows "could not be reached" and keeps the local ledger usable |
 | Permission denied | Notification: banner in Plans "Reminders are off – enable", ledger unaffected (REM-02, AT-34) |
 | Invalid input | Field-level message, save disabled until valid; negative amount → explains kind selection (FIN-01) |
 | Leaving unsaved | Confirmation "Discard changes?" |

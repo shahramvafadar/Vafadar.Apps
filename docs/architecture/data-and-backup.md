@@ -3,7 +3,8 @@
 Apps are **local-first**: all data is stored in a SQLite database on the device and the app works without network.
 To make sure data is never lost, the app creates encrypted backup packages (password known only to the user) that the
 user keeps or shares. The libraries can also store them in cloud storage **owned by the user** (Google Drive or
-OneDrive); Zanance hides these destinations until sign-in is implemented and verified (D-17).
+OneDrive). In Zanance they are offered only in builds with configured OAuth clients, as an explicit choice of the
+user, and cloud backups are always encrypted with a password (D-35, replacing D-17).
 
 ## Local database
 
@@ -117,10 +118,22 @@ sequenceDiagram
 
 Both are free for the user within their existing quota and cost the developer nothing.
 
+### Cloud backup in Zanance (D-35)
+
+| Step | What happens |
+|---|---|
+| Offered | Only when the build has the OAuth client of the provider (`MicrosoftEntraClientId`, `GoogleOAuthClientIdAndroid`) and the platform supports it (OneDrive: Android, Windows; Google Drive: Android). A build without clients has no cloud section and no `INTERNET` permission |
+| Connect | The user taps *Connect*, reads where the backups go and that only the app folder is visible, then signs in with the provider's own screen ([authentication](authentication.md)) |
+| Back up | *Back up now* uses the password entered under *Create backup*; without a password nothing is uploaded. Retention (`MaxBackupsToKeep`) applies in the cloud folder as well |
+| Restore | *Show backups* lists the files; tapping one downloads it and runs the normal restore flow (password, preview, safety copy, confirmation) |
+| Disconnect | Signs out and removes the cached tokens (Google: the grant is revoked); backups stay in the user's account |
+
+Backups are per local profile: each profile backs up its own database. There is no automatic cloud backup yet.
+
 ### Scheduling
 
 * **Manual**: "Back up now" and "Restore" in each app's backup settings.
-* **Automatic** (planned in `Vafadar.Maui.Backup`): when the app starts or resumes and `IsAutomaticBackupDue()`
+* **Automatic** (planned in `Vafadar.Maui.Backup`, not in Zanance yet): when the app starts or resumes and `IsAutomaticBackupDue()`
   (default: daily), a backup runs in the background to the storage the user configured. Later, Android WorkManager /
   iOS background tasks can run it while the app is closed.
 * **Local export**: `CreatePackageAsync` produces the file so the user can share or save it anywhere (e-mail,

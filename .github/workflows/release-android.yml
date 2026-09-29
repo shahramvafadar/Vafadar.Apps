@@ -35,6 +35,9 @@ jobs:
       APP_VERSION: ${{ inputs.version }}
       APP_BUILD_NUMBER: ${{ inputs.build-number }}
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
+      # Optional (D-35): with these OAuth clients the build offers cloud backup and keeps INTERNET; without them it stays offline.
+      MicrosoftEntraClientId: ${{ secrets.MICROSOFT_ENTRA_CLIENT_ID }}
+      GoogleOAuthClientIdAndroid: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID_ANDROID }}
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}

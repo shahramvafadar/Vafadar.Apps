@@ -63,13 +63,13 @@ The repository has two kinds of code:
 | [Vafadar.Localization](../../src/Libraries/Vafadar.Localization/README.md) | Languages, runtime language switching, RTL, Gregorian/Persian calendar, shared UI strings | Core | ✅ |
 | [Vafadar.Data](../../src/Libraries/Vafadar.Data/README.md) | EF Core SQLite base context and conventions, audit timestamps, database backup source | Core, Backup | ✅ |
 | [Vafadar.Backup](../../src/Libraries/Vafadar.Backup/README.md) | Backup package format, AES-GCM encryption, retention, restore validation, local folder storage | Core | ✅ |
-| [Vafadar.Backup.GoogleDrive](../../src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backup storage in the user's Google Drive app data folder | Backup, Authentication | ✅ (needs sign-in implementation) |
-| [Vafadar.Backup.OneDrive](../../src/Libraries/Vafadar.Backup.OneDrive/README.md) | Backup storage in the user's OneDrive app folder | Backup, Authentication | ✅ (needs sign-in implementation) |
+| [Vafadar.Backup.GoogleDrive](../../src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backup storage in the user's Google Drive app data folder | Backup, Authentication | ✅ (used by Zanance on Android, D-35) |
+| [Vafadar.Backup.OneDrive](../../src/Libraries/Vafadar.Backup.OneDrive/README.md) | Backup storage in the user's OneDrive app folder | Backup, Authentication | ✅ (used by Zanance on Android and Windows, D-35) |
 | [Vafadar.Documents](../../src/Libraries/Vafadar.Documents/README.md) | Text rows from word boxes (LTR and RTL), PDF text layer (Syncfusion PDF) | – | ✅ |
 | [Vafadar.Documents.Maui](../../src/Libraries/Vafadar.Documents.Maui/README.md) | Reading photos and PDFs on the device: system OCR engines, system PDF rendering | Documents | ✅ |
 | [Vafadar.Authentication](../../src/Libraries/Vafadar.Authentication/README.md) | Sign-in and access-token abstractions for Google / Microsoft accounts | – | ✅ abstractions |
 | [Vafadar.Maui](../../src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap (`UseVafadar`), preferences, `{v:Translate}`, RTL, date field and chips, device authentication for app locks, Syncfusion setup, MVVM base | Core, Localization | ✅ |
-| Vafadar.Authentication.Maui | Google and Microsoft sign-in on Android / iOS / Windows (MSAL, Google OAuth) | Authentication | 🔜 planned |
+| [Vafadar.Authentication.Maui](../../src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft sign-in with MSAL (Android, Windows) and Google sign-in with the Play services authorization API (Android); iOS follows | Authentication | ✅ (device check with real clients pending) |
 | Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Zanance has its own backup screen; extract when a second app needs it) |
 | Vafadar.Monetization | "Pro" unlock and tip jar via Google Play Billing / StoreKit | – | 🔜 planned ([details](monetization.md)) |
 | Vafadar.Web | Shared Blazor components, layout, localization for web apps | Localization | 🔜 when the first web app starts |
@@ -115,6 +115,7 @@ flowchart TD
         VC[Vafadar.Core]
         DM["Vafadar.Documents.Maui<br/><i>MAUI</i>"]
         DO[Vafadar.Documents]
+        AM["Vafadar.Authentication.Maui<br/><i>MAUI</i>"]
     end
 
     FA --> FD --> FC
@@ -122,6 +123,9 @@ flowchart TD
     FA --> VM
     FA --> VB
     FA --> DM --> DO
+    FA --> AM --> VA
+    FA --> GD
+    FA --> OD
     FD --> VD
     FC --> VC
     VM --> VL --> VC

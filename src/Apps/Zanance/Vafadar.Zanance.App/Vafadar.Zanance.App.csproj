@@ -47,7 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Authentication.Maui\Vafadar.Authentication.Maui.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Backup\Vafadar.Backup.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Backup.GoogleDrive\Vafadar.Backup.GoogleDrive.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Backup.OneDrive\Vafadar.Backup.OneDrive.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Documents.Maui\Vafadar.Documents.Maui.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Maui\Vafadar.Maui.csproj" />
     <ProjectReference Include="..\Vafadar.Zanance.Core\Vafadar.Zanance.Core.csproj" />
@@ -67,7 +70,20 @@
     <PackageReference Include="Plugin.LocalNotification" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release'">
+  <!--
+    Cloud backup (D-35): the OAuth clients come from Directory.Secrets.props or CI secrets. Without them the app has no
+    cloud backup, and the release build keeps removing the network permission (D-20).
+  -->
+  <PropertyGroup Condition="'$(MicrosoftEntraClientId)' != ''">
+    <DefineConstants>$(DefineConstants);CLOUD_MICROSOFT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AppSecret Include="MicrosoftEntraClientId" Value="$(MicrosoftEntraClientId)" />
+    <AppSecret Include="GoogleOAuthClientIdAndroid" Value="$(GoogleOAuthClientIdAndroid)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == ''">
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />
   </ItemGroup>
 

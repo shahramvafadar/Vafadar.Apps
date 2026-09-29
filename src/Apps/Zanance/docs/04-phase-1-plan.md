@@ -28,7 +28,7 @@ only when its acceptance scenarios pass; status is tracked in the table at the e
 | S12 Import/Export | CSV export (safe), CSV import with mapping, preview, duplicates, batch undo | AT-51–55 |
 | S13 Simple/Advanced + app lock | Mode switch preserving data, device-credential/biometric lock, lock on resume/notification/export | AT-49, 61 |
 | S14 Hardening | Localization completeness, accessibility pass, performance with 10,000 entries, release build tests | AT-48, Q-02 |
-| S15 Cloud backup (conditional) | Only when real Google/Microsoft sign-in is configured and verified | AT-59 |
+| S15 Cloud backup (conditional) | Implemented (D-35); released only when the OAuth clients are configured and the device test passes | AT-59 |
 
 **Gate 1B:** every phase-1 scenario passes on the release build (except explicitly unshipped cloud destinations);
 privacy policy, Data safety and Financial features declaration match that build.
@@ -52,4 +52,4 @@ privacy policy, Data safety and Financial features declaration match that build.
 | S13 | Implemented – verified on Windows/Android builds (Simple/Advanced as views of the same data: advanced plan, budget and entry options, Home forecast card, summaries of hidden settings; app lock with device biometrics or credential via a shared library authenticator, cover on leaving, 30 s grace, notification taps after unlock, confirmation for export/backup/restore, Android FLAG_SECURE); device checks pending |
 | S14 | Implemented – verified (resource completeness, keys used in code exist, no empty translations; 10,000-entry calculation budget; migration upgrade test; licence list; release checklist updated). Device accessibility and performance runs remain for the release (08) |
 | S16 Spec review | Implemented – verified (gaps found by comparing with the English specification v1.1: account detail and reconciliation, archive ends plans, icons for accounts and entries, income reversal and "make recurring", category order and merge, budget account scope, category filter, delete all data, forecast what-if, reminder summary and due-date reminder, plan report variance, Home guidance, Q-02 data set, quick templates, unknown opening balance with data-quality indicator, region and first day of the week in the shared localization library, notification snooze; remaining deviations in spec Section 31.3) |
-| S15 | Blocked – needs Google/Microsoft OAuth client ids and verified sign-in (D-17); until then the destination stays hidden and encrypted backup files cover BAK-01..12 |
+| S15 | Implemented – unverified (D-35): OneDrive (Android, Windows) and Google Drive (Android) in builds with OAuth client ids; the device test with real clients is still open, and builds without clients keep the offline behaviour (encrypted backup files cover BAK-01..12) |

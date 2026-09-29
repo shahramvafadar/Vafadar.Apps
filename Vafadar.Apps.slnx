@@ -29,6 +29,7 @@
     <Project Path="src/Apps/Zanance/Vafadar.Zanance.Reports/Vafadar.Zanance.Reports.csproj" />
   </Folder>
   <Folder Name="/src/Libraries/">
+    <Project Path="src/Libraries/Vafadar.Authentication.Maui/Vafadar.Authentication.Maui.csproj" />
     <Project Path="src/Libraries/Vafadar.Authentication/Vafadar.Authentication.csproj" />
     <Project Path="src/Libraries/Vafadar.Backup.GoogleDrive/Vafadar.Backup.GoogleDrive.csproj" />
     <Project Path="src/Libraries/Vafadar.Backup.OneDrive/Vafadar.Backup.OneDrive.csproj" />

@@ -1,7 +1,8 @@
 # Vafadar.Authentication
 
 Abstractions for signing in with external accounts (Google, Microsoft) and getting access tokens. Platform
-implementations (MSAL for Microsoft, OAuth for Google) are planned in `Vafadar.Authentication.Maui`.
+implementations (MSAL for Microsoft, the Play services authorization API for Google) are in
+[`Vafadar.Authentication.Maui`](../Vafadar.Authentication.Maui/README.md).
 Design: [docs/architecture/authentication.md](../../../docs/architecture/authentication.md).
 
 | Type | Purpose |

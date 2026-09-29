@@ -26,23 +26,28 @@ services.AddKeyedSingleton<IAccessTokenProvider>(ExternalIdentityProvider.Google
 services.AddGoogleDriveBackupStorage();
 ```
 
-### Implementations (planned: Vafadar.Authentication.Maui)
+### Implementations (Vafadar.Authentication.Maui)
+
+See the [library README](../../src/Libraries/Vafadar.Authentication.Maui/README.md) for the platform matrix.
 
 | Provider | Library / flow | Registration | Scope |
 |---|---|---|---|
-| Microsoft | [MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/) (`Microsoft.Identity.Client`) with the system browser (and broker where available) | Microsoft Entra app registration, *personal + work/school accounts*, public client, redirect `msal{client-id}://auth` | `Files.ReadWrite.AppFolder` |
-| Google | OAuth 2.0 authorization code + PKCE through the system browser (MAUI `WebAuthenticator`) or Google's native Android authorization API | Google Cloud project, OAuth clients per platform (Android, iOS, desktop) | `https://www.googleapis.com/auth/drive.appdata` |
+| Microsoft | [MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/) (`Microsoft.Identity.Client`) with the system browser; Android and Windows | Microsoft Entra app registration, *personal + work/school accounts*, public client (mobile/desktop), redirects `msal{client-id}://auth` (Android, with the package signature hash) and `http://localhost` (Windows) | `Files.ReadWrite.AppFolder` |
+| Google | The **Google Identity authorization API** of Play services (`Xamarin.GooglePlayServices.Auth`) on Android: Google shows its own consent dialog, Play services returns access tokens; no redirect URI and no refresh token in the app | Google Cloud project with an **Android** OAuth client (package name `pro.vafadar.<app>` + SHA-1 of the signing certificate: upload key and Play app signing key) | `https://www.googleapis.com/auth/drive.appdata` plus `openid email` to show the account |
 
-Open points to settle when implementing (tracked in the [roadmap](../roadmap.md)):
+Decisions taken (Zanance D-35, 2026-09-29):
 
-* **Google on Android**: Google restricts custom URI scheme redirects for Android OAuth clients. The options are the
-  native Google Identity Services authorization API (needs an Android binding) or an alternative redirect setup.
-  Choose the currently recommended approach at implementation time.
-* **Google OAuth verification**: an app used by the public needs a verified OAuth consent screen: app name, logo,
-  a home page and privacy policy on the verified domain `vafadar.pro`, and a justification per scope. Minimal scopes
-  (`drive.appdata` only) keep verification simple.
-* **Token storage**: refresh tokens are stored with MAUI `SecureStorage` (Keychain / Android Keystore); MSAL gets a
-  token cache backed by `SecureStorage`.
+* **Google on Android** uses the authorization API, because Google blocks custom URI scheme redirects for Android
+  OAuth clients. Google on Windows (needs a desktop client) and both providers on iOS (keychain group entitlement and
+  URL scheme, needs a Mac) follow later.
+* **Token storage**: Play services keeps Google's grant; MSAL keeps its cache in its own protected storage on Android
+  and in a DPAPI-protected file on Windows (`Microsoft.Identity.Client.Extensions.Msal`). The app stores only the
+  e-mail address of the Google account to show it.
+* **Opt-in and offline builds**: a provider is offered only when its client id is configured for the build; a build
+  without any client has no cloud backup and keeps removing the `INTERNET` permission.
+* **Google OAuth verification**: an app used by the public needs a verified consent screen (name, logo, home page and
+  privacy policy on `vafadar.pro`, justification per scope). `drive.appdata` is not a restricted scope, which keeps
+  verification simple.
 
 ### Design principles
 
