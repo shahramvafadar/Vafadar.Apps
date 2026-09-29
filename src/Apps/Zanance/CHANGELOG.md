@@ -71,6 +71,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one
   limit covers everything flexible. Each expense category can be marked fixed, non-monthly or flexible.
 
+### Added – Local profiles (D-34)
+
+- Several independent profiles on one device (More › Profiles), e.g. personal and business, each with its own data,
+  settings, app lock and backups. A profile with the app lock asks for your fingerprint, face or PIN before it opens.
+
 ### Added – Pay-cycle months and limit suggestions (§10.3)
 
 - The month can start on any day from the 1st to the 28th (Settings), e.g. on payday. Budgets, Home, reports, the

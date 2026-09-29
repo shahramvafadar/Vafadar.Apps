@@ -1024,6 +1024,20 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
     private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);
 
+    /// <summary>
+    /// Forgets what the store keeps in memory for the current session (refunds to relink on undo), e.g. when another
+    /// local profile is opened, and tells listeners that all data changed.
+    /// </summary>
+    public void ResetSession()
+    {
+        lock (_refundLinks)
+        {
+            _refundLinks.Clear();
+        }
+
+        OnChanged();
+    }
+
     // Keeps OccurrenceState.PaidAmount equal to the sum of the partial payments of every touched occurrence (F2-TX-02).
     private static async Task UpdatePaidAmountsAsync(ZananceDbContext db, IEnumerable<LedgerEntry> touched, CancellationToken cancellationToken)
     {

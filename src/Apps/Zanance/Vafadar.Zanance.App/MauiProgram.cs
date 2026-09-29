@@ -54,14 +54,16 @@ public static class MauiProgram
             });
 
         builder.Services
-            .AddZananceData(DatabasePath())
+            // The last open local profile (§3); the main profile is the original database.
+            .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()))
             .AddVafadarBackup()
             .AddTransient<IMauiInitializeService, DatabaseInitializer>()
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
             .AddSingleton<Presentation.ThemeService>()
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
-            .AddSingleton<AppLockService>();
+            .AddSingleton<AppLockService>()
+            .AddSingleton<Profiles.ProfileService>();
 
 #if IOS
         // The app switcher snapshot is covered (SEC-02, D-23); Android uses FLAG_SECURE in MainActivity.
@@ -115,6 +117,7 @@ public static class MauiProgram
             .AddTransient<Features.Goals.GoalDetailPage>().AddTransient<Features.Goals.GoalDetailViewModel>()
             .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>()
             .AddTransient<DisplayUnitsPage>().AddTransient<DisplayUnitsViewModel>()
+            .AddTransient<Features.Profiles.ProfilesPage>().AddTransient<Features.Profiles.ProfilesViewModel>()
             .AddTransient<Features.Home.HomeLayoutPage>().AddTransient<Features.Home.HomeLayoutViewModel>();
 
 #if DEBUG

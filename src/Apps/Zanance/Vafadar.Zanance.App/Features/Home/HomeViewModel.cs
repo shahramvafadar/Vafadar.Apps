@@ -39,10 +39,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly TimeProvider _time;
     private string _reportCurrency = Currencies.Euro.Code;
     private int _startDay = 1;
+    private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles)
     {
         _store = store;
+        _profiles = profiles;
         _plans = plans;
         _translator = translator;
         _dates = dates;
@@ -196,6 +198,11 @@ public sealed partial class HomeViewModel : ViewModelBase
             ? $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}"
             : _dates.Format(from, DateFormatStyle.MonthYear);
         ScopeText = _translator.Format("Home_Scope", periodText, _translator["Home_AccountsInTotals"], _reportCurrency);
+        if (_profiles.HasSeveral)
+        {
+            // With several local profiles the open one is named first (§3).
+            ScopeText = $"{_profiles.NameOf(_profiles.Current)} · {ScopeText}";
+        }
 
         // Recorded balance (FIN-13) per currency; totals always follow the accounts included in totals.
         Balances.Clear();

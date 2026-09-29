@@ -2746,4 +2746,49 @@
   <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
     <value>Wochen- und Zweiwochenbudgets nutzen Limits; Umschläge und Flex sind Monatsmethoden.</value>
   </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Profile_Main" xml:space="preserve">
+    <value>Hauptprofil</value>
+  </data>
+  <data name="Profile_Intro" xml:space="preserve">
+    <value>Getrennte Finanzen auf diesem Gerät, z. B. privat und geschäftlich. Jedes Profil hat eigene Konten, Buchungen, Einstellungen, App-Sperre und Sicherungen.</value>
+  </data>
+  <data name="Profile_Note" xml:space="preserve">
+    <value>Erinnerungen und Budgethinweise kommen aus dem geöffneten Profil. Die Liste der Profilnamen sieht jede Person, die die App öffnen kann.</value>
+  </data>
+  <data name="Profile_Open" xml:space="preserve">
+    <value>Jetzt geöffnet</value>
+  </data>
+  <data name="Profile_OpenAction" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="Profile_Add" xml:space="preserve">
+    <value>Profil hinzufügen</value>
+  </data>
+  <data name="Profile_NamePrompt" xml:space="preserve">
+    <value>Name des Profils</value>
+  </data>
+  <data name="Profile_OpenNew" xml:space="preserve">
+    <value>„{0}“ jetzt öffnen? Ein neues Profil beginnt mit der Einrichtung.</value>
+  </data>
+  <data name="Profile_Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="Profile_Delete" xml:space="preserve">
+    <value>Profil löschen</value>
+  </data>
+  <data name="Profile_DeleteMessage" xml:space="preserve">
+    <value>„{0}“ mit allen Konten, Buchungen, Plänen und Einstellungen löschen?</value>
+  </data>
+  <data name="Profile_DeleteFinal" xml:space="preserve">
+    <value>Das lässt sich nicht rückgängig machen. Nur eine Sicherung dieses Profils bringt die Daten zurück.</value>
+  </data>
+  <data name="Profile_UnlockReason" xml:space="preserve">
+    <value>Geschütztes Profil öffnen</value>
+  </data>
+  <data name="Profile_Locked" xml:space="preserve">
+    <value>Das Profil ist durch die App-Sperre geschützt und wurde nicht geöffnet.</value>
+  </data>
 </root>

@@ -57,6 +57,7 @@ public sealed partial class MoreViewModel : ViewModelBase
             new(_translator["More_DataSecurity"],
             [
                 new(_translator["Backup_Title"], Symbol.ShieldCheckmark, AppShell.BackupRoute),
+                new(_translator["Profile_Title"], Symbol.PeopleSwap, AppShell.ProfilesRoute),
                 new(_translator["ImportExport_Title"], Symbol.DocumentTable, AppShell.ImportExportRoute),
                 new(_translator["Settings_Title"], Symbol.Settings, AppShell.SettingsRoute),
             ]),

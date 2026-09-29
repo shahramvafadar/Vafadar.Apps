@@ -14,7 +14,8 @@ public static class DataServiceCollectionExtensions
 {
     /// <summary>
     /// Registers <see cref="IDbContextFactory{TContext}"/> for a SQLite database at <paramref name="databasePath"/>,
-    /// the auditing interceptor, and the database as an <see cref="IBackupSource"/>.
+    /// the auditing interceptor, and the database as an <see cref="IBackupSource"/>. The file can be moved later through
+    /// <see cref="LocalDatabaseLocation{TContext}"/> (local profiles).
     /// </summary>
     /// <remarks>Use the factory (short-lived contexts) in apps; there are no request scopes in a mobile app.</remarks>
     public static IServiceCollection AddLocalDatabase<TContext>(this IServiceCollection services, string databasePath)
@@ -23,26 +24,10 @@ public static class DataServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         ArgumentException.ThrowIfNullOrWhiteSpace(databasePath);
 
-        var connectionString = new SqliteConnectionStringBuilder
-        {
-            DataSource = databasePath,
-            Mode = SqliteOpenMode.ReadWriteCreate,
-        }.ToString();
-
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<AuditingSaveChangesInterceptor>();
-        services.AddDbContextFactory<TContext>((sp, options) =>
-        {
-            var directory = Path.GetDirectoryName(Path.GetFullPath(databasePath));
-            if (!string.IsNullOrEmpty(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            options
-                .UseSqlite(connectionString)
-                .AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());
-        });
+        services.AddSingleton(new LocalDatabaseLocation<TContext>(databasePath));
+        services.AddSingleton<IDbContextFactory<TContext>, LocalDbContextFactory<TContext>>();
         services.AddSingleton<IBackupSource, SqliteDatabaseBackupSource<TContext>>();
 
         return services;

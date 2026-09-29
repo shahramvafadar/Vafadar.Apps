@@ -8,6 +8,7 @@ On-device SQLite databases with EF Core. Design: [docs/architecture/data-and-bac
 | `Auditing.AuditingSaveChangesInterceptor` | Sets `CreatedAt` / `UpdatedAt` of `IAuditableEntity` using `TimeProvider` |
 | `SqliteDatabaseBackupSource<TContext>` | Includes the database in backups (online backup API, integrity check, migrate after restore) |
 | `DataServiceCollectionExtensions` | `AddLocalDatabase<TContext>(path)`, `MigrateLocalDatabase<TContext>()` |
+| `LocalDatabaseLocation<TContext>` | The database file in use; `MoveTo(path)` switches it at run time (local profiles), contexts created afterwards use the new file |
 
 ```csharp
 public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options) : LocalDbContext(options)

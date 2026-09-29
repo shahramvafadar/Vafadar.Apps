@@ -2750,4 +2750,49 @@
   <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
     <value>Weekly and two-week budgets use limits; envelopes and flex are monthly methods.</value>
   </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="Profile_Main" xml:space="preserve">
+    <value>Main profile</value>
+  </data>
+  <data name="Profile_Intro" xml:space="preserve">
+    <value>Keep separate finances on this device, e.g. personal and business. Each profile has its own accounts, entries, settings, app lock and backups.</value>
+  </data>
+  <data name="Profile_Note" xml:space="preserve">
+    <value>Reminders and budget alerts come from the open profile. The list of profile names is visible to anyone who can open the app.</value>
+  </data>
+  <data name="Profile_Open" xml:space="preserve">
+    <value>Open now</value>
+  </data>
+  <data name="Profile_OpenAction" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Profile_Add" xml:space="preserve">
+    <value>Add profile</value>
+  </data>
+  <data name="Profile_NamePrompt" xml:space="preserve">
+    <value>Name of the profile</value>
+  </data>
+  <data name="Profile_OpenNew" xml:space="preserve">
+    <value>Open "{0}" now? A new profile starts with the setup.</value>
+  </data>
+  <data name="Profile_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Profile_Delete" xml:space="preserve">
+    <value>Delete profile</value>
+  </data>
+  <data name="Profile_DeleteMessage" xml:space="preserve">
+    <value>Delete "{0}" with all its accounts, entries, plans and settings?</value>
+  </data>
+  <data name="Profile_DeleteFinal" xml:space="preserve">
+    <value>This cannot be undone. Only a backup of this profile can bring the data back.</value>
+  </data>
+  <data name="Profile_UnlockReason" xml:space="preserve">
+    <value>Open the protected profile</value>
+  </data>
+  <data name="Profile_Locked" xml:space="preserve">
+    <value>The profile is protected by the app lock and was not opened.</value>
+  </data>
 </root>

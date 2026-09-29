@@ -2746,4 +2746,49 @@
   <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
     <value>بودجه‌های هفتگی و دوهفته‌ای با سقف کار می‌کنند؛ پاکت‌ها و Flex روش‌های ماهانه‌اند.</value>
   </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>پروفایل‌ها</value>
+  </data>
+  <data name="Profile_Main" xml:space="preserve">
+    <value>پروفایل اصلی</value>
+  </data>
+  <data name="Profile_Intro" xml:space="preserve">
+    <value>حساب‌وکتاب‌های جدا روی همین دستگاه، مثلاً شخصی و کاری. هر پروفایل حساب‌ها، تراکنش‌ها، تنظیمات، قفل برنامه و پشتیبان خودش را دارد.</value>
+  </data>
+  <data name="Profile_Note" xml:space="preserve">
+    <value>یادآورها و هشدارهای بودجه از پروفایل باز می‌آیند. فهرست نام پروفایل‌ها برای هر کسی که برنامه را باز کند دیده می‌شود.</value>
+  </data>
+  <data name="Profile_Open" xml:space="preserve">
+    <value>اکنون باز است</value>
+  </data>
+  <data name="Profile_OpenAction" xml:space="preserve">
+    <value>باز کردن</value>
+  </data>
+  <data name="Profile_Add" xml:space="preserve">
+    <value>افزودن پروفایل</value>
+  </data>
+  <data name="Profile_NamePrompt" xml:space="preserve">
+    <value>نام پروفایل</value>
+  </data>
+  <data name="Profile_OpenNew" xml:space="preserve">
+    <value>«{0}» اکنون باز شود؟ پروفایل تازه با راه‌اندازی شروع می‌شود.</value>
+  </data>
+  <data name="Profile_Rename" xml:space="preserve">
+    <value>تغییر نام</value>
+  </data>
+  <data name="Profile_Delete" xml:space="preserve">
+    <value>حذف پروفایل</value>
+  </data>
+  <data name="Profile_DeleteMessage" xml:space="preserve">
+    <value>«{0}» با همهٔ حساب‌ها، تراکنش‌ها، برنامه‌ها و تنظیماتش حذف شود؟</value>
+  </data>
+  <data name="Profile_DeleteFinal" xml:space="preserve">
+    <value>این کار برگشت‌پذیر نیست. فقط پشتیبانی از همین پروفایل می‌تواند داده‌ها را برگرداند.</value>
+  </data>
+  <data name="Profile_UnlockReason" xml:space="preserve">
+    <value>باز کردن پروفایل محافظت‌شده</value>
+  </data>
+  <data name="Profile_Locked" xml:space="preserve">
+    <value>این پروفایل با قفل برنامه محافظت می‌شود و باز نشد.</value>
+  </data>
 </root>

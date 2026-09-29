@@ -69,6 +69,9 @@ public partial class AppShell : Shell
     /// <summary>Route of the display units such as the toman (FX-07).</summary>
     public const string DisplayUnitsRoute = "displayunits";
 
+    /// <summary>Route of the local profiles (§3).</summary>
+    public const string ProfilesRoute = "profiles";
+
     /// <summary>Route of CSV import and export.</summary>
     public const string ImportExportRoute = "importexport";
 
@@ -118,6 +121,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
         Routing.RegisterRoute(DisplayUnitsRoute, typeof(DisplayUnitsPage));
+        Routing.RegisterRoute(ProfilesRoute, typeof(Features.Profiles.ProfilesPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
         Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));

@@ -71,6 +71,24 @@ public partial class App : Application
         }
     }
 
+    /// <summary>
+    /// Shows the profile that was just opened (§3): its screens, or onboarding for a new profile; its due plans are
+    /// posted and its reminders replace those of the previous profile.
+    /// </summary>
+    public void ShowCurrentProfile()
+    {
+        if (_services.GetRequiredService<ZananceStore>().GetSettings().OnboardingCompleted)
+        {
+            ShowMainShell();
+        }
+        else
+        {
+            ShowOnboarding();
+        }
+
+        RunForegroundWork(starting: false);
+    }
+
     /// <summary>Shows onboarding again, e.g. after all data was deleted.</summary>
     public void ShowOnboarding()
     {

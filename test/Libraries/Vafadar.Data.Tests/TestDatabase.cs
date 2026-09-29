@@ -51,6 +51,8 @@ internal sealed class TestDatabase : IDisposable
 
     public IServiceProvider Services => _services;
 
+    public string PathOf(string name) => _directory.Combine(name);
+
     public TestDbContext CreateContext() => _services.GetRequiredService<IDbContextFactory<TestDbContext>>().CreateDbContext();
 
     public void Dispose()
