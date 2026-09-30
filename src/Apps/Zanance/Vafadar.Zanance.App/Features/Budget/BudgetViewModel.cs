@@ -195,7 +195,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    partial void OnConfirmedOnlyChanged(bool value) => _ = LoadAsync();
+    partial void OnConfirmedOnlyChanged(bool value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
     private bool _backFromEditor;
 

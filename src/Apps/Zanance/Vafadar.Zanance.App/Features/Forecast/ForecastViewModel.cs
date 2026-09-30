@@ -95,7 +95,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    partial void OnHorizonIndexChanged(int value) => _ = LoadAsync();
+    partial void OnHorizonIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
     public async Task LoadAsync()
     {

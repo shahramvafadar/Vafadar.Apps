@@ -229,7 +229,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
 
-    partial void OnPeriodKindChanged(int value) => _ = LoadAsync();
+    partial void OnPeriodKindChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
     partial void OnReportIndexChanged(int value)
     {
@@ -239,7 +239,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         OnPropertyChanged(nameof(ShowAccounts));
         OnPropertyChanged(nameof(ShowPlans));
         OnPropertyChanged(nameof(ShowTags));
-        _ = LoadAsync();
+        _ = Presentation.Failures.GuardAsync(LoadAsync);
     }
 
     /// <summary>Query: <c>report</c> (index of the report to show).</summary>

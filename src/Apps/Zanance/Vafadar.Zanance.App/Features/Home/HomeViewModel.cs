@@ -169,7 +169,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
 
-    partial void OnPeriodIndexChanged(int value) => _ = LoadAsync();
+    partial void OnPeriodIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
     public async Task LoadAsync()
     {

@@ -231,11 +231,11 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _refreshing = false;
     }
 
-    partial void OnShowDetailsChanged(bool value) => _ = SaveNotificationSettingsAsync();
+    partial void OnShowDetailsChanged(bool value) => _ = Presentation.Failures.GuardAsync(SaveNotificationSettingsAsync);
 
-    partial void OnReminderDaysTextChanged(string value) => _ = SaveNotificationSettingsAsync();
+    partial void OnReminderDaysTextChanged(string value) => _ = Presentation.Failures.GuardAsync(SaveNotificationSettingsAsync);
 
-    partial void OnReminderTimeChanged(TimeSpan? value) => _ = SaveNotificationSettingsAsync();
+    partial void OnReminderTimeChanged(TimeSpan? value) => _ = Presentation.Failures.GuardAsync(SaveNotificationSettingsAsync);
 
     // Reminder defaults apply to new plans; the lock-screen choice applies to all notifications (REM-01, REM-05).
     private async Task SaveNotificationSettingsAsync()
