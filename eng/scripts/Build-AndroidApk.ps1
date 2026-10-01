@@ -20,10 +20,19 @@ $ErrorActionPreference = 'Stop'
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))
 New-Item -ItemType Directory -Force $Output | Out-Null
 
-# EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
-dotnet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
-    -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -o $Output -nologo
-if ($LASTEXITCODE -ne 0) { throw "The build failed ($LASTEXITCODE)." }
+# Restore for Android alone first: after a build for all platforms (e.g. Windows from Visual Studio) the assets file
+# lists other target frameworks, and publish would stop with NETSDK1005 instead of restoring again.
+$log = dotnet restore $Project -p:VafadarMauiTargetFrameworks=net10.0-android -nologo 2>&1
+if ($LASTEXITCODE -eq 0) {
+    # EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
+    $log = dotnet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
+        -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -o $Output -nologo --no-restore 2>&1
+}
+if ($LASTEXITCODE -ne 0) {
+    # Show the errors, not only the exit code, even when the caller keeps just the last lines.
+    $log | Select-String -Pattern ': error ' | Select-Object -ExpandProperty Line -Unique | Write-Host
+    throw "The build failed ($LASTEXITCODE). The errors are listed above."
+}
 
 $apk = Get-ChildItem $Output -Filter '*-Signed.apk' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 "APK: $($apk.FullName) ($([math]::Round($apk.Length / 1MB, 1)) MB)"
