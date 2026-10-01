@@ -205,9 +205,6 @@
   <data name="Settings_ReportCurrency" xml:space="preserve">
     <value>ارز گزارش</value>
   </data>
-  <data name="Settings_Display" xml:space="preserve">
-    <value>نمایش</value>
-  </data>
   <data name="Tab_Transactions" xml:space="preserve">
     <value>تراکنش‌ها</value>
   </data>
@@ -1470,9 +1467,6 @@
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>پایان ماه ≈ {0} · کمترین {1} در {2}</value>
-  </data>
-  <data name="Settings_Licences" xml:space="preserve">
-    <value>اجزای شخص ثالث</value>
   </data>
   <data name="Account_ConfirmedOnly" xml:space="preserve">
     <value>فقط تأییدشده: {0}</value>
@@ -3132,5 +3126,71 @@
   </data>
   <data name="Camera_PhotoName" xml:space="preserve">
     <value>عکس رسید</value>
+  </data>
+  <data name="Settings_LanguageRegion" xml:space="preserve">
+    <value>زبان و منطقه</value>
+  </data>
+  <data name="Settings_MoneyMonths" xml:space="preserve">
+    <value>پول و ماه‌ها</value>
+  </data>
+  <data name="More_App" xml:space="preserve">
+    <value>برنامه</value>
+  </data>
+  <data name="More_AccountsHint" xml:space="preserve">
+    <value>موجودی‌ها، وام‌ها و دارایی‌ها، تطبیق</value>
+  </data>
+  <data name="More_ReimbursementsHint" xml:space="preserve">
+    <value>هزینه‌هایی که دیگران پس می‌دهند</value>
+  </data>
+  <data name="More_CategoriesHint" xml:space="preserve">
+    <value>دسته‌های هزینه و درآمد</value>
+  </data>
+  <data name="More_TemplatesHint" xml:space="preserve">
+    <value>تراکنش‌های تکراری با یک لمس</value>
+  </data>
+  <data name="More_RulesHint" xml:space="preserve">
+    <value>پیشنهاد دسته از روی طرف حساب یا عنوان</value>
+  </data>
+  <data name="More_RatesHint" xml:space="preserve">
+    <value>نرخ‌های شما برای جمع کل ارزها</value>
+  </data>
+  <data name="More_UnitsHint" xml:space="preserve">
+    <value>واحدهای روزمره، مثل تومان به‌جای ریال</value>
+  </data>
+  <data name="More_BackupHint" xml:space="preserve">
+    <value>پشتیبان رمزگذاری‌شده و بازیابی</value>
+  </data>
+  <data name="More_ImportExportHint" xml:space="preserve">
+    <value>فایل CSV برای صفحه‌گسترده و برنامه‌های دیگر</value>
+  </data>
+  <data name="More_ProfilesHint" xml:space="preserve">
+    <value>داده‌های جدا، مثلاً شخصی و کاری</value>
+  </data>
+  <data name="More_SettingsHint" xml:space="preserve">
+    <value>زبان، ظاهر، قفل برنامه، یادآورها</value>
+  </data>
+  <data name="More_AboutHint" xml:space="preserve">
+    <value>نسخه، داده‌های شما و مجوزها</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>دربارهٔ Zanance</value>
+  </data>
+  <data name="About_DataTitle" xml:space="preserve">
+    <value>داده‌های شما</value>
+  </data>
+  <data name="About_DataText" xml:space="preserve">
+    <value>Zanance به حساب کاربری نیاز ندارد و تبلیغ نشان نمی‌دهد. داده‌های مالی شما روی همین دستگاه و در پشتیبان‌هایی که خودتان می‌سازید نگه داشته می‌شود و برای سازنده یا هیچ‌کس دیگری فرستاده نمی‌شود. پشتیبان ابری اختیاری است و فقط پس از اتصال، از فضای ابری خود شما استفاده می‌کند.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>مجوزهای متن‌باز</value>
+  </data>
+  <data name="About_LicencesText" xml:space="preserve">
+    <value>Zanance با نرم‌افزارها و فونت‌های زیر ساخته شده است. مجوز آن‌ها نمایش این اطلاعات را لازم می‌داند.</value>
+  </data>
+  <data name="About_ShowLicences" xml:space="preserve">
+    <value>نمایش متن مجوزها</value>
+  </data>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>© 2026 Shahram Vafadar · vafadar.pro</value>
   </data>
 </root>

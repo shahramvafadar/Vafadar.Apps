@@ -165,9 +165,8 @@
         <Setter Property="Margin" Value="20" />
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="VerticalOptions" Value="End" />
-        <Setter Property="Shadow">
-            <Shadow Brush="#1D56C9" Opacity="0.28" Radius="14" Offset="0,6" />
-        </Setter>
+        <!-- No shadow: Android draws a MAUI shadow in a rectangular layer whose clipped edge showed as a light square around
+             the round button, most visibly in the dark theme. The filled blue stands out on both grounds without it. -->
     </Style>
 
     <Style x:Key="ListRow" TargetType="Grid">

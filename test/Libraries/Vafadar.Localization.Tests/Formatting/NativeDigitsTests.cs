@@ -9,6 +9,9 @@ public sealed class NativeDigitsTests
     [InlineData("1405/07/06", "۱۴۰۵/۰۷/۰۶")]
     [InlineData("3 days overdue", "۳ days overdue")]
     [InlineData("Total, 12.", "Total, ۱۲.")]
+    [InlineData("costs 2.50.", "costs ۲٫۵۰.")]
+    [InlineData("Version 0.1.0.1", "Version ۰.۱.۰.۱")]
+    [InlineData("1.10.2026", "۱.۱۰.۲۰۲۶")]
     [InlineData("no digits", "no digits")]
     [InlineData("", "")]
     public void Latin_digits_and_the_separators_between_them_become_Persian(string text, string expected) =>

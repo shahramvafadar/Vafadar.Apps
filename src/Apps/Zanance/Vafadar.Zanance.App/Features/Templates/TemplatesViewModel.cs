@@ -12,7 +12,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Templates;
 
 /// <summary>A quick template in the list.</summary>
-public sealed record TemplateRow(Guid Id, string Name, string Details, Symbol Icon);
+public sealed record TemplateRow(Guid Id, string Name, string Details, Symbol Icon, Color IconColor, Color IconBackground, Color IconStroke);
 
 /// <summary>
 /// Quick templates (TX-04): created from an entry ("Save as template"), used from the entry form, deleted here.
@@ -49,8 +49,11 @@ public sealed partial class TemplatesViewModel(ZananceStore store, Translator tr
                 parts.Add(MoneyText.Format(amount, account.CurrencyCode, culture));
             }
 
-            var icon = Icons.Parse(template.Icon, categories.Get(template.CategoryId) is { } category ? Icons.Parse(category.Icon, Symbol.Flash) : Symbol.Flash);
-            Templates.Add(new TemplateRow(template.Id, template.Name, string.Join(" · ", parts), icon));
+            // The same icon and colour as on Home and in the entry lists (category colour; slate for a transfer).
+            var transfer = template.Kind == EntryKind.Transfer;
+            var icon = transfer ? Symbol.ArrowSwap : Icons.Parse(template.Icon, categories.Get(template.CategoryId) is { } category ? Icons.Parse(category.Icon, Symbol.Flash) : Symbol.Flash);
+            var color = transfer ? Presentation.Palette.TransferText : categories.Color(template.CategoryId);
+            Templates.Add(new TemplateRow(template.Id, template.Name, string.Join(" · ", parts), icon, color, color.WithAlpha(0.12f), color.WithAlpha(0.3f)));
         }
 
         HasTemplates = Templates.Count > 0;

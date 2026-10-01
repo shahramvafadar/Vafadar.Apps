@@ -35,7 +35,7 @@ public sealed partial class ReimbursementsViewModel(ZananceStore store, Translat
             var currency = presenter.CurrencyOf(expense.AccountId);
             Items.Add(presenter.Row(expense) with
             {
-                Subtitle = $"{expense.ReimbursedBy ?? translator["Entry_ReimbursedBySomeone"]} · {dates.Format(expense.Date, DateFormatStyle.Short)}",
+                Subtitle = $"{expense.ReimbursedBy ?? translator["Entry_ReimbursedBySomeone"]} · {dates.Format(expense.Date, DateFormatStyle.Long)}",
                 AmountText = MoneyText.Format(amount, currency, culture),
             });
         }

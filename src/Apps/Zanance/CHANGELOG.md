@@ -85,6 +85,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – More, Settings and About (D-39)
+
+- More: every row says in one line what it holds; Settings and the new About Zanance are in their own group "App".
+- About Zanance: version, what happens with your data, and the open-source licences with their full texts.
+- Settings grouped by what they change: language and region, money and months, appearance, experience, privacy and
+  security, notifications, delete data. The reminder time has a label.
+- The add button has no square around it any more (Android); the Windows time picker shows 24 hours instead of an
+  empty AM/PM column; quick templates show their category colour; money owed to you is shown in sky blue.
+- Persian digits keep the dots of version numbers (۰.۱.۰.۱) instead of turning them into decimal commas.
+
 ### Changed – Dark theme and permissions (D-38)
 
 - The dark theme is a deep navy that matches the blue of the symbol (it looked green-grey before); on Android the

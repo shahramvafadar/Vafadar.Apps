@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Vafadar.Core.Hosting;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -17,7 +16,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
-    private readonly IAppEnvironment _app;
     private readonly ZananceStore _store;
     private readonly ReminderService _reminders;
     private readonly AppLockService _lock;
@@ -29,7 +27,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
         Translator translator,
         IDateFormatter dates,
         TimeProvider time,
-        IAppEnvironment app,
         ZananceStore store,
         ReminderService reminders,
         AppLockService appLock,
@@ -43,7 +40,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _translator = translator;
         _dates = dates;
         _time = time;
-        _app = app;
         _store = store;
 
         Languages = [.. localization.SupportedLanguages];
@@ -61,20 +57,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
     public partial string ReportCurrency { get; set; }
 
     public IReadOnlyList<string> ModeNames { get; }
-
-    /// <summary>Gets the third-party components shipped with the app and their licences.</summary>
-    public string LicencesText { get; } = string.Join(Environment.NewLine,
-        ".NET, .NET MAUI, EF Core, CommunityToolkit.Mvvm – MIT",
-        "SQLite – public domain",
-        "Syncfusion Essential Studio for .NET MAUI – commercial licence",
-        "Fluent UI System Icons (FluentIcons.Maui) – MIT",
-        "Plugin.LocalNotification – MIT",
-        "AndroidX (Biometric and others) – Apache 2.0",
-        "Figtree and Urbanist fonts – SIL Open Font License 1.1",
-        "Google ML Kit text recognition (Android) – ML Kit Terms of Service",
-        "Microsoft Authentication Library (MSAL.NET) – MIT",
-        "Google Play services (Android, cloud backup sign-in) – Android Software Development Kit License",
-        "Vazirmatn font – SIL Open Font License 1.1");
 
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
@@ -296,9 +278,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string CalendarPreview { get; set; }
 
-    [ObservableProperty]
-    public partial string VersionText { get; set; }
-
     partial void OnSelectedLanguageChanged(AppLanguage? value)
     {
         if (_refreshing || value is null || value == _localization.CurrentLanguage)
@@ -360,7 +339,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     }
 
     // Rebuilds everything that contains translated or formatted text for the current language and calendar.
-    [MemberNotNull(nameof(Calendars), nameof(CalendarPreview), nameof(VersionText))]
+    [MemberNotNull(nameof(Calendars), nameof(CalendarPreview))]
     private void Refresh()
     {
         _refreshing = true;
@@ -396,7 +375,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ];
             SelectedWeekStart = _localization.IsFirstDayOfWeekAutomatic ? WeekStarts[0] : WeekStarts.FirstOrDefault(o => o.Day == _localization.FirstDayOfWeek) ?? WeekStarts[0];
             CalendarPreview = _dates.Format(DateOnly.FromDateTime(_time.GetLocalNow().DateTime), DateFormatStyle.Long);
-            VersionText = _translator.Format("Settings_Version", _app.Version);
         }
         finally
         {

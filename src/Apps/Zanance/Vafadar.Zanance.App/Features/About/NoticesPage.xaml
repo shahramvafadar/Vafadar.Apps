@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.About.NoticesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.About"
+    x:DataType="local:AboutViewModel"
+    Title="{v:Translate About_LicencesTitle}">
+
+    <!-- The full third-party notices, as the licences require them; legal texts stay in English and left to right. -->
+    <ScrollView>
+        <Border Style="{StaticResource Card}" Margin="16">
+            <Label Text="{Binding NoticesText}" FontSize="12" LineHeight="1.2" FlowDirection="LeftToRight" HorizontalTextAlignment="Start" />
+        </Border>
+    </ScrollView>
+</ContentPage>

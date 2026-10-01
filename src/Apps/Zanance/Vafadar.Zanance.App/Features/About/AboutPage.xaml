@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.About.AboutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.About"
+    x:DataType="local:AboutViewModel"
+    Title="{v:Translate About_Title}">
+
+    <!-- About Zanance (D-39): who made it, what happens with the data, and the licences of what it is built with. -->
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+            <Border Style="{StaticResource Card}" Padding="16,24">
+                <VerticalStackLayout Spacing="6">
+                    <Image Source="zanance_symbol.png" HeightRequest="64" WidthRequest="62" HorizontalOptions="Center" Aspect="AspectFit"
+                           SemanticProperties.Description="{v:Translate App_Name}" />
+                    <Label Text="{v:Translate App_Name}" FontFamily="{DynamicResource DisplayFont}" FontSize="26" HorizontalTextAlignment="Center" Margin="0,6,0,0" />
+                    <Label Text="{v:Translate Onb_Tagline}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding VersionText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="{v:Translate About_DataTitle}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <Label Text="{v:Translate About_DataText}" />
+            </Border>
+
+            <Label Text="{v:Translate About_LicencesTitle}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{v:Translate About_LicencesText}" Style="{StaticResource Secondary}" />
+                    <!-- Names and licences stay in their original (Latin) form and direction. -->
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Components}" Spacing="10" FlowDirection="LeftToRight">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:NoticeComponent">
+                                <VerticalStackLayout Spacing="1">
+                                    <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold" FlowDirection="LeftToRight" />
+                                    <Label Text="{Binding Licence}" Style="{StaticResource Secondary}" FontSize="12.5" FlowDirection="LeftToRight" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate About_ShowLicences}" Command="{Binding ShowNoticesCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="{v:Translate About_Copyright}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,12,0,8" FlowDirection="LeftToRight" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

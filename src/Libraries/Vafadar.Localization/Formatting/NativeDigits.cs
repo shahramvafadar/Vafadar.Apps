@@ -40,7 +40,8 @@ public static class NativeDigits
             {
                 result.Append((char)(PersianZero + (c - '0')));
             }
-            else if (c is ',' or '.' && i > 0 && i < text.Length - 1 && char.IsAsciiDigit(text[i - 1]) && char.IsAsciiDigit(text[i + 1]))
+            else if (c is ',' or '.' && i > 0 && i < text.Length - 1 && char.IsAsciiDigit(text[i - 1]) && char.IsAsciiDigit(text[i + 1])
+                     && (c == ',' || !HasSeveralDots(text, i)))
             {
                 result.Append(c == ',' ? ArabicThousandsSeparator : ArabicDecimalSeparator);
             }
@@ -51,5 +52,34 @@ public static class NativeDigits
         }
 
         return result.ToString();
+    }
+
+    // A number has one decimal separator; dots in a run like 0.1.0.1 (a version) or 1.2.2026 (a date) are not decimals
+    // and stay dots.
+    private static bool HasSeveralDots(string text, int index)
+    {
+        var start = index;
+        while (start > 0 && (char.IsAsciiDigit(text[start - 1]) || text[start - 1] is '.' or ','))
+        {
+            start--;
+        }
+
+        var end = index;
+        while (end < text.Length - 1 && (char.IsAsciiDigit(text[end + 1]) || text[end + 1] is '.' or ','))
+        {
+            end++;
+        }
+
+        // Only dots between two digits count, so a full stop after a number ("costs 2.50.") stays a full stop.
+        var dots = 0;
+        for (var i = start + 1; i < end; i++)
+        {
+            if (text[i] == '.' && char.IsAsciiDigit(text[i - 1]) && char.IsAsciiDigit(text[i + 1]))
+            {
+                dots++;
+            }
+        }
+
+        return dots > 1;
     }
 }

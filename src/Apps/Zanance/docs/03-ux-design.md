@@ -12,7 +12,8 @@ TabBar:   Home | Transactions | Plans | Insights | More
           └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
 Insights: top tabs Budget · Reports · Forecast · Goals
 More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templates, Categorization rules)
-          · Currency (Exchange rates, Display units) · Data and security (Backup, Profiles, Import/Export, Settings)
+          · Currency (Exchange rates, Display units) · Data and security (Backup, Import/Export, Profiles)
+          · App (Settings, About Zanance); every row has a one-line description (D-39)
 ```
 
 Home (D-37) starts with the recorded balance and a quick add card – Expense, Income and Transfer, each opening the
@@ -40,7 +41,8 @@ show them in full.
 | UI-11 | Reports | Expense by category (gross donut + refunds card + net table), income vs expense, monthly trend (6/12), account movement, budget, plan vs actual; tap → drill-down list | same data, Advanced filters |
 | UI-12 | Import / Export | Export CSV (period, accounts, include notes?), sensitive-data warning, share; Import: pick file → mapping → preview (valid/invalid/duplicates) → apply → result with "undo this import" | same |
 | UI-13 | Backup & restore | Last successful backup, create encrypted backup file (password + confirmation, "cannot be recovered" warning), restore: pick file → password → preview (date, counts) → safety copy → confirm | same |
-| UI-14 | Settings & privacy | Language, calendar, report currency, week start, mode Simple/Advanced, reminder defaults, notification privacy, app lock, privacy information, about | same |
+| UI-14 | Settings & privacy | Language and region (language, calendar, region, week start) · Money and months (report currency, month start) · Appearance (theme, Persian digits) · Experience (Simple/Advanced) · Privacy and security (app lock) · Notifications (turn on, names and amounts, reminder defaults) · Delete data | same |
+| UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; the open-source components with licence and copyright, and their full licence texts on a page of their own (`Resources/Raw/ThirdPartyNotices.txt`) | same |
 
 ## 4. States every screen defines (UX-05)
 

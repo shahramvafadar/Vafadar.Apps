@@ -266,7 +266,10 @@
         </Setter>
     </Style>
 
+    <!-- Windows shows a 12-hour picker with the AM/PM names of the system language; on a system whose language has none
+         (e.g. German) that column stays empty. The 24-hour clock reads well everywhere; phones use their own picker. -->
     <Style TargetType="TimePicker">
+        <Setter Property="Format" Value="{OnPlatform WinUI='HH:mm', Default='t'}" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />

@@ -146,6 +146,9 @@ internal static class DebugSnapshots
             ("report-tags", AppShell.ReportsRoute, new() { ["report"] = 5 }),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
+            ("profiles", AppShell.ProfilesRoute, null),
+            ("about", AppShell.AboutRoute, null),
+            ("notices", AppShell.NoticesRoute, null),
             ("more", "//more", null),
         };
 

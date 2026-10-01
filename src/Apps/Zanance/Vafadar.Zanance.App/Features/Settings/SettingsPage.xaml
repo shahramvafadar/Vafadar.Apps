@@ -12,7 +12,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
 
-            <Label Text="{v:Translate Settings_Display}" Style="{StaticResource SectionHeader}" />
+            <!-- Language and region: how dates, numbers and weeks are shown -->
+            <Label Text="{v:Translate Settings_LanguageRegion}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout>
                     <Label Text="{v:Translate Settings_Language}" Style="{StaticResource FieldLabel}" Margin="0" />
@@ -32,6 +33,19 @@
                     <Label Text="{v:Translate Settings_WeekStart}" Style="{StaticResource FieldLabel}" />
                     <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
                             SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Money and months: what every total and budget is counted in (D-39) -->
+            <Label Text="{v:Translate Settings_MoneyMonths}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <v:HelpButton Topic="ReportCurrency" />
+                    </HorizontalStackLayout>
+                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
+                            SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
 
                     <HorizontalStackLayout Spacing="6">
                         <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />
@@ -40,13 +54,18 @@
                     <Picker ItemsSource="{Binding StartDayNames}" SelectedIndex="{Binding StartDayIndex}"
                             SemanticProperties.Description="{v:Translate Settings_MonthStart}" />
                     <Label Text="{v:Translate Settings_MonthStartHint}" Style="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+            </Border>
 
-                    <HorizontalStackLayout Spacing="6">
-                        <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
-                        <v:HelpButton Topic="ReportCurrency" Margin="0,8,0,0" />
-                    </HorizontalStackLayout>
-                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
-                            SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
+            <!-- Appearance (UX-08, D-22, D-27) -->
+            <Label Text="{v:Translate Theme_Title}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0" IsVisible="{Binding IsPersian}">
+                        <Label Text="{v:Translate Settings_PersianDigits}" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding PersianDigits}" SemanticProperties.Description="{v:Translate Settings_PersianDigits}" />
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
 
@@ -59,12 +78,6 @@
                 <VerticalStackLayout Spacing="8">
                     <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" />
                     <Label Text="{v:Translate Mode_Hint}" Style="{StaticResource Secondary}" />
-                    <Label Text="{v:Translate Theme_Title}" Style="{StaticResource FieldLabel}" />
-                    <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" />
-                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0" IsVisible="{Binding IsPersian}">
-                        <Label Text="{v:Translate Settings_PersianDigits}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding PersianDigits}" SemanticProperties.Description="{v:Translate Settings_PersianDigits}" />
-                    </Grid>
                 </VerticalStackLayout>
             </Border>
 
@@ -109,18 +122,11 @@
                                SemanticProperties.Description="{v:Translate Plan_DaysBefore}" />
                         <Label Grid.Column="1" Text="{v:Translate Plan_DaysBefore}" VerticalOptions="Center" />
                     </Grid>
+                    <Label Text="{v:Translate Plan_ReminderTime}" Style="{StaticResource FieldLabel}" Margin="0,4,0,0" />
                     <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="{v:Translate Settings_About}" Style="{StaticResource SectionHeader}" />
-            <Border Style="{StaticResource Card}">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding VersionText}" />
-                    <Label Text="{v:Translate Settings_Licences}" Style="{StaticResource Secondary}" FontAttributes="Bold" Margin="0,8,0,0" />
-                    <Label Text="{Binding LicencesText}" Style="{StaticResource Secondary}" FontSize="13" FlowDirection="LeftToRight" />
-                </VerticalStackLayout>
-            </Border>
 
             <Label Text="{v:Translate Settings_DangerZone}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">

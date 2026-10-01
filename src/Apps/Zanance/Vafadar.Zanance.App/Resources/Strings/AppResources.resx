@@ -206,9 +206,6 @@
   <data name="Settings_ReportCurrency" xml:space="preserve">
     <value>Report currency</value>
   </data>
-  <data name="Settings_Display" xml:space="preserve">
-    <value>Display</value>
-  </data>
   <data name="Tab_Transactions" xml:space="preserve">
     <value>Transactions</value>
   </data>
@@ -1474,9 +1471,6 @@
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>End of month ≈ {0} · lowest {1} on {2}</value>
-  </data>
-  <data name="Settings_Licences" xml:space="preserve">
-    <value>Third-party components</value>
   </data>
   <data name="Account_ConfirmedOnly" xml:space="preserve">
     <value>Confirmed only: {0}</value>
@@ -3136,5 +3130,71 @@
   </data>
   <data name="Camera_PhotoName" xml:space="preserve">
     <value>Receipt photo</value>
+  </data>
+  <data name="Settings_LanguageRegion" xml:space="preserve">
+    <value>Language and region</value>
+  </data>
+  <data name="Settings_MoneyMonths" xml:space="preserve">
+    <value>Money and months</value>
+  </data>
+  <data name="More_App" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="More_AccountsHint" xml:space="preserve">
+    <value>Balances, loans and assets, reconciling</value>
+  </data>
+  <data name="More_ReimbursementsHint" xml:space="preserve">
+    <value>Expenses others will pay back</value>
+  </data>
+  <data name="More_CategoriesHint" xml:space="preserve">
+    <value>Expense and income categories</value>
+  </data>
+  <data name="More_TemplatesHint" xml:space="preserve">
+    <value>Recurring entries in one tap</value>
+  </data>
+  <data name="More_RulesHint" xml:space="preserve">
+    <value>Suggest a category from the payee or title</value>
+  </data>
+  <data name="More_RatesHint" xml:space="preserve">
+    <value>Your rates for combined totals</value>
+  </data>
+  <data name="More_UnitsHint" xml:space="preserve">
+    <value>Everyday units, e.g. toman for rial</value>
+  </data>
+  <data name="More_BackupHint" xml:space="preserve">
+    <value>Encrypted backups and restore</value>
+  </data>
+  <data name="More_ImportExportHint" xml:space="preserve">
+    <value>CSV files for spreadsheets and other apps</value>
+  </data>
+  <data name="More_ProfilesHint" xml:space="preserve">
+    <value>Separate data, e.g. personal and business</value>
+  </data>
+  <data name="More_SettingsHint" xml:space="preserve">
+    <value>Language, theme, app lock, reminders</value>
+  </data>
+  <data name="More_AboutHint" xml:space="preserve">
+    <value>Version, your data and licences</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>About Zanance</value>
+  </data>
+  <data name="About_DataTitle" xml:space="preserve">
+    <value>Your data</value>
+  </data>
+  <data name="About_DataText" xml:space="preserve">
+    <value>Zanance needs no account and shows no advertising. Your financial data is kept on this device and in the backups you create, and it is not sent to the developer or to anyone else. Cloud backup is optional and uses only your own storage, once you connect it.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Open-source licences</value>
+  </data>
+  <data name="About_LicencesText" xml:space="preserve">
+    <value>Zanance is built with the following software and fonts. Their licences ask for these notices.</value>
+  </data>
+  <data name="About_ShowLicences" xml:space="preserve">
+    <value>Show licence texts</value>
+  </data>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>© 2026 Shahram Vafadar · vafadar.pro</value>
   </data>
 </root>

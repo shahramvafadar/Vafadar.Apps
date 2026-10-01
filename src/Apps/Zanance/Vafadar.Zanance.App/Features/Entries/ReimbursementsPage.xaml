@@ -16,7 +16,7 @@
             <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="2">
                     <Label Text="{v:Translate Reimbursements_Total}" Style="{StaticResource Secondary}" />
-                    <Label Text="{Binding TotalText}" Style="{StaticResource AmountLarge}" />
+                    <Label Text="{Binding TotalText}" Style="{StaticResource AmountLarge}" TextColor="{DynamicResource RefundText}" />
                 </VerticalStackLayout>
             </Border>
             <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
@@ -32,7 +32,7 @@
                                     <Label Text="{Binding Title}" FontSize="16" />
                                     <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" TextColor="{DynamicResource RefundText}" VerticalOptions="Center" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
