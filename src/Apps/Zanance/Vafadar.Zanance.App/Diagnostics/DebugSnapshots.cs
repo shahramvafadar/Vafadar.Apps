@@ -17,14 +17,20 @@ namespace Vafadar.Zanance.App.Diagnostics;
 /// </summary>
 internal static class DebugSnapshots
 {
+    private static void SetSize(Window window)
+    {
+        var size = Environment.GetEnvironmentVariable("VAFADAR_WINDOW_SIZE")?.Split('x');
+        window.Width = size is [var w, _] && double.TryParse(w, System.Globalization.CultureInfo.InvariantCulture, out var width) ? width : 412;
+        window.Height = size is [_, var h] && double.TryParse(h, System.Globalization.CultureInfo.InvariantCulture, out var height) ? height : 892;
+    }
+
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
         // VAFADAR_START_ROUTE opens one screen with the real window chrome (navigation bar, back button) for a check
         // of the whole window; the app stays open.
         if (Environment.GetEnvironmentVariable("VAFADAR_START_ROUTE") is { Length: > 0 } route)
         {
-            window.Width = 412;
-            window.Height = 892;
+            SetSize(window);
             app.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(3), async () =>
             {
                 if (Shell.Current is { } shell)
@@ -43,9 +49,8 @@ internal static class DebugSnapshots
             return;
         }
 
-        // Phone-like size so that the layout matches the primary target.
-        window.Width = 412;
-        window.Height = 892;
+        // Phone-like size so that the layout matches the primary target; VAFADAR_WINDOW_SIZE (e.g. 1280x820) checks wide windows.
+        SetSize(window);
         Directory.CreateDirectory(folder);
         app.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(3), async () =>
         {
@@ -91,6 +96,38 @@ internal static class DebugSnapshots
             vm.Account.OpeningText = "1250.50";
             await vm.NextCommand.ExecuteAsync(null);
             await Task.Delay(1500);
+        }
+
+        // VAFADAR_SNAPSHOT_EMPTY=1: the first days of a new user – one account, nothing recorded yet – to check every
+        // empty state (UX-05).
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_EMPTY") == "1")
+        {
+            var emptyScreens = new (string Name, string Route)[]
+            {
+                ("home", "//home"), ("transactions", "//transactions"), ("plans", "//plans"), ("budget", AppShell.BudgetRoute),
+                ("reports", AppShell.ReportsRoute), ("forecast", AppShell.ForecastRoute), ("goals", AppShell.GoalsRoute),
+                ("accounts", AppShell.AccountsRoute), ("templates", AppShell.TemplatesRoute), ("rules", AppShell.RulesRoute),
+                ("reimbursements", AppShell.ReimbursementsRoute), ("rates", AppShell.RatesRoute), ("display-units", AppShell.DisplayUnitsRoute),
+                ("backup", AppShell.BackupRoute), ("entry-new", AppShell.EntryEditorRoute),
+            };
+            foreach (var language in languages)
+            {
+                localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
+                await Task.Delay(1000);
+                foreach (var (name, route) in emptyScreens)
+                {
+                    await Shell.Current.GoToAsync(route);
+                    await Task.Delay(1500);
+                    await CaptureAsync(app, folder, $"{language}-empty-{name}");
+                    if (!route.StartsWith("//", StringComparison.Ordinal))
+                    {
+                        await Shell.Current.GoToAsync("//home");
+                        await Task.Delay(500);
+                    }
+                }
+            }
+
+            return;
         }
 
         var (expenseId, foodId) = await SeedAsync(services);

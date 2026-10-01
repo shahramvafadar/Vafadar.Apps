@@ -125,8 +125,12 @@ lightened (`CategoryLookup.DisplayColor`).
   Plans and Settings offer "Turn on" later, which opens the system settings once the system no longer asks. Camera: only
   when the user chooses "Take a photo"; Android uses the camera app and needs no permission, iOS shows its dialog with
   our usage text and, after a refusal, offers the settings.
-* **Keyboard focus on Windows** (D-37): the focus ring is drawn in the action blue (`SystemControlFocusVisual*Brush`
-  in `Platforms/Windows/App.xaml`, light and dark) and follows the rounded corners of each control.
+* **Keyboard focus on Windows** (D-37, D-41): the focus ring is drawn in the action blue, set on each control in
+  `MauiProgram` (WinUI 3 does not take it from app resources), and follows the rounded corners of each control.
+* **Wide windows** (D-41): wider than 720 px every page is a centred column of 720 px, so cards and lists read like
+  on a large phone instead of stretching across a desktop window or a tablet in landscape.
+* **Getting started** (D-41): a new user sees three steps on Home (first expense, a regular payment, a monthly budget),
+  ticked off as they are done; the card disappears when all are done or on *Hide*.
 * **Onboarding** (D-36): a centred column of at most 560 px with a progress bar, the symbol in a halo on the welcome
   step, an icon above every step title, fields in cards and full-width buttons; "Add your first account".
 * Rows that open a page are real buttons (keyboard, screen readers, touch feedback); icons are not in the

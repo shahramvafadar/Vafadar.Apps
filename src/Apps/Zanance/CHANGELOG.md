@@ -85,6 +85,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Wide windows and the first days (D-41)
+
+- Windows and tablets: in a wide window every page is a centred, readable column instead of cards across the screen.
+- Getting started on Home for new users: first expense, a regular payment and a monthly budget, ticked off as you go.
+- Reports without entries show one "Add entry" card; the forecast without plans explains how to get one and offers
+  "Add plan"; money owed to you has a proper empty state.
+- Exchange rates start from the currency of one of your accounts (or the US dollar) instead of the first in the list.
+- Windows: the keyboard focus ring is blue now (the earlier change did not take effect).
+
 ### Changed – Whole-app review (D-40)
 
 - Reports: a positive result is green, a negative result and negative balances are red; the trend table has column

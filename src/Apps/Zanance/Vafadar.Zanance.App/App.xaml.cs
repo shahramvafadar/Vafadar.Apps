@@ -17,6 +17,9 @@ public partial class App : Application
         _services = services;
         InitializeComponent();
 
+        // Wide windows show every page as a centred, readable column (D-41).
+        Presentation.ReadableWidth.Attach(this);
+
         // Display units (e.g. toman) the user defined, before any amount is shown (FX-07).
         Presentation.DisplayUnitPreferences.Load();
 

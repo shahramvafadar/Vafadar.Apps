@@ -123,6 +123,70 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Getting started (ONB-04, D-41): what makes Home useful, ticked off as it is done -->
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding ShowGettingStarted}">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto" Padding="16,14,8,0">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{v:Translate Home_StartTitle}" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{v:Translate Home_StartText}" Style="{StaticResource Secondary}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Style="{StaticResource TextButton}" Text="{v:Translate Home_StartHide}" Command="{Binding HideGettingStartedCommand}" VerticalOptions="Start" />
+                        </Grid>
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="24" ForegroundColor="{DynamicResource IncomeText}" VerticalOptions="Center" IsVisible="{Binding FirstEntryDone}" />
+                            <fi:SymbolIcon Symbol="Circle" FontSize="24" ForegroundColor="{DynamicResource StrokeStrong}" VerticalOptions="Center"
+                                           IsVisible="{Binding FirstEntryDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Label Grid.Column="1" Text="{v:Translate Home_StartEntry}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding FirstEntryDone}" Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
+                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}"
+                                           IsVisible="{Binding FirstEntryDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding AddKindCommand}" CommandParameter="Expense"
+                                    IsVisible="{Binding FirstEntryDone, Converter={StaticResource InvertedBoolConverter}}" SemanticProperties.Description="{v:Translate Home_StartEntry}" />
+                        </Grid>
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="24" ForegroundColor="{DynamicResource IncomeText}" VerticalOptions="Center" IsVisible="{Binding PlanDone}" />
+                            <fi:SymbolIcon Symbol="Circle" FontSize="24" ForegroundColor="{DynamicResource StrokeStrong}" VerticalOptions="Center"
+                                           IsVisible="{Binding PlanDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Label Grid.Column="1" Text="{v:Translate Home_StartPlan}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding PlanDone}" Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
+                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}"
+                                           IsVisible="{Binding PlanDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding AddPlanCommand}"
+                                    IsVisible="{Binding PlanDone, Converter={StaticResource InvertedBoolConverter}}" SemanticProperties.Description="{v:Translate Home_StartPlan}" />
+                        </Grid>
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="24" ForegroundColor="{DynamicResource IncomeText}" VerticalOptions="Center" IsVisible="{Binding BudgetDone}" />
+                            <fi:SymbolIcon Symbol="Circle" FontSize="24" ForegroundColor="{DynamicResource StrokeStrong}" VerticalOptions="Center"
+                                           IsVisible="{Binding BudgetDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Label Grid.Column="1" Text="{v:Translate Home_StartBudget}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding BudgetDone}" Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
+                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}"
+                                           IsVisible="{Binding BudgetDone, Converter={StaticResource InvertedBoolConverter}}" />
+                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding AddBudgetCommand}"
+                                    IsVisible="{Binding BudgetDone, Converter={StaticResource InvertedBoolConverter}}" SemanticProperties.Description="{v:Translate Home_StartBudget}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Needs attention: always an action, never just a red number (DASH-03) -->
                 <VerticalStackLayout Spacing="0" IsVisible="{Binding HasAttention}">
                     <Label Text="{v:Translate Home_Attention}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
@@ -172,28 +236,6 @@
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
-
-                <!-- Guidance (ONB-04) -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowPlansTip}">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Home_TipPlansTitle}" FontAttributes="Bold" />
-                        <Label Text="{v:Translate Home_TipPlansText}" Style="{StaticResource Secondary}" />
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipPlansAction}" Command="{Binding AddPlanCommand}" />
-                            <Button Grid.Column="1" Style="{StaticResource TextButton}" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="plans" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowBudgetTip}">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Home_TipBudgetTitle}" FontAttributes="Bold" />
-                        <Label Text="{v:Translate Home_TipBudgetText}" Style="{StaticResource Secondary}" />
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Home_TipBudgetAction}" Command="{Binding AddBudgetCommand}" />
-                            <Button Grid.Column="1" Style="{StaticResource TextButton}" Text="{v:Translate Home_TipDismiss}" Command="{Binding DismissTipCommand}" CommandParameter="budget" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
 
                 <!-- Sections the user can hide and reorder (§21.5); balance and attention stay on top (DASH-03) -->
                 <VerticalStackLayout x:Name="PeriodSection" Spacing="0">

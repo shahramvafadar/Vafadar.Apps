@@ -11,12 +11,17 @@
 
 .EXAMPLE
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark
+    ./eng/scripts/Run-Snapshots.ps1 -Languages en -WindowSize 1280x820
 #>
 param(
     [string]$Languages = 'fa',
     [ValidateSet('light', 'dark')] [string]$Theme = 'light',
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\snapshots'),
-    [int]$TimeoutSeconds = 240)
+    [int]$TimeoutSeconds = 240,
+    # e.g. 1280x820 to check wide windows (desktop, tablet); default: a phone-sized window.
+    [string]$WindowSize = '',
+    # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.
+    [switch]$Empty)
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -43,6 +48,8 @@ $exe = Get-ChildItem 'src\Apps\Zanance\Vafadar.Zanance.App\bin\Debug\net10.0-win
 $env:VAFADAR_SNAPSHOTS = (Resolve-Path $Output)
 $env:VAFADAR_SNAPSHOT_LANGUAGES = $Languages
 $env:VAFADAR_SNAPSHOT_THEME = $Theme
+$env:VAFADAR_WINDOW_SIZE = $WindowSize
+$env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }

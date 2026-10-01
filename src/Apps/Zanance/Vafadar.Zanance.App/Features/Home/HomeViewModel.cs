@@ -172,12 +172,19 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? IncompleteText { get; set; }
 
-    // Guidance after the first entries (ONB-04): one tip at a time, each can be dismissed for good.
+    // Getting started (ONB-04, D-41): the three steps that make Home useful, ticked off as they are done; hidden when all
+    // are done or when the user hides it.
     [ObservableProperty]
-    public partial bool ShowPlansTip { get; set; }
+    public partial bool ShowGettingStarted { get; set; }
 
     [ObservableProperty]
-    public partial bool ShowBudgetTip { get; set; }
+    public partial bool FirstEntryDone { get; set; }
+
+    [ObservableProperty]
+    public partial bool PlanDone { get; set; }
+
+    [ObservableProperty]
+    public partial bool BudgetDone { get; set; }
 
     [ObservableProperty]
     public partial string? BudgetText { get; set; }
@@ -276,7 +283,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
         await LoadPlansAsync(byId, categories, today);
-        await LoadTipsAsync(entries.Count);
+        await LoadGettingStartedAsync(entries.Count);
         await LoadForecastAsync(settings.Mode, allAccounts, entries, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
@@ -517,14 +524,21 @@ public sealed partial class HomeViewModel : ViewModelBase
         return PeriodMath.MonthRange(year, month, Calendar, _startDay);
     }
 
-    private const string PlansTipKey = "home.tip.plans.dismissed";
-    private const string BudgetTipKey = "home.tip.budget.dismissed";
+    private const string GettingStartedKey = "home.getting_started.hidden";
 
-    private async Task LoadTipsAsync(int entryCount)
+    private async Task LoadGettingStartedAsync(int entryCount)
     {
-        var ready = HasAccounts && entryCount >= 3;
-        ShowPlansTip = ready && !Preferences.Default.Get(PlansTipKey, false) && (await _plans.GetSchedulesAsync()).Count == 0;
-        ShowBudgetTip = ready && !ShowPlansTip && !Preferences.Default.Get(BudgetTipKey, false) && (await _store.GetBudgetsAsync()).Count == 0;
+        FirstEntryDone = entryCount > 0;
+        PlanDone = (await _plans.GetSchedulesAsync()).Count > 0;
+        BudgetDone = (await _store.GetBudgetsAsync()).Count > 0;
+        ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !(FirstEntryDone && PlanDone && BudgetDone);
+    }
+
+    [RelayCommand]
+    private void HideGettingStarted()
+    {
+        Preferences.Default.Set(GettingStartedKey, true);
+        ShowGettingStarted = false;
     }
 
     [RelayCommand]
@@ -532,14 +546,6 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task AddBudgetAsync() => Shell.Current.GoToAsync(AppShell.BudgetRoute);
-
-    [RelayCommand]
-    private void DismissTip(string tip)
-    {
-        Preferences.Default.Set(tip == "plans" ? PlansTipKey : BudgetTipKey, true);
-        ShowPlansTip = false;
-        ShowBudgetTip = false;
-    }
 
     [RelayCommand]
     private Task OpenAccountsAsync() => Shell.Current.GoToAsync(AppShell.AccountsRoute);

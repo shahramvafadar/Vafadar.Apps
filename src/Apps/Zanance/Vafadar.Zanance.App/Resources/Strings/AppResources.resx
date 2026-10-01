@@ -1580,27 +1580,6 @@
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
     <value>Confirm deleting all data</value>
   </data>
-  <data name="Home_TipPlansTitle" xml:space="preserve">
-    <value>Add your regular payments</value>
-  </data>
-  <data name="Home_TipPlansText" xml:space="preserve">
-    <value>Rent, salary, subscriptions or instalments: with a plan you get a reminder and see what is coming.</value>
-  </data>
-  <data name="Home_TipPlansAction" xml:space="preserve">
-    <value>Add a plan</value>
-  </data>
-  <data name="Home_TipBudgetTitle" xml:space="preserve">
-    <value>Set a monthly budget</value>
-  </data>
-  <data name="Home_TipBudgetText" xml:space="preserve">
-    <value>Choose how much you want to spend this month and see what is left at a glance.</value>
-  </data>
-  <data name="Home_TipBudgetAction" xml:space="preserve">
-    <value>Set a budget</value>
-  </data>
-  <data name="Home_TipDismiss" xml:space="preserve">
-    <value>Not now</value>
-  </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
     <value>Tap a plan item to leave it out or assume another date or amount, e.g. a delayed salary or a higher bill. This only changes this view.</value>
   </data>
@@ -3196,5 +3175,26 @@
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
+  </data>
+  <data name="Home_StartTitle" xml:space="preserve">
+    <value>Getting started</value>
+  </data>
+  <data name="Home_StartText" xml:space="preserve">
+    <value>Three steps to see where your money goes.</value>
+  </data>
+  <data name="Home_StartEntry" xml:space="preserve">
+    <value>Record your first expense</value>
+  </data>
+  <data name="Home_StartPlan" xml:space="preserve">
+    <value>Add a regular payment, e.g. rent or salary</value>
+  </data>
+  <data name="Home_StartBudget" xml:space="preserve">
+    <value>Set a monthly budget</value>
+  </data>
+  <data name="Home_StartHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Forecast_NoPlansHint" xml:space="preserve">
+    <value>Add your regular income and bills as plans to see how your balance develops.</value>
   </data>
 </root>

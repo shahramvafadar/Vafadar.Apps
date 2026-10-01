@@ -5,24 +5,20 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:Vafadar.Zanance.App.WinUI">
 
-    <!-- The keyboard focus ring in the action blue of the palette (Presentation/Palette.cs, D-37) instead of the system's
-         black and white; it keeps the rounded corners of each control. -->
+    <!-- Text boxes in the outline colours of the palette (Presentation/Palette.cs). The keyboard focus ring is set per
+         control in MauiProgram: WinUI 3 does not take it from app resources. -->
     <maui:MauiWinUIApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <!-- Text boxes (entries, the editable currency box) outline in the palette's strong outline, darker on
                      hover and blue when focused; the system's dark outline is almost white and stood out (D-40). -->
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="SystemControlFocusVisualPrimaryBrush" Color="#1D56C9" />
-                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#FFFFFF" />
                     <SolidColorBrush x:Key="TextControlBorderBrush" Color="#B9C3D1" />
                     <SolidColorBrush x:Key="TextControlElevationBorderBrush" Color="#B9C3D1" />
                     <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#697586" />
                     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#1D56C9" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="SystemControlFocusVisualPrimaryBrush" Color="#79A6FF" />
-                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#1C2536" />
                     <SolidColorBrush x:Key="TextControlBorderBrush" Color="#3D4A62" />
                     <SolidColorBrush x:Key="TextControlElevationBorderBrush" Color="#3D4A62" />
                     <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#8C97A8" />

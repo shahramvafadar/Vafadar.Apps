@@ -151,6 +151,20 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+#if WINDOWS
+        // The keyboard focus ring in the action blue of the palette instead of black and white (D-40). WinUI 3 reads the
+        // ring colours of a control from the control itself, not from overridable app resources; a theme change rebuilds
+        // the screens, so each new control gets the current colours.
+        Microsoft.Maui.Handlers.ViewHandler.ViewMapper.AppendToMapping("ZananceFocusRing", (handler, _) =>
+        {
+            if (handler.PlatformView is Microsoft.UI.Xaml.FrameworkElement element)
+            {
+                element.FocusVisualPrimaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.Primary);
+                element.FocusVisualSecondaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.CardBackground);
+            }
+        });
+#endif
+
         return builder.Build();
     }
 

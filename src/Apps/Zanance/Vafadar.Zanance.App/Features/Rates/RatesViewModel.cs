@@ -53,6 +53,11 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
     {
         var settings = await store.GetSettingsAsync();
         ToCurrency ??= settings.ReportCurrencyCode;
+
+        // The rate that is likely needed: of an account in another currency, otherwise of the US dollar (or the euro
+        // when the report currency is the dollar) – not the first currency of the alphabet.
+        FromCurrency ??= (await store.GetAccountsAsync()).Select(a => a.CurrencyCode).FirstOrDefault(c => c != ToCurrency)
+            ?? (ToCurrency == "USD" ? "EUR" : "USD");
         if (Date == default)
         {
             Date = DateOnly.FromDateTime(time.GetLocalNow().DateTime);

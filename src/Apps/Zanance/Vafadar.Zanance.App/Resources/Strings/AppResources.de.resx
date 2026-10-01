@@ -1576,27 +1576,6 @@
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
     <value>Löschen aller Daten bestätigen</value>
   </data>
-  <data name="Home_TipPlansTitle" xml:space="preserve">
-    <value>Regelmäßige Zahlungen hinzufügen</value>
-  </data>
-  <data name="Home_TipPlansText" xml:space="preserve">
-    <value>Miete, Gehalt, Abos oder Raten: Mit einer Planung werden Sie erinnert und sehen, was ansteht.</value>
-  </data>
-  <data name="Home_TipPlansAction" xml:space="preserve">
-    <value>Planung hinzufügen</value>
-  </data>
-  <data name="Home_TipBudgetTitle" xml:space="preserve">
-    <value>Monatsbudget festlegen</value>
-  </data>
-  <data name="Home_TipBudgetText" xml:space="preserve">
-    <value>Legen Sie fest, wie viel Sie diesen Monat ausgeben möchten, und sehen Sie den Rest auf einen Blick.</value>
-  </data>
-  <data name="Home_TipBudgetAction" xml:space="preserve">
-    <value>Budget festlegen</value>
-  </data>
-  <data name="Home_TipDismiss" xml:space="preserve">
-    <value>Nicht jetzt</value>
-  </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
     <value>Tippen Sie auf einen Planungseintrag, um ihn auszulassen oder ein anderes Datum oder einen anderen Betrag anzunehmen, z. B. ein späteres Gehalt oder eine höhere Rechnung. Das ändert nur diese Ansicht.</value>
   </data>
@@ -3192,5 +3171,26 @@
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
+  </data>
+  <data name="Home_StartTitle" xml:space="preserve">
+    <value>Erste Schritte</value>
+  </data>
+  <data name="Home_StartText" xml:space="preserve">
+    <value>Drei Schritte, um zu sehen, wohin Ihr Geld geht.</value>
+  </data>
+  <data name="Home_StartEntry" xml:space="preserve">
+    <value>Erste Ausgabe erfassen</value>
+  </data>
+  <data name="Home_StartPlan" xml:space="preserve">
+    <value>Regelmäßige Zahlung anlegen, z. B. Miete oder Gehalt</value>
+  </data>
+  <data name="Home_StartBudget" xml:space="preserve">
+    <value>Monatsbudget festlegen</value>
+  </data>
+  <data name="Home_StartHide" xml:space="preserve">
+    <value>Ausblenden</value>
+  </data>
+  <data name="Forecast_NoPlansHint" xml:space="preserve">
+    <value>Legen Sie regelmäßige Einnahmen und Rechnungen als Pläne an, um zu sehen, wie sich Ihr Saldo entwickelt.</value>
   </data>
 </root>

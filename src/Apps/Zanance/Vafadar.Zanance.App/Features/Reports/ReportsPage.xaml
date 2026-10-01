@@ -34,7 +34,14 @@
                                VerticalOptions="Center" />
             </Grid>
 
-            <Label Text="{v:Translate Report_Empty}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,24" IsVisible="{Binding IsEmpty}" />
+            <!-- Nothing recorded yet: one empty state with the way out, like the other lists (UX-05) -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding ShowEmpty}">
+                <VerticalStackLayout Spacing="12">
+                    <fi:SymbolIcon Symbol="DataPie" FontSize="36" ForegroundColor="{DynamicResource Muted}" HorizontalOptions="Center" />
+                    <Label Text="{v:Translate Report_Empty}" HorizontalTextAlignment="Center" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Tx_Add}" Command="{Binding AddEntryCommand}" />
+                </VerticalStackLayout>
+            </Border>
             <Button Text="{v:Translate Report_SharePdf}" Command="{Binding SharePdfCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="Transparent"
                     TextColor="{DynamicResource Primary}" HorizontalOptions="End" Padding="8,0"
                     IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />

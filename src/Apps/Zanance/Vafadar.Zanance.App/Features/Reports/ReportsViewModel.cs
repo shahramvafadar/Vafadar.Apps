@@ -192,8 +192,16 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [ObservableProperty]
     public partial string? CurrencyNote { get; set; }
 
+    // Without any entry the reports of amounts have nothing to show; one empty state replaces them. Accounts and plans
+    // still show balances and planned amounts.
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowExpenses), nameof(ShowIncomeExpense), nameof(ShowTrend), nameof(ShowTags), nameof(ShowEmpty))]
     public partial bool IsEmpty { get; set; }
+
+    public bool ShowEmpty => IsEmpty && ReportIndex is 0 or 1 or 2 or 5;
+
+    [RelayCommand]
+    private Task AddEntryAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute);
 
     [ObservableProperty]
     public partial bool HasSlices { get; set; }
@@ -207,17 +215,17 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [ObservableProperty]
     public partial Symbol NextIcon { get; set; }
 
-    public bool ShowExpenses => ReportIndex == 0;
+    public bool ShowExpenses => ReportIndex == 0 && !IsEmpty;
 
-    public bool ShowIncomeExpense => ReportIndex == 1;
+    public bool ShowIncomeExpense => ReportIndex == 1 && !IsEmpty;
 
-    public bool ShowTrend => ReportIndex == 2;
+    public bool ShowTrend => ReportIndex == 2 && !IsEmpty;
 
     public bool ShowAccounts => ReportIndex == 3;
 
     public bool ShowPlans => ReportIndex == 4;
 
-    public bool ShowTags => ReportIndex == 5;
+    public bool ShowTags => ReportIndex == 5 && !IsEmpty;
 
     // Spending per tag (F2-TX-04, REP-08). An entry with several tags appears under each, so tags do not add up.
     public ObservableCollection<TagReportRow> TagRows { get; } = [];
@@ -239,6 +247,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         OnPropertyChanged(nameof(ShowAccounts));
         OnPropertyChanged(nameof(ShowPlans));
         OnPropertyChanged(nameof(ShowTags));
+        OnPropertyChanged(nameof(ShowEmpty));
         _ = Presentation.Failures.GuardAsync(LoadAsync);
     }
 

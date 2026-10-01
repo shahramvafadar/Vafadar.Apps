@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Entries"
     x:DataType="local:ReimbursementsViewModel"
@@ -12,7 +13,12 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Reimbursements_Intro}" Style="{StaticResource Secondary}" />
-            <Label Text="{v:Translate Reimbursements_Empty}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,24" IsVisible="{Binding IsEmpty}" />
+            <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
+                <VerticalStackLayout Spacing="8">
+                    <fi:SymbolIcon Symbol="ArrowUndo" FontSize="36" ForegroundColor="{DynamicResource Muted}" HorizontalOptions="Center" />
+                    <Label Text="{v:Translate Reimbursements_Empty}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
             <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="2">
                     <Label Text="{v:Translate Reimbursements_Total}" Style="{StaticResource Secondary}" />

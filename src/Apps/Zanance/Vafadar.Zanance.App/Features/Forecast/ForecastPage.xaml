@@ -42,7 +42,7 @@
                                             IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}">
                                         <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" />
                                     </Border>
-                                    <chart:SfCartesianChart HeightRequest="180" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Forecast_Path}">
+                                    <chart:SfCartesianChart HeightRequest="180" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Forecast_Path}" IsVisible="{Binding HasItems}">
                                         <chart:SfCartesianChart.XAxes>
                                             <chart:DateTimeAxis ShowMajorGridLines="False" LabelCreated="OnDateLabelCreated">
                                     <chart:DateTimeAxis.MajorGridLineStyle>
@@ -82,7 +82,13 @@
                             <Border Style="{StaticResource Card}" Padding="0">
                                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
                                     <BindableLayout.EmptyView>
-                                        <Label Text="{v:Translate Forecast_NoItems}" Style="{StaticResource Secondary}" Padding="16" />
+                                        <!-- Without plans the balance cannot change: say how to get a forecast instead of a flat line -->
+                                        <VerticalStackLayout Padding="16" Spacing="12">
+                                            <Label Text="{v:Translate Forecast_NoItems}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                            <Label Text="{v:Translate Forecast_NoPlansHint}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+                                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Plans_Add}"
+                                                    Command="{Binding AddPlanCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}" />
+                                        </VerticalStackLayout>
                                     </BindableLayout.EmptyView>
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="local:ForecastRow">

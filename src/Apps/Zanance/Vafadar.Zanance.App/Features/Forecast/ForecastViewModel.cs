@@ -45,7 +45,11 @@ public sealed record ForecastCard(
     string? Warning,
     string? IncompleteText,
     IReadOnlyList<PathPoint> Path,
-    IReadOnlyList<ForecastRow> Rows);
+    IReadOnlyList<ForecastRow> Rows)
+{
+    /// <summary>Gets a value indicating whether planned items change the balance; without any the path is a flat line.</summary>
+    public bool HasItems => Rows.Count > 0;
+}
 
 /// <summary>
 /// "Estimated balance after recorded plans" (FOR-01..09): end balance, lowest balance with its date and the items
@@ -167,6 +171,9 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 rows));
         }
     }
+
+    [RelayCommand]
+    private Task AddPlanAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute);
 
     // FOR-04, FOR-10: a plan item can be left out, or assumed on another date or with another amount, for this view only;
     // nothing is saved.
