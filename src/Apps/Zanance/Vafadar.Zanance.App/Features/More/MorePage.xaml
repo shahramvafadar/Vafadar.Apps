@@ -20,16 +20,16 @@
                                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="local:MoreItem">
-                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent" SemanticProperties.Description="{Binding Title}">
-                                                <Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:MoreViewModel}}, x:DataType=local:MoreViewModel}"
-                                                                          CommandParameter="{Binding .}" />
-                                                </Grid.GestureRecognizers>
+                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
                                                 <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
                                                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                                 </Border>
                                                 <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource RowTitle}" VerticalOptions="Center" />
                                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                                <!-- The whole row is one real button: keyboard, screen readers and touch feedback on every platform. -->
+                                                <Button Grid.ColumnSpan="3" Margin="-16,-10" BackgroundColor="Transparent" BorderWidth="0" CornerRadius="0"
+                                                        Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:MoreViewModel}}, x:DataType=local:MoreViewModel}"
+                                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" />
                                             </Grid>
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
@@ -38,7 +38,8 @@
                         </VerticalStackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>            <Image Source="zanance_symbol.png" HeightRequest="40" WidthRequest="38" HorizontalOptions="Center" Aspect="AspectFit" Margin="0,24,0,0"
+            </VerticalStackLayout>
+            <Image Source="zanance_symbol.png" HeightRequest="40" WidthRequest="38" HorizontalOptions="Center" Aspect="AspectFit" Margin="0,24,0,0"
                    SemanticProperties.Description="Zanance" />
             <Label Text="{Binding VersionText}" Style="{StaticResource Secondary}" HorizontalOptions="Center" Margin="0,4,0,16" />
         </VerticalStackLayout>

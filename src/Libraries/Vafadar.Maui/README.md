@@ -11,6 +11,7 @@ Shared .NET MAUI infrastructure for all apps.
 | `Localization.FlowDirectionExtensions.ApplyToModalPages()` | Gives modal pages the current text direction before they appear |
 | `Controls.DateField` | Date input in the user's display calendar (Gregorian or Persian) with a Syncfusion calendar dialog |
 | `Controls.ChoiceChips` | Single-choice chips; wrapping for forms, `IsCompact` for one-line scrolling filter bars |
+| `Controls.HelpButton` | The round "?" next to a setting; shows `Help_{Topic}_Title`, `Help_{Topic}_Text` and the optional `Help_{Topic}_Example` from the app's strings; screen readers say "Help: <title>" |
 | `Controls.InvertedBoolConverter`, `IsNotNullConverter`, `IsPositiveConverter` | Common XAML converters |
 | `Security.IDeviceAuthenticator` | Confirms the device owner with biometrics or the device credential (BiometricPrompt, LocalAuthentication, Windows Hello) – for app locks; stores no PIN |
 

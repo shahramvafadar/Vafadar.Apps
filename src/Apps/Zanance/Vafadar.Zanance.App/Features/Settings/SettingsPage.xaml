@@ -33,19 +33,28 @@
                     <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
                             SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
 
-                    <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />
+                        <v:HelpButton Topic="MonthStartDay" Margin="0,8,0,0" />
+                    </HorizontalStackLayout>
                     <Picker ItemsSource="{Binding StartDayNames}" SelectedIndex="{Binding StartDayIndex}"
                             SemanticProperties.Description="{v:Translate Settings_MonthStart}" />
                     <Label Text="{v:Translate Settings_MonthStartHint}" Style="{StaticResource Secondary}" />
 
-                    <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
+                        <v:HelpButton Topic="ReportCurrency" Margin="0,8,0,0" />
+                    </HorizontalStackLayout>
                     <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
                 </VerticalStackLayout>
             </Border>
 
             <!-- Experience (UX-01) -->
-            <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
+            <HorizontalStackLayout Spacing="6">
+                <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
+                <v:HelpButton Topic="Mode" Margin="0,12,0,0" />
+            </HorizontalStackLayout>
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" />
@@ -63,9 +72,10 @@
             <Label Text="{v:Translate Settings_Security}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding LockAvailable}">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" IsVisible="{Binding LockAvailable}">
                         <Label Text="{v:Translate Lock_Setting}" VerticalOptions="Center" />
-                        <Switch x:Name="LockSwitch" Grid.Column="1" IsToggled="{Binding LockEnabled}" OnColor="{DynamicResource Primary}" Toggled="OnLockToggled" />
+                        <v:HelpButton Grid.Column="1" Topic="AppLock" />
+                        <Switch x:Name="LockSwitch" Grid.Column="2" IsToggled="{Binding LockEnabled}" OnColor="{DynamicResource Primary}" Toggled="OnLockToggled" />
                     </Grid>
                     <Label Text="{v:Translate Lock_NotAvailableHint}" Style="{StaticResource Secondary}"
                            IsVisible="{Binding LockAvailable, Converter={StaticResource InvertedBoolConverter}}" />
@@ -85,9 +95,10 @@
                             <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableNotificationsCommand}"
                                     BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" FontAttributes="Bold" />
                         </Grid>
-                        <Grid ColumnDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Settings_ShowDetails}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding ShowDetails}" OnColor="{DynamicResource Primary}" />
+                            <v:HelpButton Grid.Column="1" Topic="NotificationDetails" />
+                            <Switch Grid.Column="2" IsToggled="{Binding ShowDetails}" OnColor="{DynamicResource Primary}" />
                         </Grid>
                         <Label Text="{v:Translate Settings_ShowDetailsHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>

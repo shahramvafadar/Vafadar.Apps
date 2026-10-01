@@ -188,7 +188,7 @@
     <value>زبان، تقویم و ارز را بعداً هم در تنظیمات می‌توانید تغییر دهید.</value>
   </data>
   <data name="Onb_AccountTitle" xml:space="preserve">
-    <value>اولین حساب شما</value>
+    <value>افزودن اولین حساب</value>
   </data>
   <data name="Onb_AccountText" xml:space="preserve">
     <value>با حسابی شروع کنید که بیشتر از همه استفاده می‌کنید. بعداً می‌توانید حساب‌های دیگر را اضافه کنید.</value>
@@ -2847,5 +2847,200 @@
   </data>
   <data name="Cloud_DeleteMessage" xml:space="preserve">
     <value>«{0}» از فضای ابری شما حذف شود؟ داده‌های این دستگاه تغییری نمی‌کنند.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Title" xml:space="preserve">
+    <value>در جمع کل حساب شود</value>
+  </data>
+  <data name="Help_IncludeInTotals_Text" xml:space="preserve">
+    <value>وقتی روشن باشد، موجودی این حساب در جمع کل صفحهٔ خانه، گزارش‌ها و بودجه‌ها حساب می‌شود. برای پولی که می‌خواهید ببینید ولی جزو پول در دسترس نباشد خاموشش کنید؛ مثلاً حساب پس‌انداز برای یک هدف، حساب کاری یا حسابی که برای کس دیگری اداره می‌کنید. موجودی خود حساب در هر حال حفظ می‌شود.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Example" xml:space="preserve">
+    <value>حساب جاری شما ۱٬۲۰۰ و حساب پس‌انداز سفر ۸۰۰ دارد. اگر هر دو در جمع باشند، صفحهٔ خانه ۲٬۰۰۰ نشان می‌دهد؛ اگر حساب پس‌انداز خارج باشد، ۱٬۲۰۰.</value>
+  </data>
+  <data name="Account_IncludeInTotalsHint" xml:space="preserve">
+    <value>در موجودی صفحهٔ خانه، گزارش‌ها و بودجه‌ها حساب می‌شود.</value>
+  </data>
+  <data name="Help_AccountType_Title" xml:space="preserve">
+    <value>نوع حساب</value>
+  </data>
+  <data name="Help_AccountType_Text" xml:space="preserve">
+    <value>نوع حساب تعیین می‌کند حساب چطور نمایش و حساب شود. نقد، جاری، پس‌انداز و کارت اعتباری پولی است که روزمره استفاده می‌کنید. وام بدهی شماست، پول قرض‌داده طلب شما از دیگری است و دارایی (مثلاً خودرو یا طلا) ارزشی دارد که خودتان به‌روز می‌کنید. وام، پول قرض‌داده و دارایی جدا از پولی که می‌توانید خرج کنید نگه داشته می‌شوند.</value>
+  </data>
+  <data name="Help_AccountType_Example" xml:space="preserve">
+    <value>کارت اعتباری‌ای که ۳۰۰ با آن خرج شده −۳۰۰ نشان می‌دهد. خودرویی به ارزش ۹٬۰۰۰ دارایی است و موجودی قابل خرج شما را بیشتر نشان نمی‌دهد.</value>
+  </data>
+  <data name="Help_OpeningBalance_Title" xml:space="preserve">
+    <value>موجودی اولیه</value>
+  </data>
+  <data name="Help_OpeningBalance_Text" xml:space="preserve">
+    <value>مبلغی که در ابتدای روز انتخاب‌شده، پیش از هر تراکنشی که برای آن روز یا بعد از آن ثبت می‌کنید، در حساب است. Zanance تراکنش‌های شما را به آن اضافه می‌کند؛ پس موجودی نمایش‌داده‌شده همان چیزی است که ثبت کرده‌اید و از بانک خوانده نمی‌شود.</value>
+  </data>
+  <data name="Help_OpeningBalance_Example" xml:space="preserve">
+    <value>بانک امروز صبح ۲٬۳۵۰ نشان می‌دهد. ۲٬۳۵۰ را با تاریخ امروز وارد کنید و خریدهای امروز را به‌صورت تراکنش ثبت کنید.</value>
+  </data>
+  <data name="Help_OpeningUnknown_Title" xml:space="preserve">
+    <value>موجودی اولیه را نمی‌دانم</value>
+  </data>
+  <data name="Help_OpeningUnknown_Text" xml:space="preserve">
+    <value>اگر هنوز مبلغ را نمی‌دانید این را انتخاب کنید. حساب از صفر شروع می‌شود و جمع‌هایی که آن را شامل می‌شوند «ناقص» علامت می‌خورند تا با عدد دقیق اشتباه گرفته نشوند. مبلغ واقعی را بعداً در خود حساب وارد کنید.</value>
+  </data>
+  <data name="Help_ReportCurrency_Title" xml:space="preserve">
+    <value>ارز گزارش</value>
+  </data>
+  <data name="Help_ReportCurrency_Text" xml:space="preserve">
+    <value>جمع‌ها، بودجه‌ها و گزارش‌ها با این ارز نمایش داده می‌شوند. هر حساب ارز خودش را نگه می‌دارد؛ مبلغ‌های ارزهای دیگر با نرخ‌هایی که خودتان وارد می‌کنید تبدیل می‌شوند و جمع‌های بدون نرخ «ناقص» علامت می‌خورند.</value>
+  </data>
+  <data name="Help_ReportCurrency_Example" xml:space="preserve">
+    <value>حساب‌هایی به یورو و دلار با ارز گزارش یورو: حساب دلاری وقتی در جمع حساب می‌شود که نرخ دلار به یورو را وارد کنید.</value>
+  </data>
+  <data name="Help_MonthStartDay_Title" xml:space="preserve">
+    <value>ماه مالی</value>
+  </data>
+  <data name="Help_MonthStartDay_Text" xml:space="preserve">
+    <value>بودجه، صفحهٔ خانه، گزارش‌ها و فیلتر تراکنش‌ها با ماه کار می‌کنند. اگر درآمدتان روز ثابتی می‌رسد، ماه را از همان روز شروع کنید تا هر ماه از یک حقوق تا حقوق بعدی باشد. برنامه‌ها و سررسیدهایشان جابه‌جا نمی‌شوند.</value>
+  </data>
+  <data name="Help_MonthStartDay_Example" xml:space="preserve">
+    <value>حقوق شما روز ۲۵ می‌رسد. اگر ماه از روز ۲۵ شروع شود، «سپتامبر» از ۲۵ سپتامبر تا ۲۴ اکتبر است.</value>
+  </data>
+  <data name="Help_Mode_Title" xml:space="preserve">
+    <value>ساده و پیشرفته</value>
+  </data>
+  <data name="Help_Mode_Text" xml:space="preserve">
+    <value>هر دو همان داده‌ها و محاسبات را نشان می‌دهند. حالت پیشرفته گزینه‌های بیشتری را مستقیم نشان می‌دهد؛ مثلاً سقف دسته‌ها، محدودهٔ حساب‌ها، بودجهٔ هفتگی و قراردادها. برگشت به حالت ساده هیچ چیزی را حذف نمی‌کند و گزینه‌هایی که استفاده شده‌اند هر جا لازم باشد خلاصه نمایش داده می‌شوند.</value>
+  </data>
+  <data name="Help_AppLock_Title" xml:space="preserve">
+    <value>قفل برنامه</value>
+  </data>
+  <data name="Help_AppLock_Text" xml:space="preserve">
+    <value>هنگام باز کردن Zanance و برگشت پس از ۳۰ ثانیه، اثر انگشت، چهره یا رمز دستگاه را می‌خواهد. قفل برنامه را پنهان می‌کند ولی داده‌های روی دستگاه را رمزگذاری نمی‌کند.</value>
+  </data>
+  <data name="Help_NotificationDetails_Title" xml:space="preserve">
+    <value>نام و مبلغ در اعلان‌ها</value>
+  </data>
+  <data name="Help_NotificationDetails_Text" xml:space="preserve">
+    <value>به‌طور پیش‌فرض یادآور فقط می‌گوید پرداختی در پیش است تا چیز خصوصی روی صفحهٔ قفل دیده نشود. با روشن کردن این گزینه، نام برنامه و مبلغ هم در اعلان دیده می‌شود.</value>
+  </data>
+  <data name="Help_NotificationDetails_Example" xml:space="preserve">
+    <value>خاموش: «امروز پرداختی دارید.» روشن: «اجاره – ۹۰۰ یورو امروز.»</value>
+  </data>
+  <data name="Help_AmountMode_Title" xml:space="preserve">
+    <value>مبلغ برنامه</value>
+  </data>
+  <data name="Help_AmountMode_Text" xml:space="preserve">
+    <value>ثابت: همیشه همان مبلغ. تخمینی: حدوداً همین مبلغ، مثلاً برق؛ پیش‌بینی‌ها آن را تخمینی نشان می‌دهند. نامعلوم: هنوز مبلغی ندارد؛ هنگام سررسید آن را وارد می‌کنید و تا آن موقع پیش‌بینی‌ها «ناقص» علامت می‌خورند.</value>
+  </data>
+  <data name="Help_WeekendRule_Title" xml:space="preserve">
+    <value>تعطیلات آخر هفته و رسمی</value>
+  </data>
+  <data name="Help_WeekendRule_Text" xml:space="preserve">
+    <value>اگر سررسید در تعطیلی آخر هفته بیفتد (یا اگر بخواهید، در تعطیلات رسمی منطقهٔ شما)، پرداخت می‌تواند مثل بیشتر بانک‌ها در روز کاری قبل یا بعد از آن انتظار برود.</value>
+  </data>
+  <data name="Help_WeekendRule_Example" xml:space="preserve">
+    <value>حقوق روز ۳۰ است و آن روز تعطیل است: با «روز کاری قبل»، حقوق در آخرین روز کاری پیش از آن انتظار می‌رود. روزهای آخر هفته از منطقهٔ انتخاب‌شده در تنظیمات می‌آیند.</value>
+  </data>
+  <data name="Help_AutoPost_Title" xml:space="preserve">
+    <value>ثبت خودکار</value>
+  </data>
+  <data name="Help_AutoPost_Text" xml:space="preserve">
+    <value>در روز سررسید، تراکنش برنامه دفعهٔ بعد که برنامه را باز کنید خودکار ثبت می‌شود و «بررسی‌نشده» علامت می‌خورد تا آن را چک کنید. بدون این گزینه، پرداخت در بخش برنامه‌ها می‌ماند تا خودتان تأییدش کنید. هیچ پرداختی دو بار ثبت نمی‌شود.</value>
+  </data>
+  <data name="Help_AutoPost_Example" xml:space="preserve">
+    <value>اجارهٔ ۹۰۰ روز اول ماه سررسید دارد. وقتی روز دوم برنامه را باز کنید، تراکنش ثبت شده و منتظر بررسی شماست.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
+    <value>اعمال تغییر از</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
+    <value>تغییر می‌تواند روی همهٔ پرداخت‌ها یا فقط از یک تاریخ به بعد اعمال شود. پرداخت‌های پیش از آن تاریخ مبلغ و روز قبلی خود را نگه می‌دارند تا سابقهٔ شما درست بماند.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
+    <value>اجاره از اسفند از ۹۰۰ به ۹۵۰ می‌رسد: تغییر را از اول اسفند اعمال کنید تا ماه‌های قبل ۹۰۰ بمانند.</value>
+  </data>
+  <data name="Help_Reimbursable_Title" xml:space="preserve">
+    <value>بازپرداخت به شما</value>
+  </data>
+  <data name="Help_Reimbursable_Text" xml:space="preserve">
+    <value>هزینه‌ای را علامت بزنید که کسی آن را به شما برمی‌گرداند؛ مثلاً سفر کاری یا شامی که برای دوستان پرداخته‌اید. تا پول برنگردد هزینه می‌ماند؛ پول برگشتی به‌صورت برگشت همین هزینه ثبت می‌شود، نه درآمد، و مبلغ‌های باز در «طلب‌های من» دیده می‌شوند.</value>
+  </data>
+  <data name="Help_Reimbursable_Example" xml:space="preserve">
+    <value>۱۲۰ برای ناهار همکاران می‌پردازید و شرکت آن را برمی‌گرداند: هزینه را علامت بزنید و وقتی ۱۲۰ برگشت، آن را برگشت همین هزینه ثبت کنید.</value>
+  </data>
+  <data name="Help_ForeignAmount_Title" xml:space="preserve">
+    <value>پرداخت با ارز دیگر</value>
+  </data>
+  <data name="Help_ForeignAmount_Text" xml:space="preserve">
+    <value>وقتی در سفر یا آنلاین با ارز دیگری پرداخته‌اید، مبلغ اصلی را نگه دارید. حساب با مبلغ به ارز خودش کم می‌شود و مبلغ اصلی کنار تراکنش نمایش داده می‌شود.</value>
+  </data>
+  <data name="Help_ForeignAmount_Example" xml:space="preserve">
+    <value>هتل ۱۵۰ دلار است و از کارت شما ۱۳۹٫۲۰ یورو کم می‌شود: مبلغ ۱۳۹٫۲۰ یورو، مبلغ اصلی ۱۵۰ دلار.</value>
+  </data>
+  <data name="Help_SpendingType_Title" xml:space="preserve">
+    <value>نوع هزینه</value>
+  </data>
+  <data name="Help_SpendingType_Text" xml:space="preserve">
+    <value>در بودجهٔ Flex استفاده می‌شود. ثابت: قبضی که هر ماه یکسان است، مثل اجاره. غیرماهانه: قبض‌هایی که چند بار در سال می‌آیند، مثل بیمه؛ سهم ماهانه می‌گیرند. منعطف: هزینه‌های روزمره که یک سقف مشترک دارند.</value>
+  </data>
+  <data name="Help_SpendingType_Example" xml:space="preserve">
+    <value>بیمهٔ خودرو ۶۰۰ در سال غیرماهانه است: بودجه هر ماه ۵۰ برایش کنار می‌گذارد.</value>
+  </data>
+  <data name="Help_BudgetMethod_Title" xml:space="preserve">
+    <value>روش بودجه</value>
+  </data>
+  <data name="Help_BudgetMethod_Text" xml:space="preserve">
+    <value>سقف: حداکثری برای ماه و در صورت تمایل برای هر دسته؛ ساده‌ترین روش. پاکت‌ها: پولی را که الان دارید بین دسته‌ها تقسیم می‌کنید و بودجه نشان می‌دهد چقدر هنوز تقسیم نشده است. Flex: قبض‌های ثابت از برنامه‌ها می‌آیند، قبض‌های غیرماهانه سهم ماهانه می‌گیرند و یک سقف برای بقیهٔ هزینه‌ها است.</value>
+  </data>
+  <data name="Help_BudgetMethod_Example" xml:space="preserve">
+    <value>Flex با اجارهٔ ۹۰۰ به‌عنوان برنامه: بیمهٔ سالانهٔ ۶۰۰ ماهی ۵۰ سهم می‌گیرد و یک سقف منعطف ۷۰۰ برای خوراک، رستوران و بقیه است.</value>
+  </data>
+  <data name="Help_Rollover_Title" xml:space="preserve">
+    <value>انتقال مانده</value>
+  </data>
+  <data name="Help_Rollover_Text" xml:space="preserve">
+    <value>تعیین می‌کند با ماندهٔ دورهٔ قبل چه شود. هیچ: هر دوره از نو شروع می‌شود. مازاد: پولی که خرج نکرده‌اید به سقف جدید اضافه می‌شود. مازاد و کسری: بیش‌خرجی هم از سقف جدید کم می‌شود.</value>
+  </data>
+  <data name="Help_Rollover_Example" xml:space="preserve">
+    <value>سقف ۵۰۰ است و ماه پیش ۴۵۰ خرج کرده‌اید: با «مازاد» سقف این ماه ۵۵۰ می‌شود. اگر ۵۶۰ خرج کرده بودید، با «مازاد و کسری» ۴۴۰ می‌شد.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Title" xml:space="preserve">
+    <value>دورهٔ بودجه</value>
+  </data>
+  <data name="Help_BudgetPeriod_Text" xml:space="preserve">
+    <value>علاوه بر ماه می‌توانید برای هر هفته یا هر دو هفته بودجه بگذارید؛ مثلاً اگر هر دو هفته حقوق می‌گیرید یا سقف هفتگی برای خوراک می‌خواهید. هر دوره سقف‌های خودش را دارد و بودجهٔ ماهانه جدا می‌ماند. پاکت‌ها و Flex روش‌های ماهانه‌اند.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Example" xml:space="preserve">
+    <value>سقف هفتگی ۱۲۰ برای خوراک از شنبه تا جمعه؛ هفتهٔ بعد دوباره با ۱۲۰ یا با انتقال مانده بیشتر شروع می‌شود.</value>
+  </data>
+  <data name="Help_FortnightStart_Title" xml:space="preserve">
+    <value>دوره‌های دوهفته‌ای</value>
+  </data>
+  <data name="Help_FortnightStart_Text" xml:space="preserve">
+    <value>بودجه‌های دوهفته‌ای از این روز هر ۱۴ روز تکرار می‌شوند. یک روز حقوق را انتخاب کنید تا هر دوره از یک حقوق تا حقوق بعدی باشد.</value>
+  </data>
+  <data name="Help_FortnightStart_Example" xml:space="preserve">
+    <value>هر دو هفته یک بار جمعه حقوق می‌گیرید و آخرین بار ۱۸ سپتامبر بوده: دوره‌ها ۱۸ سپتامبر تا ۱ اکتبر، ۲ تا ۱۵ اکتبر و به همین ترتیب‌اند.</value>
+  </data>
+  <data name="Help_BackupPassword_Title" xml:space="preserve">
+    <value>رمز پشتیبان</value>
+  </data>
+  <data name="Help_BackupPassword_Text" xml:space="preserve">
+    <value>فایل پشتیبان با این رمز رمزگذاری می‌شود (AES-256). هیچ‌کس، حتی سازندهٔ برنامه، بدون رمز نمی‌تواند آن را باز کند؛ پس رمز را جای امنی نگه دارید. رمز در برنامه ذخیره نمی‌شود و رمز فراموش‌شده قابل بازیابی نیست.</value>
+  </data>
+  <data name="Help_GoalPriority_Title" xml:space="preserve">
+    <value>اولویت هدف</value>
+  </data>
+  <data name="Help_GoalPriority_Text" xml:space="preserve">
+    <value>وقتی پول کنار گذاشته‌شده برای همهٔ هدف‌ها کافی نیست، هدف‌های با اولویت بالاتر زودتر پوشش داده می‌شوند. اولویت هیچ مبلغی را تغییر نمی‌دهد و فقط ترتیب نمایش کسری‌ها را تعیین می‌کند.</value>
+  </data>
+  <data name="Onb_Tagline" xml:space="preserve">
+    <value>پول شما، با برنامه و شفاف.</value>
+  </data>
+  <data name="Onb_CurrencyIntro" xml:space="preserve">
+    <value>نحوهٔ نمایش جمع‌ها را انتخاب کنید</value>
+  </data>
+  <data name="Account_HideIcons" xml:space="preserve">
+    <value>بستن نمادها</value>
+  </data>
+  <data name="Account_Icon" xml:space="preserve">
+    <value>نماد</value>
   </data>
 </root>

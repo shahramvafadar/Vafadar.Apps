@@ -179,9 +179,10 @@
 
                         <!-- Reimbursable (F2-TX-03) -->
                         <VerticalStackLayout IsVisible="{Binding IsExpense}" Margin="0,12,0,0">
-                            <Grid ColumnDefinitions="*,Auto">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                 <Label Text="{v:Translate Entry_Reimbursable}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ReimbursableEnabled}" OnColor="{DynamicResource Primary}" />
+                                <v:HelpButton Grid.Column="1" Topic="Reimbursable" />
+                                <Switch Grid.Column="2" IsToggled="{Binding ReimbursableEnabled}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ReimbursableEnabled}" Spacing="0">
                                 <Label Text="{v:Translate Entry_ReimbursableAmount}" Style="{StaticResource FieldLabel}" />
@@ -204,9 +205,10 @@
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}">
-                            <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
                                 <Label Text="{v:Translate Entry_Foreign}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ForeignEnabled}" OnColor="{DynamicResource Primary}" />
+                                <v:HelpButton Grid.Column="1" Topic="ForeignAmount" />
+                                <Switch Grid.Column="2" IsToggled="{Binding ForeignEnabled}" OnColor="{DynamicResource Primary}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ForeignEnabled}">
                                 <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" />

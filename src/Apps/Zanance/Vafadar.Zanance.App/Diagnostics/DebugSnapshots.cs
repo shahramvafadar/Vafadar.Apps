@@ -19,6 +19,24 @@ internal static class DebugSnapshots
 {
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
+        // VAFADAR_START_ROUTE opens one screen with the real window chrome (navigation bar, back button) for a check
+        // of the whole window; the app stays open.
+        if (Environment.GetEnvironmentVariable("VAFADAR_START_ROUTE") is { Length: > 0 } route)
+        {
+            window.Width = 412;
+            window.Height = 892;
+            app.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(3), async () =>
+            {
+                if (Shell.Current is { } shell)
+                {
+                    foreach (var step in route.Split(';', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        await shell.GoToAsync(step);
+                    }
+                }
+            });
+        }
+
         var folder = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOTS");
         if (string.IsNullOrWhiteSpace(folder))
         {

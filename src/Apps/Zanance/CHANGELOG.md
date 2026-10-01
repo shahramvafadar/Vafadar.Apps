@@ -71,6 +71,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - A flex method for budgets: fixed bills are expected from your plans, non-monthly bills get a monthly share, and one
   limit covers everything flexible. Each expense category can be marked fixed, non-monthly or flexible.
 
+### Changed – Design and help (D-36)
+
+- A "?" next to settings whose effect is not obvious explains them in full, with an example.
+- A clearer start: centred welcome with the symbol, a progress bar, an icon for every step, "Add your first account".
+- Windows: a visible back button next to the title of every page opened from another page.
+- Light theme: the page background is a step darker and outlines are stronger, so cards stay visible.
+- The account icon is chosen with a real button that shows the current icon; "Include in totals" explains itself.
+- Rows in More work with the keyboard and screen readers; icons are no longer read aloud as odd characters.
+- Android: `eng/scripts/Build-AndroidApk.ps1` builds an APK that installs directly on a phone.
+
 ### Added – Cloud backup (D-35)
 
 - Optional backups to your own OneDrive (Android, Windows) or Google Drive (Android): connect, back up now, see and restore

@@ -46,7 +46,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     public IReadOnlyList<string> CurrencyCodes { get; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsStep1), nameof(IsStep2), nameof(IsStep3), nameof(IsLastStep), nameof(CanGoBack))]
+    [NotifyPropertyChangedFor(nameof(IsStep1), nameof(IsStep2), nameof(IsStep3), nameof(IsLastStep), nameof(CanGoBack), nameof(ReachedStep2), nameof(ReachedStep3))]
     public partial int Step { get; set; }
 
     [ObservableProperty]
@@ -73,6 +73,12 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     public bool IsLastStep => Step == StepCount;
 
     public bool CanGoBack => Step > 1;
+
+    /// <summary>Gets a value indicating whether the second segment of the progress bar is filled.</summary>
+    public bool ReachedStep2 => Step >= 2;
+
+    /// <summary>Gets a value indicating whether the third segment of the progress bar is filled.</summary>
+    public bool ReachedStep3 => Step >= 3;
 
     partial void OnSelectedLanguageChanged(AppLanguage? value)
     {

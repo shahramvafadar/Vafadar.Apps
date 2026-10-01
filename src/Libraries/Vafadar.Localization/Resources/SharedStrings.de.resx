@@ -235,4 +235,10 @@
   <data name="Theme_Dark" xml:space="preserve">
     <value>Dunkel</value>
   </data>
+  <data name="Help_Example" xml:space="preserve">
+    <value>Beispiel: {0}</value>
+  </data>
+  <data name="Help_ButtonDescription" xml:space="preserve">
+    <value>Hilfe: {0}</value>
+  </data>
 </root>

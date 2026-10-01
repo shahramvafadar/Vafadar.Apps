@@ -90,6 +90,7 @@ public sealed partial class AccountFormModel : ObservableObject
     // A new loan starts as money owed and outside the liquid total; both remain changeable (ACC-05).
     partial void OnTypeIndexChanged(int value)
     {
+        OnPropertyChanged(nameof(PreviewIcon));
         IsDebtType = Type.IsDebt();
         DebtHint = Type switch
         {
@@ -107,7 +108,11 @@ public sealed partial class AccountFormModel : ObservableObject
 
     /// <summary>Gets or sets the chosen icon; <see langword="null"/> uses the icon of the account type (ACC-01).</summary>
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PreviewIcon))]
     public partial string? IconKey { get; set; }
+
+    /// <summary>Gets the icon the account will show: the chosen one or that of its type.</summary>
+    public FluentIcons.Common.Symbol PreviewIcon => Icons.Parse(IconKey, Icons.For(Type));
 
     [ObservableProperty]
     public partial bool ShowIconPicker { get; set; }

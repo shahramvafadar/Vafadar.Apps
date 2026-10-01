@@ -57,6 +57,14 @@ public static class VafadarMauiAppBuilderExtensions
         // with an amount would be laid out left-to-right. Use the element's flow direction instead, as Android does.
         Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("VafadarReadingOrder", (handler, _) =>
             handler.PlatformView.TextReadingOrder = Microsoft.UI.Xaml.TextReadingOrder.UseFlowDirection);
+
+        // The WinUI check box reserves 120 px for a built-in caption the apps never use (their label stands next to
+        // it), which leaves a wide gap before the text.
+        Microsoft.Maui.Handlers.CheckBoxHandler.Mapper.AppendToMapping("VafadarCompact", (handler, _) =>
+        {
+            handler.PlatformView.MinWidth = 0;
+            handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
+        });
 #endif
 
         // Persian digits (NativeDigits) in the text a label shows; the bound value and every input stay Latin. The

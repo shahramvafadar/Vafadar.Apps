@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     x:DataType="local:AccountFormModel"
@@ -17,7 +18,10 @@
     <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}"
            IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
 
-    <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
+    <HorizontalStackLayout Spacing="6">
+        <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
+        <v:HelpButton Topic="AccountType" Margin="0,8,0,0" />
+    </HorizontalStackLayout>
     <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
                    SemanticProperties.Description="{v:Translate Account_Type}" />
 
@@ -51,15 +55,19 @@
                IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
     </VerticalStackLayout>
 
-    <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
+    <HorizontalStackLayout Spacing="6">
+        <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
+        <v:HelpButton Topic="OpeningBalance" Margin="0,8,0,0" />
+    </HorizontalStackLayout>
     <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
            IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
            SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
     <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
-    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0">
+    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4" Margin="0,4,0,0">
         <CheckBox IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
                   SemanticProperties.Description="{v:Translate Account_OpeningUnknown}" />
         <Label Grid.Column="1" Text="{v:Translate Account_OpeningUnknown}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+        <v:HelpButton Grid.Column="2" Topic="OpeningUnknown" />
     </Grid>
     <Label Text="{v:Translate Account_OpeningUnknownHint}" Style="{StaticResource Secondary}" IsVisible="{Binding OpeningUnknown}" />
     <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
@@ -77,12 +85,30 @@
     <v:DateField Date="{Binding OpeningDate}" />
     <Label Text="{v:Translate Account_OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
 
-    <Button Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}" BackgroundColor="Transparent"
-            TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
-    <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" />
+    <!-- The icon: a preview of what the account shows and a real button that opens the choice. -->
+    <Label Text="{v:Translate Account_Icon}" Style="{StaticResource FieldLabel}" />
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+        <Border Style="{StaticResource IconTile}" WidthRequest="48" HeightRequest="48" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}">
+            <fi:SymbolIcon Symbol="{Binding PreviewIcon}" FontSize="24" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
+        <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}"
+                HorizontalOptions="Start" Padding="16,0">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding ShowIconPicker}" Value="True">
+                    <Setter Property="Text" Value="{v:Translate Account_HideIcons}" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+    <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" Margin="0,8,0,0" />
 
-    <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,0">
-        <Label Text="{v:Translate Account_IncludeInTotals}" VerticalOptions="Center" />
-        <Switch Grid.Column="1" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}" />
+    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="{v:Translate Account_IncludeInTotals}" />
+            <Label Text="{v:Translate Account_IncludeInTotalsHint}" Style="{StaticResource Secondary}" FontSize="13" />
+        </VerticalStackLayout>
+        <v:HelpButton Grid.Column="1" Topic="IncludeInTotals" />
+        <Switch Grid.Column="2" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}"
+                SemanticProperties.Description="{v:Translate Account_IncludeInTotals}" />
     </Grid>
 </VerticalStackLayout>

@@ -45,7 +45,10 @@
                             <v:ChoiceChips ItemsSource="{Binding FrequencyNames}" SelectedIndex="{Binding FrequencyIndex}" />
                         </VerticalStackLayout>
 
-                        <Label Text="{v:Translate Goal_Priority}" Style="{StaticResource FieldLabel}" />
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{v:Translate Goal_Priority}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Topic="GoalPriority" Margin="0,8,0,0" />
+                        </HorizontalStackLayout>
                         <v:ChoiceChips ItemsSource="{Binding PriorityNames}" SelectedIndex="{Binding PriorityIndex}" />
                         <Label Text="{v:Translate Goal_PriorityHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>

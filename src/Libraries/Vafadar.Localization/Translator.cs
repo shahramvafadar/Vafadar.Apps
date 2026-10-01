@@ -34,6 +34,23 @@ public sealed class Translator : INotifyPropertyChanged
     /// <summary>Gets the string for <paramref name="key"/> in the current culture.</summary>
     public string this[string key] => GetString(key);
 
+    /// <summary>Gets the string for <paramref name="key"/> when it exists, e.g. an optional part of a help text.</summary>
+    public bool TryGetString(string key, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? value)
+    {
+        ArgumentNullException.ThrowIfNull(key);
+        foreach (var resources in _resources)
+        {
+            if (resources.GetString(key, _culture) is { } found)
+            {
+                value = found;
+                return true;
+            }
+        }
+
+        value = null;
+        return false;
+    }
+
     /// <summary>Gets the string for <paramref name="key"/> in the current culture, or the key when it is missing.</summary>
     public string GetString(string key)
     {

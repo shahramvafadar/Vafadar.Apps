@@ -17,7 +17,16 @@
 | Script | Purpose |
 |---|---|
 | `eng/scripts/Add-Strings.ps1 -JsonPath strings.json` | Adds or updates UI strings in all languages (en, fa, de) of a `.resx` set in one step |
-| `eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark]` | Builds the Windows Debug app, resets its development database and saves screenshots of every screen to `artifacts/snapshots` |
+| `eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark]` | Builds the Windows Debug app, starts it with an empty development database (the existing one is moved to `Data-before-snapshots-*`, never deleted) and saves screenshots of every screen to `artifacts/snapshots` |
+| `eng/scripts/Build-AndroidApk.ps1 [-Configuration Debug]` | Builds a complete Android APK for installing on a phone directly (`artifacts/android`); see below |
+
+### Installing on an Android phone without Visual Studio
+
+The APK in `bin/Debug/net10.0-android` is made for **Fast Deployment**: Visual Studio copies the app's assemblies to the
+device separately, so that APK alone stops at start (logcat: *No assemblies found … Fast Deployment*). For a phone or
+for testers, build a complete APK with `eng/scripts/Build-AndroidApk.ps1` (Release by default, signed with the local
+debug key) and install `artifacts/android/pro.vafadar.zanance-Signed.apk`. Android blocks screenshots of the app on purpose
+(`FLAG_SECURE`, D-23); use the accessibility tree (`adb shell uiautomator dump`) to check screens on an emulator.
 ## Target frameworks
 
 * Plain libraries, tests and (future) web projects: `$(VafadarTargetFramework)` = `net10.0`.

@@ -6,6 +6,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:v="http://vafadar.pro/schemas/maui"
                     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+                    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
                     xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
                     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs">
 
@@ -50,6 +51,12 @@
         <Setter Property="DropDownIconColor" Value="{DynamicResource SecondaryText}" />
         <Setter Property="SelectedDropDownItemBackground" Value="{DynamicResource IncomeBackground}" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
+    </Style>
+
+    <!-- Icons are decoration: their meaning is in the text or the description next to them. Screen readers would read
+         the icon font's private character otherwise. -->
+    <Style TargetType="fi:SymbolIcon" ApplyToDerivedTypes="True">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="False" />
     </Style>
 
     <Style x:Key="Card" TargetType="Border">

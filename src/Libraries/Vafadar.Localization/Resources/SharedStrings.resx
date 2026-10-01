@@ -237,4 +237,10 @@
   <data name="Theme_Dark" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="Help_Example" xml:space="preserve">
+    <value>Example: {0}</value>
+  </data>
+  <data name="Help_ButtonDescription" xml:space="preserve">
+    <value>Help: {0}</value>
+  </data>
 </root>

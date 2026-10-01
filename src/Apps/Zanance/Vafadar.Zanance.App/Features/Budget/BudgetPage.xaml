@@ -33,10 +33,14 @@
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Period length (§10.3, Advanced): month, week or two weeks -->
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" IsVisible="{Binding IsAdvanced}" />
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding IsTwoWeeks}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding IsAdvanced}">
+                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
+                <v:HelpButton Grid.Column="1" Topic="BudgetPeriod" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" IsVisible="{Binding IsTwoWeeks}">
                 <Label Text="{v:Translate Budget_FortnightStart}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
-                <v:DateField Grid.Column="1" Date="{Binding FortnightStart}" SemanticProperties.Description="{v:Translate Budget_FortnightStart}" />
+                <v:HelpButton Grid.Column="1" Topic="FortnightStart" />
+                <v:DateField Grid.Column="2" Date="{Binding FortnightStart}" SemanticProperties.Description="{v:Translate Budget_FortnightStart}" />
             </Grid>
 
             <!-- Period -->

@@ -188,7 +188,7 @@
     <value>You can change language, calendar and currency later in Settings.</value>
   </data>
   <data name="Onb_AccountTitle" xml:space="preserve">
-    <value>Your first account</value>
+    <value>Add your first account</value>
   </data>
   <data name="Onb_AccountText" xml:space="preserve">
     <value>Start with the account you use most. You can add more later.</value>
@@ -1485,7 +1485,7 @@
     <value>Entries</value>
   </data>
   <data name="Account_ChooseIcon" xml:space="preserve">
-    <value>Choose icon</value>
+    <value>Choose an icon</value>
   </data>
   <data name="Account_ArchiveWithPlans" xml:space="preserve">
     <value>{0} active plans use this account ({1}). Archiving ends them from today; past entries and history stay.</value>
@@ -2851,5 +2851,200 @@
   </data>
   <data name="Cloud_DeleteMessage" xml:space="preserve">
     <value>Delete "{0}" from your cloud storage? The data on this device is not changed.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Title" xml:space="preserve">
+    <value>Include in totals</value>
+  </data>
+  <data name="Help_IncludeInTotals_Text" xml:space="preserve">
+    <value>When this is on, the account's balance counts in the total on Home, in reports and in budgets. Turn it off for money you want to see but not count as available – for example a savings account for a later goal, a business account or an account you manage for someone else. The account keeps its own balance either way.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Example" xml:space="preserve">
+    <value>Your checking account holds 1,200 and a holiday savings account 800. With both included, Home shows 2,000; with the savings account left out, it shows 1,200.</value>
+  </data>
+  <data name="Account_IncludeInTotalsHint" xml:space="preserve">
+    <value>Counts in the balance on Home, in reports and budgets.</value>
+  </data>
+  <data name="Help_AccountType_Title" xml:space="preserve">
+    <value>Account type</value>
+  </data>
+  <data name="Help_AccountType_Text" xml:space="preserve">
+    <value>The type decides how the account is shown and counted. Cash, checking, savings and credit card are money you use day to day. A loan is money you owe, money lent is money someone owes you, and an asset (for example a car or gold) has a value you update yourself. Loans, money lent and assets are kept apart from the money you can spend.</value>
+  </data>
+  <data name="Help_AccountType_Example" xml:space="preserve">
+    <value>A credit card with 300 spent shows −300. A car worth 9,000 is an asset and does not make your spendable balance look larger.</value>
+  </data>
+  <data name="Help_OpeningBalance_Title" xml:space="preserve">
+    <value>Opening balance</value>
+  </data>
+  <data name="Help_OpeningBalance_Text" xml:space="preserve">
+    <value>The amount in the account at the start of the chosen day, before any transaction you record for that day or later. Zanance adds your transactions to it, so the balance shown is what you recorded – it is not read from a bank.</value>
+  </data>
+  <data name="Help_OpeningBalance_Example" xml:space="preserve">
+    <value>Your bank shows 2,350 this morning. Enter 2,350 with today's date, then record today's purchases as transactions.</value>
+  </data>
+  <data name="Help_OpeningUnknown_Title" xml:space="preserve">
+    <value>Opening balance not known</value>
+  </data>
+  <data name="Help_OpeningUnknown_Text" xml:space="preserve">
+    <value>Choose this if you do not know the amount yet. The account starts at zero and totals that include it are marked as incomplete, so they are never mistaken for exact numbers. You can enter the real amount later in the account.</value>
+  </data>
+  <data name="Help_ReportCurrency_Title" xml:space="preserve">
+    <value>Report currency</value>
+  </data>
+  <data name="Help_ReportCurrency_Text" xml:space="preserve">
+    <value>Totals, budgets and reports are shown in this currency. Every account keeps its own currency; amounts in other currencies are converted with the exchange rates you enter, and totals without a rate are marked as incomplete.</value>
+  </data>
+  <data name="Help_ReportCurrency_Example" xml:space="preserve">
+    <value>Accounts in EUR and USD with the report currency EUR: the USD account counts in the totals once you enter a USD → EUR rate.</value>
+  </data>
+  <data name="Help_MonthStartDay_Title" xml:space="preserve">
+    <value>Financial month</value>
+  </data>
+  <data name="Help_MonthStartDay_Text" xml:space="preserve">
+    <value>Budgets, Home, reports and the transaction filters work with months. If your money arrives on a fixed day, let the month start on that day, so each month runs from one payday to the next. Plans and their due dates do not move.</value>
+  </data>
+  <data name="Help_MonthStartDay_Example" xml:space="preserve">
+    <value>Your salary arrives on the 25th. With the month starting on the 25th, “September” runs from 25 September to 24 October.</value>
+  </data>
+  <data name="Help_Mode_Title" xml:space="preserve">
+    <value>Simple and Advanced</value>
+  </data>
+  <data name="Help_Mode_Text" xml:space="preserve">
+    <value>Both show the same data and calculations. Advanced shows more options directly – for example category limits, account scopes, weekly budgets and contracts. Switching back never removes anything; options already in use are summarised where they matter.</value>
+  </data>
+  <data name="Help_AppLock_Title" xml:space="preserve">
+    <value>App lock</value>
+  </data>
+  <data name="Help_AppLock_Text" xml:space="preserve">
+    <value>Asks for your fingerprint, face or device PIN when you open Zanance and when you come back after 30 seconds. The lock hides the app; it does not encrypt the data on this device.</value>
+  </data>
+  <data name="Help_NotificationDetails_Title" xml:space="preserve">
+    <value>Names and amounts in notifications</value>
+  </data>
+  <data name="Help_NotificationDetails_Text" xml:space="preserve">
+    <value>By default a reminder only says that a payment is due, so nothing private appears on the lock screen. Turn this on to see the plan's name and amount in the notification.</value>
+  </data>
+  <data name="Help_NotificationDetails_Example" xml:space="preserve">
+    <value>Off: “A payment is due today.” On: “Rent – 900.00 EUR today.”</value>
+  </data>
+  <data name="Help_AmountMode_Title" xml:space="preserve">
+    <value>Amount of the plan</value>
+  </data>
+  <data name="Help_AmountMode_Text" xml:space="preserve">
+    <value>Fixed: always the same amount. Estimated: about this amount, for example electricity; forecasts show it as an estimate. Unknown: no amount yet – you enter it when the payment is due, and forecasts are marked as incomplete until then.</value>
+  </data>
+  <data name="Help_WeekendRule_Title" xml:space="preserve">
+    <value>Weekends and holidays</value>
+  </data>
+  <data name="Help_WeekendRule_Text" xml:space="preserve">
+    <value>If a due date falls on a weekend – or, when you choose it, on a public holiday of your region – the payment can be expected on the working day before or after, as many banks do.</value>
+  </data>
+  <data name="Help_WeekendRule_Example" xml:space="preserve">
+    <value>Salary on the 30th, which is a Saturday: with “working day before” it is expected on Friday the 29th.</value>
+  </data>
+  <data name="Help_AutoPost_Title" xml:space="preserve">
+    <value>Record automatically</value>
+  </data>
+  <data name="Help_AutoPost_Text" xml:space="preserve">
+    <value>On the due date the plan's transaction is recorded for you the next time you open the app. It is marked as unreviewed, so you can check it. Without this, the payment waits under Plans until you confirm it. A payment is never recorded twice.</value>
+  </data>
+  <data name="Help_AutoPost_Example" xml:space="preserve">
+    <value>Rent of 900 is due on the 1st. When you open the app on the 2nd, the entry is already there, waiting for your review.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
+    <value>Apply the change from</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
+    <value>A change can apply to all payments or only from a date on. Payments before that date keep their old amount and day, so your history stays correct.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
+    <value>Your rent rises from 900 to 950 in March: apply from 1 March, and January and February stay at 900.</value>
+  </data>
+  <data name="Help_Reimbursable_Title" xml:space="preserve">
+    <value>Paid back to you</value>
+  </data>
+  <data name="Help_Reimbursable_Text" xml:space="preserve">
+    <value>Mark an expense that someone will pay back – for example a work trip or a dinner you paid for friends. It stays an expense until the money comes back; the repayment is recorded as a refund of it, never as income, and open amounts are listed under “Owed to me”.</value>
+  </data>
+  <data name="Help_Reimbursable_Example" xml:space="preserve">
+    <value>You pay 120 for a team lunch and your employer pays it back: mark the expense; when the 120 arrive, record them as its refund.</value>
+  </data>
+  <data name="Help_ForeignAmount_Title" xml:space="preserve">
+    <value>Paid in another currency</value>
+  </data>
+  <data name="Help_ForeignAmount_Text" xml:space="preserve">
+    <value>Keep the original amount when you paid abroad or online in another currency. The account is charged with the amount in its own currency; the original amount is shown with the entry.</value>
+  </data>
+  <data name="Help_ForeignAmount_Example" xml:space="preserve">
+    <value>A hotel costs 150 USD and your card is charged 139.20 EUR: amount 139.20 EUR, original 150 USD.</value>
+  </data>
+  <data name="Help_SpendingType_Title" xml:space="preserve">
+    <value>Spending type</value>
+  </data>
+  <data name="Help_SpendingType_Text" xml:space="preserve">
+    <value>Used by flex budgets. Fixed: the same bill every month, such as rent. Non-monthly: bills that come a few times a year, such as insurance – they get a monthly share. Flexible: everyday spending, which shares one limit.</value>
+  </data>
+  <data name="Help_SpendingType_Example" xml:space="preserve">
+    <value>Car insurance of 600 a year is non-monthly: the budget sets aside 50 each month for it.</value>
+  </data>
+  <data name="Help_BudgetMethod_Title" xml:space="preserve">
+    <value>Budget method</value>
+  </data>
+  <data name="Help_BudgetMethod_Text" xml:space="preserve">
+    <value>Limits: a maximum for the month and, if you like, per category – the simplest choice. Envelopes: you assign the money you have now to categories; the budget shows what is not assigned yet. Flex: fixed bills come from your plans, non-monthly bills get a monthly share, and one limit covers everything else.</value>
+  </data>
+  <data name="Help_BudgetMethod_Example" xml:space="preserve">
+    <value>Flex with rent of 900 as a plan: a yearly insurance of 600 gets 50 a month, and a flexible limit of 700 covers groceries, eating out and the rest.</value>
+  </data>
+  <data name="Help_Rollover_Title" xml:space="preserve">
+    <value>Rollover</value>
+  </data>
+  <data name="Help_Rollover_Text" xml:space="preserve">
+    <value>Decides what happens with the rest of the previous period. None: every period starts fresh. Surplus: money you did not spend is added to the new limit. Surplus and deficit: overspending is also taken from the new limit.</value>
+  </data>
+  <data name="Help_Rollover_Example" xml:space="preserve">
+    <value>Limit 500 and you spent 450 last month: with surplus, this month's limit is 550. Had you spent 560, “surplus and deficit” would make it 440.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Title" xml:space="preserve">
+    <value>Budget period</value>
+  </data>
+  <data name="Help_BudgetPeriod_Text" xml:space="preserve">
+    <value>Besides the month you can budget per week or per two weeks – for example when you are paid every two weeks or want a weekly grocery limit. Each period has its own limits; the monthly budget stays separate. Envelopes and flex are monthly methods.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Example" xml:space="preserve">
+    <value>A weekly limit of 120 for groceries from Monday to Sunday; next week starts again with 120, or more with rollover.</value>
+  </data>
+  <data name="Help_FortnightStart_Title" xml:space="preserve">
+    <value>Two-week periods</value>
+  </data>
+  <data name="Help_FortnightStart_Text" xml:space="preserve">
+    <value>Two-week budgets repeat every 14 days from this day. Choose a payday, so each period runs from one pay to the next.</value>
+  </data>
+  <data name="Help_FortnightStart_Example" xml:space="preserve">
+    <value>Paid every second Friday, last on 18 September: the periods run 18 September – 1 October, 2 – 15 October, and so on.</value>
+  </data>
+  <data name="Help_BackupPassword_Title" xml:space="preserve">
+    <value>Backup password</value>
+  </data>
+  <data name="Help_BackupPassword_Text" xml:space="preserve">
+    <value>The backup file is encrypted with this password (AES-256). Nobody can open it without the password – not even the developer – so keep the password somewhere safe. It is not stored in the app, and a forgotten password cannot be recovered.</value>
+  </data>
+  <data name="Help_GoalPriority_Title" xml:space="preserve">
+    <value>Priority of a goal</value>
+  </data>
+  <data name="Help_GoalPriority_Text" xml:space="preserve">
+    <value>When the money set aside is not enough for all goals, goals with a higher priority are covered first. The priority changes no amount; it only decides the order in which shortfalls are shown.</value>
+  </data>
+  <data name="Onb_Tagline" xml:space="preserve">
+    <value>Your money, clearly planned.</value>
+  </data>
+  <data name="Onb_CurrencyIntro" xml:space="preserve">
+    <value>Choose how totals are shown</value>
+  </data>
+  <data name="Account_HideIcons" xml:space="preserve">
+    <value>Hide icons</value>
+  </data>
+  <data name="Account_Icon" xml:space="preserve">
+    <value>Icon</value>
   </data>
 </root>

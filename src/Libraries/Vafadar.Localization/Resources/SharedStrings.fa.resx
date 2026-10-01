@@ -235,4 +235,10 @@
   <data name="Theme_Dark" xml:space="preserve">
     <value>تیره</value>
   </data>
+  <data name="Help_Example" xml:space="preserve">
+    <value>مثال: {0}</value>
+  </data>
+  <data name="Help_ButtonDescription" xml:space="preserve">
+    <value>راهنما: {0}</value>
+  </data>
 </root>

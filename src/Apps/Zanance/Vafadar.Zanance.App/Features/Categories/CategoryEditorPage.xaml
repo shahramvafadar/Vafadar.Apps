@@ -39,7 +39,10 @@
 
                         <!-- Flex budgets (D-28) -->
                         <VerticalStackLayout IsVisible="{Binding ShowSpendingType}">
-                            <Label Text="{v:Translate SpendingType_Title}" Style="{StaticResource FieldLabel}" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{v:Translate SpendingType_Title}" Style="{StaticResource FieldLabel}" />
+                                <v:HelpButton Topic="SpendingType" Margin="0,8,0,0" />
+                            </HorizontalStackLayout>
                             <v:ChoiceChips ItemsSource="{Binding SpendingTypeNames}" SelectedIndex="{Binding SpendingTypeIndex}" />
                             <Label Text="{v:Translate SpendingType_Hint}" Style="{StaticResource Secondary}" />
                         </VerticalStackLayout>

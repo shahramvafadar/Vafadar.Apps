@@ -105,6 +105,16 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
+#if WINDOWS
+        // A page opened from another one gets a visible back button next to its title (the window's arrow is tiny).
+        Navigated += (_, _) =>
+        {
+            if (CurrentPage is { } page && Navigation.NavigationStack.Count > 1 && GetTitleView(page) is null)
+            {
+                SetTitleView(page, new Presentation.PageHeader(page, FlowDirection == FlowDirection.RightToLeft));
+            }
+        };
+#endif
         Routing.RegisterRoute(AccountsRoute, typeof(AccountsPage));
         Routing.RegisterRoute(AccountEditorRoute, typeof(AccountEditorPage));
         Routing.RegisterRoute(AccountDetailRoute, typeof(AccountDetailPage));

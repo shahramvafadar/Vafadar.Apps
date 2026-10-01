@@ -28,9 +28,10 @@
                 <Label Text="{v:Translate Backup_Create}" Style="{StaticResource SectionHeader}" />
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="8">
-                        <Grid ColumnDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Backup_UsePassword}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding UsePassword}" OnColor="{DynamicResource Primary}" />
+                            <v:HelpButton Grid.Column="1" Topic="BackupPassword" />
+                            <Switch Grid.Column="2" IsToggled="{Binding UsePassword}" OnColor="{DynamicResource Primary}" />
                         </Grid>
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding UsePassword}">
                             <Entry Text="{Binding Password}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"

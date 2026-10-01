@@ -188,7 +188,7 @@
     <value>Sprache, Kalender und Währung können Sie später in den Einstellungen ändern.</value>
   </data>
   <data name="Onb_AccountTitle" xml:space="preserve">
-    <value>Ihr erstes Konto</value>
+    <value>Erstes Konto hinzufügen</value>
   </data>
   <data name="Onb_AccountText" xml:space="preserve">
     <value>Beginnen Sie mit dem Konto, das Sie am häufigsten nutzen. Weitere können Sie später hinzufügen.</value>
@@ -1481,7 +1481,7 @@
     <value>Buchungen</value>
   </data>
   <data name="Account_ChooseIcon" xml:space="preserve">
-    <value>Symbol wählen</value>
+    <value>Symbol auswählen</value>
   </data>
   <data name="Account_ArchiveWithPlans" xml:space="preserve">
     <value>{0} aktive Planungen nutzen dieses Konto ({1}). Mit dem Archivieren enden sie ab heute; vergangene Buchungen und Verlauf bleiben.</value>
@@ -2847,5 +2847,200 @@
   </data>
   <data name="Cloud_DeleteMessage" xml:space="preserve">
     <value>„{0}“ aus Ihrem Cloud-Speicher löschen? Die Daten auf diesem Gerät bleiben unverändert.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Title" xml:space="preserve">
+    <value>In Summen einbeziehen</value>
+  </data>
+  <data name="Help_IncludeInTotals_Text" xml:space="preserve">
+    <value>Wenn eingeschaltet, zählt der Kontostand in der Summe auf der Startseite, in Berichten und Budgets. Schalten Sie es aus für Geld, das Sie sehen, aber nicht als verfügbar zählen möchten – etwa ein Sparkonto für ein späteres Ziel, ein Geschäftskonto oder ein Konto, das Sie für jemand anderen führen. Der Kontostand selbst bleibt in jedem Fall erhalten.</value>
+  </data>
+  <data name="Help_IncludeInTotals_Example" xml:space="preserve">
+    <value>Ihr Girokonto hat 1.200, ein Urlaubs-Sparkonto 800. Sind beide einbezogen, zeigt die Startseite 2.000; ohne das Sparkonto 1.200.</value>
+  </data>
+  <data name="Account_IncludeInTotalsHint" xml:space="preserve">
+    <value>Zählt im Kontostand der Startseite, in Berichten und Budgets.</value>
+  </data>
+  <data name="Help_AccountType_Title" xml:space="preserve">
+    <value>Kontotyp</value>
+  </data>
+  <data name="Help_AccountType_Text" xml:space="preserve">
+    <value>Der Typ bestimmt, wie das Konto angezeigt und gezählt wird. Bargeld, Girokonto, Sparkonto und Kreditkarte sind Geld für den Alltag. Ein Kredit ist Geld, das Sie schulden, verliehenes Geld schuldet Ihnen jemand, und ein Vermögenswert (etwa ein Auto oder Gold) hat einen Wert, den Sie selbst aktualisieren. Kredite, verliehenes Geld und Vermögenswerte stehen getrennt vom Geld, das Sie ausgeben können.</value>
+  </data>
+  <data name="Help_AccountType_Example" xml:space="preserve">
+    <value>Eine Kreditkarte mit 300 Ausgaben zeigt −300. Ein Auto im Wert von 9.000 ist ein Vermögenswert und lässt Ihr verfügbares Geld nicht größer erscheinen.</value>
+  </data>
+  <data name="Help_OpeningBalance_Title" xml:space="preserve">
+    <value>Anfangssaldo</value>
+  </data>
+  <data name="Help_OpeningBalance_Text" xml:space="preserve">
+    <value>Der Betrag auf dem Konto zu Beginn des gewählten Tages, vor allen Buchungen, die Sie für diesen Tag oder später erfassen. Zanance rechnet Ihre Buchungen dazu; der angezeigte Stand ist also das, was Sie erfasst haben – er wird nicht von einer Bank gelesen.</value>
+  </data>
+  <data name="Help_OpeningBalance_Example" xml:space="preserve">
+    <value>Ihre Bank zeigt heute Morgen 2.350. Geben Sie 2.350 mit dem heutigen Datum ein und erfassen Sie die heutigen Einkäufe als Buchungen.</value>
+  </data>
+  <data name="Help_OpeningUnknown_Title" xml:space="preserve">
+    <value>Anfangssaldo unbekannt</value>
+  </data>
+  <data name="Help_OpeningUnknown_Text" xml:space="preserve">
+    <value>Wählen Sie dies, wenn Sie den Betrag noch nicht kennen. Das Konto beginnt bei null, und Summen mit diesem Konto werden als unvollständig markiert, damit sie nie für exakte Zahlen gehalten werden. Den echten Betrag können Sie später im Konto eintragen.</value>
+  </data>
+  <data name="Help_ReportCurrency_Title" xml:space="preserve">
+    <value>Berichtswährung</value>
+  </data>
+  <data name="Help_ReportCurrency_Text" xml:space="preserve">
+    <value>Summen, Budgets und Berichte werden in dieser Währung angezeigt. Jedes Konto behält seine Währung; Beträge in anderen Währungen werden mit den von Ihnen eingetragenen Kursen umgerechnet, Summen ohne Kurs werden als unvollständig markiert.</value>
+  </data>
+  <data name="Help_ReportCurrency_Example" xml:space="preserve">
+    <value>Konten in EUR und USD mit Berichtswährung EUR: Das USD-Konto zählt in den Summen, sobald Sie einen Kurs USD → EUR eintragen.</value>
+  </data>
+  <data name="Help_MonthStartDay_Title" xml:space="preserve">
+    <value>Finanzmonat</value>
+  </data>
+  <data name="Help_MonthStartDay_Text" xml:space="preserve">
+    <value>Budgets, Startseite, Berichte und die Buchungsfilter arbeiten mit Monaten. Kommt Ihr Geld an einem festen Tag, lassen Sie den Monat an diesem Tag beginnen, damit jeder Monat von Zahltag zu Zahltag reicht. Pläne und ihre Termine verschieben sich nicht.</value>
+  </data>
+  <data name="Help_MonthStartDay_Example" xml:space="preserve">
+    <value>Ihr Gehalt kommt am 25. Beginnt der Monat am 25., reicht „September“ vom 25. September bis 24. Oktober.</value>
+  </data>
+  <data name="Help_Mode_Title" xml:space="preserve">
+    <value>Einfach und Erweitert</value>
+  </data>
+  <data name="Help_Mode_Text" xml:space="preserve">
+    <value>Beide zeigen dieselben Daten und Berechnungen. Erweitert zeigt mehr Optionen direkt – etwa Kategorielimits, Kontenauswahl, Wochenbudgets und Verträge. Zurückschalten entfernt nichts; bereits genutzte Optionen werden dort zusammengefasst, wo sie wirken.</value>
+  </data>
+  <data name="Help_AppLock_Title" xml:space="preserve">
+    <value>App-Sperre</value>
+  </data>
+  <data name="Help_AppLock_Text" xml:space="preserve">
+    <value>Fragt beim Öffnen von Zanance und bei der Rückkehr nach 30 Sekunden nach Fingerabdruck, Gesicht oder Geräte-PIN. Die Sperre verbirgt die App; sie verschlüsselt die Daten auf dem Gerät nicht.</value>
+  </data>
+  <data name="Help_NotificationDetails_Title" xml:space="preserve">
+    <value>Namen und Beträge in Benachrichtigungen</value>
+  </data>
+  <data name="Help_NotificationDetails_Text" xml:space="preserve">
+    <value>Standardmäßig sagt eine Erinnerung nur, dass eine Zahlung fällig ist, damit nichts Privates auf dem Sperrbildschirm erscheint. Schalten Sie dies ein, um Name und Betrag des Plans in der Benachrichtigung zu sehen.</value>
+  </data>
+  <data name="Help_NotificationDetails_Example" xml:space="preserve">
+    <value>Aus: „Heute ist eine Zahlung fällig.“ Ein: „Miete – 900,00 EUR heute.“</value>
+  </data>
+  <data name="Help_AmountMode_Title" xml:space="preserve">
+    <value>Betrag des Plans</value>
+  </data>
+  <data name="Help_AmountMode_Text" xml:space="preserve">
+    <value>Fest: immer derselbe Betrag. Geschätzt: ungefähr dieser Betrag, etwa Strom; Prognosen zeigen ihn als Schätzung. Unbekannt: noch kein Betrag – Sie tragen ihn bei Fälligkeit ein, bis dahin sind Prognosen als unvollständig markiert.</value>
+  </data>
+  <data name="Help_WeekendRule_Title" xml:space="preserve">
+    <value>Wochenenden und Feiertage</value>
+  </data>
+  <data name="Help_WeekendRule_Text" xml:space="preserve">
+    <value>Fällt ein Termin auf ein Wochenende – oder, wenn Sie es wählen, auf einen Feiertag Ihrer Region –, kann die Zahlung wie bei vielen Banken am Werktag davor oder danach erwartet werden.</value>
+  </data>
+  <data name="Help_WeekendRule_Example" xml:space="preserve">
+    <value>Gehalt am 30., einem Samstag: mit „Werktag davor“ wird es am Freitag, dem 29., erwartet.</value>
+  </data>
+  <data name="Help_AutoPost_Title" xml:space="preserve">
+    <value>Automatisch buchen</value>
+  </data>
+  <data name="Help_AutoPost_Text" xml:space="preserve">
+    <value>Am Fälligkeitstag wird die Buchung des Plans beim nächsten Öffnen der App für Sie erfasst und als ungeprüft markiert, damit Sie sie kontrollieren können. Ohne diese Option wartet die Zahlung unter Pläne auf Ihre Bestätigung. Eine Zahlung wird nie doppelt erfasst.</value>
+  </data>
+  <data name="Help_AutoPost_Example" xml:space="preserve">
+    <value>Miete von 900 ist am 1. fällig. Öffnen Sie die App am 2., ist die Buchung schon da und wartet auf Ihre Prüfung.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
+    <value>Änderung gilt ab</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
+    <value>Eine Änderung kann für alle Zahlungen oder erst ab einem Datum gelten. Zahlungen davor behalten ihren alten Betrag und Tag, damit Ihre Historie stimmt.</value>
+  </data>
+  <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
+    <value>Die Miete steigt im März von 900 auf 950: ab 1. März anwenden, Januar und Februar bleiben bei 900.</value>
+  </data>
+  <data name="Help_Reimbursable_Title" xml:space="preserve">
+    <value>Wird Ihnen erstattet</value>
+  </data>
+  <data name="Help_Reimbursable_Text" xml:space="preserve">
+    <value>Markieren Sie eine Ausgabe, die Ihnen jemand erstattet – etwa eine Dienstreise oder ein Essen, das Sie für Freunde bezahlt haben. Sie bleibt eine Ausgabe, bis das Geld zurückkommt; die Erstattung wird als Rückerstattung dieser Ausgabe erfasst, nie als Einnahme, offene Beträge stehen unter „Mir geschuldet“.</value>
+  </data>
+  <data name="Help_Reimbursable_Example" xml:space="preserve">
+    <value>Sie zahlen 120 für ein Teamessen, der Arbeitgeber erstattet es: Ausgabe markieren; wenn die 120 kommen, als deren Rückerstattung erfassen.</value>
+  </data>
+  <data name="Help_ForeignAmount_Title" xml:space="preserve">
+    <value>In anderer Währung bezahlt</value>
+  </data>
+  <data name="Help_ForeignAmount_Text" xml:space="preserve">
+    <value>Behalten Sie den Originalbetrag, wenn Sie im Ausland oder online in einer anderen Währung bezahlt haben. Das Konto wird mit dem Betrag in seiner eigenen Währung belastet; der Originalbetrag steht bei der Buchung.</value>
+  </data>
+  <data name="Help_ForeignAmount_Example" xml:space="preserve">
+    <value>Ein Hotel kostet 150 USD, Ihre Karte wird mit 139,20 EUR belastet: Betrag 139,20 EUR, Original 150 USD.</value>
+  </data>
+  <data name="Help_SpendingType_Title" xml:space="preserve">
+    <value>Ausgabenart</value>
+  </data>
+  <data name="Help_SpendingType_Text" xml:space="preserve">
+    <value>Wird für Flex-Budgets verwendet. Fix: jeden Monat dieselbe Rechnung, etwa Miete. Nicht monatlich: Rechnungen, die einige Male im Jahr kommen, etwa Versicherungen – sie bekommen einen Monatsanteil. Flexibel: Alltagsausgaben, die sich ein Limit teilen.</value>
+  </data>
+  <data name="Help_SpendingType_Example" xml:space="preserve">
+    <value>Eine Kfz-Versicherung von 600 im Jahr ist nicht monatlich: Das Budget legt dafür jeden Monat 50 zurück.</value>
+  </data>
+  <data name="Help_BudgetMethod_Title" xml:space="preserve">
+    <value>Budgetmethode</value>
+  </data>
+  <data name="Help_BudgetMethod_Text" xml:space="preserve">
+    <value>Limits: ein Höchstbetrag für den Monat und auf Wunsch je Kategorie – die einfachste Wahl. Umschläge: Sie verteilen das Geld, das Sie jetzt haben, auf Kategorien; das Budget zeigt, was noch nicht verteilt ist. Flex: Fixkosten kommen aus Ihren Plänen, nicht monatliche Kosten erhalten einen Monatsanteil, und ein Limit deckt alles Übrige.</value>
+  </data>
+  <data name="Help_BudgetMethod_Example" xml:space="preserve">
+    <value>Flex mit Miete von 900 als Plan: Eine Jahresversicherung von 600 bekommt 50 im Monat, ein flexibles Limit von 700 deckt Lebensmittel, Essen gehen und den Rest.</value>
+  </data>
+  <data name="Help_Rollover_Title" xml:space="preserve">
+    <value>Übertrag</value>
+  </data>
+  <data name="Help_Rollover_Text" xml:space="preserve">
+    <value>Bestimmt, was mit dem Rest des vorigen Zeitraums geschieht. Keiner: jeder Zeitraum beginnt neu. Überschuss: nicht ausgegebenes Geld kommt zum neuen Limit hinzu. Überschuss und Defizit: auch Mehrausgaben werden vom neuen Limit abgezogen.</value>
+  </data>
+  <data name="Help_Rollover_Example" xml:space="preserve">
+    <value>Limit 500, im Vormonat 450 ausgegeben: Mit Überschuss liegt das Limit diesen Monat bei 550. Bei 560 Ausgaben ergäbe „Überschuss und Defizit“ 440.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Title" xml:space="preserve">
+    <value>Budgetzeitraum</value>
+  </data>
+  <data name="Help_BudgetPeriod_Text" xml:space="preserve">
+    <value>Neben dem Monat können Sie pro Woche oder pro zwei Wochen budgetieren – etwa bei zweiwöchentlichem Gehalt oder für ein wöchentliches Lebensmittellimit. Jeder Zeitraum hat eigene Limits; das Monatsbudget bleibt getrennt. Umschläge und Flex sind Monatsmethoden.</value>
+  </data>
+  <data name="Help_BudgetPeriod_Example" xml:space="preserve">
+    <value>Ein Wochenlimit von 120 für Lebensmittel von Montag bis Sonntag; die nächste Woche beginnt wieder mit 120, mit Übertrag auch mehr.</value>
+  </data>
+  <data name="Help_FortnightStart_Title" xml:space="preserve">
+    <value>Zweiwochenzeiträume</value>
+  </data>
+  <data name="Help_FortnightStart_Text" xml:space="preserve">
+    <value>Zweiwochenbudgets wiederholen sich ab diesem Tag alle 14 Tage. Wählen Sie einen Zahltag, damit jeder Zeitraum von Gehalt zu Gehalt reicht.</value>
+  </data>
+  <data name="Help_FortnightStart_Example" xml:space="preserve">
+    <value>Gehalt jeden zweiten Freitag, zuletzt am 18. September: Die Zeiträume laufen vom 18. September bis 1. Oktober, vom 2. bis 15. Oktober und so weiter.</value>
+  </data>
+  <data name="Help_BackupPassword_Title" xml:space="preserve">
+    <value>Sicherungspasswort</value>
+  </data>
+  <data name="Help_BackupPassword_Text" xml:space="preserve">
+    <value>Die Sicherungsdatei wird mit diesem Passwort verschlüsselt (AES-256). Ohne das Passwort kann sie niemand öffnen – auch nicht der Entwickler –, bewahren Sie es also sicher auf. Es wird nicht in der App gespeichert, ein vergessenes Passwort lässt sich nicht wiederherstellen.</value>
+  </data>
+  <data name="Help_GoalPriority_Title" xml:space="preserve">
+    <value>Priorität eines Ziels</value>
+  </data>
+  <data name="Help_GoalPriority_Text" xml:space="preserve">
+    <value>Reicht das zurückgelegte Geld nicht für alle Ziele, werden Ziele mit höherer Priorität zuerst gedeckt. Die Priorität ändert keinen Betrag; sie bestimmt nur die Reihenfolge, in der Fehlbeträge angezeigt werden.</value>
+  </data>
+  <data name="Onb_Tagline" xml:space="preserve">
+    <value>Ihr Geld, klar geplant.</value>
+  </data>
+  <data name="Onb_CurrencyIntro" xml:space="preserve">
+    <value>Wählen Sie, wie Summen gezeigt werden</value>
+  </data>
+  <data name="Account_HideIcons" xml:space="preserve">
+    <value>Symbole ausblenden</value>
+  </data>
+  <data name="Account_Icon" xml:space="preserve">
+    <value>Symbol</value>
   </data>
 </root>

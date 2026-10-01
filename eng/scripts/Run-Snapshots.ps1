@@ -4,7 +4,8 @@
 
 .DESCRIPTION
     The Debug-only walk-through (src/Apps/Zanance/Vafadar.Zanance.App/Diagnostics/DebugSnapshots.cs) starts when
-    VAFADAR_SNAPSHOTS points to a folder. It resets the development database, seeds fictitious data, sets Advanced mode
+    VAFADAR_SNAPSHOTS points to a folder. It starts with an empty development database (the existing one is moved to a
+    Data-before-snapshots-* folder next to it, never deleted), seeds fictitious data, sets Advanced mode
     and captures each route per language, plus "-end" shots of scrolled pages. Look at the Persian (right-to-left) and
     the dark variants after every UI change.
 
@@ -20,11 +21,20 @@ $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
 
-# Only the development build of this repository is stopped and only its own database is reset.
+# Only the development build of this repository is stopped. Its database is moved aside, never deleted: the walk-through
+# needs an empty start, but someone may have used the development build with their own data.
 Get-Process Vafadar.Zanance.App -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$root\*" } | Stop-Process -Force
 Start-Sleep 1
 $data = Join-Path $env:LOCALAPPDATA 'Shahram Vafadar\pro.vafadar.zanance\Data'
-if (Test-Path $data) { Get-ChildItem $data -Filter '*.db*' | Where-Object Name -match '^(zanance|finance)\.db' | ForEach-Object { [IO.File]::Delete($_.FullName) } }
+if (Test-Path $data) {
+    $files = Get-ChildItem $data -Filter '*.db*' | Where-Object Name -match '^(zanance|finance)(-[0-9a-f]{32})?\.db'
+    if ($files) {
+        $kept = Join-Path (Split-Path $data) "Data-before-snapshots-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+        New-Item -ItemType Directory -Force $kept | Out-Null
+        $files | Move-Item -Destination $kept
+        "The development data was moved to $kept"
+    }
+}
 New-Item -ItemType Directory -Force $Output | Out-Null
 Get-ChildItem $Output -File | ForEach-Object { [IO.File]::Delete($_.FullName) }
 

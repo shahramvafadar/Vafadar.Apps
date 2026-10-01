@@ -12,7 +12,7 @@ TabBar:   Home | Transactions | Plans | Insights | More
           └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
 Insights: top tabs Budget · Reports · Forecast · Goals
 More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templates, Categorization rules)
-          · Currency (Exchange rates, Display units) · Data and security (Backup, Import/Export, Settings)
+          · Currency (Exchange rates, Display units) · Data and security (Backup, Profiles, Import/Export, Settings)
 ```
 
 Home shows only the balance, what needs attention, income and expenses of the period, the forecast (Advanced), the
@@ -84,7 +84,7 @@ lightened (`CategoryLookup.DisplayColor`).
 
 | Token | Value |
 |---|---|
-| Surfaces | Page `#F4F6F9` / `#0D1219`, card `#FFFFFF` / `#151B24`, line `#E3E8EF` / `#252E3A` |
+| Surfaces | Page `#E8ECF2` / `#0D1219`, card `#FFFFFF` / `#151B24`, card outline and line `#D5DCE6` / `#2A3442`, strong outline `#B9C3D1` / `#3A4556`. The light page is a clear step darker than the cards, so cards stay visible on any screen brightness (owner feedback 2026-10-01) |
 | Text | Ink `#0F1B2D`, secondary `#4A5568`, muted `#697586` (dark: `#E9EEF5`, `#AEB8C6`, `#8C97A8`) |
 | Shape | Cards radius 18, buttons and inputs 14, icon tiles 40 × 40 radius 12, chips fully rounded |
 | Spacing | 4-pt grid; screen padding 16; card padding 16; list row min height 60 |
@@ -100,6 +100,17 @@ lightened (`CategoryLookup.DisplayColor`).
 * Every icon has an accessible name (`SemanticProperties.Description`); charts have a table alternative (UX-06).
 * Light and dark theme (D-22): the semantic color tokens have a light and a dark variant (`Presentation/Palette.cs`) and are used as `DynamicResource`, so switching recolors open pages; code reads colors from the palette, never as literals. Settings offers "like the device", light and dark.
 
+* **Help** (D-36): a setting whose effect is not obvious has a round "?" (`HelpButton`) next to its label or switch.
+  It opens the full explanation and, where it helps, an example; short hints under the control stay for the common case.
+  Covered: account type, opening balance, include in totals, report currency, financial month, Simple/Advanced, app
+  lock, notification details, plan amount, weekend rule, automatic recording, "apply from", reimbursable and foreign
+  amounts, spending type, budget method, rollover, budget period and two-week start, backup password, goal priority.
+* **Back on Windows** (D-36): a page opened from another one shows a round back button before its title
+  (`PageHeader`); the window's own arrow is small and easy to miss. Android keeps its toolbar arrow.
+* **Onboarding** (D-36): a centred column of at most 560 px with a progress bar, the symbol in a halo on the welcome
+  step, an icon above every step title, fields in cards and full-width buttons; "Add your first account".
+* Rows that open a page are real buttons (keyboard, screen readers, touch feedback); icons are not in the
+  accessibility tree, their meaning is in the text next to them.
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
   segmented control, so German and Persian labels never scroll or get cut off.
 * Categories in the entry editor are wrapping pills (icon + full name) rather than a fixed grid, so no name is

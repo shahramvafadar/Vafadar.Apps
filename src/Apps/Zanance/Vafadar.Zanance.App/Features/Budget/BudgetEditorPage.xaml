@@ -41,11 +41,17 @@
                             <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{DynamicResource Primary}" />
                         </Grid>
                         <VerticalStackLayout IsVisible="{Binding IsAdvanced}" Spacing="4" Margin="0,12,0,0">
-                            <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
+                                <v:HelpButton Topic="Rollover" Margin="0" />
+                            </HorizontalStackLayout>
                             <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" />
                             <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
                             <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
-                                <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
+                                    <v:HelpButton Topic="BudgetMethod" Margin="0,8,0,0" />
+                                </HorizontalStackLayout>
                                 <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
                                 <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
                             </VerticalStackLayout>
