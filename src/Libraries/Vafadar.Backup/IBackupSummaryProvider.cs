@@ -1,4 +1,4 @@
-﻿namespace Vafadar.Backup;
+namespace Vafadar.Backup;
 
 /// <summary>
 /// Adds a short, non-sensitive summary to backups, e.g. how many accounts and entries they contain, so that a restore
