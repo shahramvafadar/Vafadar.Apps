@@ -281,7 +281,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
     }
 
     [CommunityToolkit.Mvvm.Input.RelayCommand]
-    private async Task EnableNotificationsAsync() => NotificationsEnabled = await _reminders.EnsurePermissionAsync();
+    private async Task EnableNotificationsAsync() =>
+        NotificationsEnabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
 
     [ObservableProperty]
     public partial AppLanguage? SelectedLanguage { get; set; }

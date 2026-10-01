@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_surface">#151B24</color>
-    <color name="widget_button">#1B222D</color>
-    <color name="widget_line">#252E3A</color>
+    <color name="widget_surface">#1C2536</color>
+    <color name="widget_button">#232D40</color>
+    <color name="widget_line">#2B364B</color>
     <color name="widget_ink">#E9EEF5</color>
     <color name="widget_income">#5FCB95</color>
     <color name="widget_transfer">#AAB7CF</color>

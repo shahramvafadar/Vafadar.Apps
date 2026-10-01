@@ -43,10 +43,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     private string _reportCurrency = Currencies.Euro.Code;
     private int _startDay = 1;
     private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
+    private readonly Security.AppLockService _lock;
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock)
     {
         _store = store;
+        _lock = appLock;
         _profiles = profiles;
         _plans = plans;
         _translator = translator;
@@ -563,7 +565,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     private Task OpenTransactionsAsync() => Shell.Current.GoToAsync("//transactions");
 
     // A receipt photo or PDF read on the device (D-31, D-33) opens a new expense with the values found; the file is
-    // attached when the entry is saved, and nothing is stored before (D-37).
+    // attached when the entry is saved, and nothing is stored before (D-37). Phones can take the photo right away (D-38).
     [RelayCommand]
     private async Task ReadReceiptAsync()
     {
@@ -578,32 +580,10 @@ public sealed partial class HomeViewModel : ViewModelBase
             return;
         }
 
-        PendingAttachment pending;
-        Core.Receipts.ReceiptSuggestion receipt;
+        (string Name, string ContentType, byte[] Data)? file;
         try
         {
-            if (await AttachmentFiles.PickAsync(_translator["Attachment_Pick"]) is not { } picked)
-            {
-                return;
-            }
-
-            if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
-            {
-                await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"],
-                    _translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], _translator["Common_Ok"]);
-                return;
-            }
-
-            pending = new PendingAttachment(picked.Name, picked.ContentType, picked.Data);
-            IsBusy = true;
-            try
-            {
-                receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType));
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            file = await ChooseReceiptAsync();
         }
         catch (InvalidDataException)
         {
@@ -616,12 +596,68 @@ public sealed partial class HomeViewModel : ViewModelBase
             return;
         }
 
+        if (file is not { } picked)
+        {
+            return;
+        }
+
+        // The camera or picker took the user out of the app: with the app lock on, nothing opens before it is unlocked.
+        await _lock.RunWhenUnlockedAsync(() => OpenReceiptAsync(picked));
+    }
+
+    private async Task<(string Name, string ContentType, byte[] Data)?> ChooseReceiptAsync()
+    {
+        if (PermissionPrompts.CanTakePhoto)
+        {
+            var takePhoto = _translator["Receipt_TakePhoto"];
+            var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Receipt_SourceTitle"], _translator["Common_Cancel"], null,
+                takePhoto, _translator["Receipt_ChooseFile"]);
+            if (choice == takePhoto)
+            {
+                return await PermissionPrompts.TakePhotoAsync(_translator) is { } photo
+                    ? AttachmentFiles.FromCamera(_translator["Camera_PhotoName"], photo)
+                    : null;
+            }
+
+            if (choice != _translator["Receipt_ChooseFile"])
+            {
+                return null;
+            }
+        }
+
+        return await AttachmentFiles.PickAsync(_translator["Attachment_Pick"]);
+    }
+
+    private async Task OpenReceiptAsync((string Name, string ContentType, byte[] Data) picked)
+    {
+        if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"],
+                _translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], _translator["Common_Ok"]);
+            return;
+        }
+
+        Core.Receipts.ReceiptSuggestion receipt;
+        IsBusy = true;
+        try
+        {
+            receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType));
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+
         if (receipt.IsEmpty)
         {
             await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_NothingNew"], _translator["Common_Ok"]);
         }
 
-        var query = new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Expense), ["receiptFile"] = pending };
+        var query = new Dictionary<string, object>
+        {
+            ["kind"] = nameof(EntryKind.Expense),
+            ["receiptFile"] = new PendingAttachment(picked.Name, picked.ContentType, picked.Data),
+        };
         if (receipt.Amount is { } amount)
         {
             query["receiptAmount"] = amount.ToString(System.Globalization.CultureInfo.InvariantCulture);

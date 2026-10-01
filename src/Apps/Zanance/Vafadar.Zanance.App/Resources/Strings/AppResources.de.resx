@@ -3091,4 +3091,46 @@
   <data name="Receipt_AttachFailed" xml:space="preserve">
     <value>Die Buchung wurde gespeichert, der Beleg konnte aber nicht angehängt werden. Sie können ihn in den Details der Buchung anhängen.</value>
   </data>
+  <data name="Notify_OfferTitle" xml:space="preserve">
+    <value>Erinnerungen an fällige Zahlungen</value>
+  </data>
+  <data name="Notify_OfferText" xml:space="preserve">
+    <value>Zanance kann Sie erinnern, bevor Miete, Rechnungen oder Ihr Gehalt fällig sind, und wenn ein Budget fast aufgebraucht ist. Erinnerungen entstehen nur auf diesem Gerät, und der Sperrbildschirm zeigt keine Beträge, solange Sie es nicht erlauben. Sie können das jederzeit in den Einstellungen ändern.</value>
+  </data>
+  <data name="Notify_Allow" xml:space="preserve">
+    <value>Erinnerungen erlauben</value>
+  </data>
+  <data name="Notify_NotNow" xml:space="preserve">
+    <value>Jetzt nicht</value>
+  </data>
+  <data name="Notify_OffTitle" xml:space="preserve">
+    <value>Mitteilungen sind aus</value>
+  </data>
+  <data name="Notify_OffText" xml:space="preserve">
+    <value>Mitteilungen für Zanance sind in den Systemeinstellungen ausgeschaltet, deshalb können keine Erinnerungen erscheinen. Öffnen Sie die Einstellungen und erlauben Sie Mitteilungen für Zanance.</value>
+  </data>
+  <data name="Common_OpenSettings" xml:space="preserve">
+    <value>Einstellungen öffnen</value>
+  </data>
+  <data name="Receipt_SourceTitle" xml:space="preserve">
+    <value>Beleg hinzufügen</value>
+  </data>
+  <data name="Receipt_TakePhoto" xml:space="preserve">
+    <value>Foto aufnehmen</value>
+  </data>
+  <data name="Receipt_ChooseFile" xml:space="preserve">
+    <value>Foto oder PDF auswählen</value>
+  </data>
+  <data name="Camera_OffTitle" xml:space="preserve">
+    <value>Kamerazugriff ist aus</value>
+  </data>
+  <data name="Camera_OffText" xml:space="preserve">
+    <value>Zanance darf die Kamera nicht verwenden. Öffnen Sie die Einstellungen und erlauben Sie Zanance den Kamerazugriff, oder wählen Sie stattdessen ein Foto oder PDF.</value>
+  </data>
+  <data name="Camera_NotAvailable" xml:space="preserve">
+    <value>Auf diesem Gerät ist keine Kamera-App verfügbar. Wählen Sie stattdessen ein Foto oder PDF.</value>
+  </data>
+  <data name="Camera_PhotoName" xml:space="preserve">
+    <value>Belegfoto</value>
+  </data>
 </root>

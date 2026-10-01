@@ -30,11 +30,15 @@ public class MainActivity : MauiAppCompatActivity
         }
     }
 
-    // Google's consent dialog and Microsoft's browser sign-in return here (cloud backup, D-35).
+    // Google's consent dialog and Microsoft's browser sign-in return here (cloud backup, D-35), and so does the camera
+    // app with a receipt photo (D-38).
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
-        Vafadar.Authentication.Maui.SignInActivityResults.OnActivityResult(requestCode, resultCode, data);
+        if (!CameraCapture.OnActivityResult(requestCode, resultCode))
+        {
+            Vafadar.Authentication.Maui.SignInActivityResults.OnActivityResult(requestCode, resultCode, data);
+        }
     }
 
     protected override void OnNewIntent(Intent? intent)

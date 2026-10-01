@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:localeConfig="@xml/locales_config"></application>
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:localeConfig="@xml/locales_config">
+		<!-- Receipt photos (D-38): the camera app writes into Zanance's cache through this provider. No camera or storage
+		     permission is declared, so Android needs none for the camera app's intent. -->
+		<provider android:name="pro.vafadar.zanance.CameraFileProvider" android:authorities="${applicationId}.camera"
+		          android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/camera_paths" />
+		</provider>
+	</application>
+	<!-- A camera is optional: devices without one get the app and choose photos or PDFs instead. -->
+	<uses-feature android:name="android.hardware.camera.any" android:required="false" />
 	<!-- Works fully offline: no network permission (privacy matrix DF-15). Debug builds add INTERNET for the debugger; only a build
 	     configured for cloud backup keeps it in release (D-35), used for the user's own Google Drive or OneDrive only. -->
-	<!-- Reminders (REM-01): asking is done only when the user turns a reminder on (REM-03). -->
+	<!-- Reminders (REM-01): asked once after the first start with an explanation, then when the user turns a reminder on
+	     (REM-03, D-38). -->
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<!-- Scheduled reminders are restored after a restart (REM-07). No exact-alarm permission is needed (REM-09). -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

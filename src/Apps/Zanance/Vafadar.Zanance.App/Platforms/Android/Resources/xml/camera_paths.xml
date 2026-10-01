@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The only folder the camera app may write into: the camera folder of Zanance's cache (CameraCapture.cs, D-38). -->
+<paths>
+    <cache-path name="camera" path="camera/" />
+</paths>

@@ -3095,4 +3095,46 @@
   <data name="Receipt_AttachFailed" xml:space="preserve">
     <value>The entry was saved, but the receipt could not be attached. You can attach it in the entry's details.</value>
   </data>
+  <data name="Notify_OfferTitle" xml:space="preserve">
+    <value>Reminders for due payments</value>
+  </data>
+  <data name="Notify_OfferText" xml:space="preserve">
+    <value>Zanance can remind you before rent, bills or your salary are due, and when a budget is almost used up. Reminders are created on this device only, and the lock screen shows no amounts unless you allow it. You can change this anytime in Settings.</value>
+  </data>
+  <data name="Notify_Allow" xml:space="preserve">
+    <value>Allow reminders</value>
+  </data>
+  <data name="Notify_NotNow" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="Notify_OffTitle" xml:space="preserve">
+    <value>Notifications are off</value>
+  </data>
+  <data name="Notify_OffText" xml:space="preserve">
+    <value>Notifications for Zanance are turned off in the system settings, so reminders cannot appear. Open the settings and allow notifications for Zanance.</value>
+  </data>
+  <data name="Common_OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="Receipt_SourceTitle" xml:space="preserve">
+    <value>Add a receipt</value>
+  </data>
+  <data name="Receipt_TakePhoto" xml:space="preserve">
+    <value>Take a photo</value>
+  </data>
+  <data name="Receipt_ChooseFile" xml:space="preserve">
+    <value>Choose a photo or PDF</value>
+  </data>
+  <data name="Camera_OffTitle" xml:space="preserve">
+    <value>Camera access is off</value>
+  </data>
+  <data name="Camera_OffText" xml:space="preserve">
+    <value>Zanance may not use the camera. Open the settings and allow camera access for Zanance, or choose a photo or PDF instead.</value>
+  </data>
+  <data name="Camera_NotAvailable" xml:space="preserve">
+    <value>No camera app is available on this device. Choose a photo or PDF instead.</value>
+  </data>
+  <data name="Camera_PhotoName" xml:space="preserve">
+    <value>Receipt photo</value>
+  </data>
 </root>

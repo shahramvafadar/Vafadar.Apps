@@ -16,7 +16,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="SystemControlFocusVisualPrimaryBrush" Color="#79A6FF" />
-                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#151B24" />
+                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#1C2536" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

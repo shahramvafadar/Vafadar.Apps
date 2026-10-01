@@ -50,7 +50,7 @@ show them in full.
 | Loading | Syncfusion busy indicator only if > 300 ms |
 | Error | Inline message with retry; user input is kept (TX-06, AT-04) |
 | Offline | Nothing changes (all local); cloud backup, when offered (D-35), shows "could not be reached" and keeps the local ledger usable |
-| Permission denied | Notification: banner in Plans "Reminders are off – enable", ledger unaffected (REM-02, AT-34) |
+| Permission denied | Notification: banner in Plans "Reminders are off – enable", ledger unaffected (REM-02, AT-34). Once the system no longer shows its dialog, "Turn on" explains why and opens the app's notification settings (D-38) |
 | Invalid input | Field-level message, save disabled until valid; negative amount → explains kind selection (FIN-01) |
 | Leaving unsaved | Confirmation "Discard changes?" |
 | Incomplete data | Amber "incomplete" label with reason (missing rate, unknown amount, entries before opening date) |
@@ -60,8 +60,8 @@ show them in full.
 * **Quick expense (UX-04, target ≈ 10 s):** Home "Expense" (or +) → amount (numeric keypad focused) → category tap →
   Save. Date today, default account. A quick template on Home fills account, category, title and, if kept, the amount:
   template → Save. The editor title names the kind ("New expense"), so the choice made on Home is visible.
-* **Expense from a receipt (D-31, D-33, D-37):** Home "Receipt" → pick a photo or PDF (system picker, no storage
-  permission) → read on the device → the editor opens with amount, date and shop to check → category → Save; the file
+* **Expense from a receipt (D-31, D-33, D-37, D-38):** Home "Receipt" → "Take a photo" (phones) or "Choose a photo or
+  PDF" (system picker, no storage permission) → read on the device → the editor opens with amount, date and shop to check → category → Save; the file
   becomes the entry's attachment only then. If nothing can be read, the editor still opens with the file.
 * **Salary and bill (§15.2):** Plans → + → Income "Salary", fixed, monthly → reminder 3 days before 09:00 → save;
   bill with estimated amount → at due date: confirm actual amount → choose whether future estimates change.
@@ -94,7 +94,7 @@ lightened (`CategoryLookup.DisplayColor`).
 
 | Token | Value |
 |---|---|
-| Surfaces | Page `#E8ECF2` / `#0D1219`, card `#FFFFFF` / `#151B24`, card outline and line `#D5DCE6` / `#2A3442`, strong outline `#B9C3D1` / `#3A4556`. The light page is a clear step darker than the cards, so cards stay visible on any screen brightness (owner feedback 2026-10-01) |
+| Surfaces | Page `#E8ECF2` / `#111827`, card `#FFFFFF` / `#1C2536`, muted surface `#F1F4F8` / `#232D40`, card outline and line `#D5DCE6` / `#2B364B`, strong outline `#B9C3D1` / `#3D4A62`. The light page is a clear step darker than the cards, so cards stay visible on any screen brightness (owner feedback 2026-10-01). The dark ground is a deep navy built on `#111827` (D-38): blue clearly leads, so it never reads green-grey, and it matches the blue of the symbol; the Android splash follows it in dark mode |
 | Text | Ink `#0F1B2D`, secondary `#4A5568`, muted `#697586` (dark: `#E9EEF5`, `#AEB8C6`, `#8C97A8`) |
 | Shape | Cards radius 18, buttons and inputs 14, icon tiles 40 × 40 radius 12, chips fully rounded |
 | Spacing | 4-pt grid; screen padding 16; card padding 16; list row min height 60 |
@@ -117,6 +117,12 @@ lightened (`CategoryLookup.DisplayColor`).
   amounts, spending type, budget method, rollover, budget period and two-week start, backup password, goal priority.
 * **Back on Windows** (D-36): a page opened from another one shows a round back button before its title
   (`PageHeader`); the window's own arrow is small and easy to miss. Android keeps its toolbar arrow.
+* **Permissions** (D-38): asked in context and in the platform's own dialogs. Notifications: once per device after the
+  first start an explanation ("Reminders for due payments" – what is reminded, that nothing leaves the device, that the
+  lock screen shows no amounts by default) leads to the system dialog (Android 13+, iOS); "Not now" is respected, and
+  Plans and Settings offer "Turn on" later, which opens the system settings once the system no longer asks. Camera: only
+  when the user chooses "Take a photo"; Android uses the camera app and needs no permission, iOS shows its dialog with
+  our usage text and, after a refusal, offers the settings.
 * **Keyboard focus on Windows** (D-37): the focus ring is drawn in the action blue (`SystemControlFocusVisual*Brush`
   in `Platforms/Windows/App.xaml`, light and dark) and follows the rounded corners of each control.
 * **Onboarding** (D-36): a centred column of at most 560 px with a progress bar, the symbol in a halo on the welcome

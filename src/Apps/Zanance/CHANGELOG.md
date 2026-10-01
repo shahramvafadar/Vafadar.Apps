@@ -85,6 +85,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Dark theme and permissions (D-38)
+
+- The dark theme is a deep navy that matches the blue of the symbol (it looked green-grey before); on Android the
+  splash screen is dark too when the device is in dark mode.
+- After the first start Zanance offers reminders once, explains what they do and then lets the system ask. "Not now"
+  is respected; "Turn on" in Plans and Settings opens the notification settings when the system no longer asks.
+- Receipt: on phones you can take a photo right away. Android uses the camera app and needs no camera permission;
+  iOS asks for the camera with a short explanation and points to the settings after a refusal.
+- With the app lock on, a receipt taken or chosen outside the app opens only after unlocking.
+
 ### Changed – Home at a glance and quick add (D-37)
 
 - Home starts with your balance and a quick add card: Expense, Income and Transfer open the editor with that kind,

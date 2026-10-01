@@ -70,7 +70,23 @@ public partial class App : Application
         if (Windows.FirstOrDefault() is { } window)
         {
             window.Page = CreateShell();
+            OfferNotificationsSoon();
         }
+    }
+
+    // Reminders are offered once per device after the first start (D-38): after onboarding, or on the next start of an
+    // installation that finished onboarding before; only once the app is unlocked and the new screens are shown.
+    private void OfferNotificationsSoon()
+    {
+#if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOTS") is { Length: > 0 })
+        {
+            return;
+        }
+#endif
+        Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(1), () => _ = Presentation.Failures.GuardAsync(() =>
+            _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() =>
+                Presentation.PermissionPrompts.OfferNotificationsAsync(_services.GetRequiredService<ReminderService>(), Translator.Instance))));
     }
 
     /// <summary>
@@ -126,6 +142,11 @@ public partial class App : Application
             {
                 _pendingLink = null;
                 OpenLink(link);
+            }
+
+            if (Windows.FirstOrDefault()?.Page is AppShell)
+            {
+                OfferNotificationsSoon();
             }
         });
         RunForegroundWork(starting: true);

@@ -265,8 +265,8 @@ public sealed partial class PlansViewModel : ViewModelBase
     [RelayCommand]
     private async Task EnableRemindersAsync()
     {
-        RemindersOff = !await _reminders.EnsurePermissionAsync();
-        _reminders.RefreshSoon();
+        // The system asks while it still can; otherwise its notification settings open (D-38).
+        RemindersOff = !await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
     }
 
     [RelayCommand]

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- PageBackground of the dark palette (Presentation/Palette.cs). -->
-    <color name="zanance_page">#0D1219</color>
+    <color name="zanance_page">#111827</color>
     <bool name="zanance_light_bars">false</bool>
+    <!-- The splash screen in the dark theme: MAUI generates the light colour (MauiSplashScreen Color) in values only, so
+         a device in dark mode would flash a light screen before the dark app (D-38). -->
+    <color name="maui_splash_color">#111827</color>
 </resources>

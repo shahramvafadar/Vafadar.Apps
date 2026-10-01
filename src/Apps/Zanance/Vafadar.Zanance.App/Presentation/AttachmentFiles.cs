@@ -34,13 +34,20 @@ internal static class AttachmentFiles
         await using var stream = await file.OpenReadAsync();
         using var buffer = new MemoryStream();
         await stream.CopyToAsync(buffer);
-        var data = buffer.ToArray();
-        var contentType = string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType;
+        return Prepare(file.FileName, string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType, buffer.ToArray());
+    }
+
+    /// <summary>Prepares a photo just taken with the camera like a picked one (smaller, upright, without metadata).</summary>
+    public static (string Name, string ContentType, byte[] Data) FromCamera(string name, byte[] data) =>
+        Prepare(name + ".jpg", "image/jpeg", data);
+
+    private static (string Name, string ContentType, byte[] Data) Prepare(string name, string contentType, byte[] data)
+    {
         if (contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
         {
             if (Shrink(data) is { } smaller)
             {
-                return (Path.ChangeExtension(file.FileName, ".jpg"), "image/jpeg", smaller);
+                return (Path.ChangeExtension(name, ".jpg"), "image/jpeg", smaller);
             }
 
 #if ANDROID || IOS
@@ -49,7 +56,7 @@ internal static class AttachmentFiles
 #endif
         }
 
-        return (file.FileName, contentType, data);
+        return (name, contentType, data);
     }
 
     private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");

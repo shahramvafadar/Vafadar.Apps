@@ -3091,4 +3091,46 @@
   <data name="Receipt_AttachFailed" xml:space="preserve">
     <value>تراکنش ذخیره شد، اما رسید پیوست نشد. می‌توانید آن را در جزئیات تراکنش پیوست کنید.</value>
   </data>
+  <data name="Notify_OfferTitle" xml:space="preserve">
+    <value>یادآوری پرداخت‌های سررسیدشده</value>
+  </data>
+  <data name="Notify_OfferText" xml:space="preserve">
+    <value>Zanance می‌تواند پیش از سررسید اجاره، قبض‌ها یا حقوق، و وقتی بودجه نزدیک تمام شدن است، به شما یادآوری کند. یادآورها فقط روی همین دستگاه ساخته می‌شوند و تا خودتان اجازه ندهید، روی صفحهٔ قفل مبلغی نشان داده نمی‌شود. هر وقت بخواهید می‌توانید این را در تنظیمات تغییر دهید.</value>
+  </data>
+  <data name="Notify_Allow" xml:space="preserve">
+    <value>اجازهٔ یادآوری</value>
+  </data>
+  <data name="Notify_NotNow" xml:space="preserve">
+    <value>حالا نه</value>
+  </data>
+  <data name="Notify_OffTitle" xml:space="preserve">
+    <value>اعلان‌ها خاموش است</value>
+  </data>
+  <data name="Notify_OffText" xml:space="preserve">
+    <value>اعلان‌های Zanance در تنظیمات سیستم خاموش است و یادآورها نمی‌توانند نمایش داده شوند. تنظیمات را باز کنید و اعلان‌های Zanance را روشن کنید.</value>
+  </data>
+  <data name="Common_OpenSettings" xml:space="preserve">
+    <value>باز کردن تنظیمات</value>
+  </data>
+  <data name="Receipt_SourceTitle" xml:space="preserve">
+    <value>افزودن رسید</value>
+  </data>
+  <data name="Receipt_TakePhoto" xml:space="preserve">
+    <value>گرفتن عکس</value>
+  </data>
+  <data name="Receipt_ChooseFile" xml:space="preserve">
+    <value>انتخاب عکس یا PDF</value>
+  </data>
+  <data name="Camera_OffTitle" xml:space="preserve">
+    <value>دسترسی به دوربین خاموش است</value>
+  </data>
+  <data name="Camera_OffText" xml:space="preserve">
+    <value>Zanance اجازهٔ استفاده از دوربین را ندارد. تنظیمات را باز کنید و دسترسی Zanance به دوربین را روشن کنید، یا به‌جای آن یک عکس یا PDF انتخاب کنید.</value>
+  </data>
+  <data name="Camera_NotAvailable" xml:space="preserve">
+    <value>روی این دستگاه برنامهٔ دوربین در دسترس نیست. به‌جای آن یک عکس یا PDF انتخاب کنید.</value>
+  </data>
+  <data name="Camera_PhotoName" xml:space="preserve">
+    <value>عکس رسید</value>
+  </data>
 </root>

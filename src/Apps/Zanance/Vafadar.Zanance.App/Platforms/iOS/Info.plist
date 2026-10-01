@@ -37,6 +37,9 @@
 	<!-- Face ID for the optional app lock (SEC-01); iOS ends the app without this text. Localised in *.lproj/InfoPlist.strings. -->
 	<key>NSFaceIDUsageDescription</key>
 	<string>Zanance uses Face ID to unlock the app when the app lock is on.</string>
+	<!-- Camera for photographing receipts (D-38); asked only when the user chooses "Take a photo". Localised in *.lproj/InfoPlist.strings. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Zanance uses the camera to photograph receipts. The photo is read on this device and stays on it.</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
