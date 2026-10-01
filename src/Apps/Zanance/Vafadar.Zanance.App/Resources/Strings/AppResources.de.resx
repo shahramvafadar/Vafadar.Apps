@@ -3043,4 +3043,31 @@
   <data name="Account_Icon" xml:space="preserve">
     <value>Symbol</value>
   </data>
+  <data name="Home_QuickAdd" xml:space="preserve">
+    <value>Schnell erfassen</value>
+  </data>
+  <data name="Home_TemplateDescription" xml:space="preserve">
+    <value>Neue Buchung mit der Vorlage {0}</value>
+  </data>
+  <data name="Home_ForecastEnd" xml:space="preserve">
+    <value>Monatsende ≈ {0}</value>
+  </data>
+  <data name="Home_ForecastLow" xml:space="preserve">
+    <value>Tiefster Stand {0} am {1}</value>
+  </data>
+  <data name="Home_BudgetPerDay" xml:space="preserve">
+    <value>≈ {0} pro Tag für die restlichen {1} Tage</value>
+  </data>
+  <data name="Home_BudgetLastDay" xml:space="preserve">
+    <value>{0} für heute, den letzten Tag</value>
+  </data>
+  <data name="Entry_NewExpense" xml:space="preserve">
+    <value>Neue Ausgabe</value>
+  </data>
+  <data name="Entry_NewIncome" xml:space="preserve">
+    <value>Neue Einnahme</value>
+  </data>
+  <data name="Entry_NewTransfer" xml:space="preserve">
+    <value>Neue Umbuchung</value>
+  </data>
 </root>

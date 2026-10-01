@@ -3047,4 +3047,31 @@
   <data name="Account_Icon" xml:space="preserve">
     <value>Icon</value>
   </data>
+  <data name="Home_QuickAdd" xml:space="preserve">
+    <value>Quick add</value>
+  </data>
+  <data name="Home_TemplateDescription" xml:space="preserve">
+    <value>New entry from the template {0}</value>
+  </data>
+  <data name="Home_ForecastEnd" xml:space="preserve">
+    <value>End of month ≈ {0}</value>
+  </data>
+  <data name="Home_ForecastLow" xml:space="preserve">
+    <value>Lowest {0} on {1}</value>
+  </data>
+  <data name="Home_BudgetPerDay" xml:space="preserve">
+    <value>≈ {0} a day for the {1} days left</value>
+  </data>
+  <data name="Home_BudgetLastDay" xml:space="preserve">
+    <value>{0} for today, the last day</value>
+  </data>
+  <data name="Entry_NewExpense" xml:space="preserve">
+    <value>New expense</value>
+  </data>
+  <data name="Entry_NewIncome" xml:space="preserve">
+    <value>New income</value>
+  </data>
+  <data name="Entry_NewTransfer" xml:space="preserve">
+    <value>New transfer</value>
+  </data>
 </root>

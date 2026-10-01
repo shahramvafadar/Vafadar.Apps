@@ -85,6 +85,19 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Home at a glance and quick add (D-37)
+
+- Home starts with your balance and a quick add card: Expense, Income and Transfer open the editor with that kind,
+  and your quick templates fill it in one tap – a template with an amount is two taps (template, Save).
+- The editor says what you are adding ("New expense", "New income", "New transfer").
+- This month / last month moved into the income and expenses section they change.
+- The budget card shows what is left per day for the rest of the month.
+- Colours where they belong: budget bars are green within the limit, amber near it and red over it; the forecast line
+  is violet; the forecast on Home shows the end balance and the lowest point separately, red only below zero; negative
+  balances in an account's month summary are red.
+- Chart dates follow the app language and calendar (the forecast showed Persian month names in English); the forecast
+  list shows dates as "October 28".
+
 ### Added – Cloud backup (D-35)
 
 - Optional backups to your own OneDrive (Android, Windows) or Google Drive (Android): connect, back up now, see and restore

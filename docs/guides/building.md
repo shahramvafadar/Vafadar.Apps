@@ -27,6 +27,12 @@ device separately, so that APK alone stops at start (logcat: *No assemblies foun
 for testers, build a complete APK with `eng/scripts/Build-AndroidApk.ps1` (Release by default, signed with the local
 debug key) and install `artifacts/android/pro.vafadar.zanance-Signed.apk`. Android blocks screenshots of the app on purpose
 (`FLAG_SECURE`, D-23); use the accessibility tree (`adb shell uiautomator dump`) to check screens on an emulator.
+
+**Visual Studio open at the same time:** it restores the solution in the background for all target frameworks, which can
+overwrite the restore of a command-line build for one framework. The build then stops with `NETSDK1005` (*assets file
+doesn't have a target for 'net10.0-android'*) or `APT2126` (*file not found*). Run the command again – it restores
+first – or close the solution in Visual Studio while building from the command line.
+
 ## Target frameworks
 
 * Plain libraries, tests and (future) web projects: `$(VafadarTargetFramework)` = `net10.0`.

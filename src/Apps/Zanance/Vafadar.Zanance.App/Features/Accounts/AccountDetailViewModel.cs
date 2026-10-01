@@ -184,7 +184,8 @@ public sealed partial class AccountDetailViewModel(
         var movement = ReportCalculator.AccountMovements([account], entries, from, to).Single();
         string Format(long value, bool plus = false) => MoneyText.Format(value, account.CurrencyCode, culture, showPlus: plus);
         Movement.Clear();
-        Movement.Add(new AmountLine(translator["Report_Opening"], Format(movement.Opening), true));
+        // A balance below zero is a problem or a debt (red, D-27); the movements in between keep their signs only.
+        Movement.Add(new AmountLine(translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0));
         void Add(string key, long value, bool negative = false)
         {
             if (value != 0)
@@ -201,7 +202,7 @@ public sealed partial class AccountDetailViewModel(
         Add("Report_TransfersIn", movement.TransfersIn);
         Add("Report_TransfersOut", movement.TransfersOut, negative: true);
         Add("Report_Adjustments", movement.Adjustments);
-        Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true));
+        Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
     }
 
     private void LoadLoanEstimate(Account account, long balance, DateOnly today, System.Globalization.CultureInfo culture)

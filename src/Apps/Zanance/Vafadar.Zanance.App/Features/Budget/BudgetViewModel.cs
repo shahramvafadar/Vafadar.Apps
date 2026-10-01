@@ -38,7 +38,9 @@ public sealed record FlexLine(string Title, string Detail, Symbol Icon, Color Ic
 /// </summary>
 public sealed partial class BudgetViewModel : ViewModelBase
 {
-    private static Color Good => Palette.Primary;
+    // Traffic light of the palette (D-27): within the limit is a positive result (green), then amber, then red. Blue is
+    // the action colour and never shows the state of money.
+    private static Color Good => Palette.IncomeText;
     private static Color Near => Palette.NearLimit;
     private static Color Over => Palette.ExpenseText;
 

@@ -72,6 +72,9 @@
                                         <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
                                             <Setter Property="FontAttributes" Value="Bold" />
                                         </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                            <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+                                        </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
                             </Grid>

@@ -13,14 +13,11 @@
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
 
-    <!-- Home (D-27): the balance, what needs attention, then the sections the user keeps (§21.5). One job per card. -->
+    <!-- Home (D-27, D-37): the balance first, quick add right below it, what needs attention, then the sections the user
+         keeps (§21.5). One job per card; the first screen answers "where do I stand?" and "add an expense" without scrolling. -->
     <Grid>
         <ScrollView>
             <VerticalStackLayout x:Name="Sections" Padding="16,8,16,16" Spacing="12">
-
-                <!-- Scope of every number on this page (DASH-01) -->
-                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
-                <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" />
 
                 <!-- Welcome without accounts -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAccounts, Converter={StaticResource InvertedBoolConverter}}">
@@ -60,6 +57,59 @@
                             </Label.Triggers>
                         </Label>
                         <Label Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Quick add (UX-04, D-37): the kind is chosen here, so an expense is amount, category, Save. Expense is the
+                     everyday action (blue); income and transfer carry their meaning colours. Templates fill the form in one tap. -->
+                <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding HasAccounts}">
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                            <Grid Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}" HorizontalOptions="Center">
+                                    <fi:SymbolIcon Symbol="ArrowUpRight" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Row="1" Text="{v:Translate EntryKind_Expense}" Style="{StaticResource QuickActionLabel}" />
+                                <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Expense"
+                                        SemanticProperties.Description="{v:Translate Entry_NewExpense}" ToolTipProperties.Text="{v:Translate Entry_NewExpense}" />
+                            </Grid>
+                            <Grid Grid.Column="1" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource IncomeBackground}" Stroke="{DynamicResource IncomeLine}" HorizontalOptions="Center">
+                                    <fi:SymbolIcon Symbol="ArrowDownLeft" FontSize="20" ForegroundColor="{DynamicResource IncomeText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Row="1" Text="{v:Translate EntryKind_Income}" Style="{StaticResource QuickActionLabel}" />
+                                <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Income"
+                                        SemanticProperties.Description="{v:Translate Entry_NewIncome}" ToolTipProperties.Text="{v:Translate Entry_NewIncome}" />
+                            </Grid>
+                            <Grid Grid.Column="2" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource TransferBackground}" Stroke="{DynamicResource TransferLine}" HorizontalOptions="Center">
+                                    <fi:SymbolIcon Symbol="ArrowSwap" FontSize="20" ForegroundColor="{DynamicResource TransferText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Row="1" Text="{v:Translate EntryKind_Transfer}" Style="{StaticResource QuickActionLabel}" />
+                                <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Transfer"
+                                        SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
+                            </Grid>
+                        </Grid>
+
+                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasQuickTemplates}">
+                            <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding QuickTemplates}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:QuickTemplate">
+                                        <Grid>
+                                            <Border Style="{StaticResource TemplatePill}">
+                                                <HorizontalStackLayout Spacing="6">
+                                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="16" ForegroundColor="{Binding IconColor}" VerticalOptions="Center" />
+                                                    <Label Text="{Binding Name}" FontSize="13.5" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                            <Button Style="{StaticResource OverlayButton}" CornerRadius="20"
+                                                    Command="{Binding UseTemplateCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                    CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
+                        </ScrollView>
                     </VerticalStackLayout>
                 </Border>
 
@@ -145,6 +195,11 @@
                             </Label.GestureRecognizers>
                         </Label>
                     </Grid>
+                    <!-- The period of the numbers below (DASH-01): chosen here, next to what it changes -->
+                    <VerticalStackLayout Spacing="6" Margin="0,0,0,8" IsVisible="{Binding HasEntries}">
+                        <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
+                        <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" />
+                    </VerticalStackLayout>
                     <!-- Income and expense of the period; tap for the entries behind each number -->
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Periods}" Spacing="8" IsVisible="{Binding HasEntries}">
                         <BindableLayout.ItemTemplate>
@@ -191,17 +246,20 @@
 
                 <VerticalStackLayout x:Name="ForecastSection" Spacing="0">
                     <!-- Forecast (Advanced): the estimate after the recorded plans -->
-                    <Border Style="{StaticResource Card}" Padding="14,12" IsVisible="{Binding ForecastText, Converter={StaticResource IsNotNullConverter}}">
+                    <Border Style="{StaticResource Card}" Padding="14,12" IsVisible="{Binding ForecastEndText, Converter={StaticResource IsNotNullConverter}}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenForecastCommand}" />
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource PlanBackground}" Stroke="{DynamicResource PlanLine}">
-                                <fi:SymbolIcon Symbol="DataTrending" FontSize="17" ForegroundColor="{DynamicResource PlanText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PlanBackground}" Stroke="{DynamicResource PlanLine}">
+                                <fi:SymbolIcon Symbol="DataTrending" FontSize="20" ForegroundColor="{DynamicResource PlanText}" HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
-                                <Label Text="{Binding ForecastText}" TextColor="{Binding ForecastColor}" FontSize="14" />
+                                <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" FontSize="12" />
+                                <Label Text="{Binding ForecastEndText}" FontSize="15" FontAttributes="Bold" />
+                                <Label Text="{Binding ForecastLowText}" TextColor="{Binding ForecastLowColor}" FontSize="13" />
+                                <Label Text="{Binding ForecastNote}" TextColor="{DynamicResource WarningText}" FontSize="12"
+                                       IsVisible="{Binding ForecastNote, Converter={StaticResource IsNotNullConverter}}" />
                             </VerticalStackLayout>
                             <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
                         </Grid>
@@ -222,9 +280,11 @@
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenBudgetCommand}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout Spacing="10">
+                        <VerticalStackLayout Spacing="8">
                             <Label Text="{Binding BudgetText}" FontSize="15" FontAttributes="Bold" />
                             <progress:SfLinearProgressBar Progress="{Binding BudgetProgress}" ProgressFill="{Binding BudgetColor}" />
+                            <Label Text="{Binding BudgetDailyText}" Style="{StaticResource Secondary}"
+                                   IsVisible="{Binding BudgetDailyText, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>

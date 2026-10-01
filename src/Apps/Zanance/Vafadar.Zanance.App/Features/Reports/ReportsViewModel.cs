@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.App.Features.Reports;
 public sealed record CategoryReportRow(IReadOnlyCollection<Guid> CategoryIds, string Name, Color Color, string GrossText, string RefundsText, string NetText, Color NetColor, string DetailText);
 
 /// <summary>A labelled amount, e.g. one line of an account movement.</summary>
-public sealed record AmountLine(string Label, string Amount, bool IsTotal);
+public sealed record AmountLine(string Label, string Amount, bool IsTotal, bool IsNegative = false);
 
 /// <summary>An account with its movement lines.</summary>
 public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines);

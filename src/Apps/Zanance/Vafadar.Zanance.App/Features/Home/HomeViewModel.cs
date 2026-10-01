@@ -23,6 +23,9 @@ public sealed record PeriodSummary(string IncomeText, string ExpenseText, string
 /// <summary>A category slice of the expense chart and its row in the table below it (UX-06: charts have a table).</summary>
 public sealed record CategorySlice(IReadOnlyCollection<Guid> CategoryIds, string Name, double Value, string AmountText, string PercentText, Color Color, Brush Brush);
 
+/// <summary>A quick template on Home (TX-04): one tap opens a new entry filled from it, nothing is saved yet.</summary>
+public sealed record QuickTemplate(Guid Id, string Name, FluentIcons.Common.Symbol Icon, Color IconColor, string Description);
+
 /// <summary>
 /// Home dashboard (UI-02, DASH-01..04). Every number uses one filter set – the period chosen at the top, the accounts
 /// included in totals and their currencies – and every number can be tapped to see the entries behind it (AT-50).
@@ -67,6 +70,28 @@ public sealed partial class HomeViewModel : ViewModelBase
     public ObservableCollection<Brush> SliceBrushes { get; } = [];
 
     public ObservableCollection<AccountItem> Accounts { get; } = [];
+
+    /// <summary>Gets the quick templates shown under the quick add buttons (at most six, in the user's order).</summary>
+    public ObservableCollection<QuickTemplate> QuickTemplates { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasQuickTemplates { get; set; }
+
+    [ObservableProperty]
+    public partial string? ForecastEndText { get; set; }
+
+    [ObservableProperty]
+    public partial string? ForecastLowText { get; set; }
+
+    [ObservableProperty]
+    public partial Color? ForecastLowColor { get; set; }
+
+    [ObservableProperty]
+    public partial string? ForecastNote { get; set; }
+
+    /// <summary>Gets what can be spent per day for the rest of the budget period, e.g. "≈ 38.90 EUR a day for 30 days".</summary>
+    [ObservableProperty]
+    public partial string? BudgetDailyText { get; set; }
 
     [ObservableProperty]
     public partial int PeriodIndex { get; set; }
@@ -132,12 +157,6 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial bool CombinedIncomplete { get; set; }
-
-    [ObservableProperty]
-    public partial string? ForecastText { get; set; }
-
-    [ObservableProperty]
-    public partial Color? ForecastColor { get; set; }
 
     [ObservableProperty]
     public partial bool HasBudget { get; set; }
@@ -261,6 +280,21 @@ public sealed partial class HomeViewModel : ViewModelBase
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown) { Type = account.Type });
         }
 
+        // Quick templates (TX-04) one tap away from Home; the editor still opens for a check before saving.
+        QuickTemplates.Clear();
+        foreach (var template in (await _store.GetTemplatesAsync()).OrderBy(t => t.SortOrder).Take(6))
+        {
+            var transfer = template.Kind == EntryKind.Transfer;
+            QuickTemplates.Add(new QuickTemplate(
+                template.Id,
+                template.Name,
+                transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(template.Icon, categories.Icon(template.CategoryId)),
+                transfer ? Palette.TransferText : categories.Color(template.CategoryId),
+                _translator.Format("Home_TemplateDescription", template.Name)));
+        }
+
+        HasQuickTemplates = QuickTemplates.Count > 0;
+
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null;
@@ -276,6 +310,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         var budget = await _store.GetBudgetAsync(year, month, calendar, _reportCurrency);
+        BudgetDailyText = null;
         HasBudget = budget?.TotalLimit is not null;
         if (budget?.TotalLimit is not { } ownLimit)
         {
@@ -290,18 +325,28 @@ public sealed partial class HomeViewModel : ViewModelBase
             ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _reportCurrency, culture))
             : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _reportCurrency, culture), MoneyText.Format(limit, _reportCurrency, culture));
         BudgetProgress = limit > 0 ? Math.Clamp((double)status.Spent / limit, 0, 1) : status.Spent > 0 ? 1 : 0;
+
+        // What is left per day of the running period answers "can I still spend today?" at a glance.
+        var daysLeft = to.DayNumber - today.DayNumber + 1;
+        if (PeriodIndex == 0 && !status.IsOver && status.Remaining > 0 && daysLeft > 0)
+        {
+            var perDay = MoneyText.Format(status.Remaining / daysLeft, _reportCurrency, culture);
+            BudgetDailyText = daysLeft == 1
+                ? _translator.Format("Home_BudgetLastDay", perDay)
+                : _translator.Format("Home_BudgetPerDay", perDay, daysLeft);
+        }
         BudgetColor = status.Alert switch
         {
             BudgetAlert.Exceeded => EntryPresenter.DangerColor,
             BudgetAlert.Near => Palette.NearLimit,
-            _ => Palette.Primary,
+            _ => Palette.IncomeText,
         };
     }
 
     // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08).
     private async Task LoadForecastAsync(Core.Settings.ExperienceMode mode, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
     {
-        ForecastText = null;
+        ForecastEndText = null;
         if (mode != Core.Settings.ExperienceMode.Advanced)
         {
             return;
@@ -316,10 +361,11 @@ public sealed partial class HomeViewModel : ViewModelBase
             return;
         }
 
-        ForecastText = _translator.Format("Home_Forecast", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture),
-            MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short))
-            + (forecast.IsIncomplete ? " · " + _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : string.Empty);
-        ForecastColor = forecast.GoesNegative ? EntryPresenter.DangerColor : Palette.AmountText;
+        // The end balance and the lowest point are two facts; only a balance below zero is a problem (red, D-27).
+        ForecastEndText = _translator.Format("Home_ForecastEnd", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture));
+        ForecastLowText = _translator.Format("Home_ForecastLow", MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth));
+        ForecastLowColor = forecast.GoesNegative ? EntryPresenter.DangerColor : Palette.SecondaryText;
+        ForecastNote = forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null;
     }
 
     [RelayCommand]
@@ -478,6 +524,16 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task AddEntryAsync() => Shell.Current.GoToAsync(HasAccounts ? AppShell.EntryEditorRoute : AppShell.AccountEditorRoute);
+
+    // Quick add on Home (UX-04): the editor opens with the kind already chosen, so an expense is amount, category, Save.
+    [RelayCommand]
+    private Task AddKindAsync(string kind) => HasAccounts
+        ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = kind })
+        : Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
+
+    [RelayCommand]
+    private Task UseTemplateAsync(QuickTemplate template) =>
+        Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["template"] = template.Id });
 
     [RelayCommand]
     private Task OpenUnreviewedAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });

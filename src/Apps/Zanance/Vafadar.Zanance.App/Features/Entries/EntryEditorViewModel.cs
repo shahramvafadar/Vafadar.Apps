@@ -55,6 +55,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private Dictionary<Guid, Account> _accounts = [];
     private string _snapshot = string.Empty;
     private bool _loading;
+    private bool _isNew;
 
     public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time)
     {
@@ -228,6 +229,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     {
         ArgumentNullException.ThrowIfNull(query);
         _loading = true;
+        _isNew = false;
         try
         {
             await LoadReferenceDataAsync();
@@ -295,6 +297,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 var kind = query.TryGetValue("kind", out var value) && Enum.TryParse<EntryKind>(value?.ToString(), out var parsed) ? parsed : EntryKind.Expense;
                 var defaultAccount = active.FirstOrDefault(a => a.Id == settings.DefaultAccountId) ?? active.FirstOrDefault();
                 _entry = new LedgerEntry { Kind = kind, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
+                _isNew = true;
                 CanChangeKind = true;
                 KindIndex = Math.Max(0, Array.IndexOf(ChipKinds, kind));
 
@@ -327,6 +330,13 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 // Quick templates fill a new entry only (TX-04).
                 Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? await _store.GetTemplatesAsync() : [];
                 HasTemplates = Templates.Count > 0;
+
+                // A template chosen on Home fills the form at once (Home quick add).
+                if (Get(query, "template") is { } templateId && Templates.FirstOrDefault(t => t.Id == templateId) is { } chosen)
+                {
+                    ApplyTemplate(chosen);
+                    _loading = true;
+                }
             }
         }
         finally
@@ -506,6 +516,19 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         ShowAccountPicker = Accounts.Count > 1 || IsTransfer;
+
+        // A new entry says what it records ("New expense"), so the kind chosen on Home is confirmed at a glance.
+        if (_isNew && CanChangeKind)
+        {
+            Title = Kind switch
+            {
+                EntryKind.Expense => _translator["Entry_NewExpense"],
+                EntryKind.Income => _translator["Entry_NewIncome"],
+                EntryKind.Transfer => _translator["Entry_NewTransfer"],
+                _ => _translator["Entry_NewTitle"],
+            };
+        }
+
         if (_loading)
         {
             return;

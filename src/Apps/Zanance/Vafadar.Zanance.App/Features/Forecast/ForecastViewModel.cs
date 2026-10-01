@@ -130,7 +130,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
         {
             var currency = Currencies.TryGet(forecast.CurrencyCode, out var known) ? known : Currencies.Euro;
             var rows = forecast.Items.Select(item => new ForecastRow(
-                _dates.Format(item.Date, DateFormatStyle.Short),
+                _dates.Format(item.Date, DateFormatStyle.DayMonth),
                 string.IsNullOrEmpty(item.Name) ? _translator["Forecast_RecordedEntry"] : item.Name,
                 item.Effect is { } effect ? MoneyText.Format(effect, forecast.CurrencyCode, culture, showPlus: true, approximate: item.IsEstimate) : _translator["Plan_AmountUnknown"],
                 item.Effect is null ? Palette.WarningText : item.Effect < 0 ? EntryPresenter.ExpenseColor : Palette.IncomeText,
@@ -159,7 +159,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
             Cards.Add(new ForecastCard(
                 forecast.CurrencyCode,
                 MoneyText.Format(forecast.EndBalance, forecast.CurrencyCode, culture),
-                _translator.Format("Forecast_Lowest", MoneyText.Format(forecast.Minimum, forecast.CurrencyCode, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.Short)),
+                _translator.Format("Forecast_Lowest", MoneyText.Format(forecast.Minimum, forecast.CurrencyCode, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth)),
                 forecast.GoesNegative ? Palette.ExpenseText : Palette.SecondaryText,
                 warning,
                 forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null,

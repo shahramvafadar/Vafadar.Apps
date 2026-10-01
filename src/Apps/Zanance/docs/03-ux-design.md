@@ -15,16 +15,19 @@ More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templat
           · Currency (Exchange rates, Display units) · Data and security (Backup, Profiles, Import/Export, Settings)
 ```
 
-Home shows only the balance, what needs attention, income and expenses of the period, the forecast (Advanced), the
-budget and the next due items. The category chart and the account list are Home sections that start hidden
-(§21.5 layout), because Insights and Accounts show them in full.
+Home (D-37) starts with the recorded balance and a quick add card – Expense, Income and Transfer, each opening the
+editor with that kind, plus up to six quick templates – so the first screen answers "where do I stand?" and "add an
+expense" without scrolling. Then what needs attention, income and expenses of the period (with the period chips this
+month / last month), the forecast (Advanced), the budget with what is left per day, and the next due items. The
+category chart and the account list are Home sections that start hidden (§21.5 layout), because Insights and Accounts
+show them in full.
 
 ## 3. Screen inventory
 
 | ID | Screen | Content | Simple / Advanced |
 |---|---|---|---|
 | UI-01 | Onboarding (3 steps) | 1 language · 2 report currency + calendar suggestion · 3 first account (name, type, opening balance, date) | same |
-| UI-02 | Home | Scope header (period, accounts, currency); recorded balance card (with "includes N unreviewed"); income/expense of period; budget remaining; next due items; "needs review" chip; expense donut below | Advanced adds forecast card and filters |
+| UI-02 | Home | Recorded balance card (with "includes N unreviewed"); quick add (Expense · Income · Transfer, quick templates); needs attention; income/expense of the period with period chips and scope (period, accounts, currency); budget remaining and per day; next due items; expense donut below (hidden by default) | Advanced adds the forecast card (end balance, lowest point) |
 | UI-03 | Entry editor | Kind segmented control (Expense · Income · Transfer); amount with currency; category grid; title; date (today); account (hidden if only one); "More details": note, payee, icon, foreign amount | Advanced shows account, date, payee, currency directly |
 | UI-04 | Transactions | Search, filter chips (period, kind, account, category, review state), list grouped by date with day totals; entry detail with refund, duplicate, make recurring, delete (undo) | same |
 | UI-05 | Accounts | Balance per account in its currency, type icon, archived section, total per currency | same |
@@ -53,8 +56,9 @@ budget and the next due items. The category chart and the account list are Home 
 
 ## 5. Key flows
 
-* **Quick expense (UX-04, target ≈ 10 s):** + → amount (numeric keypad focused) → category tap → Save. Date today,
-  default account.
+* **Quick expense (UX-04, target ≈ 10 s):** Home "Expense" (or +) → amount (numeric keypad focused) → category tap →
+  Save. Date today, default account. A quick template on Home fills account, category, title and, if kept, the amount:
+  template → Save. The editor title names the kind ("New expense"), so the choice made on Home is visible.
 * **Salary and bill (§15.2):** Plans → + → Income "Salary", fixed, monthly → reminder 3 days before 09:00 → save;
   bill with estimated amount → at due date: confirm actual amount → choose whether future estimates change.
 * **Refund:** entry detail → "Refund" → amount (≤ refundable), receiving account, date → linked refund.
@@ -79,7 +83,9 @@ Approved design canvas: "Zanance Design" (foundations, eight screens, dark and E
 | Expenses | `AmountText` (neutral ink) | An expense is shown with "−" and its category icon, not in red, so real warnings stand out |
 
 Each meaning colour has a text, a background and a line variant (`…Text`, `…Background`, `…Line`): icon tiles and
-badges use all three. Category colours only colour category icons; in the dark theme dark category colours are
+badges use all three. Budget bars follow the same meanings (D-37): green within the limit, amber near it, red over it;
+goal bars are teal; the forecast path is violet. Blue never shows the state of money – on Home it marks the everyday
+action (Expense in quick add) next to income in green and transfer in slate. Category colours only colour category icons; in the dark theme dark category colours are
 lightened (`CategoryLookup.DisplayColor`).
 
 | Token | Value |
