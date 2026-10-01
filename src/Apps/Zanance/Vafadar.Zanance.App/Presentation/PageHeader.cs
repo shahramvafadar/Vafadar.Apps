@@ -37,6 +37,25 @@ internal sealed class PageHeader : Grid
         ToolTipProperties.SetText(back, Translator.Instance["Common_Back"]);
         back.Clicked += (_, _) => Shell.Current?.SendBackButtonPressed();
 
+        // WinUI gives a newly shown page's text box the focus and scrolls to it (Settings opened halfway down at the
+        // reminder days). The first time the page is shown, the back button takes the focus and the page starts at the
+        // top; coming back from a page opened from here keeps the position.
+        var shown = false;
+        back.Loaded += (_, _) =>
+        {
+            if (shown)
+            {
+                return;
+            }
+
+            shown = true;
+            back.Focus();
+            if (page is ContentPage { Content: ScrollView scroll })
+            {
+                back.Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(150), () => _ = scroll.ScrollToAsync(0, 0, animated: false));
+            }
+        };
+
         var title = new Label { VerticalOptions = LayoutOptions.Center, LineBreakMode = LineBreakMode.TailTruncation };
         if (Application.Current?.Resources.TryGetValue("PageTitle", out var style) == true && style is Style pageTitle)
         {

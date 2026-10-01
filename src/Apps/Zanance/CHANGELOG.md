@@ -75,7 +75,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - A "?" next to settings whose effect is not obvious explains them in full, with an example.
 - A clearer start: centred welcome with the symbol, a progress bar, an icon for every step, "Add your first account".
-- Windows: a visible back button next to the title of every page opened from another page.
+- Windows: a visible back button next to the title of every page opened from another page; such a page opens at the
+  top with the focus on that button (Settings no longer opens halfway down).
 - Light theme: the page background is a step darker and outlines are stronger, so cards stay visible.
 - The account icon is chosen with a real button that shows the current icon; "Include in totals" explains itself.
 - Rows in More work with the keyboard and screen readers; icons are no longer read aloud as odd characters.
