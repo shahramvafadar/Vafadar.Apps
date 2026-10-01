@@ -226,7 +226,7 @@ public sealed partial class EntryDetailViewModel(
             var refunds = await store.GetRefundsAsync(entry.Id);
             foreach (var refund in refunds)
             {
-                Refunds.Add(presenter.Row(refund) with { Subtitle = dates.Format(refund.Date, DateFormatStyle.Short) });
+                Refunds.Add(presenter.Row(refund) with { Subtitle = dates.Format(refund.Date, DateFormatStyle.Long) });
             }
 
             var refundable = EntryActions.Refundable(entry, refunds);

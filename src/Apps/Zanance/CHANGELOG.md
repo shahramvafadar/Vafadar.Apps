@@ -85,6 +85,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Whole-app review (D-40)
+
+- Reports: a positive result is green, a negative result and negative balances are red; the trend table has column
+  titles. Chart grid lines and axes are calm in the dark theme.
+- Dark theme: the "?" help buttons and the currency box are no longer white.
+- Entry details: the further actions (refund, duplicate, make recurring, rules, template) are one list with icons.
+- Quick templates in the editor show their category icon, like on Home; the move buttons of Customize Home are small.
+- Dates in refunds and goal history are written out ("Thursday, October 1, 2026").
+
 ### Changed – More, Settings and About (D-39)
 
 - More: every row says in one line what it holds; Settings and the new About Zanance are in their own group "App".

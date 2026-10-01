@@ -30,12 +30,12 @@ public sealed class HelpButton : Button
         BorderWidth = 1;
         VerticalOptions = LayoutOptions.Center;
         HorizontalOptions = LayoutOptions.Start;
-        TextColor = Color.FromArgb("#1D56C9");
-        BackgroundColor = Color.FromArgb("#EAF1FD");
-        BorderColor = Color.FromArgb("#C7D8F7");
-        SetDynamicResource(TextColorProperty, "Primary");
-        SetDynamicResource(BackgroundColorProperty, "PrimarySoft");
-        SetDynamicResource(BorderColorProperty, "PrimaryLine");
+
+        // A value set in code outranks a dynamic resource, so a fallback colour set here would hide the theme colours
+        // (the dark theme showed the light ones). The fallback is only for apps that do not define these resources.
+        Colour(TextColorProperty, "Primary", "#1D56C9");
+        Colour(BackgroundColorProperty, "PrimarySoft", "#EAF1FD");
+        Colour(BorderColorProperty, "PrimaryLine", "#C7D8F7");
         Clicked += async (_, _) => await ShowAsync(Topic);
 
         // The language can change while the page is shown (onboarding); the spoken name follows it.
@@ -45,6 +45,18 @@ public sealed class HelpButton : Button
             UpdateDescription();
         };
         Unloaded += (_, _) => Translator.Instance.PropertyChanged -= OnTranslatorChanged;
+    }
+
+    private void Colour(BindableProperty property, string key, string fallback)
+    {
+        if (Application.Current?.Resources.TryGetValue(key, out _) == true)
+        {
+            SetDynamicResource(property, key);
+        }
+        else
+        {
+            SetValue(property, Color.FromArgb(fallback));
+        }
     }
 
     private void OnTranslatorChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) =>

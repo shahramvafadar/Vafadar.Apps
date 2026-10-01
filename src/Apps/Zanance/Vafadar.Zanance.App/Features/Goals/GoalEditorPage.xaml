@@ -28,9 +28,11 @@
                         <Label Text="{v:Translate Goal_Target}" Style="{StaticResource FieldLabel}" />
                         <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" SemanticProperties.Description="{v:Translate Goal_Target}" />
-                            <inputs:SfComboBox Style="{StaticResource CurrencyBox}" Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
+                            <Border Style="{StaticResource FieldBox}" Grid.Column="1">
+                                <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
                                     IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
                                     SemanticProperties.Description="{v:Translate Account_Currency}" />
+                            </Border>
                         </Grid>
                         <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />

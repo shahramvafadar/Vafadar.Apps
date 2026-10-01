@@ -37,7 +37,9 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="0">
                     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
-                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}" SemanticProperties.Description="{v:Translate Account_Currency}" />
+                    <Border Style="{StaticResource FieldBox}">
+                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}" SemanticProperties.Description="{v:Translate Account_Currency}" />
+                    </Border>
                     <Label Text="{v:Translate Unit_Name}" Style="{StaticResource FieldLabel}" />
                     <Entry Text="{Binding Name}" MaxLength="20" SemanticProperties.Description="{v:Translate Unit_Name}" />
                     <Label Text="{v:Translate Unit_Factor}" Style="{StaticResource FieldLabel}" />

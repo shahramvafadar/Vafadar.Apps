@@ -19,6 +19,9 @@ public sealed record AccountChoice(Guid Id, string Name, string CurrencyCode)
     public override string ToString() => $"{Name} ({CurrencyCode})";
 }
 
+/// <summary>A quick template above a new entry, with the icon and colour of its category (TX-04).</summary>
+public sealed record TemplateChip(EntryTemplate Template, Symbol Icon, Color IconColor);
+
 /// <summary>A category tile in the entry editor.</summary>
 public sealed partial class CategoryChoice(Guid id, string name, Symbol icon, Color color) : ObservableObject
 {
@@ -333,6 +336,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? await _store.GetTemplatesAsync() : [];
                 HasTemplates = Templates.Count > 0;
 
+                // Shown like on Home: the category icon in its colour (slate for a transfer).
+                TemplateChips = [.. Templates.Select(t => t.Kind == EntryKind.Transfer
+                    ? new TemplateChip(t, Symbol.ArrowSwap, Presentation.Palette.TransferText)
+                    : new TemplateChip(t, Icons.Parse(t.Icon, _categories.Icon(t.CategoryId)), _categories.Color(t.CategoryId)))];
+
                 // A template chosen on Home fills the form at once (Home quick add).
                 if (Get(query, "template") is { } templateId && Templates.FirstOrDefault(t => t.Id == templateId) is { } chosen)
                 {
@@ -401,6 +409,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     [ObservableProperty]
     public partial IReadOnlyList<EntryTemplate> Templates { get; set; } = [];
+
+    [ObservableProperty]
+    public partial IReadOnlyList<TemplateChip> TemplateChips { get; set; } = [];
 
     [ObservableProperty]
     public partial bool HasTemplates { get; set; }

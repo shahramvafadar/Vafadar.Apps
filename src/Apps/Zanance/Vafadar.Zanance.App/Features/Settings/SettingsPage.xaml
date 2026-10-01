@@ -44,8 +44,10 @@
                         <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <v:HelpButton Topic="ReportCurrency" />
                     </HorizontalStackLayout>
-                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
+                    <Border Style="{StaticResource FieldBox}">
+                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
+                    </Border>
 
                     <HorizontalStackLayout Spacing="6">
                         <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />

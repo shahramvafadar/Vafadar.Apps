@@ -132,7 +132,7 @@ public sealed partial class GoalDetailViewModel(
             History.Add(new AllocationRow(
                 allocation.Id,
                 translator.Format(release ? "Goal_ReleasedFrom" : "Goal_SetAsideIn", names.GetValueOrDefault(allocation.AccountId, "?")),
-                dates.Format(allocation.Date, DateFormatStyle.Short),
+                dates.Format(allocation.Date, DateFormatStyle.Long),
                 MoneyText.Format(allocation.Amount, goal.CurrencyCode, localization.CurrentCulture, showPlus: true),
                 release ? Palette.SecondaryText : Palette.IncomeText));
         }

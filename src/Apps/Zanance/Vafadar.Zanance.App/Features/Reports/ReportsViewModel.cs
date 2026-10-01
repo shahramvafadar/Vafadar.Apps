@@ -21,13 +21,13 @@ namespace Vafadar.Zanance.App.Features.Reports;
 public sealed record CategoryReportRow(IReadOnlyCollection<Guid> CategoryIds, string Name, Color Color, string GrossText, string RefundsText, string NetText, Color NetColor, string DetailText);
 
 /// <summary>A labelled amount, e.g. one line of an account movement.</summary>
-public sealed record AmountLine(string Label, string Amount, bool IsTotal, bool IsNegative = false);
+public sealed record AmountLine(string Label, string Amount, bool IsTotal, bool IsNegative = false, bool IsPositive = false);
 
 /// <summary>An account with its movement lines.</summary>
 public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines);
 
 /// <summary>One month of the trend chart; amounts are major units for the chart axis.</summary>
-public sealed record TrendPoint(string Label, double Income, double Expense, string IncomeText, string ExpenseText, string ResultText);
+public sealed record TrendPoint(string Label, double Income, double Expense, string IncomeText, string ExpenseText, string ResultText, Color ResultColor);
 
 /// <summary>A plan with planned and recorded amounts.</summary>
 /// <summary>Spending of one tag.</summary>
@@ -373,7 +373,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 IncomeExpenseLines.Add(new AmountLine(_translator["Report_OfWhichRefunds"], MoneyText.Format(total.Refunds, total.CurrencyCode, culture), false));
             }
 
-            IncomeExpenseLines.Add(new AmountLine(_translator["Home_Result"], MoneyText.Format(total.Result, total.CurrencyCode, culture, showPlus: true), true));
+            // A result is a positive (green) or negative (red) outcome of the period (D-27).
+            IncomeExpenseLines.Add(new AmountLine(_translator["Home_Result"], MoneyText.Format(total.Result, total.CurrencyCode, culture, showPlus: true), true, total.Result < 0, total.Result > 0));
             if (total.NetIncome > 0)
             {
                 var rate = (double)total.Result / total.NetIncome;
@@ -396,7 +397,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 (double)MoneyText.ToDecimal(Math.Max(0, month.NetExpense), currency),
                 MoneyText.Format(month.NetIncome, _currency, culture),
                 MoneyText.Format(month.NetExpense, _currency, culture),
-                MoneyText.Format(month.Result, _currency, culture, showPlus: true)));
+                MoneyText.Format(month.Result, _currency, culture, showPlus: true),
+                month.Result < 0 ? EntryPresenter.DangerColor : month.Result > 0 ? EntryPresenter.IncomeColor : Palette.AmountText));
         }
     }
 
@@ -408,7 +410,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         {
             var account = accounts.First(a => a.Id == movement.AccountId);
             string Format(long value, bool plus = false) => MoneyText.Format(value, movement.CurrencyCode, culture, showPlus: plus);
-            var lines = new List<AmountLine> { new(_translator["Report_Opening"], Format(movement.Opening), true) };
+            var lines = new List<AmountLine> { new(_translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0) };
             void Add(string key, long value, bool negative = false)
             {
                 if (value != 0)
@@ -425,7 +427,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             Add("Report_TransfersIn", movement.TransfersIn);
             Add("Report_TransfersOut", movement.TransfersOut, negative: true);
             Add("Report_Adjustments", movement.Adjustments);
-            lines.Add(new AmountLine(_translator["Report_Closing"], Format(movement.Closing), true));
+            lines.Add(new AmountLine(_translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
             Accounts.Add(new AccountReport(account.Name, lines));
         }
     }

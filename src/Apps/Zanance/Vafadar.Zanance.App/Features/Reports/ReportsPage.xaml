@@ -108,6 +108,11 @@
                                             <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
                                                 <Setter Property="FontAttributes" Value="Bold" />
                                                 <Setter Property="FontSize" Value="17" />
+                                            </DataTrigger>                                            <DataTrigger TargetType="Label" Binding="{Binding IsPositive}" Value="True">
+                                                <Setter Property="TextColor" Value="{DynamicResource IncomeText}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
@@ -128,13 +133,41 @@
                 <Border Style="{StaticResource Card}">
                     <chart:SfCartesianChart HeightRequest="240" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Report_Trend}">
                         <chart:SfCartesianChart.Legend>
-                            <chart:ChartLegend />
+                            <chart:ChartLegend>
+                                <chart:ChartLegend.LabelStyle>
+                                    <chart:ChartLegendLabelStyle TextColor="{DynamicResource SecondaryText}" />
+                                </chart:ChartLegend.LabelStyle>
+                            </chart:ChartLegend>
                         </chart:SfCartesianChart.Legend>
                         <chart:SfCartesianChart.XAxes>
-                            <chart:CategoryAxis LabelRotation="0" LabelCreated="OnAxisLabelCreated" />
+                            <chart:CategoryAxis LabelRotation="0" LabelCreated="OnAxisLabelCreated">
+                                    <chart:CategoryAxis.MajorGridLineStyle>
+                                        <chart:ChartLineStyle Stroke="{DynamicResource DividerColor}" StrokeWidth="1" />
+                                    </chart:CategoryAxis.MajorGridLineStyle>
+                                    <chart:CategoryAxis.AxisLineStyle>
+                                        <chart:ChartLineStyle Stroke="{DynamicResource StrokeStrong}" StrokeWidth="1" />
+                                    </chart:CategoryAxis.AxisLineStyle>
+                                    <chart:CategoryAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle Stroke="{DynamicResource StrokeStrong}" />
+                                    </chart:CategoryAxis.MajorTickStyle>
+                                    <chart:CategoryAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle TextColor="{DynamicResource SecondaryText}" FontSize="11" />
+                                    </chart:CategoryAxis.LabelStyle>                                </chart:CategoryAxis>
                         </chart:SfCartesianChart.XAxes>
                         <chart:SfCartesianChart.YAxes>
-                            <chart:NumericalAxis LabelCreated="OnAxisLabelCreated" />
+                            <chart:NumericalAxis LabelCreated="OnAxisLabelCreated">
+                                    <chart:NumericalAxis.MajorGridLineStyle>
+                                        <chart:ChartLineStyle Stroke="{DynamicResource DividerColor}" StrokeWidth="1" />
+                                    </chart:NumericalAxis.MajorGridLineStyle>
+                                    <chart:NumericalAxis.AxisLineStyle>
+                                        <chart:ChartLineStyle Stroke="{DynamicResource StrokeStrong}" StrokeWidth="1" />
+                                    </chart:NumericalAxis.AxisLineStyle>
+                                    <chart:NumericalAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle Stroke="{DynamicResource StrokeStrong}" />
+                                    </chart:NumericalAxis.MajorTickStyle>
+                                    <chart:NumericalAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle TextColor="{DynamicResource SecondaryText}" FontSize="11" />
+                                    </chart:NumericalAxis.LabelStyle>                                </chart:NumericalAxis>
                         </chart:SfCartesianChart.YAxes>
                         <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Income" Fill="{DynamicResource IncomeText}"
                                             Label="{v:Translate KindFilter_Income}" />
@@ -143,6 +176,14 @@
                     </chart:SfCartesianChart>
                 </Border>
                 <Border Style="{StaticResource Card}" Padding="12">
+                    <VerticalStackLayout Spacing="0">
+                    <!-- Column titles, so the three amounts of a row read as income, expenses and result -->
+                    <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" Margin="0,0,0,4">
+                        <Label Text="{v:Translate Report_Month}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Grid.Column="1" Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Grid.Column="2" Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Grid.Column="3" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" FontSize="12" />
+                    </Grid>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trend}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:TrendPoint">
@@ -150,10 +191,11 @@
                                     <Label Text="{Binding Label}" VerticalOptions="Center" FontSize="13" />
                                     <Label Grid.Column="1" Text="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" VerticalOptions="Center" FontSize="13" />
                                     <Label Grid.Column="2" Text="{Binding ExpenseText}" VerticalOptions="Center" FontSize="13" />
-                                    <Label Grid.Column="3" Text="{Binding ResultText}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
+                                    <Label Grid.Column="3" Text="{Binding ResultText}" TextColor="{Binding ResultColor}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
                 <Label Text="{v:Translate Report_PartialHint}" Style="{StaticResource Secondary}" FontSize="12" />
@@ -175,6 +217,8 @@
                                                     <Label.Triggers>
                                                         <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
                                                             <Setter Property="FontAttributes" Value="Bold" />
+                                                        </DataTrigger>                                                        <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                            <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
                                                         </DataTrigger>
                                                     </Label.Triggers>
                                                 </Label>

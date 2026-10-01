@@ -26,9 +26,11 @@
                    SemanticProperties.Description="{v:Translate Account_Type}" />
 
     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
-    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
+    <Border Style="{StaticResource FieldBox}">
+        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
             IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
             SemanticProperties.Description="{v:Translate Account_Currency}" />
+    </Border>
     <Label Text="{v:Translate Account_CurrencyLocked}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}" />
 
     <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0"

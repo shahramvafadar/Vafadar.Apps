@@ -118,8 +118,10 @@
                                 <Label Text="{v:Translate Onb_CurrencyTitle}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
                                 <v:HelpButton Topic="ReportCurrency" Margin="0,-4,0,0" />
                             </HorizontalStackLayout>
-                            <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
+                            <Border Style="{StaticResource FieldBox}">
+                                <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                                     SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />
+                            </Border>
                             <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
                             <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
                                     SemanticProperties.Description="{v:Translate Settings_Calendar}" />

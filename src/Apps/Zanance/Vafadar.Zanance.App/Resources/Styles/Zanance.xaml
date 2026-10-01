@@ -36,6 +36,15 @@
     </Style>
 
     <!-- Currency selection: about 50 codes, so typing filters the list ("IR" finds IRR). -->
+    <!-- The outline of a field that draws none itself (the currency box): the strong outline of the palette. -->
+    <Style x:Key="FieldBox" TargetType="Border">
+        <Setter Property="Stroke" Value="{DynamicResource StrokeStrong}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="{OnPlatform WinUI='RoundRectangle 4', Default='RoundRectangle 10'}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
     <Style x:Key="CurrencyBox" TargetType="inputs:SfComboBox">
         <Setter Property="IsEditable" Value="True" />
         <Setter Property="IsFilteringEnabled" Value="True" />
@@ -45,7 +54,9 @@
         <Setter Property="MaxDropDownHeight" Value="280" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
-        <Setter Property="Stroke" Value="{DynamicResource DividerColor}" />
+        <!-- The control sets its own outline per state (almost white in the dark theme) and ignores a Stroke setter; it
+             is switched off and the box sits in a FieldBox border in the palette's outline colour instead (D-40). -->
+        <Setter Property="ShowBorder" Value="False" />
         <Setter Property="DropDownBackground" Value="{DynamicResource CardBackground}" />
         <Setter Property="DropDownItemTextColor" Value="{DynamicResource AmountText}" />
         <Setter Property="DropDownIconColor" Value="{DynamicResource SecondaryText}" />
@@ -199,6 +210,20 @@
         <Setter Property="CornerRadius" Value="14" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Text" Value="" />
+    </Style>
+
+    <!-- A small round icon button for moving a row up or down (Customize Home). -->
+    <Style x:Key="MoveButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
+        <Setter Property="BorderColor" Value="{DynamicResource PrimaryLine}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="MinimumWidthRequest" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
     <!-- Quick add on Home (D-37): an icon tile in the meaning colour above a short label. -->

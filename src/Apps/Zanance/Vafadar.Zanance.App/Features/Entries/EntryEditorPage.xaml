@@ -44,12 +44,21 @@
 
                 <!-- Quick templates (TX-04), new entries only -->
                 <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasTemplates}">
-                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Templates}">
+                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding TemplateChips}">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="ledger:EntryTemplate">
-                                <Button Text="{Binding Name}" Style="{StaticResource SecondaryButton}" Padding="14,0" HeightRequest="40" CornerRadius="20"
-                                        Command="{Binding ApplyTemplateCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
-                                        CommandParameter="{Binding .}" />
+                            <DataTemplate x:DataType="local:TemplateChip">
+                                <!-- The same pill as on Home: category icon and name -->
+                                <Grid>
+                                    <Border Style="{StaticResource TemplatePill}">
+                                        <HorizontalStackLayout Spacing="6">
+                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="16" ForegroundColor="{Binding IconColor}" VerticalOptions="Center" />
+                                            <Label Text="{Binding Template.Name}" FontSize="13.5" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                    <Button Style="{StaticResource OverlayButton}" CornerRadius="20"
+                                            Command="{Binding ApplyTemplateCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
+                                            CommandParameter="{Binding Template}" SemanticProperties.Description="{Binding Template.Name}" />
+                                </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </HorizontalStackLayout>
@@ -215,8 +224,10 @@
                                 <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
                                     <Entry Text="{Binding ForeignAmountText}" Keyboard="Numeric" Placeholder="0"
                                            SemanticProperties.Description="{v:Translate Entry_ForeignAmount}" />
-                                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" Grid.Column="1" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ForeignCurrency, Mode=TwoWay}"
+                                    <Border Style="{StaticResource FieldBox}" Grid.Column="1">
+                                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ForeignCurrency, Mode=TwoWay}"
                                             SemanticProperties.Description="{v:Translate Account_Currency}" />
+                                    </Border>
                                 </Grid>
                                 <Label Text="{v:Translate Entry_ForeignHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
                             </VerticalStackLayout>

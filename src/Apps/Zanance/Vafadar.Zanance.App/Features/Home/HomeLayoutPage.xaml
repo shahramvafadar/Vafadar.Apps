@@ -16,20 +16,20 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:HomeSectionRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,44,44,Auto" ColumnSpacing="4">
-                                <Label Text="{Binding Name}" FontSize="16" VerticalOptions="Center" />
-                                <Button Grid.Column="1" BackgroundColor="Transparent" Padding="8" IsVisible="{Binding CanMoveUp}"
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,44,44,Auto" ColumnSpacing="6">
+                                <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" VerticalOptions="Center" />
+                                <Button Grid.Column="1" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveUp}"
                                         Command="{Binding MoveUpCommand, Source={RelativeSource AncestorType={x:Type local:HomeLayoutViewModel}}, x:DataType=local:HomeLayoutViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{v:Translate HomeLayout_Up}">
                                     <Button.ImageSource>
-                                        <fi:SymbolImageSource Symbol="ArrowUp" Color="{DynamicResource Primary}" />
+                                        <fi:SymbolImageSource Symbol="ArrowUp" Size="18" Color="{DynamicResource Primary}" />
                                     </Button.ImageSource>
                                 </Button>
-                                <Button Grid.Column="2" BackgroundColor="Transparent" Padding="8" IsVisible="{Binding CanMoveDown}"
+                                <Button Grid.Column="2" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveDown}"
                                         Command="{Binding MoveDownCommand, Source={RelativeSource AncestorType={x:Type local:HomeLayoutViewModel}}, x:DataType=local:HomeLayoutViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{v:Translate HomeLayout_Down}">
                                     <Button.ImageSource>
-                                        <fi:SymbolImageSource Symbol="ArrowDown" Color="{DynamicResource Primary}" />
+                                        <fi:SymbolImageSource Symbol="ArrowDown" Size="18" Color="{DynamicResource Primary}" />
                                     </Button.ImageSource>
                                 </Button>
                                 <Switch Grid.Column="3" IsToggled="{Binding IsVisible}" OnColor="{DynamicResource Primary}" VerticalOptions="Center"
