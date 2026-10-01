@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PageBackground of the dark palette (Presentation/Palette.cs). -->
+    <color name="zanance_page">#0D1219</color>
+    <bool name="zanance_light_bars">false</bool>
+</resources>

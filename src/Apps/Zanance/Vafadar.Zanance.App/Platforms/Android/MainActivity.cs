@@ -21,6 +21,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
+        UpdateSystemBarIcons();
 
         // A recreated activity or a start from the recent apps delivers the old intent again; only a fresh tap counts.
         if (savedInstanceState is null && Intent is { } intent && !intent.Flags.HasFlag(ActivityFlags.LaunchedFromHistory))
@@ -53,6 +54,22 @@ public class MainActivity : MauiAppCompatActivity
         }
 
         QuickAddWidget.Refresh(this);
+        UpdateSystemBarIcons();
+    }
+
+    // The status and navigation bars show the page background (Resources/values/styles.xml), so their icons are dark
+    // in the light theme and light in the dark one. A theme chosen in the app arrives as a ui mode change.
+    private void UpdateSystemBarIcons()
+    {
+        if (Window is not { } window)
+        {
+            return;
+        }
+
+        var light = (Resources?.Configuration?.UiMode & Android.Content.Res.UiMode.NightMask) != Android.Content.Res.UiMode.NightYes;
+        var bars = AndroidX.Core.View.WindowCompat.GetInsetsController(window, window.DecorView);
+        bars.AppearanceLightStatusBars = light;
+        bars.AppearanceLightNavigationBars = light;
     }
 
     // A tap on the quick add widget (D-30) opens a new entry of that kind, after the app lock.

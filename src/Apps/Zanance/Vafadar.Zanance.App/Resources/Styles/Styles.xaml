@@ -20,8 +20,10 @@
         <Setter Property="StrokeThickness" Value="1" />
     </Style>
 
+    <!-- A BoxView without a color is a divider. Color, not BackgroundColor: transparent spacers and rounded dots keep no
+         grey rectangle behind them. -->
     <Style TargetType="BoxView">
-        <Setter Property="BackgroundColor" Value="{DynamicResource DividerColor}" />
+        <Setter Property="Color" Value="{DynamicResource DividerColor}" />
     </Style>
 
     <Style TargetType="Button">

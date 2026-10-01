@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The app's additions to the MAUI theme. Maui.MainTheme is the empty extension point of the MAUI theme
+  (its items are in Maui.MainTheme.Base), so redefining it keeps everything MAUI sets.
+-->
+<resources>
+    <style name="Maui.MainTheme" parent="Maui.MainTheme.Base">
+        <item name="tabStyle">@style/ZananceTabLayout</item>
+        <!-- The status bar shows the page background instead of the brand blue, with dark icons in the light theme. -->
+        <item name="android:statusBarColor">@color/zanance_page</item>
+        <item name="android:windowLightStatusBar">@bool/zanance_light_bars</item>
+    </style>
+
+    <!-- The bar behind the status bar and the page title; MAUI paints it in colorPrimary. -->
+    <style name="MauiAppBarLayout" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/zanance_page</item>
+    </style>
+
+    <!-- The top tabs of Insights (Budget, Reports, ...) in normal case, like every other title; Material writes them in capitals. -->
+    <style name="ZananceTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/ZananceTabText</item>
+    </style>
+
+    <style name="ZananceTabText" parent="TextAppearance.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+</resources>

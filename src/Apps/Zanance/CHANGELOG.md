@@ -80,6 +80,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The account icon is chosen with a real button that shows the current icon; "Include in totals" explains itself.
 - Rows in More work with the keyboard and screen readers; icons are no longer read aloud as odd characters.
 - Android: `eng/scripts/Build-AndroidApk.ps1` builds an APK that installs directly on a phone.
+- Android: the status bar shows the page background instead of the brand blue, with dark icons in the light theme,
+  and the Insights tabs are no longer written in capitals.
+- Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
 ### Added – Cloud backup (D-35)
 
