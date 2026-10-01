@@ -35,10 +35,6 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:GoalRow">
                                 <Border Style="{StaticResource Card}">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                                         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{DynamicResource SavingText}" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
@@ -50,6 +46,10 @@
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
+                                        <!-- The whole card is one real button: keyboard, screen readers and touch -->
+                                        <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
+                                                Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding FundedText}" />
                                     </Grid>
                                 </Border>
                         </DataTemplate>
@@ -61,10 +61,6 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:GoalRow">
                                 <Border Style="{StaticResource Card}">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                                         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="28" VerticalOptions="Start" ForegroundColor="{DynamicResource SavingText}" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
@@ -76,6 +72,10 @@
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
+                                        <!-- The whole card is one real button: keyboard, screen readers and touch -->
+                                        <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
+                                                Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding FundedText}" />
                                     </Grid>
                                 </Border>
                         </DataTemplate>

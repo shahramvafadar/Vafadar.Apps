@@ -12,10 +12,6 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="CategoryRow" x:DataType="local:CategoryItem">
             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:CategoriesViewModel}}, x:DataType=local:CategoriesViewModel}"
-                                          CommandParameter="{Binding .}" />
-                </Grid.GestureRecognizers>
                 <Border WidthRequest="36" HeightRequest="36" StrokeThickness="0" StrokeShape="RoundRectangle 18"
                         BackgroundColor="{Binding Background}" VerticalOptions="Center">
                     <Border.Triggers>
@@ -26,6 +22,10 @@
                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding Color}" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
                 <Label Grid.Column="1" Text="{Binding Name}" FontSize="16" VerticalOptions="Center" />
+                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                        Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:CategoriesViewModel}}, x:DataType=local:CategoriesViewModel}"
+                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" />
             </Grid>
         </DataTemplate>
     </ContentPage.Resources>

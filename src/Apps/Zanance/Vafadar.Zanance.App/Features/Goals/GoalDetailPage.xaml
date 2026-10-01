@@ -64,15 +64,15 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:AllocationRow">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding DeleteAllocationCommand, Source={RelativeSource AncestorType={x:Type local:GoalDetailViewModel}}, x:DataType=local:GoalDetailViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
                                     <VerticalStackLayout VerticalOptions="Center">
                                         <Label Text="{Binding Text}" />
                                         <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" />
                                     </VerticalStackLayout>
                                     <Label Grid.Column="1" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                    <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding DeleteAllocationCommand, Source={RelativeSource AncestorType={x:Type local:GoalDetailViewModel}}, x:DataType=local:GoalDetailViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Text}" SemanticProperties.Hint="{Binding AmountText}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

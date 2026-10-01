@@ -52,16 +52,16 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:RateRow">
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RatesViewModel}}, x:DataType=local:RatesViewModel}"
-                                                          CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Text}" FontSize="15" FlowDirection="LeftToRight" HorizontalOptions="Start" />
                                     <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="1" Text="{v:Translate Rates_EstimateBadge}" FontSize="12" Padding="6,1" VerticalOptions="Center"
                                        TextColor="{DynamicResource WarningText}" BackgroundColor="{DynamicResource WarningBackground}" IsVisible="{Binding IsEstimate}" />
+                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                        Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RatesViewModel}}, x:DataType=local:RatesViewModel}"
+                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Text}" SemanticProperties.Hint="{Binding DateText}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

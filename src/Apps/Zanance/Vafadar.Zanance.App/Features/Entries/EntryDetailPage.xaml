@@ -65,12 +65,12 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="p:EntryRow">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenRefundCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
                                     <Label Text="{Binding Subtitle}" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                    <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding OpenRefundCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Subtitle}" SemanticProperties.Hint="{Binding AmountText}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
@@ -95,10 +95,6 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:AttachmentRow">
                                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto,Auto">
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Grid.GestureRecognizers>
                                         <Grid WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
                                             <Image Source="{Binding Preview}" Aspect="AspectFill" IsVisible="{Binding HasPreview}" />
                                             <fi:SymbolIcon Symbol="Document" FontSize="28" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center"
@@ -108,6 +104,10 @@
                                             <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" />
                                             <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                         </VerticalStackLayout>
+                                        <!-- Preview and name open the file; Read and Delete stay their own buttons -->
+                                        <Button Grid.ColumnSpan="2" Margin="-16,-10,0,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Details}" />
                                         <Button Grid.Column="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
                                                 Command="{Binding ReadReceiptCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
                                                 CommandParameter="{Binding .}" />

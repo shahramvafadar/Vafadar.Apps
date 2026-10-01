@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
-<!-- Visual system of Zanance (docs/03-ux-design.md §6, D-27). Presentation/Palette.cs sets the light or dark colours at start
+<!-- Visual system of Zanance (docs/03-ux-design.md Â§6, D-27). Presentation/Palette.cs sets the light or dark colours at start
      and on every theme change, so colours are always used as DynamicResource. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -19,7 +19,7 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
     </Style>
 
-    <!-- Budget and goal progress (0–1): rounded bar on a visible track, filled in the reading direction. -->
+    <!-- Budget and goal progress (0â€“1): rounded bar on a visible track, filled in the reading direction. -->
     <Style TargetType="progress:SfLinearProgressBar">
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Maximum" Value="1" />
@@ -92,12 +92,18 @@
         <Setter Property="Margin" Value="4,16,4,2" />
     </Style>
 
-    <!-- The small action at the end of a section header ("All", "Details"). -->
-    <Style x:Key="SectionLink" TargetType="Label">
+    <!-- The small action at the end of a section header ("All", "Details"): a real button that reads like a link. -->
+    <Style x:Key="SectionLink" TargetType="Button">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
-        <Setter Property="VerticalOptions" Value="End" />
-        <Setter Property="Margin" Value="4,16,4,2" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="4,0" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="MinimumHeightRequest" Value="32" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,4" />
     </Style>
 
     <Style x:Key="RowTitle" TargetType="Label">
@@ -212,7 +218,7 @@
         <Setter Property="Text" Value="" />
     </Style>
 
-    <!-- A small round icon button for moving a row up or down (Customize Home). -->
+    <!-- A small round icon button: moving a row up or down (Customize Home), previous and next period. -->
     <Style x:Key="MoveButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
         <Setter Property="BorderColor" Value="{DynamicResource PrimaryLine}" />
@@ -229,12 +235,13 @@
     <!-- Quick add on Home (D-37): an icon tile in the meaning colour above a short label. -->
     <Style x:Key="QuickAction" TargetType="Grid">
         <Setter Property="RowSpacing" Value="6" />
-        <Setter Property="Padding" Value="4,6" />
+        <Setter Property="Padding" Value="0,6" />
         <Setter Property="MinimumHeightRequest" Value="72" />
     </Style>
 
+    <!-- 12.5: four labels fit a phone in every language (German "Umbuchung" was cut at 13). -->
     <Style x:Key="QuickActionLabel" TargetType="Label">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="12.5" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="MaxLines" Value="1" />

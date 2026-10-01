@@ -34,6 +34,10 @@ namespace Vafadar.Zanance.App;
 
 public static class MauiProgram
 {
+#if WINDOWS
+    private static bool _focusRingHooked;
+
+#endif
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -152,17 +156,27 @@ public static class MauiProgram
 #endif
 
 #if WINDOWS
-        // The keyboard focus ring in the action blue of the palette instead of black and white (D-40). WinUI 3 reads the
-        // ring colours of a control from the control itself, not from overridable app resources; a theme change rebuilds
-        // the screens, so each new control gets the current colours.
-        Microsoft.Maui.Handlers.ViewHandler.ViewMapper.AppendToMapping("ZananceFocusRing", (handler, _) =>
+        // The keyboard focus ring in the action blue of the palette instead of black and white (D-40, D-42). WinUI 3 reads
+        // the ring colours from the focused element itself, not from overridable app resources, so each element gets them
+        // the moment it receives focus – also the parts MAUI does not create, such as the tabs of the shell – in the
+        // colours of the current theme.
+        builder.ConfigureLifecycleEvents(events => events.AddWindows(windows => windows.OnWindowCreated(_ =>
         {
-            if (handler.PlatformView is Microsoft.UI.Xaml.FrameworkElement element)
+            if (_focusRingHooked)
             {
-                element.FocusVisualPrimaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.Primary);
-                element.FocusVisualSecondaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.CardBackground);
+                return;
             }
-        });
+
+            _focusRingHooked = true;
+            Microsoft.UI.Xaml.Input.FocusManager.GettingFocus += (_, args) =>
+            {
+                if (args.NewFocusedElement is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    element.FocusVisualPrimaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.Primary);
+                    element.FocusVisualSecondaryBrush = Microsoft.Maui.Platform.ColorExtensions.ToPlatform(Presentation.Palette.CardBackground);
+                }
+            };
+        })));
 #endif
 
         return builder.Build();

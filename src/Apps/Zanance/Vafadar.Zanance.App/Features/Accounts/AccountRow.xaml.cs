@@ -7,7 +7,7 @@ public partial class AccountRow : Grid
         InitializeComponent();
     }
 
-    private async void OnTapped(object? sender, TappedEventArgs e)
+    private async void OnTapped(object? sender, EventArgs e)
     {
         if (BindingContext is AccountItem item)
         {

@@ -17,11 +17,7 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Profiles}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:ProfileRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" SemanticProperties.Description="{Binding Name}">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ChooseCommand, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
-                                                          CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                                 <fi:SymbolIcon Symbol="Person" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                     <Label Text="{Binding Name}" FontSize="16" />
@@ -29,6 +25,10 @@
                                 </VerticalStackLayout>
                                 <fi:SymbolIcon Grid.Column="2" Symbol="Checkmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center"
                                                IsVisible="{Binding IsCurrent}" />
+                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                        Command="{Binding ChooseCommand, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
+                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Detail}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

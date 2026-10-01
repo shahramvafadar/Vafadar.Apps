@@ -125,16 +125,20 @@ lightened (`CategoryLookup.DisplayColor`).
   Plans and Settings offer "Turn on" later, which opens the system settings once the system no longer asks. Camera: only
   when the user chooses "Take a photo"; Android uses the camera app and needs no permission, iOS shows its dialog with
   our usage text and, after a refusal, offers the settings.
-* **Keyboard focus on Windows** (D-37, D-41): the focus ring is drawn in the action blue, set on each control in
-  `MauiProgram` (WinUI 3 does not take it from app resources), and follows the rounded corners of each control.
+* **Keyboard focus on Windows** (D-37, D-41, D-42): the focus ring is drawn in the action blue of the current theme,
+  set on each element as it receives focus (`MauiProgram`; WinUI 3 does not take it from app resources), so the tabs
+  of the shell get it too; it follows the rounded corners of each control.
 * **Wide windows** (D-41): wider than 720 px every page is a centred column of 720 px, so cards and lists read like
   on a large phone instead of stretching across a desktop window or a tablet in landscape.
 * **Getting started** (D-41): a new user sees three steps on Home (first expense, a regular payment, a monthly budget),
   ticked off as they are done; the card disappears when all are done or on *Hide*.
 * **Onboarding** (D-36): a centred column of at most 560 px with a progress bar, the symbol in a halo on the welcome
   step, an icon above every step title, fields in cards and full-width buttons; "Add your first account".
-* Rows that open a page are real buttons (keyboard, screen readers, touch feedback); icons are not in the
-  accessibility tree, their meaning is in the text next to them.
+* Everything that reacts to a tap is a real button (keyboard, screen readers, touch feedback), never a tap gesture
+  alone (D-42): list rows and cards that open a page carry a transparent `OverlayButton`; chips, swatches and the
+  previous/next period arrows (round `MoveButton`) are buttons too. Icons are not in the accessibility tree, their
+  meaning is in the text next to them.
+* Form errors appear next to their field, all at once, so one pass fixes the form (entry and plan editors).
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
   segmented control, so German and Persian labels never scroll or get cut off.
 * Categories in the entry editor are wrapping pills (icon + full name) rather than a fixed grid, so no name is

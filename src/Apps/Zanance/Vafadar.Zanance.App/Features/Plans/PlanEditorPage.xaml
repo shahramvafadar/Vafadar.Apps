@@ -50,6 +50,8 @@
                                    SemanticProperties.Description="{v:Translate Entry_Amount}" />
                             <Label Grid.Column="1" Text="{Binding CurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                         </Grid>
+                        <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" />
                         <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" SemanticProperties.Description="{v:Translate Entry_Account}" />
@@ -65,32 +67,33 @@
                 <!-- Category -->
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Entry_Category}" Style="{StaticResource Secondary}" Margin="4,0" />
+                        <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="entries:CategoryChoice">
-                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
-                                            StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44"
-                                            SemanticProperties.Description="{Binding Name}">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="{Binding Color}" />
-                                                <Setter Property="BackgroundColor" Value="{Binding Background}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:PlanEditorViewModel}}, x:DataType=local:PlanEditorViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <HorizontalStackLayout Spacing="8">
-                                            <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
-                                                    BackgroundColor="{Binding Background}" VerticalOptions="Center">
-                                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="18" ForegroundColor="{Binding Color}"
-                                                               HorizontalOptions="Center" VerticalOptions="Center" />
-                                            </Border>
-                                            <Label Text="{Binding Name}" FontSize="14" VerticalOptions="Center" />
-                                        </HorizontalStackLayout>
-                                    </Border>
+                                    <!-- A real button over the chip, as in the entry editor -->
+                                    <Grid Margin="0,0,8,8">
+                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
+                                                StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Stroke" Value="{Binding Color}" />
+                                                    <Setter Property="BackgroundColor" Value="{Binding Background}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <HorizontalStackLayout Spacing="8">
+                                                <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                                                        BackgroundColor="{Binding Background}" VerticalOptions="Center">
+                                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="18" ForegroundColor="{Binding Color}"
+                                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                                </Border>
+                                                <Label Text="{Binding Name}" FontSize="14" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                        <Button Style="{StaticResource OverlayButton}" CornerRadius="22"
+                                                Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:PlanEditorViewModel}}, x:DataType=local:PlanEditorViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </FlexLayout>

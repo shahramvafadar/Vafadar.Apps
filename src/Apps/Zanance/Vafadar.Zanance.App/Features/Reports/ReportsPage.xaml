@@ -17,19 +17,19 @@
             <!-- Period and report -->
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding ReportNames}" SelectedIndex="{Binding ReportIndex}" />
             <Grid ColumnDefinitions="48,*,48,Auto">
-                <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PreviousCommand}" />
-                    </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding PreviousIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
+                <Button Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding PreviousCommand}"
+                        SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
+                    <Button.ImageSource>
+                        <fi:SymbolImageSource Symbol="{Binding PreviousIcon}" Size="20" Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
                 <Label Grid.Column="1" Text="{Binding PeriodText}" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalOptions="Center" />
-                <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NextCommand}" />
-                    </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
+                <Button Grid.Column="2" Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding NextCommand}"
+                        SemanticProperties.Description="{v:Translate Budget_NextMonth}">
+                    <Button.ImageSource>
+                        <fi:SymbolImageSource Symbol="{Binding NextIcon}" Size="20" Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
                 <v:ChoiceChips Grid.Column="3" IsCompact="True" ItemsSource="{Binding PeriodKindNames}" SelectedIndex="{Binding PeriodKind}"
                                VerticalOptions="Center" />
             </Grid>
@@ -70,10 +70,11 @@
                 </Border>
 
                 <Border Style="{StaticResource Card}" IsVisible="{Binding RefundsText, Converter={StaticResource IsNotNullConverter}}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenExpensesCommand}" />
-                    </Border.GestureRecognizers>
-                    <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" />
+                    <Grid>
+                        <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" />
+                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenExpensesCommand}"
+                                SemanticProperties.Description="{Binding RefundsText}" />
+                    </Grid>
                 </Border>
 
                 <Border Style="{StaticResource Card}" Padding="12">
@@ -86,14 +87,14 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryReportRow">
                                     <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" Padding="0,6">
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding OpenCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Grid.GestureRecognizers>
                                         <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{Binding Color}" VerticalOptions="Center" />
                                         <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                         <Label Grid.Column="2" Text="{Binding NetText}" VerticalOptions="Center" FontAttributes="Bold" TextColor="{Binding NetColor}" />
                                         <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                        <Button Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                                Command="{Binding OpenCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding NetText}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -248,15 +249,15 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:TagReportRow">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenTagCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
                                     <VerticalStackLayout VerticalOptions="Center">
                                         <Label Text="{Binding Name}" FontSize="16" />
                                         <Label Text="{Binding Details}" Style="{StaticResource Secondary}" FontSize="12" />
                                     </VerticalStackLayout>
                                     <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                    <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding OpenTagCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding AmountText}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

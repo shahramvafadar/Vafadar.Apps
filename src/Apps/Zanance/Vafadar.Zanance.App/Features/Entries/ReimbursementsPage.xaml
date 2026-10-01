@@ -30,15 +30,15 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="p:EntryRow">
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:ReimbursementsViewModel}}, x:DataType=local:ReimbursementsViewModel}"
-                                                          CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Title}" FontSize="16" />
                                     <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" TextColor="{DynamicResource RefundText}" VerticalOptions="Center" />
+                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                        Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:ReimbursementsViewModel}}, x:DataType=local:ReimbursementsViewModel}"
+                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

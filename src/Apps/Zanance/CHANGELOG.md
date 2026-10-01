@@ -85,6 +85,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Keyboard and screen readers (D-42)
+
+- Everything you can tap is a real button: rows, cards, category pills, colour and icon choices and the "All" links can be
+  reached with the Tab key on Windows and are announced as buttons by screen readers.
+- Budget and Reports: the previous and next month are round buttons instead of bare arrows.
+- Windows: the focus ring is blue on the tabs too, and follows the light or dark theme.
+- The plan editor shows a missing amount next to the field at the same time as a missing name.
+- Home quick add: "Umbuchung" (German) is no longer cut off.
+
 ### Changed – Wide windows and the first days (D-41)
 
 - Windows and tablets: in a wide window every page is a centred, readable column instead of cards across the screen.

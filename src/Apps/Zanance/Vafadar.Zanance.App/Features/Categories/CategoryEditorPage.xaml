@@ -51,45 +51,47 @@
 
                 <Border Style="{StaticResource Card}" Padding="12">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Category_Color}" Style="{StaticResource Secondary}" Margin="4,0" />
+                        <Label Text="{v:Translate Category_Color}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Palette}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:Swatch">
-                                    <Border WidthRequest="44" HeightRequest="44" Margin="3" StrokeShape="RoundRectangle 22" StrokeThickness="3"
-                                            Stroke="Transparent" BackgroundColor="{Binding Color}" SemanticProperties.Description="{Binding Description}">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="{DynamicResource AmountText}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding SelectColorCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                    </Border>
+                                    <!-- Real buttons over the swatches and icons: reachable with the keyboard -->
+                                    <Grid Margin="3">
+                                        <Border WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="3"
+                                                Stroke="Transparent" BackgroundColor="{Binding Color}">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Stroke" Value="{DynamicResource AmountText}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                        </Border>
+                                        <Button Style="{StaticResource OverlayButton}" CornerRadius="22"
+                                                Command="{Binding SelectColorCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </FlexLayout>
 
-                        <Label Text="{v:Translate Category_Icon}" Style="{StaticResource Secondary}" Margin="4,8,4,0" />
+                        <Label Text="{v:Translate Category_Icon}" Style="{StaticResource FieldLabel}" Margin="4,8,4,0" />
                         <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Icons}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:Swatch">
-                                    <Border WidthRequest="48" HeightRequest="48" Margin="2" StrokeShape="RoundRectangle 12" StrokeThickness="2"
-                                            Stroke="Transparent" SemanticProperties.Description="{Binding Description}">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
-                                                <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding SelectIconCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"
-                                                       ForegroundColor="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
-                                    </Border>
+                                    <Grid Margin="2">
+                                        <Border WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="Transparent">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Stroke" Value="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"
+                                                           ForegroundColor="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
+                                        </Border>
+                                        <Button Style="{StaticResource OverlayButton}" CornerRadius="12"
+                                                Command="{Binding SelectIconCommand, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </FlexLayout>

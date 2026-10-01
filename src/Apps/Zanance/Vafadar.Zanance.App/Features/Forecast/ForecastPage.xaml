@@ -93,10 +93,6 @@
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="local:ForecastRow">
                                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Opacity="{Binding Opacity}">
-                                                <Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding OpenItemCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}"
-                                                                          CommandParameter="{Binding .}" />
-                                                </Grid.GestureRecognizers>
                                                 <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                                     <Label Text="{Binding Name}" />
@@ -104,6 +100,10 @@
                                                            IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}" />
                                                 </VerticalStackLayout>
                                                 <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                        Command="{Binding OpenItemCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}"
+                                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding DateText}" />
                                             </Grid>
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>

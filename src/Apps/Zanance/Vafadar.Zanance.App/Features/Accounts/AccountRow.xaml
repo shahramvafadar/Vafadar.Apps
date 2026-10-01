@@ -12,9 +12,6 @@
     Style="{StaticResource ListRow}"
     ColumnDefinitions="Auto,*,Auto">
 
-    <Grid.GestureRecognizers>
-        <TapGestureRecognizer Tapped="OnTapped" />
-    </Grid.GestureRecognizers>
 
     <Border Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding TileText}" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -34,4 +31,7 @@
             </DataTrigger>
         </Label.Triggers>
     </Label>
+    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+    <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Clicked="OnTapped"
+            SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding BalanceText}" />
 </Grid>

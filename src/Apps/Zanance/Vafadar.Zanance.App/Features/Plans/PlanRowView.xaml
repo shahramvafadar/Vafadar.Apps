@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- One occurrence or plan: a date tile for due items (violet, red when overdue, green for income) or the plan's icon,
-     the name, and the amount with its status badge (D-27). The page adds the tap. -->
+     the name, and the amount with its status badge (D-27). The page sets Command for the tap. -->
 <ContentView
     x:Class="Vafadar.Zanance.App.Features.Plans.PlanRowView"
+    x:Name="Root"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
@@ -29,5 +30,10 @@
                 <Label Text="{Binding Badge}" Style="{StaticResource BadgeText}" TextColor="{Binding BadgeText}" />
             </Border>
         </VerticalStackLayout>
+        <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                Command="{Binding Command, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
+                CommandParameter="{Binding CommandParameter, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
+                IsVisible="{Binding Command, Source={x:Reference Root}, Converter={StaticResource IsNotNullConverter}, x:DataType=local:PlanRowView}"
+                SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Subtitle}" />
     </Grid>
 </ContentView>

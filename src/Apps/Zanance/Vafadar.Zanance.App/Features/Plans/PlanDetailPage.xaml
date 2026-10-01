@@ -12,15 +12,15 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="OccurrenceTemplate" x:DataType="local:OccurrenceRow">
             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:PlanDetailViewModel}}, x:DataType=local:PlanDetailViewModel}"
-                                          CommandParameter="{Binding .}" />
-                </Grid.GestureRecognizers>
                 <VerticalStackLayout VerticalOptions="Center" Spacing="2">
                     <Label Text="{Binding DateText}" FontSize="15" />
                     <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
                 </VerticalStackLayout>
                 <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                        Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:PlanDetailViewModel}}, x:DataType=local:PlanDetailViewModel}"
+                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding DateText}" SemanticProperties.Hint="{Binding StatusText}" />
             </Grid>
         </DataTemplate>
     </ContentPage.Resources>

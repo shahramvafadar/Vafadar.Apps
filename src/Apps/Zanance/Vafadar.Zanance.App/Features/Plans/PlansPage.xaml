@@ -39,12 +39,8 @@
                 <DataTemplate x:DataType="local:PlanRow">
                     <Grid Padding="16,0,16,8">
                     <Border Style="{StaticResource Card}" Padding="0">
-                        <local:PlanRowView>
-                            <local:PlanRowView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:PlansViewModel}}, x:DataType=local:PlansViewModel}"
-                                                      CommandParameter="{Binding .}" />
-                            </local:PlanRowView.GestureRecognizers>
-                        </local:PlanRowView>
+                        <local:PlanRowView Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:PlansViewModel}}, x:DataType=local:PlansViewModel}"
+                                           CommandParameter="{Binding .}" />
                     </Border>
                     </Grid>
                 </DataTemplate>

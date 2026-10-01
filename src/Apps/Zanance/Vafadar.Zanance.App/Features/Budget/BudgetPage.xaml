@@ -45,24 +45,24 @@
 
             <!-- Period -->
             <Grid ColumnDefinitions="48,*,48">
-                <Border StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{Binding PreviousLabel}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PreviousCommand}" />
-                    </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding PreviousIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
+                <Button Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding PreviousCommand}"
+                        SemanticProperties.Description="{Binding PreviousLabel}">
+                    <Button.ImageSource>
+                        <fi:SymbolImageSource Symbol="{Binding PreviousIcon}" Size="20" Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding PeriodText}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                     <Label Text="{Binding CurrencyText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
                     <Label Text="{Binding ScopeText}" TextColor="{DynamicResource WarningText}" FontSize="13" HorizontalTextAlignment="Center"
                            IsVisible="{Binding ScopeText, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
-                <Border Grid.Column="2" StrokeThickness="0" BackgroundColor="Transparent" HeightRequest="48" SemanticProperties.Description="{Binding NextLabel}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NextCommand}" />
-                    </Border.GestureRecognizers>
-                    <fi:SymbolIcon Symbol="{Binding NextIcon}" FontSize="22" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
+                <Button Grid.Column="2" Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding NextCommand}"
+                        SemanticProperties.Description="{Binding NextLabel}">
+                    <Button.ImageSource>
+                        <fi:SymbolImageSource Symbol="{Binding NextIcon}" Size="20" Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
             </Grid>
 
             <!-- No budget is not a zero budget (BUD-01) -->

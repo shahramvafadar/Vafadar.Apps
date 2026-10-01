@@ -96,33 +96,35 @@
                             <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" BackgroundColor="Transparent"
                                     TextColor="{DynamicResource Primary}" Padding="8,0" />
                         </Grid>
-                        <Label Text="{v:Translate Entry_Category}" Style="{StaticResource Secondary}" Margin="4,0" />
+                        <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout Wrap="Wrap" JustifyContent="Start" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryChoice">
-                                    <Border Padding="4,4,14,4" Margin="0,0,8,8" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
-                                            StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44"
-                                            SemanticProperties.Description="{Binding Name}">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="{Binding Color}" />
-                                                <Setter Property="BackgroundColor" Value="{Binding Background}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
-                                                                  CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <HorizontalStackLayout Spacing="8">
-                                            <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
-                                                    BackgroundColor="{Binding Background}" VerticalOptions="Center">
-                                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="18" ForegroundColor="{Binding Color}"
-                                                               HorizontalOptions="Center" VerticalOptions="Center" />
-                                            </Border>
-                                            <Label Text="{Binding Name}" FontSize="14" VerticalOptions="Center" />
-                                        </HorizontalStackLayout>
-                                    </Border>
-                                </DataTemplate>                            </BindableLayout.ItemTemplate>
+                                    <!-- A real button over the chip: reachable with the keyboard and announced as a button -->
+                                    <Grid Margin="0,0,8,8">
+                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
+                                                StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Stroke" Value="{Binding Color}" />
+                                                    <Setter Property="BackgroundColor" Value="{Binding Background}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <HorizontalStackLayout Spacing="8">
+                                                <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                                                        BackgroundColor="{Binding Background}" VerticalOptions="Center">
+                                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="18" ForegroundColor="{Binding Color}"
+                                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                                </Border>
+                                                <Label Text="{Binding Name}" FontSize="14" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                        <Button Style="{StaticResource OverlayButton}" CornerRadius="22"
+                                                Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
                         </FlexLayout>
                     </VerticalStackLayout>
                 </Border>

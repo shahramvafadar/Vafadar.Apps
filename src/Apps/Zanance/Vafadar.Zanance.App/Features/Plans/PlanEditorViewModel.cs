@@ -181,6 +181,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     public partial string? NameError { get; set; }
 
     [ObservableProperty]
+    public partial string? AmountError { get; set; }
+
+    [ObservableProperty]
     public partial int AmountModeIndex { get; set; }
 
     [ObservableProperty]
@@ -685,24 +688,28 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         }
 
         SaveError = null;
+        var culture = _localization.CurrentCulture;
+
+        // Every field problem at once, next to its field, so one pass fixes the form.
         NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Plan_NameRequired"] : null;
-        if (NameError is not null || Account is null)
+        AmountError = null;
+        long? amount = null;
+        if (ShowAmount && Account is not null)
+        {
+            if (MoneyText.TryParse(AmountText, Currencies.Get(Account.CurrencyCode), culture, out var parsed) && parsed > 0)
+            {
+                amount = parsed;
+            }
+            else
+            {
+                AmountError = _translator["LedgerError_AmountMustBePositive"];
+            }
+        }
+
+        if (NameError is not null || AmountError is not null || Account is null)
         {
             SaveError ??= Account is null ? _translator["Entry_NoAccounts"] : null;
             return;
-        }
-
-        var culture = _localization.CurrentCulture;
-        long? amount = null;
-        if (ShowAmount)
-        {
-            if (!MoneyText.TryParse(AmountText, Currencies.Get(Account.CurrencyCode), culture, out var parsed) || parsed <= 0)
-            {
-                SaveError = _translator["LedgerError_AmountMustBePositive"];
-                return;
-            }
-
-            amount = parsed;
         }
 
         long? toAmount = null;

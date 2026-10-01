@@ -61,13 +61,13 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:LocalBackup">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
                                     <fi:SymbolIcon Symbol="Archive" FontSize="22" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" />
                                     <Label Grid.Column="2" Text="{Binding Details}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                    <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Details}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
@@ -121,14 +121,14 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding CloudBackups}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:CloudBackup">
-                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" SemanticProperties.Description="{Binding Title}">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenCloudCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
                                     <fi:SymbolIcon Symbol="CloudArrowDown" FontSize="22" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" />
                                     <Label Grid.Column="2" Text="{Binding Details}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                    <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding OpenCloudCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Details}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
