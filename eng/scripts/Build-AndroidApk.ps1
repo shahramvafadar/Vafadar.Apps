@@ -34,6 +34,12 @@ if ($LASTEXITCODE -ne 0) {
     throw "The build failed ($LASTEXITCODE). The errors are listed above."
 }
 
+# CI treats warnings as errors; list them so they are fixed before pushing.
+$warnings = $log | Select-String -Pattern ': warning ' | Select-Object -ExpandProperty Line -Unique
+if ($warnings) {
+    $warnings | Write-Warning
+}
+
 $apk = Get-ChildItem $Output -Filter '*-Signed.apk' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 "APK: $($apk.FullName) ($([math]::Round($apk.Length / 1MB, 1)) MB)"
 'Copy it to the phone and open it there (allow installing from this source once), or: adb install -r "<path>"'
