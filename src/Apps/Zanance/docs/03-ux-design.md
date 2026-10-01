@@ -16,9 +16,10 @@ More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templat
 ```
 
 Home (D-37) starts with the recorded balance and a quick add card – Expense, Income and Transfer, each opening the
-editor with that kind, plus up to six quick templates – so the first screen answers "where do I stand?" and "add an
-expense" without scrolling. Then what needs attention, income and expenses of the period (with the period chips this
-month / last month), the forecast (Advanced), the budget with what is left per day, and the next due items. The
+editor with that kind, Receipt (a photo or PDF read on the device into a new expense, attached when it is saved), plus
+up to six quick templates – so the first screen answers "where do I stand?" and "add an expense" without scrolling.
+Then what needs attention, income and expenses of the period (with the period chips this month / last month), the
+forecast (Advanced), the budget with what is left per day, the next due items and the three latest entries. The
 category chart and the account list are Home sections that start hidden (§21.5 layout), because Insights and Accounts
 show them in full.
 
@@ -27,7 +28,7 @@ show them in full.
 | ID | Screen | Content | Simple / Advanced |
 |---|---|---|---|
 | UI-01 | Onboarding (3 steps) | 1 language · 2 report currency + calendar suggestion · 3 first account (name, type, opening balance, date) | same |
-| UI-02 | Home | Recorded balance card (with "includes N unreviewed"); quick add (Expense · Income · Transfer, quick templates); needs attention; income/expense of the period with period chips and scope (period, accounts, currency); budget remaining and per day; next due items; expense donut below (hidden by default) | Advanced adds the forecast card (end balance, lowest point) |
+| UI-02 | Home | Recorded balance card (with "includes N unreviewed"); quick add (Expense · Income · Transfer · Receipt, quick templates); needs attention; income/expense of the period with period chips and scope (period, accounts, currency); budget remaining and per day; next due items; recent entries; expense donut below (hidden by default) | Advanced adds the forecast card (end balance, lowest point) |
 | UI-03 | Entry editor | Kind segmented control (Expense · Income · Transfer); amount with currency; category grid; title; date (today); account (hidden if only one); "More details": note, payee, icon, foreign amount | Advanced shows account, date, payee, currency directly |
 | UI-04 | Transactions | Search, filter chips (period, kind, account, category, review state), list grouped by date with day totals; entry detail with refund, duplicate, make recurring, delete (undo) | same |
 | UI-05 | Accounts | Balance per account in its currency, type icon, archived section, total per currency | same |
@@ -59,6 +60,9 @@ show them in full.
 * **Quick expense (UX-04, target ≈ 10 s):** Home "Expense" (or +) → amount (numeric keypad focused) → category tap →
   Save. Date today, default account. A quick template on Home fills account, category, title and, if kept, the amount:
   template → Save. The editor title names the kind ("New expense"), so the choice made on Home is visible.
+* **Expense from a receipt (D-31, D-33, D-37):** Home "Receipt" → pick a photo or PDF (system picker, no storage
+  permission) → read on the device → the editor opens with amount, date and shop to check → category → Save; the file
+  becomes the entry's attachment only then. If nothing can be read, the editor still opens with the file.
 * **Salary and bill (§15.2):** Plans → + → Income "Salary", fixed, monthly → reminder 3 days before 09:00 → save;
   bill with estimated amount → at due date: confirm actual amount → choose whether future estimates change.
 * **Refund:** entry detail → "Refund" → amount (≤ refundable), receiving account, date → linked refund.
@@ -113,6 +117,8 @@ lightened (`CategoryLookup.DisplayColor`).
   amounts, spending type, budget method, rollover, budget period and two-week start, backup password, goal priority.
 * **Back on Windows** (D-36): a page opened from another one shows a round back button before its title
   (`PageHeader`); the window's own arrow is small and easy to miss. Android keeps its toolbar arrow.
+* **Keyboard focus on Windows** (D-37): the focus ring is drawn in the action blue (`SystemControlFocusVisual*Brush`
+  in `Platforms/Windows/App.xaml`, light and dark) and follows the rounded corners of each control.
 * **Onboarding** (D-36): a centred column of at most 560 px with a progress bar, the symbol in a halo on the welcome
   step, an icon above every step title, fields in cards and full-width buttons; "Add your first account".
 * Rows that open a page are real buttons (keyboard, screen readers, touch feedback); icons are not in the

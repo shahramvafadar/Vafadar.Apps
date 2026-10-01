@@ -77,6 +77,12 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasQuickTemplates { get; set; }
 
+    /// <summary>Gets the latest recorded entries (D-37), newest first, dated today at the latest.</summary>
+    public ObservableCollection<EntryRow> RecentEntries { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasRecent { get; set; }
+
     [ObservableProperty]
     public partial string? ForecastEndText { get; set; }
 
@@ -294,6 +300,20 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         HasQuickTemplates = QuickTemplates.Count > 0;
+
+        // The last entries show at a glance what was recorded and that a quick add worked.
+        var presenter = new EntryPresenter(byId, categories, _translator, culture);
+        RecentEntries.Clear();
+        foreach (var entry in entries.Where(e => e.Date <= today).OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt).Take(3))
+        {
+            var row = presenter.Row(entry);
+            var day = entry.Date == today ? _translator["Common_Today"]
+                : entry.Date == today.AddDays(-1) ? _translator["Home_Yesterday"]
+                : _dates.Format(entry.Date, DateFormatStyle.DayMonth);
+            RecentEntries.Add(row with { Subtitle = $"{day} · {row.Subtitle}" });
+        }
+
+        HasRecent = RecentEntries.Count > 0;
 
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
@@ -534,6 +554,91 @@ public sealed partial class HomeViewModel : ViewModelBase
     [RelayCommand]
     private Task UseTemplateAsync(QuickTemplate template) =>
         Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["template"] = template.Id });
+
+    [RelayCommand]
+    private Task OpenEntryAsync(EntryRow row) =>
+        Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+
+    [RelayCommand]
+    private Task OpenTransactionsAsync() => Shell.Current.GoToAsync("//transactions");
+
+    // A receipt photo or PDF read on the device (D-31, D-33) opens a new expense with the values found; the file is
+    // attached when the entry is saved, and nothing is stored before (D-37).
+    [RelayCommand]
+    private async Task ReadReceiptAsync()
+    {
+        if (!HasAccounts)
+        {
+            await Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
+            return;
+        }
+
+        if (IsBusy)
+        {
+            return;
+        }
+
+        PendingAttachment pending;
+        Core.Receipts.ReceiptSuggestion receipt;
+        try
+        {
+            if (await AttachmentFiles.PickAsync(_translator["Attachment_Pick"]) is not { } picked)
+            {
+                return;
+            }
+
+            if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
+            {
+                await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"],
+                    _translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], _translator["Common_Ok"]);
+                return;
+            }
+
+            pending = new PendingAttachment(picked.Name, picked.ContentType, picked.Data);
+            IsBusy = true;
+            try
+            {
+                receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType));
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        catch (InvalidDataException)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"], _translator["Attachment_PhotoFailed"], _translator["Common_Ok"]);
+            return;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"], _translator["Attachment_Failed"], _translator["Common_Ok"]);
+            return;
+        }
+
+        if (receipt.IsEmpty)
+        {
+            await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_NothingNew"], _translator["Common_Ok"]);
+        }
+
+        var query = new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Expense), ["receiptFile"] = pending };
+        if (receipt.Amount is { } amount)
+        {
+            query["receiptAmount"] = amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        if (receipt.Date is { } date)
+        {
+            query["receiptDate"] = date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        if (receipt.Merchant is { } merchant)
+        {
+            query["receiptPayee"] = merchant;
+        }
+
+        await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+    }
 
     [RelayCommand]
     private Task OpenUnreviewedAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });

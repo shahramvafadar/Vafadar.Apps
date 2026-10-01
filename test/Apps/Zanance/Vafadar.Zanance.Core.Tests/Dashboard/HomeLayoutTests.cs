@@ -9,8 +9,15 @@ public sealed class HomeLayoutTests
     {
         var layout = HomeLayout.Parse(null);
         Assert.Equal(Enum.GetValues<HomeSection>(), layout.Sections.Select(s => s.Section));
-        Assert.Equal("Period,Forecast,Budget,Upcoming,-Categories,-Accounts", layout.ToString());
+        Assert.Equal("Period,Forecast,Budget,Upcoming,Recent,-Categories,-Accounts", layout.ToString());
         Assert.False(layout.IsCustomized);
+    }
+
+    [Fact]
+    public void A_layout_saved_before_the_recent_entries_existed_shows_them_at_the_end()
+    {
+        var layout = HomeLayout.Parse("Budget,Period,Forecast,Upcoming,-Categories,-Accounts");
+        Assert.Equal("Budget,Period,Forecast,Upcoming,-Categories,-Accounts,Recent", layout.ToString());
     }
 
     [Fact]
@@ -21,21 +28,21 @@ public sealed class HomeLayoutTests
         layout.SetVisible(HomeSection.Forecast, false);
         layout.Move(HomeSection.Period, -1);
 
-        Assert.Equal("Period,-Accounts,-Forecast,Budget,Upcoming,-Categories", layout.ToString());
+        Assert.Equal("Period,-Accounts,-Forecast,Budget,Upcoming,Recent,-Categories", layout.ToString());
         Assert.True(layout.IsCustomized);
         Assert.Equal(layout.ToString(), HomeLayout.Parse(layout.ToString()).ToString());
 
         // Moves past either end change nothing.
         layout.Move(HomeSection.Period, -1);
         layout.Move(HomeSection.Categories, 1);
-        Assert.Equal("Period,-Accounts,-Forecast,Budget,Upcoming,-Categories", layout.ToString());
+        Assert.Equal("Period,-Accounts,-Forecast,Budget,Upcoming,Recent,-Categories", layout.ToString());
     }
 
     [Fact]
     public void Unknown_and_duplicate_names_are_ignored_and_missing_sections_are_added()
     {
         var layout = HomeLayout.Parse("Budget, -Budget, Widgets, -Accounts");
-        Assert.Equal("Budget,-Accounts,Period,Forecast,Upcoming,-Categories", layout.ToString());
+        Assert.Equal("Budget,-Accounts,Period,Forecast,Upcoming,Recent,-Categories", layout.ToString());
     }
 
     [Fact]

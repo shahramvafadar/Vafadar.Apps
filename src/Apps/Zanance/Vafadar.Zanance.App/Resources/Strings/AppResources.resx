@@ -2493,7 +2493,7 @@
     <value>Customize Home</value>
   </data>
   <data name="HomeLayout_Intro" xml:space="preserve">
-    <value>Choose which sections Home shows and in which order. The balance and items that need attention always stay on top.</value>
+    <value>Choose which sections Home shows and in which order. The balance, quick add and items that need attention always stay on top.</value>
   </data>
   <data name="HomeLayout_Up" xml:space="preserve">
     <value>Move up</value>
@@ -3073,5 +3073,26 @@
   </data>
   <data name="Entry_NewTransfer" xml:space="preserve">
     <value>New transfer</value>
+  </data>
+  <data name="HomeSection_Recent" xml:space="preserve">
+    <value>Recent entries</value>
+  </data>
+  <data name="Home_Recent" xml:space="preserve">
+    <value>Recent entries</value>
+  </data>
+  <data name="Home_Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="Home_ReadReceipt" xml:space="preserve">
+    <value>Read a receipt photo or PDF</value>
+  </data>
+  <data name="Receipt_WillAttach" xml:space="preserve">
+    <value>The receipt is attached to the entry when you save.</value>
+  </data>
+  <data name="Receipt_NothingNew" xml:space="preserve">
+    <value>No amount, date or shop could be read from this receipt. Enter them yourself; the receipt is attached when you save.</value>
+  </data>
+  <data name="Receipt_AttachFailed" xml:space="preserve">
+    <value>The entry was saved, but the receipt could not be attached. You can attach it in the entry's details.</value>
   </data>
 </root>

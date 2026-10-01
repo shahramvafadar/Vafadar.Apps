@@ -5,4 +5,20 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:Vafadar.Zanance.App.WinUI">
 
+    <!-- The keyboard focus ring in the action blue of the palette (Presentation/Palette.cs, D-37) instead of the system's
+         black and white; it keeps the rounded corners of each control. -->
+    <maui:MauiWinUIApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="SystemControlFocusVisualPrimaryBrush" Color="#1D56C9" />
+                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#FFFFFF" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SystemControlFocusVisualPrimaryBrush" Color="#79A6FF" />
+                    <SolidColorBrush x:Key="SystemControlFocusVisualSecondaryBrush" Color="#151B24" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </maui:MauiWinUIApplication.Resources>
 </maui:MauiWinUIApplication>

@@ -2489,7 +2489,7 @@
     <value>تنظیم چیدمان خانه</value>
   </data>
   <data name="HomeLayout_Intro" xml:space="preserve">
-    <value>انتخاب کنید صفحهٔ خانه کدام بخش‌ها را و به چه ترتیبی نشان دهد. موجودی و مواردی که نیاز به اقدام دارند همیشه بالای صفحه می‌مانند.</value>
+    <value>انتخاب کنید صفحهٔ خانه کدام بخش‌ها را و به چه ترتیبی نشان دهد. موجودی، ثبت سریع و مواردی که نیاز به اقدام دارند همیشه بالای صفحه می‌مانند.</value>
   </data>
   <data name="HomeLayout_Up" xml:space="preserve">
     <value>بالاتر</value>
@@ -3069,5 +3069,26 @@
   </data>
   <data name="Entry_NewTransfer" xml:space="preserve">
     <value>انتقال جدید</value>
+  </data>
+  <data name="HomeSection_Recent" xml:space="preserve">
+    <value>تراکنش‌های اخیر</value>
+  </data>
+  <data name="Home_Recent" xml:space="preserve">
+    <value>تراکنش‌های اخیر</value>
+  </data>
+  <data name="Home_Yesterday" xml:space="preserve">
+    <value>دیروز</value>
+  </data>
+  <data name="Home_ReadReceipt" xml:space="preserve">
+    <value>خواندن عکس یا PDF رسید</value>
+  </data>
+  <data name="Receipt_WillAttach" xml:space="preserve">
+    <value>رسید هنگام ذخیره به تراکنش پیوست می‌شود.</value>
+  </data>
+  <data name="Receipt_NothingNew" xml:space="preserve">
+    <value>از این رسید مبلغ، تاریخ یا فروشگاهی خوانده نشد. آن‌ها را خودتان وارد کنید؛ رسید هنگام ذخیره پیوست می‌شود.</value>
+  </data>
+  <data name="Receipt_AttachFailed" xml:space="preserve">
+    <value>تراکنش ذخیره شد، اما رسید پیوست نشد. می‌توانید آن را در جزئیات تراکنش پیوست کنید.</value>
   </data>
 </root>

@@ -9,6 +9,7 @@
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     xmlns:plans="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Home"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
@@ -64,7 +65,7 @@
                      everyday action (blue); income and transfer carry their meaning colours. Templates fill the form in one tap. -->
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding HasAccounts}">
                     <VerticalStackLayout Spacing="12">
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
                             <Grid Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="ArrowUpRight" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -88,6 +89,15 @@
                                 <Label Grid.Row="1" Text="{v:Translate EntryKind_Transfer}" Style="{StaticResource QuickActionLabel}" />
                                 <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Transfer"
                                         SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
+                            </Grid>
+                            <!-- A receipt photo or PDF, read on the device; neutral, because it is a way to add an expense -->
+                            <Grid Grid.Column="3" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}" HorizontalOptions="Center">
+                                    <fi:SymbolIcon Symbol="Receipt" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Row="1" Text="{v:Translate Receipt_Title}" Style="{StaticResource QuickActionLabel}" />
+                                <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding ReadReceiptCommand}"
+                                        SemanticProperties.Description="{v:Translate Home_ReadReceipt}" ToolTipProperties.Text="{v:Translate Home_ReadReceipt}" />
                             </Grid>
                         </Grid>
 
@@ -315,6 +325,44 @@
                     </Border>
                 </VerticalStackLayout>
 
+                <VerticalStackLayout x:Name="RecentSection" Spacing="0">
+                    <!-- The latest entries (D-37): what was recorded last, one tap to its details -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasRecent}">
+                        <Label Text="{v:Translate Home_Recent}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Label Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Margin="4,4,4,8">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTransactionsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRecent}">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentEntries}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="p:EntryRow">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
+                                            <!-- A grid, not a stack: the subtitle gets the remaining width and is shortened instead of running under the amount -->
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
+                                                         SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
+                                                <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" MaxLines="1" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenEntryCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
                 <VerticalStackLayout x:Name="CategoriesSection" Spacing="0">
                     <!-- Expense by category: chart with a table that is also the accessible alternative (UX-06) -->
                     <Label Text="{v:Translate Home_ExpenseByCategory}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" IsVisible="{Binding HasEntries}" />
@@ -384,5 +432,9 @@
 
         <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddEntryCommand}"
                 SemanticProperties.Description="{v:Translate Tx_Add}" />
+
+        <!-- Reading a receipt takes a moment on the device -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"
+                           WidthRequest="48" HeightRequest="48" />
     </Grid>
 </ContentPage>

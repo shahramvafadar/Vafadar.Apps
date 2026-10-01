@@ -2,6 +2,9 @@ using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.App.Presentation;
 
+/// <summary>A picked file that is attached to an entry once the entry is saved (a receipt read on Home, D-37).</summary>
+internal sealed record PendingAttachment(string FileName, string ContentType, byte[] Data);
+
 /// <summary>
 /// Picks and prepares attachments (F2-TX-04). The system file picker needs no storage permission; photos are always
 /// re-encoded as JPEG of at most 1600 px, which keeps receipts small in the database and backups and drops metadata such

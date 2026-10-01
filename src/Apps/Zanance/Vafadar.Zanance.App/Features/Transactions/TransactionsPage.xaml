@@ -131,11 +131,12 @@
                         </Border>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
                             <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
-                            <HorizontalStackLayout Spacing="6">
-                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
+                            <!-- A grid, not a stack: the subtitle gets the remaining width and is shortened instead of running under the amount -->
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
                                          SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
-                                <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" />
-                            </HorizontalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" MaxLines="1" />
+                            </Grid>
                         </VerticalStackLayout>
                         <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
                                FontAttributes="Bold" VerticalOptions="Center" />

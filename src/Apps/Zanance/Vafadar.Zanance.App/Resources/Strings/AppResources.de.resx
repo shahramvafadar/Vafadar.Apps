@@ -2489,7 +2489,7 @@
     <value>Startseite anpassen</value>
   </data>
   <data name="HomeLayout_Intro" xml:space="preserve">
-    <value>Wählen Sie, welche Bereiche die Startseite in welcher Reihenfolge zeigt. Saldo und offene Hinweise bleiben immer oben.</value>
+    <value>Wählen Sie, welche Bereiche die Startseite in welcher Reihenfolge zeigt. Saldo, Schnellerfassung und offene Hinweise bleiben immer oben.</value>
   </data>
   <data name="HomeLayout_Up" xml:space="preserve">
     <value>Nach oben</value>
@@ -3069,5 +3069,26 @@
   </data>
   <data name="Entry_NewTransfer" xml:space="preserve">
     <value>Neue Umbuchung</value>
+  </data>
+  <data name="HomeSection_Recent" xml:space="preserve">
+    <value>Letzte Buchungen</value>
+  </data>
+  <data name="Home_Recent" xml:space="preserve">
+    <value>Letzte Buchungen</value>
+  </data>
+  <data name="Home_Yesterday" xml:space="preserve">
+    <value>Gestern</value>
+  </data>
+  <data name="Home_ReadReceipt" xml:space="preserve">
+    <value>Belegfoto oder PDF lesen</value>
+  </data>
+  <data name="Receipt_WillAttach" xml:space="preserve">
+    <value>Der Beleg wird beim Speichern an die Buchung angehängt.</value>
+  </data>
+  <data name="Receipt_NothingNew" xml:space="preserve">
+    <value>Aus diesem Beleg konnten kein Betrag, kein Datum und kein Geschäft gelesen werden. Tragen Sie sie selbst ein; der Beleg wird beim Speichern angehängt.</value>
+  </data>
+  <data name="Receipt_AttachFailed" xml:space="preserve">
+    <value>Die Buchung wurde gespeichert, der Beleg konnte aber nicht angehängt werden. Sie können ihn in den Details der Buchung anhängen.</value>
   </data>
 </root>

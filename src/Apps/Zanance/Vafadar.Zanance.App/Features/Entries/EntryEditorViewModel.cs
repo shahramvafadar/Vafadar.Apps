@@ -56,6 +56,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private string _snapshot = string.Empty;
     private bool _loading;
     private bool _isNew;
+    private Presentation.PendingAttachment? _pendingAttachment;
 
     public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time)
     {
@@ -230,6 +231,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ArgumentNullException.ThrowIfNull(query);
         _loading = true;
         _isNew = false;
+        _pendingAttachment = null;
         try
         {
             await LoadReferenceDataAsync();
@@ -381,7 +383,20 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             applied.Add(_translator["Entry_Payee"]);
         }
 
-        ReceiptNote = applied.Count == 0 ? null : _translator.Format("Receipt_Review", string.Join(_translator["Reminder_ListSeparator"], applied));
+        var notes = new List<string>();
+        if (applied.Count > 0)
+        {
+            notes.Add(_translator.Format("Receipt_Review", string.Join(_translator["Reminder_ListSeparator"], applied)));
+        }
+
+        // A receipt read on Home becomes the entry's attachment when it is saved (D-37).
+        if (_isNew && query.TryGetValue("receiptFile", out var file) && file is Presentation.PendingAttachment pending)
+        {
+            _pendingAttachment = pending;
+            notes.Add(_translator["Receipt_WillAttach"]);
+        }
+
+        ReceiptNote = notes.Count == 0 ? null : string.Join(" ", notes);
     }
 
     [ObservableProperty]
@@ -797,7 +812,28 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             }
 
             _snapshot = Snapshot();
+
+            // The entry is saved; a failing attachment must not look like a failed save (which would invite saving twice).
+            var attachmentFailed = false;
+            if (_pendingAttachment is { } pending)
+            {
+                try
+                {
+                    await _store.AddAttachmentAsync(new EntryAttachment { EntryId = _entry.Id, FileName = pending.FileName, ContentType = pending.ContentType, Data = pending.Data });
+                }
+                catch (Exception ex) when (ex is not OutOfMemoryException)
+                {
+                    attachmentFailed = true;
+                }
+
+                _pendingAttachment = null;
+            }
+
             await Shell.Current.GoToAsync("..");
+            if (attachmentFailed)
+            {
+                await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_AttachFailed"], _translator["Common_Ok"]);
+            }
         }
         catch (Exception)
         {

@@ -89,7 +89,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Home starts with your balance and a quick add card: Expense, Income and Transfer open the editor with that kind,
   and your quick templates fill it in one tap – a template with an amount is two taps (template, Save).
+- A Receipt button next to them: choose a receipt photo or PDF, it is read on the device and opens a new expense with
+  amount, date and shop to check; the receipt is attached when you save.
+- Recent entries on Home: the three latest entries, one tap to their details (can be hidden or moved like the other
+  sections).
 - The editor says what you are adding ("New expense", "New income", "New transfer").
+- Windows: the keyboard focus ring is drawn in the app's blue instead of black and white.
+- Long subtitles in transaction rows are shortened instead of running under the amount.
 - This month / last month moved into the income and expenses section they change.
 - The budget card shows what is left per day for the rest of the month.
 - Colours where they belong: budget bars are green within the limit, amber near it and red over it; the forecast line

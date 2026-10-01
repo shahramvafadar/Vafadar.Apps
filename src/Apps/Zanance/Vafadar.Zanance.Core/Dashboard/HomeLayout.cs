@@ -16,6 +16,9 @@ public enum HomeSection
     /// <summary>The next due plan items.</summary>
     Upcoming,
 
+    /// <summary>The latest recorded entries (D-37). Stored by name, so layouts saved before it get it at the end.</summary>
+    Recent,
+
     /// <summary>Expense by category.</summary>
     Categories,
 

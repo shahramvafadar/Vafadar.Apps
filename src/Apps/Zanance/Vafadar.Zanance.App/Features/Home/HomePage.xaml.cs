@@ -20,6 +20,7 @@ public partial class HomePage : ContentPage
             [HomeSection.Forecast] = ForecastSection,
             [HomeSection.Budget] = BudgetSection,
             [HomeSection.Upcoming] = UpcomingSection,
+            [HomeSection.Recent] = RecentSection,
             [HomeSection.Categories] = CategoriesSection,
             [HomeSection.Accounts] = AccountsSection,
         };
