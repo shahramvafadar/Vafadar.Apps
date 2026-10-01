@@ -128,6 +128,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   unreviewed summary.
 - The safety copy made before a restore no longer counts as the last backup.
 - iOS: Face ID usage text in English, German and Persian, and a complete privacy manifest.
+- Switching from Persian to another language during onboarding no longer leaves Persian digits in the texts.
 
 ### Not yet included
 

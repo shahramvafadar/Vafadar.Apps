@@ -29,9 +29,11 @@ public partial class App : Application
         theme.Changed += OnLocalizationChanged;
         var localization = services.GetRequiredService<ILocalizationService>();
 
-        // Persian digits in the Persian interface (D-27); applied before the screens are rebuilt for a new language.
+        // Persian digits in the Persian interface (D-27). The translator refreshes the texts of open pages before the
+        // service raises Changed, and a page that stays open (onboarding) would keep the old digits. This handler is
+        // registered before any page binds to the translator, so it runs first.
         Presentation.DigitPreferences.Apply(localization);
-        localization.Changed += (_, _) => Presentation.DigitPreferences.Apply(localization);
+        Translator.Instance.PropertyChanged += (_, _) => Presentation.DigitPreferences.Apply(localization);
         Presentation.DigitPreferences.Changed += OnLocalizationChanged;
         localization.Changed += OnLocalizationChanged;
 #if ANDROID
