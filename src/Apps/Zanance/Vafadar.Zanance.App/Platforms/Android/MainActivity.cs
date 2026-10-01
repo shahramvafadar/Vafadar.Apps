@@ -67,7 +67,11 @@ public class MainActivity : MauiAppCompatActivity
         }
 
         var light = (Resources?.Configuration?.UiMode & Android.Content.Res.UiMode.NightMask) != Android.Content.Res.UiMode.NightYes;
-        var bars = AndroidX.Core.View.WindowCompat.GetInsetsController(window, window.DecorView);
+        if (AndroidX.Core.View.WindowCompat.GetInsetsController(window, window.DecorView) is not { } bars)
+        {
+            return;
+        }
+
         bars.AppearanceLightStatusBars = light;
         bars.AppearanceLightNavigationBars = light;
     }
