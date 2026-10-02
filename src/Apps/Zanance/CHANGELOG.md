@@ -90,6 +90,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Windows: the window title shows the Zanance symbol and is readable in every combination of app and Windows theme
   (it was white on the light page when Windows was dark).
 - Screen readers read each entry, plan and day of a list by its name and amount instead of a technical type name.
+- Windows: transactions and loan installments are aligned with the headers instead of running to the window edge; an
+  installment shows principal and interest and what remains on lines of their own.
 
 ### Changed – Faster start (D-44)
 

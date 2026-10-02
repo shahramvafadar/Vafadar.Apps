@@ -116,33 +116,36 @@
             </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="p:EntryRow">
-                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Margin="16,0">
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid" Binding="{Binding Selection.IsSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
-                            </DataTrigger>
-                        </Grid.Triggers>
-                        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
-                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
-                                           HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
-                            <!-- A grid, not a stack: the subtitle gets the remaining width and is shortened instead of running under the amount -->
-                            <Grid ColumnDefinitions="Auto,*">
-                                <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
-                                         SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
-                                <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" MaxLines="1" />
-                            </Grid>
-                        </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
-                               FontAttributes="Bold" VerticalOptions="Center" />
-                        <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                        <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
-                                Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
-                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
-                        <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"
-                                       Margin="-6,-4,0,0" IsVisible="{Binding Selection.IsSelected}" InputTransparent="True" />
+                    <!-- Padding, not a margin on the row: Windows ignores the margin of a list item's root, and the rows ran edge to edge -->
+                    <Grid Padding="16,0">
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                            <Grid.Triggers>
+                                <DataTrigger TargetType="Grid" Binding="{Binding Selection.IsSelected}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
+                                </DataTrigger>
+                            </Grid.Triggers>
+                            <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
+                                <!-- A grid, not a stack: the subtitle gets the remaining width and is shortened instead of running under the amount -->
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
+                                             SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
+                                    <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" MaxLines="1" />
+                                </Grid>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
+                                   FontAttributes="Bold" VerticalOptions="Center" />
+                            <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                    Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
+                                    CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"
+                                           Margin="-6,-4,0,0" IsVisible="{Binding Selection.IsSelected}" InputTransparent="True" />
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
