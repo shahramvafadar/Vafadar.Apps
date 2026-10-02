@@ -15,7 +15,8 @@ internal sealed class InsightsTabs : HorizontalStackLayout
         (AppShell.BudgetRoute, "Budget_Title"),
         (AppShell.ReportsRoute, "Report_Title"),
         (AppShell.ForecastRoute, "Forecast_Title"),
-        (AppShell.GoalsRoute, "Goals_Title"),
+        // "Goals", not "Savings goals": the four fit next to each other down to a 360 px window.
+        (AppShell.GoalsRoute, "Goals_Tab"),
     ];
 
     public InsightsTabs(string currentRoute)
@@ -45,10 +46,10 @@ internal sealed class InsightsTabs : HorizontalStackLayout
             BackgroundColor = Colors.Transparent,
             BorderWidth = 0,
             CornerRadius = 8,
-            Padding = new Thickness(10, 0),
+            Padding = new Thickness(8, 0),
             HeightRequest = 40,
             MinimumHeightRequest = 40,
-            FontSize = 18,
+            FontSize = 17,
             FontAttributes = selected ? FontAttributes.Bold : FontAttributes.None,
         };
         button.SetBinding(Button.TextProperty, new Binding($"[{titleKey}]", source: Translator.Instance));
@@ -64,7 +65,7 @@ internal sealed class InsightsTabs : HorizontalStackLayout
         }
 
         // The bar keeps its height on every tab, so the titles stay on one line whichever page is open.
-        var bar = new BoxView { HeightRequest = 3, CornerRadius = 1.5, Margin = new Thickness(10, 0), Opacity = selected ? 1 : 0 };
+        var bar = new BoxView { HeightRequest = 3, CornerRadius = 1.5, Margin = new Thickness(8, 0), Opacity = selected ? 1 : 0 };
         bar.SetDynamicResource(BoxView.ColorProperty, "Primary");
         return new VerticalStackLayout { Spacing = 0, Children = { button, bar } };
     }

@@ -146,6 +146,10 @@ public partial class App : Application
         var titleBar = new TitleBar { Title = Translator.Instance["App_Name"], Icon = "zanance_symbol.png" };
         titleBar.SetDynamicResource(TitleBar.ForegroundColorProperty, "AmountText");
         window.TitleBar = titleBar;
+
+        // Never narrower than a small phone, the width every layout is made for (D-47).
+        window.MinimumWidth = 360;
+        window.MinimumHeight = 520;
 #endif
 #if DEBUG
         Diagnostics.DebugSnapshots.StartIfRequested(this, _services, window);

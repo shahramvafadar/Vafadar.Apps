@@ -437,9 +437,17 @@ internal static class DebugSnapshots
             var number = 0;
             foreach (var popup in Microsoft.UI.Xaml.Media.VisualTreeHelper.GetOpenPopupsForXamlRoot(root.XamlRoot))
             {
-                if (popup.Child is { } child)
+                // Some layers of a menu have no size; rendering them fails with an invalid argument.
+                if (popup.Child is Microsoft.UI.Xaml.FrameworkElement { ActualWidth: > 0, ActualHeight: > 0 } child)
                 {
-                    await RenderAsync(child, Path.ChangeExtension(path, null) + $"-popup{++number}.png");
+                    try
+                    {
+                        await RenderAsync(child, Path.ChangeExtension(path, null) + $"-popup{++number}.png");
+                    }
+                    catch (Exception exception)
+                    {
+                        await File.WriteAllTextAsync(Path.ChangeExtension(path, null) + $"-popup{number}.txt", exception.Message);
+                    }
                 }
             }
         }

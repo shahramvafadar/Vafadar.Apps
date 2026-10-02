@@ -3196,4 +3196,7 @@
   <data name="Common_Selected" xml:space="preserve">
     <value>انتخاب‌شده</value>
   </data>
+  <data name="Goals_Tab" xml:space="preserve">
+    <value>اهداف</value>
+  </data>
 </root>
