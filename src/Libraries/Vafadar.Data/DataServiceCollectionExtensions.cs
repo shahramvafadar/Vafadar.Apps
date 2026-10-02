@@ -43,7 +43,13 @@ public static class DataServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
 
         using var context = services.GetRequiredService<IDbContextFactory<TContext>>().CreateDbContext();
-        context.Database.Migrate();
+
+        // Most starts find the database up to date. Reading the migration history is cheap; Migrate() itself also takes
+        // a lock and compares the whole model with the migrations, which costs seconds on a phone.
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
     }
 
     /// <summary>Applies pending EF Core migrations.</summary>
@@ -54,6 +60,9 @@ public static class DataServiceCollectionExtensions
 
         var factory = services.GetRequiredService<IDbContextFactory<TContext>>();
         await using var context = await factory.CreateDbContextAsync(cancellationToken);
-        await context.Database.MigrateAsync(cancellationToken);
+        if ((await context.Database.GetPendingMigrationsAsync(cancellationToken)).Any())
+        {
+            await context.Database.MigrateAsync(cancellationToken);
+        }
     }
 }

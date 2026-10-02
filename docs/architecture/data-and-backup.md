@@ -32,9 +32,22 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data
 
 # Inspect the SQL a migration produces
 dotnet ef migrations script --project src/Apps/Zanance/Vafadar.Zanance.Data
+
+# After every model change: regenerate the compiled model the app loads at startup
+dotnet ef dbcontext optimize --project src/Apps/Zanance/Vafadar.Zanance.Data `
+    --startup-project src/Apps/Zanance/Vafadar.Zanance.Data `
+    --output-dir CompiledModel --namespace Vafadar.Zanance.Data.CompiledModel
 ```
 
 The `*.Data` projects contain an `IDesignTimeDbContextFactory`, so the EF tools do not need to start the MAUI app.
+
+**Compiled model** (Zanance, D-44): building the EF model from `OnModelCreating` took about four seconds of every cold
+start on an Android emulator. `Vafadar.Zanance.Data/CompiledModel` holds the generated model, which EF Core picks up
+through its `DbContextModel` assembly attribute; the EF tools still build the model from code. A test
+(`Compiled_model_matches_the_model_in_code`) fails when the compiled model is out of date. It is built on the calling
+thread (`Microsoft.EntityFrameworkCore.Issue31751`): EF's default second thread hangs the app under Mono. At startup
+`MigrateLocalDatabase` only runs `Migrate()` when the history lists a pending migration, because `Migrate()` also
+compares the whole model with the migrations; the tests start from an empty database and keep that check.
 Migrations must be backward compatible with existing user data: add columns with defaults, migrate data in the
 migration, never drop user data silently.
 

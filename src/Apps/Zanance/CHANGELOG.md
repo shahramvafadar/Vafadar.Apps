@@ -85,6 +85,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Faster start (D-44)
+
+- The app starts faster: the database model is prepared ahead of time instead of at every start, and the database is
+  only upgraded when an update brings a change.
+
 ### Changed – Insights on Windows (D-43)
 
 - Windows: Budget, Reports, Forecast and Goals are visible tabs at the top of these pages instead of a hidden drop-down.
