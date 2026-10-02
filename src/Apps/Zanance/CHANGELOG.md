@@ -95,6 +95,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Windows: dialogs, help texts, picker lists and the date picker use the app's font (Vazirmatn for Persian) instead of
   the system font (D-47).
 - Windows: the window cannot be made narrower than a small phone (360 px), and the Insights tabs fit at that width.
+- The "?" help buttons are easier to hit: the circle is the same, the area that reacts to a tap is larger (D-48).
 
 ### Changed – Faster start (D-44)
 

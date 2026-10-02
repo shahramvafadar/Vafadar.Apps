@@ -141,6 +141,7 @@ lightened (`CategoryLookup.DisplayColor`).
   previous/next period arrows (round `MoveButton`) are buttons too. Icons are not in the accessibility tree, their
   meaning is in the text next to them.
 * Form errors appear next to their field, all at once, so one pass fixes the form (entry and plan editors).
+* Touch targets are at least 44 px where possible; the 30 px "?" circle sits in a 44 px button (D-48).
 * Short single-choice lists with long labels (account type) use wrapping chips (`ChoiceChips`) instead of a
   segmented control, so German and Persian labels never scroll or get cut off.
 * Categories in the entry editor are wrapping pills (icon + full name) rather than a fixed grid, so no name is
