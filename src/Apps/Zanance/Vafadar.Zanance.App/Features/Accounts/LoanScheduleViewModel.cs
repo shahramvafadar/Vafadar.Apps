@@ -11,7 +11,11 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Accounts;
 
 /// <summary>One estimated installment in the schedule.</summary>
-public sealed record LoanRow(string Title, string Split, string Payment, string Remaining);
+public sealed record LoanRow(string Title, string Split, string Payment, string Remaining)
+{
+    /// <summary>Returns what a screen reader says for the row (Windows names list rows after it).</summary>
+    public override string ToString() => $"{Title}, {Payment}, {Split}, {Remaining}";
+}
 
 /// <summary>
 /// The estimated repayment schedule of a loan or money lent (F2-DEBT-02), calculated from the current balance and the

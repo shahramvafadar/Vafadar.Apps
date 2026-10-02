@@ -85,6 +85,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Windows title bar and lists (D-45)
+
+- Windows: the window title shows the Zanance symbol and is readable in every combination of app and Windows theme
+  (it was white on the light page when Windows was dark).
+- Screen readers read each entry, plan and day of a list by its name and amount instead of a technical type name.
+
 ### Changed – Faster start (D-44)
 
 - The app starts faster: the database model is prepared ahead of time instead of at every start, and the database is

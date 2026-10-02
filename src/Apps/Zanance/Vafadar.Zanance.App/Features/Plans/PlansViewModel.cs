@@ -52,6 +52,10 @@ public sealed record PlanRow(
 
     /// <summary>Gets a value indicating whether the row shows an icon tile.</summary>
     public bool HasIcon => DayText is null;
+
+    /// <summary>Returns what a screen reader says for the row (Windows names list rows after it).</summary>
+    public override string ToString() =>
+        string.Join(", ", new[] { Title, AmountText, Subtitle, Badge }.Where(part => !string.IsNullOrWhiteSpace(part)));
 }
 
 /// <summary>The plan centre (UI-07): due and overdue, upcoming and all plans. Works without notification permission (REM-02).</summary>

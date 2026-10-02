@@ -127,6 +127,13 @@ public partial class App : Application
             : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
 
         var window = new Window(root) { Title = Translator.Instance["App_Name"] };
+#if WINDOWS
+        // The window title in the app's colours with the symbol in front of it (D-45). The default title keeps the
+        // Windows theme: white on the light page when Windows is dark, black on the dark page when it is light.
+        var titleBar = new TitleBar { Title = Translator.Instance["App_Name"], Icon = "zanance_symbol.png" };
+        titleBar.SetDynamicResource(TitleBar.ForegroundColorProperty, "AmountText");
+        window.TitleBar = titleBar;
+#endif
 #if DEBUG
         Diagnostics.DebugSnapshots.StartIfRequested(this, _services, window);
 #endif

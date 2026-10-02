@@ -40,6 +40,13 @@ internal static class DebugSnapshots
                         await shell.GoToAsync(step);
                     }
                 }
+#if WINDOWS
+                if (Environment.GetEnvironmentVariable("VAFADAR_CAPTURE_WINDOW") is { Length: > 0 } file)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await CaptureWindowAsync(window, file);
+                }
+#endif
             });
         }
 
@@ -410,5 +417,36 @@ internal static class DebugSnapshots
         await using var target = File.Create(Path.Combine(folder, name + ".png"));
         await source.CopyToAsync(target);
     }
+
+#if WINDOWS
+    // VAFADAR_CAPTURE_WINDOW=<file.png> with VAFADAR_START_ROUTE: the whole window content, including the title area
+    // and the navigation, rendered by the app itself. A capture from outside is blank while other windows cover it.
+    private static async Task CaptureWindowAsync(Window window, string path)
+    {
+        if (window.Handler?.PlatformView is not Microsoft.UI.Xaml.Window { Content: Microsoft.UI.Xaml.UIElement root })
+        {
+            return;
+        }
+
+        var bitmap = new Microsoft.UI.Xaml.Media.Imaging.RenderTargetBitmap();
+        await bitmap.RenderAsync(root);
+        var pixels = await bitmap.GetPixelsAsync();
+        using var stream = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
+        var encoder = await global::Windows.Graphics.Imaging.BitmapEncoder.CreateAsync(global::Windows.Graphics.Imaging.BitmapEncoder.PngEncoderId, stream);
+        var dpi = 96 * (root.XamlRoot?.RasterizationScale ?? 1);
+        encoder.SetPixelData(
+            global::Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+            global::Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied,
+            (uint)bitmap.PixelWidth,
+            (uint)bitmap.PixelHeight,
+            dpi,
+            dpi,
+            System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeBufferExtensions.ToArray(pixels));
+        await encoder.FlushAsync();
+        stream.Seek(0);
+        await using var target = File.Create(path);
+        await System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead(stream).CopyToAsync(target);
+    }
+#endif
 }
 #endif

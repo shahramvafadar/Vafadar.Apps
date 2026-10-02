@@ -177,6 +177,15 @@ public static class MauiProgram
                 }
             };
         })));
+
+        // Screen readers name list rows after their item instead of MAUI's wrapper type (D-45).
+        Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler.Mapper.AppendToMapping("ZananceRowNames", (handler, _) =>
+        {
+            if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ListViewBase list && handler.VirtualView is ItemsView view)
+            {
+                Presentation.ListRowNames.Attach(list, view);
+            }
+        });
 #endif
 
         return builder.Build();

@@ -20,6 +20,9 @@ public sealed class EntryDayGroup(string header, string netText, IEnumerable<Ent
     public string Header { get; } = header;
 
     public string NetText { get; } = netText;
+
+    /// <summary>Returns what a screen reader says for the day header.</summary>
+    public override string ToString() => $"{Header}, {NetText}";
 }
 
 /// <summary>An account choice of the account filter; <see cref="Id"/> is <see langword="null"/> for "all accounts".</summary>

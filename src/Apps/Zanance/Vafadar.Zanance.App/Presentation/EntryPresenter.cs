@@ -24,6 +24,9 @@ public sealed record EntryRow(
 
     /// <summary>Gets the selection state of the row in lists that allow selecting several entries (F2-TX-04).</summary>
     public RowSelection Selection { get; init; } = new();
+
+    /// <summary>Returns what a screen reader says for the row (Windows names list rows after it).</summary>
+    public override string ToString() => $"{Title}, {AmountText}, {Subtitle}";
 }
 
 /// <summary>Whether a list row is selected; observable so a tap does not rebuild the list.</summary>
