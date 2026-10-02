@@ -39,8 +39,18 @@ public static class Regions
     public static bool IsKnown(string? code) =>
         code is { Length: 2 } && All.Contains(code.ToUpperInvariant(), StringComparer.Ordinal);
 
-    /// <summary>Returns the region's name in the current UI language, or the code when the platform has no name.</summary>
-    public static string DisplayName(string code) => TryRegion(code)?.DisplayName ?? code;
+    /// <summary>
+    /// Returns the region's name in <paramref name="language"/> (by default the current UI language) – "Germany",
+    /// "Deutschland" or "آلمان" for DE – or the code when the platform has no name.
+    /// </summary>
+    public static string DisplayName(string code, CultureInfo? language = null)
+    {
+        // RegionInfo.DisplayName is the name in the region's own language ("Deutschland" in an English list). The region
+        // of a culture in the wanted language carries its name in that language.
+        var languageCode = (language ?? CultureInfo.CurrentUICulture).TwoLetterISOLanguageName;
+        var name = TryRegion($"{languageCode}-{code}")?.NativeName;
+        return string.IsNullOrWhiteSpace(name) ? TryRegion(code)?.DisplayName ?? code : name;
+    }
 
     /// <summary>
     /// Returns the conventional first day of the week: the region's when one is chosen, otherwise the language's.

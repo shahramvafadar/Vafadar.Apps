@@ -89,6 +89,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Windows: Budget, Reports, Forecast and Goals are visible tabs at the top of these pages instead of a hidden drop-down.
 - Screen readers no longer read out dividers and colour dots.
+- Countries in Settings are named in the app language (they were shown in their own languages, e.g. "Deutschland" in
+  English).
+- The currency boxes have the same arrow as the other lists, and the chosen currency is marked in blue instead of green.
 
 ### Changed – Keyboard and screen readers (D-42)
 

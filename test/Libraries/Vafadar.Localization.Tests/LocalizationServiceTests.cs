@@ -176,6 +176,15 @@ public sealed class LocalizationServiceTests : IDisposable
     }
 
     [Fact]
+    public void Region_names_are_in_the_app_language_not_the_region_language()
+    {
+        Assert.Equal("Germany", Regions.DisplayName("DE", CultureInfo.GetCultureInfo("en-US")));
+        Assert.Equal("Deutschland", Regions.DisplayName("DE", CultureInfo.GetCultureInfo("de-DE")));
+        Assert.Equal("آلمان", Regions.DisplayName("DE", CultureInfo.GetCultureInfo("fa-IR")));
+        Assert.Equal("Iran", Regions.DisplayName("IR", CultureInfo.GetCultureInfo("en-US")));
+    }
+
+    [Fact]
     public void Region_does_not_change_language_calendar_or_number_format_and_can_be_cleared()
     {
         var service = CreateService();

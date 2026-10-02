@@ -60,7 +60,10 @@
         <Setter Property="DropDownBackground" Value="{DynamicResource CardBackground}" />
         <Setter Property="DropDownItemTextColor" Value="{DynamicResource AmountText}" />
         <Setter Property="DropDownIconColor" Value="{DynamicResource SecondaryText}" />
-        <Setter Property="SelectedDropDownItemBackground" Value="{DynamicResource IncomeBackground}" />
+        <!-- The chosen currency in the list is marked like every other selection, in the soft action blue. -->
+        <Setter Property="SelectedDropDownItemBackground" Value="{DynamicResource PrimarySoft}" />
+        <!-- The same thin chevron as the other pickers instead of the control's filled triangle (D-43). -->
+        <Setter Property="p:ComboChevron.IsEnabled" Value="True" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
     </Style>
 

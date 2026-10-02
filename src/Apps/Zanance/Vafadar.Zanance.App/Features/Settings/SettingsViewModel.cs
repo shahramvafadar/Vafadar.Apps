@@ -357,12 +357,12 @@ public sealed partial class SettingsViewModel : ViewModelBase
             var suggested = _localization.SuggestedRegion;
             var notSet = suggested is null
                 ? _translator["Settings_RegionNotSet"]
-                : _translator.Format("Settings_RegionSuggested", Vafadar.Localization.Regions.DisplayName(suggested));
+                : _translator.Format("Settings_RegionSuggested", Vafadar.Localization.Regions.DisplayName(suggested, culture));
             Regions =
             [
                 new RegionOption(null, notSet),
                 .. Vafadar.Localization.Regions.All
-                    .Select(code => new RegionOption(code, Vafadar.Localization.Regions.DisplayName(code)))
+                    .Select(code => new RegionOption(code, Vafadar.Localization.Regions.DisplayName(code, culture)))
                     .OrderBy(option => option.DisplayName, StringComparer.Create(culture, ignoreCase: true)),
             ];
             SelectedRegion = Regions.FirstOrDefault(option => option.Code == _localization.CurrentRegion) ?? Regions[0];
