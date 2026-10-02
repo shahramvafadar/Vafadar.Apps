@@ -21,9 +21,11 @@
     </Style>
 
     <!-- A BoxView without a color is a divider. Color, not BackgroundColor: transparent spacers and rounded dots keep no
-         grey rectangle behind them. -->
+         grey rectangle behind them. BoxViews only decorate (dividers, colour dots, bars), so screen readers skip them
+         instead of reading out the control's type name (D-43). -->
     <Style TargetType="BoxView">
         <Setter Property="Color" Value="{DynamicResource DividerColor}" />
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="False" />
     </Style>
 
     <Style TargetType="Button">

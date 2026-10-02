@@ -3193,4 +3193,7 @@
   <data name="Forecast_NoPlansHint" xml:space="preserve">
     <value>درآمد و قبض‌های منظم را به‌صورت برنامه اضافه کنید تا ببینید موجودی‌تان چطور تغییر می‌کند.</value>
   </data>
+  <data name="Common_Selected" xml:space="preserve">
+    <value>انتخاب‌شده</value>
+  </data>
 </root>

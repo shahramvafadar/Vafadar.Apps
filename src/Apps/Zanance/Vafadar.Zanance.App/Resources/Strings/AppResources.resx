@@ -3197,4 +3197,7 @@
   <data name="Forecast_NoPlansHint" xml:space="preserve">
     <value>Add your regular income and bills as plans to see how your balance develops.</value>
   </data>
+  <data name="Common_Selected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
 </root>

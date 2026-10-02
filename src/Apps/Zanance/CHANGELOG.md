@@ -85,6 +85,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   and the Insights tabs are no longer written in capitals.
 - Spacers and colour dots no longer show a grey rectangle (e.g. below "Customize Home").
 
+### Changed – Insights on Windows (D-43)
+
+- Windows: Budget, Reports, Forecast and Goals are visible tabs at the top of these pages instead of a hidden drop-down.
+- Screen readers no longer read out dividers and colour dots.
+
 ### Changed – Keyboard and screen readers (D-42)
 
 - Everything you can tap is a real button: rows, cards, category pills, colour and icon choices and the "All" links can be

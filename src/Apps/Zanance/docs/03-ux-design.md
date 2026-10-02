@@ -128,6 +128,8 @@ lightened (`CategoryLookup.DisplayColor`).
 * **Keyboard focus on Windows** (D-37, D-41, D-42): the focus ring is drawn in the action blue of the current theme,
   set on each element as it receives focus (`MauiProgram`; WinUI 3 does not take it from app resources), so the tabs
   of the shell get it too; it follows the rounded corners of each control.
+* **Insights on Windows** (D-43): the four Insights pages show Budget, Reports, Forecast and Goals as tabs in their
+  header, because the Windows shell only offers them in a drop-down of the Insights tab. Phones keep their top tabs.
 * **Wide windows** (D-41): wider than 720 px every page is a centred column of 720 px, so cards and lists read like
   on a large phone instead of stretching across a desktop window or a tablet in landscape.
 * **Getting started** (D-41): a new user sees three steps on Home (first expense, a regular payment, a monthly budget),

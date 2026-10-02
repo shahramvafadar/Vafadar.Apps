@@ -3193,4 +3193,7 @@
   <data name="Forecast_NoPlansHint" xml:space="preserve">
     <value>Legen Sie regelmäßige Einnahmen und Rechnungen als Pläne an, um zu sehen, wie sich Ihr Saldo entwickelt.</value>
   </data>
+  <data name="Common_Selected" xml:space="preserve">
+    <value>Ausgewählt</value>
+  </data>
 </root>
