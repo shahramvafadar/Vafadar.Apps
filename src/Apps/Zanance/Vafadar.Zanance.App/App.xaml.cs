@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Localization;
 using Vafadar.Zanance.App.Features.Onboarding;
@@ -121,6 +122,10 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
+        // The database is created or upgraded here, before the first page reads it, and not while the app is built:
+        // Android builds the app in Application.onCreate, also when it starts the process only to deliver a notification,
+        // and reports the app as not responding when that takes too long on a slow device (D-46).
+        _services.MigrateLocalDatabase<ZananceDbContext>();
         var settings = _services.GetRequiredService<ZananceStore>().GetSettings();
         Page root = settings.OnboardingCompleted
             ? CreateShell()

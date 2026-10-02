@@ -34,8 +34,8 @@ public static class DataServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Applies pending EF Core migrations synchronously. Use this from synchronous startup code
-    /// (e.g. an <c>IMauiInitializeService</c>); blocking on the async overload can deadlock on a UI thread.
+    /// Applies pending EF Core migrations synchronously. Use this from synchronous startup code (e.g. where the app
+    /// creates its first window); blocking on the async overload can deadlock on a UI thread.
     /// </summary>
     public static void MigrateLocalDatabase<TContext>(this IServiceProvider services)
         where TContext : LocalDbContext

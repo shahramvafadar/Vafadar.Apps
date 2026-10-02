@@ -97,6 +97,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - The app starts faster: the database model is prepared ahead of time instead of at every start, and the database is
   only upgraded when an update brings a change.
+- Android: the database is prepared when the window opens, no longer while the system starts the app, which could
+  show "Zanance isn't responding" on slow devices, e.g. right after an update or for a notification (D-46).
 
 ### Changed – Insights on Windows (D-43)
 
