@@ -43,7 +43,9 @@ internal static class DebugSnapshots
 #if WINDOWS
                 if (Environment.GetEnvironmentVariable("VAFADAR_CAPTURE_WINDOW") is { Length: > 0 } file)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    // VAFADAR_CAPTURE_DELAY leaves time to open a dialog first, which is saved next to the window.
+                    var delay = int.TryParse(Environment.GetEnvironmentVariable("VAFADAR_CAPTURE_DELAY"), out var seconds) ? seconds : 2;
+                    await Task.Delay(TimeSpan.FromSeconds(delay));
                     await CaptureWindowAsync(window, file);
                 }
 #endif
@@ -421,6 +423,7 @@ internal static class DebugSnapshots
 #if WINDOWS
     // VAFADAR_CAPTURE_WINDOW=<file.png> with VAFADAR_START_ROUTE: the whole window content, including the title area
     // and the navigation, rendered by the app itself. A capture from outside is blank while other windows cover it.
+    // Open dialogs and menus are saved as <file>-popup1.png, <file>-popup2.png, ...
     private static async Task CaptureWindowAsync(Window window, string path)
     {
         if (window.Handler?.PlatformView is not Microsoft.UI.Xaml.Window { Content: Microsoft.UI.Xaml.UIElement root })
@@ -428,6 +431,22 @@ internal static class DebugSnapshots
             return;
         }
 
+        await RenderAsync(root, path);
+        if (root.XamlRoot is not null)
+        {
+            var number = 0;
+            foreach (var popup in Microsoft.UI.Xaml.Media.VisualTreeHelper.GetOpenPopupsForXamlRoot(root.XamlRoot))
+            {
+                if (popup.Child is { } child)
+                {
+                    await RenderAsync(child, Path.ChangeExtension(path, null) + $"-popup{++number}.png");
+                }
+            }
+        }
+    }
+
+    private static async Task RenderAsync(Microsoft.UI.Xaml.UIElement root, string path)
+    {
         var bitmap = new Microsoft.UI.Xaml.Media.Imaging.RenderTargetBitmap();
         await bitmap.RenderAsync(root);
         var pixels = await bitmap.GetPixelsAsync();

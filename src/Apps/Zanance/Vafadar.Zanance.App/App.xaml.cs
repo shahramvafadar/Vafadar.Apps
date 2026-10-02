@@ -66,6 +66,14 @@ public partial class App : Application
         var persian = localization.CurrentCulture.TwoLetterISOLanguageName == "fa";
         Resources["AppFont"] = persian ? "Vazirmatn" : "Figtree";
         Resources["DisplayFont"] = persian ? "VazirmatnBold" : "UrbanistBold";
+#if WINDOWS
+        // What Windows draws itself – dialogs (alerts, confirmations, help), picker lists, the date picker – takes the
+        // system font otherwise (Segoe UI, also for Persian); it uses the app's font as well (D-47).
+        if (_services.GetService<IFontManager>() is { } fonts && Microsoft.UI.Xaml.Application.Current is { } platformApp)
+        {
+            platformApp.Resources["ContentControlThemeFontFamily"] = fonts.GetFontFamily(Microsoft.Maui.Font.OfSize(persian ? "Vazirmatn" : "Figtree", 14));
+        }
+#endif
     }
 
     /// <summary>Replaces the root page of the main window, e.g. after onboarding.</summary>

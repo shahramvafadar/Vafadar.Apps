@@ -92,6 +92,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Screen readers read each entry, plan and day of a list by its name and amount instead of a technical type name.
 - Windows: transactions and loan installments are aligned with the headers instead of running to the window edge; an
   installment shows principal and interest and what remains on lines of their own.
+- Windows: dialogs, help texts, picker lists and the date picker use the app's font (Vazirmatn for Persian) instead of
+  the system font (D-47).
 
 ### Changed – Faster start (D-44)
 
