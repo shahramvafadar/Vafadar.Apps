@@ -9,6 +9,7 @@ using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
@@ -48,9 +49,13 @@ public sealed partial class HomeViewModel : ViewModelBase
     private int _startDay = 1;
     private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
     private readonly Security.AppLockService _lock;
+    private readonly GoalStore _goals;
+    private readonly Goals.GoalPresenter _goalPresenter;
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter)
     {
+        _goals = goals;
+        _goalPresenter = goalPresenter;
         _store = store;
         _lock = appLock;
         _profiles = profiles;
@@ -76,6 +81,16 @@ public sealed partial class HomeViewModel : ViewModelBase
     public ObservableCollection<Brush> SliceBrushes { get; } = [];
 
     public ObservableCollection<AccountItem> Accounts { get; } = [];
+
+    /// <summary>Gets the goals pinned to Home, at most two (ZEX-GO06).</summary>
+    public ObservableCollection<Goals.GoalRow> PinnedGoals { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasPinnedGoals { get; set; }
+
+    /// <summary>Gets the attention line for an overdue goal when no goal is pinned (ZEX-GO07).</summary>
+    [ObservableProperty]
+    public partial string? GoalAttentionText { get; set; }
 
     /// <summary>Gets the quick templates shown under the quick add buttons (at most six, in the user's order).</summary>
     public ObservableCollection<QuickTemplate> QuickTemplates { get; } = [];
@@ -354,7 +369,8 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
-        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null;
+        await LoadGoalsAsync(allAccounts, entries, today);
+        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -435,6 +451,28 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);
+
+    // Pinned goals with progress and the estimate of the plan, only when valid (ZEX-GO06, GO07). Paused goals leave Home.
+    private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
+    {
+        var goals = await _goals.GetGoalsAsync();
+        var progress = GoalProgressService.Evaluate(goals, await _goals.GetAllocationsAsync(), accounts, entries, await _goals.GetContributionPlansAsync(), today);
+        PinnedGoals.Clear();
+        foreach (var item in progress.Where(p => p.Goal.State == GoalState.Active && p.Goal.HomePin is not null).OrderBy(p => p.Goal.HomePin).Take(2))
+        {
+            PinnedGoals.Add(_goalPresenter.Row(item.Goal, item));
+        }
+
+        HasPinnedGoals = PinnedGoals.Count > 0;
+        var overdue = progress.FirstOrDefault(p => p.Goal.State == GoalState.Active && p.IsOverdue);
+        GoalAttentionText = !HasPinnedGoals && overdue is not null ? _translator.Format("Home_GoalOverdue", overdue.Goal.Name) : null;
+    }
+
+    [RelayCommand]
+    private Task OpenGoalsAsync() => Shell.Current.GoToAsync(AppShell.GoalsRoute);
+
+    [RelayCommand]
+    private Task OpenGoalAsync(Goals.GoalRow row) => Shell.Current.GoToAsync(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
     private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);

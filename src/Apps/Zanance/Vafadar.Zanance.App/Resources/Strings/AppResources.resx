@@ -3369,4 +3369,178 @@
   <data name="Entry_DestinationFee" xml:space="preserve">
     <value>Fee at the destination</value>
   </data>
+  <data name="GoalType_AccountBalance" xml:space="preserve">
+    <value>A balance on one account</value>
+  </data>
+  <data name="GoalType_Earmark" xml:space="preserve">
+    <value>Money set aside</value>
+  </data>
+  <data name="Goal_TypeQuestion" xml:space="preserve">
+    <value>What do you want to reach?</value>
+  </data>
+  <data name="Help_GoalType_Title" xml:space="preserve">
+    <value>Kinds of goals</value>
+  </data>
+  <data name="Help_GoalType_Text" xml:space="preserve">
+    <value>A balance goal follows the balance of one account: every deposit, transfer in or withdrawal changes its progress, and it reserves nothing. Money set aside marks part of the money in your accounts for the goal; that money is reserved, can be protected and stays in the account.</value>
+  </data>
+  <data name="Help_GoalType_Example" xml:space="preserve">
+    <value>"Savings account to 5,000 EUR" is a balance goal. "Holiday: 800 EUR set aside in the checking account" is money set aside.</value>
+  </data>
+  <data name="Goal_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Goal_BalanceNote" xml:space="preserve">
+    <value>This goal follows the account balance; it does not reserve money.</value>
+  </data>
+  <data name="Goal_ShowOnHome" xml:space="preserve">
+    <value>Show on Home</value>
+  </data>
+  <data name="Goal_PlanTitle" xml:space="preserve">
+    <value>Your plan</value>
+  </data>
+  <data name="Goal_Schedule" xml:space="preserve">
+    <value>Contribution dates</value>
+  </data>
+  <data name="Goal_EveryTwoWeeks" xml:space="preserve">
+    <value>Every two weeks</value>
+  </data>
+  <data name="Goal_FirstDate" xml:space="preserve">
+    <value>First date (e.g. your next pay day)</value>
+  </data>
+  <data name="Goal_Method" xml:space="preserve">
+    <value>How much</value>
+  </data>
+  <data name="Help_ContributionMethod_Title" xml:space="preserve">
+    <value>How much to set aside</value>
+  </data>
+  <data name="Help_ContributionMethod_Text" xml:space="preserve">
+    <value>Fixed amount: the same amount on each date. Share of income: a percentage of last month's income – only real income counts, never transfers, refunds or money moved from savings. Spending cut: spend less in one category; the budget changes only when you tap "Apply to budget".</value>
+  </data>
+  <data name="Help_ContributionMethod_Example" xml:space="preserve">
+    <value>Salary 3,000 EUR and 500 EUR moved from savings: 10 % suggests 300 EUR, not 350 EUR.</value>
+  </data>
+  <data name="Contribution_Fixed" xml:space="preserve">
+    <value>Fixed amount</value>
+  </data>
+  <data name="Contribution_ShareOfIncome" xml:space="preserve">
+    <value>Share of income</value>
+  </data>
+  <data name="Contribution_SpendingCut" xml:space="preserve">
+    <value>Spending cut</value>
+  </data>
+  <data name="Goal_ContributionAmount" xml:space="preserve">
+    <value>Amount per date</value>
+  </data>
+  <data name="Goal_CutAmount" xml:space="preserve">
+    <value>Spend less per month</value>
+  </data>
+  <data name="Goal_Percent" xml:space="preserve">
+    <value>Share of income (%)</value>
+  </data>
+  <data name="Goal_CutCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Goal_PlanNotTransfer" xml:space="preserve">
+    <value>This is a plan for you – Zanance moves no money.</value>
+  </data>
+  <data name="Goal_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Goal_PreviewNow" xml:space="preserve">
+    <value>Now {0} · {1} % · {2} left</value>
+  </data>
+  <data name="Goal_PreviewPlan" xml:space="preserve">
+    <value>With {0} per date ({1}): {2} times → ~ {3}</value>
+  </data>
+  <data name="Goal_PreviewRequired" xml:space="preserve">
+    <value>To be ready by {0}: {1} per date ({2} dates)</value>
+  </data>
+  <data name="Goal_PreviewNeededNow" xml:space="preserve">
+    <value>The date has passed – {0} are needed now</value>
+  </data>
+  <data name="Goal_PreviewShare" xml:space="preserve">
+    <value>Last month's eligible income {0} ({1} entries) × {2} % = {3}</value>
+  </data>
+  <data name="Goal_PreviewCut" xml:space="preserve">
+    <value>Spend {1} less on {0} each month. Nothing changes until you apply it.</value>
+  </data>
+  <data name="Goal_ApplyCut" xml:space="preserve">
+    <value>Apply to budget</value>
+  </data>
+  <data name="Goal_ApplyCutMessage" xml:space="preserve">
+    <value>Lower the limit for {0} in this month's budget from {1} to {2}?</value>
+  </data>
+  <data name="Goal_CutNoLimit" xml:space="preserve">
+    <value>This month's budget has no limit for {0}. Add one on the Budget page first.</value>
+  </data>
+  <data name="Goal_EstimateNote" xml:space="preserve">
+    <value>Estimates under your assumptions, not promises.</value>
+  </data>
+  <data name="Goal_Protect" xml:space="preserve">
+    <value>Protect this money</value>
+  </data>
+  <data name="Help_GoalProtect_Title" xml:space="preserve">
+    <value>Protected money</value>
+  </data>
+  <data name="Help_GoalProtect_Text" xml:space="preserve">
+    <value>Money set aside for a protected goal is kept out of the money you can freely spend in forecasts, for example an emergency reserve. It stays in your account and you can still spend it; the app only warns when your plans would use it.</value>
+  </data>
+  <data name="Help_GoalProtect_Example" xml:space="preserve">
+    <value>Emergency reserve 1,000 EUR protected: if your plans leave 670 EUR around 24 Oct, the app says they would use 330 EUR of the protected money.</value>
+  </data>
+  <data name="Goal_ChooseAccount" xml:space="preserve">
+    <value>Choose the account this goal follows.</value>
+  </data>
+  <data name="Goal_AccountHasGoal" xml:space="preserve">
+    <value>This account already has a balance goal. Choose another account, or complete or archive that goal first.</value>
+  </data>
+  <data name="Goal_AboveTarget" xml:space="preserve">
+    <value>{0} above target</value>
+  </data>
+  <data name="Goal_Remaining" xml:space="preserve">
+    <value>{0} % · {1} left</value>
+  </data>
+  <data name="Goal_SuggestPerDate" xml:space="preserve">
+    <value>Set aside {0} per date ({1} dates left)</value>
+  </data>
+  <data name="Goal_EtaPlan" xml:space="preserve">
+    <value>~ {0} with {1} per date</value>
+  </data>
+  <data name="Goal_OverdueNeeded" xml:space="preserve">
+    <value>The date has passed – {0} are needed now.</value>
+  </data>
+  <data name="Goal_AccountArchived" xml:space="preserve">
+    <value>The account of this goal is archived – choose another account or complete the goal.</value>
+  </data>
+  <data name="Goal_NegativeBalance" xml:space="preserve">
+    <value>The balance is {0}: progress counts as 0 %.</value>
+  </data>
+  <data name="GoalState_Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="Goal_Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Goal_Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="Goal_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Goal_CompleteMessage" xml:space="preserve">
+    <value>Mark as completed? The history stays; the money set aside is released.</value>
+  </data>
+  <data name="Goal_CompleteBalanceMessage" xml:space="preserve">
+    <value>Mark as completed? The history stays and the account does not change.</value>
+  </data>
+  <data name="Home_GoalOverdue" xml:space="preserve">
+    <value>{0}: the target date has passed</value>
+  </data>
+  <data name="Goal_BalanceProgress" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="Goal_ReleaseTooMuch" xml:space="preserve">
+    <value>Only {0} is set aside for this goal in this account.</value>
+  </data>
 </root>

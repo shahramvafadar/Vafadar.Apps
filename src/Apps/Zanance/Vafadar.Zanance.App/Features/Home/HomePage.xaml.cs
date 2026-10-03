@@ -25,6 +25,7 @@ public partial class HomePage : ContentPage
             [HomeSection.Recent] = RecentSection,
             [HomeSection.Categories] = CategoriesSection,
             [HomeSection.Accounts] = AccountsSection,
+            [HomeSection.Goals] = GoalsSection,
         };
 
         // A section without visible content takes no room, so hidden cards leave no extra gap.

@@ -80,6 +80,24 @@ public sealed partial class GoalDetailViewModel(
     [ObservableProperty]
     public partial string? CompleteText { get; set; }
 
+    /// <summary>Gets a value indicating whether money can be set aside (active goals of money set aside).</summary>
+    [ObservableProperty]
+    public partial bool CanSetAside { get; set; }
+
+    /// <summary>Gets the text of the pause button: "Pause" or "Resume" (ZEX-S0303).</summary>
+    [ObservableProperty]
+    public partial string? PauseText { get; set; }
+
+    [ObservableProperty]
+    public partial bool CanPause { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsArchived { get; set; }
+
+    /// <summary>Gets a value indicating whether the goal is money set aside (it has a history of earmarks).</summary>
+    [ObservableProperty]
+    public partial bool IsEarmark { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -104,13 +122,19 @@ public sealed partial class GoalDetailViewModel(
 
         var today = Today;
         var accounts = await store.GetAccountsAsync();
-        var balances = GoalPresenter.Balances(accounts, await store.GetEntriesAsync(), today);
+        var entries = await store.GetEntriesAsync();
+        var balances = GoalPresenter.Balances(accounts, entries, today);
         var all = await goals.GetGoalsAsync();
         var allocations = await goals.GetAllocationsAsync();
-        var status = GoalCalculator.Evaluate(all, allocations, balances, today).FirstOrDefault(s => s.Goal.Id == goal.Id);
-        Summary = presenter.Row(goal, status, today);
+        var progress = GoalProgressService.Evaluate(all, allocations, accounts, entries, await goals.GetContributionPlansAsync(), today).FirstOrDefault(p => p.Goal.Id == goal.Id);
+        Summary = presenter.Row(goal, progress);
         IsActive = goal.State == GoalState.Active;
-        CompleteText = IsActive ? translator["Goal_Complete"] : translator["Goal_Reactivate"];
+        IsArchived = goal.State == GoalState.Archived;
+        IsEarmark = goal.Type == GoalType.Earmark;
+        CanSetAside = IsActive && IsEarmark;
+        CanPause = goal.State is GoalState.Active or GoalState.Paused;
+        PauseText = translator[goal.State == GoalState.Paused ? "Goal_Resume" : "Goal_Pause"];
+        CompleteText = goal.State is GoalState.Active or GoalState.Paused ? translator["Goal_Complete"] : translator["Goal_Reactivate"];
         DirectionNames = [translator["Goal_SetAside"], translator["Goal_Release"]];
 
         var names = accounts.ToDictionary(a => a.Id, a => a.Name);
@@ -141,8 +165,9 @@ public sealed partial class GoalDetailViewModel(
         var earmarks = GoalCalculator.Accounts(all, allocations, balances).ToDictionary(e => e.AccountId);
         Accounts =
         [
+            // Money is set aside only in money accounts – never in a loan, money lent or a valued asset (ZEX-S0307).
             .. accounts
-                .Where(a => !a.IsArchived && string.Equals(a.CurrencyCode, goal.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+                .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && string.Equals(a.CurrencyCode, goal.CurrencyCode, StringComparison.OrdinalIgnoreCase))
                 .Select(a =>
                 {
                     var free = earmarks.TryGetValue(a.Id, out var e) ? e.Unallocated : Math.Max(0, balances.GetValueOrDefault(a.Id));
@@ -167,6 +192,17 @@ public sealed partial class GoalDetailViewModel(
         {
             AmountError = translator["Amount_Invalid"];
             return;
+        }
+
+        // A release can only give back what is set aside for this goal in that account (ZEX-S0307).
+        if (DirectionIndex == 1)
+        {
+            var earmarked = (await goals.GetAllocationsAsync(_goal.Id)).Where(a => a.AccountId == SelectedAccount.Id).Sum(a => a.Amount);
+            if (amount > earmarked)
+            {
+                AmountError = translator.Format("Goal_ReleaseTooMuch", presenter.Money(Math.Max(0, earmarked), _goal.CurrencyCode));
+                return;
+            }
         }
 
         AmountError = null;
@@ -202,7 +238,8 @@ public sealed partial class GoalDetailViewModel(
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.GoalEditorRoute, new Dictionary<string, object> { ["id"] = _id });
 
-    // Completing a goal releases its earmark for the funding view; its history stays (F2-GOAL-03).
+    // Completing a goal releases its earmark for the funding view; its history stays (F2-GOAL-03, ZEX-GO13). Completing
+    // is the user's decision ("I reached it / I bought it"), never set because a balance once touched the target.
     [RelayCommand]
     private async Task ToggleCompleteAsync()
     {
@@ -211,8 +248,58 @@ public sealed partial class GoalDetailViewModel(
             return;
         }
 
-        _goal.State = _goal.State == GoalState.Active ? GoalState.Completed : GoalState.Active;
-        await goals.SaveGoalAsync(_goal);
+        var completing = _goal.State is GoalState.Active or GoalState.Paused;
+        if (completing && !await Shell.Current.DisplayAlertAsync(translator["Goal_Complete"], translator[_goal.Type == GoalType.Earmark ? "Goal_CompleteMessage" : "Goal_CompleteBalanceMessage"], translator["Goal_Complete"], translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        _goal.State = completing ? GoalState.Completed : GoalState.Active;
+        _goal.CompletedAt = completing ? time.GetUtcNow() : null;
+        _goal.PausedAt = null;
+        await SaveStateAsync();
+    }
+
+    // A paused goal keeps its data and money set aside, but leaves Home and the suggestions until resumed (ZEX-P13).
+    [RelayCommand]
+    private async Task TogglePauseAsync()
+    {
+        if (_goal is null)
+        {
+            return;
+        }
+
+        var pausing = _goal.State == GoalState.Active;
+        _goal.State = pausing ? GoalState.Paused : GoalState.Active;
+        _goal.PausedAt = pausing ? time.GetUtcNow() : null;
+        await SaveStateAsync();
+    }
+
+    [RelayCommand]
+    private async Task RestoreAsync()
+    {
+        if (_goal is null)
+        {
+            return;
+        }
+
+        _goal.State = GoalState.Active;
+        await SaveStateAsync();
+    }
+
+    // Another balance goal may follow the account by now (ZEX-P12): then the state stays and the user is told.
+    private async Task SaveStateAsync()
+    {
+        try
+        {
+            await goals.SaveGoalAsync(_goal!);
+        }
+        catch (InvalidOperationException)
+        {
+            await Shell.Current.DisplayAlertAsync(translator["Goal_Details"], translator["Goal_AccountHasGoal"], translator["Common_Ok"]);
+            _goal = await goals.GetGoalAsync(_id);
+        }
+
         await LoadAsync();
     }
 

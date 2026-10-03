@@ -16,7 +16,7 @@ public sealed class WeekendShiftTests
     {
         var rule = new RecurrenceRule { WeekendShift = shift, WeekendDays = SaturdaySunday };
 
-        Assert.Equal(DateOnly.Parse(expected), rule.ApplyWeekend(DateOnly.Parse(date)));
+        Assert.Equal(DateOnly.Parse(expected, System.Globalization.CultureInfo.InvariantCulture), rule.ApplyWeekend(DateOnly.Parse(date, System.Globalization.CultureInfo.InvariantCulture)));
     }
 
     [Fact]

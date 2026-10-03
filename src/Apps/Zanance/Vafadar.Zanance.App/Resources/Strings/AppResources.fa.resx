@@ -3365,4 +3365,178 @@
   <data name="Entry_DestinationFee" xml:space="preserve">
     <value>کارمزد در حساب مقصد</value>
   </data>
+  <data name="GoalType_AccountBalance" xml:space="preserve">
+    <value>موجودی یک حساب</value>
+  </data>
+  <data name="GoalType_Earmark" xml:space="preserve">
+    <value>پول کنارگذاشته</value>
+  </data>
+  <data name="Goal_TypeQuestion" xml:space="preserve">
+    <value>به چه چیزی می‌خواهید برسید؟</value>
+  </data>
+  <data name="Help_GoalType_Title" xml:space="preserve">
+    <value>انواع هدف</value>
+  </data>
+  <data name="Help_GoalType_Text" xml:space="preserve">
+    <value>هدف موجودی، موجودی یک حساب را دنبال می‌کند: هر واریز، انتقال یا برداشت پیشرفت را تغییر می‌دهد و چیزی رزرو نمی‌شود. پول کنارگذاشته بخشی از پول حساب‌ها را برای هدف علامت می‌زند؛ این پول رزرو شده، می‌تواند محافظت شود و در همان حساب می‌ماند.</value>
+  </data>
+  <data name="Help_GoalType_Example" xml:space="preserve">
+    <value>«حساب پس‌انداز تا ۵٬۰۰۰ EUR» هدف موجودی است. «سفر: ۸۰۰ EUR کنارگذاشته در حساب جاری» پول کنارگذاشته است.</value>
+  </data>
+  <data name="Goal_Account" xml:space="preserve">
+    <value>حساب</value>
+  </data>
+  <data name="Goal_BalanceNote" xml:space="preserve">
+    <value>این هدف موجودی حساب را دنبال می‌کند و پولی رزرو نمی‌کند.</value>
+  </data>
+  <data name="Goal_ShowOnHome" xml:space="preserve">
+    <value>نمایش در خانه</value>
+  </data>
+  <data name="Goal_PlanTitle" xml:space="preserve">
+    <value>برنامهٔ شما</value>
+  </data>
+  <data name="Goal_Schedule" xml:space="preserve">
+    <value>زمان‌های واریز</value>
+  </data>
+  <data name="Goal_EveryTwoWeeks" xml:space="preserve">
+    <value>هر دو هفته</value>
+  </data>
+  <data name="Goal_FirstDate" xml:space="preserve">
+    <value>اولین نوبت (مثلاً روز حقوق بعدی)</value>
+  </data>
+  <data name="Goal_Method" xml:space="preserve">
+    <value>چه مقدار</value>
+  </data>
+  <data name="Help_ContributionMethod_Title" xml:space="preserve">
+    <value>چقدر کنار بگذارید</value>
+  </data>
+  <data name="Help_ContributionMethod_Text" xml:space="preserve">
+    <value>مبلغ ثابت: در هر نوبت همان مبلغ. سهمی از درآمد: درصدی از درآمد ماه گذشته؛ فقط درآمد واقعی حساب می‌شود، نه انتقال، بازپرداخت یا پولی که از پس‌انداز آمده. کم کردن هزینه: در یک دسته کمتر خرج کنید؛ بودجه فقط وقتی تغییر می‌کند که «اعمال در بودجه» را بزنید.</value>
+  </data>
+  <data name="Help_ContributionMethod_Example" xml:space="preserve">
+    <value>حقوق ۳٬۰۰۰ EUR و ۵۰۰ EUR انتقال از پس‌انداز: ده درصد یعنی ۳۰۰ EUR، نه ۳۵۰ EUR.</value>
+  </data>
+  <data name="Contribution_Fixed" xml:space="preserve">
+    <value>مبلغ ثابت</value>
+  </data>
+  <data name="Contribution_ShareOfIncome" xml:space="preserve">
+    <value>سهمی از درآمد</value>
+  </data>
+  <data name="Contribution_SpendingCut" xml:space="preserve">
+    <value>کم کردن هزینه</value>
+  </data>
+  <data name="Goal_ContributionAmount" xml:space="preserve">
+    <value>مبلغ هر نوبت</value>
+  </data>
+  <data name="Goal_CutAmount" xml:space="preserve">
+    <value>کاهش هزینه در هر ماه</value>
+  </data>
+  <data name="Goal_Percent" xml:space="preserve">
+    <value>سهم از درآمد (٪)</value>
+  </data>
+  <data name="Goal_CutCategory" xml:space="preserve">
+    <value>دسته</value>
+  </data>
+  <data name="Goal_PlanNotTransfer" xml:space="preserve">
+    <value>این فقط برنامهٔ شماست؛ Zanance پولی جابه‌جا نمی‌کند.</value>
+  </data>
+  <data name="Goal_Preview" xml:space="preserve">
+    <value>پیش‌نمایش</value>
+  </data>
+  <data name="Goal_PreviewNow" xml:space="preserve">
+    <value>اکنون {0} · {1}٪ · مانده {2}</value>
+  </data>
+  <data name="Goal_PreviewPlan" xml:space="preserve">
+    <value>با {0} در هر نوبت ({1}): {2} بار → حدود {3}</value>
+  </data>
+  <data name="Goal_PreviewRequired" xml:space="preserve">
+    <value>برای رسیدن تا {0}: هر نوبت {1} ({2} نوبت)</value>
+  </data>
+  <data name="Goal_PreviewNeededNow" xml:space="preserve">
+    <value>تاریخ گذشته است؛ اکنون {0} لازم است</value>
+  </data>
+  <data name="Goal_PreviewShare" xml:space="preserve">
+    <value>درآمد قابل‌احتساب ماه گذشته {0} ({1} ثبت) × {2}٪ = {3}</value>
+  </data>
+  <data name="Goal_PreviewCut" xml:space="preserve">
+    <value>هر ماه {1} کمتر برای {0} خرج کنید. تا آن را اعمال نکنید، چیزی تغییر نمی‌کند.</value>
+  </data>
+  <data name="Goal_ApplyCut" xml:space="preserve">
+    <value>اعمال در بودجه</value>
+  </data>
+  <data name="Goal_ApplyCutMessage" xml:space="preserve">
+    <value>سقف «{0}» در بودجهٔ این ماه از {1} به {2} کاهش یابد؟</value>
+  </data>
+  <data name="Goal_CutNoLimit" xml:space="preserve">
+    <value>بودجهٔ این ماه برای «{0}» سقفی ندارد. اول در صفحهٔ بودجه سقف بگذارید.</value>
+  </data>
+  <data name="Goal_EstimateNote" xml:space="preserve">
+    <value>برآورد بر اساس فرض‌های شماست، نه قول.</value>
+  </data>
+  <data name="Goal_Protect" xml:space="preserve">
+    <value>محافظت از این پول</value>
+  </data>
+  <data name="Help_GoalProtect_Title" xml:space="preserve">
+    <value>پول محافظت‌شده</value>
+  </data>
+  <data name="Help_GoalProtect_Text" xml:space="preserve">
+    <value>پولی که برای هدف محافظت‌شده کنار گذاشته شده، در پیش‌بینی‌ها جزو پول آزاد حساب نمی‌شود، مثلاً ذخیرهٔ اضطراری. این پول در حساب می‌ماند و هنوز می‌توانید خرجش کنید؛ برنامه فقط وقتی هشدار می‌دهد که برنامه‌های شما از آن استفاده کنند.</value>
+  </data>
+  <data name="Help_GoalProtect_Example" xml:space="preserve">
+    <value>ذخیرهٔ اضطراری ۱٬۰۰۰ EUR محافظت‌شده: اگر طبق برنامه‌ها حدود ۲۴ اکتبر ۶۷۰ EUR بماند، برنامه می‌گوید ۳۳۰ EUR از پول محافظت‌شده مصرف می‌شود.</value>
+  </data>
+  <data name="Goal_ChooseAccount" xml:space="preserve">
+    <value>حسابی را که این هدف دنبال می‌کند انتخاب کنید.</value>
+  </data>
+  <data name="Goal_AccountHasGoal" xml:space="preserve">
+    <value>این حساب هدف موجودی دیگری دارد. حساب دیگری انتخاب کنید یا اول آن هدف را تکمیل یا بایگانی کنید.</value>
+  </data>
+  <data name="Goal_AboveTarget" xml:space="preserve">
+    <value>بالاتر از هدف: {0}</value>
+  </data>
+  <data name="Goal_Remaining" xml:space="preserve">
+    <value>مانده {1} · {0}٪</value>
+  </data>
+  <data name="Goal_SuggestPerDate" xml:space="preserve">
+    <value>در هر نوبت {0} کنار بگذارید ({1} نوبت مانده)</value>
+  </data>
+  <data name="Goal_EtaPlan" xml:space="preserve">
+    <value>حدود {0} با {1} در هر نوبت</value>
+  </data>
+  <data name="Goal_OverdueNeeded" xml:space="preserve">
+    <value>تاریخ گذشته است؛ اکنون {0} لازم است.</value>
+  </data>
+  <data name="Goal_AccountArchived" xml:space="preserve">
+    <value>حساب این هدف بایگانی شده است؛ حساب دیگری انتخاب کنید یا هدف را تکمیل کنید.</value>
+  </data>
+  <data name="Goal_NegativeBalance" xml:space="preserve">
+    <value>موجودی {0} است؛ پیشرفت صفر درصد حساب می‌شود.</value>
+  </data>
+  <data name="GoalState_Paused" xml:space="preserve">
+    <value>متوقف</value>
+  </data>
+  <data name="Goal_Pause" xml:space="preserve">
+    <value>توقف موقت</value>
+  </data>
+  <data name="Goal_Resume" xml:space="preserve">
+    <value>ادامه</value>
+  </data>
+  <data name="Goal_Restore" xml:space="preserve">
+    <value>بازگرداندن</value>
+  </data>
+  <data name="Goal_CompleteMessage" xml:space="preserve">
+    <value>به‌عنوان تکمیل‌شده علامت بخورد؟ سابقه می‌ماند و پول کنارگذاشته آزاد می‌شود.</value>
+  </data>
+  <data name="Goal_CompleteBalanceMessage" xml:space="preserve">
+    <value>به‌عنوان تکمیل‌شده علامت بخورد؟ سابقه می‌ماند و حساب تغییری نمی‌کند.</value>
+  </data>
+  <data name="Home_GoalOverdue" xml:space="preserve">
+    <value>تاریخ هدف «{0}» گذشته است</value>
+  </data>
+  <data name="Goal_BalanceProgress" xml:space="preserve">
+    <value>موجودی {0} از {1}</value>
+  </data>
+  <data name="Goal_ReleaseTooMuch" xml:space="preserve">
+    <value>در این حساب فقط {0} برای این هدف کنار گذاشته شده است.</value>
+  </data>
 </root>

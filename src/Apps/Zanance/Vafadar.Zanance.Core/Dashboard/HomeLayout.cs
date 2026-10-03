@@ -24,6 +24,9 @@ public enum HomeSection
 
     /// <summary>The accounts.</summary>
     Accounts,
+
+    /// <summary>The goals pinned to Home (ZEX-GO06); appended, so stored layouts get it at the end.</summary>
+    Goals,
 }
 
 /// <summary>One section in the layout.</summary>
@@ -47,7 +50,7 @@ public sealed class HomeLayout
     // forecast card, the category chart and the account list are one tap away in "Customize Home".
     private static readonly HomeSection[] DefaultOrder =
     [
-        HomeSection.Budget, HomeSection.Upcoming, HomeSection.Recent,
+        HomeSection.Budget, HomeSection.Upcoming, HomeSection.Goals, HomeSection.Recent,
         HomeSection.Period, HomeSection.Forecast, HomeSection.Categories, HomeSection.Accounts,
     ];
 
@@ -56,17 +59,18 @@ public sealed class HomeLayout
     [
         "Period,Forecast,Budget,Upcoming,Categories,Accounts",
         "Period,Forecast,Budget,Upcoming,Recent,-Categories,-Accounts",
+        "Budget,Upcoming,Recent,-Period,-Forecast,-Categories,-Accounts",
     ];
 
     /// <summary>
     /// Gets the default layout (ZEX-P19): at most three groups below the balance, quick add and "needs attention" –
-    /// budget, next payments and recent entries. A group without data is not shown at all, so a new user sees balance,
-    /// quick add and the latest entries. The other sections start hidden; the user can turn them on.
+    /// budget, next payments, pinned goals and recent entries. A group without data is not shown at all, so a new user
+    /// sees balance, quick add and the latest entries. The other sections start hidden; the user can turn them on.
     /// </summary>
     public static HomeLayout Default => new([.. DefaultOrder.Select(s => new HomeSectionState(s, IsVisibleByDefault(s)))]);
 
     /// <summary>Returns whether a section is shown when the user has not chosen otherwise.</summary>
-    public static bool IsVisibleByDefault(HomeSection section) => section is HomeSection.Budget or HomeSection.Upcoming or HomeSection.Recent;
+    public static bool IsVisibleByDefault(HomeSection section) => section is HomeSection.Budget or HomeSection.Upcoming or HomeSection.Goals or HomeSection.Recent;
 
     /// <summary>Gets a value indicating whether the layout differs from <see cref="Default"/>.</summary>
     public bool IsCustomized => ToString() != Default.ToString();

@@ -21,6 +21,8 @@
                             <Label Text="{Binding Summary.Name}" FontSize="18" FontAttributes="Bold" />
                             <Label Text="{Binding Summary.FundedText}" FontSize="16" />
                             <progress:SfLinearProgressBar Progress="{Binding Summary.Progress}" ProgressFill="{Binding Summary.ProgressColor}" />
+                            <Label Text="{Binding Summary.RemainingText}" FontAttributes="Bold" IsVisible="{Binding Summary.RemainingText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding Summary.PlanText}" TextColor="{DynamicResource PlanText}" IsVisible="{Binding Summary.PlanText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.DateText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />
@@ -37,7 +39,7 @@
                 </Border>
 
                 <!-- Set aside or release (F2-GOAL-02); this never moves money -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding IsActive}">
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanSetAside}">
                     <VerticalStackLayout Spacing="4">
                         <v:ChoiceChips ItemsSource="{Binding DirectionNames}" SelectedIndex="{Binding DirectionIndex}" />
                         <Label Text="{Binding NoAccountsText}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding NoAccountsText, Converter={StaticResource IsNotNullConverter}}" />
@@ -55,8 +57,8 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{v:Translate Goal_History}" Style="{StaticResource SectionHeader}" />
-                <Border Style="{StaticResource Card}" Padding="0">
+                <Label Text="{v:Translate Goal_History}" Style="{StaticResource SectionHeader}" IsVisible="{Binding IsEarmark}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsEarmark}">
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding History}">
                         <BindableLayout.EmptyView>
                             <Label Text="{v:Translate Goal_NoHistory}" Style="{StaticResource Secondary}" Padding="16" />
@@ -80,10 +82,13 @@
                 </Border>
 
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
+                <!-- Life cycle (ZEX-S0303): pause or resume, complete or reopen, archive or restore -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                     <Button Style="{StaticResource SecondaryButton}" Text="{Binding CompleteText}" Command="{Binding ToggleCompleteCommand}" />
-                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Archive}" Command="{Binding ArchiveCommand}" IsVisible="{Binding IsActive}" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{Binding PauseText}" Command="{Binding TogglePauseCommand}" IsVisible="{Binding CanPause}" />
                 </Grid>
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Archive}" Command="{Binding ArchiveCommand}" IsVisible="{Binding IsActive}" />
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Restore}" Command="{Binding RestoreCommand}" IsVisible="{Binding IsArchived}" />
                 <Button Text="{v:Translate Goal_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </ScrollView>

@@ -40,6 +40,9 @@
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
+                                            <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
@@ -49,7 +52,7 @@
                                         <!-- The whole card is one real button: keyboard, screen readers and touch -->
                                         <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
                                                 Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding FundedText}" />
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
                                     </Grid>
                                 </Border>
                         </DataTemplate>
@@ -66,6 +69,9 @@
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                             <Label Text="{Binding FundedText}" />
+                                            <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
@@ -75,7 +81,7 @@
                                         <!-- The whole card is one real button: keyboard, screen readers and touch -->
                                         <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
                                                 Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, x:DataType=local:GoalsViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding FundedText}" />
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
                                     </Grid>
                                 </Border>
                         </DataTemplate>

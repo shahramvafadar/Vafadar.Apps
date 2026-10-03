@@ -41,17 +41,19 @@ public sealed partial class GoalsViewModel(
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var accounts = await store.GetAccountsAsync();
-        var balances = GoalPresenter.Balances(accounts, await store.GetEntriesAsync(), today);
+        var entries = await store.GetEntriesAsync();
+        var balances = GoalPresenter.Balances(accounts, entries, today);
         var all = await goals.GetGoalsAsync();
         var allocations = await goals.GetAllocationsAsync();
-        var status = GoalCalculator.Evaluate(all, allocations, balances, today).ToDictionary(s => s.Goal.Id);
+        var progress = GoalProgressService.Evaluate(all, allocations, accounts, entries, await goals.GetContributionPlansAsync(), today).ToDictionary(p => p.Goal.Id);
 
+        // Active and paused goals above, completed and archived ones below (ZEX-S0303).
         Active.Clear();
         Finished.Clear();
         foreach (var goal in all)
         {
-            var row = presenter.Row(goal, status.GetValueOrDefault(goal.Id), today);
-            (goal.State == GoalState.Active ? Active : Finished).Add(row);
+            var row = presenter.Row(goal, progress.GetValueOrDefault(goal.Id));
+            (goal.State is GoalState.Active or GoalState.Paused ? Active : Finished).Add(row);
         }
 
         // Earmarked and still free money per currency, so the user sees what is not yet assigned (BUD-12).

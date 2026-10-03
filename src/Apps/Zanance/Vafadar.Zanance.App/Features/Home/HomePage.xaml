@@ -8,6 +8,7 @@
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     xmlns:plans="clr-namespace:Vafadar.Zanance.App.Features.Plans"
+    xmlns:goals="clr-namespace:Vafadar.Zanance.App.Features.Goals"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Home"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
@@ -207,6 +208,16 @@
                     <Border Style="{StaticResource Card}" Padding="0">
                         <VerticalStackLayout>
                             <!-- Each row is one real button, like the rows of Getting started -->
+                            <!-- A goal whose date has passed, when no goal is pinned to Home (ZEX-GO07) -->
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding GoalAttentionText, Converter={StaticResource IsNotNullConverter}}">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SavingBackground}" Stroke="{DynamicResource SavingLine}">
+                                    <fi:SymbolIcon Symbol="Savings" FontSize="20" ForegroundColor="{DynamicResource SavingText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding GoalAttentionText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding OpenGoalsCommand}"
+                                        SemanticProperties.Description="{Binding GoalAttentionText}" />
+                            </Grid>
                             <!-- The balance may fall below zero this month (forecast with the plans, in both modes, ZEX-P19) -->
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding LowBalanceText, Converter={StaticResource IsNotNullConverter}}">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource WarningBackground}" Stroke="{DynamicResource WarningText}">
@@ -353,6 +364,39 @@
                                     SemanticProperties.Description="{Binding BudgetText}" SemanticProperties.Hint="{Binding BudgetDailyText}" />
                         </Grid>
                     </Border>
+                </VerticalStackLayout>
+
+                <!-- Pinned goals (ZEX-GO06, GO07): at most two, one card each; no empty group -->
+                <VerticalStackLayout x:Name="GoalsSection" Spacing="0">
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasPinnedGoals}">
+                        <Label Text="{v:Translate Goals_Tab}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenGoalsCommand}" />
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding PinnedGoals}" IsVisible="{Binding HasPinnedGoals}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="goals:GoalRow">
+                                <Border Style="{StaticResource Card}">
+                                    <Grid>
+                                        <VerticalStackLayout Spacing="6">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SavingText}" VerticalOptions="Center" />
+                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <Label Grid.Column="2" Text="{Binding FundedText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                            </Grid>
+                                            <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
+                                            <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                        </VerticalStackLayout>
+                                        <!-- The card is one button named with its whole text (ZEX-S0304) -->
+                                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
+                                                Command="{Binding OpenGoalCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout x:Name="UpcomingSection" Spacing="0">

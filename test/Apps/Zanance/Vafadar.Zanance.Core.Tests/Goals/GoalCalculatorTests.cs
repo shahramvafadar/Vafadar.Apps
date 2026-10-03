@@ -67,7 +67,7 @@ public sealed class GoalCalculatorTests
     [InlineData(ContributionFrequency.Weekly, "2027-03-10", "2027-03-30", 3)]
     [InlineData(ContributionFrequency.Monthly, "2027-03-10", "2027-03-09", 0)]
     public void Opportunities_count_the_current_period(ContributionFrequency frequency, string today, string target, int expected) =>
-        Assert.Equal(expected, GoalCalculator.Opportunities(frequency, DateOnly.Parse(today), DateOnly.Parse(target)));
+        Assert.Equal(expected, GoalCalculator.Opportunities(frequency, DateOnly.Parse(today, System.Globalization.CultureInfo.InvariantCulture), DateOnly.Parse(target, System.Globalization.CultureInfo.InvariantCulture)));
 
     [Fact]
     public void Suggestions_round_up_are_due_at_once_when_late_and_absent_without_a_date()

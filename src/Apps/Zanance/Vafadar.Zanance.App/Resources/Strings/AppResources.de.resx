@@ -3365,4 +3365,178 @@
   <data name="Entry_DestinationFee" xml:space="preserve">
     <value>Gebühr beim Zielkonto</value>
   </data>
+  <data name="GoalType_AccountBalance" xml:space="preserve">
+    <value>Ein Kontostand</value>
+  </data>
+  <data name="GoalType_Earmark" xml:space="preserve">
+    <value>Zurückgelegtes Geld</value>
+  </data>
+  <data name="Goal_TypeQuestion" xml:space="preserve">
+    <value>Was möchten Sie erreichen?</value>
+  </data>
+  <data name="Help_GoalType_Title" xml:space="preserve">
+    <value>Arten von Zielen</value>
+  </data>
+  <data name="Help_GoalType_Text" xml:space="preserve">
+    <value>Ein Kontostand-Ziel folgt dem Stand eines Kontos: Jede Einzahlung, Umbuchung oder Abhebung ändert den Fortschritt, und es reserviert nichts. Zurückgelegtes Geld markiert einen Teil des Geldes auf Ihren Konten für das Ziel; dieses Geld ist reserviert, kann geschützt werden und bleibt auf dem Konto.</value>
+  </data>
+  <data name="Help_GoalType_Example" xml:space="preserve">
+    <value>„Sparkonto auf 5.000 EUR“ ist ein Kontostand-Ziel. „Urlaub: 800 EUR auf dem Girokonto zurückgelegt“ ist zurückgelegtes Geld.</value>
+  </data>
+  <data name="Goal_Account" xml:space="preserve">
+    <value>Konto</value>
+  </data>
+  <data name="Goal_BalanceNote" xml:space="preserve">
+    <value>Dieses Ziel folgt dem Kontostand; es reserviert kein Geld.</value>
+  </data>
+  <data name="Goal_ShowOnHome" xml:space="preserve">
+    <value>Auf der Startseite zeigen</value>
+  </data>
+  <data name="Goal_PlanTitle" xml:space="preserve">
+    <value>Ihr Plan</value>
+  </data>
+  <data name="Goal_Schedule" xml:space="preserve">
+    <value>Einzahlungstermine</value>
+  </data>
+  <data name="Goal_EveryTwoWeeks" xml:space="preserve">
+    <value>Alle zwei Wochen</value>
+  </data>
+  <data name="Goal_FirstDate" xml:space="preserve">
+    <value>Erster Termin (z. B. Ihr nächster Zahltag)</value>
+  </data>
+  <data name="Goal_Method" xml:space="preserve">
+    <value>Wie viel</value>
+  </data>
+  <data name="Help_ContributionMethod_Title" xml:space="preserve">
+    <value>Wie viel zurücklegen</value>
+  </data>
+  <data name="Help_ContributionMethod_Text" xml:space="preserve">
+    <value>Fester Betrag: an jedem Termin derselbe Betrag. Anteil am Einkommen: ein Prozentsatz des Einkommens im letzten Monat – nur echtes Einkommen zählt, nie Umbuchungen, Erstattungen oder Geld vom Sparkonto. Weniger ausgeben: in einer Kategorie sparen; das Budget ändert sich nur, wenn Sie „Ins Budget übernehmen“ tippen.</value>
+  </data>
+  <data name="Help_ContributionMethod_Example" xml:space="preserve">
+    <value>Gehalt 3.000 EUR und 500 EUR vom Sparkonto: 10 % ergeben 300 EUR, nicht 350 EUR.</value>
+  </data>
+  <data name="Contribution_Fixed" xml:space="preserve">
+    <value>Fester Betrag</value>
+  </data>
+  <data name="Contribution_ShareOfIncome" xml:space="preserve">
+    <value>Anteil am Einkommen</value>
+  </data>
+  <data name="Contribution_SpendingCut" xml:space="preserve">
+    <value>Weniger ausgeben</value>
+  </data>
+  <data name="Goal_ContributionAmount" xml:space="preserve">
+    <value>Betrag je Termin</value>
+  </data>
+  <data name="Goal_CutAmount" xml:space="preserve">
+    <value>Weniger ausgeben pro Monat</value>
+  </data>
+  <data name="Goal_Percent" xml:space="preserve">
+    <value>Anteil am Einkommen (%)</value>
+  </data>
+  <data name="Goal_CutCategory" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="Goal_PlanNotTransfer" xml:space="preserve">
+    <value>Das ist Ihr Plan – Zanance überweist kein Geld.</value>
+  </data>
+  <data name="Goal_Preview" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="Goal_PreviewNow" xml:space="preserve">
+    <value>Jetzt {0} · {1} % · noch {2}</value>
+  </data>
+  <data name="Goal_PreviewPlan" xml:space="preserve">
+    <value>Mit {0} je Termin ({1}): {2}-mal → ~ {3}</value>
+  </data>
+  <data name="Goal_PreviewRequired" xml:space="preserve">
+    <value>Bis {0} erreicht: {1} je Termin ({2} Termine)</value>
+  </data>
+  <data name="Goal_PreviewNeededNow" xml:space="preserve">
+    <value>Das Datum ist vorbei – jetzt fehlen {0}</value>
+  </data>
+  <data name="Goal_PreviewShare" xml:space="preserve">
+    <value>Anrechenbares Einkommen des letzten Monats {0} ({1} Buchungen) × {2} % = {3}</value>
+  </data>
+  <data name="Goal_PreviewCut" xml:space="preserve">
+    <value>Jeden Monat {1} weniger für {0} ausgeben. Nichts ändert sich, bis Sie es übernehmen.</value>
+  </data>
+  <data name="Goal_ApplyCut" xml:space="preserve">
+    <value>Ins Budget übernehmen</value>
+  </data>
+  <data name="Goal_ApplyCutMessage" xml:space="preserve">
+    <value>Das Limit für {0} im Budget dieses Monats von {1} auf {2} senken?</value>
+  </data>
+  <data name="Goal_CutNoLimit" xml:space="preserve">
+    <value>Das Budget dieses Monats hat kein Limit für {0}. Legen Sie zuerst eines auf der Budgetseite an.</value>
+  </data>
+  <data name="Goal_EstimateNote" xml:space="preserve">
+    <value>Schätzungen unter Ihren Annahmen, keine Zusagen.</value>
+  </data>
+  <data name="Goal_Protect" xml:space="preserve">
+    <value>Dieses Geld schützen</value>
+  </data>
+  <data name="Help_GoalProtect_Title" xml:space="preserve">
+    <value>Geschütztes Geld</value>
+  </data>
+  <data name="Help_GoalProtect_Text" xml:space="preserve">
+    <value>Für ein geschütztes Ziel zurückgelegtes Geld zählt in Prognosen nicht zum frei verfügbaren Geld, etwa eine Notreserve. Es bleibt auf Ihrem Konto und Sie können es weiter ausgeben; die App warnt nur, wenn Ihre Pläne es aufbrauchen würden.</value>
+  </data>
+  <data name="Help_GoalProtect_Example" xml:space="preserve">
+    <value>Notreserve 1.000 EUR geschützt: Bleiben laut Ihren Plänen um den 24. Okt. 670 EUR, sagt die App, dass sie 330 EUR des geschützten Geldes verwenden würden.</value>
+  </data>
+  <data name="Goal_ChooseAccount" xml:space="preserve">
+    <value>Wählen Sie das Konto, dem dieses Ziel folgt.</value>
+  </data>
+  <data name="Goal_AccountHasGoal" xml:space="preserve">
+    <value>Dieses Konto hat schon ein Kontostand-Ziel. Wählen Sie ein anderes Konto oder schließen bzw. archivieren Sie zuerst das andere Ziel.</value>
+  </data>
+  <data name="Goal_AboveTarget" xml:space="preserve">
+    <value>{0} über dem Ziel</value>
+  </data>
+  <data name="Goal_Remaining" xml:space="preserve">
+    <value>{0} % · noch {1}</value>
+  </data>
+  <data name="Goal_SuggestPerDate" xml:space="preserve">
+    <value>{0} je Termin zurücklegen (noch {1} Termine)</value>
+  </data>
+  <data name="Goal_EtaPlan" xml:space="preserve">
+    <value>~ {0} mit {1} je Termin</value>
+  </data>
+  <data name="Goal_OverdueNeeded" xml:space="preserve">
+    <value>Das Datum ist vorbei – jetzt fehlen {0}.</value>
+  </data>
+  <data name="Goal_AccountArchived" xml:space="preserve">
+    <value>Das Konto dieses Ziels ist archiviert – wählen Sie ein anderes Konto oder schließen Sie das Ziel ab.</value>
+  </data>
+  <data name="Goal_NegativeBalance" xml:space="preserve">
+    <value>Der Kontostand ist {0}: Der Fortschritt zählt als 0 %.</value>
+  </data>
+  <data name="GoalState_Paused" xml:space="preserve">
+    <value>Pausiert</value>
+  </data>
+  <data name="Goal_Pause" xml:space="preserve">
+    <value>Pausieren</value>
+  </data>
+  <data name="Goal_Resume" xml:space="preserve">
+    <value>Fortsetzen</value>
+  </data>
+  <data name="Goal_Restore" xml:space="preserve">
+    <value>Wiederherstellen</value>
+  </data>
+  <data name="Goal_CompleteMessage" xml:space="preserve">
+    <value>Als erledigt markieren? Der Verlauf bleibt; das zurückgelegte Geld wird freigegeben.</value>
+  </data>
+  <data name="Goal_CompleteBalanceMessage" xml:space="preserve">
+    <value>Als erledigt markieren? Der Verlauf bleibt und das Konto ändert sich nicht.</value>
+  </data>
+  <data name="Home_GoalOverdue" xml:space="preserve">
+    <value>{0}: Das Zieldatum ist vorbei</value>
+  </data>
+  <data name="Goal_BalanceProgress" xml:space="preserve">
+    <value>{0} von {1}</value>
+  </data>
+  <data name="Goal_ReleaseTooMuch" xml:space="preserve">
+    <value>Auf diesem Konto sind für dieses Ziel nur {0} zurückgelegt.</value>
+  </data>
 </root>

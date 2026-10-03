@@ -6,6 +6,22 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Account goals (enhancement ZEX, phase 2)
+
+- A goal can follow the balance of one account ("Savings account to 5,000 EUR"): deposits, transfers in and
+  withdrawals change its progress, and it reserves nothing. Money set aside works as before; in Advanced you choose
+  the kind. One balance goal per account.
+- Goals can be paused, completed and reopened, archived and restored. "Reached" and "overdue" follow the real numbers:
+  a withdrawal after reaching a goal shows it as not reached again; a passed date says how much is needed now.
+- Your plan per goal: contribution dates (monthly, every two weeks from a pay day, weekly; Persian months in the Persian
+  calendar) and a fixed amount – in Advanced also a share of last month's income (transfers, refunds and money from
+  savings never count) or a spending cut that changes the budget only when you apply it. The editor shows progress,
+  the amount needed per date and the estimated date before you save.
+- Pin up to two goals to Home: progress, what is left and the estimate of your plan. Without a pinned goal, an overdue
+  goal appears under "Needs attention".
+- Money is set aside only in money accounts, a release cannot exceed what is set aside, and money set aside can be
+  marked as protected (Advanced).
+
 ### Changed – Several currencies, defaults and Home (enhancement ZEX, phase 1)
 
 - Three separate settings under Money and months: the default currency for new items, the default account for new

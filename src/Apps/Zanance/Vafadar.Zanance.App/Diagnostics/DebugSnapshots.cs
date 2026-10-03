@@ -143,7 +143,7 @@ internal static class DebugSnapshots
         await Presentation.DisplayUnitPreferences.SaveAsync(services.GetRequiredService<ZananceStore>(), [new Core.Money.DisplayUnit("IRR", "Toman", 1)]);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
-        var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;
+        var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First(g => g.Type == Core.Goals.GoalType.AccountBalance).Id;
         var accountId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         var weekdayPlanId = (await services.GetRequiredService<PlanStore>().GetSchedulesAsync()).First(s => s.Rule.DayRule == MonthDayRule.LastWeekday).Id;
         var loanId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
@@ -308,6 +308,20 @@ internal static class DebugSnapshots
         await goalStore.SaveGoalAsync(insurance);
         await goalStore.AddAllocationAsync(new Core.Goals.GoalAllocation { GoalId = insurance.Id, AccountId = savings.Id, Amount = 180_00, Date = today });
         await goalStore.AddAllocationAsync(new Core.Goals.GoalAllocation { GoalId = travel.Id, AccountId = savings.Id, Amount = 300_00, Date = today });
+
+        // A balance goal on the savings account with a monthly plan, pinned to Home (ZEX phase 2).
+        var emergency = new Core.Goals.Goal
+        {
+            Name = "Emergency fund", TargetAmount = 5_000_00, CurrencyCode = savings.CurrencyCode, Icon = "BuildingBank",
+            Type = Core.Goals.GoalType.AccountBalance, AccountId = savings.Id, HomePin = 1,
+        };
+        await goalStore.SaveGoalAsync(emergency);
+        await goalStore.SaveContributionPlanAsync(emergency.Id, new Core.Goals.ContributionPlan
+        {
+            Method = Core.Goals.ContributionMethod.FixedAmount,
+            Amount = 250_00,
+            Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Start = today.AddDays(5) },
+        });
         await store.SaveTemplateAsync(new EntryTemplate { Name = "Coffee", Kind = EntryKind.Expense, AccountId = checking.Id, CategoryId = Category("Food"), Amount = 350 });
         return (groceries.Id, Category("Food"));
     }
