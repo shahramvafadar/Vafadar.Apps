@@ -25,8 +25,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] App design: meaning colours, Insights tab, calm Home, Persian digits (D-27)
 - [x] English and German fonts of the design (Figtree, Urbanist)
 - [x] Local backup: encrypted backup file, restore with safety copy, CSV import / export
-- [x] Cloud backup (OneDrive on Android and Windows, Google Drive on Android) with sign-in (`Vafadar.Authentication.Maui`,
-      D-35) – offered only in builds with OAuth clients; device verification with real clients pending
+- [x] Cloud backup (OneDrive and Google Drive on Android, iOS and Windows) with sign-in (`Vafadar.Authentication.Maui`,
+      D-35, D-50) – offered only in builds with OAuth clients; device verification with real clients pending
 - [ ] Device checks of the release build (08 release checklist)
 ## Phase 2 – First store release
 
@@ -40,7 +40,9 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 
 - [ ] Apple Developer Program, Mac build environment
 - [ ] iOS-specific testing (Persian RTL, sign-in flows, backup)
-- [ ] Cloud backup sign-in on iOS: MSAL keychain group entitlement and `msauth` URL scheme, Google iOS OAuth client
+- [x] Cloud backup sign-in on iOS (D-50): MSAL with keychain group entitlement and `msauth` URL scheme, Google with the
+      iOS OAuth client (PKCE, reversed client id scheme) – built for iOS from Windows only as a library; app build and
+      device test need a Mac
 - [ ] App Store listing and privacy details, TestFlight, release
 
 ## Phase 4 – Monetization
@@ -54,7 +56,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [ ] Web version / multi-device sync where an app needs it ([web-and-shared-data.md](architecture/web-and-shared-data.md))
 - [x] Android 13+ per-app language integration (D-32)
 - [ ] Direct upload to Google Play from the release workflow
-- [ ] Google Drive backup on Windows (desktop OAuth client) and automatic cloud backups (`Vafadar.Maui.Backup`)
+- [x] Google Drive backup on Windows (Desktop app OAuth client, loopback + PKCE, no client secret; D-50)
+- [ ] Automatic cloud backups (`Vafadar.Maui.Backup`)
 
 ## Open questions
 

@@ -2809,6 +2809,10 @@
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>ورود به {0} انجام نشد. لطفاً دوباره تلاش کنید.</value>
   </data>
+  <data name="Cloud_BrowserDone" xml:space="preserve">
+    <value>ورود انجام شد. می‌توانید این زبانه را ببندید و به Zanance برگردید.</value>
+    <comment>Windows: page in the browser after a Google sign-in (D-50).</comment>
+  </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
     <value>لطفاً دوباره به {0} متصل شوید.</value>
   </data>

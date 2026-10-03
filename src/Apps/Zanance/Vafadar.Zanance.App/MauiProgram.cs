@@ -82,16 +82,23 @@ public static class MauiProgram
 #endif
 
         // Cloud backup to the user's own Google Drive or OneDrive, offered only when the OAuth clients are configured
-        // for the build and the platform supports them (D-35).
+        // for the build (D-35). Both providers work on Android, iOS and Windows; Google has one client per platform and
+        // each build carries only its own (D-50).
         var cloud = new CloudSignIn(new CloudSignInOptions
         {
             MicrosoftClientId = AppSecrets.MicrosoftEntraClientId,
             GoogleAndroidClientId = AppSecrets.GoogleOAuthClientIdAndroid,
+            GoogleIosClientId = AppSecrets.GoogleOAuthClientIdIos,
+            GoogleWindowsClientId = AppSecrets.GoogleOAuthClientIdWindows,
         });
         builder.Services.AddVafadarCloudSignIn(options =>
         {
             options.MicrosoftClientId = cloud.Options.MicrosoftClientId;
             options.GoogleAndroidClientId = cloud.Options.GoogleAndroidClientId;
+            options.GoogleIosClientId = cloud.Options.GoogleIosClientId;
+            options.GoogleWindowsClientId = cloud.Options.GoogleWindowsClientId;
+            options.BrowserCompletionMessage = () =>
+                AppStrings.ResourceManager.GetString("Cloud_BrowserDone", System.Globalization.CultureInfo.CurrentUICulture) ?? string.Empty;
         });
         if (cloud.IsGoogleAvailable)
         {

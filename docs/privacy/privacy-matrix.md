@@ -18,7 +18,7 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 | Backup files | ⚙️ | On the device (last 10) and wherever the user shares them | ⚙️ only when the user shares one | The user (encrypted: only with the password) |
 | CSV / PDF exports | ⚙️ | App cache, then the app the user picks in the share sheet | ⚙️ only when the user shares one (unencrypted, with a warning) | Whoever receives the file |
 | Reminders | ⚙️ | Local notification service | ❌ | The user (generic text unless details are allowed) |
-| Google / Microsoft account, OAuth tokens | 🔜 | – | – | Not in this release (cloud backup DF-04/05 is hidden) |
+| Google / Microsoft account, OAuth tokens | ⚙️ | Device only: Play services (Google, Android), MSAL cache (Android storage, iOS keychain, Windows DPAPI), Google refresh token (iOS keychain, Windows DPAPI) | ❌ | Only in builds with cloud backup clients and after the user connects (D-35, D-50); removed on disconnect |
 | Purchase status (Pro, tips) | 🔜 | – | – | Not in this release |
 | Crash reports / analytics | ❌ | – | – | – |
 | Advertising identifiers | ❌ | – | – | – |
@@ -42,8 +42,8 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 
 | Service / SDK | Zanance | Data involved | Notes |
 |---|---|---|---|
-| Google Drive API + Google Identity (Play services) | ⚙️ | Encrypted backup files; the account e-mail | Only when the user connects Google Drive (Android, D-35); scopes `drive.appdata` (own folder only), `openid`, `email`; tokens kept by Play services |
-| Microsoft Graph (OneDrive) + Microsoft identity (MSAL) | ⚙️ | Encrypted backup files; the account name | Only when the user connects OneDrive (Android, Windows, D-35); scope `Files.ReadWrite.AppFolder` (own folder only); token cache on the device (MSAL storage, DPAPI on Windows) |
+| Google Drive API + Google Identity | ⚙️ | Encrypted backup files; the account e-mail | Only when the user connects Google Drive (Android, iOS, Windows; D-35, D-50); scopes `drive.appdata` (own folder only), `openid`, `email`; Android: tokens kept by Play services; iOS and Windows: system browser with PKCE, no client secret, refresh token in the keychain / under DPAPI, revoked on disconnect |
+| Microsoft Graph (OneDrive) + Microsoft identity (MSAL) | ⚙️ | Encrypted backup files; the account name | Only when the user connects OneDrive (Android, iOS, Windows; D-35, D-50); scope `Files.ReadWrite.AppFolder` (own folder only); token cache on the device (MSAL storage on Android, keychain on iOS, DPAPI on Windows) |
 | Google Play Billing / StoreKit | 🔜 | Purchase status | Only if the app gets Pro / tips |
 | Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline. The `Syncfusion.Telemetry` package they bring is switched off at startup (`Telemetry.Disable()` in `Vafadar.Maui`) |
 | Plugin.LocalNotification | ✅ | Reminder text | Local notifications only, no push service |
@@ -69,6 +69,6 @@ the current Play Console help texts before submitting; when in doubt, declare co
 | Question | Zanance (draft) |
 |---|---|
 | Data used to track you | ❌ None |
-| Data linked to you | None collected by the app; cloud backup on iOS is not offered yet (D-35); re-check Apple's definitions at submission |
+| Data linked to you | None collected by the app. A build with cloud backup sends encrypted backup files and uses the account e-mail only between the device and the user's own Google Drive / OneDrive at the user's request (D-50); the developer receives nothing – re-check Apple's definitions at submission |
 | Data not linked to you | None |
 | Privacy manifest | `Platforms/iOS/Resources/PrivacyInfo.xcprivacy` (no tracking; required-reason API `UserDefaults` declared with reason `CA92.1`) |

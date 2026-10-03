@@ -40,12 +40,8 @@
 	<!-- Camera for photographing receipts (D-38); asked only when the user chooses "Take a photo". Localised in *.lproj/InfoPlist.strings. -->
 	<key>NSCameraUsageDescription</key>
 	<string>Zanance uses the camera to photograph receipts. The photo is read on this device and stays on it.</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>de</string>
-		<string>fa</string>
-	</array>
+	<!-- Sign-in URL schemes (CFBundleURLTypes) are generated at build time from the configured OAuth clients: msauth.<bundle id>
+	     for Microsoft, the reversed iOS client id for Google (see ZananceCloudUrlSchemes in Vafadar.Zanance.App.csproj, D-50). -->
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 </dict>

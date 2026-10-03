@@ -131,11 +131,11 @@ sequenceDiagram
 
 Both are free for the user within their existing quota and cost the developer nothing.
 
-### Cloud backup in Zanance (D-35)
+### Cloud backup in Zanance (D-35, D-50)
 
 | Step | What happens |
 |---|---|
-| Offered | Only when the build has the OAuth client of the provider (`MicrosoftEntraClientId`, `GoogleOAuthClientIdAndroid`) and the platform supports it (OneDrive: Android, Windows; Google Drive: Android). A build without clients has no cloud section and no `INTERNET` permission |
+| Offered | Only when the build has the OAuth client of the provider for that platform (`MicrosoftEntraClientId` for all; `GoogleOAuthClientIdAndroid`, `GoogleOAuthClientIdIos`, `GoogleOAuthClientIdWindows`). Both providers work on Android, iOS and Windows. A build without clients has no cloud section (and on Android no `INTERNET` permission) |
 | Connect | The user taps *Connect*, reads where the backups go and that only the app folder is visible, then signs in with the provider's own screen ([authentication](authentication.md)) |
 | Back up | *Back up now* uses the password entered under *Create backup*; without a password nothing is uploaded. Retention (`MaxBackupsToKeep`) applies in the cloud folder as well |
 | Restore | *Show backups* lists the files; tapping one downloads it and runs the normal restore flow (password, preview, safety copy, confirmation) |

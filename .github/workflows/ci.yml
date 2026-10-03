@@ -95,6 +95,9 @@ jobs:
     runs-on: windows-latest
     env:
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
+      # Optional OAuth clients (D-35, D-50): with them the build offers OneDrive and Google Drive; empty in forks.
+      MicrosoftEntraClientId: ${{ secrets.MICROSOFT_ENTRA_CLIENT_ID }}
+      GoogleOAuthClientIdWindows: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID_WINDOWS }}
     steps:
       - uses: actions/checkout@v7
 
@@ -114,6 +117,9 @@ jobs:
     runs-on: macos-latest
     env:
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
+      # Optional OAuth clients (D-35, D-50); they also decide the sign-in URL schemes in Info.plist.
+      MicrosoftEntraClientId: ${{ secrets.MICROSOFT_ENTRA_CLIENT_ID }}
+      GoogleOAuthClientIdIos: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID_IOS }}
     steps:
       - uses: actions/checkout@v7
 

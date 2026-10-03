@@ -178,6 +178,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Chart dates follow the app language and calendar (the forecast showed Persian month names in English); the forecast
   list shows dates as "October 28".
 
+### Added – Cloud backup on every platform (D-50)
+
+- OneDrive and Google Drive backups now on Android, iOS and Windows. On iOS both sign in through Safari's secure
+  sign-in sheet; on Windows Google opens your browser and the app receives the answer on this computer only. No client
+  secret is used, and the access stays on the device (keychain on iOS, protected for your Windows user on Windows).
+
 ### Added – Cloud backup (D-35)
 
 - Optional backups to your own OneDrive (Android, Windows) or Google Drive (Android): connect, back up now, see and restore
@@ -229,5 +235,5 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ### Not yet included
 
-- Cloud backup on iOS and Google Drive on Windows; automatic cloud backups. Cloud backup is not yet verified on a
-  device with real OAuth clients.
+- Automatic cloud backups. Cloud backup is not yet verified on a device with real OAuth clients; the iOS app has not
+  been built on a Mac yet.

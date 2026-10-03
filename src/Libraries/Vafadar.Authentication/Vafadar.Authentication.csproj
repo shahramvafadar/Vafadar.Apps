@@ -2,7 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
-    <Description>Authentication abstractions: signing in with external accounts (Google, Microsoft) and acquiring access tokens.</Description>
+    <Description>Authentication abstractions: signing in with external accounts (Google, Microsoft) and acquiring access tokens; the platform-neutral OAuth pieces (PKCE, loopback redirect, Google sign-in for installed apps) and the provider availability matrix.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Vafadar.Authentication.Tests" />
+  </ItemGroup>
 
 </Project>

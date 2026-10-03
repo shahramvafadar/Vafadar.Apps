@@ -71,17 +71,67 @@
   </ItemGroup>
 
   <!--
-    Cloud backup (D-35): the OAuth clients come from Directory.Secrets.props or CI secrets. Without them the app has no
-    cloud backup, and the release build keeps removing the network permission (D-20).
+    Cloud backup (D-35, D-50): the OAuth clients come from Directory.Secrets.props or CI secrets. Without them the app
+    has no cloud backup, and the Android release build keeps removing the network permission (D-20).
+    Microsoft uses one Entra public client everywhere; Google has one client per platform (Android, iOS, Desktop app
+    for Windows). Each platform compiles only its own Google client id; the others become empty strings.
   -->
+  <PropertyGroup>
+    <ZananceTargetPlatform>$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))</ZananceTargetPlatform>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(MicrosoftEntraClientId)' != ''">
     <DefineConstants>$(DefineConstants);CLOUD_MICROSOFT</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <AppSecret Include="MicrosoftEntraClientId" Value="$(MicrosoftEntraClientId)" />
-    <AppSecret Include="GoogleOAuthClientIdAndroid" Value="$(GoogleOAuthClientIdAndroid)" />
+    <AppSecret Include="GoogleOAuthClientIdAndroid" Value="$(GoogleOAuthClientIdAndroid)" Condition="'$(ZananceTargetPlatform)' == 'android'" />
+    <AppSecret Include="GoogleOAuthClientIdAndroid" Value="" Condition="'$(ZananceTargetPlatform)' != 'android'" />
+    <AppSecret Include="GoogleOAuthClientIdIos" Value="$(GoogleOAuthClientIdIos)" Condition="'$(ZananceTargetPlatform)' == 'ios'" />
+    <AppSecret Include="GoogleOAuthClientIdIos" Value="" Condition="'$(ZananceTargetPlatform)' != 'ios'" />
+    <AppSecret Include="GoogleOAuthClientIdWindows" Value="$(GoogleOAuthClientIdWindows)" Condition="'$(ZananceTargetPlatform)' == 'windows'" />
+    <AppSecret Include="GoogleOAuthClientIdWindows" Value="" Condition="'$(ZananceTargetPlatform)' != 'windows'" />
   </ItemGroup>
+
+  <!--
+    iOS sign-in redirects (D-50). The URL schemes depend on the configured clients, so they are not in Info.plist but
+    generated at build time into a partial app manifest that the iOS SDK merges into Info.plist:
+      * msauth.<bundle id>                       – Microsoft (MSAL), when MicrosoftEntraClientId is set;
+      * com.googleusercontent.apps.<client id>   – Google (reversed iOS client id), when GoogleOAuthClientIdIos is set.
+    A build without clients registers no URL scheme. The keychain group for the token caches is in
+    Platforms/iOS/Entitlements.plist (picked up by MAUI by convention).
+  -->
+  <PropertyGroup Condition="'$(ZananceTargetPlatform)' == 'ios'">
+    <CollectAppManifestsDependsOn>$(CollectAppManifestsDependsOn);ZananceCloudUrlSchemes</CollectAppManifestsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ZananceCloudUrlSchemes" Condition="'$(ZananceTargetPlatform)' == 'ios'">
+    <PropertyGroup>
+      <_ZananceUrlSchemesPlist>$(IntermediateOutputPath)ZananceCloudUrlSchemes.plist</_ZananceUrlSchemesPlist>
+      <_ZananceGoogleScheme Condition="$(GoogleOAuthClientIdIos.EndsWith('.apps.googleusercontent.com'))">com.googleusercontent.apps.$(GoogleOAuthClientIdIos.Replace('.apps.googleusercontent.com', ''))</_ZananceGoogleScheme>
+    </PropertyGroup>
+    <Warning Condition="'$(GoogleOAuthClientIdIos)' != '' and '$(_ZananceGoogleScheme)' == ''"
+             Text="GoogleOAuthClientIdIos does not end with .apps.googleusercontent.com; Google Drive is not offered on iOS." />
+    <ItemGroup>
+      <_ZananceUrlScheme Include="msauth.$(ApplicationId)" Condition="'$(MicrosoftEntraClientId)' != ''" />
+      <_ZananceUrlScheme Include="$(_ZananceGoogleScheme)" Condition="'$(_ZananceGoogleScheme)' != ''" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_ZananceUrlTypes>@(_ZananceUrlScheme->'&lt;dict&gt;&lt;key&gt;CFBundleURLName&lt;/key&gt;&lt;string&gt;%(Identity)&lt;/string&gt;&lt;key&gt;CFBundleURLSchemes&lt;/key&gt;&lt;array&gt;&lt;string&gt;%(Identity)&lt;/string&gt;&lt;/array&gt;&lt;/dict&gt;', '')</_ZananceUrlTypes>
+    </PropertyGroup>
+    <ItemGroup>
+      <_ZananceUrlSchemesLine Include="&lt;%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F&gt;" />
+      <_ZananceUrlSchemesLine Include="&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;" />
+      <_ZananceUrlSchemesLine Include="&lt;plist version=&quot;1.0&quot;&gt;&lt;dict&gt;&lt;key&gt;CFBundleURLTypes&lt;/key&gt;&lt;array&gt;$(_ZananceUrlTypes)&lt;/array&gt;&lt;/dict&gt;&lt;/plist&gt;" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_ZananceUrlSchemesPlist)" Lines="@(_ZananceUrlSchemesLine)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                      Condition="'@(_ZananceUrlScheme)' != ''" />
+    <ItemGroup Condition="'@(_ZananceUrlScheme)' != ''">
+      <PartialAppManifest Include="$(_ZananceUrlSchemesPlist)" />
+      <FileWrites Include="$(_ZananceUrlSchemesPlist)" />
+    </ItemGroup>
+  </Target>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == ''">
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />

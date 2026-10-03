@@ -3,18 +3,18 @@
   <Import Project="$(RepoRoot)eng\Maui.props" />
 
   <PropertyGroup>
-    <Description>Sign-in with Microsoft (MSAL) and Google (Google Identity authorization API on Android) for backups in the user's own OneDrive or Google Drive. Only minimal scopes; tokens stay on the device.</Description>
+    <Description>Sign-in with Microsoft (MSAL on Android, iOS and Windows) and Google (Google Identity authorization API on Android, system browser with PKCE on iOS and Windows) for backups in the user's own OneDrive or Google Drive. Only minimal scopes; tokens stay on the device.</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Vafadar.Authentication\Vafadar.Authentication.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <PackageReference Include="Microsoft.Identity.Client" />
   </ItemGroup>
 
-  <!-- The token cache of the desktop is kept with DPAPI (Android keeps it in MSAL's own protected storage). -->
+  <!-- The token caches of the desktop (MSAL, Google) are kept with DPAPI; Android and iOS keep them in protected platform storage. -->
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
   </ItemGroup>

@@ -50,6 +50,7 @@
     <Project Path="test/Apps/Zanance/Vafadar.Zanance.Reports.Tests/Vafadar.Zanance.Reports.Tests.csproj" />
   </Folder>
   <Folder Name="/test/Libraries/">
+    <Project Path="test/Libraries/Vafadar.Authentication.Tests/Vafadar.Authentication.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Backup.GoogleDrive.Tests/Vafadar.Backup.GoogleDrive.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Backup.OneDrive.Tests/Vafadar.Backup.OneDrive.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Backup.Tests/Vafadar.Backup.Tests.csproj" />

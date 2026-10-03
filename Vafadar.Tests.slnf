@@ -16,6 +16,7 @@
       "test\\Apps\\Zanance\\Vafadar.Zanance.Core.Tests\\Vafadar.Zanance.Core.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Data.Tests\\Vafadar.Zanance.Data.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Reports.Tests\\Vafadar.Zanance.Reports.Tests.csproj",
+      "test\\Libraries\\Vafadar.Authentication.Tests\\Vafadar.Authentication.Tests.csproj",
       "test\\Libraries\\Vafadar.Backup.GoogleDrive.Tests\\Vafadar.Backup.GoogleDrive.Tests.csproj",
       "test\\Libraries\\Vafadar.Backup.OneDrive.Tests\\Vafadar.Backup.OneDrive.Tests.csproj",
       "test\\Libraries\\Vafadar.Backup.Tests\\Vafadar.Backup.Tests.csproj",

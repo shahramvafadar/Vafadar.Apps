@@ -35,11 +35,11 @@ Android and iOS.
   it, the backup cannot be recovered.
 * **CSV and PDF export.** You can export entries (CSV) or a report (PDF) and share them. These files are **not
   encrypted**; where they go is your decision. Attachments are never included in exports.
-* **Cloud backup (optional).** You can connect your own Google Drive (Android) or OneDrive (Android, Windows) and store
+* **Cloud backup (optional).** You can connect your own Google Drive or OneDrive (Android, iOS, Windows) and store
   backups there. Nothing is uploaded until you connect and choose "Back up now". Cloud backups are always encrypted
   with your password, which is never uploaded. The app asks only for access to its own app folder
   (`drive.appdata`, `Files.ReadWrite.AppFolder`) and, for Google, your e-mail address to show which account is
-  connected. Sign-in happens in Google's or Microsoft's own screen; the app never sees your account password. The
+  connected. Sign-in happens in Google's or Microsoft's own screen (on Windows and iOS in your browser); the app never sees your account password. The access it receives stays on your device (on iOS in the keychain, on Windows protected for your Windows user account). The
   files are stored under your Google or Microsoft account terms; I have no access to them. "Disconnect" signs out on
   the device and removes the stored access; backups already uploaded stay in your account until you delete them
   (Google Drive: Settings → Manage apps; OneDrive: the folder Apps/Zanance).

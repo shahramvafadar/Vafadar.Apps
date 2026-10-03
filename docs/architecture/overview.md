@@ -69,7 +69,7 @@ The repository has two kinds of code:
 | [Vafadar.Documents.Maui](../../src/Libraries/Vafadar.Documents.Maui/README.md) | Reading photos and PDFs on the device: system OCR engines, system PDF rendering | Documents | ✅ |
 | [Vafadar.Authentication](../../src/Libraries/Vafadar.Authentication/README.md) | Sign-in and access-token abstractions for Google / Microsoft accounts | – | ✅ abstractions |
 | [Vafadar.Maui](../../src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap (`UseVafadar`), preferences, `{v:Translate}`, RTL, date field and chips, device authentication for app locks, Syncfusion setup, MVVM base | Core, Localization | ✅ |
-| [Vafadar.Authentication.Maui](../../src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft sign-in with MSAL (Android, Windows) and Google sign-in with the Play services authorization API (Android); iOS follows | Authentication | ✅ (device check with real clients pending) |
+| [Vafadar.Authentication.Maui](../../src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft sign-in with MSAL and Google sign-in (Play services on Android, system browser + PKCE on iOS and Windows) on Android, iOS and Windows | Authentication | ✅ (device check with real clients pending) |
 | Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Zanance has its own backup screen; extract when a second app needs it) |
 | Vafadar.Monetization | "Pro" unlock and tip jar via Google Play Billing / StoreKit | – | 🔜 planned ([details](monetization.md)) |
 | Vafadar.Web | Shared Blazor components, layout, localization for web apps | Localization | 🔜 when the first web app starts |

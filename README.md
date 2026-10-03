@@ -30,7 +30,7 @@ controls.
 | [Vafadar.Documents](src/Libraries/Vafadar.Documents/README.md) | Text rows from word boxes (LTR and RTL), PDF text layer |
 | [Vafadar.Documents.Maui](src/Libraries/Vafadar.Documents.Maui/README.md) | Reading photos and PDFs on the device with the system engines |
 | [Vafadar.Authentication](src/Libraries/Vafadar.Authentication/README.md) | Google / Microsoft sign-in abstractions |
-| [Vafadar.Authentication.Maui](src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft (MSAL) and Google (Play services) sign-in for cloud backups |
+| [Vafadar.Authentication.Maui](src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft (MSAL) and Google (Play services on Android, browser + PKCE on iOS and Windows) sign-in for cloud backups |
 | [Vafadar.Maui](src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap, XAML localization, RTL, Syncfusion setup, MVVM base |
 
 ## Repository layout

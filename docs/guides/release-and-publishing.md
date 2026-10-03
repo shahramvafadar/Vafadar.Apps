@@ -76,12 +76,17 @@ service account), so no artifact is needed.
   `production` secrets).
 * App privacy details in App Store Connect (from the privacy matrix); `PrivacyInfo.xcprivacy` is already in
   `Platforms/iOS/Resources`.
+* With cloud backup (Zanance D-50): the build needs `MicrosoftEntraClientId` and `GoogleOAuthClientIdIos` (environment
+  variables or `Directory.Secrets.props` on the Mac). The App ID needs no extra capability: the keychain group
+  `$(AppIdentifierPrefix)pro.vafadar.<app>` of `Platforms/iOS/Entitlements.plist` is the app's own. Check the URL
+  schemes in the built Info.plist (`msauth.…`, `com.googleusercontent.apps.…`).
 * TestFlight before release.
 
 ## Windows
 
 * For personal use: `dotnet publish src/Apps/<App>/Vafadar.<App>.App -c Release -f net10.0-windows10.0.19041.0`
-  produces an unpackaged app.
+  produces an unpackaged app. With cloud backup (Zanance D-50) set `MicrosoftEntraClientId` and
+  `GoogleOAuthClientIdWindows` (a Google *Desktop app* client; its client secret is not used) before publishing.
 * Microsoft Store (optional, later): switch to MSIX packaging (`WindowsPackageType=MSIX`) and a Store publisher
   identity.
 

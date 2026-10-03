@@ -1,12 +1,13 @@
-#if ANDROID || WINDOWS
+#if ANDROID || IOS || WINDOWS
 using Microsoft.Identity.Client;
 
 namespace Vafadar.Authentication.Maui;
 
 /// <summary>
 /// Microsoft sign-in with MSAL through the system browser, for personal and work or school accounts. The token cache
-/// stays on the device: MSAL's protected storage on Android, DPAPI on Windows. Only the scopes of the caller are
-/// requested (for backups: the app's own OneDrive folder).
+/// stays on the device: MSAL's protected storage on Android, the keychain on iOS, DPAPI on Windows. Only the scopes of
+/// the caller are requested (for backups: the app's own OneDrive folder). No client secret exists for this public
+/// client, and no broker app (Authenticator) is used.
 /// </summary>
 public sealed class MicrosoftSignInService : IExternalSignInService
 {
@@ -26,6 +27,16 @@ public sealed class MicrosoftSignInService : IExternalSignInService
         builder = builder
             .WithRedirectUri($"msal{clientId}://auth")
             .WithParentActivityOrWindow(() => Microsoft.Maui.ApplicationModel.Platform.CurrentActivity);
+#elif IOS
+        // Redirect msauth.{bundle-id}://auth (registered in the Entra app as an iOS platform and in CFBundleURLTypes).
+        // The token cache lives in the keychain group of the bundle id; the entitlement keychain-access-groups lists
+        // $(AppIdentifierPrefix){bundle-id}, and MSAL adds the team prefix itself.
+        var bundleId = Microsoft.Maui.ApplicationModel.AppInfo.Current.PackageName;
+        builder = builder
+            .WithRedirectUri($"msauth.{bundleId}://auth")
+            .WithIosKeychainSecurityGroup(bundleId)
+            .WithParentActivityOrWindow(() => Microsoft.Maui.ApplicationModel.Platform.GetCurrentUIViewController()
+                ?? throw new InvalidOperationException("No view controller to sign in from."));
 #else
         builder = builder.WithRedirectUri("http://localhost");
 #endif
@@ -109,7 +120,7 @@ public sealed class MicrosoftSignInService : IExternalSignInService
     private static ExternalAccount ToAccount(IAccount account) =>
         new(ExternalIdentityProvider.Microsoft, account.HomeAccountId?.Identifier ?? account.Username, account.Username, null);
 
-    // Android persists the cache itself; the desktop needs a cache file, protected with DPAPI for the Windows user.
+    // Android and iOS persist the cache themselves; the desktop needs a cache file, protected with DPAPI for the Windows user.
     private async Task EnsureCacheAsync()
     {
 #if WINDOWS

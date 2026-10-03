@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Keychain group of the app itself (team prefix + bundle id), used by the sign-in token caches (D-50): MSAL keeps the
+	  Microsoft tokens here (WithIosKeychainSecurityGroup), and the Google refresh token is stored through SecureStorage.
+	  No group shared with other apps. MAUI uses this file by convention (Platforms/iOS/Entitlements.plist).
+	-->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)pro.vafadar.zanance</string>
+	</array>
+</dict>
+</plist>

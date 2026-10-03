@@ -204,5 +204,6 @@ repository.
 * Phase 1 is implemented, including cloud backup (D-35), which is not yet verified with real OAuth clients; Phase 2A
   is in progress (see `05-phase-2-backlog.md` and spec Section 31). Phase 2B (sync, sharing, bank connections, AI,
   online rates, purchases) needs a separate owner decision per item.
-* Waiting for the owner: Google/Microsoft OAuth client ids for cloud backup; tests on a physical device; a competitor
+* Waiting for the owner: Google OAuth client ids (Android, iOS, Desktop app) and the Entra iOS platform for cloud
+  backup (D-50); a Mac with Xcode and the Apple signing setup for the iOS build; tests on a physical device; a competitor
   and user-feedback review of reports and KPIs (postponed by the owner).
