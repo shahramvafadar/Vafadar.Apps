@@ -15,6 +15,7 @@ repository and track what is actually implemented.
 | [06 – Privacy matrix](06-privacy-matrix.md) | Data flows verified against the code |
 | [07 – Acceptance test plan](07-acceptance-test-plan.md) | Mapping of the 68 acceptance scenarios to tests |
 | [08 – Release checklist](08-release-checklist.md) | Gates for the first public release |
+| [Enhancement ZEX](enhancements/2026-10-multi-unit-goals-insights/README.md) | Design package for multi-unit holdings, trackable goals and explainable insights – approved 2026-10-03, implementation in phases |
 | [Specification](spec/Zanance-Product-Specification.md) | The owner's requirements; Section 31 = implementation status and deviations |
 
 Status words used everywhere: **Implemented – verified** (behaviour tested), **Implemented – unverified**,

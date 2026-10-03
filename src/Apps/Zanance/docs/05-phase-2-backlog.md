@@ -17,6 +17,18 @@ possible (SC-01).
 | Unofficial currency units (e.g. Toman) | FX-07 | **P2-20 done:** user-defined display units (currency, name, factor 10^1..10^6) for display and input; stored amounts, CSV and rates stay in the ISO currency; a one-tap toman choice, never applied automatically |
 | Multiple local profiles | §3 | **P2-32 done:** local profiles (More › Profiles): one database file per profile with its own data, settings, app lock and backups; switching without a restart (`LocalDatabaseLocation`), a locked profile asks for the device owner first, the main profile is the original database; reminders come from the open profile (D-34) |
 
+## Enhancement ZEX – multi-unit holdings, trackable goals, explainable insights
+
+**Status: design approved by the owner (2026-10-03); implementation in phases 1–6.** Extends the phase 2A capabilities above
+without rebuilding them: separate default currency, default account and valuation currency; one account selection
+contract for quick entry; quantity holdings (gold in g/kg, coins and items by count) with valuations and linked money
+movements; account-balance and quantity goals with Home cards, contribution plans and explained ETAs; the KPIs K01–K14,
+liquidity headroom and six report packages; a single Simple/Advanced policy; wealth history and forecast snapshots.
+Design, decisions and the **reference backlog with every work item and its state**:
+[enhancements/2026-10-multi-unit-goals-insights](enhancements/2026-10-multi-unit-goals-insights/README.md)
+([backlog](enhancements/2026-10-multi-unit-goals-insights/06-implementation-backlog.md)). This table does not repeat
+those items, so there is only one place for their status.
+
 ## Phase 2B – online, each with its own decision gate
 
 | Item | Gate before any work |
