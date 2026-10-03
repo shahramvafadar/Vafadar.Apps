@@ -119,7 +119,10 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             .ToListAsync(cancellationToken);
     }
 
-    /// <summary>Inserts or updates an account. The currency of an account with entries cannot change (ACC-07).</summary>
+    /// <summary>
+    /// Inserts or updates an account. The currency cannot change while any stored amount is in it – entries, plans,
+    /// templates, earmarks, budgets or a loan installment (ACC-07, ZEX-S0105).
+    /// </summary>
     /// <returns><see langword="false"/> when the currency change was refused.</returns>
     public async Task<bool> SaveAccountAsync(Account account, CancellationToken cancellationToken = default)
     {
@@ -134,7 +137,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         else
         {
             if (!string.Equals(existing.CurrencyCode, account.CurrencyCode, StringComparison.OrdinalIgnoreCase)
-                && await db.Entries.AnyAsync(e => e.AccountId == account.Id || e.ToAccountId == account.Id, cancellationToken))
+                && (await CurrencyLockAsync(db, existing, cancellationToken)).IsLocked)
             {
                 return false;
             }
@@ -146,6 +149,27 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
         OnChanged();
         return true;
+    }
+
+    /// <summary>Returns what keeps the currency of an account from changing (ZEX-S0105); <see cref="AccountCurrencyLock.None"/> for a new account.</summary>
+    public async Task<AccountCurrencyLock> GetCurrencyLockAsync(Guid accountId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var account = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
+        return account is null ? AccountCurrencyLock.None : await CurrencyLockAsync(db, account, cancellationToken);
+    }
+
+    private static async Task<AccountCurrencyLock> CurrencyLockAsync(ZananceDbContext db, Account account, CancellationToken cancellationToken)
+    {
+        var id = account.Id;
+        var entries = await db.Entries.CountAsync(e => e.AccountId == id || e.ToAccountId == id, cancellationToken);
+        var plans = await db.Schedules.CountAsync(s => s.AccountId == id || s.ToAccountId == id, cancellationToken);
+        var templates = await db.Templates.CountAsync(t => t.AccountId == id || t.ToAccountId == id, cancellationToken);
+        var earmarks = await db.GoalAllocations.CountAsync(a => a.AccountId == id, cancellationToken);
+
+        // The account list of a budget is a stored collection, checked after loading (budgets are few).
+        var budgets = (await db.Budgets.AsNoTracking().ToListAsync(cancellationToken)).Count(b => b.AccountIds.Contains(id));
+        return new AccountCurrencyLock(entries, plans, templates, earmarks, budgets, account.Installment is not null);
     }
 
     /// <summary>Returns whether an account has any entries.</summary>

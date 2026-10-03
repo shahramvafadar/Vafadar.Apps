@@ -19,6 +19,7 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(a => a.Counterparty).HasMaxLength(100);
         builder.Property(a => a.CurrencyCode).HasMaxLength(3);
         builder.Property(a => a.Icon).HasMaxLength(64);
+        builder.Property(a => a.CountryCode).HasMaxLength(2);
     }
 }
 
@@ -208,5 +209,9 @@ internal sealed class ZananceSettingsConfiguration : IEntityTypeConfiguration<Za
     {
         builder.ToTable("Settings");
         builder.Property(s => s.ReportCurrencyCode).HasMaxLength(3);
+        builder.Property(s => s.DefaultCurrencyCode).HasMaxLength(3);
+        builder.Property(s => s.HomeBudgetCurrencyCode).HasMaxLength(3);
+        builder.Property(s => s.DisplayUnits).HasMaxLength(2000);
+        builder.Property(s => s.HomeLayout).HasMaxLength(500);
     }
 }

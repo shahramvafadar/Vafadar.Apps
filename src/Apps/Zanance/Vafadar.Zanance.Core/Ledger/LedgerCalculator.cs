@@ -34,7 +34,9 @@ public sealed record UnreviewedSummary(string CurrencyCode, int Count, long NetE
 
 /// <summary>
 /// Pure calculations over accounts and entries. All views use these functions, so one concept always has one formula
-/// (Q-05). Amounts are minor units; multi-currency results are returned per currency (FX-02).
+/// (Q-05). Amounts are minor units; multi-currency results are returned per currency (FX-02). Sums are checked: a total
+/// beyond the range of <see cref="long"/> throws <see cref="OverflowException"/> instead of showing a wrong number
+/// (ZEX-S0104).
 /// </summary>
 public static class LedgerCalculator
 {
@@ -65,13 +67,17 @@ public static class LedgerCalculator
                 continue;
             }
 
-            balance += entry.EffectOn(account.Id);
+            balance = checked(balance + entry.EffectOn(account.Id));
         }
 
         return balance;
     }
 
-    /// <summary>Sum of balances per currency for the accounts in scope.</summary>
+    /// <summary>
+    /// Sum of balances per currency for the accounts in scope. Without an explicit list these are the accounts included
+    /// in totals that are not archived, so Home and the account list show the same current totals (ZEX-S0201); an
+    /// explicit list is taken as it is.
+    /// </summary>
     public static IReadOnlyDictionary<string, long> TotalBalances(
         IEnumerable<Account> accounts,
         IReadOnlyCollection<LedgerEntry> entries,
@@ -80,9 +86,9 @@ public static class LedgerCalculator
         bool confirmedOnly = false)
     {
         var totals = new SortedDictionary<string, long>(StringComparer.Ordinal);
-        foreach (var account in InScope(accounts, accountIds))
+        foreach (var account in InScope(accounts, accountIds).Where(a => accountIds is not null || !a.IsArchived))
         {
-            totals[account.CurrencyCode] = totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, entries, at, confirmedOnly);
+            totals[account.CurrencyCode] = checked(totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, entries, at, confirmedOnly));
         }
 
         return totals;
@@ -102,26 +108,26 @@ public static class LedgerCalculator
                 continue;
             }
 
-            var slot = entry.Kind switch
-            {
-                EntryKind.Income => 0,
-                EntryKind.IncomeReversal => 1,
-                EntryKind.Expense => 2,
-                EntryKind.Refund => 3,
-                _ => -1,
-            };
-
-            if (slot < 0)
+            // Only income and consumption count; transfers, corrections and capital movements never do.
+            if (!EntryClassification.CountsInResult(entry.Kind))
             {
                 continue;
             }
+
+            var slot = (EntryClassification.Of(entry.Kind), EntryClassification.IsReduction(entry.Kind)) switch
+            {
+                (EntryClass.Income, false) => 0,
+                (EntryClass.Income, true) => 1,
+                (_, false) => 2,
+                _ => 3,
+            };
 
             if (!sums.TryGetValue(account.CurrencyCode, out var values))
             {
                 sums[account.CurrencyCode] = values = new long[4];
             }
 
-            values[slot] += entry.Amount;
+            values[slot] = checked(values[slot] + entry.Amount);
         }
 
         return [.. sums.Select(pair => new PeriodTotals(pair.Key, pair.Value[0], pair.Value[1], pair.Value[2], pair.Value[3]))];
@@ -155,7 +161,7 @@ public static class LedgerCalculator
 
             var key = (account.CurrencyCode, group(entry.CategoryId));
             var (gross, refunds) = sums.GetValueOrDefault(key);
-            sums[key] = entry.Kind == EntryKind.Expense ? (gross + entry.Amount, refunds) : (gross, refunds + entry.Amount);
+            sums[key] = entry.Kind == EntryKind.Expense ? (checked(gross + entry.Amount), refunds) : (gross, checked(refunds + entry.Amount));
         }
 
         return

@@ -51,15 +51,15 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 
 | Story | Title | Phase | State |
 |---|---|---|---|
-| ZEX-S0101 | Golden examples as tests; view-model test harness | 1 | Planned |
-| ZEX-S0102 | Separate default currency, default account and valuation currency | 1 | Planned |
-| ZEX-S0103 | Account selection contract for every entry path | 1 | Planned |
-| ZEX-S0104 | Shared definitions: entry classification, totals, checked arithmetic | 1 | Planned |
-| ZEX-S0105 | Account currency lock covers all stored amounts | 1 | Planned |
-| ZEX-S0106 | Rate information and freshness | 1 | Planned |
+| ZEX-S0101 | Golden examples as tests; view-model test harness | 1 | In progress |
+| ZEX-S0102 | Separate default currency, default account and valuation currency | 1 | In progress |
+| ZEX-S0103 | Account selection contract for every entry path | 1 | In progress |
+| ZEX-S0104 | Shared definitions: entry classification, totals, checked arithmetic | 1 | In progress |
+| ZEX-S0105 | Account currency lock covers all stored amounts | 1 | In progress |
+| ZEX-S0106 | Rate information and freshness | 1 | In progress |
 | ZEX-S0201 | Home balances: native first, converted secondary, archived excluded | 1 | Planned |
 | ZEX-S0202 | Accounts overview groups and account details | 1 | Planned |
-| ZEX-S0203 | Usable for payments and optional country | 1 | Planned |
+| ZEX-S0203 | Usable for payments and optional country | 1 | In progress |
 | ZEX-S0204 | Cross-currency transfer effect preview and fees | 1 | Planned |
 | ZEX-S0205 | Display units and Home layout per profile and in backups | 1 | Planned |
 | ZEX-S0206 | Home layout: attention, at most three groups | 1 | Planned |

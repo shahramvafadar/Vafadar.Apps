@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Accounts.Account",
                 typeof(Account),
                 baseEntityType,
-                propertyCount: 16,
+                propertyCount: 18,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -40,6 +40,14 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(Account).GetField("<Counterparty>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 100);
+
+            var countryCode = runtimeEntityType.AddProperty(
+                "CountryCode",
+                typeof(string),
+                propertyInfo: typeof(Account).GetProperty("CountryCode", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Account).GetField("<CountryCode>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 2);
 
             var createdAt = runtimeEntityType.AddProperty(
                 "CreatedAt",
@@ -141,6 +149,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(Account).GetField("<UpdatedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 valueConverter: new UtcTicksDateTimeOffsetConverter());
             updatedAt.SetSentinelFromProviderValue(0L);
+
+            var usableForPayments = runtimeEntityType.AddProperty(
+                "UsableForPayments",
+                typeof(bool),
+                propertyInfo: typeof(Account).GetProperty("UsableForPayments", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Account).GetField("<UsableForPayments>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: false);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });

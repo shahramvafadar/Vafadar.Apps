@@ -19,8 +19,44 @@ public enum ExperienceMode
 /// </summary>
 public sealed class ZananceSettings : Entity, IAuditableEntity
 {
-    /// <summary>Gets or sets the report currency.</summary>
+    /// <summary>
+    /// Gets or sets the valuation currency (shown as *Valuation currency*; the property keeps its old name): the currency
+    /// of converted totals and converted charts only. It is never the default of new items (ZEX-P01).
+    /// </summary>
     public string ReportCurrencyCode { get; set; } = "EUR";
+
+    /// <summary>
+    /// Gets or sets the currency preselected for new accounts, goals, budgets, rates and display units (ZEX-P01).
+    /// Changing it never changes existing data or the currency of an entry, which is always its account's.
+    /// </summary>
+    public string DefaultCurrencyCode { get; set; } = "EUR";
+
+    /// <summary>
+    /// Gets or sets a value indicating whether converted totals are shown at all (Advanced may switch the valuation
+    /// currency off; then only native totals appear).
+    /// </summary>
+    public bool ValuationCurrencyEnabled { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets after how many days a rate may be outdated (7, 30 or 90; 0 = never), see
+    /// <see cref="Rates.RateFreshness"/> (ZEX-P06).
+    /// </summary>
+    public int RateFreshnessDays { get; set; } = 30;
+
+    /// <summary>
+    /// Gets or sets the currency of the budget shown on Home and first on the Budget page; <see langword="null"/> = the
+    /// currency of the default account (ZEX-P02).
+    /// </summary>
+    public string? HomeBudgetCurrencyCode { get; set; }
+
+    /// <summary>
+    /// Gets or sets the display units of this profile (<c>CODE|name|exponent;…</c>, FX-07). Stored here so that they belong
+    /// to the profile and are in its backups (ZEX-P20); <see langword="null"/> = not copied from the device yet.
+    /// </summary>
+    public string? DisplayUnits { get; set; }
+
+    /// <summary>Gets or sets the Home layout of this profile (<see cref="Dashboard.HomeLayout"/> text, ZEX-P20); <see langword="null"/> = not set.</summary>
+    public string? HomeLayout { get; set; }
 
     /// <summary>Gets or sets the account preselected in the entry form (ACC-02).</summary>
     public Guid? DefaultAccountId { get; set; }

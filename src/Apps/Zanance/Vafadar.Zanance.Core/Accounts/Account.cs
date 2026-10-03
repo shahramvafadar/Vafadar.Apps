@@ -41,6 +41,12 @@ public static class AccountTypes
 
     /// <summary>Returns whether the account is not money at hand: debts, receivables and valued assets (ACC-05).</summary>
     public static bool IsOutsideCash(this AccountType type) => type.IsDebt() || type == AccountType.Asset;
+
+    /// <summary>Returns whether new accounts of this type are usable for payments: cash, checking and savings (ZEX-P17).</summary>
+    public static bool IsUsableByDefault(this AccountType type) => type is AccountType.Cash or AccountType.Checking or AccountType.Savings;
+
+    /// <summary>Returns whether the type is a money account that can be the default account of new entries (ZEX-MC06).</summary>
+    public static bool CanBeDefault(this AccountType type) => type is AccountType.Cash or AccountType.Checking or AccountType.Savings or AccountType.CreditCard;
 }
 
 /// <summary>
@@ -82,6 +88,16 @@ public sealed class Account : Entity, IAuditableEntity
 
     /// <summary>Gets or sets a value indicating whether the account is part of the main totals.</summary>
     public bool IncludeInTotals { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the money of this account can pay bills (ZEX-P17): the forecast minimum and
+    /// the liquidity numbers use only such accounts. Defaults by type (<see cref="AccountTypes.IsUsableByDefault"/>);
+    /// never inferred from language, currency or country.
+    /// </summary>
+    public bool UsableForPayments { get; set; } = true;
+
+    /// <summary>Gets or sets the optional country of the account (ISO 3166 alpha-2, ZEX-P18); information only, no logic depends on it.</summary>
+    public string? CountryCode { get; set; }
 
     /// <summary>Gets or sets a value indicating whether the account is archived (ACC-06).</summary>
     public bool IsArchived { get; set; }

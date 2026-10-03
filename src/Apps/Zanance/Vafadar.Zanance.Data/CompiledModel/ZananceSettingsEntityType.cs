@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Settings.ZananceSettings",
                 typeof(ZananceSettings),
                 baseEntityType,
-                propertyCount: 14,
+                propertyCount: 20,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -63,12 +63,43 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(ZananceSettings).GetField("<DefaultAccountId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
 
+            var defaultCurrencyCode = runtimeEntityType.AddProperty(
+                "DefaultCurrencyCode",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("DefaultCurrencyCode", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<DefaultCurrencyCode>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                maxLength: 3);
+
+            var displayUnits = runtimeEntityType.AddProperty(
+                "DisplayUnits",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("DisplayUnits", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<DisplayUnits>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 2000);
+
             var fortnightStart = runtimeEntityType.AddProperty(
                 "FortnightStart",
                 typeof(DateOnly?),
                 propertyInfo: typeof(ZananceSettings).GetProperty("FortnightStart", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(ZananceSettings).GetField("<FortnightStart>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
+
+            var homeBudgetCurrencyCode = runtimeEntityType.AddProperty(
+                "HomeBudgetCurrencyCode",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("HomeBudgetCurrencyCode", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<HomeBudgetCurrencyCode>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 3);
+
+            var homeLayout = runtimeEntityType.AddProperty(
+                "HomeLayout",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("HomeLayout", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<HomeLayout>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 500);
 
             var mode = runtimeEntityType.AddProperty(
                 "Mode",
@@ -98,6 +129,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(ZananceSettings).GetField("<OnboardingCompleted>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: false);
 
+            var rateFreshnessDays = runtimeEntityType.AddProperty(
+                "RateFreshnessDays",
+                typeof(int),
+                propertyInfo: typeof(ZananceSettings).GetProperty("RateFreshnessDays", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<RateFreshnessDays>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: 0);
+
             var reminderDaysBefore = runtimeEntityType.AddProperty(
                 "ReminderDaysBefore",
                 typeof(int),
@@ -126,6 +164,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(ZananceSettings).GetField("<UpdatedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 valueConverter: new UtcTicksDateTimeOffsetConverter());
             updatedAt.SetSentinelFromProviderValue(0L);
+
+            var valuationCurrencyEnabled = runtimeEntityType.AddProperty(
+                "ValuationCurrencyEnabled",
+                typeof(bool),
+                propertyInfo: typeof(ZananceSettings).GetProperty("ValuationCurrencyEnabled", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<ValuationCurrencyEnabled>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: false);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });
