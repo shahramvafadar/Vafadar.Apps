@@ -162,7 +162,9 @@ public static class ForecastCalculator
         ArgumentNullException.ThrowIfNull(entries);
         ArgumentNullException.ThrowIfNull(schedules);
         var accountList = accounts.ToList();
-        var scope = LedgerCalculator.InScope(accountList, accountIds).Where(a => !a.IsArchived || accountIds is not null).ToDictionary(a => a.Id);
+        // Without an explicit list: the accounts in totals that can pay bills (ZEX-P17). Money moved to an account outside
+        // the scope (a card payment, a savings account kept aside) is a payment of the scope.
+        var scope = LedgerCalculator.InScope(accountList, accountIds).Where(a => accountIds is not null || (!a.IsArchived && a.UsableForPayments)).ToDictionary(a => a.Id);
         var stateList = states.ToList();
         var items = new List<ForecastItem>();
 

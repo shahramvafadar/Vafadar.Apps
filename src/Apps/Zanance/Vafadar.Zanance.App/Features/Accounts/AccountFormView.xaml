@@ -31,7 +31,8 @@
             IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
             SemanticProperties.Description="{v:Translate Account_Currency}" />
     </Border>
-    <Label Text="{v:Translate Account_CurrencyLocked}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}" />
+    <Label Text="{Binding CurrencyLockText}" Style="{StaticResource Secondary}" IsVisible="{Binding CurrencyLocked}"
+           SemanticProperties.Description="{Binding CurrencyLockText}" />
 
     <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0"
            IsVisible="{Binding DebtHint, Converter={StaticResource IsNotNullConverter}}" />
@@ -113,4 +114,20 @@
         <Switch Grid.Column="2" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}"
                 SemanticProperties.Description="{v:Translate Account_IncludeInTotals}" />
     </Grid>
+
+    <!-- Advanced (ZEX-P17, P18): whether the money pays bills (forecast minimum), and an optional country -->
+    <VerticalStackLayout IsVisible="{Binding ShowAdvanced}">
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="{v:Translate Account_Usable}" />
+                <Label Text="{v:Translate Account_UsableHint}" Style="{StaticResource Secondary}" FontSize="13" />
+            </VerticalStackLayout>
+            <v:HelpButton Grid.Column="1" Topic="UsableForPayments" />
+            <Switch Grid.Column="2" IsToggled="{Binding UsableForPayments}" OnColor="{DynamicResource Primary}"
+                    SemanticProperties.Description="{v:Translate Account_Usable}" />
+        </Grid>
+        <Label Text="{v:Translate Account_Country}" Style="{StaticResource FieldLabel}" />
+        <Entry Text="{Binding CountryCode}" MaxLength="2" Placeholder="{v:Translate Account_CountryPlaceholder}"
+               SemanticProperties.Description="{v:Translate Account_Country}" />
+    </VerticalStackLayout>
 </VerticalStackLayout>

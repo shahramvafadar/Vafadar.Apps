@@ -204,7 +204,7 @@
     <comment>{0} = current step, {1} = number of steps</comment>
   </data>
   <data name="Settings_ReportCurrency" xml:space="preserve">
-    <value>Report currency</value>
+    <value>Valuation currency</value>
   </data>
   <data name="Tab_Transactions" xml:space="preserve">
     <value>Transactions</value>
@@ -2866,13 +2866,13 @@
     <value>Choose this if you do not know the amount yet. The account starts at zero and totals that include it are marked as incomplete, so they are never mistaken for exact numbers. You can enter the real amount later in the account.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
-    <value>Report currency</value>
+    <value>Valuation currency</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>Totals, budgets and reports are shown in this currency. Every account keeps its own currency; amounts in other currencies are converted with the exchange rates you enter, and totals without a rate are marked as incomplete.</value>
+    <value>Only for converted totals: amounts in other currencies are converted into this currency with the exchange rates you enter, and the date of the rates is shown. Totals per currency always stay as they are, and nothing new is created in this currency. Without a rate, the converted total is marked as incomplete.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
-    <value>Accounts in EUR and USD with the report currency EUR: the USD account counts in the totals once you enter a USD → EUR rate.</value>
+    <value>Accounts in EUR and USD, valuation currency EUR: Home shows 2,000 EUR and 4,000 USD, and below them "≈ 5,680 EUR at rates of 12 Aug" once a USD rate exists.</value>
   </data>
   <data name="Help_MonthStartDay_Title" xml:space="preserve">
     <value>Financial month</value>
@@ -3206,5 +3206,167 @@
   </data>
   <data name="Goals_Tab" xml:space="preserve">
     <value>Goals</value>
+  </data>
+  <data name="Settings_DefaultCurrency" xml:space="preserve">
+    <value>Default currency for new items</value>
+  </data>
+  <data name="Help_DefaultCurrency_Title" xml:space="preserve">
+    <value>Default currency for new items</value>
+  </data>
+  <data name="Help_DefaultCurrency_Text" xml:space="preserve">
+    <value>New accounts, goals, budgets and exchange rates start in this currency; you can change it each time. Existing accounts and entries keep their currency, and an entry is always in the currency of its account.</value>
+  </data>
+  <data name="Help_DefaultCurrency_Example" xml:space="preserve">
+    <value>Your accounts are in EUR and USD. With EUR here, a new account starts in EUR; your USD account stays in USD.</value>
+  </data>
+  <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
+    <value>Only new items use this. Existing accounts and entries keep their currency.</value>
+  </data>
+  <data name="Settings_DefaultAccount" xml:space="preserve">
+    <value>Default account for new entries</value>
+  </data>
+  <data name="Settings_DefaultAccountNone" xml:space="preserve">
+    <value>None – choose each time</value>
+  </data>
+  <data name="Help_DefaultAccount_Title" xml:space="preserve">
+    <value>Default account for new entries</value>
+  </data>
+  <data name="Help_DefaultAccount_Text" xml:space="preserve">
+    <value>Quick add on Home, the widget and receipts use this account. The entry form always shows it, and you can pick another one for a single entry. Only cash, bank and card accounts can be the default; without one, the form asks which account to use.</value>
+  </data>
+  <data name="Help_DefaultAccount_Example" xml:space="preserve">
+    <value>Default "Main (EUR)": Expense on Home opens with Main. Choose "Dollar account" in the form, and only that entry goes there.</value>
+  </data>
+  <data name="Settings_ShowConverted" xml:space="preserve">
+    <value>Show converted totals</value>
+  </data>
+  <data name="Settings_RateFreshness" xml:space="preserve">
+    <value>Rates may be outdated after</value>
+  </data>
+  <data name="Settings_FreshnessDays" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="Settings_FreshnessNever" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="Help_RateFreshness_Title" xml:space="preserve">
+    <value>Outdated rates</value>
+  </data>
+  <data name="Help_RateFreshness_Text" xml:space="preserve">
+    <value>A converted total says "may be outdated" when a rate it uses is older than this and was entered before the current month. It is a reminder to update the rate, not a statement about its accuracy.</value>
+  </data>
+  <data name="Help_RateFreshness_Example" xml:space="preserve">
+    <value>30 days: a USD rate of 12 August is marked on 15 September; a rate of 2 September is not.</value>
+  </data>
+  <data name="Entry_ChooseAccount" xml:space="preserve">
+    <value>Choose the account for this entry.</value>
+  </data>
+  <data name="Entry_CurrencyChanged" xml:space="preserve">
+    <value>The amount is now in {0} (was {1}). Check it before saving.</value>
+  </data>
+  <data name="Entry_UndoAccountChange" xml:space="preserve">
+    <value>Undo account change</value>
+  </data>
+  <data name="Entry_TemplateAccountArchived" xml:space="preserve">
+    <value>The template's account is archived – choose an account and the amount.</value>
+  </data>
+  <data name="Entry_EffectFrom" xml:space="preserve">
+    <value>{0} from {1}</value>
+  </data>
+  <data name="Entry_EffectTo" xml:space="preserve">
+    <value>{0} to {1}</value>
+  </data>
+  <data name="Entry_ImpliedRate" xml:space="preserve">
+    <value>1 {0} = {1} {2}, from your amounts</value>
+  </data>
+  <data name="Budget_ShownCurrency" xml:space="preserve">
+    <value>Budget currency</value>
+  </data>
+  <data name="Home_QuickAddTarget" xml:space="preserve">
+    <value>to {0} · {1}</value>
+  </data>
+  <data name="Home_QuickAddChoose" xml:space="preserve">
+    <value>No default account – quick add asks for one</value>
+  </data>
+  <data name="Home_QuickAddChange" xml:space="preserve">
+    <value>change</value>
+  </data>
+  <data name="Home_CombinedOutdated" xml:space="preserve">
+    <value>Together ≈ {0} (rates of {1} – may be outdated)</value>
+  </data>
+  <data name="Home_RateEstimate" xml:space="preserve">
+    <value>contains an estimated rate</value>
+  </data>
+  <data name="Home_BalanceBelowZero" xml:space="preserve">
+    <value>Your balance may fall below zero around {0}</value>
+  </data>
+  <data name="Account_CurrencyLockedBy" xml:space="preserve">
+    <value>The currency cannot change because these amounts are in it: {0}. To use another currency, create a new account and move the money with a transfer.</value>
+  </data>
+  <data name="Account_LockEntries" xml:space="preserve">
+    <value>{0} entries</value>
+  </data>
+  <data name="Account_LockPlans" xml:space="preserve">
+    <value>{0} plans</value>
+  </data>
+  <data name="Account_LockTemplates" xml:space="preserve">
+    <value>{0} quick templates</value>
+  </data>
+  <data name="Account_LockEarmarks" xml:space="preserve">
+    <value>{0} amounts set aside for goals</value>
+  </data>
+  <data name="Account_LockBudgets" xml:space="preserve">
+    <value>{0} budgets</value>
+  </data>
+  <data name="Account_LockInstallment" xml:space="preserve">
+    <value>the loan installment</value>
+  </data>
+  <data name="Account_DefaultCleared" xml:space="preserve">
+    <value>This was your default account. Quick add now asks for an account; choose a new default in Settings › Money and months.</value>
+  </data>
+  <data name="Account_Usable" xml:space="preserve">
+    <value>Usable for payments</value>
+  </data>
+  <data name="Account_UsableHint" xml:space="preserve">
+    <value>Counts in the money that can pay your bills, e.g. the lowest expected balance.</value>
+  </data>
+  <data name="Help_UsableForPayments_Title" xml:space="preserve">
+    <value>Usable for payments</value>
+  </data>
+  <data name="Help_UsableForPayments_Text" xml:space="preserve">
+    <value>Some money is in your totals but is not meant for everyday payments, for example a savings account with notice or money abroad. Switch this off for such accounts: the forecast of your lowest balance then leaves them out, while every total still includes them. Zanance never decides this for you.</value>
+  </data>
+  <data name="Help_UsableForPayments_Example" xml:space="preserve">
+    <value>Checking 1,250 EUR (on) and a fixed-term savings account 5,000 EUR (off): the lowest expected balance looks only at the 1,250 EUR.</value>
+  </data>
+  <data name="Account_Country" xml:space="preserve">
+    <value>Country (optional)</value>
+  </data>
+  <data name="Account_CountryPlaceholder" xml:space="preserve">
+    <value>e.g. DE</value>
+  </data>
+  <data name="Account_AddEntryHere" xml:space="preserve">
+    <value>Add entry here</value>
+  </data>
+  <data name="Accounts_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="AccountGroup_Money" xml:space="preserve">
+    <value>Money</value>
+  </data>
+  <data name="AccountGroup_CreditCards" xml:space="preserve">
+    <value>Credit cards</value>
+  </data>
+  <data name="AccountGroup_Receivables" xml:space="preserve">
+    <value>Owed to me</value>
+  </data>
+  <data name="AccountGroup_Debts" xml:space="preserve">
+    <value>Debts</value>
+  </data>
+  <data name="AccountGroup_ValuedAssets" xml:space="preserve">
+    <value>Valued assets</value>
+  </data>
+  <data name="Entry_DestinationFee" xml:space="preserve">
+    <value>Fee at the destination</value>
   </data>
 </root>

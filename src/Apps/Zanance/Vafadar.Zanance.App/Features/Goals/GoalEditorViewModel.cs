@@ -95,7 +95,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     {
         ArgumentNullException.ThrowIfNull(query);
         var settings = await _store.GetSettingsAsync();
-        CurrencyCode = settings.ReportCurrencyCode;
+        CurrencyCode = settings.DefaultCurrencyCode;
         if (query.TryGetValue("id", out var value) && value is Guid id && await _goals.GetGoalAsync(id) is { } goal)
         {
             _existing = goal;

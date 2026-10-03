@@ -43,14 +43,30 @@ public sealed class HomeLayout
     /// <summary>Gets the sections in their order.</summary>
     public IReadOnlyList<HomeSectionState> Sections => _sections;
 
+    // The order of the default layout (ZEX-P19): budget, the next payments, the latest entries; the period numbers, the
+    // forecast card, the category chart and the account list are one tap away in "Customize Home".
+    private static readonly HomeSection[] DefaultOrder =
+    [
+        HomeSection.Budget, HomeSection.Upcoming, HomeSection.Recent,
+        HomeSection.Period, HomeSection.Forecast, HomeSection.Categories, HomeSection.Accounts,
+    ];
+
+    // Defaults stored by earlier versions on "Reset"; they mean "the default", so such users get the current one.
+    private static readonly string[] EarlierDefaults =
+    [
+        "Period,Forecast,Budget,Upcoming,Categories,Accounts",
+        "Period,Forecast,Budget,Upcoming,Recent,-Categories,-Accounts",
+    ];
+
     /// <summary>
-    /// Gets the default layout: every section in the original order; the category chart and the account list start
-    /// hidden, because Insights and Accounts show them (a calm Home, D-27). The user can turn them on.
+    /// Gets the default layout (ZEX-P19): at most three groups below the balance, quick add and "needs attention" –
+    /// budget, next payments and recent entries. A group without data is not shown at all, so a new user sees balance,
+    /// quick add and the latest entries. The other sections start hidden; the user can turn them on.
     /// </summary>
-    public static HomeLayout Default => new([.. Enum.GetValues<HomeSection>().Select(s => new HomeSectionState(s, IsVisibleByDefault(s)))]);
+    public static HomeLayout Default => new([.. DefaultOrder.Select(s => new HomeSectionState(s, IsVisibleByDefault(s)))]);
 
     /// <summary>Returns whether a section is shown when the user has not chosen otherwise.</summary>
-    public static bool IsVisibleByDefault(HomeSection section) => section is not (HomeSection.Categories or HomeSection.Accounts);
+    public static bool IsVisibleByDefault(HomeSection section) => section is HomeSection.Budget or HomeSection.Upcoming or HomeSection.Recent;
 
     /// <summary>Gets a value indicating whether the layout differs from <see cref="Default"/>.</summary>
     public bool IsCustomized => ToString() != Default.ToString();
@@ -58,8 +74,7 @@ public sealed class HomeLayout
     /// <summary>Reads a stored layout.</summary>
     public static HomeLayout Parse(string? text)
     {
-        // The default of versions before D-27 (every section visible) was stored on "Reset"; it means "the default".
-        if (text == "Period,Forecast,Budget,Upcoming,Categories,Accounts")
+        if (text is not null && EarlierDefaults.Contains(text))
         {
             return Default;
         }
@@ -74,7 +89,7 @@ public sealed class HomeLayout
             }
         }
 
-        foreach (var section in Enum.GetValues<HomeSection>().Where(s => sections.All(x => x.Section != s)))
+        foreach (var section in DefaultOrder.Where(s => sections.All(x => x.Section != s)))
         {
             sections.Add(new HomeSectionState(section, IsVisibleByDefault(section)));
         }

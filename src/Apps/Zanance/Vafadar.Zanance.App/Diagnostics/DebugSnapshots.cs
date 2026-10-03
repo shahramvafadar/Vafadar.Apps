@@ -140,7 +140,7 @@ internal static class DebugSnapshots
         }
 
         var (expenseId, foodId) = await SeedAsync(services);
-        Presentation.DisplayUnitPreferences.Save([new Core.Money.DisplayUnit("IRR", "Toman", 1)]);
+        await Presentation.DisplayUnitPreferences.SaveAsync(services.GetRequiredService<ZananceStore>(), [new Core.Money.DisplayUnit("IRR", "Toman", 1)]);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
         var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First().Id;

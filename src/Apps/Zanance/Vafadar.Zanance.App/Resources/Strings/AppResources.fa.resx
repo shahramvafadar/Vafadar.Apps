@@ -203,7 +203,7 @@
     <value>مرحلهٔ {0} از {1}</value>
   </data>
   <data name="Settings_ReportCurrency" xml:space="preserve">
-    <value>ارز گزارش</value>
+    <value>ارز ارزش‌گذاری</value>
   </data>
   <data name="Tab_Transactions" xml:space="preserve">
     <value>تراکنش‌ها</value>
@@ -2862,13 +2862,13 @@
     <value>اگر هنوز مبلغ را نمی‌دانید این را انتخاب کنید. حساب از صفر شروع می‌شود و جمع‌هایی که آن را شامل می‌شوند «ناقص» علامت می‌خورند تا با عدد دقیق اشتباه گرفته نشوند. مبلغ واقعی را بعداً در خود حساب وارد کنید.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
-    <value>ارز گزارش</value>
+    <value>ارز ارزش‌گذاری</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>جمع‌ها، بودجه‌ها و گزارش‌ها با این ارز نمایش داده می‌شوند. هر حساب ارز خودش را نگه می‌دارد؛ مبلغ‌های ارزهای دیگر با نرخ‌هایی که خودتان وارد می‌کنید تبدیل می‌شوند و جمع‌های بدون نرخ «ناقص» علامت می‌خورند.</value>
+    <value>فقط برای جمع‌های تبدیل‌شده: مبالغ ارزهای دیگر با نرخ‌هایی که وارد می‌کنید به این ارز تبدیل می‌شوند و تاریخ نرخ‌ها نشان داده می‌شود. جمع هر ارز همیشه همان‌طور می‌ماند و چیز جدیدی با این ارز ساخته نمی‌شود. بدون نرخ، جمع تبدیل‌شده ناقص علامت می‌خورد.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
-    <value>حساب‌هایی به یورو و دلار با ارز گزارش یورو: حساب دلاری وقتی در جمع حساب می‌شود که نرخ دلار به یورو را وارد کنید.</value>
+    <value>حساب‌ها به EUR و USD و ارز ارزش‌گذاری EUR: خانه ۲٬۰۰۰ EUR و ۴٬۰۰۰ USD را نشان می‌دهد و پس از ثبت نرخ USD زیر آن‌ها «حدود ۵٬۶۸۰ EUR با نرخ‌های ۱۲ اوت» می‌آید.</value>
   </data>
   <data name="Help_MonthStartDay_Title" xml:space="preserve">
     <value>ماه مالی</value>
@@ -3202,5 +3202,167 @@
   </data>
   <data name="Goals_Tab" xml:space="preserve">
     <value>اهداف</value>
+  </data>
+  <data name="Settings_DefaultCurrency" xml:space="preserve">
+    <value>ارز پیش‌فرض برای موارد جدید</value>
+  </data>
+  <data name="Help_DefaultCurrency_Title" xml:space="preserve">
+    <value>ارز پیش‌فرض برای موارد جدید</value>
+  </data>
+  <data name="Help_DefaultCurrency_Text" xml:space="preserve">
+    <value>حساب‌ها، هدف‌ها، بودجه‌ها و نرخ‌های جدید با این ارز شروع می‌شوند و هر بار می‌توانید آن را عوض کنید. حساب‌ها و ثبت‌های فعلی ارز خود را نگه می‌دارند و هر ثبت همیشه به ارز حساب خودش است.</value>
+  </data>
+  <data name="Help_DefaultCurrency_Example" xml:space="preserve">
+    <value>حساب‌های شما به EUR و USD هستند. اگر اینجا EUR باشد، حساب جدید با EUR شروع می‌شود و حساب USD شما همان USD می‌ماند.</value>
+  </data>
+  <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
+    <value>فقط موارد جدید از این استفاده می‌کنند. حساب‌ها و ثبت‌های فعلی ارز خود را نگه می‌دارند.</value>
+  </data>
+  <data name="Settings_DefaultAccount" xml:space="preserve">
+    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+  </data>
+  <data name="Settings_DefaultAccountNone" xml:space="preserve">
+    <value>هیچ‌کدام؛ هر بار انتخاب شود</value>
+  </data>
+  <data name="Help_DefaultAccount_Title" xml:space="preserve">
+    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+  </data>
+  <data name="Help_DefaultAccount_Text" xml:space="preserve">
+    <value>ثبت سریع در خانه، ویجت و رسیدها از این حساب استفاده می‌کنند. فرم ثبت همیشه آن را نشان می‌دهد و می‌توانید برای یک ثبت حساب دیگری انتخاب کنید. فقط حساب نقد، بانکی و کارت می‌تواند پیش‌فرض باشد؛ بدون آن، فرم می‌پرسد از کدام حساب استفاده شود.</value>
+  </data>
+  <data name="Help_DefaultAccount_Example" xml:space="preserve">
+    <value>پیش‌فرض «اصلی (EUR)»: «هزینه» در خانه با حساب اصلی باز می‌شود. اگر در فرم «حساب دلار» را انتخاب کنید، فقط همان ثبت به آنجا می‌رود.</value>
+  </data>
+  <data name="Settings_ShowConverted" xml:space="preserve">
+    <value>نمایش جمع‌های تبدیل‌شده</value>
+  </data>
+  <data name="Settings_RateFreshness" xml:space="preserve">
+    <value>نرخ‌ها پس از این مدت شاید قدیمی باشند</value>
+  </data>
+  <data name="Settings_FreshnessDays" xml:space="preserve">
+    <value>{0} روز</value>
+  </data>
+  <data name="Settings_FreshnessNever" xml:space="preserve">
+    <value>هرگز</value>
+  </data>
+  <data name="Help_RateFreshness_Title" xml:space="preserve">
+    <value>نرخ‌های قدیمی</value>
+  </data>
+  <data name="Help_RateFreshness_Text" xml:space="preserve">
+    <value>اگر نرخی که در جمع تبدیل‌شده به کار رفته قدیمی‌تر از این مدت باشد و پیش از ماه جاری وارد شده باشد، کنار جمع «شاید قدیمی باشد» می‌آید. این یادآوری برای به‌روز کردن نرخ است، نه حکمی دربارهٔ دقت آن.</value>
+  </data>
+  <data name="Help_RateFreshness_Example" xml:space="preserve">
+    <value>۳۰ روز: نرخ USD ثبت‌شده در ۱۲ اوت، در ۱۵ سپتامبر علامت می‌خورد؛ نرخ ۲ سپتامبر نه.</value>
+  </data>
+  <data name="Entry_ChooseAccount" xml:space="preserve">
+    <value>حساب این ثبت را انتخاب کنید.</value>
+  </data>
+  <data name="Entry_CurrencyChanged" xml:space="preserve">
+    <value>مبلغ اکنون به {0} است (قبلاً {1}). پیش از ذخیره بررسی کنید.</value>
+  </data>
+  <data name="Entry_UndoAccountChange" xml:space="preserve">
+    <value>برگرداندن تغییر حساب</value>
+  </data>
+  <data name="Entry_TemplateAccountArchived" xml:space="preserve">
+    <value>حساب این الگو بایگانی شده است؛ حساب و مبلغ را انتخاب کنید.</value>
+  </data>
+  <data name="Entry_EffectFrom" xml:space="preserve">
+    <value>از {1}: {0}</value>
+  </data>
+  <data name="Entry_EffectTo" xml:space="preserve">
+    <value>به {1}: {0}</value>
+  </data>
+  <data name="Entry_ImpliedRate" xml:space="preserve">
+    <value>نرخ حاصل از مبالغ شما: 1 {0} = {1} {2}</value>
+  </data>
+  <data name="Budget_ShownCurrency" xml:space="preserve">
+    <value>ارز بودجه</value>
+  </data>
+  <data name="Home_QuickAddTarget" xml:space="preserve">
+    <value>ثبت در {0} · {1}</value>
+  </data>
+  <data name="Home_QuickAddChoose" xml:space="preserve">
+    <value>حساب پیش‌فرض ندارید؛ ثبت سریع حساب را می‌پرسد</value>
+  </data>
+  <data name="Home_QuickAddChange" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="Home_CombinedOutdated" xml:space="preserve">
+    <value>مجموع ≈ {0} (نرخ‌های {1}؛ شاید قدیمی باشد)</value>
+  </data>
+  <data name="Home_RateEstimate" xml:space="preserve">
+    <value>شامل نرخ تخمینی</value>
+  </data>
+  <data name="Home_BalanceBelowZero" xml:space="preserve">
+    <value>ممکن است موجودی شما حدود {0} منفی شود</value>
+  </data>
+  <data name="Account_CurrencyLockedBy" xml:space="preserve">
+    <value>ارز قابل تغییر نیست، چون این مبالغ با آن ثبت شده‌اند: {0}. برای ارز دیگر، حساب تازه‌ای بسازید و پول را با انتقال جابه‌جا کنید.</value>
+  </data>
+  <data name="Account_LockEntries" xml:space="preserve">
+    <value>{0} ثبت</value>
+  </data>
+  <data name="Account_LockPlans" xml:space="preserve">
+    <value>{0} برنامه</value>
+  </data>
+  <data name="Account_LockTemplates" xml:space="preserve">
+    <value>{0} الگوی سریع</value>
+  </data>
+  <data name="Account_LockEarmarks" xml:space="preserve">
+    <value>{0} مبلغ کنارگذاشته برای هدف‌ها</value>
+  </data>
+  <data name="Account_LockBudgets" xml:space="preserve">
+    <value>{0} بودجه</value>
+  </data>
+  <data name="Account_LockInstallment" xml:space="preserve">
+    <value>قسط وام</value>
+  </data>
+  <data name="Account_DefaultCleared" xml:space="preserve">
+    <value>این حساب پیش‌فرض شما بود. ثبت سریع اکنون حساب را می‌پرسد؛ در تنظیمات › پول و ماه‌ها حساب پیش‌فرض تازه‌ای انتخاب کنید.</value>
+  </data>
+  <data name="Account_Usable" xml:space="preserve">
+    <value>قابل استفاده برای پرداخت</value>
+  </data>
+  <data name="Account_UsableHint" xml:space="preserve">
+    <value>در پولی حساب می‌شود که می‌تواند قبض‌ها را بپردازد، مثلاً در کمترین موجودی پیش‌بینی‌شده.</value>
+  </data>
+  <data name="Help_UsableForPayments_Title" xml:space="preserve">
+    <value>قابل استفاده برای پرداخت</value>
+  </data>
+  <data name="Help_UsableForPayments_Text" xml:space="preserve">
+    <value>بخشی از پول در جمع‌های شما هست ولی برای پرداخت‌های روزمره نیست، مثلاً حساب پس‌انداز با مهلت برداشت یا پولی در کشور دیگر. این گزینه را برای چنین حساب‌هایی خاموش کنید: پیش‌بینی کمترین موجودی آن‌ها را کنار می‌گذارد، ولی همهٔ جمع‌ها هنوز آن‌ها را دارند. Zanance هرگز به‌جای شما تصمیم نمی‌گیرد.</value>
+  </data>
+  <data name="Help_UsableForPayments_Example" xml:space="preserve">
+    <value>حساب جاری ۱٬۲۵۰ EUR (روشن) و سپردهٔ مدت‌دار ۵٬۰۰۰ EUR (خاموش): کمترین موجودی پیش‌بینی‌شده فقط به ۱٬۲۵۰ EUR نگاه می‌کند.</value>
+  </data>
+  <data name="Account_Country" xml:space="preserve">
+    <value>کشور (اختیاری)</value>
+  </data>
+  <data name="Account_CountryPlaceholder" xml:space="preserve">
+    <value>مثلاً IR</value>
+  </data>
+  <data name="Account_AddEntryHere" xml:space="preserve">
+    <value>ثبت در این حساب</value>
+  </data>
+  <data name="Accounts_Default" xml:space="preserve">
+    <value>پیش‌فرض</value>
+  </data>
+  <data name="AccountGroup_Money" xml:space="preserve">
+    <value>پول</value>
+  </data>
+  <data name="AccountGroup_CreditCards" xml:space="preserve">
+    <value>کارت‌های اعتباری</value>
+  </data>
+  <data name="AccountGroup_Receivables" xml:space="preserve">
+    <value>طلب من</value>
+  </data>
+  <data name="AccountGroup_Debts" xml:space="preserve">
+    <value>بدهی‌ها</value>
+  </data>
+  <data name="AccountGroup_ValuedAssets" xml:space="preserve">
+    <value>دارایی‌های ارزش‌گذاری‌شده</value>
+  </data>
+  <data name="Entry_DestinationFee" xml:space="preserve">
+    <value>کارمزد در حساب مقصد</value>
   </data>
 </root>

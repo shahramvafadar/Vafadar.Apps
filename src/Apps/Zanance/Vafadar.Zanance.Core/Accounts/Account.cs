@@ -33,9 +33,38 @@ public enum AccountType
     Asset = 6,
 }
 
+/// <summary>The group an account is listed in (ZEX-S0202): each group has its own totals, never mixed with another.</summary>
+public enum AccountGroup
+{
+    /// <summary>Cash, checking and savings.</summary>
+    Money = 0,
+
+    /// <summary>Credit cards.</summary>
+    CreditCards = 1,
+
+    /// <summary>Money lent: what others owe the user.</summary>
+    Receivables = 2,
+
+    /// <summary>Loans: what the user owes.</summary>
+    Debts = 3,
+
+    /// <summary>Valued assets such as a car or a property.</summary>
+    ValuedAssets = 4,
+}
+
 /// <summary>Helpers for account types.</summary>
 public static class AccountTypes
 {
+    /// <summary>Returns the group an account of this type is listed in.</summary>
+    public static AccountGroup GroupOf(this AccountType type) => type switch
+    {
+        AccountType.CreditCard => AccountGroup.CreditCards,
+        AccountType.Lent => AccountGroup.Receivables,
+        AccountType.Loan => AccountGroup.Debts,
+        AccountType.Asset => AccountGroup.ValuedAssets,
+        _ => AccountGroup.Money,
+    };
+
     /// <summary>Returns whether the type tracks a debt or a receivable rather than money at hand (ACC-05).</summary>
     public static bool IsDebt(this AccountType type) => type is AccountType.Loan or AccountType.Lent;
 

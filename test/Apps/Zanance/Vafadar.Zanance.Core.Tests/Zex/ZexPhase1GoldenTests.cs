@@ -163,4 +163,26 @@ public sealed class ZexPhase1GoldenTests
         Assert.Equal(0, totals.NetIncome);
         Assert.Equal(-450_00, totals.Result);
     }
+
+    [Fact]
+    public void A_destination_fee_is_an_expense_on_the_destination_and_found_apart_from_the_source_fee()
+    {
+        var ledger = new LedgerBuilder();
+        var main = ledger.Account("Main", 500m);
+        var dollar = ledger.Account("Dollar", 0m, currency: "USD");
+        var transfer = ledger.Transfer(main, dollar, 100m, 110m);
+        var sourceFee = EntryActions.SyncTransferFee(transfer, null, 2_00, null)!;
+        var destinationFee = EntryActions.SyncDestinationFee(transfer, null, 1_00, null)!;
+        ledger.Entries.Add(sourceFee);
+        ledger.Entries.Add(destinationFee);
+
+        Assert.Equal(398_00, ledger.Balance(main));
+        Assert.Equal(109_00, ledger.Balance(dollar));
+        Assert.Same(sourceFee, EntryActions.FindTransferFee(transfer, ledger.Entries));
+        Assert.Same(destinationFee, EntryActions.FindDestinationFee(transfer, ledger.Entries));
+        var totals = LedgerCalculator.Totals(ledger.Accounts, ledger.Entries, new LedgerFilter(LedgerBuilder.Day1, Today));
+        Assert.Equal([("EUR", 2_00L), ("USD", 1_00L)], totals.Select(t => (t.CurrencyCode, t.NetExpense)));
+        Assert.All(totals, t => Assert.Equal(0, t.NetIncome));
+        Assert.Null(EntryActions.SyncDestinationFee(transfer, destinationFee, 0, null));
+    }
 }

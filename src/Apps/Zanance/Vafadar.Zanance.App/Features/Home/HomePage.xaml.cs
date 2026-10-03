@@ -7,11 +7,13 @@ namespace Vafadar.Zanance.App.Features.Home;
 public partial class HomePage : ContentPage
 {
     private readonly HomeViewModel _viewModel;
+    private readonly Vafadar.Zanance.Data.ZananceStore _store;
     private readonly Dictionary<HomeSection, VerticalStackLayout> _sections;
     private HomeLayout _layout = HomeLayout.Default;
 
-    public HomePage(HomeViewModel viewModel)
+    public HomePage(HomeViewModel viewModel, Vafadar.Zanance.Data.ZananceStore store)
     {
+        _store = store;
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
         _sections = new()
@@ -53,7 +55,7 @@ public partial class HomePage : ContentPage
     // The user's order and visibility of the sections (§21.5); balance and attention always stay on top (DASH-03).
     private void ApplyLayout()
     {
-        _layout = HomeLayoutPreferences.Load();
+        _layout = HomeLayoutPreferences.Load(_store);
         var first = _sections.Values.Min(s => Sections.Children.IndexOf(s));
         foreach (var section in _sections.Values)
         {

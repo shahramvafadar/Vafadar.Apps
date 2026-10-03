@@ -101,6 +101,20 @@
                             </Grid>
                         </Grid>
 
+                        <!-- Where quick add puts an expense; "change" picks another account for one entry (ZEX-S0103) -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="4,0">
+                            <Label Text="{Binding QuickAddTargetText}" Style="{StaticResource Secondary}" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding NeedsDefaultAccount}" Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource WarningText}" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Button Grid.Column="1" Text="{v:Translate Home_QuickAddChange}" Style="{StaticResource TextButton}" Command="{Binding AddKindCommand}"
+                                    CommandParameter="Expense" SemanticProperties.Description="{Binding QuickAddTargetText}" />
+                        </Grid>
+
                         <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasQuickTemplates}">
                             <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding QuickTemplates}">
                                 <BindableLayout.ItemTemplate>
@@ -193,6 +207,16 @@
                     <Border Style="{StaticResource Card}" Padding="0">
                         <VerticalStackLayout>
                             <!-- Each row is one real button, like the rows of Getting started -->
+                            <!-- The balance may fall below zero this month (forecast with the plans, in both modes, ZEX-P19) -->
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding LowBalanceText, Converter={StaticResource IsNotNullConverter}}">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource WarningBackground}" Stroke="{DynamicResource WarningText}">
+                                    <fi:SymbolIcon Symbol="Warning" FontSize="20" ForegroundColor="{DynamicResource WarningText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding LowBalanceText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding OpenForecastCommand}"
+                                        SemanticProperties.Description="{Binding LowBalanceText}" />
+                            </Grid>
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding DueCount, Converter={StaticResource IsPositiveConverter}}">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding DueTileBackground}" Stroke="{Binding DueTileLine}">
                                     <fi:SymbolIcon Symbol="CalendarClock" FontSize="20" ForegroundColor="{Binding DueTileText}" HorizontalOptions="Center" VerticalOptions="Center" />

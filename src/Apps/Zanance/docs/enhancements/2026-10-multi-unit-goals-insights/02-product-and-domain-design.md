@@ -154,9 +154,11 @@ newer, no 1:1 assumption, no triangulation. Extensions:
 * A result carries `RateInfo` per source currency: date, `IsEstimate`, *outdated* flag (ZEX-P06), missing.
 * Missing rate → the converted total is *incomplete* and lists the currencies without a rate; the native totals stay
   complete (AT07).
-* **Freshness (ZEX-P06):** *may be outdated* when the rate is older than `max(30 days, start of the current financial
-  month)` before the valuation date (Advanced setting: 7 / 30 / 90 days / never). It is a reminder to update, not a
-  claim about accuracy; the label says "rate of 12 Aug – may be outdated".
+* **Freshness (ZEX-P06):** *may be outdated* when the rate is older than the chosen number of days before the
+  valuation date (Advanced setting: 7 / 30 / 90 days / never; default 30) **and** was entered before the start of the
+  current financial month – a rate entered for the running month is never flagged (`RateFreshness`, implemented in
+  phase 1; this makes every option of the setting meaningful). It is a reminder to update, not a claim about accuracy;
+  the label says "rate of 12 Aug – may be outdated".
 * Historical valuation never uses a rate dated after the valuation date (ZEX-AS13).
 
 ### 5.4 Multi-currency budgets, reports and charts

@@ -97,14 +97,51 @@ public static class EntryActions
         return entry;
     }
 
-    /// <summary>Returns the fee entry grouped with <paramref name="transfer"/>, if any.</summary>
+    /// <summary>Returns the fee entry grouped with <paramref name="transfer"/> on its source account, if any.</summary>
     public static LedgerEntry? FindTransferFee(LedgerEntry transfer, IEnumerable<LedgerEntry> entries)
     {
         ArgumentNullException.ThrowIfNull(transfer);
         ArgumentNullException.ThrowIfNull(entries);
         return transfer.GroupId is { } group
-            ? entries.FirstOrDefault(e => e.GroupId == group && e.Id != transfer.Id && e.Kind == EntryKind.Expense)
+            ? entries.FirstOrDefault(e => e.GroupId == group && e.Id != transfer.Id && e.Kind == EntryKind.Expense && e.AccountId == transfer.AccountId)
             : null;
+    }
+
+    /// <summary>
+    /// Returns the fee charged at the destination of a transfer (ZEX-S0204), grouped with it and booked on the destination
+    /// account in its currency, if any.
+    /// </summary>
+    public static LedgerEntry? FindDestinationFee(LedgerEntry transfer, IEnumerable<LedgerEntry> entries)
+    {
+        ArgumentNullException.ThrowIfNull(transfer);
+        ArgumentNullException.ThrowIfNull(entries);
+        return transfer is { GroupId: { } group, ToAccountId: { } to } && to != transfer.AccountId
+            ? entries.FirstOrDefault(e => e.GroupId == group && e.Id != transfer.Id && e.Kind == EntryKind.Expense && e.AccountId == to)
+            : null;
+    }
+
+    /// <summary>
+    /// Creates, updates or removes the fee charged at the destination of a transfer (ZEX-S0204): an expense on the
+    /// destination account in its currency, grouped with the transfer like the source fee.
+    /// </summary>
+    /// <returns>The fee entry to save, or <see langword="null"/> when there is no fee (delete <paramref name="existingFee"/>).</returns>
+    public static LedgerEntry? SyncDestinationFee(LedgerEntry transfer, LedgerEntry? existingFee, long fee, Guid? categoryId)
+    {
+        ArgumentNullException.ThrowIfNull(transfer);
+        if (fee <= 0 || transfer.ToAccountId is not { } to)
+        {
+            return null;
+        }
+
+        transfer.GroupId ??= Guid.CreateVersion7();
+        var entry = existingFee ?? new LedgerEntry { Kind = EntryKind.Expense, CategoryId = categoryId };
+        entry.Date = transfer.Date;
+        entry.AccountId = to;
+        entry.Amount = fee;
+        entry.GroupId = transfer.GroupId;
+        entry.Review = transfer.Review;
+        entry.Source = transfer.Source;
+        return entry;
     }
 
     /// <summary>

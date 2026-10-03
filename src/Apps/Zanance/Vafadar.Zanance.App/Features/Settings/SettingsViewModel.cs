@@ -53,8 +53,41 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     public IReadOnlyList<string> CurrencyCodes { get; } = [.. Currencies.All.Select(c => c.Code)];
 
+    /// <summary>Gets or sets the valuation currency: converted totals and converted charts only (ZEX-P01).</summary>
     [ObservableProperty]
     public partial string ReportCurrency { get; set; }
+
+    /// <summary>Gets or sets the currency preselected for new accounts, goals, budgets and rates (ZEX-P01).</summary>
+    [ObservableProperty]
+    public partial string DefaultCurrency { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets a value indicating whether the hint "only new items use this" is shown after a change.</summary>
+    [ObservableProperty]
+    public partial bool DefaultCurrencyChanged { get; set; }
+
+    /// <summary>Gets the choices for the default account: "none" and every money account (ZEX-S0102, S0103).</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<DefaultAccountOption> DefaultAccounts { get; set; } = [];
+
+    [ObservableProperty]
+    public partial DefaultAccountOption? DefaultAccount { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether converted totals are shown (Advanced).</summary>
+    [ObservableProperty]
+    public partial bool ValuationEnabled { get; set; } = true;
+
+    /// <summary>Gets the choices after how many days a rate may be outdated (Advanced, ZEX-P06).</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> FreshnessNames { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int FreshnessIndex { get; set; }
+
+    /// <summary>Gets a value indicating whether the Advanced settings of money are shown.</summary>
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
+
+    private static readonly int[] FreshnessDays = [7, 30, 90, 0];
 
     public IReadOnlyList<string> ModeNames { get; }
 
@@ -143,6 +176,22 @@ public sealed partial class SettingsViewModel : ViewModelBase
         {
             var settings = await _store.GetSettingsAsync();
             ReportCurrency = settings.ReportCurrencyCode;
+            DefaultCurrency = settings.DefaultCurrencyCode;
+            DefaultCurrencyChanged = false;
+            ValuationEnabled = settings.ValuationCurrencyEnabled;
+            IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+            var dayNames = FreshnessDays.Select(d => d == 0
+                ? _translator["Settings_FreshnessNever"]
+                : Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_FreshnessDays", d.ToString(_localization.CurrentCulture)))!);
+            FreshnessNames = [.. dayNames];
+            FreshnessIndex = Math.Max(0, Array.IndexOf(FreshnessDays, settings.RateFreshnessDays));
+            var accounts = (await _store.GetAccountsAsync(includeArchived: false)).Where(a => Core.Accounts.EntryAccountContract.IsValidDefault(a)).ToList();
+            DefaultAccounts =
+            [
+                new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]),
+                .. accounts.Select(a => new DefaultAccountOption(a.Id, $"{a.Name} ({a.CurrencyCode})")),
+            ];
+            DefaultAccount = DefaultAccounts.FirstOrDefault(o => o.Id == settings.DefaultAccountId) ?? DefaultAccounts[0];
             ShowDetails = settings.NotificationsShowDetails;
             ModeIndex = (int)settings.Mode;
             var culture = _localization.CurrentCulture;
@@ -186,9 +235,66 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
     }
 
+    // Changing one default never changes another or any stored amount (ZEX-MC02, AT02).
+    async partial void OnDefaultCurrencyChanged(string value)
+    {
+        if (_refreshing || string.IsNullOrEmpty(value))
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        if (settings.DefaultCurrencyCode != value)
+        {
+            settings.DefaultCurrencyCode = value;
+            await _store.SaveSettingsAsync(settings);
+            DefaultCurrencyChanged = true;
+        }
+    }
+
+    async partial void OnDefaultAccountChanged(DefaultAccountOption? value)
+    {
+        if (_refreshing || value is null)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        if (settings.DefaultAccountId != value.Id)
+        {
+            settings.DefaultAccountId = value.Id;
+            await _store.SaveSettingsAsync(settings);
+        }
+    }
+
+    async partial void OnValuationEnabledChanged(bool value)
+    {
+        if (_refreshing)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        settings.ValuationCurrencyEnabled = value;
+        await _store.SaveSettingsAsync(settings);
+    }
+
+    async partial void OnFreshnessIndexChanged(int value)
+    {
+        if (_refreshing || value < 0 || value >= FreshnessDays.Length)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        settings.RateFreshnessDays = FreshnessDays[value];
+        await _store.SaveSettingsAsync(settings);
+    }
+
     // Simple and Advanced show the same data and calculations; switching never removes anything (UX-01, UX-02).
     async partial void OnModeIndexChanged(int value)
     {
+        IsAdvanced = value == (int)Core.Settings.ExperienceMode.Advanced;
         if (_refreshing)
         {
             return;
@@ -255,8 +361,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
         await _store.DeleteAllDataAsync();
         Presentation.AttachmentFiles.ClearCache();
-        Presentation.DisplayUnitPreferences.Clear();
-        Presentation.HomeLayoutPreferences.Clear();
+        await Presentation.DisplayUnitPreferences.ClearAsync(_store);
+        await Presentation.HomeLayoutPreferences.ClearAsync(_store);
         await _lock.SetEnabledAsync(false);
         await _reminders.RefreshAsync();
         (Application.Current as App)?.ShowOnboarding();
@@ -381,6 +487,12 @@ public sealed partial class SettingsViewModel : ViewModelBase
             _refreshing = false;
         }
     }
+}
+
+/// <summary>A default-account choice; <see cref="Id"/> is <see langword="null"/> for "no default account".</summary>
+public sealed record DefaultAccountOption(Guid? Id, string DisplayName)
+{
+    public override string ToString() => DisplayName;
 }
 
 /// <summary>A region choice; <see cref="Code"/> is <see langword="null"/> for "not set".</summary>

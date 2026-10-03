@@ -18,6 +18,9 @@ public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol I
     /// <summary>Gets the account type, which picks the tile colours: teal for savings, red for loans, sky for money lent (D-27).</summary>
     public AccountType Type { get; init; }
 
+    /// <summary>Gets a value indicating whether this is the default account of new entries (ZEX-S0202).</summary>
+    public bool IsDefault { get; init; }
+
     /// <summary>Gets the icon colour.</summary>
     public Color TileText => Look.Text;
 
@@ -39,22 +42,21 @@ public sealed record AccountItem(Guid Id, string Name, string TypeName, Symbol I
 /// <summary>A total per currency.</summary>
 public sealed record CurrencyTotal(string CurrencyCode, string Text);
 
-public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time) : ViewModelBase
-{
-    public ObservableCollection<AccountItem> Active { get; } = [];
+/// <summary>One group of the account list with its totals per currency, e.g. "Money · 2,000.00 EUR · 4,000.00 USD" (ZEX-S0202).</summary>
+public sealed record AccountListGroup(AccountGroup Group, string Title, string? TotalsText, IReadOnlyList<AccountItem> Items);
 
+public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Vafadar.Localization.Formatting.IDateFormatter dates) : ViewModelBase
+{
     public ObservableCollection<AccountItem> Archived { get; } = [];
 
     public ObservableCollection<CurrencyTotal> Totals { get; } = [];
 
-    // Loans and money lent are listed apart from the money at hand (ACC-05, F2-DEBT-01).
-    public ObservableCollection<AccountItem> Debts { get; } = [];
+    /// <summary>Gets the groups in a fixed order: money, cards, owed to me, debts, valued assets (ZEX-S0202).</summary>
+    public ObservableCollection<AccountListGroup> Groups { get; } = [];
 
+    /// <summary>Gets the converted total of the accounts in totals (Advanced, only with a valuation currency).</summary>
     [ObservableProperty]
-    public partial string? DebtSummary { get; set; }
-
-    [ObservableProperty]
-    public partial bool HasDebts { get; set; }
+    public partial string? ConvertedText { get; set; }
 
     [ObservableProperty]
     public partial bool IsEmpty { get; set; }
@@ -66,16 +68,14 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
     {
         var accounts = await store.GetAccountsAsync();
         var entries = await store.GetEntriesAsync();
+        var settings = await store.GetSettingsAsync();
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var culture = localization.CurrentCulture;
 
-        Active.Clear();
         Archived.Clear();
         Totals.Clear();
-        Debts.Clear();
-        var owed = new Dictionary<string, long>();
-        var lent = new Dictionary<string, long>();
-        var assets = new Dictionary<string, long>();
+        Groups.Clear();
+        var grouped = new Dictionary<AccountGroup, List<(AccountItem Item, string Currency, long Balance)>>();
 
         foreach (var account in accounts)
         {
@@ -88,46 +88,48 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
                 MoneyText.Format(balance, account.CurrencyCode, culture),
                 balance < 0,
                 !account.IncludeInTotals,
-                !account.OpeningBalanceKnown) { Type = account.Type };
+                !account.OpeningBalanceKnown) { Type = account.Type, IsDefault = account.Id == settings.DefaultAccountId };
             if (account.IsArchived)
             {
                 Archived.Add(item);
+                continue;
             }
-            else if (account.Type.IsOutsideCash())
+
+            var group = account.Type.GroupOf();
+            if (!grouped.TryGetValue(group, out var list))
             {
-                Debts.Add(item);
-                var target = account.Type == AccountType.Asset ? assets : balance < 0 ? owed : lent;
-                target[account.CurrencyCode] = target.GetValueOrDefault(account.CurrencyCode) + Math.Abs(balance);
+                grouped[group] = list = [];
             }
-            else
-            {
-                Active.Add(item);
-            }
+
+            list.Add((item, account.CurrencyCode, balance));
         }
 
-        foreach (var (currency, total) in LedgerCalculator.TotalBalances(accounts.Where(a => !a.IsArchived), entries, today))
+        // Each group in exactly one place, with its own totals per currency; groups never mix (ZEX-MC12).
+        foreach (var group in Enum.GetValues<AccountGroup>().Where(grouped.ContainsKey))
+        {
+            var rows = grouped[group];
+            var totals = rows.GroupBy(r => r.Currency, StringComparer.OrdinalIgnoreCase)
+                .Select(g => MoneyText.Format(g.Sum(r => r.Balance), g.Key, culture));
+            Groups.Add(new AccountListGroup(group, translator[$"AccountGroup_{group}"], string.Join(" · ", totals), [.. rows.Select(r => r.Item)]));
+        }
+
+        var inTotals = LedgerCalculator.TotalBalances(accounts, entries, today);
+        foreach (var (currency, total) in inTotals)
         {
             Totals.Add(new CurrencyTotal(currency, MoneyText.Format(total, currency, culture)));
         }
 
-        var parts = new List<string>();
-        if (owed.Count > 0)
+        // Advanced: one converted line under the native totals, never instead of them (ZEX-MC08).
+        ConvertedText = null;
+        if (settings.Mode == Core.Settings.ExperienceMode.Advanced && settings.ValuationCurrencyEnabled && inTotals.Count > 1)
         {
-            parts.Add(translator.Format("Accounts_IOwe", string.Join(" · ", owed.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
+            var combined = new Core.Rates.RateTable(await store.GetRatesAsync()).Combine(inTotals, settings.ReportCurrencyCode, today, new Core.Rates.RateFreshness(settings.RateFreshnessDays));
+            ConvertedText = combined.IsComplete
+                ? translator.Format(combined.IsOutdated ? "Home_CombinedOutdated" : "Home_Combined", MoneyText.Format(combined.Total!.Value, settings.ReportCurrencyCode, culture),
+                    combined.OldestRateDate is { } date ? dates.Format(date, Vafadar.Localization.Formatting.DateFormatStyle.Short) : "-")
+                : translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies));
         }
 
-        if (lent.Values.Any(v => v != 0))
-        {
-            parts.Add(translator.Format("Accounts_OwedToMe", string.Join(" · ", lent.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
-        }
-
-        if (assets.Values.Any(v => v != 0))
-        {
-            parts.Add(translator.Format("Accounts_AssetsValue", string.Join(" · ", assets.Where(o => o.Value != 0).Select(o => MoneyText.Format(o.Value, o.Key, culture)))));
-        }
-
-        DebtSummary = parts.Count > 0 ? string.Join(Environment.NewLine, parts) : null;
-        HasDebts = Debts.Count > 0;
         IsEmpty = accounts.Count == 0;
         HasArchived = Archived.Count > 0;
     }

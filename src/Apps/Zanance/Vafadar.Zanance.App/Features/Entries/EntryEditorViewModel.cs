@@ -53,6 +53,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private readonly TimeProvider _time;
     private LedgerEntry _entry = new();
     private LedgerEntry? _fee;
+    private LedgerEntry? _destinationFee;
+    private bool _isAdvanced;
     private LedgerEntry? _refundOf;
     private CategoryLookup _categories;
     private Dictionary<Guid, Account> _accounts = [];
@@ -139,6 +141,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string FeeText { get; set; }
 
+    /// <summary>Gets or sets a fee charged at the destination, in its currency (Advanced, ZEX-S0204).</summary>
+    [ObservableProperty]
+    public partial string DestinationFeeText { get; set; } = string.Empty;
+
+    /// <summary>Gets a value indicating whether the destination fee field is shown (Advanced transfers).</summary>
+    [ObservableProperty]
+    public partial bool ShowDestinationFee { get; set; }
+
     [ObservableProperty]
     public partial bool ShowDetails { get; set; }
 
@@ -218,6 +228,126 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial bool HasNoAccounts { get; set; }
 
+    /// <summary>
+    /// Gets or sets the notice under the amount after the account changed to another currency (ZEX-P04): the digits are
+    /// kept and relabelled, never converted.
+    /// </summary>
+    [ObservableProperty]
+    public partial string? CurrencyNotice { get; set; }
+
+    /// <summary>Gets or sets the notice that a template or context account could not be used (archived, ZEX-S0103).</summary>
+    [ObservableProperty]
+    public partial string? AccountNotice { get; set; }
+
+    /// <summary>Gets a value indicating whether no account is chosen yet: the field asks for one and Save is disabled.</summary>
+    public bool NeedsAccount => Account is null && !HasNoAccounts;
+
+    /// <summary>Gets a value indicating whether Save can be used now.</summary>
+    public bool CanSave => !IsBusy && Account is not null;
+
+    /// <summary>Gets the effect of saving, e.g. "−25.00 EUR from Main" (ZEX-S0103, S0204); nothing changes before Save.</summary>
+    [ObservableProperty]
+    public partial string? EffectText { get; set; }
+
+    /// <summary>Gets the rate implied by the two amounts of a transfer between currencies (ZEX-S0204).</summary>
+    [ObservableProperty]
+    public partial string? ImpliedRateText { get; set; }
+
+    private AccountChoice? _previousAccount;
+    private string? _previousAmountText;
+
+    protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+        if (e.PropertyName is nameof(IsBusy) or nameof(Account) or nameof(HasNoAccounts))
+        {
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanSave)));
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(NeedsAccount)));
+        }
+
+        if (e.PropertyName is nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(KindIndex))
+        {
+            UpdateEffect();
+        }
+    }
+
+    // Undoes the last account change: the previous account and the amount as typed before (ZEX-P04).
+    [RelayCommand]
+    private void UndoAccountChange()
+    {
+        if (_previousAccount is null)
+        {
+            return;
+        }
+
+        var (account, amount) = (_previousAccount, _previousAmountText);
+        _loading = true;
+        try
+        {
+            Account = account;
+            AmountText = amount ?? AmountText;
+        }
+        finally
+        {
+            _loading = false;
+        }
+
+        UpdateCurrencies();
+        CurrencyNotice = null;
+        _previousAccount = null;
+    }
+
+    // "−25.00 EUR from Main", "+3,000.00 EUR to Main" or for a transfer "−102.00 EUR from Main · +110.00 USD to Dollar".
+    private void UpdateEffect()
+    {
+        EffectText = null;
+        ImpliedRateText = null;
+        if (Account is null || !_accounts.TryGetValue(Account.Id, out var account)
+            || !MoneyText.TryParse(AmountText, account.CurrencyCode, _localization.CurrentCulture, out var amount) || amount <= 0)
+        {
+            return;
+        }
+
+        var culture = _localization.CurrentCulture;
+        var outgoing = Kind is EntryKind.Expense or EntryKind.IncomeReversal or EntryKind.Transfer;
+        if (Kind == EntryKind.Transfer && !string.IsNullOrWhiteSpace(FeeText)
+            && MoneyText.TryParse(FeeText, account.CurrencyCode, culture, out var fee) && fee > 0)
+        {
+            amount = checked(amount + fee);
+        }
+
+        var parts = new List<string>
+        {
+            _translator.Format(outgoing ? "Entry_EffectFrom" : "Entry_EffectTo", MoneyText.Format(outgoing ? -amount : amount, account.CurrencyCode, culture, showPlus: !outgoing), account.Name),
+        };
+
+        if (Kind == EntryKind.Transfer && ToAccount is not null && _accounts.TryGetValue(ToAccount.Id, out var target))
+        {
+            var sameCurrency = string.Equals(target.CurrencyCode, account.CurrencyCode, StringComparison.OrdinalIgnoreCase);
+            long received = 0;
+            var known = sameCurrency
+                ? MoneyText.TryParse(AmountText, account.CurrencyCode, culture, out received)
+                : MoneyText.TryParse(ToAmountText, target.CurrencyCode, culture, out received) && received > 0;
+            if (known)
+            {
+                if (ShowDestinationFee && MoneyText.TryParse(DestinationFeeText, target.CurrencyCode, culture, out var destinationFee) && destinationFee > 0)
+                {
+                    received -= destinationFee;
+                }
+
+                parts.Add(_translator.Format("Entry_EffectTo", MoneyText.Format(received, target.CurrencyCode, culture, showPlus: true), target.Name));
+                if (!sameCurrency && MoneyText.TryParse(AmountText, account.CurrencyCode, culture, out var sent) && sent > 0)
+                {
+                    var rate = MoneyText.ToDecimal(received, Currencies.TryGet(target.CurrencyCode, out var to) ? to : Currencies.Euro)
+                        / MoneyText.ToDecimal(sent, Currencies.TryGet(account.CurrencyCode, out var from) ? from : Currencies.Euro);
+                    ImpliedRateText = _translator.Format("Entry_ImpliedRate", account.CurrencyCode, rate.ToString("0.####", culture), target.CurrencyCode);
+                }
+            }
+        }
+
+        EffectText = string.Join(" · ", parts);
+    }
+
     /// <summary>Gets the kind being edited.</summary>
     public EntryKind Kind => _refundOf is not null ? EntryKind.Refund : CanChangeKind ? ChipKinds[Math.Clamp(KindIndex, 0, ChipKinds.Length - 1)] : _entry.Kind;
 
@@ -239,14 +369,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             await LoadReferenceDataAsync();
             var settings = await _store.GetSettingsAsync();
+            _isAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+            _destinationFee = null;
+            DestinationFeeText = string.Empty;
             var active = Accounts;
 
             if (Get(query, "id") is { } id && await _store.GetEntryAsync(id) is { } existing)
             {
                 _entry = existing;
-                _fee = existing.Kind == EntryKind.Transfer && existing.GroupId is { } group
-                    ? EntryActions.FindTransferFee(existing, await _store.GetGroupAsync(group))
-                    : null;
+                var groupEntries = existing.Kind == EntryKind.Transfer && existing.GroupId is { } group ? await _store.GetGroupAsync(group) : [];
+                _fee = EntryActions.FindTransferFee(existing, groupEntries);
+                _destinationFee = EntryActions.FindDestinationFee(existing, groupEntries);
                 if (existing.Kind == EntryKind.Refund && existing.RefundOfId is { } purchaseId)
                 {
                     _refundOf = await _store.GetEntryAsync(purchaseId);
@@ -286,7 +419,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             else if (query.TryGetValue("kind", out var reversalKind) && reversalKind?.ToString() == nameof(EntryKind.IncomeReversal))
             {
                 // Paying income back reduces income; it is not an expense (REF-05).
-                var defaultAccount = active.FirstOrDefault(a => a.Id == settings.DefaultAccountId) ?? active.FirstOrDefault();
+                var defaultAccount = active.FirstOrDefault(a => a.Id == EntryAccountContract.Choose([.. _accounts.Values], null, null, settings.DefaultAccountId).AccountId);
                 _entry = new LedgerEntry { Kind = EntryKind.IncomeReversal, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
                 if (Get(query, "of") is { } incomeId && await _store.GetEntryAsync(incomeId) is { } income)
                 {
@@ -300,7 +433,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             else
             {
                 var kind = query.TryGetValue("kind", out var value) && Enum.TryParse<EntryKind>(value?.ToString(), out var parsed) ? parsed : EntryKind.Expense;
-                var defaultAccount = active.FirstOrDefault(a => a.Id == settings.DefaultAccountId) ?? active.FirstOrDefault();
+
+                // One rule for every path (ZEX-S0103): the context account (an account page or a prepared transfer),
+                // then a valid default account, otherwise none – never a silent fallback to the first account.
+                var choice = EntryAccountContract.Choose([.. _accounts.Values], null, Get(query, "account") ?? Get(query, "from"), settings.DefaultAccountId);
+                var defaultAccount = active.FirstOrDefault(a => a.Id == choice.AccountId);
                 _entry = new LedgerEntry { Kind = kind, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
                 _isNew = true;
                 CanChangeKind = true;
@@ -373,7 +510,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (query.TryGetValue("receiptAmount", out var amount) && amount is string amountText
             && decimal.TryParse(amountText, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var value))
         {
-            AmountText = value.ToString("0.##", culture);
+            // A receipt total is in the ISO unit of the currency, never in a display unit such as the toman (ZEX-S0103).
+            AmountText = Account is not null && Currencies.TryGet(Account.CurrencyCode, out var receiptCurrency)
+                ? MoneyText.ForInput(MoneyAmount.ToMinor(value, receiptCurrency), receiptCurrency.Code, culture)
+                : value.ToString("0.##", culture);
             applied.Add(_translator["Entry_Amount"]);
         }
 
@@ -421,9 +561,15 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private void ApplyTemplate(EntryTemplate template)
     {
         var entry = template.CreateEntry(Date == default ? Today : Date);
+        AccountNotice = null;
         if (Accounts.All(a => a.Id != entry.AccountId))
         {
-            entry.AccountId = Account?.Id ?? Guid.Empty;
+            // The template's account is archived or gone: its amount would mean something else in another account, so
+            // the amount and the account stay empty and the user is told (ZEX-S0103).
+            entry.AccountId = Guid.Empty;
+            entry.Amount = 0;
+            entry.ToAmount = null;
+            AccountNotice = _translator["Entry_TemplateAccountArchived"];
         }
 
         if (entry.ToAccountId is { } to && Accounts.All(a => a.Id != to))
@@ -472,6 +618,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         // An archived account of an existing entry stays selectable for that entry.
         Accounts = EnsureChoice(Accounts, entry.AccountId);
         Account = Accounts.FirstOrDefault(a => a.Id == entry.AccountId);
+        CurrencyNotice = null;
+        _previousAccount = null;
         if (entry.ToAccountId is { } to)
         {
             ToAccounts = EnsureChoice(ToAccounts, to);
@@ -488,6 +636,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (_fee is not null)
         {
             FeeText = MoneyText.ForInput(_fee.Amount, currency, culture);
+        }
+
+        if (_destinationFee is not null && ToAccount is not null)
+        {
+            DestinationFeeText = MoneyText.ForInput(_destinationFee.Amount, ToAccount.CurrencyCode, culture);
         }
 
         EntryTitle = entry.Title ?? string.Empty;
@@ -526,9 +679,39 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
     }
 
-    partial void OnAccountChanged(AccountChoice? value) => UpdateCurrencies();
+    partial void OnAccountChanged(AccountChoice? oldValue, AccountChoice? newValue)
+    {
+        // Another currency keeps the typed digits and says so, with Undo (ZEX-P04); a fee in the old currency is cleared.
+        if (!_loading && oldValue is not null && newValue is not null && !string.Equals(oldValue.CurrencyCode, newValue.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+        {
+            _previousAccount = oldValue;
+            _previousAmountText = AmountText;
+            if (!string.IsNullOrWhiteSpace(AmountText) || !string.IsNullOrWhiteSpace(FeeText))
+            {
+                CurrencyNotice = _translator.Format("Entry_CurrencyChanged", MoneyText.UnitName(newValue.CurrencyCode), MoneyText.UnitName(oldValue.CurrencyCode));
+            }
 
-    partial void OnToAccountChanged(AccountChoice? value) => UpdateCurrencies();
+            FeeText = string.Empty;
+        }
+        else if (!_loading && newValue is not null && oldValue is null)
+        {
+            AccountNotice = null;
+        }
+
+        UpdateCurrencies();
+    }
+
+    partial void OnToAccountChanged(AccountChoice? oldValue, AccountChoice? newValue)
+    {
+        // The amount received is in the destination's currency: a new currency clears it instead of relabelling it.
+        if (!_loading && oldValue is not null && newValue is not null && !string.Equals(oldValue.CurrencyCode, newValue.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+        {
+            ToAmountText = string.Empty;
+            DestinationFeeText = string.Empty;
+        }
+
+        UpdateCurrencies();
+    }
 
     private void UpdateKindState()
     {
@@ -541,7 +724,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             Accounts = [.. Accounts.Where(a => a.CurrencyCode == purchaseAccount.CurrencyCode)];
         }
 
-        ShowAccountPicker = Accounts.Count > 1 || IsTransfer;
+        // The account is always visible (ZEX-S0103), read-only when there is only one.
+        ShowAccountPicker = true;
 
         // A new entry says what it records ("New expense"), so the kind chosen on Home is confirmed at a glance.
         if (_isNew && CanChangeKind)
@@ -573,6 +757,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         CurrencyCode = Account?.CurrencyCode ?? Currencies.Euro.Code;
         ToCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode;
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
+        ShowDestinationFee = IsTransfer && _isAdvanced && ToAccount is not null;
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
     }
 
@@ -701,7 +886,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         AmountError = null;
         if (Account is null)
         {
-            SaveError = _translator["Entry_NoAccounts"];
+            SaveError = _translator[HasNoAccounts ? "Entry_NoAccounts" : "Entry_ChooseAccount"];
             return;
         }
 
@@ -801,16 +986,38 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 }
 
                 _fee = synced;
+
+                // A fee at the destination (Advanced) is an expense there, in its currency (ZEX-S0204).
+                long destinationFee = 0;
+                if (ShowDestinationFee && !string.IsNullOrWhiteSpace(DestinationFeeText)
+                    && (ToAccount is null || !MoneyText.TryParse(DestinationFeeText, ToAccount.CurrencyCode, culture, out destinationFee) || destinationFee < 0))
+                {
+                    SaveError = _translator["Amount_Invalid"];
+                    return;
+                }
+
+                var destination = EntryActions.SyncDestinationFee(_entry, _destinationFee, destinationFee, _categories.Fees());
+                if (destination is null && _destinationFee is not null)
+                {
+                    deleteIds.Add(_destinationFee.Id);
+                }
+                else if (destination is not null)
+                {
+                    batch.Add(destination);
+                }
+
+                _destinationFee = destination;
             }
             else
             {
                 var categoryKind = kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense;
                 _entry.CategoryId = Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(categoryKind);
-                if (_fee is not null)
+                if (_fee is not null || _destinationFee is not null)
                 {
-                    // The entry is no longer a transfer: its fee goes with it.
-                    deleteIds.Add(_fee.Id);
+                    // The entry is no longer a transfer: its fees go with it.
+                    deleteIds.AddRange(new[] { _fee?.Id, _destinationFee?.Id }.OfType<Guid>());
                     _fee = null;
+                    _destinationFee = null;
                     _entry.GroupId = null;
                 }
             }

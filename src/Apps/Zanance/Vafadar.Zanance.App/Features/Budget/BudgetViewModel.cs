@@ -227,6 +227,30 @@ public sealed partial class BudgetViewModel : ViewModelBase
         }
     }
 
+    /// <summary>Gets the budget currencies to switch between (only shown with budgets in several currencies, ZEX-P02).</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> CurrencyChoices { get; set; } = [];
+
+    [ObservableProperty]
+    public partial string? SelectedCurrency { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasCurrencyChoices { get; set; }
+
+    // The choice is remembered per profile and also decides the budget shown on Home.
+    async partial void OnSelectedCurrencyChanged(string? value)
+    {
+        if (_refreshing || string.IsNullOrEmpty(value) || value == _currency)
+        {
+            return;
+        }
+
+        var settings = await _store.GetSettingsAsync();
+        settings.HomeBudgetCurrencyCode = value;
+        await _store.SaveSettingsAsync(settings);
+        await Presentation.Failures.GuardAsync(LoadAsync);
+    }
+
     public async Task LoadAsync()
     {
         var settings = await _store.GetSettingsAsync();
@@ -237,7 +261,21 @@ public sealed partial class BudgetViewModel : ViewModelBase
             (_year, _month) = PeriodMath.MonthOf(Today, _calendar, _startDay);
         }
 
-        _currency = settings.ReportCurrencyCode;
+        // The budget of the default account's currency, or the one picked in the switcher (ZEX-P02).
+        var allAccounts = await _store.GetAccountsAsync();
+        _currency = BudgetCurrency.Resolve(settings, allAccounts);
+        _refreshing = true;
+        try
+        {
+            CurrencyChoices = BudgetCurrency.Choices(_currency, await _store.GetBudgetsAsync(), allAccounts);
+            SelectedCurrency = _currency;
+            HasCurrencyChoices = CurrencyChoices.Count > 1;
+        }
+        finally
+        {
+            _refreshing = false;
+        }
+
         IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
         if (!IsAdvanced)
         {

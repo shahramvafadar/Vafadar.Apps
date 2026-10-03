@@ -52,6 +52,32 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         return db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefault() ?? new ZananceSettings();
     }
 
+    /// <summary>
+    /// Saves the settings synchronously – for startup code on the UI thread (see <see cref="GetSettings"/>). Creates the
+    /// row when none exists yet.
+    /// </summary>
+    public void SaveSettings(ZananceSettings settings)
+    {
+        ArgumentNullException.ThrowIfNull(settings);
+        using var db = contextFactory.CreateDbContext();
+        var existingId = db.Settings.OrderBy(s => s.CreatedAt).Select(s => (Guid?)s.Id).FirstOrDefault();
+        if (existingId is null)
+        {
+            db.Settings.Add(settings);
+        }
+        else if (existingId == settings.Id)
+        {
+            db.Settings.Update(settings);
+        }
+        else
+        {
+            throw new InvalidOperationException("A different settings row already exists; load it with GetSettings first.");
+        }
+
+        db.SaveChanges();
+        OnChanged();
+    }
+
     /// <summary>Returns the settings row, creating it on first use.</summary>
     public async Task<ZananceSettings> GetSettingsAsync(CancellationToken cancellationToken = default)
     {

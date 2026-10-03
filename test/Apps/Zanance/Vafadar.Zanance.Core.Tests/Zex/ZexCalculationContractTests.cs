@@ -106,4 +106,18 @@ public sealed class ZexCalculationContractTests
         Assert.Equal(usable, type.IsUsableByDefault());
         Assert.Equal(canBeDefault, type.CanBeDefault());
     }
+
+    [Fact]
+    public void Accounts_not_usable_for_payments_leave_the_forecast_but_stay_in_the_totals()
+    {
+        var ledger = new LedgerBuilder();
+        ledger.Account("Checking", 1_250m);
+        var savings = ledger.Account("Fixed term", 5_000m, AccountType.Savings);
+        savings.UsableForPayments = false;
+
+        var forecast = Assert.Single(Core.Forecasts.ForecastCalculator.Compute(ledger.Accounts, ledger.Entries, [], [], Today, Today.AddDays(10)));
+
+        Assert.Equal(1_250_00, forecast.EndBalance);
+        Assert.Equal(6_250_00, LedgerCalculator.TotalBalances(ledger.Accounts, ledger.Entries, Today)["EUR"]);
+    }
 }

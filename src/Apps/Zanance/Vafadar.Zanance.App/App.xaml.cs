@@ -21,9 +21,6 @@ public partial class App : Application
         // Wide windows show every page as a centred, readable column (D-41).
         Presentation.ReadableWidth.Attach(this);
 
-        // Display units (e.g. toman) the user defined, before any amount is shown (FX-07).
-        Presentation.DisplayUnitPreferences.Load();
-
         // Copies of opened receipts do not outlive the session that opened them (F2-TX-04).
         Presentation.AttachmentFiles.ClearCache();
 
@@ -107,6 +104,8 @@ public partial class App : Application
     /// </summary>
     public void ShowCurrentProfile()
     {
+        // Each profile has its own display units (ZEX-P20).
+        Presentation.DisplayUnitPreferences.Load(_services.GetRequiredService<ZananceStore>());
         if (_services.GetRequiredService<ZananceStore>().GetSettings().OnboardingCompleted)
         {
             ShowMainShell();
@@ -134,6 +133,9 @@ public partial class App : Application
         // Android builds the app in Application.onCreate, also when it starts the process only to deliver a notification,
         // and reports the app as not responding when that takes too long on a slow device (D-46).
         _services.MigrateLocalDatabase<ZananceDbContext>();
+
+        // Display units (e.g. toman) of the open profile, before any amount is shown (FX-07, ZEX-P20).
+        Presentation.DisplayUnitPreferences.Load(_services.GetRequiredService<ZananceStore>());
         var settings = _services.GetRequiredService<ZananceStore>().GetSettings();
         Page root = settings.OnboardingCompleted
             ? CreateShell()

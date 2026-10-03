@@ -40,14 +40,44 @@
             <Label Text="{v:Translate Settings_MoneyMonths}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout>
+                    <!-- Three separate defaults (ZEX-P01): changing one never changes another or any stored amount -->
                     <HorizontalStackLayout Spacing="6">
-                        <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
-                        <v:HelpButton Topic="ReportCurrency" />
+                        <Label Text="{v:Translate Settings_DefaultCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <v:HelpButton Topic="DefaultCurrency" />
+                    </HorizontalStackLayout>
+                    <Border Style="{StaticResource FieldBox}">
+                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}"
+                            SemanticProperties.Description="{v:Translate Settings_DefaultCurrency}" />
+                    </Border>
+                    <Label Text="{v:Translate Settings_DefaultCurrencyHint}" Style="{StaticResource Secondary}" IsVisible="{Binding DefaultCurrencyChanged}" />
+
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Settings_DefaultAccount}" Style="{StaticResource FieldLabel}" />
+                        <v:HelpButton Topic="DefaultAccount" Margin="0,8,0,0" />
+                    </HorizontalStackLayout>
+                    <Picker ItemsSource="{Binding DefaultAccounts}" SelectedItem="{Binding DefaultAccount}"
+                            SemanticProperties.Description="{v:Translate Settings_DefaultAccount}" />
+
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
+                        <v:HelpButton Topic="ReportCurrency" Margin="0,8,0,0" />
                     </HorizontalStackLayout>
                     <Border Style="{StaticResource FieldBox}">
                         <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
                     </Border>
+                    <VerticalStackLayout IsVisible="{Binding IsAdvanced}">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                            <Label Text="{v:Translate Settings_ShowConverted}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ValuationEnabled}" SemanticProperties.Description="{v:Translate Settings_ShowConverted}" />
+                        </Grid>
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{v:Translate Settings_RateFreshness}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Topic="RateFreshness" Margin="0,8,0,0" />
+                        </HorizontalStackLayout>
+                        <Picker ItemsSource="{Binding FreshnessNames}" SelectedIndex="{Binding FreshnessIndex}"
+                                SemanticProperties.Description="{v:Translate Settings_RateFreshness}" />
+                    </VerticalStackLayout>
 
                     <HorizontalStackLayout Spacing="6">
                         <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />

@@ -144,7 +144,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
             await _store.SaveAccountAsync(account);
 
             var settings = await _store.GetSettingsAsync();
+            // One currency starts all three defaults (ZEX-P01): new items, the default account and converted totals.
             settings.ReportCurrencyCode = ReportCurrency;
+            settings.DefaultCurrencyCode = ReportCurrency;
             settings.DefaultAccountId = account.Id;
 
             // Budget months follow the calendar chosen here; later changes apply to future budgets only (BUD-08).

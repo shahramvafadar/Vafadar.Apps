@@ -390,6 +390,14 @@ public sealed partial class AccountDetailViewModel(
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["id"] = _id });
 
+    // A new expense on this account: the account page is the context account of the entry (ZEX-S0103, S0202).
+    [RelayCommand]
+    private Task AddEntryHereAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object>
+    {
+        ["kind"] = nameof(EntryKind.Expense),
+        ["account"] = _id,
+    });
+
     [RelayCommand]
     private Task ShowEntriesAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["account"] = _id.ToString() });
 }

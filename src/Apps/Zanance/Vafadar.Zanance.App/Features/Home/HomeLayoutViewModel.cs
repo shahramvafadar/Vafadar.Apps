@@ -29,9 +29,9 @@ public sealed partial class HomeSectionRow(HomeSection section, string name, boo
 
 /// <summary>
 /// Customising Home (§21.5, REP-08): sections can be hidden and reordered. The balance and "needs attention" always stay
-/// on top, so nothing that needs action is hidden (DASH-03). Stored in the local preferences.
+/// on top, so nothing that needs action is hidden (DASH-03). Stored in the settings of the open profile (ZEX-P20).
 /// </summary>
-public sealed partial class HomeLayoutViewModel(Translator translator) : ViewModelBase
+public sealed partial class HomeLayoutViewModel(Translator translator, Vafadar.Zanance.Data.ZananceStore store) : ViewModelBase
 {
     private HomeLayout _layout = HomeLayout.Default;
     private bool _loading;
@@ -40,7 +40,7 @@ public sealed partial class HomeLayoutViewModel(Translator translator) : ViewMod
 
     public void Load()
     {
-        _layout = HomeLayoutPreferences.Load();
+        _layout = HomeLayoutPreferences.Load(store);
         Refresh();
     }
 
@@ -54,14 +54,14 @@ public sealed partial class HomeLayoutViewModel(Translator translator) : ViewMod
     private void Reset()
     {
         _layout = HomeLayout.Default;
-        HomeLayoutPreferences.Save(_layout);
+        _ = Failures.GuardAsync(() => HomeLayoutPreferences.SaveAsync(store, _layout));
         Refresh();
     }
 
     private void Move(HomeSectionRow row, int delta)
     {
         _layout.Move(row.Section, delta);
-        HomeLayoutPreferences.Save(_layout);
+        _ = Failures.GuardAsync(() => HomeLayoutPreferences.SaveAsync(store, _layout));
         Refresh();
     }
 
@@ -73,7 +73,7 @@ public sealed partial class HomeLayoutViewModel(Translator translator) : ViewMod
         }
 
         _layout.SetVisible(row.Section, row.IsVisible);
-        HomeLayoutPreferences.Save(_layout);
+        _ = Failures.GuardAsync(() => HomeLayoutPreferences.SaveAsync(store, _layout));
     }
 
     private void Refresh()

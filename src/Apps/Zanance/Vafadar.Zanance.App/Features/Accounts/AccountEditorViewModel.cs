@@ -55,12 +55,13 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     {
         ArgumentNullException.ThrowIfNull(query);
         var settings = await _store.GetSettingsAsync();
+        Form.ShowAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
 
         if (query.TryGetValue("id", out var value) && value is Guid id
             && (await _store.GetAccountsAsync()).FirstOrDefault(a => a.Id == id) is { } account)
         {
             _account = account;
-            Form.Load(account, _localization.CurrentCulture, await _store.HasEntriesAsync(id));
+            Form.Load(account, _localization.CurrentCulture, await _store.GetCurrencyLockAsync(id));
             IsExisting = true;
             IsArchived = account.IsArchived;
             IsDefault = settings.DefaultAccountId == id;
@@ -68,7 +69,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         }
         else
         {
-            Form.CurrencyCode = settings.ReportCurrencyCode;
+            Form.CurrencyCode = settings.DefaultCurrencyCode;
         }
 
         _snapshot = Form.Snapshot();
@@ -87,7 +88,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         {
             if (!await _store.SaveAccountAsync(_account))
             {
-                SaveError = _translator["Account_CurrencyLocked"];
+                SaveError = Form.CurrencyLockText ?? _translator["Account_CurrencyLocked"];
                 return;
             }
 
@@ -138,6 +139,17 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         _account.IsArchived = !IsArchived;
         await _store.SaveAccountAsync(_account);
         IsArchived = _account.IsArchived;
+
+        // An archived account cannot be the default any more: the default is cleared and the user is told, so quick add
+        // asks for an account instead of silently using another one (ZEX-S0103).
+        var settings = await _store.GetSettingsAsync();
+        if (IsArchived && settings.DefaultAccountId == _account.Id)
+        {
+            settings.DefaultAccountId = null;
+            await _store.SaveSettingsAsync(settings);
+            await Shell.Current.DisplayAlertAsync(_translator["Account_Archive"], _translator["Account_DefaultCleared"], _translator["Common_Ok"]);
+        }
+
         await Shell.Current.GoToAsync("..");
     }
 

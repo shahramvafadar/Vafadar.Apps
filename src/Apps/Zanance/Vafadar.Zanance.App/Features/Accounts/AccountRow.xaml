@@ -20,6 +20,7 @@
         <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
         <HorizontalStackLayout Spacing="8">
             <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
+            <Label Text="{v:Translate Accounts_Default}" TextColor="{DynamicResource Primary}" FontSize="13" FontAttributes="Bold" IsVisible="{Binding IsDefault}" />
             <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" IsVisible="{Binding NotInTotals}" />
             <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
         </HorizontalStackLayout>

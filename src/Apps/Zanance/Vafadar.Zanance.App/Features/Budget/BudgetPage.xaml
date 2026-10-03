@@ -32,6 +32,13 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
 
+            <!-- Budgets in several currencies: pick which one is shown here and on Home (ZEX-P02) -->
+            <Grid ColumnDefinitions="*,120" ColumnSpacing="8" IsVisible="{Binding HasCurrencyChoices}">
+                <Label Text="{v:Translate Budget_ShownCurrency}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                <Picker Grid.Column="1" ItemsSource="{Binding CurrencyChoices}" SelectedItem="{Binding SelectedCurrency}"
+                        SemanticProperties.Description="{v:Translate Budget_ShownCurrency}" />
+            </Grid>
+
             <!-- Period length (§10.3, Advanced): month, week or two weeks -->
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding IsAdvanced}">
                 <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />

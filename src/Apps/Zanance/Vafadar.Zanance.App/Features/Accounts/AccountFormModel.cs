@@ -61,6 +61,22 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool CurrencyLocked { get; set; }
 
+    /// <summary>Gets what keeps the currency from changing, e.g. "2 entries, 1 plan" (ZEX-S0105).</summary>
+    [ObservableProperty]
+    public partial string? CurrencyLockText { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether the money of the account can pay bills (ZEX-P17).</summary>
+    [ObservableProperty]
+    public partial bool UsableForPayments { get; set; } = true;
+
+    /// <summary>Gets or sets the optional country code of the account (ZEX-P18), information only.</summary>
+    [ObservableProperty]
+    public partial string CountryCode { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets a value indicating whether the Advanced fields (usable for payments, country) are shown.</summary>
+    [ObservableProperty]
+    public partial bool ShowAdvanced { get; set; }
+
     // Loans and lent money (F2-DEBT-01).
     [ObservableProperty]
     public partial string Counterparty { get; set; } = string.Empty;
@@ -104,6 +120,12 @@ public sealed partial class AccountFormModel : ObservableObject
             IncludeInTotals = false;
             OpeningIsNegative = Type == AccountType.Loan;
         }
+
+        // Cash, checking and savings pay bills by default; cards, debts, receivables and assets do not (ZEX-P17).
+        if (_isNew)
+        {
+            UsableForPayments = Type.IsUsableByDefault();
+        }
     }
 
     /// <summary>Gets or sets the chosen icon; <see langword="null"/> uses the icon of the account type (ACC-01).</summary>
@@ -134,8 +156,9 @@ public sealed partial class AccountFormModel : ObservableObject
         TypeNames = [.. Enum.GetValues<AccountType>().Select(t => _translator[$"AccountType_{t}"])];
 
     /// <summary>Fills the form from an account.</summary>
-    public void Load(Account account, CultureInfo culture, bool currencyLocked)
+    public void Load(Account account, CultureInfo culture, AccountCurrencyLock currencyLock)
     {
+        ArgumentNullException.ThrowIfNull(currencyLock);
         ArgumentNullException.ThrowIfNull(account);
         Name = account.Name;
         TypeIndex = (int)account.Type;
@@ -145,7 +168,10 @@ public sealed partial class AccountFormModel : ObservableObject
         OpeningUnknown = !account.OpeningBalanceKnown;
         OpeningDate = account.OpeningDate;
         IncludeInTotals = account.IncludeInTotals;
-        CurrencyLocked = currencyLocked;
+        CurrencyLocked = currencyLock.IsLocked;
+        CurrencyLockText = currencyLock.IsLocked ? _translator.Format("Account_CurrencyLockedBy", LockReasons(currencyLock)) : null;
+        UsableForPayments = account.UsableForPayments;
+        CountryCode = account.CountryCode ?? string.Empty;
         IconKey = account.Icon;
         Counterparty = account.Counterparty ?? string.Empty;
         RateText = account.InterestRate is { } rate ? rate.ToString("0.##########", culture) : string.Empty;
@@ -203,6 +229,9 @@ public sealed partial class AccountFormModel : ObservableObject
             target.OpeningBalance = 0;
         }
         target.IncludeInTotals = IncludeInTotals;
+        target.UsableForPayments = UsableForPayments;
+        var country = CountryCode.Trim().ToUpperInvariant();
+        target.CountryCode = country.Length == 2 && country.All(char.IsAsciiLetterUpper) ? country : null;
         target.Icon = IconKey;
         target.Counterparty = Type.IsDebt() && !string.IsNullOrWhiteSpace(Counterparty) ? Counterparty.Trim() : null;
         target.InterestRate = Type.IsDebt() ? rate : null;
@@ -211,5 +240,30 @@ public sealed partial class AccountFormModel : ObservableObject
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode);
+
+    // "3 entries, 1 plan and the loan installment" in the current language.
+    private string LockReasons(AccountCurrencyLock currencyLock)
+    {
+        var parts = new List<string>();
+        void Add(int count, string key)
+        {
+            if (count > 0)
+            {
+                parts.Add(_translator.Format(key, count));
+            }
+        }
+
+        Add(currencyLock.Entries, "Account_LockEntries");
+        Add(currencyLock.Plans, "Account_LockPlans");
+        Add(currencyLock.Templates, "Account_LockTemplates");
+        Add(currencyLock.Earmarks, "Account_LockEarmarks");
+        Add(currencyLock.Budgets, "Account_LockBudgets");
+        if (currencyLock.Installment)
+        {
+            parts.Add(_translator["Account_LockInstallment"]);
+        }
+
+        return string.Join(_translator["Reminder_ListSeparator"], parts);
+    }
 }

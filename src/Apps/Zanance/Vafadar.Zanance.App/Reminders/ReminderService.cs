@@ -197,17 +197,19 @@ public sealed class ReminderService(
     }
 
     // One alert per level and period: opening the app again or editing an entry never repeats it (BUD-06). The budget
-    // of this month and, when there are any, the weekly and two-week budgets of today are checked.
+    // of this month and, when there are any, the weekly and two-week budgets of today are checked – in every currency
+    // that has a budget, not only the one shown on Home (ZEX-P02).
     private async Task CheckBudgetAsync(Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture)
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar, settings.MonthStartDay);
-        Budget?[] budgets =
-        [
-            await store.GetBudgetAsync(year, month, settings.BudgetCalendar, settings.ReportCurrencyCode),
-            await store.GetBudgetAsync(BudgetPeriod.Week, today, settings.ReportCurrencyCode),
-            await store.GetBudgetAsync(BudgetPeriod.TwoWeeks, today, settings.ReportCurrencyCode),
-        ];
+        var budgets = new List<Budget?>();
+        foreach (var currency in (await store.GetBudgetsAsync()).Select(b => b.CurrencyCode).Distinct(StringComparer.OrdinalIgnoreCase))
+        {
+            budgets.Add(await store.GetBudgetAsync(year, month, settings.BudgetCalendar, currency));
+            budgets.Add(await store.GetBudgetAsync(BudgetPeriod.Week, today, currency));
+            budgets.Add(await store.GetBudgetAsync(BudgetPeriod.TwoWeeks, today, currency));
+        }
 
         foreach (var budget in budgets)
         {

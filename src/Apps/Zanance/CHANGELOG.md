@@ -6,6 +6,29 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed – Several currencies, defaults and Home (enhancement ZEX, phase 1)
+
+- Three separate settings under Money and months: the default currency for new items, the default account for new
+  entries and the valuation currency for converted totals. Changing one never changes another or any stored amount.
+- The entry form shows the account directly under the amount. Quick add, the widget and receipts use the default
+  account only when it is a usable money account; otherwise the form asks for an account and Save waits for it – no
+  hidden fallback to the first account. Switching to an account in another currency keeps the digits and says so,
+  with Undo. Save shows what it will do ("−25.00 EUR from Main"); a transfer between currencies shows the rate of
+  your amounts, and Advanced adds a fee at the destination.
+- A template of an archived account no longer reuses its amount for another account; archiving the default account
+  clears the default and says so. Receipt totals are read in the currency itself, never through a display unit.
+- An account's currency stays locked while any stored amount is in it (entries, plans, templates, money set aside,
+  budgets, a loan installment); the account form names them.
+- Accounts are listed in groups – money, credit cards, owed to me, debts, valued assets – each with totals per
+  currency; the default account is marked, and its details offer "Add entry here". Advanced: "Usable for payments"
+  (the forecast minimum uses only such accounts) and an optional country.
+- Home: archived accounts leave the current totals; the converted total says when a rate may be outdated or is an
+  estimate; the line under quick add names the account; a balance that may fall below zero this month is shown under
+  "Needs attention" in both modes; the budget, forecast and chart follow the default account's currency, with a
+  currency switcher on the Budget page and alerts for budgets in every currency. The default Home shows budget, next
+  payments and recent entries; the other sections are one tap away in Customize Home. The category chart shows gross
+  spending like the reports.
+- Display units (such as the toman) and the Home layout belong to the profile and are part of its backups.
 ### Added – Phase 1
 
 - App for Android, iOS and Windows in English, German and Persian (right to left), with the Gregorian or Persian

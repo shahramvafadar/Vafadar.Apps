@@ -54,6 +54,8 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Account_AddEntryHere}" Command="{Binding AddEntryHereCommand}"
+                    IsVisible="{Binding IsArchived, Converter={StaticResource InvertedBoolConverter}}" />
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
                 <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />

@@ -54,7 +54,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
 
     public async Task LoadAsync()
     {
-        CurrencyCode ??= (await store.GetSettingsAsync()).ReportCurrencyCode;
+        CurrencyCode ??= (await store.GetSettingsAsync()).DefaultCurrencyCode;
         Refresh();
     }
 
@@ -68,7 +68,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
     }
 
     [RelayCommand]
-    private void Add()
+    private async Task AddAsync()
     {
         Error = null;
         var name = Name.Trim();
@@ -79,7 +79,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
             return;
         }
 
-        DisplayUnitPreferences.Save([.. DisplayUnits.All.Where(u => u.CurrencyCode != unit.CurrencyCode), unit]);
+        await DisplayUnitPreferences.SaveAsync(store, [.. DisplayUnits.All.Where(u => u.CurrencyCode != unit.CurrencyCode), unit]);
         Name = string.Empty;
         Refresh();
     }
@@ -89,7 +89,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
     {
         if (await Shell.Current.DisplayAlertAsync(translator["Unit_Remove"], row.Text, translator["Common_Delete"], translator["Common_Cancel"]))
         {
-            DisplayUnitPreferences.Save(DisplayUnits.All.Where(u => u.CurrencyCode != row.CurrencyCode));
+            await DisplayUnitPreferences.SaveAsync(store, DisplayUnits.All.Where(u => u.CurrencyCode != row.CurrencyCode));
             Refresh();
         }
     }

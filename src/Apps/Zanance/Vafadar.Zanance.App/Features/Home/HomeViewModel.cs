@@ -41,6 +41,10 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
     private string _reportCurrency = Currencies.Euro.Code;
+
+    // The currency of the budget, forecast and chart on Home: the default account's currency or the one picked on the
+    // Budget page (ZEX-P02). The valuation currency only names the converted total.
+    private string _homeCurrency = Currencies.Euro.Code;
     private int _startDay = 1;
     private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
     private readonly Security.AppLockService _lock;
@@ -132,6 +136,17 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasAttention { get; set; }
 
+    /// <summary>Gets the warning that the balance may fall below zero this month, or <see langword="null"/>.</summary>
+    [ObservableProperty]
+    public partial string? LowBalanceText { get; set; }
+
+    /// <summary>Gets the line under quick add: "to Main · EUR", or a request to choose an account (ZEX-S0103).</summary>
+    [ObservableProperty]
+    public partial string? QuickAddTargetText { get; set; }
+
+    [ObservableProperty]
+    public partial bool NeedsDefaultAccount { get; set; }
+
     /// <summary>Gets the colours of the due items row: red when something is overdue, violet otherwise (D-27).</summary>
     [ObservableProperty]
     public partial Color? DueTileText { get; set; }
@@ -216,6 +231,14 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var allAccounts = await _store.GetAccountsAsync();
         var accounts = allAccounts.Where(a => !a.IsArchived).ToList();
+        _homeCurrency = BudgetCurrency.Resolve(settings, allAccounts);
+
+        // Where quick add puts an expense (ZEX-S0103): the valid default account, or a request to choose one.
+        var defaultAccount = accounts.FirstOrDefault(a => a.Id == settings.DefaultAccountId);
+        NeedsDefaultAccount = !EntryAccountContract.IsValidDefault(defaultAccount);
+        QuickAddTargetText = NeedsDefaultAccount
+            ? _translator["Home_QuickAddChoose"]
+            : _translator.Format("Home_QuickAddTarget", defaultAccount!.Name, MoneyText.UnitName(defaultAccount.CurrencyCode));
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = await _store.GetEntriesAsync();
         var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
@@ -231,7 +254,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         var periodText = _startDay > 1
             ? $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}"
             : _dates.Format(from, DateFormatStyle.MonthYear);
-        ScopeText = _translator.Format("Home_Scope", periodText, _translator["Home_AccountsInTotals"], _reportCurrency);
+        ScopeText = _translator.Format("Home_Scope", periodText, _translator["Home_AccountsInTotals"], _homeCurrency);
         if (_profiles.HasSeveral)
         {
             // With several local profiles the open one is named first (§3).
@@ -249,13 +272,18 @@ public sealed partial class HomeViewModel : ViewModelBase
         var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
         CombinedText = null;
         CombinedIncomplete = false;
-        if (balances.Count > 1)
+        if (balances.Count > 1 && settings.ValuationCurrencyEnabled)
         {
-            var combined = new RateTable(await _store.GetRatesAsync()).Combine(balances, _reportCurrency, today);
-            CombinedIncomplete = !combined.IsComplete;
-            CombinedText = combined.IsComplete
-                ? _translator.Format("Home_Combined", MoneyText.Format(combined.Total!.Value, _reportCurrency, culture), combined.OldestRateDate is { } rateDate ? _dates.Format(rateDate, DateFormatStyle.Short) : "-")
-                : _translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies));
+            // Secondary, with the date of the oldest rate and a reminder when a rate may be outdated (ZEX-S0106).
+            var (monthYear, monthNumber) = PeriodMath.MonthOf(today, settings.BudgetCalendar, _startDay);
+            var freshness = new RateFreshness(settings.RateFreshnessDays, PeriodMath.MonthRange(monthYear, monthNumber, settings.BudgetCalendar, _startDay).First);
+            var combined = new RateTable(await _store.GetRatesAsync()).Combine(balances, _reportCurrency, today, freshness);
+            CombinedIncomplete = !combined.IsComplete || combined.IsOutdated;
+            var rateDate = combined.OldestRateDate is { } oldest ? _dates.Format(oldest, DateFormatStyle.Short) : "-";
+            CombinedText = !combined.IsComplete
+                ? _translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies))
+                : _translator.Format(combined.IsOutdated ? "Home_CombinedOutdated" : "Home_Combined", MoneyText.Format(combined.Total!.Value, _reportCurrency, culture), rateDate)
+                    + (combined.HasEstimate ? " · " + _translator["Home_RateEstimate"] : string.Empty);
         }
 
         var unreviewed = LedgerCalculator.Unreviewed(allAccounts, entries);
@@ -326,7 +354,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
-        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null;
+        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -338,7 +366,7 @@ public sealed partial class HomeViewModel : ViewModelBase
             (year, month) = PeriodMath.Previous(year, month);
         }
 
-        var budget = await _store.GetBudgetAsync(year, month, calendar, _reportCurrency);
+        var budget = await _store.GetBudgetAsync(year, month, calendar, _homeCurrency);
         BudgetDailyText = null;
         HasBudget = budget?.TotalLimit is not null;
         if (budget?.TotalLimit is not { } ownLimit)
@@ -351,15 +379,15 @@ public sealed partial class HomeViewModel : ViewModelBase
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await _store.GetCategoriesAsync(), from, to));
         BudgetText = status.IsOver
-            ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _reportCurrency, culture))
-            : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _reportCurrency, culture), MoneyText.Format(limit, _reportCurrency, culture));
+            ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _homeCurrency, culture))
+            : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _homeCurrency, culture), MoneyText.Format(limit, _homeCurrency, culture));
         BudgetProgress = limit > 0 ? Math.Clamp((double)status.Spent / limit, 0, 1) : status.Spent > 0 ? 1 : 0;
 
         // What is left per day of the running period answers "can I still spend today?" at a glance.
         var daysLeft = to.DayNumber - today.DayNumber + 1;
         if (PeriodIndex == 0 && !status.IsOver && status.Remaining > 0 && daysLeft > 0)
         {
-            var perDay = MoneyText.Format(status.Remaining / daysLeft, _reportCurrency, culture);
+            var perDay = MoneyText.Format(status.Remaining / daysLeft, _homeCurrency, culture);
             BudgetDailyText = daysLeft == 1
                 ? _translator.Format("Home_BudgetLastDay", perDay)
                 : _translator.Format("Home_BudgetPerDay", perDay, daysLeft);
@@ -372,27 +400,35 @@ public sealed partial class HomeViewModel : ViewModelBase
         };
     }
 
-    // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08).
+    // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08); a balance that may fall below
+    // zero is a warning in "Needs attention" in both modes (ZEX-P19).
     private async Task LoadForecastAsync(Core.Settings.ExperienceMode mode, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
     {
         ForecastEndText = null;
-        if (mode != Core.Settings.ExperienceMode.Advanced)
-        {
-            return;
-        }
+        LowBalanceText = null;
 
         var (year, month) = PeriodMath.MonthOf(today, Calendar, _startDay);
         var end = PeriodMath.MonthRange(year, month, Calendar, _startDay).Last;
         var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), today, end)
-            .FirstOrDefault(f => string.Equals(f.CurrencyCode, _reportCurrency, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefault(f => string.Equals(f.CurrencyCode, _homeCurrency, StringComparison.OrdinalIgnoreCase));
         if (forecast is null)
         {
             return;
         }
 
+        if (forecast.GoesNegative)
+        {
+            LowBalanceText = _translator.Format("Home_BalanceBelowZero", _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth));
+        }
+
+        if (mode != Core.Settings.ExperienceMode.Advanced)
+        {
+            return;
+        }
+
         // The end balance and the lowest point are two facts; only a balance below zero is a problem (red, D-27).
-        ForecastEndText = _translator.Format("Home_ForecastEnd", MoneyText.Format(forecast.EndBalance, _reportCurrency, culture));
-        ForecastLowText = _translator.Format("Home_ForecastLow", MoneyText.Format(forecast.Minimum, _reportCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth));
+        ForecastEndText = _translator.Format("Home_ForecastEnd", MoneyText.Format(forecast.EndBalance, _homeCurrency, culture));
+        ForecastLowText = _translator.Format("Home_ForecastLow", MoneyText.Format(forecast.Minimum, _homeCurrency, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth));
         ForecastLowColor = forecast.GoesNegative ? EntryPresenter.DangerColor : Palette.SecondaryText;
         ForecastNote = forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null;
     }
@@ -456,7 +492,8 @@ public sealed partial class HomeViewModel : ViewModelBase
         HasUpcoming = Upcoming.Count > 0;
     }
 
-    // Expense by top-level category in the report currency (or the only currency in use). Small slices are combined.
+    // Expense by top-level category in the Home currency (or the only currency in use). Small slices are combined. The
+    // chart shows gross expense like the reports, so Home and reports show the same numbers (ZEX-S0104).
     private void BuildSlices(List<Account> accounts, List<LedgerEntry> entries, CategoryLookup categories, DateOnly from, DateOnly to, System.Globalization.CultureInfo culture)
     {
         Slices.Clear();
@@ -466,14 +503,14 @@ public sealed partial class HomeViewModel : ViewModelBase
         Guid? TopLevel(Guid? id) => categories.Get(id)?.ParentId ?? id;
         var byCategory = LedgerCalculator.ExpenseByCategory(accounts, entries, new LedgerFilter(from, to), TopLevel);
         var currencies = byCategory.Select(c => c.CurrencyCode).Distinct().ToList();
-        var currency = currencies.Contains(_reportCurrency) || currencies.Count == 0 ? _reportCurrency : currencies[0];
+        var currency = currencies.Contains(_homeCurrency) || currencies.Count == 0 ? _homeCurrency : currencies[0];
         if (currencies.Count > 1)
         {
             ChartNote = _translator.Format("Home_ChartCurrency", currency);
         }
 
-        var positive = byCategory.Where(c => c.CurrencyCode == currency && c.Net > 0).ToList();
-        var total = positive.Sum(c => c.Net);
+        var positive = byCategory.Where(c => c.CurrencyCode == currency && c.GrossExpense > 0).OrderByDescending(c => c.GrossExpense).ToList();
+        var total = positive.Sum(c => c.GrossExpense);
         SliceTotalText = total > 0 ? MoneyText.Format(total, currency, culture) : null;
         if (total <= 0)
         {
@@ -486,13 +523,13 @@ public sealed partial class HomeViewModel : ViewModelBase
         foreach (var slice in shown)
         {
             var ids = categories.All.Where(c => c.Id == slice.CategoryId || c.ParentId == slice.CategoryId).Select(c => c.Id).ToList();
-            AddSlice(ids, categories.Name(slice.CategoryId), slice.Net, total, currency, categories.Color(slice.CategoryId), culture);
+            AddSlice(ids, categories.Name(slice.CategoryId), slice.GrossExpense, total, currency, categories.Color(slice.CategoryId), culture);
         }
 
         if (rest.Count > 0)
         {
             var ids = rest.SelectMany(r => categories.All.Where(c => c.Id == r.CategoryId || c.ParentId == r.CategoryId)).Select(c => c.Id).ToList();
-            AddSlice(ids, _translator["Home_OtherCategories"], rest.Sum(r => r.Net), total, currency, Palette.Muted, culture);
+            AddSlice(ids, _translator["Home_OtherCategories"], rest.Sum(r => r.GrossExpense), total, currency, Palette.Muted, culture);
         }
 
         HasSlices = Slices.Count > 0;
