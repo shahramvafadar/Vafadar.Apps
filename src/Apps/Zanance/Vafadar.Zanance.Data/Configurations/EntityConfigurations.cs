@@ -169,6 +169,39 @@ internal sealed class GoalConfiguration : IEntityTypeConfiguration<Goal>
         builder.Property(g => g.CurrencyCode).HasMaxLength(3);
         builder.Property(g => g.Icon).HasMaxLength(64);
         builder.Property(g => g.Note).HasMaxLength(1000);
+
+        // A balance goal follows one account; the account cannot be deleted while a goal refers to it.
+        builder.HasOne<Account>().WithMany().HasForeignKey(g => g.AccountId).OnDelete(DeleteBehavior.Restrict);
+    }
+}
+
+internal sealed class ContributionPlanConfiguration : IEntityTypeConfiguration<ContributionPlan>
+{
+    public void Configure(EntityTypeBuilder<ContributionPlan> builder)
+    {
+        // One plan per goal (ZEX-GO08); it goes with its goal.
+        builder.HasOne<Goal>().WithMany().HasForeignKey(p => p.GoalId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(p => p.GoalId).IsUnique();
+        builder.Property(p => p.Percent).HasPrecision(9, 4);
+
+        // The contribution dates use the recurrence rule of the plans, stored as columns of this table.
+        builder.OwnsOne(p => p.Rule, rule =>
+        {
+            rule.Property(r => r.Frequency).HasColumnName("Frequency");
+            rule.Property(r => r.Interval).HasColumnName("Interval");
+            rule.Property(r => r.Start).HasColumnName("Start");
+            rule.Property(r => r.Calendar).HasColumnName("Calendar");
+            rule.Property(r => r.DayRule).HasColumnName("DayRule");
+            rule.Property(r => r.MissingDay).HasColumnName("MissingDay");
+            rule.Property(r => r.End).HasColumnName("EndKind");
+            rule.Property(r => r.EndDate).HasColumnName("EndDate");
+            rule.Property(r => r.Count).HasColumnName("Count");
+            rule.Property(r => r.WeekendShift).HasColumnName("WeekendShift");
+            rule.Property(r => r.WeekendDays).HasColumnName("WeekendDays");
+            rule.Property(r => r.HolidayRegion).HasColumnName("HolidayRegion").HasMaxLength(8);
+            rule.Property(r => r.SecondDay).HasColumnName("SecondDay");
+        });
+        builder.Navigation(p => p.Rule).IsRequired();
     }
 }
 

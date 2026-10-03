@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("fe4bdaa8-b975-448d-bdba-65052b046766"), entityTypeCount: 16)
+            : base(skipDetectChanges: false, modelId: new Guid("efb9b1fa-5def-4885-a67a-6dd79e3ca5b3"), entityTypeCount: 18)
         {
         }
 
@@ -22,6 +22,8 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var budgetCategoryLimit = BudgetCategoryLimitEntityType.Create(this);
             var category = CategoryEntityType.Create(this);
             var categoryRule = CategoryRuleEntityType.Create(this);
+            var contributionPlan = ContributionPlanEntityType.Create(this);
+            var recurrenceRule = RecurrenceRuleEntityType.Create(this);
             var goal = GoalEntityType.Create(this);
             var goalAllocation = GoalAllocationEntityType.Create(this);
             var entryAttachment = EntryAttachmentEntityType.Create(this);
@@ -29,28 +31,33 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var ledgerEntry = LedgerEntryEntityType.Create(this);
             var savedFilter = SavedFilterEntityType.Create(this);
             var occurrenceState = OccurrenceStateEntityType.Create(this);
-            var recurrenceRule = RecurrenceRuleEntityType.Create(this);
             var schedule = ScheduleEntityType.Create(this);
+            var recurrenceRule0 = RecurrenceRule0EntityType.Create(this);
             var exchangeRate = ExchangeRateEntityType.Create(this);
             var zananceSettings = ZananceSettingsEntityType.Create(this);
 
             BudgetCategoryLimitEntityType.CreateForeignKey1(budgetCategoryLimit, budget);
             CategoryEntityType.CreateForeignKey1(category, category);
+            ContributionPlanEntityType.CreateForeignKey1(contributionPlan, goal);
+            RecurrenceRuleEntityType.CreateForeignKey1(recurrenceRule, contributionPlan);
+            GoalEntityType.CreateForeignKey1(goal, account);
             LedgerEntryEntityType.CreateForeignKey1(ledgerEntry, account);
             LedgerEntryEntityType.CreateForeignKey2(ledgerEntry, category);
             LedgerEntryEntityType.CreateForeignKey3(ledgerEntry, ledgerEntry);
             LedgerEntryEntityType.CreateForeignKey4(ledgerEntry, account);
             OccurrenceStateEntityType.CreateForeignKey1(occurrenceState, schedule);
-            RecurrenceRuleEntityType.CreateForeignKey1(recurrenceRule, schedule);
             ScheduleEntityType.CreateForeignKey1(schedule, account);
             ScheduleEntityType.CreateForeignKey2(schedule, category);
             ScheduleEntityType.CreateForeignKey3(schedule, account);
+            RecurrenceRule0EntityType.CreateForeignKey1(recurrenceRule0, schedule);
 
             AccountEntityType.CreateAnnotations(account);
             BudgetEntityType.CreateAnnotations(budget);
             BudgetCategoryLimitEntityType.CreateAnnotations(budgetCategoryLimit);
             CategoryEntityType.CreateAnnotations(category);
             CategoryRuleEntityType.CreateAnnotations(categoryRule);
+            ContributionPlanEntityType.CreateAnnotations(contributionPlan);
+            RecurrenceRuleEntityType.CreateAnnotations(recurrenceRule);
             GoalEntityType.CreateAnnotations(goal);
             GoalAllocationEntityType.CreateAnnotations(goalAllocation);
             EntryAttachmentEntityType.CreateAnnotations(entryAttachment);
@@ -58,8 +65,8 @@ namespace Vafadar.Zanance.Data.CompiledModel
             LedgerEntryEntityType.CreateAnnotations(ledgerEntry);
             SavedFilterEntityType.CreateAnnotations(savedFilter);
             OccurrenceStateEntityType.CreateAnnotations(occurrenceState);
-            RecurrenceRuleEntityType.CreateAnnotations(recurrenceRule);
             ScheduleEntityType.CreateAnnotations(schedule);
+            RecurrenceRule0EntityType.CreateAnnotations(recurrenceRule0);
             ExchangeRateEntityType.CreateAnnotations(exchangeRate);
             ZananceSettingsEntityType.CreateAnnotations(zananceSettings);
 

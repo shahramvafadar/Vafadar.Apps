@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Vafadar.Zanance.Core.Budgets;
-using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
 
 #pragma warning disable 219, 612, 618
@@ -14,12 +13,12 @@ using Vafadar.Zanance.Core.Plans;
 namespace Vafadar.Zanance.Data.CompiledModel
 {
     [EntityFrameworkInternal]
-    public partial class RecurrenceRuleEntityType
+    public partial class RecurrenceRule0EntityType
     {
         public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
-                "Vafadar.Zanance.Core.Goals.ContributionPlan.Rule#RecurrenceRule",
+                "Vafadar.Zanance.Core.Plans.Schedule.Rule#RecurrenceRule",
                 typeof(RecurrenceRule),
                 baseEntityType,
                 sharedClrType: true,
@@ -27,8 +26,8 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 foreignKeyCount: 1,
                 keyCount: 1);
 
-            var contributionPlanId = runtimeEntityType.AddProperty(
-                "ContributionPlanId",
+            var scheduleId = runtimeEntityType.AddProperty(
+                "ScheduleId",
                 typeof(Guid),
                 afterSaveBehavior: PropertySaveBehavior.Throw,
                 sentinel: new Guid("00000000-0000-0000-0000-000000000000"));
@@ -139,7 +138,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             weekendShift.AddAnnotation("Relational:ColumnName", "WeekendShift");
 
             var key = runtimeEntityType.AddKey(
-                new[] { contributionPlanId });
+                new[] { scheduleId });
             runtimeEntityType.SetPrimaryKey(key);
 
             return runtimeEntityType;
@@ -147,7 +146,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ContributionPlanId") },
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ScheduleId") },
                 principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
                 principalEntityType,
                 deleteBehavior: DeleteBehavior.Cascade,
@@ -160,8 +159,8 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 runtimeForeignKey,
                 onDependent: false,
                 typeof(RecurrenceRule),
-                propertyInfo: typeof(ContributionPlan).GetProperty("Rule", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(ContributionPlan).GetField("<Rule>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(Schedule).GetProperty("Rule", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Schedule).GetField("<Rule>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 eagerLoaded: true);
 
             return runtimeForeignKey;
@@ -172,7 +171,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             runtimeEntityType.AddAnnotation("Relational:FunctionName", null);
             runtimeEntityType.AddAnnotation("Relational:Schema", null);
             runtimeEntityType.AddAnnotation("Relational:SqlQuery", null);
-            runtimeEntityType.AddAnnotation("Relational:TableName", "ContributionPlans");
+            runtimeEntityType.AddAnnotation("Relational:TableName", "Schedules");
             runtimeEntityType.AddAnnotation("Relational:ViewName", null);
             runtimeEntityType.AddAnnotation("Relational:ViewSchema", null);
 

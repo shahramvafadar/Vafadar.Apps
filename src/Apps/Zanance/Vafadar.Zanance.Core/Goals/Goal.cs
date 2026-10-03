@@ -25,7 +25,10 @@ public enum ContributionFrequency
     Weekly,
 }
 
-/// <summary>Life cycle of a goal.</summary>
+/// <summary>
+/// Life cycle of a goal (ZEX-P13). Only these states are stored; *reached* and *overdue* are derived from the numbers, so
+/// a withdrawal after reaching a goal shows the real state again. New values are appended, never renumbered.
+/// </summary>
 public enum GoalState
 {
     /// <summary>Money is being set aside.</summary>
@@ -36,6 +39,19 @@ public enum GoalState
 
     /// <summary>Hidden; its history stays.</summary>
     Archived,
+
+    /// <summary>On hold: kept with its data, left out of Home and of suggestions until resumed.</summary>
+    Paused,
+}
+
+/// <summary>What a goal measures (ZEX-D07). New values are appended, never renumbered.</summary>
+public enum GoalType
+{
+    /// <summary>Money set aside: earmarks in accounts of the goal currency (<see cref="GoalAllocation"/>); reserves money.</summary>
+    Earmark = 0,
+
+    /// <summary>The recorded balance of one money account; observes, reserves nothing.</summary>
+    AccountBalance = 1,
 }
 
 /// <summary>
@@ -70,6 +86,75 @@ public sealed class Goal : Entity, IAuditableEntity
 
     /// <summary>Gets or sets an optional note.</summary>
     public string? Note { get; set; }
+
+    /// <summary>Gets or sets what the goal measures (ZEX-D07); existing goals are <see cref="GoalType.Earmark"/>.</summary>
+    public GoalType Type { get; set; }
+
+    /// <summary>Gets or sets the account a <see cref="GoalType.AccountBalance"/> goal follows; <see langword="null"/> otherwise.</summary>
+    public Guid? AccountId { get; set; }
+
+    /// <summary>Gets or sets the position on Home (1 or 2), or <see langword="null"/> when the goal is not shown there (ZEX-GO06).</summary>
+    public int? HomePin { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the money set aside counts as protected, so the liquidity headroom keeps it
+    /// out (ZEX-P16). Only <see cref="GoalType.Earmark"/> goals can be protected; a balance goal reserves nothing.
+    /// </summary>
+    public bool Protect { get; set; }
+
+    /// <summary>Gets or sets when the goal was paused; <see langword="null"/> unless <see cref="GoalState.Paused"/>.</summary>
+    public DateTimeOffset? PausedAt { get; set; }
+
+    /// <summary>Gets or sets when the user marked the goal completed; the history stays.</summary>
+    public DateTimeOffset? CompletedAt { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset CreatedAt { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset UpdatedAt { get; set; }
+}
+
+/// <summary>How a contribution plan suggests the amount (ZEX-GO08). New values are appended, never renumbered.</summary>
+public enum ContributionMethod
+{
+    /// <summary>A fixed amount on each contribution date.</summary>
+    FixedAmount = 0,
+
+    /// <summary>A share of the eligible income of the last closed period.</summary>
+    ShareOfIncome = 1,
+
+    /// <summary>Spending less in some categories each financial month; budgets change only on explicit confirmation.</summary>
+    SpendingCut = 2,
+}
+
+/// <summary>
+/// The user's plan to reach a goal (ZEX-GO08..GO11): a method, an amount or percentage and a contribution schedule on
+/// the recurrence engine (weekly, every two weeks, monthly, Gregorian or Persian calendar). It is a plan for the user –
+/// Zanance moves no money and changes no budget without confirmation. One plan per goal.
+/// </summary>
+public sealed class ContributionPlan : Entity, IAuditableEntity
+{
+    /// <summary>Gets or sets the goal.</summary>
+    public Guid GoalId { get; set; }
+
+    /// <summary>Gets or sets the method.</summary>
+    public ContributionMethod Method { get; set; }
+
+    /// <summary>Gets or sets the amount per date (fixed amount) or per financial month (spending cut), in minor units.</summary>
+    public long? Amount { get; set; }
+
+    /// <summary>Gets or sets the share of eligible income in percent (share of income).</summary>
+    public decimal? Percent { get; set; }
+
+    /// <summary>Gets or sets the contribution dates.</summary>
+    public Plans.RecurrenceRule Rule { get; set; } = new();
+
+    /// <summary>Gets or sets the categories of a spending cut.</summary>
+    public List<Guid> CategoryIds { get; set; } = [];
+
+    /// <summary>Gets or sets a value indicating whether a reminder is shown on each contribution date.</summary>
+    public bool ReminderEnabled { get; set; }
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; set; }

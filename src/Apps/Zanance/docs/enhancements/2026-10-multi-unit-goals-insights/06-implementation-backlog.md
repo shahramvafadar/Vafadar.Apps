@@ -63,13 +63,13 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0204 | Cross-currency transfer effect preview and fees | 1 | Implemented – verified (fees unit-tested; form to check on a phone) |
 | ZEX-S0205 | Display units and Home layout per profile and in backups | 1 | Implemented – unverified (dismissed-guidance flags stay device-wide) |
 | ZEX-S0206 | Home layout: attention, at most three groups | 1 | Implemented – verified |
-| ZEX-S0301 | Goal types and states | 2 | Planned |
-| ZEX-S0302 | Balance goal: create, edit, preview | 2 | Planned |
-| ZEX-S0303 | Goal lifecycle and messages | 2 | Planned |
-| ZEX-S0304 | Pin goals to Home; goal card | 2 | Planned |
-| ZEX-S0305 | Contribution schedule and scenario ETA | 2 | Planned |
-| ZEX-S0306 | Contribution methods: fixed, share of income, spending cut | 2 | Planned |
-| ZEX-S0307 | Earmark goals: money accounts only, protect flag, regression | 2 | Planned |
+| ZEX-S0301 | Goal types and states | 2 | In progress |
+| ZEX-S0302 | Balance goal: create, edit, preview | 2 | In progress |
+| ZEX-S0303 | Goal lifecycle and messages | 2 | In progress |
+| ZEX-S0304 | Pin goals to Home; goal card | 2 | In progress |
+| ZEX-S0305 | Contribution schedule and scenario ETA | 2 | In progress |
+| ZEX-S0306 | Contribution methods: fixed, share of income, spending cut | 2 | In progress |
+| ZEX-S0307 | Earmark goals: money accounts only, protect flag, regression | 2 | In progress |
 | ZEX-S0401 | Asset types, units, purity and locations | 3 | Planned |
 | ZEX-S0402 | Opening holdings and history validation | 3 | Planned |
 | ZEX-S0403 | Purchase: linked money and quantity, fee, capital entry kinds | 3 | Planned |

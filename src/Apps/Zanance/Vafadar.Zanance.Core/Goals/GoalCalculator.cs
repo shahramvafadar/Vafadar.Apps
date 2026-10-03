@@ -42,8 +42,8 @@ public sealed record AccountEarmark(Guid AccountId, long Balance, long Earmarked
 /// </summary>
 public static class GoalCalculator
 {
-    /// <summary>Evaluates the active goals.</summary>
-    /// <param name="goals">All goals; only active ones are evaluated.</param>
+    /// <summary>Evaluates the active and paused goals; a paused goal keeps the money set aside for it (ZEX-P13).</summary>
+    /// <param name="goals">All goals; only active and paused ones are evaluated.</param>
     /// <param name="allocations">All allocations.</param>
     /// <param name="balances">Recorded balance per account.</param>
     /// <param name="today">The current date.</param>
@@ -56,7 +56,7 @@ public static class GoalCalculator
         ArgumentNullException.ThrowIfNull(goals);
         ArgumentNullException.ThrowIfNull(allocations);
         ArgumentNullException.ThrowIfNull(balances);
-        var active = goals.Where(g => g.State == GoalState.Active).ToList();
+        var active = goals.Where(g => g.State is GoalState.Active or GoalState.Paused).ToList();
         var funded = Funding(active, allocations.ToList(), balances);
 
         return
@@ -79,7 +79,7 @@ public static class GoalCalculator
         ArgumentNullException.ThrowIfNull(goals);
         ArgumentNullException.ThrowIfNull(allocations);
         ArgumentNullException.ThrowIfNull(balances);
-        var active = goals.Where(g => g.State == GoalState.Active).Select(g => g.Id).ToHashSet();
+        var active = goals.Where(g => g.State is GoalState.Active or GoalState.Paused).Select(g => g.Id).ToHashSet();
         return
         [
             .. allocations

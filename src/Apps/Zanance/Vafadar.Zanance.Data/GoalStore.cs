@@ -17,7 +17,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var goals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
-        return [.. goals.OrderBy(g => g.State).ThenBy(g => g.Priority).ThenBy(g => g.TargetDate ?? DateOnly.MaxValue).ThenBy(g => g.Name)];
+        return [.. goals.OrderBy(g => StateOrder(g.State)).ThenBy(g => g.Priority).ThenBy(g => g.TargetDate ?? DateOnly.MaxValue).ThenBy(g => g.Name)];
     }
 
     /// <summary>Returns one goal.</summary>
@@ -41,11 +41,39 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         return [.. list.OrderByDescending(a => a.Date).ThenByDescending(a => a.CreatedAt)];
     }
 
-    /// <summary>Inserts or updates a goal.</summary>
+    /// <summary>
+    /// Inserts or updates a goal. A balance goal needs an account, and an account has at most one active or paused balance
+    /// goal (ZEX-P12); at most two goals are pinned to Home – pinning a third takes the pin of the oldest (ZEX-GO06).
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The account already has a balance goal.</exception>
     public async Task SaveGoalAsync(Goal goal, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(goal);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var others = await db.Goals.AsNoTracking().Where(g => g.Id != goal.Id).ToListAsync(cancellationToken);
+        if (goal.Type == GoalType.AccountBalance && goal.State is GoalState.Active or GoalState.Paused
+            && (goal.AccountId is not { } accountId || GoalProgressService.HasOtherBalanceGoal(others, accountId, goal.Id)))
+        {
+            throw new InvalidOperationException("The account already has a balance goal.");
+        }
+
+        if (goal.Type != GoalType.Earmark)
+        {
+            // Only money set aside can be protected; a balance goal reserves nothing (ZEX-P16).
+            goal.Protect = false;
+        }
+
+        if (goal.HomePin is not null)
+        {
+            var pinned = others.Where(g => g.HomePin is not null).OrderBy(g => g.HomePin).ToList();
+            if (pinned.Count >= 2)
+            {
+                var oldest = pinned[0];
+                oldest.HomePin = null;
+                db.Goals.Update(oldest);
+            }
+        }
+
         if (await db.Goals.AnyAsync(g => g.Id == goal.Id, cancellationToken))
         {
             db.Goals.Update(goal);
@@ -82,12 +110,60 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>Returns the contribution plans of all goals (ZEX-GO08).</summary>
+    public async Task<List<ContributionPlan>> GetContributionPlansAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
+    }
+
+    /// <summary>Saves the contribution plan of a goal, replacing an earlier one; <see langword="null"/> removes it.</summary>
+    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goalId, cancellationToken);
+        if (plan is null)
+        {
+            if (existing is not null)
+            {
+                db.ContributionPlans.Remove(existing);
+            }
+        }
+        else if (existing is null)
+        {
+            plan.GoalId = goalId;
+            db.ContributionPlans.Add(plan);
+        }
+        else
+        {
+            existing.Method = plan.Method;
+            existing.Amount = plan.Amount;
+            existing.Percent = plan.Percent;
+            existing.Rule = plan.Rule.Clone();
+            existing.CategoryIds = [.. plan.CategoryIds];
+            existing.ReminderEnabled = plan.ReminderEnabled;
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    // Active goals first, then paused, completed and archived ones.
+    private static int StateOrder(GoalState state) => state switch
+    {
+        GoalState.Active => 0,
+        GoalState.Paused => 1,
+        GoalState.Completed => 2,
+        _ => 3,
+    };
+
     /// <summary>Deletes a goal and its allocations; ledger entries are never touched.</summary>
     public async Task DeleteGoalAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.GoalAllocations.Where(a => a.GoalId == id).ExecuteDeleteAsync(cancellationToken);
+        await db.ContributionPlans.Where(p => p.GoalId == id).ExecuteDeleteAsync(cancellationToken);
         await db.Goals.Where(g => g.Id == id).ExecuteDeleteAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);

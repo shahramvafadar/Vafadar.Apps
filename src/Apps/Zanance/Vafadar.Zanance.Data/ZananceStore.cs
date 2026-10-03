@@ -814,6 +814,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await db.CategoryRules.ExecuteDeleteAsync(cancellationToken);
         await db.Attachments.ExecuteDeleteAsync(cancellationToken);
         await db.GoalAllocations.ExecuteDeleteAsync(cancellationToken);
+        await db.ContributionPlans.ExecuteDeleteAsync(cancellationToken);
         await db.Goals.ExecuteDeleteAsync(cancellationToken);
         await db.OccurrenceStates.ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.ExecuteDeleteAsync(cancellationToken);
