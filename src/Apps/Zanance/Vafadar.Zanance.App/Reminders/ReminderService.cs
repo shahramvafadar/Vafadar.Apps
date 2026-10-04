@@ -72,9 +72,16 @@ public sealed class ReminderService(
     /// <summary>Schedules a refresh after a short delay; later calls within the delay replace earlier ones.</summary>
     public void RefreshSoon()
     {
-        _pending?.Cancel();
-        _pending = new CancellationTokenSource();
-        var token = _pending.Token;
+        // Changes are reported from any thread: swap the timer atomically, so two changes at once can never both start a
+        // refresh, and release the one it replaces.
+        var next = new CancellationTokenSource();
+        var token = next.Token;
+        if (Interlocked.Exchange(ref _pending, next) is { } previous)
+        {
+            previous.Cancel();
+            previous.Dispose();
+        }
+
         _ = Task.Delay(TimeSpan.FromSeconds(1.5), token).ContinueWith(_ => RefreshAsync(), token, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
     }
 
@@ -203,6 +210,7 @@ public sealed class ReminderService(
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar, settings.MonthStartDay);
+        var categories = await store.GetCategoriesAsync();
         var budgets = new List<Budget?>();
         foreach (var currency in (await store.GetBudgetsAsync()).Select(b => b.CurrencyCode).Distinct(StringComparer.OrdinalIgnoreCase))
         {
@@ -215,17 +223,17 @@ public sealed class ReminderService(
         {
             if (budget is { AlertsEnabled: true, TotalLimit: not null })
             {
-                await CheckBudgetAsync(budget, settings, accounts, culture, today);
+                await CheckBudgetAsync(budget, settings, accounts, categories, culture, today);
             }
         }
     }
 
-    private async Task CheckBudgetAsync(Budget budget, Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture, DateOnly today)
+    private async Task CheckBudgetAsync(Budget budget, Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, IReadOnlyList<Core.Categories.Category> categories, CultureInfo culture, DateOnly today)
     {
         var limit = budget.TotalLimit!.Value + (await store.GetBudgetCarryAsync(budget)).Total;
         var (from, to) = BudgetPeriods.Range(budget, settings.MonthStartDay);
         var entries = await store.GetEntriesAsync(from, to);
-        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await store.GetCategoriesAsync(), from, to));
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
         var key = BudgetAlertKey + budget.Id.ToString("N");
         var previous = int.TryParse(preferences.Get(key), NumberStyles.None, CultureInfo.InvariantCulture, out var level) ? level : 0;
         var current = (int)status.Alert;

@@ -49,6 +49,11 @@ internal static class Palette
         ["NearLimit"] = ("#E3A21A", "#D99A1A"),
         ["Muted"] = ("#697586", "#8C97A8"),
     };
+
+    // Parsed once: rows and charts read these colours many times per screen, and a Color never changes.
+    private static readonly Dictionary<string, Color> Light = Colors.ToDictionary(c => c.Key, c => Color.FromArgb(c.Value.Light));
+    private static readonly Dictionary<string, Color> Dark = Colors.ToDictionary(c => c.Key, c => Color.FromArgb(c.Value.Dark));
+
     /// <summary>Gets the semantic color keys.</summary>
     public static IEnumerable<string> Keys => Colors.Keys;
 
@@ -127,5 +132,5 @@ internal static class Palette
     }
 
     /// <summary>Returns the current value of a semantic color.</summary>
-    public static Color Get(string key) => Color.FromArgb(IsDark ? Colors[key].Dark : Colors[key].Light);
+    public static Color Get(string key) => (IsDark ? Dark : Light)[key];
 }

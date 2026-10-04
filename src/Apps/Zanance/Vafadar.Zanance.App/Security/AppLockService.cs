@@ -154,7 +154,16 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
 
         foreach (var action in actions)
         {
-            await action();
+            try
+            {
+                await action();
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                // One link that cannot be opened (e.g. navigation refused while a dialog is open) must neither keep the
+                // others from running nor end the app: these actions run from the lock page's unlock handler.
+                System.Diagnostics.Debug.WriteLine($"Action after unlocking failed: {ex}");
+            }
         }
     }
 

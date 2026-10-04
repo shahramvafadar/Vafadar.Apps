@@ -5086,4 +5086,10 @@
   <data name="Budget_MethodActive" xml:space="preserve">
     <value>روش این بودجه: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
   </data>
+  <data name="Icon_Default" xml:space="preserve">
+    <value>نماد پیش‌فرض</value>
+  </data>
+  <data name="Lock_NotUnlocked" xml:space="preserve">
+    <value>برنامه هنوز قفل است. برای تلاش دوباره «باز کردن قفل» را بزنید.</value>
+  </data>
 </root>

@@ -116,7 +116,18 @@ internal static class AttachmentFiles
                 _ => 0,
             };
 
-            using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length);
+            // Read the size first and decode at the largest power-of-two step that still leaves at least the stored size:
+            // a 50-megapixel photo decoded in full needs about 200 MB and can end the app with an out-of-memory error.
+            using var bounds = new Android.Graphics.BitmapFactory.Options { InJustDecodeBounds = true };
+            Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length, bounds);
+            var sample = 1;
+            while (Math.Max(bounds.OutWidth, bounds.OutHeight) / (sample * 2) >= MaxEdge)
+            {
+                sample *= 2;
+            }
+
+            using var options = new Android.Graphics.BitmapFactory.Options { InSampleSize = sample };
+            using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length, options);
             if (bitmap is null)
             {
                 return null;

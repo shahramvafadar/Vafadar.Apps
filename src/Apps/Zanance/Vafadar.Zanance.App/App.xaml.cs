@@ -339,6 +339,7 @@ public partial class App : Application
 
         return section.Items.Count > 1 ? $"//{section.Route}/{content.Route}" : $"//{content.Route}";
     }
+
     private AppShell CreateShell() =>
         _services.GetRequiredService<AppShell>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
 }

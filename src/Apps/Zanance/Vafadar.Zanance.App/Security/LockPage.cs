@@ -2,7 +2,6 @@ using FluentIcons.Common;
 using FluentIcons.Maui;
 using Vafadar.Localization;
 using Vafadar.Maui.Security;
-using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App.Security;
 
@@ -20,19 +19,23 @@ internal sealed class LockPage : ContentPage
         _lock = appLock;
         _translator = translator;
         _promptOnAppearing = promptOnAppearing;
-        BackgroundColor = Palette.PageBackground;
         FlowDirection = Application.Current?.Windows.FirstOrDefault()?.Page?.FlowDirection ?? FlowDirection.MatchParent;
 
         _message = new Label { Text = translator["Lock_Message"], FontSize = 16, HorizontalTextAlignment = TextAlignment.Center };
         var unlock = new Button
         {
             Text = translator["Lock_Unlock"],
-            BackgroundColor = Palette.Primary,
-            TextColor = Colors.White,
             CornerRadius = 24,
             MinimumHeightRequest = 48,
             FontAttributes = FontAttributes.Bold,
         };
+
+        // Theme colours as dynamic resources (the page background comes from the page style): the cover follows a theme
+        // change while it is shown, and the button text keeps its contrast on the lighter blue of the dark theme.
+        unlock.SetDynamicResource(Button.BackgroundColorProperty, "Primary");
+        unlock.SetDynamicResource(Button.TextColorProperty, "OnPrimary");
+        var symbol = new SymbolIcon { Symbol = Symbol.LockClosed, FontSize = 56, HorizontalOptions = LayoutOptions.Center };
+        symbol.SetDynamicResource(SymbolIcon.ForegroundColorProperty, "Primary");
         unlock.Clicked += async (_, _) => await PromptAsync();
 
         Content = new VerticalStackLayout
@@ -42,7 +45,7 @@ internal sealed class LockPage : ContentPage
             VerticalOptions = LayoutOptions.Center,
             Children =
             {
-                new SymbolIcon { Symbol = Symbol.LockClosed, FontSize = 56, ForegroundColor = Palette.Primary, HorizontalOptions = LayoutOptions.Center },
+                symbol,
                 new Label { Text = translator["App_Name"], FontSize = 22, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment = TextAlignment.Center },
                 _message,
                 unlock,
@@ -71,7 +74,9 @@ internal sealed class LockPage : ContentPage
                     await _lock.UnlockedAsync();
                     break;
                 default:
-                    _message.Text = _translator["Lock_Message"];
+                    // Cancelled or not recognised: say so, so the cover does not look as if nothing happened.
+                    _message.Text = _translator["Lock_NotUnlocked"];
+                    SemanticScreenReader.Announce(_message.Text);
                     break;
             }
         }

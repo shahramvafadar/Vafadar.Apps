@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–5: libraries, core and data
+### Fixed – Code review, parts 1–6: libraries, core, data and app foundation
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -28,6 +28,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Importing a large CSV file is faster.
 - A changed assumed price of a quantity goal is kept (a second change was lost).
 - Merging categories also moves them in the spending cut of a goal and in saved filters.
+- The icon choice (accounts, entries, goals) works with the keyboard and screen readers: each icon is a button with a
+  name ("Icon 12", "Default icon") and the chosen one is announced; it is marked in the app's blue selection colour and
+  follows a theme change.
+- The lock screen says when unlocking was cancelled or failed, keeps its contrast in the dark theme and follows a theme
+  change; a link from a notification or the widget that cannot be opened no longer stops the others after unlocking.
+- Very large receipt photos no longer risk closing the app on Android: they are decoded at a reduced size first.
+- Long lists and the reminder update do less work (colours are prepared once; categories are read once per update).
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

@@ -5086,4 +5086,10 @@ Schritte zum Wiederholen:
   <data name="Budget_MethodActive" xml:space="preserve">
     <value>Methode dieses Budgets: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um sie zu ändern.</value>
   </data>
+  <data name="Icon_Default" xml:space="preserve">
+    <value>Standardsymbol</value>
+  </data>
+  <data name="Lock_NotUnlocked" xml:space="preserve">
+    <value>Die App ist noch gesperrt. Tippen Sie auf Entsperren, um es erneut zu versuchen.</value>
+  </data>
 </root>

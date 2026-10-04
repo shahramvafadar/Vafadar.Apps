@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using FluentIcons.Common;
 using Vafadar.Localization;
 using Vafadar.Zanance.Core.Categories;
@@ -7,6 +8,7 @@ namespace Vafadar.Zanance.App.Presentation;
 /// <summary>Display names, icons and colours of categories for one screen load.</summary>
 internal sealed class CategoryLookup
 {
+    private static readonly ConcurrentDictionary<(string Value, bool Dark), Color> DisplayColors = new();
     private readonly Dictionary<Guid, Category> _byId;
     private readonly Translator _translator;
 
@@ -43,8 +45,14 @@ internal sealed class CategoryLookup
     /// <summary>The colour to show: in the dark theme dark category colours are lightened so icons stay readable.</summary>
     public static Color DisplayColor(string? value)
     {
-        var color = ParseColor(value);
-        return Palette.IsDark && color.GetLuminosity() < 0.62f ? color.WithLuminosity(0.68f) : color;
+        // Every row of a long list asks for its category colour; there are only a few distinct colours, so each is parsed
+        // (and lightened) once per theme instead of once per row.
+        var dark = Palette.IsDark;
+        return DisplayColors.GetOrAdd((value ?? string.Empty, dark), key =>
+        {
+            var color = ParseColor(key.Value.Length == 0 ? null : key.Value);
+            return key.Dark && color.GetLuminosity() < 0.62f ? color.WithLuminosity(0.68f) : color;
+        });
     }
 
     /// <summary>The stored colour of a category.</summary>
