@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 to CR04 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 to CR05 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -113,3 +113,10 @@ Filled in section by section.
 | CR04-04 | `Vafadar.Zanance.Core/DataFiles/CsvImport.cs` | performance | Medium | Every imported row looked its category up by translating the name of every category again (10,000 rows × 30 categories). | Fixed: the names are indexed once per import; same first-match rule. |
 | CR04-05 | `Vafadar.Zanance.Core/Reports/KpiCatalog.cs` | performance | Low | The essential coverage rebuilt the same filtered entry list in each of its three months. | Fixed: built once. |
 | CR04-06 | `Vafadar.Zanance.Core/DataFiles/CsvImport.cs` | quality | Low | The own CSV format names accounts; two accounts with the same name cannot be told apart and the first one is used. | No change here: the format is shared with spreadsheets and older files. CR08 checks whether the account editor prevents duplicate names. |
+| CR05-01 | `Vafadar.Zanance.Data/GoalStore.cs` | bug | High | Saving an existing contribution plan dropped its assumed price: a price changed or removed on the goal page was silently lost (the existing test only covered the first save). | Fixed: the price is copied with the other fields; test `A_changed_assumed_price_of_an_existing_plan_is_kept`. |
+| CR05-02 | `Vafadar.Zanance.Data/ZananceStore.cs` (`MergeCategoryAsync`) | bug | Medium | Merging categories moved entries, plans, templates, rules and budget limits, but not the categories of a goal's spending cut or of saved filters; they kept pointing to the archived category. | Fixed: both lists move to the target in the same transaction; test. |
+| CR05-03 | `ZananceStore.EnsureDefaultCategoriesAsync` | performance | Low | Raised `Changed` even when nothing was added, so the reminders were rebuilt for nothing. | Fixed: only when categories were added; test. |
+| CR05-04 | `ZananceStore.MoveCategoryAsync` | quality | Low | The new sort order used a minimum recomputed inside the renumbering loop (correct only by accident). | Fixed: computed once. |
+| CR05-05 | `ZananceStore.cs`, `Configurations/EntityConfigurations.cs` | quality | Low | A closing brace on the same line and two misindented lines. | Fixed (no model change; the compiled-model test passes). |
+| CR05-06 | `Vafadar.Zanance.Data/PlanStore.cs` (`UnsettleAsync`) | bug | Low | Reopening deletes the plan's entry and then updates the state in a second transaction; if the app is killed in between, the occurrence stays "settled" without an entry. | No change now: very unlikely (two short writes) and visible in the plan; noted for a later change of the store API. |
+| CR05-07 | `Migrations/2026100*` | data safety | – | The ZEX migrations only add columns and tables; data updates are scoped (default currency, usable accounts, essential categories). | No issue; covered by `ZexUpgradeTests`. |

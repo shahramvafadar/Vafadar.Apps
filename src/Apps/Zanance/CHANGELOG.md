@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–4: libraries, money, ledger, plans, budgets, forecasts, goals, holdings and reports
+### Fixed – Code review, parts 1–5: libraries, core and data
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -26,6 +26,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The price per gram of a holding bought in rials is right also for large amounts (it could overflow).
 - Long tables in a PDF report no longer run under the note at the foot of the page.
 - Importing a large CSV file is faster.
+- A changed assumed price of a quantity goal is kept (a second change was lost).
+- Merging categories also moves them in the spending cut of a goal and in saved filters.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

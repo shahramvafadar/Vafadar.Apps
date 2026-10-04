@@ -142,6 +142,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             existing.Rule = plan.Rule.Clone();
             existing.CategoryIds = [.. plan.CategoryIds];
             existing.ReminderEnabled = plan.ReminderEnabled;
+            existing.AssumedPricePerUnitMilli = plan.AssumedPricePerUnitMilli;
         }
 
         await db.SaveChangesAsync(cancellationToken);

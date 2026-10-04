@@ -223,6 +223,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
             .Select(c => (c.Kind, c.SystemKey!)).ToHashSet();
 
         var order = 0;
+        var added = 0;
         foreach (var (kind, key, icon, color) in DefaultCategories.All)
         {
             if (!existing.Contains((kind, key)))
@@ -231,16 +232,20 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
                 {
                     Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order,
                     SpendingType = kind == CategoryKind.Expense ? DefaultCategories.SpendingTypeOf(key) : SpendingType.Flexible,
-                IsEssential = kind == CategoryKind.Expense && DefaultCategories.IsEssential(key),
+                    IsEssential = kind == CategoryKind.Expense && DefaultCategories.IsEssential(key),
                 });
+                added++;
             }
 
             order++;
         }
 
-        await db.SaveChangesAsync(cancellationToken);
-
-        OnChanged();
+        // Listeners (e.g. the reminders) are told only when something was really added.
+        if (added > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            OnChanged();
+        }
     }
 
     /// <summary>Inserts or updates a category.</summary>
@@ -739,6 +744,18 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await db.Templates.Where(t => t.CategoryId == sourceId).ExecuteUpdateAsync(t => t.SetProperty(x => x.CategoryId, targetId), cancellationToken);
         await db.CategoryRules.Where(r => r.CategoryId == sourceId).ExecuteUpdateAsync(r => r.SetProperty(x => x.CategoryId, targetId), cancellationToken);
 
+        // Category lists move too: the spending cut of a goal plan and the categories of a saved filter.
+        static List<Guid> Moved(List<Guid> ids, Guid from, Guid to) => [.. ids.Select(id => id == from ? to : id).Distinct()];
+        foreach (var plan in (await db.ContributionPlans.ToListAsync(cancellationToken)).Where(p => p.CategoryIds.Contains(sourceId)))
+        {
+            plan.CategoryIds = Moved(plan.CategoryIds, sourceId, targetId);
+        }
+
+        foreach (var filter in (await db.SavedFilters.ToListAsync(cancellationToken)).Where(f => f.CategoryIds.Contains(sourceId)))
+        {
+            filter.CategoryIds = Moved(filter.CategoryIds, sourceId, targetId);
+        }
+
         // One level only: children of the source go under the target's main category. Merging a main category into one
         // of its own children makes that child the main category, so nothing stays under the archived source.
         if (target.ParentId == sourceId)
@@ -791,10 +808,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         }
 
         // Renumber so that equal sort orders never make the move a no-op.
+        var first = siblings.Min(s => s.SortOrder);
         (siblings[index], siblings[other]) = (siblings[other], siblings[index]);
         for (var i = 0; i < siblings.Count; i++)
         {
-            siblings[i].SortOrder = siblings.Min(s => s.SortOrder) + i;
+            siblings[i].SortOrder = first + i;
         }
 
         await db.SaveChangesAsync(cancellationToken);
@@ -1159,4 +1177,5 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await db.ForecastSnapshots.Where(s => s.Id == id).ExecuteDeleteAsync(cancellationToken);
         OnChanged();
-    }}
+    }
+}
