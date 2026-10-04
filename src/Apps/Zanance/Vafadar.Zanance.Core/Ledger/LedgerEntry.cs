@@ -152,6 +152,21 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
     /// <summary>Gets or sets who pays the <see cref="ReimbursableAmount"/> back.</summary>
     public string? ReimbursedBy { get; set; }
 
+    /// <summary>Gets or sets when the reimbursement is expected (ZEX-K12); optional. Overdue when the date has passed.</summary>
+    public DateOnly? ReimbursementDueDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the entry sums up several purchases or receipts of a date range, e.g.
+    /// "Groceries, September, 412 EUR" (ZEX-P21). It counts like any entry; KPIs that need timing say its spread is unknown.
+    /// </summary>
+    public bool IsAggregated { get; set; }
+
+    /// <summary>Gets or sets the first day covered by an aggregated entry.</summary>
+    public DateOnly? AggregatedFrom { get; set; }
+
+    /// <summary>Gets or sets the last day covered by an aggregated entry.</summary>
+    public DateOnly? AggregatedTo { get; set; }
+
     /// <summary>
     /// Gets or sets free tags such as "vacation 2027" or "car" (F2-TX-04). Tags cut across categories; see
     /// <see cref="EntryTags"/> for their rules.

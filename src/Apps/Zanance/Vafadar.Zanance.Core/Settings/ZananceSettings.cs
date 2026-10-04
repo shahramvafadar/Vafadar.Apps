@@ -58,6 +58,25 @@ public sealed class ZananceSettings : Entity, IAuditableEntity
     /// <summary>Gets or sets the Home layout of this profile (<see cref="Dashboard.HomeLayout"/> text, ZEX-P20); <see langword="null"/> = not set.</summary>
     public string? HomeLayout { get; set; }
 
+    /// <summary>
+    /// Gets or sets the explicit estimate of day-to-day essential spending used by the liquidity headroom (04 §3) in minor
+    /// units of <see cref="EssentialEstimateCurrency"/> per <see cref="EssentialEstimatePeriod"/>; <see langword="null"/> = not set,
+    /// then the forecast says "Day-to-day spending not included". Zanance only suggests a value, never sets it.
+    /// </summary>
+    public long? EssentialEstimate { get; set; }
+
+    /// <summary>Gets or sets the period of <see cref="EssentialEstimate"/>.</summary>
+    public EstimatePeriod EssentialEstimatePeriod { get; set; }
+
+    /// <summary>Gets or sets the currency of <see cref="EssentialEstimate"/>.</summary>
+    public string? EssentialEstimateCurrency { get; set; }
+
+    /// <summary>
+    /// Gets or sets the progress of the period-end review (ZEX-S0610): "2026-09" for a finished review of that financial
+    /// month, or "2026-09:unreviewed,plans" with the steps done so far.
+    /// </summary>
+    public string? ReviewProgress { get; set; }
+
     /// <summary>Gets or sets the account preselected in the entry form (ACC-02).</summary>
     public Guid? DefaultAccountId { get; set; }
 
@@ -99,4 +118,17 @@ public sealed class ZananceSettings : Entity, IAuditableEntity
 
     /// <inheritdoc />
     public DateTimeOffset UpdatedAt { get; set; }
+}
+
+/// <summary>The period of an amount estimate. New values are appended, never renumbered.</summary>
+public enum EstimatePeriod
+{
+    /// <summary>Per day.</summary>
+    Day = 0,
+
+    /// <summary>Per week.</summary>
+    Week = 1,
+
+    /// <summary>Per financial month.</summary>
+    Month = 2,
 }

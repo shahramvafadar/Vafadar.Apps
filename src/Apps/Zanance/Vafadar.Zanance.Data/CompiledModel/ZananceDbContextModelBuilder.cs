@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("cdd28b20-8cc6-4e83-8c31-5584d36f18d2"), entityTypeCount: 22)
+            : base(skipDetectChanges: false, modelId: new Guid("a3bbe02b-73bf-4f69-9c06-1411d7a881b7"), entityTypeCount: 22)
         {
         }
 

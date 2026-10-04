@@ -231,6 +231,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
                 {
                     Kind = kind, SystemKey = key, Icon = icon, Color = color, SortOrder = order,
                     SpendingType = kind == CategoryKind.Expense ? DefaultCategories.SpendingTypeOf(key) : SpendingType.Flexible,
+                IsEssential = kind == CategoryKind.Expense && DefaultCategories.IsEssential(key),
                 });
             }
 

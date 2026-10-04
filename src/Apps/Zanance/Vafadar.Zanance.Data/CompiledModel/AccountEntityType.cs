@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Accounts.Account",
                 typeof(Account),
                 baseEntityType,
-                propertyCount: 18,
+                propertyCount: 20,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -64,6 +64,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(Account).GetField("<CurrencyCode>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 3);
 
+            var dueDate = runtimeEntityType.AddProperty(
+                "DueDate",
+                typeof(DateOnly?),
+                propertyInfo: typeof(Account).GetProperty("DueDate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Account).GetField("<DueDate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+
             var icon = runtimeEntityType.AddProperty(
                 "Icon",
                 typeof(string),
@@ -99,6 +106,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 propertyInfo: typeof(Account).GetProperty("IsArchived", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Account).GetField("<IsArchived>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: false);
+
+            var lastReconciledOn = runtimeEntityType.AddProperty(
+                "LastReconciledOn",
+                typeof(DateOnly?),
+                propertyInfo: typeof(Account).GetProperty("LastReconciledOn", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Account).GetField("<LastReconciledOn>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
 
             var name = runtimeEntityType.AddProperty(
                 "Name",

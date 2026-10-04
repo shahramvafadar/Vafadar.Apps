@@ -128,6 +128,12 @@ public sealed class Account : Entity, IAuditableEntity
     /// <summary>Gets or sets the optional country of the account (ISO 3166 alpha-2, ZEX-P18); information only, no logic depends on it.</summary>
     public string? CountryCode { get; set; }
 
+    /// <summary>Gets or sets the day the balance was last compared with the bank or wallet (ZEX-S0608); <see langword="null"/> = never.</summary>
+    public DateOnly? LastReconciledOn { get; set; }
+
+    /// <summary>Gets or sets when money lent should be paid back (ZEX-K12); optional, only for accounts of money lent.</summary>
+    public DateOnly? DueDate { get; set; }
+
     /// <summary>Gets or sets a value indicating whether the account is archived (ACC-06).</summary>
     public bool IsArchived { get; set; }
 

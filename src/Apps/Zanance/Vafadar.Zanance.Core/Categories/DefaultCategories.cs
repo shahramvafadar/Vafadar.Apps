@@ -19,6 +19,12 @@ public static class DefaultCategories
         _ => SpendingType.Flexible,
     };
 
+    /// <summary>
+    /// Returns whether a default expense category is essential by default (ZEX-K07): housing, food, energy, phone and
+    /// internet, transport, health and insurance. The user can change it per category.
+    /// </summary>
+    public static bool IsEssential(string? key) => key is "Housing" or "Food" or "Energy" or "Communication" or "Transport" or "Health" or "Insurance";
+
     /// <summary>Gets the default categories as (kind, key, icon, colour).</summary>
     public static IReadOnlyList<(CategoryKind Kind, string Key, string Icon, string Color)> All { get; } =
     [

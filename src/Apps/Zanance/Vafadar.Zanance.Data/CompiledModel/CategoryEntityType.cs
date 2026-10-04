@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Categories.Category",
                 typeof(Category),
                 baseEntityType,
-                propertyCount: 12,
+                propertyCount: 13,
                 foreignKeyCount: 1,
                 unnamedIndexCount: 1,
                 keyCount: 1);
@@ -65,6 +65,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 typeof(bool),
                 propertyInfo: typeof(Category).GetProperty("IsArchived", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Category).GetField("<IsArchived>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: false);
+
+            var isEssential = runtimeEntityType.AddProperty(
+                "IsEssential",
+                typeof(bool),
+                propertyInfo: typeof(Category).GetProperty("IsEssential", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Category).GetField("<IsEssential>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: false);
 
             var kind = runtimeEntityType.AddProperty(

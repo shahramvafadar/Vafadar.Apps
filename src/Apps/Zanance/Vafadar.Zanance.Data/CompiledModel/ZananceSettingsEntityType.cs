@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Settings.ZananceSettings",
                 typeof(ZananceSettings),
                 baseEntityType,
-                propertyCount: 20,
+                propertyCount: 24,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -77,6 +77,28 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(ZananceSettings).GetField("<DisplayUnits>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 2000);
+
+            var essentialEstimate = runtimeEntityType.AddProperty(
+                "EssentialEstimate",
+                typeof(long?),
+                propertyInfo: typeof(ZananceSettings).GetProperty("EssentialEstimate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<EssentialEstimate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+
+            var essentialEstimateCurrency = runtimeEntityType.AddProperty(
+                "EssentialEstimateCurrency",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("EssentialEstimateCurrency", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<EssentialEstimateCurrency>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 3);
+
+            var essentialEstimatePeriod = runtimeEntityType.AddProperty(
+                "EssentialEstimatePeriod",
+                typeof(EstimatePeriod),
+                propertyInfo: typeof(ZananceSettings).GetProperty("EssentialEstimatePeriod", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<EssentialEstimatePeriod>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            essentialEstimatePeriod.SetSentinelFromProviderValue(0);
 
             var fortnightStart = runtimeEntityType.AddProperty(
                 "FortnightStart",
@@ -156,6 +178,14 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 propertyInfo: typeof(ZananceSettings).GetProperty("ReportCurrencyCode", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(ZananceSettings).GetField("<ReportCurrencyCode>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 3);
+
+            var reviewProgress = runtimeEntityType.AddProperty(
+                "ReviewProgress",
+                typeof(string),
+                propertyInfo: typeof(ZananceSettings).GetProperty("ReviewProgress", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<ReviewProgress>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 200);
 
             var updatedAt = runtimeEntityType.AddProperty(
                 "UpdatedAt",

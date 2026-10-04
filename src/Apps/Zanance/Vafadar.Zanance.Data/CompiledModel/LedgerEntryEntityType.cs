@@ -23,7 +23,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Ledger.LedgerEntry",
                 typeof(LedgerEntry),
                 baseEntityType,
-                propertyCount: 28,
+                propertyCount: 32,
                 foreignKeyCount: 4,
                 unnamedIndexCount: 7,
                 keyCount: 1);
@@ -43,6 +43,20 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 propertyInfo: typeof(LedgerEntry).GetProperty("AccountId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(LedgerEntry).GetField("<AccountId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            var aggregatedFrom = runtimeEntityType.AddProperty(
+                "AggregatedFrom",
+                typeof(DateOnly?),
+                propertyInfo: typeof(LedgerEntry).GetProperty("AggregatedFrom", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(LedgerEntry).GetField("<AggregatedFrom>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+
+            var aggregatedTo = runtimeEntityType.AddProperty(
+                "AggregatedTo",
+                typeof(DateOnly?),
+                propertyInfo: typeof(LedgerEntry).GetProperty("AggregatedTo", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(LedgerEntry).GetField("<AggregatedTo>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
 
             var amount = runtimeEntityType.AddProperty(
                 "Amount",
@@ -101,6 +115,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 propertyInfo: typeof(LedgerEntry).GetProperty("ImportBatchId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(LedgerEntry).GetField("<ImportBatchId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
+
+            var isAggregated = runtimeEntityType.AddProperty(
+                "IsAggregated",
+                typeof(bool),
+                propertyInfo: typeof(LedgerEntry).GetProperty("IsAggregated", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(LedgerEntry).GetField("<IsAggregated>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: false);
 
             var isPartialPayment = runtimeEntityType.AddProperty(
                 "IsPartialPayment",
@@ -175,6 +196,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(LedgerEntry).GetField("<ReimbursedBy>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 200);
+
+            var reimbursementDueDate = runtimeEntityType.AddProperty(
+                "ReimbursementDueDate",
+                typeof(DateOnly?),
+                propertyInfo: typeof(LedgerEntry).GetProperty("ReimbursementDueDate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(LedgerEntry).GetField("<ReimbursementDueDate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
 
             var review = runtimeEntityType.AddProperty(
                 "Review",

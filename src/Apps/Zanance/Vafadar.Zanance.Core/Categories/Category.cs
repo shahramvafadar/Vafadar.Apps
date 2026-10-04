@@ -52,6 +52,12 @@ public sealed class Category : Entity, IAuditableEntity
     /// <summary>Gets or sets how the category is budgeted with the flex method; a sub-category follows its parent.</summary>
     public SpendingType SpendingType { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether spending in the category is essential (housing, food, energy …); used by the
+    /// essential coverage (ZEX-K07) and the suggested day-to-day estimate. A sub-category follows its parent.
+    /// </summary>
+    public bool IsEssential { get; set; }
+
     /// <summary>Gets or sets a value indicating whether the category is archived.</summary>
     public bool IsArchived { get; set; }
 

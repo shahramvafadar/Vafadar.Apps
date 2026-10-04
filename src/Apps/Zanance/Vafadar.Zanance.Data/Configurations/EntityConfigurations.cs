@@ -246,6 +246,8 @@ internal sealed class ZananceSettingsConfiguration : IEntityTypeConfiguration<Za
         builder.Property(s => s.HomeBudgetCurrencyCode).HasMaxLength(3);
         builder.Property(s => s.DisplayUnits).HasMaxLength(2000);
         builder.Property(s => s.HomeLayout).HasMaxLength(500);
+        builder.Property(s => s.EssentialEstimateCurrency).HasMaxLength(3);
+        builder.Property(s => s.ReviewProgress).HasMaxLength(200);
     }
 }
 
