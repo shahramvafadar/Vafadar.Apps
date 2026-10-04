@@ -1,3 +1,4 @@
+using Syncfusion.Pdf;
 using Syncfusion.Pdf.Parsing;
 
 namespace Vafadar.Zanance.Reports.Tests;
@@ -69,5 +70,22 @@ public sealed class PdfReportTests
         using var loaded = new PdfLoadedDocument(new MemoryStream(PdfReport.Write(report)));
 
         Assert.True(loaded.Pages.Count > 1);
+    }
+
+    [Fact]
+    public void Rows_of_a_long_table_end_above_the_disclaimer_on_every_page()
+    {
+        // CR04-05: a table that runs down a page must not print under the disclaimer at its foot.
+        var rows = Enumerable.Range(1, 120).Select(i => (IReadOnlyList<string>)[$"Row {i}", $"{i}.00 EUR"]).ToList();
+        var report = new ReportDocument("Report", "2026", "All", "today", "Disclaimer text", false, [], [new ReportTable("Entries", ["Title", "Amount"], rows, new HashSet<int> { 1 })]);
+
+        using var loaded = new PdfLoadedDocument(new MemoryStream(PdfReport.Write(report)));
+
+        for (var i = 0; i < loaded.Pages.Count; i++)
+        {
+            loaded.Pages[i].ExtractText(out TextLineCollection lines);
+            var disclaimer = lines.TextLine.Single(l => l.Text.Contains("Disclaimer text", StringComparison.Ordinal));
+            Assert.All(lines.TextLine.Where(l => l.Text.Contains("Row ", StringComparison.Ordinal)), row => Assert.True(row.Bounds.Bottom <= disclaimer.Bounds.Top, $"Page {i + 1}: '{row.Text}' reaches the disclaimer."));
+        }
     }
 }

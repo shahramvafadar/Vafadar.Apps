@@ -495,11 +495,11 @@ public static class KpiCatalog
         var current = PeriodMath.MonthOf(today, calendar, startDay);
         var (year, month) = PeriodMath.Previous(current.Year, current.Month);
         var oldest = today;
+        var relevant = entries.Where(e => !(e.ScheduleId is { } plan && nonMonthlyIds.Contains(plan)) && Essential(e.CategoryId)).ToList();
         for (var i = 0; i < 3; i++)
         {
             var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);
             oldest = from;
-            var relevant = entries.Where(e => !(e.ScheduleId is { } plan && nonMonthlyIds.Contains(plan)) && Essential(e.CategoryId)).ToList();
             months.Add(LedgerCalculator.ExpenseByCategory(accountList, relevant, new LedgerFilter(from, to, scope), id => id).Sum(c => c.Net));
             (year, month) = PeriodMath.Previous(year, month);
         }

@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 to CR03 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 to CR04 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -107,3 +107,9 @@ Filled in section by section.
 | CR03-04 | `Vafadar.Zanance.Core/Receipts/ReceiptParser.cs` | bug | Low | Persian total keywords ("جمع کل") were not recognised with the Arabic letter forms that PDFs and OCR often return, so a later line with "مبلغ" could be taken as the total. | Fixed: keywords match ي/ى/ك and words with or without a half-space; test. |
 | CR03-05 | `Vafadar.Zanance.Core/Reminders/ReminderSnoozes.cs` | quality | Low | Snoozes are stored with reflection-based JSON. | No change: Release builds trim only assemblies marked trimmable (MAUI default), which the app's own are not. |
 | CR03-06 | `Vafadar.Zanance.Core/Budgets/BudgetSuggestions.cs` | performance | Low | Each category suggestion reads all entries once per past period. | No change: about 50 passes over the entries, a few milliseconds with 10,000 entries. |
+| CR04-01 | `Vafadar.Zanance.Core/Holdings/Quantities.cs` | bug | High | A typed quantity lost its decimal point when the point was also the language's group separator: in German "1.5" g became 15 g (the group separator was removed first). | Fixed: separators are read like amounts – the last of two kinds is the decimal one, a single one groups thousands only when it is the language's group separator before exactly three digits; badly grouped input is refused. Tests per language. |
+| CR04-02 | `Vafadar.Zanance.Core/Holdings/HoldingsLedger.cs` | bug | High | The cost basis per gram multiplied the basis by one million in 64-bit integers and overflowed silently for holdings bought in rials (e.g. 100 g for 500 billion rials), showing a wrong price per gram. | Fixed: computed in decimal with the same truncation; test. |
+| CR04-03 | `Vafadar.Zanance.Reports/PdfReport.cs` | bug | Medium | A table that ran down a page printed its rows under the disclaimer at the page foot. | Fixed: tables paginate above the reserved footer on every page; test `Rows_of_a_long_table_end_above_the_disclaimer_on_every_page` (failed on the old code). |
+| CR04-04 | `Vafadar.Zanance.Core/DataFiles/CsvImport.cs` | performance | Medium | Every imported row looked its category up by translating the name of every category again (10,000 rows × 30 categories). | Fixed: the names are indexed once per import; same first-match rule. |
+| CR04-05 | `Vafadar.Zanance.Core/Reports/KpiCatalog.cs` | performance | Low | The essential coverage rebuilt the same filtered entry list in each of its three months. | Fixed: built once. |
+| CR04-06 | `Vafadar.Zanance.Core/DataFiles/CsvImport.cs` | quality | Low | The own CSV format names accounts; two accounts with the same name cannot be told apart and the first one is used. | No change here: the format is shared with spreadsheets and older files. CR08 checks whether the account editor prevents duplicate names. |

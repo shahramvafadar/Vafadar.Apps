@@ -36,6 +36,9 @@ public static class PdfReport
 {
     private const float Margin = 36;
 
+    // The bottom of every page holds the disclaimer; tables end above it.
+    private const float FooterHeight = 30;
+
     /// <summary>Creates the PDF.</summary>
     public static byte[] Write(ReportDocument report)
     {
@@ -153,7 +156,11 @@ public static class PdfReport
             }
         }
 
-        var result = grid.Draw(page, new PointF(0, y), new PdfGridLayoutFormat { Layout = PdfLayoutType.Paginate });
+        // Rows stop above the disclaimer, on this page and on every page the table continues on.
+        var size = page.GetClientSize();
+        var bottom = size.Height - FooterHeight;
+        var format = new PdfGridLayoutFormat { Layout = PdfLayoutType.Paginate, PaginateBounds = new RectangleF(0, 0, size.Width, bottom) };
+        var result = grid.Draw(page, new RectangleF(0, y, size.Width, Math.Max(0, bottom - y)), format);
         return (result.Page, result.Bounds.Bottom);
     }
 

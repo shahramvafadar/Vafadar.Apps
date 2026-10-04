@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–3: shared libraries, money, ledger, plans, budgets and forecasts
+### Fixed – Code review, parts 1–4: libraries, money, ledger, plans, budgets, forecasts, goals, holdings and reports
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -21,6 +21,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   date, and the comparison of a saved forecast no longer reads the whole ledger for every day.
 - A receipt or invoice whose text uses the Arabic forms of ک and ی (common in PDFs) is read with its total line, not
   with a later line such as a service fee.
+- A quantity typed as "1.5" g in German is 1.5 g again (it was read as 15 g); separators follow the language and an
+  ambiguous number is refused instead of guessed.
+- The price per gram of a holding bought in rials is right also for large amounts (it could overflow).
+- Long tables in a PDF report no longer run under the note at the foot of the page.
+- Importing a large CSV file is faster.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

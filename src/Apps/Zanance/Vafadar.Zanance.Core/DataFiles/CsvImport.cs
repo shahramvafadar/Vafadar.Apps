@@ -71,6 +71,7 @@ public static class CsvImport
     {
         ArgumentNullException.ThrowIfNull(rows);
         var ids = existing.Select(e => e.Id).ToHashSet();
+        var categoryByName = CategoryIndex(categories, categoryName);
         var byName = accounts.GroupBy(a => a.Name, StringComparer.OrdinalIgnoreCase).ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
         var result = new List<ImportRow>();
 
@@ -189,7 +190,7 @@ public static class CsvImport
             else if (Empty(Cell(9)) is { } name)
             {
                 var categoryKind = kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense;
-                entry.CategoryId = categories.FirstOrDefault(c => c.Kind == categoryKind && string.Equals(categoryName(c), name, StringComparison.OrdinalIgnoreCase))?.Id;
+                entry.CategoryId = categoryByName.GetValueOrDefault((categoryKind, name.ToUpperInvariant()))?.Id;
             }
 
             if (Empty(Cell(14)) is { } originalCurrency && TryAmount(Cell(13), originalCurrency, '.', out var original))
@@ -217,6 +218,7 @@ public static class CsvImport
         ArgumentNullException.ThrowIfNull(rows);
         ArgumentNullException.ThrowIfNull(mapping);
         var byId = categories.ToDictionary(c => c.Id);
+        var categoryByName = CategoryIndex(categories, categoryName);
         var account = accounts.FirstOrDefault(a => a.Id == mapping.AccountId);
         var existingKeys = existing.Where(e => e.AccountId == mapping.AccountId).Select(e => (e.Date, e.Amount, e.Kind)).ToHashSet();
         var result = new List<ImportRow>();
@@ -265,7 +267,7 @@ public static class CsvImport
 
             var categoryKind = kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
             var category = Empty(Cell(mapping.CategoryColumn)) is { } name
-                ? categories.FirstOrDefault(c => c.Kind == categoryKind && string.Equals(categoryName(c), name, StringComparison.OrdinalIgnoreCase))
+                ? categoryByName.GetValueOrDefault((categoryKind, name.ToUpperInvariant()))
                 : null;
 
             // Without a category in the file, a categorization rule may suggest one; imported rows stay unreviewed (F2-TX-04).
@@ -405,6 +407,19 @@ public static class CsvImport
     }
 
     private static ImportRow Invalid(int line, string error) => new(line, null, error, false, false, false);
+
+    // The categories by kind and display name (case ignored), each name translated once instead of once per row; with
+    // equal names the first category wins, as before.
+    private static Dictionary<(CategoryKind Kind, string Name), Category> CategoryIndex(IEnumerable<Category> categories, Func<Category, string> categoryName)
+    {
+        var index = new Dictionary<(CategoryKind, string), Category>();
+        foreach (var category in categories)
+        {
+            index.TryAdd((category.Kind, categoryName(category).ToUpperInvariant()), category);
+        }
+
+        return index;
+    }
 
     private static string? Empty(string value) => string.IsNullOrWhiteSpace(value) ? null : value;
 }

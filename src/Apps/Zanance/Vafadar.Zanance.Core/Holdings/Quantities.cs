@@ -37,20 +37,19 @@ public static class Quantities
         dimension == AssetDimension.Mass ? [QuantityUnit.Gram, QuantityUnit.Kilogram] : [QuantityUnit.Piece];
 
     /// <summary>
-    /// Parses a typed quantity into base units. Accepts the culture's and a Latin decimal point and any digit script;
-    /// refuses more than three decimals of a gram or unit, fractions of an indivisible count type, zero and negatives.
+    /// Parses a typed quantity into base units. Any digit script; '.' and ',' (and the Persian separators) are read like
+    /// amounts: with both, the last one is the decimal separator; one kind used several times groups thousands; a single
+    /// one is the decimal separator unless it is the culture's group separator followed by exactly three digits – so in
+    /// German "1.5" is 1.5 g and "1.500" is 1,500 g, in English "1,500" is 1,500 g. Refuses more than three decimals of a
+    /// gram or unit, fractions of an indivisible count type, zero, negatives and badly grouped numbers.
     /// </summary>
     public static bool TryParse(string? text, QuantityUnit unit, AssetType type, CultureInfo culture, out long quantity)
     {
         ArgumentNullException.ThrowIfNull(type);
         ArgumentNullException.ThrowIfNull(culture);
         quantity = 0;
-        var cleaned = Vafadar.Core.Text.Digits.ToAscii((text ?? string.Empty).Trim())
-            .Replace(culture.NumberFormat.NumberGroupSeparator, string.Empty, StringComparison.Ordinal)
-            .Replace(culture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal)
-            .Replace('٫', '.')
-            .Replace(',', '.');
-        if (!decimal.TryParse(cleaned, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) || value <= 0)
+        if (Normalize(text, culture) is not { } cleaned
+            || !decimal.TryParse(cleaned, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) || value <= 0)
         {
             return false;
         }
@@ -63,6 +62,65 @@ public static class Quantities
 
         quantity = (long)exact;
         return type.Dimension == AssetDimension.Mass || type.Divisible || quantity % PerGramOrUnit == 0;
+    }
+
+    // The typed number with '.' as its only separator, or null when its separators are ambiguous or misplaced.
+    private static string? Normalize(string? text, CultureInfo culture)
+    {
+        var value = Vafadar.Core.Text.Digits.ToAscii((text ?? string.Empty).Trim())
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Replace("\u00A0", string.Empty, StringComparison.Ordinal)
+            .Replace("\u202F", string.Empty, StringComparison.Ordinal);
+        if (value.Length == 0 || value.Any(c => !char.IsAsciiDigit(c) && c is not '.' and not ','))
+        {
+            return null;
+        }
+
+        var dots = value.Count(c => c == '.');
+        var commas = value.Count(c => c == ',');
+        char? decimalSeparator;
+        if (dots > 0 && commas > 0)
+        {
+            decimalSeparator = value.LastIndexOf('.') > value.LastIndexOf(',') ? '.' : ',';
+            if (value.Count(c => c == decimalSeparator) > 1)
+            {
+                return null;
+            }
+        }
+        else if (dots + commas == 0)
+        {
+            decimalSeparator = null;
+        }
+        else
+        {
+            var separator = dots > 0 ? '.' : ',';
+            var digitsAfter = value.Length - value.LastIndexOf(separator) - 1;
+            var cultureGroup = Vafadar.Core.Text.Digits.ToAscii(culture.NumberFormat.NumberGroupSeparator) is { Length: 1 } g ? g[0] : '\0';
+            var isGroup = dots + commas > 1 || (separator == cultureGroup && digitsAfter == 3);
+            decimalSeparator = isGroup ? null : separator;
+        }
+
+        var groupSeparator = decimalSeparator switch { '.' => ',', ',' => '.', _ => dots > 0 ? '.' : ',' };
+        var decimalIndex = decimalSeparator is { } d ? value.IndexOf(d) : -1;
+        var integer = decimalIndex < 0 ? value : value[..decimalIndex];
+        var fraction = decimalIndex < 0 ? string.Empty : value[(decimalIndex + 1)..];
+        if (integer.Contains(groupSeparator))
+        {
+            var groups = integer.Split(groupSeparator);
+            if (groups[0].Length is 0 or > 3 || groups.Skip(1).Any(group => group.Length != 3))
+            {
+                return null;
+            }
+
+            integer = string.Concat(groups);
+        }
+
+        if (fraction.Contains(groupSeparator) || (integer.Length == 0 && fraction.Length == 0))
+        {
+            return null;
+        }
+
+        return (integer.Length == 0 ? "0" : integer) + (fraction.Length > 0 ? "." + fraction : string.Empty);
     }
 
     /// <summary>Formats a quantity, e.g. "50.000 g", "1.25 kg" or "3 coins" (the unit name comes from the caller).</summary>

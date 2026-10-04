@@ -19,8 +19,13 @@ public sealed record SaleResult(AssetEvent Sale, long? RemovedBasis, long? Resul
 /// <param name="Sales">Each sale with its removed basis and realised result.</param>
 public sealed record CostBasis(long Quantity, long? Basis, IReadOnlyList<SaleResult> Sales)
 {
-    /// <summary>Gets the basis per gram or unit in minor units × 1,000, or <see langword="null"/>.</summary>
-    public long? PerUnitMilli => Basis is { } basis && Quantity > 0 ? basis * Quantities.PerGramOrUnit * 1_000 / Quantity : null;
+    /// <summary>
+    /// Gets the basis per gram or unit in minor units × 1,000, or <see langword="null"/>. Computed in decimal: the basis of
+    /// a holding in rials times one million does not fit a 64-bit number.
+    /// </summary>
+    public long? PerUnitMilli => Basis is { } basis && Quantity > 0
+        ? (long)decimal.Truncate((decimal)basis * Quantities.PerGramOrUnit * 1_000 / Quantity)
+        : null;
 }
 
 /// <summary>
