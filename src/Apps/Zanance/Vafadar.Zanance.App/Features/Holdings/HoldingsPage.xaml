@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Holdings.HoldingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Holdings"
+    x:DataType="local:HoldingsViewModel"
+    Title="{v:Translate Holdings_Title}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="8">
+
+                <!-- Empty state: what holdings are for -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
+                    <VerticalStackLayout Spacing="12">
+                        <fi:SymbolIcon Symbol="Diamond" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
+                        <Label Text="{v:Translate Holdings_Empty}" HorizontalTextAlignment="Center" />
+                        <Label Text="{v:Translate Holdings_AdvancedHint}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
+                               IsVisible="{Binding IsAdvanced, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Holdings_Add}" Command="{Binding AddCommand}" IsVisible="{Binding IsAdvanced}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Known value per currency and what is missing; never mixed into money totals (ZEX-AS06) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate Holdings_KnownValue}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding KnownValueText, TargetNullValue='–'}" Style="{StaticResource AmountLarge}" />
+                        <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontAttributes="Bold"
+                               IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding FineMetals}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Label Text="{Binding .}" Style="{StaticResource Secondary}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- One row per asset type: quantity, where, value or "unknown" -->
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HoldingRow">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                                    <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
+                                        <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
+                                        <Label Text="{Binding DetailText}" Style="{StaticResource Secondary}" IsVisible="{Binding DetailText, Converter={StaticResource IsNotNullConverter}}" />
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding QuantityText}" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                        <Label Text="{Binding DerivedText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="End" IsVisible="{Binding DerivedText, Converter={StaticResource IsNotNullConverter}}" />
+                                        <Label Text="{Binding ValueText}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="End" IsVisible="{Binding ValueUnknown, Converter={StaticResource InvertedBoolConverter}}" />
+                                        <Label Text="{v:Translate Holding_ValueUnknown}" TextColor="{DynamicResource WarningText}" FontSize="12" HorizontalTextAlignment="End" IsVisible="{Binding ValueUnknown}" />
+                                    </VerticalStackLayout>
+                                    <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                            Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:HoldingsViewModel}}, x:DataType=local:HoldingsViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{v:Translate Holdings_Note}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,8" />
+                <BoxView HeightRequest="72" Color="Transparent" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}" IsVisible="{Binding IsAdvanced}"
+                SemanticProperties.Description="{v:Translate Holdings_Add}" />
+    </Grid>
+</ContentPage>

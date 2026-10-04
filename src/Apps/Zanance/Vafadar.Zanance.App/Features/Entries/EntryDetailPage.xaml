@@ -124,9 +124,13 @@
                 </Border>
 
                 <!-- Actions -->
-                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
+                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0"
+                        IsVisible="{Binding IsHoldingMoney, Converter={StaticResource InvertedBoolConverter}}" />
+                <!-- The money of a holding purchase or sale is changed together with the holding (ZEX-AS14) -->
+                <Label Text="{v:Translate Entry_HoldingMoney}" Style="{StaticResource Secondary}" Margin="4,8,4,0" IsVisible="{Binding IsHoldingMoney}" />
+                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Entry_OpenHolding}" Command="{Binding EditCommand}" IsVisible="{Binding IsHoldingMoney}" />
                 <!-- Further actions as rows, like More: one card instead of a stack of equal buttons -->
-                <Border Style="{StaticResource Card}" Padding="0">
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsHoldingMoney, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent" IsVisible="{Binding CanRefund}">
                             <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
@@ -194,7 +198,7 @@
                     </VerticalStackLayout>
                 </Border>
                 <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
-                        TextColor="{DynamicResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" />
+                        TextColor="{DynamicResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding IsHoldingMoney, Converter={StaticResource InvertedBoolConverter}}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

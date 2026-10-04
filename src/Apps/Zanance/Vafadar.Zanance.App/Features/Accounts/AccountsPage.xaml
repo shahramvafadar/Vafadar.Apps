@@ -60,6 +60,15 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
+                <!-- Holdings by quantity, per type and never in the money totals (ZEX-S0407) -->
+                <Label Text="{v:Translate Holdings_Title}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" />
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}">
+                    <Grid>
+                        <Label Text="{Binding HoldingsText}" />
+                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenHoldingsCommand}" SemanticProperties.Description="{Binding HoldingsText}" />
+                    </Grid>
+                </Border>
+
                 <!-- Archived accounts -->
                 <Label Text="{v:Translate Accounts_Archived}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasArchived}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasArchived}">

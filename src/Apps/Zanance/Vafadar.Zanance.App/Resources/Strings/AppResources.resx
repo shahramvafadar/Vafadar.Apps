@@ -3543,4 +3543,469 @@
   <data name="Goal_ReleaseTooMuch" xml:space="preserve">
     <value>Only {0} is set aside for this goal in this account.</value>
   </data>
+  <data name="Holdings_Title" xml:space="preserve">
+    <value>Holdings</value>
+  </data>
+  <data name="More_HoldingsHint" xml:space="preserve">
+    <value>Gold, coins and other things you own by weight or count</value>
+  </data>
+  <data name="Holdings_Empty" xml:space="preserve">
+    <value>Record gold, coins or other things you own by weight or count. Their value is shown separately and never mixed into your money.</value>
+  </data>
+  <data name="Holdings_AdvancedHint" xml:space="preserve">
+    <value>Adding holdings is available in Advanced mode (Settings).</value>
+  </data>
+  <data name="Holdings_Add" xml:space="preserve">
+    <value>Add a holding</value>
+  </data>
+  <data name="Holdings_KnownValue" xml:space="preserve">
+    <value>Known value</value>
+  </data>
+  <data name="Holdings_Note" xml:space="preserve">
+    <value>Values are estimates from the prices you entered. Holdings are not part of account balances or net worth totals.</value>
+  </data>
+  <data name="Holding_ValueUnknown" xml:space="preserve">
+    <value>Value unknown – add a price</value>
+  </data>
+  <data name="Holding_Value" xml:space="preserve">
+    <value>{0} · price of {1}</value>
+  </data>
+  <data name="Holding_ValuePurchase" xml:space="preserve">
+    <value>{0} · purchase price of {1}</value>
+  </data>
+  <data name="Holding_None" xml:space="preserve">
+    <value>None left</value>
+  </data>
+  <data name="Holding_Incomplete" xml:space="preserve">
+    <value>Incomplete – types without a price: {0}</value>
+  </data>
+  <data name="Holding_FineMetal" xml:space="preserve">
+    <value>{1}, fine: ≈ {0} g (types with known purity: {2})</value>
+  </data>
+  <data name="Holding_FineExcluded" xml:space="preserve">
+    <value>without known purity: {0}</value>
+  </data>
+  <data name="Holding_PerGram" xml:space="preserve">
+    <value>per g</value>
+  </data>
+  <data name="Holding_PerUnit" xml:space="preserve">
+    <value>per {0}</value>
+  </data>
+  <data name="Holding_Piece" xml:space="preserve">
+    <value>piece</value>
+  </data>
+  <data name="Unit_Gram" xml:space="preserve">
+    <value>g</value>
+  </data>
+  <data name="Unit_Kilogram" xml:space="preserve">
+    <value>kg</value>
+  </data>
+  <data name="Holding_NotFound" xml:space="preserve">
+    <value>This holding no longer exists.</value>
+  </data>
+  <data name="Holding_AverageCost" xml:space="preserve">
+    <value>Average cost: {0}</value>
+  </data>
+  <data name="Holding_Unrealised" xml:space="preserve">
+    <value>Unrealised result (estimate): {0}</value>
+  </data>
+  <data name="Holding_Realised" xml:space="preserve">
+    <value>Result of sales: {0}</value>
+  </data>
+  <data name="Holding_Buy" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="Holding_Sell" xml:space="preserve">
+    <value>Sell</value>
+  </data>
+  <data name="Holding_Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="Holding_AddExisting" xml:space="preserve">
+    <value>Add (owned or gift)</value>
+  </data>
+  <data name="Holding_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Holding_Correct" xml:space="preserve">
+    <value>Correct the quantity</value>
+  </data>
+  <data name="Holding_Prices" xml:space="preserve">
+    <value>Prices</value>
+  </data>
+  <data name="Holding_PriceTotal" xml:space="preserve">
+    <value>Total of what I hold</value>
+  </data>
+  <data name="Holding_PriceIn" xml:space="preserve">
+    <value>Price in {0}</value>
+  </data>
+  <data name="Holding_SavePrice" xml:space="preserve">
+    <value>Save price</value>
+  </data>
+  <data name="Holding_NoPrices" xml:space="preserve">
+    <value>No price yet. Without a price the value stays unknown.</value>
+  </data>
+  <data name="Holding_FromPurchase" xml:space="preserve">
+    <value>From a purchase</value>
+  </data>
+  <data name="Holding_TotalNeedsQuantity" xml:space="preserve">
+    <value>A total needs a quantity held on that date.</value>
+  </data>
+  <data name="Holding_DeletePrice" xml:space="preserve">
+    <value>Delete this price?</value>
+  </data>
+  <data name="Holding_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Holding_NoHistory" xml:space="preserve">
+    <value>Nothing recorded yet.</value>
+  </data>
+  <data name="Holding_Moved" xml:space="preserve">
+    <value>from {0} to {1}</value>
+  </data>
+  <data name="Holding_Deleted" xml:space="preserve">
+    <value>Deleted: {0}</value>
+  </data>
+  <data name="Holding_CannotDelete" xml:space="preserve">
+    <value>Cannot delete</value>
+  </data>
+  <data name="Holding_Conflict" xml:space="preserve">
+    <value>On {0} only {1} were held at {2}.</value>
+  </data>
+  <data name="Holding_EditType" xml:space="preserve">
+    <value>Edit the type</value>
+  </data>
+  <data name="Holding_Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="Holding_ArchiveMessage" xml:space="preserve">
+    <value>The type disappears from lists and Home. Its history stays.</value>
+  </data>
+  <data name="Holding_DefaultLocation" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="AssetType_NewTitle" xml:space="preserve">
+    <value>New holding type</value>
+  </data>
+  <data name="AssetType_EditTitle" xml:space="preserve">
+    <value>Edit holding type</value>
+  </data>
+  <data name="AssetType_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AssetType_NamePlaceholder" xml:space="preserve">
+    <value>e.g. 18k gold jewellery</value>
+  </data>
+  <data name="AssetType_NameRequired" xml:space="preserve">
+    <value>Please enter a name.</value>
+  </data>
+  <data name="AssetType_Kind" xml:space="preserve">
+    <value>Kind</value>
+  </data>
+  <data name="AssetKind_PreciousMetal" xml:space="preserve">
+    <value>Precious metal</value>
+  </data>
+  <data name="AssetKind_CoinOrBar" xml:space="preserve">
+    <value>Coin or bar</value>
+  </data>
+  <data name="AssetKind_CountableItem" xml:space="preserve">
+    <value>Countable item</value>
+  </data>
+  <data name="AssetKind_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="AssetType_MeasuredBy" xml:space="preserve">
+    <value>Measured by</value>
+  </data>
+  <data name="AssetType_ByWeight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="AssetType_ByCount" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="AssetType_DimensionLocked" xml:space="preserve">
+    <value>Weight or count cannot change once something is recorded.</value>
+  </data>
+  <data name="AssetType_Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Metal_Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Metal_Silver" xml:space="preserve">
+    <value>Silver</value>
+  </data>
+  <data name="Metal_Platinum" xml:space="preserve">
+    <value>Platinum</value>
+  </data>
+  <data name="Metal_Palladium" xml:space="preserve">
+    <value>Palladium</value>
+  </data>
+  <data name="Metal_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Metal_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="AssetType_Purity" xml:space="preserve">
+    <value>Purity</value>
+  </data>
+  <data name="AssetType_PurityOther" xml:space="preserve">
+    <value>Other / unknown</value>
+  </data>
+  <data name="AssetType_PurityPlaceholder" xml:space="preserve">
+    <value>Karat (18) or fineness (750); empty = unknown</value>
+  </data>
+  <data name="AssetType_PurityInvalid" xml:space="preserve">
+    <value>Enter karat (1–24) or fineness (1–1000).</value>
+  </data>
+  <data name="AssetType_CountUnit" xml:space="preserve">
+    <value>Name of one unit</value>
+  </data>
+  <data name="AssetType_CountUnitPlaceholder" xml:space="preserve">
+    <value>e.g. coin (empty = piece)</value>
+  </data>
+  <data name="AssetType_UnitWeight" xml:space="preserve">
+    <value>Weight of one unit in g (optional)</value>
+  </data>
+  <data name="AssetType_WeightInvalid" xml:space="preserve">
+    <value>Enter a weight greater than zero with up to three decimals.</value>
+  </data>
+  <data name="AssetType_Divisible" xml:space="preserve">
+    <value>Fractions allowed (e.g. half a coin)</value>
+  </data>
+  <data name="AssetType_PriceCurrency" xml:space="preserve">
+    <value>Currency of prices</value>
+  </data>
+  <data name="AssetEvent_NewTitle" xml:space="preserve">
+    <value>Record a change</value>
+  </data>
+  <data name="AssetEvent_EditTitle" xml:space="preserve">
+    <value>Edit change</value>
+  </data>
+  <data name="AssetEvent_Kind" xml:space="preserve">
+    <value>What happened?</value>
+  </data>
+  <data name="AssetEvent_Opening" xml:space="preserve">
+    <value>Already owned</value>
+  </data>
+  <data name="AssetEvent_Purchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="AssetEvent_Sale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="AssetEvent_LocationTransfer" xml:space="preserve">
+    <value>Moved</value>
+  </data>
+  <data name="AssetEvent_GiftReceived" xml:space="preserve">
+    <value>Gift or inheritance</value>
+  </data>
+  <data name="AssetEvent_Outflow" xml:space="preserve">
+    <value>Given away or gone</value>
+  </data>
+  <data name="AssetEvent_Correction" xml:space="preserve">
+    <value>Correction</value>
+  </data>
+  <data name="AssetEvent_OpeningHint" xml:space="preserve">
+    <value>What you already have. No money is taken from an account.</value>
+  </data>
+  <data name="AssetEvent_PurchaseHint" xml:space="preserve">
+    <value>Paid from an account. The price is not spending; a fee is recorded as an expense.</value>
+  </data>
+  <data name="AssetEvent_SaleHint" xml:space="preserve">
+    <value>Paid into an account. The money received is not income.</value>
+  </data>
+  <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
+    <value>From one place to another. The total stays the same.</value>
+  </data>
+  <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
+    <value>Received without paying. It is not income.</value>
+  </data>
+  <data name="AssetEvent_OutflowHint" xml:space="preserve">
+    <value>Given away, used up or lost. It is not spending.</value>
+  </data>
+  <data name="AssetEvent_CorrectionHint" xml:space="preserve">
+    <value>Fixes the quantity, e.g. after weighing again. A reason is required.</value>
+  </data>
+  <data name="AssetEvent_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="AssetEvent_QuantityInvalid" xml:space="preserve">
+    <value>Enter a quantity greater than zero with up to three decimals.</value>
+  </data>
+  <data name="AssetEvent_WholeUnits" xml:space="preserve">
+    <value>This type is counted in whole units.</value>
+  </data>
+  <data name="AssetEvent_Increase" xml:space="preserve">
+    <value>More than recorded</value>
+  </data>
+  <data name="AssetEvent_Decrease" xml:space="preserve">
+    <value>Less than recorded</value>
+  </data>
+  <data name="AssetEvent_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="AssetEvent_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="AssetEvent_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="AssetEvent_LocationsDiffer" xml:space="preserve">
+    <value>Choose two different locations.</value>
+  </data>
+  <data name="AssetEvent_AddLocation" xml:space="preserve">
+    <value>Add location</value>
+  </data>
+  <data name="AssetEvent_AddLocationMessage" xml:space="preserve">
+    <value>e.g. Home safe or Bank box</value>
+  </data>
+  <data name="AssetEvent_Paid" xml:space="preserve">
+    <value>Price paid</value>
+  </data>
+  <data name="AssetEvent_Received" xml:space="preserve">
+    <value>Money received</value>
+  </data>
+  <data name="AssetEvent_PriceTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="AssetEvent_SecondAmount" xml:space="preserve">
+    <value>The same in {0} (for the cost basis; optional)</value>
+  </data>
+  <data name="AssetEvent_Fee" xml:space="preserve">
+    <value>Fee (optional)</value>
+  </data>
+  <data name="AssetEvent_FeeHint" xml:space="preserve">
+    <value>A fee is recorded as an expense in Fees.</value>
+  </data>
+  <data name="AssetEvent_FeeTitle" xml:space="preserve">
+    <value>Fee: {0}</value>
+  </data>
+  <data name="AssetEvent_BasisLabel" xml:space="preserve">
+    <value>Value at the time in {0} (optional)</value>
+  </data>
+  <data name="AssetEvent_BasisHint" xml:space="preserve">
+    <value>Used for the average cost. Leave empty if unknown.</value>
+  </data>
+  <data name="AssetEvent_Reason" xml:space="preserve">
+    <value>Reason (optional)</value>
+  </data>
+  <data name="AssetEvent_ReasonRequired" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="AssetEvent_ReasonMissing" xml:space="preserve">
+    <value>A correction needs a reason.</value>
+  </data>
+  <data name="AssetEvent_AccountMissing" xml:space="preserve">
+    <value>Choose an account.</value>
+  </data>
+  <data name="AssetEvent_At" xml:space="preserve">
+    <value>{0} at {1}</value>
+  </data>
+  <data name="AssetEvent_After" xml:space="preserve">
+    <value>After saving: {0}</value>
+  </data>
+  <data name="Help_AssetDimension_Title" xml:space="preserve">
+    <value>Weight or count</value>
+  </data>
+  <data name="Help_AssetDimension_Text" xml:space="preserve">
+    <value>Jewellery, granules and bars of unknown size are kept by weight. Coins and bars of a fixed size are counted; their weight can be given per unit and is then shown as a view, never as a second holding.</value>
+  </data>
+  <data name="Help_AssetDimension_Example" xml:space="preserve">
+    <value>"18k gold: 50 g" by weight; "Bahar Azadi coin: 3 coins (24.4 g)" by count.</value>
+  </data>
+  <data name="Help_Purity_Title" xml:space="preserve">
+    <value>Purity</value>
+  </data>
+  <data name="Help_Purity_Text" xml:space="preserve">
+    <value>Purity is given in karat (24 = pure) or as fineness in thousandths. 18 k and 24 k gold are two types, because their grams are not the same. With a purity the app shows the fine metal you own; without it nothing is guessed.</value>
+  </data>
+  <data name="Help_Purity_Example" xml:space="preserve">
+    <value>18 k = 750/1000: 20 g of 18k gold contain about 15 g of fine gold.</value>
+  </data>
+  <data name="Help_AssetEvents_Title" xml:space="preserve">
+    <value>Kinds of changes</value>
+  </data>
+  <data name="Help_AssetEvents_Text" xml:space="preserve">
+    <value>A purchase takes money from an account and a sale puts money into one; neither is spending or income. Already owned, gifts, moves, removals and corrections change only the quantity. Nothing can make a holding negative on any date.</value>
+  </data>
+  <data name="Help_AssetEvents_Example" xml:space="preserve">
+    <value>Bought 10 g for 1,000 EUR plus a fee of 20 EUR: the account goes down by 1,020 EUR, of which 20 EUR is an expense.</value>
+  </data>
+  <data name="Help_HoldingPrices_Title" xml:space="preserve">
+    <value>Prices and value</value>
+  </data>
+  <data name="Help_HoldingPrices_Text" xml:space="preserve">
+    <value>Enter a price per gram or unit, or the total value of what you hold. The latest price on or before a day gives the value of that day; a new price never changes earlier values or the quantity. Purchase prices are used too and are marked.</value>
+  </data>
+  <data name="Help_HoldingPrices_Example" xml:space="preserve">
+    <value>50 EUR per g × 730 g = 36,500 EUR.</value>
+  </data>
+  <data name="EntryKind_AssetPurchase" xml:space="preserve">
+    <value>Holding purchase</value>
+  </data>
+  <data name="EntryKind_AssetSale" xml:space="preserve">
+    <value>Holding sale</value>
+  </data>
+  <data name="Entry_HoldingMoney" xml:space="preserve">
+    <value>This money belongs to a purchase or sale of a holding. It is changed or deleted there, together with the quantity.</value>
+  </data>
+  <data name="Entry_OpenHolding" xml:space="preserve">
+    <value>Open the holding</value>
+  </data>
+  <data name="Home_Holdings" xml:space="preserve">
+    <value>Holdings: {0}</value>
+  </data>
+  <data name="Export_HoldingsButton" xml:space="preserve">
+    <value>Export holdings</value>
+  </data>
+  <data name="Export_HoldingsDone" xml:space="preserve">
+    <value>Holdings exported with {0} changes. The money of purchases and sales is in the entries export.</value>
+  </data>
+  <data name="Import_HoldingsPreview" xml:space="preserve">
+    <value>Holdings file: {0} types, {1} changes, {2} prices; {3} invalid rows.</value>
+  </data>
+  <data name="Import_HoldingsInvalid" xml:space="preserve">
+    <value>A holdings file is imported only as a whole. Fix the invalid rows first.</value>
+  </data>
+  <data name="Import_HoldingsConflict" xml:space="preserve">
+    <value>Nothing was imported: on {0} a holding would become negative.</value>
+  </data>
+  <data name="Import_Error_Type" xml:space="preserve">
+    <value>unknown or invalid holding type</value>
+  </data>
+  <data name="Import_Error_Location" xml:space="preserve">
+    <value>unknown or invalid location</value>
+  </data>
+  <data name="Import_Error_Quantity" xml:space="preserve">
+    <value>invalid quantity</value>
+  </data>
+  <data name="Import_Error_Record" xml:space="preserve">
+    <value>unknown row type</value>
+  </data>
+  <data name="Account_ConvertToHolding" xml:space="preserve">
+    <value>Convert to a holding</value>
+  </data>
+  <data name="Account_ConvertPreview" xml:space="preserve">
+    <value>"{0}" becomes a holding of 1 piece worth {1} (price of today). The account is archived with its entries and can be restored. Nothing changes before you confirm.</value>
+  </data>
+  <data name="Account_ConvertConfirm" xml:space="preserve">
+    <value>Convert</value>
+  </data>
+  <data name="Holding_FineMetalOne" xml:space="preserve">
+    <value>{1}, fine: ≈ {0} g</value>
+  </data>
+  <data name="Entry_AssetAccountTitle" xml:space="preserve">
+    <value>A valued asset account</value>
+  </data>
+  <data name="Entry_AssetAccountMessage" xml:space="preserve">
+    <value>This account holds the value of something you own. A change of value is usually a balance adjustment, and gold or coins are better kept as holdings. Record this as spending or income anyway?</value>
+  </data>
+  <data name="Entry_AssetAccountYes" xml:space="preserve">
+    <value>Record anyway</value>
+  </data>
+  <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
+    <value>Goals: {0} · holding types: {1}</value>
+  </data>
 </root>

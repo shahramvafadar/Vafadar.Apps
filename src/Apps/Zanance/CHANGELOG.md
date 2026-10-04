@@ -6,6 +6,26 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Holdings by weight or count (enhancement ZEX, phase 3)
+
+- New under More > Money: holdings such as gold, coins or other things you own by weight or count. Each type has its
+  own unit (g/kg or pieces with an optional weight per piece), metal and purity (karat or fineness), and quantities
+  add up only within one type – 18 k and 24 k gold stay apart. A fine-metal line shows the pure metal of the types
+  with a known purity.
+- Record what you already own, purchases (money from an account, an optional fee as an expense in Fees, a second
+  amount when the account's currency differs), sales, moves between locations, gifts, removals and corrections with
+  a reason. Nothing can make a holding negative on any date ("On 3 Oct only 20.000 g were held at Home safe."), and
+  the form shows the result before saving. Purchases and sales are neither spending nor income.
+- Prices per gram or unit, or the total value of what you hold; the latest price gives the value, purchase prices are
+  used and marked, and a type without a price shows "Value unknown" instead of zero. Details show the quantity per
+  location, the average cost and the unrealised and realised results as estimates. Deleting a change can be undone.
+- Home and Accounts show a holdings line per type, never added to your money. Transactions show holding purchases
+  and sales as such; their money is changed or deleted together with the holding.
+- Import/Export: a holdings file (types, locations, changes, prices) that imports into another profile and skips what
+  is already there; every CSV file now carries a format version, and older files import unchanged. Restoring a backup
+  lists its goals and holding types.
+- Advanced: a valued asset account can be converted into a holding after a preview; the account is archived and can
+  be restored. Recording spending or income on such an account asks for confirmation first.
 ### Added – Account goals (enhancement ZEX, phase 2)
 
 - A goal can follow the balance of one account ("Savings account to 5,000 EUR"): deposits, transfers in and

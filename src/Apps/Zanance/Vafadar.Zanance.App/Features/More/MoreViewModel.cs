@@ -27,6 +27,7 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
             new(translator["More_Money"],
             [
                 Item("Accounts_Title", "More_AccountsHint", Symbol.Wallet, AppShell.AccountsRoute),
+                Item("Holdings_Title", "More_HoldingsHint", Symbol.Diamond, AppShell.HoldingsRoute),
                 Item("Reimbursements_Title", "More_ReimbursementsHint", Symbol.ArrowUndo, AppShell.ReimbursementsRoute),
             ]),
             new(translator["More_Organize"],

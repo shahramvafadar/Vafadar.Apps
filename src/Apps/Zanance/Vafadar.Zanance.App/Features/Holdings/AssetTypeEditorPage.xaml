@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Holdings.AssetTypeEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Holdings"
+    x:DataType="local:AssetTypeEditorViewModel"
+    Title="{Binding Title}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate AssetType_Name}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <Entry Text="{Binding Name}" Placeholder="{v:Translate AssetType_NamePlaceholder}" MaxLength="100" SemanticProperties.Description="{v:Translate AssetType_Name}" />
+
+                        <Label Text="{v:Translate AssetType_Kind}" Style="{StaticResource FieldLabel}" />
+                        <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
+
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{v:Translate AssetType_MeasuredBy}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Topic="AssetDimension" Margin="0,8,0,0" />
+                        </HorizontalStackLayout>
+                        <v:ChoiceChips ItemsSource="{Binding DimensionNames}" SelectedIndex="{Binding DimensionIndex}"
+                                       IsEnabled="{Binding DimensionLocked, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Label Text="{v:Translate AssetType_DimensionLocked}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding DimensionLocked}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Metal and purity (ZEX-AS03): without purity no fine-metal amount is shown -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasMetal}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate AssetType_Metal}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <v:ChoiceChips ItemsSource="{Binding MetalNames}" SelectedIndex="{Binding MetalIndex}" />
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{v:Translate AssetType_Purity}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Topic="Purity" Margin="0,8,0,0" />
+                        </HorizontalStackLayout>
+                        <v:ChoiceChips ItemsSource="{Binding PurityNames}" SelectedIndex="{Binding PurityIndex}" />
+                        <Entry Text="{Binding PurityText}" Keyboard="Numeric" Placeholder="{v:Translate AssetType_PurityPlaceholder}" IsVisible="{Binding IsOtherPurity}"
+                               SemanticProperties.Description="{v:Translate AssetType_Purity}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Counted items: unit name, weight of one unit (derived weight only), fractions -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsCount}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate AssetType_CountUnit}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <Entry Text="{Binding CountUnitName}" Placeholder="{v:Translate AssetType_CountUnitPlaceholder}" MaxLength="40" SemanticProperties.Description="{v:Translate AssetType_CountUnit}" />
+                        <Label Text="{v:Translate AssetType_UnitWeight}" Style="{StaticResource FieldLabel}" />
+                        <Entry Text="{Binding UnitWeightText}" Keyboard="Numeric" Placeholder="8.133" SemanticProperties.Description="{v:Translate AssetType_UnitWeight}" />
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                            <Label Text="{v:Translate AssetType_Divisible}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding Divisible}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate AssetType_Divisible}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{v:Translate AssetType_PriceCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <Border Style="{StaticResource FieldBox}">
+                            <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
+                                SemanticProperties.Description="{v:Translate AssetType_PriceCurrency}" />
+                        </Border>
+                        <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />
+                        <Editor Text="{Binding Note}" AutoSize="TextChanges" MaxLength="1000" SemanticProperties.Description="{v:Translate Entry_Note}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </Grid>
+</ContentPage>

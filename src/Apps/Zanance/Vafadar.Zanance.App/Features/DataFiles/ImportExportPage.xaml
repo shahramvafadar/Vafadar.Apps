@@ -31,6 +31,9 @@
                                IsVisible="{Binding ExportResult, Converter={StaticResource IsNotNullConverter}}" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Export_Button}" Command="{Binding ExportCommand}"
                                 IsEnabled="{Binding IsNotBusy}" Margin="0,12,0,0" />
+                        <!-- Holdings: a separate file with types, locations, events and prices (ZEX-S0409) -->
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Export_HoldingsButton}" Command="{Binding ExportHoldingsCommand}"
+                                IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding CanExportHoldings}" />
                     </VerticalStackLayout>
                 </Border>
 

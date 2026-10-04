@@ -967,13 +967,15 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
     /// <summary>
     /// Deletes an entry together with the entries of its group (a transfer and its fee) and returns them, so that
-    /// <see cref="RestoreEntriesAsync"/> can undo the deletion. Refunds linked to a deleted purchase are kept.
+    /// <see cref="RestoreEntriesAsync"/> can undo the deletion. Refunds linked to a deleted purchase are kept. The money of a
+    /// holding purchase or sale is deleted only with its holding event (<see cref="HoldingStore.DeleteEventAsync"/>), so
+    /// nothing is deleted here for it.
     /// </summary>
     public async Task<IReadOnlyList<LedgerEntry>> DeleteEntryAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var entry = await db.Entries.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-        if (entry is null)
+        if (entry is null || (entry.GroupId is { } holdingGroup && await db.AssetEvents.AnyAsync(e => e.GroupId == holdingGroup, cancellationToken)))
         {
             return [];
         }

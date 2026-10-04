@@ -38,12 +38,15 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
     private readonly AppLockService _lock;
+    private readonly HoldingStore _holdings;
+    private HoldingsCsvContent? _holdingsContent;
     private IReadOnlyList<IReadOnlyList<string>> _rows = [];
     private IReadOnlyList<ImportRow> _preview = [];
     private bool _ownFormat;
 
-    public ImportExportViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, AppLockService appLock)
+    public ImportExportViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, AppLockService appLock, HoldingStore holdings)
     {
+        _holdings = holdings;
         _lock = appLock;
         _store = store;
         _translator = translator;
@@ -154,6 +157,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? ImportError { get; set; }
 
+    /// <summary>Gets a value indicating whether holdings can be exported (Advanced, with holdings; ZEX-S0409).</summary>
+    [ObservableProperty]
+    public partial bool CanExportHoldings { get; set; }
+
     public async Task LoadAsync()
     {
         var accounts = await _store.GetAccountsAsync(includeArchived: false);
@@ -161,6 +168,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         Account ??= Accounts.FirstOrDefault();
         DateFormat ??= DateFormats[0];
         CalendarIndex = _localization.CurrentCalendar == CalendarSystem.Persian ? 1 : 0;
+        CanExportHoldings = (await _store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced && (await _holdings.GetTypesAsync()).Count > 0;
         await LoadBatchesAsync();
     }
 
@@ -206,6 +214,35 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         }
     }
 
+    // The holdings file: types, locations, events and prices; the money of purchases and sales is in the entries file.
+    [RelayCommand]
+    private async Task ExportHoldingsAsync()
+    {
+        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var events = await _holdings.GetEventsAsync();
+            var text = HoldingsCsv.Write(await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync(), events, await _holdings.GetValuationsAsync(), IncludeNotes);
+            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-holdings-{_time.GetLocalNow():yyyyMMdd-HHmm}.csv"));
+            await File.WriteAllTextAsync(path, text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+            ExportResult = _translator.Format("Export_HoldingsDone", events.Count);
+            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Export_Title"], File = new ShareFile(path, "text/csv") });
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            await Failures.ShowAsync(ex);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
     [RelayCommand]
     private Task PickAsync() => Failures.GuardAsync(PickFileAsync);
 
@@ -233,6 +270,15 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         {
             ImportError = _translator["Import_Empty"];
             ShowMapping = false;
+            return;
+        }
+
+        // A holdings file is read as it is; nothing to map (ZEX-S0409).
+        _holdingsContent = null;
+        if (HoldingsCsv.IsHoldingsFormat(_rows[0]))
+        {
+            ShowMapping = false;
+            await PreviewHoldingsAsync();
             return;
         }
 
@@ -310,10 +356,34 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         HasPreview = true;
     }
 
+    private async Task PreviewHoldingsAsync()
+    {
+        var content = HoldingsCsv.Read(_rows, await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync());
+        _holdingsContent = content;
+        _preview = [];
+        PreviewText = _translator.Format("Import_HoldingsPreview", content.Types.Count, content.Events.Count, content.Valuations.Count, content.Errors.Count);
+        InvalidLines.Clear();
+        foreach (var error in content.Errors.Take(8))
+        {
+            InvalidLines.Add(_translator.Format("Import_InvalidLine", error.Line, _translator[$"Import_Error_{error.Error}"]));
+        }
+
+        HasDuplicates = false;
+        WarningText = content.Errors.Count > 0 ? _translator["Import_HoldingsInvalid"] : null;
+        ImportCount = content.Errors.Count > 0 ? 0 : content.Types.Count + content.Locations.Count + content.Events.Count + content.Valuations.Count;
+        ImportButtonText = _translator.Format("Import_Button", ImportCount);
+        HasPreview = true;
+    }
+
     partial void OnSkipDuplicatesChanged(bool value) => UpdateCount();
 
     private void UpdateCount()
     {
+        if (_holdingsContent is not null)
+        {
+            return;
+        }
+
         ImportCount = _preview.Count(r => r.Entry is not null && !r.AlreadyImported && !(SkipDuplicates && r.PossibleDuplicate));
         ImportButtonText = _translator.Format("Import_Button", ImportCount);
     }
@@ -321,6 +391,12 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     [RelayCommand]
     private async Task ImportAsync()
     {
+        if (_holdingsContent is { } holdings)
+        {
+            await ImportHoldingsAsync(holdings);
+            return;
+        }
+
         var entries = _preview.Where(r => r.Entry is not null && !r.AlreadyImported && !(SkipDuplicates && r.PossibleDuplicate)).Select(r => r.Entry!).ToList();
         if (entries.Count == 0)
         {
@@ -346,6 +422,38 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             // E.g. a constraint the checks did not catch: the batch is rolled back, nothing was imported.
+            await Failures.ShowAsync(ex);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    // All or nothing: a file with unreadable rows or a negative history is refused as a whole.
+    private async Task ImportHoldingsAsync(HoldingsCsvContent content)
+    {
+        if (content.Errors.Count > 0)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var (imported, skipped, conflict) = await _holdings.ImportAsync(content);
+            if (conflict is not null)
+            {
+                ImportError = _translator.Format("Import_HoldingsConflict", _dates.Format(conflict.Date, DateFormatStyle.Short));
+                return;
+            }
+
+            ImportResult = _translator.Format("Import_Done", imported, skipped);
+            HasPreview = false;
+            _holdingsContent = null;
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
             await Failures.ShowAsync(ex);
         }
         finally

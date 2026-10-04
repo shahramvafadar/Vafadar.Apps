@@ -3539,4 +3539,469 @@
   <data name="Goal_ReleaseTooMuch" xml:space="preserve">
     <value>Auf diesem Konto sind für dieses Ziel nur {0} zurückgelegt.</value>
   </data>
+  <data name="Holdings_Title" xml:space="preserve">
+    <value>Bestände</value>
+  </data>
+  <data name="More_HoldingsHint" xml:space="preserve">
+    <value>Gold, Münzen und anderes nach Gewicht oder Stückzahl</value>
+  </data>
+  <data name="Holdings_Empty" xml:space="preserve">
+    <value>Erfassen Sie Gold, Münzen oder anderes nach Gewicht oder Stückzahl. Der Wert wird getrennt gezeigt und nie mit Ihrem Geld vermischt.</value>
+  </data>
+  <data name="Holdings_AdvancedHint" xml:space="preserve">
+    <value>Bestände hinzufügen ist im erweiterten Modus möglich (Einstellungen).</value>
+  </data>
+  <data name="Holdings_Add" xml:space="preserve">
+    <value>Bestand hinzufügen</value>
+  </data>
+  <data name="Holdings_KnownValue" xml:space="preserve">
+    <value>Bekannter Wert</value>
+  </data>
+  <data name="Holdings_Note" xml:space="preserve">
+    <value>Werte sind Schätzungen aus Ihren eingegebenen Preisen. Bestände zählen nicht zu Kontoständen oder Vermögenssummen.</value>
+  </data>
+  <data name="Holding_ValueUnknown" xml:space="preserve">
+    <value>Wert unbekannt – Preis eintragen</value>
+  </data>
+  <data name="Holding_Value" xml:space="preserve">
+    <value>{0} · Preis vom {1}</value>
+  </data>
+  <data name="Holding_ValuePurchase" xml:space="preserve">
+    <value>{0} · Kaufpreis vom {1}</value>
+  </data>
+  <data name="Holding_None" xml:space="preserve">
+    <value>Nichts mehr vorhanden</value>
+  </data>
+  <data name="Holding_Incomplete" xml:space="preserve">
+    <value>Unvollständig – Arten ohne Preis: {0}</value>
+  </data>
+  <data name="Holding_FineMetal" xml:space="preserve">
+    <value>{1}, fein: ≈ {0} g (Arten mit bekannter Reinheit: {2})</value>
+  </data>
+  <data name="Holding_FineExcluded" xml:space="preserve">
+    <value>ohne bekannte Reinheit: {0}</value>
+  </data>
+  <data name="Holding_PerGram" xml:space="preserve">
+    <value>pro g</value>
+  </data>
+  <data name="Holding_PerUnit" xml:space="preserve">
+    <value>pro {0}</value>
+  </data>
+  <data name="Holding_Piece" xml:space="preserve">
+    <value>Stück</value>
+  </data>
+  <data name="Unit_Gram" xml:space="preserve">
+    <value>g</value>
+  </data>
+  <data name="Unit_Kilogram" xml:space="preserve">
+    <value>kg</value>
+  </data>
+  <data name="Holding_NotFound" xml:space="preserve">
+    <value>Dieser Bestand existiert nicht mehr.</value>
+  </data>
+  <data name="Holding_AverageCost" xml:space="preserve">
+    <value>Durchschnittlicher Einstand: {0}</value>
+  </data>
+  <data name="Holding_Unrealised" xml:space="preserve">
+    <value>Nicht realisiertes Ergebnis (Schätzung): {0}</value>
+  </data>
+  <data name="Holding_Realised" xml:space="preserve">
+    <value>Ergebnis der Verkäufe: {0}</value>
+  </data>
+  <data name="Holding_Buy" xml:space="preserve">
+    <value>Kaufen</value>
+  </data>
+  <data name="Holding_Sell" xml:space="preserve">
+    <value>Verkaufen</value>
+  </data>
+  <data name="Holding_Move" xml:space="preserve">
+    <value>Verlagern</value>
+  </data>
+  <data name="Holding_AddExisting" xml:space="preserve">
+    <value>Hinzufügen (vorhanden oder Geschenk)</value>
+  </data>
+  <data name="Holding_Remove" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="Holding_Correct" xml:space="preserve">
+    <value>Menge korrigieren</value>
+  </data>
+  <data name="Holding_Prices" xml:space="preserve">
+    <value>Preise</value>
+  </data>
+  <data name="Holding_PriceTotal" xml:space="preserve">
+    <value>Gesamtwert meines Bestands</value>
+  </data>
+  <data name="Holding_PriceIn" xml:space="preserve">
+    <value>Preis in {0}</value>
+  </data>
+  <data name="Holding_SavePrice" xml:space="preserve">
+    <value>Preis speichern</value>
+  </data>
+  <data name="Holding_NoPrices" xml:space="preserve">
+    <value>Noch kein Preis. Ohne Preis bleibt der Wert unbekannt.</value>
+  </data>
+  <data name="Holding_FromPurchase" xml:space="preserve">
+    <value>Aus einem Kauf</value>
+  </data>
+  <data name="Holding_TotalNeedsQuantity" xml:space="preserve">
+    <value>Ein Gesamtwert braucht an diesem Datum einen Bestand.</value>
+  </data>
+  <data name="Holding_DeletePrice" xml:space="preserve">
+    <value>Diesen Preis löschen?</value>
+  </data>
+  <data name="Holding_History" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="Holding_NoHistory" xml:space="preserve">
+    <value>Noch nichts erfasst.</value>
+  </data>
+  <data name="Holding_Moved" xml:space="preserve">
+    <value>von {0} nach {1}</value>
+  </data>
+  <data name="Holding_Deleted" xml:space="preserve">
+    <value>Gelöscht: {0}</value>
+  </data>
+  <data name="Holding_CannotDelete" xml:space="preserve">
+    <value>Löschen nicht möglich</value>
+  </data>
+  <data name="Holding_Conflict" xml:space="preserve">
+    <value>Am {0} waren in {2} nur {1} vorhanden.</value>
+  </data>
+  <data name="Holding_EditType" xml:space="preserve">
+    <value>Art bearbeiten</value>
+  </data>
+  <data name="Holding_Archive" xml:space="preserve">
+    <value>Archivieren</value>
+  </data>
+  <data name="Holding_ArchiveMessage" xml:space="preserve">
+    <value>Die Art verschwindet aus Listen und der Startseite. Ihr Verlauf bleibt.</value>
+  </data>
+  <data name="Holding_DefaultLocation" xml:space="preserve">
+    <value>Zuhause</value>
+  </data>
+  <data name="AssetType_NewTitle" xml:space="preserve">
+    <value>Neue Bestandsart</value>
+  </data>
+  <data name="AssetType_EditTitle" xml:space="preserve">
+    <value>Bestandsart bearbeiten</value>
+  </data>
+  <data name="AssetType_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AssetType_NamePlaceholder" xml:space="preserve">
+    <value>z. B. Goldschmuck 18 Karat</value>
+  </data>
+  <data name="AssetType_NameRequired" xml:space="preserve">
+    <value>Bitte einen Namen eingeben.</value>
+  </data>
+  <data name="AssetType_Kind" xml:space="preserve">
+    <value>Art</value>
+  </data>
+  <data name="AssetKind_PreciousMetal" xml:space="preserve">
+    <value>Edelmetall</value>
+  </data>
+  <data name="AssetKind_CoinOrBar" xml:space="preserve">
+    <value>Münze oder Barren</value>
+  </data>
+  <data name="AssetKind_CountableItem" xml:space="preserve">
+    <value>Zählbarer Gegenstand</value>
+  </data>
+  <data name="AssetKind_Other" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="AssetType_MeasuredBy" xml:space="preserve">
+    <value>Gemessen nach</value>
+  </data>
+  <data name="AssetType_ByWeight" xml:space="preserve">
+    <value>Gewicht</value>
+  </data>
+  <data name="AssetType_ByCount" xml:space="preserve">
+    <value>Stückzahl</value>
+  </data>
+  <data name="AssetType_DimensionLocked" xml:space="preserve">
+    <value>Gewicht oder Stückzahl kann nach dem ersten Eintrag nicht mehr geändert werden.</value>
+  </data>
+  <data name="AssetType_Metal" xml:space="preserve">
+    <value>Metall</value>
+  </data>
+  <data name="Metal_Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Metal_Silver" xml:space="preserve">
+    <value>Silber</value>
+  </data>
+  <data name="Metal_Platinum" xml:space="preserve">
+    <value>Platin</value>
+  </data>
+  <data name="Metal_Palladium" xml:space="preserve">
+    <value>Palladium</value>
+  </data>
+  <data name="Metal_Other" xml:space="preserve">
+    <value>Anderes</value>
+  </data>
+  <data name="Metal_None" xml:space="preserve">
+    <value>Keines</value>
+  </data>
+  <data name="AssetType_Purity" xml:space="preserve">
+    <value>Reinheit</value>
+  </data>
+  <data name="AssetType_PurityOther" xml:space="preserve">
+    <value>Andere / unbekannt</value>
+  </data>
+  <data name="AssetType_PurityPlaceholder" xml:space="preserve">
+    <value>Karat (18) oder Feingehalt (750); leer = unbekannt</value>
+  </data>
+  <data name="AssetType_PurityInvalid" xml:space="preserve">
+    <value>Karat (1–24) oder Feingehalt (1–1000) eingeben.</value>
+  </data>
+  <data name="AssetType_CountUnit" xml:space="preserve">
+    <value>Name einer Einheit</value>
+  </data>
+  <data name="AssetType_CountUnitPlaceholder" xml:space="preserve">
+    <value>z. B. Münze (leer = Stück)</value>
+  </data>
+  <data name="AssetType_UnitWeight" xml:space="preserve">
+    <value>Gewicht einer Einheit in g (optional)</value>
+  </data>
+  <data name="AssetType_WeightInvalid" xml:space="preserve">
+    <value>Gewicht größer als null mit höchstens drei Nachkommastellen eingeben.</value>
+  </data>
+  <data name="AssetType_Divisible" xml:space="preserve">
+    <value>Bruchteile erlaubt (z. B. halbe Münze)</value>
+  </data>
+  <data name="AssetType_PriceCurrency" xml:space="preserve">
+    <value>Währung der Preise</value>
+  </data>
+  <data name="AssetEvent_NewTitle" xml:space="preserve">
+    <value>Änderung erfassen</value>
+  </data>
+  <data name="AssetEvent_EditTitle" xml:space="preserve">
+    <value>Änderung bearbeiten</value>
+  </data>
+  <data name="AssetEvent_Kind" xml:space="preserve">
+    <value>Was ist passiert?</value>
+  </data>
+  <data name="AssetEvent_Opening" xml:space="preserve">
+    <value>Bereits vorhanden</value>
+  </data>
+  <data name="AssetEvent_Purchase" xml:space="preserve">
+    <value>Kauf</value>
+  </data>
+  <data name="AssetEvent_Sale" xml:space="preserve">
+    <value>Verkauf</value>
+  </data>
+  <data name="AssetEvent_LocationTransfer" xml:space="preserve">
+    <value>Verlagert</value>
+  </data>
+  <data name="AssetEvent_GiftReceived" xml:space="preserve">
+    <value>Geschenk oder Erbe</value>
+  </data>
+  <data name="AssetEvent_Outflow" xml:space="preserve">
+    <value>Weggegeben oder verloren</value>
+  </data>
+  <data name="AssetEvent_Correction" xml:space="preserve">
+    <value>Korrektur</value>
+  </data>
+  <data name="AssetEvent_OpeningHint" xml:space="preserve">
+    <value>Was Sie bereits besitzen. Es wird kein Geld von einem Konto abgebucht.</value>
+  </data>
+  <data name="AssetEvent_PurchaseHint" xml:space="preserve">
+    <value>Von einem Konto bezahlt. Der Preis ist keine Ausgabe; eine Gebühr wird als Ausgabe erfasst.</value>
+  </data>
+  <data name="AssetEvent_SaleHint" xml:space="preserve">
+    <value>Auf ein Konto eingezahlt. Der Erlös ist kein Einkommen.</value>
+  </data>
+  <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
+    <value>Von einem Ort zum anderen. Die Gesamtmenge bleibt gleich.</value>
+  </data>
+  <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
+    <value>Ohne Bezahlung erhalten. Es ist kein Einkommen.</value>
+  </data>
+  <data name="AssetEvent_OutflowHint" xml:space="preserve">
+    <value>Verschenkt, verbraucht oder verloren. Es ist keine Ausgabe.</value>
+  </data>
+  <data name="AssetEvent_CorrectionHint" xml:space="preserve">
+    <value>Korrigiert die Menge, z. B. nach erneutem Wiegen. Ein Grund ist nötig.</value>
+  </data>
+  <data name="AssetEvent_Quantity" xml:space="preserve">
+    <value>Menge</value>
+  </data>
+  <data name="AssetEvent_QuantityInvalid" xml:space="preserve">
+    <value>Menge größer als null mit höchstens drei Nachkommastellen eingeben.</value>
+  </data>
+  <data name="AssetEvent_WholeUnits" xml:space="preserve">
+    <value>Diese Art wird in ganzen Einheiten gezählt.</value>
+  </data>
+  <data name="AssetEvent_Increase" xml:space="preserve">
+    <value>Mehr als erfasst</value>
+  </data>
+  <data name="AssetEvent_Decrease" xml:space="preserve">
+    <value>Weniger als erfasst</value>
+  </data>
+  <data name="AssetEvent_Location" xml:space="preserve">
+    <value>Ort</value>
+  </data>
+  <data name="AssetEvent_From" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="AssetEvent_To" xml:space="preserve">
+    <value>Nach</value>
+  </data>
+  <data name="AssetEvent_LocationsDiffer" xml:space="preserve">
+    <value>Zwei verschiedene Orte wählen.</value>
+  </data>
+  <data name="AssetEvent_AddLocation" xml:space="preserve">
+    <value>Ort hinzufügen</value>
+  </data>
+  <data name="AssetEvent_AddLocationMessage" xml:space="preserve">
+    <value>z. B. Tresor zu Hause oder Bankschließfach</value>
+  </data>
+  <data name="AssetEvent_Paid" xml:space="preserve">
+    <value>Bezahlter Preis</value>
+  </data>
+  <data name="AssetEvent_Received" xml:space="preserve">
+    <value>Erhaltenes Geld</value>
+  </data>
+  <data name="AssetEvent_PriceTotal" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
+  <data name="AssetEvent_SecondAmount" xml:space="preserve">
+    <value>Dasselbe in {0} (für den Einstand; optional)</value>
+  </data>
+  <data name="AssetEvent_Fee" xml:space="preserve">
+    <value>Gebühr (optional)</value>
+  </data>
+  <data name="AssetEvent_FeeHint" xml:space="preserve">
+    <value>Eine Gebühr wird als Ausgabe unter Gebühren erfasst.</value>
+  </data>
+  <data name="AssetEvent_FeeTitle" xml:space="preserve">
+    <value>Gebühr: {0}</value>
+  </data>
+  <data name="AssetEvent_BasisLabel" xml:space="preserve">
+    <value>Wert zu diesem Zeitpunkt in {0} (optional)</value>
+  </data>
+  <data name="AssetEvent_BasisHint" xml:space="preserve">
+    <value>Wird für den durchschnittlichen Einstand verwendet. Leer lassen, wenn unbekannt.</value>
+  </data>
+  <data name="AssetEvent_Reason" xml:space="preserve">
+    <value>Grund (optional)</value>
+  </data>
+  <data name="AssetEvent_ReasonRequired" xml:space="preserve">
+    <value>Grund</value>
+  </data>
+  <data name="AssetEvent_ReasonMissing" xml:space="preserve">
+    <value>Eine Korrektur braucht einen Grund.</value>
+  </data>
+  <data name="AssetEvent_AccountMissing" xml:space="preserve">
+    <value>Konto wählen.</value>
+  </data>
+  <data name="AssetEvent_At" xml:space="preserve">
+    <value>{0} in {1}</value>
+  </data>
+  <data name="AssetEvent_After" xml:space="preserve">
+    <value>Nach dem Speichern: {0}</value>
+  </data>
+  <data name="Help_AssetDimension_Title" xml:space="preserve">
+    <value>Gewicht oder Stückzahl</value>
+  </data>
+  <data name="Help_AssetDimension_Text" xml:space="preserve">
+    <value>Schmuck, Granulat und Barren ohne feste Größe werden nach Gewicht geführt. Münzen und Barren fester Größe werden gezählt; ihr Gewicht kann je Einheit angegeben werden und wird dann nur angezeigt, nie als zweiter Bestand.</value>
+  </data>
+  <data name="Help_AssetDimension_Example" xml:space="preserve">
+    <value>„Gold 18 Karat: 50 g“ nach Gewicht; „Bahar-Azadi-Münze: 3 Münzen (24,4 g)“ nach Stückzahl.</value>
+  </data>
+  <data name="Help_Purity_Title" xml:space="preserve">
+    <value>Reinheit</value>
+  </data>
+  <data name="Help_Purity_Text" xml:space="preserve">
+    <value>Die Reinheit wird in Karat (24 = rein) oder als Feingehalt in Tausendsteln angegeben. Gold mit 18 und 24 Karat sind zwei Arten, weil ihre Gramm nicht gleich sind. Mit Reinheit zeigt die App das enthaltene Feinmetall; ohne sie wird nichts geschätzt.</value>
+  </data>
+  <data name="Help_Purity_Example" xml:space="preserve">
+    <value>18 Karat = 750/1000: 20 g Gold mit 18 Karat enthalten etwa 15 g Feingold.</value>
+  </data>
+  <data name="Help_AssetEvents_Title" xml:space="preserve">
+    <value>Arten von Änderungen</value>
+  </data>
+  <data name="Help_AssetEvents_Text" xml:space="preserve">
+    <value>Ein Kauf nimmt Geld von einem Konto, ein Verkauf zahlt Geld ein; beides ist weder Ausgabe noch Einkommen. Vorhandenes, Geschenke, Verlagerungen, Abgänge und Korrekturen ändern nur die Menge. Ein Bestand kann an keinem Tag negativ werden.</value>
+  </data>
+  <data name="Help_AssetEvents_Example" xml:space="preserve">
+    <value>10 g für 1.000 EUR plus 20 EUR Gebühr gekauft: Das Konto sinkt um 1.020 EUR, davon sind 20 EUR Ausgabe.</value>
+  </data>
+  <data name="Help_HoldingPrices_Title" xml:space="preserve">
+    <value>Preise und Wert</value>
+  </data>
+  <data name="Help_HoldingPrices_Text" xml:space="preserve">
+    <value>Geben Sie einen Preis pro Gramm oder Einheit oder den Gesamtwert Ihres Bestands ein. Der letzte Preis bis zu einem Tag ergibt den Wert dieses Tages; ein neuer Preis ändert weder frühere Werte noch die Menge. Kaufpreise werden ebenfalls verwendet und gekennzeichnet.</value>
+  </data>
+  <data name="Help_HoldingPrices_Example" xml:space="preserve">
+    <value>50 EUR pro g × 730 g = 36.500 EUR.</value>
+  </data>
+  <data name="EntryKind_AssetPurchase" xml:space="preserve">
+    <value>Bestandskauf</value>
+  </data>
+  <data name="EntryKind_AssetSale" xml:space="preserve">
+    <value>Bestandsverkauf</value>
+  </data>
+  <data name="Entry_HoldingMoney" xml:space="preserve">
+    <value>Dieses Geld gehört zu einem Kauf oder Verkauf eines Bestands. Es wird dort zusammen mit der Menge geändert oder gelöscht.</value>
+  </data>
+  <data name="Entry_OpenHolding" xml:space="preserve">
+    <value>Bestand öffnen</value>
+  </data>
+  <data name="Home_Holdings" xml:space="preserve">
+    <value>Bestände: {0}</value>
+  </data>
+  <data name="Export_HoldingsButton" xml:space="preserve">
+    <value>Bestände exportieren</value>
+  </data>
+  <data name="Export_HoldingsDone" xml:space="preserve">
+    <value>Bestände mit {0} Änderungen exportiert. Das Geld von Käufen und Verkäufen steht im Export der Buchungen.</value>
+  </data>
+  <data name="Import_HoldingsPreview" xml:space="preserve">
+    <value>Bestandsdatei: {0} Arten, {1} Änderungen, {2} Preise; {3} ungültige Zeilen.</value>
+  </data>
+  <data name="Import_HoldingsInvalid" xml:space="preserve">
+    <value>Eine Bestandsdatei wird nur vollständig importiert. Bitte zuerst die ungültigen Zeilen korrigieren.</value>
+  </data>
+  <data name="Import_HoldingsConflict" xml:space="preserve">
+    <value>Nichts importiert: Am {0} würde ein Bestand negativ.</value>
+  </data>
+  <data name="Import_Error_Type" xml:space="preserve">
+    <value>unbekannte oder ungültige Bestandsart</value>
+  </data>
+  <data name="Import_Error_Location" xml:space="preserve">
+    <value>unbekannter oder ungültiger Ort</value>
+  </data>
+  <data name="Import_Error_Quantity" xml:space="preserve">
+    <value>ungültige Menge</value>
+  </data>
+  <data name="Import_Error_Record" xml:space="preserve">
+    <value>unbekannte Zeilenart</value>
+  </data>
+  <data name="Account_ConvertToHolding" xml:space="preserve">
+    <value>In einen Bestand umwandeln</value>
+  </data>
+  <data name="Account_ConvertPreview" xml:space="preserve">
+    <value>„{0}“ wird ein Bestand von 1 Stück im Wert von {1} (Preis von heute). Das Konto wird mit seinen Buchungen archiviert und kann wiederhergestellt werden. Vor Ihrer Bestätigung ändert sich nichts.</value>
+  </data>
+  <data name="Account_ConvertConfirm" xml:space="preserve">
+    <value>Umwandeln</value>
+  </data>
+  <data name="Holding_FineMetalOne" xml:space="preserve">
+    <value>{1}, fein: ≈ {0} g</value>
+  </data>
+  <data name="Entry_AssetAccountTitle" xml:space="preserve">
+    <value>Ein Vermögenswert-Konto</value>
+  </data>
+  <data name="Entry_AssetAccountMessage" xml:space="preserve">
+    <value>Dieses Konto enthält den Wert von etwas, das Sie besitzen. Eine Wertänderung ist meist eine Saldokorrektur, und Gold oder Münzen werden besser als Bestand geführt. Trotzdem als Ausgabe oder Einnahme erfassen?</value>
+  </data>
+  <data name="Entry_AssetAccountYes" xml:space="preserve">
+    <value>Trotzdem erfassen</value>
+  </data>
+  <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
+    <value>Ziele: {0} · Bestandsarten: {1}</value>
+  </data>
 </root>

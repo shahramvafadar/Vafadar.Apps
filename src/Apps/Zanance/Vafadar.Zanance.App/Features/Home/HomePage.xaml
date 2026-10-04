@@ -32,7 +32,7 @@
 
                 <!-- Recorded balance (FIN-13); the card is a button to the accounts, the combined total one to the rates -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAccounts}">
-                    <Grid RowDefinitions="Auto,Auto,Auto">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
                         <VerticalStackLayout Spacing="6">
                             <Label Text="{v:Translate Home_Balance}" Style="{StaticResource Secondary}" />
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Balances}">
@@ -54,11 +54,15 @@
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Grid.Row="2" Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,6,0,0" />
-                        <Button Grid.RowSpan="3" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenAccountsCommand}"
+                        <!-- Holdings per type, never added to the money above (ZEX-AS05); a button to the holdings -->
+                        <Label Grid.Row="2" Text="{Binding HoldingsText}" FontSize="13" Margin="0,6,0,0" IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Grid.Row="3" Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,6,0,0" />
+                        <Button Grid.RowSpan="4" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenAccountsCommand}"
                                 SemanticProperties.Description="{v:Translate Home_Balance}" SemanticProperties.Hint="{v:Translate Home_AccountsSection}" />
                         <Button Grid.Row="1" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenRatesCommand}"
                                 IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{Binding CombinedText}" />
+                        <Button Grid.Row="2" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenHoldingsCommand}"
+                                IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{Binding HoldingsText}" />
                     </Grid>
                 </Border>
 

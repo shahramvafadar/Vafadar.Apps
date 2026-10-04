@@ -3539,4 +3539,469 @@
   <data name="Goal_ReleaseTooMuch" xml:space="preserve">
     <value>در این حساب فقط {0} برای این هدف کنار گذاشته شده است.</value>
   </data>
+  <data name="Holdings_Title" xml:space="preserve">
+    <value>دارایی‌های مقداری</value>
+  </data>
+  <data name="More_HoldingsHint" xml:space="preserve">
+    <value>طلا، سکه و چیزهای دیگری که به وزن یا تعداد دارید</value>
+  </data>
+  <data name="Holdings_Empty" xml:space="preserve">
+    <value>طلا، سکه یا چیزهای دیگری را که به وزن یا تعداد دارید ثبت کنید. ارزش آن‌ها جداگانه نشان داده می‌شود و هرگز با پول شما جمع نمی‌شود.</value>
+  </data>
+  <data name="Holdings_AdvancedHint" xml:space="preserve">
+    <value>افزودن دارایی در حالت پیشرفته ممکن است (تنظیمات).</value>
+  </data>
+  <data name="Holdings_Add" xml:space="preserve">
+    <value>افزودن دارایی</value>
+  </data>
+  <data name="Holdings_KnownValue" xml:space="preserve">
+    <value>ارزش معلوم</value>
+  </data>
+  <data name="Holdings_Note" xml:space="preserve">
+    <value>ارزش‌ها برآوردی از قیمت‌هایی است که وارد کرده‌اید. دارایی‌های مقداری جزو موجودی حساب‌ها و جمع دارایی نیستند.</value>
+  </data>
+  <data name="Holding_ValueUnknown" xml:space="preserve">
+    <value>ارزش نامعلوم – قیمت وارد کنید</value>
+  </data>
+  <data name="Holding_Value" xml:space="preserve">
+    <value>ارزش {0} · قیمت {1}</value>
+  </data>
+  <data name="Holding_ValuePurchase" xml:space="preserve">
+    <value>ارزش {0} · قیمت خرید {1}</value>
+  </data>
+  <data name="Holding_None" xml:space="preserve">
+    <value>چیزی باقی نمانده</value>
+  </data>
+  <data name="Holding_Incomplete" xml:space="preserve">
+    <value>ناقص – انواع بدون قیمت: {0}</value>
+  </data>
+  <data name="Holding_FineMetal" xml:space="preserve">
+    <value>مقدار خالص {1}: حدود {0} گرم (انواع با عیار معلوم: {2})</value>
+  </data>
+  <data name="Holding_FineExcluded" xml:space="preserve">
+    <value>بدون عیار معلوم: {0}</value>
+  </data>
+  <data name="Holding_PerGram" xml:space="preserve">
+    <value>هر گرم</value>
+  </data>
+  <data name="Holding_PerUnit" xml:space="preserve">
+    <value>هر {0}</value>
+  </data>
+  <data name="Holding_Piece" xml:space="preserve">
+    <value>عدد</value>
+  </data>
+  <data name="Unit_Gram" xml:space="preserve">
+    <value>گرم</value>
+  </data>
+  <data name="Unit_Kilogram" xml:space="preserve">
+    <value>کیلوگرم</value>
+  </data>
+  <data name="Holding_NotFound" xml:space="preserve">
+    <value>این دارایی دیگر وجود ندارد.</value>
+  </data>
+  <data name="Holding_AverageCost" xml:space="preserve">
+    <value>میانگین قیمت خرید: {0}</value>
+  </data>
+  <data name="Holding_Unrealised" xml:space="preserve">
+    <value>سود یا زیان تحقق‌نیافته (برآورد): {0}</value>
+  </data>
+  <data name="Holding_Realised" xml:space="preserve">
+    <value>سود یا زیان فروش‌ها: {0}</value>
+  </data>
+  <data name="Holding_Buy" xml:space="preserve">
+    <value>خرید</value>
+  </data>
+  <data name="Holding_Sell" xml:space="preserve">
+    <value>فروش</value>
+  </data>
+  <data name="Holding_Move" xml:space="preserve">
+    <value>جابه‌جایی</value>
+  </data>
+  <data name="Holding_AddExisting" xml:space="preserve">
+    <value>افزودن (موجود یا هدیه)</value>
+  </data>
+  <data name="Holding_Remove" xml:space="preserve">
+    <value>خارج کردن</value>
+  </data>
+  <data name="Holding_Correct" xml:space="preserve">
+    <value>اصلاح مقدار</value>
+  </data>
+  <data name="Holding_Prices" xml:space="preserve">
+    <value>قیمت‌ها</value>
+  </data>
+  <data name="Holding_PriceTotal" xml:space="preserve">
+    <value>ارزش کل موجودی</value>
+  </data>
+  <data name="Holding_PriceIn" xml:space="preserve">
+    <value>قیمت به {0}</value>
+  </data>
+  <data name="Holding_SavePrice" xml:space="preserve">
+    <value>ذخیرهٔ قیمت</value>
+  </data>
+  <data name="Holding_NoPrices" xml:space="preserve">
+    <value>هنوز قیمتی ثبت نشده است. بدون قیمت، ارزش نامعلوم می‌ماند.</value>
+  </data>
+  <data name="Holding_FromPurchase" xml:space="preserve">
+    <value>از یک خرید</value>
+  </data>
+  <data name="Holding_TotalNeedsQuantity" xml:space="preserve">
+    <value>برای ارزش کل باید در آن تاریخ مقداری موجود باشد.</value>
+  </data>
+  <data name="Holding_DeletePrice" xml:space="preserve">
+    <value>این قیمت حذف شود؟</value>
+  </data>
+  <data name="Holding_History" xml:space="preserve">
+    <value>تاریخچه</value>
+  </data>
+  <data name="Holding_NoHistory" xml:space="preserve">
+    <value>هنوز چیزی ثبت نشده است.</value>
+  </data>
+  <data name="Holding_Moved" xml:space="preserve">
+    <value>از {0} به {1}</value>
+  </data>
+  <data name="Holding_Deleted" xml:space="preserve">
+    <value>حذف شد: {0}</value>
+  </data>
+  <data name="Holding_CannotDelete" xml:space="preserve">
+    <value>حذف ممکن نیست</value>
+  </data>
+  <data name="Holding_Conflict" xml:space="preserve">
+    <value>در تاریخ {0} فقط {1} در {2} موجود بود.</value>
+  </data>
+  <data name="Holding_EditType" xml:space="preserve">
+    <value>ویرایش نوع</value>
+  </data>
+  <data name="Holding_Archive" xml:space="preserve">
+    <value>بایگانی</value>
+  </data>
+  <data name="Holding_ArchiveMessage" xml:space="preserve">
+    <value>این نوع از فهرست‌ها و صفحهٔ خانه حذف می‌شود و تاریخچه‌اش می‌ماند.</value>
+  </data>
+  <data name="Holding_DefaultLocation" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="AssetType_NewTitle" xml:space="preserve">
+    <value>نوع دارایی جدید</value>
+  </data>
+  <data name="AssetType_EditTitle" xml:space="preserve">
+    <value>ویرایش نوع دارایی</value>
+  </data>
+  <data name="AssetType_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="AssetType_NamePlaceholder" xml:space="preserve">
+    <value>مثلاً طلای ۱۸ عیار</value>
+  </data>
+  <data name="AssetType_NameRequired" xml:space="preserve">
+    <value>لطفاً نام را وارد کنید.</value>
+  </data>
+  <data name="AssetType_Kind" xml:space="preserve">
+    <value>گونه</value>
+  </data>
+  <data name="AssetKind_PreciousMetal" xml:space="preserve">
+    <value>فلز گران‌بها</value>
+  </data>
+  <data name="AssetKind_CoinOrBar" xml:space="preserve">
+    <value>سکه یا شمش</value>
+  </data>
+  <data name="AssetKind_CountableItem" xml:space="preserve">
+    <value>شیء شمارشی</value>
+  </data>
+  <data name="AssetKind_Other" xml:space="preserve">
+    <value>سایر</value>
+  </data>
+  <data name="AssetType_MeasuredBy" xml:space="preserve">
+    <value>اندازه‌گیری بر اساس</value>
+  </data>
+  <data name="AssetType_ByWeight" xml:space="preserve">
+    <value>وزن</value>
+  </data>
+  <data name="AssetType_ByCount" xml:space="preserve">
+    <value>تعداد</value>
+  </data>
+  <data name="AssetType_DimensionLocked" xml:space="preserve">
+    <value>پس از اولین ثبت، وزن یا تعداد قابل تغییر نیست.</value>
+  </data>
+  <data name="AssetType_Metal" xml:space="preserve">
+    <value>فلز</value>
+  </data>
+  <data name="Metal_Gold" xml:space="preserve">
+    <value>طلا</value>
+  </data>
+  <data name="Metal_Silver" xml:space="preserve">
+    <value>نقره</value>
+  </data>
+  <data name="Metal_Platinum" xml:space="preserve">
+    <value>پلاتین</value>
+  </data>
+  <data name="Metal_Palladium" xml:space="preserve">
+    <value>پالادیوم</value>
+  </data>
+  <data name="Metal_Other" xml:space="preserve">
+    <value>دیگر</value>
+  </data>
+  <data name="Metal_None" xml:space="preserve">
+    <value>هیچ</value>
+  </data>
+  <data name="AssetType_Purity" xml:space="preserve">
+    <value>عیار</value>
+  </data>
+  <data name="AssetType_PurityOther" xml:space="preserve">
+    <value>دیگر / نامعلوم</value>
+  </data>
+  <data name="AssetType_PurityPlaceholder" xml:space="preserve">
+    <value>قیراط (۱۸) یا عیار هزارم (۷۵۰)؛ خالی = نامعلوم</value>
+  </data>
+  <data name="AssetType_PurityInvalid" xml:space="preserve">
+    <value>قیراط (۱ تا ۲۴) یا عیار هزارم (۱ تا ۱۰۰۰) وارد کنید.</value>
+  </data>
+  <data name="AssetType_CountUnit" xml:space="preserve">
+    <value>نام هر واحد</value>
+  </data>
+  <data name="AssetType_CountUnitPlaceholder" xml:space="preserve">
+    <value>مثلاً سکه (خالی = عدد)</value>
+  </data>
+  <data name="AssetType_UnitWeight" xml:space="preserve">
+    <value>وزن هر واحد به گرم (اختیاری)</value>
+  </data>
+  <data name="AssetType_WeightInvalid" xml:space="preserve">
+    <value>وزنی بیشتر از صفر با حداکثر سه رقم اعشار وارد کنید.</value>
+  </data>
+  <data name="AssetType_Divisible" xml:space="preserve">
+    <value>کسر مجاز است (مثلاً نیم سکه)</value>
+  </data>
+  <data name="AssetType_PriceCurrency" xml:space="preserve">
+    <value>ارز قیمت‌ها</value>
+  </data>
+  <data name="AssetEvent_NewTitle" xml:space="preserve">
+    <value>ثبت تغییر</value>
+  </data>
+  <data name="AssetEvent_EditTitle" xml:space="preserve">
+    <value>ویرایش تغییر</value>
+  </data>
+  <data name="AssetEvent_Kind" xml:space="preserve">
+    <value>چه اتفاقی افتاد؟</value>
+  </data>
+  <data name="AssetEvent_Opening" xml:space="preserve">
+    <value>موجودی قبلی</value>
+  </data>
+  <data name="AssetEvent_Purchase" xml:space="preserve">
+    <value>خرید</value>
+  </data>
+  <data name="AssetEvent_Sale" xml:space="preserve">
+    <value>فروش</value>
+  </data>
+  <data name="AssetEvent_LocationTransfer" xml:space="preserve">
+    <value>جابه‌جایی</value>
+  </data>
+  <data name="AssetEvent_GiftReceived" xml:space="preserve">
+    <value>هدیه یا ارث</value>
+  </data>
+  <data name="AssetEvent_Outflow" xml:space="preserve">
+    <value>بخشیده یا ازدست‌رفته</value>
+  </data>
+  <data name="AssetEvent_Correction" xml:space="preserve">
+    <value>اصلاح</value>
+  </data>
+  <data name="AssetEvent_OpeningHint" xml:space="preserve">
+    <value>آنچه از قبل دارید. پولی از حسابی کم نمی‌شود.</value>
+  </data>
+  <data name="AssetEvent_PurchaseHint" xml:space="preserve">
+    <value>از یک حساب پرداخت می‌شود. قیمت خرید هزینه نیست؛ کارمزد به‌عنوان هزینه ثبت می‌شود.</value>
+  </data>
+  <data name="AssetEvent_SaleHint" xml:space="preserve">
+    <value>به یک حساب واریز می‌شود. پول دریافتی درآمد نیست.</value>
+  </data>
+  <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
+    <value>از یک مکان به مکان دیگر. مقدار کل تغییر نمی‌کند.</value>
+  </data>
+  <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
+    <value>بدون پرداخت دریافت شده است. درآمد حساب نمی‌شود.</value>
+  </data>
+  <data name="AssetEvent_OutflowHint" xml:space="preserve">
+    <value>بخشیده، مصرف یا گم شده است. هزینه حساب نمی‌شود.</value>
+  </data>
+  <data name="AssetEvent_CorrectionHint" xml:space="preserve">
+    <value>مقدار را اصلاح می‌کند، مثلاً پس از وزن‌کردن دوباره. ذکر دلیل لازم است.</value>
+  </data>
+  <data name="AssetEvent_Quantity" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="AssetEvent_QuantityInvalid" xml:space="preserve">
+    <value>مقداری بیشتر از صفر با حداکثر سه رقم اعشار وارد کنید.</value>
+  </data>
+  <data name="AssetEvent_WholeUnits" xml:space="preserve">
+    <value>این نوع فقط با عدد صحیح شمرده می‌شود.</value>
+  </data>
+  <data name="AssetEvent_Increase" xml:space="preserve">
+    <value>بیشتر از ثبت‌شده</value>
+  </data>
+  <data name="AssetEvent_Decrease" xml:space="preserve">
+    <value>کمتر از ثبت‌شده</value>
+  </data>
+  <data name="AssetEvent_Location" xml:space="preserve">
+    <value>مکان</value>
+  </data>
+  <data name="AssetEvent_From" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="AssetEvent_To" xml:space="preserve">
+    <value>به</value>
+  </data>
+  <data name="AssetEvent_LocationsDiffer" xml:space="preserve">
+    <value>دو مکان متفاوت انتخاب کنید.</value>
+  </data>
+  <data name="AssetEvent_AddLocation" xml:space="preserve">
+    <value>افزودن مکان</value>
+  </data>
+  <data name="AssetEvent_AddLocationMessage" xml:space="preserve">
+    <value>مثلاً گاوصندوق خانه یا صندوق امانات بانک</value>
+  </data>
+  <data name="AssetEvent_Paid" xml:space="preserve">
+    <value>مبلغ پرداختی</value>
+  </data>
+  <data name="AssetEvent_Received" xml:space="preserve">
+    <value>مبلغ دریافتی</value>
+  </data>
+  <data name="AssetEvent_PriceTotal" xml:space="preserve">
+    <value>کل</value>
+  </data>
+  <data name="AssetEvent_SecondAmount" xml:space="preserve">
+    <value>همین مبلغ به {0} (برای بهای تمام‌شده؛ اختیاری)</value>
+  </data>
+  <data name="AssetEvent_Fee" xml:space="preserve">
+    <value>کارمزد (اختیاری)</value>
+  </data>
+  <data name="AssetEvent_FeeHint" xml:space="preserve">
+    <value>کارمزد به‌عنوان هزینه در دستهٔ کارمزدها ثبت می‌شود.</value>
+  </data>
+  <data name="AssetEvent_FeeTitle" xml:space="preserve">
+    <value>کارمزد: {0}</value>
+  </data>
+  <data name="AssetEvent_BasisLabel" xml:space="preserve">
+    <value>ارزش در آن زمان به {0} (اختیاری)</value>
+  </data>
+  <data name="AssetEvent_BasisHint" xml:space="preserve">
+    <value>برای میانگین قیمت خرید استفاده می‌شود. اگر نمی‌دانید خالی بگذارید.</value>
+  </data>
+  <data name="AssetEvent_Reason" xml:space="preserve">
+    <value>دلیل (اختیاری)</value>
+  </data>
+  <data name="AssetEvent_ReasonRequired" xml:space="preserve">
+    <value>دلیل</value>
+  </data>
+  <data name="AssetEvent_ReasonMissing" xml:space="preserve">
+    <value>اصلاح به دلیل نیاز دارد.</value>
+  </data>
+  <data name="AssetEvent_AccountMissing" xml:space="preserve">
+    <value>یک حساب انتخاب کنید.</value>
+  </data>
+  <data name="AssetEvent_At" xml:space="preserve">
+    <value>در {1}: {0}</value>
+  </data>
+  <data name="AssetEvent_After" xml:space="preserve">
+    <value>پس از ذخیره: {0}</value>
+  </data>
+  <data name="Help_AssetDimension_Title" xml:space="preserve">
+    <value>وزن یا تعداد</value>
+  </data>
+  <data name="Help_AssetDimension_Text" xml:space="preserve">
+    <value>زیورآلات، طلای آب‌شده و شمش‌های بدون اندازهٔ ثابت با وزن نگه داشته می‌شوند. سکه‌ها و شمش‌های با اندازهٔ ثابت شمرده می‌شوند؛ وزن هر واحد را می‌توان وارد کرد که فقط نمایش داده می‌شود و دارایی دوم حساب نمی‌شود.</value>
+  </data>
+  <data name="Help_AssetDimension_Example" xml:space="preserve">
+    <value>«طلای ۱۸ عیار: ۵۰ گرم» با وزن؛ «سکهٔ بهار آزادی: ۳ سکه (۲۴٫۴ گرم)» با تعداد.</value>
+  </data>
+  <data name="Help_Purity_Title" xml:space="preserve">
+    <value>عیار</value>
+  </data>
+  <data name="Help_Purity_Text" xml:space="preserve">
+    <value>عیار به قیراط (۲۴ = خالص) یا به هزارم وارد می‌شود. طلای ۱۸ و ۲۴ عیار دو نوع جدا هستند، چون گرم‌های آن‌ها برابر نیست. با داشتن عیار، برنامه مقدار فلز خالص را نشان می‌دهد؛ بدون آن چیزی حدس زده نمی‌شود.</value>
+  </data>
+  <data name="Help_Purity_Example" xml:space="preserve">
+    <value>۱۸ عیار = ۷۵۰ از ۱۰۰۰: در ۲۰ گرم طلای ۱۸ عیار حدود ۱۵ گرم طلای خالص هست.</value>
+  </data>
+  <data name="Help_AssetEvents_Title" xml:space="preserve">
+    <value>انواع تغییر</value>
+  </data>
+  <data name="Help_AssetEvents_Text" xml:space="preserve">
+    <value>خرید از یک حساب پول برمی‌دارد و فروش به یک حساب پول واریز می‌کند؛ هیچ‌کدام هزینه یا درآمد نیست. موجودی قبلی، هدیه، جابه‌جایی، خارج‌کردن و اصلاح فقط مقدار را تغییر می‌دهند. موجودی در هیچ تاریخی منفی نمی‌شود.</value>
+  </data>
+  <data name="Help_AssetEvents_Example" xml:space="preserve">
+    <value>خرید ۱۰ گرم به قیمت ۱٬۰۰۰ EUR با ۲۰ EUR کارمزد: موجودی حساب ۱٬۰۲۰ EUR کم می‌شود که فقط ۲۰ EUR آن هزینه است.</value>
+  </data>
+  <data name="Help_HoldingPrices_Title" xml:space="preserve">
+    <value>قیمت و ارزش</value>
+  </data>
+  <data name="Help_HoldingPrices_Text" xml:space="preserve">
+    <value>قیمت هر گرم یا هر واحد، یا ارزش کل موجودی را وارد کنید. آخرین قیمت تا هر روز، ارزش همان روز را می‌سازد؛ قیمت جدید ارزش‌های قبلی یا مقدار را تغییر نمی‌دهد. قیمت‌های خرید هم با علامت به کار می‌روند.</value>
+  </data>
+  <data name="Help_HoldingPrices_Example" xml:space="preserve">
+    <value>قیمت هر گرم ۵۰ EUR × ۷۳۰ گرم = ۳۶٬۵۰۰ EUR.</value>
+  </data>
+  <data name="EntryKind_AssetPurchase" xml:space="preserve">
+    <value>خرید دارایی</value>
+  </data>
+  <data name="EntryKind_AssetSale" xml:space="preserve">
+    <value>فروش دارایی</value>
+  </data>
+  <data name="Entry_HoldingMoney" xml:space="preserve">
+    <value>این پول مربوط به خرید یا فروش یک دارایی است و همان‌جا همراه با مقدار تغییر یا حذف می‌شود.</value>
+  </data>
+  <data name="Entry_OpenHolding" xml:space="preserve">
+    <value>باز کردن دارایی</value>
+  </data>
+  <data name="Home_Holdings" xml:space="preserve">
+    <value>دارایی‌ها: {0}</value>
+  </data>
+  <data name="Export_HoldingsButton" xml:space="preserve">
+    <value>خروجی دارایی‌ها</value>
+  </data>
+  <data name="Export_HoldingsDone" xml:space="preserve">
+    <value>دارایی‌ها با تعداد {0} تغییر خروجی گرفته شد. پول خریدها و فروش‌ها در خروجی تراکنش‌ها است.</value>
+  </data>
+  <data name="Import_HoldingsPreview" xml:space="preserve">
+    <value>فایل دارایی‌ها: تعداد {0} نوع، {1} تغییر، {2} قیمت؛ {3} ردیف نامعتبر.</value>
+  </data>
+  <data name="Import_HoldingsInvalid" xml:space="preserve">
+    <value>فایل دارایی‌ها فقط به‌طور کامل وارد می‌شود. ابتدا ردیف‌های نامعتبر را اصلاح کنید.</value>
+  </data>
+  <data name="Import_HoldingsConflict" xml:space="preserve">
+    <value>چیزی وارد نشد: در تاریخ {0} موجودی یک دارایی منفی می‌شد.</value>
+  </data>
+  <data name="Import_Error_Type" xml:space="preserve">
+    <value>نوع دارایی نامعلوم یا نامعتبر</value>
+  </data>
+  <data name="Import_Error_Location" xml:space="preserve">
+    <value>مکان نامعلوم یا نامعتبر</value>
+  </data>
+  <data name="Import_Error_Quantity" xml:space="preserve">
+    <value>مقدار نامعتبر</value>
+  </data>
+  <data name="Import_Error_Record" xml:space="preserve">
+    <value>نوع ردیف نامعلوم</value>
+  </data>
+  <data name="Account_ConvertToHolding" xml:space="preserve">
+    <value>تبدیل به دارایی مقداری</value>
+  </data>
+  <data name="Account_ConvertPreview" xml:space="preserve">
+    <value>«{0}» به یک دارایی به تعداد ۱ عدد با ارزش {1} (قیمت امروز) تبدیل می‌شود. حساب با تراکنش‌هایش بایگانی می‌شود و قابل بازگردانی است. تا تأیید نکنید چیزی تغییر نمی‌کند.</value>
+  </data>
+  <data name="Account_ConvertConfirm" xml:space="preserve">
+    <value>تبدیل</value>
+  </data>
+  <data name="Holding_FineMetalOne" xml:space="preserve">
+    <value>مقدار خالص {1}: حدود {0} گرم</value>
+  </data>
+  <data name="Entry_AssetAccountTitle" xml:space="preserve">
+    <value>حساب دارایی ارزش‌گذاری‌شده</value>
+  </data>
+  <data name="Entry_AssetAccountMessage" xml:space="preserve">
+    <value>این حساب ارزش چیزی را که دارید نگه می‌دارد. تغییر ارزش معمولاً اصلاح موجودی است و طلا یا سکه بهتر است به‌صورت دارایی مقداری ثبت شود. با این حال به‌عنوان هزینه یا درآمد ثبت شود؟</value>
+  </data>
+  <data name="Entry_AssetAccountYes" xml:space="preserve">
+    <value>ثبت شود</value>
+  </data>
+  <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
+    <value>هدف‌ها: {0} · انواع دارایی: {1}</value>
+  </data>
 </root>

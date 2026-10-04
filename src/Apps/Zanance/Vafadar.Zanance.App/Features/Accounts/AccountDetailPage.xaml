@@ -60,6 +60,8 @@
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
                 <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
             </Grid>
+            <!-- Advanced: a valued asset account can become a holding; nothing changes before the preview is confirmed (ZEX-S0408) -->
+            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ConvertToHolding}" Command="{Binding ConvertToHoldingCommand}" IsVisible="{Binding CanConvert}" />
 
             <!-- This month -->
             <Label Text="{Binding MonthText}" Style="{StaticResource SectionHeader}" />

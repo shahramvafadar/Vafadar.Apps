@@ -890,6 +890,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
 
+        // A valued asset account holds a value, not spending or income: such an entry is saved only when confirmed (ZEX-S0408).
+        if (Kind is EntryKind.Income or EntryKind.Expense
+            && (await _store.GetAccountsAsync()).FirstOrDefault(a => a.Id == Account.Id) is { Type: Core.Accounts.AccountType.Asset }
+            && !await Shell.Current.DisplayAlertAsync(_translator["Entry_AssetAccountTitle"], _translator["Entry_AssetAccountMessage"], _translator["Entry_AssetAccountYes"], _translator["Common_Cancel"]))
+        {
+            return;
+        }
+
         var culture = _localization.CurrentCulture;
         var currency = Currencies.TryGet(Account.CurrencyCode, out var known) ? known : Currencies.Euro;
         var parsed = MoneyText.TryParse(AmountText, currency, culture, out var amount);

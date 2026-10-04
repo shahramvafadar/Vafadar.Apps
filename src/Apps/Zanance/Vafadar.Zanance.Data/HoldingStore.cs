@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Categories;
+using Vafadar.Zanance.Core.DataFiles;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 
@@ -241,6 +242,111 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         await transaction.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return (new HoldingGroup([assetEvent], entries), null);
+    }
+
+    /// <summary>
+    /// Imports a holdings file (ZEX-S0409): types, locations, events and prices whose ids are new are added in one
+    /// transaction; existing ids are skipped, so importing twice creates nothing twice. Nothing is saved when an event
+    /// refers to an unknown type or location, or the history of a type would become negative on any date.
+    /// </summary>
+    public async Task<(int Imported, int Skipped, HoldingConflict? Conflict)> ImportAsync(HoldingsCsvContent content, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var typeIds = (await db.AssetTypes.Select(t => t.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var locationIds = (await db.AssetLocations.Select(l => l.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var eventIds = (await db.AssetEvents.Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var valuationIds = (await db.AssetValuations.Select(v => v.Id).ToListAsync(cancellationToken)).ToHashSet();
+
+        var types = content.Types.Where(t => !typeIds.Contains(t.Id)).DistinctBy(t => t.Id).ToList();
+        var locations = content.Locations.Where(l => !locationIds.Contains(l.Id)).DistinctBy(l => l.Id).ToList();
+        var events = content.Events.Where(e => !eventIds.Contains(e.Id)).DistinctBy(e => e.Id).ToList();
+        var valuations = content.Valuations.Where(v => !valuationIds.Contains(v.Id)).DistinctBy(v => v.Id).ToList();
+        var skipped = content.Types.Count + content.Locations.Count + content.Events.Count + content.Valuations.Count - types.Count - locations.Count - events.Count - valuations.Count;
+
+        // The history after the import, per type, must never be negative.
+        var all = await db.AssetEvents.AsNoTracking().ToListAsync(cancellationToken);
+        if (HoldingsLedger.FindConflict([.. all, .. events]) is { } conflict)
+        {
+            return (0, skipped, conflict);
+        }
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        db.AssetTypes.AddRange(types);
+        db.AssetLocations.AddRange(locations);
+        db.AssetEvents.AddRange(events);
+        db.AssetValuations.AddRange(valuations);
+        await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        Changed?.Invoke(this, EventArgs.Empty);
+        return (types.Count + locations.Count + events.Count + valuations.Count, skipped, null);
+    }
+
+    /// <summary>
+    /// Converts a legacy valued-asset account into a holding (ZEX-S0408), only after the user confirmed the preview: a
+    /// count type named like the account in its currency, an opening holding of one unit at <paramref name="location"/>
+    /// with the balance as value and cost basis, and the account archived (it stays restorable, its entries stay).
+    /// Returns the new type, or <see langword="null"/> when the account is not an active asset account.
+    /// </summary>
+    public async Task<AssetType?> ConvertAccountAsync(Guid accountId, long balance, DateOnly date, string location, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var account = await db.Accounts.FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
+        if (account is null || account.Type != Core.Accounts.AccountType.Asset || account.IsArchived)
+        {
+            return null;
+        }
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var place = await db.AssetLocations.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).FirstOrDefaultAsync(cancellationToken);
+        if (place is null)
+        {
+            place = new AssetLocation { Name = location };
+            db.AssetLocations.Add(place);
+        }
+
+        var type = new AssetType
+        {
+            Name = account.Name,
+            Kind = AssetKind.Other,
+            Dimension = AssetDimension.Count,
+            PriceCurrencyCode = account.CurrencyCode,
+            SortOrder = await db.AssetTypes.CountAsync(cancellationToken),
+        };
+        db.AssetTypes.Add(type);
+        var known = balance > 0 ? balance : (long?)null;
+        db.AssetEvents.Add(new AssetEvent
+        {
+            AssetTypeId = type.Id,
+            LocationId = place.Id,
+            Kind = AssetEventKind.Opening,
+            Quantity = Quantities.PerGramOrUnit,
+            Date = date,
+            BasisAmount = known,
+        });
+        if (known is { } value)
+        {
+            db.AssetValuations.Add(new AssetValuation
+            {
+                AssetTypeId = type.Id,
+                CurrencyCode = account.CurrencyCode,
+                Date = date,
+                PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(value, Quantities.PerGramOrUnit),
+            });
+        }
+
+        account.IsArchived = true;
+        await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        Changed?.Invoke(this, EventArgs.Empty);
+        return type;
+    }
+
+    /// <summary>Returns the asset type whose purchase or sale owns the entries of <paramref name="groupId"/>, if any.</summary>
+    public async Task<Guid?> FindTypeOfGroupAsync(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.AssetEvents.AsNoTracking().Where(e => e.GroupId == groupId).Select(e => (Guid?)e.AssetTypeId).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <summary>Puts a deleted group back unchanged (Undo).</summary>

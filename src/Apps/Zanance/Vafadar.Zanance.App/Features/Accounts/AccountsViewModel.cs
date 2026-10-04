@@ -45,7 +45,7 @@ public sealed record CurrencyTotal(string CurrencyCode, string Text);
 /// <summary>One group of the account list with its totals per currency, e.g. "Money · 2,000.00 EUR · 4,000.00 USD" (ZEX-S0202).</summary>
 public sealed record AccountListGroup(AccountGroup Group, string Title, string? TotalsText, IReadOnlyList<AccountItem> Items);
 
-public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Vafadar.Localization.Formatting.IDateFormatter dates) : ViewModelBase
+public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Vafadar.Localization.Formatting.IDateFormatter dates, HoldingStore holdings, Holdings.HoldingText holdingText) : ViewModelBase
 {
     public ObservableCollection<AccountItem> Archived { get; } = [];
 
@@ -57,6 +57,10 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
     /// <summary>Gets the converted total of the accounts in totals (Advanced, only with a valuation currency).</summary>
     [ObservableProperty]
     public partial string? ConvertedText { get; set; }
+
+    /// <summary>Gets the holdings per type, e.g. "18k gold 50.000 g · Coins 3 coins"; never summed (ZEX-AS05).</summary>
+    [ObservableProperty]
+    public partial string? HoldingsText { get; set; }
 
     [ObservableProperty]
     public partial bool IsEmpty { get; set; }
@@ -130,10 +134,19 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
                 : translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies));
         }
 
+        var types = (await holdings.GetTypesAsync()).Where(t => !t.IsArchived).ToList();
+        var events = types.Count == 0 ? [] : await holdings.GetEventsAsync();
+        var held = types.Select(t => (Type: t, Quantity: Core.Holdings.HoldingsLedger.Quantity(events, t.Id, today))).Where(h => h.Quantity > 0)
+            .Select(h => $"{h.Type.Name} {holdingText.Quantity(h.Quantity, h.Type)}").ToList();
+        HoldingsText = held.Count == 0 ? null : string.Join(" · ", held);
+
         IsEmpty = accounts.Count == 0;
         HasArchived = Archived.Count > 0;
     }
 
     [RelayCommand]
     private Task AddAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
+
+    [RelayCommand]
+    private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
 }

@@ -24,6 +24,7 @@ namespace Vafadar.Zanance.App.Features.Accounts;
 public sealed partial class AccountDetailViewModel(
     ZananceStore store,
     GoalStore goals,
+    HoldingStore holdings,
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
@@ -112,6 +113,10 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial bool IsArchived { get; set; }
 
+    /// <summary>Gets a value indicating whether the account is an active valued asset that can become a holding (Advanced).</summary>
+    [ObservableProperty]
+    public partial bool CanConvert { get; set; }
+
     /// <summary>Gets the colour of the balance: red when it is negative, e.g. a loan (D-27).</summary>
     [ObservableProperty]
     public partial Color? BalanceColor { get; set; }
@@ -157,6 +162,7 @@ public sealed partial class AccountDetailViewModel(
         CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
         IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
         IsDebt = account.Type.IsDebt() && !account.IsArchived;
+        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);
@@ -385,6 +391,29 @@ public sealed partial class AccountDetailViewModel(
         var query = new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Transfer) };
         query[_account.Type == AccountType.Loan ? "to" : "from"] = _account.Id;
         return Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+    }
+
+    // ZEX-S0408: a preview first; only a confirmation creates the holding and archives the account (restorable).
+    [RelayCommand]
+    private async Task ConvertToHoldingAsync()
+    {
+        if (_account is not { } account || !CanConvert)
+        {
+            return;
+        }
+
+        var balance = LedgerCalculator.Balance(account, await store.GetEntriesAsync(), Today);
+        var value = balance > 0 ? MoneyText.Format(balance, account.CurrencyCode, localization.CurrentCulture) : translator["Holding_ValueUnknown"];
+        if (!await Shell.Current.DisplayAlertAsync(translator["Account_ConvertToHolding"], translator.Format("Account_ConvertPreview", account.Name, value),
+                translator["Account_ConvertConfirm"], translator["Common_Cancel"]))
+        {
+            return;
+        }
+
+        if (await holdings.ConvertAccountAsync(account.Id, balance, Today, translator["Holding_DefaultLocation"]) is { } type)
+        {
+            await Shell.Current.GoToAsync($"../{AppShell.HoldingDetailRoute}", new Dictionary<string, object> { ["id"] = type.Id });
+        }
     }
 
     [RelayCommand]

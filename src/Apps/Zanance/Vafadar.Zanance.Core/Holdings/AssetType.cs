@@ -57,6 +57,17 @@ public enum Metal
 /// </summary>
 public sealed class AssetType : Entity, IAuditableEntity
 {
+    /// <summary>Creates one with a new id.</summary>
+    public AssetType()
+    {
+    }
+
+    /// <summary>Creates one with an existing id, e.g. when importing the holdings file (ZEX-S0409).</summary>
+    public AssetType(Guid id)
+        : base(id)
+    {
+    }
+
     /// <summary>Gets or sets the name, e.g. "18k gold" or "Bahar Azadi coin".</summary>
     public required string Name { get; set; }
 
@@ -109,6 +120,17 @@ public sealed class AssetType : Entity, IAuditableEntity
 /// <summary>Where a holding is kept, e.g. "Home safe" or "Bank box" (design §7.1).</summary>
 public sealed class AssetLocation : Entity, IAuditableEntity
 {
+    /// <summary>Creates one with a new id.</summary>
+    public AssetLocation()
+    {
+    }
+
+    /// <summary>Creates one with an existing id, e.g. when importing the holdings file (ZEX-S0409).</summary>
+    public AssetLocation(Guid id)
+        : base(id)
+    {
+    }
+
     /// <summary>Gets or sets the name.</summary>
     public required string Name { get; set; }
 
@@ -157,6 +179,17 @@ public enum AssetEventKind
 /// </summary>
 public sealed class AssetEvent : Entity, IAuditableEntity
 {
+    /// <summary>Creates one with a new id.</summary>
+    public AssetEvent()
+    {
+    }
+
+    /// <summary>Creates one with an existing id, e.g. when importing the holdings file (ZEX-S0409).</summary>
+    public AssetEvent(Guid id)
+        : base(id)
+    {
+    }
+
     /// <summary>Gets or sets the asset type.</summary>
     public Guid AssetTypeId { get; set; }
 
@@ -252,6 +285,17 @@ public enum ValuationSource
 /// </summary>
 public sealed class AssetValuation : Entity, IAuditableEntity
 {
+    /// <summary>Creates one with a new id.</summary>
+    public AssetValuation()
+    {
+    }
+
+    /// <summary>Creates one with an existing id, e.g. when importing the holdings file (ZEX-S0409).</summary>
+    public AssetValuation(Guid id)
+        : base(id)
+    {
+    }
+
     /// <summary>Gets or sets the asset type.</summary>
     public Guid AssetTypeId { get; set; }
 

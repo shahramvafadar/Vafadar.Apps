@@ -22,8 +22,8 @@ public static class CsvExport
         "category", "title", "payee", "note", "original_amount", "original_currency", "review", "refund_of", "group_id",
     ];
 
-    /// <summary>All columns written by this version.</summary>
-    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by", "tags", "direction"];
+    /// <summary>All columns written by this version; the last one is the format version of the file (ZEX-S0409).</summary>
+    public static readonly IReadOnlyList<string> Columns = [.. BaseColumns, "reimbursable_amount", "reimbursed_by", "tags", "direction", "format_version"];
 
     /// <summary>Returns the CSV text.</summary>
     /// <param name="entries">Entries to export (already filtered by period and accounts).</param>
@@ -72,6 +72,7 @@ public static class CsvExport
                 Csv.Text(EntryTags.Format(entry.Tags)),
                 // Adjustments need their direction to be re-imported (an increase and a decrease share the amount sign).
                 entry.Kind == EntryKind.Adjustment && entry.Direction is { } direction ? direction.ToString() : string.Empty,
+                HoldingsCsv.FormatVersion,
             ]);
         }
 

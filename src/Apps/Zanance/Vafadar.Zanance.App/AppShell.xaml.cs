@@ -93,6 +93,18 @@ public partial class AppShell : Shell
     /// <summary>Route of one goal.</summary>
     public const string GoalDetailRoute = "goaldetail";
 
+    /// <summary>Route of the quantity holdings (ZEX phase 3; More &gt; Money).</summary>
+    public const string HoldingsRoute = "holdings";
+
+    /// <summary>Route of one asset type.</summary>
+    public const string HoldingDetailRoute = "holdingdetail";
+
+    /// <summary>Route of the asset type editor.</summary>
+    public const string AssetTypeEditorRoute = "assettype";
+
+    /// <summary>Route of the editor of one holding event (purchase, sale, move, correction ...).</summary>
+    public const string AssetEventEditorRoute = "assetevent";
+
     /// <summary>Route of the split editor (F2-TX-01).</summary>
     public const string SplitRoute = "split";
 
@@ -154,6 +166,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
         Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));
+        Routing.RegisterRoute(HoldingsRoute, typeof(Features.Holdings.HoldingsPage));
+        Routing.RegisterRoute(HoldingDetailRoute, typeof(Features.Holdings.HoldingDetailPage));
+        Routing.RegisterRoute(AssetTypeEditorRoute, typeof(Features.Holdings.AssetTypeEditorPage));
+        Routing.RegisterRoute(AssetEventEditorRoute, typeof(Features.Holdings.AssetEventEditorPage));
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
         Routing.RegisterRoute(ReimbursementsRoute, typeof(ReimbursementsPage));
         Routing.RegisterRoute(LoanScheduleRoute, typeof(LoanSchedulePage));

@@ -355,6 +355,12 @@ public sealed partial class BackupViewModel : ViewModelBase
                 summary.GetValueOrDefault(ZananceBackupSummary.Accounts, "?"),
                 summary.GetValueOrDefault(ZananceBackupSummary.Entries, "?"),
                 summary.GetValueOrDefault(ZananceBackupSummary.Plans, "?")));
+
+            // Goals and holdings are listed when the backup has them (backups of earlier versions do not; ZEX-S0409).
+            if (summary.TryGetValue(ZananceBackupSummary.Goals, out var goals) && summary.TryGetValue(ZananceBackupSummary.Holdings, out var holdings))
+            {
+                lines.Add(_translator.Format("Backup_PreviewGoalsHoldings", goals, holdings));
+            }
         }
 
         return string.Join(Environment.NewLine, lines);

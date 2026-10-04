@@ -147,6 +147,9 @@ internal static class DebugSnapshots
         var accountId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         var weekdayPlanId = (await services.GetRequiredService<PlanStore>().GetSchedulesAsync()).First(s => s.Rule.DayRule == MonthDayRule.LastWeekday).Id;
         var loanId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
+        var holdingTypes = await services.GetRequiredService<HoldingStore>().GetTypesAsync();
+        var goldId = holdingTypes.First(t => t.Dimension == Core.Holdings.AssetDimension.Mass).Id;
+        var coinId = holdingTypes.First(t => t.Dimension == Core.Holdings.AssetDimension.Count).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
@@ -183,6 +186,13 @@ internal static class DebugSnapshots
             ("goals", AppShell.GoalsRoute, null),
             ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),
             ("goal-edit", AppShell.GoalEditorRoute, new() { ["id"] = goalId }),
+            ("holdings", AppShell.HoldingsRoute, null),
+            ("holding-detail", AppShell.HoldingDetailRoute, new() { ["id"] = goldId }),
+            ("holding-coin", AppShell.HoldingDetailRoute, new() { ["id"] = coinId }),
+            ("asset-type-edit", AppShell.AssetTypeEditorRoute, new() { ["id"] = coinId }),
+            ("asset-type-new", AppShell.AssetTypeEditorRoute, null),
+            ("asset-purchase", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "Purchase" }),
+            ("asset-move", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "LocationTransfer" }),
             ("importexport", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
@@ -322,8 +332,38 @@ internal static class DebugSnapshots
             Amount = 250_00,
             Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Start = today.AddDays(5) },
         });
+        await SeedHoldingsAsync(services, checking, today);
         await store.SaveTemplateAsync(new EntryTemplate { Name = "Coffee", Kind = EntryKind.Expense, AccountId = checking.Id, CategoryId = Category("Food"), Amount = 350 });
         return (groceries.Id, Category("Food"));
+    }
+
+    // Holdings (ZEX phase 3): 18k gold already owned, a purchase with a fee, a move to the bank box and a price; three
+    // coins received as a gift without a price, so the value is shown as unknown.
+    private static async Task SeedHoldingsAsync(IServiceProvider services, Account checking, DateOnly today)
+    {
+        var holdings = services.GetRequiredService<HoldingStore>();
+        var gold = new Core.Holdings.AssetType { Name = "18k gold", PriceCurrencyCode = checking.CurrencyCode, Metal = Core.Holdings.Metal.Gold, PurityPer10000 = 7500 };
+        var coin = new Core.Holdings.AssetType
+        {
+            Name = "Bahar Azadi coin", Kind = Core.Holdings.AssetKind.CoinOrBar, Dimension = Core.Holdings.AssetDimension.Count, Metal = Core.Holdings.Metal.Gold,
+            PurityPer10000 = 9000, UnitWeightMg = 8_133, CountUnitName = "coins", PriceCurrencyCode = checking.CurrencyCode, SortOrder = 1,
+        };
+        await holdings.SaveTypeAsync(gold);
+        await holdings.SaveTypeAsync(coin);
+        var safe = await holdings.EnsureDefaultLocationAsync("Home safe");
+        var bank = new Core.Holdings.AssetLocation { Name = "Bank box", SortOrder = 1 };
+        await holdings.SaveLocationAsync(bank);
+        await holdings.SaveEventAsync(new Core.Holdings.AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, Kind = Core.Holdings.AssetEventKind.Opening, Quantity = 20_000, BasisAmount = 1_000_00, Date = today.AddDays(-40) }, []);
+        var purchase = new Core.Holdings.AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, Kind = Core.Holdings.AssetEventKind.Purchase, Quantity = 10_000, BasisAmount = 1_050_00, Date = today.AddDays(-3) };
+        await holdings.SaveEventAsync(purchase,
+        [
+            new LedgerEntry { Kind = EntryKind.AssetPurchase, AccountId = checking.Id, Amount = 1_050_00, Date = purchase.Date, Title = gold.Name },
+            new LedgerEntry { Kind = EntryKind.Expense, AccountId = checking.Id, Amount = 20_00, Date = purchase.Date, CategoryId = await holdings.FeesCategoryAsync(), Title = "Fee: 18k gold" },
+        ]);
+        await holdings.SaveEventAsync(new Core.Holdings.AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, ToLocationId = bank.Id, Kind = Core.Holdings.AssetEventKind.LocationTransfer, Quantity = 5_000, Date = today.AddDays(-1) }, []);
+        await holdings.SaveValuationAsync(new Core.Holdings.AssetValuation { AssetTypeId = gold.Id, CurrencyCode = gold.PriceCurrencyCode, Date = purchase.Date, PricePerUnitMilli = 105_00_000, Source = Core.Holdings.ValuationSource.Purchase });
+        await holdings.SaveValuationAsync(new Core.Holdings.AssetValuation { AssetTypeId = gold.Id, CurrencyCode = gold.PriceCurrencyCode, Date = today, PricePerUnitMilli = 110_00_000 });
+        await holdings.SaveEventAsync(new Core.Holdings.AssetEvent { AssetTypeId = coin.Id, LocationId = safe.Id, Kind = Core.Holdings.AssetEventKind.GiftReceived, Quantity = 3_000, Date = today.AddDays(-20), Note = "Wedding gift" }, []);
     }
 
     private static async Task SeedBudgetAsync(IServiceProvider services, Guid foodId)

@@ -31,9 +31,11 @@ public sealed partial class EntryDetailViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    UndoService undo) : ViewModelBase, IQueryAttributable
+    UndoService undo,
+    HoldingStore holdings) : ViewModelBase, IQueryAttributable
 {
     private Guid _id;
+    private Guid? _holdingTypeId;
     private LedgerEntry? _entry;
 
     public ObservableCollection<DetailLine> Lines { get; } = [];
@@ -82,6 +84,10 @@ public sealed partial class EntryDetailViewModel(
     // Split across categories (F2-TX-01): offered for a single entry, and as "Edit split" for a part of one.
     [ObservableProperty]
     public partial bool CanSplit { get; set; }
+
+    /// <summary>Gets a value indicating whether the entry is the money (or fee) of a holding purchase or sale.</summary>
+    [ObservableProperty]
+    public partial bool IsHoldingMoney { get; set; }
 
     // Reimbursable expense (F2-TX-03): what is still to be paid back.
     [ObservableProperty]
@@ -158,7 +164,16 @@ public sealed partial class EntryDetailViewModel(
             ? translator.Format("Rule_Always", match, categories.Name(entry.CategoryId))
             : null;
         var related = entry.GroupId is { } groupId ? await store.GetGroupAsync(groupId) : [entry];
-        CanSplit = EntryActions.CanSplit(related) && !EntryActions.HasPaybacks(related, await store.GetEntriesAsync());
+
+        // The money of a holding purchase or sale (and its fee) is edited and deleted with the holding (ZEX-AS14).
+        _holdingTypeId = entry.GroupId is { } holdingGroup ? await holdings.FindTypeOfGroupAsync(holdingGroup) : null;
+        IsHoldingMoney = _holdingTypeId is not null;
+        if (IsHoldingMoney)
+        {
+            CanPayBack = CanMakeRecurring = CanSaveTemplate = false;
+            RuleActionText = null;
+        }
+        CanSplit = !IsHoldingMoney && EntryActions.CanSplit(related) && !EntryActions.HasPaybacks(related, await store.GetEntriesAsync());
         var isSplit = EntryActions.IsSplit(related);
         SplitActionText = translator[isSplit ? "Split_Edit" : "Split_Action"];
         SplitText = isSplit
@@ -384,7 +399,9 @@ public sealed partial class EntryDetailViewModel(
     }
 
     [RelayCommand]
-    private Task EditAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+    private Task EditAsync() => _holdingTypeId is { } holding
+        ? Shell.Current.GoToAsync(AppShell.HoldingDetailRoute, new Dictionary<string, object> { ["id"] = holding })
+        : Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["id"] = _id });
 
     [RelayCommand]
     private Task RecordReimbursementAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["refundOf"] = _id, ["reimburse"] = true });
@@ -454,6 +471,12 @@ public sealed partial class EntryDetailViewModel(
     {
         if (IsBusy)
         {
+            return;
+        }
+
+        if (_holdingTypeId is not null)
+        {
+            await EditAsync();
             return;
         }
 

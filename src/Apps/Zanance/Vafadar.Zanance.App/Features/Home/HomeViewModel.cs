@@ -10,6 +10,7 @@ using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Goals;
+using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
@@ -51,9 +52,13 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly Security.AppLockService _lock;
     private readonly GoalStore _goals;
     private readonly Goals.GoalPresenter _goalPresenter;
+    private readonly HoldingStore _holdings;
+    private readonly Holdings.HoldingText _holdingText;
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText)
     {
+        _holdings = holdings;
+        _holdingText = holdingText;
         _goals = goals;
         _goalPresenter = goalPresenter;
         _store = store;
@@ -81,6 +86,10 @@ public sealed partial class HomeViewModel : ViewModelBase
     public ObservableCollection<Brush> SliceBrushes { get; } = [];
 
     public ObservableCollection<AccountItem> Accounts { get; } = [];
+
+    /// <summary>Gets the holdings line, e.g. "Holdings: 18k gold 50.000 g · Coins 3 coins" – per type, never summed (ZEX-AS05).</summary>
+    [ObservableProperty]
+    public partial string? HoldingsText { get; set; }
 
     /// <summary>Gets the goals pinned to Home, at most two (ZEX-GO06).</summary>
     public ObservableCollection<Goals.GoalRow> PinnedGoals { get; } = [];
@@ -370,6 +379,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
         await LoadGoalsAsync(allAccounts, entries, today);
+        await LoadHoldingsAsync(today);
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null;
     }
 
@@ -451,6 +461,30 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     [RelayCommand]
     private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);
+
+    // Quantities per asset type, never added across types or into money (ZEX-AS05); at most three, then "+N".
+    private async Task LoadHoldingsAsync(DateOnly today)
+    {
+        var types = (await _holdings.GetTypesAsync()).Where(t => !t.IsArchived).ToDictionary(t => t.Id);
+        if (types.Count == 0)
+        {
+            HoldingsText = null;
+            return;
+        }
+
+        var events = await _holdings.GetEventsAsync();
+        var held = types.Values
+            .Select(t => (Type: t, Quantity: HoldingsLedger.Quantity(events, t.Id, today)))
+            .Where(h => h.Quantity > 0)
+            .Select(h => $"{h.Type.Name} {_holdingText.Quantity(h.Quantity, h.Type)}")
+            .ToList();
+        HoldingsText = held.Count == 0
+            ? null
+            : _translator.Format("Home_Holdings", string.Join(" · ", held.Take(3)) + (held.Count > 3 ? $" · +{held.Count - 3}" : string.Empty));
+    }
+
+    [RelayCommand]
+    private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
 
     // Pinned goals with progress and the estimate of the plan, only when valid (ZEX-GO06, GO07). Paused goals leave Home.
     private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
 using Vafadar.Testing;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.DataFiles;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 
@@ -99,6 +100,76 @@ public sealed class ZexPhase3DataTests : IDisposable
         gold.Dimension = AssetDimension.Count;
 
         Assert.False(await _holdings.SaveTypeAsync(gold, Ct));
+    }
+
+    [Fact]
+    public async Task The_money_of_a_purchase_is_not_deleted_without_its_holding()
+    {
+        var (cash, gold, safe) = await SetUpAsync();
+        var purchase = new AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, Kind = AssetEventKind.Purchase, Quantity = 10_000, BasisAmount = 1_000_00, Date = Day };
+        var payment = new LedgerEntry { Kind = EntryKind.AssetPurchase, AccountId = cash.Id, Amount = 1_000_00, Date = Day };
+        await _holdings.SaveEventAsync(purchase, [payment], Ct);
+
+        Assert.Empty(await _store.DeleteEntryAsync(payment.Id, Ct));
+        Assert.Single(await _store.GetEntriesAsync(cancellationToken: Ct));
+        Assert.Equal(gold.Id, await _holdings.FindTypeOfGroupAsync(purchase.GroupId!.Value, Ct));
+    }
+
+    [Fact]
+    public async Task A_holdings_file_imports_once_into_an_empty_profile_and_twice_creates_nothing()
+    {
+        var (_, gold, safe) = await SetUpAsync();
+        await _holdings.SaveEventAsync(new AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, Kind = AssetEventKind.Opening, Quantity = 20_000, Date = Day }, [], Ct);
+        await _holdings.SaveValuationAsync(new AssetValuation { AssetTypeId = gold.Id, CurrencyCode = "EUR", Date = Day, PricePerUnitMilli = 50_00_000 }, Ct);
+        var text = HoldingsCsv.Write(await _holdings.GetTypesAsync(Ct), await _holdings.GetLocationsAsync(Ct), await _holdings.GetEventsAsync(cancellationToken: Ct), await _holdings.GetValuationsAsync(cancellationToken: Ct), includeNotes: true);
+
+        using var other = new TemporaryDirectory();
+        await using var services = new ServiceCollection().AddZananceData(other.Combine("other.db")).BuildServiceProvider();
+        services.MigrateLocalDatabase<ZananceDbContext>();
+        var target = services.GetRequiredService<HoldingStore>();
+        var content = HoldingsCsv.Read(Csv.Read(text, ','), await target.GetTypesAsync(Ct), await target.GetLocationsAsync(Ct));
+
+        var first = await target.ImportAsync(content, Ct);
+        var second = await target.ImportAsync(content, Ct);
+
+        Assert.Equal((4, 0), (first.Imported, first.Skipped));
+        Assert.Equal((0, 4), (second.Imported, second.Skipped));
+        Assert.Equal(20_000, HoldingsLedger.Quantity(await target.GetEventsAsync(cancellationToken: Ct), gold.Id, Day));
+        Assert.Equal(50_00_000, Assert.Single(await target.GetValuationsAsync(cancellationToken: Ct)).PricePerUnitMilli);
+        SqliteConnection.ClearAllPools();
+    }
+
+    [Fact]
+    public async Task A_holdings_import_that_makes_a_history_negative_is_refused_as_a_whole()
+    {
+        var (_, gold, safe) = await SetUpAsync();
+        var sale = new AssetEvent { AssetTypeId = gold.Id, LocationId = safe.Id, Kind = AssetEventKind.Outflow, Quantity = 5_000, Date = Day };
+
+        var (imported, _, conflict) = await _holdings.ImportAsync(new HoldingsCsvContent([], [], [sale], [], []), Ct);
+
+        Assert.Equal(0, imported);
+        Assert.NotNull(conflict);
+        Assert.Empty(await _holdings.GetEventsAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    public async Task S0408_an_asset_account_stays_until_converted_and_then_becomes_one_valued_unit()
+    {
+        var car = new Account { Name = "Car", Type = AccountType.Asset, CurrencyCode = "EUR", OpeningBalance = 8_000_00, OpeningDate = new DateOnly(2026, 1, 1) };
+        await _store.SaveAccountAsync(car, Ct);
+        Assert.Empty(await _holdings.GetTypesAsync(Ct));
+
+        var type = await _holdings.ConvertAccountAsync(car.Id, 8_000_00, Day, "Home", Ct);
+
+        Assert.NotNull(type);
+        Assert.Equal("Car", type.Name);
+        Assert.Equal(AssetDimension.Count, type.Dimension);
+        var events = await _holdings.GetEventsAsync(cancellationToken: Ct);
+        Assert.Equal(1_000, HoldingsLedger.Quantity(events, type.Id, Day));
+        var value = AssetValuationService.Values([type], events, await _holdings.GetValuationsAsync(cancellationToken: Ct), Day).Single();
+        Assert.Equal(8_000_00, value.Value);
+        Assert.True((await _store.GetAccountsAsync(cancellationToken: Ct)).Single(a => a.Id == car.Id).IsArchived);
+        Assert.Null(await _holdings.ConvertAccountAsync(car.Id, 8_000_00, Day, "Home", Ct));
     }
 
     private async Task<(Account Cash, AssetType Gold, AssetLocation Safe)> SetUpAsync()

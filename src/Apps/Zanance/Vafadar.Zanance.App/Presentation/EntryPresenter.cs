@@ -62,6 +62,8 @@ internal sealed class EntryPresenter(
         { Title: { Length: > 0 } title } => title,
         { Kind: EntryKind.Transfer } => translator["EntryKind_Transfer"],
         { Kind: EntryKind.Adjustment } => translator["EntryKind_Adjustment"],
+        { Kind: EntryKind.AssetPurchase } => translator["EntryKind_AssetPurchase"],
+        { Kind: EntryKind.AssetSale } => translator["EntryKind_AssetSale"],
         _ => categories.Name(entry.CategoryId),
     };
 
@@ -71,6 +73,8 @@ internal sealed class EntryPresenter(
         EntryKind.Refund => $"{translator["EntryKind_Refund"]} · {categories.Name(entry.CategoryId)} · {AccountName(entry.AccountId)}",
         EntryKind.IncomeReversal => $"{translator["EntryKind_IncomeReversal"]} · {AccountName(entry.AccountId)}",
         EntryKind.Adjustment => AccountName(entry.AccountId),
+        // A holding bought or sold: neither spending nor income (ZEX-AS05).
+        EntryKind.AssetPurchase or EntryKind.AssetSale => $"{translator[$"EntryKind_{entry.Kind}"]} · {AccountName(entry.AccountId)}",
         _ when string.IsNullOrEmpty(entry.Title) => AccountName(entry.AccountId),
         _ => $"{categories.Name(entry.CategoryId)} · {AccountName(entry.AccountId)}",
     };
@@ -84,6 +88,8 @@ internal sealed class EntryPresenter(
             EntryKind.Income or EntryKind.Refund => MoneyText.Format(entry.Amount, currency, culture, showPlus: true),
             EntryKind.Expense or EntryKind.IncomeReversal => MoneyText.Format(-entry.Amount, currency, culture),
             EntryKind.Adjustment => MoneyText.Format(entry.Direction == AdjustmentDirection.Decrease ? -entry.Amount : entry.Amount, currency, culture, showPlus: true),
+            EntryKind.AssetPurchase => MoneyText.Format(-entry.Amount, currency, culture),
+            EntryKind.AssetSale => MoneyText.Format(entry.Amount, currency, culture, showPlus: true),
             _ => MoneyText.Format(entry.Amount, currency, culture),
         };
     }
@@ -100,12 +106,13 @@ internal sealed class EntryPresenter(
     {
         EntryKind.Transfer => Symbol.ArrowSwap,
         EntryKind.Adjustment => Symbol.ArrowSync,
+        EntryKind.AssetPurchase or EntryKind.AssetSale => Symbol.Diamond,
         _ when entry.Icon is not null => Icons.Parse(entry.Icon, categories.Icon(entry.CategoryId)),
         _ => categories.Icon(entry.CategoryId),
     };
 
     public Color IconColor(LedgerEntry entry) =>
-        entry.Kind is EntryKind.Transfer or EntryKind.Adjustment ? NeutralColor : categories.Color(entry.CategoryId);
+        entry.Kind is EntryKind.Transfer or EntryKind.Adjustment or EntryKind.AssetPurchase or EntryKind.AssetSale ? NeutralColor : categories.Color(entry.CategoryId);
 
     public EntryRow Row(LedgerEntry entry)
     {
