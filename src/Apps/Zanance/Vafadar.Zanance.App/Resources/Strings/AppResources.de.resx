@@ -4787,4 +4787,22 @@
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>Zeilen innerhalb einer Sammelbuchung (zählen doppelt): {0}. Bearbeiten Sie nach dem Import die Sammelbuchung oder die Zeilen.</value>
   </data>
+  <data name="Home_Next30" xml:space="preserve">
+    <value>Nächste 30 Tage: {0}</value>
+  </data>
+  <data name="Report_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="Report_BudgetUsage" xml:space="preserve">
+    <value>Verbraucht: {0}</value>
+  </data>
+  <data name="Report_BudgetLimit" xml:space="preserve">
+    <value>Limit mit Übertrag</value>
+  </data>
+  <data name="Report_BudgetSpent" xml:space="preserve">
+    <value>Ausgegeben (Ausgaben − Erstattungen)</value>
+  </data>
+  <data name="Report_BudgetRemaining" xml:space="preserve">
+    <value>Verbleibend</value>
+  </data>
 </root>

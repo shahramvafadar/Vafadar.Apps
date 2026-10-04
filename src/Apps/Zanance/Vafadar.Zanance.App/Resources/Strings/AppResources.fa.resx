@@ -4787,4 +4787,22 @@
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>ردیف‌های داخل یک ورودی تجمیعی (دو بار شمرده می‌شوند): {0}. پس از ورود، ورودی تجمیعی یا ردیف‌ها را ویرایش کنید.</value>
   </data>
+  <data name="Home_Next30" xml:space="preserve">
+    <value>پرداخت‌های ۳۰ روز آینده: {0}</value>
+  </data>
+  <data name="Report_Budget" xml:space="preserve">
+    <value>بودجه</value>
+  </data>
+  <data name="Report_BudgetUsage" xml:space="preserve">
+    <value>مصرف‌شده: {0}</value>
+  </data>
+  <data name="Report_BudgetLimit" xml:space="preserve">
+    <value>سقف با مقدار منتقل‌شده</value>
+  </data>
+  <data name="Report_BudgetSpent" xml:space="preserve">
+    <value>خرج‌شده (هزینه‌ها − بازپرداخت‌ها)</value>
+  </data>
+  <data name="Report_BudgetRemaining" xml:space="preserve">
+    <value>باقیمانده</value>
+  </data>
 </root>

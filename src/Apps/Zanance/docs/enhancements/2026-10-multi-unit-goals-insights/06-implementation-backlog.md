@@ -84,13 +84,13 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0503 | Mode-switch regression suite | 1 (rules with every phase) | Planned |
 | ZEX-S0601 | Report scope bar, drill-down parity, PDF scopes | 4 | Implemented – verified (scope bar; drill-down parity and PDF scope tests) |
 | ZEX-S0602 | Period overview (R1): surplus, rate, spending changes | 4 | Implemented – verified (K05, K06, K11 tests; tag overlaps named) |
-| ZEX-S0603 | Commitments and cost of living (R2): K04, K08 | 4 | Implemented – unverified (K04 and K08 tested; Home keeps its Upcoming group, no separate 30-day total there) |
+| ZEX-S0603 | Commitments and cost of living (R2): K04, K08 | 4 | Implemented – verified (K04 and K08 tested; Home shows the 30-day total above its upcoming payments) |
 | ZEX-S0604 | Goals and capacity (R3) | 4 | Implemented – verified (capacity and split tested; accepting stores a monthly plan) |
 | ZEX-S0605 | Holdings and net worth (R4): K10, K13 | 4 | Implemented – verified (K10 and K13 tests) |
 | ZEX-S0606 | Liquidity and headroom: K02 with usable scope, protected money, essential estimate | 4 | Implemented – verified (headroom example tested; Home warning, estimate in Settings) |
 | ZEX-S0607 | Debt burden and receivables (K09, K12) | 4 | Implemented – unverified (a loan plan is a plan that transfers to the loan, no extra link column; due dates and aging tested) |
 | ZEX-S0608 | Data quality (R6, K14): reconciliation date, backup status | 4 | Implemented – verified (K14 tests; reconcile date stored; backup item on Home) |
-| ZEX-S0609 | KPI explanations | 4 | Implemented – unverified (sheets for K01–K14 and capacity; no sheet is opened for K01 and K14 yet) |
+| ZEX-S0609 | KPI explanations | 4 | Implemented – unverified (sheets for K01–K14 and capacity from every card; texts checked in three languages by the resource test) |
 | ZEX-S0610 | Period-end review | 4 | Implemented – verified (review state tested; the optional reminder is not built) |
 | ZEX-S0611 | Aggregated entries and overlap handling | 4 | Implemented – unverified (editor, overlap choice and Undo; an import only warns about overlaps) |
 | ZEX-S0612 | Essential expense coverage (K07) | 4 | Implemented – verified (K07 tests, essential defaults) |

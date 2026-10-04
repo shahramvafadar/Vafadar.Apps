@@ -83,6 +83,15 @@ public sealed partial class ReportsViewModel
     [ObservableProperty]
     public partial bool HasTagRows { get; set; }
 
+    /// <summary>Gets the budget remaining of the month in this currency (ZEX-K01), or null without a budget (never 0).</summary>
+    [ObservableProperty]
+    public partial string? BudgetText { get; set; }
+
+    [ObservableProperty]
+    public partial string? BudgetDetail { get; set; }
+
+    private (long Limit, long Spent)? _budget;
+
     private async Task BuildOverviewAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
         var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
@@ -132,6 +141,7 @@ public sealed partial class ReportsViewModel
         }
 
         HasSeparateLines = SeparateLines.Count > 0;
+        await BuildBudgetAsync(entries);
         BuildChanges(entries, categories);
         BuildExpenses(entries, categories);
         if (IsAdvanced)
@@ -142,6 +152,38 @@ public sealed partial class ReportsViewModel
 
         await BuildStatusAsync(entries, full: false);
     }
+
+    // K01: the same remaining amount as the budget page and Home (limit with carry-over, spending of the flex part).
+    private async Task BuildBudgetAsync(IReadOnlyCollection<LedgerEntry> entries)
+    {
+        BudgetText = null;
+        BudgetDetail = null;
+        _budget = null;
+        if (PeriodKind != 0)
+        {
+            return;
+        }
+
+        var calendar = _settings.BudgetCalendar;
+        var (year, month) = PeriodMath.MonthOf(_from, calendar, _startDay);
+        var budget = await _store.GetBudgetAsync(year, month, calendar, _currency);
+        if (budget?.TotalLimit is not { } ownLimit)
+        {
+            return;
+        }
+
+        var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
+        var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, [.. _accounts], [.. entries], await _store.GetCategoriesAsync(), from, to));
+        _budget = (limit, status.Spent);
+        BudgetText = status.IsOver ? _translator.Format("Budget_Over", Money(-status.Remaining)) : _translator.Format("Home_BudgetLeft", Money(status.Remaining), Money(limit));
+        BudgetDetail = limit > 0 ? _translator.Format("Report_BudgetUsage", ((decimal)status.Spent * 100 / limit).ToString("0", Culture) + " %") : null;
+    }
+
+    [RelayCommand]
+    private Task ExplainBudgetAsync() => ExplainAsync("K01", BudgetText ?? string.Empty,
+        _budget is { } b ? [new(_translator["Report_BudgetLimit"], Money(b.Limit), false), new("− " + _translator["Report_BudgetSpent"], Money(b.Spent), false), new("= " + _translator["Report_BudgetRemaining"], Money(b.Limit - b.Spent), true, b.Limit < b.Spent)] : [],
+        () => Shell.Current.GoToAsync(AppShell.BudgetRoute));
 
     // K11: the comparison period has the same length while the period runs (AT30); Simple shows the top three.
     private void BuildChanges(IReadOnlyCollection<LedgerEntry> entries, CategoryLookup categories)

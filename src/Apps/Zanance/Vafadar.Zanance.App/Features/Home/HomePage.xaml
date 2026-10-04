@@ -429,6 +429,9 @@
                         <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenDueCommand}" />
                     </Grid>
                     <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">
+                        <VerticalStackLayout>
+                        <!-- The total of the next 30 days (ZEX-K04), the same number as the commitments report -->
+                        <Label Text="{Binding Next30Text}" Style="{StaticResource Secondary}" FontSize="13" Margin="16,10,16,0" IsVisible="{Binding Next30Text, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="plans:PlanRow">
@@ -436,6 +439,7 @@
                                                        CommandParameter="{Binding .}" />
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>

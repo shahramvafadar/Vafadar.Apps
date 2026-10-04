@@ -128,6 +128,18 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- K01 budget remaining of the month, only with a budget (never 0) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding BudgetText, Converter={StaticResource IsNotNullConverter}}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Budget}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainBudgetCommand}" />
+                        </Grid>
+                        <Label Text="{Binding BudgetText}" FontAttributes="Bold" FontSize="17" />
+                        <Label Text="{Binding BudgetDetail}" Style="{StaticResource Secondary}" IsVisible="{Binding BudgetDetail, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- K11 spending changes, same length while the period runs -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
@@ -607,6 +619,10 @@
             <!-- ================= R6 · Data status: a list, never a score; each item opens its fix ================= -->
             <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowStatus}">
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Review_Start}" Command="{Binding OpenReviewCommand}" />
+                <Grid ColumnDefinitions="*,Auto" Margin="4,0">
+                    <Label Text="{v:Translate Report_R6}" Style="{StaticResource SectionHeader}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainStatusCommand}" />
+                </Grid>
                 <Border Style="{StaticResource Card}" Padding="0">
                     <VerticalStackLayout>
                         <Label Text="{v:Translate Report_NoIssues}" Margin="16" IsVisible="{Binding HasIssues, Converter={StaticResource InvertedBoolConverter}}" />

@@ -163,6 +163,10 @@ public sealed partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? ReviewText { get; set; }
 
+    /// <summary>Gets the payments of the next 30 days in the Home currency, e.g. "Next 30 days: 1,200.00 EUR · ≈ 30.00 EUR · unknown: 1" (ZEX-K04).</summary>
+    [ObservableProperty]
+    public partial string? Next30Text { get; set; }
+
     /// <summary>Gets the backup item of the data status (ZEX-S0608): shown once on Home when the last backup is old or missing.</summary>
     [ObservableProperty]
     public partial string? BackupText { get; set; }
@@ -592,6 +596,16 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         HasUpcoming = Upcoming.Count > 0;
+
+        // K04: what the next 30 days cost, known, estimated and unknown apart – the same number as the reports.
+        var culture = _localization.CurrentCulture;
+        var next30 = Core.Reports.KpiCatalog.Commitments(accounts.Values, schedules, states, today).FirstOrDefault(c => string.Equals(c.CurrencyCode, _homeCurrency, StringComparison.OrdinalIgnoreCase));
+        Next30Text = next30 is null ? null : _translator.Format("Home_Next30", string.Join(" · ", new[]
+        {
+            MoneyText.Format(next30.Fixed, next30.CurrencyCode, culture),
+            next30.Estimated > 0 ? "≈ " + MoneyText.Format(next30.Estimated, next30.CurrencyCode, culture) : null,
+            next30.UnknownCount > 0 ? _translator.Format("Report_UnknownCount", next30.UnknownCount) : null,
+        }.Where(s => s is not null)));
     }
 
     // Expense by top-level category in the Home currency (or the only currency in use). Small slices are combined. The

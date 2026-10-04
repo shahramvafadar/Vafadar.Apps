@@ -4791,4 +4791,22 @@
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>Rows inside a summed-up entry (would count twice): {0}. After the import, edit the summed-up entry or the rows.</value>
   </data>
+  <data name="Home_Next30" xml:space="preserve">
+    <value>Next 30 days: {0}</value>
+  </data>
+  <data name="Report_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="Report_BudgetUsage" xml:space="preserve">
+    <value>Used: {0}</value>
+  </data>
+  <data name="Report_BudgetLimit" xml:space="preserve">
+    <value>Limit with carry-over</value>
+  </data>
+  <data name="Report_BudgetSpent" xml:space="preserve">
+    <value>Spent (expenses − refunds)</value>
+  </data>
+  <data name="Report_BudgetRemaining" xml:space="preserve">
+    <value>Remaining</value>
+  </data>
 </root>

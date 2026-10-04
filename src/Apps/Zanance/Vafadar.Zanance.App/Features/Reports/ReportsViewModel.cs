@@ -424,6 +424,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     };
 
     [RelayCommand]
+    private Task ExplainStatusAsync() => ExplainAsync("K14", string.Empty, [.. Issues.Select(i => new AmountLine(i.Text, string.Empty, false))]);
+
+    [RelayCommand]
     private Task OpenReviewAsync() => Shell.Current.GoToAsync(AppShell.ReviewRoute);
 
     [RelayCommand]
