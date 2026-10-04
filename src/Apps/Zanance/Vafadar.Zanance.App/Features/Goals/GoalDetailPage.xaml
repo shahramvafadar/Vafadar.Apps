@@ -123,7 +123,7 @@
                 </Grid>
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Archive}" Command="{Binding ArchiveCommand}" IsVisible="{Binding IsActive}" />
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Restore}" Command="{Binding RestoreCommand}" IsVisible="{Binding IsArchived}" />
-                <Button Text="{v:Translate Goal_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
+                <Button Text="{v:Translate Goal_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

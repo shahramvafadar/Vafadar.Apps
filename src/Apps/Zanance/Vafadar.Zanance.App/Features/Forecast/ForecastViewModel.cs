@@ -71,6 +71,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
     private Dictionary<Guid, string> _planCurrencies = [];
     private IReadOnlyList<CurrencyForecast> _forecasts = [];
     private List<Guid> _scope = [];
+    private readonly SemaphoreSlim _loading = new(1, 1);
 
     public ForecastViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
@@ -116,7 +117,22 @@ public sealed partial class ForecastViewModel : ViewModelBase
 
     partial void OnHorizonIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
+    /// <summary>Computes the forecast of the chosen horizon.</summary>
+    /// <remarks>Appearing, the horizon and the scenario can ask at once; loads run one after the other (as on Home, CR07-05).</remarks>
     public async Task LoadAsync()
+    {
+        await _loading.WaitAsync();
+        try
+        {
+            await LoadCoreAsync();
+        }
+        finally
+        {
+            _loading.Release();
+        }
+    }
+
+    private async Task LoadCoreAsync()
     {
         var today = Today;
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;

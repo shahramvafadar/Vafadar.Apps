@@ -630,6 +630,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
             return;
         }
 
+        var saved = false;
         IsBusy = true;
         try
         {
@@ -655,8 +656,11 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
             // Pinned goals keep their place; a newly pinned goal goes after the others (ZEX-GO06).
             goal.HomePin = ShowOnHome ? goal.HomePin ?? ((await _goals.GetGoalsAsync()).Max(g => g.HomePin) ?? 0) + 1 : null;
             await _goals.SaveGoalAsync(goal);
+
+            // From now on the page edits the saved goal: if the plan below fails, saving again must not add a second goal.
+            _existing = goal;
             await _goals.SaveContributionPlanAsync(goal.Id, BuildPlan(culture));
-            await Shell.Current.GoToAsync("..");
+            saved = true;
         }
         catch (InvalidOperationException)
         {
@@ -665,6 +669,12 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         finally
         {
             IsBusy = false;
+        }
+
+        // Leaving the page is not part of saving: a navigation problem must not look like a refused save.
+        if (saved)
+        {
+            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
         }
     }
 

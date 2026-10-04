@@ -142,7 +142,7 @@ public sealed partial class ReportsViewModel
         }
 
         HasSeparateLines = SeparateLines.Count > 0;
-        await BuildBudgetAsync(entries);
+        await BuildBudgetAsync(entries, categories);
         BuildChanges(entries, categories);
         BuildExpenses(entries, categories);
         if (IsAdvanced)
@@ -155,7 +155,7 @@ public sealed partial class ReportsViewModel
     }
 
     // K01: the same remaining amount as the budget page and Home (limit with carry-over, spending of the flex part).
-    private async Task BuildBudgetAsync(IReadOnlyCollection<LedgerEntry> entries)
+    private async Task BuildBudgetAsync(IReadOnlyCollection<LedgerEntry> entries, CategoryLookup categories)
     {
         BudgetText = null;
         BudgetDetail = null;
@@ -175,7 +175,7 @@ public sealed partial class ReportsViewModel
 
         var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
-        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, [.. _accounts], [.. entries], await _store.GetCategoriesAsync(), from, to));
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, [.. _accounts], [.. entries], categories.All, from, to));
         _budget = (limit, status.Spent);
         BudgetText = status.IsOver ? _translator.Format("Budget_Over", Money(-status.Remaining)) : _translator.Format("Home_BudgetLeft", Money(status.Remaining), Money(limit));
         BudgetDetail = limit > 0 ? _translator.Format("Report_BudgetUsage", ((decimal)status.Spent * 100 / limit).ToString("0", Culture) + " %") : null;

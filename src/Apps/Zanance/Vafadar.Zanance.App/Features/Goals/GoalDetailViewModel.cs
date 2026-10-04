@@ -158,17 +158,20 @@ public sealed partial class GoalDetailViewModel(
         }
 
         UnitNote = DisplayUnitNote.For(translator, goal.CurrencyCode);
-        await LoadCoverageAsync(goal);
 
-        var today = Today;
+        // The ledger is read once per load; coverage, trend, capacity and progress all work on the same data.
+        var settings = await store.GetSettingsAsync();
         var accounts = await store.GetAccountsAsync();
         var entries = await store.GetEntriesAsync();
+        await LoadCoverageAsync(goal, settings, accounts, entries);
+
+        var today = Today;
         var balances = GoalPresenter.Balances(accounts, entries, today);
         var all = await goals.GetGoalsAsync();
         var allocations = await goals.GetAllocationsAsync();
         var progress = (await presenter.EvaluateAsync(goals, accounts, entries, today, all)).FirstOrDefault(p => p.Goal.Id == goal.Id);
         Summary = presenter.Row(goal, progress);
-        await LoadTrendAsync(goal, progress?.Remaining ?? 0);
+        await LoadTrendAsync(goal, progress?.Remaining ?? 0, settings, accounts, entries);
         IsActive = goal.State == GoalState.Active;
         IsArchived = goal.State == GoalState.Archived;
         IsEarmark = goal.Type == GoalType.Earmark;
@@ -222,11 +225,10 @@ public sealed partial class GoalDetailViewModel(
     }
 
     // The observed pace (design §9.2) – a separate line from the user's own plan, which always stays available.
-    private async Task LoadTrendAsync(Goal goal, long remaining)
+    private async Task LoadTrendAsync(Goal goal, long remaining, Core.Settings.ZananceSettings settings, List<Account> accounts, List<Core.Ledger.LedgerEntry> entries)
     {
-        var settings = await store.GetSettingsAsync();
         var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
-        var trend = GoalTrendService.Compute(goal, remaining, await store.GetAccountsAsync(), await store.GetEntriesAsync(), await goals.GetAllocationsAsync(goal.Id), await holdings.GetEventsAsync(), Today, calendar, settings.MonthStartDay);
+        var trend = GoalTrendService.Compute(goal, remaining, accounts, entries, await goals.GetAllocationsAsync(goal.Id), await holdings.GetEventsAsync(), Today, calendar, settings.MonthStartDay);
         TrendText = trend.Status switch
         {
             TrendStatus.Ok => translator.Format("Goal_TrendEta", presenter.Amount(goal, trend.Pace!.Value), trend.CompletePeriods, dates.Format(trend.Eta!.Value, DateFormatStyle.MonthYear)),
@@ -261,7 +263,7 @@ public sealed partial class GoalDetailViewModel(
         if (plan?.AssumedPricePerUnitMilli is { } price)
         {
             AssumedPriceText = MoneyText.ForInput((long)Math.Round(price / 1_000m, MidpointRounding.AwayFromZero), type.PriceCurrencyCode, localization.CurrentCulture);
-            var capacity = Core.Reports.CapacityCalculator.Compute(await store.GetAccountsAsync(), await store.GetEntriesAsync(), await plans.GetSchedulesAsync(), await plans.GetStatesAsync(),
+            var capacity = Core.Reports.CapacityCalculator.Compute(accounts, entries, await plans.GetSchedulesAsync(), await plans.GetStatesAsync(),
                 await goals.GetGoalsAsync(), await goals.GetContributionPlansAsync(), type.PriceCurrencyCode, Today, calendar, settings.MonthStartDay, goal.Id);
             CapacityQuantityText = capacity.Amount is { } none && none <= 0 ? translator["Goal_NoCapacity"]
                 : capacity.Amount is { } money
@@ -280,23 +282,23 @@ public sealed partial class GoalDetailViewModel(
         }
 
         var plan = (await goals.GetContributionPlansAsync()).FirstOrDefault(p => p.GoalId == goal.Id) ?? new ContributionPlan { GoalId = goal.Id, Method = ContributionMethod.FixedAmount };
-        plan.AssumedPricePerUnitMilli = MoneyText.TryParse(AssumedPriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var price) && price > 0 ? price * 1_000 : null;
+        // Kept in thousandths; a price too large for that is not stored (as CR08-06).
+        plan.AssumedPricePerUnitMilli = MoneyText.TryParse(AssumedPriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var price) && price > 0 && price <= long.MaxValue / 1_000 ? price * 1_000 : null;
         await goals.SaveContributionPlanAsync(goal.Id, plan);
         await LoadAsync();
     }
 
     // For an emergency fund the question is how long the money would last; shown in Advanced (ZEX-S0612).
-    private async Task LoadCoverageAsync(Goal goal)
+    private async Task LoadCoverageAsync(Goal goal, Core.Settings.ZananceSettings settings, List<Account> accounts, List<Core.Ledger.LedgerEntry> entries)
     {
         CoverageText = null;
-        var settings = await store.GetSettingsAsync();
         if (!settings.Shows(Feature.GoalDetails))
         {
             return;
         }
 
         var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
-        var coverage = Core.Reports.KpiCatalog.Coverage(await store.GetAccountsAsync(), await store.GetEntriesAsync(), await store.GetCategoriesAsync(), await plans.GetSchedulesAsync(), goal.CurrencyCode, Today, calendar, settings.MonthStartDay);
+        var coverage = Core.Reports.KpiCatalog.Coverage(accounts, entries, await store.GetCategoriesAsync(), await plans.GetSchedulesAsync(), goal.CurrencyCode, Today, calendar, settings.MonthStartDay);
         CoverageText = coverage.Months is { } months
             ? translator.Format("Goal_Coverage", translator.Format("Report_Months", months.ToString("0.0", localization.CurrentCulture)))
             : null;

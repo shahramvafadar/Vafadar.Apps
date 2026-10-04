@@ -103,8 +103,7 @@
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Tx_Add}" Command="{Binding AddEntryCommand}" />
                 </VerticalStackLayout>
             </Border>
-            <Button Text="{v:Translate Report_SharePdf}" Command="{Binding SharePdfCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" HorizontalOptions="End" Padding="8,0"
+            <Button Text="{v:Translate Report_SharePdf}" Command="{Binding SharePdfCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource TextButton}" HorizontalOptions="End" Padding="8,0"
                     IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
 
             <!-- ================= R1 · Period overview ================= -->

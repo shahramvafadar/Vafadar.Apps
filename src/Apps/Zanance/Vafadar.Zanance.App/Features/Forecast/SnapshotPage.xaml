@@ -96,7 +96,7 @@
                 </Border>
                 <Label Text="{v:Translate Snapshot_PartsNote}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" />
 
-                <Button Text="{v:Translate Snapshot_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
+                <Button Text="{v:Translate Snapshot_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

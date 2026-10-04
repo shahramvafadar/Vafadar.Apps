@@ -11,7 +11,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Close}" Command="{Binding CloseCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Close}" Command="{Binding CloseCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" SemanticProperties.HeadingLevel="Level1" />
         </Grid>
 

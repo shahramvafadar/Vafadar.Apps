@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–9: libraries, core, data, app foundation, recording, accounts, holdings, plans and budget
+### Fixed – Code review, parts 1–10: libraries, core, data, app foundation, recording, accounts, holdings, plans, budget and insights
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -63,6 +63,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - A double tap on Save no longer adds a budget twice, and a budget needs at least one account.
 - The plan centre opens faster with many entries.
 - Screen readers hear the amount and status ("3 days overdue") of due items; switches in plans and budgets have names.
+- Reports apply a currency, period or package chosen while they are still loading (it was ignored), and the PDF never
+  mixes with a reload.
+- Saving a goal again after a failed second step no longer creates a second goal.
+- The forecast and the goal details load faster and never fill twice.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

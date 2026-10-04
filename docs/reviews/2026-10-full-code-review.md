@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 to CR09 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 to CR10 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -167,3 +167,10 @@ Filled in section by section.
 | CR09-08 | `PlanEditorViewModel.SaveAsync` | bug | Low | A navigation failure after a successful save was reported as "could not be saved" (as CR07-03). | Fixed. |
 | CR09-09 | Plan and budget pages | accessibility, control | Low | Ten switches and a checkbox list without names (the account checkboxes now say the account), hand-styled text buttons. | Fixed. |
 | CR09-10 | `OccurrenceViewModel`, `PlanDetailViewModel`, `SettlementViewModel` | review | – | Confirm, link, skip, partial payments and their undo; pause, resume and end; final settlement. | No bug found. Skip and link have no busy guard; a consistent guard for every command goes to CR12. |
+| CR10-01 | `Features/Reports/ReportsViewModel.cs` | bug | Medium | A `_loading` flag kept the page's own scope changes from reloading – and also dropped a change the user made while a load ran (another currency, period or package showed the old numbers); loads from appearing and a query, and the PDF walk through the packages, could run at the same time. | Fixed: the page's own changes are marked separately, a user change during a load is applied by one more load, and loads and the PDF run one after the other. |
+| CR10-02 | `Features/Goals/GoalEditorViewModel.cs` | bug | Medium | When the goal was saved but its contribution plan was not, the page still treated the goal as new: saving again added a second goal. A navigation problem after saving showed the account error. | Fixed: after the first save the page edits the saved goal; navigation is separate from saving. |
+| CR10-03 | `Features/Forecast/ForecastViewModel.cs` | bug | Low | Appearing and the horizon switch could compute at the same time and fill the cards twice (as CR07-05). | Fixed: loads run one after the other. |
+| CR10-04 | `Features/Goals/GoalDetailViewModel.cs` | performance, bug | Low | One load read all accounts and the whole ledger four times (coverage, trend, capacity, progress). The assumed price was multiplied by 1,000 without an overflow check (as CR08-06). | Fixed: read once and passed on; a price too large is not stored. |
+| CR10-05 | `ReportsViewModel.Overview.cs` | performance | Low | The overview read the categories again for the budget number. | Fixed: the lookup of the overview is used. |
+| CR10-06 | Report, KPI sheet, snapshot and goal pages | control | Low | Hand-styled text buttons. | Fixed: `TextButton` style. |
+| CR10-07 | Reports, KPI sheets, period review, goals list, snapshots | review | – | KPIs with their explanation sheets, drill-downs with the same scope, PDF, review steps, snapshot comparison (CR03-02). | No issue found. Editors without a discard question on Cancel (goals, splits, holdings, settlement) go to CR12. |

@@ -69,7 +69,13 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private string _currency = Currencies.Euro.Code;
     private ZananceSettings _settings = new();
     private List<Account> _accounts = [];
+    // A load is running; a scope change meanwhile asks for one more load after it (instead of being lost).
     private bool _loading;
+    private bool _reloadRequested;
+
+    // The page sets scope values itself (currency list, account, the packages of the PDF): those changes reload nothing.
+    private bool _applying;
+    private readonly SemaphoreSlim _gate = new(1, 1);
 
     public ReportsViewModel(
         ZananceStore store,
@@ -217,10 +223,18 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private void Reload()
     {
-        if (!_loading)
+        if (_applying)
         {
-            _ = Presentation.Failures.GuardAsync(LoadAsync);
+            return;
         }
+
+        if (_loading)
+        {
+            _reloadRequested = true;
+            return;
+        }
+
+        _ = Presentation.Failures.GuardAsync(LoadAsync);
     }
 
     /// <summary>Query: <c>report</c> (index of the package to show).</summary>
@@ -239,63 +253,94 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [RelayCommand]
     private Task AddEntryAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute);
 
+    /// <summary>Loads the shown package.</summary>
+    /// <remarks>
+    /// Loads run one after the other (appearing, a query and the scope switches can ask at once, as on Home, CR07-05), and a
+    /// switch changed during a load is applied by one more load right after it.
+    /// </remarks>
     public async Task LoadAsync()
     {
+        await _gate.WaitAsync();
         _loading = true;
         try
         {
-            _settings = await _store.GetSettingsAsync();
-            _startDay = _settings.MonthStartDay;
-            IsAdvanced = _settings.Shows(Feature.ReportDetails);
-            if (_year == 0)
+            do
             {
-                (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
+                _reloadRequested = false;
+                await LoadCoreAsync();
             }
-
-            PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
-            NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
-
-            // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
-            (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
-            PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
-                : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
-                : _dates.Format(_from, DateFormatStyle.MonthYear);
-            if (_to >= Today && _from <= Today)
-            {
-                // A running period is labelled as such, so it is not compared as if it were complete (REP-05).
-                PeriodText += " · " + _translator["Report_SoFar"];
-            }
-
-            _accounts = await _store.GetAccountsAsync();
-            LoadScope();
-            var entries = await _store.GetEntriesAsync();
-            IsEmpty = entries.Count == 0;
-
-            switch (PackageIndex)
-            {
-                case 0:
-                    await BuildOverviewAsync(entries);
-                    break;
-                case 1:
-                    await BuildCommitmentsAsync(entries);
-                    break;
-                case 2:
-                    await BuildGoalsAsync(entries);
-                    break;
-                case 3:
-                    await BuildWealthAsync(entries);
-                    break;
-                case 4:
-                    await BuildHistoryAsync(entries);
-                    break;
-                default:
-                    await BuildStatusAsync(entries, full: true);
-                    break;
-            }
+            while (_reloadRequested);
         }
         finally
         {
             _loading = false;
+            _gate.Release();
+        }
+    }
+
+    private async Task LoadCoreAsync()
+    {
+        _settings = await _store.GetSettingsAsync();
+        _startDay = _settings.MonthStartDay;
+        IsAdvanced = _settings.Shows(Feature.ReportDetails);
+        if (_year == 0)
+        {
+            (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
+        }
+
+        PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
+        NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
+
+        // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
+        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
+        PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
+            : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
+            : _dates.Format(_from, DateFormatStyle.MonthYear);
+        if (_to >= Today && _from <= Today)
+        {
+            // A running period is labelled as such, so it is not compared as if it were complete (REP-05).
+            PeriodText += " · " + _translator["Report_SoFar"];
+        }
+
+        _accounts = await _store.GetAccountsAsync();
+        ApplyScope();
+        var entries = await _store.GetEntriesAsync();
+        IsEmpty = entries.Count == 0;
+
+        switch (PackageIndex)
+        {
+            case 0:
+                await BuildOverviewAsync(entries);
+                break;
+            case 1:
+                await BuildCommitmentsAsync(entries);
+                break;
+            case 2:
+                await BuildGoalsAsync(entries);
+                break;
+            case 3:
+                await BuildWealthAsync(entries);
+                break;
+            case 4:
+                await BuildHistoryAsync(entries);
+                break;
+            default:
+                await BuildStatusAsync(entries, full: true);
+                break;
+        }
+    }
+
+    // LoadScope sets the currency and the account itself; that must not start another load.
+    private void ApplyScope()
+    {
+        _applying = true;
+        try
+        {
+            LoadScope();
+        }
+        finally
+        {
+            _applying = false;
         }
     }
 
@@ -504,12 +549,16 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     /// <summary>Creates the PDF of the current scope with all packages; the screen must be reloaded afterwards.</summary>
     public async Task<byte[]> CreatePdfAsync()
     {
+        // The PDF walks through every package on this view model: no load may run at the same time, and its own package
+        // changes reload nothing.
+        await _gate.WaitAsync();
         var shown = PackageIndex;
-        var entries = await _store.GetEntriesAsync();
         var tables = new List<Vafadar.Zanance.Reports.ReportTable>();
-        _loading = true;
+        _applying = true;
         try
         {
+            var entries = await _store.GetEntriesAsync();
+
             // R1: the overview with categories, trend and tags.
             PackageIndex = 0;
             LoadScope();
@@ -597,7 +646,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         finally
         {
             PackageIndex = shown;
-            _loading = false;
+            _applying = false;
+            _gate.Release();
         }
     }
 }
