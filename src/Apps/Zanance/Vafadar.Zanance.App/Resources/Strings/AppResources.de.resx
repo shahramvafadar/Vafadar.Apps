@@ -2509,9 +2509,6 @@
   <data name="Category_ColorOption" xml:space="preserve">
     <value>Farbe {0}</value>
   </data>
-  <data name="Category_IconOption" xml:space="preserve">
-    <value>Symbol {0}</value>
-  </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}, ausgewählt</value>
   </data>
@@ -5112,5 +5109,143 @@ Schritte zum Wiederholen:
   </data>
   <data name="Profile_NameTaken" xml:space="preserve">
     <value>Ein anderes Profil hat bereits diesen Namen.</value>
+  </data>
+  <data name="Icon_Home" xml:space="preserve">
+    <value>Zuhause</value>
+  </data>
+  <data name="Icon_Food" xml:space="preserve">
+    <value>Essen</value>
+  </data>
+  <data name="Icon_FoodPizza" xml:space="preserve">
+    <value>Pizza</value>
+  </data>
+  <data name="Icon_Cart" xml:space="preserve">
+    <value>Einkaufswagen</value>
+  </data>
+  <data name="Icon_ShoppingBag" xml:space="preserve">
+    <value>Einkaufstasche</value>
+  </data>
+  <data name="Icon_Flash" xml:space="preserve">
+    <value>Strom</value>
+  </data>
+  <data name="Icon_Drop" xml:space="preserve">
+    <value>Wasser</value>
+  </data>
+  <data name="Icon_Fire" xml:space="preserve">
+    <value>Heizung</value>
+  </data>
+  <data name="Icon_Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Icon_Laptop" xml:space="preserve">
+    <value>Laptop</value>
+  </data>
+  <data name="Icon_Tv" xml:space="preserve">
+    <value>Fernseher</value>
+  </data>
+  <data name="Icon_VehicleCar" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Icon_Gas" xml:space="preserve">
+    <value>Tanken</value>
+  </data>
+  <data name="Icon_Airplane" xml:space="preserve">
+    <value>Flug</value>
+  </data>
+  <data name="Icon_Beach" xml:space="preserve">
+    <value>Urlaub</value>
+  </data>
+  <data name="Icon_Heart" xml:space="preserve">
+    <value>Herz</value>
+  </data>
+  <data name="Icon_Pill" xml:space="preserve">
+    <value>Medikamente</value>
+  </data>
+  <data name="Icon_Stethoscope" xml:space="preserve">
+    <value>Arzt</value>
+  </data>
+  <data name="Icon_Dumbbell" xml:space="preserve">
+    <value>Fitness</value>
+  </data>
+  <data name="Icon_Shield" xml:space="preserve">
+    <value>Versicherung</value>
+  </data>
+  <data name="Icon_HatGraduation" xml:space="preserve">
+    <value>Bildung</value>
+  </data>
+  <data name="Icon_Book" xml:space="preserve">
+    <value>Bücher</value>
+  </data>
+  <data name="Icon_People" xml:space="preserve">
+    <value>Familie</value>
+  </data>
+  <data name="Icon_Person" xml:space="preserve">
+    <value>Persönlich</value>
+  </data>
+  <data name="Icon_Games" xml:space="preserve">
+    <value>Spiele</value>
+  </data>
+  <data name="Icon_MusicNote1" xml:space="preserve">
+    <value>Musik</value>
+  </data>
+  <data name="Icon_Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="Icon_ArrowRepeatAll" xml:space="preserve">
+    <value>Abos</value>
+  </data>
+  <data name="Icon_Gift" xml:space="preserve">
+    <value>Geschenk</value>
+  </data>
+  <data name="Icon_Money" xml:space="preserve">
+    <value>Geld</value>
+  </data>
+  <data name="Icon_Savings" xml:space="preserve">
+    <value>Sparen</value>
+  </data>
+  <data name="Icon_BuildingBank" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="Icon_Briefcase" xml:space="preserve">
+    <value>Arbeit</value>
+  </data>
+  <data name="Icon_Handshake" xml:space="preserve">
+    <value>Vereinbarung</value>
+  </data>
+  <data name="Icon_Receipt" xml:space="preserve">
+    <value>Beleg</value>
+  </data>
+  <data name="Icon_Wrench" xml:space="preserve">
+    <value>Reparatur</value>
+  </data>
+  <data name="Icon_PaintBrush" xml:space="preserve">
+    <value>Kunst</value>
+  </data>
+  <data name="Icon_Box" xml:space="preserve">
+    <value>Paket</value>
+  </data>
+  <data name="Icon_Balloon" xml:space="preserve">
+    <value>Feier</value>
+  </data>
+  <data name="Icon_Umbrella" xml:space="preserve">
+    <value>Schirm</value>
+  </data>
+  <data name="Icon_Star" xml:space="preserve">
+    <value>Stern</value>
+  </data>
+  <data name="Icon_Tag" xml:space="preserve">
+    <value>Etikett</value>
+  </data>
+  <data name="Icon_Wallet" xml:space="preserve">
+    <value>Geldbörse</value>
+  </data>
+  <data name="Icon_Payment" xml:space="preserve">
+    <value>Karte</value>
+  </data>
+  <data name="Icon_MoreHorizontal" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="Icon_QuestionCircle" xml:space="preserve">
+    <value>Unbekannt</value>
   </data>
 </root>

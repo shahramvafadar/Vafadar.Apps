@@ -63,8 +63,8 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         KindNames = [translator["CategoryKind_Expense"], translator["CategoryKind_Income"]];
         SpendingTypeNames = [translator["SpendingType_Flexible"], translator["SpendingType_Fixed"], translator["SpendingType_NonMonthly"]];
         Parents = [];
-        // The same icons in the same order as the icon choice of accounts, entries and goals, so "Icon 12" is one icon.
-        Icons = [.. IconPicker.Keys.Select((key, i) => Labelled(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent, "Category_IconOption", i))];
+        // The same icons with the same names ("Car", "Savings") as the icon choice of accounts, entries and goals.
+        Icons = [.. IconPicker.Keys.Select(key => Named(key, Presentation.Icons.Parse(key, Symbol.Tag), translator[$"Icon_{key}"]))];
         Palette = [.. ColorKeys.Select((key, i) => Labelled(key, Symbol.Circle, Color.FromArgb(key), "Category_ColorOption", i))];
         SelectedColor = Color.FromArgb(ColorKeys[0]);
         Select(Icons, "Tag");
@@ -204,11 +204,11 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         }
     }
 
-    private Swatch Labelled(string key, Symbol icon, Color color, string labelKey, int index)
-    {
-        var label = _translator.Format(labelKey, index + 1);
-        return new Swatch(key, icon, color, label, _translator.Format("Common_SelectedItem", label));
-    }
+    private Swatch Labelled(string key, Symbol icon, Color color, string labelKey, int index) =>
+        Named(key, icon, _translator.Format(labelKey, index + 1), color);
+
+    private Swatch Named(string key, Symbol icon, string label, Color? color = null) =>
+        new(key, icon, color ?? Colors.Transparent, label, _translator.Format("Common_SelectedItem", label));
 
     [RelayCommand]
     private void SelectIcon(Swatch swatch)

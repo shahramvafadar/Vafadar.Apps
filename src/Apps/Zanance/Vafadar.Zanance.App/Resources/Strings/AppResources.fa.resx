@@ -2509,9 +2509,6 @@
   <data name="Category_ColorOption" xml:space="preserve">
     <value>رنگ {0}</value>
   </data>
-  <data name="Category_IconOption" xml:space="preserve">
-    <value>آیکن {0}</value>
-  </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}، انتخاب‌شده</value>
   </data>
@@ -5112,5 +5109,143 @@
   </data>
   <data name="Profile_NameTaken" xml:space="preserve">
     <value>پروفایل دیگری همین نام را دارد.</value>
+  </data>
+  <data name="Icon_Home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="Icon_Food" xml:space="preserve">
+    <value>غذا</value>
+  </data>
+  <data name="Icon_FoodPizza" xml:space="preserve">
+    <value>پیتزا</value>
+  </data>
+  <data name="Icon_Cart" xml:space="preserve">
+    <value>سبد خرید</value>
+  </data>
+  <data name="Icon_ShoppingBag" xml:space="preserve">
+    <value>کیسهٔ خرید</value>
+  </data>
+  <data name="Icon_Flash" xml:space="preserve">
+    <value>برق</value>
+  </data>
+  <data name="Icon_Drop" xml:space="preserve">
+    <value>آب</value>
+  </data>
+  <data name="Icon_Fire" xml:space="preserve">
+    <value>گرمایش</value>
+  </data>
+  <data name="Icon_Phone" xml:space="preserve">
+    <value>تلفن</value>
+  </data>
+  <data name="Icon_Laptop" xml:space="preserve">
+    <value>لپ‌تاپ</value>
+  </data>
+  <data name="Icon_Tv" xml:space="preserve">
+    <value>تلویزیون</value>
+  </data>
+  <data name="Icon_VehicleCar" xml:space="preserve">
+    <value>خودرو</value>
+  </data>
+  <data name="Icon_Gas" xml:space="preserve">
+    <value>سوخت</value>
+  </data>
+  <data name="Icon_Airplane" xml:space="preserve">
+    <value>پرواز</value>
+  </data>
+  <data name="Icon_Beach" xml:space="preserve">
+    <value>تعطیلات</value>
+  </data>
+  <data name="Icon_Heart" xml:space="preserve">
+    <value>قلب</value>
+  </data>
+  <data name="Icon_Pill" xml:space="preserve">
+    <value>دارو</value>
+  </data>
+  <data name="Icon_Stethoscope" xml:space="preserve">
+    <value>پزشک</value>
+  </data>
+  <data name="Icon_Dumbbell" xml:space="preserve">
+    <value>بدنسازی</value>
+  </data>
+  <data name="Icon_Shield" xml:space="preserve">
+    <value>بیمه</value>
+  </data>
+  <data name="Icon_HatGraduation" xml:space="preserve">
+    <value>آموزش</value>
+  </data>
+  <data name="Icon_Book" xml:space="preserve">
+    <value>کتاب</value>
+  </data>
+  <data name="Icon_People" xml:space="preserve">
+    <value>خانواده</value>
+  </data>
+  <data name="Icon_Person" xml:space="preserve">
+    <value>شخصی</value>
+  </data>
+  <data name="Icon_Games" xml:space="preserve">
+    <value>بازی</value>
+  </data>
+  <data name="Icon_MusicNote1" xml:space="preserve">
+    <value>موسیقی</value>
+  </data>
+  <data name="Icon_Sport" xml:space="preserve">
+    <value>ورزش</value>
+  </data>
+  <data name="Icon_ArrowRepeatAll" xml:space="preserve">
+    <value>اشتراک</value>
+  </data>
+  <data name="Icon_Gift" xml:space="preserve">
+    <value>هدیه</value>
+  </data>
+  <data name="Icon_Money" xml:space="preserve">
+    <value>پول</value>
+  </data>
+  <data name="Icon_Savings" xml:space="preserve">
+    <value>پس‌انداز</value>
+  </data>
+  <data name="Icon_BuildingBank" xml:space="preserve">
+    <value>بانک</value>
+  </data>
+  <data name="Icon_Briefcase" xml:space="preserve">
+    <value>کار</value>
+  </data>
+  <data name="Icon_Handshake" xml:space="preserve">
+    <value>توافق</value>
+  </data>
+  <data name="Icon_Receipt" xml:space="preserve">
+    <value>رسید</value>
+  </data>
+  <data name="Icon_Wrench" xml:space="preserve">
+    <value>تعمیرات</value>
+  </data>
+  <data name="Icon_PaintBrush" xml:space="preserve">
+    <value>هنر</value>
+  </data>
+  <data name="Icon_Box" xml:space="preserve">
+    <value>بسته</value>
+  </data>
+  <data name="Icon_Balloon" xml:space="preserve">
+    <value>جشن</value>
+  </data>
+  <data name="Icon_Umbrella" xml:space="preserve">
+    <value>چتر</value>
+  </data>
+  <data name="Icon_Star" xml:space="preserve">
+    <value>ستاره</value>
+  </data>
+  <data name="Icon_Tag" xml:space="preserve">
+    <value>برچسب</value>
+  </data>
+  <data name="Icon_Wallet" xml:space="preserve">
+    <value>کیف پول</value>
+  </data>
+  <data name="Icon_Payment" xml:space="preserve">
+    <value>کارت</value>
+  </data>
+  <data name="Icon_MoreHorizontal" xml:space="preserve">
+    <value>سایر</value>
+  </data>
+  <data name="Icon_QuestionCircle" xml:space="preserve">
+    <value>نامشخص</value>
   </data>
 </root>

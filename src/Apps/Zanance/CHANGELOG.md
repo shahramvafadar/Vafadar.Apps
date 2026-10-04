@@ -78,6 +78,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Holding changes show their sign in front of the number in Persian.
 - The "Opening balance unknown" label toggles its checkbox, like the other checkbox labels.
 - Two categories with the same name in the same place, or two profiles with one name, can no longer be created.
+- Screen readers name each icon in the icon choice ("Car", "Savings") instead of "Icon 12".
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

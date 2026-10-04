@@ -36,7 +36,6 @@ public sealed class IconPicker : ContentView
     {
         var translator = Translator.Instance;
         var panel = new FlexLayout { Wrap = FlexWrap.Wrap };
-        var number = 0;
         foreach (var key in Keys.Prepend(null))
         {
             View symbol;
@@ -60,8 +59,8 @@ public sealed class IconPicker : ContentView
             };
             AutomationProperties.SetIsInAccessibleTree(face, false);
 
-            // The same names as the icon choice of the category editor ("Icon 3"); the first tile keeps the default.
-            var name = key is null ? translator["Icon_Default"] : translator.Format("Category_IconOption", ++number);
+            // What the icon shows ("Car", "Savings"), the same names as in the category editor; the first tile keeps the default.
+            var name = translator[key is null ? "Icon_Default" : $"Icon_{key}"];
             var button = new Button { Text = string.Empty, BackgroundColor = Colors.Transparent, BorderWidth = 0, CornerRadius = 12, Padding = 0 };
             button.Clicked += (_, _) => SelectedKey = key;
 
