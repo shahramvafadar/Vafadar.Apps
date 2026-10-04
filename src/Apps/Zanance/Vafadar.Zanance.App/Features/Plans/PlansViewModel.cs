@@ -53,16 +53,18 @@ public sealed record PlanRow(
     /// <summary>Gets a value indicating whether the row shows an icon tile.</summary>
     public bool HasIcon => DayText is null;
 
-    /// <summary>Returns what a screen reader says for the row (Windows names list rows after it).</summary>
-    public override string ToString() =>
+    /// <summary>Gets what a screen reader says for the row: name, amount, date or rule and status (e.g. "3 days overdue").</summary>
+    public string Description =>
         string.Join(", ", new[] { Title, AmountText, Subtitle, Badge }.Where(part => !string.IsNullOrWhiteSpace(part)));
+
+    /// <summary>Returns <see cref="Description"/> (Windows names list rows after it).</summary>
+    public override string ToString() => Description;
 }
 
 /// <summary>The plan centre (UI-07): due and overdue, upcoming and all plans. Works without notification permission (REM-02).</summary>
 public sealed partial class PlansViewModel : ViewModelBase
 {
     private const int UpcomingDays = 60;
-
 
     private readonly ZananceStore _store;
     private readonly PlanStore _plans;
@@ -90,7 +92,9 @@ public sealed partial class PlansViewModel : ViewModelBase
 
     public IReadOnlyList<string> SegmentNames { get; }
 
-    public ObservableCollection<PlanRow> Rows { get; } = [];
+    /// <summary>Gets the rows of the chosen list; replaced as a whole, so the list lays out once per change.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<PlanRow> Rows { get; set; } = [];
 
     [ObservableProperty]
     public partial int SegmentIndex { get; set; }
@@ -118,7 +122,7 @@ public sealed partial class PlansViewModel : ViewModelBase
         _states = await _plans.GetStatesAsync();
         _accounts = (await _store.GetAccountsAsync()).ToDictionary(a => a.Id);
         _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-        UnreviewedCount = (await _store.GetEntriesAsync()).Count(e => e.Review == ReviewState.Unreviewed);
+        UnreviewedCount = await _store.CountUnreviewedAsync();
         HasNoPlans = _schedules.Count == 0;
 
         // Reminders were chosen but notifications are not allowed: say so, the plans themselves keep working (AT-34).
@@ -139,7 +143,7 @@ public sealed partial class PlansViewModel : ViewModelBase
 
         var text = new PlanText(_translator, _dates, _localization.CurrentCulture);
         var today = Today;
-        Rows.Clear();
+        var rows = new List<PlanRow>();
 
         switch (SegmentIndex)
         {
@@ -148,7 +152,7 @@ public sealed partial class PlansViewModel : ViewModelBase
                              .SelectMany(s => Occurrences.OpenUpTo(s, _states, today, s.ActiveFrom ?? s.Rule.Start))
                              .OrderBy(o => o.DueDate))
                 {
-                    Rows.Add(OccurrenceRow(occurrence, text, today));
+                    rows.Add(OccurrenceRow(occurrence, text, today));
                 }
 
                 EmptyText = _translator[HasNoPlans ? "Plans_Empty" : "Plans_NothingDue"];
@@ -160,7 +164,7 @@ public sealed partial class PlansViewModel : ViewModelBase
                              .Where(o => o.IsOpen)
                              .OrderBy(o => o.DueDate))
                 {
-                    Rows.Add(OccurrenceRow(occurrence, text, today));
+                    rows.Add(OccurrenceRow(occurrence, text, today));
                 }
 
                 EmptyText = _translator[HasNoPlans ? "Plans_Empty" : "Plans_NothingUpcoming"];
@@ -169,14 +173,15 @@ public sealed partial class PlansViewModel : ViewModelBase
             default:
                 foreach (var schedule in _schedules.Where(s => !_schedules.Any(n => n.PreviousScheduleId == s.Id)))
                 {
-                    Rows.Add(ScheduleRow(schedule, text, today));
+                    rows.Add(ScheduleRow(schedule, text, today));
                 }
 
                 EmptyText = _translator["Plans_Empty"];
                 break;
         }
 
-        IsEmpty = Rows.Count == 0;
+        Rows = rows;
+        IsEmpty = rows.Count == 0;
     }
 
     private PlanRow OccurrenceRow(Occurrence occurrence, PlanText text, DateOnly today)

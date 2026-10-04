@@ -34,6 +34,6 @@
                 Command="{Binding Command, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
                 CommandParameter="{Binding CommandParameter, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
                 IsVisible="{Binding Command, Source={x:Reference Root}, Converter={StaticResource IsNotNullConverter}, x:DataType=local:PlanRowView}"
-                SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Subtitle}" />
+                SemanticProperties.Description="{Binding Description}" />
     </Grid>
 </ContentView>

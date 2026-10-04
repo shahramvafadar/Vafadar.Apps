@@ -5101,4 +5101,7 @@ Schritte zum Wiederholen:
   <data name="Account_NameTaken" xml:space="preserve">
     <value>Ein anderes Konto hat bereits diesen Namen. Wählen Sie einen anderen, damit Listen und Dateien die Konten unterscheiden können.</value>
   </data>
+  <data name="Budget_NoAccountChosen" xml:space="preserve">
+    <value>Wählen Sie mindestens ein Konto für dieses Budget.</value>
+  </data>
 </root>

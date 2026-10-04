@@ -12,8 +12,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{v:Translate Budget_EditTitle}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -38,7 +37,7 @@
                         <Label Text="{v:Translate Budget_ScopeHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0" />
                         <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                             <Label Text="{v:Translate Budget_Alerts}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Budget_Alerts}" />
                         </Grid>
                         <VerticalStackLayout IsVisible="{Binding IsAdvanced}" Spacing="4" Margin="0,12,0,0">
                             <HorizontalStackLayout Spacing="6">
@@ -67,7 +66,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:ScopeAccount">
                                 <Grid ColumnDefinitions="Auto,*" MinimumHeightRequest="48">
-                                    <CheckBox IsChecked="{Binding IsIncluded}" Color="{DynamicResource Primary}" VerticalOptions="Center" />
+                                    <CheckBox IsChecked="{Binding IsIncluded}" Color="{DynamicResource Primary}" VerticalOptions="Center" SemanticProperties.Description="{Binding Name}" />
                                     <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
                                 </Grid>
                             </DataTemplate>

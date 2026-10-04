@@ -5105,4 +5105,7 @@ Steps to repeat it:
   <data name="Account_NameTaken" xml:space="preserve">
     <value>Another account already has this name. Choose a different one, so lists and files can tell them apart.</value>
   </data>
+  <data name="Budget_NoAccountChosen" xml:space="preserve">
+    <value>Choose at least one account for this budget.</value>
+  </data>
 </root>

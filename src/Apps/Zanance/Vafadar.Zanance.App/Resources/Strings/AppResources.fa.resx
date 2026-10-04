@@ -5101,4 +5101,7 @@
   <data name="Account_NameTaken" xml:space="preserve">
     <value>حساب دیگری همین نام را دارد. نام دیگری انتخاب کنید تا فهرست‌ها و فایل‌ها آن‌ها را از هم تشخیص دهند.</value>
   </data>
+  <data name="Budget_NoAccountChosen" xml:space="preserve">
+    <value>دستکم یک حساب برای این بودجه انتخاب کنید.</value>
+  </data>
 </root>

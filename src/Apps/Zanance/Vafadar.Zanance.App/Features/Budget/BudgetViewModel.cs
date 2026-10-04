@@ -61,6 +61,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
     private BudgetPeriod _period;
     private DateOnly _periodStart;
     private bool _refreshing;
+    private readonly SemaphoreSlim _loading = new(1, 1);
 
     public BudgetViewModel(ZananceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
@@ -247,13 +248,35 @@ public sealed partial class BudgetViewModel : ViewModelBase
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        settings.HomeBudgetCurrencyCode = value;
-        await _store.SaveSettingsAsync(settings);
-        await Presentation.Failures.GuardAsync(LoadAsync);
+        // An async void handler: every failure is shown instead of ending the app.
+        await Presentation.Failures.GuardAsync(async () =>
+        {
+            var settings = await _store.GetSettingsAsync();
+            settings.HomeBudgetCurrencyCode = value;
+            await _store.SaveSettingsAsync(settings);
+            await LoadAsync();
+        });
     }
 
+    /// <summary>Loads the shown period.</summary>
+    /// <remarks>
+    /// Appearing, the period and currency switches and the confirmed-only switch can ask at the same moment; two loads
+    /// filling the same lists would mix their lines, so loads run one after the other (as on Home, CR07-05).
+    /// </remarks>
     public async Task LoadAsync()
+    {
+        await _loading.WaitAsync();
+        try
+        {
+            await LoadCoreAsync();
+        }
+        finally
+        {
+            _loading.Release();
+        }
+    }
+
+    private async Task LoadCoreAsync()
     {
         var settings = await _store.GetSettingsAsync();
         _startDay = settings.MonthStartDay;
@@ -342,8 +365,10 @@ public sealed partial class BudgetViewModel : ViewModelBase
         HasBudget = _budget is not null;
         ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
 
-        var accounts = await _store.GetAccountsAsync();
+        var accounts = allAccounts;
         var entries = await _store.GetEntriesAsync(from, to);
+        var schedules = await _plans.GetSchedulesAsync();
+        var states = await _plans.GetStatesAsync();
         var categories = await _store.GetCategoriesAsync();
         var lookup = new CategoryLookup(categories, _translator);
         var culture = _localization.CurrentCulture;
@@ -367,7 +392,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
             var carry = await _store.GetBudgetCarryAsync(budget);
             if (IsFlex)
             {
-                await LoadFlexAsync(budget, carry.Total, accounts, entries, categories, from, to, culture);
+                LoadFlex(budget, carry.Total, accounts, entries, schedules, states, categories, from, to, culture);
             }
             else if (budget.TotalLimit is { } limit)
             {
@@ -397,8 +422,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
         UnreviewedText = unreviewed > 0 && !ConfirmedOnly ? _translator.Format("Budget_IncludesUnreviewed", unreviewed) : null;
 
         // Plans of the month: real occurrences (BUD-10) and monthly shares of non-monthly plans (BUD-09).
-        var schedules = await _plans.GetSchedulesAsync();
-        var planned = BudgetPlanning.PlannedInPeriod(schedules, await _plans.GetStatesAsync(), accounts.ToDictionary(a => a.Id), from, to, _currency, Today);
+        var planned = BudgetPlanning.PlannedInPeriod(schedules, states, accounts.ToDictionary(a => a.Id), from, to, _currency, Today);
         PlannedText = planned.Count == 0 ? null : _translator.Format("Budget_Planned", MoneyText.Format(planned.Total, _currency, culture), planned.Count)
             + (planned.UnknownCount > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", planned.UnknownCount) : string.Empty);
         var equivalent = schedules
@@ -410,11 +434,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
     // monthly share. Every amount is counted in one group only (BUD-12).
-    private async Task LoadFlexAsync(Core.Budgets.Budget budget, long carry, IReadOnlyList<Account> accounts, IReadOnlyList<LedgerEntry> entries,
-        IReadOnlyList<Core.Categories.Category> categories, DateOnly from, DateOnly to, CultureInfo culture)
+    private void LoadFlex(Core.Budgets.Budget budget, long carry, IReadOnlyList<Account> accounts, IReadOnlyList<LedgerEntry> entries,
+        List<Core.Plans.Schedule> schedules, List<Core.Plans.OccurrenceState> states, IReadOnlyList<Core.Categories.Category> categories, DateOnly from, DateOnly to, CultureInfo culture)
     {
         var limit = (budget.TotalLimit ?? 0) + carry;
-        var flex = FlexCalculator.Summarize(limit, accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), categories,
+        var flex = FlexCalculator.Summarize(limit, accounts, entries, schedules, states, categories,
             from, to, _currency, Today, budget.AccountIds.Count > 0 ? budget.AccountIds : null, ConfirmedOnly);
         string Money(long value) => MoneyText.Format(value, _currency, culture);
 
@@ -603,13 +627,16 @@ public sealed partial class BudgetViewModel : ViewModelBase
             return;
         }
 
+        // Over an existing budget the copy replaces it in one step: if it cannot be saved, the old budget stays.
         var copy = _period == BudgetPeriod.Month ? BudgetPlanning.CopyTo(_budget, ny, nm) : BudgetPlanning.CopyTo(_budget, nextStart);
         if (existing is not null)
         {
-            await _store.DeleteBudgetAsync(existing.Id);
+            await _store.ReplaceBudgetAsync(existing.Id, copy);
         }
-
-        await _store.SaveBudgetAsync(copy);
+        else
+        {
+            await _store.SaveBudgetAsync(copy);
+        }
         if (_period == BudgetPeriod.Month)
         {
             (_year, _month) = (ny, nm);

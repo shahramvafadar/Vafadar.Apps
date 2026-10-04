@@ -148,7 +148,7 @@
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Budget_ConfirmedOnly}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Budget_ConfirmedOnly}" />
                     </Grid>
                     <Label Text="{Binding UnreviewedText}" TextColor="{DynamicResource WarningText}"
                            IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
@@ -167,7 +167,7 @@
             <VerticalStackLayout Spacing="8" IsVisible="{Binding HasBudget}" Margin="0,8,0,0">
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyNext}" Command="{Binding CopyToNextCommand}" />
-                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" />
+                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

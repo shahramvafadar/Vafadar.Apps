@@ -80,7 +80,7 @@
                 </Grid>
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Settlement_Title}" Command="{Binding SettleCommand}"
                         IsVisible="{Binding CanSettle}" />
-                <Button Text="{v:Translate Plan_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
+                <Button Text="{v:Translate Plan_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}"
                         TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding CanDelete}" />
             </VerticalStackLayout>
         </ScrollView>

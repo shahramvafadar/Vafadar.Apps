@@ -18,7 +18,7 @@
                     IsVisible="{Binding RemindersOff}">
                 <Grid ColumnDefinitions="*,Auto">
                     <Label Text="{v:Translate Reminder_PermissionDenied}" TextColor="{DynamicResource WarningText}" VerticalOptions="Center" />
-                    <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableRemindersCommand}" BackgroundColor="Transparent"
+                    <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableRemindersCommand}" Style="{StaticResource TextButton}"
                             TextColor="{DynamicResource WarningText}" FontAttributes="Bold" />
                 </Grid>
             </Border>
@@ -28,7 +28,7 @@
                     IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
                 <Grid ColumnDefinitions="*,Auto">
                     <Label Text="{v:Translate Plans_UnreviewedEntries}" TextColor="{DynamicResource RefundText}" VerticalOptions="Center" />
-                    <Button Grid.Column="1" Text="{v:Translate Plans_Review}" Command="{Binding ReviewEntriesCommand}" BackgroundColor="Transparent"
+                    <Button Grid.Column="1" Text="{v:Translate Plans_Review}" Command="{Binding ReviewEntriesCommand}" Style="{StaticResource TextButton}"
                             TextColor="{DynamicResource RefundText}" FontAttributes="Bold" />
                 </Grid>
             </Border>
@@ -38,10 +38,10 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:PlanRow">
                     <Grid Padding="16,0,16,8">
-                    <Border Style="{StaticResource Card}" Padding="0">
-                        <local:PlanRowView Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:PlansViewModel}}, x:DataType=local:PlansViewModel}"
-                                           CommandParameter="{Binding .}" />
-                    </Border>
+                        <Border Style="{StaticResource Card}" Padding="0">
+                            <local:PlanRowView Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:PlansViewModel}}, x:DataType=local:PlansViewModel}"
+                                               CommandParameter="{Binding .}" />
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

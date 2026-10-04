@@ -390,6 +390,29 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         OnChanged();
     }
 
+    /// <summary>
+    /// Saves <paramref name="budget"/> in place of the budget <paramref name="replacedId"/> in one transaction (copy to the
+    /// next period over an existing budget, BUD-07): if the new budget cannot be saved, the old one stays.
+    /// </summary>
+    public async Task ReplaceBudgetAsync(Guid replacedId, Budget budget, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(budget);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == replacedId, cancellationToken) is { } replaced)
+        {
+            // Removed first in its own step, so the new budget of the same period never meets the old one.
+            db.Budgets.Remove(replaced);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        db.Budgets.Add(budget);
+        await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        OnChanged();
+    }
+
     /// <summary>Deletes a budget; entries are not affected.</summary>
     public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -876,6 +899,13 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         return await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+    }
+
+    /// <summary>Returns how many entries wait for review (REC-13), counted in the database instead of loading every entry.</summary>
+    public async Task<int> CountUnreviewedAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await db.Entries.CountAsync(e => e.Review == ReviewState.Unreviewed, cancellationToken);
     }
 
     /// <summary>Returns the refunds linked to a purchase.</summary>

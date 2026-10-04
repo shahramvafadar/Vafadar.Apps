@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–8: libraries, core, data, app foundation, recording, accounts and holdings
+### Fixed – Code review, parts 1–9: libraries, core, data, app foundation, recording, accounts, holdings, plans and budget
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -56,6 +56,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Very large prices or quantities of holdings are refused instead of overflowing.
 - The exchange-rate form suggests a missing rate first and accepts the Persian decimal separator.
 - Account rows wrap their labels on small screens.
+- "Also skip public holidays" in a plan is saved again (it was lost on every save) and the preview shows the shifted
+  dates.
+- Copying a budget to the next month over an existing one can no longer lose it.
+- The budget page no longer mixes lines when the period or currency is switched while it loads.
+- A double tap on Save no longer adds a budget twice, and a budget needs at least one account.
+- The plan centre opens faster with many entries.
+- Screen readers hear the amount and status ("3 days overdue") of due items; switches in plans and budgets have names.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

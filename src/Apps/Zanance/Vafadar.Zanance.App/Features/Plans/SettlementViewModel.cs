@@ -36,6 +36,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
 
     [ObservableProperty]
     public partial string? AdvancesText { get; set; }
+
     // Amounts are typed in the currency's display unit when one is defined (FX-07).
     [ObservableProperty]
     public partial string? UnitNote { get; set; }

@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 to CR08 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 to CR09 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -157,3 +157,13 @@ Filled in section by section.
 | CR08-09 | `Features/Categories/CategoryEditorViewModel.cs` | quality | Low | (CR06-11) Its own copy of the icon list, without Wallet and Payment, so "Icon 43" meant different icons. | Fixed: `IconPicker.Keys`. |
 | CR08-10 | `AccountDetailViewModel.cs`, `AccountFormModel.cs`, `RulesViewModel.cs` and the CR08 pages | quality, accessibility | Low | Settings read twice per load, misindented lines, a rule saved with surrounding spaces, unnamed checkboxes and switches, hand-styled text buttons, delete buttons without the item's name. | Fixed. |
 | CR08-11 | Accounts, holdings, categories, rates | review | – | Reconciliation, loan estimate and installment, holding conflicts and undo, display units. | No issue found. |
+| CR09-01 | `Features/Plans/PlanEditorViewModel.cs` | bug | High | "Also skip public holidays" was read from a plan but never written: `BuildRule` set no `HolidayRegion`, so the switch was lost on every save (and the preview ignored it) since the option exists. | Fixed: the region is part of the rule (a plan keeps its region when the device's region has no calendar); the preview shows the shifted dates. |
+| CR09-02 | `Features/Budget/BudgetViewModel.cs`, `Vafadar.Zanance.Data/ZananceStore.cs` | bug | Medium | "Copy to next month" over an existing budget deleted it and saved the copy in a second step: a failing save lost the next month's budget. | Fixed: `ReplaceBudgetAsync` replaces in one transaction; test `Copying_over_an_existing_budget_replaces_it_in_one_step`. |
+| CR09-03 | `BudgetViewModel.LoadAsync` | bug, performance | Medium | Appearing, the period, currency and confirmed-only switches could load at the same time and mix their lines (as CR07-05); accounts, plans and states were read twice. A failing currency switch could end the app (`async void`). | Fixed: loads run one after the other; data read once; the handler is guarded. |
+| CR09-04 | `Features/Budget/BudgetEditorViewModel.cs` | bug | Medium | No busy guard: a double tap on Save of a new budget could add it twice. With every account unticked, the empty list meant "all accounts". | Fixed: busy guard and the page edits the saved budget afterwards; at least one account is required (`Budget_NoAccountChosen`). |
+| CR09-05 | `Features/Plans/PlanEditorPage.xaml` | bug, UI | Medium | (CR08-03) Category chips used a trigger setter with a binding: an earlier choice could keep looking selected. | Fixed with the chip's outline and fill. |
+| CR09-06 | `Features/Plans/PlansViewModel.cs`, `ZananceStore.CountUnreviewedAsync` | performance | Low | The plan centre loaded every entry to count the unreviewed ones, and filled its list row by row. | Fixed: counted in the database; the list is set at once. |
+| CR09-07 | `Features/Plans/PlanRowView.xaml` | accessibility | Low | Screen readers heard the name and date of a due item but not its amount or "3 days overdue" (Home and the plan centre). | Fixed: the row's full description. |
+| CR09-08 | `PlanEditorViewModel.SaveAsync` | bug | Low | A navigation failure after a successful save was reported as "could not be saved" (as CR07-03). | Fixed. |
+| CR09-09 | Plan and budget pages | accessibility, control | Low | Ten switches and a checkbox list without names (the account checkboxes now say the account), hand-styled text buttons. | Fixed. |
+| CR09-10 | `OccurrenceViewModel`, `PlanDetailViewModel`, `SettlementViewModel` | review | – | Confirm, link, skip, partial payments and their undo; pause, resume and end; final settlement. | No bug found. Skip and link have no busy guard; a consistent guard for every command goes to CR12. |

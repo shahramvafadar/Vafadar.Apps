@@ -35,8 +35,7 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Button Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" BackgroundColor="Transparent"
-                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" />
+                        <Button Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0" />
                     </VerticalStackLayout>
                 </Border>
 

@@ -13,8 +13,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -73,14 +72,9 @@
                                 <DataTemplate x:DataType="entries:CategoryChoice">
                                     <!-- A real button over the chip, as in the entry editor -->
                                     <Grid Margin="0,0,8,8">
-                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
-                                                StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44">
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                    <Setter Property="Stroke" Value="{Binding Color}" />
-                                                    <Setter Property="BackgroundColor" Value="{Binding Background}" />
-                                                </DataTrigger>
-                                            </Border.Triggers>
+                                        <!-- Outline and fill come from the chip (CR08-03): a trigger setter with a binding stays applied -->
+                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{Binding Outline}"
+                                                StrokeShape="RoundRectangle 22" BackgroundColor="{Binding Fill}" MinimumHeightRequest="44">
                                             <HorizontalStackLayout Spacing="8">
                                                 <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
                                                         BackgroundColor="{Binding Background}" VerticalOptions="Center">
@@ -134,7 +128,7 @@
                             <VerticalStackLayout IsVisible="{Binding ShowSecondDay}">
                                 <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                     <Label Text="{v:Translate Plan_SecondDay}" VerticalOptions="Center" />
-                                    <Switch Grid.Column="1" IsToggled="{Binding HasSecondDay}" OnColor="{DynamicResource Primary}" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding HasSecondDay}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_SecondDay}" />
                                 </Grid>
                                 <Grid ColumnDefinitions="70,*" ColumnSpacing="8" IsVisible="{Binding HasSecondDay}">
                                     <Entry Text="{Binding SecondDayText}" Keyboard="Numeric" MaxLength="2" HorizontalTextAlignment="Center"
@@ -198,7 +192,7 @@
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Text="{v:Translate Plan_Reminder}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding ReminderEnabled}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ReminderEnabled}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_Reminder}" />
                         </Grid>
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding ReminderEnabled}">
                             <Grid ColumnDefinitions="70,*" ColumnSpacing="8">
@@ -209,7 +203,7 @@
                             <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowReminderOnDueDate}">
                                 <Label Text="{v:Translate Plan_ReminderOnDueDate}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding ReminderOnDueDate}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding ReminderOnDueDate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_ReminderOnDueDate}" />
                             </Grid>
                             <Label Text="{Binding ReminderNote}" TextColor="{DynamicResource WarningText}" FontSize="13"
                                    IsVisible="{Binding ReminderNote, Converter={StaticResource IsNotNullConverter}}" />
@@ -219,7 +213,7 @@
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Plan_AutoPost}" VerticalOptions="Center" />
                             <v:HelpButton Grid.Column="1" Topic="AutoPost" />
-                            <Switch Grid.Column="2" IsToggled="{Binding AutoPost}" IsEnabled="{Binding CanAutoPost}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="2" IsToggled="{Binding AutoPost}" IsEnabled="{Binding CanAutoPost}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_AutoPost}" />
                         </Grid>
                         <Label Text="{v:Translate Plan_AutoPostHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>
@@ -228,8 +222,7 @@
                 <!-- Contract details (F2-CON-01): created in Advanced, shown in Simple once they exist (ZEX-S0502) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowContractCard}">
                     <VerticalStackLayout Spacing="4">
-                        <Button Text="{v:Translate Contract_Title}" Command="{Binding ToggleContractCommand}" BackgroundColor="Transparent"
-                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0" />
+                        <Button Text="{v:Translate Contract_Title}" Command="{Binding ToggleContractCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0" />
                         <VerticalStackLayout IsVisible="{Binding ShowContract}" Spacing="4">
                             <Label Text="{v:Translate Contract_Provider}" Style="{StaticResource FieldLabel}" />
                             <Entry Text="{Binding ContractProvider}" MaxLength="200" SemanticProperties.Description="{v:Translate Contract_Provider}" />
@@ -238,19 +231,19 @@
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_End}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_End}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasContractEnd}" Spacing="4">
                                 <v:DateField Date="{Binding ContractEnd}" />
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Text="{v:Translate Contract_Renews}" VerticalOptions="Center" />
-                                    <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{DynamicResource Primary}" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Renews}" />
                                 </Grid>
                             </VerticalStackLayout>
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_Deadline}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Deadline}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasCancellationDeadline}">
                                 <v:DateField Date="{Binding CancellationDeadline}" />
@@ -258,7 +251,7 @@
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                                 <Label Text="{v:Translate Contract_Review}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Review}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasReviewDate}">
                                 <v:DateField Date="{Binding ReviewDate}" />

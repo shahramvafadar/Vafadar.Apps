@@ -657,6 +657,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
         SecondDay = HasSecondDay && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday() && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
         WeekendDays = WeekendIndex == 0 ? 0 : RecurrenceRule.MaskOf(_weekend),
+
+        // Public holidays move a date like the weekend (F2-CON-05). The switch was read but never saved, so the option was
+        // lost on every save; a plan keeps its holiday region when the device's region has no calendar.
+        HolidayRegion = SkipHolidays && WeekendIndex != 0 ? _holidayRegion ?? _existing?.Rule.HolidayRegion : null,
         End = Frequency == Frequency.Once ? EndKind.Never : (EndKind)EndIndex,
         EndDate = EndIndex == 1 ? EndDate : null,
         Count = EndIndex == 2 && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(CountText), NumberStyles.None, CultureInfo.InvariantCulture, out var count) ? count : null,
@@ -753,6 +757,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             return;
         }
 
+        var saved = false;
         IsBusy = true;
         try
         {
@@ -808,15 +813,21 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             }
 
             _snapshot = Snapshot();
-            await Shell.Current.GoToAsync("..");
+            saved = true;
         }
-        catch (Exception)
+        catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             SaveError = _translator["Common_SaveFailed"];
         }
         finally
         {
             IsBusy = false;
+        }
+
+        // Leaving the page is not part of saving: a navigation problem must not say "not saved".
+        if (saved)
+        {
+            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
         }
     }
 

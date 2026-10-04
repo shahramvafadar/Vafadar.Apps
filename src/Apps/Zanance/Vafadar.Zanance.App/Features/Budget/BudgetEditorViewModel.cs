@@ -273,6 +273,12 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     [RelayCommand]
     private async Task SaveAsync()
     {
+        // A second tap while saving would add a new budget twice.
+        if (IsBusy)
+        {
+            return;
+        }
+
         Error = null;
         var culture = localization.CurrentCulture;
         var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
@@ -307,6 +313,13 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
             return;
         }
 
+        // An empty list means "all accounts": with every account unticked it would silently cover them all.
+        if (ScopeAccounts.Count > 0 && ScopeAccounts.All(a => !a.IsIncluded))
+        {
+            Error = translator["Budget_NoAccountChosen"];
+            return;
+        }
+
         var budget = _budget ?? (IsWeekly
             ? new Core.Budgets.Budget { Period = _period, PeriodStart = _periodStart, Calendar = _calendar, CurrencyCode = _currency }
             : new Core.Budgets.Budget { Year = _year, Month = _month, Calendar = _calendar, CurrencyCode = _currency });
@@ -316,8 +329,20 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         budget.Rollover = (BudgetRollover)Math.Clamp(RolloverIndex, 0, 2);
         budget.Method = IsWeekly ? BudgetMethod.Limits : (BudgetMethod)Math.Clamp(MethodIndex, 0, 2);
         budget.AccountIds = ScopeAccounts.All(a => a.IsIncluded) ? [] : [.. ScopeAccounts.Where(a => a.IsIncluded).Select(a => a.Id)];
-        await store.SaveBudgetAsync(budget);
-        await Shell.Current.GoToAsync("..");
+        IsBusy = true;
+        try
+        {
+            await store.SaveBudgetAsync(budget);
+
+            // From now on the page edits the saved budget, so a later save never adds a second one.
+            _budget = budget;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+
+        await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
     }
 
     [RelayCommand]
