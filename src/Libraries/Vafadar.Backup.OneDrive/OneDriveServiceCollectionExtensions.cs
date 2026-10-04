@@ -16,7 +16,9 @@ public static class OneDriveServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddHttpClient(OneDriveBackupStorage.HttpClientName);
+        // A whole backup goes up or down in one request; on a slow mobile connection that takes longer than the
+        // default of 100 seconds.
+        services.AddHttpClient(OneDriveBackupStorage.HttpClientName, client => client.Timeout = OneDriveBackupStorage.TransferTimeout);
         services.AddTransient(sp => new OneDriveBackupStorage(
             sp.GetRequiredService<IHttpClientFactory>().CreateClient(OneDriveBackupStorage.HttpClientName),
             sp.GetRequiredKeyedService<IAccessTokenProvider>(ExternalIdentityProvider.Microsoft)));

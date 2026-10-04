@@ -234,6 +234,50 @@ public sealed class BackupServiceTests : IDisposable
         await service.RestoreAsync(_storage, work[0], cancellationToken: Ct);
     }
 
+    [Fact]
+    public async Task The_heavy_work_runs_off_the_callers_thread()
+    {
+        // A UI thread has a synchronization context; the snapshot, compression and PBKDF2 must not block it (CR01-01).
+        var source = new ContextRecordingSource();
+        var service = new BackupService([source], Environment(), _settings, _time, new BackupOptions());
+        var previous = SynchronizationContext.Current;
+        try
+        {
+            SynchronizationContext.SetSynchronizationContext(new UiContext());
+            var package = await service.CreatePackageAsync("secret", Ct);
+            SynchronizationContext.SetSynchronizationContext(new UiContext());
+            await service.RestorePackageAsync(package, "secret", Ct);
+        }
+        finally
+        {
+            SynchronizationContext.SetSynchronizationContext(previous);
+        }
+
+        Assert.Equal([false, false], source.OnUiContext);
+    }
+
+    private sealed class UiContext : SynchronizationContext;
+
+    // Records whether the source was called on the caller's (UI) context.
+    private sealed class ContextRecordingSource : IBackupSource
+    {
+        public List<bool> OnUiContext { get; } = [];
+
+        public string Name => "database.sqlite";
+
+        public Task WriteAsync(Stream destination, CancellationToken cancellationToken)
+        {
+            OnUiContext.Add(SynchronizationContext.Current is UiContext);
+            return destination.WriteAsync("data"u8.ToArray(), cancellationToken).AsTask();
+        }
+
+        public Task RestoreAsync(Stream source, CancellationToken cancellationToken)
+        {
+            OnUiContext.Add(SynchronizationContext.Current is UiContext);
+            return Task.CompletedTask;
+        }
+    }
+
     private BackupService CreateService(string appId = AppId, Version? version = null, int maxBackups = 10) =>
         new(
             [_database, _attachments],

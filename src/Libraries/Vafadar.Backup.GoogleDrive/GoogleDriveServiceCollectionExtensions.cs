@@ -16,7 +16,9 @@ public static class GoogleDriveServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddHttpClient(GoogleDriveBackupStorage.HttpClientName);
+        // A whole backup goes up or down in one request; on a slow mobile connection that takes longer than the
+        // default of 100 seconds.
+        services.AddHttpClient(GoogleDriveBackupStorage.HttpClientName, client => client.Timeout = GoogleDriveBackupStorage.TransferTimeout);
         services.AddTransient(sp => new GoogleDriveBackupStorage(
             sp.GetRequiredService<IHttpClientFactory>().CreateClient(GoogleDriveBackupStorage.HttpClientName),
             sp.GetRequiredKeyedService<IAccessTokenProvider>(ExternalIdentityProvider.Google)));

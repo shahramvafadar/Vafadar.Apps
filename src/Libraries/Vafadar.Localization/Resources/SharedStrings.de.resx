@@ -241,4 +241,7 @@
   <data name="Help_ButtonDescription" xml:space="preserve">
     <value>Hilfe: {0}</value>
   </data>
+  <data name="Common_ChipSelected" xml:space="preserve">
+    <value>{0}, ausgewählt</value>
+  </data>
 </root>

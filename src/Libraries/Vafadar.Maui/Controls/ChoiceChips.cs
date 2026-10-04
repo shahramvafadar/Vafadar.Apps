@@ -2,6 +2,7 @@ using System.Collections.Specialized;
 using System.Collections;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Layouts;
+using Vafadar.Localization;
 
 namespace Vafadar.Maui.Controls;
 
@@ -9,6 +10,10 @@ namespace Vafadar.Maui.Controls;
 /// A single-choice group of chips that wraps onto several lines, so long labels (e.g. in German) never scroll or
 /// get cut off like a fixed-width segmented control would. Items are shown with their <c>ToString()</c> text.
 /// </summary>
+/// <remarks>
+/// Each chip is a real button (a transparent button over the drawn chip): it takes keyboard focus, is announced as a
+/// button with its selected state, and gives touch feedback. The colours follow a theme change while the page is open.
+/// </remarks>
 public sealed class ChoiceChips : ContentView
 {
     /// <summary>Identifies the <see cref="ItemsSource"/> property.</summary>
@@ -47,13 +52,32 @@ public sealed class ChoiceChips : ContentView
         propertyChanged: (bindable, _, _) => ((ChoiceChips)bindable).CreatePanel());
 
 
-    private readonly List<Border> _chips = [];
+    private readonly List<Chip> _chips = [];
     private Layout _panel = null!;
 
     /// <summary>Creates the control.</summary>
     public ChoiceChips()
     {
         CreatePanel();
+        Loaded += (_, _) =>
+        {
+            if (Application.Current is { } application)
+            {
+                application.RequestedThemeChanged += OnThemeChanged;
+            }
+
+            Translator.Instance.PropertyChanged += OnTranslatorChanged;
+            UpdateStates();
+        };
+        Unloaded += (_, _) =>
+        {
+            if (Application.Current is { } application)
+            {
+                application.RequestedThemeChanged -= OnThemeChanged;
+            }
+
+            Translator.Instance.PropertyChanged -= OnTranslatorChanged;
+        };
     }
 
     /// <summary>
@@ -145,6 +169,11 @@ public sealed class ChoiceChips : ContentView
 
     private void OnItemsChanged(object? sender, NotifyCollectionChangedEventArgs e) => Rebuild();
 
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(UpdateStates);
+
+    // The spoken "selected" follows the app language.
+    private void OnTranslatorChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => Dispatcher.Dispatch(UpdateStates);
+
     private void CreatePanel()
     {
         if (IsCompact)
@@ -173,23 +202,25 @@ public sealed class ChoiceChips : ContentView
         for (var i = 0; i < ItemsSource.Count; i++)
         {
             var index = i;
-            var chip = new Border
+            var text = ItemsSource[i]?.ToString() ?? string.Empty;
+            var label = new Label { Text = text, FontSize = IsCompact ? 13 : 14, VerticalOptions = LayoutOptions.Center };
+            var face = new Border
             {
                 Padding = IsCompact ? new Thickness(14, 6) : new Thickness(16, 10),
-                Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8),
                 StrokeThickness = 1,
                 StrokeShape = new RoundRectangle { CornerRadius = 20 },
                 MinimumHeightRequest = IsCompact ? 36 : 44,
-                Content = new Label
-                {
-                    Text = ItemsSource[i]?.ToString(),
-                    FontSize = IsCompact ? 13 : 14,
-                    VerticalOptions = LayoutOptions.Center,
-                },
+                Content = label,
+                InputTransparent = true,
             };
-            chip.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedIndex = index) });
-            SemanticProperties.SetDescription(chip, ItemsSource[i]?.ToString());
-            _chips.Add(chip);
+            AutomationProperties.SetIsInAccessibleTree(face, false);
+
+            // The transparent button over the chip takes taps, keyboard focus and the spoken name.
+            var button = new Button { Text = string.Empty, Padding = 0, BorderWidth = 0, CornerRadius = 20, BackgroundColor = Colors.Transparent };
+            button.Clicked += (_, _) => SelectedIndex = index;
+
+            var chip = new Grid { Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8), Children = { face, button } };
+            _chips.Add(new Chip(face, label, button, text));
             _panel.Children.Add(chip);
         }
 
@@ -201,22 +232,27 @@ public sealed class ChoiceChips : ContentView
         for (var i = 0; i < _chips.Count; i++)
         {
             var selected = i == SelectedIndex;
-            var chip = _chips[i];
-            var label = (Label)chip.Content!;
+            var (face, label, button, text) = _chips[i];
             if (selected)
             {
-                chip.BackgroundColor = SelectedFill ?? AccentColor;
-                chip.Stroke = SelectedOutline ?? AccentColor;
+                face.BackgroundColor = SelectedFill ?? AccentColor;
+                face.Stroke = SelectedOutline ?? AccentColor;
                 label.TextColor = SelectedFill is null ? ThemeColors.OnColor(AccentColor) : AccentColor;
                 label.FontAttributes = FontAttributes.Bold;
             }
             else
             {
-                chip.BackgroundColor = ChipBackground ?? Colors.Transparent;
-                chip.Stroke = OutlineColor ?? ThemeColors.Outline;
+                face.BackgroundColor = ChipBackground ?? Colors.Transparent;
+                face.Stroke = OutlineColor ?? ThemeColors.Outline;
                 label.TextColor = TextColor ?? ThemeColors.Text;
                 label.FontAttributes = FontAttributes.None;
             }
+
+            // Screen readers announce which chip is chosen ("Week, selected").
+            SemanticProperties.SetDescription(button, selected ? Translator.Instance.Format("Common_ChipSelected", text) : text);
         }
     }
+
+    // One chip: the drawn surface, its text, the button over it and the item text.
+    private sealed record Chip(Border Face, Label Label, Button Button, string Text);
 }

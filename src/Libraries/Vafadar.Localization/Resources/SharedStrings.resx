@@ -243,4 +243,8 @@
   <data name="Help_ButtonDescription" xml:space="preserve">
     <value>Help: {0}</value>
   </data>
+  <data name="Common_ChipSelected" xml:space="preserve">
+    <value>{0}, selected</value>
+    <comment>Spoken by screen readers for the chosen chip of a choice group.</comment>
+  </data>
 </root>

@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **Planned** (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -85,3 +85,12 @@ Filled in section by section.
 
 | Id | File | Kind | Severity | Finding | Resolution |
 |---|---|---|---|---|---|
+| CR01-01 | `Vafadar.Backup/BackupService.cs` | performance | Medium | The database snapshot, compression, checksums and PBKDF2 (600,000 iterations, twice for a restore: preview and restore) ran on the caller's thread – the UI thread in the app – and froze the screen on a phone. | Fixed: the package work runs on the thread pool; test `The_heavy_work_runs_off_the_callers_thread`. |
+| CR01-02 | `Vafadar.Backup.GoogleDrive`, `Vafadar.Backup.OneDrive` (service registration) | bug | Medium | The HTTP clients kept the default timeout of 100 s; a whole backup in one request on a slow mobile connection failed. | Fixed: 10 minutes per transfer (`TransferTimeout`); one test per storage. |
+| CR01-03 | `Vafadar.Maui/Controls/ChoiceChips.cs` | control, accessibility | Medium | Chips were tap gestures on a border: no keyboard focus, not announced as buttons, the chosen chip not announced. | Fixed: a transparent button over each chip (the app's overlay pattern); the chosen one is read as "…, selected" (`Common_ChipSelected`, three languages). |
+| CR01-04 | `Vafadar.Maui/Controls/DateField.cs` | control, accessibility | Medium | The date field was a tap gesture on a border: no keyboard focus, not announced as a button. | Fixed: a transparent button over the field carries the date and the hint. |
+| CR01-05 | `ChoiceChips.cs`, `DateField.cs` | UI | Low | Outline and text colours were set once; after a theme switch an open page kept the colours of the other theme. | Fixed: both follow `RequestedThemeChanged` while shown. |
+| CR01-06 | `Vafadar.Documents/TextLayout.cs` | performance | Low | `Rows` recomputes the average centre of a row for every word (quadratic within one row). | No change: a row holds a few dozen words at most; the cost is not measurable. |
+| CR01-07 | `Vafadar.Authentication.Maui/GoogleSignInService.cs` | quality | Low | A new `HttpClient` for the e-mail lookup and the revocation. | No change: called once per sign-in or sign-out. |
+| CR01-08 | `Vafadar.Data/LocalDatabaseLocation.cs` | performance | Low | SQLite runs in rollback-journal mode; WAL would let reads run during a write. | No change: no contention measured (one user, short writes); WAL adds files that profile moves and deletion would have to handle. |
+| CR01-09 | `Vafadar.Zanance.App/Presentation/AttachmentFiles.cs` | performance | Medium | Found while checking the OCR path: a photo is decoded at full size (about 48 MB for 12 MP) before it is scaled down to 1,600 px. | Moved to CR06 (app code). |

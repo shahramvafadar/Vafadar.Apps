@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Authentication;
 using Vafadar.Testing;
 
@@ -90,5 +91,15 @@ public sealed class OneDriveBackupStorageTests
         var error = await Assert.ThrowsAsync<AuthenticationRequiredException>(() => _storage.ListAsync(Ct));
 
         Assert.Equal(ExternalIdentityProvider.Microsoft, error.Provider);
+    }
+
+    [Fact]
+    public void A_whole_backup_may_take_longer_than_the_default_timeout()
+    {
+        using var services = new ServiceCollection().AddOneDriveBackupStorage().BuildServiceProvider();
+
+        var client = services.GetRequiredService<IHttpClientFactory>().CreateClient(OneDriveBackupStorage.HttpClientName);
+
+        Assert.Equal(TimeSpan.FromMinutes(10), client.Timeout);
     }
 }

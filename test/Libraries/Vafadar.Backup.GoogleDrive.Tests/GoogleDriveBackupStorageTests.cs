@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Authentication;
 using Vafadar.Testing;
 
@@ -107,5 +108,15 @@ public sealed class GoogleDriveBackupStorageTests
         Assert.Equal(403, error.StatusCode);
         Assert.Equal(GoogleDriveBackupStorage.StorageId, error.StorageId);
         Assert.Contains("quota exceeded", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void A_whole_backup_may_take_longer_than_the_default_timeout()
+    {
+        using var services = new ServiceCollection().AddGoogleDriveBackupStorage().BuildServiceProvider();
+
+        var client = services.GetRequiredService<IHttpClientFactory>().CreateClient(GoogleDriveBackupStorage.HttpClientName);
+
+        Assert.Equal(TimeSpan.FromMinutes(10), client.Timeout);
     }
 }

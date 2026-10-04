@@ -11,7 +11,8 @@ namespace Vafadar.Backup;
 /// <remarks>
 /// A backup is: all sources → ZIP package with manifest and checksums → optional AES-GCM encryption → upload.
 /// A restore validates everything (password, app id, app version, checksums) before any source is touched.
-/// Only one backup or restore runs at a time.
+/// Only one backup or restore runs at a time. The heavy work – the database snapshot, compression, checksums and the
+/// PBKDF2 key derivation (600,000 iterations) – runs on the thread pool, so a caller on the UI thread stays responsive.
 /// </remarks>
 public sealed class BackupService : IBackupService
 {
@@ -205,14 +206,19 @@ public sealed class BackupService : IBackupService
 
             // Everything is validated; only now is existing data replaced. Sources without an entry (e.g. added in a
             // later app version than the backup) keep their current data.
-            foreach (var source in _sources)
-            {
-                if (entries.TryGetValue(source.Name, out var content))
+            await Task.Run(
+                async () =>
                 {
-                    using var stream = new MemoryStream(content, writable: false);
-                    await source.RestoreAsync(stream, cancellationToken);
-                }
-            }
+                    foreach (var source in _sources)
+                    {
+                        if (entries.TryGetValue(source.Name, out var content))
+                        {
+                            using var stream = new MemoryStream(content, writable: false);
+                            await source.RestoreAsync(stream, cancellationToken);
+                        }
+                    }
+                },
+                cancellationToken);
 
             return manifest;
         }
@@ -238,8 +244,11 @@ public sealed class BackupService : IBackupService
         }
     }
 
-    // Decrypts, reads and validates a package without touching any data.
-    private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenAsync(byte[] package, string? password, CancellationToken cancellationToken)
+    // Decrypts, reads and validates a package without touching any data (on the thread pool, see the remarks).
+    private Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenAsync(byte[] package, string? password, CancellationToken cancellationToken) =>
+        Task.Run(() => OpenCoreAsync(package, password, cancellationToken), cancellationToken);
+
+    private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenCoreAsync(byte[] package, string? password, CancellationToken cancellationToken)
     {
         if (BackupEncryption.IsEncrypted(package))
         {
@@ -256,7 +265,11 @@ public sealed class BackupService : IBackupService
         return result;
     }
 
-    private async Task<byte[]> CreatePackageCoreAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken)
+    // Builds the package on the thread pool (see the remarks).
+    private Task<byte[]> CreatePackageCoreAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken) =>
+        Task.Run(() => BuildPackageAsync(createdAt, password, cancellationToken), cancellationToken);
+
+    private async Task<byte[]> BuildPackageAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken)
     {
         if (_sources.Count == 0)
         {

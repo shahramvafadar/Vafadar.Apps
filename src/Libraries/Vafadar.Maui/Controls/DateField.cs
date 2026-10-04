@@ -10,6 +10,10 @@ namespace Vafadar.Maui.Controls;
 /// (Gregorian or Persian). The value is always a Gregorian <see cref="DateOnly"/>. An unset value (before 1900, e.g.
 /// <c>default(DateOnly)</c>) becomes today: the native calendars cannot show such dates.
 /// </summary>
+/// <remarks>
+/// The field is a real button (a transparent button over the drawn field): it takes keyboard focus and is announced as
+/// a button with the date. The outline follows a theme change while the page is open.
+/// </remarks>
 public sealed class DateField : ContentView
 {
     /// <summary>Identifies the <see cref="Date"/> property.</summary>
@@ -19,6 +23,8 @@ public sealed class DateField : ContentView
         coerceValue: (_, value) => value is DateOnly { Year: < 1900 } ? DateOnly.FromDateTime(DateTime.Today) : value);
 
     private readonly Label _text;
+    private readonly Border _frame;
+    private readonly Button _button;
     private readonly SfCalendar _calendar;
 
     /// <summary>Creates the control.</summary>
@@ -36,7 +42,7 @@ public sealed class DateField : ContentView
         _calendar.AcceptCommand = new Command(Accept);
         _calendar.DeclineCommand = new Command(() => _calendar.IsOpen = false);
 
-        var frame = new Border
+        _frame = new Border
         {
             Padding = new Thickness(12, 10),
             StrokeThickness = 1,
@@ -44,14 +50,18 @@ public sealed class DateField : ContentView
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
             Content = _text,
             MinimumHeightRequest = 48,
+            InputTransparent = true,
         };
-        frame.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Open) });
-        SemanticProperties.SetHint(frame, Translator.Instance["Common_SelectDate"]);
+        AutomationProperties.SetIsInAccessibleTree(_frame, false);
 
-        Content = new Grid { Children = { frame, _calendar } };
+        // The transparent button over the field takes taps, keyboard focus and the spoken date.
+        _button = new Button { Text = string.Empty, Padding = 0, BorderWidth = 0, CornerRadius = 8, BackgroundColor = Colors.Transparent };
+        _button.Clicked += (_, _) => Open();
+
+        Content = new Grid { Children = { _frame, _button, _calendar } };
         UpdateText();
 
-        // Language or calendar may change while the page is alive (e.g. during onboarding).
+        // Language or calendar may change while the page is alive (e.g. during onboarding), and so may the theme.
         Loaded += (_, _) =>
         {
             if (Localization is { } localization)
@@ -59,6 +69,12 @@ public sealed class DateField : ContentView
                 localization.Changed += OnLocalizationChanged;
             }
 
+            if (Application.Current is { } application)
+            {
+                application.RequestedThemeChanged += OnThemeChanged;
+            }
+
+            _frame.Stroke = ThemeColors.Outline;
             UpdateText();
         };
         Unloaded += (_, _) =>
@@ -66,6 +82,11 @@ public sealed class DateField : ContentView
             if (Localization is { } localization)
             {
                 localization.Changed -= OnLocalizationChanged;
+            }
+
+            if (Application.Current is { } application)
+            {
+                application.RequestedThemeChanged -= OnThemeChanged;
             }
         };
     }
@@ -82,6 +103,8 @@ public sealed class DateField : ContentView
     private static ILocalizationService? Localization => Services?.GetService<ILocalizationService>();
 
     private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(UpdateText);
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(() => _frame.Stroke = ThemeColors.Outline);
 
     private void Open()
     {
@@ -108,6 +131,7 @@ public sealed class DateField : ContentView
     {
         var formatter = Services?.GetService<IDateFormatter>();
         _text.Text = formatter?.Format(Date, DateFormatStyle.Long) ?? Date.ToString("d", Translator.Instance.Culture);
-        SemanticProperties.SetDescription(this, _text.Text);
+        SemanticProperties.SetDescription(_button, _text.Text);
+        SemanticProperties.SetHint(_button, Translator.Instance["Common_SelectDate"]);
     }
 }

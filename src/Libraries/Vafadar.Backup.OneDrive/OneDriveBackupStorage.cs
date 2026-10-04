@@ -23,6 +23,9 @@ public sealed class OneDriveBackupStorage : IBackupStorage
     /// <summary>The name of the <see cref="HttpClient"/> registered for this storage.</summary>
     public const string HttpClientName = "Vafadar.Backup.OneDrive";
 
+    /// <summary>Gets how long one upload or download may take (10 minutes).</summary>
+    public static TimeSpan TransferTimeout { get; } = TimeSpan.FromMinutes(10);
+
     private const string DriveEndpoint = "https://graph.microsoft.com/v1.0/me/drive";
     private const string AppFolderEndpoint = DriveEndpoint + "/special/approot";
 

@@ -24,6 +24,9 @@ public sealed class GoogleDriveBackupStorage : IBackupStorage
     /// <summary>The name of the <see cref="HttpClient"/> registered for this storage.</summary>
     public const string HttpClientName = "Vafadar.Backup.GoogleDrive";
 
+    /// <summary>Gets how long one upload or download may take (10 minutes).</summary>
+    public static TimeSpan TransferTimeout { get; } = TimeSpan.FromMinutes(10);
+
     private const string FilesEndpoint = "https://www.googleapis.com/drive/v3/files";
     private const string UploadEndpoint = "https://www.googleapis.com/upload/drive/v3/files";
     private const string AppDataFolder = "appDataFolder";
