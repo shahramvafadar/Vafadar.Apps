@@ -1,14 +1,15 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Forecasts;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Forecast;
@@ -121,7 +122,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
         var settings = await _store.GetSettingsAsync();
         var startDay = settings.MonthStartDay;
-        IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        IsAdvanced = settings.Shows(Feature.ForecastDetails);
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var horizon = HorizonIndex switch
         {

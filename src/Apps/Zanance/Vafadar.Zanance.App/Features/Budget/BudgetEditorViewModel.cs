@@ -8,6 +8,7 @@ using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Budget;
@@ -160,7 +161,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         _budget = IsWeekly
             ? await store.GetBudgetAsync(_period, _periodStart, _currency)
             : await store.GetBudgetAsync(_year, _month, _calendar, _currency);
-        IsAdvanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.BudgetOptions);
 
         // Category limits are an Advanced option; in Simple they stay saved and are summarised (BUD-02, UX-02).
         var limitCount = _budget?.CategoryLimits.Count ?? 0;
@@ -175,6 +176,12 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
         if (!IsAdvanced && RolloverIndex != 0)
         {
             HiddenLimitsText = string.Join(Environment.NewLine, new[] { HiddenLimitsText, translator[$"Rollover_Active_{(BudgetRollover)RolloverIndex}"] }.Where(t => t is not null));
+        }
+
+        // Envelopes and flex stay active in Simple and are named, so the budget reads the same in both modes (ZEX-S0502).
+        if (!IsAdvanced && MethodIndex != (int)BudgetMethod.Limits)
+        {
+            HiddenLimitsText = string.Join(Environment.NewLine, new[] { HiddenLimitsText, translator.Format("Budget_MethodActive", MethodNames[MethodIndex]) }.Where(t => t is not null));
         }
 
         // Default scope: accounts in totals with the budget currency; an explicit list narrows it (BUD-03).

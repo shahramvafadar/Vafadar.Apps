@@ -8,6 +8,7 @@ using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
@@ -125,7 +126,7 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
 
         // Advanced: one converted line under the native totals, never instead of them (ZEX-MC08).
         ConvertedText = null;
-        if (settings.Mode == Core.Settings.ExperienceMode.Advanced && settings.ValuationCurrencyEnabled && inTotals.Count > 1)
+        if (settings.Shows(Feature.ConvertedTotals) && settings.ValuationCurrencyEnabled && inTotals.Count > 1)
         {
             var combined = new Core.Rates.RateTable(await store.GetRatesAsync()).Combine(inTotals, settings.ReportCurrencyCode, today, new Core.Rates.RateFreshness(settings.RateFreshnessDays));
             ConvertedText = combined.IsComplete

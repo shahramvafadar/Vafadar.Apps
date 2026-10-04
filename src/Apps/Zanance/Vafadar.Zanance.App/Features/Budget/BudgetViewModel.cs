@@ -12,6 +12,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Budget;
@@ -143,9 +144,10 @@ public sealed partial class BudgetViewModel : ViewModelBase
     [ObservableProperty]
     public partial Symbol NextIcon { get; set; }
 
-    // Weekly and two-week budgets (§10.3) are an Advanced choice; Simple mode keeps months.
+    // Weekly and two-week budgets (§10.3) are created in Advanced; Simple shows the period choice as soon as such a
+    // budget exists, so it is never recomputed as a month (ZEX-S0502, SA17).
     [ObservableProperty]
-    public partial bool IsAdvanced { get; set; }
+    public partial bool ShowsPeriods { get; set; }
 
     [ObservableProperty]
     public partial IReadOnlyList<string> PeriodNames { get; set; } = [];
@@ -264,10 +266,11 @@ public sealed partial class BudgetViewModel : ViewModelBase
         // The budget of the default account's currency, or the one picked in the switcher (ZEX-P02).
         var allAccounts = await _store.GetAccountsAsync();
         _currency = BudgetCurrency.Resolve(settings, allAccounts);
+        var budgets = await _store.GetBudgetsAsync();
         _refreshing = true;
         try
         {
-            CurrencyChoices = BudgetCurrency.Choices(_currency, await _store.GetBudgetsAsync(), allAccounts);
+            CurrencyChoices = BudgetCurrency.Choices(_currency, budgets, allAccounts);
             SelectedCurrency = _currency;
             HasCurrencyChoices = CurrencyChoices.Count > 1;
         }
@@ -276,8 +279,8 @@ public sealed partial class BudgetViewModel : ViewModelBase
             _refreshing = false;
         }
 
-        IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
-        if (!IsAdvanced)
+        ShowsPeriods = settings.ShowsExisting(Feature.BudgetPeriods, budgets.Any(b => b.Period != BudgetPeriod.Month && b.CurrencyCode == _currency));
+        if (!ShowsPeriods)
         {
             _period = BudgetPeriod.Month;
         }

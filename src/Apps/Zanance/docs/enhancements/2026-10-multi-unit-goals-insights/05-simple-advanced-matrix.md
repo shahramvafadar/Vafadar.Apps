@@ -16,8 +16,10 @@ deleted data or a cheaper edition; *Advanced* is not a paid tier. Free/Pro is ou
 4. **Creating** complex structures (custom recurrence rules, envelope/flex methods, weekly budgets, holdings with
    purity, contribution methods, scenarios, snapshots) may require Advanced; **viewing and correcting** existing ones
    never does.
-5. **One policy, not page conditions.** A single `FeaturePolicy` table in the App layer (key → visibility in Simple,
-   create level, summary text) is used by every page; pages ask the policy instead of checking the mode themselves.
+5. **One policy, not page conditions.** A single `FeaturePolicy` table (key → area, visibility in Simple) is used by
+   every page; pages ask the policy instead of checking the mode themselves. It lives in the core
+   (`Vafadar.Zanance.Core/Settings/FeaturePolicy.cs`) so that tests can enumerate it; the summary texts stay in the
+   view models. Only Settings (the switch), onboarding (sets Simple) and the Debug walk-through write the mode (ZEX-S0501).
 6. **Switching** shows what changes ("Simple hides 6 advanced options; your data and numbers stay the same").
 7. Onboarding sets Simple explicitly (fixes ZEX-F15) and offers Advanced at the end of setup.
 

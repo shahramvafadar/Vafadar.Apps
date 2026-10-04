@@ -106,10 +106,40 @@ as they are; the scenarios of this package are `ZEX-AT01 … ZEX-AT40` and `ZEX-
 
 ## 6. What was actually run
 
-In this design stage only the existing test suite was run, to record the baseline:
+Baseline before the package (design stage):
 
 | Date | Command | Result |
 |---|---|---|
 | 2026-10-02 | `dotnet test --solution Vafadar.Tests.slnf` at `67410b4` with this package as the only (untracked) change | Passed: 499 total, 0 failed, 0 skipped (46 s); followed by `dotnet clean Vafadar.Tests.slnf` |
 
-No new test, build of new code, migration or device run was performed for this package.
+Evidence per phase (ZEX-S0903). Every phase ended with the full test suite, the Release builds of the CI
+(`Vafadar.Tests.slnf`, and `Vafadar.Apps.slnx` for Windows; warnings are errors), a Windows walk-through of the changed
+screens (`eng/scripts/Run-Snapshots.ps1`, English and Persian, light and dark), and a signed Android APK that the owner
+installed and checked on a phone before the next phase started. "Test methods" counts `[Fact]` and `[Theory]` in the
+repository at the commit; a theory runs several cases.
+
+| Phase | Commits | Test methods | CI (CI · CodeQL) | Windows | Android (owner, device) |
+|---|---|---|---|---|---|
+| 1 – defaults, currencies, Home | `3e088c3`, `14d11e5` | 432 → 434 | success · success | walk-through en/fa | checked, approved |
+| 2 – goals | `8638562`, `cff8ccf` | 451 | success · success (`cff8ccf`: CI cancelled by the next push, which ran the same tests) | walk-through en/fa | checked, approved |
+| 3 – holdings | `f41cc1f`, `bf20f78`, `bd34746` | 468 → 476 | failure (analyzer xUnit2013 in a test) → fixed in `bd34746`: success · success | walk-through en/fa | checked, approved |
+| 4 – KPI catalog, reports, data status | `0d5a132`, `2c58b83`, `642fba0` | 492 → 501 | success · success (`2c58b83` cancelled by the next push) | walk-through en/fa, dark | checked, approved |
+| 5 – quantity goals, pace, wealth history, snapshots | `175bbf9` | 512 | success · success | walk-through en/fa | checked, approved |
+| 6 – validation and release, Simple/Advanced policy | phase 6 commit | 707 test cases run, 0 failed, 0 skipped (27 s) on 2026-10-04 | see the commit's CI run | walk-throughs: German light, Persian dark, English and Persian in Simple mode (`-Mode simple`), About page in a tall window | APK built for the owner's check |
+
+Phase 6 checks in detail:
+
+* S0901 upgrade: a database and a backup of the version before ZEX (`20260929205530_BudgetPeriods`) upgrade with every
+  balance, goal, budget and setting unchanged (`ZexUpgradeTests`).
+* S0902 backup round trip: holdings, goals with contribution plans, snapshots and profile settings survive a restore
+  on a fresh install, and the preview counts them (`ZexBackupRoundTripTests`, AT34).
+* S0904 localisation: keys built from enum values exist in English, Persian and German (`RuntimeResourceKeyTests`).
+* S0906 performance: the reference data set (10,000 entries, 20 accounts, 100 plans, 30 asset types, 500 events, 200
+  valuations, 10 goals) is calculated for Home, R1–R6 and the holdings ledger within the 2 s budget of Q-02 per
+  calculation (`ZexPerformanceTests`; the whole test took about 1 s).
+* S0501–S0503 Simple/Advanced: the policy table is complete, no page reads the mode, no calculation takes it
+  (`FeaturePolicyTests`), and switching Advanced → Simple → Advanced changes no number and no setting
+  (`ZexModeSwitchTests`, AT28).
+
+Not run: iOS (no Mac and no iOS device; the About page states "not checked yet, not offered"), the Android emulator
+(the owner's phone was used instead), and UI automation.

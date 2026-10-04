@@ -137,7 +137,11 @@
                 <Label Text="{v:Translate Cloud_RestoreHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasCloudBackups}" />
 
                 <!-- Restore -->
+                <!-- Before a restore the current data is kept as a safety copy on this device, unencrypted (ZEX-F20, disclosed) -->
+            <HorizontalStackLayout Spacing="6">
                 <Label Text="{v:Translate Backup_Restore}" Style="{StaticResource SectionHeader}" />
+                <v:HelpButton Topic="SafetyCopy" VerticalOptions="Center" />
+            </HorizontalStackLayout>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Backup_RestoreIntro}" Style="{StaticResource Secondary}" />

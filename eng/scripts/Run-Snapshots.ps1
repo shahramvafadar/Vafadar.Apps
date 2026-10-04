@@ -1,11 +1,11 @@
-﻿<#
+<#
 .SYNOPSIS
     Builds the Windows app in Debug and walks through every screen, saving screenshots (and the report PDF).
 
 .DESCRIPTION
     The Debug-only walk-through (src/Apps/Zanance/Vafadar.Zanance.App/Diagnostics/DebugSnapshots.cs) starts when
     VAFADAR_SNAPSHOTS points to a folder. It starts with an empty development database (the existing one is moved to a
-    Data-before-snapshots-* folder next to it, never deleted), seeds fictitious data, sets Advanced mode
+    Data-before-snapshots-* folder next to it, never deleted), seeds fictitious data, sets Advanced mode (or Simple with -Mode simple)
     and captures each route per language, plus "-end" shots of scrolled pages. Look at the Persian (right-to-left) and
     the dark variants after every UI change.
 
@@ -13,6 +13,7 @@
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -WindowSize 1280x820
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Only report,holding
+    ./eng/scripts/Run-Snapshots.ps1 -Languages en -Mode simple -Only budget,plan
 #>
 param(
     [string]$Languages = 'fa',
@@ -24,7 +25,9 @@ param(
     # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.
     [switch]$Empty,
     # Comma-separated name prefixes of the screens to shoot, e.g. 'report,holding'; default: all screens.
-    [string]$Only = '')
+    [string]$Only = '',
+    # The experience mode of the walk-through; Simple shows what stays visible of the Advanced data (05 §5).
+    [ValidateSet('advanced', 'simple')] [string]$Mode = 'advanced')
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -54,6 +57,7 @@ $env:VAFADAR_SNAPSHOT_THEME = $Theme
 $env:VAFADAR_WINDOW_SIZE = $WindowSize
 $env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
 $env:VAFADAR_SNAPSHOT_ONLY = $Only
+$env:VAFADAR_SNAPSHOT_MODE = $Mode
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }

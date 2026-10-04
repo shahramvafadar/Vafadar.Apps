@@ -7,6 +7,7 @@ using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Holdings;
@@ -131,7 +132,7 @@ public sealed partial class HoldingDetailViewModel(
         }
 
         var today = Today;
-        IsAdvanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
         var events = await holdings.GetEventsAsync(type.Id);
         var valuations = await holdings.GetValuationsAsync(type.Id);
         var locations = (await holdings.GetLocationsAsync()).ToDictionary(l => l.Id, l => l.Name);

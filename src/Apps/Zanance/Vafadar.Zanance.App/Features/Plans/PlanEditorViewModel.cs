@@ -15,6 +15,7 @@ using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Plans;
@@ -271,6 +272,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial bool ReminderOnDueDate { get; set; }
 
+    // The second reminder and the contract are created in Advanced; once they exist, Simple shows them too, so they can
+    // be seen and corrected (ZEX-S0502, SA14, SA15).
+    [ObservableProperty]
+    public partial bool ShowReminderOnDueDate { get; set; }
+
+    [ObservableProperty]
+    public partial bool ShowContractCard { get; set; }
+
     [ObservableProperty]
     public partial string Note { get; set; }
 
@@ -386,7 +395,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
             HasNoAccounts = Accounts.Count == 0;
             var settings = await _store.GetSettingsAsync();
-            IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+            IsAdvanced = settings.Shows(Feature.PlanRules);
+            ShowReminderOnDueDate = IsAdvanced;
+            ShowContractCard = IsAdvanced;
 
             if (query.TryGetValue("id", out var value) && value is Guid id && await _plans.GetScheduleAsync(id) is { } schedule)
             {
@@ -495,6 +506,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         HasReviewDate = schedule.ReviewDate is not null;
         ReviewDate = schedule.ReviewDate ?? Today.AddMonths(6);
         ShowContract = schedule.HasContract;
+        ShowReminderOnDueDate |= schedule.ReminderOnDueDate;
+        ShowContractCard |= schedule.HasContract;
         BuildCategories(schedule.CategoryId);
     }
 
@@ -608,7 +621,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
         // Hidden settings that change the dates are summarised in Simple mode (UX-02).
         var current = BuildRule();
-        AdvancedSummary = !IsAdvanced && (current.End != EndKind.Never || current.DayRule != MonthDayRule.SpecificDay || current.MissingDay != MissingDayPolicy.LastValidDay)
+        AdvancedSummary = !IsAdvanced && (current.End != EndKind.Never || current.DayRule != MonthDayRule.SpecificDay || current.MissingDay != MissingDayPolicy.LastValidDay || current.SecondDay is not null)
             ? _translator.Format("Plan_AdvancedSummary", new PlanText(_translator, _dates, _localization.CurrentCulture).Rule(current))
             : null;
 

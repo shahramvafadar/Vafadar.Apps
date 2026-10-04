@@ -6,6 +6,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Holdings;
@@ -195,7 +196,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     {
         ArgumentNullException.ThrowIfNull(query);
         var culture = _localization.CurrentCulture;
-        var advanced = (await _store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        var advanced = (await _store.GetSettingsAsync()).Shows(Feature.HoldingEvents);
         var events = await _holdings.GetEventsAsync();
         if (query.TryGetValue("id", out var idValue) && idValue is Guid id)
         {

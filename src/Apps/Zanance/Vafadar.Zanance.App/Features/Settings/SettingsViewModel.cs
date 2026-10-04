@@ -1,12 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Settings;
@@ -202,7 +203,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
             DefaultCurrency = settings.DefaultCurrencyCode;
             DefaultCurrencyChanged = false;
             ValuationEnabled = settings.ValuationCurrencyEnabled;
-            IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+            IsAdvanced = settings.Shows(Feature.MoneySettings);
             var dayNames = FreshnessDays.Select(d => d == 0
                 ? _translator["Settings_FreshnessNever"]
                 : Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_FreshnessDays", d.ToString(_localization.CurrentCulture)))!);
@@ -370,7 +371,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     // Simple and Advanced show the same data and calculations; switching never removes anything (UX-01, UX-02).
     async partial void OnModeIndexChanged(int value)
     {
-        IsAdvanced = value == (int)Core.Settings.ExperienceMode.Advanced;
+        IsAdvanced = FeaturePolicy.Shows(Feature.MoneySettings, (ExperienceMode)value);
         if (_refreshing)
         {
             return;

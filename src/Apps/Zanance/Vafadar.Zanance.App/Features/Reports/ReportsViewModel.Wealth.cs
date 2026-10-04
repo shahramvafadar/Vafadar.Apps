@@ -5,6 +5,7 @@ using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Rates;
 using Vafadar.Zanance.Core.Reports;
+using Vafadar.Zanance.Core.Settings;
 
 namespace Vafadar.Zanance.App.Features.Reports;
 
@@ -87,7 +88,7 @@ public sealed partial class ReportsViewModel
         CompositionNote = null;
         IReadOnlyCollection<RateInfo>? rates = null;
         IReadOnlyCollection<string>? missing = null;
-        if (IsAdvanced && _settings.ValuationCurrencyEnabled)
+        if (_settings.Shows(Feature.ConvertedTotals) && _settings.ValuationCurrencyEnabled)
         {
             var composition = NetWorthCalculator.Compose(_netWorth, new RateTable(await _store.GetRatesAsync()), _settings.ReportCurrencyCode, new RateFreshness(_settings.RateFreshnessDays));
             rates = composition.Rates;

@@ -5025,4 +5025,69 @@
   <data name="Goal_NoCapacity" xml:space="preserve">
     <value>No capacity left for this goal at the moment.</value>
   </data>
+  <data name="Help_SafetyCopy_Title" xml:space="preserve">
+    <value>Safety copy before a restore</value>
+  </data>
+  <data name="Help_SafetyCopy_Text" xml:space="preserve">
+    <value>Before a backup replaces your data, Zanance keeps a safety copy of the current data on this device, so nothing is lost if the restore fails. The safety copy is not encrypted; it stays in the app's private storage and only the newest copies are kept. A backup file you create yourself is always encrypted with your password.</value>
+  </data>
+  <data name="HomeSection_Goals" xml:space="preserve">
+    <value>Goals</value>
+  </data>
+  <data name="About_FilesTitle" xml:space="preserve">
+    <value>What your files contain</value>
+  </data>
+  <data name="About_FilesBackupTitle" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="About_FilesBackup" xml:space="preserve">
+    <value>Everything you entered: accounts, entries, plans, budgets, rates, goals, holdings with their events and prices, forecast snapshots, display units and the Home layout. It is encrypted with your password. Device preferences (theme, language, digits, reminders) are not included.</value>
+  </data>
+  <data name="About_FilesCsvTitle" xml:space="preserve">
+    <value>CSV export</value>
+  </data>
+  <data name="About_FilesCsv" xml:space="preserve">
+    <value>Your entries, and your holdings in a file of their own, for a spreadsheet. A CSV export is not a backup: plans, budgets, goals and snapshots are not in it.</value>
+  </data>
+  <data name="About_FilesPdfTitle" xml:space="preserve">
+    <value>PDF report</value>
+  </data>
+  <data name="About_FilesPdf" xml:space="preserve">
+    <value>The report you chose, with its period, currency and the accounts it covers on the page. It is for reading and sharing; it cannot be restored.</value>
+  </data>
+  <data name="About_PlatformsTitle" xml:space="preserve">
+    <value>Platforms</value>
+  </data>
+  <data name="About_PlatformsText" xml:space="preserve">
+    <value>Every release is checked on these systems before it is published.</value>
+  </data>
+  <data name="About_Platform_Verified" xml:space="preserve">
+    <value>Checked</value>
+  </data>
+  <data name="About_Platform_NotVerified" xml:space="preserve">
+    <value>Not checked yet, not offered</value>
+  </data>
+  <data name="About_ProblemTitle" xml:space="preserve">
+    <value>Report a problem</value>
+  </data>
+  <data name="About_ProblemText" xml:space="preserve">
+    <value>Zanance sends nothing on its own: no usage data and no crash reports. The button prepares a short text with the app version and the device type, and you choose where to send it. Please remove amounts, account names and other financial details first.</value>
+  </data>
+  <data name="About_ProblemButton" xml:space="preserve">
+    <value>Prepare a problem report</value>
+  </data>
+  <data name="About_ProblemReport" xml:space="preserve">
+    <value>Zanance {0} · {1} {2}
+
+What happened:
+
+What I expected:
+
+Steps to repeat it:
+
+(Please remove amounts, account names and other financial details before sending.)</value>
+  </data>
+  <data name="Budget_MethodActive" xml:space="preserve">
+    <value>Method of this budget: {0}. Switch to Advanced in Settings to change it.</value>
+  </data>
 </root>

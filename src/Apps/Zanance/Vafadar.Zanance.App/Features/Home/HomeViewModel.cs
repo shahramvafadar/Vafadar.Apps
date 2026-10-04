@@ -15,6 +15,7 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Rates;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Home;
@@ -350,7 +351,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
         await LoadPlansAsync(byId, categories, today);
         await LoadGettingStartedAsync(entries.Count);
-        await LoadForecastAsync(settings.Mode, allAccounts, entries, today, culture);
+        await LoadForecastAsync(settings.Shows(Feature.ForecastDetails), allAccounts, entries, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
         Accounts.Clear();
@@ -443,7 +444,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08); a balance that may fall below
     // zero is a warning in "Needs attention" in both modes (ZEX-P19).
-    private async Task LoadForecastAsync(Core.Settings.ExperienceMode mode, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
+    private async Task LoadForecastAsync(bool showDetails, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
     {
         ForecastEndText = null;
         LowBalanceText = null;
@@ -462,7 +463,7 @@ public sealed partial class HomeViewModel : ViewModelBase
             LowBalanceText = _translator.Format("Home_BalanceBelowZero", _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth));
         }
 
-        if (mode != Core.Settings.ExperienceMode.Advanced)
+        if (!showDetails)
         {
             return;
         }

@@ -2,8 +2,8 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
-using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Reports;
 using Vafadar.Zanance.App.Presentation;
@@ -13,6 +13,7 @@ using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
@@ -169,7 +170,7 @@ public sealed partial class AccountDetailViewModel(
         ReconciledText = account.LastReconciledOn is { } reconciled
             ? translator.Format("Account_LastReconciled", dates.Format(reconciled, DateFormatStyle.Short))
             : translator["Account_NeverReconciled"];
-        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && (await store.GetSettingsAsync()).Shows(Feature.AccountConversion);
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);

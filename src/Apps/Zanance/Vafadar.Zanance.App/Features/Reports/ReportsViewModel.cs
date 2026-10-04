@@ -246,7 +246,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         {
             _settings = await _store.GetSettingsAsync();
             _startDay = _settings.MonthStartDay;
-            IsAdvanced = _settings.Mode == ExperienceMode.Advanced;
+            IsAdvanced = _settings.Shows(Feature.ReportDetails);
             if (_year == 0)
             {
                 (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
@@ -335,7 +335,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             2 or 3 or 4 => _translator["Report_Today"],
             _ => PeriodText.Replace(" · " + _translator["Report_SoFar"], string.Empty, StringComparison.Ordinal),
         };
-        ScopeText = string.Join(" · ", new[] { period, _currency, accountsText, ConfirmedOnly ? _translator["Report_ConfirmedOnly"] : null }.Where(s => !string.IsNullOrEmpty(s)));
+        // A formatted span shows the text as it is, so the digits follow the app's digit setting here (D-27).
+        ScopeText = NativeDigits.Apply(string.Join(" · ", new[] { period, _currency, accountsText, ConfirmedOnly ? _translator["Report_ConfirmedOnly"] : null }.Where(s => !string.IsNullOrEmpty(s)))) ?? string.Empty;
     }
 
     // The accounts of the scope: in totals (default), usable for payments, or one account (ZEX-S0601).

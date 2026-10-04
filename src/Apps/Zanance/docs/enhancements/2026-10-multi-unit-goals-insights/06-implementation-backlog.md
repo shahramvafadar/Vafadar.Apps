@@ -79,9 +79,9 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0407 | Holdings screens and aggregation rules | 3 | Implemented – verified (snapshots en/fa) |
 | ZEX-S0408 | Legacy asset accounts kept; optional conversion assistant | 3 | Implemented – unverified (assistant tested; the confirmation of income or expense on an asset account has no test yet) |
 | ZEX-S0409 | Holdings in backup, CSV export and import | 3 | Implemented – verified (CSV round trip; restore preview lists goals and holding types) |
-| ZEX-S0501 | Feature policy model and audit | 1 (rules with every phase) | Planned |
-| ZEX-S0502 | Summaries for hidden active data | 1 (rules with every phase) | Planned |
-| ZEX-S0503 | Mode-switch regression suite | 1 (rules with every phase) | Planned |
+| ZEX-S0501 | Feature policy model and audit | 1 (rules with every phase) | Implemented – verified (policy table complete; no page reads the mode; onboarding sets Simple) |
+| ZEX-S0502 | Summaries for hidden active data | 1 (rules with every phase) | Implemented – verified (existing weekly budgets, second reminder, contract and budget method visible in Simple) |
+| ZEX-S0503 | Mode-switch regression suite | 1 (rules with every phase) | Implemented – verified (AT28 data set: same numbers and settings after Advanced → Simple → Advanced) |
 | ZEX-S0601 | Report scope bar, drill-down parity, PDF scopes | 4 | Implemented – verified (scope bar; drill-down parity and PDF scope tests) |
 | ZEX-S0602 | Period overview (R1): surplus, rate, spending changes | 4 | Implemented – verified (K05, K06, K11 tests; tag overlaps named) |
 | ZEX-S0603 | Commitments and cost of living (R2): K04, K08 | 4 | Implemented – verified (K04 and K08 tested; Home shows the 30-day total above its upcoming payments) |
@@ -101,12 +101,12 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0802 | Wealth change decomposition | 5 | Implemented – verified (570 example and missing-valuation cause tested) |
 | ZEX-S0803 | Save forecast snapshot | 5 | Implemented – verified (read-only store test; backup counts snapshots) |
 | ZEX-S0804 | Snapshot vs reality | 5 | Implemented – verified (recorded-later example tested; parts add up) |
-| ZEX-S0901 | Migration and older-backup restore per wave | 6 | Planned |
-| ZEX-S0902 | Backup round trip with all new data | 6 | Planned |
-| ZEX-S0903 | Platform verification per wave | 6 | Planned |
-| ZEX-S0904 | Localization, RTL, dark theme and accessibility per wave | 6 | Planned |
-| ZEX-S0905 | Product transparency | 6 | Planned |
-| ZEX-S0906 | Performance with the reference data set | 6 | Planned |
+| ZEX-S0901 | Migration and older-backup restore per wave | 6 | Implemented – verified (database and backup of the base version upgrade unchanged) |
+| ZEX-S0902 | Backup round trip with all new data | 6 | Implemented – verified (AT34 round trip on a fresh install) |
+| ZEX-S0903 | Platform verification per wave | 6 | Implemented – unverified for iOS (Windows and Android verified per phase, 07 §6; iOS blocked: no Mac or iOS device) |
+| ZEX-S0904 | Localization, RTL, dark theme and accessibility per wave | 6 | Implemented – verified (German light, Persian dark, Simple walk-throughs; enum-built keys tested) |
+| ZEX-S0905 | Product transparency | 6 | Implemented – verified (About: file contents, platforms, problem report without telemetry) |
+| ZEX-S0906 | Performance with the reference data set | 6 | Implemented – verified (reference data set within the Q-02 budget) |
 
 ---
 

@@ -14,6 +14,7 @@ using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Goals;
@@ -258,7 +259,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         try
         {
             var settings = await _store.GetSettingsAsync();
-            IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+            IsAdvanced = settings.Shows(Feature.GoalOptions);
             CurrencyCode = settings.DefaultCurrencyCode;
             _accounts = await _store.GetAccountsAsync();
             _entries = await _store.GetEntriesAsync();
@@ -414,7 +415,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
 
         var units = Quantities.UnitsOf(type.Dimension);
         QuantityUnitNames = [.. units.Select(u => u == QuantityUnit.Piece ? _holdingText.CountName(type) : _translator[u == QuantityUnit.Kilogram ? "Unit_Kilogram" : "Unit_Gram"])];
-        HasQuantityUnitChoice = units.Count > 1;
+        HasQuantityUnitChoice = IsQuantityGoal && units.Count > 1;
         QuantityUnitIndex = 0;
     }
 
@@ -459,6 +460,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         IsQuantityGoal = TypeIndex == 2;
         IsMoneyGoal = !IsQuantityGoal;
         ShowCurrencyChoice = TypeIndex == 1;
+        HasQuantityUnitChoice = IsQuantityGoal && QuantityUnitNames.Count > 1;
         ShowMethods = IsAdvanced && IsMoneyGoal;
         if (IsBalanceGoal && Account is not null)
         {

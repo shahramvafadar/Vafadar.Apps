@@ -398,8 +398,14 @@ internal static class DebugSnapshots
         budget.CategoryLimits.Add(new Core.Budgets.BudgetCategoryLimit { CategoryId = foodId, Limit = 4_000 });
         await store.SaveBudgetAsync(budget);
 
-        // Snapshots show the Advanced screens; Simple hides options but not data.
-        settings.Mode = Core.Settings.ExperienceMode.Advanced;
+        // A weekly budget of the current week: Simple shows the period choice because it exists (ZEX-S0502).
+        var week = Core.Budgets.BudgetPeriods.StartOf(Core.Budgets.BudgetPeriod.Week, DateOnly.FromDateTime(DateTime.Today), DayOfWeek.Monday);
+        await store.SaveBudgetAsync(new Core.Budgets.Budget { Period = Core.Budgets.BudgetPeriod.Week, PeriodStart = week, CurrencyCode = settings.ReportCurrencyCode, TotalLimit = 30_000 });
+
+        // Snapshots show the Advanced screens unless VAFADAR_SNAPSHOT_MODE=simple; Simple hides options but not data.
+        settings.Mode = string.Equals(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_MODE"), "simple", StringComparison.OrdinalIgnoreCase)
+            ? Core.Settings.ExperienceMode.Simple
+            : Core.Settings.ExperienceMode.Advanced;
         await store.SaveSettingsAsync(settings);
     }
 

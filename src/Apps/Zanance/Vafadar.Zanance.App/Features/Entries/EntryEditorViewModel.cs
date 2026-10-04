@@ -9,6 +9,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Entries;
@@ -54,7 +55,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private LedgerEntry _entry = new();
     private LedgerEntry? _fee;
     private LedgerEntry? _destinationFee;
-    private bool _isAdvanced;
+    // What the feature policy shows for new entries: creating an aggregated entry and a fee in the destination currency.
+    private bool _canAggregate;
+    private bool _showsFee;
     private LedgerEntry? _refundOf;
     private CategoryLookup _categories;
     private Dictionary<Guid, Account> _accounts = [];
@@ -189,7 +192,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial bool CanAggregate { get; set; }
 
-    partial void OnIsTransferChanged(bool value) => CanAggregate = (_isAdvanced || IsAggregated) && !value;
+    partial void OnIsTransferChanged(bool value) => CanAggregate = (_canAggregate || IsAggregated) && !value;
 
     partial void OnIsAggregatedChanged(bool value)
     {
@@ -404,8 +407,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             await LoadReferenceDataAsync();
             var settings = await _store.GetSettingsAsync();
-            _isAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
-        CanAggregate = (_isAdvanced || IsAggregated) && !IsTransfer;
+            _canAggregate = settings.Shows(Feature.AggregatedEntries);
+            _showsFee = settings.Shows(Feature.TransferFee);
+            CanAggregate = (_canAggregate || IsAggregated) && !IsTransfer;
             _destinationFee = null;
             DestinationFeeText = string.Empty;
             var active = Accounts;
@@ -480,7 +484,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 KindIndex = Math.Max(0, Array.IndexOf(ChipKinds, kind));
 
                 // Advanced shows payee, note and foreign amount directly; Simple keeps them one tap away (§14).
-                ShowDetails = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+                ShowDetails = settings.Shows(Feature.EntryDetails);
                 Account = defaultAccount;
                 ToAccount = active.FirstOrDefault(a => a.Id != defaultAccount?.Id);
 
@@ -798,7 +802,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         CurrencyCode = Account?.CurrencyCode ?? Currencies.Euro.Code;
         ToCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode;
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
-        ShowDestinationFee = IsTransfer && _isAdvanced && ToAccount is not null;
+        ShowDestinationFee = IsTransfer && _showsFee && ToAccount is not null;
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
     }
 

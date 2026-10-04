@@ -1,13 +1,14 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Goals;
@@ -235,7 +236,7 @@ public sealed partial class GoalDetailViewModel(
         };
         SoFarText = trend.Status != TrendStatus.Reached && trend.SoFar != 0 ? translator.Format("Goal_TrendSoFar", presenter.Amount(goal, trend.SoFar)) : null;
         TrendPeriods.Clear();
-        if (settings.Mode == Core.Settings.ExperienceMode.Advanced)
+        if (settings.Shows(Feature.GoalDetails))
         {
             foreach (var period in trend.Periods)
             {
@@ -249,7 +250,7 @@ public sealed partial class GoalDetailViewModel(
         // Quantity goals: money capacity becomes a quantity only at a price the user types (ZEX-S0703).
         IsQuantity = goal.Type == GoalType.HoldingQuantity;
         CapacityQuantityText = null;
-        CanUseAssumedPrice = IsQuantity && settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        CanUseAssumedPrice = IsQuantity && settings.Shows(Feature.GoalDetails);
         if (!CanUseAssumedPrice || presenter.TypeOf(goal) is not { } type)
         {
             return;
@@ -289,7 +290,7 @@ public sealed partial class GoalDetailViewModel(
     {
         CoverageText = null;
         var settings = await store.GetSettingsAsync();
-        if (settings.Mode != Core.Settings.ExperienceMode.Advanced)
+        if (!settings.Shows(Feature.GoalDetails))
         {
             return;
         }

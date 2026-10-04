@@ -3618,7 +3618,7 @@
     <value>Verlagern</value>
   </data>
   <data name="Holding_AddExisting" xml:space="preserve">
-    <value>Hinzufügen (vorhanden oder Geschenk)</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Entfernen</value>
@@ -5020,5 +5020,70 @@
   </data>
   <data name="Goal_NoCapacity" xml:space="preserve">
     <value>Derzeit kein Spielraum für dieses Ziel.</value>
+  </data>
+  <data name="Help_SafetyCopy_Title" xml:space="preserve">
+    <value>Sicherheitskopie vor einer Wiederherstellung</value>
+  </data>
+  <data name="Help_SafetyCopy_Text" xml:space="preserve">
+    <value>Bevor eine Sicherung Ihre Daten ersetzt, behält Zanance eine Sicherheitskopie der aktuellen Daten auf diesem Gerät, damit bei einem Fehler nichts verloren geht. Die Sicherheitskopie ist nicht verschlüsselt; sie bleibt im privaten Speicher der App, und nur die neuesten Kopien werden behalten. Eine Sicherungsdatei, die Sie selbst erstellen, ist immer mit Ihrem Passwort verschlüsselt.</value>
+  </data>
+  <data name="HomeSection_Goals" xml:space="preserve">
+    <value>Ziele</value>
+  </data>
+  <data name="About_FilesTitle" xml:space="preserve">
+    <value>Was Ihre Dateien enthalten</value>
+  </data>
+  <data name="About_FilesBackupTitle" xml:space="preserve">
+    <value>Sicherung</value>
+  </data>
+  <data name="About_FilesBackup" xml:space="preserve">
+    <value>Alles, was Sie erfasst haben: Konten, Buchungen, Pläne, Budgets, Kurse, Ziele, Bestände mit ihren Ereignissen und Preisen, Prognose-Schnappschüsse, Anzeigeeinheiten und das Layout der Startseite. Sie wird mit Ihrem Passwort verschlüsselt. Geräteeinstellungen (Design, Sprache, Ziffern, Erinnerungen) sind nicht enthalten.</value>
+  </data>
+  <data name="About_FilesCsvTitle" xml:space="preserve">
+    <value>CSV-Export</value>
+  </data>
+  <data name="About_FilesCsv" xml:space="preserve">
+    <value>Ihre Buchungen und, in einer eigenen Datei, Ihre Bestände für eine Tabellenkalkulation. Ein CSV-Export ist keine Sicherung: Pläne, Budgets, Ziele und Schnappschüsse sind nicht enthalten.</value>
+  </data>
+  <data name="About_FilesPdfTitle" xml:space="preserve">
+    <value>PDF-Bericht</value>
+  </data>
+  <data name="About_FilesPdf" xml:space="preserve">
+    <value>Der gewählte Bericht mit Zeitraum, Währung und den einbezogenen Konten. Er dient zum Lesen und Weitergeben und lässt sich nicht wiederherstellen.</value>
+  </data>
+  <data name="About_PlatformsTitle" xml:space="preserve">
+    <value>Plattformen</value>
+  </data>
+  <data name="About_PlatformsText" xml:space="preserve">
+    <value>Jede Version wird vor der Veröffentlichung auf diesen Systemen geprüft.</value>
+  </data>
+  <data name="About_Platform_Verified" xml:space="preserve">
+    <value>Geprüft</value>
+  </data>
+  <data name="About_Platform_NotVerified" xml:space="preserve">
+    <value>Noch nicht geprüft, nicht angeboten</value>
+  </data>
+  <data name="About_ProblemTitle" xml:space="preserve">
+    <value>Problem melden</value>
+  </data>
+  <data name="About_ProblemText" xml:space="preserve">
+    <value>Zanance sendet nichts von selbst: keine Nutzungsdaten und keine Absturzberichte. Die Schaltfläche bereitet einen kurzen Text mit App-Version und Gerätetyp vor, und Sie entscheiden, wohin Sie ihn senden. Bitte entfernen Sie vorher Beträge, Kontonamen und andere finanzielle Angaben.</value>
+  </data>
+  <data name="About_ProblemButton" xml:space="preserve">
+    <value>Problembericht vorbereiten</value>
+  </data>
+  <data name="About_ProblemReport" xml:space="preserve">
+    <value>Zanance {0} · {1} {2}
+
+Was ist passiert:
+
+Was ich erwartet habe:
+
+Schritte zum Wiederholen:
+
+(Bitte vor dem Senden Beträge, Kontonamen und andere finanzielle Angaben entfernen.)</value>
+  </data>
+  <data name="Budget_MethodActive" xml:space="preserve">
+    <value>Methode dieses Budgets: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um sie zu ändern.</value>
   </data>
 </root>

@@ -1463,7 +1463,7 @@
     <value>این برنامه از این تنظیم استفاده می‌کند: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
   </data>
   <data name="Budget_HiddenLimits" xml:space="preserve">
-    <value>{0} سقف دسته حفظ شده است. برای ویرایش، حالت پیشرفته را در تنظیمات فعال کنید.</value>
+    <value>سقف دسته‌ها ({0} مورد) حفظ شده است. برای ویرایش، حالت پیشرفته را در تنظیمات فعال کنید.</value>
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>پایان ماه ≈ {0} · کمترین {1} در {2}</value>
@@ -5020,5 +5020,70 @@
   </data>
   <data name="Goal_NoCapacity" xml:space="preserve">
     <value>فعلاً ظرفیتی برای این هدف باقی نمانده است.</value>
+  </data>
+  <data name="Help_SafetyCopy_Title" xml:space="preserve">
+    <value>نسخهٔ احتیاطی پیش از بازیابی</value>
+  </data>
+  <data name="Help_SafetyCopy_Text" xml:space="preserve">
+    <value>پیش از این‌که پشتیبان داده‌های شما را جایگزین کند، زنانس یک نسخهٔ احتیاطی از داده‌های فعلی را روی همین دستگاه نگه می‌دارد تا اگر بازیابی ناموفق بود چیزی از دست نرود. این نسخهٔ احتیاطی رمزگذاری نشده است؛ در فضای خصوصی برنامه می‌ماند و فقط تازه‌ترین نسخه‌ها نگه داشته می‌شوند. فایل پشتیبانی که خودتان می‌سازید همیشه با رمز شما رمزگذاری می‌شود.</value>
+  </data>
+  <data name="HomeSection_Goals" xml:space="preserve">
+    <value>هدف‌ها</value>
+  </data>
+  <data name="About_FilesTitle" xml:space="preserve">
+    <value>فایل‌ها چه چیزی دارند</value>
+  </data>
+  <data name="About_FilesBackupTitle" xml:space="preserve">
+    <value>پشتیبان</value>
+  </data>
+  <data name="About_FilesBackup" xml:space="preserve">
+    <value>همه‌ی آنچه وارد کرده‌اید: حساب‌ها، تراکنش‌ها، برنامه‌ها، بودجه‌ها، نرخ‌ها، هدف‌ها، دارایی‌ها با رویدادها و قیمت‌هایشان، پیش‌بینی‌های ذخیره‌شده، واحدهای نمایش و چیدمان خانه. با گذرواژه‌ی شما رمزگذاری می‌شود. تنظیمات دستگاه (پوسته، زبان، ارقام، یادآورها) در آن نیست.</value>
+  </data>
+  <data name="About_FilesCsvTitle" xml:space="preserve">
+    <value>خروجی CSV</value>
+  </data>
+  <data name="About_FilesCsv" xml:space="preserve">
+    <value>تراکنش‌ها، و دارایی‌ها در فایلی جداگانه، برای صفحه‌گسترده. خروجی CSV پشتیبان نیست: برنامه‌ها، بودجه‌ها، هدف‌ها و پیش‌بینی‌های ذخیره‌شده در آن نیستند.</value>
+  </data>
+  <data name="About_FilesPdfTitle" xml:space="preserve">
+    <value>گزارش PDF</value>
+  </data>
+  <data name="About_FilesPdf" xml:space="preserve">
+    <value>گزارشی که انتخاب کرده‌اید، با دوره، ارز و حساب‌هایی که در بر می‌گیرد. برای خواندن و فرستادن است و نمی‌توان آن را بازیابی کرد.</value>
+  </data>
+  <data name="About_PlatformsTitle" xml:space="preserve">
+    <value>سیستم‌عامل‌ها</value>
+  </data>
+  <data name="About_PlatformsText" xml:space="preserve">
+    <value>هر نسخه پیش از انتشار روی این سیستم‌ها بررسی می‌شود.</value>
+  </data>
+  <data name="About_Platform_Verified" xml:space="preserve">
+    <value>بررسی‌شده</value>
+  </data>
+  <data name="About_Platform_NotVerified" xml:space="preserve">
+    <value>هنوز بررسی نشده، عرضه نمی‌شود</value>
+  </data>
+  <data name="About_ProblemTitle" xml:space="preserve">
+    <value>گزارش مشکل</value>
+  </data>
+  <data name="About_ProblemText" xml:space="preserve">
+    <value>Zanance خودش چیزی نمی‌فرستد: نه داده‌ی استفاده و نه گزارش خرابی. این دکمه متن کوتاهی با نسخه‌ی برنامه و نوع دستگاه آماده می‌کند و خودتان انتخاب می‌کنید آن را کجا بفرستید. لطفاً پیش از فرستادن، مبلغ‌ها، نام حساب‌ها و دیگر جزئیات مالی را پاک کنید.</value>
+  </data>
+  <data name="About_ProblemButton" xml:space="preserve">
+    <value>آماده کردن گزارش مشکل</value>
+  </data>
+  <data name="About_ProblemReport" xml:space="preserve">
+    <value>Zanance {0} · {1} {2}
+
+چه اتفاقی افتاد:
+
+چه انتظاری داشتم:
+
+مراحل تکرار:
+
+(لطفاً پیش از فرستادن، مبلغ‌ها، نام حساب‌ها و دیگر جزئیات مالی را پاک کنید.)</value>
+  </data>
+  <data name="Budget_MethodActive" xml:space="preserve">
+    <value>روش این بودجه: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
   </data>
 </root>

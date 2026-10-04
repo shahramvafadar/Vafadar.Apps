@@ -33,16 +33,20 @@ show them in full.
 | UI-03 | Entry editor | Kind segmented control (Expense · Income · Transfer); amount with currency; category grid; title; date (today); account (hidden if only one); "More details": note, payee, icon, foreign amount | Advanced shows account, date, payee, currency directly |
 | UI-04 | Transactions | Search, filter chips (period, kind, account, category, review state), list grouped by date with day totals; entry detail with refund, duplicate, make recurring, delete (undo) | same |
 | UI-05 | Accounts | Balance per account in its currency, type icon, archived section, total per currency | same |
-| UI-06 | Account detail / reconcile | Movement list (in, out, transfer, adjustment), reconcile: enter observed balance → difference → review suggestions → optional adjustment with reason | Advanced |
+| UI-06 | Account detail / reconcile | Movement list (in, out, transfer, adjustment), reconcile: enter observed balance → difference → review suggestions → optional adjustment with reason | same (correcting a balance is never hidden, ZEX-SA25) |
 | UI-07 | Plans | Segments: Due & overdue · Upcoming · Needs review · All plans; each row shows status badge + amount (fixed/≈/?) | same |
 | UI-08 | Plan editor | Kind, name, amount mode, account(s), category, start date, repeat (common presets / custom N days-weeks-months-years), calendar, month-end rule, end, reminder, auto-post (with "records only, pays nothing" notice), **preview of next 6 dates** | presets in Simple |
 | UI-09 | Occurrence review | Confirm with actual amount/date, link to existing entry (suggestions), move due date, skip, note | same |
-| UI-10 | Budget | Month selector, total card (limit, spent net, remaining, %), category limits, copy to next month | category limits Advanced |
+| UI-10 | Budget | Month selector, total card (limit, spent net, remaining, %), category limits, copy to next month | limits, method and periods edited in Advanced; existing ones shown in Simple (ZEX-S0502) |
 | UI-11 | Reports | Expense by category (gross donut + refunds card + net table), income vs expense, monthly trend (6/12), account movement, budget, plan vs actual; tap → drill-down list | same data, Advanced filters |
 | UI-12 | Import / Export | Export CSV (period, accounts, include notes?), sensitive-data warning, share; Import: pick file → mapping → preview (valid/invalid/duplicates) → apply → result with "undo this import" | same |
 | UI-13 | Backup & restore | Last successful backup, create encrypted backup file (password + confirmation, "cannot be recovered" warning), restore: pick file → password → preview (date, counts) → safety copy → confirm | same |
 | UI-14 | Settings & privacy | Language and region (language, calendar, region, week start) · Money and months (report currency, month start) · Appearance (theme, Persian digits) · Experience (Simple/Advanced) · Privacy and security (app lock) · Notifications (turn on, names and amounts, reminder defaults) · Delete data | same |
-| UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; the open-source components with licence and copyright, and their full licence texts on a page of their own (`Resources/Raw/ThirdPartyNotices.txt`) | same |
+| UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; what a backup, a CSV export and a PDF report contain; the platforms each release is checked on; a problem report the user sends themselves (nothing is sent automatically, ZEX-S0905); the open-source components with licence and copyright, and their full licence texts on a page of their own (`Resources/Raw/ThirdPartyNotices.txt`) | same |
+
+What each mode shows is decided by one table, `FeaturePolicy` (`Vafadar.Zanance.Core/Settings/FeaturePolicy.cs`);
+pages ask it instead of reading the mode. Simple keeps every existing item visible, at least as a summary
+([enhancement 05](enhancements/2026-10-multi-unit-goals-insights/05-simple-advanced-matrix.md)).
 
 ## 4. States every screen defines (UX-05)
 

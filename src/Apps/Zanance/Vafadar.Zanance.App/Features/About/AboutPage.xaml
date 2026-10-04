@@ -26,6 +26,50 @@
                 <Label Text="{v:Translate About_DataText}" />
             </Border>
 
+            <!-- ZEX-S0905: what a backup, a CSV export and a PDF report contain (02 §10). -->
+            <Label Text="{v:Translate About_FilesTitle}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{v:Translate About_FilesBackupTitle}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate About_FilesBackup}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{v:Translate About_FilesCsvTitle}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate About_FilesCsv}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{v:Translate About_FilesPdfTitle}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate About_FilesPdf}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ZEX-S0905: the systems each release is checked on; system names stay in their Latin form. -->
+            <Label Text="{v:Translate About_PlatformsTitle}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{v:Translate About_PlatformsText}" Style="{StaticResource Secondary}" />
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="6">
+                        <Label Text="Android" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="{v:Translate About_Platform_Verified}" TextColor="{DynamicResource IncomeText}" />
+                        <Label Grid.Row="1" Text="Windows" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{v:Translate About_Platform_Verified}" TextColor="{DynamicResource IncomeText}" />
+                        <Label Grid.Row="2" Text="iOS" FontAttributes="Bold" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{v:Translate About_Platform_NotVerified}" Style="{StaticResource Secondary}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ZEX-S0905: no telemetry; a report is prepared locally and the user decides where it goes. -->
+            <Label Text="{v:Translate About_ProblemTitle}" Style="{StaticResource SectionHeader}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{v:Translate About_ProblemText}" Style="{StaticResource Secondary}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate About_ProblemButton}" Command="{Binding ReportProblemCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
             <Label Text="{v:Translate About_LicencesTitle}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="10">

@@ -5,6 +5,7 @@ using FluentIcons.Common;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Holdings;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Holdings;
@@ -54,7 +55,7 @@ public sealed partial class HoldingsViewModel(HoldingStore holdings, ZananceStor
     public async Task LoadAsync()
     {
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
-        IsAdvanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
         var types = (await holdings.GetTypesAsync()).Where(t => !t.IsArchived).ToList();
         var events = await holdings.GetEventsAsync();
         var valuations = await holdings.GetValuationsAsync();

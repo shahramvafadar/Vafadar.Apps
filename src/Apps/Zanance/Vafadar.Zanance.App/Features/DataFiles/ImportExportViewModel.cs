@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Presentation;
@@ -12,6 +12,7 @@ using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.DataFiles;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.DataFiles;
@@ -168,7 +169,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         Account ??= Accounts.FirstOrDefault();
         DateFormat ??= DateFormats[0];
         CalendarIndex = _localization.CurrentCalendar == CalendarSystem.Persian ? 1 : 0;
-        CanExportHoldings = (await _store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced && (await _holdings.GetTypesAsync()).Count > 0;
+        CanExportHoldings = (await _store.GetSettingsAsync()).Shows(Feature.HoldingsExport) && (await _holdings.GetTypesAsync()).Count > 0;
         await LoadBatchesAsync();
     }
 

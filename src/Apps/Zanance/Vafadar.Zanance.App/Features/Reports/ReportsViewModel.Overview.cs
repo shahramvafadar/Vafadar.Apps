@@ -8,6 +8,7 @@ using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
+using Vafadar.Zanance.Core.Settings;
 
 namespace Vafadar.Zanance.App.Features.Reports;
 
@@ -110,7 +111,7 @@ public sealed partial class ReportsViewModel
         var others = all.Where(s => !string.Equals(s.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase) && s.Surplus != 0).ToList();
         OtherCurrenciesText = others.Count == 0 ? null : _translator.Format("Report_OtherCurrencies", string.Join(" · ", others.Select(s => Money(s.Surplus, s.CurrencyCode, showPlus: true))));
         ConvertedText = null;
-        if (IsAdvanced && _settings.ValuationCurrencyEnabled && all.Count > 1)
+        if (_settings.Shows(Feature.ConvertedTotals) && _settings.ValuationCurrencyEnabled && all.Count > 1)
         {
             var combined = new Core.Rates.RateTable(await _store.GetRatesAsync()).Combine(all.ToDictionary(s => s.CurrencyCode, s => s.Surplus), _settings.ReportCurrencyCode, _to < Today ? _to : Today, new Core.Rates.RateFreshness(_settings.RateFreshnessDays));
             ConvertedText = combined.IsComplete

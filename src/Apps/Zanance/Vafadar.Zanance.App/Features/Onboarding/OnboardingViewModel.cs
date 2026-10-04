@@ -151,6 +151,8 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
             // Budget months follow the calendar chosen here; later changes apply to future budgets only (BUD-08).
             settings.BudgetCalendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+            // A new profile starts in Simple, set explicitly rather than by the column default (ZEX-F15, 05 §1 rule 7).
+            settings.Mode = Core.Settings.ExperienceMode.Simple;
             settings.OnboardingCompleted = true;
             await _store.SaveSettingsAsync(settings);
 

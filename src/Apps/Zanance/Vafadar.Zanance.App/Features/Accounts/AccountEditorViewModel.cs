@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
@@ -55,7 +56,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     {
         ArgumentNullException.ThrowIfNull(query);
         var settings = await _store.GetSettingsAsync();
-        Form.ShowAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        Form.ShowAdvanced = settings.Shows(Feature.AccountOptions);
 
         if (query.TryGetValue("id", out var value) && value is Guid id
             && (await _store.GetAccountsAsync()).FirstOrDefault(a => a.Id == id) is { } account)

@@ -12,8 +12,9 @@ namespace Vafadar.Zanance.App.Features.About;
 public sealed record NoticeComponent(string Name, string Licence);
 
 /// <summary>
-/// About Zanance (D-39): version, what happens with the user's data, and the third-party notices the licences of the
-/// included software and fonts require (<c>Resources/Raw/ThirdPartyNotices.txt</c>, shown in full on its own page).
+/// About Zanance (D-39, ZEX-S0905): version, what happens with the user's data, what each file contains, the checked
+/// platforms, a problem report the user sends themselves, and the third-party notices the licences of the included
+/// software and fonts require (<c>Resources/Raw/ThirdPartyNotices.txt</c>, shown in full on its own page).
 /// </summary>
 public sealed partial class AboutViewModel(Translator translator, IAppEnvironment app) : ViewModelBase
 {
@@ -91,4 +92,19 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
 
     [RelayCommand]
     private Task ShowNoticesAsync() => Shell.Current.GoToAsync(AppShell.NoticesRoute);
+
+    /// <summary>
+    /// ZEX-S0905: prepares a problem report with only the app version and the device type, and hands it to the system
+    /// share sheet. Nothing is sent by the app; the user picks the recipient and edits the text first.
+    /// </summary>
+    [RelayCommand]
+    private Task ReportProblemAsync() => Share.Default.RequestAsync(new ShareTextRequest
+    {
+        Title = translator["About_ProblemTitle"],
+        Text = ProblemReport(translator, app.Version, app.Platform, DeviceInfo.Current.VersionString),
+    });
+
+    /// <summary>The text of a problem report; it holds no data of the user, only the version and the system.</summary>
+    public static string ProblemReport(Translator translator, Version version, string platform, string systemVersion) =>
+        translator.Format("About_ProblemReport", version, platform, systemVersion);
 }

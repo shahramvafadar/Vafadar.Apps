@@ -39,8 +39,8 @@
                         SemanticProperties.Description="{v:Translate Budget_ShownCurrency}" />
             </Grid>
 
-            <!-- Period length (§10.3, Advanced): month, week or two weeks -->
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding IsAdvanced}">
+            <!-- Period length (§10.3): month, week or two weeks; in Simple only when such a budget exists (ZEX-S0502) -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding ShowsPeriods}">
                 <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
                 <v:HelpButton Grid.Column="1" Topic="BudgetPeriod" />
             </Grid>

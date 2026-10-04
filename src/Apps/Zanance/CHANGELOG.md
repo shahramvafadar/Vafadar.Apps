@@ -6,6 +6,20 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
+
+- About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme
+  and language excepted), a CSV export holds entries and holdings but is not a backup, and a PDF report is for reading
+  only. It also lists the systems every release is checked on (Android, Windows; iOS not yet).
+- "Prepare a problem report" in About: the app writes a short text with only its version and the device type and
+  opens the share sheet; you choose where it goes and remove financial details first. The app sends nothing on its
+  own – no usage data and no crash reports.
+- Simple mode no longer hides data that exists: a weekly or two-week budget is shown with its own period, and an
+  existing second reminder, contract and budget method stay visible and can be corrected. A new profile starts in
+  Simple. What each mode shows is decided in one place, and switching the mode never changes a number or a setting.
+- Tests: upgrading a database and restoring a backup of the version before this enhancement, a full backup round trip
+  of the new data, keys built from names in all three languages, the Simple/Advanced policy and a mode switch with a
+  rich data set, and the speed of the new calculations with 10,000 entries, 500 holding events and 10 goals.
 ### Added – Quantity goals and wealth history (enhancement ZEX, phase 5)
 
 - A goal can count a quantity of a holding, e.g. 50 g of gold, at all locations or one: progress is the quantity you
@@ -20,6 +34,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Forecast (Advanced): save the forecast with a name; later compare it with reality – the saved and the actual path,
   and the difference split into entries recorded later, unplanned spending and income, and plans paid differently.
   Saved forecasts never change and are part of backups.
+
 ### Added – Reports and data quality (enhancement ZEX, phase 4)
 
 - Reports are now five packages under one scope bar – period overview, commitments, goals, holdings and data status.
