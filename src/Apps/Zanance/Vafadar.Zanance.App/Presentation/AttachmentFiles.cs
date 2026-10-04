@@ -61,9 +61,13 @@ internal static class AttachmentFiles
 
     private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");
 
+    // Files written for sharing: CSV exports and PDF reports (ImportExportViewModel, ReportsViewModel).
+    private static readonly string[] SharedFilePatterns = ["zanance-export-*.csv", "zanance-holdings-*.csv", "zanance-report-*.pdf"];
+
     /// <summary>
-    /// Removes the copies written for opening attachments. They are plain files, so they are deleted on every start and
-    /// after "Delete all data" instead of staying in the cache.
+    /// Removes the copies written for opening attachments and the files written for sharing (exports and reports). They
+    /// are plain, unencrypted files, so they are deleted on every start and after "Delete all data" instead of staying in
+    /// the cache until the system clears it.
     /// </summary>
     public static void ClearCache()
     {
@@ -72,6 +76,11 @@ internal static class AttachmentFiles
             if (Directory.Exists(CacheFolder))
             {
                 Directory.Delete(CacheFolder, recursive: true);
+            }
+
+            foreach (var file in SharedFilePatterns.SelectMany(pattern => Directory.EnumerateFiles(FileSystem.CacheDirectory, pattern)))
+            {
+                File.Delete(file);
             }
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)

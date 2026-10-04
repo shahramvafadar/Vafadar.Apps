@@ -22,7 +22,7 @@
                         <v:DateField Date="{Binding ExportTo}" />
                         <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                             <Label Text="{v:Translate Export_IncludeNotes}" VerticalOptions="Center" />
-                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Export_IncludeNotes}" />
                         </Grid>
                         <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,12,0,0">
                             <Label Text="{v:Translate Export_Warning}" TextColor="{DynamicResource WarningText}" />
@@ -90,7 +90,7 @@
                             </Border>
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasDuplicates}">
                                 <Label Text="{v:Translate Import_SkipDuplicates}" VerticalOptions="Center" />
-                                <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Import_SkipDuplicates}" />
                             </Grid>
                             <Button Style="{StaticResource PrimaryButton}" Command="{Binding ImportCommand}" IsEnabled="{Binding IsNotBusy}"
                                     Text="{Binding ImportButtonText}" />
@@ -108,7 +108,7 @@
                             <DataTemplate x:DataType="local:BatchRow">
                                 <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
                                     <Label Text="{Binding Text}" VerticalOptions="Center" />
-                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
                                             Command="{Binding UndoCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>

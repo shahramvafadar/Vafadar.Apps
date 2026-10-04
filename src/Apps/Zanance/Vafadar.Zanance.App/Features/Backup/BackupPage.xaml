@@ -31,7 +31,7 @@
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Backup_UsePassword}" VerticalOptions="Center" />
                             <v:HelpButton Grid.Column="1" Topic="BackupPassword" />
-                            <Switch Grid.Column="2" IsToggled="{Binding UsePassword}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="2" IsToggled="{Binding UsePassword}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Backup_UsePassword}" />
                         </Grid>
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding UsePassword}">
                             <Entry Text="{Binding Password}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"
@@ -168,8 +168,7 @@
                             </Border>
                             <Button Text="{v:Translate Backup_Replace}" Command="{Binding RestoreCommand}" IsEnabled="{Binding IsNotBusy}"
                                     BackgroundColor="{DynamicResource ExpenseText}" TextColor="{DynamicResource CardBackground}" CornerRadius="24" MinimumHeightRequest="48" FontAttributes="Bold" />
-                            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelRestoreCommand}" BackgroundColor="Transparent"
-                                    TextColor="{DynamicResource Primary}" />
+                            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelRestoreCommand}" Style="{StaticResource TextButton}" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>

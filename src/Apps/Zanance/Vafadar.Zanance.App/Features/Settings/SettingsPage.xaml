@@ -90,7 +90,7 @@
                         </Grid>
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding EssentialSuggestionText, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding EssentialSuggestionText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
-                            <Button Grid.Column="1" Text="{v:Translate Settings_UseSuggestion}" Command="{Binding UseEssentialSuggestionCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+                            <Button Grid.Column="1" Text="{v:Translate Settings_UseSuggestion}" Command="{Binding UseEssentialSuggestionCommand}" Style="{StaticResource TextButton}" />
                         </Grid>
                         <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveEssentialCommand}" HorizontalOptions="Start" />
                         <Label Text="{Binding EssentialSavedText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding EssentialSavedText, Converter={StaticResource IsNotNullConverter}}" />
@@ -137,7 +137,7 @@
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" IsVisible="{Binding LockAvailable}">
                         <Label Text="{v:Translate Lock_Setting}" VerticalOptions="Center" />
                         <v:HelpButton Grid.Column="1" Topic="AppLock" />
-                        <Switch x:Name="LockSwitch" Grid.Column="2" IsToggled="{Binding LockEnabled}" OnColor="{DynamicResource Primary}" Toggled="OnLockToggled" />
+                        <Switch x:Name="LockSwitch" Grid.Column="2" IsToggled="{Binding LockEnabled}" OnColor="{DynamicResource Primary}" Toggled="OnLockToggled" SemanticProperties.Description="{v:Translate Lock_Setting}" />
                     </Grid>
                     <Label Text="{v:Translate Lock_NotAvailableHint}" Style="{StaticResource Secondary}"
                            IsVisible="{Binding LockAvailable, Converter={StaticResource InvertedBoolConverter}}" />
@@ -155,12 +155,12 @@
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding NotificationsEnabled, Converter={StaticResource InvertedBoolConverter}}">
                             <Label Text="{v:Translate Reminder_PermissionDenied}" TextColor="{DynamicResource WarningText}" VerticalOptions="Center" />
                             <Button Grid.Column="1" Text="{v:Translate Settings_Enable}" Command="{Binding EnableNotificationsCommand}"
-                                    BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" FontAttributes="Bold" />
+                                    Style="{StaticResource TextButton}" FontAttributes="Bold" />
                         </Grid>
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Settings_ShowDetails}" VerticalOptions="Center" />
                             <v:HelpButton Grid.Column="1" Topic="NotificationDetails" />
-                            <Switch Grid.Column="2" IsToggled="{Binding ShowDetails}" OnColor="{DynamicResource Primary}" />
+                            <Switch Grid.Column="2" IsToggled="{Binding ShowDetails}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Settings_ShowDetails}" />
                         </Grid>
                         <Label Text="{v:Translate Settings_ShowDetailsHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>
@@ -181,7 +181,7 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{v:Translate Settings_DeleteAllHint}" Style="{StaticResource Secondary}" />
-                    <Button Text="{v:Translate Settings_DeleteAll}" Command="{Binding DeleteAllDataCommand}" BackgroundColor="Transparent"
+                    <Button Text="{v:Translate Settings_DeleteAll}" Command="{Binding DeleteAllDataCommand}" Style="{StaticResource TextButton}"
                             TextColor="{DynamicResource ExpenseText}" BorderColor="{DynamicResource ExpenseText}" BorderWidth="1" />
                 </VerticalStackLayout>
             </Border>

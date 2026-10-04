@@ -23,6 +23,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly Translator _translator;
     private bool _refreshing;
+    private Account? _firstAccount;
 
     public OnboardingViewModel(ZananceStore store, ILocalizationService localization, Translator translator, TimeProvider time)
     {
@@ -131,8 +132,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
     private async Task FinishAsync()
     {
-        var account = new Account { Name = string.Empty, CurrencyCode = ReportCurrency };
-        if (IsBusy || !Account.TryApply(account, _localization.CurrentCulture))
+        // The account of a finish that failed half-way is reused, so trying again never adds a second first account.
+        var account = _firstAccount ??= new Account { Name = string.Empty, CurrencyCode = ReportCurrency };
+        if (IsBusy || !Account.TryApply(account, _localization.CurrentCulture, await _store.GetAccountsAsync()))
         {
             return;
         }
@@ -157,6 +159,11 @@ public sealed partial class OnboardingViewModel : ViewModelBase
             await _store.SaveSettingsAsync(settings);
 
             ((App)Application.Current!).ShowMainShell();
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            // The input stays; Finish can be tapped again.
+            await Presentation.Failures.ShowAsync(ex);
         }
         finally
         {

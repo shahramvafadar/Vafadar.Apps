@@ -30,7 +30,7 @@
                                                 </VerticalStackLayout>
                                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
                                                 <!-- The whole row is one real button: keyboard, screen readers and touch feedback on every platform. -->
-                                                <Button Grid.ColumnSpan="3" Margin="-16,-10" BackgroundColor="Transparent" BorderWidth="0" CornerRadius="0"
+                                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                                         Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:MoreViewModel}}, x:DataType=local:MoreViewModel}"
                                                         CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Subtitle}" />
                                             </Grid>

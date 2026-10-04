@@ -267,6 +267,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             return;
         }
 
+        var restored = false;
         IsBusy = true;
         try
         {
@@ -292,8 +293,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             }
 
             ResetRestore();
-            await Shell.Current.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
-            (Application.Current as App)?.ShowMainShell();
+            restored = true;
         }
         catch (BackupException ex)
         {
@@ -313,6 +313,17 @@ public sealed partial class BackupViewModel : ViewModelBase
         finally
         {
             IsBusy = false;
+        }
+
+        // Telling the user and rebuilding the screens are not part of the restore: a problem there must not report the
+        // finished restore as failed.
+        if (restored)
+        {
+            await Presentation.Failures.GuardAsync(async () =>
+            {
+                await Shell.Current.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
+                (Application.Current as App)?.ShowMainShell();
+            });
         }
     }
 

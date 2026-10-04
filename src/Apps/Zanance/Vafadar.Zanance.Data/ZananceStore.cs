@@ -39,6 +39,9 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     private readonly Dictionary<Guid, Guid> _refundLinks = [];
     private readonly SemaphoreSlim _settingsGate = new(1, 1);
 
+    // One settings change at a time: every change reads the row, changes it and writes the whole row back.
+    private readonly SemaphoreSlim _settingsUpdate = new(1, 1);
+
     /// <summary>Raised after data was written, e.g. to refresh reminders.</summary>
     public event EventHandler? Changed;
 
@@ -109,6 +112,27 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
         OnChanged();
         return settings;
+    }
+
+    /// <summary>
+    /// Reads the settings, applies <paramref name="change"/> and saves them – one change after the other. Two changes at the
+    /// same moment (e.g. two switches on the settings page) each read the row and wrote it back whole, so the later one
+    /// restored the old value of the earlier one.
+    /// </summary>
+    public async Task UpdateSettingsAsync(Action<ZananceSettings> change, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(change);
+        await _settingsUpdate.WaitAsync(cancellationToken);
+        try
+        {
+            var settings = await GetSettingsAsync(cancellationToken);
+            change(settings);
+            await SaveSettingsAsync(settings, cancellationToken);
+        }
+        finally
+        {
+            _settingsUpdate.Release();
+        }
     }
 
     /// <summary>Saves the settings.</summary>

@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–10: libraries, core, data, app foundation, recording, accounts, holdings, plans, budget and insights
+### Fixed – Code review, parts 1–11: libraries, core, data, app foundation, recording, accounts, holdings, plans, budget, insights, settings and data
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -52,7 +52,6 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - The category editor and the entry editor mark only the chosen icon or category (an earlier choice could still look
   selected).
 - Sub-categories of an archived main category stay in the category list.
-- A double tap on Save no longer creates an asset type twice.
 - Very large prices or quantities of holdings are refused instead of overflowing.
 - The exchange-rate form suggests a missing rate first and accepts the Persian decimal separator.
 - Account rows wrap their labels on small screens.
@@ -60,13 +59,19 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   dates.
 - Copying a budget to the next month over an existing one can no longer lose it.
 - The budget page no longer mixes lines when the period or currency is switched while it loads.
-- A double tap on Save no longer adds a budget twice, and a budget needs at least one account.
+- A budget needs at least one account (with none ticked it covered all accounts).
 - The plan centre opens faster with many entries.
 - Screen readers hear the amount and status ("3 days overdue") of due items; switches in plans and budgets have names.
 - Reports apply a currency, period or package chosen while they are still loading (it was ignored), and the PDF never
   mixes with a reload.
 - Saving a goal again after a failed second step no longer creates a second goal.
 - The forecast and the goal details load faster and never fill twice.
+- Changing several settings quickly keeps all of them (one could restore the old value of another), and a settings
+  error no longer closes the app.
+- A finished restore is never reported as failed.
+- Exported CSV files and PDF reports are removed from the app's cache on the next start and after "Delete all data".
+- Finishing onboarding again after an error no longer creates a second account.
+- Switches in settings, backup and import/export have names for screen readers.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

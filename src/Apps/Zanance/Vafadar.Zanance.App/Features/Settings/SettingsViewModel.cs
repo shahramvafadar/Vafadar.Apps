@@ -125,21 +125,21 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial int StartDayIndex { get; set; }
 
-    async partial void OnStartDayIndexChanged(int value)
+    partial void OnStartDayIndexChanged(int value)
     {
         if (_refreshing || value < 0)
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
         var day = Math.Clamp(value + 1, 1, Core.Budgets.PeriodMath.MaxStartDay);
-        if (settings.MonthStartDay != day)
-        {
-            settings.MonthStartDay = day;
-            await _store.SaveSettingsAsync(settings);
-        }
+        Update(s => s.MonthStartDay = day);
     }
+
+    // Every setting is saved through one serialized update (no change can overwrite another), and a failure is shown
+    // instead of ending the app from a property-changed handler.
+    private void Update(Action<Core.Settings.ZananceSettings> change) =>
+        _ = Presentation.Failures.GuardAsync(() => _store.UpdateSettingsAsync(change));
 
     // Theme (UX-08): follow the device, light or dark.
     [ObservableProperty]
@@ -245,63 +245,46 @@ public sealed partial class SettingsViewModel : ViewModelBase
         Refresh();
     }
 
-    async partial void OnReportCurrencyChanged(string value)
+    partial void OnReportCurrencyChanged(string value)
     {
         if (_refreshing || string.IsNullOrEmpty(value))
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        if (settings.ReportCurrencyCode != value)
-        {
-            settings.ReportCurrencyCode = value;
-            await _store.SaveSettingsAsync(settings);
-        }
+        Update(s => s.ReportCurrencyCode = value);
     }
 
     // Changing one default never changes another or any stored amount (ZEX-MC02, AT02).
-    async partial void OnDefaultCurrencyChanged(string value)
+    partial void OnDefaultCurrencyChanged(string value)
     {
         if (_refreshing || string.IsNullOrEmpty(value))
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        if (settings.DefaultCurrencyCode != value)
-        {
-            settings.DefaultCurrencyCode = value;
-            await _store.SaveSettingsAsync(settings);
-            DefaultCurrencyChanged = true;
-        }
+        Update(s => s.DefaultCurrencyCode = value);
+        DefaultCurrencyChanged = true;
     }
 
-    async partial void OnDefaultAccountChanged(DefaultAccountOption? value)
+    partial void OnDefaultAccountChanged(DefaultAccountOption? value)
     {
         if (_refreshing || value is null)
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        if (settings.DefaultAccountId != value.Id)
-        {
-            settings.DefaultAccountId = value.Id;
-            await _store.SaveSettingsAsync(settings);
-        }
+        Update(s => s.DefaultAccountId = value.Id);
     }
 
-    async partial void OnValuationEnabledChanged(bool value)
+    partial void OnValuationEnabledChanged(bool value)
     {
         if (_refreshing)
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        settings.ValuationCurrencyEnabled = value;
-        await _store.SaveSettingsAsync(settings);
+        Update(s => s.ValuationCurrencyEnabled = value);
     }
 
     // The explicit estimate of day-to-day spending (ZEX-S0606) and a suggestion: the median daily spending of the last
@@ -356,20 +339,18 @@ public sealed partial class SettingsViewModel : ViewModelBase
         EssentialSavedText = _translator[settings.EssentialEstimate is null ? "Settings_EssentialCleared" : "Settings_EssentialSaved"];
     }
 
-    async partial void OnFreshnessIndexChanged(int value)
+    partial void OnFreshnessIndexChanged(int value)
     {
         if (_refreshing || value < 0 || value >= FreshnessDays.Length)
         {
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        settings.RateFreshnessDays = FreshnessDays[value];
-        await _store.SaveSettingsAsync(settings);
+        Update(s => s.RateFreshnessDays = FreshnessDays[value]);
     }
 
     // Simple and Advanced show the same data and calculations; switching never removes anything (UX-01, UX-02).
-    async partial void OnModeIndexChanged(int value)
+    partial void OnModeIndexChanged(int value)
     {
         IsAdvanced = FeaturePolicy.Shows(Feature.MoneySettings, (ExperienceMode)value);
         if (_refreshing)
@@ -377,9 +358,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        settings.Mode = (Core.Settings.ExperienceMode)value;
-        await _store.SaveSettingsAsync(settings);
+        Update(s => s.Mode = (Core.Settings.ExperienceMode)value);
     }
 
     /// <summary>Turns the app lock on or off after the device owner confirmed it (SEC-01).</summary>
@@ -410,19 +389,22 @@ public sealed partial class SettingsViewModel : ViewModelBase
             return;
         }
 
-        var settings = await _store.GetSettingsAsync();
-        settings.NotificationsShowDetails = ShowDetails;
-        if (int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days))
+        var showDetails = ShowDetails;
+        int? days = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var parsed) ? Math.Clamp(parsed, 0, 60) : null;
+        var time = ReminderTime;
+        await _store.UpdateSettingsAsync(settings =>
         {
-            settings.ReminderDaysBefore = Math.Clamp(days, 0, 60);
-        }
+            settings.NotificationsShowDetails = showDetails;
+            if (days is { } value)
+            {
+                settings.ReminderDaysBefore = value;
+            }
 
-        if (ReminderTime is { } time)
-        {
-            settings.ReminderTime = TimeOnly.FromTimeSpan(time);
-        }
-
-        await _store.SaveSettingsAsync(settings);
+            if (time is { } at)
+            {
+                settings.ReminderTime = TimeOnly.FromTimeSpan(at);
+            }
+        });
     }
 
     // SEC: deletes every record on this device after two confirmations; onboarding starts again.

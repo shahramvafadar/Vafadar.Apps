@@ -127,10 +127,15 @@ public sealed partial class PeriodReviewViewModel(
             return;
         }
 
-        var settings = await store.GetSettingsAsync();
-        settings.ReviewProgress = PeriodReview.Toggle(_state, row.Step, row.IsDone);
-        await store.SaveSettingsAsync(settings);
-        _state = PeriodReview.Parse(settings.ReviewProgress, _state.Year, _state.Month);
+        // Ticking several steps quickly: each toggle builds on the one before (one settings change at a time).
+        var state = _state;
+        string? progress = null;
+        await store.UpdateSettingsAsync(settings =>
+        {
+            settings.ReviewProgress = PeriodReview.Toggle(PeriodReview.Parse(settings.ReviewProgress, state.Year, state.Month), row.Step, row.IsDone);
+            progress = settings.ReviewProgress;
+        });
+        _state = PeriodReview.Parse(progress, state.Year, state.Month);
         UpdateProgress();
     }
 

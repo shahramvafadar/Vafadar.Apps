@@ -190,9 +190,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
 
         await Presentation.Failures.GuardAsync(async () =>
         {
-            var settings = await _store.GetSettingsAsync();
-            settings.FortnightStart = value;
-            await _store.SaveSettingsAsync(settings);
+            await _store.UpdateSettingsAsync(s => s.FortnightStart = value);
             _periodStart = default;
             await LoadAsync();
         });
@@ -251,9 +249,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
         // An async void handler: every failure is shown instead of ending the app.
         await Presentation.Failures.GuardAsync(async () =>
         {
-            var settings = await _store.GetSettingsAsync();
-            settings.HomeBudgetCurrencyCode = value;
-            await _store.SaveSettingsAsync(settings);
+            await _store.UpdateSettingsAsync(s => s.HomeBudgetCurrencyCode = value);
             await LoadAsync();
         });
     }
