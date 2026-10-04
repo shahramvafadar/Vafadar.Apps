@@ -50,8 +50,18 @@ public static class Recurrence
             yield break;
         }
 
+        // Daily and weekly rules have exactly one date per step, so a range far after the start begins at its step
+        // instead of generating every earlier date; the numbers still count from the start.
         var number = 0;
-        for (var step = 0; step < MaxSteps; step++)
+        var firstStep = 0;
+        if (rule.Frequency is Frequency.Daily or Frequency.Weekly && from > rule.Start)
+        {
+            var length = (rule.Frequency == Frequency.Daily ? 1L : 7L) * rule.Interval;
+            firstStep = (int)Math.Min(MaxSteps, (from.DayNumber - rule.Start.DayNumber) / length);
+            number = firstStep;
+        }
+
+        for (var step = firstStep; step < MaxSteps; step++)
         {
             var dates = Candidates(rule, step);
             if (dates.Count == 0)

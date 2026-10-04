@@ -143,9 +143,13 @@ public static partial class ReceiptParser
         }
     }
 
-    // The lower-case words of a line, padded with spaces so that whole words and phrases can be found.
+    // The lower-case words of a line, padded with spaces so that whole words and phrases can be found. Keywords match the
+    // Arabic letter forms of PDFs and OCR (ي, ى, ك) and words written with or without a half-space ("باقی‌مانده").
     private static string Tokens(string line) =>
-        " " + string.Join(' ', WordPattern().Matches(line.ToLowerInvariant()).Select(m => m.Value)) + " ";
+        " " + string.Join(' ', WordPattern().Matches(FoldPersian(line.ToLowerInvariant())).Select(m => m.Value)) + " ";
+
+    private static string FoldPersian(string text) =>
+        text.Replace('ي', 'ی').Replace('ى', 'ی').Replace('ك', 'ک').Replace("\u200C", string.Empty, StringComparison.Ordinal);
 
     private static bool Has(string tokens, string phrase) => tokens.Contains(" " + phrase + " ", StringComparison.Ordinal);
 

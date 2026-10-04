@@ -38,10 +38,39 @@ public static class SnapshotComparer
         var scoped = accounts.Where(a => scope.Contains(a.Id)).ToList();
         var end = today < snapshot.Horizon ? today : snapshot.Horizon;
         var saved = snapshot.Points().Where(p => p.Date <= end).ToList();
-        var days = saved.Select(p => new SnapshotDay(p.Date, p.Balance, scoped.Sum(a => LedgerCalculator.Balance(a, entries, p.Date)))).ToList();
 
         // The effect of an entry on the whole scope: a transfer between two accounts of the scope moves nothing.
         long Effect(LedgerEntry entry) => scoped.Where(a => !LedgerCalculator.IsBeforeOpening(entry, a)).Sum(a => entry.EffectOn(a.Id));
+
+        // The actual balances: the first day from the ledger, every later day by adding what happened on it – entries and
+        // the opening balance of an account that opens that day – instead of reading the whole ledger again per day.
+        var days = new List<SnapshotDay>(saved.Count);
+        if (saved.Count > 0)
+        {
+            var first = saved[0].Date;
+            var balance = scoped.Sum(a => LedgerCalculator.Balance(a, entries, first));
+            var deltas = new Dictionary<DateOnly, long>();
+            foreach (var entry in entries.Where(e => e.Date > first && e.Date <= end))
+            {
+                deltas[entry.Date] = deltas.GetValueOrDefault(entry.Date) + Effect(entry);
+            }
+
+            foreach (var account in scoped.Where(a => a.OpeningDate > first && a.OpeningDate <= end))
+            {
+                deltas[account.OpeningDate] = deltas.GetValueOrDefault(account.OpeningDate) + account.OpeningBalance;
+            }
+
+            var day = first;
+            foreach (var point in saved)
+            {
+                for (; day < point.Date; day = day.AddDays(1))
+                {
+                    balance += deltas.GetValueOrDefault(day.AddDays(1));
+                }
+
+                days.Add(new SnapshotDay(point.Date, point.Balance, balance));
+            }
+        }
         var later = entries.Where(e => e.CreatedAt > snapshot.CreatedAt).ToList();
         var recordedLater = later.Where(e => e.Date <= snapshot.BaseDate).Sum(Effect);
         var unplanned = later.Where(e => e.Date > snapshot.BaseDate && e.Date <= end && e.ScheduleId is null).Select(Effect).ToList();

@@ -82,12 +82,13 @@ public static class BudgetCalculator
                 continue;
             }
 
-            total += entry.Kind switch
+            // Checked like every sum of the ledger (ZEX-S0104): an overflow is an error, never a wrong number.
+            total = checked(total + entry.Kind switch
             {
                 EntryKind.Expense => entry.Amount,
                 EntryKind.Refund => -entry.Amount,
                 _ => 0,
-            };
+            });
         }
 
         return total;

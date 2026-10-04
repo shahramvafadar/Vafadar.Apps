@@ -109,6 +109,11 @@ public sealed class ZexPerformanceTests
         Measure(() => WealthHistory.MonthEnds(ledger.Accounts, ledger.Entries, types, events, valuations, rates, "EUR", Today, 12, PeriodCalendar.Gregorian));
         Measure(() => WealthHistory.Explain(ledger.Accounts, ledger.Entries, types, events, valuations, new DateOnly(2027, 4, 30), new DateOnly(2027, 5, 31)));
 
+        // A saved forecast of 90 days compared with the ledger (CR03-02).
+        var snapshot = ForecastSnapshot.From("Reference", forecast[0], accounts.Select(a => a.Id), Today.AddDays(-90), null, null);
+        snapshot.Path = string.Join(',', Enumerable.Repeat("0", 91));
+        Measure(() => SnapshotComparer.Compare(snapshot, ledger.Accounts, ledger.Entries, Today));
+
         // The holdings ledger: positions, values and cost basis of every type.
         Measure(() => HoldingsLedger.Positions(events, Today));
         Measure(() => AssetValuationService.Values(types, events, valuations, Today));

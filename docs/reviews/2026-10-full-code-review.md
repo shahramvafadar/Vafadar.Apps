@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01, CR02 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01 to CR03 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -101,3 +101,9 @@ Filled in section by section.
 | CR02-05 | `Vafadar.Zanance.Core/Rates/RateTable.cs` | performance | Low | The rate of a date is found by scanning the sorted list. | No change: the scan starts at the newest rate and a profile has a few dozen rates. |
 | CR02-06 | `Vafadar.Zanance.Core/Ledger/LedgerCalculator.cs` | performance | Low | Total balances read all entries once per account. | No change: within the Q-02 budget with 10,000 entries and 20 accounts (`PerformanceTests`). |
 | CR02-07 | `Vafadar.Zanance.Core/Ledger/EntryTags.cs` | UI/UX | Low | Tags typed with Arabic and Persian letter forms ("كافه", "کافه") stay two tags. | No change: tags keep the user's text; search finds both. |
+| CR03-01 | `Vafadar.Zanance.Core/Plans/Recurrence.cs` | performance | Medium | Every range of a plan was generated from its first date: a daily or weekly plan that started years ago produced every earlier date on each call (Home asks up to four times per plan for the next due item). | Fixed: daily and weekly rules start at the step of the range and keep their numbers; test `A_range_long_after_the_start_has_the_same_dates_and_numbers_as_counting_from_the_start`. |
+| CR03-02 | `Vafadar.Zanance.Core/Forecasts/SnapshotComparison.cs` | performance | Medium | The actual balance of every day of a saved forecast read the whole ledger once per account (90 days × 20 accounts × 10,000 entries ≈ 18 million steps on the snapshot page). | Fixed: the first day from the ledger, later days by adding what happened on them; equality test and a measurement in `ZexPerformanceTests`. |
+| CR03-03 | `Vafadar.Zanance.Core/Budgets/BudgetCalculator.cs` | quality | Low | Budget spending was summed without overflow check, unlike every other sum of the ledger (ZEX-S0104). | Fixed: checked; test. |
+| CR03-04 | `Vafadar.Zanance.Core/Receipts/ReceiptParser.cs` | bug | Low | Persian total keywords ("جمع کل") were not recognised with the Arabic letter forms that PDFs and OCR often return, so a later line with "مبلغ" could be taken as the total. | Fixed: keywords match ي/ى/ك and words with or without a half-space; test. |
+| CR03-05 | `Vafadar.Zanance.Core/Reminders/ReminderSnoozes.cs` | quality | Low | Snoozes are stored with reflection-based JSON. | No change: Release builds trim only assemblies marked trimmable (MAUI default), which the app's own are not. |
+| CR03-06 | `Vafadar.Zanance.Core/Budgets/BudgetSuggestions.cs` | performance | Low | Each category suggestion reads all entries once per past period. | No change: about 50 passes over the entries, a few milliseconds with 10,000 entries. |

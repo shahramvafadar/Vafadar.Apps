@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–2: shared libraries, money and ledger
+### Fixed – Code review, parts 1–3: shared libraries, money, ledger, plans, budgets and forecasts
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -17,6 +17,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Chips and date fields take the colours of the new theme at once when the theme is switched.
 - Categorization rules recognise payees typed on any Persian keyboard (Arabic or Persian forms of ی and ک), and the
   search and the rules treat a half-space like a space, so "میوه فروشی" finds "میوه‌فروشی".
+- Plans that started long ago and saved forecasts load faster: daily and weekly plans no longer go through every past
+  date, and the comparison of a saved forecast no longer reads the whole ledger for every day.
+- A receipt or invoice whose text uses the Arabic forms of ک and ی (common in PDFs) is read with its total line, not
+  with a later line such as a service fee.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme
