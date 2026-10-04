@@ -45,7 +45,7 @@ public sealed partial class ReportsViewModel
         var today = Today;
         var goals = await _goals.GetGoalsAsync();
         var plans = await _goals.GetContributionPlansAsync();
-        var progress = GoalProgressService.Evaluate(goals, await _goals.GetAllocationsAsync(), _accounts, entries, plans, today);
+        var progress = await _goalPresenter.EvaluateAsync(_goals, _accounts, entries, today, goals);
 
         // K03: every active or paused goal with its progress and the next step.
         GoalRows.Clear();
@@ -78,7 +78,7 @@ public sealed partial class ReportsViewModel
 
                 // Goals without a plan of their own share what is left; those with a plan are already in G.
                 var planned = plans.Select(p => p.GoalId).ToHashSet();
-                var needs = progress.Where(p => p.Goal.State == GoalState.Active && !planned.Contains(p.Goal.Id) && string.Equals(p.Goal.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase))
+                var needs = progress.Where(p => p.Goal.State == GoalState.Active && p.Goal.Type != GoalType.HoldingQuantity && !planned.Contains(p.Goal.Id) && string.Equals(p.Goal.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase))
                     .Select(p => CapacityCalculator.Need(p.Goal, p.Remaining, today))
                     .Where(n => n.PerMonth > 0)
                     .ToList();

@@ -94,7 +94,8 @@ public static class CapacityCalculator
         }
 
         // G: what other active goals of this currency already plan per month.
-        var active = goals.Where(g => g.State == GoalState.Active && Same(g.CurrencyCode) && g.Id != exceptGoalId).Select(g => g.Id).ToHashSet();
+        // Quantity goals plan grams or units, never money, so their plans are not part of G.
+        var active = goals.Where(g => g.State == GoalState.Active && g.Type != GoalType.HoldingQuantity && Same(g.CurrencyCode) && g.Id != exceptGoalId).Select(g => g.Id).ToHashSet();
         long other = 0;
         foreach (var plan in contributionPlans.Where(p => active.Contains(p.GoalId)))
         {
@@ -109,6 +110,13 @@ public static class CapacityCalculator
 
         return new CapacityResult(currencyCode, income, KpiCatalog.Median(spending), nm, principal, other, enough && incomes.Count == 3);
     }
+
+    /// <summary>
+    /// Returns the quantity money capacity buys at a price the user assumes (ZEX-S0703), in the holding type's base unit:
+    /// 150 EUR at 60 EUR per g is 2.5 g (2,500 mg). Rounded down; never a valuation of the holding.
+    /// </summary>
+    public static long QuantityFor(long capacity, long assumedPricePerUnitMilli) =>
+        capacity <= 0 || assumedPricePerUnitMilli <= 0 ? 0 : (long)((decimal)capacity * 1_000 * Holdings.Quantities.PerGramOrUnit / assumedPricePerUnitMilli);
 
     /// <summary>
     /// Returns what a goal needs per month: the remaining amount over the months left to its target date (rounded up),

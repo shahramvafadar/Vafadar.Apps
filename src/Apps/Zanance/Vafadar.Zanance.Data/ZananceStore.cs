@@ -811,6 +811,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.AssetEvents.ExecuteDeleteAsync(cancellationToken);
         await db.AssetValuations.ExecuteDeleteAsync(cancellationToken);
+        await db.ForecastSnapshots.ExecuteDeleteAsync(cancellationToken);
         await db.AssetTypes.ExecuteDeleteAsync(cancellationToken);
         await db.AssetLocations.ExecuteDeleteAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
@@ -1129,4 +1130,33 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
 
         await db.SaveChangesAsync(cancellationToken);
     }
-}
+
+    /// <summary>Returns the saved forecast snapshots, newest first (ZEX-S0803).</summary>
+    public async Task<List<Core.Forecasts.ForecastSnapshot>> GetForecastSnapshotsAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return [.. (await db.ForecastSnapshots.AsNoTracking().ToListAsync(cancellationToken)).OrderByDescending(s => s.CreatedAt)];
+    }
+
+    /// <summary>Saves a new forecast snapshot; snapshots are read-only, so an existing one is never changed (ZEX-AT40).</summary>
+    public async Task SaveForecastSnapshotAsync(Core.Forecasts.ForecastSnapshot snapshot, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (await db.ForecastSnapshots.AnyAsync(s => s.Id == snapshot.Id, cancellationToken))
+        {
+            throw new InvalidOperationException("A forecast snapshot cannot be changed.");
+        }
+
+        db.ForecastSnapshots.Add(snapshot);
+        await db.SaveChangesAsync(cancellationToken);
+        OnChanged();
+    }
+
+    /// <summary>Deletes a forecast snapshot.</summary>
+    public async Task DeleteForecastSnapshotAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.ForecastSnapshots.Where(s => s.Id == id).ExecuteDeleteAsync(cancellationToken);
+        OnChanged();
+    }}

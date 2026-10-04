@@ -96,7 +96,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         _localization = localization;
         _time = time;
         PeriodKindNames = [translator["Report_Month"], translator["Report_Year"]];
-        PackageNames = [translator["Report_R1"], translator["Report_R2"], translator["Report_R3"], translator["Report_R4"], translator["Report_R6"]];
+        PackageNames = [translator["Report_R1"], translator["Report_R2"], translator["Report_R3"], translator["Report_R4"], translator["Report_R5"], translator["Report_R6"]];
         AccountScopeNames = [translator["Report_ScopeInTotals"], translator["Report_ScopeUsable"], translator["Report_ScopeOneAccount"]];
         PeriodText = string.Empty;
         ScopeText = string.Empty;
@@ -113,9 +113,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [ObservableProperty]
     public partial int PeriodKind { get; set; }
 
-    /// <summary>Gets or sets the package: 0 R1, 1 R2, 2 R3, 3 R4, 4 R6.</summary>
+    /// <summary>Gets or sets the package: 0 R1, 1 R2, 2 R3, 3 R4, 4 R5, 5 R6.</summary>
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowOverview), nameof(ShowCommitments), nameof(ShowGoals), nameof(ShowWealth), nameof(ShowStatus), nameof(ShowEmpty), nameof(ShowPeriod))]
+    [NotifyPropertyChangedFor(nameof(ShowOverview), nameof(ShowCommitments), nameof(ShowGoals), nameof(ShowWealth), nameof(ShowHistory), nameof(ShowStatus), nameof(ShowEmpty), nameof(ShowPeriod))]
     public partial int PackageIndex { get; set; }
 
     [ObservableProperty]
@@ -185,10 +185,13 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public bool ShowWealth => PackageIndex == 3;
 
-    public bool ShowStatus => PackageIndex == 4;
+    /// <summary>Gets a value indicating whether the wealth change package R5 is shown (Advanced content, ZEX-E08).</summary>
+    public bool ShowHistory => PackageIndex == 4;
+
+    public bool ShowStatus => PackageIndex == 5;
 
     /// <summary>Gets a value indicating whether the package has a period (commitments look ahead from today; wealth is today).</summary>
-    public bool ShowPeriod => PackageIndex is 0 or 4;
+    public bool ShowPeriod => PackageIndex is 0 or 5;
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
@@ -282,6 +285,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 case 3:
                     await BuildWealthAsync(entries);
                     break;
+                case 4:
+                    await BuildHistoryAsync(entries);
+                    break;
                 default:
                     await BuildStatusAsync(entries, full: true);
                     break;
@@ -326,7 +332,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         var period = PackageIndex switch
         {
             1 => _translator["Report_Next30"],
-            2 or 3 => _translator["Report_Today"],
+            2 or 3 or 4 => _translator["Report_Today"],
             _ => PeriodText.Replace(" · " + _translator["Report_SoFar"], string.Empty, StringComparison.Ordinal),
         };
         ScopeText = string.Join(" · ", new[] { period, _currency, accountsText, ConfirmedOnly ? _translator["Report_ConfirmedOnly"] : null }.Where(s => !string.IsNullOrEmpty(s)));
@@ -562,7 +568,19 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                     [.. account.Lines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, overviewScope));
             }
 
+            // R5: net worth at month ends and its change (Advanced data, printed when there is a history).
             PackageIndex = 4;
+            LoadScope();
+            await BuildHistoryAsync(entries);
+            if (HasHistory)
+            {
+                tables.Add(new(_translator["Report_History"], [_translator["Report_Month"], _translator["Report_NetWorth"]],
+                    [.. HistoryRows.Select(h => (IReadOnlyList<string>)[h.Label, h.ValueText])], new HashSet<int> { 1 }, ScopeText));
+                tables.Add(new(ChangeTitle ?? _translator["Report_R5"], [_translator["Report_Item"], _translator["Report_Amount"]],
+                    [.. ChangeLines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, ChangeNote ?? ScopeText));
+            }
+
+            PackageIndex = 5;
             await BuildStatusAsync(entries, full: true);
             var document = new Vafadar.Zanance.Reports.ReportDocument(
                 _translator.Format("Report_PdfTitle", _translator["App_Name"]),

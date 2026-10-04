@@ -23,7 +23,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Goals.ContributionPlan",
                 typeof(ContributionPlan),
                 baseEntityType,
-                propertyCount: 9,
+                propertyCount: 10,
                 navigationCount: 1,
                 foreignKeyCount: 1,
                 unnamedIndexCount: 1,
@@ -43,6 +43,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 typeof(long?),
                 propertyInfo: typeof(ContributionPlan).GetProperty("Amount", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(ContributionPlan).GetField("<Amount>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+
+            var assumedPricePerUnitMilli = runtimeEntityType.AddProperty(
+                "AssumedPricePerUnitMilli",
+                typeof(long?),
+                propertyInfo: typeof(ContributionPlan).GetProperty("AssumedPricePerUnitMilli", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ContributionPlan).GetField("<AssumedPricePerUnitMilli>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
 
             var categoryIds = runtimeEntityType.AddProperty(

@@ -361,6 +361,11 @@ public sealed partial class BackupViewModel : ViewModelBase
             {
                 lines.Add(_translator.Format("Backup_PreviewGoalsHoldings", goals, holdings));
             }
+
+            if (summary.TryGetValue(ZananceBackupSummary.Snapshots, out var snapshots) && snapshots != "0")
+            {
+                lines.Add(_translator.Format("Backup_PreviewSnapshots", snapshots));
+            }
         }
 
         return string.Join(Environment.NewLine, lines);

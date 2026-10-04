@@ -72,6 +72,9 @@ public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options)
     /// <summary>Gets the dated prices of asset types.</summary>
     public DbSet<Core.Holdings.AssetValuation> AssetValuations => Set<Core.Holdings.AssetValuation>();
 
+    /// <summary>Gets the saved forecasts (ZEX-S0803); read-only after saving.</summary>
+    public DbSet<Core.Forecasts.ForecastSnapshot> ForecastSnapshots => Set<Core.Forecasts.ForecastSnapshot>();
+
     /// <summary>Gets the local categorization rules (F2-TX-04).</summary>
     public DbSet<CategoryRule> CategoryRules => Set<CategoryRule>();
 

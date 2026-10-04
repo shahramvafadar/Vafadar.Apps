@@ -52,6 +52,12 @@ public enum GoalType
 
     /// <summary>The recorded balance of one money account; observes, reserves nothing.</summary>
     AccountBalance = 1,
+
+    /// <summary>
+    /// The quantity of one holding type, e.g. 50 g of gold (ZEX-S0701); prices are never progress. The target is in the
+    /// type's base unit (mg or thousandths of a unit).
+    /// </summary>
+    HoldingQuantity = 2,
 }
 
 /// <summary>
@@ -63,7 +69,10 @@ public sealed class Goal : Entity, IAuditableEntity
     /// <summary>Gets or sets the name.</summary>
     public required string Name { get; set; }
 
-    /// <summary>Gets or sets the target amount in minor units of <see cref="CurrencyCode"/>.</summary>
+    /// <summary>
+    /// Gets or sets the target: minor units of <see cref="CurrencyCode"/>, or for a <see cref="GoalType.HoldingQuantity"/>
+    /// goal the quantity in the holding type's base unit (mg or thousandths of a unit).
+    /// </summary>
     public long TargetAmount { get; set; }
 
     /// <summary>Gets or sets the currency; only accounts in this currency can fund the goal.</summary>
@@ -92,6 +101,12 @@ public sealed class Goal : Entity, IAuditableEntity
 
     /// <summary>Gets or sets the account a <see cref="GoalType.AccountBalance"/> goal follows; <see langword="null"/> otherwise.</summary>
     public Guid? AccountId { get; set; }
+
+    /// <summary>Gets or sets the holding type of a <see cref="GoalType.HoldingQuantity"/> goal; <see langword="null"/> otherwise.</summary>
+    public Guid? AssetTypeId { get; set; }
+
+    /// <summary>Gets or sets the one location a quantity goal counts, or <see langword="null"/> for all locations.</summary>
+    public Guid? LocationId { get; set; }
 
     /// <summary>Gets or sets the position on Home (1 or 2), or <see langword="null"/> when the goal is not shown there (ZEX-GO06).</summary>
     public int? HomePin { get; set; }
@@ -141,7 +156,10 @@ public sealed class ContributionPlan : Entity, IAuditableEntity
     /// <summary>Gets or sets the method.</summary>
     public ContributionMethod Method { get; set; }
 
-    /// <summary>Gets or sets the amount per date (fixed amount) or per financial month (spending cut), in minor units.</summary>
+    /// <summary>
+    /// Gets or sets the amount per date (fixed amount) or per financial month (spending cut), in minor units; for a
+    /// quantity goal the quantity per date in the holding type's base unit.
+    /// </summary>
     public long? Amount { get; set; }
 
     /// <summary>Gets or sets the share of eligible income in percent (share of income).</summary>
@@ -155,6 +173,12 @@ public sealed class ContributionPlan : Entity, IAuditableEntity
 
     /// <summary>Gets or sets a value indicating whether a reminder is shown on each contribution date.</summary>
     public bool ReminderEnabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price the user assumes for a quantity goal, per gram or unit in minor units × 1,000 (ZEX-S0703):
+    /// it turns money capacity into a quantity ("2.5 g per month at your price"); never a valuation of the holding.
+    /// </summary>
+    public long? AssumedPricePerUnitMilli { get; set; }
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; set; }

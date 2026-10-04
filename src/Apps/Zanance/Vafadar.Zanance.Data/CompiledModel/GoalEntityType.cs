@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Goals.Goal",
                 typeof(Goal),
                 baseEntityType,
-                propertyCount: 18,
+                propertyCount: 20,
                 foreignKeyCount: 1,
                 unnamedIndexCount: 1,
                 keyCount: 1);
@@ -41,6 +41,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 typeof(Guid?),
                 propertyInfo: typeof(Goal).GetProperty("AccountId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Goal).GetField("<AccountId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+
+            var assetTypeId = runtimeEntityType.AddProperty(
+                "AssetTypeId",
+                typeof(Guid?),
+                propertyInfo: typeof(Goal).GetProperty("AssetTypeId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Goal).GetField("<AssetTypeId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
 
             var completedAt = runtimeEntityType.AddProperty(
@@ -87,6 +94,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(Goal).GetField("<Icon>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 64);
+
+            var locationId = runtimeEntityType.AddProperty(
+                "LocationId",
+                typeof(Guid?),
+                propertyInfo: typeof(Goal).GetProperty("LocationId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(Goal).GetField("<LocationId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
 
             var name = runtimeEntityType.AddProperty(
                 "Name",

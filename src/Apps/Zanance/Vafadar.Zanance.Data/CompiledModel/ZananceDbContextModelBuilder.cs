@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("a3bbe02b-73bf-4f69-9c06-1411d7a881b7"), entityTypeCount: 22)
+            : base(skipDetectChanges: false, modelId: new Guid("2d245f58-7a50-4bf3-9e7c-61d71eab2e7c"), entityTypeCount: 23)
         {
         }
 
@@ -22,6 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var budgetCategoryLimit = BudgetCategoryLimitEntityType.Create(this);
             var category = CategoryEntityType.Create(this);
             var categoryRule = CategoryRuleEntityType.Create(this);
+            var forecastSnapshot = ForecastSnapshotEntityType.Create(this);
             var contributionPlan = ContributionPlanEntityType.Create(this);
             var recurrenceRule = RecurrenceRuleEntityType.Create(this);
             var goal = GoalEntityType.Create(this);
@@ -64,6 +65,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             BudgetCategoryLimitEntityType.CreateAnnotations(budgetCategoryLimit);
             CategoryEntityType.CreateAnnotations(category);
             CategoryRuleEntityType.CreateAnnotations(categoryRule);
+            ForecastSnapshotEntityType.CreateAnnotations(forecastSnapshot);
             ContributionPlanEntityType.CreateAnnotations(contributionPlan);
             RecurrenceRuleEntityType.CreateAnnotations(recurrenceRule);
             GoalEntityType.CreateAnnotations(goal);

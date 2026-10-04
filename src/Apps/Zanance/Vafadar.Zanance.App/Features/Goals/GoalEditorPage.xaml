@@ -44,10 +44,20 @@
                             <Label Text="{v:Translate Goal_BalanceNote}" Style="{StaticResource Secondary}" FontSize="12" />
                         </VerticalStackLayout>
 
+                        <!-- A quantity goal counts one holding type, at all locations or one; prices are never progress (ZEX-S0701) -->
+                        <VerticalStackLayout IsVisible="{Binding IsQuantityGoal}">
+                            <Label Text="{v:Translate Goal_Holding}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding HoldingTypes}" SelectedItem="{Binding HoldingType}" SemanticProperties.Description="{v:Translate Goal_Holding}" />
+                            <Label Text="{v:Translate Goal_HoldingLocation}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding HoldingLocations}" SelectedItem="{Binding HoldingLocation}" SemanticProperties.Description="{v:Translate Goal_HoldingLocation}" />
+                            <Label Text="{v:Translate Goal_QuantityNote}" Style="{StaticResource Secondary}" FontSize="12" />
+                        </VerticalStackLayout>
+
                         <Label Text="{v:Translate Goal_Target}" Style="{StaticResource FieldLabel}" />
+                        <v:ChoiceChips ItemsSource="{Binding QuantityUnitNames}" SelectedIndex="{Binding QuantityUnitIndex}" IsVisible="{Binding HasQuantityUnitChoice}" />
                         <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" SemanticProperties.Description="{v:Translate Goal_Target}" />
-                            <Border Style="{StaticResource FieldBox}" Grid.Column="1" IsVisible="{Binding IsBalanceGoal, Converter={StaticResource InvertedBoolConverter}}">
+                            <Border Style="{StaticResource FieldBox}" Grid.Column="1" IsVisible="{Binding ShowCurrencyChoice}">
                                 <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding CurrencyCode, Mode=TwoWay}"
                                     IsEnabled="{Binding CurrencyLocked, Converter={StaticResource InvertedBoolConverter}}"
                                     SemanticProperties.Description="{v:Translate Account_Currency}" />
@@ -80,7 +90,7 @@
                         <Label Text="{v:Translate Goal_FirstDate}" Style="{StaticResource FieldLabel}" />
                         <v:DateField Date="{Binding FirstDate}" />
 
-                        <VerticalStackLayout IsVisible="{Binding IsAdvanced}" Spacing="4">
+                        <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
                             <HorizontalStackLayout Spacing="6">
                                 <Label Text="{v:Translate Goal_Method}" Style="{StaticResource FieldLabel}" />
                                 <v:HelpButton Topic="ContributionMethod" Margin="0,8,0,0" />

@@ -521,7 +521,7 @@ audit timestamps, `long` minor units, `DateOnly`). No SQL or migration is produc
 | `AssetLocation` (new) | Name, IsArchived, SortOrder | One default location |
 | `AssetEvent` (new) | AssetTypeId, LocationId, ToLocationId?, Kind, Date, Quantity (long, base unit), BasisAmount (long?, minor), BasisCurrency, ProceedsAmount (long?), GroupId?, Reason?, Note? | Index (AssetTypeId, Date) |
 | `AssetValuation` (new) | AssetTypeId, Date, Mode (PerUnit, Total), PriceMinor (long, per base unit × 1000 scale) or TotalMinor, CurrencyCode, Source, LocationId? | Unique (AssetTypeId, Date, LocationId) |
-| `Goal` | `Type` (int, default Earmark), `AccountId?`, `AssetTypeId?`, `LocationId?`, `TargetQuantity` (long?), `HomePin` (int?, 1–2), `Protect` (bool), `PausedAt?`, `CompletedAt?` | `State` gains `Paused`; existing rows get Type = Earmark |
+| `Goal` | `Type` (int, default Earmark), `AccountId?`, `AssetTypeId?`, `LocationId?`, target quantity (implemented in `TargetAmount`, in the type's base unit), `HomePin` (int?, 1–2), `Protect` (bool), `PausedAt?`, `CompletedAt?` | `State` gains `Paused`; existing rows get Type = Earmark |
 | `ContributionPlan` (new) | GoalId, Method, Amount (long?), Percent (decimal?), RuleJson (existing rule format), CategoryIds?, ReminderEnabled | One per goal |
 | `ForecastSnapshot` (new) | Name, CreatedAt, BaseDate, HorizonDays, CurrencyCode, AccountIds, ScenarioJson, PathJson, MinimumMinor, MinimumDate, IncompleteJson, AppVersion | Read-only after insert |
 

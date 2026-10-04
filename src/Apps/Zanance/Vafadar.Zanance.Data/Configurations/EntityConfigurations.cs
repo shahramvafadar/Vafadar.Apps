@@ -295,3 +295,16 @@ internal sealed class AssetValuationConfiguration : IEntityTypeConfiguration<Cor
         builder.HasIndex(v => new { v.AssetTypeId, v.Date });
     }
 }
+
+internal sealed class ForecastSnapshotConfiguration : IEntityTypeConfiguration<Core.Forecasts.ForecastSnapshot>
+{
+    public void Configure(EntityTypeBuilder<Core.Forecasts.ForecastSnapshot> builder)
+    {
+        builder.ToTable("ForecastSnapshots");
+        builder.Property(s => s.Name).HasMaxLength(100);
+        builder.Property(s => s.CurrencyCode).HasMaxLength(3);
+        builder.Property(s => s.Assumptions).HasMaxLength(2000);
+        builder.Property(s => s.AppVersion).HasMaxLength(40);
+        builder.HasIndex(s => s.CreatedAt);
+    }
+}

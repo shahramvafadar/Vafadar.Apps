@@ -4805,4 +4805,220 @@
   <data name="Report_BudgetRemaining" xml:space="preserve">
     <value>Verbleibend</value>
   </data>
+  <data name="GoalType_HoldingQuantity" xml:space="preserve">
+    <value>Eine Menge eines Bestands</value>
+  </data>
+  <data name="Goal_Holding" xml:space="preserve">
+    <value>Bestand</value>
+  </data>
+  <data name="Goal_HoldingLocation" xml:space="preserve">
+    <value>Wo</value>
+  </data>
+  <data name="Goal_AllLocations" xml:space="preserve">
+    <value>Alle Orte</value>
+  </data>
+  <data name="Goal_QuantityNote" xml:space="preserve">
+    <value>Fortschritt ist die gehaltene Menge; Preisänderungen zählen nie.</value>
+  </data>
+  <data name="Goal_ChooseHolding" xml:space="preserve">
+    <value>Bestand wählen.</value>
+  </data>
+  <data name="Goal_HoldingUnavailable" xml:space="preserve">
+    <value>Der Bestand ist archiviert – einen anderen wählen oder das Ziel abschließen.</value>
+  </data>
+  <data name="Goal_TrendTitle" xml:space="preserve">
+    <value>In Ihrem Tempo</value>
+  </data>
+  <data name="Goal_TrendEta" xml:space="preserve">
+    <value>Bei Ihrem jüngsten Tempo von {0} pro Monat (Median aus {1} Monaten): ~ {2}</value>
+  </data>
+  <data name="Goal_TrendNoPace" xml:space="preserve">
+    <value>Kein Datum bei Ihrem aktuellen Tempo.</value>
+  </data>
+  <data name="Goal_TrendHistory" xml:space="preserve">
+    <value>Noch nicht genug Verlauf ({0} von {1} Monaten).</value>
+  </data>
+  <data name="Goal_TrendSoFar" xml:space="preserve">
+    <value>Diesen Monat bisher: {0}</value>
+  </data>
+  <data name="Goal_TrendOneOff" xml:space="preserve">
+    <value>einmalig</value>
+  </data>
+  <data name="Goal_TrendNote" xml:space="preserve">
+    <value>Eine Schätzung aus vollen Monaten, kein Versprechen. Ihr eigener Plan bleibt eine eigene Zeile.</value>
+  </data>
+  <data name="Goal_AssumedPrice" xml:space="preserve">
+    <value>Ihr angenommener Preis in {0} ({1})</value>
+  </data>
+  <data name="Goal_CapacityQuantity" xml:space="preserve">
+    <value>Zu Ihrem Preis: {0} pro Monat aus Ihrem Spielraum von {1}</value>
+  </data>
+  <data name="Goal_AssumedPriceNote" xml:space="preserve">
+    <value>Nur für diese Schätzung; nie der Wert Ihres Bestands.</value>
+  </data>
+  <data name="Help_GoalTrend_Title" xml:space="preserve">
+    <value>In Ihrem Tempo</value>
+  </data>
+  <data name="Help_GoalTrend_Text" xml:space="preserve">
+    <value>Zanance betrachtet, was in jedem der letzten vollen Monate (bis zu sechs) zum Ziel kam, und nimmt den Median. Ein Monat weit über den anderen wird als einmalig markiert. Mit weniger als drei vollen Monaten gibt es noch kein Tempo.</value>
+  </data>
+  <data name="Help_GoalTrend_Example" xml:space="preserve">
+    <value>200, 250, 230 und 900 → Tempo 240 pro Monat; 900 ist einmalig.</value>
+  </data>
+  <data name="Report_R5" xml:space="preserve">
+    <value>Vermögensverlauf</value>
+  </data>
+  <data name="Report_AdvancedOnly" xml:space="preserve">
+    <value>Im erweiterten Modus verfügbar (Einstellungen).</value>
+  </data>
+  <data name="Report_History" xml:space="preserve">
+    <value>Nettovermögen im Zeitverlauf</value>
+  </data>
+  <data name="Report_NoHistory" xml:space="preserve">
+    <value>Noch nicht genug Verlauf.</value>
+  </data>
+  <data name="Report_HistoryIncomplete" xml:space="preserve">
+    <value>* unvollständig: ein Bestand ohne Preis oder eine Währung ohne Kurs an diesem Tag</value>
+  </data>
+  <data name="Report_WealthChangeTitle" xml:space="preserve">
+    <value>Gespart oder Preise?</value>
+  </data>
+  <data name="Report_LastMonth" xml:space="preserve">
+    <value>Letzter Monat</value>
+  </data>
+  <data name="Report_ThisYear" xml:space="preserve">
+    <value>Dieses Jahr</value>
+  </data>
+  <data name="Report_Last12Months" xml:space="preserve">
+    <value>12 Monate</value>
+  </data>
+  <data name="Report_ChangeRange" xml:space="preserve">
+    <value>Vom Ende des {0} bis {1}</value>
+  </data>
+  <data name="Report_WealthStart" xml:space="preserve">
+    <value>Nettovermögen am Anfang</value>
+  </data>
+  <data name="Report_WealthEnd" xml:space="preserve">
+    <value>Nettovermögen am Ende</value>
+  </data>
+  <data name="Report_WealthChange" xml:space="preserve">
+    <value>Veränderung</value>
+  </data>
+  <data name="Report_Flows" xml:space="preserve">
+    <value>Gespart (Einnahmen − Ausgaben)</value>
+  </data>
+  <data name="Report_PriceEffect" xml:space="preserve">
+    <value>Preisänderungen der Bestände</value>
+  </data>
+  <data name="Report_FxEffect" xml:space="preserve">
+    <value>Wechselkursänderungen</value>
+  </data>
+  <data name="Report_Corrections" xml:space="preserve">
+    <value>Korrekturen, neue Konten, Bestände ohne Geld</value>
+  </data>
+  <data name="Report_Remainder" xml:space="preserve">
+    <value>Nicht erklärt</value>
+  </data>
+  <data name="Report_RemainderCauses" xml:space="preserve">
+    <value>Nicht erklärt wegen: {0}</value>
+  </data>
+  <data name="Report_Cause_MissingValuation" xml:space="preserve">
+    <value>ein Bestand ohne Preis an einem der Tage</value>
+  </data>
+  <data name="Report_Cause_UnknownOpeningBalance" xml:space="preserve">
+    <value>ein unbekannter Anfangsstand</value>
+  </data>
+  <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
+    <value>Bestände zu einem anderen Preis als ihrer Bewertung gekauft oder verkauft</value>
+  </data>
+  <data name="Report_Cause_MissingRate" xml:space="preserve">
+    <value>eine Währung ohne Kurs</value>
+  </data>
+  <data name="Kpi_K10H_Title" xml:space="preserve">
+    <value>Gespart oder Preise?</value>
+  </data>
+  <data name="Kpi_K10H_Question" xml:space="preserve">
+    <value>Wuchs mein Vermögen durch Sparen oder durch Preise und Kurse?</value>
+  </data>
+  <data name="Kpi_K10H_Definition" xml:space="preserve">
+    <value>Die Veränderung des Nettovermögens, aufgeteilt in Gespartes, Preisänderungen der Bestände, Wechselkursänderungen und Korrekturen. Was diese nicht erklären, wird mit Ursache gezeigt, nie versteckt.</value>
+  </data>
+  <data name="Kpi_K10H_Included" xml:space="preserve">
+    <value>Nettovermögen an beiden Tagen mit Preisen und Kursen dieser Tage|Einnahmen minus Ausgaben dazwischen|Für jede Preisänderung: die damals gehaltene Menge × die Änderung</value>
+  </data>
+  <data name="Kpi_K10H_Excluded" xml:space="preserve">
+    <value>Umbuchungen zwischen Ihren Konten|Schätzungen für fehlende Preise oder Kurse|Steuern</value>
+  </data>
+  <data name="Snapshot_SaveTitle" xml:space="preserve">
+    <value>Diese Vorschau speichern</value>
+  </data>
+  <data name="Snapshot_SaveMessage" xml:space="preserve">
+    <value>Ein Name, damit Sie sie später mit der Wirklichkeit vergleichen können.</value>
+  </data>
+  <data name="Snapshot_ListTitle" xml:space="preserve">
+    <value>Gespeicherte Vorschauen</value>
+  </data>
+  <data name="Snapshot_Saved" xml:space="preserve">
+    <value>{0} · {1} · Tiefstand {2} am {3}</value>
+  </data>
+  <data name="Snapshot_Detail" xml:space="preserve">
+    <value>Gespeichert am {0}, bis {1}; Tiefstand {2} am {3}</value>
+  </data>
+  <data name="Snapshot_Assumptions" xml:space="preserve">
+    <value>Annahmen: {0}</value>
+  </data>
+  <data name="Snapshot_ReadOnly" xml:space="preserve">
+    <value>Eine gespeicherte Vorschau ändert sich nie; spätere Planänderungen zeigt der Vergleich.</value>
+  </data>
+  <data name="Snapshot_NotStarted" xml:space="preserve">
+    <value>Die Vorschau beginnt heute – vergleichen Sie ab morgen.</value>
+  </data>
+  <data name="Snapshot_Compared" xml:space="preserve">
+    <value>Verglichen bis {0}</value>
+  </data>
+  <data name="Snapshot_Chart" xml:space="preserve">
+    <value>Gespeicherte Vorschau und Wirklichkeit</value>
+  </data>
+  <data name="Snapshot_SavedPath" xml:space="preserve">
+    <value>Gespeichert</value>
+  </data>
+  <data name="Snapshot_ActualPath" xml:space="preserve">
+    <value>Tatsächlich</value>
+  </data>
+  <data name="Snapshot_Difference" xml:space="preserve">
+    <value>Differenz</value>
+  </data>
+  <data name="Snapshot_Parts" xml:space="preserve">
+    <value>Woher die Differenz kommt</value>
+  </data>
+  <data name="Snapshot_RecordedLater" xml:space="preserve">
+    <value>Später erfasst (vor dem Speichern datiert)</value>
+  </data>
+  <data name="Snapshot_UnplannedSpending" xml:space="preserve">
+    <value>Ungeplante Ausgaben</value>
+  </data>
+  <data name="Snapshot_UnplannedIncome" xml:space="preserve">
+    <value>Ungeplante Einnahmen</value>
+  </data>
+  <data name="Snapshot_PlansChanged" xml:space="preserve">
+    <value>Pläne anders bezahlt</value>
+  </data>
+  <data name="Snapshot_PartsNote" xml:space="preserve">
+    <value>Die Teile ergeben zusammen die Differenz des letzten verglichenen Tages.</value>
+  </data>
+  <data name="Snapshot_Delete" xml:space="preserve">
+    <value>Diese Vorschau löschen</value>
+  </data>
+  <data name="Snapshot_DeleteMessage" xml:space="preserve">
+    <value>Die gespeicherte Vorschau wird gelöscht; Ihre Pläne und Buchungen bleiben.</value>
+  </data>
+  <data name="Snapshot_NotFound" xml:space="preserve">
+    <value>Diese Vorschau existiert nicht mehr.</value>
+  </data>
+  <data name="Backup_PreviewSnapshots" xml:space="preserve">
+    <value>Gespeicherte Vorschauen: {0}</value>
+  </data>
+  <data name="Goal_NoCapacity" xml:space="preserve">
+    <value>Derzeit kein Spielraum für dieses Ziel.</value>
+  </data>
 </root>

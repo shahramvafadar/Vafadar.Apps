@@ -45,7 +45,7 @@ public sealed partial class GoalsViewModel(
         var balances = GoalPresenter.Balances(accounts, entries, today);
         var all = await goals.GetGoalsAsync();
         var allocations = await goals.GetAllocationsAsync();
-        var progress = GoalProgressService.Evaluate(all, allocations, accounts, entries, await goals.GetContributionPlansAsync(), today).ToDictionary(p => p.Goal.Id);
+        var progress = (await presenter.EvaluateAsync(goals, accounts, entries, today, all)).ToDictionary(p => p.Goal.Id);
 
         // Active and paused goals above, completed and archived ones below (ZEX-S0303).
         Active.Clear();

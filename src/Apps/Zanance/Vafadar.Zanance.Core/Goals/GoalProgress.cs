@@ -1,4 +1,5 @@
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.Core.Goals;
@@ -20,6 +21,9 @@ public enum GoalNotice
 
     /// <summary>The balance of a balance goal is negative: progress counts as 0 %.</summary>
     NegativeBalance = 4,
+
+    /// <summary>The holding type of a quantity goal is archived or gone.</summary>
+    HoldingUnavailable = 5,
 }
 
 /// <summary>
@@ -28,7 +32,7 @@ public enum GoalNotice
 /// remaining = max(0, T − F), progress = clamp(F / T, 0, 1), overshoot = max(0, F − T).
 /// </summary>
 /// <param name="Goal">The goal.</param>
-/// <param name="Current">F: the account balance (balance goal) or the covered earmarks (money set aside).</param>
+/// <param name="Current">F: the account balance (balance goal), the covered earmarks (money set aside) or the held quantity (quantity goal).</param>
 /// <param name="Unfunded">Earmarked money no balance covers (money set aside only).</param>
 /// <param name="Opportunities">N: contribution dates from today to the target date, both inclusive.</param>
 /// <param name="Required">Contribution per date that reaches the target in time; <see langword="null"/> without a target date.</param>
@@ -78,13 +82,17 @@ public static class GoalProgressService
     /// <param name="entries">All entries (for balances).</param>
     /// <param name="plans">The contribution plans of the goals.</param>
     /// <param name="today">The current date.</param>
+    /// <param name="events">The holding events, for quantity goals (ZEX-S0701); without them a quantity goal holds nothing.</param>
+    /// <param name="types">The holding types, to tell an archived type of a quantity goal.</param>
     public static IReadOnlyList<GoalProgress> Evaluate(
         IEnumerable<Goal> goals,
         IEnumerable<GoalAllocation> allocations,
         IReadOnlyCollection<Account> accounts,
         IReadOnlyCollection<LedgerEntry> entries,
         IEnumerable<ContributionPlan> plans,
-        DateOnly today)
+        DateOnly today,
+        IReadOnlyCollection<AssetEvent>? events = null,
+        IReadOnlyCollection<AssetType>? types = null)
     {
         ArgumentNullException.ThrowIfNull(goals);
         ArgumentNullException.ThrowIfNull(accounts);
@@ -109,6 +117,15 @@ public static class GoalProgressService
                 else
                 {
                     notice = GoalNotice.AccountUnavailable;
+                }
+            }
+            else if (goal.Type == GoalType.HoldingQuantity)
+            {
+                // The quantity held, of all locations or the chosen one; a price change is never progress (AT25, AT26).
+                current = HeldQuantity(goal, events ?? [], today);
+                if (goal.AssetTypeId is not { } typeId || (types is not null && types.FirstOrDefault(t => t.Id == typeId) is not { IsArchived: false }))
+                {
+                    notice = GoalNotice.HoldingUnavailable;
                 }
             }
             else if (earmarks.TryGetValue(goal.Id, out var status))
@@ -149,6 +166,22 @@ public static class GoalProgressService
         }
 
         return new GoalProgress(goal, current, unfunded, opportunities, required, planned, eta, notice);
+    }
+
+    /// <summary>Returns the quantity a quantity goal counts: the holding type at all locations or at its one location.</summary>
+    public static long HeldQuantity(Goal goal, IEnumerable<AssetEvent> events, DateOnly at)
+    {
+        ArgumentNullException.ThrowIfNull(goal);
+        ArgumentNullException.ThrowIfNull(events);
+        if (goal.AssetTypeId is not { } typeId)
+        {
+            return 0;
+        }
+
+        var ofType = events.Where(e => e.AssetTypeId == typeId).ToList();
+        return goal.LocationId is { } location
+            ? HoldingsLedger.Positions(ofType, at).Where(p => p.LocationId == location).Sum(p => p.Quantity)
+            : HoldingsLedger.Quantity(ofType, typeId, at);
     }
 
     /// <summary>

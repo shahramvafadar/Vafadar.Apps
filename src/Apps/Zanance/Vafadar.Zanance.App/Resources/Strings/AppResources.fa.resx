@@ -4805,4 +4805,220 @@
   <data name="Report_BudgetRemaining" xml:space="preserve">
     <value>باقیمانده</value>
   </data>
+  <data name="GoalType_HoldingQuantity" xml:space="preserve">
+    <value>مقداری از یک دارایی</value>
+  </data>
+  <data name="Goal_Holding" xml:space="preserve">
+    <value>دارایی</value>
+  </data>
+  <data name="Goal_HoldingLocation" xml:space="preserve">
+    <value>کجا</value>
+  </data>
+  <data name="Goal_AllLocations" xml:space="preserve">
+    <value>همهٔ مکان‌ها</value>
+  </data>
+  <data name="Goal_QuantityNote" xml:space="preserve">
+    <value>پیشرفت همان مقداری است که دارید؛ تغییر قیمت هرگز حساب نمی‌شود.</value>
+  </data>
+  <data name="Goal_ChooseHolding" xml:space="preserve">
+    <value>یک دارایی انتخاب کنید.</value>
+  </data>
+  <data name="Goal_HoldingUnavailable" xml:space="preserve">
+    <value>این دارایی بایگانی شده است – دارایی دیگری انتخاب کنید یا هدف را تمام کنید.</value>
+  </data>
+  <data name="Goal_TrendTitle" xml:space="preserve">
+    <value>با سرعت فعلی شما</value>
+  </data>
+  <data name="Goal_TrendEta" xml:space="preserve">
+    <value>با سرعت اخیر شما، ماهانه {0} (میانهٔ {1} ماه): حدود {2}</value>
+  </data>
+  <data name="Goal_TrendNoPace" xml:space="preserve">
+    <value>با سرعت فعلی تاریخی به دست نمی‌آید.</value>
+  </data>
+  <data name="Goal_TrendHistory" xml:space="preserve">
+    <value>هنوز سابقهٔ کافی نیست ({0} از {1} ماه).</value>
+  </data>
+  <data name="Goal_TrendSoFar" xml:space="preserve">
+    <value>این ماه تا امروز: {0}</value>
+  </data>
+  <data name="Goal_TrendOneOff" xml:space="preserve">
+    <value>یک‌باره</value>
+  </data>
+  <data name="Goal_TrendNote" xml:space="preserve">
+    <value>برآوردی از ماه‌های کامل است، نه قول. برنامهٔ خود شما جداگانه می‌ماند.</value>
+  </data>
+  <data name="Goal_AssumedPrice" xml:space="preserve">
+    <value>قیمت فرضی شما به {0} ({1})</value>
+  </data>
+  <data name="Goal_CapacityQuantity" xml:space="preserve">
+    <value>با قیمت شما: ماهانه {0} از ظرفیت {1}</value>
+  </data>
+  <data name="Goal_AssumedPriceNote" xml:space="preserve">
+    <value>فقط برای این برآورد است؛ هرگز ارزش دارایی شما نیست.</value>
+  </data>
+  <data name="Help_GoalTrend_Title" xml:space="preserve">
+    <value>با سرعت فعلی شما</value>
+  </data>
+  <data name="Help_GoalTrend_Text" xml:space="preserve">
+    <value>زنانس بررسی می‌کند در هر یک از ماه‌های کامل اخیر (تا شش ماه) چه مقدار به هدف رسید و میانه را می‌گیرد. ماهی که خیلی بیشتر از بقیه باشد «یک‌باره» علامت می‌خورد. با کمتر از سه ماه کامل هنوز سرعتی محاسبه نمی‌شود.</value>
+  </data>
+  <data name="Help_GoalTrend_Example" xml:space="preserve">
+    <value>۲۰۰، ۲۵۰، ۲۳۰ و ۹۰۰ → سرعت ماهانه ۲۴۰؛ ۹۰۰ یک‌باره است.</value>
+  </data>
+  <data name="Report_R5" xml:space="preserve">
+    <value>روند ثروت</value>
+  </data>
+  <data name="Report_AdvancedOnly" xml:space="preserve">
+    <value>در حالت پیشرفته در دسترس است (تنظیمات).</value>
+  </data>
+  <data name="Report_History" xml:space="preserve">
+    <value>ارزش خالص در طول زمان</value>
+  </data>
+  <data name="Report_NoHistory" xml:space="preserve">
+    <value>هنوز سابقهٔ کافی نیست.</value>
+  </data>
+  <data name="Report_HistoryIncomplete" xml:space="preserve">
+    <value>* ناقص: دارایی بدون قیمت یا ارز بدون نرخ در آن روز</value>
+  </data>
+  <data name="Report_WealthChangeTitle" xml:space="preserve">
+    <value>پس‌انداز یا قیمت؟</value>
+  </data>
+  <data name="Report_LastMonth" xml:space="preserve">
+    <value>ماه گذشته</value>
+  </data>
+  <data name="Report_ThisYear" xml:space="preserve">
+    <value>امسال</value>
+  </data>
+  <data name="Report_Last12Months" xml:space="preserve">
+    <value>دوازده ماه اخیر</value>
+  </data>
+  <data name="Report_ChangeRange" xml:space="preserve">
+    <value>از پایان {0} تا {1}</value>
+  </data>
+  <data name="Report_WealthStart" xml:space="preserve">
+    <value>ارزش خالص در آغاز</value>
+  </data>
+  <data name="Report_WealthEnd" xml:space="preserve">
+    <value>ارزش خالص در پایان</value>
+  </data>
+  <data name="Report_WealthChange" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="Report_Flows" xml:space="preserve">
+    <value>پس‌انداز (درآمد − خرج)</value>
+  </data>
+  <data name="Report_PriceEffect" xml:space="preserve">
+    <value>تغییر قیمت دارایی‌ها</value>
+  </data>
+  <data name="Report_FxEffect" xml:space="preserve">
+    <value>تغییر نرخ ارز</value>
+  </data>
+  <data name="Report_Corrections" xml:space="preserve">
+    <value>اصلاح‌ها، حساب‌های جدید، دارایی‌های بدون پول</value>
+  </data>
+  <data name="Report_Remainder" xml:space="preserve">
+    <value>توضیح‌داده‌نشده</value>
+  </data>
+  <data name="Report_RemainderCauses" xml:space="preserve">
+    <value>علت بخش توضیح‌داده‌نشده: {0}</value>
+  </data>
+  <data name="Report_Cause_MissingValuation" xml:space="preserve">
+    <value>دارایی بدون قیمت در یکی از تاریخ‌ها</value>
+  </data>
+  <data name="Report_Cause_UnknownOpeningBalance" xml:space="preserve">
+    <value>موجودی اولیهٔ نامعلوم</value>
+  </data>
+  <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
+    <value>خرید یا فروش دارایی با قیمتی غیر از ارزش‌گذاری آن</value>
+  </data>
+  <data name="Report_Cause_MissingRate" xml:space="preserve">
+    <value>ارز بدون نرخ</value>
+  </data>
+  <data name="Kpi_K10H_Title" xml:space="preserve">
+    <value>پس‌انداز یا قیمت؟</value>
+  </data>
+  <data name="Kpi_K10H_Question" xml:space="preserve">
+    <value>ثروتم با پس‌انداز رشد کرد یا با قیمت‌ها و نرخ‌ها؟</value>
+  </data>
+  <data name="Kpi_K10H_Definition" xml:space="preserve">
+    <value>تغییر ارزش خالص تقسیم‌شده به پس‌انداز، تغییر قیمت دارایی‌ها، تغییر نرخ ارز و اصلاح‌ها. آنچه این‌ها توضیح نمی‌دهند با علتش نشان داده می‌شود، هرگز پنهان نمی‌شود.</value>
+  </data>
+  <data name="Kpi_K10H_Included" xml:space="preserve">
+    <value>ارزش خالص در هر دو تاریخ با قیمت‌ها و نرخ‌های همان روز|درآمد منهای خرج در این فاصله|برای هر تغییر قیمت: مقدار موجود در آن زمان × تغییر</value>
+  </data>
+  <data name="Kpi_K10H_Excluded" xml:space="preserve">
+    <value>انتقال بین حساب‌های شما|حدس برای قیمت یا نرخ ناموجود|مالیات</value>
+  </data>
+  <data name="Snapshot_SaveTitle" xml:space="preserve">
+    <value>ذخیرهٔ این پیش‌بینی</value>
+  </data>
+  <data name="Snapshot_SaveMessage" xml:space="preserve">
+    <value>یک نام، تا بعداً آن را با آنچه واقعاً رخ داد مقایسه کنید.</value>
+  </data>
+  <data name="Snapshot_ListTitle" xml:space="preserve">
+    <value>پیش‌بینی‌های ذخیره‌شده</value>
+  </data>
+  <data name="Snapshot_Saved" xml:space="preserve">
+    <value>{0} · {1} · کمترین {2} در {3}</value>
+  </data>
+  <data name="Snapshot_Detail" xml:space="preserve">
+    <value>ذخیره در {0}، تا {1}؛ کمترین {2} در {3}</value>
+  </data>
+  <data name="Snapshot_Assumptions" xml:space="preserve">
+    <value>فرض‌ها: {0}</value>
+  </data>
+  <data name="Snapshot_ReadOnly" xml:space="preserve">
+    <value>پیش‌بینی ذخیره‌شده هرگز تغییر نمی‌کند؛ تغییر برنامه‌ها در مقایسه دیده می‌شود.</value>
+  </data>
+  <data name="Snapshot_NotStarted" xml:space="preserve">
+    <value>پیش‌بینی از امروز آغاز می‌شود – از فردا مقایسه کنید.</value>
+  </data>
+  <data name="Snapshot_Compared" xml:space="preserve">
+    <value>مقایسه تا {0}</value>
+  </data>
+  <data name="Snapshot_Chart" xml:space="preserve">
+    <value>پیش‌بینی ذخیره‌شده و واقعیت</value>
+  </data>
+  <data name="Snapshot_SavedPath" xml:space="preserve">
+    <value>ذخیره‌شده</value>
+  </data>
+  <data name="Snapshot_ActualPath" xml:space="preserve">
+    <value>واقعی</value>
+  </data>
+  <data name="Snapshot_Difference" xml:space="preserve">
+    <value>تفاوت</value>
+  </data>
+  <data name="Snapshot_Parts" xml:space="preserve">
+    <value>تفاوت از کجا آمده</value>
+  </data>
+  <data name="Snapshot_RecordedLater" xml:space="preserve">
+    <value>ثبت‌شده بعداً (با تاریخ پیش از ذخیره)</value>
+  </data>
+  <data name="Snapshot_UnplannedSpending" xml:space="preserve">
+    <value>خرج برنامه‌ریزی‌نشده</value>
+  </data>
+  <data name="Snapshot_UnplannedIncome" xml:space="preserve">
+    <value>درآمد برنامه‌ریزی‌نشده</value>
+  </data>
+  <data name="Snapshot_PlansChanged" xml:space="preserve">
+    <value>برنامه‌هایی که متفاوت پرداخت شدند</value>
+  </data>
+  <data name="Snapshot_PartsNote" xml:space="preserve">
+    <value>جمع این بخش‌ها برابر تفاوت آخرین روز مقایسه است.</value>
+  </data>
+  <data name="Snapshot_Delete" xml:space="preserve">
+    <value>حذف این پیش‌بینی</value>
+  </data>
+  <data name="Snapshot_DeleteMessage" xml:space="preserve">
+    <value>پیش‌بینی ذخیره‌شده حذف می‌شود؛ برنامه‌ها و تراکنش‌های شما می‌مانند.</value>
+  </data>
+  <data name="Snapshot_NotFound" xml:space="preserve">
+    <value>این پیش‌بینی دیگر وجود ندارد.</value>
+  </data>
+  <data name="Backup_PreviewSnapshots" xml:space="preserve">
+    <value>پیش‌بینی‌های ذخیره‌شده: {0}</value>
+  </data>
+  <data name="Goal_NoCapacity" xml:space="preserve">
+    <value>فعلاً ظرفیتی برای این هدف باقی نمانده است.</value>
+  </data>
 </root>

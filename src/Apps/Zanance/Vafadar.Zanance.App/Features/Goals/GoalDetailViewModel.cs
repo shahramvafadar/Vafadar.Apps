@@ -29,6 +29,7 @@ public sealed partial class GoalDetailViewModel(
     ZananceStore store,
     GoalStore goals,
     PlanStore plans,
+    HoldingStore holdings,
     GoalPresenter presenter,
     Translator translator,
     IDateFormatter dates,
@@ -99,6 +100,38 @@ public sealed partial class GoalDetailViewModel(
     [ObservableProperty]
     public partial bool IsEarmark { get; set; }
 
+    /// <summary>Gets the observed pace and its date (ZEX-S0702): "At your recent pace …", "No date …" or "Not enough history …".</summary>
+    [ObservableProperty]
+    public partial string? TrendText { get; set; }
+
+    /// <summary>Gets the net contribution of the running month, shown apart from the pace.</summary>
+    [ObservableProperty]
+    public partial string? SoFarText { get; set; }
+
+    /// <summary>Gets the months behind the pace (Advanced), with one-offs named.</summary>
+    public ObservableCollection<string> TrendPeriods { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasTrendPeriods { get; set; }
+
+    /// <summary>Gets a value indicating whether the goal counts a holding quantity (ZEX-S0701).</summary>
+    [ObservableProperty]
+    public partial bool IsQuantity { get; set; }
+
+    /// <summary>Gets or sets the price the user assumes per gram or unit (ZEX-S0703); only to turn money capacity into a quantity.</summary>
+    [ObservableProperty]
+    public partial string AssumedPriceText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string? AssumedPriceLabel { get; set; }
+
+    /// <summary>Gets "At your price: 2.5 g per month from your capacity", a separate line from the quantity pace.</summary>
+    [ObservableProperty]
+    public partial string? CapacityQuantityText { get; set; }
+
+    [ObservableProperty]
+    public partial bool CanUseAssumedPrice { get; set; }
+
     /// <summary>Gets the essential coverage in the goal's currency (ZEX-K07, Advanced): how many months usable money lasts.</summary>
     [ObservableProperty]
     public partial string? CoverageText { get; set; }
@@ -132,8 +165,9 @@ public sealed partial class GoalDetailViewModel(
         var balances = GoalPresenter.Balances(accounts, entries, today);
         var all = await goals.GetGoalsAsync();
         var allocations = await goals.GetAllocationsAsync();
-        var progress = GoalProgressService.Evaluate(all, allocations, accounts, entries, await goals.GetContributionPlansAsync(), today).FirstOrDefault(p => p.Goal.Id == goal.Id);
+        var progress = (await presenter.EvaluateAsync(goals, accounts, entries, today, all)).FirstOrDefault(p => p.Goal.Id == goal.Id);
         Summary = presenter.Row(goal, progress);
+        await LoadTrendAsync(goal, progress?.Remaining ?? 0);
         IsActive = goal.State == GoalState.Active;
         IsArchived = goal.State == GoalState.Archived;
         IsEarmark = goal.Type == GoalType.Earmark;
@@ -184,6 +218,70 @@ public sealed partial class GoalDetailViewModel(
             ?? Accounts.OrderByDescending(a => accounts.First(x => x.Id == a.Id).Type == AccountType.Savings).ThenByDescending(a => a.Unallocated).FirstOrDefault();
         HasFundingAccounts = Accounts.Count > 0;
         NoAccountsText = HasFundingAccounts ? null : translator.Format("Goal_NoAccounts", goal.CurrencyCode);
+    }
+
+    // The observed pace (design §9.2) – a separate line from the user's own plan, which always stays available.
+    private async Task LoadTrendAsync(Goal goal, long remaining)
+    {
+        var settings = await store.GetSettingsAsync();
+        var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        var trend = GoalTrendService.Compute(goal, remaining, await store.GetAccountsAsync(), await store.GetEntriesAsync(), await goals.GetAllocationsAsync(goal.Id), await holdings.GetEventsAsync(), Today, calendar, settings.MonthStartDay);
+        TrendText = trend.Status switch
+        {
+            TrendStatus.Ok => translator.Format("Goal_TrendEta", presenter.Amount(goal, trend.Pace!.Value), trend.CompletePeriods, dates.Format(trend.Eta!.Value, DateFormatStyle.MonthYear)),
+            TrendStatus.NoPace => translator["Goal_TrendNoPace"],
+            TrendStatus.NotEnoughHistory => translator.Format("Goal_TrendHistory", trend.CompletePeriods, GoalTrendService.MinimumPeriods),
+            _ => null,
+        };
+        SoFarText = trend.Status != TrendStatus.Reached && trend.SoFar != 0 ? translator.Format("Goal_TrendSoFar", presenter.Amount(goal, trend.SoFar)) : null;
+        TrendPeriods.Clear();
+        if (settings.Mode == Core.Settings.ExperienceMode.Advanced)
+        {
+            foreach (var period in trend.Periods)
+            {
+                var text = $"{dates.Format(period.From, DateFormatStyle.MonthYear)}: {presenter.Amount(goal, period.Contribution)}";
+                TrendPeriods.Add(period.IsOneOff ? text + " · " + translator["Goal_TrendOneOff"] : text);
+            }
+        }
+
+        HasTrendPeriods = TrendPeriods.Count > 0;
+
+        // Quantity goals: money capacity becomes a quantity only at a price the user types (ZEX-S0703).
+        IsQuantity = goal.Type == GoalType.HoldingQuantity;
+        CapacityQuantityText = null;
+        CanUseAssumedPrice = IsQuantity && settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        if (!CanUseAssumedPrice || presenter.TypeOf(goal) is not { } type)
+        {
+            return;
+        }
+
+        AssumedPriceLabel = translator.Format("Goal_AssumedPrice", type.PriceCurrencyCode, translator[type.Dimension == Core.Holdings.AssetDimension.Mass ? "Holding_PerGram" : "Holding_Piece"]);
+        var plan = (await goals.GetContributionPlansAsync()).FirstOrDefault(p => p.GoalId == goal.Id);
+        if (plan?.AssumedPricePerUnitMilli is { } price)
+        {
+            AssumedPriceText = MoneyText.ForInput((long)Math.Round(price / 1_000m, MidpointRounding.AwayFromZero), type.PriceCurrencyCode, localization.CurrentCulture);
+            var capacity = Core.Reports.CapacityCalculator.Compute(await store.GetAccountsAsync(), await store.GetEntriesAsync(), await plans.GetSchedulesAsync(), await plans.GetStatesAsync(),
+                await goals.GetGoalsAsync(), await goals.GetContributionPlansAsync(), type.PriceCurrencyCode, Today, calendar, settings.MonthStartDay, goal.Id);
+            CapacityQuantityText = capacity.Amount is { } none && none <= 0 ? translator["Goal_NoCapacity"]
+                : capacity.Amount is { } money
+                ? translator.Format("Goal_CapacityQuantity", presenter.Amount(goal, Core.Reports.CapacityCalculator.QuantityFor(money, price)), MoneyText.Format(money, type.PriceCurrencyCode, localization.CurrentCulture))
+                : translator["Report_NotEnoughHistory"];
+        }
+    }
+
+    // Stores the assumed price with the goal's plan; it is never a valuation of the holding.
+    [RelayCommand]
+    private async Task SaveAssumedPriceAsync()
+    {
+        if (_goal is not { } goal || presenter.TypeOf(goal) is not { } type)
+        {
+            return;
+        }
+
+        var plan = (await goals.GetContributionPlansAsync()).FirstOrDefault(p => p.GoalId == goal.Id) ?? new ContributionPlan { GoalId = goal.Id, Method = ContributionMethod.FixedAmount };
+        plan.AssumedPricePerUnitMilli = MoneyText.TryParse(AssumedPriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var price) && price > 0 ? price * 1_000 : null;
+        await goals.SaveContributionPlanAsync(goal.Id, plan);
+        await LoadAsync();
     }
 
     // For an emergency fund the question is how long the money would last; shown in Advanced (ZEX-S0612).

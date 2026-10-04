@@ -144,6 +144,8 @@ internal static class DebugSnapshots
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
         var goalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First(g => g.Type == Core.Goals.GoalType.AccountBalance).Id;
+        var quantityGoalId = (await services.GetRequiredService<GoalStore>().GetGoalsAsync()).First(g => g.Type == Core.Goals.GoalType.HoldingQuantity).Id;
+        var snapshotId = (await services.GetRequiredService<ZananceStore>().GetForecastSnapshotsAsync()).First().Id;
         var accountId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         var weekdayPlanId = (await services.GetRequiredService<PlanStore>().GetSchedulesAsync()).First(s => s.Rule.DayRule == MonthDayRule.LastWeekday).Id;
         var loanId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
@@ -186,6 +188,9 @@ internal static class DebugSnapshots
             ("goals", AppShell.GoalsRoute, null),
             ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),
             ("goal-edit", AppShell.GoalEditorRoute, new() { ["id"] = goalId }),
+            ("goal-quantity", AppShell.GoalDetailRoute, new() { ["id"] = quantityGoalId }),
+            ("goal-quantity-edit", AppShell.GoalEditorRoute, new() { ["id"] = quantityGoalId }),
+            ("forecast-snapshot", AppShell.SnapshotRoute, new() { ["id"] = snapshotId }),
             ("holdings", AppShell.HoldingsRoute, null),
             ("holding-detail", AppShell.HoldingDetailRoute, new() { ["id"] = goldId }),
             ("holding-coin", AppShell.HoldingDetailRoute, new() { ["id"] = coinId }),
@@ -198,7 +203,8 @@ internal static class DebugSnapshots
             ("report-commitments", AppShell.ReportsRoute, new() { ["report"] = 1 }),
             ("report-goals", AppShell.ReportsRoute, new() { ["report"] = 2 }),
             ("report-wealth", AppShell.ReportsRoute, new() { ["report"] = 3 }),
-            ("report-status", AppShell.ReportsRoute, new() { ["report"] = 4 }),
+            ("report-history", AppShell.ReportsRoute, new() { ["report"] = 4 }),
+            ("report-status", AppShell.ReportsRoute, new() { ["report"] = 5 }),
             ("report-kpi", AppShell.KpiSheetRoute, new() { ["sheet"] = new Features.Reports.KpiExplanation("K05", "+700.00 EUR", "October · EUR · Accounts in totals", [new("Income", "3,000.00 EUR", false), new("= Surplus", "+700.00 EUR", true)], null, null) }),
             ("report-review", AppShell.ReviewRoute, null),
             ("backup", AppShell.BackupRoute, null),
@@ -367,6 +373,18 @@ internal static class DebugSnapshots
         await holdings.SaveValuationAsync(new Core.Holdings.AssetValuation { AssetTypeId = gold.Id, CurrencyCode = gold.PriceCurrencyCode, Date = purchase.Date, PricePerUnitMilli = 105_00_000, Source = Core.Holdings.ValuationSource.Purchase });
         await holdings.SaveValuationAsync(new Core.Holdings.AssetValuation { AssetTypeId = gold.Id, CurrencyCode = gold.PriceCurrencyCode, Date = today, PricePerUnitMilli = 110_00_000 });
         await holdings.SaveEventAsync(new Core.Holdings.AssetEvent { AssetTypeId = coin.Id, LocationId = safe.Id, Kind = Core.Holdings.AssetEventKind.GiftReceived, Quantity = 3_000, Date = today.AddDays(-20), Note = "Wedding gift" }, []);
+
+        // A quantity goal of 50 g with 2 g per month (ZEX phase 5) and a forecast saved two weeks ago.
+        var goals = services.GetRequiredService<GoalStore>();
+        var fifty = new Core.Goals.Goal { Name = "50 g gold", CurrencyCode = gold.PriceCurrencyCode, Type = Core.Goals.GoalType.HoldingQuantity, AssetTypeId = gold.Id, TargetAmount = 50_000, TargetDate = today.AddMonths(18), Icon = "Diamond" };
+        await goals.SaveGoalAsync(fifty);
+        await goals.SaveContributionPlanAsync(fifty.Id, new Core.Goals.ContributionPlan { Method = Core.Goals.ContributionMethod.FixedAmount, Amount = 2_000, AssumedPricePerUnitMilli = 105_00_000, Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Start = today.AddDays(10) } });
+        var store = services.GetRequiredService<ZananceStore>();
+        var baseDate = today.AddDays(-14);
+        var forecast = Core.Forecasts.ForecastCalculator.Compute(await store.GetAccountsAsync(), await store.GetEntriesAsync(), await services.GetRequiredService<PlanStore>().GetSchedulesAsync(), [], baseDate, baseDate.AddDays(30)).First();
+        var snapshot = Core.Forecasts.ForecastSnapshot.From("Before October", forecast, [checking.Id], baseDate, null, "snapshot");
+        snapshot.CreatedAt = DateTimeOffset.Now.AddDays(-14);
+        await store.SaveForecastSnapshotAsync(snapshot);
     }
 
     private static async Task SeedBudgetAsync(IServiceProvider services, Guid foodId)

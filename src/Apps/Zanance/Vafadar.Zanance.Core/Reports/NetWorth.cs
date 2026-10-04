@@ -81,7 +81,8 @@ public static class NetWorthCalculator
         ArgumentNullException.ThrowIfNull(entries);
         var parts = new List<WealthPart>();
         var accountList = accounts.ToList();
-        foreach (var account in accountList)
+        // An account opened after the date did not exist yet (wealth history, ZEX-S0801).
+        foreach (var account in accountList.Where(a => a.OpeningDate <= date))
         {
             var balance = LedgerCalculator.Balance(account, entries, date);
             if (account.IsArchived && balance == 0)

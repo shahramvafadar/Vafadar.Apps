@@ -94,13 +94,13 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0610 | Period-end review | 4 | Implemented – verified (review state tested; the optional reminder is not built) |
 | ZEX-S0611 | Aggregated entries and overlap handling | 4 | Implemented – unverified (editor, overlap choice and Undo; an import only warns about overlaps) |
 | ZEX-S0612 | Essential expense coverage (K07) | 4 | Implemented – verified (K07 tests, essential defaults) |
-| ZEX-S0701 | Holding-quantity goal | 5 | Planned |
-| ZEX-S0702 | Observed-trend ETA for all goal types | 5 | Planned |
-| ZEX-S0703 | Capacity suggestions with an assumed price for quantity goals | 5 | Planned |
-| ZEX-S0801 | Net worth history | 5 | Planned |
-| ZEX-S0802 | Wealth change decomposition | 5 | Planned |
-| ZEX-S0803 | Save forecast snapshot | 5 | Planned |
-| ZEX-S0804 | Snapshot vs reality | 5 | Planned |
+| ZEX-S0701 | Holding-quantity goal | 5 | Implemented – verified (G14 tested; a money goal never follows a holding, so no "includes price effect" note is needed) |
+| ZEX-S0702 | Observed-trend ETA for all goal types | 5 | Implemented – verified (median, one-off and history rules tested; periods are financial months) |
+| ZEX-S0703 | Capacity suggestions with an assumed price for quantity goals | 5 | Implemented – verified (conversion tested; the assumed price is stored with the plan) |
+| ZEX-S0801 | Net worth history | 5 | Implemented – verified (back-dated prices tested) |
+| ZEX-S0802 | Wealth change decomposition | 5 | Implemented – verified (570 example and missing-valuation cause tested) |
+| ZEX-S0803 | Save forecast snapshot | 5 | Implemented – verified (read-only store test; backup counts snapshots) |
+| ZEX-S0804 | Snapshot vs reality | 5 | Implemented – verified (recorded-later example tested; parts add up) |
 | ZEX-S0901 | Migration and older-backup restore per wave | 6 | Planned |
 | ZEX-S0902 | Backup round trip with all new data | 6 | Planned |
 | ZEX-S0903 | Platform verification per wave | 6 | Planned |

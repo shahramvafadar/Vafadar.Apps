@@ -4809,4 +4809,220 @@
   <data name="Report_BudgetRemaining" xml:space="preserve">
     <value>Remaining</value>
   </data>
+  <data name="GoalType_HoldingQuantity" xml:space="preserve">
+    <value>A quantity of a holding</value>
+  </data>
+  <data name="Goal_Holding" xml:space="preserve">
+    <value>Holding</value>
+  </data>
+  <data name="Goal_HoldingLocation" xml:space="preserve">
+    <value>Where</value>
+  </data>
+  <data name="Goal_AllLocations" xml:space="preserve">
+    <value>All locations</value>
+  </data>
+  <data name="Goal_QuantityNote" xml:space="preserve">
+    <value>Progress is the quantity you hold; price changes never count.</value>
+  </data>
+  <data name="Goal_ChooseHolding" xml:space="preserve">
+    <value>Choose a holding.</value>
+  </data>
+  <data name="Goal_HoldingUnavailable" xml:space="preserve">
+    <value>The holding is archived – choose another or complete the goal.</value>
+  </data>
+  <data name="Goal_TrendTitle" xml:space="preserve">
+    <value>At your pace</value>
+  </data>
+  <data name="Goal_TrendEta" xml:space="preserve">
+    <value>At your recent pace of {0} per month (median of {1} months): ~ {2}</value>
+  </data>
+  <data name="Goal_TrendNoPace" xml:space="preserve">
+    <value>No date at your current pace.</value>
+  </data>
+  <data name="Goal_TrendHistory" xml:space="preserve">
+    <value>Not enough history yet ({0} of {1} months).</value>
+  </data>
+  <data name="Goal_TrendSoFar" xml:space="preserve">
+    <value>This month so far: {0}</value>
+  </data>
+  <data name="Goal_TrendOneOff" xml:space="preserve">
+    <value>one-off</value>
+  </data>
+  <data name="Goal_TrendNote" xml:space="preserve">
+    <value>An estimate from complete months, not a promise. Your own plan stays a separate line.</value>
+  </data>
+  <data name="Goal_AssumedPrice" xml:space="preserve">
+    <value>Your assumed price in {0} ({1})</value>
+  </data>
+  <data name="Goal_CapacityQuantity" xml:space="preserve">
+    <value>At your price: {0} per month from your capacity of {1}</value>
+  </data>
+  <data name="Goal_AssumedPriceNote" xml:space="preserve">
+    <value>Only for this estimate; it is never the value of your holding.</value>
+  </data>
+  <data name="Help_GoalTrend_Title" xml:space="preserve">
+    <value>At your pace</value>
+  </data>
+  <data name="Help_GoalTrend_Text" xml:space="preserve">
+    <value>Zanance looks at what reached the goal in each of the last complete months (up to six) and takes the median. A month far above the others is marked one-off. With fewer than three complete months there is no pace yet.</value>
+  </data>
+  <data name="Help_GoalTrend_Example" xml:space="preserve">
+    <value>200, 250, 230 and 900 → pace 240 per month; 900 is a one-off.</value>
+  </data>
+  <data name="Report_R5" xml:space="preserve">
+    <value>Wealth</value>
+  </data>
+  <data name="Report_AdvancedOnly" xml:space="preserve">
+    <value>Available in Advanced mode (Settings).</value>
+  </data>
+  <data name="Report_History" xml:space="preserve">
+    <value>Net worth over time</value>
+  </data>
+  <data name="Report_NoHistory" xml:space="preserve">
+    <value>Not enough history yet.</value>
+  </data>
+  <data name="Report_HistoryIncomplete" xml:space="preserve">
+    <value>* incomplete: a holding without a price or a currency without a rate on that day</value>
+  </data>
+  <data name="Report_WealthChangeTitle" xml:space="preserve">
+    <value>Saving or prices?</value>
+  </data>
+  <data name="Report_LastMonth" xml:space="preserve">
+    <value>Last month</value>
+  </data>
+  <data name="Report_ThisYear" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="Report_Last12Months" xml:space="preserve">
+    <value>12 months</value>
+  </data>
+  <data name="Report_ChangeRange" xml:space="preserve">
+    <value>From the end of {0} to {1}</value>
+  </data>
+  <data name="Report_WealthStart" xml:space="preserve">
+    <value>Net worth at the start</value>
+  </data>
+  <data name="Report_WealthEnd" xml:space="preserve">
+    <value>Net worth at the end</value>
+  </data>
+  <data name="Report_WealthChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Report_Flows" xml:space="preserve">
+    <value>Saved (income − spending)</value>
+  </data>
+  <data name="Report_PriceEffect" xml:space="preserve">
+    <value>Price changes of holdings</value>
+  </data>
+  <data name="Report_FxEffect" xml:space="preserve">
+    <value>Exchange rate changes</value>
+  </data>
+  <data name="Report_Corrections" xml:space="preserve">
+    <value>Corrections, new accounts, holdings without money</value>
+  </data>
+  <data name="Report_Remainder" xml:space="preserve">
+    <value>Not explained</value>
+  </data>
+  <data name="Report_RemainderCauses" xml:space="preserve">
+    <value>Not explained because of: {0}</value>
+  </data>
+  <data name="Report_Cause_MissingValuation" xml:space="preserve">
+    <value>a holding without a price on one of the dates</value>
+  </data>
+  <data name="Report_Cause_UnknownOpeningBalance" xml:space="preserve">
+    <value>an unknown opening balance</value>
+  </data>
+  <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
+    <value>holdings bought or sold at another price than their valuation</value>
+  </data>
+  <data name="Report_Cause_MissingRate" xml:space="preserve">
+    <value>a currency without a rate</value>
+  </data>
+  <data name="Kpi_K10H_Title" xml:space="preserve">
+    <value>Saving or prices?</value>
+  </data>
+  <data name="Kpi_K10H_Question" xml:space="preserve">
+    <value>Did my wealth grow through saving or through prices and rates?</value>
+  </data>
+  <data name="Kpi_K10H_Definition" xml:space="preserve">
+    <value>The change of net worth split into what you saved, price changes of holdings, exchange rate changes and corrections. What these do not explain is shown with its cause, never hidden.</value>
+  </data>
+  <data name="Kpi_K10H_Included" xml:space="preserve">
+    <value>Net worth at both dates with prices and rates of those dates|Income minus spending in between|For each price change: the quantity held then × the change</value>
+  </data>
+  <data name="Kpi_K10H_Excluded" xml:space="preserve">
+    <value>Transfers between your accounts|A guess for missing prices or rates|Taxes</value>
+  </data>
+  <data name="Snapshot_SaveTitle" xml:space="preserve">
+    <value>Save this forecast</value>
+  </data>
+  <data name="Snapshot_SaveMessage" xml:space="preserve">
+    <value>A name, so you can compare it with what really happens later.</value>
+  </data>
+  <data name="Snapshot_ListTitle" xml:space="preserve">
+    <value>Saved forecasts</value>
+  </data>
+  <data name="Snapshot_Saved" xml:space="preserve">
+    <value>{0} · {1} · lowest {2} on {3}</value>
+  </data>
+  <data name="Snapshot_Detail" xml:space="preserve">
+    <value>Saved on {0}, until {1}; lowest {2} on {3}</value>
+  </data>
+  <data name="Snapshot_Assumptions" xml:space="preserve">
+    <value>Assumptions: {0}</value>
+  </data>
+  <data name="Snapshot_ReadOnly" xml:space="preserve">
+    <value>A saved forecast never changes; later plan changes show up in the comparison.</value>
+  </data>
+  <data name="Snapshot_NotStarted" xml:space="preserve">
+    <value>The forecast starts today – compare it from tomorrow on.</value>
+  </data>
+  <data name="Snapshot_Compared" xml:space="preserve">
+    <value>Compared up to {0}</value>
+  </data>
+  <data name="Snapshot_Chart" xml:space="preserve">
+    <value>Saved forecast and reality</value>
+  </data>
+  <data name="Snapshot_SavedPath" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="Snapshot_ActualPath" xml:space="preserve">
+    <value>Actual</value>
+  </data>
+  <data name="Snapshot_Difference" xml:space="preserve">
+    <value>Difference</value>
+  </data>
+  <data name="Snapshot_Parts" xml:space="preserve">
+    <value>Where the difference comes from</value>
+  </data>
+  <data name="Snapshot_RecordedLater" xml:space="preserve">
+    <value>Recorded later (dated before saving)</value>
+  </data>
+  <data name="Snapshot_UnplannedSpending" xml:space="preserve">
+    <value>Unplanned spending</value>
+  </data>
+  <data name="Snapshot_UnplannedIncome" xml:space="preserve">
+    <value>Unplanned income</value>
+  </data>
+  <data name="Snapshot_PlansChanged" xml:space="preserve">
+    <value>Plans paid differently</value>
+  </data>
+  <data name="Snapshot_PartsNote" xml:space="preserve">
+    <value>The parts add up to the difference of the last compared day.</value>
+  </data>
+  <data name="Snapshot_Delete" xml:space="preserve">
+    <value>Delete this forecast</value>
+  </data>
+  <data name="Snapshot_DeleteMessage" xml:space="preserve">
+    <value>The saved forecast is deleted; your plans and entries stay.</value>
+  </data>
+  <data name="Snapshot_NotFound" xml:space="preserve">
+    <value>This forecast no longer exists.</value>
+  </data>
+  <data name="Backup_PreviewSnapshots" xml:space="preserve">
+    <value>Saved forecasts: {0}</value>
+  </data>
+  <data name="Goal_NoCapacity" xml:space="preserve">
+    <value>No capacity left for this goal at the moment.</value>
+  </data>
 </root>

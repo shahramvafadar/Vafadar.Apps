@@ -43,8 +43,33 @@ public sealed record GoalRow(
 }
 
 /// <summary>Formats goals for lists, details and Home (F2-GOAL-02, F2-GOAL-04, F2-GOAL-05, ZEX-S0302..S0304).</summary>
-public sealed class GoalPresenter(Translator translator, IDateFormatter dates, ILocalizationService localization)
+public sealed class GoalPresenter(Translator translator, IDateFormatter dates, ILocalizationService localization, Data.HoldingStore holdings, Holdings.HoldingText holdingText)
 {
+    private IReadOnlyList<Core.Holdings.AssetType> _types = [];
+
+    /// <summary>
+    /// Evaluates goals of every type with the holdings a quantity goal counts (ZEX-S0701) and keeps the holding types for
+    /// <see cref="Row"/>, so quantities show in their unit.
+    /// </summary>
+    public async Task<IReadOnlyList<GoalProgress>> EvaluateAsync(Data.GoalStore goals, IReadOnlyCollection<Account> accounts, IReadOnlyCollection<LedgerEntry> entries, DateOnly today, IEnumerable<Goal>? all = null)
+    {
+        ArgumentNullException.ThrowIfNull(goals);
+        _types = await holdings.GetTypesAsync();
+        var events = await holdings.GetEventsAsync();
+        return GoalProgressService.Evaluate(all ?? await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts, entries, await goals.GetContributionPlansAsync(), today, events, _types);
+    }
+
+    /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
+    public string Amount(Goal goal, long value)
+    {
+        ArgumentNullException.ThrowIfNull(goal);
+        return goal.Type == GoalType.HoldingQuantity && _types.FirstOrDefault(t => t.Id == goal.AssetTypeId) is { } type
+            ? holdingText.Quantity(value, type)
+            : Money(value, goal.CurrencyCode);
+    }
+
+    /// <summary>Returns the holding type of a quantity goal, if known.</summary>
+    public Core.Holdings.AssetType? TypeOf(Goal goal) => goal?.Type == GoalType.HoldingQuantity ? _types.FirstOrDefault(t => t.Id == goal.AssetTypeId) : null;
     /// <summary>Returns the recorded balance of every account.</summary>
     public static Dictionary<Guid, long> Balances(IEnumerable<Account> accounts, IReadOnlyCollection<LedgerEntry> entries, DateOnly today) =>
         accounts.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, entries, today));
@@ -55,21 +80,21 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
     public GoalRow Row(Goal goal, GoalProgress? progress)
     {
         ArgumentNullException.ThrowIfNull(goal);
-        var icon = Icons.Parse(goal.Icon, goal.Type == GoalType.AccountBalance ? Symbol.BuildingBank : Symbol.Savings);
+        var icon = Icons.Parse(goal.Icon, goal.Type switch { GoalType.AccountBalance => Symbol.BuildingBank, GoalType.HoldingQuantity => Symbol.Diamond, _ => Symbol.Savings });
         if (progress is null)
         {
             // Completed or archived: no funding, only the history.
-            return new GoalRow(goal.Id, goal.Name, icon, Money(goal.TargetAmount, goal.CurrencyCode), 1, Palette.Muted,
+            return new GoalRow(goal.Id, goal.Name, icon, Amount(goal, goal.TargetAmount), 1, Palette.Muted,
                 null, null, null, translator[$"GoalState_{goal.State}"]);
         }
 
         var culture = localization.CurrentCulture;
         var currency = goal.CurrencyCode;
-        var funded = translator.Format(goal.Type == GoalType.AccountBalance ? "Goal_BalanceProgress" : "Goal_Funded", Money(Math.Max(0, progress.Current), currency), Money(goal.TargetAmount, currency));
+        var funded = translator.Format(goal.Type == GoalType.Earmark ? "Goal_Funded" : "Goal_BalanceProgress", Amount(goal, Math.Max(0, progress.Current)), Amount(goal, goal.TargetAmount));
         var date = goal.TargetDate is { } target ? translator.Format("Goal_By", dates.Format(target, DateFormatStyle.Long)) : null;
         var remaining = progress.IsReached
-            ? (progress.Overshoot > 0 ? translator.Format("Goal_AboveTarget", Money(progress.Overshoot, currency)) : null)
-            : translator.Format("Goal_Remaining", Math.Round(progress.Progress * 100).ToString("0", culture), Money(progress.Remaining, currency));
+            ? (progress.Overshoot > 0 ? translator.Format("Goal_AboveTarget", Amount(goal, progress.Overshoot)) : null)
+            : translator.Format("Goal_Remaining", Math.Round(progress.Progress * 100).ToString("0", culture), Amount(goal, progress.Remaining));
 
         string? suggestion = null;
         if (progress.IsReached)
@@ -79,32 +104,35 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         else if (progress.Required is { } next && next > 0)
         {
             suggestion = progress.Opportunities <= 0
-                ? translator.Format("Goal_SuggestNow", Money(next, currency))
-                : translator.Format("Goal_SuggestPerDate", Money(next, currency), progress.Opportunities);
+                ? translator.Format("Goal_SuggestNow", Amount(goal, next))
+                : translator.Format("Goal_SuggestPerDate", Amount(goal, next), progress.Opportunities);
         }
 
         string? plan = null;
         if (!progress.IsReached && progress.Eta is { } eta && progress.PlannedContribution is { } contribution && goal.State == GoalState.Active)
         {
-            plan = translator.Format("Goal_EtaPlan", dates.Format(eta, DateFormatStyle.MonthYear), Money(contribution, currency));
+            plan = translator.Format("Goal_EtaPlan", dates.Format(eta, DateFormatStyle.MonthYear), Amount(goal, contribution));
         }
 
         var warnings = new List<string>();
         if (progress.Unfunded > 0)
         {
-            warnings.Add(translator.Format("Goal_Unfunded", Money(progress.Unfunded, currency)));
+            warnings.Add(translator.Format("Goal_Unfunded", Amount(goal, progress.Unfunded)));
         }
 
         switch (progress.Notice)
         {
             case GoalNotice.Overdue:
-                warnings.Add(translator.Format("Goal_OverdueNeeded", Money(progress.Remaining, currency)));
+                warnings.Add(translator.Format("Goal_OverdueNeeded", Amount(goal, progress.Remaining)));
                 break;
             case GoalNotice.AccountUnavailable:
                 warnings.Add(translator["Goal_AccountArchived"]);
                 break;
+            case GoalNotice.HoldingUnavailable:
+                warnings.Add(translator["Goal_HoldingUnavailable"]);
+                break;
             case GoalNotice.NegativeBalance:
-                warnings.Add(translator.Format("Goal_NegativeBalance", Money(progress.Current, currency)));
+                warnings.Add(translator.Format("Goal_NegativeBalance", Amount(goal, progress.Current)));
                 break;
         }
 

@@ -16,6 +16,9 @@ namespace Vafadar.Zanance.App.Features.Forecast;
 /// <summary>One point of the path chart (major units).</summary>
 public sealed record PathPoint(DateTime Date, double Balance);
 
+/// <summary>A saved forecast in the list (ZEX-S0803).</summary>
+public sealed record SnapshotRow(Guid Id, string Name, string Detail);
+
 /// <summary>An item of the forecast list.</summary>
 public sealed record ForecastRow(
     string DateText,
@@ -65,6 +68,8 @@ public sealed partial class ForecastViewModel : ViewModelBase
     private readonly TimeProvider _time;
     private readonly ForecastScenario _scenario = new();
     private Dictionary<Guid, string> _planCurrencies = [];
+    private IReadOnlyList<CurrencyForecast> _forecasts = [];
+    private List<Guid> _scope = [];
 
     public ForecastViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
     {
@@ -81,6 +86,15 @@ public sealed partial class ForecastViewModel : ViewModelBase
     public IReadOnlyList<string> HorizonNames { get; }
 
     public ObservableCollection<ForecastCard> Cards { get; } = [];
+
+    /// <summary>Gets the saved forecasts, newest first (ZEX-S0803); listed in both modes once they exist.</summary>
+    public ObservableCollection<SnapshotRow> Snapshots { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasSnapshots { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
 
     [ObservableProperty]
     public partial int HorizonIndex { get; set; }
@@ -105,7 +119,9 @@ public sealed partial class ForecastViewModel : ViewModelBase
     {
         var today = Today;
         var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
-        var startDay = (await _store.GetSettingsAsync()).MonthStartDay;
+        var settings = await _store.GetSettingsAsync();
+        var startDay = settings.MonthStartDay;
+        IsAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var horizon = HorizonIndex switch
         {
@@ -121,6 +137,9 @@ public sealed partial class ForecastViewModel : ViewModelBase
         var accountCurrencies = accounts.ToDictionary(a => a.Id, a => a.CurrencyCode);
         _planCurrencies = schedules.Where(p => accountCurrencies.ContainsKey(p.AccountId)).ToDictionary(p => p.Id, p => accountCurrencies[p.AccountId]);
         var forecasts = ForecastCalculator.Compute(accounts, entries, schedules, await _plans.GetStatesAsync(), today, horizon, scenario: _scenario);
+        _forecasts = forecasts;
+        _scope = [.. accounts.Where(a => a.IncludeInTotals && !a.IsArchived && a.UsableForPayments).Select(a => a.Id)];
+        await LoadSnapshotsAsync();
         HasScenario = !_scenario.IsEmpty;
         var culture = _localization.CurrentCulture;
 
@@ -171,6 +190,47 @@ public sealed partial class ForecastViewModel : ViewModelBase
                 rows));
         }
     }
+
+    private async Task LoadSnapshotsAsync()
+    {
+        Snapshots.Clear();
+        foreach (var snapshot in await _store.GetForecastSnapshotsAsync())
+        {
+            Snapshots.Add(new SnapshotRow(snapshot.Id, snapshot.Name, _translator.Format("Snapshot_Saved", _dates.Format(snapshot.BaseDate, DateFormatStyle.Short), snapshot.CurrencyCode,
+                MoneyText.Format(snapshot.Minimum, snapshot.CurrencyCode, _localization.CurrentCulture), _dates.Format(snapshot.MinimumDate, DateFormatStyle.Short))));
+        }
+
+        HasSnapshots = Snapshots.Count > 0;
+    }
+
+    // ZEX-S0803: the forecast as it is now – path, scope and assumptions – kept read-only for a later comparison.
+    [RelayCommand]
+    private async Task SaveSnapshotAsync()
+    {
+        if (_forecasts.Count == 0)
+        {
+            return;
+        }
+
+        var name = await Shell.Current.DisplayPromptAsync(_translator["Snapshot_SaveTitle"], _translator["Snapshot_SaveMessage"], _translator["Common_Save"], _translator["Common_Cancel"],
+            initialValue: _dates.Format(Today, DateFormatStyle.Short), maxLength: 80);
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
+        var assumptions = string.Join("; ", Cards.SelectMany(c => c.Rows).Where(r => r.Badge is not null && (r.IsExcluded || r.IsMoved || r.IsAmountAssumed)).Select(r => $"{r.Name}: {r.Badge}"));
+        foreach (var forecast in _forecasts)
+        {
+            var label = _forecasts.Count > 1 ? $"{name.Trim()} ({forecast.CurrencyCode})" : name.Trim();
+            await _store.SaveForecastSnapshotAsync(ForecastSnapshot.From(label, forecast, _scope, Today, assumptions, AppInfo.Current.VersionString));
+        }
+
+        await LoadSnapshotsAsync();
+    }
+
+    [RelayCommand]
+    private Task OpenSnapshotAsync(SnapshotRow row) => Shell.Current.GoToAsync(AppShell.SnapshotRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
     private Task AddPlanAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute);

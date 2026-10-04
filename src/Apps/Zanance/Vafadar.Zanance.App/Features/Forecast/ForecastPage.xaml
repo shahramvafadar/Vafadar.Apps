@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Forecast"
     x:DataType="local:ForecastViewModel"
     Title="{v:Translate Forecast_Title}">
@@ -116,6 +117,28 @@
 
             <!-- What the forecast does not know (FOR-06, FOR-07) -->
             <Label Text="{v:Translate Forecast_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,8,0,0" />
+
+            <!-- Snapshots (ZEX-S0803): save in Advanced; the list shows in both modes once there are any -->
+            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Snapshot_SaveTitle}" Command="{Binding SaveSnapshotCommand}" IsVisible="{Binding IsAdvanced}" Margin="0,8,0,0" />
+            <Label Text="{v:Translate Snapshot_ListTitle}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasSnapshots}" />
+            <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasSnapshots}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Snapshots}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:SnapshotRow">
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" />
+                                    <Label Text="{Binding Detail}" Style="{StaticResource Secondary}" FontSize="12" />
+                                </VerticalStackLayout>
+                                <fi:SymbolIcon Grid.Column="1" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                        Command="{Binding OpenSnapshotCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}"
+                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Detail}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

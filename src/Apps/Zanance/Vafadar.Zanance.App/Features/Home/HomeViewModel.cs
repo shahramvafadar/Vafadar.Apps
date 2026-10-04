@@ -524,7 +524,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
     {
         var goals = await _goals.GetGoalsAsync();
-        var progress = GoalProgressService.Evaluate(goals, await _goals.GetAllocationsAsync(), accounts, entries, await _goals.GetContributionPlansAsync(), today);
+        var progress = await _goalPresenter.EvaluateAsync(_goals, accounts, entries, today, goals);
         PinnedGoals.Clear();
         foreach (var item in progress.Where(p => p.Goal.State == GoalState.Active && p.Goal.HomePin is not null).OrderBy(p => p.Goal.HomePin).Take(2))
         {

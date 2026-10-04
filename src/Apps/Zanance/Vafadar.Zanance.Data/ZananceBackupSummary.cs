@@ -28,6 +28,9 @@ public sealed class ZananceBackupSummary(IDbContextFactory<ZananceDbContext> con
     /// <summary>Summary key: number of asset types with holdings (ZEX-S0409).</summary>
     public const string Holdings = "holdings";
 
+    /// <summary>Summary key: number of saved forecast snapshots (ZEX-S0803).</summary>
+    public const string Snapshots = "snapshots";
+
     /// <inheritdoc />
     public async Task<IReadOnlyDictionary<string, string>> GetSummaryAsync(CancellationToken cancellationToken)
     {
@@ -40,6 +43,7 @@ public sealed class ZananceBackupSummary(IDbContextFactory<ZananceDbContext> con
             [Budgets] = Count(await db.Budgets.CountAsync(cancellationToken)),
             [Goals] = Count(await db.Goals.CountAsync(cancellationToken)),
             [Holdings] = Count(await db.AssetTypes.CountAsync(cancellationToken)),
+            [Snapshots] = Count(await db.ForecastSnapshots.CountAsync(cancellationToken)),
         };
     }
 

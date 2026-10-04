@@ -6,6 +6,20 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Quantity goals and wealth history (enhancement ZEX, phase 5)
+
+- A goal can count a quantity of a holding, e.g. 50 g of gold, at all locations or one: progress is the quantity you
+  hold, never a price change. The plan is a quantity per date; the editor previews the remaining grams and the date.
+- Every goal shows its pace: the median of what reached it in the last complete months (up to six), with the date it
+  would reach the target, "Not enough history yet (2 of 3 months)" or "No date at your current pace". A month far above
+  the others is marked one-off; your own plan stays a separate line.
+- Advanced: for a quantity goal you can type an assumed price; your capacity is then shown as a quantity per month
+  ("At your price: 2.5 g per month") – never as the value of the holding.
+- Reports › Wealth (Advanced): net worth at the end of each month with the prices and rates of that day, and whether it
+  grew through saving or through prices and exchange rates; whatever the parts do not explain is shown with its cause.
+- Forecast (Advanced): save the forecast with a name; later compare it with reality – the saved and the actual path,
+  and the difference split into entries recorded later, unplanned spending and income, and plans paid differently.
+  Saved forecasts never change and are part of backups.
 ### Added – Reports and data quality (enhancement ZEX, phase 4)
 
 - Reports are now five packages under one scope bar – period overview, commitments, goals, holdings and data status.
