@@ -5102,4 +5102,7 @@ Steps to repeat it:
   <data name="Entry_DeleteQuestion" xml:space="preserve">
     <value>Delete this entry?</value>
   </data>
+  <data name="Account_NameTaken" xml:space="preserve">
+    <value>Another account already has this name. Choose a different one, so lists and files can tell them apart.</value>
+  </data>
 </root>

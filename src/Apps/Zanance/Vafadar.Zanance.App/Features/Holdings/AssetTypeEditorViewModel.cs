@@ -147,6 +147,25 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
     [RelayCommand]
     private async Task SaveAsync()
     {
+        // A second tap while saving would create the type twice.
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            await SaveCoreAsync();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task SaveCoreAsync()
+    {
         Error = null;
         var culture = _localization.CurrentCulture;
         if (string.IsNullOrWhiteSpace(Name))
@@ -201,8 +220,12 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
             return;
         }
 
+        // From now on the page edits the saved type, so nothing can add it a second time.
+        var isNew = _existing is null;
+        _existing = type;
+
         // A new type: record what is already owned next – no money is taken from an account (AT39).
-        if (_existing is null)
+        if (isNew)
         {
             await Shell.Current.GoToAsync($"../{AppShell.AssetEventEditorRoute}", new Dictionary<string, object>
             {

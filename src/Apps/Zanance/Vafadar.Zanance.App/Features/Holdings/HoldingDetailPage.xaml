@@ -114,7 +114,7 @@
                 </Border>
 
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Holding_EditType}" Command="{Binding EditTypeCommand}" Margin="0,8,0,0" IsVisible="{Binding IsAdvanced}" />
-                <Button Text="{v:Translate Holding_Archive}" Command="{Binding ArchiveCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding IsAdvanced}" />
+                <Button Text="{v:Translate Holding_Archive}" Command="{Binding ArchiveCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding IsAdvanced}" />
             </VerticalStackLayout>
         </ScrollView>
 
@@ -122,7 +122,7 @@
         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16,0,16,16" IsVisible="{Binding UndoText, Converter={StaticResource IsNotNullConverter}}">
             <Grid ColumnDefinitions="*,Auto">
                 <Label Text="{Binding UndoText}" VerticalOptions="Center" />
-                <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+                <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoCommand}" Style="{StaticResource TextButton}" />
             </Grid>
         </Border>
     </Grid>

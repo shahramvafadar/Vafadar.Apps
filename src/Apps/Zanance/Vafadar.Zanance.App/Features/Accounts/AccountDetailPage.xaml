@@ -47,8 +47,7 @@
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Loan_RecordInstallment}" Command="{Binding RecordInstallmentCommand}" />
                             <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Loan_ShowSchedule}" Command="{Binding ShowScheduleCommand}" />
                         </Grid>
-                        <Button Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" BackgroundColor="Transparent"
-                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0,4" />
+                        <Button Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
                     </VerticalStackLayout>
                     <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding HasLoanTerms, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>

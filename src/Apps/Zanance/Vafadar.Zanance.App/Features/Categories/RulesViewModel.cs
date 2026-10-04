@@ -72,7 +72,7 @@ public sealed partial class RulesViewModel(ZananceStore store, Translator transl
             return;
         }
 
-        await store.SaveCategoryRuleAsync(new CategoryRule { Match = MatchText, CategoryId = SelectedCategory.Id, Kind = SelectedCategory.Kind });
+        await store.SaveCategoryRuleAsync(new CategoryRule { Match = MatchText.Trim(), CategoryId = SelectedCategory.Id, Kind = SelectedCategory.Kind });
         MatchText = string.Empty;
         await LoadAsync();
     }

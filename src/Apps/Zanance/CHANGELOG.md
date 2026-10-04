@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–7: libraries, core, data, app foundation and recording
+### Fixed – Code review, parts 1–8: libraries, core, data, app foundation, recording, accounts and holdings
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -46,6 +46,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - In a bulk category change, sub-categories show their main category ("Car › Other").
 - Opening an attachment that no app on the device can show says so.
 - Buttons and switches in the recording screens have names for screen readers and full-size touch targets.
+- Two accounts can no longer have the same name (also not in another spelling), so lists and CSV files tell them
+  apart.
+- Only money accounts can be the default for new entries; switching the default and cancelling asks first.
+- The category editor and the entry editor mark only the chosen icon or category (an earlier choice could still look
+  selected).
+- Sub-categories of an archived main category stay in the category list.
+- A double tap on Save no longer creates an asset type twice.
+- Very large prices or quantities of holdings are refused instead of overflowing.
+- The exchange-rate form suggests a missing rate first and accepts the Persian decimal separator.
+- Account rows wrap their labels on small screens.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

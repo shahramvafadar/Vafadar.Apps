@@ -261,7 +261,8 @@ public sealed partial class HoldingDetailViewModel(
         }
 
         PriceError = null;
-        if (!MoneyText.TryParse(PriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var amount) || amount <= 0)
+        // The price is kept in thousandths; a price too large for that is invalid input, never a silent overflow (as CR04-02).
+        if (!MoneyText.TryParse(PriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var amount) || amount <= 0 || amount > long.MaxValue / 1_000)
         {
             PriceError = translator["Amount_Invalid"];
             return;

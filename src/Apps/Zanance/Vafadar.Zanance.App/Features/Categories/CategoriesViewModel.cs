@@ -47,6 +47,14 @@ public sealed partial class CategoriesViewModel(ZananceStore store, Translator t
             }
         }
 
+        // A sub-category whose main category was archived (or merged away) stays active: it is listed on its own instead of
+        // disappearing from the list, so it can still be opened, moved or archived.
+        var shownParents = categories.Where(c => !c.IsArchived && c.ParentId is null).Select(c => c.Id).ToHashSet();
+        foreach (var orphan in categories.Where(c => !c.IsArchived && c.ParentId is { } parent && !shownParents.Contains(parent)).OrderBy(c => c.SortOrder))
+        {
+            (orphan.Kind == CategoryKind.Income ? Income : Expense).Add(ToItem(orphan, false));
+        }
+
         HasArchived = Archived.Count > 0;
     }
 

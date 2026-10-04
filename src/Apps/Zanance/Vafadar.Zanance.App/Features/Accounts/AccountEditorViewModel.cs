@@ -28,6 +28,14 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         Form = new AccountFormModel(translator, time);
         _account = new Account { Name = string.Empty, CurrencyCode = Form.CurrencyCode, OpeningDate = Form.OpeningDate };
         Title = translator["Account_NewTitle"];
+        Form.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(AccountFormModel.TypeIndex))
+            {
+                UpdateCanBeDefault();
+            }
+        };
+        UpdateCanBeDefault();
     }
 
     public AccountFormModel Form { get; }
@@ -44,11 +52,25 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     [ObservableProperty]
     public partial bool IsDefault { get; set; }
 
+    /// <summary>
+    /// Gets a value indicating whether the account can be the default of new entries: a money account that is not archived
+    /// (<see cref="EntryAccountContract.IsValidDefault"/>). A loan, money lent or an asset is never offered.
+    /// </summary>
+    [ObservableProperty]
+    public partial bool CanBeDefault { get; set; }
+
+    partial void OnIsArchivedChanged(bool value) => UpdateCanBeDefault();
+
+    private void UpdateCanBeDefault() => CanBeDefault = Form.Type.CanBeDefault() && !IsArchived;
+
     [ObservableProperty]
     public partial string? SaveError { get; set; }
 
     /// <summary>Gets a value indicating whether the user changed something.</summary>
-    public bool IsDirty => Form.Snapshot() != _snapshot;
+    public bool IsDirty => Snapshot() != _snapshot;
+
+    // The form and the default switch: switching the default and cancelling asks like any other change.
+    private string Snapshot() => $"{Form.Snapshot()}|{IsDefault}";
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
@@ -73,17 +95,19 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
             Form.CurrencyCode = settings.DefaultCurrencyCode;
         }
 
-        _snapshot = Form.Snapshot();
+        _snapshot = Snapshot();
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (IsBusy || !Form.TryApply(_account, _localization.CurrentCulture))
+        // Names tell accounts apart in pickers and in CSV files, so one cannot be used twice (CR08).
+        if (IsBusy || !Form.TryApply(_account, _localization.CurrentCulture, await _store.GetAccountsAsync()))
         {
             return;
         }
 
+        var saved = false;
         IsBusy = true;
         try
         {
@@ -94,16 +118,22 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
             }
 
             await UpdateDefaultAsync();
-            _snapshot = Form.Snapshot();
-            await Shell.Current.GoToAsync("..");
+            _snapshot = Snapshot();
+            saved = true;
         }
-        catch (Exception)
+        catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             SaveError = _translator["Common_SaveFailed"];
         }
         finally
         {
             IsBusy = false;
+        }
+
+        // Leaving the page is not part of saving: a navigation problem must not say "not saved".
+        if (saved)
+        {
+            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
         }
     }
 
@@ -171,9 +201,12 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
     {
         var settings = await _store.GetSettingsAsync();
         var isDefaultNow = settings.DefaultAccountId == _account.Id;
-        if (IsDefault != isDefaultNow)
+
+        // An account changed into a loan, money lent or an asset stops being the default (quick add would refuse it).
+        var wanted = IsDefault && EntryAccountContract.IsValidDefault(_account);
+        if (wanted != isDefaultNow)
         {
-            settings.DefaultAccountId = IsDefault ? _account.Id : null;
+            settings.DefaultAccountId = wanted ? _account.Id : null;
             await _store.SaveSettingsAsync(settings);
         }
     }

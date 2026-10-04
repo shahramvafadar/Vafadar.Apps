@@ -48,6 +48,7 @@ public sealed partial class AccountDetailViewModel(
 
     [ObservableProperty]
     public partial string? BalanceText { get; set; }
+
     // Amounts are typed in the currency's display unit when one is defined (FX-07).
     [ObservableProperty]
     public partial string? UnitNote { get; set; }
@@ -146,6 +147,7 @@ public sealed partial class AccountDetailViewModel(
         }
 
         var culture = localization.CurrentCulture;
+        var settings = await store.GetSettingsAsync();
         var entries = await store.GetEntriesAsync();
         var today = Today;
         if (ReconcileDate == default)
@@ -170,7 +172,7 @@ public sealed partial class AccountDetailViewModel(
         ReconciledText = account.LastReconciledOn is { } reconciled
             ? translator.Format("Account_LastReconciled", dates.Format(reconciled, DateFormatStyle.Short))
             : translator["Account_NeverReconciled"];
-        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && (await store.GetSettingsAsync()).Shows(Feature.AccountConversion);
+        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && settings.Shows(Feature.AccountConversion);
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);
@@ -178,6 +180,7 @@ public sealed partial class AccountDetailViewModel(
         BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
         BalanceColor = balance < 0 ? EntryPresenter.DangerColor : Palette.AmountText;
         LoadLoanEstimate(account, balance, today, culture);
+
         // Money set aside for goals in this account and what is still free (F2-GOAL-05).
         var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
             .FirstOrDefault(e => e.AccountId == account.Id);
@@ -189,7 +192,7 @@ public sealed partial class AccountDetailViewModel(
             : null;
 
         var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
-        var startDay = (await store.GetSettingsAsync()).MonthStartDay;
+        var startDay = settings.MonthStartDay;
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);
         MonthText = startDay > 1
@@ -198,6 +201,7 @@ public sealed partial class AccountDetailViewModel(
         var movement = ReportCalculator.AccountMovements([account], entries, from, to).Single();
         string Format(long value, bool plus = false) => MoneyText.Format(value, account.CurrencyCode, culture, showPlus: plus);
         Movement.Clear();
+
         // A balance below zero is a problem or a debt (red, D-27); the movements in between keep their signs only.
         Movement.Add(new AmountLine(translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0));
         void Add(string key, long value, bool negative = false)

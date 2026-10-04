@@ -25,6 +25,13 @@ public sealed partial class Swatch(string key, Symbol icon, Color color, string 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Description))]
     public partial bool IsSelected { get; set; }
+
+    /// <summary>
+    /// Gets or sets the outline of an icon swatch: the category colour when selected, otherwise transparent. Set by the
+    /// editor, because a trigger setter with a binding stays applied after the trigger turns off (two icons looked selected).
+    /// </summary>
+    [ObservableProperty]
+    public partial Color Outline { get; set; } = Colors.Transparent;
 }
 
 /// <summary>A possible parent category.</summary>
@@ -36,14 +43,6 @@ public sealed record ParentChoice(Guid? Id, string Name)
 /// <summary>Creates and edits a category: name, kind (new only), icon, colour and one parent level (CAT-02).</summary>
 public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttributable
 {
-    private static readonly string[] IconKeys =
-    [
-        "Home", "Food", "FoodPizza", "Cart", "ShoppingBag", "Flash", "Drop", "Fire", "Phone", "Laptop", "Tv", "VehicleCar",
-        "Gas", "Airplane", "Beach", "Heart", "Pill", "Stethoscope", "Dumbbell", "Shield", "HatGraduation", "Book", "People",
-        "Person", "Games", "MusicNote1", "Sport", "ArrowRepeatAll", "Gift", "Money", "Savings", "BuildingBank", "Briefcase",
-        "Handshake", "Receipt", "Wrench", "PaintBrush", "Box", "Balloon", "Umbrella", "Star", "Tag", "MoreHorizontal", "QuestionCircle",
-    ];
-
     private static readonly string[] ColorKeys =
     [
         "#2E7D32", "#00838F", "#0277BD", "#283593", "#4527A0", "#6A1B9A", "#AD1457", "#C62828", "#E65100", "#F9A825", "#5D4037", "#546E7A",
@@ -64,11 +63,13 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         KindNames = [translator["CategoryKind_Expense"], translator["CategoryKind_Income"]];
         SpendingTypeNames = [translator["SpendingType_Flexible"], translator["SpendingType_Fixed"], translator["SpendingType_NonMonthly"]];
         Parents = [];
-        Icons = [.. IconKeys.Select((key, i) => Labelled(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent, "Category_IconOption", i))];
+        // The same icons in the same order as the icon choice of accounts, entries and goals, so "Icon 12" is one icon.
+        Icons = [.. IconPicker.Keys.Select((key, i) => Labelled(key, Presentation.Icons.Parse(key, Symbol.Tag), Colors.Transparent, "Category_IconOption", i))];
         Palette = [.. ColorKeys.Select((key, i) => Labelled(key, Symbol.Circle, Color.FromArgb(key), "Category_ColorOption", i))];
         SelectedColor = Color.FromArgb(ColorKeys[0]);
         Select(Icons, "Tag");
         Select(Palette, ColorKeys[0]);
+        UpdateIconOutlines();
     }
 
     public IReadOnlyList<string> KindNames { get; }
@@ -152,12 +153,13 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             IsArchived = category.IsArchived;
             KindIndex = category.Kind == CategoryKind.Income ? 1 : 0;
             SpendingTypeIndex = (int)category.SpendingType;
-        IsEssential = category.IsEssential;
+            IsEssential = category.IsEssential;
             Name = category.Name ?? string.Empty;
             DefaultName = category.SystemKey is { } key ? _translator[$"Category_{key}"] : null;
             Select(Icons, category.Icon ?? "Tag");
             Select(Palette, category.Color ?? ColorKeys[0]);
             SelectedColor = CategoryLookup.ParseColor(category.Color);
+            UpdateIconOutlines();
         }
 
         // Only one level (CAT-02): a category with children, and the fallback category, cannot get a parent.
@@ -209,7 +211,22 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     }
 
     [RelayCommand]
-    private void SelectIcon(Swatch swatch) => Select(Icons, swatch.Key);
+    private void SelectIcon(Swatch swatch)
+    {
+        Select(Icons, swatch.Key);
+        UpdateIconOutlines();
+    }
+
+    partial void OnSelectedColorChanged(Color value) => UpdateIconOutlines();
+
+    // The chosen icon is outlined in the chosen colour, so the preview shows the category as it will look.
+    private void UpdateIconOutlines()
+    {
+        foreach (var icon in Icons)
+        {
+            icon.Outline = icon.IsSelected ? SelectedColor : Colors.Transparent;
+        }
+    }
 
     [RelayCommand]
     private void SelectColor(Swatch swatch)
@@ -246,8 +263,8 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             _category.Icon = Icons.FirstOrDefault(i => i.IsSelected)?.Key;
             _category.Color = Palette.FirstOrDefault(c => c.IsSelected)?.Key;
             _category.ParentId = CanHaveParent ? Parent?.Id : null;
-        _category.SpendingType = Enum.IsDefined((SpendingType)SpendingTypeIndex) ? (SpendingType)SpendingTypeIndex : SpendingType.Flexible;
-        _category.IsEssential = ShowSpendingType && IsEssential;
+            _category.SpendingType = Enum.IsDefined((SpendingType)SpendingTypeIndex) ? (SpendingType)SpendingTypeIndex : SpendingType.Flexible;
+            _category.IsEssential = ShowSpendingType && IsEssential;
             await _store.SaveCategoryAsync(_category);
             _snapshot = Snapshot();
             await Shell.Current.GoToAsync("..");

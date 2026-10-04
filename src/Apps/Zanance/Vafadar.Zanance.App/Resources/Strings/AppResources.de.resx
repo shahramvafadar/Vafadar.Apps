@@ -5098,4 +5098,7 @@ Schritte zum Wiederholen:
   <data name="Entry_DeleteQuestion" xml:space="preserve">
     <value>Diese Buchung löschen?</value>
   </data>
+  <data name="Account_NameTaken" xml:space="preserve">
+    <value>Ein anderes Konto hat bereits diesen Namen. Wählen Sie einen anderen, damit Listen und Dateien die Konten unterscheiden können.</value>
+  </data>
 </root>

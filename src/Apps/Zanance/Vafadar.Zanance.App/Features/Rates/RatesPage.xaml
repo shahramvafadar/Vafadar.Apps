@@ -38,7 +38,7 @@
                     <v:DateField Date="{Binding Date}" />
                     <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                         <Label Text="{v:Translate Rates_Estimate}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding IsEstimate}" OnColor="{DynamicResource Primary}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsEstimate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Rates_Estimate}" />
                     </Grid>
                     <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" Margin="0,12,0,0" />
@@ -58,10 +58,10 @@
                                 </VerticalStackLayout>
                                 <Label Grid.Column="1" Text="{v:Translate Rates_EstimateBadge}" FontSize="12" Padding="6,1" VerticalOptions="Center"
                                        TextColor="{DynamicResource WarningText}" BackgroundColor="{DynamicResource WarningBackground}" IsVisible="{Binding IsEstimate}" />
-                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
+                                <!-- The whole row is one real button that offers to delete the rate; the hint says so -->
                                 <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RatesViewModel}}, x:DataType=local:RatesViewModel}"
-                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Text}" SemanticProperties.Hint="{Binding DateText}" />
+                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" SemanticProperties.Hint="{v:Translate Rates_Delete}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- One account in a list. The binding context is an AccountItem; taps open the editor. The tile colour says what kind of
-     money it is (D-27). -->
+<!-- One account in a list. The binding context is an AccountItem; a tap opens the account details. The tile colour says what
+     kind of money it is (D-27). -->
 <Grid
     x:Class="Vafadar.Zanance.App.Features.Accounts.AccountRow"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -12,18 +12,18 @@
     Style="{StaticResource ListRow}"
     ColumnDefinitions="Auto,*,Auto">
 
-
     <Border Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding TileText}" HorizontalOptions="Center" VerticalOptions="Center" />
     </Border>
     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
         <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
-        <HorizontalStackLayout Spacing="8">
-            <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
-            <Label Text="{v:Translate Accounts_Default}" TextColor="{DynamicResource Primary}" FontSize="13" FontAttributes="Bold" IsVisible="{Binding IsDefault}" />
-            <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" IsVisible="{Binding NotInTotals}" />
+        <!-- Wraps instead of cutting off: type, default, not in totals and incomplete do not fit one line on a phone -->
+        <FlexLayout Wrap="Wrap">
+            <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" Margin="0,0,8,0" />
+            <Label Text="{v:Translate Accounts_Default}" TextColor="{DynamicResource Primary}" FontSize="13" FontAttributes="Bold" Margin="0,0,8,0" IsVisible="{Binding IsDefault}" />
+            <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" Margin="0,0,8,0" IsVisible="{Binding NotInTotals}" />
             <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
-        </HorizontalStackLayout>
+        </FlexLayout>
     </VerticalStackLayout>
     <Label Grid.Column="2" Text="{Binding BalanceText}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center">
         <Label.Triggers>

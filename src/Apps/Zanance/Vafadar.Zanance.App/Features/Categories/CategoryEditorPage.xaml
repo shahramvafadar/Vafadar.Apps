@@ -12,8 +12,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -86,10 +85,9 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:Swatch">
                                     <Grid Margin="2">
-                                        <Border WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="Transparent">
+                                        <Border WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="{Binding Outline}">
                                             <Border.Triggers>
                                                 <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                    <Setter Property="Stroke" Value="{Binding SelectedColor, Source={RelativeSource AncestorType={x:Type local:CategoryEditorViewModel}}, x:DataType=local:CategoryEditorViewModel}" />
                                                     <Setter Property="BackgroundColor" Value="{DynamicResource PageBackground}" />
                                                 </DataTrigger>
                                             </Border.Triggers>

@@ -11,7 +11,8 @@ public partial class AccountRow : Grid
     {
         if (BindingContext is AccountItem item)
         {
-            await Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = item.Id });
+            // An event handler: a failing navigation shows a message instead of ending the app.
+            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = item.Id }));
         }
     }
 }

@@ -84,7 +84,8 @@
     <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
            IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0" IsVisible="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}">
-        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{DynamicResource Primary}" />
+        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{DynamicResource Primary}"
+                  SemanticProperties.Description="{v:Translate Account_OpeningNegative}" />
         <Label Grid.Column="1" Text="{v:Translate Account_OpeningNegative}" VerticalOptions="Center" LineBreakMode="WordWrap">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnNegativeLabelTapped" />

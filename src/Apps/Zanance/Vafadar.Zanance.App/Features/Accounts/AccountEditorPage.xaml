@@ -12,8 +12,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Header -->
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -23,10 +22,11 @@
                     <local:AccountFormView BindingContext="{Binding Form}" />
                 </Border>
 
-                <Border Style="{StaticResource Card}">
+                <!-- Only money accounts can be the default of new entries (ZEX-S0103) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanBeDefault}">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Account_IsDefault}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{DynamicResource Primary}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_IsDefault}" />
                     </Grid>
                 </Border>
 

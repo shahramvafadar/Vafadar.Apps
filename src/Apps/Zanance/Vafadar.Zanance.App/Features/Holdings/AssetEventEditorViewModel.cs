@@ -249,7 +249,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             Note = existing.Note ?? string.Empty;
             BasisText = existing.BasisAmount is { } basis && HasBasis ? MoneyText.ForInput(basis, type.PriceCurrencyCode, culture) : string.Empty;
 
-            _groupEntries = existing.GroupId is { } group ? [.. (await _store.GetEntriesAsync()).Where(e => e.GroupId == group)] : [];
+            _groupEntries = existing.GroupId is { } group ? await _store.GetGroupAsync(group) : [];
             if (_groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale) is { } money)
             {
                 Account = Accounts.FirstOrDefault(a => a.Id == money.AccountId) ?? Account;
@@ -338,7 +338,22 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             return null;
         }
 
-        return PriceModeIndex == 1 ? (long)Math.Round((decimal)amount * quantity / Quantities.PerGramOrUnit, MidpointRounding.AwayFromZero) : amount;
+        if (PriceModeIndex != 1)
+        {
+            return amount;
+        }
+
+        // A price per gram or unit times a very large quantity can leave the range of an amount: that is invalid input,
+        // shown as such, never a crash while typing.
+        try
+        {
+            var total = Math.Round((decimal)amount * quantity / Quantities.PerGramOrUnit, MidpointRounding.AwayFromZero);
+            return total is > 0 and <= long.MaxValue ? (long)total : null;
+        }
+        catch (OverflowException)
+        {
+            return null;
+        }
     }
 
     private long ParsedFee() =>

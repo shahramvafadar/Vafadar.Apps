@@ -13,7 +13,11 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Rates;
 
 /// <summary>A stored rate for the list.</summary>
-public sealed record RateRow(Guid Id, string Text, string DateText, bool IsEstimate);
+public sealed record RateRow(Guid Id, string Text, string DateText, bool IsEstimate)
+{
+    /// <summary>Gets what a screen reader says for the row: the rate and its date.</summary>
+    public string Description => $"{Text}, {DateText}";
+}
 
 /// <summary>
 /// Manual exchange rates (FX-02): 1 unit of one currency in another on a date, actual or estimated. Rates only value
@@ -52,12 +56,8 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
     public async Task LoadAsync()
     {
         var settings = await store.GetSettingsAsync();
+        var accounts = await store.GetAccountsAsync(includeArchived: false);
         ToCurrency ??= settings.ReportCurrencyCode;
-
-        // The rate that is likely needed: of an account in another currency, otherwise of the US dollar (or the euro
-        // when the report currency is the dollar) – not the first currency of the alphabet.
-        FromCurrency ??= (await store.GetAccountsAsync()).Select(a => a.CurrencyCode).FirstOrDefault(c => c != ToCurrency)
-            ?? (ToCurrency == "USD" ? "EUR" : "USD");
         if (Date == default)
         {
             Date = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
@@ -80,13 +80,18 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
         // Currencies of the accounts that cannot be valued in the report currency today.
         var table = new RateTable(rates);
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
-        var missing = (await store.GetAccountsAsync(includeArchived: false))
+        var missing = accounts
             .Select(a => a.CurrencyCode)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Where(c => !table.TryGetRate(c, settings.ReportCurrencyCode, today, out _, out _))
             .ToList();
         MissingText = missing.Count > 0 ? translator.Format("Rates_Missing", string.Join(", ", missing), settings.ReportCurrencyCode) : null;
-        FromCurrency ??= missing.FirstOrDefault() ?? CurrencyCodes.FirstOrDefault(c => c != ToCurrency);
+
+        // The rate that is likely needed: one that is missing, then of an account in another currency, otherwise of the US
+        // dollar (or the euro when the report currency is the dollar) – not the first currency of the alphabet.
+        FromCurrency ??= missing.FirstOrDefault(c => c != ToCurrency)
+            ?? accounts.Select(a => a.CurrencyCode).FirstOrDefault(c => c != ToCurrency)
+            ?? (ToCurrency == "USD" ? "EUR" : "USD");
     }
 
     [RelayCommand]
@@ -100,7 +105,7 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
         }
 
         // A rate is a plain positive number with the culture's or a Latin decimal point, in any digit script.
-        var text = Digits.ToAscii(RateText.Trim()).Replace(localization.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal);
+        var text = Digits.ToAscii(RateText.Trim()).Replace(localization.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('\u066B', '.');
         if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var rate) || rate <= 0)
         {
             Error = translator["Rates_Invalid"];

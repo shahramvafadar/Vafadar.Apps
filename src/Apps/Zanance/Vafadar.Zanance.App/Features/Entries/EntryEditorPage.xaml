@@ -119,14 +119,8 @@
                                 <DataTemplate x:DataType="local:CategoryChoice">
                                     <!-- A real button over the chip: reachable with the keyboard and announced as a button -->
                                     <Grid Margin="0,0,8,8">
-                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{DynamicResource DividerColor}"
-                                                StrokeShape="RoundRectangle 22" BackgroundColor="{DynamicResource CardBackground}" MinimumHeightRequest="44">
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                    <Setter Property="Stroke" Value="{Binding Color}" />
-                                                    <Setter Property="BackgroundColor" Value="{Binding Background}" />
-                                                </DataTrigger>
-                                            </Border.Triggers>
+                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{Binding Outline}"
+                                                StrokeShape="RoundRectangle 22" BackgroundColor="{Binding Fill}" MinimumHeightRequest="44">
                                             <HorizontalStackLayout Spacing="8">
                                                 <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
                                                         BackgroundColor="{Binding Background}" VerticalOptions="Center">

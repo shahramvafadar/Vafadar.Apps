@@ -25,6 +25,7 @@ public sealed partial class AccountFormModel : ObservableObject
         TypeNames = [];
         TypeIndex = (int)AccountType.Checking;
         IncludeInTotals = true;
+        DueDate = OpeningDate.AddMonths(1);
         RefreshTexts();
     }
 
@@ -89,7 +90,7 @@ public sealed partial class AccountFormModel : ObservableObject
     public partial bool HasDueDate { get; set; }
 
     [ObservableProperty]
-    public partial DateOnly DueDate { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddMonths(1);
+    public partial DateOnly DueDate { get; set; }
 
     [ObservableProperty]
     public partial bool IsLent { get; set; }
@@ -103,9 +104,11 @@ public sealed partial class AccountFormModel : ObservableObject
 
     [ObservableProperty]
     public partial string? TermsError { get; set; }
+
     // Amounts are typed in the currency's display unit when one is defined (FX-07).
     [ObservableProperty]
     public partial string? UnitNote { get; set; }
+
     partial void OnCurrencyCodeChanged(string value) => UnitNote = DisplayUnitNote.For(_translator, value);
 
     [ObservableProperty]
@@ -194,11 +197,16 @@ public sealed partial class AccountFormModel : ObservableObject
     }
 
     /// <summary>Validates the input and writes it to <paramref name="target"/>.</summary>
+    /// <param name="target">The account to change.</param>
+    /// <param name="culture">The culture of the typed amounts.</param>
+    /// <param name="others">The accounts of the profile, so a name cannot be used twice (<see cref="AccountNames"/>).</param>
     /// <returns><see langword="false"/> when the input is invalid; the error texts are set.</returns>
-    public bool TryApply(Account target, CultureInfo culture)
+    public bool TryApply(Account target, CultureInfo culture, IEnumerable<Account>? others = null)
     {
         ArgumentNullException.ThrowIfNull(target);
-        NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Account_NameRequired"] : null;
+        NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Account_NameRequired"]
+            : others is not null && AccountNames.IsTaken(others, Name, target.Id) ? _translator["Account_NameTaken"]
+            : null;
 
         long opening = 0;
         AmountError = null;
@@ -241,6 +249,7 @@ public sealed partial class AccountFormModel : ObservableObject
         {
             target.OpeningBalance = 0;
         }
+
         target.IncludeInTotals = IncludeInTotals;
         target.UsableForPayments = UsableForPayments;
         var country = CountryCode.Trim().ToUpperInvariant();

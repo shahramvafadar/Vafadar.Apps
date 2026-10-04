@@ -5098,4 +5098,7 @@
   <data name="Entry_DeleteQuestion" xml:space="preserve">
     <value>این ثبت حذف شود؟</value>
   </data>
+  <data name="Account_NameTaken" xml:space="preserve">
+    <value>حساب دیگری همین نام را دارد. نام دیگری انتخاب کنید تا فهرست‌ها و فایل‌ها آن‌ها را از هم تشخیص دهند.</value>
+  </data>
 </root>

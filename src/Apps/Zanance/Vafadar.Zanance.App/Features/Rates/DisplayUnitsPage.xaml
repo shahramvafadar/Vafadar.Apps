@@ -23,9 +23,9 @@
                                     <Label Text="{Binding Text}" FontSize="16" />
                                     <Label Text="{Binding Example}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Button Grid.Column="1" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                <Button Grid.Column="1" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
                                         Command="{Binding RemoveCommand, Source={RelativeSource AncestorType={x:Type local:DisplayUnitsViewModel}}, x:DataType=local:DisplayUnitsViewModel}"
-                                        CommandParameter="{Binding .}" />
+                                        CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Text}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -47,8 +47,7 @@
                     <Label Text="{Binding PreviewText}" Margin="0,8,0,0" IsVisible="{Binding PreviewText, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" Margin="0,12,0,0" />
-                    <Button Text="{v:Translate Unit_UseToman}" Command="{Binding UseTomanCommand}" BackgroundColor="Transparent"
-                            TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="0,8" />
+                    <Button Text="{v:Translate Unit_UseToman}" Command="{Binding UseTomanCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0,8" />
                 </VerticalStackLayout>
             </Border>
             <Label Text="{v:Translate Unit_Note}" Style="{StaticResource Secondary}" FontSize="12" />

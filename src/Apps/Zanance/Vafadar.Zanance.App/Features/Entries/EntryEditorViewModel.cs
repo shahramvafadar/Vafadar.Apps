@@ -37,7 +37,17 @@ public sealed partial class CategoryChoice(Guid id, string name, Symbol icon, Co
 
     public Color Background { get; } = color.WithAlpha(0.12f);
 
+    /// <summary>
+    /// Gets the chip outline: the category colour when selected. A property instead of a trigger setter with a binding,
+    /// which stays applied after the trigger turns off, so a category chosen before kept looking selected.
+    /// </summary>
+    public Color Outline => IsSelected ? Color : Presentation.Palette.DividerColor;
+
+    /// <summary>Gets the chip background: the light category colour when selected.</summary>
+    public Color Fill => IsSelected ? Background : Presentation.Palette.CardBackground;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Outline), nameof(Fill))]
     public partial bool IsSelected { get; set; }
 }
 
