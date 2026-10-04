@@ -66,6 +66,17 @@ public sealed class EntryListTests
     }
 
     [Fact]
+    public void Text_search_treats_a_half_space_like_a_space()
+    {
+        var checking = _ledger.Account("Checking", 100);
+        var entry = _ledger.Add(EntryKind.Expense, checking, 1);
+        entry.Payee = "میوه‌فروشی محله";
+
+        var result = EntrySearch.Apply(_ledger.Entries, new EntryFilter(Text: "ميوه فروشي"), _ => null, AccountsById);
+
+        Assert.Equal([entry], result);
+    }
+    [Fact]
     public void Days_are_newest_first_with_net_result_excluding_transfers()
     {
         var checking = _ledger.Account("Checking", 100);

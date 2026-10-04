@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **In progress** – CR01, CR02 done (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -94,3 +94,10 @@ Filled in section by section.
 | CR01-07 | `Vafadar.Authentication.Maui/GoogleSignInService.cs` | quality | Low | A new `HttpClient` for the e-mail lookup and the revocation. | No change: called once per sign-in or sign-out. |
 | CR01-08 | `Vafadar.Data/LocalDatabaseLocation.cs` | performance | Low | SQLite runs in rollback-journal mode; WAL would let reads run during a write. | No change: no contention measured (one user, short writes); WAL adds files that profile moves and deletion would have to handle. |
 | CR01-09 | `Vafadar.Zanance.App/Presentation/AttachmentFiles.cs` | performance | Medium | Found while checking the OCR path: a photo is decoded at full size (about 48 MB for 12 MP) before it is scaled down to 1,600 px. | Moved to CR06 (app code). |
+| CR02-01 | `Vafadar.Zanance.Core/Money/Currency.cs` | performance | Low | `MinorFactor` built the power of ten with LINQ on every access – for every amount formatted, parsed or converted. | Fixed: a table lookup. |
+| CR02-02 | `Vafadar.Zanance.Core/Categories/CategoryRule.cs` | bug | Medium | Categorization rules ignored the Arabic forms of Yeh and Kaf (the transaction search already handled them): a rule typed on one Persian keyboard missed payees typed on another. | Fixed: rules and search share `Vafadar.Core.Text.SearchText`; test `Persian_letter_forms_and_half_spaces_do_not_hide_a_rule`. |
+| CR02-03 | `Vafadar.Zanance.Core/Ledger/EntrySearch.cs` | UI/UX | Low | A search with a space ("میوه فروشی") did not find a payee written with a half-space ("میوه‌فروشی"), which is how most people type it. | Fixed: the half-space counts as a space when matching; tests in `EntryListTests` and `SearchTextTests`. |
+| CR02-04 | `EntrySearch.cs`, `Accounts/Account.cs` | quality | Low | A misindented line and a missing blank line between properties. | Fixed. |
+| CR02-05 | `Vafadar.Zanance.Core/Rates/RateTable.cs` | performance | Low | The rate of a date is found by scanning the sorted list. | No change: the scan starts at the newest rate and a profile has a few dozen rates. |
+| CR02-06 | `Vafadar.Zanance.Core/Ledger/LedgerCalculator.cs` | performance | Low | Total balances read all entries once per account. | No change: within the Q-02 budget with 10,000 entries and 20 accounts (`PerformanceTests`). |
+| CR02-07 | `Vafadar.Zanance.Core/Ledger/EntryTags.cs` | UI/UX | Low | Tags typed with Arabic and Persian letter forms ("كافه", "کافه") stay two tags. | No change: tags keep the user's text; search finds both. |

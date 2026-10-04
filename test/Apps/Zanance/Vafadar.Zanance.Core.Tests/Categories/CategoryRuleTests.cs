@@ -42,4 +42,15 @@ public sealed class CategoryRuleTests
 
         Assert.Null(CategoryRules.Suggest(rules, categories, CategoryKind.Expense, "shop", null));
     }
+
+    [Fact]
+    public void Persian_letter_forms_and_half_spaces_do_not_hide_a_rule()
+    {
+        // Rules typed on an Arabic keyboard (Kaf, Yeh) or with a space; payees with Persian letters or a half-space (CR02-02).
+        var cafe = new CategoryRule { Match = "كافي", CategoryId = Food.Id, Kind = CategoryKind.Expense };
+        var grocer = new CategoryRule { Match = "میوه فروشی", CategoryId = Household.Id, Kind = CategoryKind.Expense };
+
+        Assert.Equal(Food.Id, CategoryRules.Suggest([cafe], Categories, CategoryKind.Expense, "کافی نادری", null)?.CategoryId);
+        Assert.Equal(Household.Id, CategoryRules.Suggest([grocer], Categories, CategoryKind.Expense, "میوه‌فروشی محله", null)?.CategoryId);
+    }
 }

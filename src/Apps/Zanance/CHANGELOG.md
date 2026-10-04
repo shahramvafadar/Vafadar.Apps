@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, part 1: shared libraries
+### Fixed – Code review, parts 1–2: shared libraries, money and ledger
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -15,6 +15,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Choice chips and date fields are real buttons: they can be reached with the keyboard, screen readers announce them
   as buttons, and the chosen chip is read as "…, selected".
 - Chips and date fields take the colours of the new theme at once when the theme is switched.
+- Categorization rules recognise payees typed on any Persian keyboard (Arabic or Persian forms of ی and ک), and the
+  search and the rules treat a half-space like a space, so "میوه فروشی" finds "میوه‌فروشی".
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

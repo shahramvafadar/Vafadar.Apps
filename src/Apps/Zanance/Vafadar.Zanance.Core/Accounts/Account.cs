@@ -94,6 +94,7 @@ public sealed class Account : Entity, IAuditableEntity
 
     /// <summary>Gets or sets the agreed monthly installment in minor units (F2-DEBT-02); <see langword="null"/> when unknown.</summary>
     public long? Installment { get; set; }
+
     /// <summary>Gets or sets the user-given name.</summary>
     public required string Name { get; set; }
 

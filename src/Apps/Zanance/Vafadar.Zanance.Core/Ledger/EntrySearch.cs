@@ -152,7 +152,7 @@ public static class EntrySearch
         {
             var currency = Currencies.TryGet(account.CurrencyCode, out var known) ? known : new Currency(account.CurrencyCode, 2);
             // The amount as stored or as shown in the user's display unit (FX-07).
-        return MoneyAmount.ToDecimal(entry.Amount, currency) == searched || MoneyText.ToDecimal(entry.Amount, currency) == searched;
+            return MoneyAmount.ToDecimal(entry.Amount, currency) == searched || MoneyText.ToDecimal(entry.Amount, currency) == searched;
         }
 
         return false;
@@ -161,5 +161,6 @@ public static class EntrySearch
     private static bool Contains(string? value, string text) =>
         value is not null && Normalize(value).Contains(text, StringComparison.OrdinalIgnoreCase);
 
-    private static string Normalize(string? value) => value is null ? string.Empty : Digits.ToAscii(value.Trim()).Replace('ي', 'ی').Replace('ك', 'ک');
+    // The same normalization as categorization rules: digits, Persian letter forms and half-spaces (SearchText).
+    private static string Normalize(string? value) => SearchText.Normalize(value);
 }

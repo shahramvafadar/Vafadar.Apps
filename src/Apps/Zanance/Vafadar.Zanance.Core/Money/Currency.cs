@@ -10,8 +10,11 @@ public sealed record Currency(string Code, int MinorDigits)
     /// digits, so any count from 0 to 18 is supported.
     /// </summary>
     public long MinorFactor => MinorDigits is >= 0 and <= 18
-        ? Enumerable.Repeat(10L, MinorDigits).Aggregate(1L, (factor, ten) => factor * ten)
+        ? PowersOfTen[MinorDigits]
         : throw new InvalidOperationException($"{MinorDigits} minor digits are not supported.");
+
+    // Read for every amount that is formatted or parsed, so it is a table lookup.
+    private static readonly long[] PowersOfTen = [.. Enumerable.Range(0, 19).Select(digits => (long)Math.Pow(10, digits))];
 
     /// <inheritdoc />
     public override string ToString() => Code;

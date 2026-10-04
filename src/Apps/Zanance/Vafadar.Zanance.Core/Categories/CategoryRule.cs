@@ -9,7 +9,7 @@ namespace Vafadar.Zanance.Core.Categories;
 /// </summary>
 public sealed class CategoryRule : Entity, IAuditableEntity
 {
-    /// <summary>Gets or sets the text to look for in payee or title (case and digit style are ignored).</summary>
+    /// <summary>Gets or sets the text to look for in payee or title (case, digit style and Persian letter forms are ignored).</summary>
     public required string Match { get; set; }
 
     /// <summary>Gets or sets the suggested category.</summary>
@@ -54,5 +54,6 @@ public static class CategoryRules
             .FirstOrDefault();
     }
 
-    private static string Normalize(string? text) => string.IsNullOrWhiteSpace(text) ? string.Empty : Digits.ToAscii(text.Trim());
+    // The same normalization as the transaction search: digits, Persian letter forms and half-spaces (SearchText).
+    private static string Normalize(string? text) => SearchText.Normalize(text);
 }
