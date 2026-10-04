@@ -143,7 +143,7 @@ public sealed class ZexPhase3HoldingTests
         var positions = HoldingsLedger.Positions(events, Day);
         Assert.Equal(15_000, positions.Single(p => p.LocationId == _safe).Quantity);
         Assert.Equal(5_000, positions.Single(p => p.LocationId == _bank).Quantity);
-        Assert.Equal(0, HoldingsLedger.Basis(events, gold.Id).Sales.Count);
+        Assert.Empty(HoldingsLedger.Basis(events, gold.Id).Sales);
     }
 
     [Fact]
