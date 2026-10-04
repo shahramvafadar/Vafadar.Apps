@@ -32,6 +32,7 @@ public static class EntryClassification
         EntryKind.Expense or EntryKind.Refund => EntryClass.Consumption,
         EntryKind.Transfer => EntryClass.Transfer,
         EntryKind.Adjustment => EntryClass.Correction,
+        EntryKind.AssetPurchase or EntryKind.AssetSale => EntryClass.Capital,
         _ => EntryClass.Capital,
     };
 

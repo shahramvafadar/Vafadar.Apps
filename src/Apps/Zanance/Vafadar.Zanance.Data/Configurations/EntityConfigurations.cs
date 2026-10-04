@@ -248,3 +248,48 @@ internal sealed class ZananceSettingsConfiguration : IEntityTypeConfiguration<Za
         builder.Property(s => s.HomeLayout).HasMaxLength(500);
     }
 }
+
+internal sealed class AssetTypeConfiguration : IEntityTypeConfiguration<Core.Holdings.AssetType>
+{
+    public void Configure(EntityTypeBuilder<Core.Holdings.AssetType> builder)
+    {
+        builder.Property(t => t.Name).HasMaxLength(100);
+        builder.Property(t => t.CountUnitName).HasMaxLength(40);
+        builder.Property(t => t.PriceCurrencyCode).HasMaxLength(3);
+        builder.Property(t => t.Note).HasMaxLength(1000);
+        builder.Property(t => t.Icon).HasMaxLength(64);
+    }
+}
+
+internal sealed class AssetLocationConfiguration : IEntityTypeConfiguration<Core.Holdings.AssetLocation>
+{
+    public void Configure(EntityTypeBuilder<Core.Holdings.AssetLocation> builder) =>
+        builder.Property(l => l.Name).HasMaxLength(100);
+}
+
+internal sealed class AssetEventConfiguration : IEntityTypeConfiguration<Core.Holdings.AssetEvent>
+{
+    public void Configure(EntityTypeBuilder<Core.Holdings.AssetEvent> builder)
+    {
+        builder.Property(e => e.Reason).HasMaxLength(200);
+        builder.Property(e => e.Note).HasMaxLength(1000);
+        builder.HasOne<Core.Holdings.AssetType>().WithMany().HasForeignKey(e => e.AssetTypeId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne<Core.Holdings.AssetLocation>().WithMany().HasForeignKey(e => e.LocationId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne<Core.Holdings.AssetLocation>().WithMany().HasForeignKey(e => e.ToLocationId).OnDelete(DeleteBehavior.Restrict);
+
+        // History checks and quantities read the events of one type in date order (design §12).
+        builder.HasIndex(e => new { e.AssetTypeId, e.Date });
+        builder.HasIndex(e => e.GroupId);
+    }
+}
+
+internal sealed class AssetValuationConfiguration : IEntityTypeConfiguration<Core.Holdings.AssetValuation>
+{
+    public void Configure(EntityTypeBuilder<Core.Holdings.AssetValuation> builder)
+    {
+        builder.Property(v => v.CurrencyCode).HasMaxLength(3);
+        builder.Property(v => v.Note).HasMaxLength(200);
+        builder.HasOne<Core.Holdings.AssetType>().WithMany().HasForeignKey(v => v.AssetTypeId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(v => new { v.AssetTypeId, v.Date });
+    }
+}

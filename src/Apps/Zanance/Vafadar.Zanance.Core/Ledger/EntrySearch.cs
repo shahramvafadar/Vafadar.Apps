@@ -46,7 +46,8 @@ public static class EntrySearch
     {
         KindFilter.Expenses => kind is EntryKind.Expense or EntryKind.Refund,
         KindFilter.Income => kind is EntryKind.Income or EntryKind.IncomeReversal,
-        KindFilter.Transfers => kind is EntryKind.Transfer or EntryKind.Adjustment,
+        // Money moved, corrected or exchanged for holdings: neither income nor spending.
+        KindFilter.Transfers => kind is EntryKind.Transfer or EntryKind.Adjustment or EntryKind.AssetPurchase or EntryKind.AssetSale,
         _ => true,
     };
 

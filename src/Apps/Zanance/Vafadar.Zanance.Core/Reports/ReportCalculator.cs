@@ -24,6 +24,9 @@ public sealed record AccountMovement(
     long Adjustments,
     long Closing)
 {
+    /// <summary>Gets money exchanged for holdings: sales minus purchases (ZEX-P07); neither income nor spending.</summary>
+    public long Capital { get; init; }
+
     /// <summary>Gets the balance change of the period.</summary>
     public long Change => Closing - Opening;
 }
@@ -61,7 +64,7 @@ public static class ReportCalculator
 
         foreach (var account in accounts)
         {
-            long income = 0, refunds = 0, expense = 0, reversals = 0, transfersIn = 0, transfersOut = 0, adjustments = 0;
+            long income = 0, refunds = 0, expense = 0, reversals = 0, transfersIn = 0, transfersOut = 0, adjustments = 0, capital = 0;
             foreach (var entry in entries)
             {
                 if (entry.Date < from || entry.Date > to || entry.Date < account.OpeningDate)
@@ -79,6 +82,7 @@ public static class ReportCalculator
                         case EntryKind.IncomeReversal: reversals += entry.Amount; break;
                         case EntryKind.Transfer: transfersOut += entry.Amount; break;
                         case EntryKind.Adjustment: adjustments += entry.EffectOn(account.Id); break;
+                        case EntryKind.AssetPurchase or EntryKind.AssetSale: capital += entry.EffectOn(account.Id); break;
                     }
                 }
 
@@ -91,7 +95,7 @@ public static class ReportCalculator
             var opening = LedgerCalculator.Balance(account, entries, from.AddDays(-1));
             var closing = LedgerCalculator.Balance(account, entries, to);
             var openingAdded = account.OpeningDate >= from && account.OpeningDate <= to ? account.OpeningBalance : 0;
-            result.Add(new AccountMovement(account.Id, account.CurrencyCode, opening, openingAdded, income, refunds, expense, reversals, transfersIn, transfersOut, adjustments, closing));
+            result.Add(new AccountMovement(account.Id, account.CurrencyCode, opening, openingAdded, income, refunds, expense, reversals, transfersIn, transfersOut, adjustments, closing) { Capital = capital });
         }
 
         return result;

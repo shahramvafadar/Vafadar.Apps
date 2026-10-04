@@ -60,6 +60,18 @@ public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options)
     /// <summary>Gets the contribution plans of goals (ZEX-GO08).</summary>
     public DbSet<ContributionPlan> ContributionPlans => Set<ContributionPlan>();
 
+    /// <summary>Gets the asset types of quantity holdings (ZEX-AS02).</summary>
+    public DbSet<Core.Holdings.AssetType> AssetTypes => Set<Core.Holdings.AssetType>();
+
+    /// <summary>Gets the places where holdings are kept.</summary>
+    public DbSet<Core.Holdings.AssetLocation> AssetLocations => Set<Core.Holdings.AssetLocation>();
+
+    /// <summary>Gets the changes of holdings.</summary>
+    public DbSet<Core.Holdings.AssetEvent> AssetEvents => Set<Core.Holdings.AssetEvent>();
+
+    /// <summary>Gets the dated prices of asset types.</summary>
+    public DbSet<Core.Holdings.AssetValuation> AssetValuations => Set<Core.Holdings.AssetValuation>();
+
     /// <summary>Gets the local categorization rules (F2-TX-04).</summary>
     public DbSet<CategoryRule> CategoryRules => Set<CategoryRule>();
 

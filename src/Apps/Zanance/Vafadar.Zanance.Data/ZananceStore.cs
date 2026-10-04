@@ -808,6 +808,10 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.AssetEvents.ExecuteDeleteAsync(cancellationToken);
+        await db.AssetValuations.ExecuteDeleteAsync(cancellationToken);
+        await db.AssetTypes.ExecuteDeleteAsync(cancellationToken);
+        await db.AssetLocations.ExecuteDeleteAsync(cancellationToken);
         await db.Entries.ExecuteDeleteAsync(cancellationToken);
         await db.Templates.ExecuteDeleteAsync(cancellationToken);
         await db.SavedFilters.ExecuteDeleteAsync(cancellationToken);

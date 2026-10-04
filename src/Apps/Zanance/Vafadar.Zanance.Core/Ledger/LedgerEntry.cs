@@ -22,6 +22,15 @@ public enum EntryKind
 
     /// <summary>A balance correction after reconciliation – outside income and expense (ACC-08).</summary>
     Adjustment = 5,
+
+    /// <summary>
+    /// Money paid for a holding (ZEX-P07): leaves the account like a transfer and is neither income nor spending; it is
+    /// linked to the holding's purchase event through <see cref="LedgerEntry.GroupId"/>.
+    /// </summary>
+    AssetPurchase = 6,
+
+    /// <summary>Money received for a holding (ZEX-P07): enters the account; never income (ZEX-AS10).</summary>
+    AssetSale = 7,
 }
 
 /// <summary>Whether the user has confirmed an entry (FIN-11).</summary>
@@ -172,8 +181,8 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
         {
             effect += Kind switch
             {
-                EntryKind.Income or EntryKind.Refund => Amount,
-                EntryKind.Expense or EntryKind.IncomeReversal or EntryKind.Transfer => -Amount,
+                EntryKind.Income or EntryKind.Refund or EntryKind.AssetSale => Amount,
+                EntryKind.Expense or EntryKind.IncomeReversal or EntryKind.Transfer or EntryKind.AssetPurchase => -Amount,
                 EntryKind.Adjustment => Direction == AdjustmentDirection.Decrease ? -Amount : Amount,
                 _ => 0,
             };

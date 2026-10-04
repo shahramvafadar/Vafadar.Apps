@@ -70,13 +70,13 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0305 | Contribution schedule and scenario ETA | 2 | Implemented – verified |
 | ZEX-S0306 | Contribution methods: fixed, share of income, spending cut | 2 | Implemented – unverified (eligible income tested; reminders on contribution dates not yet) |
 | ZEX-S0307 | Earmark goals: money accounts only, protect flag, regression | 2 | Implemented – unverified (protected money is used by the headroom of phase 4) |
-| ZEX-S0401 | Asset types, units, purity and locations | 3 | Planned |
-| ZEX-S0402 | Opening holdings and history validation | 3 | Planned |
-| ZEX-S0403 | Purchase: linked money and quantity, fee, capital entry kinds | 3 | Planned |
-| ZEX-S0404 | Sale, average cost and realised result | 3 | Planned |
-| ZEX-S0405 | Location transfer, gifts, outflows, corrections | 3 | Planned |
-| ZEX-S0406 | Valuations and valued totals | 3 | Planned |
-| ZEX-S0407 | Holdings screens and aggregation rules | 3 | Planned |
+| ZEX-S0401 | Asset types, units, purity and locations | 3 | In progress |
+| ZEX-S0402 | Opening holdings and history validation | 3 | In progress |
+| ZEX-S0403 | Purchase: linked money and quantity, fee, capital entry kinds | 3 | In progress |
+| ZEX-S0404 | Sale, average cost and realised result | 3 | In progress |
+| ZEX-S0405 | Location transfer, gifts, outflows, corrections | 3 | In progress |
+| ZEX-S0406 | Valuations and valued totals | 3 | In progress |
+| ZEX-S0407 | Holdings screens and aggregation rules | 3 | In progress |
 | ZEX-S0408 | Legacy asset accounts kept; optional conversion assistant | 3 | Planned |
 | ZEX-S0409 | Holdings in backup, CSV export and import | 3 | Planned |
 | ZEX-S0501 | Feature policy model and audit | 1 (rules with every phase) | Planned |

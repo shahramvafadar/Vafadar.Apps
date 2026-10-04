@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("efb9b1fa-5def-4885-a67a-6dd79e3ca5b3"), entityTypeCount: 18)
+            : base(skipDetectChanges: false, modelId: new Guid("cdd28b20-8cc6-4e83-8c31-5584d36f18d2"), entityTypeCount: 22)
         {
         }
 
@@ -26,6 +26,10 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var recurrenceRule = RecurrenceRuleEntityType.Create(this);
             var goal = GoalEntityType.Create(this);
             var goalAllocation = GoalAllocationEntityType.Create(this);
+            var assetEvent = AssetEventEntityType.Create(this);
+            var assetLocation = AssetLocationEntityType.Create(this);
+            var assetType = AssetTypeEntityType.Create(this);
+            var assetValuation = AssetValuationEntityType.Create(this);
             var entryAttachment = EntryAttachmentEntityType.Create(this);
             var entryTemplate = EntryTemplateEntityType.Create(this);
             var ledgerEntry = LedgerEntryEntityType.Create(this);
@@ -41,6 +45,10 @@ namespace Vafadar.Zanance.Data.CompiledModel
             ContributionPlanEntityType.CreateForeignKey1(contributionPlan, goal);
             RecurrenceRuleEntityType.CreateForeignKey1(recurrenceRule, contributionPlan);
             GoalEntityType.CreateForeignKey1(goal, account);
+            AssetEventEntityType.CreateForeignKey1(assetEvent, assetType);
+            AssetEventEntityType.CreateForeignKey2(assetEvent, assetLocation);
+            AssetEventEntityType.CreateForeignKey3(assetEvent, assetLocation);
+            AssetValuationEntityType.CreateForeignKey1(assetValuation, assetType);
             LedgerEntryEntityType.CreateForeignKey1(ledgerEntry, account);
             LedgerEntryEntityType.CreateForeignKey2(ledgerEntry, category);
             LedgerEntryEntityType.CreateForeignKey3(ledgerEntry, ledgerEntry);
@@ -60,6 +68,10 @@ namespace Vafadar.Zanance.Data.CompiledModel
             RecurrenceRuleEntityType.CreateAnnotations(recurrenceRule);
             GoalEntityType.CreateAnnotations(goal);
             GoalAllocationEntityType.CreateAnnotations(goalAllocation);
+            AssetEventEntityType.CreateAnnotations(assetEvent);
+            AssetLocationEntityType.CreateAnnotations(assetLocation);
+            AssetTypeEntityType.CreateAnnotations(assetType);
+            AssetValuationEntityType.CreateAnnotations(assetValuation);
             EntryAttachmentEntityType.CreateAnnotations(entryAttachment);
             EntryTemplateEntityType.CreateAnnotations(entryTemplate);
             LedgerEntryEntityType.CreateAnnotations(ledgerEntry);

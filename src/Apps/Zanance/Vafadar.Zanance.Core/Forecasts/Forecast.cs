@@ -278,10 +278,10 @@ public static class ForecastCalculator
         scope.TryGetValue(accountId, out var source);
         switch (kind)
         {
-            case EntryKind.Income or EntryKind.Refund when source is not null:
+            case EntryKind.Income or EntryKind.Refund or EntryKind.AssetSale when source is not null:
                 effects.Add((source.CurrencyCode, amount));
                 break;
-            case EntryKind.Expense or EntryKind.IncomeReversal when source is not null:
+            case EntryKind.Expense or EntryKind.IncomeReversal or EntryKind.AssetPurchase when source is not null:
                 effects.Add((source.CurrencyCode, -amount));
                 break;
             case EntryKind.Adjustment when source is not null:
