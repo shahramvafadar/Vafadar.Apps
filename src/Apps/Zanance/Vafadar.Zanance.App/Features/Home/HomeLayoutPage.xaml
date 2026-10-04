@@ -39,8 +39,7 @@
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
             </Border>
-            <Button Text="{v:Translate HomeLayout_Reset}" Command="{Binding ResetCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" HorizontalOptions="Start" />
+            <Button Text="{v:Translate HomeLayout_Reset}" Command="{Binding ResetCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -81,14 +81,15 @@ internal static class AttachmentFiles
     }
 
     /// <summary>Writes the attachment to the cache and opens it with the app the device chooses.</summary>
-    public static async Task OpenAsync(EntryAttachment attachment)
+    /// <returns><see langword="false"/> when no app could open it.</returns>
+    public static async Task<bool> OpenAsync(EntryAttachment attachment)
     {
         ArgumentNullException.ThrowIfNull(attachment);
         var folder = CacheFolder;
         Directory.CreateDirectory(folder);
         var path = Path.Combine(folder, $"{attachment.Id:N}{Path.GetExtension(attachment.FileName)}");
         await File.WriteAllBytesAsync(path, attachment.Data);
-        await Launcher.Default.OpenAsync(new OpenFileRequest(attachment.FileName, new ReadOnlyFile(path, attachment.ContentType)));
+        return await Launcher.Default.OpenAsync(new OpenFileRequest(attachment.FileName, new ReadOnlyFile(path, attachment.ContentType)));
     }
 
     private static string Guess(string name) => Path.GetExtension(name).ToLowerInvariant() switch

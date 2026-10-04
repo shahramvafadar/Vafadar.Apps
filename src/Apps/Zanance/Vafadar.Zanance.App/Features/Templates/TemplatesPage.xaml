@@ -32,7 +32,7 @@
                                     <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
                                     <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Button Grid.Column="2" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                <Button Grid.Column="2" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" SemanticProperties.Hint="{Binding Name}"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:TemplatesViewModel}}, x:DataType=local:TemplatesViewModel}"
                                         CommandParameter="{Binding .}" />
                             </Grid>

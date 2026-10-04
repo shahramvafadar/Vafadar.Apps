@@ -11,7 +11,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{v:Translate Split_Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -48,7 +48,7 @@
                 </VerticalStackLayout>
 
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Split_AddPart}" Command="{Binding AddCommand}" />
-                <Button Text="{v:Translate Split_Join}" Command="{Binding JoinCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}"
+                <Button Text="{v:Translate Split_Join}" Command="{Binding JoinCommand}" Style="{StaticResource TextButton}"
                         IsVisible="{Binding IsSplit}" />
             </VerticalStackLayout>
         </ScrollView>

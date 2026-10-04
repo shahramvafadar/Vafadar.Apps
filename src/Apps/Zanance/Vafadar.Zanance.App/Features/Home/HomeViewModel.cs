@@ -56,6 +56,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly HoldingStore _holdings;
     private readonly Holdings.HoldingText _holdingText;
     private readonly Vafadar.Backup.IBackupService _backup;
+    private readonly SemaphoreSlim _loading = new(1, 1);
 
     public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup)
     {
@@ -259,7 +260,25 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     partial void OnPeriodIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
+    /// <summary>Loads everything shown on Home.</summary>
+    /// <remarks>
+    /// Appearing and a change of the period can ask at the same moment; two loads filling the same lists would mix their
+    /// rows, so loads run one after the other and the later one shows the latest state.
+    /// </remarks>
     public async Task LoadAsync()
+    {
+        await _loading.WaitAsync();
+        try
+        {
+            await LoadCoreAsync();
+        }
+        finally
+        {
+            _loading.Release();
+        }
+    }
+
+    private async Task LoadCoreAsync()
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
@@ -280,7 +299,12 @@ public sealed partial class HomeViewModel : ViewModelBase
             : _translator.Format("Home_QuickAddTarget", defaultAccount!.Name, MoneyText.UnitName(defaultAccount.CurrencyCode));
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = await _store.GetEntriesAsync();
-        var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+        var categoryList = await _store.GetCategoriesAsync();
+        var categories = new CategoryLookup(categoryList, _translator);
+
+        // Plans are read once for the due items, the forecast and getting started.
+        var schedules = await _plans.GetSchedulesAsync();
+        var states = await _plans.GetStatesAsync();
 
         HasAccounts = accounts.Count > 0;
 
@@ -301,14 +325,14 @@ public sealed partial class HomeViewModel : ViewModelBase
         }
 
         // Recorded balance (FIN-13) per currency; totals always follow the accounts included in totals.
+        var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
         Balances.Clear();
-        foreach (var (currency, total) in LedgerCalculator.TotalBalances(allAccounts, entries, today))
+        foreach (var (currency, total) in balances)
         {
             Balances.Add(new CurrencyTotal(currency, MoneyText.Format(total, currency, culture)));
         }
 
         // With several currencies, a combined total only when every rate exists (FX-02, FX-05).
-        var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
         CombinedText = null;
         CombinedIncomplete = false;
         if (balances.Count > 1 && settings.ValuationCurrencyEnabled)
@@ -348,10 +372,10 @@ public sealed partial class HomeViewModel : ViewModelBase
                 refunds));
         }
 
-        await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, today, culture);
-        await LoadPlansAsync(byId, categories, today);
-        await LoadGettingStartedAsync(entries.Count);
-        await LoadForecastAsync(settings.Shows(Feature.ForecastDetails), allAccounts, entries, today, culture);
+        await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
+        LoadPlans(byId, categories, schedules, states, today);
+        await LoadGettingStartedAsync(entries.Count, schedules.Count);
+        LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
         Accounts.Clear();
@@ -393,14 +417,14 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
-        LoadDataAttention(allAccounts, entries, today);
+        LoadDataAttention(settings, allAccounts, entries, today);
         await LoadGoalsAsync(allAccounts, entries, today);
         await LoadHoldingsAsync(today);
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
-    private async Task LoadBudgetAsync(PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
+    private async Task LoadBudgetAsync(PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, List<Core.Categories.Category> categories, DateOnly today, System.Globalization.CultureInfo culture)
     {
         var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         if (PeriodIndex == 1)
@@ -419,7 +443,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
         var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
-        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, await _store.GetCategoriesAsync(), from, to));
+        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
         BudgetText = status.IsOver
             ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _homeCurrency, culture))
             : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _homeCurrency, culture), MoneyText.Format(limit, _homeCurrency, culture));
@@ -434,6 +458,7 @@ public sealed partial class HomeViewModel : ViewModelBase
                 ? _translator.Format("Home_BudgetLastDay", perDay)
                 : _translator.Format("Home_BudgetPerDay", perDay, daysLeft);
         }
+
         BudgetColor = status.Alert switch
         {
             BudgetAlert.Exceeded => EntryPresenter.DangerColor,
@@ -444,14 +469,14 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08); a balance that may fall below
     // zero is a warning in "Needs attention" in both modes (ZEX-P19).
-    private async Task LoadForecastAsync(bool showDetails, List<Account> accounts, List<LedgerEntry> entries, DateOnly today, System.Globalization.CultureInfo culture)
+    private void LoadForecast(bool showDetails, List<Account> accounts, List<LedgerEntry> entries, List<Schedule> schedules, List<OccurrenceState> states, DateOnly today, System.Globalization.CultureInfo culture)
     {
         ForecastEndText = null;
         LowBalanceText = null;
 
         var (year, month) = PeriodMath.MonthOf(today, Calendar, _startDay);
         var end = PeriodMath.MonthRange(year, month, Calendar, _startDay).Last;
-        var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), today, end)
+        var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, schedules, states, today, end)
             .FirstOrDefault(f => string.Equals(f.CurrencyCode, _homeCurrency, StringComparison.OrdinalIgnoreCase));
         if (forecast is null)
         {
@@ -476,9 +501,8 @@ public sealed partial class HomeViewModel : ViewModelBase
     }
 
     // The month-end review and an old backup (K14 at Home: only the backup item, once).
-    private void LoadDataAttention(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
+    private void LoadDataAttention(ZananceSettings settings, List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
     {
-        var settings = _store.GetSettings();
         var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Min(a => a.OpeningDate);
         var review = Core.Reports.PeriodReview.Due(settings.ReviewProgress, today, Calendar, _startDay, firstData);
         ReviewText = review is null ? null : _translator.Format("Home_Review", _dates.Format(PeriodMath.MonthRange(review.Year, review.Month, Calendar, _startDay).First, DateFormatStyle.MonthYear));
@@ -546,10 +570,9 @@ public sealed partial class HomeViewModel : ViewModelBase
     [RelayCommand]
     private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);
 
-    private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, DateOnly today)
+    private void LoadPlans(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states, DateOnly today)
     {
-        var schedules = PlanActions.InForce(await _plans.GetSchedulesAsync());
-        var states = await _plans.GetStatesAsync();
+        var schedules = PlanActions.InForce(allSchedules);
         var text = new PlanText(_translator, _dates, _localization.CurrentCulture);
 
         var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start)).ToList();
@@ -558,7 +581,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         var dueLook = due.Any(o => o.Status == OccurrenceView.Overdue) ? PlanLook.Danger : PlanLook.Future;
         (DueTileText, DueTileBackground, DueTileLine) = dueLook;
 
-        var contracts = Core.Reminders.ContractReminderPlanner.Upcoming(await _plans.GetSchedulesAsync(), today);
+        var contracts = Core.Reminders.ContractReminderPlanner.Upcoming(allSchedules, today);
         _contractPlanId = contracts.Count > 0 ? contracts[0].Schedule.Id : null;
         ContractText = contracts.Count == 0 ? null
             : _translator.Format(contracts[0].Kind == Core.Reminders.ContractDateKind.Cancellation ? "Home_CancelBy" : "Home_ReviewOn",
@@ -680,10 +703,10 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private const string GettingStartedKey = "home.getting_started.hidden";
 
-    private async Task LoadGettingStartedAsync(int entryCount)
+    private async Task LoadGettingStartedAsync(int entryCount, int planCount)
     {
         FirstEntryDone = entryCount > 0;
-        PlanDone = (await _plans.GetSchedulesAsync()).Count > 0;
+        PlanDone = planCount > 0;
         BudgetDone = (await _store.GetBudgetsAsync()).Count > 0;
         ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !(FirstEntryDone && PlanDone && BudgetDone);
     }

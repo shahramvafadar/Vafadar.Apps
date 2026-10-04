@@ -991,18 +991,33 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     /// holding purchase or sale is deleted only with its holding event (<see cref="HoldingStore.DeleteEventAsync"/>), so
     /// nothing is deleted here for it.
     /// </summary>
-    public async Task<IReadOnlyList<LedgerEntry>> DeleteEntryAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<LedgerEntry>> DeleteEntryAsync(Guid id, CancellationToken cancellationToken = default) =>
+        DeleteEntriesAsync([id], cancellationToken);
+
+    /// <summary>
+    /// Deletes several entries with the same rules as <see cref="DeleteEntryAsync"/> – groups go together, holding money
+    /// stays – in one transaction, and raises <see cref="Changed"/> once (bulk delete, F2-TX-04). Returns every deleted
+    /// entry for undo.
+    /// </summary>
+    public async Task<IReadOnlyList<LedgerEntry>> DeleteEntriesAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(ids);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var entry = await db.Entries.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-        if (entry is null || (entry.GroupId is { } holdingGroup && await db.AssetEvents.AnyAsync(e => e.GroupId == holdingGroup, cancellationToken)))
+        var wanted = ids.Distinct().ToList();
+        var entries = await db.Entries.Where(e => wanted.Contains(e.Id)).ToListAsync(cancellationToken);
+        var groups = entries.Where(e => e.GroupId is not null).Select(e => e.GroupId!.Value).Distinct().ToList();
+        var holdingGroups = groups.Count == 0
+            ? []
+            : await db.AssetEvents.Where(e => e.GroupId != null && groups.Contains(e.GroupId.Value)).Select(e => e.GroupId!.Value).Distinct().ToListAsync(cancellationToken);
+        var otherGroups = groups.Except(holdingGroups).ToList();
+        var grouped = otherGroups.Count == 0
+            ? []
+            : await db.Entries.Where(e => e.GroupId != null && otherGroups.Contains(e.GroupId.Value)).ToListAsync(cancellationToken);
+        List<LedgerEntry> deleted = [.. entries.Where(e => e.GroupId is null).Concat(grouped).DistinctBy(e => e.Id)];
+        if (deleted.Count == 0)
         {
             return [];
         }
-
-        List<LedgerEntry> deleted = entry.GroupId is { } group
-            ? await db.Entries.Where(e => e.GroupId == group).ToListAsync(cancellationToken)
-            : [entry];
 
         // Refunds of a deleted purchase stay, and the database unlinks them; remember the links so undo restores them.
         var deletedIds = deleted.Select(e => e.Id).ToList();

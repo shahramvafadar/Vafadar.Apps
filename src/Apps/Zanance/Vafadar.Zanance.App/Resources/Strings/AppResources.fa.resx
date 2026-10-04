@@ -5092,4 +5092,10 @@
   <data name="Lock_NotUnlocked" xml:space="preserve">
     <value>برنامه هنوز قفل است. برای تلاش دوباره «باز کردن قفل» را بزنید.</value>
   </data>
+  <data name="Attachment_OpenFailed" xml:space="preserve">
+    <value>هیچ برنامه‌ای روی این دستگاه نتوانست فایل را باز کند.</value>
+  </data>
+  <data name="Entry_DeleteQuestion" xml:space="preserve">
+    <value>این ثبت حذف شود؟</value>
+  </data>
 </root>

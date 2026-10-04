@@ -110,16 +110,16 @@
                                                 CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Details}" />
                                         <Button Grid.Column="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
                                                 Command="{Binding ReadReceiptCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                CommandParameter="{Binding .}" />
-                                        <Button Grid.Column="3" Text="{v:Translate Common_Delete}" BackgroundColor="Transparent" TextColor="{DynamicResource ExpenseText}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
+                                        <!-- The file name as hint: a screen reader hears which file Read or Delete acts on -->
+                                        <Button Grid.Column="3" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
                                                 Command="{Binding DeleteAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                CommandParameter="{Binding .}" />
+                                                CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Button Text="{v:Translate Attachment_Add}" Command="{Binding AddAttachmentCommand}" BackgroundColor="Transparent"
-                                TextColor="{DynamicResource Primary}" HorizontalOptions="Start" Padding="16,8" />
+                        <Button Text="{v:Translate Attachment_Add}" Command="{Binding AddAttachmentCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="16,8" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -197,7 +197,7 @@
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
-                <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" BackgroundColor="Transparent"
+                <Button Text="{v:Translate Entry_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}"
                         TextColor="{DynamicResource ExpenseText}" IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding IsHoldingMoney, Converter={StaticResource InvertedBoolConverter}}" />
             </VerticalStackLayout>
         </ScrollView>

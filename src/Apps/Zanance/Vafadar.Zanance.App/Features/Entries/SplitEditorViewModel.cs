@@ -49,6 +49,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
     [ObservableProperty]
     public partial string? RemainingText { get; set; }
+
     // Amounts are typed in the currency's display unit when one is defined (FX-07).
     [ObservableProperty]
     public partial string? UnitNote { get; set; }
@@ -77,7 +78,14 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
         query.Clear();
         _parts = entry.GroupId is { } group ? [.. (await store.GetGroupAsync(group)).OrderBy(e => e.Id == entry.Id ? 0 : 1).ThenBy(e => e.CreatedAt)] : [entry];
-        if (!EntryActions.CanSplit(_parts) || EntryActions.HasPaybacks(_parts, await store.GetEntriesAsync()))
+        // Only refunds and paybacks of these parts matter; the whole ledger is not read for them.
+        var paybacks = new List<LedgerEntry>();
+        foreach (var part in _parts)
+        {
+            paybacks.AddRange(await store.GetRefundsAsync(part.Id));
+        }
+
+        if (!EntryActions.CanSplit(_parts) || EntryActions.HasPaybacks(_parts, paybacks))
         {
             Error = translator["Split_NotPossible"];
             return;
@@ -214,11 +222,14 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         {
             var (save, delete) = EntryActions.Join(_parts);
             var result = await store.SaveEntriesAsync([save], [.. delete], save.Id);
-
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                await Shell.Current.GoToAsync("..");
+                // A refused join says why, like a refused split, instead of leaving the page unchanged without a word.
+                Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"]));
+                return;
             }
+
+            await Shell.Current.GoToAsync("..");
         }
         finally
         {

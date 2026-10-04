@@ -430,16 +430,16 @@
                     </Grid>
                     <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">
                         <VerticalStackLayout>
-                        <!-- The total of the next 30 days (ZEX-K04), the same number as the commitments report -->
-                        <Label Text="{Binding Next30Text}" Style="{StaticResource Secondary}" FontSize="13" Margin="16,10,16,0" IsVisible="{Binding Next30Text, Converter={StaticResource IsNotNullConverter}}" />
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="plans:PlanRow">
-                                    <plans:PlanRowView Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                       CommandParameter="{Binding .}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
+                            <!-- The total of the next 30 days (ZEX-K04), the same number as the commitments report -->
+                            <Label Text="{Binding Next30Text}" Style="{StaticResource Secondary}" FontSize="13" Margin="16,10,16,0" IsVisible="{Binding Next30Text, Converter={StaticResource IsNotNullConverter}}" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="plans:PlanRow">
+                                        <plans:PlanRowView Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                           CommandParameter="{Binding .}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
@@ -470,7 +470,7 @@
                                         <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                                         <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                                 Command="{Binding OpenEntryCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" />
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

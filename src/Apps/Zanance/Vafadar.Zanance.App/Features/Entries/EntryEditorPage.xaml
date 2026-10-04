@@ -16,8 +16,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Header -->
         <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" BackgroundColor="Transparent"
-                    TextColor="{DynamicResource Primary}" />
+            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
         </Grid>
 
@@ -100,8 +99,7 @@
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                                 <Label Text="{Binding CurrencyNotice}" TextColor="{DynamicResource WarningText}" VerticalOptions="Center"
                                        SemanticProperties.Description="{Binding CurrencyNotice}" />
-                                <Button Grid.Column="1" Text="{v:Translate Entry_UndoAccountChange}" Command="{Binding UndoAccountChangeCommand}"
-                                        BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" Padding="8,0" MinimumHeightRequest="44" />
+                                <Button Grid.Column="1" Text="{v:Translate Entry_UndoAccountChange}" Command="{Binding UndoAccountChangeCommand}" Style="{StaticResource TextButton}" />
                             </Grid>
                         </Border>
                         <Label Text="{v:Translate Entry_TransferHint}" Style="{StaticResource Secondary}" IsVisible="{Binding IsTransfer}" Margin="0,4,0,0" />
@@ -113,8 +111,7 @@
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding RuleHint, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding RuleHint}" Style="{StaticResource Secondary}" FontSize="13" VerticalOptions="Center" />
-                            <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" BackgroundColor="Transparent"
-                                    TextColor="{DynamicResource Primary}" Padding="8,0" />
+                            <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" Style="{StaticResource TextButton}" />
                         </Grid>
                         <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout Wrap="Wrap" JustifyContent="Start" BindableLayout.ItemsSource="{Binding Categories}">
@@ -190,8 +187,7 @@
                 </Border>
 
                 <!-- More details -->
-                <Button Text="{v:Translate Entry_MoreDetails}" Command="{Binding ToggleDetailsCommand}" BackgroundColor="Transparent"
-                        TextColor="{DynamicResource Primary}" HorizontalOptions="Start" />
+                <Button Text="{v:Translate Entry_MoreDetails}" Command="{Binding ToggleDetailsCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowDetails}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Entry_Payee}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
@@ -204,7 +200,7 @@
                         <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding TagSuggestions}" Margin="0,4,0,0">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <Button Text="{Binding ., StringFormat='+ {0}'}" FontSize="13" Padding="10,0" HeightRequest="34" Margin="0,0,6,6" CornerRadius="17"
+                                    <Button Text="{Binding ., StringFormat='+ {0}'}" FontSize="13" Padding="12,0" HeightRequest="40" MinimumHeightRequest="40" Margin="0,0,6,6" CornerRadius="20"
                                             BackgroundColor="{DynamicResource PageBackground}" TextColor="{DynamicResource Primary}"
                                             Command="{Binding AddTagCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
                                             CommandParameter="{Binding .}" />
@@ -217,7 +213,7 @@
                             <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                 <Label Text="{v:Translate Entry_Reimbursable}" VerticalOptions="Center" />
                                 <v:HelpButton Grid.Column="1" Topic="Reimbursable" />
-                                <Switch Grid.Column="2" IsToggled="{Binding ReimbursableEnabled}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="2" IsToggled="{Binding ReimbursableEnabled}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_Reimbursable}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ReimbursableEnabled}" Spacing="0">
                                 <Label Text="{v:Translate Entry_ReimbursableAmount}" Style="{StaticResource FieldLabel}" />
@@ -268,7 +264,7 @@
                             <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
                                 <Label Text="{v:Translate Entry_Foreign}" VerticalOptions="Center" />
                                 <v:HelpButton Grid.Column="1" Topic="ForeignAmount" />
-                                <Switch Grid.Column="2" IsToggled="{Binding ForeignEnabled}" OnColor="{DynamicResource Primary}" />
+                                <Switch Grid.Column="2" IsToggled="{Binding ForeignEnabled}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_Foreign}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ForeignEnabled}">
                                 <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" />

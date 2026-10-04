@@ -5092,4 +5092,10 @@ Schritte zum Wiederholen:
   <data name="Lock_NotUnlocked" xml:space="preserve">
     <value>Die App ist noch gesperrt. Tippen Sie auf Entsperren, um es erneut zu versuchen.</value>
   </data>
+  <data name="Attachment_OpenFailed" xml:space="preserve">
+    <value>Keine App auf diesem Gerät konnte die Datei öffnen.</value>
+  </data>
+  <data name="Entry_DeleteQuestion" xml:space="preserve">
+    <value>Diese Buchung löschen?</value>
+  </data>
 </root>

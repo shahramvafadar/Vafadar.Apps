@@ -23,7 +23,9 @@ public sealed record AttachmentRow(Guid Id, string Name, string Details, ImageSo
 }
 
 /// <summary>A labelled value in the entry details.</summary>
-public sealed record DetailLine(string Label, string Value);
+/// <param name="Label">The label; <see langword="null"/> for a line without one (e.g. "From a plan").</param>
+/// <param name="Value">The value.</param>
+public sealed record DetailLine(string? Label, string Value);
 
 /// <summary>Details of one entry with refund, duplicate, edit and delete (UI-04).</summary>
 public sealed partial class EntryDetailViewModel(
@@ -173,7 +175,15 @@ public sealed partial class EntryDetailViewModel(
             CanPayBack = CanMakeRecurring = CanSaveTemplate = false;
             RuleActionText = null;
         }
-        CanSplit = !IsHoldingMoney && EntryActions.CanSplit(related) && !EntryActions.HasPaybacks(related, await store.GetEntriesAsync());
+
+        // Only refunds and paybacks of these entries matter for splitting; reading the whole ledger for them was slow.
+        var paybacks = new List<LedgerEntry>();
+        foreach (var part in related)
+        {
+            paybacks.AddRange(await store.GetRefundsAsync(part.Id));
+        }
+
+        CanSplit = !IsHoldingMoney && EntryActions.CanSplit(related) && !EntryActions.HasPaybacks(related, paybacks);
         var isSplit = EntryActions.IsSplit(related);
         SplitActionText = translator[isSplit ? "Split_Edit" : "Split_Action"];
         SplitText = isSplit
@@ -191,7 +201,7 @@ public sealed partial class EntryDetailViewModel(
                 Lines.Add(new DetailLine(translator.Format("Entry_ToAmount", presenter.CurrencyOf(to)), MoneyText.Format(toAmount, presenter.CurrencyOf(to), culture)));
             }
 
-            if (entry.GroupId is { } group && EntryActions.FindTransferFee(entry, await store.GetGroupAsync(group)) is { } fee)
+            if (EntryActions.FindTransferFee(entry, related) is { } fee)
             {
                 Lines.Add(new DetailLine(translator["Entry_Fee"], MoneyText.Format(fee.Amount, presenter.CurrencyOf(fee.AccountId), culture)));
             }
@@ -232,7 +242,7 @@ public sealed partial class EntryDetailViewModel(
 
         if (entry.Source == EntrySource.Schedule)
         {
-            Lines.Add(new DetailLine(string.Empty, translator["Entry_FromPlan"]));
+            Lines.Add(new DetailLine(null, translator["Entry_FromPlan"]));
         }
 
         Refunds.Clear();
@@ -382,9 +392,25 @@ public sealed partial class EntryDetailViewModel(
     [RelayCommand]
     private async Task OpenAttachmentAsync(AttachmentRow row)
     {
-        if (await store.GetAttachmentAsync(row.Id) is { } attachment)
+        if (await store.GetAttachmentAsync(row.Id) is not { } attachment)
         {
-            await AttachmentFiles.OpenAsync(attachment);
+            return;
+        }
+
+        // A device without an app for the file type (e.g. no PDF viewer) says so instead of doing nothing or failing.
+        bool opened;
+        try
+        {
+            opened = await AttachmentFiles.OpenAsync(attachment);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException or NotSupportedException)
+        {
+            opened = false;
+        }
+
+        if (!opened)
+        {
+            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_OpenFailed"], translator["Common_Ok"]);
         }
     }
 
@@ -480,10 +506,18 @@ public sealed partial class EntryDetailViewModel(
             return;
         }
 
+        // Undo is offered on the transaction list for a few seconds (TX-05), so from there no question is asked. Opened from
+        // anywhere else (Home, an account, a plan), the page shown after deleting offers no undo: confirm first.
+        var stack = Shell.Current.Navigation.NavigationStack;
+        var backToList = stack.Count >= 2 && stack[^2] is Transactions.TransactionsPage;
+        if (!backToList && !await Shell.Current.DisplayAlertAsync(translator["Entry_DeleteQuestion"], $"{Heading} · {AmountText}", translator["Common_Delete"], translator["Common_Cancel"]))
+        {
+            return;
+        }
+
         IsBusy = true;
         try
         {
-            // No confirmation: deleting is undoable from the list for a few seconds (TX-05).
             var deleted = await store.DeleteEntryAsync(_id);
             if (deleted.Count > 0)
             {

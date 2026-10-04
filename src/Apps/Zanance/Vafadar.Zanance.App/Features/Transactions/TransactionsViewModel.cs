@@ -55,6 +55,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     [ObservableProperty]
     public partial bool HasSavedFilters { get; set; }
+
     private bool _inTotalsOnly;
 
     // The rest of a report's scope (ZEX-S0601): currency, accounts and confirmed only, so the list matches the number.
@@ -82,7 +83,9 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     public IReadOnlyList<string> KindNames { get; }
 
-    public ObservableCollection<EntryDayGroup> Days { get; } = [];
+    /// <summary>Gets the entries grouped by day; replaced as a whole, so the list lays out once per change of the filter.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<EntryDayGroup> Days { get; set; } = [];
 
     [ObservableProperty]
     public partial int PeriodIndex { get; set; }
@@ -146,12 +149,12 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     [ObservableProperty]
     public partial string? CustomPeriodText { get; set; }
 
+    private bool _drillDown;
+
     /// <summary>
     /// Accepts <c>unreviewed=true</c>, <c>account</c>, and a drill-down from a number (AT-50): <c>period</c> (chip index),
     /// <c>kind</c> (<see cref="KindFilter"/>), <c>categories</c> (ids), <c>categoryName</c> and <c>inTotals</c>.
     /// </summary>
-    private bool _drillDown;
-
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -305,11 +308,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             ? _translator.Format("Tx_FilterTotal", matching.Count, string.Join("  ", EntrySearch.NetByCurrency(matching, _accounts).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true))))
             : null;
 
-        Days.Clear();
+        // One new list instead of clearing and adding day by day: each added group made the list lay out again, which was
+        // slow for "All" with thousands of entries.
+        var days = new List<EntryDayGroup>();
         foreach (var day in EntrySearch.ByDay(matching, _accounts))
         {
             var net = string.Join("  ", day.Net.Where(n => n.Value != 0).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true)));
-            Days.Add(new EntryDayGroup(_dates.Format(day.Date, DateFormatStyle.Long), net, day.Entries.Select(e =>
+            days.Add(new EntryDayGroup(_dates.Format(day.Date, DateFormatStyle.Long), net, day.Entries.Select(e =>
             {
                 var row = presenter.Row(e);
                 row.Selection.IsSelected = _selected.Contains(e.Id);
@@ -317,7 +322,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             })));
         }
 
-        IsEmpty = Days.Count == 0;
+        Days = days;
+        IsEmpty = days.Count == 0;
     }
 
     private (DateOnly? From, DateOnly? To) PeriodRange()
@@ -458,8 +464,10 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             return;
         }
 
+        // Sub-categories carry their main category ("Car › Other"), so two sub-categories with the same name can be told
+        // apart; the choice is matched by its text.
         var options = _categories.All.Where(c => c.Kind == kinds[0] && !c.IsArchived).OrderBy(c => c.ParentId is null ? c.SortOrder : _categories.Get(c.ParentId)?.SortOrder ?? 0).ThenBy(c => c.ParentId is null ? 0 : 1)
-            .Select(c => (c.Id, Name: _categories.Name(c.Id))).ToList();
+            .Select(c => (c.Id, Name: c.ParentId is null ? _categories.Name(c.Id) : $"{_categories.Name(c.ParentId)} › {_categories.Name(c.Id)}")).ToList();
         var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Bulk_ChooseCategory"], _translator["Common_Cancel"], null, [.. options.Select(o => o.Name)]);
         var picked = options.FindIndex(o => o.Name == choice);
         if (choice is null || picked < 0)
@@ -494,11 +502,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             return;
         }
 
-        var deleted = new List<LedgerEntry>();
-        foreach (var id in ids.Where(id => deleted.All(d => d.Id != id)))
-        {
-            deleted.AddRange(await _store.DeleteEntryAsync(id));
-        }
+        // One transaction for the whole selection: one change for the other screens instead of one per entry.
+        var deleted = await _store.DeleteEntriesAsync(ids);
 
         if (deleted.Count > 0)
         {

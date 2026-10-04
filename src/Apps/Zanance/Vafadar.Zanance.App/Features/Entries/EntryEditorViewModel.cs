@@ -6,6 +6,7 @@ using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
@@ -64,6 +65,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private string _snapshot = string.Empty;
     private bool _loading;
     private bool _isNew;
+    private int _startDay = 1;
     private Presentation.PendingAttachment? _pendingAttachment;
     private readonly Presentation.UndoService _undo;
 
@@ -90,6 +92,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         Accounts = [];
         ToAccounts = [];
         Date = Today;
+        ReimbursementDue = Today.AddDays(30);
     }
 
     public IReadOnlyList<string> KindNames { get; }
@@ -196,11 +199,13 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     partial void OnIsAggregatedChanged(bool value)
     {
-        // A new aggregate covers the financial month of its date by default; the user can change the range.
+        // A new aggregate covers the financial month of its date by default – in the user's calendar and from the month's
+        // start day, like the periods everywhere else; the user can change the range.
         if (value && !_loading && AggregatedFrom == AggregatedTo)
         {
-            AggregatedFrom = new DateOnly(Date.Year, Date.Month, 1);
-            AggregatedTo = AggregatedFrom.AddMonths(1).AddDays(-1);
+            var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+            var (year, month) = PeriodMath.MonthOf(Date, calendar, _startDay);
+            (AggregatedFrom, AggregatedTo) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         }
     }
 
@@ -217,7 +222,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string ReimbursedBy { get; set; } = string.Empty;
 
-    /// <summary>Gets or sets a value indicating whether the reimbursement is expected by a day (ZEX-K12); optional.</summary>
     /// <summary>Gets or sets a value indicating whether the entry sums up several purchases or receipts of a range (ZEX-P21, Advanced).</summary>
     [ObservableProperty]
     public partial bool IsAggregated { get; set; }
@@ -228,11 +232,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial DateOnly AggregatedTo { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether the reimbursement is expected by a day (ZEX-K12); optional.</summary>
     [ObservableProperty]
     public partial bool HasReimbursementDue { get; set; }
 
     [ObservableProperty]
-    public partial DateOnly ReimbursementDue { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddDays(30);
+    public partial DateOnly ReimbursementDue { get; set; }
 
     // Tags (F2-TX-04): typed comma-separated, with the most used tags one tap away.
     [ObservableProperty]
@@ -409,6 +414,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             var settings = await _store.GetSettingsAsync();
             _canAggregate = settings.Shows(Feature.AggregatedEntries);
             _showsFee = settings.Shows(Feature.TransferFee);
+            _startDay = settings.MonthStartDay;
             CanAggregate = (_canAggregate || IsAggregated) && !IsTransfer;
             _destinationFee = null;
             DestinationFeeText = string.Empty;
@@ -454,6 +460,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                     _entry = EntryActions.CreateRefund(purchase, refundable, purchase.AccountId, Today);
                     Title = _translator["Entry_RefundTitle"];
                 }
+
                 LoadFrom(_entry);
             }
             else if (query.TryGetValue("kind", out var reversalKind) && reversalKind?.ToString() == nameof(EntryKind.IncomeReversal))
@@ -1001,7 +1008,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
         // A valued asset account holds a value, not spending or income: such an entry is saved only when confirmed (ZEX-S0408).
         if (Kind is EntryKind.Income or EntryKind.Expense
-            && (await _store.GetAccountsAsync()).FirstOrDefault(a => a.Id == Account.Id) is { Type: Core.Accounts.AccountType.Asset }
+            && _accounts.TryGetValue(Account.Id, out var target) && target.Type == Core.Accounts.AccountType.Asset
             && !await Shell.Current.DisplayAlertAsync(_translator["Entry_AssetAccountTitle"], _translator["Entry_AssetAccountMessage"], _translator["Entry_AssetAccountYes"], _translator["Common_Cancel"]))
         {
             return;
@@ -1047,6 +1054,16 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             foreignAmount = parsedForeign;
         }
 
+        // The destination fee is checked with the other input, before the entry is changed: a refused save must leave the
+        // entry and its fees as they were.
+        long destinationFee = 0;
+        if (IsTransfer && ShowDestinationFee && !string.IsNullOrWhiteSpace(DestinationFeeText)
+            && (ToAccount is null || !MoneyText.TryParse(DestinationFeeText, ToAccount.CurrencyCode, culture, out destinationFee) || destinationFee < 0))
+        {
+            SaveError = _translator["Amount_Invalid"];
+            return;
+        }
+
         long? reimbursableAmount = null;
         if (ReimbursableEnabled && Kind == EntryKind.Expense)
         {
@@ -1066,6 +1083,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             }
         }
 
+        var saved = false;
+        var attachmentFailed = false;
         IsBusy = true;
         try
         {
@@ -1110,14 +1129,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 _fee = synced;
 
                 // A fee at the destination (Advanced) is an expense there, in its currency (ZEX-S0204).
-                long destinationFee = 0;
-                if (ShowDestinationFee && !string.IsNullOrWhiteSpace(DestinationFeeText)
-                    && (ToAccount is null || !MoneyText.TryParse(DestinationFeeText, ToAccount.CurrencyCode, culture, out destinationFee) || destinationFee < 0))
-                {
-                    SaveError = _translator["Amount_Invalid"];
-                    return;
-                }
-
                 var destination = EntryActions.SyncDestinationFee(_entry, _destinationFee, destinationFee, _categories.Fees());
                 if (destination is null && _destinationFee is not null)
                 {
@@ -1166,8 +1177,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
             _snapshot = Snapshot();
 
+            saved = true;
+
             // The entry is saved; a failing attachment must not look like a failed save (which would invite saving twice).
-            var attachmentFailed = false;
             if (_pendingAttachment is { } pending)
             {
                 try
@@ -1181,14 +1193,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
                 _pendingAttachment = null;
             }
-
-            await Shell.Current.GoToAsync("..");
-            if (attachmentFailed)
-            {
-                await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_AttachFailed"], _translator["Common_Ok"]);
-            }
         }
-        catch (Exception)
+        catch (Exception ex) when (ex is not OutOfMemoryException && !saved)
         {
             // The input stays in the form (TX-06, AT-04).
             SaveError = _translator["Common_SaveFailed"];
@@ -1196,6 +1202,19 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         finally
         {
             IsBusy = false;
+        }
+
+        // Leaving the page is not part of saving: a navigation problem after a successful save must not say "not saved".
+        if (saved)
+        {
+            await Presentation.Failures.GuardAsync(async () =>
+            {
+                await Shell.Current.GoToAsync("..");
+                if (attachmentFailed)
+                {
+                    await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_AttachFailed"], _translator["Common_Ok"]);
+                }
+            });
         }
     }
 
@@ -1215,7 +1234,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
+    // Every field the user can change, so leaving with a change – even only a tag or the reimbursement – asks first.
     private string Snapshot() => string.Join('|',
-        KindIndex, AmountText, EntryTitle, Date, Account?.Id, ToAccount?.Id, ToAmountText, FeeText, Payee, Note,
-        ForeignEnabled, ForeignCurrency, ForeignAmountText, IconKey, Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        KindIndex, AmountText, EntryTitle, Date, Account?.Id, ToAccount?.Id, ToAmountText, FeeText, DestinationFeeText, Payee, Note,
+        ForeignEnabled, ForeignCurrency, ForeignAmountText, IconKey, Categories.FirstOrDefault(c => c.IsSelected)?.Id, TagsText,
+        ReimbursableEnabled, ReimbursableText, ReimbursedBy, HasReimbursementDue, ReimbursementDue, IsAggregated, AggregatedFrom, AggregatedTo);
 }

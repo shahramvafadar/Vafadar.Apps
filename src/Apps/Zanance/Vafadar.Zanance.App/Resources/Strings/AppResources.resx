@@ -5096,4 +5096,10 @@ Steps to repeat it:
   <data name="Lock_NotUnlocked" xml:space="preserve">
     <value>The app is still locked. Tap Unlock to try again.</value>
   </data>
+  <data name="Attachment_OpenFailed" xml:space="preserve">
+    <value>No app on this device could open the file.</value>
+  </data>
+  <data name="Entry_DeleteQuestion" xml:space="preserve">
+    <value>Delete this entry?</value>
+  </data>
 </root>

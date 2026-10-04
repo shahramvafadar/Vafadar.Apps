@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–6: libraries, core, data and app foundation
+### Fixed – Code review, parts 1–7: libraries, core, data, app foundation and recording
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -35,6 +35,17 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   change; a link from a notification or the widget that cannot be opened no longer stops the others after unlocking.
 - Very large receipt photos no longer risk closing the app on Android: they are decoded at a reduced size first.
 - Long lists and the reminder update do less work (colours are prepared once; categories are read once per update).
+- Deleting an entry from its details asks first when it was opened from Home, an account or a plan; there is no Undo
+  there (from the transaction list, Undo is still offered instead).
+- Leaving the entry editor asks before discarding changes also when only tags, the reimbursement, the aggregate range or
+  the destination fee changed.
+- A saved entry is never reported as "not saved" when only going back afterwards fails.
+- A new aggregated entry covers the financial month (in the Persian calendar and from the month's start day).
+- Home loads faster and no longer shows a row twice when the period is switched while it loads.
+- The transaction list filters faster with many entries; deleting a selection is one step for the other screens.
+- In a bulk category change, sub-categories show their main category ("Car › Other").
+- Opening an attachment that no app on the device can show says so.
+- Buttons and switches in the recording screens have names for screen readers and full-size touch targets.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme
