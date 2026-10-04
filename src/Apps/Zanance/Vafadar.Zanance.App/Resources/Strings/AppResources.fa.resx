@@ -5107,4 +5107,10 @@
   <data name="Home_QuickTransfer" xml:space="preserve">
     <value>انتقال</value>
   </data>
+  <data name="Category_NameTaken" xml:space="preserve">
+    <value>دستهٔ دیگری در همین جا همین نام را دارد.</value>
+  </data>
+  <data name="Profile_NameTaken" xml:space="preserve">
+    <value>پروفایل دیگری همین نام را دارد.</value>
+  </data>
 </root>

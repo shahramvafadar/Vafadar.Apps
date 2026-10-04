@@ -5107,4 +5107,10 @@ Schritte zum Wiederholen:
   <data name="Home_QuickTransfer" xml:space="preserve">
     <value>Transfer</value>
   </data>
+  <data name="Category_NameTaken" xml:space="preserve">
+    <value>Eine andere Kategorie hier hat bereits diesen Namen.</value>
+  </data>
+  <data name="Profile_NameTaken" xml:space="preserve">
+    <value>Ein anderes Profil hat bereits diesen Namen.</value>
+  </data>
 </root>

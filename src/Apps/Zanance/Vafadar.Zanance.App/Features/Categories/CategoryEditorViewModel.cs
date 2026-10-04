@@ -244,6 +244,18 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
         }
 
         NameError = string.IsNullOrWhiteSpace(Name) && DefaultName is null ? _translator["Category_NameRequired"] : null;
+
+        // The same name twice under one main category (or twice at the top) cannot be told apart in lists and CSV files.
+        // Under different main categories a name may repeat ("Other").
+        var wanted = Vafadar.Core.Text.SearchText.Normalize(string.IsNullOrWhiteSpace(Name) ? DefaultName : Name);
+        var kind = IsExisting ? _category.Kind : Kind;
+        var parent = CanHaveParent ? Parent?.Id : null;
+        if (NameError is null && _all.Any(c => c.Id != _category.Id && c.Kind == kind && c.ParentId == parent
+                && string.Equals(Vafadar.Core.Text.SearchText.Normalize(CategoryLookup.NameOf(c, _translator)), wanted, StringComparison.CurrentCultureIgnoreCase)))
+        {
+            NameError = _translator["Category_NameTaken"];
+        }
+
         if (NameError is not null)
         {
             return;

@@ -5112,4 +5112,10 @@ Steps to repeat it:
     <value>Transfer</value>
     <comment>Quick add label on Home; four labels must fit a 360 px phone (German 'Umbuchung' was cut).</comment>
   </data>
+  <data name="Category_NameTaken" xml:space="preserve">
+    <value>Another category here already has this name.</value>
+  </data>
+  <data name="Profile_NameTaken" xml:space="preserve">
+    <value>Another profile already has this name.</value>
+  </data>
 </root>

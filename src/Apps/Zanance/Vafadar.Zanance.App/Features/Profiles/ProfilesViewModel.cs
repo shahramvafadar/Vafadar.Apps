@@ -44,6 +44,12 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
             return;
         }
 
+        if (IsTaken(name, null))
+        {
+            Error = translator["Profile_NameTaken"];
+            return;
+        }
+
         var profile = profiles.Create(name);
         await LoadAsync();
         if (await Shell.Current.DisplayAlertAsync(translator["Profile_Add"], translator.Format("Profile_OpenNew", profiles.NameOf(profile)), translator["Profile_OpenAction"], translator["Common_Cancel"]))
@@ -69,6 +75,12 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
             var name = await Shell.Current.DisplayPromptAsync(rename, translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], initialValue: row.Name, maxLength: ProfileService.MaxNameLength);
             if (!string.IsNullOrWhiteSpace(name))
             {
+                if (IsTaken(name, row.Profile.Id))
+                {
+                    Error = translator["Profile_NameTaken"];
+                    return;
+                }
+
                 profiles.Rename(row.Profile, name);
                 await LoadAsync();
             }
@@ -83,6 +95,14 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
                 await LoadAsync();
             }
         }
+    }
+
+    // Two profiles with one name cannot be told apart in the profile list and the switcher.
+    private bool IsTaken(string name, string? exceptId)
+    {
+        var wanted = Vafadar.Core.Text.SearchText.Normalize(name);
+        return profiles.All.Any(p => p.Id != exceptId
+            && string.Equals(Vafadar.Core.Text.SearchText.Normalize(profiles.NameOf(p)), wanted, StringComparison.CurrentCultureIgnoreCase));
     }
 
     private async Task OpenProfileAsync(LocalProfile profile)
