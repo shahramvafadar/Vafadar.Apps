@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Reports.KpiSheetPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Reports"
+    x:DataType="local:KpiSheetViewModel"
+    Title="{Binding Title}"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
+            <Button Text="{v:Translate Common_Close}" Command="{Binding CloseCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" SemanticProperties.HeadingLevel="Level1" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <!-- The number and the scope it was computed with -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding Value}" Style="{StaticResource AmountLarge}" IsVisible="{Binding Value, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding Scope}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding Question}" FontAttributes="Bold" Margin="0,8,0,0" />
+                        <Label Text="{Binding Definition}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- In words: the parts of the number -->
+                <Label Text="{v:Translate Kpi_InWords}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasLines}" />
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasLines}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Lines}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:AmountLine">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Label Text="{Binding Label}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
+                                                <Setter Property="FontAttributes" Value="Bold" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{v:Translate Kpi_Included}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Included}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding ., StringFormat='• {0}'}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{v:Translate Kpi_Excluded}" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Excluded}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding ., StringFormat='• {0}'}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- The data status is a list, never a score -->
+                <Label Text="{Binding DataStatus}" Style="{StaticResource Secondary}" Margin="4,4" IsVisible="{Binding DataStatus, Converter={StaticResource IsNotNullConverter}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Kpi_ShowEntries}" Command="{Binding ShowEntriesCommand}" IsVisible="{Binding CanShowEntries}" />
+    </Grid>
+</ContentPage>

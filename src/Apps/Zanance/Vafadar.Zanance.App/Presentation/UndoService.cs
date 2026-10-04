@@ -10,13 +10,14 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
 {
     private static readonly TimeSpan Window = TimeSpan.FromSeconds(8);
     private IReadOnlyList<LedgerEntry> _deleted = [];
+    private Func<Task>? _action;
     private DateTimeOffset _deletedAt;
 
     /// <summary>Raised when the undo offer appears or disappears.</summary>
     public event EventHandler? Changed;
 
     /// <summary>Gets a value indicating whether an undo is currently offered.</summary>
-    public bool CanUndo => _deleted.Count > 0 && time.GetUtcNow() - _deletedAt < Window;
+    public bool CanUndo => (_deleted.Count > 0 || _action is not null) && time.GetUtcNow() - _deletedAt < Window;
 
     /// <summary>Gets how long the offer is still valid.</summary>
     public TimeSpan Remaining => CanUndo ? Window - (time.GetUtcNow() - _deletedAt) : TimeSpan.Zero;
@@ -25,6 +26,16 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     public void Offer(IReadOnlyList<LedgerEntry> deleted)
     {
         _deleted = deleted;
+        _action = null;
+        _deletedAt = time.GetUtcNow();
+        Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>Offers to undo a change that is not a deletion, e.g. an aggregated entry reduced by "Link and replace" (ZEX-S0611).</summary>
+    public void Offer(Func<Task> undo)
+    {
+        _deleted = [];
+        _action = undo;
         _deletedAt = time.GetUtcNow();
         Changed?.Invoke(this, EventArgs.Empty);
     }
@@ -32,9 +43,10 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     /// <summary>Withdraws the offer.</summary>
     public void Dismiss()
     {
-        if (_deleted.Count > 0)
+        if (_deleted.Count > 0 || _action is not null)
         {
             _deleted = [];
+            _action = null;
             Changed?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -43,11 +55,18 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     public async Task UndoAsync()
     {
         var entries = _deleted;
+        var action = _action;
         _deleted = [];
+        _action = null;
         Changed?.Invoke(this, EventArgs.Empty);
         if (entries.Count > 0)
         {
             await store.RestoreEntriesAsync(entries);
+        }
+
+        if (action is not null)
+        {
+            await action();
         }
     }
 }

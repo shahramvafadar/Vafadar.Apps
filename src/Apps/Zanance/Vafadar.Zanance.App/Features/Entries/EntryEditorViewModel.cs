@@ -62,9 +62,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private bool _loading;
     private bool _isNew;
     private Presentation.PendingAttachment? _pendingAttachment;
+    private readonly Presentation.UndoService _undo;
 
-    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time)
+    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo)
     {
+        _undo = undo;
         _store = store;
         _translator = translator;
         _localization = localization;
@@ -183,6 +185,22 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial bool IsTransfer { get; set; }
 
+    /// <summary>Gets a value indicating whether the entry can be marked as aggregated (Advanced, income or expense, ZEX-S0611).</summary>
+    [ObservableProperty]
+    public partial bool CanAggregate { get; set; }
+
+    partial void OnIsTransferChanged(bool value) => CanAggregate = (_isAdvanced || IsAggregated) && !value;
+
+    partial void OnIsAggregatedChanged(bool value)
+    {
+        // A new aggregate covers the financial month of its date by default; the user can change the range.
+        if (value && !_loading && AggregatedFrom == AggregatedTo)
+        {
+            AggregatedFrom = new DateOnly(Date.Year, Date.Month, 1);
+            AggregatedTo = AggregatedFrom.AddMonths(1).AddDays(-1);
+        }
+    }
+
     // Reimbursable part of an expense (F2-TX-03).
     [ObservableProperty]
     public partial bool IsExpense { get; set; }
@@ -195,6 +213,23 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     [ObservableProperty]
     public partial string ReimbursedBy { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets a value indicating whether the reimbursement is expected by a day (ZEX-K12); optional.</summary>
+    /// <summary>Gets or sets a value indicating whether the entry sums up several purchases or receipts of a range (ZEX-P21, Advanced).</summary>
+    [ObservableProperty]
+    public partial bool IsAggregated { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly AggregatedFrom { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly AggregatedTo { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasReimbursementDue { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly ReimbursementDue { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddDays(30);
 
     // Tags (F2-TX-04): typed comma-separated, with the most used tags one tap away.
     [ObservableProperty]
@@ -370,6 +405,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             await LoadReferenceDataAsync();
             var settings = await _store.GetSettingsAsync();
             _isAdvanced = settings.Mode == Core.Settings.ExperienceMode.Advanced;
+        CanAggregate = (_isAdvanced || IsAggregated) && !IsTransfer;
             _destinationFee = null;
             DestinationFeeText = string.Empty;
             var active = Accounts;
@@ -658,6 +694,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ReimbursableEnabled = entry.ReimbursableAmount is > 0;
         ReimbursableText = entry.ReimbursableAmount is { } reimbursable ? MoneyText.ForInput(reimbursable, currency, culture) : string.Empty;
         ReimbursedBy = entry.ReimbursedBy ?? string.Empty;
+        HasReimbursementDue = entry.ReimbursementDueDate is not null;
+        IsAggregated = entry.IsAggregated;
+        AggregatedFrom = entry.AggregatedFrom ?? entry.Date;
+        AggregatedTo = entry.AggregatedTo ?? entry.Date;
+        ReimbursementDue = entry.ReimbursementDueDate ?? ReimbursementDue;
         TagsText = EntryTags.Format(entry.Tags);
         ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled || entry.Tags.Count > 0;
         BuildCategories(entry.CategoryId);
@@ -874,6 +915,70 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [RelayCommand]
     private void ToggleDetails() => ShowDetails = !ShowDetails;
 
+    // Finds overlaps of the entries to save with aggregated entries and asks: link and replace, keep both or cancel.
+    // Returns the aggregated entries as they were before a replacement (for Undo), an empty list without a change, or
+    // null when the user cancels.
+    private async Task<List<LedgerEntry>?> ResolveOverlapsAsync(List<LedgerEntry> batch, List<Guid> deleteIds)
+    {
+        var overlaps = AggregatedEntries.Find(batch, await _store.GetEntriesAsync(Date.AddYears(-1), Date.AddYears(1)));
+        if (overlaps.Count == 0)
+        {
+            return [];
+        }
+
+        var culture = _localization.CurrentCulture;
+        var first = overlaps[0];
+        var currency = _accounts.TryGetValue(first.Aggregate.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
+        var replace = _translator["Aggregate_Replace"];
+        var keep = _translator["Aggregate_KeepBoth"];
+        var message = _translator.Format("Aggregate_Overlap", first.Aggregate.Title ?? _categories.Name(first.Aggregate.CategoryId),
+            MoneyText.Format(first.Aggregate.Amount, currency, culture), MoneyText.Format(first.DetailedTotal, currency, culture),
+            MoneyText.Format(first.Remainder, currency, culture));
+        var choice = await Shell.Current.DisplayActionSheetAsync(message, _translator["Common_Cancel"], null, replace, keep);
+        if (choice == keep)
+        {
+            return [];
+        }
+
+        if (choice != replace)
+        {
+            return null;
+        }
+
+        var originals = new List<LedgerEntry>();
+        foreach (var overlap in overlaps)
+        {
+            var reduced = AggregatedEntries.Replace(overlap);
+            if (overlap.Aggregate.Id == _entry.Id)
+            {
+                // The aggregate being saved keeps only the difference, or is not kept at all.
+                if (reduced is null)
+                {
+                    batch.Remove(_entry);
+                    deleteIds.Add(_entry.Id);
+                }
+                else
+                {
+                    _entry.Amount = reduced.Amount;
+                }
+
+                continue;
+            }
+
+            originals.Add(overlap.Aggregate);
+            if (reduced is null)
+            {
+                deleteIds.Add(overlap.Aggregate.Id);
+            }
+            else
+            {
+                batch.Add(reduced);
+            }
+        }
+
+        return originals;
+    }
+
     [RelayCommand]
     private async Task SaveAsync()
     {
@@ -965,6 +1070,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             _entry.ReimbursableAmount = reimbursableAmount;
             _entry.Tags = EntryTags.Parse(TagsText);
             _entry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
+            _entry.ReimbursementDueDate = reimbursableAmount is not null && HasReimbursementDue ? ReimbursementDue : null;
+            // The flag is set in Advanced; an aggregated entry edited in Simple keeps it (nothing is lost by the mode).
+            _entry.IsAggregated = IsAggregated && kind is EntryKind.Income or EntryKind.Expense;
+            _entry.AggregatedFrom = _entry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedFrom : AggregatedTo) : null;
+            _entry.AggregatedTo = _entry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedTo : AggregatedFrom) : null;
             _entry.Amount = amount;
             _entry.AccountId = Account.Id;
             _entry.Date = Date;
@@ -1030,11 +1140,24 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 }
             }
 
+            // An overlap with an aggregated entry is the user's choice, never silent: replace in it, or count both (AT33).
+            var replaced = await ResolveOverlapsAsync(batch, deleteIds);
+            if (replaced is null)
+            {
+                return;
+            }
+
             var result = await _store.SaveEntriesAsync(batch, deleteIds);
             if (!result.Succeeded)
             {
                 SaveError = string.Join(Environment.NewLine, result.Errors.Select(e => _translator[$"LedgerError_{e}"]));
                 return;
+            }
+
+            if (replaced.Count > 0)
+            {
+                // Undo puts the aggregated entries back as they were; the detailed entry stays.
+                _undo.Offer(() => _store.SaveEntriesAsync(replaced, []));
             }
 
             _snapshot = Snapshot();

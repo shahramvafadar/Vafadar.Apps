@@ -226,8 +226,33 @@
                                 <Label Text="{v:Translate Entry_ReimbursedBy}" Style="{StaticResource FieldLabel}" />
                                 <Entry Text="{Binding ReimbursedBy}" MaxLength="120" Placeholder="{v:Translate Entry_ReimbursedByPlaceholder}"
                                        SemanticProperties.Description="{v:Translate Entry_ReimbursedBy}" />
+                                <!-- An optional day the money is expected back (ZEX-K12) -->
+                                <Grid ColumnDefinitions="*,Auto" Margin="0,6,0,0">
+                                    <Label Text="{v:Translate Entry_ReimbursementDue}" VerticalOptions="Center" />
+                                    <Switch Grid.Column="1" IsToggled="{Binding HasReimbursementDue}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_ReimbursementDue}" />
+                                </Grid>
+                                <v:DateField Date="{Binding ReimbursementDue}" IsVisible="{Binding HasReimbursementDue}" />
                                 <Label Text="{v:Translate Entry_ReimbursableHint}" Style="{StaticResource Secondary}" FontSize="12" />
                             </VerticalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Aggregated entry (ZEX-P21, Advanced): sums up several purchases of a range; overlaps are asked for on save -->
+                        <VerticalStackLayout IsVisible="{Binding CanAggregate}" Margin="0,12,0,0" Spacing="4">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                <Label Text="{v:Translate Entry_Aggregated}" VerticalOptions="Center" />
+                                <v:HelpButton Grid.Column="1" Topic="Aggregated" />
+                                <Switch Grid.Column="2" IsToggled="{Binding IsAggregated}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_Aggregated}" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsAggregated}">
+                                <VerticalStackLayout>
+                                    <Label Text="{v:Translate Entry_AggregatedFrom}" Style="{StaticResource FieldLabel}" />
+                                    <v:DateField Date="{Binding AggregatedFrom}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="{v:Translate Entry_AggregatedTo}" Style="{StaticResource FieldLabel}" />
+                                    <v:DateField Date="{Binding AggregatedTo}" />
+                                </VerticalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
 
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />

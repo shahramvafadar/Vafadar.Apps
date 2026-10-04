@@ -54,9 +54,11 @@ public sealed partial class HomeViewModel : ViewModelBase
     private readonly Goals.GoalPresenter _goalPresenter;
     private readonly HoldingStore _holdings;
     private readonly Holdings.HoldingText _holdingText;
+    private readonly Vafadar.Backup.IBackupService _backup;
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup)
     {
+        _backup = backup;
         _holdings = holdings;
         _holdingText = holdingText;
         _goals = goals;
@@ -156,6 +158,14 @@ public sealed partial class HomeViewModel : ViewModelBase
     // Money others still owe for reimbursable expenses (F2-TX-03).
     [ObservableProperty]
     public partial string? ReimbursementText { get; set; }
+
+    /// <summary>Gets "Review September" when the last financial month ended and its review is not finished (ZEX-S0610).</summary>
+    [ObservableProperty]
+    public partial string? ReviewText { get; set; }
+
+    /// <summary>Gets the backup item of the data status (ZEX-S0608): shown once on Home when the last backup is old or missing.</summary>
+    [ObservableProperty]
+    public partial string? BackupText { get; set; }
 
     [ObservableProperty]
     public partial bool HasAttention { get; set; }
@@ -378,9 +388,10 @@ public sealed partial class HomeViewModel : ViewModelBase
 
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
+        LoadDataAttention(allAccounts, entries, today);
         await LoadGoalsAsync(allAccounts, entries, today);
         await LoadHoldingsAsync(today);
-        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null;
+        HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -458,6 +469,25 @@ public sealed partial class HomeViewModel : ViewModelBase
         ForecastLowColor = forecast.GoesNegative ? EntryPresenter.DangerColor : Palette.SecondaryText;
         ForecastNote = forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null;
     }
+
+    // The month-end review and an old backup (K14 at Home: only the backup item, once).
+    private void LoadDataAttention(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
+    {
+        var settings = _store.GetSettings();
+        var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Min(a => a.OpeningDate);
+        var review = Core.Reports.PeriodReview.Due(settings.ReviewProgress, today, Calendar, _startDay, firstData);
+        ReviewText = review is null ? null : _translator.Format("Home_Review", _dates.Format(PeriodMath.MonthRange(review.Year, review.Month, Calendar, _startDay).First, DateFormatStyle.MonthYear));
+        var last = _backup.LastBackupAt is { } at ? DateOnly.FromDateTime(at.ToLocalTime().DateTime) : (DateOnly?)null;
+        BackupText = entries.Count == 0 || (last is { } day && today.DayNumber - day.DayNumber <= Core.Reports.DataStatus.BackupDays)
+            ? null
+            : last is { } date ? _translator.Format("Issue_BackupOld", _dates.Format(date, DateFormatStyle.Short)) : _translator["Issue_NoBackup"];
+    }
+
+    [RelayCommand]
+    private Task OpenReviewAsync() => Shell.Current.GoToAsync(AppShell.ReviewRoute);
+
+    [RelayCommand]
+    private Task OpenBackupAsync() => Shell.Current.GoToAsync(AppShell.BackupRoute);
 
     [RelayCommand]
     private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);

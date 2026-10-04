@@ -85,6 +85,15 @@
                         IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
             </VerticalStackLayout>
             <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
+            <!-- The scope of the report the number came from: currency, accounts, confirmed only (ZEX-S0601) -->
+            <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"
+                    Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding ScopeNote, Converter={StaticResource IsNotNullConverter}}">
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="{Binding ScopeNote}" TextColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                    <Button Text="✕" Command="{Binding ClearCategoryFilterCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}"
+                            Padding="8,0" MinimumWidthRequest="36" SemanticProperties.Description="{v:Translate Tx_ClearFilters}" />
+                </HorizontalStackLayout>
+            </Border>
             <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 18"
                     Padding="14,0,4,0" HorizontalOptions="Start" IsVisible="{Binding CategoryFilterName, Converter={StaticResource IsNotNullConverter}}">
                 <HorizontalStackLayout Spacing="4">

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Builds the Windows app in Debug and walks through every screen, saving screenshots (and the report PDF).
 
@@ -12,6 +12,7 @@
 .EXAMPLE
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -WindowSize 1280x820
+    ./eng/scripts/Run-Snapshots.ps1 -Languages en -Only report,holding
 #>
 param(
     [string]$Languages = 'fa',
@@ -21,7 +22,9 @@ param(
     # e.g. 1280x820 to check wide windows (desktop, tablet); default: a phone-sized window.
     [string]$WindowSize = '',
     # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.
-    [switch]$Empty)
+    [switch]$Empty,
+    # Comma-separated name prefixes of the screens to shoot, e.g. 'report,holding'; default: all screens.
+    [string]$Only = '')
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -50,6 +53,7 @@ $env:VAFADAR_SNAPSHOT_LANGUAGES = $Languages
 $env:VAFADAR_SNAPSHOT_THEME = $Theme
 $env:VAFADAR_WINDOW_SIZE = $WindowSize
 $env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
+$env:VAFADAR_SNAPSHOT_ONLY = $Only
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }

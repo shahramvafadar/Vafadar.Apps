@@ -113,6 +113,10 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial bool IsArchived { get; set; }
 
+    /// <summary>Gets the day the balance was last compared with the bank, or "never" (ZEX-S0608).</summary>
+    [ObservableProperty]
+    public partial string? ReconciledText { get; set; }
+
     /// <summary>Gets a value indicating whether the account is an active valued asset that can become a holding (Advanced).</summary>
     [ObservableProperty]
     public partial bool CanConvert { get; set; }
@@ -162,6 +166,9 @@ public sealed partial class AccountDetailViewModel(
         CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
         IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
         IsDebt = account.Type.IsDebt() && !account.IsArchived;
+        ReconciledText = account.LastReconciledOn is { } reconciled
+            ? translator.Format("Account_LastReconciled", dates.Format(reconciled, DateFormatStyle.Short))
+            : translator["Account_NeverReconciled"];
         CanConvert = account.Type == AccountType.Asset && !account.IsArchived && (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
@@ -332,12 +339,15 @@ public sealed partial class AccountDetailViewModel(
         HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null;
         CanAdjust = _result.Difference != 0;
 
-        // A matching balance confirms the account, so an unknown opening balance no longer makes it incomplete.
-        if (_result.Difference == 0 && !account.OpeningBalanceKnown)
+        // A matching balance confirms the account, so an unknown opening balance no longer makes it incomplete; the day
+        // of the comparison is remembered for the data status (ZEX-S0608).
+        if (_result.Difference == 0)
         {
             account.OpeningBalanceKnown = true;
+            account.LastReconciledOn = Max(account.LastReconciledOn, ReconcileDate);
             await store.SaveAccountAsync(account);
             IncompleteText = null;
+            ReconciledText = translator.Format("Account_LastReconciled", dates.Format(account.LastReconciledOn.Value, DateFormatStyle.Short));
         }
     }
 
@@ -365,12 +375,11 @@ public sealed partial class AccountDetailViewModel(
             }
         }
 
-        // A reconciled balance is known from its date on, so the account is no longer incomplete (ACC-09).
-        if (!_account.OpeningBalanceKnown)
-        {
-            _account.OpeningBalanceKnown = true;
-            await store.SaveAccountAsync(_account);
-        }
+        // A reconciled balance is known from its date on, so the account is no longer incomplete (ACC-09); the day of
+        // the comparison is remembered (ZEX-S0608).
+        _account.OpeningBalanceKnown = true;
+        _account.LastReconciledOn = Max(_account.LastReconciledOn, ReconcileDate);
+        await store.SaveAccountAsync(_account);
 
         ObservedText = string.Empty;
         Reason = string.Empty;
@@ -415,6 +424,8 @@ public sealed partial class AccountDetailViewModel(
             await Shell.Current.GoToAsync($"../{AppShell.HoldingDetailRoute}", new Dictionary<string, object> { ["id"] = type.Id });
         }
     }
+
+    private static DateOnly Max(DateOnly? current, DateOnly date) => current is { } value && value > date ? value : date;
 
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["id"] = _id });

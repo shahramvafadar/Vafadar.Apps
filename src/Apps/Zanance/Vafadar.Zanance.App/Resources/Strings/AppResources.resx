@@ -4008,4 +4008,787 @@
   <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
     <value>Goals: {0} · holding types: {1}</value>
   </data>
+  <data name="Report_R1" xml:space="preserve">
+    <value>Period overview</value>
+  </data>
+  <data name="Report_R2" xml:space="preserve">
+    <value>Commitments</value>
+  </data>
+  <data name="Report_R3" xml:space="preserve">
+    <value>Goals</value>
+  </data>
+  <data name="Report_R4" xml:space="preserve">
+    <value>Holdings</value>
+  </data>
+  <data name="Report_R6" xml:space="preserve">
+    <value>Data status</value>
+  </data>
+  <data name="Report_Scope" xml:space="preserve">
+    <value>Scope:</value>
+  </data>
+  <data name="Report_ChangeScope" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Report_ScopeCurrency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Report_ScopeAccounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Report_ScopeInTotals" xml:space="preserve">
+    <value>Accounts in totals</value>
+  </data>
+  <data name="Report_ScopeUsable" xml:space="preserve">
+    <value>Usable accounts</value>
+  </data>
+  <data name="Report_ScopeOneAccount" xml:space="preserve">
+    <value>One account</value>
+  </data>
+  <data name="Report_PeriodLength" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="Report_ConfirmedOnly" xml:space="preserve">
+    <value>Confirmed only</value>
+  </data>
+  <data name="Report_Next30" xml:space="preserve">
+    <value>Next 30 days</value>
+  </data>
+  <data name="Report_Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Report_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="Report_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Report_NotAvailable" xml:space="preserve">
+    <value>not available</value>
+  </data>
+  <data name="Report_DataStatus" xml:space="preserve">
+    <value>Data status: {0}</value>
+  </data>
+  <data name="Report_NoIssues" xml:space="preserve">
+    <value>No open issues for this view</value>
+  </data>
+  <data name="Report_Surplus" xml:space="preserve">
+    <value>Surplus</value>
+  </data>
+  <data name="Report_SurplusDetail" xml:space="preserve">
+    <value>Income {0} · Spending {1}</value>
+  </data>
+  <data name="Report_Rate" xml:space="preserve">
+    <value>Share of income kept: {0}</value>
+  </data>
+  <data name="Report_OtherCurrencies" xml:space="preserve">
+    <value>Other currencies (not added): {0}</value>
+  </data>
+  <data name="Report_Converted" xml:space="preserve">
+    <value>Converted: ≈ {0}</value>
+  </data>
+  <data name="Report_SpendingLine" xml:space="preserve">
+    <value>Spending (expenses {0} − refunds {1})</value>
+  </data>
+  <data name="Report_TransfersBetween" xml:space="preserve">
+    <value>Transfers between your accounts</value>
+  </data>
+  <data name="Report_SeparateLines" xml:space="preserve">
+    <value>Separate lines, not spending</value>
+  </data>
+  <data name="Report_IncomeSpending" xml:space="preserve">
+    <value>Income and spending</value>
+  </data>
+  <data name="Report_SpendingChange" xml:space="preserve">
+    <value>Spending change</value>
+  </data>
+  <data name="Report_Comparison" xml:space="preserve">
+    <value>{0} vs {1}</value>
+  </data>
+  <data name="Report_ChangeDetail" xml:space="preserve">
+    <value>Now {0} · before {1}</value>
+  </data>
+  <data name="Report_New" xml:space="preserve">
+    <value>new</value>
+  </data>
+  <data name="Report_NoChanges" xml:space="preserve">
+    <value>No spending to compare yet.</value>
+  </data>
+  <data name="Report_TagShared" xml:space="preserve">
+    <value>with several tags: {0}</value>
+  </data>
+  <data name="Report_Capital" xml:space="preserve">
+    <value>Holdings bought or sold</value>
+  </data>
+  <data name="Report_Headroom" xml:space="preserve">
+    <value>Headroom</value>
+  </data>
+  <data name="Report_Around" xml:space="preserve">
+    <value>{0} around {1}</value>
+  </data>
+  <data name="Report_UsesProtected" xml:space="preserve">
+    <value>Your plans would use {0} of the money you protected, around {1}.</value>
+  </data>
+  <data name="Report_LowestBalance" xml:space="preserve">
+    <value>Lowest balance {0} on {1}.</value>
+  </data>
+  <data name="Report_EssentialNotIncluded" xml:space="preserve">
+    <value>Day-to-day spending not included</value>
+  </data>
+  <data name="Report_Incomplete" xml:space="preserve">
+    <value>incomplete – unknown amounts: {0}</value>
+  </data>
+  <data name="Report_EstimateNotGuarantee" xml:space="preserve">
+    <value>Estimate with your current plans – not a guarantee</value>
+  </data>
+  <data name="Report_NoUsableAccounts" xml:space="preserve">
+    <value>No usable account in this currency.</value>
+  </data>
+  <data name="Report_UsableToday" xml:space="preserve">
+    <value>Usable balance, end of {0}</value>
+  </data>
+  <data name="Report_DayToDay" xml:space="preserve">
+    <value>Day-to-day spending · {0} × {1}</value>
+  </data>
+  <data name="Report_LowestOn" xml:space="preserve">
+    <value>Lowest balance · {0}</value>
+  </data>
+  <data name="Report_Protected" xml:space="preserve">
+    <value>Protected money set aside</value>
+  </data>
+  <data name="Report_ComesAfter" xml:space="preserve">
+    <value>{0} on {1} comes after the lowest point</value>
+  </data>
+  <data name="Report_Next30Title" xml:space="preserve">
+    <value>Next 30 days</value>
+  </data>
+  <data name="Report_NoCommitments" xml:space="preserve">
+    <value>No payments in the next 30 days</value>
+  </data>
+  <data name="Report_UnknownCount" xml:space="preserve">
+    <value>unknown: {0}</value>
+  </data>
+  <data name="Report_Yearly" xml:space="preserve">
+    <value>Regular payments, next 12 months</value>
+  </data>
+  <data name="Report_YearlyTotals" xml:space="preserve">
+    <value>Fixed {0} · non-monthly {1} · estimated {2}</value>
+  </data>
+  <data name="Report_MonthlyShare" xml:space="preserve">
+    <value>share {0}/month</value>
+  </data>
+  <data name="Report_ShareNotSetAside" xml:space="preserve">
+    <value>A monthly share is a share, not money set aside.</value>
+  </data>
+  <data name="Report_Debt" xml:space="preserve">
+    <value>Loans</value>
+  </data>
+  <data name="Report_NextInstallment" xml:space="preserve">
+    <value>Next installment {0} on {1}</value>
+  </data>
+  <data name="Report_AddPaymentDay" xml:space="preserve">
+    <value>A loan has an installment but no plan – add the payment day.</value>
+  </data>
+  <data name="Report_DebtRatio" xml:space="preserve">
+    <value>Installments: {0} of income · interest {1} · principal {2}</value>
+  </data>
+  <data name="Report_OwedToMe" xml:space="preserve">
+    <value>Owed to me</value>
+  </data>
+  <data name="Report_NoReceivables" xml:space="preserve">
+    <value>Nobody owes you money.</value>
+  </data>
+  <data name="Report_Receivables" xml:space="preserve">
+    <value>Open: {0} · items: {1}</value>
+  </data>
+  <data name="Report_Over90" xml:space="preserve">
+    <value>older than 90 days: {0}</value>
+  </data>
+  <data name="Report_Age0to30" xml:space="preserve">
+    <value>Up to 30 days</value>
+  </data>
+  <data name="Report_Age31to90" xml:space="preserve">
+    <value>31 to 90 days</value>
+  </data>
+  <data name="Report_AgeOver90" xml:space="preserve">
+    <value>Over 90 days</value>
+  </data>
+  <data name="Report_Days" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="Report_Due" xml:space="preserve">
+    <value>due {0}</value>
+  </data>
+  <data name="Report_DueOverdue" xml:space="preserve">
+    <value>overdue since {0}</value>
+  </data>
+  <data name="Report_GoalProgress" xml:space="preserve">
+    <value>Goal progress</value>
+  </data>
+  <data name="Report_NoGoals" xml:space="preserve">
+    <value>No active goals.</value>
+  </data>
+  <data name="Report_Capacity" xml:space="preserve">
+    <value>Capacity for goals</value>
+  </data>
+  <data name="Report_CapacityValue" xml:space="preserve">
+    <value>{0} per month</value>
+  </data>
+  <data name="Report_CapIncome" xml:space="preserve">
+    <value>Income (median of 3 months)</value>
+  </data>
+  <data name="Report_CapSpending" xml:space="preserve">
+    <value>Spending (median, without non-monthly bills)</value>
+  </data>
+  <data name="Report_CapNonMonthly" xml:space="preserve">
+    <value>Monthly shares of non-monthly bills</value>
+  </data>
+  <data name="Report_CapPrincipal" xml:space="preserve">
+    <value>Loan principal</value>
+  </data>
+  <data name="Report_CapGoals" xml:space="preserve">
+    <value>Plans of other goals</value>
+  </data>
+  <data name="Report_EstimateNotPromise" xml:space="preserve">
+    <value>An estimate, not a promise. Accepting a suggestion changes no budget or entry.</value>
+  </data>
+  <data name="Report_Needs" xml:space="preserve">
+    <value>needs {0}/month</value>
+  </data>
+  <data name="Report_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Report_Accepted" xml:space="preserve">
+    <value>Plan of {1}: {0} per month from next month.</value>
+  </data>
+  <data name="Report_NotEnoughHistory" xml:space="preserve">
+    <value>Not enough history yet (3 complete months needed)</value>
+  </data>
+  <data name="Report_Coverage" xml:space="preserve">
+    <value>Essential costs covered</value>
+  </data>
+  <data name="Report_Months" xml:space="preserve">
+    <value>{0} months</value>
+  </data>
+  <data name="Report_CoverageDetail" xml:space="preserve">
+    <value>Usable {0} · essential per month {1}</value>
+  </data>
+  <data name="Report_OfWhichProtected" xml:space="preserve">
+    <value>of which protected {0}</value>
+  </data>
+  <data name="Report_UsableMoney" xml:space="preserve">
+    <value>Usable money</value>
+  </data>
+  <data name="Report_EssentialMonth" xml:space="preserve">
+    <value>Essential costs per month</value>
+  </data>
+  <data name="Report_NetWorth" xml:space="preserve">
+    <value>Net worth</value>
+  </data>
+  <data name="Report_NetWorthIn" xml:space="preserve">
+    <value>Net worth in {0}</value>
+  </data>
+  <data name="Report_WealthMoney" xml:space="preserve">
+    <value>Money</value>
+  </data>
+  <data name="Report_WealthReceivables" xml:space="preserve">
+    <value>Owed to me</value>
+  </data>
+  <data name="Report_WealthAssets" xml:space="preserve">
+    <value>Valued assets</value>
+  </data>
+  <data name="Report_WealthHoldings" xml:space="preserve">
+    <value>Holdings (valued)</value>
+  </data>
+  <data name="Report_WealthDebts" xml:space="preserve">
+    <value>Debts</value>
+  </data>
+  <data name="Report_NotValued" xml:space="preserve">
+    <value>Not valued: {0} {1}</value>
+  </data>
+  <data name="Report_Composition" xml:space="preserve">
+    <value>Composition</value>
+  </data>
+  <data name="Report_DebtsApart" xml:space="preserve">
+    <value>debts apart: {0}</value>
+  </data>
+  <data name="Report_NoRate" xml:space="preserve">
+    <value>no rate: {0}</value>
+  </data>
+  <data name="Report_AddRatesForComposition" xml:space="preserve">
+    <value>Add rates or prices to see the composition</value>
+  </data>
+  <data name="Issue_BackupOld" xml:space="preserve">
+    <value>Last backup on {0}</value>
+  </data>
+  <data name="Issue_NoBackup" xml:space="preserve">
+    <value>No backup yet</value>
+  </data>
+  <data name="Issue_Unreviewed" xml:space="preserve">
+    <value>Unreviewed: {0}</value>
+  </data>
+  <data name="Issue_UnknownAmounts" xml:space="preserve">
+    <value>Unknown amounts: {0}</value>
+  </data>
+  <data name="Issue_MissingRates" xml:space="preserve">
+    <value>No rate: {0}</value>
+  </data>
+  <data name="Issue_OutdatedRates" xml:space="preserve">
+    <value>Rate {0} from {1}</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice" xml:space="preserve">
+    <value>Holdings without a price: {0}</value>
+  </data>
+  <data name="Issue_OpeningUnknown" xml:space="preserve">
+    <value>Opening balance unknown: {0}</value>
+  </data>
+  <data name="Issue_NotReconciled" xml:space="preserve">
+    <value>Not compared with the bank for over 60 days: {0}</value>
+  </data>
+  <data name="Issue_WithoutCategory" xml:space="preserve">
+    <value>Without category: {0}</value>
+  </data>
+  <data name="Issue_PossibleDuplicates" xml:space="preserve">
+    <value>Possible duplicates: {0}</value>
+  </data>
+  <data name="Issue_Aggregated" xml:space="preserve">
+    <value>Summed-up entries (timing unknown): {0}</value>
+  </data>
+  <data name="Issue_BeforeOpening" xml:space="preserve">
+    <value>Before an opening date: {0}</value>
+  </data>
+  <data name="Issue_BackupOld_Action" xml:space="preserve">
+    <value>Back up now</value>
+  </data>
+  <data name="Issue_Unreviewed_Action" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Issue_UnknownAmounts_Action" xml:space="preserve">
+    <value>Open plans</value>
+  </data>
+  <data name="Issue_MissingRates_Action" xml:space="preserve">
+    <value>Add rates</value>
+  </data>
+  <data name="Issue_OutdatedRates_Action" xml:space="preserve">
+    <value>Update rates</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice_Action" xml:space="preserve">
+    <value>Add prices</value>
+  </data>
+  <data name="Issue_OpeningUnknown_Action" xml:space="preserve">
+    <value>Open the account</value>
+  </data>
+  <data name="Issue_NotReconciled_Action" xml:space="preserve">
+    <value>Compare balance</value>
+  </data>
+  <data name="Issue_WithoutCategory_Action" xml:space="preserve">
+    <value>Show entries</value>
+  </data>
+  <data name="Issue_PossibleDuplicates_Action" xml:space="preserve">
+    <value>Show entries</value>
+  </data>
+  <data name="Issue_Aggregated_Action" xml:space="preserve">
+    <value>Show entries</value>
+  </data>
+  <data name="Issue_BeforeOpening_Action" xml:space="preserve">
+    <value>Show entries</value>
+  </data>
+  <data name="Kpi_Explain" xml:space="preserve">
+    <value>Explain this number</value>
+  </data>
+  <data name="Kpi_InWords" xml:space="preserve">
+    <value>In words</value>
+  </data>
+  <data name="Kpi_Included" xml:space="preserve">
+    <value>Included</value>
+  </data>
+  <data name="Kpi_Excluded" xml:space="preserve">
+    <value>Not included</value>
+  </data>
+  <data name="Kpi_ShowEntries" xml:space="preserve">
+    <value>Show entries</value>
+  </data>
+  <data name="Kpi_K01_Title" xml:space="preserve">
+    <value>Budget remaining</value>
+  </data>
+  <data name="Kpi_K01_Question" xml:space="preserve">
+    <value>How much is left in this period's budget?</value>
+  </data>
+  <data name="Kpi_K01_Definition" xml:space="preserve">
+    <value>The limit plus what was carried over, minus expenses reduced by refunds.</value>
+  </data>
+  <data name="Kpi_K01_Included" xml:space="preserve">
+    <value>Expenses and refunds of the budget's accounts and categories|Sub-categories with their parent</value>
+  </data>
+  <data name="Kpi_K01_Excluded" xml:space="preserve">
+    <value>Transfers and card payments|Loan principal|Holding purchases and sales|Adjustments and opening balances|Income</value>
+  </data>
+  <data name="Kpi_K02_Title" xml:space="preserve">
+    <value>Lowest balance and headroom</value>
+  </data>
+  <data name="Kpi_K02_Question" xml:space="preserve">
+    <value>Will I run short before my next income?</value>
+  </data>
+  <data name="Kpi_K02_Definition" xml:space="preserve">
+    <value>The usable balance of today, plus planned receipts and minus planned payments of each day, minus day-to-day spending if you set an estimate. The lowest point minus protected money is the headroom – an estimate, never "safe to spend".</value>
+  </data>
+  <data name="Kpi_K02_Included" xml:space="preserve">
+    <value>Accounts usable for payments|Entries recorded for later days|Open plan payments, overdue ones today|Your day-to-day estimate, if set|Money set aside and marked as protected</value>
+  </data>
+  <data name="Kpi_K02_Excluded" xml:space="preserve">
+    <value>Budgets and monthly shares|Holdings, debts and money owed to you|Credit limits|Card purchases – only the card payment counts</value>
+  </data>
+  <data name="Kpi_K03_Title" xml:space="preserve">
+    <value>Goal progress</value>
+  </data>
+  <data name="Kpi_K03_Question" xml:space="preserve">
+    <value>How far are my goals?</value>
+  </data>
+  <data name="Kpi_K03_Definition" xml:space="preserve">
+    <value>What is reached divided by the target; the rest is what is still needed.</value>
+  </data>
+  <data name="Kpi_K03_Included" xml:space="preserve">
+    <value>A balance goal: the balance of its account|Money set aside: what is set aside and covered</value>
+  </data>
+  <data name="Kpi_K03_Excluded" xml:space="preserve">
+    <value>Money moved in from other accounts as income|Price changes</value>
+  </data>
+  <data name="Kpi_K04_Title" xml:space="preserve">
+    <value>Payments in the next 30 days</value>
+  </data>
+  <data name="Kpi_K04_Question" xml:space="preserve">
+    <value>Which payments are coming and how much are they?</value>
+  </data>
+  <data name="Kpi_K04_Definition" xml:space="preserve">
+    <value>What is still to pay of open plan payments due within 30 days, overdue ones included. Known, estimated (≈) and unknown amounts stay apart.</value>
+  </data>
+  <data name="Kpi_K04_Included" xml:space="preserve">
+    <value>Expense plans|Transfers to cards, loans or accounts kept aside|Only the outstanding part of a partly paid payment</value>
+  </data>
+  <data name="Kpi_K04_Excluded" xml:space="preserve">
+    <value>Settled and skipped payments|Transfers between usable accounts|Unknown amounts are counted, never added as zero</value>
+  </data>
+  <data name="Kpi_K05_Title" xml:space="preserve">
+    <value>Surplus</value>
+  </data>
+  <data name="Kpi_K05_Question" xml:space="preserve">
+    <value>Did I earn more than I spent?</value>
+  </data>
+  <data name="Kpi_K05_Definition" xml:space="preserve">
+    <value>Income you earned minus what you spent on consumption in the period.</value>
+  </data>
+  <data name="Kpi_K05_Included" xml:space="preserve">
+    <value>Income on the accounts of the scope, minus income paid back|Expenses, reduced by refunds and reimbursements|Interest and fees, counted once as expenses</value>
+  </data>
+  <data name="Kpi_K05_Excluded" xml:space="preserve">
+    <value>Transfers between your accounts|Card payments and loan principal|Holding purchases and sales|Adjustments and opening balances|Price and rate changes</value>
+  </data>
+  <data name="Kpi_K06_Title" xml:space="preserve">
+    <value>Share of income kept</value>
+  </data>
+  <data name="Kpi_K06_Question" xml:space="preserve">
+    <value>Which share of my income was left?</value>
+  </data>
+  <data name="Kpi_K06_Definition" xml:space="preserve">
+    <value>The surplus divided by your income. Without income it is not available – never 0 %.</value>
+  </data>
+  <data name="Kpi_K06_Included" xml:space="preserve">
+    <value>The same as the surplus</value>
+  </data>
+  <data name="Kpi_K06_Excluded" xml:space="preserve">
+    <value>Not a measure of wealth change, price growth or money moved to savings</value>
+  </data>
+  <data name="Kpi_K07_Title" xml:space="preserve">
+    <value>Essential costs covered</value>
+  </data>
+  <data name="Kpi_K07_Question" xml:space="preserve">
+    <value>How many months could I cover essential costs with the money I can use?</value>
+  </data>
+  <data name="Kpi_K07_Definition" xml:space="preserve">
+    <value>Usable money divided by the median essential spending of the last three complete months, plus monthly shares of essential non-monthly bills.</value>
+  </data>
+  <data name="Kpi_K07_Included" xml:space="preserve">
+    <value>Accounts usable for payments|Categories marked essential (housing, food, energy, phone, transport, health, insurance)</value>
+  </data>
+  <data name="Kpi_K07_Excluded" xml:space="preserve">
+    <value>Holdings, debts and money owed to you|Credit limits|Protected money is named, not removed</value>
+  </data>
+  <data name="Kpi_K08_Title" xml:space="preserve">
+    <value>Regular payments over a year</value>
+  </data>
+  <data name="Kpi_K08_Question" xml:space="preserve">
+    <value>What do my regular obligations cost over a year?</value>
+  </data>
+  <data name="Kpi_K08_Definition" xml:space="preserve">
+    <value>The expected amounts of active expense plans in the next 12 months: fixed, non-monthly and estimated. A monthly share is a share, not money set aside.</value>
+  </data>
+  <data name="Kpi_K08_Included" xml:space="preserve">
+    <value>Active expense plans and contracts</value>
+  </data>
+  <data name="Kpi_K08_Excluded" xml:space="preserve">
+    <value>Unknown amounts (counted apart)|Ended plans and skipped payments|Income plans</value>
+  </data>
+  <data name="Kpi_K09_Title" xml:space="preserve">
+    <value>Loan installments</value>
+  </data>
+  <data name="Kpi_K09_Question" xml:space="preserve">
+    <value>Which part of my income goes to loan installments?</value>
+  </data>
+  <data name="Kpi_K09_Definition" xml:space="preserve">
+    <value>Scheduled installments of the month divided by income. The split into interest and principal is an estimate from the loan's rate.</value>
+  </data>
+  <data name="Kpi_K09_Included" xml:space="preserve">
+    <value>Loans with a plan that pays the installment</value>
+  </data>
+  <data name="Kpi_K09_Excluded" xml:space="preserve">
+    <value>Card purchases|Principal is never spending</value>
+  </data>
+  <data name="Kpi_K10_Title" xml:space="preserve">
+    <value>Net worth</value>
+  </data>
+  <data name="Kpi_K10_Question" xml:space="preserve">
+    <value>What am I worth today, and what is it made of?</value>
+  </data>
+  <data name="Kpi_K10_Definition" xml:space="preserve">
+    <value>Per currency: money + money owed to you + valued assets + holdings at their latest price − debts. Currencies are never added without a rate.</value>
+  </data>
+  <data name="Kpi_K10_Included" xml:space="preserve">
+    <value>All accounts that are not archived|Open reimbursements and money lent|Holdings at their latest price</value>
+  </data>
+  <data name="Kpi_K10_Excluded" xml:space="preserve">
+    <value>Credit limits|Money set aside (it is inside your money)|Budgets|Holdings without a price – they are listed</value>
+  </data>
+  <data name="Kpi_K11_Title" xml:space="preserve">
+    <value>Spending change</value>
+  </data>
+  <data name="Kpi_K11_Question" xml:space="preserve">
+    <value>Where did my spending change?</value>
+  </data>
+  <data name="Kpi_K11_Definition" xml:space="preserve">
+    <value>Spending per category now against the previous period. While a period runs, the same number of days is compared.</value>
+  </data>
+  <data name="Kpi_K11_Included" xml:space="preserve">
+    <value>Expenses reduced by refunds</value>
+  </data>
+  <data name="Kpi_K11_Excluded" xml:space="preserve">
+    <value>The same as the surplus|It is not "personal inflation"</value>
+  </data>
+  <data name="Kpi_K12_Title" xml:space="preserve">
+    <value>Owed to me</value>
+  </data>
+  <data name="Kpi_K12_Question" xml:space="preserve">
+    <value>Who owes me what, and since when?</value>
+  </data>
+  <data name="Kpi_K12_Definition" xml:space="preserve">
+    <value>Open reimbursements and the balances of money lent, with their age and an optional due date.</value>
+  </data>
+  <data name="Kpi_K12_Included" xml:space="preserve">
+    <value>Expenses others pay back, minus what came back|Accounts of money lent</value>
+  </data>
+  <data name="Kpi_K12_Excluded" xml:space="preserve">
+    <value>Paid back amounts|It is never usable money until received</value>
+  </data>
+  <data name="Kpi_K13_Title" xml:space="preserve">
+    <value>Composition</value>
+  </data>
+  <data name="Kpi_K13_Question" xml:space="preserve">
+    <value>In which currencies and assets is my wealth?</value>
+  </data>
+  <data name="Kpi_K13_Definition" xml:space="preserve">
+    <value>The share of each currency and holding in the valuation currency, of the part with a known value.</value>
+  </data>
+  <data name="Kpi_K13_Included" xml:space="preserve">
+    <value>Positive balances, money owed to you, valued assets and valued holdings</value>
+  </data>
+  <data name="Kpi_K13_Excluded" xml:space="preserve">
+    <value>Debts (shown apart)|Currencies without a rate and holdings without a price – they are listed</value>
+  </data>
+  <data name="Kpi_K14_Title" xml:space="preserve">
+    <value>Data status</value>
+  </data>
+  <data name="Kpi_K14_Question" xml:space="preserve">
+    <value>Can I rely on this number?</value>
+  </data>
+  <data name="Kpi_K14_Definition" xml:space="preserve">
+    <value>A list of what may make a number less reliable, each with the screen that fixes it – never a score.</value>
+  </data>
+  <data name="Kpi_K14_Included" xml:space="preserve">
+    <value>Unreviewed entries, entries without category, unknown amounts|Missing or old rates, holdings without price|Unknown opening balances, accounts not compared for 60 days|Last backup older than 30 days, possible duplicates</value>
+  </data>
+  <data name="Kpi_K14_Excluded" xml:space="preserve">
+    <value>Any accuracy score</value>
+  </data>
+  <data name="Kpi_Capacity_Title" xml:space="preserve">
+    <value>Capacity for goals</value>
+  </data>
+  <data name="Kpi_Capacity_Question" xml:space="preserve">
+    <value>How much could go to goals per month?</value>
+  </data>
+  <data name="Kpi_Capacity_Definition" xml:space="preserve">
+    <value>Median income of the last three complete months minus median spending, monthly shares of non-monthly bills, loan principal and the plans of other goals. A limit for suggestions, never an allocation.</value>
+  </data>
+  <data name="Kpi_Capacity_Included" xml:space="preserve">
+    <value>Usable accounts of the currency|Accepted contribution plans of other goals</value>
+  </data>
+  <data name="Kpi_Capacity_Excluded" xml:space="preserve">
+    <value>Entries that paid non-monthly bills (their shares are used instead)|Transfers and holdings</value>
+  </data>
+  <data name="Home_HeadroomProtected" xml:space="preserve">
+    <value>Your plans would use protected money around {0}</value>
+  </data>
+  <data name="Home_Review" xml:space="preserve">
+    <value>Review {0}</value>
+  </data>
+  <data name="Review_Title" xml:space="preserve">
+    <value>Month review</value>
+  </data>
+  <data name="Review_TitleMonth" xml:space="preserve">
+    <value>Review of {0}</value>
+  </data>
+  <data name="Review_Intro" xml:space="preserve">
+    <value>A short routine for the month that just ended. Each step opens its screen; tick it when you are done.</value>
+  </data>
+  <data name="Review_Nothing" xml:space="preserve">
+    <value>Nothing to review right now.</value>
+  </data>
+  <data name="Review_Progress" xml:space="preserve">
+    <value>Done: {0} of {1}</value>
+  </data>
+  <data name="Review_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Review_Finish" xml:space="preserve">
+    <value>Finish the review</value>
+  </data>
+  <data name="Review_Start" xml:space="preserve">
+    <value>Start the month review</value>
+  </data>
+  <data name="Review_Unreviewed" xml:space="preserve">
+    <value>Review entries</value>
+  </data>
+  <data name="Review_Plans" xml:space="preserve">
+    <value>Settle or skip due payments</value>
+  </data>
+  <data name="Review_Reconcile" xml:space="preserve">
+    <value>Compare balances with the bank</value>
+  </data>
+  <data name="Review_Goals" xml:space="preserve">
+    <value>Look at your goals</value>
+  </data>
+  <data name="Review_Backup" xml:space="preserve">
+    <value>Make a backup</value>
+  </data>
+  <data name="Review_UnreviewedDetail" xml:space="preserve">
+    <value>Unreviewed: {0}</value>
+  </data>
+  <data name="Review_PlansDetail" xml:space="preserve">
+    <value>Open until the month end: {0}</value>
+  </data>
+  <data name="Review_ReconcileDetail" xml:space="preserve">
+    <value>Not compared for 60 days: {0}</value>
+  </data>
+  <data name="Review_GoalsDetail" xml:space="preserve">
+    <value>Active goals: {0}</value>
+  </data>
+  <data name="Review_BackupDetail" xml:space="preserve">
+    <value>Last backup: {0}</value>
+  </data>
+  <data name="Account_LastReconciled" xml:space="preserve">
+    <value>Last compared with the bank: {0}</value>
+  </data>
+  <data name="Account_NeverReconciled" xml:space="preserve">
+    <value>Not compared with the bank yet</value>
+  </data>
+  <data name="Account_HasDueDate" xml:space="preserve">
+    <value>To be paid back by a day</value>
+  </data>
+  <data name="Entry_ReimbursementDue" xml:space="preserve">
+    <value>Expected back by a day</value>
+  </data>
+  <data name="Category_Essential" xml:space="preserve">
+    <value>Essential spending</value>
+  </data>
+  <data name="Help_Essential_Title" xml:space="preserve">
+    <value>Essential spending</value>
+  </data>
+  <data name="Help_Essential_Text" xml:space="preserve">
+    <value>Costs you cannot easily skip, such as rent, food, energy or insurance. They size how long your usable money would last (essential coverage) and help suggest a day-to-day estimate.</value>
+  </data>
+  <data name="Help_Essential_Example" xml:space="preserve">
+    <value>Usable 6,000 EUR, essential months 1,450 / 1,500 / 1,620 → 4.0 months.</value>
+  </data>
+  <data name="Settings_Essential" xml:space="preserve">
+    <value>Day-to-day spending</value>
+  </data>
+  <data name="Settings_EssentialPlaceholder" xml:space="preserve">
+    <value>empty = not included</value>
+  </data>
+  <data name="Settings_EssentialCurrency" xml:space="preserve">
+    <value>In {0}; used by the headroom of your plans</value>
+  </data>
+  <data name="Settings_EssentialSuggestion" xml:space="preserve">
+    <value>Last 3 months: {0} per day</value>
+  </data>
+  <data name="Settings_UseSuggestion" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="Settings_EssentialSaved" xml:space="preserve">
+    <value>Saved. The headroom now includes day-to-day spending.</value>
+  </data>
+  <data name="Settings_EssentialCleared" xml:space="preserve">
+    <value>Removed. Day-to-day spending is not included.</value>
+  </data>
+  <data name="Settings_PerDay" xml:space="preserve">
+    <value>day</value>
+  </data>
+  <data name="Settings_PerWeek" xml:space="preserve">
+    <value>week</value>
+  </data>
+  <data name="Settings_PerMonth" xml:space="preserve">
+    <value>month</value>
+  </data>
+  <data name="Help_EssentialEstimate_Title" xml:space="preserve">
+    <value>Day-to-day spending</value>
+  </data>
+  <data name="Help_EssentialEstimate_Text" xml:space="preserve">
+    <value>The forecast knows only your plans. Groceries and other daily spending are not planned, so the headroom leaves them out unless you set an estimate here. Zanance only suggests a value from the last three months; you decide.</value>
+  </data>
+  <data name="Help_EssentialEstimate_Example" xml:space="preserve">
+    <value>20 EUR per day: 24 days until the lowest point subtract 480 EUR.</value>
+  </data>
+  <data name="Goal_Coverage" xml:space="preserve">
+    <value>Essential costs covered by usable money: {0}</value>
+  </data>
+  <data name="Entry_Aggregated" xml:space="preserve">
+    <value>Sums up several purchases</value>
+  </data>
+  <data name="Entry_AggregatedFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Entry_AggregatedTo" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Entry_AggregatedMarker" xml:space="preserve">
+    <value>Summed up</value>
+  </data>
+  <data name="Aggregate_Replace" xml:space="preserve">
+    <value>Link and replace</value>
+  </data>
+  <data name="Aggregate_KeepBoth" xml:space="preserve">
+    <value>Keep both (counts twice)</value>
+  </data>
+  <data name="Aggregate_Overlap" xml:space="preserve">
+    <value>"{0}" ({1}) already sums up this range. Detailed entries: {2}. Link and replace keeps {3} in the summed-up entry; Undo puts it back.</value>
+  </data>
+  <data name="Help_Aggregated_Title" xml:space="preserve">
+    <value>Summed-up entries</value>
+  </data>
+  <data name="Help_Aggregated_Text" xml:space="preserve">
+    <value>Record several purchases of a range as one amount, e.g. all groceries of September. It counts like any entry; numbers that need the day say its timing is unknown. When you later add detailed entries for the same account and category in the range, Zanance asks whether to replace them in the summed-up entry.</value>
+  </data>
+  <data name="Help_Aggregated_Example" xml:space="preserve">
+    <value>Groceries September 412 EUR; six receipts of 395 EUR added later → the summed-up entry keeps 17 EUR.</value>
+  </data>
+  <data name="Import_AggregateOverlap" xml:space="preserve">
+    <value>Rows inside a summed-up entry (would count twice): {0}. After the import, edit the summed-up entry or the rows.</value>
+  </data>
 </root>

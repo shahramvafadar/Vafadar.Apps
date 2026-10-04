@@ -334,6 +334,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         var duplicates = _preview.Count(r => r.PossibleDuplicate);
         var beforeOpening = _preview.Count(r => r.BeforeOpening && !r.AlreadyImported);
 
+        // Rows inside the range of a summed-up entry would count that money twice (ZEX-S0611); named, never changed silently.
+        var newEntries = _preview.Where(r => r.Entry is not null && !r.AlreadyImported).Select(r => r.Entry!).ToList();
+        var overlapping = Core.Ledger.AggregatedEntries.Find(newEntries, existing).SelectMany(o => o.Detailed).Select(e => e.Id).Distinct().Count(id => newEntries.Any(n => n.Id == id));
+
         PreviewText = _translator.Format("Import_Preview", valid, known, invalid.Count);
         InvalidLines.Clear();
         foreach (var row in invalid.Take(8))
@@ -346,6 +350,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         {
             duplicates > 0 ? _translator.Format("Import_Duplicates", duplicates) : null,
             beforeOpening > 0 ? _translator.Format("Import_BeforeOpening", beforeOpening) : null,
+            overlapping > 0 ? _translator.Format("Import_AggregateOverlap", overlapping) : null,
         }.Where(t => t is not null));
         if (WarningText.Length == 0)
         {

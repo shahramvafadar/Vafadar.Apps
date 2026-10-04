@@ -4004,4 +4004,787 @@
   <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
     <value>هدف‌ها: {0} · انواع دارایی: {1}</value>
   </data>
+  <data name="Report_R1" xml:space="preserve">
+    <value>مرور دوره</value>
+  </data>
+  <data name="Report_R2" xml:space="preserve">
+    <value>تعهدات</value>
+  </data>
+  <data name="Report_R3" xml:space="preserve">
+    <value>هدف‌ها</value>
+  </data>
+  <data name="Report_R4" xml:space="preserve">
+    <value>دارایی‌ها</value>
+  </data>
+  <data name="Report_R6" xml:space="preserve">
+    <value>وضعیت داده‌ها</value>
+  </data>
+  <data name="Report_Scope" xml:space="preserve">
+    <value>دامنه:</value>
+  </data>
+  <data name="Report_ChangeScope" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="Report_ScopeCurrency" xml:space="preserve">
+    <value>ارز</value>
+  </data>
+  <data name="Report_ScopeAccounts" xml:space="preserve">
+    <value>حساب‌ها</value>
+  </data>
+  <data name="Report_ScopeInTotals" xml:space="preserve">
+    <value>حساب‌های داخل جمع</value>
+  </data>
+  <data name="Report_ScopeUsable" xml:space="preserve">
+    <value>حساب‌های قابل‌خرج</value>
+  </data>
+  <data name="Report_ScopeOneAccount" xml:space="preserve">
+    <value>یک حساب</value>
+  </data>
+  <data name="Report_PeriodLength" xml:space="preserve">
+    <value>دوره</value>
+  </data>
+  <data name="Report_ConfirmedOnly" xml:space="preserve">
+    <value>فقط تأییدشده‌ها</value>
+  </data>
+  <data name="Report_Next30" xml:space="preserve">
+    <value>تا ۳۰ روز آینده</value>
+  </data>
+  <data name="Report_Today" xml:space="preserve">
+    <value>امروز</value>
+  </data>
+  <data name="Report_Item" xml:space="preserve">
+    <value>مورد</value>
+  </data>
+  <data name="Report_Amount" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Report_NotAvailable" xml:space="preserve">
+    <value>در دسترس نیست</value>
+  </data>
+  <data name="Report_DataStatus" xml:space="preserve">
+    <value>وضعیت داده‌ها: {0}</value>
+  </data>
+  <data name="Report_NoIssues" xml:space="preserve">
+    <value>برای این نما موردی باز نیست</value>
+  </data>
+  <data name="Report_Surplus" xml:space="preserve">
+    <value>مازاد</value>
+  </data>
+  <data name="Report_SurplusDetail" xml:space="preserve">
+    <value>درآمد {0} · خرج {1}</value>
+  </data>
+  <data name="Report_Rate" xml:space="preserve">
+    <value>سهم ماندهٔ درآمد: {0}</value>
+  </data>
+  <data name="Report_OtherCurrencies" xml:space="preserve">
+    <value>ارزهای دیگر (جمع نشده): {0}</value>
+  </data>
+  <data name="Report_Converted" xml:space="preserve">
+    <value>تبدیل‌شده: حدود {0}</value>
+  </data>
+  <data name="Report_SpendingLine" xml:space="preserve">
+    <value>خرج (هزینه‌ها {0} − بازپرداخت‌ها {1})</value>
+  </data>
+  <data name="Report_TransfersBetween" xml:space="preserve">
+    <value>انتقال بین حساب‌های شما</value>
+  </data>
+  <data name="Report_SeparateLines" xml:space="preserve">
+    <value>ردیف‌های جدا، خرج حساب نمی‌شوند</value>
+  </data>
+  <data name="Report_IncomeSpending" xml:space="preserve">
+    <value>درآمد و خرج</value>
+  </data>
+  <data name="Report_SpendingChange" xml:space="preserve">
+    <value>تغییر خرج</value>
+  </data>
+  <data name="Report_Comparison" xml:space="preserve">
+    <value>{0} در برابر {1}</value>
+  </data>
+  <data name="Report_ChangeDetail" xml:space="preserve">
+    <value>اکنون {0} · قبلاً {1}</value>
+  </data>
+  <data name="Report_New" xml:space="preserve">
+    <value>جدید</value>
+  </data>
+  <data name="Report_NoChanges" xml:space="preserve">
+    <value>هنوز خرجی برای مقایسه نیست.</value>
+  </data>
+  <data name="Report_TagShared" xml:space="preserve">
+    <value>با چند برچسب: {0}</value>
+  </data>
+  <data name="Report_Capital" xml:space="preserve">
+    <value>خرید یا فروش دارایی</value>
+  </data>
+  <data name="Report_Headroom" xml:space="preserve">
+    <value>حاشیهٔ نقدینگی</value>
+  </data>
+  <data name="Report_Around" xml:space="preserve">
+    <value>حدود تاریخ {1}: {0}</value>
+  </data>
+  <data name="Report_UsesProtected" xml:space="preserve">
+    <value>برنامه‌های شما حدود {1} مبلغ {0} از پول محافظت‌شده را مصرف می‌کنند.</value>
+  </data>
+  <data name="Report_LowestBalance" xml:space="preserve">
+    <value>کمترین موجودی {0} در {1}.</value>
+  </data>
+  <data name="Report_EssentialNotIncluded" xml:space="preserve">
+    <value>خرج روزمره لحاظ نشده</value>
+  </data>
+  <data name="Report_Incomplete" xml:space="preserve">
+    <value>ناقص – مبالغ نامعلوم: {0}</value>
+  </data>
+  <data name="Report_EstimateNotGuarantee" xml:space="preserve">
+    <value>برآورد با برنامه‌های فعلی شما – تضمینی نیست</value>
+  </data>
+  <data name="Report_NoUsableAccounts" xml:space="preserve">
+    <value>حساب قابل‌خرجی با این ارز نیست.</value>
+  </data>
+  <data name="Report_UsableToday" xml:space="preserve">
+    <value>موجودی قابل‌خرج، پایان {0}</value>
+  </data>
+  <data name="Report_DayToDay" xml:space="preserve">
+    <value>خرج روزمره · {0} × {1}</value>
+  </data>
+  <data name="Report_LowestOn" xml:space="preserve">
+    <value>کمترین موجودی · {0}</value>
+  </data>
+  <data name="Report_Protected" xml:space="preserve">
+    <value>پول کنارگذاشتهٔ محافظت‌شده</value>
+  </data>
+  <data name="Report_ComesAfter" xml:space="preserve">
+    <value>{0} در {1} پس از کمترین نقطه می‌آید</value>
+  </data>
+  <data name="Report_Next30Title" xml:space="preserve">
+    <value>پرداخت‌های ۳۰ روز آینده</value>
+  </data>
+  <data name="Report_NoCommitments" xml:space="preserve">
+    <value>در ۳۰ روز آینده پرداختی نیست</value>
+  </data>
+  <data name="Report_UnknownCount" xml:space="preserve">
+    <value>نامعلوم: {0}</value>
+  </data>
+  <data name="Report_Yearly" xml:space="preserve">
+    <value>پرداخت‌های منظم ۱۲ ماه آینده</value>
+  </data>
+  <data name="Report_YearlyTotals" xml:space="preserve">
+    <value>ثابت {0} · غیرماهانه {1} · برآوردی {2}</value>
+  </data>
+  <data name="Report_MonthlyShare" xml:space="preserve">
+    <value>سهم ماهانه {0}</value>
+  </data>
+  <data name="Report_ShareNotSetAside" xml:space="preserve">
+    <value>سهم ماهانه فقط یک سهم است، نه پول کنارگذاشته.</value>
+  </data>
+  <data name="Report_Debt" xml:space="preserve">
+    <value>وام‌ها</value>
+  </data>
+  <data name="Report_NextInstallment" xml:space="preserve">
+    <value>قسط بعدی {0} در {1}</value>
+  </data>
+  <data name="Report_AddPaymentDay" xml:space="preserve">
+    <value>وامی قسط دارد ولی برنامه ندارد – روز پرداخت را اضافه کنید.</value>
+  </data>
+  <data name="Report_DebtRatio" xml:space="preserve">
+    <value>اقساط: {0} از درآمد · بهره {1} · اصل {2}</value>
+  </data>
+  <data name="Report_OwedToMe" xml:space="preserve">
+    <value>طلب‌های من</value>
+  </data>
+  <data name="Report_NoReceivables" xml:space="preserve">
+    <value>کسی به شما بدهکار نیست.</value>
+  </data>
+  <data name="Report_Receivables" xml:space="preserve">
+    <value>باز: {0} · موارد: {1}</value>
+  </data>
+  <data name="Report_Over90" xml:space="preserve">
+    <value>قدیمی‌تر از ۹۰ روز: {0}</value>
+  </data>
+  <data name="Report_Age0to30" xml:space="preserve">
+    <value>تا ۳۰ روز</value>
+  </data>
+  <data name="Report_Age31to90" xml:space="preserve">
+    <value>بین ۳۱ تا ۹۰ روز</value>
+  </data>
+  <data name="Report_AgeOver90" xml:space="preserve">
+    <value>بیش از ۹۰ روز</value>
+  </data>
+  <data name="Report_Days" xml:space="preserve">
+    <value>مدت {0} روز</value>
+  </data>
+  <data name="Report_Due" xml:space="preserve">
+    <value>سررسید {0}</value>
+  </data>
+  <data name="Report_DueOverdue" xml:space="preserve">
+    <value>سررسید گذشته از {0}</value>
+  </data>
+  <data name="Report_GoalProgress" xml:space="preserve">
+    <value>پیشرفت هدف‌ها</value>
+  </data>
+  <data name="Report_NoGoals" xml:space="preserve">
+    <value>هدف فعالی نیست.</value>
+  </data>
+  <data name="Report_Capacity" xml:space="preserve">
+    <value>ظرفیت پس‌انداز برای هدف‌ها</value>
+  </data>
+  <data name="Report_CapacityValue" xml:space="preserve">
+    <value>ماهانه {0}</value>
+  </data>
+  <data name="Report_CapIncome" xml:space="preserve">
+    <value>درآمد (میانهٔ ۳ ماه)</value>
+  </data>
+  <data name="Report_CapSpending" xml:space="preserve">
+    <value>خرج (میانه، بدون قبض‌های غیرماهانه)</value>
+  </data>
+  <data name="Report_CapNonMonthly" xml:space="preserve">
+    <value>سهم ماهانهٔ قبض‌های غیرماهانه</value>
+  </data>
+  <data name="Report_CapPrincipal" xml:space="preserve">
+    <value>اصل وام</value>
+  </data>
+  <data name="Report_CapGoals" xml:space="preserve">
+    <value>برنامهٔ هدف‌های دیگر</value>
+  </data>
+  <data name="Report_EstimateNotPromise" xml:space="preserve">
+    <value>یک برآورد است، نه قول. پذیرفتن پیشنهاد بودجه یا تراکنشی را تغییر نمی‌دهد.</value>
+  </data>
+  <data name="Report_Needs" xml:space="preserve">
+    <value>نیاز ماهانه {0}</value>
+  </data>
+  <data name="Report_Accept" xml:space="preserve">
+    <value>پذیرفتن</value>
+  </data>
+  <data name="Report_Accepted" xml:space="preserve">
+    <value>برنامهٔ {1}: ماهانه {0} از ماه آینده.</value>
+  </data>
+  <data name="Report_NotEnoughHistory" xml:space="preserve">
+    <value>هنوز سابقهٔ کافی نیست (۳ ماه کامل لازم است)</value>
+  </data>
+  <data name="Report_Coverage" xml:space="preserve">
+    <value>پوشش هزینه‌های ضروری</value>
+  </data>
+  <data name="Report_Months" xml:space="preserve">
+    <value>معادل {0} ماه</value>
+  </data>
+  <data name="Report_CoverageDetail" xml:space="preserve">
+    <value>قابل‌خرج {0} · هزینهٔ ضروری ماهانه {1}</value>
+  </data>
+  <data name="Report_OfWhichProtected" xml:space="preserve">
+    <value>شامل پول محافظت‌شده {0}</value>
+  </data>
+  <data name="Report_UsableMoney" xml:space="preserve">
+    <value>پول قابل‌خرج</value>
+  </data>
+  <data name="Report_EssentialMonth" xml:space="preserve">
+    <value>هزینهٔ ضروری ماهانه</value>
+  </data>
+  <data name="Report_NetWorth" xml:space="preserve">
+    <value>ارزش خالص دارایی</value>
+  </data>
+  <data name="Report_NetWorthIn" xml:space="preserve">
+    <value>ارزش خالص به {0}</value>
+  </data>
+  <data name="Report_WealthMoney" xml:space="preserve">
+    <value>پول</value>
+  </data>
+  <data name="Report_WealthReceivables" xml:space="preserve">
+    <value>طلب‌ها</value>
+  </data>
+  <data name="Report_WealthAssets" xml:space="preserve">
+    <value>دارایی‌های ارزش‌گذاری‌شده</value>
+  </data>
+  <data name="Report_WealthHoldings" xml:space="preserve">
+    <value>دارایی‌های مقداری (ارزش‌گذاری‌شده)</value>
+  </data>
+  <data name="Report_WealthDebts" xml:space="preserve">
+    <value>بدهی‌ها</value>
+  </data>
+  <data name="Report_NotValued" xml:space="preserve">
+    <value>ارزش‌گذاری نشده: {0} {1}</value>
+  </data>
+  <data name="Report_Composition" xml:space="preserve">
+    <value>ترکیب دارایی</value>
+  </data>
+  <data name="Report_DebtsApart" xml:space="preserve">
+    <value>بدهی‌ها جدا: {0}</value>
+  </data>
+  <data name="Report_NoRate" xml:space="preserve">
+    <value>بدون نرخ: {0}</value>
+  </data>
+  <data name="Report_AddRatesForComposition" xml:space="preserve">
+    <value>برای دیدن ترکیب، نرخ یا قیمت وارد کنید</value>
+  </data>
+  <data name="Issue_BackupOld" xml:space="preserve">
+    <value>آخرین پشتیبان در {0}</value>
+  </data>
+  <data name="Issue_NoBackup" xml:space="preserve">
+    <value>هنوز پشتیبانی گرفته نشده</value>
+  </data>
+  <data name="Issue_Unreviewed" xml:space="preserve">
+    <value>بررسی‌نشده: {0}</value>
+  </data>
+  <data name="Issue_UnknownAmounts" xml:space="preserve">
+    <value>مبالغ نامعلوم: {0}</value>
+  </data>
+  <data name="Issue_MissingRates" xml:space="preserve">
+    <value>بدون نرخ: {0}</value>
+  </data>
+  <data name="Issue_OutdatedRates" xml:space="preserve">
+    <value>نرخ {0} از تاریخ {1}</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice" xml:space="preserve">
+    <value>دارایی‌های بدون قیمت: {0}</value>
+  </data>
+  <data name="Issue_OpeningUnknown" xml:space="preserve">
+    <value>موجودی اولیهٔ نامعلوم: {0}</value>
+  </data>
+  <data name="Issue_NotReconciled" xml:space="preserve">
+    <value>بیش از ۶۰ روز با بانک مقایسه نشده: {0}</value>
+  </data>
+  <data name="Issue_WithoutCategory" xml:space="preserve">
+    <value>بدون دسته: {0}</value>
+  </data>
+  <data name="Issue_PossibleDuplicates" xml:space="preserve">
+    <value>تکراری‌های احتمالی: {0}</value>
+  </data>
+  <data name="Issue_Aggregated" xml:space="preserve">
+    <value>ورودی‌های تجمیعی (زمان نامعلوم): {0}</value>
+  </data>
+  <data name="Issue_BeforeOpening" xml:space="preserve">
+    <value>پیش از تاریخ افتتاح: {0}</value>
+  </data>
+  <data name="Issue_BackupOld_Action" xml:space="preserve">
+    <value>پشتیبان‌گیری</value>
+  </data>
+  <data name="Issue_Unreviewed_Action" xml:space="preserve">
+    <value>بررسی</value>
+  </data>
+  <data name="Issue_UnknownAmounts_Action" xml:space="preserve">
+    <value>باز کردن برنامه‌ها</value>
+  </data>
+  <data name="Issue_MissingRates_Action" xml:space="preserve">
+    <value>افزودن نرخ</value>
+  </data>
+  <data name="Issue_OutdatedRates_Action" xml:space="preserve">
+    <value>به‌روزرسانی نرخ‌ها</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice_Action" xml:space="preserve">
+    <value>افزودن قیمت</value>
+  </data>
+  <data name="Issue_OpeningUnknown_Action" xml:space="preserve">
+    <value>باز کردن حساب</value>
+  </data>
+  <data name="Issue_NotReconciled_Action" xml:space="preserve">
+    <value>مقایسهٔ موجودی</value>
+  </data>
+  <data name="Issue_WithoutCategory_Action" xml:space="preserve">
+    <value>نمایش تراکنش‌ها</value>
+  </data>
+  <data name="Issue_PossibleDuplicates_Action" xml:space="preserve">
+    <value>نمایش تراکنش‌ها</value>
+  </data>
+  <data name="Issue_Aggregated_Action" xml:space="preserve">
+    <value>نمایش تراکنش‌ها</value>
+  </data>
+  <data name="Issue_BeforeOpening_Action" xml:space="preserve">
+    <value>نمایش تراکنش‌ها</value>
+  </data>
+  <data name="Kpi_Explain" xml:space="preserve">
+    <value>توضیح این عدد</value>
+  </data>
+  <data name="Kpi_InWords" xml:space="preserve">
+    <value>به زبان ساده</value>
+  </data>
+  <data name="Kpi_Included" xml:space="preserve">
+    <value>شامل</value>
+  </data>
+  <data name="Kpi_Excluded" xml:space="preserve">
+    <value>شامل نمی‌شود</value>
+  </data>
+  <data name="Kpi_ShowEntries" xml:space="preserve">
+    <value>نمایش تراکنش‌ها</value>
+  </data>
+  <data name="Kpi_K01_Title" xml:space="preserve">
+    <value>باقیماندهٔ بودجه</value>
+  </data>
+  <data name="Kpi_K01_Question" xml:space="preserve">
+    <value>از بودجهٔ این دوره چقدر مانده است؟</value>
+  </data>
+  <data name="Kpi_K01_Definition" xml:space="preserve">
+    <value>سقف به‌علاوهٔ مقدار منتقل‌شده، منهای هزینه‌ها پس از کسر بازپرداخت‌ها.</value>
+  </data>
+  <data name="Kpi_K01_Included" xml:space="preserve">
+    <value>هزینه‌ها و بازپرداخت‌های حساب‌ها و دسته‌های بودجه|زیردسته‌ها همراه دستهٔ اصلی</value>
+  </data>
+  <data name="Kpi_K01_Excluded" xml:space="preserve">
+    <value>انتقال‌ها و پرداخت کارت|اصل وام|خرید و فروش دارایی|اصلاح موجودی و موجودی اولیه|درآمد</value>
+  </data>
+  <data name="Kpi_K02_Title" xml:space="preserve">
+    <value>کمترین موجودی و حاشیهٔ نقدینگی</value>
+  </data>
+  <data name="Kpi_K02_Question" xml:space="preserve">
+    <value>آیا پیش از درآمد بعدی کم می‌آورم؟</value>
+  </data>
+  <data name="Kpi_K02_Definition" xml:space="preserve">
+    <value>موجودی قابل‌خرج امروز، به‌علاوهٔ دریافت‌ها و منهای پرداخت‌های برنامه‌ریزی‌شدهٔ هر روز، منهای خرج روزمره اگر برآورد آن را تعیین کرده باشید. کمترین نقطه منهای پول محافظت‌شده حاشیهٔ نقدینگی است – یک برآورد، هرگز «قابل خرج امن» نیست.</value>
+  </data>
+  <data name="Kpi_K02_Included" xml:space="preserve">
+    <value>حساب‌های قابل‌استفاده برای پرداخت|تراکنش‌های ثبت‌شده برای روزهای بعد|پرداخت‌های باز برنامه، معوق‌ها در امروز|برآورد خرج روزمره، اگر تعیین شده باشد|پول کنارگذاشتهٔ محافظت‌شده</value>
+  </data>
+  <data name="Kpi_K02_Excluded" xml:space="preserve">
+    <value>بودجه‌ها و سهم‌های ماهانه|دارایی‌ها، بدهی‌ها و طلب‌ها|سقف اعتبار|خریدهای کارتی – فقط پرداخت کارت حساب می‌شود</value>
+  </data>
+  <data name="Kpi_K03_Title" xml:space="preserve">
+    <value>پیشرفت هدف‌ها</value>
+  </data>
+  <data name="Kpi_K03_Question" xml:space="preserve">
+    <value>هدف‌هایم کجا هستند؟</value>
+  </data>
+  <data name="Kpi_K03_Definition" xml:space="preserve">
+    <value>مقدار رسیده تقسیم بر هدف؛ باقیمانده آن چیزی است که هنوز لازم است.</value>
+  </data>
+  <data name="Kpi_K03_Included" xml:space="preserve">
+    <value>هدف موجودی: موجودی حساب آن|پول کنارگذاشته: مقدار کنارگذاشته و پوشش‌داده‌شده</value>
+  </data>
+  <data name="Kpi_K03_Excluded" xml:space="preserve">
+    <value>پول منتقل‌شده از حساب‌های دیگر به‌عنوان درآمد|تغییر قیمت‌ها</value>
+  </data>
+  <data name="Kpi_K04_Title" xml:space="preserve">
+    <value>پرداخت‌های ۳۰ روز آینده</value>
+  </data>
+  <data name="Kpi_K04_Question" xml:space="preserve">
+    <value>چه پرداخت‌هایی در راه است و چقدر است؟</value>
+  </data>
+  <data name="Kpi_K04_Definition" xml:space="preserve">
+    <value>آنچه از پرداخت‌های باز برنامه در ۳۰ روز آینده هنوز مانده، همراه معوق‌ها. مبالغ معلوم، برآوردی (≈) و نامعلوم جدا می‌مانند.</value>
+  </data>
+  <data name="Kpi_K04_Included" xml:space="preserve">
+    <value>برنامه‌های هزینه|انتقال به کارت، وام یا حساب‌های کنارگذاشته|فقط بخش باقیماندهٔ پرداخت نیمه‌پرداخت‌شده</value>
+  </data>
+  <data name="Kpi_K04_Excluded" xml:space="preserve">
+    <value>پرداخت‌های تسویه‌شده و ردشده|انتقال بین حساب‌های قابل‌خرج|مبالغ نامعلوم شمرده می‌شوند، هرگز صفر جمع نمی‌شوند</value>
+  </data>
+  <data name="Kpi_K05_Title" xml:space="preserve">
+    <value>مازاد</value>
+  </data>
+  <data name="Kpi_K05_Question" xml:space="preserve">
+    <value>آیا بیشتر از خرجم درآمد داشتم؟</value>
+  </data>
+  <data name="Kpi_K05_Definition" xml:space="preserve">
+    <value>درآمدی که کسب کردید منهای آنچه در این دوره خرج مصرف کردید.</value>
+  </data>
+  <data name="Kpi_K05_Included" xml:space="preserve">
+    <value>درآمد حساب‌های دامنه، منهای درآمد برگشتی|هزینه‌ها پس از کسر بازپرداخت‌ها|بهره و کارمزد، یک بار به‌عنوان هزینه</value>
+  </data>
+  <data name="Kpi_K05_Excluded" xml:space="preserve">
+    <value>انتقال بین حساب‌های شما|پرداخت کارت و اصل وام|خرید و فروش دارایی|اصلاح موجودی و موجودی اولیه|تغییر قیمت و نرخ</value>
+  </data>
+  <data name="Kpi_K06_Title" xml:space="preserve">
+    <value>سهم ماندهٔ درآمد</value>
+  </data>
+  <data name="Kpi_K06_Question" xml:space="preserve">
+    <value>چه سهمی از درآمدم ماند؟</value>
+  </data>
+  <data name="Kpi_K06_Definition" xml:space="preserve">
+    <value>مازاد تقسیم بر درآمد شما. بدون درآمد در دسترس نیست – هرگز ۰٪ نیست.</value>
+  </data>
+  <data name="Kpi_K06_Included" xml:space="preserve">
+    <value>همانند مازاد</value>
+  </data>
+  <data name="Kpi_K06_Excluded" xml:space="preserve">
+    <value>معیار تغییر ثروت، رشد قیمت یا انتقال به پس‌انداز نیست</value>
+  </data>
+  <data name="Kpi_K07_Title" xml:space="preserve">
+    <value>پوشش هزینه‌های ضروری</value>
+  </data>
+  <data name="Kpi_K07_Question" xml:space="preserve">
+    <value>با پول قابل‌خرجم چند ماه هزینه‌های ضروری پوشش داده می‌شود؟</value>
+  </data>
+  <data name="Kpi_K07_Definition" xml:space="preserve">
+    <value>پول قابل‌خرج تقسیم بر میانهٔ خرج ضروری سه ماه کامل اخیر، به‌علاوهٔ سهم ماهانهٔ قبض‌های ضروری غیرماهانه.</value>
+  </data>
+  <data name="Kpi_K07_Included" xml:space="preserve">
+    <value>حساب‌های قابل‌استفاده برای پرداخت|دسته‌های ضروری (مسکن، خوراک، انرژی، تلفن، حمل‌ونقل، سلامت، بیمه)</value>
+  </data>
+  <data name="Kpi_K07_Excluded" xml:space="preserve">
+    <value>دارایی‌ها، بدهی‌ها و طلب‌ها|سقف اعتبار|پول محافظت‌شده نام برده می‌شود، کم نمی‌شود</value>
+  </data>
+  <data name="Kpi_K08_Title" xml:space="preserve">
+    <value>پرداخت‌های منظم در یک سال</value>
+  </data>
+  <data name="Kpi_K08_Question" xml:space="preserve">
+    <value>تعهدات منظم من در یک سال چقدر هزینه دارد؟</value>
+  </data>
+  <data name="Kpi_K08_Definition" xml:space="preserve">
+    <value>مبالغ مورد انتظار برنامه‌های هزینهٔ فعال در ۱۲ ماه آینده: ثابت، غیرماهانه و برآوردی. سهم ماهانه پول کنارگذاشته نیست.</value>
+  </data>
+  <data name="Kpi_K08_Included" xml:space="preserve">
+    <value>برنامه‌های هزینه و قراردادهای فعال</value>
+  </data>
+  <data name="Kpi_K08_Excluded" xml:space="preserve">
+    <value>مبالغ نامعلوم (جداگانه شمرده می‌شوند)|برنامه‌های پایان‌یافته و پرداخت‌های ردشده|برنامه‌های درآمد</value>
+  </data>
+  <data name="Kpi_K09_Title" xml:space="preserve">
+    <value>اقساط وام</value>
+  </data>
+  <data name="Kpi_K09_Question" xml:space="preserve">
+    <value>چه بخشی از درآمدم صرف قسط وام می‌شود؟</value>
+  </data>
+  <data name="Kpi_K09_Definition" xml:space="preserve">
+    <value>اقساط برنامه‌ریزی‌شدهٔ ماه تقسیم بر درآمد. تقسیم به بهره و اصل برآوردی از نرخ وام است.</value>
+  </data>
+  <data name="Kpi_K09_Included" xml:space="preserve">
+    <value>وام‌هایی که برنامهٔ پرداخت قسط دارند</value>
+  </data>
+  <data name="Kpi_K09_Excluded" xml:space="preserve">
+    <value>خریدهای کارتی|اصل وام هرگز خرج نیست</value>
+  </data>
+  <data name="Kpi_K10_Title" xml:space="preserve">
+    <value>ارزش خالص دارایی</value>
+  </data>
+  <data name="Kpi_K10_Question" xml:space="preserve">
+    <value>امروز ارزش خالص من چقدر است و از چه تشکیل شده؟</value>
+  </data>
+  <data name="Kpi_K10_Definition" xml:space="preserve">
+    <value>برای هر ارز: پول + طلب‌ها + دارایی‌های ارزش‌گذاری‌شده + دارایی‌های مقداری با آخرین قیمت − بدهی‌ها. ارزها بدون نرخ هرگز جمع نمی‌شوند.</value>
+  </data>
+  <data name="Kpi_K10_Included" xml:space="preserve">
+    <value>همهٔ حساب‌های بایگانی‌نشده|بازپرداخت‌های باز و پول قرض‌داده|دارایی‌ها با آخرین قیمت</value>
+  </data>
+  <data name="Kpi_K10_Excluded" xml:space="preserve">
+    <value>سقف اعتبار|پول کنارگذاشته (داخل پول شماست)|بودجه‌ها|دارایی‌های بدون قیمت – فهرست می‌شوند</value>
+  </data>
+  <data name="Kpi_K11_Title" xml:space="preserve">
+    <value>تغییر خرج</value>
+  </data>
+  <data name="Kpi_K11_Question" xml:space="preserve">
+    <value>خرجم کجا تغییر کرد؟</value>
+  </data>
+  <data name="Kpi_K11_Definition" xml:space="preserve">
+    <value>خرج هر دسته اکنون در برابر دورهٔ قبل. تا دوره تمام نشده، همان تعداد روز مقایسه می‌شود.</value>
+  </data>
+  <data name="Kpi_K11_Included" xml:space="preserve">
+    <value>هزینه‌ها پس از کسر بازپرداخت‌ها</value>
+  </data>
+  <data name="Kpi_K11_Excluded" xml:space="preserve">
+    <value>همانند مازاد|«تورم شخصی» نیست</value>
+  </data>
+  <data name="Kpi_K12_Title" xml:space="preserve">
+    <value>طلب‌های من</value>
+  </data>
+  <data name="Kpi_K12_Question" xml:space="preserve">
+    <value>چه کسی چه مبلغی به من بدهکار است و از کی؟</value>
+  </data>
+  <data name="Kpi_K12_Definition" xml:space="preserve">
+    <value>بازپرداخت‌های باز و موجودی پول قرض‌داده، با مدت و سررسید اختیاری.</value>
+  </data>
+  <data name="Kpi_K12_Included" xml:space="preserve">
+    <value>هزینه‌هایی که دیگران برمی‌گردانند، منهای آنچه برگشته|حساب‌های پول قرض‌داده</value>
+  </data>
+  <data name="Kpi_K12_Excluded" xml:space="preserve">
+    <value>مبالغ برگشته|تا دریافت نشود پول قابل‌خرج نیست</value>
+  </data>
+  <data name="Kpi_K13_Title" xml:space="preserve">
+    <value>ترکیب دارایی</value>
+  </data>
+  <data name="Kpi_K13_Question" xml:space="preserve">
+    <value>ثروتم در چه ارزها و دارایی‌هایی است؟</value>
+  </data>
+  <data name="Kpi_K13_Definition" xml:space="preserve">
+    <value>سهم هر ارز و دارایی به ارز ارزش‌گذاری، از بخشی که ارزش معلوم دارد.</value>
+  </data>
+  <data name="Kpi_K13_Included" xml:space="preserve">
+    <value>موجودی‌های مثبت، طلب‌ها، دارایی‌های ارزش‌گذاری‌شده</value>
+  </data>
+  <data name="Kpi_K13_Excluded" xml:space="preserve">
+    <value>بدهی‌ها (جدا نشان داده می‌شوند)|ارزهای بدون نرخ و دارایی‌های بدون قیمت – فهرست می‌شوند</value>
+  </data>
+  <data name="Kpi_K14_Title" xml:space="preserve">
+    <value>وضعیت داده‌ها</value>
+  </data>
+  <data name="Kpi_K14_Question" xml:space="preserve">
+    <value>آیا می‌توانم به این عدد تکیه کنم؟</value>
+  </data>
+  <data name="Kpi_K14_Definition" xml:space="preserve">
+    <value>فهرستی از آنچه ممکن است عددی را کم‌اعتبار کند، هر کدام با صفحهٔ رفع آن – هرگز یک امتیاز نیست.</value>
+  </data>
+  <data name="Kpi_K14_Included" xml:space="preserve">
+    <value>تراکنش‌های بررسی‌نشده، بدون دسته، مبالغ نامعلوم|نرخ‌های ناموجود یا قدیمی، دارایی‌های بدون قیمت|موجودی اولیهٔ نامعلوم، حساب‌های ۶۰ روز مقایسه‌نشده|پشتیبان قدیمی‌تر از ۳۰ روز، تکراری‌های احتمالی</value>
+  </data>
+  <data name="Kpi_K14_Excluded" xml:space="preserve">
+    <value>هر نوع امتیاز دقت</value>
+  </data>
+  <data name="Kpi_Capacity_Title" xml:space="preserve">
+    <value>ظرفیت پس‌انداز برای هدف‌ها</value>
+  </data>
+  <data name="Kpi_Capacity_Question" xml:space="preserve">
+    <value>ماهانه چقدر می‌تواند به هدف‌ها برسد؟</value>
+  </data>
+  <data name="Kpi_Capacity_Definition" xml:space="preserve">
+    <value>میانهٔ درآمد سه ماه کامل اخیر منهای میانهٔ خرج، سهم ماهانهٔ قبض‌های غیرماهانه، اصل وام و برنامهٔ هدف‌های دیگر. سقفی برای پیشنهاد، هرگز تخصیص نیست.</value>
+  </data>
+  <data name="Kpi_Capacity_Included" xml:space="preserve">
+    <value>حساب‌های قابل‌خرج این ارز|برنامه‌های پذیرفته‌شدهٔ هدف‌های دیگر</value>
+  </data>
+  <data name="Kpi_Capacity_Excluded" xml:space="preserve">
+    <value>تراکنش‌های پرداخت قبض‌های غیرماهانه (به جایشان سهم ماهانه)|انتقال‌ها و دارایی‌ها</value>
+  </data>
+  <data name="Home_HeadroomProtected" xml:space="preserve">
+    <value>برنامه‌های شما حدود {0} پول محافظت‌شده را مصرف می‌کنند</value>
+  </data>
+  <data name="Home_Review" xml:space="preserve">
+    <value>مرور {0}</value>
+  </data>
+  <data name="Review_Title" xml:space="preserve">
+    <value>مرور ماه</value>
+  </data>
+  <data name="Review_TitleMonth" xml:space="preserve">
+    <value>مرور {0}</value>
+  </data>
+  <data name="Review_Intro" xml:space="preserve">
+    <value>یک روال کوتاه برای ماهی که تمام شد. هر مرحله صفحهٔ خودش را باز می‌کند؛ پس از انجام، آن را علامت بزنید.</value>
+  </data>
+  <data name="Review_Nothing" xml:space="preserve">
+    <value>فعلاً چیزی برای مرور نیست.</value>
+  </data>
+  <data name="Review_Progress" xml:space="preserve">
+    <value>انجام‌شده: {0} از {1}</value>
+  </data>
+  <data name="Review_Open" xml:space="preserve">
+    <value>باز کردن</value>
+  </data>
+  <data name="Review_Finish" xml:space="preserve">
+    <value>پایان مرور</value>
+  </data>
+  <data name="Review_Start" xml:space="preserve">
+    <value>شروع مرور ماه</value>
+  </data>
+  <data name="Review_Unreviewed" xml:space="preserve">
+    <value>بررسی تراکنش‌ها</value>
+  </data>
+  <data name="Review_Plans" xml:space="preserve">
+    <value>تسویه یا رد پرداخت‌های سررسیده</value>
+  </data>
+  <data name="Review_Reconcile" xml:space="preserve">
+    <value>مقایسهٔ موجودی‌ها با بانک</value>
+  </data>
+  <data name="Review_Goals" xml:space="preserve">
+    <value>نگاه به هدف‌ها</value>
+  </data>
+  <data name="Review_Backup" xml:space="preserve">
+    <value>پشتیبان‌گیری</value>
+  </data>
+  <data name="Review_UnreviewedDetail" xml:space="preserve">
+    <value>بررسی‌نشده: {0}</value>
+  </data>
+  <data name="Review_PlansDetail" xml:space="preserve">
+    <value>باز تا پایان ماه: {0}</value>
+  </data>
+  <data name="Review_ReconcileDetail" xml:space="preserve">
+    <value>مقایسه‌نشده در ۶۰ روز: {0}</value>
+  </data>
+  <data name="Review_GoalsDetail" xml:space="preserve">
+    <value>هدف‌های فعال: {0}</value>
+  </data>
+  <data name="Review_BackupDetail" xml:space="preserve">
+    <value>آخرین پشتیبان: {0}</value>
+  </data>
+  <data name="Account_LastReconciled" xml:space="preserve">
+    <value>آخرین مقایسه با بانک: {0}</value>
+  </data>
+  <data name="Account_NeverReconciled" xml:space="preserve">
+    <value>هنوز با بانک مقایسه نشده</value>
+  </data>
+  <data name="Account_HasDueDate" xml:space="preserve">
+    <value>تا تاریخ مشخصی برگردانده شود</value>
+  </data>
+  <data name="Entry_ReimbursementDue" xml:space="preserve">
+    <value>تا تاریخ مشخصی برگشت داده شود</value>
+  </data>
+  <data name="Category_Essential" xml:space="preserve">
+    <value>خرج ضروری</value>
+  </data>
+  <data name="Help_Essential_Title" xml:space="preserve">
+    <value>خرج ضروری</value>
+  </data>
+  <data name="Help_Essential_Text" xml:space="preserve">
+    <value>هزینه‌هایی که به‌آسانی نمی‌توان کنار گذاشت، مثل اجاره، خوراک، انرژی یا بیمه. نشان می‌دهند پول قابل‌خرج شما چقدر دوام می‌آورد و به پیشنهاد برآورد خرج روزمره کمک می‌کنند.</value>
+  </data>
+  <data name="Help_Essential_Example" xml:space="preserve">
+    <value>قابل‌خرج ۶٬۰۰۰ EUR، خرج ضروری ماه‌ها ۱٬۴۵۰ / ۱٬۵۰۰ / ۱٬۶۲۰ → معادل ۴٫۰ ماه.</value>
+  </data>
+  <data name="Settings_Essential" xml:space="preserve">
+    <value>خرج روزمره</value>
+  </data>
+  <data name="Settings_EssentialPlaceholder" xml:space="preserve">
+    <value>خالی = لحاظ نمی‌شود</value>
+  </data>
+  <data name="Settings_EssentialCurrency" xml:space="preserve">
+    <value>به {0}؛ برای حاشیهٔ نقدینگی برنامه‌ها</value>
+  </data>
+  <data name="Settings_EssentialSuggestion" xml:space="preserve">
+    <value>سه ماه اخیر: روزانه {0}</value>
+  </data>
+  <data name="Settings_UseSuggestion" xml:space="preserve">
+    <value>استفاده</value>
+  </data>
+  <data name="Settings_EssentialSaved" xml:space="preserve">
+    <value>ذخیره شد. حاشیهٔ نقدینگی اکنون خرج روزمره را لحاظ می‌کند.</value>
+  </data>
+  <data name="Settings_EssentialCleared" xml:space="preserve">
+    <value>حذف شد. خرج روزمره لحاظ نمی‌شود.</value>
+  </data>
+  <data name="Settings_PerDay" xml:space="preserve">
+    <value>روز</value>
+  </data>
+  <data name="Settings_PerWeek" xml:space="preserve">
+    <value>هفته</value>
+  </data>
+  <data name="Settings_PerMonth" xml:space="preserve">
+    <value>ماه</value>
+  </data>
+  <data name="Help_EssentialEstimate_Title" xml:space="preserve">
+    <value>خرج روزمره</value>
+  </data>
+  <data name="Help_EssentialEstimate_Text" xml:space="preserve">
+    <value>پیش‌بینی فقط برنامه‌های شما را می‌شناسد. خرید روزانه و خرج‌های روزمره برنامه‌ریزی نشده‌اند، پس حاشیهٔ نقدینگی آن‌ها را لحاظ نمی‌کند مگر این‌که اینجا برآوردی تعیین کنید. زنانس فقط مقداری از سه ماه اخیر پیشنهاد می‌دهد؛ تصمیم با شماست.</value>
+  </data>
+  <data name="Help_EssentialEstimate_Example" xml:space="preserve">
+    <value>روزانه ۲۰ EUR: تا کمترین نقطه ۲۴ روز است، پس ۴۸۰ EUR کم می‌شود.</value>
+  </data>
+  <data name="Goal_Coverage" xml:space="preserve">
+    <value>پوشش هزینه‌های ضروری با پول قابل‌خرج: {0}</value>
+  </data>
+  <data name="Entry_Aggregated" xml:space="preserve">
+    <value>جمع چند خرید</value>
+  </data>
+  <data name="Entry_AggregatedFrom" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="Entry_AggregatedTo" xml:space="preserve">
+    <value>تا</value>
+  </data>
+  <data name="Entry_AggregatedMarker" xml:space="preserve">
+    <value>تجمیعی</value>
+  </data>
+  <data name="Aggregate_Replace" xml:space="preserve">
+    <value>پیوند و جایگزینی</value>
+  </data>
+  <data name="Aggregate_KeepBoth" xml:space="preserve">
+    <value>نگه‌داشتن هر دو (دو بار شمرده می‌شود)</value>
+  </data>
+  <data name="Aggregate_Overlap" xml:space="preserve">
+    <value>«{0}» ({1}) این بازه را از قبل جمع زده است. ورودی‌های جزئی: {2}. با پیوند و جایگزینی، مبلغ {3} در ورودی تجمیعی می‌ماند؛ با بازگردانی به حالت قبل برمی‌گردد.</value>
+  </data>
+  <data name="Help_Aggregated_Title" xml:space="preserve">
+    <value>ورودی‌های تجمیعی</value>
+  </data>
+  <data name="Help_Aggregated_Text" xml:space="preserve">
+    <value>چند خرید یک بازه را به‌صورت یک مبلغ ثبت کنید، مثلاً همهٔ خرید خوراک شهریور. مانند هر تراکنش شمرده می‌شود؛ عددهایی که به روز نیاز دارند زمان آن را نامعلوم می‌دانند. اگر بعداً ورودی‌های جزئی همان حساب و دسته را در آن بازه اضافه کنید، زنانس می‌پرسد که آیا در ورودی تجمیعی جایگزین شوند.</value>
+  </data>
+  <data name="Help_Aggregated_Example" xml:space="preserve">
+    <value>خوراک شهریور ۴۱۲ EUR؛ بعداً شش رسید به مبلغ ۳۹۵ EUR → ورودی تجمیعی ۱۷ EUR را نگه می‌دارد.</value>
+  </data>
+  <data name="Import_AggregateOverlap" xml:space="preserve">
+    <value>ردیف‌های داخل یک ورودی تجمیعی (دو بار شمرده می‌شوند): {0}. پس از ورود، ورودی تجمیعی یا ردیف‌ها را ویرایش کنید.</value>
+  </data>
 </root>

@@ -28,6 +28,7 @@ public sealed record AllocationRow(Guid Id, string Text, string DateText, string
 public sealed partial class GoalDetailViewModel(
     ZananceStore store,
     GoalStore goals,
+    PlanStore plans,
     GoalPresenter presenter,
     Translator translator,
     IDateFormatter dates,
@@ -98,6 +99,10 @@ public sealed partial class GoalDetailViewModel(
     [ObservableProperty]
     public partial bool IsEarmark { get; set; }
 
+    /// <summary>Gets the essential coverage in the goal's currency (ZEX-K07, Advanced): how many months usable money lasts.</summary>
+    [ObservableProperty]
+    public partial string? CoverageText { get; set; }
+
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -119,6 +124,7 @@ public sealed partial class GoalDetailViewModel(
         }
 
         UnitNote = DisplayUnitNote.For(translator, goal.CurrencyCode);
+        await LoadCoverageAsync(goal);
 
         var today = Today;
         var accounts = await store.GetAccountsAsync();
@@ -178,6 +184,23 @@ public sealed partial class GoalDetailViewModel(
             ?? Accounts.OrderByDescending(a => accounts.First(x => x.Id == a.Id).Type == AccountType.Savings).ThenByDescending(a => a.Unallocated).FirstOrDefault();
         HasFundingAccounts = Accounts.Count > 0;
         NoAccountsText = HasFundingAccounts ? null : translator.Format("Goal_NoAccounts", goal.CurrencyCode);
+    }
+
+    // For an emergency fund the question is how long the money would last; shown in Advanced (ZEX-S0612).
+    private async Task LoadCoverageAsync(Goal goal)
+    {
+        CoverageText = null;
+        var settings = await store.GetSettingsAsync();
+        if (settings.Mode != Core.Settings.ExperienceMode.Advanced)
+        {
+            return;
+        }
+
+        var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        var coverage = Core.Reports.KpiCatalog.Coverage(await store.GetAccountsAsync(), await store.GetEntriesAsync(), await store.GetCategoriesAsync(), await plans.GetSchedulesAsync(), goal.CurrencyCode, Today, calendar, settings.MonthStartDay);
+        CoverageText = coverage.Months is { } months
+            ? translator.Format("Goal_Coverage", translator.Format("Report_Months", months.ToString("0.0", localization.CurrentCulture)))
+            : null;
     }
 
     [RelayCommand]

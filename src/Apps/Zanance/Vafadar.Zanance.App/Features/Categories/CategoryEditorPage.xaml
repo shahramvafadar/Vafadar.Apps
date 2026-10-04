@@ -45,6 +45,14 @@
                             </HorizontalStackLayout>
                             <v:ChoiceChips ItemsSource="{Binding SpendingTypeNames}" SelectedIndex="{Binding SpendingTypeIndex}" />
                             <Label Text="{v:Translate SpendingType_Hint}" Style="{StaticResource Secondary}" />
+                            <!-- Essential spending: used by the essential coverage and the day-to-day estimate (ZEX-K07) -->
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label Text="{v:Translate Category_Essential}" VerticalOptions="Center" />
+                                    <v:HelpButton Topic="Essential" />
+                                </HorizontalStackLayout>
+                                <Switch Grid.Column="1" IsToggled="{Binding IsEssential}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Category_Essential}" />
+                            </Grid>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>

@@ -222,6 +222,25 @@
                                 <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding OpenGoalsCommand}"
                                         SemanticProperties.Description="{Binding GoalAttentionText}" />
                             </Grid>
+                            <!-- The month-end review (ZEX-S0610) and an old backup (ZEX-S0608) -->
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding ReviewText, Converter={StaticResource IsNotNullConverter}}">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource Primary}">
+                                    <fi:SymbolIcon Symbol="CalendarCheckmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding ReviewText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding OpenReviewCommand}"
+                                        SemanticProperties.Description="{Binding ReviewText}" />
+                            </Grid>
+                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding BackupText, Converter={StaticResource IsNotNullConverter}}">
+                                <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource WarningBackground}" Stroke="{DynamicResource WarningText}">
+                                    <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="20" ForegroundColor="{DynamicResource WarningText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding BackupText}" Style="{StaticResource RowTitle}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding OpenBackupCommand}"
+                                        SemanticProperties.Description="{Binding BackupText}" />
+                            </Grid>
                             <!-- The balance may fall below zero this month (forecast with the plans, in both modes, ZEX-P19) -->
                             <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding LowBalanceText, Converter={StaticResource IsNotNullConverter}}">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource WarningBackground}" Stroke="{DynamicResource WarningText}">

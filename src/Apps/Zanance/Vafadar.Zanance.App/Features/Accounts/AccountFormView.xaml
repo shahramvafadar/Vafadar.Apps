@@ -40,6 +40,14 @@
         <Label Text="{v:Translate Account_Counterparty}" Style="{StaticResource FieldLabel}" />
         <Entry Text="{Binding Counterparty}" MaxLength="100" Placeholder="{v:Translate Account_CounterpartyPlaceholder}"
                SemanticProperties.Description="{v:Translate Account_Counterparty}" />
+        <!-- Money lent: an optional day it should be paid back by (ZEX-K12) -->
+        <VerticalStackLayout IsVisible="{Binding IsLent}" Margin="0,8,0,0" Spacing="4">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="{v:Translate Account_HasDueDate}" VerticalOptions="Center" />
+                <Switch Grid.Column="1" IsToggled="{Binding HasDueDate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_HasDueDate}" />
+            </Grid>
+            <v:DateField Date="{Binding DueDate}" IsVisible="{Binding HasDueDate}" />
+        </VerticalStackLayout>
         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
             <VerticalStackLayout>
                 <Label Text="{v:Translate Account_InterestRate}" Style="{StaticResource FieldLabel}" />

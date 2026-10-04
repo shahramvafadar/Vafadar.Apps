@@ -27,6 +27,7 @@
                             <Label Text="{Binding Summary.SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding Summary.SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding Summary.WarningText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding Summary.StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding Summary.StateText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding CoverageText}" Style="{StaticResource Secondary}" IsVisible="{Binding CoverageText, Converter={StaticResource IsNotNullConverter}}" />
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding PerAccount}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">

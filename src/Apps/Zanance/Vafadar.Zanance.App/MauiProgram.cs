@@ -156,6 +156,8 @@ public static class MauiProgram
             .AddTransient<Features.Holdings.HoldingDetailPage>().AddTransient<Features.Holdings.HoldingDetailViewModel>()
             .AddTransient<Features.Holdings.AssetTypeEditorPage>().AddTransient<Features.Holdings.AssetTypeEditorViewModel>()
             .AddTransient<Features.Holdings.AssetEventEditorPage>().AddTransient<Features.Holdings.AssetEventEditorViewModel>()
+            .AddTransient<Features.Reports.KpiSheetPage>().AddTransient<Features.Reports.KpiSheetViewModel>()
+            .AddTransient<Features.Reports.PeriodReviewPage>().AddTransient<Features.Reports.PeriodReviewViewModel>()
             .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>()
             .AddTransient<DisplayUnitsPage>().AddTransient<DisplayUnitsViewModel>()
             .AddTransient<Features.Profiles.ProfilesPage>().AddTransient<Features.Profiles.ProfilesViewModel>()

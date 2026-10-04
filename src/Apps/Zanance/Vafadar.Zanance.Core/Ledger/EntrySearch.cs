@@ -24,6 +24,8 @@ public enum KindFilter
 /// <summary>
 /// Filter of the transaction list. <see langword="null"/> values do not filter. <see cref="InTotalsOnly"/> limits the
 /// list to accounts included in totals – the scope of dashboard and report numbers, so a drill-down matches them (AT-50).
+/// A report passes its whole scope: <see cref="CurrencyCode"/>, <see cref="AccountIds"/> and <see cref="ConfirmedOnly"/>
+/// (ZEX-S0601), so the list shows the same total as the tapped number.
 /// </summary>
 public sealed record EntryFilter(
     DateOnly? From = null,
@@ -33,7 +35,10 @@ public sealed record EntryFilter(
     IReadOnlyCollection<Guid>? CategoryIds = null,
     bool UnreviewedOnly = false,
     string? Text = null,
-    bool InTotalsOnly = false);
+    bool InTotalsOnly = false,
+    string? CurrencyCode = null,
+    IReadOnlyCollection<Guid>? AccountIds = null,
+    bool ConfirmedOnly = false);
 
 /// <summary>The entries of one day with their net income/expense effect per currency (transfers excluded).</summary>
 public sealed record EntryDay(DateOnly Date, IReadOnlyList<LedgerEntry> Entries, IReadOnlyDictionary<string, long> Net);
@@ -76,6 +81,9 @@ public static class EntrySearch
             && (filter.CategoryIds is not { } categories || (e.CategoryId is { } category && categories.Contains(category)))
             && (!filter.UnreviewedOnly || e.Review == ReviewState.Unreviewed)
             && (!filter.InTotalsOnly || (accounts.TryGetValue(e.AccountId, out var owner) && owner.IncludeInTotals && !LedgerCalculator.IsBeforeOpening(e, owner)))
+            && (filter.AccountIds is not { } scope || (scope.Contains(e.AccountId) && accounts.TryGetValue(e.AccountId, out var scoped) && !LedgerCalculator.IsBeforeOpening(e, scoped)))
+            && (filter.CurrencyCode is not { } currency || (accounts.TryGetValue(e.AccountId, out var payer) && string.Equals(payer.CurrencyCode, currency, StringComparison.OrdinalIgnoreCase)))
+            && (!filter.ConfirmedOnly || e.Review == ReviewState.Confirmed)
             && (text.Length == 0 || MatchesText(e, text, categoryName, accounts)));
     }
 

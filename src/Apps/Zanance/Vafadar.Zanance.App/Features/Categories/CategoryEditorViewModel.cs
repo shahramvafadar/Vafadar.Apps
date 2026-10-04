@@ -102,6 +102,10 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     [ObservableProperty]
     public partial int SpendingTypeIndex { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether spending in the category is essential (ZEX-K07); sub-categories follow their parent.</summary>
+    [ObservableProperty]
+    public partial bool IsEssential { get; set; }
+
     /// <summary>Gets a value indicating whether the spending type can be chosen (a top-level expense category).</summary>
     public bool ShowSpendingType => Kind == CategoryKind.Expense && (!CanHaveParent || Parent?.Id is null);
 
@@ -148,6 +152,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             IsArchived = category.IsArchived;
             KindIndex = category.Kind == CategoryKind.Income ? 1 : 0;
             SpendingTypeIndex = (int)category.SpendingType;
+        IsEssential = category.IsEssential;
             Name = category.Name ?? string.Empty;
             DefaultName = category.SystemKey is { } key ? _translator[$"Category_{key}"] : null;
             Select(Icons, category.Icon ?? "Tag");
@@ -242,6 +247,7 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
             _category.Color = Palette.FirstOrDefault(c => c.IsSelected)?.Key;
             _category.ParentId = CanHaveParent ? Parent?.Id : null;
         _category.SpendingType = Enum.IsDefined((SpendingType)SpendingTypeIndex) ? (SpendingType)SpendingTypeIndex : SpendingType.Flexible;
+        _category.IsEssential = ShowSpendingType && IsEssential;
             await _store.SaveCategoryAsync(_category);
             _snapshot = Snapshot();
             await Shell.Current.GoToAsync("..");
@@ -305,6 +311,6 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private string Snapshot() => string.Join('|', Name, KindIndex, SpendingTypeIndex, Parent?.Id,
+    private string Snapshot() => string.Join('|', Name, KindIndex, SpendingTypeIndex, IsEssential, Parent?.Id,
         Icons.FirstOrDefault(i => i.IsSelected)?.Key, Palette.FirstOrDefault(c => c.IsSelected)?.Key);
 }

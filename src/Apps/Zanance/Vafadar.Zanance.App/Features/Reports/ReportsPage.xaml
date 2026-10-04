@@ -6,32 +6,93 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     xmlns:home="clr-namespace:Vafadar.Zanance.App.Features.Home"
+    xmlns:goals="clr-namespace:Vafadar.Zanance.App.Features.Goals"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Reports"
     x:DataType="local:ReportsViewModel"
     Title="{v:Translate Report_Title}">
 
+    <ContentPage.Resources>
+        <!-- The "?" of a KPI card: opens its explanation sheet (ZEX-UI14) -->
+        <Style x:Key="KpiHelp" TargetType="Button">
+            <Setter Property="Text" Value="?" />
+            <Setter Property="WidthRequest" Value="32" />
+            <Setter Property="HeightRequest" Value="32" />
+            <Setter Property="MinimumWidthRequest" Value="32" />
+            <Setter Property="MinimumHeightRequest" Value="32" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
+            <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="SemanticProperties.Description" Value="{v:Translate Kpi_Explain}" />
+        </Style>
+        <Style x:Key="CardTitle" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="SemanticProperties.HeadingLevel" Value="Level2" />
+        </Style>
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="Padding" Value="0,4" />
+        </Style>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
 
-            <!-- Period and report -->
-            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding ReportNames}" SelectedIndex="{Binding ReportIndex}" />
-            <Grid ColumnDefinitions="48,*,48,Auto">
-                <Button Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding PreviousCommand}"
-                        SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
+            <!-- Packages R1–R4 and R6 (ZEX-UI13) -->
+            <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PackageNames}" SelectedIndex="{Binding PackageIndex}" />
+
+            <!-- Scope bar: it applies to every card and is named next to every number (ZEX-S0601) -->
+            <Border Style="{StaticResource Card}" Padding="12,8">
+                <VerticalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{v:Translate Report_Scope}" TextColor="{DynamicResource SecondaryText}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding ScopeText}" FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Grid.Column="1" Style="{StaticResource LinkButton}" Text="{v:Translate Report_ChangeScope}" Command="{Binding ToggleScopeCommand}" Padding="8,0" />
+                    </Grid>
+                    <VerticalStackLayout Spacing="6" IsVisible="{Binding IsScopeOpen}">
+                        <Label Text="{v:Translate Report_ScopeCurrency}" Style="{StaticResource FieldLabel}" IsVisible="{Binding HasCurrencyChoice}" />
+                        <v:ChoiceChips IsCompact="True" ItemsSource="{Binding CurrencyNames}" SelectedIndex="{Binding CurrencyIndex}" IsVisible="{Binding HasCurrencyChoice}" />
+                        <Label Text="{v:Translate Report_ScopeAccounts}" Style="{StaticResource FieldLabel}" />
+                        <v:ChoiceChips IsCompact="True" ItemsSource="{Binding AccountScopeNames}" SelectedIndex="{Binding AccountScopeIndex}" />
+                        <Picker ItemsSource="{Binding ScopeAccounts}" SelectedItem="{Binding ScopeAccount}" IsVisible="{Binding IsOneAccount}" SemanticProperties.Description="{v:Translate Entry_Account}" />
+                        <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowPeriod}">
+                            <Label Text="{v:Translate Report_PeriodLength}" VerticalOptions="Center" />
+                            <v:ChoiceChips Grid.Column="1" IsCompact="True" ItemsSource="{Binding PeriodKindNames}" SelectedIndex="{Binding PeriodKind}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_ConfirmedOnly}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Report_ConfirmedOnly}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="48,*,48" IsVisible="{Binding ShowPeriod}">
+                <Button Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding PreviousCommand}" SemanticProperties.Description="{v:Translate Budget_PreviousMonth}">
                     <Button.ImageSource>
                         <fi:SymbolImageSource Symbol="{Binding PreviousIcon}" Size="20" Color="{DynamicResource Primary}" />
                     </Button.ImageSource>
                 </Button>
                 <Label Grid.Column="1" Text="{Binding PeriodText}" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalOptions="Center" />
-                <Button Grid.Column="2" Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding NextCommand}"
-                        SemanticProperties.Description="{v:Translate Budget_NextMonth}">
+                <Button Grid.Column="2" Style="{StaticResource MoveButton}" HorizontalOptions="Center" Command="{Binding NextCommand}" SemanticProperties.Description="{v:Translate Budget_NextMonth}">
                     <Button.ImageSource>
                         <fi:SymbolImageSource Symbol="{Binding NextIcon}" Size="20" Color="{DynamicResource Primary}" />
                     </Button.ImageSource>
                 </Button>
-                <v:ChoiceChips Grid.Column="3" IsCompact="True" ItemsSource="{Binding PeriodKindNames}" SelectedIndex="{Binding PeriodKind}"
-                               VerticalOptions="Center" />
             </Grid>
 
             <!-- Nothing recorded yet: one empty state with the way out, like the other lists (UX-05) -->
@@ -46,43 +107,117 @@
                     TextColor="{DynamicResource Primary}" HorizontalOptions="End" Padding="8,0"
                     IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
 
-            <!-- Expenses by category: gross chart, refunds card, net table (REP-02) -->
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowExpenses}">
+            <!-- ================= R1 · Period overview ================= -->
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowOverview}">
+                <!-- K05 surplus and K06 rate -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Surplus}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainSurplusCommand}" />
+                        </Grid>
+                        <Label Text="{Binding SurplusText}" Style="{StaticResource AmountLarge}" TextColor="{Binding SurplusColor}" />
+                        <Label Text="{Binding SurplusDetail}" Style="{StaticResource Secondary}" />
+                        <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsAdvanced}">
+                            <Label Text="{Binding RateText}" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainRateCommand}" />
+                        </Grid>
+                        <Label Text="{Binding OtherCurrenciesText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding OtherCurrenciesText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding ConvertedText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding ConvertedText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Button Style="{StaticResource LinkButton}" Text="{v:Translate Kpi_ShowEntries}" Command="{Binding OpenSurplusEntriesCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- K11 spending changes, same length while the period runs -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_SpendingChange}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainChangesCommand}" />
+                        </Grid>
+                        <Label Text="{Binding ComparisonText}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Text="{v:Translate Report_NoChanges}" Style="{StaticResource Secondary}" IsVisible="{Binding HasChanges, Converter={StaticResource InvertedBoolConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Changes}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:ChangeRow">
+                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="0,6">
+                                        <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding DeltaText}" TextColor="{Binding DeltaColor}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Detail}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <Button Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                                Command="{Binding OpenChangeCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding DeltaText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Income and spending; transfers and capital movements as separate lines -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{v:Translate Report_IncomeSpending}" Style="{StaticResource CardTitle}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding OverviewLines}" Spacing="10">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AmountLine">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Label}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
+                                                    <Setter Property="FontAttributes" Value="Bold" />
+                                                    <Setter Property="FontSize" Value="17" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsPositive}" Value="True">
+                                                    <Setter Property="TextColor" Value="{DynamicResource IncomeText}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                    <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="6" IsVisible="{Binding HasSeparateLines}">
+                            <Label Text="{v:Translate Report_SeparateLines}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,6,0,0" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding SeparateLines}" Spacing="6">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:AmountLine">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                            <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                            <Label Grid.Column="1" Text="{Binding Amount}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate KindFilter_Income}" Command="{Binding OpenIncomeCommand}" />
+                            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate KindFilter_Expenses}" Command="{Binding OpenExpensesCommand}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Expenses by category: gross chart, refunds card, net table (REP-02) -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Report_GrossByCategory}" Style="{StaticResource Secondary}" />
+                        <Label Text="{v:Translate Report_GrossByCategory}" Style="{StaticResource CardTitle}" />
                         <Label Text="{v:Translate Home_NoExpenses}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
                                IsVisible="{Binding HasSlices, Converter={StaticResource InvertedBoolConverter}}" />
                         <Grid IsVisible="{Binding HasSlices}">
-                            <chart:SfCircularChart HeightRequest="220" FlowDirection="LeftToRight"
-                                               SemanticProperties.Description="{v:Translate Report_GrossByCategory}">
-                            <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
-                                                  PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.6" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
-                        </chart:SfCircularChart>
+                            <chart:SfCircularChart HeightRequest="220" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Report_GrossByCategory}">
+                                <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
+                                                      PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.6" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
+                            </chart:SfCircularChart>
                             <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
                                 <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
                                 <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
                         </Grid>
-                        <Label Text="{Binding CurrencyNote}" Style="{StaticResource Secondary}" FontSize="12"
-                               IsVisible="{Binding CurrencyNote, Converter={StaticResource IsNotNullConverter}}" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Style="{StaticResource Card}" IsVisible="{Binding RefundsText, Converter={StaticResource IsNotNullConverter}}">
-                    <Grid>
-                        <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" />
-                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenExpensesCommand}"
-                                SemanticProperties.Description="{Binding RefundsText}" />
-                    </Grid>
-                </Border>
-
-                <Border Style="{StaticResource Card}" Padding="12">
-                    <VerticalStackLayout Spacing="0">
-                        <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,4">
-                            <Label Text="{v:Translate Entry_Category}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="1" Text="{v:Translate Report_Net}" Style="{StaticResource Secondary}" FontSize="12" />
-                        </Grid>
+                        <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" IsVisible="{Binding RefundsText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoryRows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryReportRow">
@@ -91,7 +226,6 @@
                                         <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                         <Label Grid.Column="2" Text="{Binding NetText}" VerticalOptions="Center" FontAttributes="Bold" TextColor="{Binding NetColor}" />
                                         <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Style="{StaticResource Secondary}" FontSize="12" />
-                                        <!-- The whole row is one real button: keyboard, screen readers and touch -->
                                         <Button Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
                                                 Command="{Binding OpenCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding NetText}" />
@@ -101,177 +235,184 @@
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
-            </VerticalStackLayout>
 
-            <!-- Income and expense -->
-            <Border Style="{StaticResource Card}" IsVisible="{Binding ShowIncomeExpense}">
-                <VerticalStackLayout Spacing="10">
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding IncomeExpenseLines}" Spacing="10">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="local:AmountLine">
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding Label}" VerticalOptions="Center" />
-                                    <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
-                                                <Setter Property="FontAttributes" Value="Bold" />
-                                                <Setter Property="FontSize" Value="17" />
-                                            </DataTrigger>                                            <DataTrigger TargetType="Label" Binding="{Binding IsPositive}" Value="True">
-                                                <Setter Property="TextColor" Value="{DynamicResource IncomeText}" />
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
-                                                <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate KindFilter_Income}" Command="{Binding OpenIncomeCommand}" />
-                        <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate KindFilter_Expenses}" Command="{Binding OpenExpensesCommand}" />
-                    </Grid>
-                    <Label Text="{v:Translate Report_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Trend -->
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowTrend}">
-                <Border Style="{StaticResource Card}">
-                    <chart:SfCartesianChart HeightRequest="240" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Report_Trend}">
-                        <chart:SfCartesianChart.Legend>
-                            <chart:ChartLegend>
-                                <chart:ChartLegend.LabelStyle>
-                                    <chart:ChartLegendLabelStyle TextColor="{DynamicResource SecondaryText}" />
-                                </chart:ChartLegend.LabelStyle>
-                            </chart:ChartLegend>
-                        </chart:SfCartesianChart.Legend>
-                        <chart:SfCartesianChart.XAxes>
-                            <chart:CategoryAxis LabelRotation="0" LabelCreated="OnAxisLabelCreated">
-                                    <chart:CategoryAxis.MajorGridLineStyle>
-                                        <chart:ChartLineStyle Stroke="{DynamicResource DividerColor}" StrokeWidth="1" />
-                                    </chart:CategoryAxis.MajorGridLineStyle>
-                                    <chart:CategoryAxis.AxisLineStyle>
-                                        <chart:ChartLineStyle Stroke="{DynamicResource StrokeStrong}" StrokeWidth="1" />
-                                    </chart:CategoryAxis.AxisLineStyle>
-                                    <chart:CategoryAxis.MajorTickStyle>
-                                        <chart:ChartAxisTickStyle Stroke="{DynamicResource StrokeStrong}" />
-                                    </chart:CategoryAxis.MajorTickStyle>
+                <!-- Advanced: trend of the last months, with a table as the alternative to the chart -->
+                <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{v:Translate Report_Trend}" Style="{StaticResource CardTitle}" />
+                        <chart:SfCartesianChart HeightRequest="200" FlowDirection="LeftToRight" SemanticProperties.Description="{v:Translate Report_Trend}">
+                            <chart:SfCartesianChart.XAxes>
+                                <chart:CategoryAxis LabelRotation="0" LabelCreated="OnAxisLabelCreated">
                                     <chart:CategoryAxis.LabelStyle>
                                         <chart:ChartAxisLabelStyle TextColor="{DynamicResource SecondaryText}" FontSize="11" />
-                                    </chart:CategoryAxis.LabelStyle>                                </chart:CategoryAxis>
-                        </chart:SfCartesianChart.XAxes>
-                        <chart:SfCartesianChart.YAxes>
-                            <chart:NumericalAxis LabelCreated="OnAxisLabelCreated">
+                                    </chart:CategoryAxis.LabelStyle>
+                                </chart:CategoryAxis>
+                            </chart:SfCartesianChart.XAxes>
+                            <chart:SfCartesianChart.YAxes>
+                                <chart:NumericalAxis LabelCreated="OnAxisLabelCreated">
                                     <chart:NumericalAxis.MajorGridLineStyle>
                                         <chart:ChartLineStyle Stroke="{DynamicResource DividerColor}" StrokeWidth="1" />
                                     </chart:NumericalAxis.MajorGridLineStyle>
-                                    <chart:NumericalAxis.AxisLineStyle>
-                                        <chart:ChartLineStyle Stroke="{DynamicResource StrokeStrong}" StrokeWidth="1" />
-                                    </chart:NumericalAxis.AxisLineStyle>
-                                    <chart:NumericalAxis.MajorTickStyle>
-                                        <chart:ChartAxisTickStyle Stroke="{DynamicResource StrokeStrong}" />
-                                    </chart:NumericalAxis.MajorTickStyle>
                                     <chart:NumericalAxis.LabelStyle>
                                         <chart:ChartAxisLabelStyle TextColor="{DynamicResource SecondaryText}" FontSize="11" />
-                                    </chart:NumericalAxis.LabelStyle>                                </chart:NumericalAxis>
-                        </chart:SfCartesianChart.YAxes>
-                        <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Income" Fill="{DynamicResource IncomeText}"
-                                            Label="{v:Translate KindFilter_Income}" />
-                        <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Expense" Fill="{DynamicResource Muted}"
-                                            Label="{v:Translate KindFilter_Expenses}" />
-                    </chart:SfCartesianChart>
-                </Border>
-                <Border Style="{StaticResource Card}" Padding="12">
-                    <VerticalStackLayout Spacing="0">
-                    <!-- Column titles, so the three amounts of a row read as income, expenses and result -->
-                    <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" Margin="0,0,0,4">
-                        <Label Text="{v:Translate Report_Month}" Style="{StaticResource Secondary}" FontSize="12" />
-                        <Label Grid.Column="1" Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" FontSize="12" />
-                        <Label Grid.Column="2" Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" FontSize="12" />
-                        <Label Grid.Column="3" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" FontSize="12" />
-                    </Grid>
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trend}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="local:TrendPoint">
-                                <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" MinimumHeightRequest="36">
-                                    <Label Text="{Binding Label}" VerticalOptions="Center" FontSize="13" />
-                                    <Label Grid.Column="1" Text="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" VerticalOptions="Center" FontSize="13" />
-                                    <Label Grid.Column="2" Text="{Binding ExpenseText}" VerticalOptions="Center" FontSize="13" />
-                                    <Label Grid.Column="3" Text="{Binding ResultText}" TextColor="{Binding ResultColor}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
+                                    </chart:NumericalAxis.LabelStyle>
+                                </chart:NumericalAxis>
+                            </chart:SfCartesianChart.YAxes>
+                            <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Income" Fill="{DynamicResource IncomeText}" Label="{v:Translate KindFilter_Income}" />
+                            <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Expense" Fill="{DynamicResource Muted}" Label="{v:Translate KindFilter_Expenses}" />
+                        </chart:SfCartesianChart>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10">
+                            <Label Text="{v:Translate Report_Month}" Style="{StaticResource Secondary}" FontSize="12" />
+                            <Label Grid.Column="1" Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" FontSize="12" />
+                            <Label Grid.Column="2" Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" FontSize="12" />
+                            <Label Grid.Column="3" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" FontSize="12" />
+                        </Grid>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trend}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:TrendPoint">
+                                    <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" MinimumHeightRequest="32">
+                                        <Label Text="{Binding Label}" VerticalOptions="Center" FontSize="13" />
+                                        <Label Grid.Column="1" Text="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" VerticalOptions="Center" FontSize="13" />
+                                        <Label Grid.Column="2" Text="{Binding ExpenseText}" VerticalOptions="Center" FontSize="13" />
+                                        <Label Grid.Column="3" Text="{Binding ResultText}" TextColor="{Binding ResultColor}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Report_PartialHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>
-                <Label Text="{v:Translate Report_PartialHint}" Style="{StaticResource Secondary}" FontSize="12" />
-            </VerticalStackLayout>
 
-            <!-- Account movement (REP-03) -->
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowAccounts}" BindableLayout.ItemsSource="{Binding Accounts}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="local:AccountReport">
-                        <Border Style="{StaticResource Card}">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
-                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Lines}" Spacing="6">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate x:DataType="local:AmountLine">
-                                            <Grid ColumnDefinitions="*,Auto">
-                                                <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
-                                                <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
-                                                    <Label.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
-                                                            <Setter Property="FontAttributes" Value="Bold" />
-                                                        </DataTrigger>                                                        <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
-                                                            <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
-                                                        </DataTrigger>
-                                                    </Label.Triggers>
-                                                </Label>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </VerticalStackLayout>
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
-
-            <!-- Spending by tag (F2-TX-04) -->
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowTags}">
-                <Label Text="{v:Translate Report_NoTags}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,16"
-                       IsVisible="{Binding HasTagRows, Converter={StaticResource InvertedBoolConverter}}" />
+                <!-- Advanced: spending by tag; tags overlap and never add up (AT29) -->
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasTagRows}">
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding TagRows}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="local:TagReportRow">
-                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                    <VerticalStackLayout VerticalOptions="Center">
-                                        <Label Text="{Binding Name}" FontSize="16" />
-                                        <Label Text="{Binding Details}" Style="{StaticResource Secondary}" FontSize="12" />
-                                    </VerticalStackLayout>
-                                    <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
-                                    <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                                    <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
-                                            Command="{Binding OpenTagCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
-                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding AmountText}" />
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                    <VerticalStackLayout>
+                        <Label Text="{v:Translate Report_Tags}" Style="{StaticResource CardTitle}" Margin="16,12,16,0" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TagRows}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:TagReportRow">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" />
+                                            <Label Text="{Binding Details}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenTagCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding AmountText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Report_TagsNote}" Style="{StaticResource Secondary}" FontSize="12" Margin="16,0,16,12" />
                     </VerticalStackLayout>
                 </Border>
-                <Label Text="{v:Translate Report_TagsNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasTagRows}" />
             </VerticalStackLayout>
 
-            <!-- Plan versus actual -->
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowPlans}">
-                <Label Text="{v:Translate Report_NoPlans}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="0,16"
-                       IsVisible="{Binding HasPlanRows, Converter={StaticResource InvertedBoolConverter}}" />
+            <!-- ================= R2 · Commitments ================= -->
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowCommitments}">
+                <!-- K02 and headroom: an estimate, never "safe to spend" -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Headroom}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainHeadroomCommand}" />
+                        </Grid>
+                        <Label Text="{Binding HeadroomText}" Style="{StaticResource AmountLarge}" TextColor="{Binding HeadroomColor}" IsVisible="{Binding HeadroomText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding HeadroomSentence}" />
+                        <Label Text="{Binding HeadroomNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HeadroomNote, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- K04 next 30 days -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Next30Title}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainCommitmentsCommand}" />
+                        </Grid>
+                        <Label Text="{Binding CommitmentsTotalText}" FontAttributes="Bold" FontSize="17" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding CommitmentRows}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:CommitmentRow">
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                        <VerticalStackLayout VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" />
+                                            <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Button Grid.ColumnSpan="2" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                                Command="{Binding OpenCommitmentCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding AmountText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- K09 debts and K12 receivables -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasDebt}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Debt}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainDebtCommand}" />
+                        </Grid>
+                        <Label Text="{Binding DebtText}" />
+                        <Label Text="{Binding DebtRatioText}" Style="{StaticResource Secondary}" IsVisible="{Binding DebtRatioText, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_OwedToMe}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainReceivablesCommand}" IsVisible="{Binding HasReceivables}" />
+                        </Grid>
+                        <Label Text="{Binding ReceivablesText}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding ReceivableLines}" Spacing="6">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AmountLine">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                    <Setter Property="TextColor" Value="{DynamicResource WarningText}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Advanced: K08 twelve months -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasYearly}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Yearly}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainYearlyCommand}" />
+                        </Grid>
+                        <Label Text="{Binding YearlyTotalText}" FontAttributes="Bold" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding YearlyLines}" Spacing="6">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AmountLine">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Report_ShareNotSetAside}" Style="{StaticResource Secondary}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Advanced: plans versus actual of this month -->
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding HasPlanRows}">
                     <VerticalStackLayout Spacing="0">
+                        <Label Text="{v:Translate Report_Plans}" Style="{StaticResource CardTitle}" Margin="0,0,0,6" />
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Padding="0,0,0,6">
                             <Label Text="{v:Translate Plan_Name}" Style="{StaticResource Secondary}" FontSize="12" />
                             <Label Grid.Column="1" Text="{v:Translate Report_Planned}" Style="{StaticResource Secondary}" FontSize="12" />
@@ -294,6 +435,204 @@
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
+
+            <!-- ================= R3 · Goals and capacity ================= -->
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowGoals}">
+                <Border Style="{StaticResource Card}" Padding="0">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto" Margin="16,12,12,0">
+                            <Label Text="{v:Translate Report_GoalProgress}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainGoalsCommand}" />
+                        </Grid>
+                        <Label Text="{v:Translate Report_NoGoals}" Style="{StaticResource Secondary}" Margin="16,8,16,12" IsVisible="{Binding HasGoalRows, Converter={StaticResource InvertedBoolConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding GoalRows}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="goals:GoalRow">
+                                    <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                        <Label Grid.Row="1" Text="{Binding FundedText}" Style="{StaticResource Secondary}" />
+                                        <progress:SfLinearProgressBar Grid.Row="2" Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
+                                        <Button Grid.RowSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenGoalCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Advanced: capacity and the suggested split (Σ ≤ capacity); accepting changes no budget or entry -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Capacity}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainCapacityCommand}" />
+                        </Grid>
+                        <Label Text="{Binding CapacityText}" FontAttributes="Bold" FontSize="17" />
+                        <Label Text="{v:Translate Report_EstimateNotPromise}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Suggestions}" Spacing="4" IsVisible="{Binding HasSuggestions}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:SuggestionRow">
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Padding="0,4">
+                                        <VerticalStackLayout VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" />
+                                            <Label Text="{Binding NeededText}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="1" Text="{Binding SuggestedText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Text="{v:Translate Report_Accept}" IsVisible="{Binding CanAccept}" Padding="12,0"
+                                                Command="{Binding AcceptSuggestionCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Advanced: K07 essential coverage -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Coverage}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainCoverageCommand}" />
+                        </Grid>
+                        <Label Text="{Binding CoverageText}" FontAttributes="Bold" FontSize="17" />
+                        <Label Text="{Binding CoverageDetail}" Style="{StaticResource Secondary}" IsVisible="{Binding CoverageDetail, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ================= R4 · Holdings and net worth ================= -->
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowWealth}">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_NetWorth}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainNetWorthCommand}" />
+                        </Grid>
+                        <Label Text="{Binding NetWorthText}" Style="{StaticResource AmountLarge}" />
+                        <Label Text="{Binding NetWorthConverted}" Style="{StaticResource Secondary}" IsVisible="{Binding NetWorthConverted, Converter={StaticResource IsNotNullConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding WealthLines}" Spacing="6">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AmountLine">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Label}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
+                                                    <Setter Property="FontAttributes" Value="Bold" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                    <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding UnvaluedLines}" IsVisible="{Binding HasUnvalued}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Label Text="{Binding .}" TextColor="{DynamicResource WarningText}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Button Style="{StaticResource LinkButton}" Text="{v:Translate Holdings_Title}" Command="{Binding OpenHoldingsCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Advanced: K13 composition of the known part, with a table as the alternative to the chart -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding IsAdvanced}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Report_Composition}" Style="{StaticResource CardTitle}" />
+                            <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainCompositionCommand}" />
+                        </Grid>
+                        <chart:SfCircularChart HeightRequest="200" FlowDirection="LeftToRight" IsVisible="{Binding HasComposition}" SemanticProperties.Description="{v:Translate Report_Composition}">
+                            <chart:DoughnutSeries ItemsSource="{Binding CompositionRows}" XBindingPath="Label" YBindingPath="Value"
+                                                  PaletteBrushes="{Binding CompositionBrushes}" InnerRadius="0.6" StrokeWidth="2" Stroke="{DynamicResource CardBackground}" />
+                        </chart:SfCircularChart>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding CompositionRows}" Spacing="6">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:CompositionRow">
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                        <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{Binding Color}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Label}" VerticalOptions="Center" />
+                                        <Label Grid.Column="2" Text="{Binding ShareText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Label Grid.Column="3" Text="{Binding ValueText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{Binding CompositionNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CompositionNote, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Account movement in the period (REP-03) -->
+                <Label Text="{v:Translate Report_Accounts}" Style="{StaticResource SectionHeader}" />
+                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Accounts}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:AccountReport">
+                            <Border Style="{StaticResource Card}">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Lines}" Spacing="6">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="local:AmountLine">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                                    <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                                        <Label.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
+                                                                <Setter Property="FontAttributes" Value="Bold" />
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                                                <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- ================= R6 · Data status: a list, never a score; each item opens its fix ================= -->
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowStatus}">
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Review_Start}" Command="{Binding OpenReviewCommand}" />
+                <Border Style="{StaticResource Card}" Padding="0">
+                    <VerticalStackLayout>
+                        <Label Text="{v:Translate Report_NoIssues}" Margin="16" IsVisible="{Binding HasIssues, Converter={StaticResource InvertedBoolConverter}}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Issues}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:IssueRow">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout VerticalOptions="Center">
+                                            <Label Text="{Binding Text}" />
+                                            <Label Text="{Binding ActionText}" TextColor="{DynamicResource Primary}" FontSize="13" />
+                                        </VerticalStackLayout>
+                                        <fi:SymbolIcon Grid.Column="1" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                                        <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding FixIssueCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Text}" SemanticProperties.Hint="{Binding ActionText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Data status footer of every other package (ZEX-K14) -->
+            <Label Text="{Binding StatusText}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,4"
+                   IsVisible="{Binding ShowStatus, Converter={StaticResource InvertedBoolConverter}}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

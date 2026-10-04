@@ -6,6 +6,36 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Reports and data quality (enhancement ZEX, phase 4)
+
+- Reports are now five packages under one scope bar – period overview, commitments, goals, holdings and data status.
+  The scope (period, currency, accounts in totals, usable accounts or one account, confirmed only) is named next to
+  every number, and "Show entries" lists exactly the entries behind it with the same total.
+- Every number has a "?" that explains it: the question it answers, the definition in words, what is included and
+  left out, and the data status. There is never an accuracy score.
+- Period overview: surplus and the share of income kept ("not available" without income), spending changes against
+  the same days of the previous period, transfers and holding purchases as separate lines, categories, and in
+  Advanced the trend and tags (an entry with several tags is named, tags never add up).
+- Commitments: the headroom – the lowest balance of the usable accounts with your plans, minus money you protected,
+  labelled as an estimate and never "safe to spend"; Home warns when plans would use protected money. Payments of
+  the next 30 days (known, ≈ estimated and unknown apart), money owed to you with its age, the next loan installment,
+  and in Advanced the twelve-month view, the share of income for installments and plans versus actual.
+- Goals: progress of every goal; in Advanced the capacity per month (income minus spending, non-monthly shares,
+  loan principal and other goal plans) with suggestions that never exceed it – accepting one only stores the goal's
+  plan – and how many months your usable money covers essential costs.
+- Holdings: net worth per currency (money, money owed to you, valued assets, holdings, debts), holdings without a
+  price listed; in Advanced the composition in the valuation currency. Account movements now name holding
+  purchases and sales.
+- Data status: unreviewed entries, unknown amounts, missing or old rates, holdings without a price, unknown
+  opening balances, accounts not compared with the bank for 60 days, an old backup, possible duplicates – each opens
+  the screen that fixes it. Comparing a balance now remembers the day; Home shows an old backup once.
+- Month review: when a financial month ends, Home offers "Review September" – a short checklist (entries, due
+  payments, balances, goals, backup) whose progress is kept.
+- Advanced: a day-to-day spending estimate for the headroom (with a suggestion from the last three months),
+  essential categories (set by default for housing, food, energy, phone, transport, health and insurance), entries
+  that sum up several purchases of a range with a choice to replace or keep both when detailed entries come in (with
+  Undo), and due dates for money lent and reimbursements. The PDF prints the scope of every section and includes the
+  trend and account details; the CSV export carries the new fields.
 ### Added – Holdings by weight or count (enhancement ZEX, phase 3)
 
 - New under More > Money: holdings such as gold, coins or other things you own by weight or count. Each type has its

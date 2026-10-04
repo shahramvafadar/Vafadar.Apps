@@ -13,6 +13,23 @@ public sealed class PdfReportTests
         }
     }
 
+    [Fact]
+    public void Every_section_prints_its_own_scope()
+    {
+        var report = new ReportDocument("Report", "October 2026", "No open issues", "2026-10-31", "Not an official statement.", false, [],
+        [
+            new ReportTable("Period overview", ["Item", "Amount"], [["Surplus", "+700.00 EUR"]], new HashSet<int> { 1 }, "October 2026 · EUR · Accounts in totals"),
+            new ReportTable("Next 30 days", ["Plan", "Amount"], [["Rent", "950.00 EUR"]], new HashSet<int> { 1 }, "Next 30 days · EUR · Usable accounts"),
+        ]);
+
+        using var loaded = new PdfLoadedDocument(new MemoryStream(PdfReport.Write(report)));
+        var text = string.Concat(Enumerable.Range(0, loaded.Pages.Count).Select(i => loaded.Pages[i].ExtractText()));
+
+        Assert.Contains("Accounts in totals", text, StringComparison.Ordinal);
+        Assert.Contains("Usable accounts", text, StringComparison.Ordinal);
+        Assert.Contains("+700.00", text, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false, "Monthly report", "Food")]
     [InlineData(true, "گزارش ماهانه", "خوراک")]

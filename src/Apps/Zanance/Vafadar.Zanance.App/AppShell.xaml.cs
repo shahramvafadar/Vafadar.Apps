@@ -105,6 +105,12 @@ public partial class AppShell : Shell
     /// <summary>Route of the editor of one holding event (purchase, sale, move, correction ...).</summary>
     public const string AssetEventEditorRoute = "assetevent";
 
+    /// <summary>Route of the explanation sheet of a KPI (ZEX-UI14).</summary>
+    public const string KpiSheetRoute = "kpi";
+
+    /// <summary>Route of the period-end review (ZEX-S0610).</summary>
+    public const string ReviewRoute = "review";
+
     /// <summary>Route of the split editor (F2-TX-01).</summary>
     public const string SplitRoute = "split";
 
@@ -170,6 +176,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(HoldingDetailRoute, typeof(Features.Holdings.HoldingDetailPage));
         Routing.RegisterRoute(AssetTypeEditorRoute, typeof(Features.Holdings.AssetTypeEditorPage));
         Routing.RegisterRoute(AssetEventEditorRoute, typeof(Features.Holdings.AssetEventEditorPage));
+        Routing.RegisterRoute(KpiSheetRoute, typeof(Features.Reports.KpiSheetPage));
+        Routing.RegisterRoute(ReviewRoute, typeof(Features.Reports.PeriodReviewPage));
         Routing.RegisterRoute(SplitRoute, typeof(SplitEditorPage));
         Routing.RegisterRoute(ReimbursementsRoute, typeof(ReimbursementsPage));
         Routing.RegisterRoute(LoanScheduleRoute, typeof(LoanSchedulePage));

@@ -57,6 +57,11 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     public partial bool HasSavedFilters { get; set; }
     private bool _inTotalsOnly;
 
+    // The rest of a report's scope (ZEX-S0601): currency, accounts and confirmed only, so the list matches the number.
+    private string? _currency;
+    private IReadOnlyCollection<Guid>? _scopeAccounts;
+    private bool _confirmedOnly;
+
     public TransactionsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, UndoService undo)
     {
         _store = store;
@@ -131,6 +136,10 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     [ObservableProperty]
     public partial string? CategoryFilterName { get; set; }
 
+    /// <summary>Gets the scope of the report a drill-down came from, e.g. "October · EUR · Accounts in totals" (ZEX-S0601).</summary>
+    [ObservableProperty]
+    public partial string? ScopeNote { get; set; }
+
     [ObservableProperty]
     public partial string? SummaryText { get; set; }
 
@@ -166,6 +175,10 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             _categoryIds = query.TryGetValue("categories", out var categories) ? categories as IReadOnlyCollection<Guid> : null;
             CategoryFilterName = _categoryIds is null ? null : query.TryGetValue("categoryName", out var name) ? name?.ToString() : null;
             _inTotalsOnly = query.TryGetValue("inTotals", out var inTotals) && inTotals is true;
+            _currency = query.TryGetValue("currency", out var currency) ? currency as string : null;
+            _scopeAccounts = query.TryGetValue("accounts", out var scope) ? scope as IReadOnlyCollection<Guid> : null;
+            _confirmedOnly = query.TryGetValue("confirmedOnly", out var confirmed) && confirmed is true;
+            ScopeNote = query.TryGetValue("scope", out var note) ? note as string : null;
             UnreviewedOnly = false;
             SearchText = query.TryGetValue("search", out var search) && search is string text ? text : string.Empty;
 
@@ -283,7 +296,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         }
 
         var (from, to) = PeriodRange();
-        var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly);
+        var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly, _currency, _scopeAccounts, _confirmedOnly);
         var culture = _localization.CurrentCulture;
         var presenter = new EntryPresenter(_accounts, _categories, _translator, culture);
         var matching = EntrySearch.Apply(_entries, filter, id => _categories.Name(id), _accounts).ToList();
@@ -640,6 +653,10 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _loading = loading;
         _categoryIds = null;
         _inTotalsOnly = false;
+        _currency = null;
+        _scopeAccounts = null;
+        _confirmedOnly = false;
+        ScopeNote = null;
         CategoryFilterName = null;
     }
 

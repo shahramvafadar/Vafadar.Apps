@@ -8,8 +8,11 @@ namespace Vafadar.Zanance.Reports;
 /// <summary>A labelled figure of the report summary.</summary>
 public sealed record ReportLine(string Label, string Value);
 
-/// <summary>A table of the report; <see cref="NumericColumns"/> are aligned like numbers.</summary>
-public sealed record ReportTable(string Title, IReadOnlyList<string> Columns, IReadOnlyList<IReadOnlyList<string>> Rows, IReadOnlySet<int> NumericColumns);
+/// <summary>
+/// A table of the report; <see cref="NumericColumns"/> are aligned like numbers. <see cref="Scope"/> names what the
+/// numbers of this section were computed with (period, currency, accounts), printed under its title (ZEX-S0601).
+/// </summary>
+public sealed record ReportTable(string Title, IReadOnlyList<string> Columns, IReadOnlyList<IReadOnlyList<string>> Rows, IReadOnlySet<int> NumericColumns, string? Scope = null);
 
 /// <summary>
 /// The content of a PDF report, already translated and formatted by the app. The report states its period and scope and
@@ -74,7 +77,8 @@ public static class PdfReport
                 y = 0;
             }
 
-            y = Text(page, table.Title, heading, y, width, rtl) + 4;
+            y = Text(page, table.Title, heading, y, width, rtl) + 2;
+            y = Text(page, table.Scope ?? string.Empty, small, y, width, rtl, PdfBrushes.DimGray) + 4;
             (page, y) = Table(page, y, table, body, heading, rtl, header: true);
         }
 

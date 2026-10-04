@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Reports.PeriodReviewPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Reports"
+    x:DataType="local:PeriodReviewViewModel"
+    Title="{Binding Title}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Label Text="{v:Translate Review_Intro}" Style="{StaticResource Secondary}" Margin="4,0" />
+                <Label Text="{v:Translate Review_Nothing}" Margin="4,16" HorizontalTextAlignment="Center" IsVisible="{Binding NothingToReview}" />
+                <Label Text="{Binding ProgressText}" FontAttributes="Bold" Margin="4,8,4,0" IsVisible="{Binding NothingToReview, Converter={StaticResource InvertedBoolConverter}}" />
+
+                <!-- Each step: a toggle with its label, and a real button to its screen -->
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding NothingToReview, Converter={StaticResource InvertedBoolConverter}}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Steps}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:ReviewStepRow">
+                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                    <CheckBox IsChecked="{Binding IsDone}" Color="{DynamicResource Primary}" VerticalOptions="Center"
+                                              SemanticProperties.Description="{Binding Title}" />
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" />
+                                        <Label Text="{Binding Detail}" Style="{StaticResource Secondary}" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Text="{v:Translate Review_Open}" Padding="12,0"
+                                            Command="{Binding OpenStepCommand, Source={RelativeSource AncestorType={x:Type local:PeriodReviewViewModel}}, x:DataType=local:PeriodReviewViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="1" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Review_Finish}" Command="{Binding FinishCommand}"
+                IsVisible="{Binding NothingToReview, Converter={StaticResource InvertedBoolConverter}}" />
+    </Grid>
+</ContentPage>

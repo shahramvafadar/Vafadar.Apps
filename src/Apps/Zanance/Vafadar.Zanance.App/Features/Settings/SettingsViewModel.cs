@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -64,6 +65,28 @@ public sealed partial class SettingsViewModel : ViewModelBase
     /// <summary>Gets or sets a value indicating whether the hint "only new items use this" is shown after a change.</summary>
     [ObservableProperty]
     public partial bool DefaultCurrencyChanged { get; set; }
+
+    /// <summary>Gets or sets the day-to-day essential spending estimate used by the headroom (04 §3); empty = not set.</summary>
+    [ObservableProperty]
+    public partial string EssentialText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial int EssentialPeriodIndex { get; set; }
+
+    public IReadOnlyList<string> EssentialPeriodNames => [_translator["Settings_PerDay"], _translator["Settings_PerWeek"], _translator["Settings_PerMonth"]];
+
+    [ObservableProperty]
+    public partial string? EssentialCurrencyText { get; set; }
+
+    /// <summary>Gets the suggestion from the last three months; Zanance only suggests, the user decides.</summary>
+    [ObservableProperty]
+    public partial string? EssentialSuggestionText { get; set; }
+
+    [ObservableProperty]
+    public partial string? EssentialSavedText { get; set; }
+
+    private long? _essentialSuggestion;
+    private string _essentialCurrency = Currencies.Euro.Code;
 
     /// <summary>Gets the choices for the default account: "none" and every money account (ZEX-S0102, S0103).</summary>
     [ObservableProperty]
@@ -185,6 +208,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
                 : Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_FreshnessDays", d.ToString(_localization.CurrentCulture)))!);
             FreshnessNames = [.. dayNames];
             FreshnessIndex = Math.Max(0, Array.IndexOf(FreshnessDays, settings.RateFreshnessDays));
+            await LoadEssentialAsync(settings);
             var accounts = (await _store.GetAccountsAsync(includeArchived: false)).Where(a => Core.Accounts.EntryAccountContract.IsValidDefault(a)).ToList();
             DefaultAccounts =
             [
@@ -277,6 +301,58 @@ public sealed partial class SettingsViewModel : ViewModelBase
         var settings = await _store.GetSettingsAsync();
         settings.ValuationCurrencyEnabled = value;
         await _store.SaveSettingsAsync(settings);
+    }
+
+    // The explicit estimate of day-to-day spending (ZEX-S0606) and a suggestion: the median daily spending of the last
+    // three complete months on usable accounts, without plan payments.
+    private async Task LoadEssentialAsync(Core.Settings.ZananceSettings settings)
+    {
+        var culture = _localization.CurrentCulture;
+        _essentialCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
+        EssentialCurrencyText = _translator.Format("Settings_EssentialCurrency", _essentialCurrency);
+        EssentialText = settings.EssentialEstimate is { } estimate ? MoneyText.ForInput(estimate, _essentialCurrency, culture) : string.Empty;
+        EssentialPeriodIndex = (int)settings.EssentialEstimatePeriod;
+        EssentialSavedText = null;
+        var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
+        var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        _essentialSuggestion = Core.Reports.LiquidityCalculator.SuggestPerDay(await _store.GetAccountsAsync(), await _store.GetEntriesAsync(), _essentialCurrency, today, calendar, settings.MonthStartDay);
+        EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
+            ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, culture))
+            : null;
+    }
+
+    [RelayCommand]
+    private void UseEssentialSuggestion()
+    {
+        if (_essentialSuggestion is { } suggested)
+        {
+            EssentialText = MoneyText.ForInput(suggested, _essentialCurrency, _localization.CurrentCulture);
+            EssentialPeriodIndex = (int)Core.Settings.EstimatePeriod.Day;
+        }
+    }
+
+    [RelayCommand]
+    private async Task SaveEssentialAsync()
+    {
+        var settings = await _store.GetSettingsAsync();
+        if (string.IsNullOrWhiteSpace(EssentialText))
+        {
+            settings.EssentialEstimate = null;
+        }
+        else if (MoneyText.TryParse(EssentialText, _essentialCurrency, _localization.CurrentCulture, out var amount) && amount > 0)
+        {
+            settings.EssentialEstimate = amount;
+        }
+        else
+        {
+            EssentialSavedText = _translator["Amount_Invalid"];
+            return;
+        }
+
+        settings.EssentialEstimatePeriod = (Core.Settings.EstimatePeriod)Math.Clamp(EssentialPeriodIndex, 0, 2);
+        settings.EssentialEstimateCurrency = _essentialCurrency;
+        await _store.SaveSettingsAsync(settings);
+        EssentialSavedText = _translator[settings.EssentialEstimate is null ? "Settings_EssentialCleared" : "Settings_EssentialSaved"];
     }
 
     async partial void OnFreshnessIndexChanged(int value)

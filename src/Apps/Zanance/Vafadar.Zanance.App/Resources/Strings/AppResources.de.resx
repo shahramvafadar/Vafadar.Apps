@@ -4004,4 +4004,787 @@
   <data name="Backup_PreviewGoalsHoldings" xml:space="preserve">
     <value>Ziele: {0} · Bestandsarten: {1}</value>
   </data>
+  <data name="Report_R1" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="Report_R2" xml:space="preserve">
+    <value>Verpflichtungen</value>
+  </data>
+  <data name="Report_R3" xml:space="preserve">
+    <value>Ziele</value>
+  </data>
+  <data name="Report_R4" xml:space="preserve">
+    <value>Vermögen</value>
+  </data>
+  <data name="Report_R6" xml:space="preserve">
+    <value>Datenstatus</value>
+  </data>
+  <data name="Report_Scope" xml:space="preserve">
+    <value>Umfang:</value>
+  </data>
+  <data name="Report_ChangeScope" xml:space="preserve">
+    <value>Ändern</value>
+  </data>
+  <data name="Report_ScopeCurrency" xml:space="preserve">
+    <value>Währung</value>
+  </data>
+  <data name="Report_ScopeAccounts" xml:space="preserve">
+    <value>Konten</value>
+  </data>
+  <data name="Report_ScopeInTotals" xml:space="preserve">
+    <value>Konten in Summen</value>
+  </data>
+  <data name="Report_ScopeUsable" xml:space="preserve">
+    <value>Verfügbare Konten</value>
+  </data>
+  <data name="Report_ScopeOneAccount" xml:space="preserve">
+    <value>Ein Konto</value>
+  </data>
+  <data name="Report_PeriodLength" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="Report_ConfirmedOnly" xml:space="preserve">
+    <value>Nur bestätigte</value>
+  </data>
+  <data name="Report_Next30" xml:space="preserve">
+    <value>Nächste 30 Tage</value>
+  </data>
+  <data name="Report_Today" xml:space="preserve">
+    <value>Heute</value>
+  </data>
+  <data name="Report_Item" xml:space="preserve">
+    <value>Posten</value>
+  </data>
+  <data name="Report_Amount" xml:space="preserve">
+    <value>Betrag</value>
+  </data>
+  <data name="Report_NotAvailable" xml:space="preserve">
+    <value>nicht verfügbar</value>
+  </data>
+  <data name="Report_DataStatus" xml:space="preserve">
+    <value>Datenstatus: {0}</value>
+  </data>
+  <data name="Report_NoIssues" xml:space="preserve">
+    <value>Keine offenen Punkte für diese Ansicht</value>
+  </data>
+  <data name="Report_Surplus" xml:space="preserve">
+    <value>Überschuss</value>
+  </data>
+  <data name="Report_SurplusDetail" xml:space="preserve">
+    <value>Einnahmen {0} · Ausgaben {1}</value>
+  </data>
+  <data name="Report_Rate" xml:space="preserve">
+    <value>Behaltener Anteil des Einkommens: {0}</value>
+  </data>
+  <data name="Report_OtherCurrencies" xml:space="preserve">
+    <value>Andere Währungen (nicht addiert): {0}</value>
+  </data>
+  <data name="Report_Converted" xml:space="preserve">
+    <value>Umgerechnet: ≈ {0}</value>
+  </data>
+  <data name="Report_SpendingLine" xml:space="preserve">
+    <value>Ausgaben (Kosten {0} − Erstattungen {1})</value>
+  </data>
+  <data name="Report_TransfersBetween" xml:space="preserve">
+    <value>Umbuchungen zwischen Ihren Konten</value>
+  </data>
+  <data name="Report_SeparateLines" xml:space="preserve">
+    <value>Separate Zeilen, keine Ausgaben</value>
+  </data>
+  <data name="Report_IncomeSpending" xml:space="preserve">
+    <value>Einnahmen und Ausgaben</value>
+  </data>
+  <data name="Report_SpendingChange" xml:space="preserve">
+    <value>Veränderung der Ausgaben</value>
+  </data>
+  <data name="Report_Comparison" xml:space="preserve">
+    <value>{0} vs. {1}</value>
+  </data>
+  <data name="Report_ChangeDetail" xml:space="preserve">
+    <value>Jetzt {0} · vorher {1}</value>
+  </data>
+  <data name="Report_New" xml:space="preserve">
+    <value>neu</value>
+  </data>
+  <data name="Report_NoChanges" xml:space="preserve">
+    <value>Noch keine Ausgaben zum Vergleichen.</value>
+  </data>
+  <data name="Report_TagShared" xml:space="preserve">
+    <value>mit mehreren Tags: {0}</value>
+  </data>
+  <data name="Report_Capital" xml:space="preserve">
+    <value>Bestände gekauft oder verkauft</value>
+  </data>
+  <data name="Report_Headroom" xml:space="preserve">
+    <value>Spielraum</value>
+  </data>
+  <data name="Report_Around" xml:space="preserve">
+    <value>{0} um den {1}</value>
+  </data>
+  <data name="Report_UsesProtected" xml:space="preserve">
+    <value>Ihre Pläne würden um den {1} {0} Ihres geschützten Geldes verbrauchen.</value>
+  </data>
+  <data name="Report_LowestBalance" xml:space="preserve">
+    <value>Niedrigster Stand {0} am {1}.</value>
+  </data>
+  <data name="Report_EssentialNotIncluded" xml:space="preserve">
+    <value>Alltagsausgaben nicht enthalten</value>
+  </data>
+  <data name="Report_Incomplete" xml:space="preserve">
+    <value>unvollständig – unbekannte Beträge: {0}</value>
+  </data>
+  <data name="Report_EstimateNotGuarantee" xml:space="preserve">
+    <value>Schätzung mit Ihren aktuellen Plänen – keine Garantie</value>
+  </data>
+  <data name="Report_NoUsableAccounts" xml:space="preserve">
+    <value>Kein verfügbares Konto in dieser Währung.</value>
+  </data>
+  <data name="Report_UsableToday" xml:space="preserve">
+    <value>Verfügbarer Stand, Ende {0}</value>
+  </data>
+  <data name="Report_DayToDay" xml:space="preserve">
+    <value>Alltagsausgaben · {0} × {1}</value>
+  </data>
+  <data name="Report_LowestOn" xml:space="preserve">
+    <value>Niedrigster Stand · {0}</value>
+  </data>
+  <data name="Report_Protected" xml:space="preserve">
+    <value>Geschütztes zurückgelegtes Geld</value>
+  </data>
+  <data name="Report_ComesAfter" xml:space="preserve">
+    <value>{0} am {1} kommt nach dem Tiefpunkt</value>
+  </data>
+  <data name="Report_Next30Title" xml:space="preserve">
+    <value>Nächste 30 Tage</value>
+  </data>
+  <data name="Report_NoCommitments" xml:space="preserve">
+    <value>Keine Zahlungen in den nächsten 30 Tagen</value>
+  </data>
+  <data name="Report_UnknownCount" xml:space="preserve">
+    <value>unbekannt: {0}</value>
+  </data>
+  <data name="Report_Yearly" xml:space="preserve">
+    <value>Regelmäßige Zahlungen, nächste 12 Monate</value>
+  </data>
+  <data name="Report_YearlyTotals" xml:space="preserve">
+    <value>Fest {0} · nicht monatlich {1} · geschätzt {2}</value>
+  </data>
+  <data name="Report_MonthlyShare" xml:space="preserve">
+    <value>Anteil {0}/Monat</value>
+  </data>
+  <data name="Report_ShareNotSetAside" xml:space="preserve">
+    <value>Ein Monatsanteil ist ein Anteil, kein zurückgelegtes Geld.</value>
+  </data>
+  <data name="Report_Debt" xml:space="preserve">
+    <value>Kredite</value>
+  </data>
+  <data name="Report_NextInstallment" xml:space="preserve">
+    <value>Nächste Rate {0} am {1}</value>
+  </data>
+  <data name="Report_AddPaymentDay" xml:space="preserve">
+    <value>Ein Kredit hat eine Rate, aber keinen Plan – Zahltag hinzufügen.</value>
+  </data>
+  <data name="Report_DebtRatio" xml:space="preserve">
+    <value>Raten: {0} des Einkommens · Zinsen {1} · Tilgung {2}</value>
+  </data>
+  <data name="Report_OwedToMe" xml:space="preserve">
+    <value>Mir geschuldet</value>
+  </data>
+  <data name="Report_NoReceivables" xml:space="preserve">
+    <value>Niemand schuldet Ihnen Geld.</value>
+  </data>
+  <data name="Report_Receivables" xml:space="preserve">
+    <value>Offen: {0} · Posten: {1}</value>
+  </data>
+  <data name="Report_Over90" xml:space="preserve">
+    <value>älter als 90 Tage: {0}</value>
+  </data>
+  <data name="Report_Age0to30" xml:space="preserve">
+    <value>Bis 30 Tage</value>
+  </data>
+  <data name="Report_Age31to90" xml:space="preserve">
+    <value>31 bis 90 Tage</value>
+  </data>
+  <data name="Report_AgeOver90" xml:space="preserve">
+    <value>Über 90 Tage</value>
+  </data>
+  <data name="Report_Days" xml:space="preserve">
+    <value>{0} Tage</value>
+  </data>
+  <data name="Report_Due" xml:space="preserve">
+    <value>fällig {0}</value>
+  </data>
+  <data name="Report_DueOverdue" xml:space="preserve">
+    <value>überfällig seit {0}</value>
+  </data>
+  <data name="Report_GoalProgress" xml:space="preserve">
+    <value>Fortschritt der Ziele</value>
+  </data>
+  <data name="Report_NoGoals" xml:space="preserve">
+    <value>Keine aktiven Ziele.</value>
+  </data>
+  <data name="Report_Capacity" xml:space="preserve">
+    <value>Spielraum für Ziele</value>
+  </data>
+  <data name="Report_CapacityValue" xml:space="preserve">
+    <value>{0} pro Monat</value>
+  </data>
+  <data name="Report_CapIncome" xml:space="preserve">
+    <value>Einkommen (Median von 3 Monaten)</value>
+  </data>
+  <data name="Report_CapSpending" xml:space="preserve">
+    <value>Ausgaben (Median, ohne nicht monatliche Rechnungen)</value>
+  </data>
+  <data name="Report_CapNonMonthly" xml:space="preserve">
+    <value>Monatsanteile nicht monatlicher Rechnungen</value>
+  </data>
+  <data name="Report_CapPrincipal" xml:space="preserve">
+    <value>Kredittilgung</value>
+  </data>
+  <data name="Report_CapGoals" xml:space="preserve">
+    <value>Pläne anderer Ziele</value>
+  </data>
+  <data name="Report_EstimateNotPromise" xml:space="preserve">
+    <value>Eine Schätzung, kein Versprechen. Ein Vorschlag ändert kein Budget und keine Buchung.</value>
+  </data>
+  <data name="Report_Needs" xml:space="preserve">
+    <value>braucht {0}/Monat</value>
+  </data>
+  <data name="Report_Accept" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="Report_Accepted" xml:space="preserve">
+    <value>Plan für {1}: {0} pro Monat ab nächstem Monat.</value>
+  </data>
+  <data name="Report_NotEnoughHistory" xml:space="preserve">
+    <value>Noch nicht genug Verlauf (3 volle Monate nötig)</value>
+  </data>
+  <data name="Report_Coverage" xml:space="preserve">
+    <value>Gedeckte Grundkosten</value>
+  </data>
+  <data name="Report_Months" xml:space="preserve">
+    <value>{0} Monate</value>
+  </data>
+  <data name="Report_CoverageDetail" xml:space="preserve">
+    <value>Verfügbar {0} · Grundkosten pro Monat {1}</value>
+  </data>
+  <data name="Report_OfWhichProtected" xml:space="preserve">
+    <value>davon geschützt {0}</value>
+  </data>
+  <data name="Report_UsableMoney" xml:space="preserve">
+    <value>Verfügbares Geld</value>
+  </data>
+  <data name="Report_EssentialMonth" xml:space="preserve">
+    <value>Grundkosten pro Monat</value>
+  </data>
+  <data name="Report_NetWorth" xml:space="preserve">
+    <value>Nettovermögen</value>
+  </data>
+  <data name="Report_NetWorthIn" xml:space="preserve">
+    <value>Nettovermögen in {0}</value>
+  </data>
+  <data name="Report_WealthMoney" xml:space="preserve">
+    <value>Geld</value>
+  </data>
+  <data name="Report_WealthReceivables" xml:space="preserve">
+    <value>Mir geschuldet</value>
+  </data>
+  <data name="Report_WealthAssets" xml:space="preserve">
+    <value>Bewertete Vermögenswerte</value>
+  </data>
+  <data name="Report_WealthHoldings" xml:space="preserve">
+    <value>Bestände (bewertet)</value>
+  </data>
+  <data name="Report_WealthDebts" xml:space="preserve">
+    <value>Schulden</value>
+  </data>
+  <data name="Report_NotValued" xml:space="preserve">
+    <value>Nicht bewertet: {0} {1}</value>
+  </data>
+  <data name="Report_Composition" xml:space="preserve">
+    <value>Zusammensetzung</value>
+  </data>
+  <data name="Report_DebtsApart" xml:space="preserve">
+    <value>Schulden getrennt: {0}</value>
+  </data>
+  <data name="Report_NoRate" xml:space="preserve">
+    <value>kein Kurs: {0}</value>
+  </data>
+  <data name="Report_AddRatesForComposition" xml:space="preserve">
+    <value>Kurse oder Preise eintragen, um die Zusammensetzung zu sehen</value>
+  </data>
+  <data name="Issue_BackupOld" xml:space="preserve">
+    <value>Letzte Sicherung am {0}</value>
+  </data>
+  <data name="Issue_NoBackup" xml:space="preserve">
+    <value>Noch keine Sicherung</value>
+  </data>
+  <data name="Issue_Unreviewed" xml:space="preserve">
+    <value>Ungeprüft: {0}</value>
+  </data>
+  <data name="Issue_UnknownAmounts" xml:space="preserve">
+    <value>Unbekannte Beträge: {0}</value>
+  </data>
+  <data name="Issue_MissingRates" xml:space="preserve">
+    <value>Kein Kurs: {0}</value>
+  </data>
+  <data name="Issue_OutdatedRates" xml:space="preserve">
+    <value>Kurs {0} vom {1}</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice" xml:space="preserve">
+    <value>Bestände ohne Preis: {0}</value>
+  </data>
+  <data name="Issue_OpeningUnknown" xml:space="preserve">
+    <value>Anfangsstand unbekannt: {0}</value>
+  </data>
+  <data name="Issue_NotReconciled" xml:space="preserve">
+    <value>Seit über 60 Tagen nicht mit der Bank verglichen: {0}</value>
+  </data>
+  <data name="Issue_WithoutCategory" xml:space="preserve">
+    <value>Ohne Kategorie: {0}</value>
+  </data>
+  <data name="Issue_PossibleDuplicates" xml:space="preserve">
+    <value>Mögliche Duplikate: {0}</value>
+  </data>
+  <data name="Issue_Aggregated" xml:space="preserve">
+    <value>Sammelbuchungen (Zeitpunkt unbekannt): {0}</value>
+  </data>
+  <data name="Issue_BeforeOpening" xml:space="preserve">
+    <value>Vor einem Eröffnungsdatum: {0}</value>
+  </data>
+  <data name="Issue_BackupOld_Action" xml:space="preserve">
+    <value>Jetzt sichern</value>
+  </data>
+  <data name="Issue_Unreviewed_Action" xml:space="preserve">
+    <value>Prüfen</value>
+  </data>
+  <data name="Issue_UnknownAmounts_Action" xml:space="preserve">
+    <value>Pläne öffnen</value>
+  </data>
+  <data name="Issue_MissingRates_Action" xml:space="preserve">
+    <value>Kurse eintragen</value>
+  </data>
+  <data name="Issue_OutdatedRates_Action" xml:space="preserve">
+    <value>Kurse aktualisieren</value>
+  </data>
+  <data name="Issue_HoldingsWithoutPrice_Action" xml:space="preserve">
+    <value>Preise eintragen</value>
+  </data>
+  <data name="Issue_OpeningUnknown_Action" xml:space="preserve">
+    <value>Konto öffnen</value>
+  </data>
+  <data name="Issue_NotReconciled_Action" xml:space="preserve">
+    <value>Stand vergleichen</value>
+  </data>
+  <data name="Issue_WithoutCategory_Action" xml:space="preserve">
+    <value>Buchungen zeigen</value>
+  </data>
+  <data name="Issue_PossibleDuplicates_Action" xml:space="preserve">
+    <value>Buchungen zeigen</value>
+  </data>
+  <data name="Issue_Aggregated_Action" xml:space="preserve">
+    <value>Buchungen zeigen</value>
+  </data>
+  <data name="Issue_BeforeOpening_Action" xml:space="preserve">
+    <value>Buchungen zeigen</value>
+  </data>
+  <data name="Kpi_Explain" xml:space="preserve">
+    <value>Diese Zahl erklären</value>
+  </data>
+  <data name="Kpi_InWords" xml:space="preserve">
+    <value>In Worten</value>
+  </data>
+  <data name="Kpi_Included" xml:space="preserve">
+    <value>Enthalten</value>
+  </data>
+  <data name="Kpi_Excluded" xml:space="preserve">
+    <value>Nicht enthalten</value>
+  </data>
+  <data name="Kpi_ShowEntries" xml:space="preserve">
+    <value>Buchungen zeigen</value>
+  </data>
+  <data name="Kpi_K01_Title" xml:space="preserve">
+    <value>Verbleibendes Budget</value>
+  </data>
+  <data name="Kpi_K01_Question" xml:space="preserve">
+    <value>Wie viel ist vom Budget dieses Zeitraums übrig?</value>
+  </data>
+  <data name="Kpi_K01_Definition" xml:space="preserve">
+    <value>Das Limit plus Übertrag, minus Ausgaben abzüglich Erstattungen.</value>
+  </data>
+  <data name="Kpi_K01_Included" xml:space="preserve">
+    <value>Ausgaben und Erstattungen der Konten und Kategorien des Budgets|Unterkategorien mit ihrer Oberkategorie</value>
+  </data>
+  <data name="Kpi_K01_Excluded" xml:space="preserve">
+    <value>Umbuchungen und Kartenzahlungen|Kredittilgung|Käufe und Verkäufe von Beständen|Korrekturen und Anfangsstände|Einnahmen</value>
+  </data>
+  <data name="Kpi_K02_Title" xml:space="preserve">
+    <value>Tiefster Stand und Spielraum</value>
+  </data>
+  <data name="Kpi_K02_Question" xml:space="preserve">
+    <value>Wird das Geld vor dem nächsten Einkommen knapp?</value>
+  </data>
+  <data name="Kpi_K02_Definition" xml:space="preserve">
+    <value>Der verfügbare Stand von heute, plus geplante Eingänge und minus geplante Zahlungen jedes Tages, minus Alltagsausgaben, wenn Sie eine Schätzung festgelegt haben. Der Tiefpunkt minus geschütztes Geld ist der Spielraum – eine Schätzung, nie „sicher ausgebbar“.</value>
+  </data>
+  <data name="Kpi_K02_Included" xml:space="preserve">
+    <value>Für Zahlungen verfügbare Konten|Für spätere Tage erfasste Buchungen|Offene Planzahlungen, überfällige heute|Ihre Alltagsschätzung, falls festgelegt|Zurückgelegtes, als geschützt markiertes Geld</value>
+  </data>
+  <data name="Kpi_K02_Excluded" xml:space="preserve">
+    <value>Budgets und Monatsanteile|Bestände, Schulden und Forderungen|Kreditrahmen|Kartenkäufe – nur die Kartenzahlung zählt</value>
+  </data>
+  <data name="Kpi_K03_Title" xml:space="preserve">
+    <value>Fortschritt der Ziele</value>
+  </data>
+  <data name="Kpi_K03_Question" xml:space="preserve">
+    <value>Wie weit sind meine Ziele?</value>
+  </data>
+  <data name="Kpi_K03_Definition" xml:space="preserve">
+    <value>Das Erreichte geteilt durch das Ziel; der Rest ist, was noch fehlt.</value>
+  </data>
+  <data name="Kpi_K03_Included" xml:space="preserve">
+    <value>Kontostand-Ziel: der Stand seines Kontos|Zurückgelegtes Geld: das zurückgelegte, gedeckte Geld</value>
+  </data>
+  <data name="Kpi_K03_Excluded" xml:space="preserve">
+    <value>Von anderen Konten umgebuchtes Geld als Einkommen|Preisänderungen</value>
+  </data>
+  <data name="Kpi_K04_Title" xml:space="preserve">
+    <value>Zahlungen der nächsten 30 Tage</value>
+  </data>
+  <data name="Kpi_K04_Question" xml:space="preserve">
+    <value>Welche Zahlungen kommen und wie hoch sind sie?</value>
+  </data>
+  <data name="Kpi_K04_Definition" xml:space="preserve">
+    <value>Was von offenen Planzahlungen der nächsten 30 Tage noch zu zahlen ist, überfällige eingeschlossen. Bekannte, geschätzte (≈) und unbekannte Beträge bleiben getrennt.</value>
+  </data>
+  <data name="Kpi_K04_Included" xml:space="preserve">
+    <value>Ausgabenpläne|Umbuchungen auf Karten, Kredite oder zurückgelegte Konten|Nur der offene Teil einer teilweise bezahlten Zahlung</value>
+  </data>
+  <data name="Kpi_K04_Excluded" xml:space="preserve">
+    <value>Erledigte und übersprungene Zahlungen|Umbuchungen zwischen verfügbaren Konten|Unbekannte Beträge werden gezählt, nie als null addiert</value>
+  </data>
+  <data name="Kpi_K05_Title" xml:space="preserve">
+    <value>Überschuss</value>
+  </data>
+  <data name="Kpi_K05_Question" xml:space="preserve">
+    <value>Habe ich mehr verdient als ausgegeben?</value>
+  </data>
+  <data name="Kpi_K05_Definition" xml:space="preserve">
+    <value>Ihr Einkommen minus Ihre Konsumausgaben im Zeitraum.</value>
+  </data>
+  <data name="Kpi_K05_Included" xml:space="preserve">
+    <value>Einkommen auf den Konten des Umfangs, minus zurückgezahltes Einkommen|Ausgaben, verringert um Erstattungen|Zinsen und Gebühren, einmal als Ausgaben</value>
+  </data>
+  <data name="Kpi_K05_Excluded" xml:space="preserve">
+    <value>Umbuchungen zwischen Ihren Konten|Kartenzahlungen und Kredittilgung|Käufe und Verkäufe von Beständen|Korrekturen und Anfangsstände|Preis- und Kursänderungen</value>
+  </data>
+  <data name="Kpi_K06_Title" xml:space="preserve">
+    <value>Behaltener Anteil des Einkommens</value>
+  </data>
+  <data name="Kpi_K06_Question" xml:space="preserve">
+    <value>Welcher Anteil meines Einkommens blieb übrig?</value>
+  </data>
+  <data name="Kpi_K06_Definition" xml:space="preserve">
+    <value>Der Überschuss geteilt durch Ihr Einkommen. Ohne Einkommen nicht verfügbar – nie 0 %.</value>
+  </data>
+  <data name="Kpi_K06_Included" xml:space="preserve">
+    <value>Wie beim Überschuss</value>
+  </data>
+  <data name="Kpi_K06_Excluded" xml:space="preserve">
+    <value>Kein Maß für Vermögensänderung, Preissteigerung oder umgebuchtes Sparen</value>
+  </data>
+  <data name="Kpi_K07_Title" xml:space="preserve">
+    <value>Gedeckte Grundkosten</value>
+  </data>
+  <data name="Kpi_K07_Question" xml:space="preserve">
+    <value>Wie viele Monate decke ich Grundkosten mit dem verfügbaren Geld?</value>
+  </data>
+  <data name="Kpi_K07_Definition" xml:space="preserve">
+    <value>Verfügbares Geld geteilt durch die mittleren Grundausgaben der letzten drei vollen Monate, plus Monatsanteile nicht monatlicher Grundrechnungen.</value>
+  </data>
+  <data name="Kpi_K07_Included" xml:space="preserve">
+    <value>Für Zahlungen verfügbare Konten|Als Grundbedarf markierte Kategorien (Wohnen, Essen, Energie, Telefon, Mobilität, Gesundheit, Versicherung)</value>
+  </data>
+  <data name="Kpi_K07_Excluded" xml:space="preserve">
+    <value>Bestände, Schulden und Forderungen|Kreditrahmen|Geschütztes Geld wird genannt, nicht abgezogen</value>
+  </data>
+  <data name="Kpi_K08_Title" xml:space="preserve">
+    <value>Regelmäßige Zahlungen im Jahr</value>
+  </data>
+  <data name="Kpi_K08_Question" xml:space="preserve">
+    <value>Was kosten meine regelmäßigen Verpflichtungen im Jahr?</value>
+  </data>
+  <data name="Kpi_K08_Definition" xml:space="preserve">
+    <value>Die erwarteten Beträge aktiver Ausgabenpläne der nächsten 12 Monate: fest, nicht monatlich und geschätzt. Ein Monatsanteil ist kein zurückgelegtes Geld.</value>
+  </data>
+  <data name="Kpi_K08_Included" xml:space="preserve">
+    <value>Aktive Ausgabenpläne und Verträge</value>
+  </data>
+  <data name="Kpi_K08_Excluded" xml:space="preserve">
+    <value>Unbekannte Beträge (getrennt gezählt)|Beendete Pläne und übersprungene Zahlungen|Einnahmenpläne</value>
+  </data>
+  <data name="Kpi_K09_Title" xml:space="preserve">
+    <value>Kreditraten</value>
+  </data>
+  <data name="Kpi_K09_Question" xml:space="preserve">
+    <value>Welcher Teil meines Einkommens geht in Kreditraten?</value>
+  </data>
+  <data name="Kpi_K09_Definition" xml:space="preserve">
+    <value>Geplante Raten des Monats geteilt durch Einkommen. Die Aufteilung in Zinsen und Tilgung ist eine Schätzung aus dem Zinssatz.</value>
+  </data>
+  <data name="Kpi_K09_Included" xml:space="preserve">
+    <value>Kredite mit einem Plan, der die Rate zahlt</value>
+  </data>
+  <data name="Kpi_K09_Excluded" xml:space="preserve">
+    <value>Kartenkäufe|Tilgung ist nie eine Ausgabe</value>
+  </data>
+  <data name="Kpi_K10_Title" xml:space="preserve">
+    <value>Nettovermögen</value>
+  </data>
+  <data name="Kpi_K10_Question" xml:space="preserve">
+    <value>Was besitze ich heute, und woraus besteht es?</value>
+  </data>
+  <data name="Kpi_K10_Definition" xml:space="preserve">
+    <value>Je Währung: Geld + Forderungen + bewertete Vermögenswerte + Bestände zum letzten Preis − Schulden. Währungen werden ohne Kurs nie addiert.</value>
+  </data>
+  <data name="Kpi_K10_Included" xml:space="preserve">
+    <value>Alle nicht archivierten Konten|Offene Erstattungen und verliehenes Geld|Bestände zum letzten Preis</value>
+  </data>
+  <data name="Kpi_K10_Excluded" xml:space="preserve">
+    <value>Kreditrahmen|Zurückgelegtes Geld (es ist in Ihrem Geld)|Budgets|Bestände ohne Preis – sie werden aufgeführt</value>
+  </data>
+  <data name="Kpi_K11_Title" xml:space="preserve">
+    <value>Veränderung der Ausgaben</value>
+  </data>
+  <data name="Kpi_K11_Question" xml:space="preserve">
+    <value>Wo haben sich meine Ausgaben verändert?</value>
+  </data>
+  <data name="Kpi_K11_Definition" xml:space="preserve">
+    <value>Ausgaben je Kategorie jetzt gegenüber dem vorigen Zeitraum. Solange ein Zeitraum läuft, wird dieselbe Anzahl Tage verglichen.</value>
+  </data>
+  <data name="Kpi_K11_Included" xml:space="preserve">
+    <value>Ausgaben abzüglich Erstattungen</value>
+  </data>
+  <data name="Kpi_K11_Excluded" xml:space="preserve">
+    <value>Wie beim Überschuss|Es ist keine „persönliche Inflation“</value>
+  </data>
+  <data name="Kpi_K12_Title" xml:space="preserve">
+    <value>Mir geschuldet</value>
+  </data>
+  <data name="Kpi_K12_Question" xml:space="preserve">
+    <value>Wer schuldet mir was, und seit wann?</value>
+  </data>
+  <data name="Kpi_K12_Definition" xml:space="preserve">
+    <value>Offene Erstattungen und Stände verliehenen Geldes, mit Alter und optionalem Fälligkeitsdatum.</value>
+  </data>
+  <data name="Kpi_K12_Included" xml:space="preserve">
+    <value>Ausgaben, die andere zurückzahlen, minus Zurückerhaltenes|Konten verliehenen Geldes</value>
+  </data>
+  <data name="Kpi_K12_Excluded" xml:space="preserve">
+    <value>Zurückgezahlte Beträge|Es ist nie verfügbares Geld, bevor es eingeht</value>
+  </data>
+  <data name="Kpi_K13_Title" xml:space="preserve">
+    <value>Zusammensetzung</value>
+  </data>
+  <data name="Kpi_K13_Question" xml:space="preserve">
+    <value>In welchen Währungen und Werten liegt mein Vermögen?</value>
+  </data>
+  <data name="Kpi_K13_Definition" xml:space="preserve">
+    <value>Der Anteil jeder Währung und jedes Bestands in der Bewertungswährung, vom Teil mit bekanntem Wert.</value>
+  </data>
+  <data name="Kpi_K13_Included" xml:space="preserve">
+    <value>Positive Stände, Forderungen, bewertete Vermögenswerte und Bestände</value>
+  </data>
+  <data name="Kpi_K13_Excluded" xml:space="preserve">
+    <value>Schulden (getrennt gezeigt)|Währungen ohne Kurs und Bestände ohne Preis – sie werden aufgeführt</value>
+  </data>
+  <data name="Kpi_K14_Title" xml:space="preserve">
+    <value>Datenstatus</value>
+  </data>
+  <data name="Kpi_K14_Question" xml:space="preserve">
+    <value>Kann ich mich auf diese Zahl verlassen?</value>
+  </data>
+  <data name="Kpi_K14_Definition" xml:space="preserve">
+    <value>Eine Liste dessen, was eine Zahl unsicher machen kann, jeweils mit dem Bildschirm zur Behebung – nie eine Punktzahl.</value>
+  </data>
+  <data name="Kpi_K14_Included" xml:space="preserve">
+    <value>Ungeprüfte Buchungen, Buchungen ohne Kategorie, unbekannte Beträge|Fehlende oder alte Kurse, Bestände ohne Preis|Unbekannte Anfangsstände, 60 Tage nicht verglichene Konten|Letzte Sicherung älter als 30 Tage, mögliche Duplikate</value>
+  </data>
+  <data name="Kpi_K14_Excluded" xml:space="preserve">
+    <value>Jede Genauigkeitsbewertung</value>
+  </data>
+  <data name="Kpi_Capacity_Title" xml:space="preserve">
+    <value>Spielraum für Ziele</value>
+  </data>
+  <data name="Kpi_Capacity_Question" xml:space="preserve">
+    <value>Wie viel könnte monatlich in Ziele fließen?</value>
+  </data>
+  <data name="Kpi_Capacity_Definition" xml:space="preserve">
+    <value>Mittleres Einkommen der letzten drei vollen Monate minus mittlere Ausgaben, Monatsanteile nicht monatlicher Rechnungen, Kredittilgung und Pläne anderer Ziele. Eine Grenze für Vorschläge, nie eine Zuteilung.</value>
+  </data>
+  <data name="Kpi_Capacity_Included" xml:space="preserve">
+    <value>Verfügbare Konten der Währung|Übernommene Beitragspläne anderer Ziele</value>
+  </data>
+  <data name="Kpi_Capacity_Excluded" xml:space="preserve">
+    <value>Buchungen, die nicht monatliche Rechnungen bezahlten (stattdessen ihre Anteile)|Umbuchungen und Bestände</value>
+  </data>
+  <data name="Home_HeadroomProtected" xml:space="preserve">
+    <value>Ihre Pläne würden um den {0} geschütztes Geld verbrauchen</value>
+  </data>
+  <data name="Home_Review" xml:space="preserve">
+    <value>{0} abschließen</value>
+  </data>
+  <data name="Review_Title" xml:space="preserve">
+    <value>Monatsrückblick</value>
+  </data>
+  <data name="Review_TitleMonth" xml:space="preserve">
+    <value>Rückblick {0}</value>
+  </data>
+  <data name="Review_Intro" xml:space="preserve">
+    <value>Eine kurze Routine für den gerade beendeten Monat. Jeder Schritt öffnet seinen Bildschirm; haken Sie ihn ab, wenn Sie fertig sind.</value>
+  </data>
+  <data name="Review_Nothing" xml:space="preserve">
+    <value>Gerade gibt es nichts abzuschließen.</value>
+  </data>
+  <data name="Review_Progress" xml:space="preserve">
+    <value>Erledigt: {0} von {1}</value>
+  </data>
+  <data name="Review_Open" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="Review_Finish" xml:space="preserve">
+    <value>Rückblick abschließen</value>
+  </data>
+  <data name="Review_Start" xml:space="preserve">
+    <value>Monatsrückblick starten</value>
+  </data>
+  <data name="Review_Unreviewed" xml:space="preserve">
+    <value>Buchungen prüfen</value>
+  </data>
+  <data name="Review_Plans" xml:space="preserve">
+    <value>Fällige Zahlungen erledigen oder überspringen</value>
+  </data>
+  <data name="Review_Reconcile" xml:space="preserve">
+    <value>Stände mit der Bank vergleichen</value>
+  </data>
+  <data name="Review_Goals" xml:space="preserve">
+    <value>Ziele ansehen</value>
+  </data>
+  <data name="Review_Backup" xml:space="preserve">
+    <value>Sicherung erstellen</value>
+  </data>
+  <data name="Review_UnreviewedDetail" xml:space="preserve">
+    <value>Ungeprüft: {0}</value>
+  </data>
+  <data name="Review_PlansDetail" xml:space="preserve">
+    <value>Offen bis Monatsende: {0}</value>
+  </data>
+  <data name="Review_ReconcileDetail" xml:space="preserve">
+    <value>60 Tage nicht verglichen: {0}</value>
+  </data>
+  <data name="Review_GoalsDetail" xml:space="preserve">
+    <value>Aktive Ziele: {0}</value>
+  </data>
+  <data name="Review_BackupDetail" xml:space="preserve">
+    <value>Letzte Sicherung: {0}</value>
+  </data>
+  <data name="Account_LastReconciled" xml:space="preserve">
+    <value>Zuletzt mit der Bank verglichen: {0}</value>
+  </data>
+  <data name="Account_NeverReconciled" xml:space="preserve">
+    <value>Noch nicht mit der Bank verglichen</value>
+  </data>
+  <data name="Account_HasDueDate" xml:space="preserve">
+    <value>Bis zu einem Tag zurückzuzahlen</value>
+  </data>
+  <data name="Entry_ReimbursementDue" xml:space="preserve">
+    <value>Bis zu einem Tag zurück erwartet</value>
+  </data>
+  <data name="Category_Essential" xml:space="preserve">
+    <value>Grundbedarf</value>
+  </data>
+  <data name="Help_Essential_Title" xml:space="preserve">
+    <value>Grundbedarf</value>
+  </data>
+  <data name="Help_Essential_Text" xml:space="preserve">
+    <value>Kosten, auf die Sie kaum verzichten können, etwa Miete, Essen, Energie oder Versicherung. Sie bestimmen, wie lange Ihr verfügbares Geld reichen würde, und helfen bei einer Alltagsschätzung.</value>
+  </data>
+  <data name="Help_Essential_Example" xml:space="preserve">
+    <value>Verfügbar 6.000 EUR, Grundbedarf 1.450 / 1.500 / 1.620 → 4,0 Monate.</value>
+  </data>
+  <data name="Settings_Essential" xml:space="preserve">
+    <value>Alltagsausgaben</value>
+  </data>
+  <data name="Settings_EssentialPlaceholder" xml:space="preserve">
+    <value>leer = nicht enthalten</value>
+  </data>
+  <data name="Settings_EssentialCurrency" xml:space="preserve">
+    <value>In {0}; für den Spielraum Ihrer Pläne</value>
+  </data>
+  <data name="Settings_EssentialSuggestion" xml:space="preserve">
+    <value>Letzte 3 Monate: {0} pro Tag</value>
+  </data>
+  <data name="Settings_UseSuggestion" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="Settings_EssentialSaved" xml:space="preserve">
+    <value>Gespeichert. Der Spielraum enthält jetzt Alltagsausgaben.</value>
+  </data>
+  <data name="Settings_EssentialCleared" xml:space="preserve">
+    <value>Entfernt. Alltagsausgaben sind nicht enthalten.</value>
+  </data>
+  <data name="Settings_PerDay" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Settings_PerWeek" xml:space="preserve">
+    <value>Woche</value>
+  </data>
+  <data name="Settings_PerMonth" xml:space="preserve">
+    <value>Monat</value>
+  </data>
+  <data name="Help_EssentialEstimate_Title" xml:space="preserve">
+    <value>Alltagsausgaben</value>
+  </data>
+  <data name="Help_EssentialEstimate_Text" xml:space="preserve">
+    <value>Die Vorschau kennt nur Ihre Pläne. Lebensmittel und andere tägliche Ausgaben sind nicht geplant, daher lässt der Spielraum sie weg, außer Sie legen hier eine Schätzung fest. Zanance schlägt nur einen Wert aus den letzten drei Monaten vor; Sie entscheiden.</value>
+  </data>
+  <data name="Help_EssentialEstimate_Example" xml:space="preserve">
+    <value>20 EUR pro Tag: 24 Tage bis zum Tiefpunkt ziehen 480 EUR ab.</value>
+  </data>
+  <data name="Goal_Coverage" xml:space="preserve">
+    <value>Grundkosten durch verfügbares Geld gedeckt: {0}</value>
+  </data>
+  <data name="Entry_Aggregated" xml:space="preserve">
+    <value>Fasst mehrere Käufe zusammen</value>
+  </data>
+  <data name="Entry_AggregatedFrom" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="Entry_AggregatedTo" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="Entry_AggregatedMarker" xml:space="preserve">
+    <value>Zusammengefasst</value>
+  </data>
+  <data name="Aggregate_Replace" xml:space="preserve">
+    <value>Verknüpfen und ersetzen</value>
+  </data>
+  <data name="Aggregate_KeepBoth" xml:space="preserve">
+    <value>Beide behalten (zählt doppelt)</value>
+  </data>
+  <data name="Aggregate_Overlap" xml:space="preserve">
+    <value>„{0}“ ({1}) fasst diesen Zeitraum bereits zusammen. Einzelbuchungen: {2}. Verknüpfen und ersetzen lässt {3} in der Sammelbuchung; Rückgängig stellt sie wieder her.</value>
+  </data>
+  <data name="Help_Aggregated_Title" xml:space="preserve">
+    <value>Sammelbuchungen</value>
+  </data>
+  <data name="Help_Aggregated_Text" xml:space="preserve">
+    <value>Erfassen Sie mehrere Käufe eines Zeitraums als einen Betrag, etwa alle Lebensmittel im September. Er zählt wie jede Buchung; Zahlen, die den Tag brauchen, nennen den Zeitpunkt unbekannt. Fügen Sie später Einzelbuchungen für dasselbe Konto und dieselbe Kategorie im Zeitraum hinzu, fragt Zanance, ob sie in der Sammelbuchung ersetzt werden.</value>
+  </data>
+  <data name="Help_Aggregated_Example" xml:space="preserve">
+    <value>Lebensmittel September 412 EUR; später sechs Belege über 395 EUR → die Sammelbuchung behält 17 EUR.</value>
+  </data>
+  <data name="Import_AggregateOverlap" xml:space="preserve">
+    <value>Zeilen innerhalb einer Sammelbuchung (zählen doppelt): {0}. Bearbeiten Sie nach dem Import die Sammelbuchung oder die Zeilen.</value>
+  </data>
 </root>

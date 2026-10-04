@@ -195,11 +195,12 @@ internal static class DebugSnapshots
             ("asset-move", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "LocationTransfer" }),
             ("importexport", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
-            ("report-income", AppShell.ReportsRoute, new() { ["report"] = 1 }),
-            ("report-trend", AppShell.ReportsRoute, new() { ["report"] = 2 }),
-            ("report-accounts", AppShell.ReportsRoute, new() { ["report"] = 3 }),
-            ("report-plans", AppShell.ReportsRoute, new() { ["report"] = 4 }),
-            ("report-tags", AppShell.ReportsRoute, new() { ["report"] = 5 }),
+            ("report-commitments", AppShell.ReportsRoute, new() { ["report"] = 1 }),
+            ("report-goals", AppShell.ReportsRoute, new() { ["report"] = 2 }),
+            ("report-wealth", AppShell.ReportsRoute, new() { ["report"] = 3 }),
+            ("report-status", AppShell.ReportsRoute, new() { ["report"] = 4 }),
+            ("report-kpi", AppShell.KpiSheetRoute, new() { ["sheet"] = new Features.Reports.KpiExplanation("K05", "+700.00 EUR", "October · EUR · Accounts in totals", [new("Income", "3,000.00 EUR", false), new("= Surplus", "+700.00 EUR", true)], null, null) }),
+            ("report-review", AppShell.ReviewRoute, null),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("profiles", AppShell.ProfilesRoute, null),
@@ -212,7 +213,9 @@ internal static class DebugSnapshots
         {
             localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
             await Task.Delay(1000);
-            foreach (var (name, route, query) in screens)
+            // VAFADAR_SNAPSHOT_ONLY=report,holding shoots only the screens whose name starts with one of the prefixes.
+            var only = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY")?.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var (name, route, query) in screens.Where(s => only is null || only.Any(o => s.Name.StartsWith(o, StringComparison.Ordinal))))
             {
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
                 await Task.Delay(1500);

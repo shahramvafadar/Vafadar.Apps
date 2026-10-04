@@ -3,16 +3,18 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
+using Vafadar.Backup;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
-using Vafadar.Zanance.App.Features.Home;
+using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Reports;
@@ -29,16 +31,20 @@ public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines)
 /// <summary>One month of the trend chart; amounts are major units for the chart axis.</summary>
 public sealed record TrendPoint(string Label, double Income, double Expense, string IncomeText, string ExpenseText, string ResultText, Color ResultColor);
 
-/// <summary>A plan with planned and recorded amounts.</summary>
 /// <summary>Spending of one tag.</summary>
 public sealed record TagReportRow(string Tag, string Name, string AmountText, string Details);
 
+/// <summary>A plan with planned and recorded amounts.</summary>
 public sealed record PlanReportRow(string Name, string PlannedText, string ActualText, string Details);
 
+/// <summary>One item of the data status with the screen that fixes it (ZEX-K14).</summary>
+public sealed record IssueRow(DataIssueKind Kind, string Text, string? ActionText, IReadOnlyList<Guid>? Ids);
+
 /// <summary>
-/// Reports (UI-11, REP-01..06): expenses by category, income and expense, trend, account movement and plan versus
-/// actual. Every number uses the period at the top and the accounts included in totals; tapping a number lists the
-/// entries behind it (REP-01, AT-50).
+/// The reports hub (ZEX-UI13): report packages under one scope bar – period overview (R1), commitments (R2), goals
+/// and capacity (R3), holdings and net worth (R4) and data status (R6). Every number uses the scope (period, accounts,
+/// currency, confirmed only), names it, explains itself with "?" and lists the entries behind it with the same scope,
+/// so the list shows the same total (ZEX-S0601, AT36). Each package ends with its data status, never a score.
 /// </summary>
 public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 {
@@ -46,168 +52,116 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private readonly ZananceStore _store;
     private readonly PlanStore _plans;
+    private readonly GoalStore _goals;
+    private readonly HoldingStore _holdings;
+    private readonly IBackupService _backup;
+    private readonly Goals.GoalPresenter _goalPresenter;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
+    private readonly Security.AppLockService _lock;
     private int _year;
     private int _month;
     private int _startDay = 1;
     private DateOnly _from;
     private DateOnly _to;
     private string _currency = Currencies.Euro.Code;
+    private ZananceSettings _settings = new();
+    private List<Account> _accounts = [];
+    private bool _loading;
 
-    public ReportsViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Security.AppLockService appLock)
+    public ReportsViewModel(
+        ZananceStore store,
+        PlanStore plans,
+        GoalStore goals,
+        HoldingStore holdings,
+        IBackupService backup,
+        Goals.GoalPresenter goalPresenter,
+        Translator translator,
+        IDateFormatter dates,
+        ILocalizationService localization,
+        TimeProvider time,
+        Security.AppLockService appLock)
     {
         _lock = appLock;
         _store = store;
         _plans = plans;
+        _goals = goals;
+        _holdings = holdings;
+        _backup = backup;
+        _goalPresenter = goalPresenter;
         _translator = translator;
         _dates = dates;
         _localization = localization;
         _time = time;
         PeriodKindNames = [translator["Report_Month"], translator["Report_Year"]];
-        ReportNames = [translator["Report_Expenses"], translator["Report_IncomeExpense"], translator["Report_Trend"], translator["Report_Accounts"], translator["Report_Plans"], translator["Report_Tags"]];
+        PackageNames = [translator["Report_R1"], translator["Report_R2"], translator["Report_R3"], translator["Report_R4"], translator["Report_R6"]];
+        AccountScopeNames = [translator["Report_ScopeInTotals"], translator["Report_ScopeUsable"], translator["Report_ScopeOneAccount"]];
         PeriodText = string.Empty;
+        ScopeText = string.Empty;
     }
 
     public IReadOnlyList<string> PeriodKindNames { get; }
 
-    public IReadOnlyList<string> ReportNames { get; }
+    public IReadOnlyList<string> PackageNames { get; }
 
-    private readonly Security.AppLockService _lock;
+    public IReadOnlyList<string> AccountScopeNames { get; }
 
-    // PDF of the period (REP-07): every report of the screen in one file, clearly marked as not official.
-    [RelayCommand]
-    private async Task SharePdfAsync()
-    {
-        if (IsBusy || !await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
-        {
-            return;
-        }
-
-        IsBusy = true;
-        var shown = ReportIndex;
-        try
-        {
-            var pdf = await CreatePdfAsync();
-            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-report-{_from:yyyy-MM}.pdf"));
-            await File.WriteAllBytesAsync(path, pdf);
-            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
-        }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            await Failures.ShowAsync(ex);
-        }
-        finally
-        {
-            IsBusy = false;
-            ReportIndex = shown;
-            await LoadAsync();
-        }
-    }
-
-    /// <summary>Creates the PDF of the current period with all reports; the screen must be reloaded afterwards.</summary>
-    public async Task<byte[]> CreatePdfAsync()
-    {
-        {
-            var accounts = await _store.GetAccountsAsync();
-            var entries = await _store.GetEntriesAsync();
-            var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-            var culture = _localization.CurrentCulture;
-            BuildExpenses(accounts, entries, categories, culture);
-            BuildIncomeExpense(accounts, entries, culture);
-            BuildAccounts(accounts, entries, culture);
-            await BuildPlansAsync(accounts, entries, culture);
-            BuildTags(accounts, entries, culture);
-
-            var tables = new List<Vafadar.Zanance.Reports.ReportTable>();
-            if (CategoryRows.Count > 0)
-            {
-                tables.Add(new(_translator["Report_GrossByCategory"], [_translator["Entry_Category"], _translator["Report_Gross"], _translator["Report_Refunds"], _translator["Report_Net"]],
-                    [.. CategoryRows.Select(r => (IReadOnlyList<string>)[r.Name, r.GrossText, r.RefundsText, r.NetText])], new HashSet<int> { 1, 2, 3 }));
-            }
-
-            if (Accounts.Count > 0)
-            {
-                tables.Add(new(_translator["Report_Accounts"], [_translator["Entry_Account"], _translator["Report_Opening"], _translator["Report_Closing"]],
-                    [.. Accounts.Select(a => (IReadOnlyList<string>)[a.Name, a.Lines.FirstOrDefault()?.Amount ?? string.Empty, a.Lines.LastOrDefault()?.Amount ?? string.Empty])], new HashSet<int> { 1, 2 }));
-            }
-
-            if (PlanRows.Count > 0)
-            {
-                tables.Add(new(_translator["Report_Plans"], [_translator["Plan_Name"], _translator["Report_Planned"], _translator["Report_Actual"]],
-                    [.. PlanRows.Select(p => (IReadOnlyList<string>)[p.Name, p.PlannedText, p.ActualText])], new HashSet<int> { 1, 2 }));
-            }
-
-            if (TagRows.Count > 0)
-            {
-                tables.Add(new(_translator["Report_Tags"], [_translator["Entry_Tags"], _translator["Report_Net"]],
-                    [.. TagRows.Select(t => (IReadOnlyList<string>)["#" + t.Tag, t.AmountText])], new HashSet<int> { 1 }));
-            }
-
-            var document = new Vafadar.Zanance.Reports.ReportDocument(
-                _translator.Format("Report_PdfTitle", _translator["App_Name"]),
-                PeriodText,
-                _translator.Format("Report_PdfScope", _currency),
-                _translator.Format("Report_PdfCreated", _dates.Format(Today, DateFormatStyle.Long)),
-                _translator["Report_PdfDisclaimer"],
-                _localization.IsRightToLeft,
-                [.. IncomeExpenseLines.Select(l => new Vafadar.Zanance.Reports.ReportLine(l.Label, l.Amount))],
-                tables);
-            return await Task.Run(() => Vafadar.Zanance.Reports.PdfReport.Write(document));
-        }
-    }
-
-    public ObservableCollection<CategorySlice> Slices { get; } = [];
-
-    public ObservableCollection<Brush> SliceBrushes { get; } = [];
-
-    public ObservableCollection<CategoryReportRow> CategoryRows { get; } = [];
-
-    public ObservableCollection<AmountLine> IncomeExpenseLines { get; } = [];
-
-    public ObservableCollection<TrendPoint> Trend { get; } = [];
-
-    public ObservableCollection<AccountReport> Accounts { get; } = [];
-
-    public ObservableCollection<PlanReportRow> PlanRows { get; } = [];
+    public ObservableCollection<IssueRow> Issues { get; } = [];
 
     [ObservableProperty]
     public partial int PeriodKind { get; set; }
 
+    /// <summary>Gets or sets the package: 0 R1, 1 R2, 2 R3, 3 R4, 4 R6.</summary>
     [ObservableProperty]
-    public partial int ReportIndex { get; set; }
+    [NotifyPropertyChangedFor(nameof(ShowOverview), nameof(ShowCommitments), nameof(ShowGoals), nameof(ShowWealth), nameof(ShowStatus), nameof(ShowEmpty), nameof(ShowPeriod))]
+    public partial int PackageIndex { get; set; }
 
     [ObservableProperty]
     public partial string PeriodText { get; set; }
 
+    /// <summary>Gets the scope the numbers are computed with, e.g. "October · EUR · Accounts in totals" (ZEX-S0601).</summary>
     [ObservableProperty]
-    public partial string? RefundsText { get; set; }
-
-    // The total in the middle of the doughnut, so the chart answers "how much in total" at a glance.
-    [ObservableProperty]
-    public partial string? SliceTotalText { get; set; }
+    public partial string ScopeText { get; set; }
 
     [ObservableProperty]
-    public partial string? CurrencyNote { get; set; }
-
-    // Without any entry the reports of amounts have nothing to show; one empty state replaces them. Accounts and plans
-    // still show balances and planned amounts.
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowExpenses), nameof(ShowIncomeExpense), nameof(ShowTrend), nameof(ShowTags), nameof(ShowEmpty))]
-    public partial bool IsEmpty { get; set; }
-
-    public bool ShowEmpty => IsEmpty && ReportIndex is 0 or 1 or 2 or 5;
-
-    [RelayCommand]
-    private Task AddEntryAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute);
+    public partial bool IsScopeOpen { get; set; }
 
     [ObservableProperty]
-    public partial bool HasSlices { get; set; }
+    public partial IReadOnlyList<string> CurrencyNames { get; set; } = [];
 
     [ObservableProperty]
-    public partial bool HasPlanRows { get; set; }
+    public partial int CurrencyIndex { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasCurrencyChoice { get; set; }
+
+    [ObservableProperty]
+    public partial int AccountScopeIndex { get; set; }
+
+    [ObservableProperty]
+    public partial IReadOnlyList<AccountChoice> ScopeAccounts { get; set; } = [];
+
+    [ObservableProperty]
+    public partial AccountChoice? ScopeAccount { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsOneAccount { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether unreviewed entries are left out (default: included, with their count).</summary>
+    [ObservableProperty]
+    public partial bool ConfirmedOnly { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsAdvanced { get; set; }
+
+    /// <summary>Gets the data status line of the package, e.g. "Data status: 3 unreviewed · USD rate from 12 Aug".</summary>
+    [ObservableProperty]
+    public partial string? StatusText { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasIssues { get; set; }
 
     [ObservableProperty]
     public partial Symbol PreviousIcon { get; set; }
@@ -215,271 +169,262 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [ObservableProperty]
     public partial Symbol NextIcon { get; set; }
 
-    public bool ShowExpenses => ReportIndex == 0 && !IsEmpty;
-
-    public bool ShowIncomeExpense => ReportIndex == 1 && !IsEmpty;
-
-    public bool ShowTrend => ReportIndex == 2 && !IsEmpty;
-
-    public bool ShowAccounts => ReportIndex == 3;
-
-    public bool ShowPlans => ReportIndex == 4;
-
-    public bool ShowTags => ReportIndex == 5 && !IsEmpty;
-
-    // Spending per tag (F2-TX-04, REP-08). An entry with several tags appears under each, so tags do not add up.
-    public ObservableCollection<TagReportRow> TagRows { get; } = [];
-
+    // Without any entry the period overview has nothing to show; one empty state replaces it. The other packages still
+    // show plans, goals, balances and the data status.
     [ObservableProperty]
-    public partial bool HasTagRows { get; set; }
+    [NotifyPropertyChangedFor(nameof(ShowEmpty), nameof(ShowOverview))]
+    public partial bool IsEmpty { get; set; }
+
+    public bool ShowEmpty => IsEmpty && PackageIndex == 0;
+
+    public bool ShowOverview => PackageIndex == 0 && !IsEmpty;
+
+    public bool ShowCommitments => PackageIndex == 1;
+
+    public bool ShowGoals => PackageIndex == 2;
+
+    public bool ShowWealth => PackageIndex == 3;
+
+    public bool ShowStatus => PackageIndex == 4;
+
+    /// <summary>Gets a value indicating whether the package has a period (commitments look ahead from today; wealth is today).</summary>
+    public bool ShowPeriod => PackageIndex is 0 or 4;
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
+    private CultureInfo Culture => _localization.CurrentCulture;
+
     private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
 
-    partial void OnPeriodKindChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
+    partial void OnPeriodKindChanged(int value) => Reload();
 
-    partial void OnReportIndexChanged(int value)
+    partial void OnPackageIndexChanged(int value) => Reload();
+
+    partial void OnCurrencyIndexChanged(int value) => Reload();
+
+    partial void OnConfirmedOnlyChanged(bool value) => Reload();
+
+    partial void OnAccountScopeIndexChanged(int value)
     {
-        OnPropertyChanged(nameof(ShowExpenses));
-        OnPropertyChanged(nameof(ShowIncomeExpense));
-        OnPropertyChanged(nameof(ShowTrend));
-        OnPropertyChanged(nameof(ShowAccounts));
-        OnPropertyChanged(nameof(ShowPlans));
-        OnPropertyChanged(nameof(ShowTags));
-        OnPropertyChanged(nameof(ShowEmpty));
-        _ = Presentation.Failures.GuardAsync(LoadAsync);
+        IsOneAccount = value == 2;
+        Reload();
     }
 
-    /// <summary>Query: <c>report</c> (index of the report to show).</summary>
+    partial void OnScopeAccountChanged(AccountChoice? value) => Reload();
+
+    private void Reload()
+    {
+        if (!_loading)
+        {
+            _ = Presentation.Failures.GuardAsync(LoadAsync);
+        }
+    }
+
+    /// <summary>Query: <c>report</c> (index of the package to show).</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("report", out var report) && report is int index)
         {
-            ReportIndex = index;
+            PackageIndex = Math.Clamp(index, 0, PackageNames.Count - 1);
         }
-    }
-
-    public async Task LoadAsync()
-    {
-        var settings = await _store.GetSettingsAsync();
-        _startDay = settings.MonthStartDay;
-        if (_year == 0)
-        {
-            (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
-        }
-
-        PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
-        NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
-
-        // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
-        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
-        PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
-            : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
-            : _dates.Format(_from, DateFormatStyle.MonthYear);
-        if (_to >= Today && _from <= Today)
-        {
-            // A running period is labelled as such, so it is not compared as if it were complete (REP-05).
-            PeriodText += " · " + _translator["Report_SoFar"];
-        }
-
-        _currency = settings.ReportCurrencyCode;
-        var accounts = await _store.GetAccountsAsync();
-        var entries = await _store.GetEntriesAsync();
-        var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-        var culture = _localization.CurrentCulture;
-        IsEmpty = entries.Count == 0;
-
-        switch (ReportIndex)
-        {
-            case 0:
-                BuildExpenses(accounts, entries, categories, culture);
-                break;
-            case 1:
-                BuildIncomeExpense(accounts, entries, culture);
-                break;
-            case 2:
-                BuildTrend(accounts, entries, culture);
-                break;
-            case 3:
-                BuildAccounts(accounts, entries, culture);
-                break;
-            case 4:
-                await BuildPlansAsync(accounts, entries, culture);
-                break;
-            default:
-                BuildTags(accounts, entries, culture);
-                break;
-        }
-    }
-
-    // Gross expense chart (never negative), refunds card, net table (REP-02, AT-13).
-    private void BuildExpenses(List<Account> accounts, List<LedgerEntry> entries, CategoryLookup categories, CultureInfo culture)
-    {
-        Slices.Clear();
-        SliceBrushes.Clear();
-        CategoryRows.Clear();
-        Guid? TopLevel(Guid? id) => categories.Get(id)?.ParentId ?? id;
-        var rows = LedgerCalculator.ExpenseByCategory(accounts, entries, new LedgerFilter(_from, _to), TopLevel)
-            .Where(r => string.Equals(r.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase))
-            .OrderByDescending(r => r.GrossExpense)
-            .ToList();
-        var otherCurrencies = LedgerCalculator.ExpenseByCategory(accounts, entries, new LedgerFilter(_from, _to), TopLevel)
-            .Any(r => !string.Equals(r.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));
-        CurrencyNote = otherCurrencies ? _translator.Format("Home_ChartCurrency", _currency) : null;
-
-        var gross = rows.Sum(r => r.GrossExpense);
-        SliceTotalText = gross > 0 ? MoneyText.Format(gross, _currency, culture) : null;
-        var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
-        foreach (var row in rows)
-        {
-            var ids = categories.All.Where(c => c.Id == row.CategoryId || c.ParentId == row.CategoryId).Select(c => c.Id).ToList();
-            var color = categories.Color(row.CategoryId);
-            var name = categories.Name(row.CategoryId);
-            if (row.GrossExpense > 0)
-            {
-                var brush = new SolidColorBrush(color);
-                Slices.Add(new CategorySlice(ids, name, (double)MoneyText.ToDecimal(row.GrossExpense, currency), MoneyText.Format(row.GrossExpense, _currency, culture),
-                    ((double)row.GrossExpense / gross).ToString("P0", culture), color, brush));
-                SliceBrushes.Add(brush);
-            }
-
-            CategoryRows.Add(new CategoryReportRow(
-                ids,
-                name,
-                color,
-                MoneyText.Format(row.GrossExpense, _currency, culture),
-                row.Refunds > 0 ? MoneyText.Format(-row.Refunds, _currency, culture) : "–",
-                MoneyText.Format(row.Net, _currency, culture),
-                row.Net < 0 ? EntryPresenter.IncomeColor : EntryPresenter.ExpenseColor,
-                $"{_translator["Report_Gross"]} {MoneyText.Format(row.GrossExpense, _currency, culture)}"
-                    + (row.Refunds > 0 ? $" · {_translator["Report_Refunds"]} {MoneyText.Format(-row.Refunds, _currency, culture)}" : string.Empty)));
-        }
-
-        var refunds = rows.Sum(r => r.Refunds);
-        RefundsText = refunds > 0 ? _translator.Format("Report_RefundsTotal", MoneyText.Format(refunds, _currency, culture)) : null;
-        HasSlices = Slices.Count > 0;
-    }
-
-    // Income, net expense and result per currency (REP-03, REP-04).
-    private void BuildIncomeExpense(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
-    {
-        IncomeExpenseLines.Clear();
-        var totals = LedgerCalculator.Totals(accounts, entries, new LedgerFilter(_from, _to));
-        if (totals.Count == 0)
-        {
-            IncomeExpenseLines.Add(new AmountLine(_translator["Report_NoData"], string.Empty, false));
-            return;
-        }
-
-        foreach (var total in totals)
-        {
-            IncomeExpenseLines.Add(new AmountLine(_translator["KindFilter_Income"], MoneyText.Format(total.NetIncome, total.CurrencyCode, culture), false));
-            IncomeExpenseLines.Add(new AmountLine(_translator["Report_NetExpense"], MoneyText.Format(total.NetExpense, total.CurrencyCode, culture), false));
-            if (total.Refunds > 0)
-            {
-                IncomeExpenseLines.Add(new AmountLine(_translator["Report_OfWhichRefunds"], MoneyText.Format(total.Refunds, total.CurrencyCode, culture), false));
-            }
-
-            // A result is a positive (green) or negative (red) outcome of the period (D-27).
-            IncomeExpenseLines.Add(new AmountLine(_translator["Home_Result"], MoneyText.Format(total.Result, total.CurrencyCode, culture, showPlus: true), true, total.Result < 0, total.Result > 0));
-            if (total.NetIncome > 0)
-            {
-                var rate = (double)total.Result / total.NetIncome;
-                IncomeExpenseLines.Add(new AmountLine(_translator["Report_SavingsRate"], rate.ToString("P0", culture), false));
-            }
-        }
-    }
-
-    private void BuildTrend(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
-    {
-        Trend.Clear();
-        var currency = Currencies.TryGet(_currency, out var known) ? known : Currencies.Euro;
-        var end = _to < Today ? _to : Today;
-        foreach (var month in ReportCalculator.MonthlyTrend(accounts, entries, end, PeriodKind == 0 ? TrendMonths : 12, Calendar, _currency, PeriodKind == 0 ? _startDay : 1))
-        {
-            var label = _dates.Format(month.From, DateFormatStyle.MonthYear) + (month.IsPartial ? " *" : string.Empty);
-            Trend.Add(new TrendPoint(
-                label,
-                (double)MoneyText.ToDecimal(month.NetIncome, currency),
-                (double)MoneyText.ToDecimal(Math.Max(0, month.NetExpense), currency),
-                MoneyText.Format(month.NetIncome, _currency, culture),
-                MoneyText.Format(month.NetExpense, _currency, culture),
-                MoneyText.Format(month.Result, _currency, culture, showPlus: true),
-                month.Result < 0 ? EntryPresenter.DangerColor : month.Result > 0 ? EntryPresenter.IncomeColor : Palette.AmountText));
-        }
-    }
-
-    // Opening → movements → closing for each account (REP-03).
-    private void BuildAccounts(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
-    {
-        Accounts.Clear();
-        foreach (var movement in ReportCalculator.AccountMovements(accounts.Where(a => !a.IsArchived || entries.Any(e => e.AccountId == a.Id && e.Date >= _from && e.Date <= _to)), entries, _from, _to))
-        {
-            var account = accounts.First(a => a.Id == movement.AccountId);
-            string Format(long value, bool plus = false) => MoneyText.Format(value, movement.CurrencyCode, culture, showPlus: plus);
-            var lines = new List<AmountLine> { new(_translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0) };
-            void Add(string key, long value, bool negative = false)
-            {
-                if (value != 0)
-                {
-                    lines.Add(new AmountLine(_translator[key], Format(negative ? -value : value, plus: true), false));
-                }
-            }
-
-            Add("Report_OpeningBalance", movement.OpeningBalanceAdded);
-            Add("KindFilter_Income", movement.Income);
-            Add("Report_Refunds", movement.Refunds);
-            Add("KindFilter_Expenses", movement.Expense, negative: true);
-            Add("EntryKind_IncomeReversal", movement.IncomeReversals, negative: true);
-            Add("Report_TransfersIn", movement.TransfersIn);
-            Add("Report_TransfersOut", movement.TransfersOut, negative: true);
-            Add("Report_Adjustments", movement.Adjustments);
-            lines.Add(new AmountLine(_translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
-            Accounts.Add(new AccountReport(account.Name, lines));
-        }
-    }
-
-    private void BuildTags(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
-    {
-        TagRows.Clear();
-        var inPeriod = entries.Where(e => e.Date >= _from && e.Date <= _to && e.Tags.Count > 0).ToList();
-        foreach (var tag in EntryTags.InUse(inPeriod))
-        {
-            var tagged = inPeriod.Where(e => e.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase)).ToList();
-            var spent = Core.Budgets.BudgetCalculator.NetExpense(accounts, tagged, _from, _to, _currency);
-            if (spent != 0)
-            {
-                TagRows.Add(new TagReportRow(tag, EntryTags.Display(tag), MoneyText.Format(spent, _currency, culture), _translator.Format("Report_TagCount", tagged.Count)));
-            }
-        }
-
-        HasTagRows = TagRows.Count > 0;
     }
 
     [RelayCommand]
-    private Task OpenTagAsync(TagReportRow row) =>
-        Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["from"] = _from, ["to"] = _to, ["kind"] = KindFilter.Expenses, ["inTotals"] = true, ["search"] = "#" + row.Tag });
+    private void ToggleScope() => IsScopeOpen = !IsScopeOpen;
 
-    private async Task BuildPlansAsync(List<Account> accounts, List<LedgerEntry> entries, CultureInfo culture)
+    [RelayCommand]
+    private Task AddEntryAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute);
+
+    public async Task LoadAsync()
     {
-        PlanRows.Clear();
-        var byId = accounts.ToDictionary(a => a.Id);
-        var rows = ReportCalculator.PlanVsActual(await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), entries, _from, _to, Today);
-        foreach (var row in rows)
+        _loading = true;
+        try
         {
-            var currency = byId.TryGetValue(row.Schedule.AccountId, out var account) ? account.CurrencyCode : _currency;
-            var details = _translator.Format("Report_PlanDetails", row.SettledCount, row.PlannedCount)
-                + (row.UnknownCount > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", row.UnknownCount) : string.Empty)
-                + (row.OpenCount > 0 ? " · " + _translator.Format("Report_PlanOpen", row.OpenCount) : string.Empty)
-                + (row.Variance is { } variance and not 0 ? " · " + _translator.Format("Report_PlanVariance", MoneyText.Format(variance, currency, culture, showPlus: true)) : string.Empty)
-                + (BudgetPlanning.MonthlyEquivalent(row.Schedule) is { } monthly ? " · " + _translator.Format("Report_PlanMonthly", MoneyText.Format(monthly, currency, culture, approximate: true)) : string.Empty);
-            PlanRows.Add(new PlanReportRow(row.Schedule.Name, MoneyText.Format(row.Planned, currency, culture), MoneyText.Format(row.Actual, currency, culture), details));
+            _settings = await _store.GetSettingsAsync();
+            _startDay = _settings.MonthStartDay;
+            IsAdvanced = _settings.Mode == ExperienceMode.Advanced;
+            if (_year == 0)
+            {
+                (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
+            }
+
+            PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
+            NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
+
+            // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
+            (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
+            PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
+                : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
+                : _dates.Format(_from, DateFormatStyle.MonthYear);
+            if (_to >= Today && _from <= Today)
+            {
+                // A running period is labelled as such, so it is not compared as if it were complete (REP-05).
+                PeriodText += " · " + _translator["Report_SoFar"];
+            }
+
+            _accounts = await _store.GetAccountsAsync();
+            LoadScope();
+            var entries = await _store.GetEntriesAsync();
+            IsEmpty = entries.Count == 0;
+
+            switch (PackageIndex)
+            {
+                case 0:
+                    await BuildOverviewAsync(entries);
+                    break;
+                case 1:
+                    await BuildCommitmentsAsync(entries);
+                    break;
+                case 2:
+                    await BuildGoalsAsync(entries);
+                    break;
+                case 3:
+                    await BuildWealthAsync(entries);
+                    break;
+                default:
+                    await BuildStatusAsync(entries, full: true);
+                    break;
+            }
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    // The scope bar: currencies of the accounts in scope, the account scope and the text that names it.
+    private void LoadScope()
+    {
+        ScopeAccounts = [.. _accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
+        if (ScopeAccount is null || ScopeAccounts.All(a => a.Id != ScopeAccount.Id))
+        {
+            ScopeAccount = ScopeAccounts.FirstOrDefault();
         }
 
-        HasPlanRows = PlanRows.Count > 0;
+        var currencies = ScopedAccounts().Select(a => a.CurrencyCode.ToUpperInvariant()).Distinct().Order(StringComparer.Ordinal).ToList();
+        if (currencies.Count == 0)
+        {
+            currencies.Add(_settings.DefaultCurrencyCode);
+        }
+
+        if (!currencies.SequenceEqual(CurrencyNames))
+        {
+            var keep = CurrencyNames.ElementAtOrDefault(CurrencyIndex) ?? _settings.DefaultCurrencyCode;
+            CurrencyNames = currencies;
+            CurrencyIndex = Math.Max(0, currencies.IndexOf(keep.ToUpperInvariant()));
+        }
+
+        _currency = CurrencyNames.ElementAtOrDefault(CurrencyIndex) ?? _settings.DefaultCurrencyCode;
+        HasCurrencyChoice = CurrencyNames.Count > 1;
+        var accountsText = AccountScopeIndex switch
+        {
+            1 => _translator["Report_ScopeUsable"],
+            2 => ScopeAccount?.Name ?? string.Empty,
+            _ => _translator["Report_ScopeInTotals"],
+        };
+        var period = PackageIndex switch
+        {
+            1 => _translator["Report_Next30"],
+            2 or 3 => _translator["Report_Today"],
+            _ => PeriodText.Replace(" · " + _translator["Report_SoFar"], string.Empty, StringComparison.Ordinal),
+        };
+        ScopeText = string.Join(" · ", new[] { period, _currency, accountsText, ConfirmedOnly ? _translator["Report_ConfirmedOnly"] : null }.Where(s => !string.IsNullOrEmpty(s)));
     }
+
+    // The accounts of the scope: in totals (default), usable for payments, or one account (ZEX-S0601).
+    private IReadOnlyCollection<Guid>? ScopeIds() => AccountScopeIndex switch
+    {
+        1 => [.. _accounts.Where(a => !a.IsArchived && a.UsableForPayments).Select(a => a.Id)],
+        2 when ScopeAccount is not null => [ScopeAccount.Id],
+        _ => null,
+    };
+
+    private IEnumerable<Account> ScopedAccounts() => LedgerCalculator.InScope(_accounts, ScopeIds()).Where(a => !a.IsArchived);
+
+    private LedgerFilter Filter(DateOnly from, DateOnly to) => new(from, to, ScopeIds(), ConfirmedOnly);
+
+    private string Money(long minor, string? currency = null, bool showPlus = false) => MoneyText.Format(minor, currency ?? _currency, Culture, showPlus);
+
+    // Opens the transactions with the same scope as the number, so the list shows the same total (AT36).
+    private Task Drill(KindFilter kind, IReadOnlyCollection<Guid>? categories, string? name, DateOnly? from = null, DateOnly? to = null)
+    {
+        var query = new Dictionary<string, object>
+        {
+            ["from"] = from ?? _from,
+            ["to"] = to ?? _to,
+            ["kind"] = kind,
+            ["inTotals"] = AccountScopeIndex == 0,
+            ["currency"] = _currency,
+            ["confirmedOnly"] = ConfirmedOnly,
+            ["scope"] = ScopeText,
+        };
+        if (ScopeIds() is { } ids)
+        {
+            query["accounts"] = ids;
+        }
+
+        if (categories is not null)
+        {
+            query["categories"] = categories;
+            query["categoryName"] = name ?? string.Empty;
+        }
+
+        return Shell.Current.GoToAsync("//transactions", query);
+    }
+
+    // The data status of the package (K14): the full list in R6, a one-line footer elsewhere.
+    private async Task BuildStatusAsync(IReadOnlyCollection<LedgerEntry> entries, bool full, int unknownAmounts = 0, IReadOnlyCollection<Core.Rates.RateInfo>? rates = null, IReadOnlyCollection<string>? missingRates = null, int holdingsWithoutPrice = 0)
+    {
+        if (full)
+        {
+            var events = await _holdings.GetEventsAsync();
+            var values = Core.Holdings.AssetValuationService.Values(await _holdings.GetTypesAsync(), events, await _holdings.GetValuationsAsync(), Today);
+            holdingsWithoutPrice = values.Count(v => v.Quantity > 0 && v.Value is null);
+            var forecasts = Core.Forecasts.ForecastCalculator.Compute(_accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), Today, Today.AddDays(30));
+            unknownAmounts = forecasts.Sum(f => f.UnknownCount);
+        }
+
+        var lastBackup = _backup.LastBackupAt is { } at ? DateOnly.FromDateTime(at.ToLocalTime().DateTime) : (DateOnly?)null;
+        var issues = DataStatus.Check(_accounts, entries, await _store.GetCategoriesAsync(), Filter(_from, _to), Today, lastBackup, unknownAmounts, rates, missingRates, holdingsWithoutPrice);
+        Issues.Clear();
+        foreach (var issue in issues)
+        {
+            Issues.Add(new IssueRow(issue.Kind, IssueText(issue), _translator[$"Issue_{issue.Kind}_Action"], issue.Ids));
+        }
+
+        HasIssues = Issues.Count > 0;
+        StatusText = issues.Count == 0
+            ? _translator["Report_NoIssues"]
+            : _translator.Format("Report_DataStatus", string.Join(" · ", issues.Take(3).Select(IssueText)) + (issues.Count > 3 ? " · …" : string.Empty));
+    }
+
+    private string IssueText(DataIssue issue) => issue.Kind switch
+    {
+        DataIssueKind.BackupOld when issue.Date is { } date => _translator.Format("Issue_BackupOld", _dates.Format(date, DateFormatStyle.Short)),
+        DataIssueKind.BackupOld => _translator["Issue_NoBackup"],
+        DataIssueKind.OutdatedRates when issue.Date is { } date => _translator.Format("Issue_OutdatedRates", string.Join(", ", issue.Details ?? []), _dates.Format(date, DateFormatStyle.Short)),
+        DataIssueKind.MissingRates or DataIssueKind.OutdatedRates => _translator.Format($"Issue_{issue.Kind}", string.Join(", ", issue.Details ?? []), string.Empty),
+        DataIssueKind.NotReconciled or DataIssueKind.OpeningUnknown => _translator.Format($"Issue_{issue.Kind}", string.Join(", ", issue.Details ?? [])),
+        _ => _translator.Format($"Issue_{issue.Kind}", issue.Count),
+    };
+
+    // Each item opens the list or screen that fixes it (K14).
+    [RelayCommand]
+    private Task FixIssueAsync(IssueRow row) => row.Kind switch
+    {
+        DataIssueKind.BackupOld => Shell.Current.GoToAsync(AppShell.BackupRoute),
+        DataIssueKind.Unreviewed => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true }),
+        DataIssueKind.UnknownAmounts => Shell.Current.GoToAsync("//plans"),
+        DataIssueKind.MissingRates or DataIssueKind.OutdatedRates => Shell.Current.GoToAsync(AppShell.RatesRoute),
+        DataIssueKind.HoldingsWithoutPrice => Shell.Current.GoToAsync(AppShell.HoldingsRoute),
+        DataIssueKind.OpeningUnknown or DataIssueKind.NotReconciled when row.Ids is [var id, ..] => Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = id }),
+        DataIssueKind.WithoutCategory => Drill(KindFilter.All, null, null),
+        _ => Drill(KindFilter.All, null, null),
+    };
+
+    [RelayCommand]
+    private Task OpenReviewAsync() => Shell.Current.GoToAsync(AppShell.ReviewRoute);
 
     [RelayCommand]
     private Task PreviousAsync()
@@ -511,27 +456,126 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         return LoadAsync();
     }
 
-    [RelayCommand]
-    private Task OpenCategoryAsync(CategoryReportRow row) => Drill(KindFilter.Expenses, row.CategoryIds, row.Name);
-
-    [RelayCommand]
-    private Task OpenSliceAsync(CategorySlice slice) => Drill(KindFilter.Expenses, slice.CategoryIds, slice.Name);
-
-    [RelayCommand]
-    private Task OpenExpensesAsync() => Drill(KindFilter.Expenses, null, null);
-
-    [RelayCommand]
-    private Task OpenIncomeAsync() => Drill(KindFilter.Income, null, null);
-
-    private Task Drill(KindFilter kind, IReadOnlyCollection<Guid>? categories, string? name)
-    {
-        var query = new Dictionary<string, object> { ["from"] = _from, ["to"] = _to, ["kind"] = kind, ["inTotals"] = true };
-        if (categories is not null)
+    // Opens the explanation of a KPI with the number, the scope it was computed with and its parts (ZEX-UI14).
+    private Task ExplainAsync(string id, string value, IReadOnlyList<AmountLine> lines, Func<Task>? showEntries = null) =>
+        Shell.Current.GoToAsync(AppShell.KpiSheetRoute, new Dictionary<string, object>
         {
-            query["categories"] = categories;
-            query["categoryName"] = name ?? string.Empty;
+            ["sheet"] = new KpiExplanation(id, value, ScopeText, lines, StatusText, showEntries),
+        });
+
+    // PDF of the scope (REP-07, ZEX-S0601): every package with its own scope line, clearly marked as not official.
+    [RelayCommand]
+    private async Task SharePdfAsync()
+    {
+        if (IsBusy || !await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
+        {
+            return;
         }
 
-        return Shell.Current.GoToAsync("//transactions", query);
+        IsBusy = true;
+        try
+        {
+            var pdf = await CreatePdfAsync();
+            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-report-{_from:yyyy-MM}.pdf"));
+            await File.WriteAllBytesAsync(path, pdf);
+            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            await Failures.ShowAsync(ex);
+        }
+        finally
+        {
+            IsBusy = false;
+            await LoadAsync();
+        }
+    }
+
+    /// <summary>Creates the PDF of the current scope with all packages; the screen must be reloaded afterwards.</summary>
+    public async Task<byte[]> CreatePdfAsync()
+    {
+        var shown = PackageIndex;
+        var entries = await _store.GetEntriesAsync();
+        var tables = new List<Vafadar.Zanance.Reports.ReportTable>();
+        _loading = true;
+        try
+        {
+            // R1: the overview with categories, trend and tags.
+            PackageIndex = 0;
+            LoadScope();
+            await BuildOverviewAsync(entries);
+            var overviewScope = ScopeText;
+            tables.Add(new(_translator["Report_R1"], [_translator["Report_Item"], _translator["Report_Amount"]],
+                [.. OverviewLines.Concat(SeparateLines).Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, overviewScope));
+            if (CategoryRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_GrossByCategory"], [_translator["Entry_Category"], _translator["Report_Gross"], _translator["Report_Refunds"], _translator["Report_Net"]],
+                    [.. CategoryRows.Select(r => (IReadOnlyList<string>)[r.Name, r.GrossText, r.RefundsText, r.NetText])], new HashSet<int> { 1, 2, 3 }, overviewScope));
+            }
+
+            BuildTrend(entries);
+            if (Trend.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Trend"], [_translator["Report_Month"], _translator["KindFilter_Income"], _translator["KindFilter_Expenses"], _translator["Home_Result"]],
+                    [.. Trend.Select(t => (IReadOnlyList<string>)[t.Label, t.IncomeText, t.ExpenseText, t.ResultText])], new HashSet<int> { 1, 2, 3 }, overviewScope));
+            }
+
+            BuildTags(entries);
+            if (TagRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Tags"], [_translator["Entry_Tags"], _translator["Report_Net"]],
+                    [.. TagRows.Select(t => (IReadOnlyList<string>)["#" + t.Tag, t.AmountText])], new HashSet<int> { 1 }, overviewScope + " · " + _translator["Report_TagsNote"]));
+            }
+
+            // R2: commitments and plans.
+            PackageIndex = 1;
+            LoadScope();
+            await BuildCommitmentsAsync(entries);
+            if (CommitmentRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Next30Title"], [_translator["Plan_Name"], _translator["Entry_Date"], _translator["Report_Amount"]],
+                    [.. CommitmentRows.Select(c => (IReadOnlyList<string>)[c.Name, c.DateText, c.AmountText])], new HashSet<int> { 2 }, ScopeText));
+            }
+
+            if (PlanRows.Count > 0)
+            {
+                tables.Add(new(_translator["Report_Plans"], [_translator["Plan_Name"], _translator["Report_Planned"], _translator["Report_Actual"]],
+                    [.. PlanRows.Select(p => (IReadOnlyList<string>)[p.Name, p.PlannedText, p.ActualText])], new HashSet<int> { 1, 2 }, overviewScope));
+            }
+
+            // R4: net worth and the movement of every account.
+            PackageIndex = 3;
+            LoadScope();
+            await BuildWealthAsync(entries);
+            if (WealthLines.Count > 0)
+            {
+                tables.Add(new(_translator["Report_NetWorth"], [_translator["Report_Item"], _translator["Report_Amount"]],
+                    [.. WealthLines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, ScopeText));
+            }
+
+            foreach (var account in Accounts)
+            {
+                tables.Add(new(account.Name, [_translator["Report_Item"], _translator["Report_Amount"]],
+                    [.. account.Lines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, overviewScope));
+            }
+
+            PackageIndex = 4;
+            await BuildStatusAsync(entries, full: true);
+            var document = new Vafadar.Zanance.Reports.ReportDocument(
+                _translator.Format("Report_PdfTitle", _translator["App_Name"]),
+                PeriodText,
+                StatusText ?? string.Empty,
+                _translator.Format("Report_PdfCreated", _dates.Format(Today, DateFormatStyle.Long)),
+                _translator["Report_PdfDisclaimer"],
+                _localization.IsRightToLeft,
+                [],
+                tables);
+            return await Task.Run(() => Vafadar.Zanance.Reports.PdfReport.Write(document));
+        }
+        finally
+        {
+            PackageIndex = shown;
+            _loading = false;
+        }
     }
 }

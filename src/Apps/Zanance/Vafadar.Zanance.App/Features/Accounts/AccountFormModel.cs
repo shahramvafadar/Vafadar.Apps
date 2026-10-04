@@ -84,6 +84,16 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial bool IsDebtType { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether money lent has a day it should be paid back by (ZEX-K12).</summary>
+    [ObservableProperty]
+    public partial bool HasDueDate { get; set; }
+
+    [ObservableProperty]
+    public partial DateOnly DueDate { get; set; } = DateOnly.FromDateTime(DateTime.Today).AddMonths(1);
+
+    [ObservableProperty]
+    public partial bool IsLent { get; set; }
+
     // Optional loan terms for the repayment estimate (F2-DEBT-02).
     [ObservableProperty]
     public partial string RateText { get; set; } = string.Empty;
@@ -108,6 +118,7 @@ public sealed partial class AccountFormModel : ObservableObject
     {
         OnPropertyChanged(nameof(PreviewIcon));
         IsDebtType = Type.IsDebt();
+        IsLent = Type == AccountType.Lent;
         DebtHint = Type switch
         {
             AccountType.Loan => _translator["Account_LoanHint"],
@@ -174,6 +185,8 @@ public sealed partial class AccountFormModel : ObservableObject
         CountryCode = account.CountryCode ?? string.Empty;
         IconKey = account.Icon;
         Counterparty = account.Counterparty ?? string.Empty;
+        HasDueDate = account.DueDate is not null;
+        DueDate = account.DueDate ?? DueDate;
         RateText = account.InterestRate is { } rate ? rate.ToString("0.##########", culture) : string.Empty;
         InstallmentText = account.Installment is { } installment ? MoneyText.ForInput(installment, account.CurrencyCode, culture) : string.Empty;
         _isNew = false;
@@ -234,13 +247,14 @@ public sealed partial class AccountFormModel : ObservableObject
         target.CountryCode = country.Length == 2 && country.All(char.IsAsciiLetterUpper) ? country : null;
         target.Icon = IconKey;
         target.Counterparty = Type.IsDebt() && !string.IsNullOrWhiteSpace(Counterparty) ? Counterparty.Trim() : null;
+        target.DueDate = Type == AccountType.Lent && HasDueDate ? DueDate : null;
         target.InterestRate = Type.IsDebt() ? rate : null;
         target.Installment = Type.IsDebt() && installment > 0 ? installment : null;
         return true;
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode);
+    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode, HasDueDate, DueDate);
 
     // "3 entries, 1 plan and the loan installment" in the current language.
     private string LockReasons(AccountCurrencyLock currencyLock)

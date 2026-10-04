@@ -77,6 +77,23 @@
                         </HorizontalStackLayout>
                         <Picker ItemsSource="{Binding FreshnessNames}" SelectedIndex="{Binding FreshnessIndex}"
                                 SemanticProperties.Description="{v:Translate Settings_RateFreshness}" />
+
+                        <!-- Day-to-day spending for the headroom (ZEX-S0606): set by the user, only suggested by Zanance -->
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{v:Translate Settings_Essential}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Topic="EssentialEstimate" Margin="0,8,0,0" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding EssentialCurrencyText}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Entry Text="{Binding EssentialText}" Keyboard="Numeric" Placeholder="{v:Translate Settings_EssentialPlaceholder}" SemanticProperties.Description="{v:Translate Settings_Essential}" />
+                            <v:ChoiceChips Grid.Column="1" IsCompact="True" ItemsSource="{Binding EssentialPeriodNames}" SelectedIndex="{Binding EssentialPeriodIndex}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding EssentialSuggestionText, Converter={StaticResource IsNotNullConverter}}">
+                            <Label Text="{Binding EssentialSuggestionText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Text="{v:Translate Settings_UseSuggestion}" Command="{Binding UseEssentialSuggestionCommand}" BackgroundColor="Transparent" TextColor="{DynamicResource Primary}" />
+                        </Grid>
+                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveEssentialCommand}" HorizontalOptions="Start" />
+                        <Label Text="{Binding EssentialSavedText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding EssentialSavedText, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
 
                     <HorizontalStackLayout Spacing="6">

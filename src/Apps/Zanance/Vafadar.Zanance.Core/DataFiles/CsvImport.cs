@@ -152,6 +152,19 @@ public static class CsvImport
                 entry.Direction = direction;
             }
 
+            // Aggregated entries and the reimbursement due date (format version 2; older files have no such columns).
+            if (string.Equals(Cell(22), "true", StringComparison.OrdinalIgnoreCase) && kind is EntryKind.Income or EntryKind.Expense)
+            {
+                entry.IsAggregated = true;
+                entry.AggregatedFrom = DateOnly.TryParseExact(Cell(23), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var aggregatedFrom) ? aggregatedFrom : date;
+                entry.AggregatedTo = DateOnly.TryParseExact(Cell(24), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var aggregatedTo) ? aggregatedTo : date;
+            }
+
+            if (entry.ReimbursableAmount is not null && DateOnly.TryParseExact(Cell(25), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var due))
+            {
+                entry.ReimbursementDueDate = due;
+            }
+
             if (kind == EntryKind.Transfer)
             {
                 if (!byName.TryGetValue(Cell(6), out var destination))
