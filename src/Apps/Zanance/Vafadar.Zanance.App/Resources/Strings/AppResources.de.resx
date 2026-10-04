@@ -5104,4 +5104,7 @@ Schritte zum Wiederholen:
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>Wählen Sie mindestens ein Konto für dieses Budget.</value>
   </data>
+  <data name="Home_QuickTransfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
 </root>

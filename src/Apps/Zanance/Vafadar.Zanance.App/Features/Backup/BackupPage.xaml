@@ -138,10 +138,10 @@
 
                 <!-- Restore -->
                 <!-- Before a restore the current data is kept as a safety copy on this device, unencrypted (ZEX-F20, disclosed) -->
-            <HorizontalStackLayout Spacing="6">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                 <Label Text="{v:Translate Backup_Restore}" Style="{StaticResource SectionHeader}" />
-                <v:HelpButton Topic="SafetyCopy" VerticalOptions="Center" />
-            </HorizontalStackLayout>
+                <v:HelpButton Grid.Column="1" Topic="SafetyCopy" VerticalOptions="Center" />
+            </Grid>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Backup_RestoreIntro}" Style="{StaticResource Secondary}" />

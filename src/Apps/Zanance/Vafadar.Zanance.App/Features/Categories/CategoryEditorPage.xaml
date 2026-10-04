@@ -38,10 +38,10 @@
 
                         <!-- Flex budgets (D-28) -->
                         <VerticalStackLayout IsVisible="{Binding ShowSpendingType}">
-                            <HorizontalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate SpendingType_Title}" Style="{StaticResource FieldLabel}" />
-                                <v:HelpButton Topic="SpendingType" Margin="0,8,0,0" />
-                            </HorizontalStackLayout>
+                                <v:HelpButton Grid.Column="1" Topic="SpendingType" Margin="0,8,0,0" />
+                            </Grid>
                             <v:ChoiceChips ItemsSource="{Binding SpendingTypeNames}" SelectedIndex="{Binding SpendingTypeIndex}" />
                             <Label Text="{v:Translate SpendingType_Hint}" Style="{StaticResource Secondary}" />
                             <!-- Essential spending: used by the essential coverage and the day-to-day estimate (ZEX-K07) -->

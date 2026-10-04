@@ -5108,4 +5108,8 @@ Steps to repeat it:
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>Choose at least one account for this budget.</value>
   </data>
+  <data name="Home_QuickTransfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Quick add label on Home; four labels must fit a 360 px phone (German 'Umbuchung' was cut).</comment>
+  </data>
 </root>

@@ -7,6 +7,8 @@ public partial class AccountFormView : VerticalStackLayout
         InitializeComponent();
     }
 
-    // The label is part of the checkbox's touch target.
+    // The labels are part of their checkbox's touch target.
     private void OnNegativeLabelTapped(object? sender, TappedEventArgs e) => NegativeBox.IsChecked = !NegativeBox.IsChecked;
+
+    private void OnUnknownLabelTapped(object? sender, TappedEventArgs e) => UnknownBox.IsChecked = !UnknownBox.IsChecked;
 }

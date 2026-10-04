@@ -42,10 +42,10 @@
                 <!-- ETA panel (ZEX-S0702, S0703): the observed pace is a separate line from the plan; an estimate, not a promise -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding TrendText, Converter={StaticResource IsNotNullConverter}}">
                     <VerticalStackLayout Spacing="4">
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate Goal_TrendTitle}" FontAttributes="Bold" VerticalOptions="Center" />
-                            <v:HelpButton Topic="GoalTrend" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="GoalTrend" />
+                        </Grid>
                         <Label Text="{Binding TrendText}" />
                         <Label Text="{Binding SoFarText}" Style="{StaticResource Secondary}" IsVisible="{Binding SoFarText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding TrendPeriods}" IsVisible="{Binding HasTrendPeriods}">

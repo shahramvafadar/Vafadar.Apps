@@ -30,7 +30,7 @@ public sealed record LocationChoice(Guid Id, string Name)
 /// currency differs from the price currency, the value in the price currency is asked for separately (cost basis).
 /// Nothing is saved when the history would become negative on any date: "On 3 Oct only 20.000 g were held at Home safe."
 /// </summary>
-public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     private static readonly AssetEventKind[] AdvancedKinds =
     [
@@ -266,6 +266,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         }
 
         UpdateEffect();
+        _snapshot = Snapshot();
     }
 
     private async Task LoadLocationsAsync(Guid? select)
@@ -546,5 +547,15 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,
+        AmountText, FeeText, SecondAmountText, BasisText, DirectionIndex, ReasonText, Note);
 }

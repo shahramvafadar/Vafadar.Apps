@@ -1,6 +1,6 @@
 # Full code review – October 2026
 
-Status: **In progress** – CR01 to CR11 done (2026-10-04). Owner: Shahram Vafadar.
+Status: **Done** – CR01 to CR12 (2026-10-04). Owner: Shahram Vafadar.
 
 After enhancement ZEX (phases 1–6), every line of the repository is read once more, in a fixed order, to find bugs,
 performance problems and code that can be simpler or clearer, to check that every screen uses the best control for its
@@ -181,3 +181,32 @@ Filled in section by section.
 | CR11-05 | Review document, `CHANGELOG.md` | correction | – | CR08-05 and part of CR09-04 reported duplicates from a double tap on Save. `[RelayCommand]` commands do not run twice at once (CommunityToolkit default; the button is disabled meanwhile), so these could not happen. | Rows and changelog corrected; the added guards stay as defence only. |
 | CR11-06 | Settings, backup, import/export and More pages | accessibility, control | Low | Five switches without a name (app lock, notification details, backup password, export notes, skip duplicates); hand-styled text and row buttons. | Fixed. |
 | CR11-07 | Import/export, profiles, About, cloud backup | review | – | Import preview and all-or-nothing import, undo of an import batch, holdings file, profile switch and deletion, licences, cloud sign-in errors. | No issue found. |
+| CR12-01 | New `Presentation/UnsavedChanges.cs`; goal, budget, holding event, asset type, split and settlement editors | UI/UX | Medium | (CR10-07) Six editors left at once on Cancel or the Android back button, also with typed input; the other editors asked "Discard changes?". | Fixed: one shared helper asks the same question everywhere; each editor compares its input with what it loaded. |
+| CR12-02 | 24 labels with a "?" on 11 pages (`HorizontalStackLayout` of `FieldLabel` and `HelpButton`) | UI | Medium | At 360 px a long label (German "Kurse gelten als möglicherweise veraltet nach") pushed its "?" off the screen: a horizontal stack never shrinks its children. | Fixed: a grid that keeps the "?" next to a short label and lets a long one wrap; checked in German and Persian at 360 px. |
+| CR12-03 | `HomePage.xaml` (pinned goals), `BudgetPage.xaml` (limit lines) | UI | Medium | At 360 px the amounts next to a name squeezed it letter by letter ("Emer / genc / y fund", "Gesa / mt"). | Fixed: the amounts go under the name, as on the goals page. |
+| CR12-04 | `HomePage.xaml` quick add | UI | Low | German "Umbuchung" was cut ("Umbuch…") at 360 px. | Fixed: a short label of its own, `Home_QuickTransfer` ("Transfer"). |
+| CR12-05 | `Features/Settings/SettingsPage.xaml` (day-to-day spending) | UI | Low | The amount field shared its line with three chips and shrank to a few letters on a phone. | Fixed: the chips have their own line. |
+| CR12-06 | `Features/Holdings/HoldingText.cs` (`SignedQuantity`) | UI, RTL | Low | In Persian the sign of a holding change stood after the number ("۱۰٫۰۰۰+ گرم"), unlike amounts. | Fixed: sign and number form one left-to-right run, the unit follows in the reading direction ("+۱۰٫۰۰۰ گرم"). |
+| CR12-07 | `Features/Accounts/AccountFormView.xaml` | control | Low | "Balance is negative" could be toggled by its label, "Opening balance unknown" only by the small box. | Fixed: both labels toggle their box. |
+| CR12-08 | `eng/scripts/Run-Snapshots.ps1` | engineering | Low | Every walk-through moved the previous walk-through's sample data aside: 71 `Data-before-snapshots-*` folders (27.6 MB) since 1 Oct. | Fixed: a marker identifies unchanged sample data, which is removed instead; data changed after a walk-through is still moved aside, never deleted. The existing folders are left for the owner to decide. |
+| CR12-09 | `Vafadar.Localization/Formatting/NativeDigits.cs` | decision | – | (CR06-12) Rendered large in the app's Persian font, the thousands separator "٬" and the decimal separator "٫" are clearly different (comma and slanted stroke); the ambiguity came from downscaled snapshots. | No change: standard Persian notation. |
+| CR12-10 | Undo after deleting (CR07-01) | decision | – | A shared undo bar for every page was considered. Deleting outside the transaction list now asks first; the only other undo (replacing an aggregated entry) follows an explicit choice in a dialog. | No change: no case loses data without a question. |
+| CR12-11 | Icon names for screen readers (CR06-02, CR06-11) | decision | – | Translated names for 46 icons were considered. Tiles are named "Icon 12" consistently in every picker and the chosen tile is announced. | No change for now; candidate for a later accessibility pass. |
+| CR12-12 | `.github/workflows`, `eng/scripts` | review | – | CI (tests, Android, Windows, optional iOS), CodeQL, signed release with validated inputs, removed keystore and short artifact retention; string, signing and APK scripts. | No issue found. CI has no NuGet cache (about 8 minutes per run); left as it is. |
+| CR12-13 | All screens | walk-through | – | English, Persian and German; light and dark; 360 px and the default phone size; Simple and Advanced (snapshots of every section, CR06–CR12). | Findings fixed above; nothing else found. |
+
+## 6. Outcome
+
+All twelve sections were reviewed in order on 2026-10-04; every section ended with tests, Release builds, snapshots of the
+changed screens, a pushed commit, a CI run and an APK for the owner's phone.
+
+- 109 rows: 5 High, 38 Medium, 53 Low, 13 reviews or decisions without a severity.
+- The High findings were wrong data or lost input: a German quantity read ten times too large (CR04-01), a rial cost basis
+  that overflowed (CR04-02), an assumed price lost on update (CR05-01), an entry deleted without question or undo
+  (CR07-01) and the public holiday option of plans never saved (CR09-01).
+- Recurring patterns, now fixed everywhere they occurred: loads that could run at the same time and mix their rows,
+  read-modify-write of the settings, trigger setters with bindings, success reported as failure after navigation
+  problems, hand-styled buttons and unnamed switches, layouts that broke at 360 px.
+- Each fixed bug that can be tested outside the UI has a regression test (`CodeReview*Tests`); the suite has
+  755 tests at the end of the review.
+- Two findings were corrected later in the review itself (CR11-05).

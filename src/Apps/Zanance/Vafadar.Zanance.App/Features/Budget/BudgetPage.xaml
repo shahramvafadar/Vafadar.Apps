@@ -14,10 +14,11 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="LineTemplate" x:DataType="local:BudgetLine">
             <VerticalStackLayout Spacing="6" Padding="0,8">
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <!-- Spent and limit under the name: next to it they squeezed the name letter by letter on a phone -->
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" VerticalOptions="Center" />
-                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalOptions="Center" />
-                    <HorizontalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center">
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
                         <Label Text="{Binding SpentText}" FontAttributes="Bold" />
                         <Label Text="{Binding LimitText}" Style="{StaticResource Secondary}" />
                     </HorizontalStackLayout>

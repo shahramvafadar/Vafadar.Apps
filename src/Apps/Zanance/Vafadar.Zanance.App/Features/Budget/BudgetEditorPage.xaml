@@ -40,17 +40,17 @@
                             <Switch Grid.Column="1" IsToggled="{Binding AlertsEnabled}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Budget_Alerts}" />
                         </Grid>
                         <VerticalStackLayout IsVisible="{Binding IsAdvanced}" Spacing="4" Margin="0,12,0,0">
-                            <HorizontalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
-                                <v:HelpButton Topic="Rollover" Margin="0" />
-                            </HorizontalStackLayout>
+                                <v:HelpButton Grid.Column="1" Topic="Rollover" Margin="0" />
+                            </Grid>
                             <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" />
                             <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
                             <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
-                                <HorizontalStackLayout Spacing="6">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                     <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
-                                    <v:HelpButton Topic="BudgetMethod" Margin="0,8,0,0" />
-                                </HorizontalStackLayout>
+                                    <v:HelpButton Grid.Column="1" Topic="BudgetMethod" Margin="0,8,0,0" />
+                                </Grid>
                                 <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
                                 <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
                             </VerticalStackLayout>

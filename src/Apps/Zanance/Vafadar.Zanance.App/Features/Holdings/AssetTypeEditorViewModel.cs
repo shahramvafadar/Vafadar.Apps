@@ -13,7 +13,7 @@ namespace Vafadar.Zanance.App.Features.Holdings;
 /// and divisibility of counted items, and the currency of its prices. Quantities add up only within one type, so 18 k
 /// and 24 k gold are two types. After a new type the user records what they already own (an opening holding).
 /// </summary>
-public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     private static readonly Metal[] Metals = [Metal.Gold, Metal.Silver, Metal.Platinum, Metal.Palladium, Metal.Other, Metal.None];
 
@@ -126,6 +126,7 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
         }
 
         query.Clear();
+        _snapshot = Snapshot();
     }
 
     partial void OnKindIndexChanged(int value)
@@ -239,5 +240,14 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        Name, KindIndex, DimensionIndex, MetalIndex, PurityIndex, PurityText, UnitWeightText, CountUnitName, Divisible, CurrencyCode, Note);
 }

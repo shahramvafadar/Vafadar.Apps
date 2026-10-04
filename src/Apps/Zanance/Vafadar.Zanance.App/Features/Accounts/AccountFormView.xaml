@@ -18,10 +18,10 @@
     <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}"
            IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
 
-    <HorizontalStackLayout Spacing="6">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
         <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
-        <v:HelpButton Topic="AccountType" Margin="0,8,0,0" />
-    </HorizontalStackLayout>
+        <v:HelpButton Grid.Column="1" Topic="AccountType" Margin="0,8,0,0" />
+    </Grid>
     <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
                    SemanticProperties.Description="{v:Translate Account_Type}" />
 
@@ -66,18 +66,22 @@
                IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
     </VerticalStackLayout>
 
-    <HorizontalStackLayout Spacing="6">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
         <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
-        <v:HelpButton Topic="OpeningBalance" Margin="0,8,0,0" />
-    </HorizontalStackLayout>
+        <v:HelpButton Grid.Column="1" Topic="OpeningBalance" Margin="0,8,0,0" />
+    </Grid>
     <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
            IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
            SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
     <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4" Margin="0,4,0,0">
-        <CheckBox IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
+        <CheckBox x:Name="UnknownBox" IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
                   SemanticProperties.Description="{v:Translate Account_OpeningUnknown}" />
-        <Label Grid.Column="1" Text="{v:Translate Account_OpeningUnknown}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+        <Label Grid.Column="1" Text="{v:Translate Account_OpeningUnknown}" VerticalOptions="Center" LineBreakMode="WordWrap">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnUnknownLabelTapped" />
+            </Label.GestureRecognizers>
+        </Label>
         <v:HelpButton Grid.Column="2" Topic="OpeningUnknown" />
     </Grid>
     <Label Text="{v:Translate Account_OpeningUnknownHint}" Style="{StaticResource Secondary}" IsVisible="{Binding OpeningUnknown}" />

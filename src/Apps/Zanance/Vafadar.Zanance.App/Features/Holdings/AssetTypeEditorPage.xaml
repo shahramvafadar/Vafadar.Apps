@@ -26,10 +26,10 @@
                         <Label Text="{v:Translate AssetType_Kind}" Style="{StaticResource FieldLabel}" />
                         <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
 
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate AssetType_MeasuredBy}" Style="{StaticResource FieldLabel}" />
-                            <v:HelpButton Topic="AssetDimension" Margin="0,8,0,0" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="AssetDimension" Margin="0,8,0,0" />
+                        </Grid>
                         <v:ChoiceChips ItemsSource="{Binding DimensionNames}" SelectedIndex="{Binding DimensionIndex}"
                                        IsEnabled="{Binding DimensionLocked, Converter={StaticResource InvertedBoolConverter}}" />
                         <Label Text="{v:Translate AssetType_DimensionLocked}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding DimensionLocked}" />
@@ -41,10 +41,10 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_Metal}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <v:ChoiceChips ItemsSource="{Binding MetalNames}" SelectedIndex="{Binding MetalIndex}" />
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate AssetType_Purity}" Style="{StaticResource FieldLabel}" />
-                            <v:HelpButton Topic="Purity" Margin="0,8,0,0" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="Purity" Margin="0,8,0,0" />
+                        </Grid>
                         <v:ChoiceChips ItemsSource="{Binding PurityNames}" SelectedIndex="{Binding PurityIndex}" />
                         <Entry Text="{Binding PurityText}" Keyboard="Numeric" Placeholder="{v:Translate AssetType_PurityPlaceholder}" IsVisible="{Binding IsOtherPurity}"
                                SemanticProperties.Description="{v:Translate AssetType_Purity}" />

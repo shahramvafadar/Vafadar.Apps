@@ -5,7 +5,8 @@
 .DESCRIPTION
     The Debug-only walk-through (src/Apps/Zanance/Vafadar.Zanance.App/Diagnostics/DebugSnapshots.cs) starts when
     VAFADAR_SNAPSHOTS points to a folder. It starts with an empty development database (the existing one is moved to a
-    Data-before-snapshots-* folder next to it, never deleted), seeds fictitious data, sets Advanced mode (or Simple with -Mode simple)
+    Data-before-snapshots-* folder next to it, never deleted – unless it is the unchanged sample data of the previous
+    walk-through, which is removed instead of piling up), seeds fictitious data, sets Advanced mode (or Simple with -Mode simple)
     and captures each route per language, plus "-end" shots of scrolled pages. Look at the Persian (right-to-left) and
     the dark variants after every UI change.
 
@@ -37,9 +38,16 @@ Set-Location $root
 Get-Process Vafadar.Zanance.App -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$root\*" } | Stop-Process -Force
 Start-Sleep 1
 $data = Join-Path $env:LOCALAPPDATA 'Shahram Vafadar\pro.vafadar.zanance\Data'
+# Written after each walk-through: database files not changed since then hold only its fictitious sample data.
+$marker = Join-Path $data 'snapshot-data.marker'
 if (Test-Path $data) {
     $files = Get-ChildItem $data -Filter '*.db*' | Where-Object Name -match '^(zanance|finance)(-[0-9a-f]{32})?\.db'
-    if ($files) {
+    $sampleOnly = $files -and (Test-Path $marker) -and -not ($files | Where-Object LastWriteTimeUtc -gt (Get-Item $marker).LastWriteTimeUtc.AddSeconds(2))
+    if ($sampleOnly) {
+        $files | Remove-Item
+        'The sample data of the previous walk-through was removed'
+    }
+    elseif ($files) {
         $kept = Join-Path (Split-Path $data) "Data-before-snapshots-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
         New-Item -ItemType Directory -Force $kept | Out-Null
         $files | Move-Item -Destination $kept
@@ -60,5 +68,7 @@ $env:VAFADAR_SNAPSHOT_ONLY = $Only
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
+# Marks the database as sample data, so the next run removes it instead of moving it aside (only if it stays unchanged).
+if (Test-Path $data) { Set-Content -Path $marker -Value (Get-Date -Format o) -Encoding utf8 }
 if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }
 "$((Get-ChildItem $Output -Filter *.png).Count) screenshots in $Output"

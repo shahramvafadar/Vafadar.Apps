@@ -58,12 +58,18 @@ public sealed class HoldingText(Translator translator, ILocalizationService loca
         ArgumentNullException.ThrowIfNull(assetEvent);
         var effect = assetEvent.TotalEffect;
         var text = Quantity(Math.Abs(effect == 0 ? assetEvent.Quantity : effect), type);
-        return effect switch
+        var sign = effect switch
         {
-            > 0 => "+" + text,
-            < 0 => "−" + text,
-            _ => text,
+            > 0 => "+",
+            < 0 => "−",
+            _ => string.Empty,
         };
+
+        // Sign and number form one left-to-right run, so in Persian the sign stays in front of the digits like in amounts
+        // ("+۱۰٫۰۰۰ گرم", not "۱۰٫۰۰۰+ گرم"); the unit stays outside, after the number in the reading direction.
+        var space = text.IndexOf(' ', StringComparison.Ordinal);
+        var (number, unit) = space < 0 ? (text, string.Empty) : (text[..space], text[space..]);
+        return $"\u2066\u200E{sign}{number}\u200E\u2069{unit}";
     }
 
     /// <summary>Returns a date in the chosen calendar.</summary>

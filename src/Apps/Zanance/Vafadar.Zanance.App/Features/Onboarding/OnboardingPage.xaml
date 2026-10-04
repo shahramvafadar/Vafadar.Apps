@@ -114,10 +114,10 @@
 
                     <Border Style="{StaticResource Card}" Margin="0,24,0,0">
                         <VerticalStackLayout Spacing="0">
-                            <HorizontalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate Onb_CurrencyTitle}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                                <v:HelpButton Topic="ReportCurrency" Margin="0,-4,0,0" />
-                            </HorizontalStackLayout>
+                                <v:HelpButton Grid.Column="1" Topic="ReportCurrency" Margin="0,-4,0,0" />
+                            </Grid>
                             <Border Style="{StaticResource FieldBox}">
                                 <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                                     SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />

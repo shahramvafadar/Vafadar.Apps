@@ -23,10 +23,10 @@
                 <!-- What the goal measures (ZEX-D07): a balance on one account, or money set aside (Advanced) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowTypeChooser}">
                     <VerticalStackLayout Spacing="6">
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate Goal_TypeQuestion}" Style="{StaticResource FieldLabel}" Margin="0" />
-                            <v:HelpButton Topic="GoalType" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="GoalType" />
+                        </Grid>
                         <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" />
                     </VerticalStackLayout>
                 </Border>
@@ -91,10 +91,10 @@
                         <v:DateField Date="{Binding FirstDate}" />
 
                         <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
-                            <HorizontalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate Goal_Method}" Style="{StaticResource FieldLabel}" />
-                                <v:HelpButton Topic="ContributionMethod" Margin="0,8,0,0" />
-                            </HorizontalStackLayout>
+                                <v:HelpButton Grid.Column="1" Topic="ContributionMethod" Margin="0,8,0,0" />
+                            </Grid>
                             <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
                         </VerticalStackLayout>
 
@@ -132,10 +132,10 @@
                 <!-- Money set aside: priority, protection (Advanced) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsBalanceGoal, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout Spacing="4">
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate Goal_Priority}" Style="{StaticResource FieldLabel}" Margin="0" />
-                            <v:HelpButton Topic="GoalPriority" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="GoalPriority" />
+                        </Grid>
                         <v:ChoiceChips ItemsSource="{Binding PriorityNames}" SelectedIndex="{Binding PriorityIndex}" />
                         <Label Text="{v:Translate Goal_PriorityHint}" Style="{StaticResource Secondary}" />
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,12,0,0" IsVisible="{Binding IsAdvanced}">

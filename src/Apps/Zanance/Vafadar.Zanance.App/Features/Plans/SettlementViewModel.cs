@@ -15,7 +15,7 @@ namespace Vafadar.Zanance.App.Features.Plans;
 /// the extra payment is recorded as an expense, or the money back as refunds of the advances.
 /// </summary>
 public sealed partial class SettlementViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time)
-    : ViewModelBase, IQueryAttributable
+    : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     private Schedule? _plan;
     private List<LedgerEntry> _entries = [];
@@ -77,6 +77,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
         To = Today;
         From = Today.AddYears(-1).AddDays(1);
         Update();
+        _snapshot = Snapshot();
     }
 
     partial void OnFromChanged(DateOnly value) => Update();
@@ -142,5 +143,14 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        From, To, ActualText);
 }

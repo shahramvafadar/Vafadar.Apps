@@ -35,7 +35,7 @@ public sealed partial class SplitPart(IReadOnlyList<SplitCategory> categories, A
 /// Splits one purchase or income across categories, or changes and joins an existing split (F2-TX-01). The parts must
 /// add up exactly to the amount; the account balance changes by the same total.
 /// </summary>
-public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable
+public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     private List<LedgerEntry> _parts = [];
     private Currency _currency = Currencies.Euro;
@@ -121,6 +121,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         }
 
         Update();
+        _snapshot = Snapshot();
     }
 
     private void AddPart(Guid? categoryId, long amount) => Parts.Add(new SplitPart(_categories, Update)
@@ -238,5 +239,14 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        string.Join(',', Parts.Select(p => $"{p.Category?.Id}:{p.AmountText}")));
 }

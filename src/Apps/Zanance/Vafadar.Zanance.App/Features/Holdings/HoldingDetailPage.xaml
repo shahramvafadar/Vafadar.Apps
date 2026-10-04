@@ -51,10 +51,10 @@
                         IsVisible="{Binding IsAdvanced, Converter={StaticResource InvertedBoolConverter}}" />
 
                 <!-- Prices: per gram or unit, or the total of what is held -->
-                <HorizontalStackLayout Spacing="6">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                     <Label Text="{v:Translate Holding_Prices}" Style="{StaticResource SectionHeader}" />
-                    <v:HelpButton Topic="HoldingPrices" Margin="0,8,0,0" />
-                </HorizontalStackLayout>
+                    <v:HelpButton Grid.Column="1" Topic="HoldingPrices" Margin="0,8,0,0" />
+                </Grid>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <v:ChoiceChips ItemsSource="{Binding PriceModeNames}" SelectedIndex="{Binding PriceModeIndex}" />

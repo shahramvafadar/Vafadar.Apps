@@ -37,7 +37,7 @@ public sealed record CutCategory(Guid Id, string Name)
 /// date and the estimated date before anything is saved (ZEX-GO14). A plan is a plan for the user: Zanance moves no money
 /// and changes no budget unless the user taps "Apply to budget".
 /// </summary>
-public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     // The schedule choices: monthly, every two weeks, weekly (ZEX-P14).
     private static readonly (Frequency Frequency, int Interval)[] Schedules = [(Frequency.Monthly, 1), (Frequency.Weekly, 2), (Frequency.Weekly, 1)];
@@ -314,6 +314,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         ShowTypeChooser = CanChangeType && IsAdvanced;
         UpdateType();
         query.Clear();
+        _snapshot = Snapshot();
     }
 
     private async Task LoadGoalAsync(Goal goal)
@@ -714,5 +715,15 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        TypeIndex, HoldingType?.Id, HoldingLocation?.Id, QuantityUnitIndex, Account?.Id, Name, AmountText, CurrencyCode, HasTargetDate, TargetDate,
+        ScheduleIndex, FirstDate, MethodIndex, ContributionText, PercentText, CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note);
 }

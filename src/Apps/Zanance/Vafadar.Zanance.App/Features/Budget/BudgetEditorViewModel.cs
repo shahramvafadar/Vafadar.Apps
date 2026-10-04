@@ -46,7 +46,7 @@ public sealed partial class ScopeAccount(Guid id, string name) : ObservableObjec
 }
 
 /// <summary>Creates or edits the budget of one month (BUD-01, BUD-02). Other months are never changed (BUD-07).</summary>
-public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable
+public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
 {
     private Core.Budgets.Budget? _budget;
     private int _year;
@@ -209,6 +209,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
 
         await LoadSuggestionsAsync();
         _loaded = true;
+        _snapshot = Snapshot();
     }
 
     // The average of the last months in the same scope and financial month as the budget page (§10.3).
@@ -346,5 +347,15 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Shell.Current.GoToAsync("..");
+    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+
+    // The input as it was loaded or saved; leaving with a change asks first (CR12).
+    private string? _snapshot;
+
+    /// <inheritdoc />
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+
+    private string Snapshot() => string.Join('|',
+        TotalText, AlertsEnabled, RolloverIndex, MethodIndex,
+        string.Join(',', Limits.Select(l => l.Text)), string.Join(',', ScopeAccounts.Select(a => a.IsIncluded)));
 }

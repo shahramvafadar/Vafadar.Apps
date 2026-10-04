@@ -41,27 +41,27 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout>
                     <!-- Three separate defaults (ZEX-P01): changing one never changes another or any stored amount -->
-                    <HorizontalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                         <Label Text="{v:Translate Settings_DefaultCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
-                        <v:HelpButton Topic="DefaultCurrency" />
-                    </HorizontalStackLayout>
+                        <v:HelpButton Grid.Column="1" Topic="DefaultCurrency" />
+                    </Grid>
                     <Border Style="{StaticResource FieldBox}">
                         <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_DefaultCurrency}" />
                     </Border>
                     <Label Text="{v:Translate Settings_DefaultCurrencyHint}" Style="{StaticResource Secondary}" IsVisible="{Binding DefaultCurrencyChanged}" />
 
-                    <HorizontalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                         <Label Text="{v:Translate Settings_DefaultAccount}" Style="{StaticResource FieldLabel}" />
-                        <v:HelpButton Topic="DefaultAccount" Margin="0,8,0,0" />
-                    </HorizontalStackLayout>
+                        <v:HelpButton Grid.Column="1" Topic="DefaultAccount" Margin="0,8,0,0" />
+                    </Grid>
                     <Picker ItemsSource="{Binding DefaultAccounts}" SelectedItem="{Binding DefaultAccount}"
                             SemanticProperties.Description="{v:Translate Settings_DefaultAccount}" />
 
-                    <HorizontalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                         <Label Text="{v:Translate Settings_ReportCurrency}" Style="{StaticResource FieldLabel}" />
-                        <v:HelpButton Topic="ReportCurrency" Margin="0,8,0,0" />
-                    </HorizontalStackLayout>
+                        <v:HelpButton Grid.Column="1" Topic="ReportCurrency" Margin="0,8,0,0" />
+                    </Grid>
                     <Border Style="{StaticResource FieldBox}">
                         <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
                             SemanticProperties.Description="{v:Translate Settings_ReportCurrency}" />
@@ -71,23 +71,22 @@
                             <Label Text="{v:Translate Settings_ShowConverted}" VerticalOptions="Center" />
                             <Switch Grid.Column="1" IsToggled="{Binding ValuationEnabled}" SemanticProperties.Description="{v:Translate Settings_ShowConverted}" />
                         </Grid>
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate Settings_RateFreshness}" Style="{StaticResource FieldLabel}" />
-                            <v:HelpButton Topic="RateFreshness" Margin="0,8,0,0" />
-                        </HorizontalStackLayout>
+                            <v:HelpButton Grid.Column="1" Topic="RateFreshness" Margin="0,8,0,0" />
+                        </Grid>
                         <Picker ItemsSource="{Binding FreshnessNames}" SelectedIndex="{Binding FreshnessIndex}"
                                 SemanticProperties.Description="{v:Translate Settings_RateFreshness}" />
 
                         <!-- Day-to-day spending for the headroom (ZEX-S0606): set by the user, only suggested by Zanance -->
-                        <HorizontalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                             <Label Text="{v:Translate Settings_Essential}" Style="{StaticResource FieldLabel}" />
-                            <v:HelpButton Topic="EssentialEstimate" Margin="0,8,0,0" />
-                        </HorizontalStackLayout>
-                        <Label Text="{Binding EssentialCurrencyText}" Style="{StaticResource Secondary}" FontSize="12" />
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                            <Entry Text="{Binding EssentialText}" Keyboard="Numeric" Placeholder="{v:Translate Settings_EssentialPlaceholder}" SemanticProperties.Description="{v:Translate Settings_Essential}" />
-                            <v:ChoiceChips Grid.Column="1" IsCompact="True" ItemsSource="{Binding EssentialPeriodNames}" SelectedIndex="{Binding EssentialPeriodIndex}" VerticalOptions="Center" />
+                            <v:HelpButton Grid.Column="1" Topic="EssentialEstimate" Margin="0,8,0,0" />
                         </Grid>
+                        <Label Text="{Binding EssentialCurrencyText}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <!-- The amount gets the whole width and the period chips their own line: side by side, the field shrank to a few letters on a phone -->
+                        <Entry Text="{Binding EssentialText}" Keyboard="Numeric" Placeholder="{v:Translate Settings_EssentialPlaceholder}" SemanticProperties.Description="{v:Translate Settings_Essential}" />
+                        <v:ChoiceChips IsCompact="True" ItemsSource="{Binding EssentialPeriodNames}" SelectedIndex="{Binding EssentialPeriodIndex}" Margin="0,6,0,0" />
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding EssentialSuggestionText, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding EssentialSuggestionText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                             <Button Grid.Column="1" Text="{v:Translate Settings_UseSuggestion}" Command="{Binding UseEssentialSuggestionCommand}" Style="{StaticResource TextButton}" />
@@ -96,10 +95,10 @@
                         <Label Text="{Binding EssentialSavedText}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding EssentialSavedText, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
 
-                    <HorizontalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                         <Label Text="{v:Translate Settings_MonthStart}" Style="{StaticResource FieldLabel}" />
-                        <v:HelpButton Topic="MonthStartDay" Margin="0,8,0,0" />
-                    </HorizontalStackLayout>
+                        <v:HelpButton Grid.Column="1" Topic="MonthStartDay" Margin="0,8,0,0" />
+                    </Grid>
                     <Picker ItemsSource="{Binding StartDayNames}" SelectedIndex="{Binding StartDayIndex}"
                             SemanticProperties.Description="{v:Translate Settings_MonthStart}" />
                     <Label Text="{v:Translate Settings_MonthStartHint}" Style="{StaticResource Secondary}" />
@@ -119,10 +118,10 @@
             </Border>
 
             <!-- Experience (UX-01) -->
-            <HorizontalStackLayout Spacing="6">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                 <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
-                <v:HelpButton Topic="Mode" Margin="0,12,0,0" />
-            </HorizontalStackLayout>
+                <v:HelpButton Grid.Column="1" Topic="Mode" Margin="0,12,0,0" />
+            </Grid>
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" />

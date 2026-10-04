@@ -6,7 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
-### Fixed – Code review, parts 1–11: libraries, core, data, app foundation, recording, accounts, holdings, plans, budget, insights, settings and data
+### Fixed – Code review (all parts): libraries, core, data, app foundation, screens and cross-cutting UI
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and
   copying run in the background.
@@ -72,6 +72,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Exported CSV files and PDF reports are removed from the app's cache on the next start and after "Delete all data".
 - Finishing onboarding again after an error no longer creates a second account.
 - Switches in settings, backup and import/export have names for screen readers.
+- Every editor asks before discarding typed input (goals, budgets, holdings, splits and final settlements left at once).
+- On small phones, help buttons stay next to long labels, goal and budget names are no longer broken letter by letter,
+  and the quick add labels fit in German.
+- Holding changes show their sign in front of the number in Persian.
+- The "Opening balance unknown" label toggles its checkbox, like the other checkbox labels.
 ### Added – Validation and release, Simple/Advanced policy (enhancement ZEX, phase 6)
 
 - About Zanance says what each file contains: a backup holds everything you entered (device preferences such as theme

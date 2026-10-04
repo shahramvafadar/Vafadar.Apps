@@ -91,7 +91,7 @@
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource TransferBackground}" Stroke="{DynamicResource TransferLine}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="ArrowSwap" FontSize="20" ForegroundColor="{DynamicResource TransferText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <Label Grid.Row="1" Text="{v:Translate EntryKind_Transfer}" Style="{StaticResource QuickActionLabel}" />
+                                <Label Grid.Row="1" Text="{v:Translate Home_QuickTransfer}" Style="{StaticResource QuickActionLabel}" />
                                 <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Transfer"
                                         SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
                             </Grid>
@@ -401,10 +401,11 @@
                                 <Border Style="{StaticResource Card}">
                                     <Grid>
                                         <VerticalStackLayout Spacing="6">
-                                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                            <!-- The amount under the name, as on the goals page: next to it, a long amount squeezed the name letter by letter -->
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
                                                 <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SavingText}" VerticalOptions="Center" />
-                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" />
-                                                <Label Grid.Column="2" Text="{Binding FundedText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding FundedText}" />
                                             </Grid>
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />

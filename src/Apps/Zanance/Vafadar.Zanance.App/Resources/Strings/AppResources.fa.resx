@@ -5104,4 +5104,7 @@
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>دستکم یک حساب برای این بودجه انتخاب کنید.</value>
   </data>
+  <data name="Home_QuickTransfer" xml:space="preserve">
+    <value>انتقال</value>
+  </data>
 </root>
