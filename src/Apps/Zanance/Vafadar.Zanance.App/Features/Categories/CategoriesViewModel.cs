@@ -14,7 +14,7 @@ namespace Vafadar.Zanance.App.Features.Categories;
 public sealed record CategoryItem(Guid Id, string Name, Symbol Icon, Color Color, Color Background, bool IsChild);
 
 /// <summary>Category management (CAT-01..03): defaults are editable, nothing is deleted – only archived.</summary>
-public sealed partial class CategoriesViewModel(ZananceStore store, Translator translator) : ViewModelBase
+public sealed partial class CategoriesViewModel(ZananceStore store, Translator translator) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<CategoryItem> Expense { get; } = [];
 
@@ -24,6 +24,9 @@ public sealed partial class CategoriesViewModel(ZananceStore store, Translator t
 
     [ObservableProperty]
     public partial bool HasArchived { get; set; }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

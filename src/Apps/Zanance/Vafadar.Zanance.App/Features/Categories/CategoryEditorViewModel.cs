@@ -340,6 +340,6 @@ public sealed partial class CategoryEditorViewModel : ViewModelBase, IQueryAttri
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private string Snapshot() => string.Join('|', Name, KindIndex, SpendingTypeIndex, IsEssential, Parent?.Id,
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint( Name, KindIndex, SpendingTypeIndex, IsEssential, Parent?.Id,
         Icons.FirstOrDefault(i => i.IsSelected)?.Key, Palette.FirstOrDefault(c => c.IsSelected)?.Key);
 }

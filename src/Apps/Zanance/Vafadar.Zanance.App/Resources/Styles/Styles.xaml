@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Default look of the built-in controls. Every colour is a semantic colour of Presentation/Palette.cs (DynamicResource), so
-     the light and the dark theme apply everywhere; the font follows the language (AppFont, set in App.xaml.cs). -->
+     the light and the dark theme apply everywhere; the font follows the language (AppFont, set in App.xaml.cs).
+     Exception: the Disabled states use fixed colours that read in both themes. A visual-state setter with a DynamicResource
+     takes over the property's resource link, and leaving the state removes it: a Save button that was disabled once kept
+     the colour of the old theme after a theme change. -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
@@ -44,8 +47,8 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
-                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceMuted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
+                            <Setter Property="BackgroundColor" Value="#337F8A9C" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver" />
@@ -64,7 +67,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="Color" Value="{DynamicResource Muted}" />
+                            <Setter Property="Color" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -95,7 +98,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -117,7 +120,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -158,7 +161,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -180,8 +183,8 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
-                            <Setter Property="TitleColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
+                            <Setter Property="TitleColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -206,7 +209,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="TextColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -248,8 +251,8 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{DynamicResource StrokeStrong}" />
-                            <Setter Property="ThumbColor" Value="{DynamicResource Muted}" />
+                            <Setter Property="OnColor" Value="#667F8A9C" />
+                            <Setter Property="ThumbColor" Value="#7A8596" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="On">

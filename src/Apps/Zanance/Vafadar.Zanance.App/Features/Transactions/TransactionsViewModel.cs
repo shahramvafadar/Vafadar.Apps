@@ -32,7 +32,7 @@ public sealed record AccountFilterOption(Guid? Id, string Name)
 }
 
 /// <summary>The transaction list (UI-04): search, filter chips and entries grouped by day.</summary>
-public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private readonly ZananceStore _store;
     private int _startDay = 1;
@@ -213,6 +213,9 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             Task.Delay(Undo.Remaining).ContinueWith(_ => MainThread.BeginInvokeOnMainThread(() => ShowUndo = Undo.CanUndo), TaskScheduler.Default);
         }
     }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

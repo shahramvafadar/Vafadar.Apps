@@ -17,12 +17,15 @@ public sealed record TemplateRow(Guid Id, string Name, string Details, Symbol Ic
 /// <summary>
 /// Quick templates (TX-04): created from an entry ("Save as template"), used from the entry form, deleted here.
 /// </summary>
-public sealed partial class TemplatesViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase
+public sealed partial class TemplatesViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<TemplateRow> Templates { get; } = [];
 
     [ObservableProperty]
     public partial bool HasTemplates { get; set; }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

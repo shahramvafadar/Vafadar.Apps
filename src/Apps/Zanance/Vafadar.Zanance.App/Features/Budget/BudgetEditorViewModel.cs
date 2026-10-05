@@ -22,7 +22,9 @@ public sealed partial class LimitInput(Guid categoryId, string name, Symbol icon
 
     public Symbol Icon { get; } = icon;
 
-    public Color Color { get; } = color;
+    /// <summary>Gets or sets the category color in the current theme (set again when the theme changes).</summary>
+    [ObservableProperty]
+    public partial Color Color { get; set; } = color;
 
     [ObservableProperty]
     public partial string Text { get; set; } = string.Empty;
@@ -46,7 +48,7 @@ public sealed partial class ScopeAccount(Guid id, string name) : ObservableObjec
 }
 
 /// <summary>Creates or edits the budget of one month (BUD-01, BUD-02). Other months are never changed (BUD-07).</summary>
-public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
+public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges, Presentation.IThemeAware
 {
     private Core.Budgets.Budget? _budget;
     private int _year;
@@ -144,6 +146,22 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
+    private CategoryLookup? _lookup;
+
+    // The limits keep what was typed; only the category colors follow the theme.
+    Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        if (_lookup is { } lookup)
+        {
+            foreach (var limit in Limits)
+            {
+                limit.Color = lookup.Color(limit.CategoryId);
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
     private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
@@ -194,7 +212,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
             });
         }
 
-        var lookup = new CategoryLookup(await store.GetCategoriesAsync(), translator);
+        var lookup = _lookup = new CategoryLookup(await store.GetCategoriesAsync(), translator);
         Limits.Clear();
         foreach (var category in lookup.All.Where(c => c.Kind == CategoryKind.Expense && c.ParentId is null && !c.IsArchived).OrderBy(c => c.SortOrder))
         {
@@ -355,7 +373,7 @@ public sealed partial class BudgetEditorViewModel(ZananceStore store, Translator
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         TotalText, AlertsEnabled, RolloverIndex, MethodIndex,
         string.Join(',', Limits.Select(l => l.Text)), string.Join(',', ScopeAccounts.Select(a => a.IsIncluded)));
 }

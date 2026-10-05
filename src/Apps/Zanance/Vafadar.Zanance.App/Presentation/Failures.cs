@@ -22,11 +22,15 @@ internal static class Failures
         }
     }
 
+    /// <summary>Gets or sets a receiver of every shown failure, e.g. the Debug walk-through, which writes them to a file.</summary>
+    public static Action<Exception>? Observed { get; set; }
+
     /// <summary>Shows that an action could not be completed; the details go to the debug output only.</summary>
     public static async Task ShowAsync(Exception exception)
     {
         ArgumentNullException.ThrowIfNull(exception);
         System.Diagnostics.Debug.WriteLine($"Unexpected failure: {exception}");
+        Observed?.Invoke(exception);
         try
         {
             if (Shell.Current is { } shell)

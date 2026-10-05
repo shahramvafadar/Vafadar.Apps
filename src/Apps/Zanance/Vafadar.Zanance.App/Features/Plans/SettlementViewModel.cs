@@ -151,6 +151,6 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         From, To, ActualText);
 }

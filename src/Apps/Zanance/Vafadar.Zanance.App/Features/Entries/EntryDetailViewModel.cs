@@ -34,7 +34,7 @@ public sealed partial class EntryDetailViewModel(
     ILocalizationService localization,
     IDateFormatter dates,
     UndoService undo,
-    HoldingStore holdings) : ViewModelBase, IQueryAttributable
+    HoldingStore holdings) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private Guid? _holdingTypeId;
@@ -130,6 +130,9 @@ public sealed partial class EntryDetailViewModel(
             _id = id;
         }
     }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

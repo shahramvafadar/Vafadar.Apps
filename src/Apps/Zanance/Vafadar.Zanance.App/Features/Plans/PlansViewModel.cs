@@ -62,7 +62,7 @@ public sealed record PlanRow(
 }
 
 /// <summary>The plan centre (UI-07): due and overdue, upcoming and all plans. Works without notification permission (REM-02).</summary>
-public sealed partial class PlansViewModel : ViewModelBase
+public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeAware
 {
     private const int UpcomingDays = 60;
 
@@ -115,6 +115,9 @@ public sealed partial class PlansViewModel : ViewModelBase
     public partial bool RemindersOff { get; set; }
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

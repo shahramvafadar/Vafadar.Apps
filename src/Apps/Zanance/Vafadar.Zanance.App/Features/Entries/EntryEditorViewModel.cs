@@ -55,7 +55,7 @@ public sealed partial class CategoryChoice(Guid id, string name, Symbol icon, Co
 /// Creates and edits entries (UI-03): expense, income, transfer (with fee and destination amount), refund, foreign
 /// amount. The entry object keeps its id across saves, so repeated taps on Save never create duplicates (AT-03).
 /// </summary>
-public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private static readonly EntryKind[] ChipKinds = [EntryKind.Expense, EntryKind.Income, EntryKind.Transfer];
 
@@ -823,6 +823,16 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
     }
 
+    // Only the chips are drawn again, with the chosen category; the form keeps everything typed.
+    Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        BuildCategories(Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        TemplateChips = [.. TemplateChips.Select(chip => chip.Template.Kind == EntryKind.Transfer
+            ? chip with { IconColor = Presentation.Palette.TransferText }
+            : chip with { IconColor = _categories.Color(chip.Template.CategoryId) })];
+        return Task.CompletedTask;
+    }
+
     private void BuildCategories(Guid? selectedId)
     {
         Categories.Clear();
@@ -1245,7 +1255,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
     // Every field the user can change, so leaving with a change – even only a tag or the reimbursement – asks first.
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         KindIndex, AmountText, EntryTitle, Date, Account?.Id, ToAccount?.Id, ToAmountText, FeeText, DestinationFeeText, Payee, Note,
         ForeignEnabled, ForeignCurrency, ForeignAmountText, IconKey, Categories.FirstOrDefault(c => c.IsSelected)?.Id, TagsText,
         ReimbursableEnabled, ReimbursableText, ReimbursedBy, HasReimbursementDue, ReimbursementDue, IsAggregated, AggregatedFrom, AggregatedTo);

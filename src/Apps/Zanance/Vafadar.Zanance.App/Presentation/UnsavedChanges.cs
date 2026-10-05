@@ -15,6 +15,14 @@ internal interface IUnsavedChanges
 /// </summary>
 internal static class UnsavedChanges
 {
+    /// <summary>
+    /// Joins the values an editor compares to see a change into one text, independent of the culture. A culture-dependent
+    /// join failed in Persian: a date is then written in the Persian calendar, which cannot show an unset date (year 1),
+    /// so opening the expense editor reported an unexpected error.
+    /// </summary>
+    public static string Fingerprint(params object?[] values) =>
+        string.Join('|', values.Select(value => Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture)));
+
     /// <summary>Asks whether unsaved changes may be discarded.</summary>
     public static Task<bool> ConfirmDiscardAsync()
     {

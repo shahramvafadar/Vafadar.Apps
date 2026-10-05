@@ -20,7 +20,7 @@ public sealed partial class GoalsViewModel(
     GoalStore goals,
     GoalPresenter presenter,
     Translator translator,
-    TimeProvider time) : ViewModelBase
+    TimeProvider time) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<GoalRow> Active { get; } = [];
 
@@ -36,6 +36,9 @@ public sealed partial class GoalsViewModel(
 
     [ObservableProperty]
     public partial bool IsEmpty { get; set; }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

@@ -248,6 +248,6 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         Name, KindIndex, DimensionIndex, MetalIndex, PurityIndex, PurityText, UnitWeightText, CountUnitName, Divisible, CurrencyCode, Note);
 }

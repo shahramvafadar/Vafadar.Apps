@@ -35,7 +35,7 @@ public sealed partial class GoalDetailViewModel(
     Translator translator,
     IDateFormatter dates,
     ILocalizationService localization,
-    TimeProvider time) : ViewModelBase, IQueryAttributable
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private Goal? _goal;
@@ -146,6 +146,14 @@ public sealed partial class GoalDetailViewModel(
         {
             _id = id;
         }
+    }
+
+    // Loading would replace a typed assumed price with the saved one; both typed amounts stay.
+    async Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        var (price, amount) = (AssumedPriceText, AmountText);
+        await LoadAsync();
+        (AssumedPriceText, AmountText) = (price, amount);
     }
 
     public async Task LoadAsync()

@@ -59,7 +59,7 @@ public sealed record ForecastCard(
 /// "Estimated balance after recorded plans" (FOR-01..09): end balance, lowest balance with its date and the items
 /// behind it. Never called "safe to spend" (FOR-09); unplanned spending is not guessed (FOR-06).
 /// </summary>
-public sealed partial class ForecastViewModel : ViewModelBase
+public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThemeAware
 {
     private readonly ZananceStore _store;
     private readonly PlanStore _plans;
@@ -119,6 +119,9 @@ public sealed partial class ForecastViewModel : ViewModelBase
 
     /// <summary>Computes the forecast of the chosen horizon.</summary>
     /// <remarks>Appearing, the horizon and the scenario can ask at once; loads run one after the other (as on Home, CR07-05).</remarks>
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+
     public async Task LoadAsync()
     {
         await _loading.WaitAsync();

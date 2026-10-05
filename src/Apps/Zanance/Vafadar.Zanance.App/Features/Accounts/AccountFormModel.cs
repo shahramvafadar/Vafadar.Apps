@@ -263,7 +263,7 @@ public sealed partial class AccountFormModel : ObservableObject
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => string.Join('|', Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode, HasDueDate, DueDate);
+    public string Snapshot() => Presentation.UnsavedChanges.Fingerprint( Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode, HasDueDate, DueDate);
 
     // "3 entries, 1 plan and the loan installment" in the current language.
     private string LockReasons(AccountCurrencyLock currencyLock)

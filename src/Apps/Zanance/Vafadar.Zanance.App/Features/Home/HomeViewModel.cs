@@ -33,7 +33,7 @@ public sealed record QuickTemplate(Guid Id, string Name, FluentIcons.Common.Symb
 /// Home dashboard (UI-02, DASH-01..04). Every number uses one filter set – the period chosen at the top, the accounts
 /// included in totals and their currencies – and every number can be tapped to see the entries behind it (AT-50).
 /// </summary>
-public sealed partial class HomeViewModel : ViewModelBase
+public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAware
 {
     private const int MaxSlices = 6;
 
@@ -265,6 +265,9 @@ public sealed partial class HomeViewModel : ViewModelBase
     /// Appearing and a change of the period can ask at the same moment; two loads filling the same lists would mix their
     /// rows, so loads run one after the other and the later one shows the latest state.
     /// </remarks>
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+
     public async Task LoadAsync()
     {
         await _loading.WaitAsync();

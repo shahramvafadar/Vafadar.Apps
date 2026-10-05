@@ -35,7 +35,7 @@ public sealed partial class SplitPart(IReadOnlyList<SplitCategory> categories, A
 /// Splits one purchase or income across categories, or changes and joins an existing split (F2-TX-01). The parts must
 /// add up exactly to the amount; the account balance changes by the same total.
 /// </summary>
-public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
+public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges, Presentation.IThemeAware
 {
     private List<LedgerEntry> _parts = [];
     private Currency _currency = Currencies.Euro;
@@ -148,6 +148,13 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     }
 
     // Shows how much is still to assign; saving is possible only when the parts add up exactly (F2-TX-01).
+    // The remaining amount is recolored from the parts as they are; nothing typed changes.
+    Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        Update();
+        return Task.CompletedTask;
+    }
+
     private void Update()
     {
         var assigned = 0L;
@@ -247,6 +254,6 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         string.Join(',', Parts.Select(p => $"{p.Category?.Id}:{p.AmountText}")));
 }

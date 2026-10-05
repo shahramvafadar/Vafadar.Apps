@@ -18,6 +18,17 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Fixed – Theme change keeps open pages
+
+- When the phone switched to dark (or light) on its own while an expense, a plan or another form was open, the app
+  closed the form and what was typed was lost. Now the open form stays as it is and only changes its colours; the
+  screens are renewed once you are back on a tab.
+- A Save button that was disabled once kept the colour of the previous theme after a theme change; disabled buttons
+  and fields now have a grey that reads in both themes.
+- In Persian, opening the expense editor (and other forms with a date) showed "unexpected error": the check for
+  unsaved changes wrote dates in the Persian calendar, which cannot show an empty date. It is independent of the
+  language now.
+
 ### Fixed – Code review (all parts): libraries, core, data, app foundation, screens and cross-cutting UI
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and

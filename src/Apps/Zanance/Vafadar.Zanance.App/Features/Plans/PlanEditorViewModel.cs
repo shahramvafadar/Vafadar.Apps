@@ -24,7 +24,7 @@ namespace Vafadar.Zanance.App.Features.Plans;
 /// Creates and edits plans (UI-08) with a live preview of the next six dates (REC-04). Changing a plan that already
 /// has settled or skipped occurrences applies "from a date on" by splitting it, so history is never rewritten (REC-15).
 /// </summary>
-public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private static readonly EntryKind[] Kinds = [EntryKind.Expense, EntryKind.Income, EntryKind.Transfer];
 
@@ -664,6 +664,13 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         Count = EndIndex == 2 && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(CountText), NumberStyles.None, CultureInfo.InvariantCulture, out var count) ? count : null,
     };
 
+    // Only the category chips are drawn again, with the chosen category; the plan keeps everything typed.
+    Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        BuildCategories(Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        return Task.CompletedTask;
+    }
+
     private void BuildCategories(Guid? selectedId)
     {
         Categories.Clear();
@@ -844,7 +851,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
         CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, SkipHolidays, HasSecondDay, SecondDayText, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
         ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,

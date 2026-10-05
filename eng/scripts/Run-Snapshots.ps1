@@ -22,7 +22,8 @@ param(
     [string[]]$Languages = @('fa'),
     [ValidateSet('light', 'dark')] [string]$Theme = 'light',
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\snapshots'),
-    [int]$TimeoutSeconds = 240,
+    # A full walk-through in two languages takes about 10 minutes.
+    [int]$TimeoutSeconds = 900,
     # e.g. 1280x820 to check wide windows (desktop, tablet); default: a phone-sized window.
     [string]$WindowSize = '',
     # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.

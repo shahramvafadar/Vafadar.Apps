@@ -115,6 +115,7 @@ lightened (`CategoryLookup.DisplayColor`).
 * Direction-dependent icons (back, chevrons) mirror in RTL; charts, logos and money icons do not.
 * Every icon has an accessible name (`SemanticProperties.Description`); charts have a table alternative (UX-06).
 * Light and dark theme (D-22): the semantic color tokens have a light and a dark variant (`Presentation/Palette.cs`) and are used as `DynamicResource`, so switching recolors open pages; code reads colors from the palette, never as literals. Settings offers "like the device", light and dark.
+* A theme change never closes what is open: with "like the device" the phone may turn dark on its own while an expense is being typed. On a tab's first page the shell is rebuilt (nothing can be lost there); with a detail page or an editor open, the open pages recompute their code colors in place (`IThemeAware`) and the rebuild waits until the user is back on a tab. Disabled states use fixed colors that read in both themes: a visual-state setter with a `DynamicResource` takes over the property's resource link, so a button that was disabled once kept the old theme's color.
 
 * **Help** (D-36): a setting whose effect is not obvious has a round "?" (`HelpButton`) next to its label or switch.
   It opens the full explanation and, where it helps, an example; short hints under the control stay for the common case.
@@ -153,8 +154,9 @@ lightened (`CategoryLookup.DisplayColor`).
 * Deleting an entry needs no confirmation: the list offers "Undo" for 8 seconds (TX-05).
 * Modal pages get the text direction explicitly before they are shown (they are not part of the window's tree).
 * Amounts are isolated with LRI…PDI plus inner LRM marks, because some renderers (Windows) ignore isolates.
-* Changing language or calendar rebuilds the main shell and returns to the current page, so every cached number,
-  date and icon is re-rendered in the new direction.
+* Changing language or calendar rebuilds the main shell and returns to the current tab, so every cached number,
+  date and icon is re-rendered in the new direction. These are deliberate choices in Settings; a theme change, which
+  can come from the device, does not rebuild while a page is open (see the theme above).
 
 ## 7. Syncfusion controls used (D-13)
 

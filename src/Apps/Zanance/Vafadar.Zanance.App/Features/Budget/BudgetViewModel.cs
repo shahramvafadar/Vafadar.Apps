@@ -37,7 +37,7 @@ public sealed record FlexLine(string Title, string Detail, Symbol Icon, Color Ic
 /// The monthly budget (UI-10). A missing budget is shown as "no budget", never as zero (BUD-01); a zero limit has no
 /// percentage (BUD-05); overspending and negative net expense are shown as they are.
 /// </summary>
-public sealed partial class BudgetViewModel : ViewModelBase
+public sealed partial class BudgetViewModel : ViewModelBase, Presentation.IThemeAware
 {
     // Traffic light of the palette (D-27): within the limit is a positive result (green), then amber, then red. Blue is
     // the action colour and never shows the state of money.
@@ -259,6 +259,9 @@ public sealed partial class BudgetViewModel : ViewModelBase
     /// Appearing, the period and currency switches and the confirmed-only switch can ask at the same moment; two loads
     /// filling the same lists would mix their lines, so loads run one after the other (as on Home, CR07-05).
     /// </remarks>
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+
     public async Task LoadAsync()
     {
         await _loading.WaitAsync();

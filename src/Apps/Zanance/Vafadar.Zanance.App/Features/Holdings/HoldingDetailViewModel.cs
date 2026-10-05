@@ -36,7 +36,7 @@ public sealed partial class HoldingDetailViewModel(
     HoldingText text,
     Translator translator,
     ILocalizationService localization,
-    TimeProvider time) : ViewModelBase, IQueryAttributable
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private AssetType? _type;
@@ -121,6 +121,9 @@ public sealed partial class HoldingDetailViewModel(
             PriceDate = Today;
         }
     }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

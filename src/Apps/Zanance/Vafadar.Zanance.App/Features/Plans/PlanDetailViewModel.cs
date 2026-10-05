@@ -21,7 +21,7 @@ public sealed partial class PlanDetailViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time) : ViewModelBase, IQueryAttributable
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private Schedule? _schedule;
@@ -72,6 +72,9 @@ public sealed partial class PlanDetailViewModel(
             _id = id;
         }
     }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

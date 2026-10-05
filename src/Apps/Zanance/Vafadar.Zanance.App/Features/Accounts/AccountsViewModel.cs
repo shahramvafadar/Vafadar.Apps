@@ -46,7 +46,7 @@ public sealed record CurrencyTotal(string CurrencyCode, string Text);
 /// <summary>One group of the account list with its totals per currency, e.g. "Money · 2,000.00 EUR · 4,000.00 USD" (ZEX-S0202).</summary>
 public sealed record AccountListGroup(AccountGroup Group, string Title, string? TotalsText, IReadOnlyList<AccountItem> Items);
 
-public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Vafadar.Localization.Formatting.IDateFormatter dates, HoldingStore holdings, Holdings.HoldingText holdingText) : ViewModelBase
+public sealed partial class AccountsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Vafadar.Localization.Formatting.IDateFormatter dates, HoldingStore holdings, Holdings.HoldingText holdingText) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<AccountItem> Archived { get; } = [];
 
@@ -68,6 +68,9 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
 
     [ObservableProperty]
     public partial bool HasArchived { get; set; }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

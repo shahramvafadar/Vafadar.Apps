@@ -46,7 +46,7 @@ public sealed record IssueRow(DataIssueKind Kind, string Text, string? ActionTex
 /// currency, confirmed only), names it, explains itself with "?" and lists the entries behind it with the same scope,
 /// so the list shows the same total (ZEX-S0601, AT36). Each package ends with its data status, never a score.
 /// </summary>
-public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
+public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private const int TrendMonths = 6;
 
@@ -258,6 +258,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     /// Loads run one after the other (appearing, a query and the scope switches can ask at once, as on Home, CR07-05), and a
     /// switch changed during a load is applied by one more load right after it.
     /// </remarks>
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+
     public async Task LoadAsync()
     {
         await _gate.WaitAsync();

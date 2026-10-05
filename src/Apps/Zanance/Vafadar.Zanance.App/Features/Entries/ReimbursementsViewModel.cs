@@ -12,7 +12,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Entries;
 
 /// <summary>Money others still owe for reimbursable expenses (F2-TX-03).</summary>
-public sealed partial class ReimbursementsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates) : ViewModelBase
+public sealed partial class ReimbursementsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<EntryRow> Items { get; } = [];
 
@@ -21,6 +21,9 @@ public sealed partial class ReimbursementsViewModel(ZananceStore store, Translat
 
     [ObservableProperty]
     public partial bool IsEmpty { get; set; }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

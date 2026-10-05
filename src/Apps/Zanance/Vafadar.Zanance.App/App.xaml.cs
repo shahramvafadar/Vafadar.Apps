@@ -24,10 +24,12 @@ public partial class App : Application
         // Copies of opened receipts do not outlive the session that opened them (F2-TX-04).
         Presentation.AttachmentFiles.ClearCache();
 
-        // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors reload with the shell.
+        // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors recolor in place
+        // (IThemeAware). The shell is not rebuilt: in "System" the device may turn dark on its own while an editor is
+        // open, and a rebuild would close the editor and lose what was typed.
         var theme = services.GetRequiredService<Presentation.ThemeService>();
         theme.Initialize(this);
-        theme.Changed += OnLocalizationChanged;
+        theme.Changed += OnThemeChanged;
         var localization = services.GetRequiredService<ILocalizationService>();
 
         // Persian digits in the Persian interface (D-27). The translator refreshes the texts of open pages before the
@@ -287,6 +289,56 @@ public partial class App : Application
         }
     }
 
+    // Set while a theme change waits for the user to leave the open pages.
+    private bool _rebuildWhenBackOnTab;
+
+    // On a tab's first page nothing can be lost, so the shell is rebuilt as for a language change: that also renews
+    // colors that a trigger or visual state took over. With a detail page or an editor open, the open pages recompute
+    // their colors in place (IThemeAware) and the rebuild waits until the user is back on a tab; the editor and what
+    // was typed stay. Pages that are not shown reload when they appear.
+    private void OnThemeChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>
+    {
+        if (Windows.FirstOrDefault()?.Page is not AppShell shell || IsOnTab(shell))
+        {
+            _rebuildWhenBackOnTab = false;
+            QueueRebuild();
+            return;
+        }
+
+        _rebuildWhenBackOnTab = true;
+        foreach (var page in OpenPages())
+        {
+            if (page.BindingContext is Presentation.IThemeAware aware)
+            {
+                await Presentation.Failures.GuardAsync(aware.RefreshThemeAsync);
+            }
+        }
+    });
+
+    private static bool IsOnTab(Shell shell) => shell.Navigation.NavigationStack.Count <= 1 && shell.Navigation.ModalStack.Count == 0;
+
+    private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+    {
+        if (_rebuildWhenBackOnTab && sender is Shell shell && IsOnTab(shell))
+        {
+            _rebuildWhenBackOnTab = false;
+            Dispatcher.Dispatch(QueueRebuild);
+        }
+    }
+
+    private IEnumerable<Page> OpenPages()
+    {
+        if (Windows.FirstOrDefault()?.Page is not { } root)
+        {
+            return [];
+        }
+
+        IEnumerable<Page?> pages = root is Shell shell
+            ? [shell.CurrentPage, .. shell.Navigation.NavigationStack, .. shell.Navigation.ModalStack]
+            : [root, .. root.Navigation.ModalStack];
+        return pages.Select(p => p is NavigationPage navigation ? navigation.CurrentPage : p).OfType<Page>().Distinct();
+    }
+
     private bool _rebuildQueued;
 
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
@@ -296,6 +348,11 @@ public partial class App : Application
     {
         // Reminder texts are translated when they are scheduled (REM-07).
         _services.GetRequiredService<ReminderService>().RefreshSoon();
+        QueueRebuild();
+    });
+
+    private void QueueRebuild()
+    {
         if (_rebuildQueued)
         {
             return;
@@ -303,9 +360,24 @@ public partial class App : Application
 
         _rebuildQueued = true;
         _ = _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(RebuildShellAsync);
-    });
+    }
+
+    /// <summary>Raised when a rebuilt shell is shown on its tab (after a language, calendar, digit or theme change).</summary>
+    internal event EventHandler? ShellRebuilt;
 
     private async Task RebuildShellAsync()
+    {
+        try
+        {
+            await RebuildShellCoreAsync();
+        }
+        finally
+        {
+            ShellRebuilt?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private async Task RebuildShellCoreAsync()
     {
         _rebuildQueued = false;
         if (Windows.FirstOrDefault() is not { Page: AppShell shell } window)
@@ -340,6 +412,10 @@ public partial class App : Application
         return section.Items.Count > 1 ? $"//{section.Route}/{content.Route}" : $"//{content.Route}";
     }
 
-    private AppShell CreateShell() =>
-        _services.GetRequiredService<AppShell>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+    private AppShell CreateShell()
+    {
+        var shell = _services.GetRequiredService<AppShell>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        shell.Navigated += OnShellNavigated;
+        return shell;
+    }
 }

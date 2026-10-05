@@ -68,6 +68,8 @@ internal static class DebugSnapshots
             File.AppendAllText(Path.Combine(folder, "error.txt"), $"Unhandled: {e.ExceptionObject}{Environment.NewLine}");
         TaskScheduler.UnobservedTaskException += (_, e) =>
             File.AppendAllText(Path.Combine(folder, "error.txt"), $"Unobserved: {e.Exception}{Environment.NewLine}");
+        Presentation.Failures.Observed = ex =>
+            File.AppendAllText(Path.Combine(folder, "error.txt"), $"Shown as a failure: {ex}{Environment.NewLine}");
 #if WINDOWS
         if (Microsoft.UI.Xaml.Application.Current is { } xaml)
         {
@@ -147,8 +149,7 @@ internal static class DebugSnapshots
             };
             foreach (var language in languages)
             {
-                localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
-                await Task.Delay(1000);
+                await SetLanguageAsync(app, localization, language);
                 foreach (var (name, route) in emptyScreens)
                 {
                     await Shell.Current.GoToAsync(route);
@@ -243,8 +244,7 @@ internal static class DebugSnapshots
 
         foreach (var language in languages)
         {
-            localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
-            await Task.Delay(1000);
+            await SetLanguageAsync(app, localization, language);
             // VAFADAR_SNAPSHOT_ONLY=report,holding shoots only the screens whose name starts with one of the prefixes.
             var only = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY")?.Split(',', StringSplitOptions.RemoveEmptyEntries);
             // A filter that matches nothing (e.g. "home budget", a list joined with spaces) must not end as an empty run.
@@ -294,6 +294,49 @@ internal static class DebugSnapshots
                     await forecast.ResetScenarioCommand.ExecuteAsync(null);
                 }
 
+                // A theme change while an editor is open (the device may turn dark on its own) keeps the editor and what
+                // was typed; the colors change in place. The run fails otherwise.
+                if (name == "entry-new" && Shell.Current.CurrentPage is { BindingContext: Features.Entries.EntryEditorViewModel editor } editorPage)
+                {
+                    var (amount, note) = (editor.AmountText, editor.Note);
+                    editor.AmountText = "12.34";
+                    editor.Note = "Theme check";
+                    var themes = services.GetRequiredService<Presentation.ThemeService>();
+                    themes.Set(dark ? Presentation.ThemeChoice.Light : Presentation.ThemeChoice.Dark);
+                    await Task.Delay(1500);
+                    if (FindScrollView(app.Windows[0].Page) is { } top)
+                    {
+                        await top.ScrollToAsync(0, 0, animated: false);
+                        await Task.Delay(300);
+                    }
+
+                    await CaptureAsync(app, folder, $"{language}-{name}-theme-switched");
+                    var kept = ReferenceEquals(Shell.Current.CurrentPage, editorPage) && editor.AmountText == "12.34" && editor.Note == "Theme check";
+                    themes.Set(dark ? Presentation.ThemeChoice.Dark : Presentation.ThemeChoice.Light);
+                    await Task.Delay(500);
+                    (editor.AmountText, editor.Note) = (amount, note);
+                    if (!kept)
+                    {
+                        throw new InvalidOperationException("A theme change closed the open editor or lost its input.");
+                    }
+
+                    // Back on a tab, the waiting rebuild renews the shell; there a theme change rebuilds it at once.
+                    var shellBefore = app.Windows[0].Page;
+                    await Shell.Current.GoToAsync("//home");
+                    await Task.Delay(1500);
+                    var renewedAfterEditing = !ReferenceEquals(app.Windows[0].Page, shellBefore);
+                    shellBefore = app.Windows[0].Page;
+                    themes.Set(dark ? Presentation.ThemeChoice.Light : Presentation.ThemeChoice.Dark);
+                    await Task.Delay(1500);
+                    var renewedOnTab = !ReferenceEquals(app.Windows[0].Page, shellBefore);
+                    themes.Set(dark ? Presentation.ThemeChoice.Dark : Presentation.ThemeChoice.Light);
+                    await Task.Delay(1500);
+                    if (!renewedAfterEditing || !renewedOnTab)
+                    {
+                        throw new InvalidOperationException($"The shell was not renewed (after editing: {renewedAfterEditing}, on a tab: {renewedOnTab}).");
+                    }
+                }
+
                 // The bulk selection of the transactions list (F2-TX-04).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
                 {
@@ -319,6 +362,30 @@ internal static class DebugSnapshots
                 }
             }
         }
+    }
+
+    // A language change rebuilds the shell, which then returns to the previous tab; a navigation before that ends would
+    // be undone (e.g. "More" instead of Home), so the walk-through waits for the rebuild instead of a fixed pause.
+    private static async Task SetLanguageAsync(App app, ILocalizationService localization, string language)
+    {
+        var rebuilt = new TaskCompletionSource();
+        void OnRebuilt(object? sender, EventArgs e) => rebuilt.TrySetResult();
+        var waits = app.Windows[0].Page is AppShell && localization.CurrentLanguage.CultureName != language;
+        app.ShellRebuilt += OnRebuilt;
+        try
+        {
+            localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
+            if (waits)
+            {
+                await Task.WhenAny(rebuilt.Task, Task.Delay(10_000));
+            }
+        }
+        finally
+        {
+            app.ShellRebuilt -= OnRebuilt;
+        }
+
+        await Task.Delay(1000);
     }
 
     // Sample data so that lists and details are not empty: a second account, income, expenses, a transfer with a

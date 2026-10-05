@@ -22,7 +22,7 @@ public sealed partial class OccurrenceViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time) : ViewModelBase, IQueryAttributable
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _scheduleId;
     private DateOnly _originalDate;
@@ -109,6 +109,14 @@ public sealed partial class OccurrenceViewModel(
         {
             _originalDate = original;
         }
+    }
+
+    // Loading fills the payment fields with their defaults; what the user typed or picked stays.
+    async Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        var (actualDate, actualAmount, dueDate, overrideAmount, note) = (ActualDate, ActualAmountText, DueDate, OverrideAmountText, OccurrenceNote);
+        await LoadAsync();
+        (ActualDate, ActualAmountText, DueDate, OverrideAmountText, OccurrenceNote) = (actualDate, actualAmount, dueDate, overrideAmount, note);
     }
 
     public async Task LoadAsync()

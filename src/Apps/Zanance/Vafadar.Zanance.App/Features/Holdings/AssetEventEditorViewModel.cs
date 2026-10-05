@@ -555,7 +555,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,
         AmountText, FeeText, SecondAmountText, BasisText, DirectionIndex, ReasonText, Note);
 }

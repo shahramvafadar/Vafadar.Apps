@@ -23,7 +23,7 @@ public sealed record ComparisonRow(string DateText, string SavedText, string Act
 /// changed – the parts always add up. The snapshot itself never changes.
 /// </summary>
 public sealed partial class SnapshotViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
-    : ViewModelBase, IQueryAttributable
+    : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
 
@@ -59,6 +59,9 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
             _id = id;
         }
     }
+
+    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

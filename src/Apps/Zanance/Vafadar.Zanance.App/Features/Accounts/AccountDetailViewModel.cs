@@ -29,7 +29,7 @@ public sealed partial class AccountDetailViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time) : ViewModelBase, IQueryAttributable
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private Account? _account;
@@ -137,6 +137,9 @@ public sealed partial class AccountDetailViewModel(
             _id = id;
         }
     }
+
+    // Loading keeps the reconciliation being typed: the observed balance, the reason and a chosen date stay.
+    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     public async Task LoadAsync()
     {

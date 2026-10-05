@@ -723,7 +723,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     /// <inheritdoc />
     public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => string.Join('|',
+    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         TypeIndex, HoldingType?.Id, HoldingLocation?.Id, QuantityUnitIndex, Account?.Id, Name, AmountText, CurrencyCode, HasTargetDate, TargetDate,
         ScheduleIndex, FirstDate, MethodIndex, ContributionText, PercentText, CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note);
 }
