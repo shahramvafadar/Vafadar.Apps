@@ -6,6 +6,18 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Lunar Hijri calendar
+
+- A third calendar in Settings and at onboarding: lunar Hijri (Umm al-Qura, the official calendar of Saudi Arabia),
+  next to Gregorian and Persian. Dates, budget months, monthly and yearly plans, the date picker and the dates of a
+  CSV import can use lunar months of 29 or 30 days; a plan on day 30 falls on the 29th in a shorter month.
+- Umm al-Qura covers 1900 to 2077; dates outside are shown in the arithmetic Hijri calendar instead of failing.
+- A receipt dated 1447/03/12 is read as a lunar date when that is nearer to today than the solar date (which would
+  be 2068).
+- A plan in another calendar than the one shown names its calendar, e.g. "Every month on day 2 · Gregorian".
+- Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
+- This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
+
 ### Fixed – Code review (all parts): libraries, core, data, app foundation, screens and cross-cutting UI
 
 - Creating, previewing and restoring a backup no longer freezes the screen: the password protection, compression and

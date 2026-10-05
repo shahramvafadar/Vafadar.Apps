@@ -60,7 +60,7 @@ The repository has two kinds of code:
 | Library | Purpose | Depends on | Status |
 |---|---|---|---|
 | [Vafadar.Core](../../src/Libraries/Vafadar.Core/README.md) | Entity base (GUID v7 ids), audit interface, app environment and settings abstractions | – | ✅ |
-| [Vafadar.Localization](../../src/Libraries/Vafadar.Localization/README.md) | Languages, runtime language switching, RTL, Gregorian/Persian calendar, shared UI strings | Core | ✅ |
+| [Vafadar.Localization](../../src/Libraries/Vafadar.Localization/README.md) | Languages, runtime language switching, RTL, Gregorian, Persian and lunar Hijri calendars, shared UI strings | Core | ✅ |
 | [Vafadar.Data](../../src/Libraries/Vafadar.Data/README.md) | EF Core SQLite base context and conventions, audit timestamps, database backup source | Core, Backup | ✅ |
 | [Vafadar.Backup](../../src/Libraries/Vafadar.Backup/README.md) | Backup package format, AES-GCM encryption, retention, restore validation, local folder storage | Core | ✅ |
 | [Vafadar.Backup.GoogleDrive](../../src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backup storage in the user's Google Drive app data folder | Backup, Authentication | ✅ (used by Zanance on Android, D-35) |

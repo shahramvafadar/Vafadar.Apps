@@ -141,7 +141,7 @@ public sealed partial class PlansViewModel : ViewModelBase
             return;
         }
 
-        var text = new PlanText(_translator, _dates, _localization.CurrentCulture);
+        var text = new PlanText(_translator, _dates, _localization);
         var today = Today;
         var rows = new List<PlanRow>();
 

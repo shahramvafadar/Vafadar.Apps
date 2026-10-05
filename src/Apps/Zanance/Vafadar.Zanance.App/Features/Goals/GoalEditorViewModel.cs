@@ -538,7 +538,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     private (DateOnly From, DateOnly To) LastClosedMonth()
     {
         var settings = _store.GetSettings();
-        var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
         var (currentYear, currentMonth) = PeriodMath.MonthOf(Today, calendar, settings.MonthStartDay);
         var (year, month) = PeriodMath.Previous(currentYear, currentMonth);
         return PeriodMath.MonthRange(year, month, calendar, settings.MonthStartDay);
@@ -578,7 +578,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     private ContributionPlan? BuildPlan(System.Globalization.CultureInfo culture)
     {
         var (frequency, interval) = Schedules[Math.Clamp(ScheduleIndex, 0, Schedules.Length - 1)];
-        var calendar = frequency == Frequency.Monthly && _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+        var calendar = frequency == Frequency.Monthly ? Presentation.Calendars.ToPeriod(_localization.CurrentCalendar) : PeriodCalendar.Gregorian;
         var method = IsAdvanced && !IsQuantityGoal ? (ContributionMethod)Math.Clamp(MethodIndex, 0, 2) : ContributionMethod.FixedAmount;
         var plan = new ContributionPlan
         {

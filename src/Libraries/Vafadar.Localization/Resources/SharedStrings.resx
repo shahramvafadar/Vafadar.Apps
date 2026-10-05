@@ -247,4 +247,8 @@
     <value>{0}, selected</value>
     <comment>Spoken by screen readers for the chosen chip of a choice group.</comment>
   </data>
+  <data name="Calendar_Hijri" xml:space="preserve">
+    <value>Hijri (lunar, Umm al-Qura)</value>
+    <comment>The lunar Hijri calendar; Umm al-Qura is the official variant (Saudi Arabia), see LunarHijri.</comment>
+  </data>
 </root>

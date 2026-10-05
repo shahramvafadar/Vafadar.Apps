@@ -16,4 +16,10 @@ public enum DateFormatStyle
 
     /// <summary>Day and month without year, e.g. <c>September 25</c> or <c>3 Mehr</c>.</summary>
     DayMonth = 3,
+
+    /// <summary>
+    /// Day and short month name for narrow places such as date tiles, e.g. <c>Sep 25</c>, <c>25 Rab II</c> or <c>3 مهر</c>;
+    /// the short names stay distinct (Rabi al-Awwal and Rabi al-Thani are <c>Rab I</c> and <c>Rab II</c>).
+    /// </summary>
+    DayMonthShort = 4,
 }

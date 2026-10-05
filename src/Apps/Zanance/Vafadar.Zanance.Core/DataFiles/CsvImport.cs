@@ -49,8 +49,6 @@ public sealed record ImportRow(int Line, LedgerEntry? Entry, string? Error, bool
 /// <summary>Reads CSV files: the app's own export (with ids, transfers and refunds) or any file with a column mapping.</summary>
 public static class CsvImport
 {
-    private static readonly PersianCalendar Persian = new();
-
     /// <summary>The date formats offered for generic files (IO-08).</summary>
     public static readonly IReadOnlyList<string> DateFormats = ["yyyy-MM-dd", "dd.MM.yyyy", "dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd"];
 
@@ -281,7 +279,10 @@ public static class CsvImport
         return result;
     }
 
-    /// <summary>Parses a date in one of <see cref="DateFormats"/> in the Gregorian or Persian calendar, digits in any script.</summary>
+    /// <summary>
+    /// Parses a date in one of <see cref="DateFormats"/> in the Gregorian, Persian or lunar Hijri calendar, digits in any
+    /// script.
+    /// </summary>
     public static bool TryDate(string text, string format, PeriodCalendar calendar, out DateOnly date)
     {
         date = default;
@@ -291,7 +292,7 @@ public static class CsvImport
             return DateOnly.TryParseExact(ascii, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
         }
 
-        // Persian dates: read the numbers in the chosen order, then convert (e.g. 1405/07/04).
+        // Persian and lunar Hijri dates: read the numbers in the chosen order, then convert (e.g. 1405/07/04, 1448/04/12).
         var parts = ascii.Split(['-', '.', '/'], StringSplitOptions.RemoveEmptyEntries);
         var order = format.Split(['-', '.', '/'], StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 3 || order.Length != 3)
@@ -315,12 +316,12 @@ public static class CsvImport
             }
         }
 
-        if (year is < 1 or > 9377 || month is < 1 or > 12 || day < 1 || day > Persian.GetDaysInMonth(year, month))
+        if (!PeriodMath.IsSupportedYear(year, calendar) || month is < 1 or > 12 || day < 1 || day > PeriodMath.DaysInMonth(year, month, calendar))
         {
             return false;
         }
 
-        date = DateOnly.FromDateTime(Persian.ToDateTime(year, month, day, 0, 0, 0, 0));
+        date = PeriodMath.ToDate(year, month, day, calendar);
         return true;
     }
 

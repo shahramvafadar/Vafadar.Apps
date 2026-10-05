@@ -213,7 +213,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         // start day, like the periods everywhere else; the user can change the range.
         if (value && !_loading && AggregatedFrom == AggregatedTo)
         {
-            var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+            var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
             var (year, month) = PeriodMath.MonthOf(Date, calendar, _startDay);
             (AggregatedFrom, AggregatedTo) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         }

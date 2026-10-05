@@ -191,7 +191,7 @@ public sealed partial class AccountDetailViewModel(
             ? translator.Format("Account_ConfirmedOnly", MoneyText.Format(confirmed, account.CurrencyCode, culture))
             : null;
 
-        var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
         var startDay = settings.MonthStartDay;
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);

@@ -60,7 +60,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         IncludeNotes = true;
         Accounts = [];
         Columns = [];
-        CalendarNames = [translator["Calendar_Gregorian"], translator["Calendar_Persian"]];
+        CalendarNames = Presentation.Calendars.Names(translator);
         SeparatorNames = [translator["Import_DecimalPoint"], translator["Import_DecimalComma"]];
         SignNames = [translator["Import_SignNegativeExpense"], translator["Import_SignAllExpenses"], translator["Import_SignAllIncome"]];
     }
@@ -168,7 +168,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         Accounts = [.. accounts.Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
         Account ??= Accounts.FirstOrDefault();
         DateFormat ??= DateFormats[0];
-        CalendarIndex = _localization.CurrentCalendar == CalendarSystem.Persian ? 1 : 0;
+        CalendarIndex = (int)Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
         CanExportHoldings = (await _store.GetSettingsAsync()).Shows(Feature.HoldingsExport) && (await _holdings.GetTypesAsync()).Count > 0;
         await LoadBatchesAsync();
     }
@@ -324,7 +324,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
                 return;
             }
 
-            var mapping = new ImportMapping(Account.Id, date, DateFormat, CalendarIndex == 1 ? PeriodCalendar.Persian : PeriodCalendar.Gregorian, amount,
+            var mapping = new ImportMapping(Account.Id, date, DateFormat, Presentation.Calendars.All[Math.Clamp(CalendarIndex, 0, Presentation.Calendars.All.Count - 1)], amount,
                 SeparatorIndex == 1 ? ',' : '.', (SignMode)SignIndex, TitleColumn?.Index, CategoryColumn?.Index, NoteColumn?.Index);
             _preview = CsvImport.PreviewGeneric(_rows, mapping, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
         }

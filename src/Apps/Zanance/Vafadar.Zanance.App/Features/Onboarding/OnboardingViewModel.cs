@@ -152,7 +152,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
             settings.DefaultAccountId = account.Id;
 
             // Budget months follow the calendar chosen here; later changes apply to future budgets only (BUD-08).
-            settings.BudgetCalendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+            settings.BudgetCalendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
             // A new profile starts in Simple, set explicitly rather than by the column default (ZEX-F15, 05 §1 rule 7).
             settings.Mode = Core.Settings.ExperienceMode.Simple;
             settings.OnboardingCompleted = true;
@@ -181,6 +181,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
             [
                 new CalendarOption(CalendarSystem.Gregorian, _translator["Calendar_Gregorian"]),
                 new CalendarOption(CalendarSystem.Persian, _translator["Calendar_Persian"]),
+                new CalendarOption(CalendarSystem.Hijri, _translator["Calendar_Hijri"]),
             ];
             SelectedCalendar = Calendars.First(c => c.Calendar == _localization.CurrentCalendar);
             StepText = _translator.Format("Onb_Step", Step, StepCount);

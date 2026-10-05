@@ -61,6 +61,20 @@ internal static class DebugSnapshots
         // Phone-like size so that the layout matches the primary target; VAFADAR_WINDOW_SIZE (e.g. 1280x820) checks wide windows.
         SetSize(window);
         Directory.CreateDirectory(folder);
+
+        // A crash outside the walk-through's own code (an event handler, a binding) ends the process without a trace;
+        // the exception is written next to the screenshots like the walk-through's own errors.
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            File.AppendAllText(Path.Combine(folder, "error.txt"), $"Unhandled: {e.ExceptionObject}{Environment.NewLine}");
+        TaskScheduler.UnobservedTaskException += (_, e) =>
+            File.AppendAllText(Path.Combine(folder, "error.txt"), $"Unobserved: {e.Exception}{Environment.NewLine}");
+#if WINDOWS
+        if (Microsoft.UI.Xaml.Application.Current is { } xaml)
+        {
+            xaml.UnhandledException += (_, e) =>
+                File.AppendAllText(Path.Combine(folder, "error.txt"), $"Unhandled (UI): {e.Exception}{Environment.NewLine}");
+        }
+#endif
         app.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(3), async () =>
         {
             try
@@ -86,6 +100,18 @@ internal static class DebugSnapshots
         // VAFADAR_SNAPSHOT_THEME=dark shoots the dark theme; the choice is saved, so light runs set it back.
         var dark = string.Equals(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_THEME"), "dark", StringComparison.OrdinalIgnoreCase);
         services.GetRequiredService<Presentation.ThemeService>().Set(dark ? Presentation.ThemeChoice.Dark : Presentation.ThemeChoice.Light);
+
+        // VAFADAR_SNAPSHOT_CALENDAR=Hijri (or Persian, Gregorian) shoots every language in that calendar, budget included
+        // (onboarding takes the current calendar). The choice is saved, so runs without it remove it again and the
+        // calendar follows the language.
+        if (Enum.TryParse<CalendarSystem>(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_CALENDAR"), ignoreCase: true, out var calendar))
+        {
+            localization.SetCalendar(calendar);
+        }
+        else
+        {
+            services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>().Remove("localization.calendar");
+        }
 
         if (app.Windows[0].Page is OnboardingPage onboarding && onboarding.BindingContext is OnboardingViewModel vm)
         {
@@ -221,6 +247,12 @@ internal static class DebugSnapshots
             await Task.Delay(1000);
             // VAFADAR_SNAPSHOT_ONLY=report,holding shoots only the screens whose name starts with one of the prefixes.
             var only = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY")?.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            // A filter that matches nothing (e.g. "home budget", a list joined with spaces) must not end as an empty run.
+            if (only is { Length: > 0 } && !screens.Any(s => only.Any(o => s.Name.StartsWith(o, StringComparison.Ordinal))))
+            {
+                throw new ArgumentException($"VAFADAR_SNAPSHOT_ONLY '{string.Join(',', only)}' matches no screen.");
+            }
+
             foreach (var (name, route, query) in screens.Where(s => only is null || only.Any(o => s.Name.StartsWith(o, StringComparison.Ordinal))))
             {
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Vafadar.Core.Dates;
 using Vafadar.Core.Text;
 
 namespace Vafadar.Zanance.Core.Receipts;
@@ -17,7 +18,8 @@ public sealed record ReceiptSuggestion(decimal? Amount, DateOnly? Date, string? 
 /// <summary>
 /// Reads the total, the date and the merchant from the text of a receipt (on-device OCR, D-31). It prefers a line with a
 /// total keyword (Total, Summe, Gesamt, جمع, مبلغ قابل پرداخت …) and falls back to the largest amount. Persian and
-/// Arabic digits are accepted; dates may be Gregorian or Solar Hijri (a year from 1300 to 1500).
+/// Arabic digits are accepted; dates may be Gregorian, Solar Hijri or lunar Hijri (a year from 1300 to 1500 is read in the
+/// Hijri calendar that gives the date nearer to today: solar years are now around 1405, lunar years around 1447).
 /// </summary>
 public static partial class ReceiptParser
 {
@@ -43,7 +45,9 @@ public static partial class ReceiptParser
     private static readonly string[] NotMerchant = ["receipt", "rechnung", "beleg", "quittung", "kassenbon", "bon", "invoice", "tel", "fax", "ust", "vat", "فاکتور", "رسید", "تلفن"];
 
     /// <summary>Reads a receipt text.</summary>
-    public static ReceiptSuggestion Parse(string? text)
+    /// <param name="text">The recognised text.</param>
+    /// <param name="today">The day the receipt is read, to tell solar from lunar Hijri years; default: today.</param>
+    public static ReceiptSuggestion Parse(string? text, DateOnly? today = null)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -53,7 +57,7 @@ public static partial class ReceiptParser
         // Persian and Arabic separators become Latin ones; OCR sometimes puts a space after the decimal separator ("2, 90").
         var normalized = SplitDecimals().Replace(Digits.ToAscii(text).Replace('٫', '.').Replace('٬', ',').Replace('،', ','), "$1$2$3");
         var lines = normalized.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        return new ReceiptSuggestion(FindTotal(lines), FindDate(lines), FindMerchant(lines));
+        return new ReceiptSuggestion(FindTotal(lines), FindDate(lines, today ?? DateOnly.FromDateTime(DateTime.Today)), FindMerchant(lines));
     }
 
     /// <summary>Reads an amount like <c>1.234,56</c>, <c>1,234.56</c>, <c>12,50</c> or <c>125,000</c>.</summary>
@@ -153,13 +157,13 @@ public static partial class ReceiptParser
 
     private static bool Has(string tokens, string phrase) => tokens.Contains(" " + phrase + " ", StringComparison.Ordinal);
 
-    private static DateOnly? FindDate(string[] lines)
+    private static DateOnly? FindDate(string[] lines, DateOnly today)
     {
         foreach (var line in lines)
         {
             foreach (Match match in DatePattern().Matches(line))
             {
-                if (TryDate(match, out var date))
+                if (TryDate(match, today, out var date))
                 {
                     return date;
                 }
@@ -169,7 +173,7 @@ public static partial class ReceiptParser
         return null;
     }
 
-    private static bool TryDate(Match match, out DateOnly date)
+    private static bool TryDate(Match match, DateOnly today, out DateOnly date)
     {
         date = default;
         var parts = match.Value.Split(['.', '/', '-']);
@@ -193,7 +197,22 @@ public static partial class ReceiptParser
         {
             if (year is >= 1300 and <= 1500)
             {
-                date = DateOnly.FromDateTime(new PersianCalendar().ToDateTime(year, month, day, 0, 0, 0, 0));
+                // Both Hijri calendars use these years; the receipt is the one nearer to today (it is neither decades old
+                // nor decades ahead).
+                DateOnly? solar = month is >= 1 and <= 12 && day >= 1 && day <= new PersianCalendar().GetDaysInMonth(year, month)
+                    ? DateOnly.FromDateTime(new PersianCalendar().ToDateTime(year, month, day, 0, 0, 0, 0))
+                    : null;
+                DateOnly? lunar = month is >= 1 and <= 12 && day >= 1 && day <= LunarHijri.DaysInMonth(year, month)
+                    ? LunarHijri.ToDate(year, month, day)
+                    : null;
+                if ((solar ?? lunar) is not { } first)
+                {
+                    return false;
+                }
+
+                date = solar is { } s && lunar is { } l
+                    ? (Math.Abs(s.DayNumber - today.DayNumber) <= Math.Abs(l.DayNumber - today.DayNumber) ? s : l)
+                    : first;
                 return true;
             }
 

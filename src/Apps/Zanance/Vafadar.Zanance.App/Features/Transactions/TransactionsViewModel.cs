@@ -333,7 +333,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             return (custom.From, custom.To);
         }
 
-        var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
         var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
         var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         switch (PeriodIndex)

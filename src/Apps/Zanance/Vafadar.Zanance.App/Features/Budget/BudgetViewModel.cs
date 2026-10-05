@@ -328,7 +328,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
         {
             (from, to) = PeriodMath.MonthRange(_year, _month, _calendar, _startDay);
             PeriodText = _dates.Format(from, DateFormatStyle.MonthYear);
-            if (_startDay > 1 || (_calendar == PeriodCalendar.Persian) != (_localization.CurrentCalendar == CalendarSystem.Persian))
+            if (_startDay > 1 || _calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
             {
                 // A month with its own start day, or budget months in another calendar than the display: show the exact range.
                 PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
@@ -357,7 +357,7 @@ public sealed partial class BudgetViewModel : ViewModelBase
             CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(_period, _periodStart.AddDays(-1), _currency) is not null;
         }
 
-        CurrencyText = _translator.Format("Budget_Currency", _currency, _translator[_calendar == PeriodCalendar.Persian ? "Calendar_Persian" : "Calendar_Gregorian"]);
+        CurrencyText = _translator.Format("Budget_Currency", _currency, _translator[Presentation.Calendars.NameKey(_calendar)]);
         HasBudget = _budget is not null;
         ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
 

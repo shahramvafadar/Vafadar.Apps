@@ -59,7 +59,7 @@ public sealed partial class PeriodReviewViewModel(
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
-    private PeriodCalendar Calendar => localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+    private PeriodCalendar Calendar => Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
 
     public async Task LoadAsync()
     {

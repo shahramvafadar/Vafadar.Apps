@@ -256,7 +256,7 @@ public sealed partial class HomeViewModel : ViewModelBase
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+    private PeriodCalendar Calendar => Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
 
     partial void OnPeriodIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
 
@@ -573,7 +573,7 @@ public sealed partial class HomeViewModel : ViewModelBase
     private void LoadPlans(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states, DateOnly today)
     {
         var schedules = PlanActions.InForce(allSchedules);
-        var text = new PlanText(_translator, _dates, _localization.CurrentCulture);
+        var text = new PlanText(_translator, _dates, _localization);
 
         var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start)).ToList();
         DueCount = due.Count;
@@ -824,7 +824,7 @@ public sealed partial class HomeViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType));
+            receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType), Today);
         }
         finally
         {

@@ -30,7 +30,7 @@ public partial class ForecastPage : ContentPage
         if (e.Position is >= -657435.0 and <= 2958465.99999999)
         {
             var date = DateOnly.FromDateTime(DateTime.FromOADate(e.Position));
-            e.Label = Vafadar.Localization.Formatting.NativeDigits.Apply(_dates.Format(date, Vafadar.Localization.Formatting.DateFormatStyle.DayMonth)) ?? e.Label;
+            e.Label = Vafadar.Localization.Formatting.NativeDigits.Apply(_dates.Format(date, Vafadar.Localization.Formatting.DateFormatStyle.DayMonthShort)) ?? e.Label;
         }
     }
 }

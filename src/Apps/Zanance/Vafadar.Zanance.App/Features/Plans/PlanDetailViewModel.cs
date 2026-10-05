@@ -86,7 +86,7 @@ public sealed partial class PlanDetailViewModel(
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
         var states = await plans.GetStatesAsync(schedule.Id);
-        var text = new PlanText(translator, dates, localization.CurrentCulture);
+        var text = new PlanText(translator, dates, localization);
         var currency = accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : "EUR";
         var today = Today;
 

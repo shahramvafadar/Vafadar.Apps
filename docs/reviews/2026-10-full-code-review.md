@@ -198,13 +198,14 @@ Filled in section by section.
 | CR12-15 | `Features/Categories/CategoryEditorViewModel.cs`, `Features/Profiles/ProfilesViewModel.cs` | bug | Low | Seen during CR11, recorded here: two categories with the same name, type and main category (the CSV import takes the first of them), and two profiles with one name, could be created. | Fixed: refused with `Category_NameTaken` and `Profile_NameTaken`; the same name under different main categories stays allowed ("Other"). |
 | CR12-16 | iOS | open | – | The iOS targets build only in CI on demand (macOS runner) and were not built during the review. | Owner: run the CI workflow with "ios" ticked. |
 | CR12-17 | Device checks | open | – | Only the device can confirm: a large camera photo as attachment (CR06-01), the lock screen in the dark theme, the Android back button in the editors (CR12-01), screen readers (TalkBack) with the names added in CR06–CR11. | Owner: check with the APK. |
+| CR12-18 | `eng/scripts/Run-Snapshots.ps1`, `Diagnostics/DebugSnapshots.cs` | engineering | Low | Found while shooting the lunar calendar (2026-10-05): `-Only home,budget` reached the app as "home budget" (PowerShell joins a list passed to a `[string]` parameter with spaces), so no screen matched and the walk-through ended after onboarding without an error; the documented `-Only report,holding` had the same effect. A crash outside the walk-through left no trace. | Fixed: `-Languages` and `-Only` take lists, a filter that matches no screen is an error, unhandled exceptions are written to `error.txt`, and a non-zero exit code is printed. New `-Calendar` option. |
 
 ## 6. Outcome
 
 All twelve sections were reviewed in order on 2026-10-04; every section ended with tests, Release builds, snapshots of the
 changed screens, a pushed commit, a CI run and an APK for the owner's phone.
 
-- 113 rows: 5 High, 38 Medium, 54 Low, 16 reviews, decisions or open owner checks without a severity (counted after the follow-up corrections).
+- 114 rows: 5 High, 38 Medium, 55 Low, 16 reviews, decisions or open owner checks without a severity (counted after the follow-up corrections).
 - The High findings were wrong data or lost input: a German quantity read ten times too large (CR04-01), a rial cost basis
   that overflowed (CR04-02), an assumed price lost on update (CR05-01), an entry deleted without question or undo
   (CR07-01) and the public holiday option of plans never saved (CR09-01).

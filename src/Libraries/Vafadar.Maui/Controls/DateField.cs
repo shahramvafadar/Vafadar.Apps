@@ -7,7 +7,7 @@ namespace Vafadar.Maui.Controls;
 
 /// <summary>
 /// A date input that shows the date in the user's display calendar and opens a calendar dialog in the same calendar
-/// (Gregorian or Persian). The value is always a Gregorian <see cref="DateOnly"/>. An unset value (before 1900, e.g.
+/// (Gregorian, Persian or lunar Hijri – Umm al-Qura). The value is always a Gregorian <see cref="DateOnly"/>. An unset value (before 1900, e.g.
 /// <c>default(DateOnly)</c>) becomes today: the native calendars cannot show such dates.
 /// </summary>
 /// <remarks>
@@ -109,7 +109,14 @@ public sealed class DateField : ContentView
     private void Open()
     {
         var calendar = Localization?.CurrentCalendar ?? CalendarSystem.Gregorian;
-        _calendar.Identifier = calendar == CalendarSystem.Persian ? CalendarIdentifier.Persian : CalendarIdentifier.Gregorian;
+        _calendar.Identifier = calendar switch
+        {
+            CalendarSystem.Persian => CalendarIdentifier.Persian,
+            // The dialog's Umm al-Qura calendar covers 30 April 1900 to 16 November 2077 (1318–1500 AH); a date outside
+            // opens in the Gregorian dialog.
+            CalendarSystem.Hijri when Date >= new DateOnly(1900, 4, 30) && Date <= new DateOnly(2077, 11, 16) => CalendarIdentifier.UmAlQura,
+            _ => CalendarIdentifier.Gregorian,
+        };
         _calendar.FlowDirection = FlowDirection;
         _calendar.MonthView.FirstDayOfWeek = Localization?.FirstDayOfWeek ?? DayOfWeek.Monday;
         _calendar.SelectedDate = Date.ToDateTime(TimeOnly.MinValue);

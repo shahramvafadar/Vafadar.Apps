@@ -298,7 +298,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         EssentialPeriodIndex = (int)settings.EssentialEstimatePeriod;
         EssentialSavedText = null;
         var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
-        var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
         _essentialSuggestion = Core.Reports.LiquidityCalculator.SuggestPerDay(await _store.GetAccountsAsync(), await _store.GetEntriesAsync(), _essentialCurrency, today, calendar, settings.MonthStartDay);
         EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
             ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, culture))
@@ -514,6 +514,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
             [
                 new CalendarOption(CalendarSystem.Gregorian, _translator["Calendar_Gregorian"]),
                 new CalendarOption(CalendarSystem.Persian, _translator["Calendar_Persian"]),
+            new CalendarOption(CalendarSystem.Hijri, _translator["Calendar_Hijri"]),
             ];
             SelectedCalendar = Calendars.First(option => option.Calendar == _localization.CurrentCalendar);
             SelectedLanguage = _localization.CurrentLanguage;

@@ -244,4 +244,7 @@
   <data name="Common_ChipSelected" xml:space="preserve">
     <value>{0}, ausgewählt</value>
   </data>
+  <data name="Calendar_Hijri" xml:space="preserve">
+    <value>Hidschri (Mondkalender, Umm al-Qura)</value>
+  </data>
 </root>

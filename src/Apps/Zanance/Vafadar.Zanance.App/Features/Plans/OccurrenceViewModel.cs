@@ -129,7 +129,7 @@ public sealed partial class OccurrenceViewModel(
         var culture = localization.CurrentCulture;
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
-        var text = new PlanText(translator, dates, culture);
+        var text = new PlanText(translator, dates, localization);
         _currency = accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
 
         Name = schedule.Name;

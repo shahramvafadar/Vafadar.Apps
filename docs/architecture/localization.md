@@ -85,12 +85,30 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   | Persian | Persian | `1405/07/03` | `جمعه 3 مهر 1405` |
   | Persian | Gregorian | `2026/09/25` | `جمعه 25 سپتامبر 2026` |
   | German | Gregorian | `25.09.2026` | `Freitag, 25. September 2026` |
+  | English | Hijri | `1448/04/14` | `Friday, 14 Rabi al-Thani 1448` |
+  | Persian | Hijri | `1448/04/14` | `جمعه 14 ربیع‌الثانی 1448` |
+  | German | Hijri | `1448/04/14` | `Freitag, 14 Rabi al-Thani 1448` |
 
+  `MonthYear` (`Rabi al-Thani 1448`), `DayMonth` (`14 Rabi al-Thani`) and `DayMonthShort` (`14 Rab II`, `Sep 25`, for
+  date tiles and chart axes) follow the same rules. The short names stay distinct: cutting names to three letters would
+  show "Rab" for both Rabi months.
+* **Three calendars** (`CalendarSystem`): Gregorian, Persian (solar Hijri) and lunar Hijri. The lunar calendar is
+  **Umm al-Qura** (the official calendar of Saudi Arabia, e.g. 1 Ramadan 1446 = 1 March 2025), which .NET covers for
+  1318–1500 AH (30 April 1900 to 16 November 2077). `Vafadar.Core.Dates.LunarHijri` is the one place that converts
+  lunar dates: inside that range it uses `UmAlQuraCalendar`, outside it the arithmetic (tabular) `HijriCalendar`, so a
+  date never fails to show. Months observed locally by moon sighting can differ by a day; that is accepted.
+* When the culture has the calendar itself (Persian with the Persian calendar, an Arabic culture with Umm al-Qura),
+  the culture formats the date; otherwise `DateFormatter` converts it and uses its own month names (Latin
+  transliteration in English and German, Persian spelling in Persian).
 * Until the user explicitly picks a calendar, it follows the language (Persian → Persian calendar). An explicit
   choice is kept when the language changes.
-* **Date input**: Syncfusion date pickers must be configured for the Persian calendar where supported; verify the
-  control's Persian calendar support when building the first date-entry screen, and fall back to a custom picker if
-  needed. This is tracked in the [roadmap](../roadmap.md).
+* **Periods and plans** use the same calendars (`PeriodCalendar` in Zanance: budget months, monthly and yearly plans,
+  the dates of a CSV import, receipts). A lunar month has 29 or 30 days; a plan on day 30 falls on the 29th in a
+  29-day month (missing-day rule). The app translates between the two enums only in `Presentation.Calendars`; a
+  screen never compares with a single calendar itself. A plan in another calendar than the display names its
+  calendar ("Every month on day 2 · Gregorian").
+* **Date input**: `DateField` (Vafadar.Maui) opens the Syncfusion calendar dialog in the display calendar
+  (`CalendarIdentifier.Persian` or `UmAlQura`; a date outside the Umm al-Qura range opens in the Gregorian dialog).
 
 ## Numbers and currency
 
@@ -99,13 +117,14 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   Latin (`123`) digits.
 * Currency is **data, not culture**: an account or amount has an explicit currency code (EUR, IRR, …). Never use
   `ToString("C")` with the UI culture to decide the currency.
-* Digits are shown as Latin digits by default. Showing Persian digits (۰–۹) in Persian is a planned option.
+* Digits are shown as Latin digits by default. In Persian the user can choose Persian digits (۰–۹): `NativeDigits`
+  changes only the displayed text; formatting and storage keep Latin digits.
 
 ## Fonts
 
-The template font (Open Sans) has no Persian glyphs; the operating system falls back to its own Persian font. Before
-the first release, add a Persian font with an open license (e.g. [Vazirmatn](https://github.com/rastikerdar/vazirmatn),
-SIL Open Font License) and use it for Persian text.
+Persian text uses [Vazirmatn](https://github.com/rastikerdar/vazirmatn) (SIL Open Font License), which also covers
+Latin and Arabic; English and German use Figtree with Urbanist for titles (`App.xaml.cs`). The PDF report embeds
+Vazirmatn for every language.
 
 ## Platform notes
 
@@ -122,3 +141,18 @@ SIL Open Font License) and use it for Persian text.
 3. Add the culture to `SatelliteResourceLanguages` in `Directory.Build.props` and to `CFBundleLocalizations` in each
    iOS `Info.plist`.
 4. Add store listing texts for the language.
+5. Set its default calendar in `LocalizationOptions` (e.g. Arabic → `CalendarSystem.Hijri`) and check the date table
+   above in that language.
+
+### Before adding Arabic
+
+The three calendars, right-to-left layout, input of Arabic-Indic digits (٠–٩, `Digits.ToAscii`) and the Arabic forms
+of ي and ك in search and rules are ready. Still to do:
+
+* **Font**: the app font is chosen for Persian only (`App.xaml.cs`: Vazirmatn for Persian, Figtree otherwise). Vazirmatn
+  covers Arabic as well; the choice must follow the script (or right-to-left), not the language "fa".
+* **Digits**: the native-digits option (`NativeDigits`) writes Persian digits (۰–۹); Arabic needs Arabic-Indic digits
+  (٠–٩), so the option needs the digit set of the language.
+* **Culture calendar**: `ar-SA` has Umm al-Qura among its calendars (`CultureFactory` selects it), so month names come
+  from the culture; check the chosen Arabic culture offers it, otherwise the Latin names are used.
+* **Translations** of every `.resx` (the completeness test lists the missing ones) and of the store listing.

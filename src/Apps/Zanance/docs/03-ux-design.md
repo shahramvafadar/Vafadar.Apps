@@ -163,6 +163,6 @@ lightened (`CategoryLookup.DisplayColor`).
 | `SfCircularChart` / `SfCartesianChart` | Home donut, reports, forecast path |
 | `SfSegmentedControl` | Entry kind, Simple/Advanced, report period |
 | `SfNumericEntry` or custom keypad | Amount entry (custom parsing for Persian digits) |
-| `SfCalendar` (dialog mode) | Date input via the shared `DateField`; Persian calendar confirmed (`CalendarIdentifier.Persian`) |
+| `SfCalendar` (dialog mode) | Date input via the shared `DateField`; Persian calendar confirmed (`CalendarIdentifier.Persian`); lunar Hijri via `CalendarIdentifier.UmAlQura` (1900–2077, a date outside opens the Gregorian dialog) |
 | `SfChip` / `SfChipGroup` | Filters |
 | `SfBusyIndicator`, `SfPopup` | Long operations, confirmations |

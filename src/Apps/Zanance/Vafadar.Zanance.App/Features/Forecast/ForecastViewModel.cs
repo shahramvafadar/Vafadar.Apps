@@ -135,7 +135,7 @@ public sealed partial class ForecastViewModel : ViewModelBase
     private async Task LoadCoreAsync()
     {
         var today = Today;
-        var calendar = _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
         var settings = await _store.GetSettingsAsync();
         var startDay = settings.MonthStartDay;
         IsAdvanced = settings.Shows(Feature.ForecastDetails);

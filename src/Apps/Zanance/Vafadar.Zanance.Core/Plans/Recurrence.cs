@@ -1,4 +1,3 @@
-using System.Globalization;
 using Vafadar.Zanance.Core.Budgets;
 
 namespace Vafadar.Zanance.Core.Plans;
@@ -12,8 +11,6 @@ public static class Recurrence
     // Guards against endless loops with rules that never produce a date in range (e.g. Skip on day 31 every 12 months
     // starting in a 30-day month would be valid forever, but a broken rule must not hang the app).
     private const int MaxSteps = 100_000;
-
-    private static readonly PersianCalendar Persian = new();
 
     /// <summary>Returns a validation problem of the rule, or <see langword="null"/> when it is valid.</summary>
     public static string? Validate(RecurrenceRule rule)
@@ -180,7 +177,7 @@ public static class Recurrence
             return null;
         }
 
-        var daysInMonth = rule.Calendar == PeriodCalendar.Persian ? Persian.GetDaysInMonth(year, month) : DateTime.DaysInMonth(year, month);
+        var daysInMonth = PeriodMath.DaysInMonth(year, month, rule.Calendar);
         var anchorDay = fixedDay ?? DayOf(rule.Start, rule.Calendar);
         int day;
         if (rule.DayRule.IsWeekday() && fixedDay is null)
@@ -204,18 +201,14 @@ public static class Recurrence
             return null;
         }
 
-        return rule.Calendar == PeriodCalendar.Persian
-            ? DateOnly.FromDateTime(Persian.ToDateTime(year, month, day, 0, 0, 0, 0))
-            : new DateOnly(year, month, day);
+        return PeriodMath.ToDate(year, month, day, rule.Calendar);
     }
 
     // The day of the month with the weekday of the start date: in the same week of the month, or the last one (REC-12).
-    // Weekdays are the same in both calendars, so the month's first day gives the offset.
+    // Weekdays are the same in every calendar, so the month's first day gives the offset.
     private static int WeekdayIn(RecurrenceRule rule, int year, int month, int daysInMonth, int anchorDay)
     {
-        var first = rule.Calendar == PeriodCalendar.Persian
-            ? DateOnly.FromDateTime(Persian.ToDateTime(year, month, 1, 0, 0, 0, 0))
-            : new DateOnly(year, month, 1);
+        var first = PeriodMath.ToDate(year, month, 1, rule.Calendar);
         var weekday = rule.Start.DayOfWeek;
         var firstMatch = 1 + (((int)weekday - (int)first.DayOfWeek + 7) % 7);
         var week = MonthDayRules.WeekOf(anchorDay);
@@ -255,11 +248,9 @@ public static class Recurrence
         return PeriodMath.MonthRange(year, month, rule.Calendar).First > to;
     }
 
-    private static bool IsSupportedYear(int year, PeriodCalendar calendar) =>
-        calendar == PeriodCalendar.Persian ? year is >= 1 and <= 9377 : year is >= 1 and <= 9999;
+    private static bool IsSupportedYear(int year, PeriodCalendar calendar) => PeriodMath.IsSupportedYear(year, calendar);
 
     private static (int Year, int Month) MonthOf(DateOnly date, PeriodCalendar calendar) => PeriodMath.MonthOf(date, calendar);
 
-    private static int DayOf(DateOnly date, PeriodCalendar calendar) =>
-        calendar == PeriodCalendar.Persian ? Persian.GetDayOfMonth(date.ToDateTime(TimeOnly.MinValue)) : date.Day;
+    private static int DayOf(DateOnly date, PeriodCalendar calendar) => PeriodMath.DayOf(date, calendar);
 }

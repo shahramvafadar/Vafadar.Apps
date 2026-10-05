@@ -19,6 +19,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] Screens: Home, transactions, plans, budgets, accounts, categories, settings
 - [x] Reports with Syncfusion charts and PDF export
 - [x] Date input with Persian calendar support
+- [x] Lunar Hijri calendar (Umm al-Qura) for display, budgets, plans, imports and receipts – prepares Arabic
+- [ ] Arabic: font by script, Arabic-Indic display digits, translations (see [localization](architecture/localization.md#before-adding-arabic))
 - [x] Persian text in Vazirmatn in the app and in PDF reports
 - [x] Persian digits in the Persian interface (setting)
 - [x] App name (Zanance), icon, splash and colors (D-21, D-22, D-26)

@@ -11,4 +11,7 @@ public enum CalendarSystem
 
     /// <summary>The Persian (Solar Hijri) calendar.</summary>
     Persian = 1,
+
+    /// <summary>The lunar Hijri (Islamic) calendar: Umm al-Qura, see <see cref="Vafadar.Core.Dates.LunarHijri"/>.</summary>
+    Hijri = 2,
 }

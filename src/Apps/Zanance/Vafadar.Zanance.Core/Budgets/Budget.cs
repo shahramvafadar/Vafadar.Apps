@@ -10,6 +10,9 @@ public enum PeriodCalendar
 
     /// <summary>Persian (Solar Hijri) months.</summary>
     Persian = 1,
+
+    /// <summary>Lunar Hijri months of 29 or 30 days (Umm al-Qura, <see cref="Vafadar.Core.Dates.LunarHijri"/>).</summary>
+    Hijri = 2,
 }
 
 /// <summary>What happens with the rest of the previous month (§10.3, Phase 2A).</summary>

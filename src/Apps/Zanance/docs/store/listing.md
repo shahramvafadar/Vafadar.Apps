@@ -31,7 +31,7 @@ What you can do
 • Savings goals with earmarked money and suggested contributions
 • Reports with charts, a forecast of your balance, and a PDF of the month
 • Several currencies with your own exchange rates, and display units such as the toman
-• Gregorian and Persian (Solar Hijri) calendar, in English, German and Persian with right-to-left layout
+• Gregorian, Persian (Solar Hijri) or lunar Hijri (Umm al-Qura) calendar, in English, German and Persian with right-to-left layout
 • Receipt photos and PDF invoices attached to entries; read the total, date and shop on the device
 • Separate profiles on one phone, e.g. personal and business
 • Quick add widget, dark theme, app lock with fingerprint or face
@@ -65,7 +65,7 @@ Was Sie tun können
 • Sparziele mit zurückgelegtem Geld und vorgeschlagenen Beträgen
 • Berichte mit Diagrammen, eine Vorschau Ihres Kontostands und ein PDF des Monats
 • Mehrere Währungen mit eigenen Wechselkursen
-• Gregorianischer und persischer Kalender, auf Deutsch, Englisch und Persisch
+• Gregorianischer, persischer oder islamischer Mondkalender (Umm al-Qura), auf Deutsch, Englisch und Persisch
 • Belegfotos und PDF-Rechnungen an Buchungen; Betrag, Datum und Geschäft direkt auf dem Gerät auslesen
 • Getrennte Profile auf einem Handy, z. B. privat und geschäftlich
 • Schnellerfassungs-Widget, dunkles Design, App-Sperre mit Fingerabdruck oder Gesicht
@@ -97,7 +97,7 @@ Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی
 • اهداف پس‌انداز با پول کنار گذاشته‌شده و مبلغ پیشنهادی
 • گزارش با نمودار، پیش‌بینی مانده و فایل PDF ماه
 • چند ارز با نرخ‌های خودتان و واحد نمایش مثل تومان
-• تقویم شمسی و میلادی، به فارسی، انگلیسی و آلمانی با چیدمان راست‌به‌چپ و ارقام فارسی
+• تقویم شمسی، میلادی یا قمری (ام‌القری)، به فارسی، انگلیسی و آلمانی با چیدمان راست‌به‌چپ و ارقام فارسی
 • عکس رسید و فاکتور PDF کنار تراکنش؛ خواندن مبلغ، تاریخ و فروشگاه روی خود دستگاه
 • پروفایل‌های جدا روی یک گوشی، مثلاً شخصی و کاری
 • ویجت ثبت سریع، تم تیره، قفل اپ با اثر انگشت یا چهره

@@ -8,9 +8,9 @@ using Vafadar.Zanance.Core.Plans;
 namespace Vafadar.Zanance.App.Presentation;
 
 /// <summary>Human-readable texts for plans and occurrences.</summary>
-internal sealed class PlanText(Translator translator, IDateFormatter dates, CultureInfo culture)
+internal sealed class PlanText(Translator translator, IDateFormatter dates, ILocalizationService localization)
 {
-    private static readonly PersianCalendar Persian = new();
+    private readonly CultureInfo culture = localization.CurrentCulture;
 
     /// <summary>Describes a rule, e.g. "Every 2 weeks on Friday" or "Every month on the last day (Persian calendar)".</summary>
     public string Rule(RecurrenceRule rule)
@@ -26,9 +26,12 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
             _ => translator.Format(n == 1 ? "Rule_Yearly" : "Rule_EveryNYears", YearDayText(rule), n),
         };
 
-        if (rule.Frequency is Frequency.Monthly or Frequency.Yearly && rule.Calendar == PeriodCalendar.Persian)
+        // "on day 2" needs its calendar unless it is the one the dates are shown in (a Gregorian plan in a Hijri display),
+        // and a non-Gregorian rule always names it.
+        if (rule.Frequency is Frequency.Monthly or Frequency.Yearly
+            && (rule.Calendar != PeriodCalendar.Gregorian || rule.Calendar != Calendars.ToPeriod(localization.CurrentCalendar)))
         {
-            text += " · " + translator["Calendar_Persian"];
+            text += " · " + translator[Calendars.NameKey(rule.Calendar)];
         }
 
         if (rule.SecondDay is { } second)
@@ -67,14 +70,10 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
     /// <summary>The day number and the month name of a date for a date tile, in the display calendar.</summary>
     public (string Day, string Month) DayAndMonth(DateOnly date)
     {
-        var parts = dates.Format(date, DateFormatStyle.DayMonth).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        // The short month names stay distinct (e.g. "Rab I" and "Rab II"); cutting full names would not.
+        var parts = dates.Format(date, DateFormatStyle.DayMonthShort).Split(' ', StringSplitOptions.RemoveEmptyEntries);
         var dayPart = parts.FirstOrDefault(p => p.Any(char.IsDigit)) ?? string.Empty;
         var month = string.Join(' ', parts.Where(p => !ReferenceEquals(p, dayPart))).Trim(',', '.');
-        if (!culture.TextInfo.IsRightToLeft && month.Length > 4)
-        {
-            month = month[..3];
-        }
-
         return (new string([.. dayPart.Where(char.IsDigit)]), month);
     }
 
@@ -88,13 +87,13 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, Cult
         rule.DayRule.IsWeekday() ? WeekdayText(rule)
         : rule.DayRule == MonthDayRule.LastDayOfMonth
             ? translator["Rule_LastDay"]
-            : translator.Format("Rule_OnDay", rule.Calendar == PeriodCalendar.Persian ? Persian.GetDayOfMonth(rule.Start.ToDateTime(TimeOnly.MinValue)) : rule.Start.Day);
+            : translator.Format("Rule_OnDay", PeriodMath.DayOf(rule.Start, rule.Calendar));
 
     // "on the 2nd Monday" or "on the last Friday"; a start in the fifth week is the last weekday (REC-12).
     private string WeekdayText(RecurrenceRule rule)
     {
         var weekday = culture.DateTimeFormat.GetDayName(rule.Start.DayOfWeek);
-        var day = rule.Calendar == PeriodCalendar.Persian ? Persian.GetDayOfMonth(rule.Start.ToDateTime(TimeOnly.MinValue)) : rule.Start.Day;
+        var day = PeriodMath.DayOf(rule.Start, rule.Calendar);
         var week = MonthDayRules.WeekOf(day);
         return rule.DayRule == MonthDayRule.NthWeekday && week <= 4
             ? translator.Format("Rule_NthWeekday", translator[$"Ordinal_{week}"], weekday)

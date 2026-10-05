@@ -15,9 +15,11 @@
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -WindowSize 1280x820
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Only report,holding
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Mode simple -Only budget,plan
+    ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Calendar Hijri -Only home,budget,plan,transactions,entry
 #>
 param(
-    [string]$Languages = 'fa',
+    # Comma-separated or a PowerShell list (en,fa); a [string] parameter would join a list with spaces.
+    [string[]]$Languages = @('fa'),
     [ValidateSet('light', 'dark')] [string]$Theme = 'light',
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\snapshots'),
     [int]$TimeoutSeconds = 240,
@@ -26,9 +28,11 @@ param(
     # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.
     [switch]$Empty,
     # Comma-separated name prefixes of the screens to shoot, e.g. 'report,holding'; default: all screens.
-    [string]$Only = '',
+    [string[]]$Only = @(),
     # The experience mode of the walk-through; Simple shows what stays visible of the Advanced data (05 §5).
-    [ValidateSet('advanced', 'simple')] [string]$Mode = 'advanced')
+    [ValidateSet('advanced', 'simple')] [string]$Mode = 'advanced',
+    # The calendar of every language (dates, budget months, plans); default: the calendar follows the language.
+    [ValidateSet('', 'Gregorian', 'Persian', 'Hijri')] [string]$Calendar = '')
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -60,14 +64,16 @@ Get-ChildItem $Output -File | ForEach-Object { [IO.File]::Delete($_.FullName) }
 dotnet build src\Apps\Zanance\Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
 $exe = Get-ChildItem 'src\Apps\Zanance\Vafadar.Zanance.App\bin\Debug\net10.0-windows10.0.19041.0' -Recurse -Filter 'Vafadar.Zanance.App.exe' | Select-Object -First 1
 $env:VAFADAR_SNAPSHOTS = (Resolve-Path $Output)
-$env:VAFADAR_SNAPSHOT_LANGUAGES = $Languages
+$env:VAFADAR_SNAPSHOT_LANGUAGES = ($Languages -join ',')
 $env:VAFADAR_SNAPSHOT_THEME = $Theme
 $env:VAFADAR_WINDOW_SIZE = $WindowSize
 $env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
-$env:VAFADAR_SNAPSHOT_ONLY = $Only
+$env:VAFADAR_SNAPSHOT_ONLY = ($Only -join ',')
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
+$env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
+elseif ($process.ExitCode -ne 0) { 'the app ended with exit code 0x{0:X8}' -f $process.ExitCode }
 # Marks the database as sample data, so the next run removes it instead of moving it aside (only if it stays unchanged).
 if (Test-Path $data) { Set-Content -Path $marker -Value (Get-Date -Format o) -Encoding utf8 }
 if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }

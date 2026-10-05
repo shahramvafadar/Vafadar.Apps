@@ -227,7 +227,7 @@ public sealed partial class GoalDetailViewModel(
     // The observed pace (design §9.2) – a separate line from the user's own plan, which always stays available.
     private async Task LoadTrendAsync(Goal goal, long remaining, Core.Settings.ZananceSettings settings, List<Account> accounts, List<Core.Ledger.LedgerEntry> entries)
     {
-        var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
         var trend = GoalTrendService.Compute(goal, remaining, accounts, entries, await goals.GetAllocationsAsync(goal.Id), await holdings.GetEventsAsync(), Today, calendar, settings.MonthStartDay);
         TrendText = trend.Status switch
         {
@@ -297,7 +297,7 @@ public sealed partial class GoalDetailViewModel(
             return;
         }
 
-        var calendar = localization.CurrentCalendar == CalendarSystem.Persian ? Core.Budgets.PeriodCalendar.Persian : Core.Budgets.PeriodCalendar.Gregorian;
+        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
         var coverage = Core.Reports.KpiCatalog.Coverage(accounts, entries, await store.GetCategoriesAsync(), await plans.GetSchedulesAsync(), goal.CurrencyCode, Today, calendar, settings.MonthStartDay);
         CoverageText = coverage.Months is { } months
             ? translator.Format("Goal_Coverage", translator.Format("Report_Months", months.ToString("0.0", localization.CurrentCulture)))

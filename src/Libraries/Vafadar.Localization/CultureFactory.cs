@@ -14,9 +14,11 @@ internal static class CultureFactory
 
         // Only calendars that are valid for the culture can be assigned. For other combinations (e.g. English with
         // the Persian calendar) the culture keeps its default calendar and DateFormatter formats the date itself.
+        // An Arabic culture offers Umm al-Qura; Persian, English or German do not, so DateFormatter formats Hijri there.
         var requested = calendar switch
         {
             CalendarSystem.Persian => culture.OptionalCalendars.OfType<PersianCalendar>().FirstOrDefault(),
+            CalendarSystem.Hijri => culture.OptionalCalendars.OfType<UmAlQuraCalendar>().FirstOrDefault(),
             _ => culture.OptionalCalendars.OfType<GregorianCalendar>().FirstOrDefault() as Calendar,
         };
 

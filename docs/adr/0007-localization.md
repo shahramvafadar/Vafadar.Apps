@@ -25,3 +25,14 @@ the Persian calendar too.
 * No dependency on third-party localization libraries; `.resx` is supported by Visual Studio's editor and
   translation tools.
 * Web apps can reuse the same resources and services with `IStringLocalizer` adapters later.
+
+## Amendment 2026-10-05: lunar Hijri calendar
+
+* A third calendar, **lunar Hijri (Umm al-Qura)**, prepares languages such as Arabic and serves users who plan by
+  lunar months. It is a value of the same setting (`CalendarSystem.Hijri`) and of the period calendar of budgets and
+  plans; stored dates stay Gregorian, and the stored calendar is an integer, so no data migration is needed.
+* Umm al-Qura is used because it is the official, published calendar (Saudi Arabia) and the one .NET, Android and
+  Syncfusion share. .NET covers it for 1318–1500 AH (1900–2077); `LunarHijri` falls back to the tabular calendar
+  outside, so dates never fail. A one-day difference to local moon sighting is accepted; a per-user adjustment can be
+  added later if users ask for it.
+* Details: [Localization, right-to-left and calendars](../architecture/localization.md#dates-and-calendars).

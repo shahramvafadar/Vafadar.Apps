@@ -1,8 +1,13 @@
 using System.Globalization;
+using Vafadar.Core.Dates;
 
 namespace Vafadar.Zanance.Core.Budgets;
 
-/// <summary>Month periods in the Gregorian and the Persian calendar.</summary>
+/// <summary>
+/// Months and days in the Gregorian, the Persian (Solar Hijri) and the lunar Hijri calendar. Every calendar calculation of
+/// periods, plans and imports goes through <see cref="ToDate"/>, <see cref="DaysInMonth"/>, <see cref="DayOf"/> and
+/// <see cref="MonthOf(DateOnly, PeriodCalendar)"/>, so a calendar is added in one place.
+/// </summary>
 public static class PeriodMath
 {
     private static readonly PersianCalendar Persian = new();
@@ -37,28 +42,58 @@ public static class PeriodMath
     /// <summary>Returns the first and last day of a month.</summary>
     public static (DateOnly First, DateOnly Last) MonthRange(int year, int month, PeriodCalendar calendar)
     {
-        if (calendar == PeriodCalendar.Persian)
-        {
-            var first = DateOnly.FromDateTime(Persian.ToDateTime(year, month, 1, 0, 0, 0, 0));
-            var days = Persian.GetDaysInMonth(year, month);
-            return (first, first.AddDays(days - 1));
-        }
-
-        var start = new DateOnly(year, month, 1);
-        return (start, start.AddMonths(1).AddDays(-1));
+        var first = ToDate(year, month, 1, calendar);
+        return (first, first.AddDays(DaysInMonth(year, month, calendar) - 1));
     }
 
     /// <summary>Returns the (year, month) that contains <paramref name="date"/>.</summary>
     public static (int Year, int Month) MonthOf(DateOnly date, PeriodCalendar calendar)
     {
-        if (calendar == PeriodCalendar.Persian)
+        switch (calendar)
         {
-            var dateTime = date.ToDateTime(TimeOnly.MinValue);
-            return (Persian.GetYear(dateTime), Persian.GetMonth(dateTime));
+            case PeriodCalendar.Persian:
+                var dateTime = date.ToDateTime(TimeOnly.MinValue);
+                return (Persian.GetYear(dateTime), Persian.GetMonth(dateTime));
+            case PeriodCalendar.Hijri:
+                var (year, month, _) = LunarHijri.Parts(date);
+                return (year, month);
+            default:
+                return (date.Year, date.Month);
         }
-
-        return (date.Year, date.Month);
     }
+
+    /// <summary>Returns the day of the month of <paramref name="date"/> in a calendar.</summary>
+    public static int DayOf(DateOnly date, PeriodCalendar calendar) => calendar switch
+    {
+        PeriodCalendar.Persian => Persian.GetDayOfMonth(date.ToDateTime(TimeOnly.MinValue)),
+        PeriodCalendar.Hijri => LunarHijri.Parts(date).Day,
+        _ => date.Day,
+    };
+
+    /// <summary>Returns the date of a day of a calendar month.</summary>
+    /// <exception cref="ArgumentOutOfRangeException">The year, month or day does not exist in the calendar.</exception>
+    public static DateOnly ToDate(int year, int month, int day, PeriodCalendar calendar) => calendar switch
+    {
+        PeriodCalendar.Persian => DateOnly.FromDateTime(Persian.ToDateTime(year, month, day, 0, 0, 0, 0)),
+        PeriodCalendar.Hijri => LunarHijri.ToDate(year, month, day),
+        _ => new DateOnly(year, month, day),
+    };
+
+    /// <summary>Returns the number of days of a calendar month (lunar Hijri months have 29 or 30).</summary>
+    public static int DaysInMonth(int year, int month, PeriodCalendar calendar) => calendar switch
+    {
+        PeriodCalendar.Persian => Persian.GetDaysInMonth(year, month),
+        PeriodCalendar.Hijri => LunarHijri.DaysInMonth(year, month),
+        _ => DateTime.DaysInMonth(year, month),
+    };
+
+    /// <summary>Returns whether a year can be converted in a calendar.</summary>
+    public static bool IsSupportedYear(int year, PeriodCalendar calendar) => calendar switch
+    {
+        PeriodCalendar.Persian => year is >= 1 and <= 9377,
+        PeriodCalendar.Hijri => year >= LunarHijri.MinYear && year <= LunarHijri.MaxYear,
+        _ => year is >= 1 and <= 9999,
+    };
 
     /// <summary>Returns the month after (year, month).</summary>
     public static (int Year, int Month) Next(int year, int month) => month == 12 ? (year + 1, 1) : (year, month + 1);

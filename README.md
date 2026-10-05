@@ -22,7 +22,7 @@ controls.
 | Library | Purpose |
 |---|---|
 | [Vafadar.Core](src/Libraries/Vafadar.Core/README.md) | Entity base, app environment and settings abstractions |
-| [Vafadar.Localization](src/Libraries/Vafadar.Localization/README.md) | Runtime language switching, right-to-left, Gregorian/Persian calendar, shared strings |
+| [Vafadar.Localization](src/Libraries/Vafadar.Localization/README.md) | Runtime language switching, right-to-left, Gregorian, Persian and lunar Hijri calendars, shared strings |
 | [Vafadar.Data](src/Libraries/Vafadar.Data/README.md) | EF Core SQLite databases, audit timestamps, database backups |
 | [Vafadar.Backup](src/Libraries/Vafadar.Backup/README.md) | Encrypted backup packages, retention, validated restore |
 | [Vafadar.Backup.GoogleDrive](src/Libraries/Vafadar.Backup.GoogleDrive/README.md) | Backups in the user's Google Drive |

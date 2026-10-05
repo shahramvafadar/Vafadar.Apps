@@ -62,7 +62,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         _allPresets = [translator["Repeat_Once"], translator["Repeat_Weekly"], translator["Repeat_TwoWeeks"], translator["Repeat_Monthly"], translator["Repeat_Yearly"], translator["Repeat_Custom"]];
         PresetNames = _allPresets;
         UnitNames = [translator["Unit_Days"], translator["Unit_Weeks"], translator["Unit_Months"], translator["Unit_Years"]];
-        CalendarNames = [translator["Calendar_Gregorian"], translator["Calendar_Persian"]];
+        CalendarNames = Presentation.Calendars.Names(translator);
         MissingDayNames = [translator["MissingDay_LastValid"], translator["MissingDay_Skip"]];
         WeekendNames = [translator["Weekend_Keep"], translator["Weekend_Before"], translator["Weekend_After"]];
         _weekend = Regions.WeekendDays(localization.CurrentRegion, System.Globalization.CultureInfo.GetCultureInfo(localization.CurrentLanguage.CultureName));
@@ -94,7 +94,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         ReminderDaysText = "3";
         ReminderTime = new TimeSpan(9, 0, 0);
         PresetIndex = 3;
-        CalendarIndex = localization.CurrentCalendar == CalendarSystem.Persian ? 1 : 0;
+        CalendarIndex = (int)Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
     }
 
     public IReadOnlyList<string> KindNames { get; }
@@ -358,11 +358,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    private PeriodCalendar Calendar => CalendarIndex == 1 ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+    private PeriodCalendar Calendar => Presentation.Calendars.All[Math.Clamp(CalendarIndex, 0, Presentation.Calendars.All.Count - 1)];
 
-    private int AnchorDay => Calendar == PeriodCalendar.Persian
-        ? new PersianCalendar().GetDayOfMonth(Start.ToDateTime(TimeOnly.MinValue))
-        : Start.Day;
+    private int AnchorDay => PeriodMath.DayOf(Start, Calendar);
 
     private Frequency Frequency => PresetIndex switch
     {
@@ -479,7 +477,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         };
         IntervalText = rule.Interval.ToString(CultureInfo.InvariantCulture);
         Start = rule.Start;
-        CalendarIndex = rule.Calendar == PeriodCalendar.Persian ? 1 : 0;
+        CalendarIndex = (int)rule.Calendar;
         _dayRules = DayRulesFor(AnchorDay);
         DayRuleIndex = IndexOfDayRule(rule.DayRule);
         MissingDayIndex = (int)rule.MissingDay;
@@ -622,7 +620,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         // Hidden settings that change the dates are summarised in Simple mode (UX-02).
         var current = BuildRule();
         AdvancedSummary = !IsAdvanced && (current.End != EndKind.Never || current.DayRule != MonthDayRule.SpecificDay || current.MissingDay != MissingDayPolicy.LastValidDay || current.SecondDay is not null)
-            ? _translator.Format("Plan_AdvancedSummary", new PlanText(_translator, _dates, _localization.CurrentCulture).Rule(current))
+            ? _translator.Format("Plan_AdvancedSummary", new PlanText(_translator, _dates, _localization).Rule(current))
             : null;
 
         Preview.Clear();

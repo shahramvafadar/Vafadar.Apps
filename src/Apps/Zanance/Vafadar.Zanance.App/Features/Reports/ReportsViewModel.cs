@@ -203,7 +203,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private CultureInfo Culture => _localization.CurrentCulture;
 
-    private PeriodCalendar Calendar => _localization.CurrentCalendar == CalendarSystem.Persian ? PeriodCalendar.Persian : PeriodCalendar.Gregorian;
+    private PeriodCalendar Calendar => Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
 
     partial void OnPeriodKindChanged(int value) => Reload();
 

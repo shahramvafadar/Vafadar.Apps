@@ -24,7 +24,7 @@ All types live in `Vafadar.Zanance.Core` unless stated otherwise. Rules are refe
 | – links | RefundOfId?, ScheduleId?, OccurrenceDate?, ImportBatchId?, ImportKey? | Unique index on (ScheduleId, OccurrenceDate) (D-07) |
 | `Schedule` | Name, Kind (Income, Expense, Transfer), AccountId, ToAccountId?, CategoryId?, AmountMode (Fixed, Estimated, Unknown), Amount?, ToAmount?, Note, Icon, Rule, Reminder, AutoPost, State (Active, Paused, Ended), PausedFrom?, PreviousScheduleId? | REC-01..22 |
 | `OccurrenceState` | ScheduleId, OriginalDate, Status (Settled, Skipped, Cancelled, Open-with-changes), DueDate override, Amount override, EntryId?, Note, AutoPostSuppressed | Unique (ScheduleId, OriginalDate) (D-06) |
-| `Budget` | Period (month, week, two weeks), Year, Month, PeriodStart (weeks), Calendar (Gregorian/Persian), Currency, TotalLimit?, AccountScope (all included or explicit list) | BUD-01..08, §10.3 |
+| `Budget` | Period (month, week, two weeks), Year, Month, PeriodStart (weeks), Calendar (Gregorian/Persian/Hijri), Currency, TotalLimit?, AccountScope (all included or explicit list) | BUD-01..08, §10.3 |
 | `BudgetCategoryLimit` | BudgetId, CategoryId, Limit | BUD-02 |
 | `ExchangeRate` | Date, From, To, Rate (decimal as string), IsEstimate | FX-02, FX-04 |
 | `ImportBatch` | FileName, ImportedAt, RowCount, State (Applied, Reverted) | IO-11 |
@@ -69,12 +69,15 @@ BudgetRemaining       = Limit − NetEligibleExpense;   Usage% = NetEligibleExpe
 ## 5. Recurrence rules (REC-03..12)
 
 `RecurrenceRule` = Frequency (Once, Daily, Weekly, Monthly, Yearly) × Interval N ≥ 1, Start date (anchor),
-Calendar (Gregorian/Persian, fixed at creation), Monthly/Yearly day rule (SpecificDay or LastDayOfMonth),
+Calendar (Gregorian/Persian/Hijri, fixed at creation), Monthly/Yearly day rule (SpecificDay or LastDayOfMonth),
 MissingDayPolicy (LastValidDay – default – or Skip), End (Never, OnDate, AfterCount).
 
 * The k-th occurrence is computed from the anchor (`anchor + k·N units`), never from the previous occurrence, so a
   31st that moved to the 28th returns to the 31st next month (REC-09, AT-19).
 * Persian months use `System.Globalization.PersianCalendar` (month lengths 31/30/29-30, leap Esfand) (AT-22, AT-24).
+* Lunar Hijri months use `Vafadar.Core.Dates.LunarHijri`: Umm al-Qura for 1318–1500 AH (1900–2077), the tabular
+  calendar outside. A month has 29 or 30 days, so a rule on day 30 follows the missing-day rule in a 29-day month.
+  All calendar arithmetic goes through `PeriodMath` (`ToDate`, `DayOf`, `DaysInMonth`, `MonthRange`, `MonthOf`).
 * `AfterCount` counts generated occurrences; skipping or postponing does not add occurrences (REC-06, AT-27).
 * Past start dates generate no entries automatically; the user chooses "from today" (the plan's `ActiveFrom` is set to
   today) or reviews past occurrences (REC-07). Enabling auto-post sets `AutoPostFrom`, so older occurrences are never
