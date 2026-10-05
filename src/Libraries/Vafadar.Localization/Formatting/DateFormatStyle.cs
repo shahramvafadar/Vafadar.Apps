@@ -22,4 +22,7 @@ public enum DateFormatStyle
     /// the short names stay distinct (Rabi al-Awwal and Rabi al-Thani are <c>Rab I</c> and <c>Rab II</c>).
     /// </summary>
     DayMonthShort = 4,
+
+    /// <summary>The month name alone, e.g. <c>February</c>, <c>Esfand</c> or <c>رمضان</c>.</summary>
+    Month = 5,
 }

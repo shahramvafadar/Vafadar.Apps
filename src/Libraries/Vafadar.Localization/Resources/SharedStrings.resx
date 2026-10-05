@@ -154,7 +154,7 @@
     <value>Keep editing</value>
   </data>
   <data name="Common_SaveFailed" xml:space="preserve">
-    <value>Could not save. Your input is kept – please try again.</value>
+    <value>Could not save your changes. Your input has been kept. Try again.</value>
   </data>
   <data name="Common_Saved" xml:space="preserve">
     <value>Saved</value>
@@ -169,13 +169,13 @@
     <value>Backup password</value>
   </data>
   <data name="Backup_PasswordConfirm" xml:space="preserve">
-    <value>Repeat the password</value>
+    <value>Confirm backup password</value>
   </data>
   <data name="Backup_PasswordWarning" xml:space="preserve">
-    <value>Keep this password safe. Without it the backup cannot be opened – nobody, including the developer, can recover it. It is not your app lock PIN.</value>
+    <value>Keep this password safe. You need it to restore this backup. The developer cannot recover a forgotten backup password. It is separate from your device unlock PIN.</value>
   </data>
   <data name="Backup_NoPasswordWarning" xml:space="preserve">
-    <value>Without a password anyone who gets the file can read your data.</value>
+    <value>Without password protection, anyone with this file can read its contents.</value>
   </data>
   <data name="Backup_PasswordTooShort" xml:space="preserve">
     <value>Use at least {0} characters.</value>
@@ -184,7 +184,7 @@
     <value>The passwords do not match.</value>
   </data>
   <data name="Backup_Error_InvalidFormat" xml:space="preserve">
-    <value>This file is not a backup of this app.</value>
+    <value>This file is not a valid backup for this app.</value>
   </data>
   <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
     <value>This backup needs a newer version of the app.</value>
@@ -193,10 +193,10 @@
     <value>This backup is protected. Enter its password.</value>
   </data>
   <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
-    <value>Wrong password, or the file is damaged. Nothing was changed.</value>
+    <value>The password is incorrect, or the backup file is damaged. No data was changed.</value>
   </data>
   <data name="Backup_Error_Corrupted" xml:space="preserve">
-    <value>The backup is damaged. Nothing was changed.</value>
+    <value>The backup file is damaged. No data was changed.</value>
   </data>
   <data name="Backup_Error_WrongApp" xml:space="preserve">
     <value>This backup belongs to another app. Nothing was changed.</value>
@@ -205,7 +205,7 @@
     <value>This backup was made with a newer version of the app. Update the app first.</value>
   </data>
   <data name="Backup_Error_Storage" xml:space="preserve">
-    <value>The file could not be read or written. Check free space and try again.</value>
+    <value>Could not read or save the file. Check available storage space and file access, then try again.</value>
   </data>
   <data name="Settings_Region" xml:space="preserve">
     <value>Country or region</value>
@@ -217,7 +217,7 @@
     <value>Not set (device: {0})</value>
   </data>
   <data name="Settings_RegionHint" xml:space="preserve">
-    <value>Only suggests the first day of the week. Language, currency and calendar stay as you chose them; no location is used.</value>
+    <value>Used for regional defaults, weekend rules and supported public holidays. Your language, currency and calendar stay unchanged. Your location is not accessed.</value>
   </data>
   <data name="Settings_WeekStart" xml:space="preserve">
     <value>First day of the week</value>
@@ -229,7 +229,7 @@
     <value>Appearance</value>
   </data>
   <data name="Theme_System" xml:space="preserve">
-    <value>Like the device</value>
+    <value>Use device setting</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
     <value>Light</value>

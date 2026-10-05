@@ -80,7 +80,7 @@
     <value>Recorded balance</value>
   </data>
   <data name="Home_BalanceHint" xml:space="preserve">
-    <value>Based on what you recorded – not a bank balance.</value>
+    <value>Based on your recorded transactions, not a balance retrieved from your bank.</value>
   </data>
   <data name="Home_AccountsSection" xml:space="preserve">
     <value>Accounts</value>
@@ -140,16 +140,16 @@
     <value>Balance on</value>
   </data>
   <data name="Account_OpeningHint" xml:space="preserve">
-    <value>The balance at the start of this day, before its transactions. You enter it yourself – it is not read from a bank.</value>
+    <value>Enter the balance at the start of the selected day, before any transactions dated that day. This amount is entered manually, not retrieved from your bank.</value>
   </data>
   <data name="Account_OpeningNegative" xml:space="preserve">
-    <value>Balance is negative (e.g. card debt or overdraft)</value>
+    <value>Negative balance (e.g. credit card debt or an overdraft)</value>
   </data>
   <data name="Account_IncludeInTotals" xml:space="preserve">
     <value>Include in totals</value>
   </data>
   <data name="Account_IsDefault" xml:space="preserve">
-    <value>Default account for new entries</value>
+    <value>Default account for new transactions</value>
   </data>
   <data name="Account_Archive" xml:space="preserve">
     <value>Archive account</value>
@@ -161,31 +161,31 @@
     <value>The account keeps its history and stays in past reports, but accepts no new transactions.</value>
   </data>
   <data name="Account_CurrencyLocked" xml:space="preserve">
-    <value>The currency cannot change because the account already has transactions.</value>
+    <value>You cannot change the currency of an account that already has transactions.</value>
   </data>
   <data name="Account_NameRequired" xml:space="preserve">
-    <value>Please enter a name.</value>
+    <value>Enter an account name.</value>
   </data>
   <data name="Account_DefaultName" xml:space="preserve">
     <value>My account</value>
   </data>
   <data name="Amount_Invalid" xml:space="preserve">
-    <value>Enter a valid amount, for example 12.50</value>
+    <value>Enter a valid amount, for example, 12.50.</value>
   </data>
   <data name="Onb_WelcomeTitle" xml:space="preserve">
     <value>Welcome</value>
   </data>
   <data name="Onb_WelcomeText" xml:space="preserve">
-    <value>Your finances stay on this device. No account or sign-in needed. Backups are optional and under your control.</value>
+    <value>Manage your finances on this device without creating an online account. You choose whether to create backups and where to store them.</value>
   </data>
   <data name="Onb_CurrencyTitle" xml:space="preserve">
-    <value>Report currency</value>
+    <value>Valuation currency</value>
   </data>
   <data name="Onb_CurrencyText" xml:space="preserve">
-    <value>Totals and reports use this currency. Every account keeps its own currency.</value>
+    <value>Converted totals use this currency. Each account keeps its own currency.</value>
   </data>
   <data name="Onb_LaterText" xml:space="preserve">
-    <value>You can change language, calendar and currency later in Settings.</value>
+    <value>You can change your language, calendar and currency later in Settings.</value>
   </data>
   <data name="Onb_AccountTitle" xml:space="preserve">
     <value>Add your first account</value>
@@ -194,7 +194,7 @@
     <value>Start with the account you use most. You can add more later.</value>
   </data>
   <data name="Onb_ZeroHint" xml:space="preserve">
-    <value>Starting with 0 is fine – enter your real balance whenever you like.</value>
+    <value>If you do not know the opening balance, select "I don't know the opening balance". You can reconcile the account later.</value>
   </data>
   <data name="Onb_Start" xml:space="preserve">
     <value>Start</value>
@@ -213,19 +213,19 @@
     <value>Transactions</value>
   </data>
   <data name="Tx_Empty" xml:space="preserve">
-    <value>No transactions yet. Record your first expense or income.</value>
+    <value>No transactions yet. Record an expense or income to get started.</value>
   </data>
   <data name="Tx_EmptyFiltered" xml:space="preserve">
     <value>Nothing matches these filters.</value>
   </data>
   <data name="Tx_Search" xml:space="preserve">
-    <value>Search title, payee, note or amount</value>
+    <value>Search titles, payees, notes or amounts</value>
   </data>
   <data name="Tx_Add" xml:space="preserve">
-    <value>Add entry</value>
+    <value>Add transaction</value>
   </data>
   <data name="Tx_Deleted" xml:space="preserve">
-    <value>Entry deleted</value>
+    <value>Transaction deleted</value>
   </data>
   <data name="Tx_Unreviewed" xml:space="preserve">
     <value>Needs review</value>
@@ -246,7 +246,7 @@
     <value>All</value>
   </data>
   <data name="KindFilter_All" xml:space="preserve">
-    <value>All kinds</value>
+    <value>All types</value>
   </data>
   <data name="KindFilter_Expenses" xml:space="preserve">
     <value>Expenses</value>
@@ -276,10 +276,10 @@
     <value>Balance adjustment</value>
   </data>
   <data name="Entry_NewTitle" xml:space="preserve">
-    <value>New entry</value>
+    <value>New transaction</value>
   </data>
   <data name="Entry_EditTitle" xml:space="preserve">
-    <value>Edit entry</value>
+    <value>Edit transaction</value>
   </data>
   <data name="Entry_RefundTitle" xml:space="preserve">
     <value>Refund</value>
@@ -294,7 +294,7 @@
     <value>Title</value>
   </data>
   <data name="Entry_TitlePlaceholder" xml:space="preserve">
-    <value>Optional – the category name is shown otherwise</value>
+    <value>Leave blank to show the category name</value>
   </data>
   <data name="Entry_Date" xml:space="preserve">
     <value>Date</value>
@@ -316,10 +316,10 @@
     <value>Fee (optional)</value>
   </data>
   <data name="Entry_FeeHint" xml:space="preserve">
-    <value>Recorded as an expense of the source account.</value>
+    <value>Recorded as an expense in the source account.</value>
   </data>
   <data name="Entry_TransferHint" xml:space="preserve">
-    <value>Transfers move money between your accounts – they are neither income nor expense.</value>
+    <value>Record money moved between your own accounts. Transfers are neither income nor expenses. Zanance does not transfer money for you.</value>
   </data>
   <data name="Entry_MoreDetails" xml:space="preserve">
     <value>More details</value>
@@ -337,7 +337,7 @@
     <value>Original amount</value>
   </data>
   <data name="Entry_ForeignHint" xml:space="preserve">
-    <value>The amount above stays the amount booked on the account.</value>
+    <value>The amount above is recorded in the account's currency.</value>
   </data>
   <data name="Entry_NoAccounts" xml:space="preserve">
     <value>Add an account first.</value>
@@ -349,7 +349,7 @@
     <value>Up to {0} can still be refunded.</value>
   </data>
   <data name="Entry_Refund" xml:space="preserve">
-    <value>Refund</value>
+    <value>Record refund</value>
   </data>
   <data name="Entry_Duplicate" xml:space="preserve">
     <value>Duplicate</value>
@@ -367,13 +367,13 @@
     <value>Recorded from a plan</value>
   </data>
   <data name="Entry_Details" xml:space="preserve">
-    <value>Entry</value>
+    <value>Transaction</value>
   </data>
   <data name="Entry_WithFee" xml:space="preserve">
     <value>Fee {0}</value>
   </data>
   <data name="Entry_NotFound" xml:space="preserve">
-    <value>This entry no longer exists.</value>
+    <value>This transaction no longer exists.</value>
   </data>
   <data name="LedgerError_AmountMustBePositive" xml:space="preserve">
     <value>Enter an amount greater than zero. Choose expense or income to set the direction.</value>
@@ -382,7 +382,7 @@
     <value>Choose an account.</value>
   </data>
   <data name="LedgerError_AccountArchived" xml:space="preserve">
-    <value>Archived accounts cannot receive new entries.</value>
+    <value>You cannot add new transactions to archived accounts.</value>
   </data>
   <data name="LedgerError_DestinationRequired" xml:space="preserve">
     <value>Choose the account the money goes to.</value>
@@ -394,7 +394,7 @@
     <value>Enter the amount received in the destination currency.</value>
   </data>
   <data name="LedgerError_CategoryKindMismatch" xml:space="preserve">
-    <value>This category does not fit the entry kind.</value>
+    <value>This category is not valid for the selected transaction type.</value>
   </data>
   <data name="LedgerError_AdjustmentDirectionRequired" xml:space="preserve">
     <value>Choose whether the balance goes up or down.</value>
@@ -442,7 +442,7 @@
     <value>Icon</value>
   </data>
   <data name="Category_Color" xml:space="preserve">
-    <value>Colour</value>
+    <value>Color</value>
   </data>
   <data name="Category_Parent" xml:space="preserve">
     <value>Parent category</value>
@@ -526,7 +526,7 @@
     <value>All accounts</value>
   </data>
   <data name="Entry_Kind" xml:space="preserve">
-    <value>Kind</value>
+    <value>Type</value>
   </data>
   <data name="Tab_Plans" xml:space="preserve">
     <value>Plans</value>
@@ -547,7 +547,7 @@
     <value>No plans yet. Add regular income and bills, or a one-time future payment.</value>
   </data>
   <data name="Plans_NothingDue" xml:space="preserve">
-    <value>Nothing is due. You are up to date.</value>
+    <value>No planned items are due or overdue.</value>
   </data>
   <data name="Plans_NothingUpcoming" xml:space="preserve">
     <value>Nothing planned for the next 60 days.</value>
@@ -556,7 +556,7 @@
     <value>Add plan</value>
   </data>
   <data name="Plans_UnreviewedEntries" xml:space="preserve">
-    <value>Automatically recorded entries need review.</value>
+    <value>Automatically recorded transactions need review.</value>
   </data>
   <data name="Plans_Review" xml:space="preserve">
     <value>Review</value>
@@ -592,19 +592,19 @@
     <value>Actual date</value>
   </data>
   <data name="Occurrence_Confirm" xml:space="preserve">
-    <value>Confirm as done</value>
+    <value>Record as completed</value>
   </data>
   <data name="Occurrence_Candidates" xml:space="preserve">
-    <value>Already recorded? Link it instead</value>
+    <value>Already recorded? Link an existing transaction</value>
   </data>
   <data name="Occurrence_Link" xml:space="preserve">
     <value>Link</value>
   </data>
   <data name="Occurrence_LinkMessage" xml:space="preserve">
-    <value>Link "{0}" ({1}) to this due item? No new entry is created.</value>
+    <value>Link "{0}" ({1}) to this scheduled item? No new transaction will be created.</value>
   </data>
   <data name="Occurrence_Change" xml:space="preserve">
-    <value>Change this time</value>
+    <value>Edit this occurrence</value>
   </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Skip</value>
@@ -625,7 +625,7 @@
     <value>Undo</value>
   </data>
   <data name="Occurrence_UndoMessage" xml:space="preserve">
-    <value>An entry recorded by the plan is deleted; an entry you recorded yourself is kept and only unlinked. The item becomes open again and will not be recorded automatically.</value>
+    <value>A transaction created by this plan will be deleted. A transaction you recorded separately will be kept and unlinked. This scheduled item will become unresolved again and will not be recorded automatically.</value>
   </data>
   <data name="Plan_NextDue" xml:space="preserve">
     <value>Next: {0}</value>
@@ -679,7 +679,7 @@
     <value>until {0}</value>
   </data>
   <data name="Rule_Times" xml:space="preserve">
-    <value>{0} times</value>
+    <value>occurrences: {0}</value>
   </data>
   <data name="Plan_NewTitle" xml:space="preserve">
     <value>New plan</value>
@@ -742,7 +742,7 @@
     <value>On a date</value>
   </data>
   <data name="End_AfterCount" xml:space="preserve">
-    <value>After a number of times</value>
+    <value>After a set number of occurrences</value>
   </data>
   <data name="Past_FromToday" xml:space="preserve">
     <value>From today on</value>
@@ -757,7 +757,7 @@
     <value>Last day of the month</value>
   </data>
   <data name="Plan_RuleInvalid" xml:space="preserve">
-    <value>Check the repetition settings.</value>
+    <value>Check the repeat settings.</value>
   </data>
   <data name="Plan_NoDates" xml:space="preserve">
     <value>No further dates.</value>
@@ -772,13 +772,13 @@
     <value>The end date must not be before the first date.</value>
   </data>
   <data name="Plan_CountMustBePositive" xml:space="preserve">
-    <value>Enter a number of times greater than zero.</value>
+    <value>Enter at least one occurrence.</value>
   </data>
   <data name="Plan_Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="Plan_NamePlaceholder" xml:space="preserve">
-    <value>e.g. Rent, Salary, Car repair</value>
+    <value>e.g. rent, salary or car repair</value>
   </data>
   <data name="Plan_AmountMode" xml:space="preserve">
     <value>Amount</value>
@@ -796,13 +796,13 @@
     <value>Every</value>
   </data>
   <data name="Plan_Calendar" xml:space="preserve">
-    <value>Calendar of this plan</value>
+    <value>Plan calendar</value>
   </data>
   <data name="Plan_Day" xml:space="preserve">
     <value>Day</value>
   </data>
   <data name="Plan_MissingDay" xml:space="preserve">
-    <value>When a month has no such day</value>
+    <value>If this day does not exist in a month</value>
   </data>
   <data name="Plan_End" xml:space="preserve">
     <value>Ends</value>
@@ -835,7 +835,7 @@
     <value>Record automatically when due</value>
   </data>
   <data name="Plan_AutoPostHint" xml:space="preserve">
-    <value>Only records the entry in this app for you to review – it does not pay or transfer anything. Available for fixed amounts.</value>
+    <value>Automatically records a transaction in Zanance for you to review. It does not make payments or transfer money. Available for fixed amounts only.</value>
   </data>
   <data name="Plan_NextOccurrences" xml:space="preserve">
     <value>Next dates</value>
@@ -853,13 +853,13 @@
     <value>Pause</value>
   </data>
   <data name="Plan_PauseMessage" xml:space="preserve">
-    <value>No occurrences are due while the plan is paused. Past entries stay as they are.</value>
+    <value>The plan will be paused in Zanance. This does not pause any real payment obligations. Existing transactions will be kept.</value>
   </data>
   <data name="Plan_EndAction" xml:space="preserve">
     <value>End plan</value>
   </data>
   <data name="Plan_EndMessage" xml:space="preserve">
-    <value>The plan ends today. Past entries and history stay.</value>
+    <value>This plan ends today in Zanance. This does not cancel any contract or payment outside the app. Existing transactions and history are kept.</value>
   </data>
   <data name="Plan_Delete" xml:space="preserve">
     <value>Delete plan</value>
@@ -868,14 +868,14 @@
     <value>Delete this plan? It has no recorded occurrences.</value>
   </data>
   <data name="Home_Scope" xml:space="preserve">
-    <value>{0} · {1} · report currency {2}</value>
+    <value>{0} · {1} · valuation currency {2}</value>
     <comment>{0} period, {1} account scope, {2} currency code</comment>
   </data>
   <data name="Home_AccountsInTotals" xml:space="preserve">
     <value>accounts in totals</value>
   </data>
   <data name="Home_Unreviewed" xml:space="preserve">
-    <value>Entries to review: {0}</value>
+    <value>Transactions to review: {0}</value>
   </data>
   <data name="Home_Due" xml:space="preserve">
     <value>Due or overdue: {0}</value>
@@ -899,19 +899,19 @@
     <value>Other categories</value>
   </data>
   <data name="Home_ChartCurrency" xml:space="preserve">
-    <value>The chart shows {0} accounts only; other currencies are not converted.</value>
+    <value>Only accounts in {0} are shown; other currencies are not converted.</value>
   </data>
   <data name="Tx_FilterTotal" xml:space="preserve">
-    <value>{0} entries · total {1}</value>
+    <value>Transactions: {0} · total: {1}</value>
   </data>
   <data name="Backup_Intro" xml:space="preserve">
-    <value>Your data lives only on this device. A backup file protects it if the device is lost or replaced.</value>
+    <value>Create a backup of your profile and keep a copy somewhere other than this device, so you can restore your data if the device is lost or replaced.</value>
   </data>
   <data name="Backup_CreateAndShare" xml:space="preserve">
     <value>Create backup file</value>
   </data>
   <data name="Backup_ShareHint" xml:space="preserve">
-    <value>After creating it, choose where to keep it – for example Google Drive, OneDrive, e-mail or your computer.</value>
+    <value>After creating a backup, choose where to keep a copy, for example, Google Drive, OneDrive, email or your computer.</value>
   </data>
   <data name="Backup_Created" xml:space="preserve">
     <value>Backup created.</value>
@@ -926,10 +926,10 @@
     <value>Backups on this device</value>
   </data>
   <data name="Backup_OnDeviceHint" xml:space="preserve">
-    <value>The last 10 are kept. They are lost with the device – keep a copy elsewhere.</value>
+    <value>The 10 most recent backups are kept on this device. Keep a copy elsewhere in case this device is lost or damaged.</value>
   </data>
   <data name="Backup_RestoreIntro" xml:space="preserve">
-    <value>Restoring replaces all data on this device with the backup. It does not merge; changes made since the backup are lost. A safety copy of the current data is kept first.</value>
+    <value>Restoring replaces the current profile's data with this backup; it does not merge data. Changes made after the backup will be lost from this profile. Other profiles are not affected. A safety copy is created on this device before restoration starts.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
     <value>Choose backup file</value>
@@ -944,25 +944,25 @@
     <value>Device: {0} · app version {1}</value>
   </data>
   <data name="Backup_PreviewCounts" xml:space="preserve">
-    <value>{0} accounts · {1} entries · {2} plans</value>
+    <value>Accounts: {0} · transactions: {1} · plans: {2}</value>
   </data>
   <data name="Backup_ReplaceWarning" xml:space="preserve">
-    <value>All current data on this device will be replaced by this backup.</value>
+    <value>All data in the current profile will be replaced by this backup. Other profiles are not affected.</value>
   </data>
   <data name="Backup_Replace" xml:space="preserve">
-    <value>Replace data on this device</value>
+    <value>Replace this profile's data</value>
   </data>
   <data name="Backup_ReplaceTitle" xml:space="preserve">
-    <value>Replace all data?</value>
+    <value>Replace this profile's data?</value>
   </data>
   <data name="Backup_ReplaceMessage" xml:space="preserve">
-    <value>A safety copy of the current data is kept on this device first.</value>
+    <value>This replaces the current profile's data, including changes made since the backup. Data is not merged. A safety copy is created on this device first; other profiles are not affected.</value>
   </data>
   <data name="Backup_Restored" xml:space="preserve">
     <value>Backup restored</value>
   </data>
   <data name="Backup_RestoredMessage" xml:space="preserve">
-    <value>Check your balances. Reminders are set up again.</value>
+    <value>Your backup was restored. Check your balances and reminder settings.</value>
   </data>
   <data name="Backup_SizeKb" xml:space="preserve">
     <value>{0} KB</value>
@@ -1002,7 +1002,7 @@
     <value>of {0}</value>
   </data>
   <data name="Budget_Left" xml:space="preserve">
-    <value>{0} left · {1} % used</value>
+    <value>{0} left · {1}% used</value>
   </data>
   <data name="Budget_Over" xml:space="preserve">
     <value>Over budget by {0}</value>
@@ -1017,16 +1017,16 @@
     <value>Optional. A category limit looks at the same expenses as the overall limit – nothing is counted twice.</value>
   </data>
   <data name="Budget_ConfirmedOnly" xml:space="preserve">
-    <value>Confirmed entries only</value>
+    <value>Confirmed transactions only</value>
   </data>
   <data name="Budget_IncludesUnreviewed" xml:space="preserve">
-    <value>Includes {0} entries that still need review.</value>
+    <value>Included transactions needing review: {0}.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
     <value>Planned expenses this month: {0} (due items: {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
-    <value>{0} with unknown amount</value>
+    <value>Unknown amounts: {0}</value>
   </data>
   <data name="Budget_Equivalent" xml:space="preserve">
     <value>Yearly and other non-monthly plans correspond to about {0} per month (for comparison only).</value>
@@ -1047,7 +1047,7 @@
     <value>Delete budget</value>
   </data>
   <data name="Budget_DeleteMessage" xml:space="preserve">
-    <value>Delete the budget of this month? Entries are not affected.</value>
+    <value>Delete this month's budget? Transactions are not affected.</value>
   </data>
   <data name="Budget_TotalLimit" xml:space="preserve">
     <value>Overall monthly limit</value>
@@ -1056,10 +1056,10 @@
     <value>No overall limit</value>
   </data>
   <data name="Budget_ScopeHint" xml:space="preserve">
-    <value>Counts expenses minus refunds of the accounts in totals in this currency. Transfers, opening balances and adjustments never count.</value>
+    <value>Counts expenses minus refunds for accounts included in this budget, in the budget currency. Transfers, opening balances and adjustments are excluded.</value>
   </data>
   <data name="Budget_Alerts" xml:space="preserve">
-    <value>Notify me at 80 % and when exceeded</value>
+    <value>Notify me at 80% and when the limit is exceeded</value>
   </data>
   <data name="Budget_NothingToSave" xml:space="preserve">
     <value>Enter an overall limit or at least one category limit.</value>
@@ -1080,7 +1080,7 @@
     <value>Expenses</value>
   </data>
   <data name="Report_IncomeExpense" xml:space="preserve">
-    <value>Income &amp; expense</value>
+    <value>Income &amp; expenses</value>
   </data>
   <data name="Report_Trend" xml:space="preserve">
     <value>Trend</value>
@@ -1089,16 +1089,16 @@
     <value>Accounts</value>
   </data>
   <data name="Report_Plans" xml:space="preserve">
-    <value>Plan vs actual</value>
+    <value>Planned vs. recorded</value>
   </data>
   <data name="Report_SoFar" xml:space="preserve">
     <value>so far</value>
   </data>
   <data name="Report_Empty" xml:space="preserve">
-    <value>Nothing recorded yet. Reports appear once you add entries.</value>
+    <value>No transactions recorded yet. Reports will appear after you add transactions.</value>
   </data>
   <data name="Report_NoData" xml:space="preserve">
-    <value>No income or expenses in this period.</value>
+    <value>No income or expenses are recorded for this period.</value>
   </data>
   <data name="Report_GrossByCategory" xml:space="preserve">
     <value>Gross expenses by category (before refunds)</value>
@@ -1158,7 +1158,7 @@
     <value>Recorded</value>
   </data>
   <data name="Report_PlanDetails" xml:space="preserve">
-    <value>{0} of {1} done</value>
+    <value>Completed: {0} of {1}</value>
   </data>
   <data name="Forecast_Title" xml:space="preserve">
     <value>Forecast</value>
@@ -1176,10 +1176,10 @@
     <value>Accounts in totals · from {0} to {1}</value>
   </data>
   <data name="Forecast_Unreviewed" xml:space="preserve">
-    <value>Includes {0} entries that still need review.</value>
+    <value>Included transactions needing review: {0}.</value>
   </data>
   <data name="Forecast_EndBalance" xml:space="preserve">
-    <value>Estimated balance after recorded plans</value>
+    <value>Estimated balance after planned transactions</value>
   </data>
   <data name="Forecast_Lowest" xml:space="preserve">
     <value>Lowest: {0} on {1}</value>
@@ -1188,7 +1188,7 @@
     <value>The balance may fall below zero around {0}.</value>
   </data>
   <data name="Forecast_Incomplete" xml:space="preserve">
-    <value>Incomplete: {0} planned items have no amount yet.</value>
+    <value>Incomplete — planned items with an unknown amount: {0}.</value>
   </data>
   <data name="Forecast_Path" xml:space="preserve">
     <value>Estimated balance per day</value>
@@ -1197,16 +1197,16 @@
     <value>No planned items in this period.</value>
   </data>
   <data name="Forecast_OverdueAssumed" xml:space="preserve">
-    <value>Overdue – assumed today</value>
+    <value>Overdue — assumed to occur today</value>
   </data>
   <data name="Forecast_Recorded" xml:space="preserve">
     <value>Already recorded</value>
   </data>
   <data name="Forecast_RecordedEntry" xml:space="preserve">
-    <value>Recorded entry</value>
+    <value>Recorded transaction</value>
   </data>
   <data name="Forecast_Disclaimer" xml:space="preserve">
-    <value>Only recorded plans and entries are included. Everyday purchases you have not planned, income changes and other unrecorded items are not. Budgets are not subtracted. This is an estimate, not money that is safe to spend.</value>
+    <value>This forecast includes only recorded transactions and open planned items. Day-to-day spending you have not planned, income changes and other unrecorded items are not included. Budget limits are not subtracted. This is an estimate, not a guarantee that money is safe to spend.</value>
   </data>
   <data name="Reminder_Generic" xml:space="preserve">
     <value>A financial item needs your attention.</value>
@@ -1233,7 +1233,7 @@
     <value>Show names and amounts</value>
   </data>
   <data name="Settings_ShowDetailsHint" xml:space="preserve">
-    <value>Off: notifications only say that something needs attention, so nothing private appears on the lock screen.</value>
+    <value>When off, reminders use generic text without financial names or amounts. Your device settings control whether notifications appear on the lock screen.</value>
   </data>
   <data name="Settings_ReminderDefaults" xml:space="preserve">
     <value>Default for new reminders</value>
@@ -1242,7 +1242,7 @@
     <value>Exchange rates</value>
   </data>
   <data name="Rates_Intro" xml:space="preserve">
-    <value>Rates you enter are used only to show combined totals in the report currency. Recorded amounts, budgets and history never change.</value>
+    <value>Exchange rates are used to show converted totals in the valuation currency. They do not change recorded transaction amounts or budget limits. Changing a rate can change converted totals for dates to which that rate applies.</value>
   </data>
   <data name="Rates_Missing" xml:space="preserve">
     <value>No rate yet for {0} → {1}. Totals in {1} stay incomplete until you add one.</value>
@@ -1275,7 +1275,7 @@
     <value>Enter a rate greater than zero.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
-    <value>Together ≈ {0} (rates of {1})</value>
+    <value>Combined ≈ {0} (rates dated {1})</value>
   </data>
   <data name="Home_CombinedIncomplete" xml:space="preserve">
     <value>Combined total incomplete – missing rate for {0}</value>
@@ -1284,7 +1284,7 @@
     <value>Import &amp; export</value>
   </data>
   <data name="Export_Title" xml:space="preserve">
-    <value>Export entries (CSV)</value>
+    <value>Export transactions (CSV)</value>
   </data>
   <data name="Export_From" xml:space="preserve">
     <value>From</value>
@@ -1302,13 +1302,13 @@
     <value>Export and share</value>
   </data>
   <data name="Export_Done" xml:space="preserve">
-    <value>{0} entries exported.</value>
+    <value>Transactions exported: {0}.</value>
   </data>
   <data name="Import_Title" xml:space="preserve">
-    <value>Import entries (CSV)</value>
+    <value>Import transactions (CSV)</value>
   </data>
   <data name="Import_Intro" xml:space="preserve">
-    <value>Files exported by this app keep their ids, so importing them twice creates nothing twice. For other files you choose the columns and formats. Imported entries are marked for review.</value>
+    <value>Files exported by Zanance preserve transaction IDs, allowing already imported transactions to be skipped. For other CSV files, choose the columns and formats. Imported transactions are marked for review.</value>
   </data>
   <data name="Import_Pick" xml:space="preserve">
     <value>Choose CSV file</value>
@@ -1365,7 +1365,7 @@
     <value>Choose the account, the date and amount columns and the date format.</value>
   </data>
   <data name="Import_Preview" xml:space="preserve">
-    <value>{0} new · {1} already imported (skipped) · {2} not readable</value>
+    <value>New: {0} · already imported (skipped): {1} · invalid: {2}</value>
   </data>
   <data name="Import_InvalidLine" xml:space="preserve">
     <value>Line {0}: {1}</value>
@@ -1374,49 +1374,49 @@
     <value>id is missing</value>
   </data>
   <data name="Import_Error_Date" xml:space="preserve">
-    <value>date not readable in this format</value>
+    <value>date does not match the selected format</value>
   </data>
   <data name="Import_Error_Kind" xml:space="preserve">
-    <value>unknown kind</value>
+    <value>unknown transaction type</value>
   </data>
   <data name="Import_Error_Account" xml:space="preserve">
     <value>account not found</value>
   </data>
   <data name="Import_Error_Amount" xml:space="preserve">
-    <value>amount not readable or ambiguous</value>
+    <value>amount is invalid or ambiguous</value>
   </data>
   <data name="Import_Duplicates" xml:space="preserve">
-    <value>{0} rows have the same date and amount as existing entries. They may still be real separate purchases.</value>
+    <value>Rows matching the date and amount of existing transactions: {0}. Review them before excluding any; they may be separate transactions.</value>
   </data>
   <data name="Import_BeforeOpening" xml:space="preserve">
-    <value>{0} rows are dated before the account's opening date and will not change its balance. Move the opening date if they should count.</value>
+    <value>Rows dated before the account's opening date: {0}. They will not change its balance; move the opening date if they should count.</value>
   </data>
   <data name="Import_SkipDuplicates" xml:space="preserve">
     <value>Leave out these possible duplicates</value>
   </data>
   <data name="Import_Button" xml:space="preserve">
-    <value>Import {0} entries</value>
+    <value>Import transactions ({0})</value>
   </data>
   <data name="Import_Rejected" xml:space="preserve">
-    <value>Nothing was imported: {0} rows are not valid ({1}).</value>
+    <value>Nothing was imported. Invalid rows: {0} ({1}).</value>
   </data>
   <data name="Import_Done" xml:space="preserve">
-    <value>{0} entries imported, {1} skipped. Review them under Transactions.</value>
+    <value>Imported: {0}. Skipped: {1}. Review the imported transactions under Transactions.</value>
   </data>
   <data name="Import_History" xml:space="preserve">
     <value>Past imports</value>
   </data>
   <data name="Import_Batch" xml:space="preserve">
-    <value>{0} · {1} entries</value>
+    <value>{0} · transactions: {1}</value>
   </data>
   <data name="Import_Undo" xml:space="preserve">
     <value>Undo import</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>Remove the entries of this import? Entries that existed before are not touched.</value>
+    <value>Remove the transactions from this import? Transactions that existed before the import are not affected.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
-    <value>Experience</value>
+    <value>Display mode</value>
   </data>
   <data name="Mode_Simple" xml:space="preserve">
     <value>Simple</value>
@@ -1467,7 +1467,7 @@
     <value>This plan uses: {0}. Switch to Advanced in Settings to change these options.</value>
   </data>
   <data name="Budget_HiddenLimits" xml:space="preserve">
-    <value>{0} category limits are kept. Switch to Advanced in Settings to edit them.</value>
+    <value>Category limits kept: {0}. Switch to Advanced in Settings to edit them.</value>
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>End of month ≈ {0} · lowest {1} on {2}</value>
@@ -1476,13 +1476,13 @@
     <value>Confirmed only: {0}</value>
   </data>
   <data name="Account_ShowEntries" xml:space="preserve">
-    <value>Entries</value>
+    <value>Transactions</value>
   </data>
   <data name="Account_ChooseIcon" xml:space="preserve">
     <value>Choose an icon</value>
   </data>
   <data name="Account_ArchiveWithPlans" xml:space="preserve">
-    <value>{0} active plans use this account ({1}). Archiving ends them from today; past entries and history stay.</value>
+    <value>Active plans using this account: {0} ({1}). Archiving ends these plans from today. Existing transactions and history are kept.</value>
   </data>
   <data name="Reconcile_Title" xml:space="preserve">
     <value>Reconcile</value>
@@ -1491,7 +1491,7 @@
     <value>Enter the balance you see, for example in your banking app, to compare it with what you recorded.</value>
   </data>
   <data name="Reconcile_Observed" xml:space="preserve">
-    <value>Balance you see</value>
+    <value>Actual balance</value>
   </data>
   <data name="Reconcile_Compare" xml:space="preserve">
     <value>Compare</value>
@@ -1503,13 +1503,13 @@
     <value>Recorded {0} · difference {1}</value>
   </data>
   <data name="Reconcile_Unreviewed" xml:space="preserve">
-    <value>{0} entries of this account still need review.</value>
+    <value>Transactions in this account needing review: {0}.</value>
   </data>
   <data name="Reconcile_Duplicates" xml:space="preserve">
-    <value>{0} entries share date and amount with another one – check for duplicates.</value>
+    <value>Transactions sharing a date and amount with another transaction: {0}. Check for duplicates.</value>
   </data>
   <data name="Reconcile_Missing" xml:space="preserve">
-    <value>Is an entry missing or recorded on another account? Only if not, record an adjustment.</value>
+    <value>Check for missing transactions or transactions recorded in the wrong account. Record an adjustment only if these do not explain the difference.</value>
   </data>
   <data name="Reconcile_Reason" xml:space="preserve">
     <value>Reason for the adjustment</value>
@@ -1527,22 +1527,22 @@
     <value>Adjustment recorded. The balances match now.</value>
   </data>
   <data name="Entry_Icon" xml:space="preserve">
-    <value>Icon for this entry</value>
+    <value>Icon for this transaction</value>
   </data>
   <data name="Entry_MakeRecurring" xml:space="preserve">
     <value>Make recurring</value>
   </data>
   <data name="Entry_PayBack" xml:space="preserve">
-    <value>Pay back</value>
+    <value>Record income repayment</value>
   </data>
   <data name="Home_ConfirmedOnly" xml:space="preserve">
-    <value>Includes {0} unreviewed entries · confirmed only: {1}</value>
+    <value>Unreviewed transactions included: {0} · confirmed balance: {1}</value>
   </data>
   <data name="Category_Merge" xml:space="preserve">
     <value>Merge</value>
   </data>
   <data name="Category_MergeMessage" xml:space="preserve">
-    <value>All entries, plans, templates and budget limits of this category move to "{0}". This category is then archived.</value>
+    <value>All transactions, plans, templates and budget limits assigned to this category will be reassigned to "{0}". This category will then be archived.</value>
   </data>
   <data name="Category_MergeInto" xml:space="preserve">
     <value>Merge into another category</value>
@@ -1557,7 +1557,7 @@
     <value>Accounts in this budget</value>
   </data>
   <data name="Budget_ScopeLimited" xml:space="preserve">
-    <value>Only {0} selected accounts count toward this budget.</value>
+    <value>Selected accounts included in this budget: {0}.</value>
   </data>
   <data name="Tx_AllCategories" xml:space="preserve">
     <value>All categories</value>
@@ -1566,19 +1566,19 @@
     <value>Delete data</value>
   </data>
   <data name="Settings_DeleteAll" xml:space="preserve">
-    <value>Delete all data on this device</value>
+    <value>Delete this profile's data</value>
   </data>
   <data name="Settings_DeleteAllHint" xml:space="preserve">
-    <value>Removes all accounts, entries, plans, budgets and settings from this device. Backup files you saved elsewhere are not affected.</value>
+    <value>Deletes the financial data and profile settings in the current profile. Other profiles and existing backup files are not deleted.</value>
   </data>
   <data name="Settings_DeleteAllTitle" xml:space="preserve">
-    <value>Delete everything?</value>
+    <value>Delete this profile's data?</value>
   </data>
   <data name="Settings_DeleteAllMessage" xml:space="preserve">
-    <value>This cannot be undone. Create a backup first if you may need the data again.</value>
+    <value>This deletes the current profile's data and cannot be undone in the app. Create a backup first if you may need this data again. Other profiles are not affected.</value>
   </data>
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
-    <value>Confirm deleting all data</value>
+    <value>Confirm deletion of this profile's data</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
     <value>Tap a plan item to leave it out or assume another date or amount, e.g. a delayed salary or a higher bill. This only changes this view.</value>
@@ -1614,7 +1614,7 @@
     <value>Use the planned date again</value>
   </data>
   <data name="Reminder_Summary" xml:space="preserve">
-    <value>{0} payments due</value>
+    <value>Scheduled items due: {0}</value>
   </data>
   <data name="Reminder_ListSeparator" xml:space="preserve">
     <value>, </value>
@@ -1647,16 +1647,16 @@
     <value>Opening balance unknown: this balance may be incomplete. Compare it with your actual balance below.</value>
   </data>
   <data name="Home_OpeningUnknown" xml:space="preserve">
-    <value>Incomplete: the opening balance of {0} account(s) is unknown.</value>
+    <value>Incomplete — accounts with an unknown opening balance: {0}.</value>
   </data>
   <data name="Templates_Title" xml:space="preserve">
     <value>Quick templates</value>
   </data>
   <data name="Templates_Intro" xml:space="preserve">
-    <value>A template fills a new entry with account, category, title and, if you like, the amount. You still check and save the entry yourself.</value>
+    <value>A template prefills the account, category, title and, optionally, the amount of a new transaction. You review and save the transaction yourself.</value>
   </data>
   <data name="Templates_Empty" xml:space="preserve">
-    <value>No templates yet. Open an entry and choose "Save as template".</value>
+    <value>No templates yet. Open a transaction and choose "Save as template".</value>
   </data>
   <data name="Templates_Delete" xml:space="preserve">
     <value>Delete template?</value>
@@ -1668,7 +1668,7 @@
     <value>Quick template</value>
   </data>
   <data name="Templates_NamePrompt" xml:space="preserve">
-    <value>Name of the template</value>
+    <value>Enter a template name</value>
   </data>
   <data name="Templates_KeepAmount" xml:space="preserve">
     <value>Keep the amount {0} in the template? Choose "Ask each time" for amounts that vary.</value>
@@ -1680,7 +1680,7 @@
     <value>Ask each time</value>
   </data>
   <data name="Templates_Saved" xml:space="preserve">
-    <value>"{0}" is available when you add a new entry.</value>
+    <value>"{0}" is available when you add a new transaction.</value>
   </data>
   <data name="Reminder_SnoozeHour" xml:space="preserve">
     <value>In 1 hour</value>
@@ -1701,7 +1701,7 @@
     <value>An emergency fund, a trip or next year's insurance: set a target, set money aside in your accounts and see how much to save each month.</value>
   </data>
   <data name="Goals_Note" xml:space="preserve">
-    <value>Setting money aside only earmarks it; it does not move money or count as spending. Record a transfer to move money and an expense when you spend it.</value>
+    <value>Setting money aside assigns it to a goal within Zanance; it does not move money or count as spending. When you move money between real accounts, record a transfer. When you spend it, record an expense.</value>
   </data>
   <data name="Goals_Finished" xml:space="preserve">
     <value>Completed and archived</value>
@@ -1710,7 +1710,7 @@
     <value>Set aside {0} · not assigned {1}</value>
   </data>
   <data name="Goals_Shortfall" xml:space="preserve">
-    <value>{0} more than the balances</value>
+    <value>Amount set aside exceeds account balances by {0}</value>
   </data>
   <data name="Goal_Funded" xml:space="preserve">
     <value>{0} of {1}</value>
@@ -1722,10 +1722,10 @@
     <value>Target reached</value>
   </data>
   <data name="Goal_SuggestMonthly" xml:space="preserve">
-    <value>Set aside {0} per month ({1} times left)</value>
+    <value>Set aside {0} per month (contributions remaining: {1})</value>
   </data>
   <data name="Goal_SuggestWeekly" xml:space="preserve">
-    <value>Set aside {0} per week ({1} times left)</value>
+    <value>Set aside {0} per week (contributions remaining: {1})</value>
   </data>
   <data name="Goal_SuggestNow" xml:space="preserve">
     <value>{0} still needed now</value>
@@ -1758,7 +1758,7 @@
     <value>e.g. Emergency fund</value>
   </data>
   <data name="Goal_NameRequired" xml:space="preserve">
-    <value>Please enter a name.</value>
+    <value>Enter a goal name.</value>
   </data>
   <data name="Goal_Target" xml:space="preserve">
     <value>Target amount</value>
@@ -1788,7 +1788,7 @@
     <value>Low</value>
   </data>
   <data name="Goal_PriorityHint" xml:space="preserve">
-    <value>If an account holds less than is set aside, lower-priority goals lose their funding first.</value>
+    <value>If an account balance is lower than the total set aside, lower-priority goals are shown as underfunded first.</value>
   </data>
   <data name="Goal_Details" xml:space="preserve">
     <value>Goal</value>
@@ -1818,7 +1818,7 @@
     <value>No active account in {0}. Add one to set money aside.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>This only earmarks money in the account. To move money to a savings account, record a transfer.</value>
+    <value>This only assigns money in the account to a goal. If you move money to a savings account, record that transfer separately.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>History</value>
@@ -1827,7 +1827,7 @@
     <value>Nothing set aside yet.</value>
   </data>
   <data name="Goal_DeleteAllocation" xml:space="preserve">
-    <value>Remove this entry?</value>
+    <value>Remove this goal allocation?</value>
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Mark as completed</value>
@@ -1842,37 +1842,37 @@
     <value>Delete goal</value>
   </data>
   <data name="Goal_DeleteMessage" xml:space="preserve">
-    <value>The goal and what was set aside for it are removed. Accounts and entries stay unchanged.</value>
+    <value>The goal and its allocations will be deleted. Account balances and transactions will not change.</value>
   </data>
   <data name="Account_Earmarked" xml:space="preserve">
     <value>Set aside for goals: {0} · free: {1}</value>
   </data>
   <data name="Rollover_Title" xml:space="preserve">
-    <value>Rest of last month</value>
+    <value>Budget rollover</value>
   </data>
   <data name="Rollover_None" xml:space="preserve">
     <value>Start fresh</value>
   </data>
   <data name="Rollover_Surplus" xml:space="preserve">
-    <value>Add what was left</value>
+    <value>Carry over unused budget</value>
   </data>
   <data name="Rollover_Both" xml:space="preserve">
-    <value>Add rest, deduct overspending</value>
+    <value>Carry over surplus and overspending</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
     <value>Uses the budgets of the previous months without gaps. No money is moved; only this month's limits change.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
-    <value>Includes {0} left from last month (own limit {1})</value>
+    <value>Includes {0} carried over from the previous period (base limit: {1})</value>
   </data>
   <data name="Rollover_Deducted" xml:space="preserve">
-    <value>{0} overspent last month is deducted (own limit {1})</value>
+    <value>Deducts {0} overspent in the previous period (base limit: {1})</value>
   </data>
   <data name="Rollover_Active_Surplus" xml:space="preserve">
-    <value>The rest of last month is added to this budget.</value>
+    <value>Unused budget from the previous period is added to this period's limit.</value>
   </data>
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
-    <value>The rest of last month is added and overspending is deducted.</value>
+    <value>Unused budget from the previous period is added to this period's limit, and overspending is deducted.</value>
   </data>
   <data name="Split_Title" xml:space="preserve">
     <value>Split across categories</value>
@@ -1905,10 +1905,10 @@
     <value>Remove part</value>
   </data>
   <data name="Split_Join" xml:space="preserve">
-    <value>Join into one entry</value>
+    <value>Combine into one transaction</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>Only income or expenses without a plan, refunds or an amount to be paid back can be split.</value>
+    <value>You can split only income or expense transactions that are not linked to a plan, have no refunds, and are not marked as reimbursable.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
     <value>Part of a split: total {0} in {1} parts. Deleting removes all parts.</value>
@@ -1917,10 +1917,10 @@
     <value>Enter an amount for every part, or remove empty parts.</value>
   </data>
   <data name="Occurrence_PayPart" xml:space="preserve">
-    <value>Record as part payment</value>
+    <value>Record partial payment</value>
   </data>
   <data name="Occurrence_PayPartHint" xml:space="preserve">
-    <value>A part payment keeps the item open with the rest; paying the rest settles it.</value>
+    <value>Recording a partial payment leaves the remaining amount outstanding. Record the remaining payment to complete this item.</value>
   </data>
   <data name="Occurrence_PaidSoFar" xml:space="preserve">
     <value>Paid so far {0} · outstanding {1}</value>
@@ -1953,7 +1953,7 @@
     <value>Review on</value>
   </data>
   <data name="Contract_Hint" xml:space="preserve">
-    <value>You get a reminder 14 days before the last day to cancel and on the day itself. Zanance only reminds you; cancelling is up to you, and the plan keeps running until you end it.</value>
+    <value>Reminders are scheduled 14 days before the cancellation deadline and on the deadline itself. Zanance does not cancel contracts for you. The plan remains active until you end it.</value>
   </data>
   <data name="Reminder_ContractGeneric" xml:space="preserve">
     <value>A contract date is coming up.</value>
@@ -1992,10 +1992,10 @@
     <value>The money you get back is recorded as a refund of this expense, not as income. Until then it is shown as open.</value>
   </data>
   <data name="Entry_ReimbursableInvalid" xml:space="preserve">
-    <value>The amount paid back must be greater than zero and not more than the expense.</value>
+    <value>The expected reimbursement must be greater than zero and cannot exceed the expense.</value>
   </data>
   <data name="Entry_ReimbursementOpen" xml:space="preserve">
-    <value>{1} pays back {0}; still open: {2}</value>
+    <value>{1} is expected to repay {0}; outstanding: {2}</value>
   </data>
   <data name="Entry_ReimbursementDone" xml:space="preserve">
     <value>{1} paid back {0} in full.</value>
@@ -2016,7 +2016,7 @@
     <value>Expenses that others will pay back. Open one to record the money you received.</value>
   </data>
   <data name="Reimbursements_Empty" xml:space="preserve">
-    <value>Nobody owes you money right now.</value>
+    <value>No outstanding reimbursements are recorded.</value>
   </data>
   <data name="Reimbursements_Total" xml:space="preserve">
     <value>Still to receive</value>
@@ -2034,13 +2034,13 @@
     <value>Tags</value>
   </data>
   <data name="Report_NoTags" xml:space="preserve">
-    <value>No tagged spending in this period. Add tags in an entry's details.</value>
+    <value>No tagged spending is recorded for this period. Add tags in a transaction's details.</value>
   </data>
   <data name="Report_TagCount" xml:space="preserve">
-    <value>{0} entries</value>
+    <value>Transactions: {0}</value>
   </data>
   <data name="Report_TagsNote" xml:space="preserve">
-    <value>An entry with several tags appears under each of them, so the tags do not add up to your total spending.</value>
+    <value>A transaction with multiple tags appears under each tag. Adding tag totals together can therefore double-count spending.</value>
   </data>
   <data name="Rules_Title" xml:space="preserve">
     <value>Categorization rules</value>
@@ -2049,7 +2049,7 @@
     <value>Categorization rules</value>
   </data>
   <data name="Rules_Intro" xml:space="preserve">
-    <value>When the payee or title of a new entry contains the text, its category is suggested. You always see the suggestion and can change it; saved entries never change.</value>
+    <value>When a new transaction contains the matching text in its payee or title, the rule suggests a category. You can change the suggestion before saving. Rules do not change existing transactions.</value>
   </data>
   <data name="Rule_Match" xml:space="preserve">
     <value>Payee or title contains</value>
@@ -2067,7 +2067,7 @@
     <value>Always suggest {1} for "{0}"</value>
   </data>
   <data name="Rule_Saved" xml:space="preserve">
-    <value>New entries with "{0}" get this category suggested.</value>
+    <value>This category will be suggested for new transactions containing "{0}".</value>
   </data>
   <data name="Entry_RuleSuggested" xml:space="preserve">
     <value>Category suggested by the rule for "{0}"</value>
@@ -2100,10 +2100,10 @@
     <value>Record a repayment</value>
   </data>
   <data name="Account_RecordReturn" xml:space="preserve">
-    <value>Record money received back</value>
+    <value>Record repayment received</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
-    <value>Loans, lent money and assets</value>
+    <value>Loans, money lent and assets</value>
   </data>
   <data name="Accounts_IOwe" xml:space="preserve">
     <value>I owe: {0}</value>
@@ -2130,7 +2130,7 @@
     <value>{0} selected</value>
   </data>
   <data name="Bulk_Title" xml:space="preserve">
-    <value>Selected entries</value>
+    <value>Selected transactions</value>
   </data>
   <data name="Bulk_Reviewed" xml:space="preserve">
     <value>Reviewed</value>
@@ -2139,19 +2139,19 @@
     <value>Tag</value>
   </data>
   <data name="Bulk_ChooseCategory" xml:space="preserve">
-    <value>Category for the selected entries</value>
+    <value>Category for the selected transactions</value>
   </data>
   <data name="Bulk_CategoryMixed" xml:space="preserve">
-    <value>Select only expenses or only income to change the category together. Transfers keep no category.</value>
+    <value>To change categories in bulk, select only expenses or only income. Transfers do not have a category.</value>
   </data>
   <data name="Bulk_AddTag" xml:space="preserve">
     <value>Add a tag</value>
   </data>
   <data name="Bulk_AddTagMessage" xml:space="preserve">
-    <value>The tag is added to every selected entry.</value>
+    <value>The tag is added to every selected transaction.</value>
   </data>
   <data name="Bulk_DeleteMessage" xml:space="preserve">
-    <value>Delete {0} entries? You can undo this for a few seconds.</value>
+    <value>Delete the selected transactions ({0})? Undo is available briefly after deletion.</value>
   </data>
   <data name="Weekend_Title" xml:space="preserve">
     <value>If the date falls on a weekend</value>
@@ -2160,10 +2160,10 @@
     <value>Keep</value>
   </data>
   <data name="Weekend_Before" xml:space="preserve">
-    <value>Day before</value>
+    <value>Previous working day</value>
   </data>
   <data name="Weekend_After" xml:space="preserve">
-    <value>Day after</value>
+    <value>Next working day</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
     <value>Weekend here: {0} (from your region; set it in Settings). Public holidays are not considered.</value>
@@ -2178,7 +2178,7 @@
     <value>Final bill for advances</value>
   </data>
   <data name="Settlement_Intro" xml:space="preserve">
-    <value>For advances like electricity or heating: enter the actual bill of the period. Only the difference is recorded, so the bill is not counted twice.</value>
+    <value>For bills paid in advance, such as electricity or heating, enter the final bill for the period. Only the difference from the recorded advance payments is recorded, so the bill is not counted twice.</value>
   </data>
   <data name="Settlement_From" xml:space="preserve">
     <value>Period from</value>
@@ -2232,7 +2232,7 @@
     <value>Created on {0}</value>
   </data>
   <data name="Report_PdfDisclaimer" xml:space="preserve">
-    <value>Created with Zanance from your own entries. This is not an official statement of a bank or tax authority.</value>
+    <value>Created with Zanance from your recorded transactions. This is not an official bank statement or tax document.</value>
   </data>
   <data name="Attachment_Title" xml:space="preserve">
     <value>Receipts and documents</value>
@@ -2274,7 +2274,7 @@
     <value>Repaid after {0} installments, around {1}. Interest remaining: {2}</value>
   </data>
   <data name="Loan_NeverPaidOff" xml:space="preserve">
-    <value>At this installment the balance is not repaid within 50 years.</value>
+    <value>At this installment amount, the loan would not be fully repaid within 50 years.</value>
   </data>
   <data name="Loan_Disclaimer" xml:space="preserve">
     <value>Estimate from the rate and installment you entered, with monthly interest on the balance. Your contract may calculate differently.</value>
@@ -2295,7 +2295,7 @@
     <value>There is no account in this currency for the installment.</value>
   </data>
   <data name="Loan_PayFrom" xml:space="preserve">
-    <value>Pay from</value>
+    <value>Repayment account</value>
   </data>
   <data name="Loan_ReceiveInto" xml:space="preserve">
     <value>Received into</value>
@@ -2382,7 +2382,7 @@
     <value>Remove unit?</value>
   </data>
   <data name="Unit_UseToman" xml:space="preserve">
-    <value>Use toman for the Iranian rial (1 toman = 10 rial)</value>
+    <value>Use toman for the Iranian rial (1 toman = 10 rials)</value>
   </data>
   <data name="Unit_TomanName" xml:space="preserve">
     <value>Toman</value>
@@ -2448,10 +2448,10 @@
     <value>Still in envelopes</value>
   </data>
   <data name="Envelope_OverAssigned" xml:space="preserve">
-    <value>More is assigned than your accounts hold. Lower an envelope or a goal.</value>
+    <value>The assigned amount exceeds your account balances. Reduce the amount assigned to an envelope or goal.</value>
   </data>
   <data name="Envelope_Overspent" xml:space="preserve">
-    <value>Envelopes are overspent by {0}; that money is already gone from the balance.</value>
+    <value>Envelope overspending is {0}. This spending is already reflected in your account balances.</value>
   </data>
   <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
     <value>Money not assigned yet is shown for the current month, based on today's balance.</value>
@@ -2478,7 +2478,7 @@
     <value>Restore the default</value>
   </data>
   <data name="HomeSection_Period" xml:space="preserve">
-    <value>Income and expense</value>
+    <value>Income and expenses</value>
   </data>
   <data name="HomeSection_Forecast" xml:space="preserve">
     <value>Forecast (Advanced)</value>
@@ -2490,7 +2490,7 @@
     <value>Upcoming</value>
   </data>
   <data name="HomeSection_Categories" xml:space="preserve">
-    <value>Expense by category</value>
+    <value>Expenses by category</value>
   </data>
   <data name="HomeSection_Accounts" xml:space="preserve">
     <value>Accounts</value>
@@ -2511,13 +2511,13 @@
     <value>{0} → {1}</value>
   </data>
   <data name="Category_ColorOption" xml:space="preserve">
-    <value>Colour {0}</value>
+    <value>Color {0}</value>
   </data>
   <data name="Common_SelectedItem" xml:space="preserve">
     <value>{0}, selected</value>
   </data>
   <data name="Plan_SplitConflict" xml:space="preserve">
-    <value>Occurrences after this date are already recorded and would not match the new dates. Choose a later "changes apply from" date, or keep the day.</value>
+    <value>Some occurrences after this date already have recorded transactions that would not match the new schedule. Choose a later "Apply changes from" date, or keep the existing day.</value>
   </data>
   <data name="Tab_Insights" xml:space="preserve">
     <value>Insights</value>
@@ -2619,13 +2619,13 @@
     <value>Lunar holidays are calculated and can differ by a day from the official announcement.</value>
   </data>
   <data name="Holiday_NationwideOnly" xml:space="preserve">
-    <value>Holidays of single states are not included.</value>
+    <value>State and regional public holidays are not included.</value>
   </data>
   <data name="Holiday_Short" xml:space="preserve">
     <value>holidays too</value>
   </data>
   <data name="Receipt_Read" xml:space="preserve">
-    <value>Read</value>
+    <value>Scan receipt</value>
   </data>
   <data name="Receipt_Title" xml:space="preserve">
     <value>Receipt</value>
@@ -2643,7 +2643,7 @@
     <value>the adjustment has no direction (increase or decrease)</value>
   </data>
   <data name="Import_Error_RefundTarget" xml:space="preserve">
-    <value>the purchase of this refund is not in the file or the app</value>
+    <value>the original purchase for this refund was not found in the file or the app</value>
   </data>
   <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
     <value>A refund must go to an account in the currency of the purchase.</value>
@@ -2655,10 +2655,10 @@
     <value>The action could not be completed. Please try again.</value>
   </data>
   <data name="Backup_Error_RestoreFailed" xml:space="preserve">
-    <value>The backup could not be restored. The copy of your data from before the restore is kept in the list of backups on this device.</value>
+    <value>The backup could not be restored completely, so the data of this profile may already have changed. Check your accounts and balances before you continue.</value>
   </data>
   <data name="LedgerError_RefundOriginalMissing" xml:space="preserve">
-    <value>The purchase of this refund does not exist.</value>
+    <value>The original purchase for this refund no longer exists.</value>
   </data>
   <data name="Plan_SecondDayInvalid" xml:space="preserve">
     <value>A second day is only possible for monthly plans on a fixed day of the month (1–31).</value>
@@ -2727,13 +2727,13 @@
     <value>Main profile</value>
   </data>
   <data name="Profile_Intro" xml:space="preserve">
-    <value>Keep separate finances on this device, e.g. personal and business. Each profile has its own accounts, entries, settings, app lock and backups.</value>
+    <value>Keep separate financial records on this device, for example, for personal and business use. Each profile has its own accounts, transactions, profile settings, app lock and backups.</value>
   </data>
   <data name="Profile_Note" xml:space="preserve">
-    <value>Reminders and budget alerts come from the open profile. A connected cloud storage is shared by the profiles of this device, but each profile sees only its own backups. The list of profile names is visible to anyone who can open the app.</value>
+    <value>Reminders and budget alerts apply to the currently open profile. Profiles on this device share the cloud storage connection, but each profile lists only its own backups. Anyone who can open the app can see the profile names.</value>
   </data>
   <data name="Profile_Open" xml:space="preserve">
-    <value>Open now</value>
+    <value>Currently open</value>
   </data>
   <data name="Profile_OpenAction" xml:space="preserve">
     <value>Open</value>
@@ -2742,7 +2742,7 @@
     <value>Add profile</value>
   </data>
   <data name="Profile_NamePrompt" xml:space="preserve">
-    <value>Name of the profile</value>
+    <value>Enter a profile name</value>
   </data>
   <data name="Profile_OpenNew" xml:space="preserve">
     <value>Open "{0}" now? A new profile starts with the setup.</value>
@@ -2808,7 +2808,7 @@
     <value>Tap a backup to restore it (with its password and a preview) or to delete it from the cloud.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
-    <value>The sign-in to {0} did not work. Please try again.</value>
+    <value>Could not sign in to {0}. Try again.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
     <value>Sign-in complete. You can close this tab and return to Zanance.</value>
@@ -2854,7 +2854,7 @@
     <value>The amount in the account at the start of the chosen day, before any transaction you record for that day or later. Zanance adds your transactions to it, so the balance shown is what you recorded – it is not read from a bank.</value>
   </data>
   <data name="Help_OpeningBalance_Example" xml:space="preserve">
-    <value>Your bank shows 2,350 this morning. Enter 2,350 with today's date, then record today's purchases as transactions.</value>
+    <value>Your balance at the start of today, before any of today's transactions, was 2,350. Enter 2,350 with today's date, then record today's transactions.</value>
   </data>
   <data name="Help_OpeningUnknown_Title" xml:space="preserve">
     <value>Opening balance not known</value>
@@ -2884,7 +2884,7 @@
     <value>Simple and Advanced</value>
   </data>
   <data name="Help_Mode_Text" xml:space="preserve">
-    <value>Both show the same data and calculations. Advanced shows more options directly – for example category limits, account scopes, weekly budgets and contracts. Switching back never removes anything; options already in use are summarised where they matter.</value>
+    <value>Both modes use the same data and calculations. Advanced shows more options directly, such as category limits, account scopes, weekly budgets and contracts. Switching to Simple does not remove data or settings; relevant options already in use are summarized.</value>
   </data>
   <data name="Help_AppLock_Title" xml:space="preserve">
     <value>App lock</value>
@@ -2896,7 +2896,7 @@
     <value>Names and amounts in notifications</value>
   </data>
   <data name="Help_NotificationDetails_Text" xml:space="preserve">
-    <value>By default a reminder only says that a payment is due, so nothing private appears on the lock screen. Turn this on to see the plan's name and amount in the notification.</value>
+    <value>Reminders use generic text by default. Turn this on to include financial names and amounts in notifications. These details may appear on the lock screen, depending on your device settings.</value>
   </data>
   <data name="Help_NotificationDetails_Example" xml:space="preserve">
     <value>Off: “A payment is due today.” On: “Rent – 900.00 EUR today.”</value>
@@ -2911,19 +2911,19 @@
     <value>Weekends and holidays</value>
   </data>
   <data name="Help_WeekendRule_Text" xml:space="preserve">
-    <value>If a due date falls on a weekend – or, when you choose it, on a public holiday of your region – the payment can be expected on the working day before or after, as many banks do.</value>
+    <value>If a due date falls on a weekend, this rule moves the scheduled date in Zanance to the previous or next working day. Supported public holidays are included only when enabled. Check the actual payment date with the payer or provider.</value>
   </data>
   <data name="Help_WeekendRule_Example" xml:space="preserve">
-    <value>Salary on the 30th, which is a Saturday: with “working day before” it is expected on Friday the 29th.</value>
+    <value>A salary is scheduled for Saturday the 30th. With “Previous working day”, Zanance schedules it for Friday the 29th, provided Friday is a working day under your selected rules.</value>
   </data>
   <data name="Help_AutoPost_Title" xml:space="preserve">
     <value>Record automatically</value>
   </data>
   <data name="Help_AutoPost_Text" xml:space="preserve">
-    <value>On the due date the plan's transaction is recorded for you the next time you open the app. It is marked as unreviewed, so you can check it. Without this, the payment waits under Plans until you confirm it. A payment is never recorded twice.</value>
+    <value>When you next open Zanance on or after the due date, the app records the scheduled transaction and marks it for review. If automatic recording is off, the item stays under Plans until you confirm it. Each scheduled occurrence is posted automatically only once; a separately entered transaction can still duplicate it.</value>
   </data>
   <data name="Help_AutoPost_Example" xml:space="preserve">
-    <value>Rent of 900 is due on the 1st. When you open the app on the 2nd, the entry is already there, waiting for your review.</value>
+    <value>Rent of 900 is due on the 1st. When you open the app on the 2nd, Zanance records the scheduled transaction and marks it for review.</value>
   </data>
   <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
     <value>Apply the change from</value>
@@ -2941,7 +2941,7 @@
     <value>Mark an expense that someone will pay back – for example a work trip or a dinner you paid for friends. It stays an expense until the money comes back; the repayment is recorded as a refund of it, never as income, and open amounts are listed under “Owed to me”.</value>
   </data>
   <data name="Help_Reimbursable_Example" xml:space="preserve">
-    <value>You pay 120 for a team lunch and your employer pays it back: mark the expense; when the 120 arrive, record them as its refund.</value>
+    <value>You pay 120 for a team lunch that your employer will reimburse. Mark the expense as reimbursable. When you receive the 120, record a refund linked to that expense.</value>
   </data>
   <data name="Help_ForeignAmount_Title" xml:space="preserve">
     <value>Paid in another currency</value>
@@ -2959,7 +2959,7 @@
     <value>Used by flex budgets. Fixed: the same bill every month, such as rent. Non-monthly: bills that come a few times a year, such as insurance – they get a monthly share. Flexible: everyday spending, which shares one limit.</value>
   </data>
   <data name="Help_SpendingType_Example" xml:space="preserve">
-    <value>Car insurance of 600 a year is non-monthly: the budget sets aside 50 each month for it.</value>
+    <value>An annual car insurance bill of 600 is non-monthly. The budget shows a monthly planning amount of 50; it does not actually set money aside.</value>
   </data>
   <data name="Help_BudgetMethod_Title" xml:space="preserve">
     <value>Budget method</value>
@@ -2968,16 +2968,16 @@
     <value>Limits: a maximum for the month and, if you like, per category – the simplest choice. Envelopes: you assign the money you have now to categories; the budget shows what is not assigned yet. Flex: fixed bills come from your plans, non-monthly bills get a monthly share, and one limit covers everything else.</value>
   </data>
   <data name="Help_BudgetMethod_Example" xml:space="preserve">
-    <value>Flex with rent of 900 as a plan: a yearly insurance of 600 gets 50 a month, and a flexible limit of 700 covers groceries, eating out and the rest.</value>
+    <value>In a Flex budget, rent of 900 comes from its plan. An annual insurance bill of 600 has a monthly planning amount of 50. A flexible limit of 700 covers groceries, eating out and other day-to-day spending.</value>
   </data>
   <data name="Help_Rollover_Title" xml:space="preserve">
     <value>Rollover</value>
   </data>
   <data name="Help_Rollover_Text" xml:space="preserve">
-    <value>Decides what happens with the rest of the previous period. None: every period starts fresh. Surplus: money you did not spend is added to the new limit. Surplus and deficit: overspending is also taken from the new limit.</value>
+    <value>Choose how unused budget and overspending affect the next period. Start fresh: use only the new limit. Carry over unused budget: add the previous period's unused amount. Carry over surplus and overspending: also deduct the previous period's overspending.</value>
   </data>
   <data name="Help_Rollover_Example" xml:space="preserve">
-    <value>Limit 500 and you spent 450 last month: with surplus, this month's limit is 550. Had you spent 560, “surplus and deficit” would make it 440.</value>
+    <value>With a monthly limit of 500 and spending of 450, “Carry over unused budget” makes the next month's limit 550. If spending was 560, “Carry over surplus and overspending” makes it 440.</value>
   </data>
   <data name="Help_BudgetPeriod_Title" xml:space="preserve">
     <value>Budget period</value>
@@ -2992,7 +2992,7 @@
     <value>Two-week periods</value>
   </data>
   <data name="Help_FortnightStart_Text" xml:space="preserve">
-    <value>Two-week budgets repeat every 14 days from this day. Choose a payday, so each period runs from one pay to the next.</value>
+    <value>Two-week budgets repeat every 14 days from this date. Choose a payday to make each period run from one payday to the next.</value>
   </data>
   <data name="Help_FortnightStart_Example" xml:space="preserve">
     <value>Paid every second Friday, last on 18 September: the periods run 18 September – 1 October, 2 – 15 October, and so on.</value>
@@ -3001,7 +3001,7 @@
     <value>Backup password</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>The backup file is encrypted with this password (AES-256). Nobody can open it without the password – not even the developer – so keep the password somewhere safe. It is not stored in the app, and a forgotten password cannot be recovered.</value>
+    <value>When password protection is enabled, the backup is encrypted with AES-256. You need the backup password to restore it. The app does not save this password for later use, and the developer cannot recover a forgotten password. Keep it somewhere safe.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priority of a goal</value>
@@ -3025,7 +3025,7 @@
     <value>Quick add</value>
   </data>
   <data name="Home_TemplateDescription" xml:space="preserve">
-    <value>New entry from the template {0}</value>
+    <value>New transaction from template {0}</value>
   </data>
   <data name="Home_ForecastEnd" xml:space="preserve">
     <value>End of month ≈ {0}</value>
@@ -3049,25 +3049,25 @@
     <value>New transfer</value>
   </data>
   <data name="HomeSection_Recent" xml:space="preserve">
-    <value>Recent entries</value>
+    <value>Recent transactions</value>
   </data>
   <data name="Home_Recent" xml:space="preserve">
-    <value>Recent entries</value>
+    <value>Recent transactions</value>
   </data>
   <data name="Home_Yesterday" xml:space="preserve">
     <value>Yesterday</value>
   </data>
   <data name="Home_ReadReceipt" xml:space="preserve">
-    <value>Read a receipt photo or PDF</value>
+    <value>Scan a receipt photo or PDF</value>
   </data>
   <data name="Receipt_WillAttach" xml:space="preserve">
-    <value>The receipt is attached to the entry when you save.</value>
+    <value>The receipt will be attached to the transaction when you save.</value>
   </data>
   <data name="Receipt_NothingNew" xml:space="preserve">
     <value>No amount, date or shop could be read from this receipt. Enter them yourself; the receipt is attached when you save.</value>
   </data>
   <data name="Receipt_AttachFailed" xml:space="preserve">
-    <value>The entry was saved, but the receipt could not be attached. You can attach it in the entry's details.</value>
+    <value>The transaction was saved, but the receipt could not be attached. Add it from the transaction's details.</value>
   </data>
   <data name="Notify_OfferTitle" xml:space="preserve">
     <value>Reminders for due payments</value>
@@ -3103,7 +3103,7 @@
     <value>Camera access is off</value>
   </data>
   <data name="Camera_OffText" xml:space="preserve">
-    <value>Zanance may not use the camera. Open the settings and allow camera access for Zanance, or choose a photo or PDF instead.</value>
+    <value>Camera access has not been granted to Zanance. Open device settings to allow access, or choose a photo or PDF instead.</value>
   </data>
   <data name="Camera_NotAvailable" xml:space="preserve">
     <value>No camera app is available on this device. Choose a photo or PDF instead.</value>
@@ -3115,13 +3115,13 @@
     <value>Language and region</value>
   </data>
   <data name="Settings_MoneyMonths" xml:space="preserve">
-    <value>Money and months</value>
+    <value>Currency and periods</value>
   </data>
   <data name="More_App" xml:space="preserve">
     <value>App</value>
   </data>
   <data name="More_AccountsHint" xml:space="preserve">
-    <value>Balances, loans and assets, reconciling</value>
+    <value>Balances, loans, assets and reconciliation</value>
   </data>
   <data name="More_ReimbursementsHint" xml:space="preserve">
     <value>Expenses others will pay back</value>
@@ -3130,7 +3130,7 @@
     <value>Expense and income categories</value>
   </data>
   <data name="More_TemplatesHint" xml:space="preserve">
-    <value>Recurring entries in one tap</value>
+    <value>Prefill transactions you record often</value>
   </data>
   <data name="More_RulesHint" xml:space="preserve">
     <value>Suggest a category from the payee or title</value>
@@ -3142,7 +3142,7 @@
     <value>Everyday units, e.g. toman for rial</value>
   </data>
   <data name="More_BackupHint" xml:space="preserve">
-    <value>Encrypted backups and restore</value>
+    <value>Back up and restore your data</value>
   </data>
   <data name="More_ImportExportHint" xml:space="preserve">
     <value>CSV files for spreadsheets and other apps</value>
@@ -3154,7 +3154,7 @@
     <value>Language, theme, app lock, reminders</value>
   </data>
   <data name="More_AboutHint" xml:space="preserve">
-    <value>Version, your data and licences</value>
+    <value>Version, your data and licenses</value>
   </data>
   <data name="About_Title" xml:space="preserve">
     <value>About Zanance</value>
@@ -3163,16 +3163,16 @@
     <value>Your data</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Zanance needs no account and shows no advertising. Your financial data is kept on this device and in the backups you create, and it is not sent to the developer or to anyone else. Cloud backup is optional and uses only your own storage, once you connect it.</value>
+    <value>Zanance works without an online account and does not show ads. Your financial data is stored on this device. You choose when to export it or create backups. Optional cloud backups are stored in your own connected cloud account. Zanance does not automatically send your financial records to the developer.</value>
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Open-source licences</value>
+    <value>Third-party licenses</value>
   </data>
   <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance is built with the following software and fonts. Their licences ask for these notices.</value>
+    <value>Zanance uses the following software and fonts. Their licenses require these notices.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
-    <value>Show licence texts</value>
+    <value>View licenses</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
@@ -3196,7 +3196,7 @@
     <value>Hide</value>
   </data>
   <data name="Forecast_NoPlansHint" xml:space="preserve">
-    <value>Add your regular income and bills as plans to see how your balance develops.</value>
+    <value>Add plans for your regular income and bills to estimate how your balance may change.</value>
   </data>
   <data name="Common_Selected" xml:space="preserve">
     <value>Selected</value>
@@ -3211,28 +3211,28 @@
     <value>Default currency for new items</value>
   </data>
   <data name="Help_DefaultCurrency_Text" xml:space="preserve">
-    <value>New accounts, goals, budgets and exchange rates start in this currency; you can change it each time. Existing accounts and entries keep their currency, and an entry is always in the currency of its account.</value>
+    <value>New accounts, goals, budgets and exchange rates default to this currency; you can choose a different one each time. Existing accounts and transactions keep their currency. Each transaction is recorded in its account's currency.</value>
   </data>
   <data name="Help_DefaultCurrency_Example" xml:space="preserve">
     <value>Your accounts are in EUR and USD. With EUR here, a new account starts in EUR; your USD account stays in USD.</value>
   </data>
   <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
-    <value>Only new items use this. Existing accounts and entries keep their currency.</value>
+    <value>Applies to new items only. Existing accounts and transactions keep their currency.</value>
   </data>
   <data name="Settings_DefaultAccount" xml:space="preserve">
-    <value>Default account for new entries</value>
+    <value>Default account for new transactions</value>
   </data>
   <data name="Settings_DefaultAccountNone" xml:space="preserve">
     <value>None – choose each time</value>
   </data>
   <data name="Help_DefaultAccount_Title" xml:space="preserve">
-    <value>Default account for new entries</value>
+    <value>Default account for new transactions</value>
   </data>
   <data name="Help_DefaultAccount_Text" xml:space="preserve">
-    <value>Quick add on Home, the widget and receipts use this account. The entry form always shows it, and you can pick another one for a single entry. Only cash, bank and card accounts can be the default; without one, the form asks which account to use.</value>
+    <value>Quick add on Home, the widget and receipt scanning preselect this account. You can choose another account in the transaction form. Only cash, bank and credit card accounts can be the default. Without a default, you are asked to choose an account.</value>
   </data>
   <data name="Help_DefaultAccount_Example" xml:space="preserve">
-    <value>Default "Main (EUR)": Expense on Home opens with Main. Choose "Dollar account" in the form, and only that entry goes there.</value>
+    <value>With "Main (EUR)" as the default, choosing Expense on Home preselects Main. Choosing "Dollar account" in the form changes the account for that transaction only.</value>
   </data>
   <data name="Settings_ShowConverted" xml:space="preserve">
     <value>Show converted totals</value>
@@ -3256,7 +3256,7 @@
     <value>30 days: a USD rate of 12 August is marked on 15 September; a rate of 2 September is not.</value>
   </data>
   <data name="Entry_ChooseAccount" xml:space="preserve">
-    <value>Choose the account for this entry.</value>
+    <value>Choose the account for this transaction.</value>
   </data>
   <data name="Entry_CurrencyChanged" xml:space="preserve">
     <value>The amount is now in {0} (was {1}). Check it before saving.</value>
@@ -3265,7 +3265,7 @@
     <value>Undo account change</value>
   </data>
   <data name="Entry_TemplateAccountArchived" xml:space="preserve">
-    <value>The template's account is archived – choose an account and the amount.</value>
+    <value>The template's account is archived. Choose an account and enter an amount.</value>
   </data>
   <data name="Entry_EffectFrom" xml:space="preserve">
     <value>{0} from {1}</value>
@@ -3289,7 +3289,7 @@
     <value>change</value>
   </data>
   <data name="Home_CombinedOutdated" xml:space="preserve">
-    <value>Together ≈ {0} (rates of {1} – may be outdated)</value>
+    <value>Combined ≈ {0} (rates dated {1} — may be outdated)</value>
   </data>
   <data name="Home_RateEstimate" xml:space="preserve">
     <value>contains an estimated rate</value>
@@ -3298,40 +3298,40 @@
     <value>Your balance may fall below zero around {0}</value>
   </data>
   <data name="Account_CurrencyLockedBy" xml:space="preserve">
-    <value>The currency cannot change because these amounts are in it: {0}. To use another currency, create a new account and move the money with a transfer.</value>
+    <value>You cannot change this account's currency because it is used by: {0}. To track another currency, create a separate account. If money was moved between accounts, record that transfer.</value>
   </data>
   <data name="Account_LockEntries" xml:space="preserve">
-    <value>{0} entries</value>
+    <value>transactions: {0}</value>
   </data>
   <data name="Account_LockPlans" xml:space="preserve">
-    <value>{0} plans</value>
+    <value>plans: {0}</value>
   </data>
   <data name="Account_LockTemplates" xml:space="preserve">
-    <value>{0} quick templates</value>
+    <value>quick templates: {0}</value>
   </data>
   <data name="Account_LockEarmarks" xml:space="preserve">
-    <value>{0} amounts set aside for goals</value>
+    <value>goal allocations: {0}</value>
   </data>
   <data name="Account_LockBudgets" xml:space="preserve">
-    <value>{0} budgets</value>
+    <value>budgets: {0}</value>
   </data>
   <data name="Account_LockInstallment" xml:space="preserve">
     <value>the loan installment</value>
   </data>
   <data name="Account_DefaultCleared" xml:space="preserve">
-    <value>This was your default account. Quick add now asks for an account; choose a new default in Settings › Money and months.</value>
+    <value>This was your default account. Quick add now asks you to choose an account. Set a new default in Settings › Currency and periods.</value>
   </data>
   <data name="Account_Usable" xml:space="preserve">
     <value>Usable for payments</value>
   </data>
   <data name="Account_UsableHint" xml:space="preserve">
-    <value>Counts in the money that can pay your bills, e.g. the lowest expected balance.</value>
+    <value>Includes this account in forecasts of the money available for planned payments, such as the lowest expected balance.</value>
   </data>
   <data name="Help_UsableForPayments_Title" xml:space="preserve">
     <value>Usable for payments</value>
   </data>
   <data name="Help_UsableForPayments_Text" xml:space="preserve">
-    <value>Some money is in your totals but is not meant for everyday payments, for example a savings account with notice or money abroad. Switch this off for such accounts: the forecast of your lowest balance then leaves them out, while every total still includes them. Zanance never decides this for you.</value>
+    <value>Some accounts are not intended for everyday payments, such as savings accounts with a withdrawal notice period or money held abroad. Turn this off to exclude an account from the lowest-balance forecast. This does not change its separate "Include in totals" setting. You choose which accounts are usable.</value>
   </data>
   <data name="Help_UsableForPayments_Example" xml:space="preserve">
     <value>Checking 1,250 EUR (on) and a fixed-term savings account 5,000 EUR (off): the lowest expected balance looks only at the 1,250 EUR.</value>
@@ -3343,7 +3343,7 @@
     <value>e.g. DE</value>
   </data>
   <data name="Account_AddEntryHere" xml:space="preserve">
-    <value>Add entry here</value>
+    <value>Add transaction here</value>
   </data>
   <data name="Accounts_Default" xml:space="preserve">
     <value>Default</value>
@@ -3367,7 +3367,7 @@
     <value>Fee at the destination</value>
   </data>
   <data name="GoalType_AccountBalance" xml:space="preserve">
-    <value>A balance on one account</value>
+    <value>Account balance</value>
   </data>
   <data name="GoalType_Earmark" xml:space="preserve">
     <value>Money set aside</value>
@@ -3403,10 +3403,10 @@
     <value>Every two weeks</value>
   </data>
   <data name="Goal_FirstDate" xml:space="preserve">
-    <value>First date (e.g. your next pay day)</value>
+    <value>First contribution date (e.g. your next payday)</value>
   </data>
   <data name="Goal_Method" xml:space="preserve">
-    <value>How much</value>
+    <value>Contribution method</value>
   </data>
   <data name="Help_ContributionMethod_Title" xml:space="preserve">
     <value>How much to set aside</value>
@@ -3427,7 +3427,7 @@
     <value>Spending cut</value>
   </data>
   <data name="Goal_ContributionAmount" xml:space="preserve">
-    <value>Amount per date</value>
+    <value>Amount per contribution</value>
   </data>
   <data name="Goal_CutAmount" xml:space="preserve">
     <value>Spend less per month</value>
@@ -3448,16 +3448,16 @@
     <value>Now {0} · {1} % · {2} left</value>
   </data>
   <data name="Goal_PreviewPlan" xml:space="preserve">
-    <value>With {0} per date ({1}): {2} times → ~ {3}</value>
+    <value>With {0} per contribution ({1}): contributions needed: {2} → approximately {3}</value>
   </data>
   <data name="Goal_PreviewRequired" xml:space="preserve">
-    <value>To be ready by {0}: {1} per date ({2} dates)</value>
+    <value>To reach the target by {0}: {1} per contribution (contributions: {2})</value>
   </data>
   <data name="Goal_PreviewNeededNow" xml:space="preserve">
-    <value>The date has passed – {0} are needed now</value>
+    <value>The target date has passed — you still need {0}.</value>
   </data>
   <data name="Goal_PreviewShare" xml:space="preserve">
-    <value>Last month's eligible income {0} ({1} entries) × {2} % = {3}</value>
+    <value>Last month's eligible income {0} (transactions: {1}) × {2} % = {3}</value>
   </data>
   <data name="Goal_PreviewCut" xml:space="preserve">
     <value>Spend {1} less on {0} each month. Nothing changes until you apply it.</value>
@@ -3472,7 +3472,7 @@
     <value>This month's budget has no limit for {0}. Add one on the Budget page first.</value>
   </data>
   <data name="Goal_EstimateNote" xml:space="preserve">
-    <value>Estimates under your assumptions, not promises.</value>
+    <value>Estimates based on your assumptions, not guaranteed outcomes.</value>
   </data>
   <data name="Goal_Protect" xml:space="preserve">
     <value>Protect this money</value>
@@ -3499,13 +3499,13 @@
     <value>{0} % · {1} left</value>
   </data>
   <data name="Goal_SuggestPerDate" xml:space="preserve">
-    <value>Set aside {0} per date ({1} dates left)</value>
+    <value>Set aside {0} per contribution (contributions remaining: {1})</value>
   </data>
   <data name="Goal_EtaPlan" xml:space="preserve">
-    <value>~ {0} with {1} per date</value>
+    <value>Around {0}, with {1} per contribution</value>
   </data>
   <data name="Goal_OverdueNeeded" xml:space="preserve">
-    <value>The date has passed – {0} are needed now.</value>
+    <value>The target date has passed — you still need {0}.</value>
   </data>
   <data name="Goal_AccountArchived" xml:space="preserve">
     <value>The account of this goal is archived – choose another account or complete the goal.</value>
@@ -3559,7 +3559,7 @@
     <value>Known value</value>
   </data>
   <data name="Holdings_Note" xml:space="preserve">
-    <value>Values are estimates from the prices you entered. Holdings are not part of account balances or net worth totals.</value>
+    <value>Values are estimates based on the prices you entered. Holdings are separate from account balances but are included in net worth when a price is available.</value>
   </data>
   <data name="Holding_ValueUnknown" xml:space="preserve">
     <value>Value unknown – add a price</value>
@@ -3604,16 +3604,16 @@
     <value>Average cost: {0}</value>
   </data>
   <data name="Holding_Unrealised" xml:space="preserve">
-    <value>Unrealised result (estimate): {0}</value>
+    <value>Unrealized gain/loss (estimate): {0}</value>
   </data>
   <data name="Holding_Realised" xml:space="preserve">
-    <value>Result of sales: {0}</value>
+    <value>Realized gain/loss: {0}</value>
   </data>
   <data name="Holding_Buy" xml:space="preserve">
-    <value>Buy</value>
+    <value>Record purchase</value>
   </data>
   <data name="Holding_Sell" xml:space="preserve">
-    <value>Sell</value>
+    <value>Record sale</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Move</value>
@@ -3646,7 +3646,7 @@
     <value>From a purchase</value>
   </data>
   <data name="Holding_TotalNeedsQuantity" xml:space="preserve">
-    <value>A total needs a quantity held on that date.</value>
+    <value>To enter a total value, you must have a recorded quantity for that date.</value>
   </data>
   <data name="Holding_DeletePrice" xml:space="preserve">
     <value>Delete this price?</value>
@@ -3670,7 +3670,7 @@
     <value>On {0} only {1} were held at {2}.</value>
   </data>
   <data name="Holding_EditType" xml:space="preserve">
-    <value>Edit the type</value>
+    <value>Edit holding type</value>
   </data>
   <data name="Holding_Archive" xml:space="preserve">
     <value>Archive</value>
@@ -3691,13 +3691,13 @@
     <value>Name</value>
   </data>
   <data name="AssetType_NamePlaceholder" xml:space="preserve">
-    <value>e.g. 18k gold jewellery</value>
+    <value>e.g. 18k gold jewelry</value>
   </data>
   <data name="AssetType_NameRequired" xml:space="preserve">
-    <value>Please enter a name.</value>
+    <value>Enter a holding type name.</value>
   </data>
   <data name="AssetType_Kind" xml:space="preserve">
-    <value>Kind</value>
+    <value>Type</value>
   </data>
   <data name="AssetKind_PreciousMetal" xml:space="preserve">
     <value>Precious metal</value>
@@ -3721,7 +3721,7 @@
     <value>Count</value>
   </data>
   <data name="AssetType_DimensionLocked" xml:space="preserve">
-    <value>Weight or count cannot change once something is recorded.</value>
+    <value>You cannot switch between weight and count after recording a holding event.</value>
   </data>
   <data name="AssetType_Metal" xml:space="preserve">
     <value>Metal</value>
@@ -3766,7 +3766,7 @@
     <value>Weight of one unit in g (optional)</value>
   </data>
   <data name="AssetType_WeightInvalid" xml:space="preserve">
-    <value>Enter a weight greater than zero with up to three decimals.</value>
+    <value>Enter a weight greater than zero with up to three decimal places.</value>
   </data>
   <data name="AssetType_Divisible" xml:space="preserve">
     <value>Fractions allowed (e.g. half a coin)</value>
@@ -3799,7 +3799,7 @@
     <value>Gift or inheritance</value>
   </data>
   <data name="AssetEvent_Outflow" xml:space="preserve">
-    <value>Given away or gone</value>
+    <value>Given away, used up or lost</value>
   </data>
   <data name="AssetEvent_Correction" xml:space="preserve">
     <value>Correction</value>
@@ -3808,19 +3808,19 @@
     <value>What you already have. No money is taken from an account.</value>
   </data>
   <data name="AssetEvent_PurchaseHint" xml:space="preserve">
-    <value>Paid from an account. The price is not spending; a fee is recorded as an expense.</value>
+    <value>Records a purchase paid from an account. In Zanance, the purchase amount is excluded from spending; any fee is recorded as an expense.</value>
   </data>
   <data name="AssetEvent_SaleHint" xml:space="preserve">
-    <value>Paid into an account. The money received is not income.</value>
+    <value>Records sale proceeds received in an account. In Zanance, the sale amount is excluded from income.</value>
   </data>
   <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
     <value>From one place to another. The total stays the same.</value>
   </data>
   <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
-    <value>Received without paying. It is not income.</value>
+    <value>Records a holding received without payment. In Zanance, this holding event is excluded from income.</value>
   </data>
   <data name="AssetEvent_OutflowHint" xml:space="preserve">
-    <value>Given away, used up or lost. It is not spending.</value>
+    <value>Records a holding given away, used up or lost. In Zanance, this holding event is excluded from spending.</value>
   </data>
   <data name="AssetEvent_CorrectionHint" xml:space="preserve">
     <value>Fixes the quantity, e.g. after weighing again. A reason is required.</value>
@@ -3829,7 +3829,7 @@
     <value>Quantity</value>
   </data>
   <data name="AssetEvent_QuantityInvalid" xml:space="preserve">
-    <value>Enter a quantity greater than zero with up to three decimals.</value>
+    <value>Enter a quantity greater than zero with up to three decimal places.</value>
   </data>
   <data name="AssetEvent_WholeUnits" xml:space="preserve">
     <value>This type is counted in whole units.</value>
@@ -3856,7 +3856,7 @@
     <value>Add location</value>
   </data>
   <data name="AssetEvent_AddLocationMessage" xml:space="preserve">
-    <value>e.g. Home safe or Bank box</value>
+    <value>e.g. home safe or safe deposit box</value>
   </data>
   <data name="AssetEvent_Paid" xml:space="preserve">
     <value>Price paid</value>
@@ -3868,7 +3868,7 @@
     <value>Total</value>
   </data>
   <data name="AssetEvent_SecondAmount" xml:space="preserve">
-    <value>The same in {0} (for the cost basis; optional)</value>
+    <value>Equivalent amount in {0} (for cost basis; optional)</value>
   </data>
   <data name="AssetEvent_Fee" xml:space="preserve">
     <value>Fee (optional)</value>
@@ -3916,7 +3916,7 @@
     <value>Purity</value>
   </data>
   <data name="Help_Purity_Text" xml:space="preserve">
-    <value>Purity is given in karat (24 = pure) or as fineness in thousandths. 18 k and 24 k gold are two types, because their grams are not the same. With a purity the app shows the fine metal you own; without it nothing is guessed.</value>
+    <value>Enter purity in karats (24 for pure gold) or as fineness in parts per thousand. Keep 18k and 24k gold as separate holding types because they contain different proportions of pure gold. When purity is known, the app estimates the pure-metal weight. It does not assume a purity when none is entered.</value>
   </data>
   <data name="Help_Purity_Example" xml:space="preserve">
     <value>18 k = 750/1000: 20 g of 18k gold contain about 15 g of fine gold.</value>
@@ -3934,7 +3934,7 @@
     <value>Prices and value</value>
   </data>
   <data name="Help_HoldingPrices_Text" xml:space="preserve">
-    <value>Enter a price per gram or unit, or the total value of what you hold. The latest price on or before a day gives the value of that day; a new price never changes earlier values or the quantity. Purchase prices are used too and are marked.</value>
+    <value>Enter a price per gram or unit, or the total value of your holdings. For any date, valuation uses the latest price on or before that date. A backdated price can therefore change historical valuations from that date onward, but it does not change recorded quantities. Purchase prices may also be used and are identified.</value>
   </data>
   <data name="Help_HoldingPrices_Example" xml:space="preserve">
     <value>50 EUR per g × 730 g = 36,500 EUR.</value>
@@ -3946,7 +3946,7 @@
     <value>Holding sale</value>
   </data>
   <data name="Entry_HoldingMoney" xml:space="preserve">
-    <value>This money belongs to a purchase or sale of a holding. It is changed or deleted there, together with the quantity.</value>
+    <value>This transaction is linked to a holding purchase or sale. Edit or delete it from the holding's history so the transaction and quantity stay consistent.</value>
   </data>
   <data name="Entry_OpenHolding" xml:space="preserve">
     <value>Open the holding</value>
@@ -3958,10 +3958,10 @@
     <value>Export holdings</value>
   </data>
   <data name="Export_HoldingsDone" xml:space="preserve">
-    <value>Holdings exported with {0} changes. The money of purchases and sales is in the entries export.</value>
+    <value>Holding events exported: {0}. Related purchase and sale transactions are included in the transactions export.</value>
   </data>
   <data name="Import_HoldingsPreview" xml:space="preserve">
-    <value>Holdings file: {0} types, {1} changes, {2} prices; {3} invalid rows.</value>
+    <value>Holdings file: types {0}, changes {1}, prices {2}, invalid rows {3}.</value>
   </data>
   <data name="Import_HoldingsInvalid" xml:space="preserve">
     <value>A holdings file is imported only as a whole. Fix the invalid rows first.</value>
@@ -4066,7 +4066,7 @@
     <value>Data status: {0}</value>
   </data>
   <data name="Report_NoIssues" xml:space="preserve">
-    <value>No open issues for this view</value>
+    <value>No data issues detected for this view</value>
   </data>
   <data name="Report_Surplus" xml:space="preserve">
     <value>Surplus</value>
@@ -4090,7 +4090,7 @@
     <value>Transfers between your accounts</value>
   </data>
   <data name="Report_SeparateLines" xml:space="preserve">
-    <value>Separate lines, not spending</value>
+    <value>Shown separately; excluded from spending</value>
   </data>
   <data name="Report_IncomeSpending" xml:space="preserve">
     <value>Income and spending</value>
@@ -4174,7 +4174,7 @@
     <value>share {0}/month</value>
   </data>
   <data name="Report_ShareNotSetAside" xml:space="preserve">
-    <value>A monthly share is a share, not money set aside.</value>
+    <value>A monthly equivalent is for planning only; it does not set money aside.</value>
   </data>
   <data name="Report_Debt" xml:space="preserve">
     <value>Loans</value>
@@ -4192,7 +4192,7 @@
     <value>Owed to me</value>
   </data>
   <data name="Report_NoReceivables" xml:space="preserve">
-    <value>Nobody owes you money.</value>
+    <value>No outstanding receivables are recorded.</value>
   </data>
   <data name="Report_Receivables" xml:space="preserve">
     <value>Open: {0} · items: {1}</value>
@@ -4243,7 +4243,7 @@
     <value>Loan principal</value>
   </data>
   <data name="Report_CapGoals" xml:space="preserve">
-    <value>Plans of other goals</value>
+    <value>Planned contributions to other goals</value>
   </data>
   <data name="Report_EstimateNotPromise" xml:space="preserve">
     <value>An estimate, not a promise. Accepting a suggestion changes no budget or entry.</value>
@@ -4306,7 +4306,7 @@
     <value>Composition</value>
   </data>
   <data name="Report_DebtsApart" xml:space="preserve">
-    <value>debts apart: {0}</value>
+    <value>debts shown separately: {0}</value>
   </data>
   <data name="Report_NoRate" xml:space="preserve">
     <value>no rate: {0}</value>
@@ -4339,7 +4339,7 @@
     <value>Opening balance unknown: {0}</value>
   </data>
   <data name="Issue_NotReconciled" xml:space="preserve">
-    <value>Not compared with the bank for over 60 days: {0}</value>
+    <value>Accounts not reconciled for over 60 days: {0}</value>
   </data>
   <data name="Issue_WithoutCategory" xml:space="preserve">
     <value>Without category: {0}</value>
@@ -4378,16 +4378,16 @@
     <value>Compare balance</value>
   </data>
   <data name="Issue_WithoutCategory_Action" xml:space="preserve">
-    <value>Show entries</value>
+    <value>Show transactions</value>
   </data>
   <data name="Issue_PossibleDuplicates_Action" xml:space="preserve">
-    <value>Show entries</value>
+    <value>Show transactions</value>
   </data>
   <data name="Issue_Aggregated_Action" xml:space="preserve">
-    <value>Show entries</value>
+    <value>Show transactions</value>
   </data>
   <data name="Issue_BeforeOpening_Action" xml:space="preserve">
-    <value>Show entries</value>
+    <value>Show transactions</value>
   </data>
   <data name="Kpi_Explain" xml:space="preserve">
     <value>Explain this number</value>
@@ -4402,7 +4402,7 @@
     <value>Not included</value>
   </data>
   <data name="Kpi_ShowEntries" xml:space="preserve">
-    <value>Show entries</value>
+    <value>Show transactions</value>
   </data>
   <data name="Kpi_K01_Title" xml:space="preserve">
     <value>Budget remaining</value>
@@ -4411,13 +4411,13 @@
     <value>How much is left in this period's budget?</value>
   </data>
   <data name="Kpi_K01_Definition" xml:space="preserve">
-    <value>The limit plus what was carried over, minus expenses reduced by refunds.</value>
+    <value>The budget limit plus rollover, minus net spending. Net spending is expenses minus refunds.</value>
   </data>
   <data name="Kpi_K01_Included" xml:space="preserve">
     <value>Expenses and refunds of the budget's accounts and categories|Sub-categories with their parent</value>
   </data>
   <data name="Kpi_K01_Excluded" xml:space="preserve">
-    <value>Transfers and card payments|Loan principal|Holding purchases and sales|Adjustments and opening balances|Income</value>
+    <value>Transfers and credit card repayments|Loan principal|Holding purchases and sales|Adjustments and opening balances|Income</value>
   </data>
   <data name="Kpi_K02_Title" xml:space="preserve">
     <value>Lowest balance and headroom</value>
@@ -4432,19 +4432,19 @@
     <value>Accounts usable for payments|Entries recorded for later days|Open plan payments, overdue ones today|Your day-to-day estimate, if set|Money set aside and marked as protected</value>
   </data>
   <data name="Kpi_K02_Excluded" xml:space="preserve">
-    <value>Budgets and monthly shares|Holdings, debts and money owed to you|Credit limits|Card purchases – only the card payment counts</value>
+    <value>Budgets and monthly planning amounts|Holdings, debts and money owed to you|Credit limits|Credit card purchases are excluded here; repayments from usable accounts are counted instead</value>
   </data>
   <data name="Kpi_K03_Title" xml:space="preserve">
     <value>Goal progress</value>
   </data>
   <data name="Kpi_K03_Question" xml:space="preserve">
-    <value>How far are my goals?</value>
+    <value>How much progress have I made toward my goals?</value>
   </data>
   <data name="Kpi_K03_Definition" xml:space="preserve">
     <value>What is reached divided by the target; the rest is what is still needed.</value>
   </data>
   <data name="Kpi_K03_Included" xml:space="preserve">
-    <value>A balance goal: the balance of its account|Money set aside: what is set aside and covered</value>
+    <value>An account-balance goal: its recorded account balance|A money-set-aside goal: its covered allocations|A holding-quantity goal: the recorded quantity held</value>
   </data>
   <data name="Kpi_K03_Excluded" xml:space="preserve">
     <value>Money moved in from other accounts as income|Price changes</value>
@@ -4468,22 +4468,22 @@
     <value>Surplus</value>
   </data>
   <data name="Kpi_K05_Question" xml:space="preserve">
-    <value>Did I earn more than I spent?</value>
+    <value>Did I receive more income than I spent?</value>
   </data>
   <data name="Kpi_K05_Definition" xml:space="preserve">
-    <value>Income you earned minus what you spent on consumption in the period.</value>
+    <value>Recorded income received, less any income repaid, minus expenses after refunds and reimbursements for the selected period.</value>
   </data>
   <data name="Kpi_K05_Included" xml:space="preserve">
     <value>Income on the accounts of the scope, minus income paid back|Expenses, reduced by refunds and reimbursements|Interest and fees, counted once as expenses</value>
   </data>
   <data name="Kpi_K05_Excluded" xml:space="preserve">
-    <value>Transfers between your accounts|Card payments and loan principal|Holding purchases and sales|Adjustments and opening balances|Price and rate changes</value>
+    <value>Transfers between your accounts|Credit card repayments and loan principal|Holding purchases and sales|Adjustments and opening balances|Price and rate changes</value>
   </data>
   <data name="Kpi_K06_Title" xml:space="preserve">
     <value>Share of income kept</value>
   </data>
   <data name="Kpi_K06_Question" xml:space="preserve">
-    <value>Which share of my income was left?</value>
+    <value>What percentage of my income was left?</value>
   </data>
   <data name="Kpi_K06_Definition" xml:space="preserve">
     <value>The surplus divided by your income. Without income it is not available – never 0 %.</value>
@@ -4501,7 +4501,7 @@
     <value>How many months could I cover essential costs with the money I can use?</value>
   </data>
   <data name="Kpi_K07_Definition" xml:space="preserve">
-    <value>Usable money divided by the median essential spending of the last three complete months, plus monthly shares of essential non-monthly bills.</value>
+    <value>Usable money divided by the total monthly essential cost estimate: the median essential spending of the last three complete months plus the monthly equivalents of essential non-monthly bills.</value>
   </data>
   <data name="Kpi_K07_Included" xml:space="preserve">
     <value>Accounts usable for payments|Categories marked essential (housing, food, energy, phone, transport, health, insurance)</value>
@@ -4516,7 +4516,7 @@
     <value>What do my regular obligations cost over a year?</value>
   </data>
   <data name="Kpi_K08_Definition" xml:space="preserve">
-    <value>The expected amounts of active expense plans in the next 12 months: fixed, non-monthly and estimated. A monthly share is a share, not money set aside.</value>
+    <value>Expected amounts from active expense plans over the next 12 months, including fixed, non-monthly and estimated amounts. Monthly equivalents are for planning only; they do not set money aside.</value>
   </data>
   <data name="Kpi_K08_Included" xml:space="preserve">
     <value>Active expense plans and contracts</value>
@@ -4534,7 +4534,7 @@
     <value>Scheduled installments of the month divided by income. The split into interest and principal is an estimate from the loan's rate.</value>
   </data>
   <data name="Kpi_K09_Included" xml:space="preserve">
-    <value>Loans with a plan that pays the installment</value>
+    <value>Loans with a plan for recording installment payments</value>
   </data>
   <data name="Kpi_K09_Excluded" xml:space="preserve">
     <value>Card purchases|Principal is never spending</value>
@@ -4543,13 +4543,13 @@
     <value>Net worth</value>
   </data>
   <data name="Kpi_K10_Question" xml:space="preserve">
-    <value>What am I worth today, and what is it made of?</value>
+    <value>What is my recorded net worth today, and what does it include?</value>
   </data>
   <data name="Kpi_K10_Definition" xml:space="preserve">
     <value>Per currency: money + money owed to you + valued assets + holdings at their latest price − debts. Currencies are never added without a rate.</value>
   </data>
   <data name="Kpi_K10_Included" xml:space="preserve">
-    <value>All accounts that are not archived|Open reimbursements and money lent|Holdings at their latest price</value>
+    <value>Accounts opened by the selected date, including archived accounts with a nonzero balance|Outstanding reimbursements and money lent|Non-archived holdings with a price on or before the selected date</value>
   </data>
   <data name="Kpi_K10_Excluded" xml:space="preserve">
     <value>Credit limits|Money set aside (it is inside your money)|Budgets|Holdings without a price – they are listed</value>
@@ -4588,7 +4588,7 @@
     <value>Composition</value>
   </data>
   <data name="Kpi_K13_Question" xml:space="preserve">
-    <value>In which currencies and assets is my wealth?</value>
+    <value>How is my recorded wealth distributed across currencies and assets?</value>
   </data>
   <data name="Kpi_K13_Definition" xml:space="preserve">
     <value>The share of each currency and holding in the valuation currency, of the part with a known value.</value>
@@ -4606,7 +4606,7 @@
     <value>Can I rely on this number?</value>
   </data>
   <data name="Kpi_K14_Definition" xml:space="preserve">
-    <value>A list of what may make a number less reliable, each with the screen that fixes it – never a score.</value>
+    <value>Lists data issues that may affect this number and links to the screens where you can review them. It does not assign an accuracy score.</value>
   </data>
   <data name="Kpi_K14_Included" xml:space="preserve">
     <value>Unreviewed entries, entries without category, unknown amounts|Missing or old rates, holdings without price|Unknown opening balances, accounts not compared for 60 days|Last backup older than 30 days, possible duplicates</value>
@@ -4636,13 +4636,13 @@
     <value>Review {0}</value>
   </data>
   <data name="Review_Title" xml:space="preserve">
-    <value>Month review</value>
+    <value>Monthly review</value>
   </data>
   <data name="Review_TitleMonth" xml:space="preserve">
     <value>Review of {0}</value>
   </data>
   <data name="Review_Intro" xml:space="preserve">
-    <value>A short routine for the month that just ended. Each step opens its screen; tick it when you are done.</value>
+    <value>Review the month that just ended. Open each step and mark it complete when you are done.</value>
   </data>
   <data name="Review_Nothing" xml:space="preserve">
     <value>Nothing to review right now.</value>
@@ -4657,16 +4657,16 @@
     <value>Finish the review</value>
   </data>
   <data name="Review_Start" xml:space="preserve">
-    <value>Start the month review</value>
+    <value>Start the monthly review</value>
   </data>
   <data name="Review_Unreviewed" xml:space="preserve">
-    <value>Review entries</value>
+    <value>Review transactions</value>
   </data>
   <data name="Review_Plans" xml:space="preserve">
     <value>Settle or skip due payments</value>
   </data>
   <data name="Review_Reconcile" xml:space="preserve">
-    <value>Compare balances with the bank</value>
+    <value>Compare recorded and actual balances</value>
   </data>
   <data name="Review_Goals" xml:space="preserve">
     <value>Look at your goals</value>
@@ -4678,7 +4678,7 @@
     <value>Unreviewed: {0}</value>
   </data>
   <data name="Review_PlansDetail" xml:space="preserve">
-    <value>Open until the month end: {0}</value>
+    <value>Unresolved items due by month-end: {0}</value>
   </data>
   <data name="Review_ReconcileDetail" xml:space="preserve">
     <value>Not compared for 60 days: {0}</value>
@@ -4690,16 +4690,16 @@
     <value>Last backup: {0}</value>
   </data>
   <data name="Account_LastReconciled" xml:space="preserve">
-    <value>Last compared with the bank: {0}</value>
+    <value>Last reconciled: {0}</value>
   </data>
   <data name="Account_NeverReconciled" xml:space="preserve">
-    <value>Not compared with the bank yet</value>
+    <value>Not reconciled yet</value>
   </data>
   <data name="Account_HasDueDate" xml:space="preserve">
-    <value>To be paid back by a day</value>
+    <value>Set a repayment due date</value>
   </data>
   <data name="Entry_ReimbursementDue" xml:space="preserve">
-    <value>Expected back by a day</value>
+    <value>Set an expected reimbursement date</value>
   </data>
   <data name="Category_Essential" xml:space="preserve">
     <value>Essential spending</value>
@@ -4708,7 +4708,7 @@
     <value>Essential spending</value>
   </data>
   <data name="Help_Essential_Text" xml:space="preserve">
-    <value>Costs you cannot easily skip, such as rent, food, energy or insurance. They size how long your usable money would last (essential coverage) and help suggest a day-to-day estimate.</value>
+    <value>Costs you cannot easily avoid, such as rent, food, energy or insurance. These costs are used to estimate how long your usable money could cover essential expenses and to suggest a day-to-day spending estimate.</value>
   </data>
   <data name="Help_Essential_Example" xml:space="preserve">
     <value>Usable 6,000 EUR, essential months 1,450 / 1,500 / 1,620 → 4.0 months.</value>
@@ -4720,7 +4720,7 @@
     <value>empty = not included</value>
   </data>
   <data name="Settings_EssentialCurrency" xml:space="preserve">
-    <value>In {0}; used by the headroom of your plans</value>
+    <value>Amount in {0}; included in your headroom forecast</value>
   </data>
   <data name="Settings_EssentialSuggestion" xml:space="preserve">
     <value>Last 3 months: {0} per day</value>
@@ -4747,7 +4747,7 @@
     <value>Day-to-day spending</value>
   </data>
   <data name="Help_EssentialEstimate_Text" xml:space="preserve">
-    <value>The forecast knows only your plans. Groceries and other daily spending are not planned, so the headroom leaves them out unless you set an estimate here. Zanance only suggests a value from the last three months; you decide.</value>
+    <value>Your plans may not include all day-to-day spending, such as groceries. Enter an estimate here to include this additional spending in the headroom forecast. Zanance can suggest an amount based on the last three months; you choose the amount to use.</value>
   </data>
   <data name="Help_EssentialEstimate_Example" xml:space="preserve">
     <value>20 EUR per day: 24 days until the lowest point subtract 480 EUR.</value>
@@ -4834,7 +4834,7 @@
     <value>At your recent pace of {0} per month (median of {1} months): ~ {2}</value>
   </data>
   <data name="Goal_TrendNoPace" xml:space="preserve">
-    <value>No date at your current pace.</value>
+    <value>A target date cannot be estimated from your recent progress.</value>
   </data>
   <data name="Goal_TrendHistory" xml:space="preserve">
     <value>Not enough history yet ({0} of {1} months).</value>
@@ -4843,7 +4843,7 @@
     <value>This month so far: {0}</value>
   </data>
   <data name="Goal_TrendOneOff" xml:space="preserve">
-    <value>one-off</value>
+    <value>possible one-off</value>
   </data>
   <data name="Goal_TrendNote" xml:space="preserve">
     <value>An estimate from complete months, not a promise. Your own plan stays a separate line.</value>
@@ -4861,10 +4861,10 @@
     <value>At your pace</value>
   </data>
   <data name="Help_GoalTrend_Text" xml:space="preserve">
-    <value>Zanance looks at what reached the goal in each of the last complete months (up to six) and takes the median. A month far above the others is marked one-off. With fewer than three complete months there is no pace yet.</value>
+    <value>Zanance estimates your recent pace from the median monthly progress over up to six complete months. A month far above the others is flagged as a possible one-off. At least three complete months are needed to estimate a pace.</value>
   </data>
   <data name="Help_GoalTrend_Example" xml:space="preserve">
-    <value>200, 250, 230 and 900 → pace 240 per month; 900 is a one-off.</value>
+    <value>Monthly progress of 200, 250, 230 and 900 gives a median pace of 240 per month; 900 is flagged as a possible one-off.</value>
   </data>
   <data name="Report_R5" xml:space="preserve">
     <value>Wealth</value>
@@ -4930,7 +4930,7 @@
     <value>an unknown opening balance</value>
   </data>
   <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
-    <value>holdings bought or sold at another price than their valuation</value>
+    <value>holdings bought or sold at a price different from their recorded valuation</value>
   </data>
   <data name="Report_Cause_MissingRate" xml:space="preserve">
     <value>a currency without a rate</value>
@@ -4954,7 +4954,7 @@
     <value>Save this forecast</value>
   </data>
   <data name="Snapshot_SaveMessage" xml:space="preserve">
-    <value>A name, so you can compare it with what really happens later.</value>
+    <value>Enter a name so you can compare this forecast with later recorded results.</value>
   </data>
   <data name="Snapshot_ListTitle" xml:space="preserve">
     <value>Saved forecasts</value>
@@ -4978,13 +4978,13 @@
     <value>Compared up to {0}</value>
   </data>
   <data name="Snapshot_Chart" xml:space="preserve">
-    <value>Saved forecast and reality</value>
+    <value>Saved forecast vs. recorded results</value>
   </data>
   <data name="Snapshot_SavedPath" xml:space="preserve">
     <value>Saved</value>
   </data>
   <data name="Snapshot_ActualPath" xml:space="preserve">
-    <value>Actual</value>
+    <value>Recorded</value>
   </data>
   <data name="Snapshot_Difference" xml:space="preserve">
     <value>Difference</value>
@@ -5002,7 +5002,7 @@
     <value>Unplanned income</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Plans paid differently</value>
+    <value>Differences in recorded plan transactions</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
     <value>The parts add up to the difference of the last compared day.</value>
@@ -5026,7 +5026,7 @@
     <value>Safety copy before a restore</value>
   </data>
   <data name="Help_SafetyCopy_Text" xml:space="preserve">
-    <value>Before a backup replaces your data, Zanance keeps a safety copy of the current data on this device, so nothing is lost if the restore fails. The safety copy is not encrypted; it stays in the app's private storage and only the newest copies are kept. A backup file you create yourself is always encrypted with your password.</value>
+    <value>Before replacing the current profile's data, Zanance creates a safety copy on this device. This copy is not encrypted and is kept in the app's private storage; only recent safety copies are retained. Local backups you create are encrypted when password protection is enabled. Cloud backups require password protection.</value>
   </data>
   <data name="HomeSection_Goals" xml:space="preserve">
     <value>Goals</value>
@@ -5038,13 +5038,13 @@
     <value>Backup</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Everything you entered: accounts, entries, plans, budgets, rates, goals, holdings with their events and prices, forecast snapshots, display units and the Home layout. It is encrypted with your password. Device preferences (theme, language, digits, reminders) are not included.</value>
+    <value>A backup contains the current profile's data, including accounts, transactions, plans, budgets, rates, goals, holdings, saved forecasts, display units and the Home layout. Local backups are encrypted when password protection is enabled; cloud backups require it. Device-wide preferences, such as theme, language and digit display, are not included.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV export</value>
   </data>
   <data name="About_FilesCsv" xml:space="preserve">
-    <value>Your entries, and your holdings in a file of their own, for a spreadsheet. A CSV export is not a backup: plans, budgets, goals and snapshots are not in it.</value>
+    <value>Transactions and holdings are exported as separate CSV files for use in a spreadsheet. CSV files are not encrypted. A CSV export is not a backup: it does not include plans, budgets, goals or saved forecasts.</value>
   </data>
   <data name="About_FilesPdfTitle" xml:space="preserve">
     <value>PDF report</value>
@@ -5056,7 +5056,7 @@
     <value>Platforms</value>
   </data>
   <data name="About_PlatformsText" xml:space="preserve">
-    <value>Every release is checked on these systems before it is published.</value>
+    <value>Platform support and verification status.</value>
   </data>
   <data name="About_Platform_Verified" xml:space="preserve">
     <value>Checked</value>
@@ -5068,7 +5068,7 @@
     <value>Report a problem</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance sends nothing on its own: no usage data and no crash reports. The button prepares a short text with the app version and the device type, and you choose where to send it. Please remove amounts, account names and other financial details first.</value>
+    <value>Zanance does not automatically send usage analytics or crash reports. This button prepares a report with the app version and device information. Review it, remove any financial or personal details, and choose where to send it.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Prepare a problem report</value>
@@ -5080,9 +5080,9 @@ What happened:
 
 What I expected:
 
-Steps to repeat it:
+Steps to reproduce:
 
-(Please remove amounts, account names and other financial details before sending.)</value>
+(Remove amounts, account names and other financial details before sending.)</value>
   </data>
   <data name="Budget_MethodActive" xml:space="preserve">
     <value>Method of this budget: {0}. Switch to Advanced in Settings to change it.</value>
@@ -5097,10 +5097,10 @@ Steps to repeat it:
     <value>No app on this device could open the file.</value>
   </data>
   <data name="Entry_DeleteQuestion" xml:space="preserve">
-    <value>Delete this entry?</value>
+    <value>Delete this transaction?</value>
   </data>
   <data name="Account_NameTaken" xml:space="preserve">
-    <value>Another account already has this name. Choose a different one, so lists and files can tell them apart.</value>
+    <value>An account with this name already exists. Enter a different name.</value>
   </data>
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>Choose at least one account for this budget.</value>
@@ -5253,5 +5253,29 @@ Steps to repeat it:
   </data>
   <data name="Icon_QuestionCircle" xml:space="preserve">
     <value>Unknown</value>
+  </data>
+  <data name="Backup_Error_SafetyCopyFailed" xml:space="preserve">
+    <value>The backup was not restored because a safety copy of your current data could not be created first. Your data has not changed.</value>
+    <comment>Restore stopped before any data was replaced (the safety copy failed); only here may the text say that nothing changed.</comment>
+  </data>
+  <data name="Rule_LastDayOfNamedMonth" xml:space="preserve">
+    <value>on the last day of {0}</value>
+    <comment>Yearly plan on the last day of a month; {0} is the month name in the plan's own calendar, e.g. February or Esfand.</comment>
+  </data>
+  <data name="Occurrence_OverdueOneDay" xml:space="preserve">
+    <value>1 day overdue</value>
+    <comment>Singular of Occurrence_OverdueDays.</comment>
+  </data>
+  <data name="Plan_ReminderOnDueDay" xml:space="preserve">
+    <value>On the due date, {0}</value>
+    <comment>Plan reminder 0 days before the due date; {0} is the time, e.g. 9:00.</comment>
+  </data>
+  <data name="Plan_ReminderOneDay" xml:space="preserve">
+    <value>1 day before, {0}</value>
+    <comment>Singular of Plan_ReminderText; {0} is the time, e.g. 9:00.</comment>
+  </data>
+  <data name="Report_OneDay" xml:space="preserve">
+    <value>1 day</value>
+    <comment>Singular of Report_Days, e.g. the age of money owed to the user.</comment>
   </data>
 </root>

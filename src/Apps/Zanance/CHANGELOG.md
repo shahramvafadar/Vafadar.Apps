@@ -18,6 +18,18 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Changed – English wording
+
+- The English texts were reviewed throughout: plain US English, "transaction" for what you record, and texts that
+  say exactly what Zanance does – deleting and restoring affect the current profile only, holdings with a price are
+  part of net worth, the region sets weekend days and public holidays for new plans, and the forecast shows only
+  what is recorded and planned.
+- "1 day overdue", "1 day before" and "On the due date" instead of "1 days" or "0 days before"; a yearly plan on the
+  last day names the month ("on the last day of February"), and its day and month are those of the plan's own
+  calendar.
+- A failed restore says whether your data may have changed: if the safety copy could not be created, nothing was
+  touched; otherwise check your accounts. The message no longer points to a safety copy the backup list does not show.
+
 ### Fixed – Theme change keeps open pages
 
 - When the phone switched to dark (or light) on its own while an expense, a plan or another form was open, the app

@@ -268,6 +268,10 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
 
         var restored = false;
+
+        // Until the safety copy exists nothing has been touched; from the restore on, a failure can leave the data
+        // replaced (e.g. a migration that fails after the copy), so only the first stage may say "not changed".
+        var replacing = false;
         IsBusy = true;
         try
         {
@@ -275,6 +279,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             await _backup.CreateSafetyCopyAsync(_safety);
             var package = _package;
             var password = NeedsRestorePassword ? RestorePassword : null;
+            replacing = true;
             await _autoPost.RunExclusiveAsync(() => _backup.RestorePackageAsync(package, password));
 
             // The restored settings may switch the app lock on or off.
@@ -297,18 +302,20 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
         catch (BackupException ex)
         {
+            // Raised while the package is checked, before any data is replaced; each text says so where it applies.
             RestoreError = _translator[$"Backup_Error_{ex.Error}"];
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException && !replacing)
         {
             RestoreError = _translator["Backup_Error_Storage"];
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            // E.g. the database could not be replaced or migrated. The safety copy of the data before the restore is kept
-            // on the device and can be restored from the list above.
+            // Before the restore: the safety copy failed and nothing changed. During it: the database may already be
+            // replaced but not migrated. The safety copy lies in "backups-safety", which the backup list does not show,
+            // so the message does not point to it.
             System.Diagnostics.Debug.WriteLine($"Restore failed: {ex}");
-            RestoreError = _translator["Backup_Error_RestoreFailed"];
+            RestoreError = _translator[replacing ? "Backup_Error_RestoreFailed" : "Backup_Error_SafetyCopyFailed"];
         }
         finally
         {

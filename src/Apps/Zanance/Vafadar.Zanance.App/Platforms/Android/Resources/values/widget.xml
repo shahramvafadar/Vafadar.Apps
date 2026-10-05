@@ -26,5 +26,5 @@
     <string name="widget_income">+ Income</string>
     <string name="widget_transfer">Transfer</string>
     <string name="widget_open">Open Zanance</string>
-    <string name="widget_description">Add an expense, income or transfer in one tap. Shows no amounts.</string>
+    <string name="widget_description">Open Zanance to record an expense, income or transfer. No financial amounts are shown on this widget.</string>
 </resources>

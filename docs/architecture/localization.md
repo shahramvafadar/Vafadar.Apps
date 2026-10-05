@@ -89,8 +89,10 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   | Persian | Hijri | `1448/04/14` | `جمعه 14 ربیع‌الثانی 1448` |
   | German | Hijri | `1448/04/14` | `Freitag, 14 Rabi al-Thani 1448` |
 
-  `MonthYear` (`Rabi al-Thani 1448`), `DayMonth` (`14 Rabi al-Thani`) and `DayMonthShort` (`14 Rab II`, `Sep 25`, for
-  date tiles and chart axes) follow the same rules. The short names stay distinct: cutting names to three letters would
+  `MonthYear` (`Rabi al-Thani 1448`), `DayMonth` (`14 Rabi al-Thani`), `DayMonthShort` (`14 Rab II`, `Sep 25`, for
+  date tiles and chart axes) and `Month` (`Rabi al-Thani`) follow the same rules. `Format(date, style, calendar)`
+  writes a date in another calendar than the display one without changing the user's choice, e.g. the day of a
+  Gregorian plan while the dates are shown in the Persian calendar. The short names stay distinct: cutting names to three letters would
   show "Rab" for both Rabi months.
 * **Three calendars** (`CalendarSystem`): Gregorian, Persian (solar Hijri) and lunar Hijri. The lunar calendar is
   **Umm al-Qura** (the official calendar of Saudi Arabia, e.g. 1 Ramadan 1446 = 1 March 2025), which .NET covers for

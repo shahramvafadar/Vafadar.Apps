@@ -50,9 +50,20 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
     ];
 
     /// <inheritdoc />
-    public string Format(DateOnly date, DateFormatStyle style = DateFormatStyle.Short)
+    public string Format(DateOnly date, DateFormatStyle style = DateFormatStyle.Short) =>
+        FormatCore(date, style, localization.CurrentCulture, localization.CurrentCalendar);
+
+    /// <inheritdoc />
+    /// <remarks>Another calendar gets its own culture of the current language (e.g. Persian with Gregorian months).</remarks>
+    public string Format(DateOnly date, DateFormatStyle style, CalendarSystem calendar) =>
+        FormatCore(
+            date,
+            style,
+            calendar == localization.CurrentCalendar ? localization.CurrentCulture : CultureFactory.Create(localization.CurrentLanguage, calendar),
+            calendar);
+
+    private static string FormatCore(DateOnly date, DateFormatStyle style, CultureInfo culture, CalendarSystem calendar)
     {
-        var culture = localization.CurrentCulture;
         var dateTime = date.ToDateTime(TimeOnly.MinValue);
 
         // Dates outside the calendar's range (e.g. an unset default value) must never crash the UI.
@@ -62,7 +73,7 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
         }
 
         var shortNames = style == DateFormatStyle.DayMonthShort;
-        switch (localization.CurrentCalendar)
+        switch (calendar)
         {
             case CalendarSystem.Persian when culture.DateTimeFormat.Calendar is not PersianCalendar:
                 return FormatOwn(
@@ -83,6 +94,7 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
             DateFormatStyle.DayMonth => "M",
             // The culture's day-month pattern with its short month names, e.g. "Sep 25" or "25. Sept.".
             DateFormatStyle.DayMonthShort => culture.DateTimeFormat.MonthDayPattern.Replace("MMMM", "MMM", StringComparison.Ordinal),
+            DateFormatStyle.Month => "MMMM",
             _ => "d",
         };
 
@@ -113,6 +125,7 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
                 $"{culture.DateTimeFormat.GetDayName(dateTime.DayOfWeek)}{separator}{day} {monthName} {year}"),
             DateFormatStyle.MonthYear => string.Create(CultureInfo.InvariantCulture, $"{monthName} {year}"),
             DateFormatStyle.DayMonth or DateFormatStyle.DayMonthShort => string.Create(CultureInfo.InvariantCulture, $"{day} {monthName}"),
+            DateFormatStyle.Month => monthName,
             _ => string.Create(CultureInfo.InvariantCulture, $"{year:0000}/{month:00}/{day:00}"),
         };
     }

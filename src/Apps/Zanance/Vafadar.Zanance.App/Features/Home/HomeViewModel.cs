@@ -613,7 +613,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 schedule.Kind == EntryKind.Transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(schedule.Icon, categories.Icon(schedule.CategoryId)),
                 color,
                 color.WithAlpha(0.12f),
-                overdue ? _translator.Format("Occurrence_OverdueDays", -days)
+                overdue ? PlanText.OverdueDays(_translator, -days)
                     : days == 0 ? text.Status(OccurrenceView.Due)
                     : days == 1 ? _translator["Plan_Tomorrow"]
                     : _translator.Format("Plan_InDays", days),

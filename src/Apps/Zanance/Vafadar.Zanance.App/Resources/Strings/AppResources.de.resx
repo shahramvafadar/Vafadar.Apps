@@ -5248,4 +5248,22 @@ Schritte zum Wiederholen:
   <data name="Icon_QuestionCircle" xml:space="preserve">
     <value>Unbekannt</value>
   </data>
+  <data name="Backup_Error_SafetyCopyFailed" xml:space="preserve">
+    <value>Die Sicherung wurde nicht wiederhergestellt, weil vorher keine Sicherheitskopie Ihrer aktuellen Daten erstellt werden konnte. Ihre Daten sind unverändert.</value>
+  </data>
+  <data name="Rule_LastDayOfNamedMonth" xml:space="preserve">
+    <value>am letzten Tag im {0}</value>
+  </data>
+  <data name="Occurrence_OverdueOneDay" xml:space="preserve">
+    <value>1 Tag überfällig</value>
+  </data>
+  <data name="Plan_ReminderOnDueDay" xml:space="preserve">
+    <value>Am Fälligkeitstag, {0}</value>
+  </data>
+  <data name="Plan_ReminderOneDay" xml:space="preserve">
+    <value>1 Tag vorher, {0}</value>
+  </data>
+  <data name="Report_OneDay" xml:space="preserve">
+    <value>1 Tag</value>
+  </data>
 </root>

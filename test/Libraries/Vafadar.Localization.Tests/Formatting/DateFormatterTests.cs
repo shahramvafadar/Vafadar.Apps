@@ -99,6 +99,35 @@ public sealed class DateFormatterTests : IDisposable
         Assert.Equal("1523/10/20", formatter.Format(new DateOnly(2100, 1, 1)));
     }
 
+    [Theory]
+    [InlineData(CalendarSystem.Gregorian)]
+    [InlineData(CalendarSystem.Persian)]
+    [InlineData(CalendarSystem.Hijri)]
+    public void A_date_can_be_formatted_in_another_calendar_than_the_display_one(CalendarSystem display)
+    {
+        // A plan's own calendar (COPY-CODE-03): the same day reads the same whatever the user's display calendar is.
+        var english = CreateFormatter(AppLanguages.English, display);
+        Assert.Equal("September 25", english.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Gregorian));
+        Assert.Equal("3 Mehr", english.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Persian));
+        Assert.Equal("14 Rabi al-Thani", english.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Hijri));
+
+        var persian = CreateFormatter(AppLanguages.Persian, display);
+        Assert.Equal("25 سپتامبر", persian.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Gregorian));
+        Assert.Equal("3 مهر", persian.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Persian));
+        Assert.Equal("14 ربیع‌الثانی", persian.Format(Date, DateFormatStyle.DayMonth, CalendarSystem.Hijri));
+    }
+
+    [Fact]
+    public void The_month_name_alone_follows_the_calendar()
+    {
+        var english = CreateFormatter(AppLanguages.English, CalendarSystem.Gregorian);
+        Assert.Equal("September", english.Format(Date, DateFormatStyle.Month));
+        Assert.Equal("Mehr", english.Format(Date, DateFormatStyle.Month, CalendarSystem.Persian));
+        Assert.Equal("Rabi al-Thani", english.Format(Date, DateFormatStyle.Month, CalendarSystem.Hijri));
+        Assert.Equal("مهر", CreateFormatter(AppLanguages.Persian, CalendarSystem.Persian).Format(Date, DateFormatStyle.Month));
+        Assert.Equal("Februar", CreateFormatter(AppLanguages.German, CalendarSystem.Persian).Format(new DateOnly(2026, 2, 28), DateFormatStyle.Month, CalendarSystem.Gregorian));
+    }
+
     [Fact]
     public void Short_month_names_for_date_tiles_stay_distinct()
     {

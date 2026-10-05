@@ -157,7 +157,7 @@ public sealed partial class ReportsViewModel
             foreach (var item in receivables.Items)
             {
                 var due = item.DueDate is { } dueDate ? " · " + _translator.Format(item.IsOverdue ? "Report_DueOverdue" : "Report_Due", _dates.Format(dueDate, DateFormatStyle.Short)) : string.Empty;
-                ReceivableLines.Add(new AmountLine($"{item.Name} · {_translator.Format("Report_Days", item.AgeDays)}{due}", Money(item.Amount), false, item.IsOverdue));
+                ReceivableLines.Add(new AmountLine($"{item.Name} · {(item.AgeDays == 1 ? _translator["Report_OneDay"] : _translator.Format("Report_Days", item.AgeDays))}{due}", Money(item.Amount), false, item.IsOverdue));
             }
         }
 

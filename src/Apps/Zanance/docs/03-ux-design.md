@@ -154,6 +154,25 @@ lightened (`CategoryLookup.DisplayColor`).
 * Deleting an entry needs no confirmation: the list offers "Undo" for 8 seconds (TX-05).
 * Modal pages get the text direction explicitly before they are shown (they are not part of the window's tree).
 * Amounts are isolated with LRI…PDI plus inner LRM marks, because some renderers (Windows) ignore isolates.
+* English copy (D-52): plain US English; a financial record is a "transaction" (code and resource keys keep
+  `Entry`); a text says what Zanance records, never more ("No planned items are due or overdue"); destructive actions
+  and restore name their scope ("Delete this profile's data"); a label quoted in another text matches the label exactly;
+  counts that can be 1 use a singular key (`Occurrence_OverdueOneDay`, `Plan_ReminderOneDay`, `Report_OneDay`; 0 days
+  before is `Plan_ReminderOnDueDay`) or a count-neutral form ("Category limits kept: {0}"). A yearly plan's day and
+  month are written in the plan's own calendar (`IDateFormatter.Format(date, style, calendar)`), "on the last day of
+  February" names the month. Restore errors depend on the stage: before the data is replaced the text may say that
+  nothing changed (`Backup_Error_SafetyCopyFailed`); from then on it may not (`Backup_Error_RestoreFailed`).
+* Translation follow-up of D-52: the English meaning changed for these keys; their Persian and German texts still say
+  the earlier meaning and are reviewed in the next translation step: `Holdings_Note`, `Settings_DeleteAll*`,
+  `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,
+  `Backup_Error_RestoreFailed`, `Onb_WelcomeText`, `Backup_Intro`, `About_DataText`, `About_FilesBackup`,
+  `About_FilesCsv`, `About_ProblemText`, `About_PlatformsText`, `Settings_ShowDetailsHint`,
+  `Help_NotificationDetails_Text`, `Help_BackupPassword_Text`, `Help_SafetyCopy_Text`, `Backup_PasswordWarning`,
+  `Backup_NoPasswordWarning`, `Settings_RegionHint`, `Onb_ZeroHint`, `Onb_CurrencyTitle`/`Text`, `Rates_Intro`,
+  `Kpi_K10_*`, `Kpi_K02_Excluded`, `Kpi_K03_Included` (third item), `Kpi_K05_*`, `Kpi_K07_Definition`,
+  `Help_SpendingType_Example`, `Help_HoldingPrices_Text`, `Help_AutoPost_Text`, `Help_WeekendRule_Text`,
+  `Weekend_Before`/`After`, `Budget_ScopeHint`, `Forecast_Disclaimer`, `Plan_PauseMessage`, `Plan_EndMessage`,
+  `Snapshot_ActualPath`, the iOS camera prompt and `widget_description` (Android).
 * Changing language or calendar rebuilds the main shell and returns to the current tab, so every cached number,
   date and icon is re-rendered in the new direction. These are deliberate choices in Settings; a theme change, which
   can come from the device, does not rebuild while a page is open (see the theme above).

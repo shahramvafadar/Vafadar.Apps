@@ -1,5 +1,5 @@
 /* Face ID prompt for the optional app lock (SEC-01). */
-"NSFaceIDUsageDescription" = "Zanance uses Face ID to unlock the app when the app lock is on.";
+"NSFaceIDUsageDescription" = "Zanance uses Face ID to unlock the app when app lock is enabled.";
 
 /* Camera prompt for photographing receipts (D-38). */
-"NSCameraUsageDescription" = "Zanance uses the camera to photograph receipts. The photo is read on this device and stays on it.";
+"NSCameraUsageDescription" = "Zanance uses the camera to scan receipts. Receipt text is processed on your device.";

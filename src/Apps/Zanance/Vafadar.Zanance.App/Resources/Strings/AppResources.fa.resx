@@ -5248,4 +5248,22 @@
   <data name="Icon_QuestionCircle" xml:space="preserve">
     <value>نامشخص</value>
   </data>
+  <data name="Backup_Error_SafetyCopyFailed" xml:space="preserve">
+    <value>پشتیبان بازیابی نشد، چون پیش از آن نمی‌شد از داده‌های فعلی نسخهٔ ایمنی ساخت. داده‌های شما تغییری نکرده است.</value>
+  </data>
+  <data name="Rule_LastDayOfNamedMonth" xml:space="preserve">
+    <value>روز آخر {0}</value>
+  </data>
+  <data name="Occurrence_OverdueOneDay" xml:space="preserve">
+    <value>یک روز معوق</value>
+  </data>
+  <data name="Plan_ReminderOnDueDay" xml:space="preserve">
+    <value>روز سررسید، {0}</value>
+  </data>
+  <data name="Plan_ReminderOneDay" xml:space="preserve">
+    <value>یک روز قبل، {0}</value>
+  </data>
+  <data name="Report_OneDay" xml:space="preserve">
+    <value>یک روز</value>
+  </data>
 </root>

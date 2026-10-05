@@ -194,7 +194,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
         var overdue = occurrence.Status == OccurrenceView.Overdue;
         var (badge, look) = occurrence.Status switch
         {
-            OccurrenceView.Overdue => (_translator.Format("Occurrence_OverdueDays", today.DayNumber - occurrence.DueDate.DayNumber), PlanLook.Danger),
+            OccurrenceView.Overdue => (PlanText.OverdueDays(_translator, today.DayNumber - occurrence.DueDate.DayNumber), PlanLook.Danger),
             OccurrenceView.Due => (_translator["Occurrence_Due"], PlanLook.Future),
             _ => ((string?)null, PlanLook.Neutral),
         };

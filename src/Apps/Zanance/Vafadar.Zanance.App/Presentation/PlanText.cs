@@ -100,10 +100,27 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, ILoc
             : translator.Format("Rule_LastWeekday", weekday);
     }
 
-    // A yearly weekday rule names the month through the start date, e.g. "on the 4th Thursday (26 November)".
-    private string YearDayText(RecurrenceRule rule) =>
-        rule.DayRule.IsWeekday() ? translator.Format("Rule_YearWeekday", WeekdayText(rule), dates.Format(rule.Start, DateFormatStyle.DayMonth))
-        : rule.DayRule == MonthDayRule.LastDayOfMonth
-            ? translator["Rule_LastDay"]
-            : translator.Format("Rule_OnDate", dates.Format(rule.Start, DateFormatStyle.DayMonth));
+    // A yearly weekday rule names the month through the start date, e.g. "on the 4th Thursday (26 November)". Day and
+    // month are those of the plan's own calendar, which Rule() names when it is not the display calendar: a Gregorian
+    // plan shown in the Persian calendar reads "on 25 September · Gregorian", not "on 3 Mehr · Gregorian".
+    private string YearDayText(RecurrenceRule rule)
+    {
+        var calendar = Calendars.ToDisplay(rule.Calendar);
+        return rule.DayRule.IsWeekday() ? translator.Format("Rule_YearWeekday", WeekdayText(rule), dates.Format(rule.Start, DateFormatStyle.DayMonth, calendar))
+            : rule.DayRule == MonthDayRule.LastDayOfMonth
+                ? translator.Format("Rule_LastDayOfNamedMonth", dates.Format(rule.Start, DateFormatStyle.Month, calendar))
+                : translator.Format("Rule_OnDate", dates.Format(rule.Start, DateFormatStyle.DayMonth, calendar));
+    }
+
+    /// <summary>"1 day overdue" or "3 days overdue".</summary>
+    public static string OverdueDays(Translator translator, int days) =>
+        days == 1 ? translator["Occurrence_OverdueOneDay"] : translator.Format("Occurrence_OverdueDays", days);
+
+    /// <summary>When a plan reminds: "On the due date, 9:00", "1 day before, 9:00" or "3 days before, 9:00".</summary>
+    public static string ReminderText(Translator translator, int daysBefore, string time) => daysBefore switch
+    {
+        0 => translator.Format("Plan_ReminderOnDueDay", time),
+        1 => translator.Format("Plan_ReminderOneDay", time),
+        _ => translator.Format("Plan_ReminderText", daysBefore, time),
+    };
 }
