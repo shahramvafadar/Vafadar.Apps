@@ -80,7 +80,7 @@
     <value>مانده ثبت‌شده</value>
   </data>
   <data name="Home_BalanceHint" xml:space="preserve">
-    <value>بر اساس ثبت‌های شما؛ نه مانده بانک.</value>
+    <value>بر اساس تراکنش‌های ثبت‌شدهٔ شماست، نه اطلاعات دریافتی از بانک.</value>
   </data>
   <data name="Home_AccountsSection" xml:space="preserve">
     <value>حساب‌ها</value>
@@ -119,7 +119,7 @@
     <value>نوع</value>
   </data>
   <data name="AccountType_Cash" xml:space="preserve">
-    <value>نقد</value>
+    <value>پول نقد</value>
   </data>
   <data name="AccountType_Checking" xml:space="preserve">
     <value>جاری</value>
@@ -140,7 +140,7 @@
     <value>موجودی در تاریخ</value>
   </data>
   <data name="Account_OpeningHint" xml:space="preserve">
-    <value>موجودی در ابتدای این روز، پیش از تراکنش‌های آن. این مقدار را خودتان وارد می‌کنید و از بانک خوانده نمی‌شود.</value>
+    <value>موجودی ابتدای روز انتخاب‌شده را، پیش از تراکنش‌های همان روز، وارد کنید. این مبلغ از بانک دریافت نمی‌شود.</value>
   </data>
   <data name="Account_OpeningNegative" xml:space="preserve">
     <value>موجودی منفی است (مثلاً بدهی کارت یا برداشت بیش از موجودی)</value>
@@ -158,31 +158,31 @@
     <value>خروج از بایگانی</value>
   </data>
   <data name="Account_ArchiveMessage" xml:space="preserve">
-    <value>حساب سابقه‌اش را نگه می‌دارد و در گزارش‌های گذشته می‌ماند، ولی تراکنش جدید نمی‌پذیرد.</value>
+    <value>سابقهٔ حساب و گزارش‌های گذشته حفظ می‌شود، اما دیگر نمی‌توانید برای آن تراکنش جدید ثبت کنید.</value>
   </data>
   <data name="Account_CurrencyLocked" xml:space="preserve">
     <value>ارز این حساب قابل تغییر نیست، چون تراکنش دارد.</value>
   </data>
   <data name="Account_NameRequired" xml:space="preserve">
-    <value>لطفاً نام را وارد کنید.</value>
+    <value>نام حساب را وارد کنید.</value>
   </data>
   <data name="Account_DefaultName" xml:space="preserve">
     <value>حساب من</value>
   </data>
   <data name="Amount_Invalid" xml:space="preserve">
-    <value>یک مبلغ معتبر وارد کنید، مثلاً 12.50</value>
+    <value>مبلغ معتبری وارد کنید؛ مثلاً «12.50».</value>
   </data>
   <data name="Onb_WelcomeTitle" xml:space="preserve">
     <value>خوش آمدید</value>
   </data>
   <data name="Onb_WelcomeText" xml:space="preserve">
-    <value>اطلاعات مالی شما روی همین دستگاه می‌ماند و به ثبت‌نام یا ورود نیازی نیست. پشتیبان‌گیری اختیاری و در اختیار خود شماست.</value>
+    <value>بدون ساخت حساب کاربری آنلاین، امور مالی خود را روی این دستگاه مدیریت کنید. انتخاب پشتیبان‌گیری و محل نگهداری نسخه‌ها با شماست.</value>
   </data>
   <data name="Onb_CurrencyTitle" xml:space="preserve">
-    <value>ارز گزارش</value>
+    <value>ارز ارزش‌گذاری</value>
   </data>
   <data name="Onb_CurrencyText" xml:space="preserve">
-    <value>جمع‌ها و گزارش‌ها با این ارز نمایش داده می‌شوند. هر حساب ارز خودش را دارد.</value>
+    <value>جمع مبالغِ تبدیل‌شده با این ارز نمایش داده می‌شود. ارز هر حساب تغییر نمی‌کند.</value>
   </data>
   <data name="Onb_LaterText" xml:space="preserve">
     <value>زبان، تقویم و ارز را بعداً هم در تنظیمات می‌توانید تغییر دهید.</value>
@@ -194,7 +194,7 @@
     <value>با حسابی شروع کنید که بیشتر از همه استفاده می‌کنید. بعداً می‌توانید حساب‌های دیگر را اضافه کنید.</value>
   </data>
   <data name="Onb_ZeroHint" xml:space="preserve">
-    <value>شروع با صفر هم مشکلی ندارد؛ هر وقت خواستید موجودی واقعی را وارد کنید.</value>
+    <value>اگر موجودی آغازین را نمی‌دانید، گزینهٔ «موجودی آغازین را نمی‌دانم» را انتخاب کنید. بعداً می‌توانید ماندهٔ حساب را تطبیق دهید.</value>
   </data>
   <data name="Onb_Start" xml:space="preserve">
     <value>شروع</value>
@@ -272,7 +272,7 @@
     <value>برگشت درآمد</value>
   </data>
   <data name="EntryKind_Adjustment" xml:space="preserve">
-    <value>تعدیل مانده</value>
+    <value>اصلاح مانده</value>
   </data>
   <data name="Entry_NewTitle" xml:space="preserve">
     <value>تراکنش جدید</value>
@@ -293,7 +293,7 @@
     <value>عنوان</value>
   </data>
   <data name="Entry_TitlePlaceholder" xml:space="preserve">
-    <value>اختیاری؛ در غیر این صورت نام دسته نمایش داده می‌شود</value>
+    <value>اختیاری؛ اگر خالی باشد، نام دسته نمایش داده می‌شود</value>
   </data>
   <data name="Entry_Date" xml:space="preserve">
     <value>تاریخ</value>
@@ -317,7 +317,7 @@
     <value>به‌عنوان هزینهٔ حساب مبدأ ثبت می‌شود.</value>
   </data>
   <data name="Entry_TransferHint" xml:space="preserve">
-    <value>انتقال پول را بین حساب‌های خودتان جابه‌جا می‌کند و درآمد یا هزینه حساب نمی‌شود.</value>
+    <value>انتقال بین حساب‌های خودتان، درآمد یا هزینه محسوب نمی‌شود. ثبت آن در این برنامه، پولی جابه‌جا نمی‌کند.</value>
   </data>
   <data name="Entry_MoreDetails" xml:space="preserve">
     <value>جزئیات بیشتر</value>
@@ -341,28 +341,28 @@
     <value>ابتدا یک حساب اضافه کنید.</value>
   </data>
   <data name="Entry_RefundOf" xml:space="preserve">
-    <value>برگشت وجهِ: {0}</value>
+    <value>برگشت وجه بابت «{0}»</value>
   </data>
   <data name="Entry_Refundable" xml:space="preserve">
-    <value>حداکثر {0} قابل برگشت است.</value>
+    <value>برای این خرید، حداکثر {0} برگشت وجهِ دیگر می‌توانید ثبت کنید.</value>
   </data>
   <data name="Entry_Refund" xml:space="preserve">
-    <value>برگشت وجه</value>
+    <value>ثبت برگشت وجه</value>
   </data>
   <data name="Entry_Duplicate" xml:space="preserve">
-    <value>تکثیر</value>
+    <value>ایجاد کپی</value>
   </data>
   <data name="Entry_Delete" xml:space="preserve">
     <value>حذف</value>
   </data>
   <data name="Entry_Refunds" xml:space="preserve">
-    <value>برگشت‌ها</value>
+    <value>برگشت وجه‌ها</value>
   </data>
   <data name="Entry_MarkReviewed" xml:space="preserve">
-    <value>علامت بررسی‌شده</value>
+    <value>ثبت بررسی</value>
   </data>
   <data name="Entry_FromPlan" xml:space="preserve">
-    <value>ثبت‌شده از یک برنامه</value>
+    <value>ثبت‌شده از برنامهٔ مالی</value>
   </data>
   <data name="Entry_Details" xml:space="preserve">
     <value>تراکنش</value>
@@ -374,7 +374,7 @@
     <value>این تراکنش دیگر وجود ندارد.</value>
   </data>
   <data name="LedgerError_AmountMustBePositive" xml:space="preserve">
-    <value>مبلغی بزرگ‌تر از صفر وارد کنید. جهت را با انتخاب هزینه یا درآمد مشخص کنید.</value>
+    <value>مبلغی بیشتر از صفر وارد کنید و نوع تراکنش را مشخص کنید.</value>
   </data>
   <data name="LedgerError_UnknownAccount" xml:space="preserve">
     <value>یک حساب انتخاب کنید.</value>
@@ -395,13 +395,13 @@
     <value>این دسته با نوع تراکنش سازگار نیست.</value>
   </data>
   <data name="LedgerError_AdjustmentDirectionRequired" xml:space="preserve">
-    <value>مشخص کنید مانده افزایش یابد یا کاهش.</value>
+    <value>مشخص کنید مانده افزایش پیدا کند یا کاهش.</value>
   </data>
   <data name="LedgerError_RefundExceedsPurchase" xml:space="preserve">
-    <value>مجموع برگشت‌ها نمی‌تواند از مبلغ خرید بیشتر باشد.</value>
+    <value>مجموع مبالغ برگشت وجه نمی‌تواند از مبلغ خرید بیشتر باشد.</value>
   </data>
   <data name="LedgerError_RefundOriginalNotExpense" xml:space="preserve">
-    <value>فقط هزینه‌ها قابل برگشت هستند.</value>
+    <value>برگشت وجه را فقط می‌توانید برای یک تراکنش هزینه ثبت کنید.</value>
   </data>
   <data name="LedgerError_InvalidOriginalCurrency" xml:space="preserve">
     <value>مبلغ اصلی و ارزی متفاوت با ارز حساب وارد کنید.</value>
@@ -446,13 +446,13 @@
     <value>دستهٔ اصلی</value>
   </data>
   <data name="Category_NoParent" xml:space="preserve">
-    <value>هیچ (دستهٔ اصلی)</value>
+    <value>بدون دستهٔ بالاتر</value>
   </data>
   <data name="Category_Archive" xml:space="preserve">
     <value>بایگانی دسته</value>
   </data>
   <data name="Category_Unarchive" xml:space="preserve">
-    <value>بازگرداندن دسته</value>
+    <value>خروج از بایگانی</value>
   </data>
   <data name="Category_ArchiveMessage" xml:space="preserve">
     <value>دسته از فهرست‌های انتخاب حذف می‌شود؛ تراکنش‌ها و گزارش‌های موجود آن را حفظ می‌کنند.</value>
@@ -470,7 +470,7 @@
     <value>هدیهٔ دریافتی</value>
   </data>
   <data name="Category_Interest" xml:space="preserve">
-    <value>سود بانکی</value>
+    <value>سود دریافتی</value>
   </data>
   <data name="Category_Uncategorized" xml:space="preserve">
     <value>بدون دسته</value>
@@ -533,7 +533,7 @@
     <value>برنامه‌ها</value>
   </data>
   <data name="Plans_Due" xml:space="preserve">
-    <value>سررسید و معوق</value>
+    <value>سررسیدشده و معوق</value>
   </data>
   <data name="Plans_Upcoming" xml:space="preserve">
     <value>پیش رو</value>
@@ -542,10 +542,10 @@
     <value>همه برنامه‌ها</value>
   </data>
   <data name="Plans_Empty" xml:space="preserve">
-    <value>هنوز برنامه‌ای ندارید. درآمدها و قبض‌های تکراری یا یک پرداخت آیندهٔ یک‌باره را اضافه کنید.</value>
+    <value>هنوز برنامهٔ مالی ندارید. درآمدها و پرداخت‌های دوره‌ای، یا یک پرداخت یک‌باره برای آینده را اضافه کنید.</value>
   </data>
   <data name="Plans_NothingDue" xml:space="preserve">
-    <value>موردی سررسید نشده است. همه‌چیز به‌روز است.</value>
+    <value>در برنامه‌های ثبت‌شده، مورد سررسیدشده یا معوقی ندارید.</value>
   </data>
   <data name="Plans_NothingUpcoming" xml:space="preserve">
     <value>برای ۶۰ روز آینده برنامه‌ای نیست.</value>
@@ -560,7 +560,7 @@
     <value>بررسی</value>
   </data>
   <data name="Occurrence_OverdueDays" xml:space="preserve">
-    <value>{0} روز معوق</value>
+    <value>گذشته از سررسید: {0} روز</value>
   </data>
   <data name="Occurrence_Due" xml:space="preserve">
     <value>سررسید امروز</value>
@@ -575,10 +575,10 @@
     <value>انجام‌شده</value>
   </data>
   <data name="Occurrence_Skipped" xml:space="preserve">
-    <value>ردشده</value>
+    <value>صرف‌نظرشده</value>
   </data>
   <data name="Occurrence_Title" xml:space="preserve">
-    <value>موعد</value>
+    <value>جزئیات سررسید</value>
   </data>
   <data name="Occurrence_DueOn" xml:space="preserve">
     <value>سررسید: {0}</value>
@@ -590,22 +590,22 @@
     <value>تاریخ واقعی</value>
   </data>
   <data name="Occurrence_Confirm" xml:space="preserve">
-    <value>تأیید انجام</value>
+    <value>ثبت انجام‌شده</value>
   </data>
   <data name="Occurrence_Candidates" xml:space="preserve">
-    <value>قبلاً ثبت کرده‌اید؟ به‌جای ثبت دوباره متصلش کنید</value>
+    <value>قبلاً تراکنش را ثبت کرده‌اید؟ آن را به این نوبت مرتبط کنید</value>
   </data>
   <data name="Occurrence_Link" xml:space="preserve">
     <value>اتصال</value>
   </data>
   <data name="Occurrence_LinkMessage" xml:space="preserve">
-    <value>«{0}» ({1}) به این موعد متصل شود؟ تراکنش جدیدی ساخته نمی‌شود.</value>
+    <value>تراکنش «{0}» به مبلغ {1} به این نوبت مرتبط شود؟ تراکنش جدیدی ثبت نمی‌شود.</value>
   </data>
   <data name="Occurrence_Change" xml:space="preserve">
     <value>تغییر همین نوبت</value>
   </data>
   <data name="Occurrence_Skip" xml:space="preserve">
-    <value>رد کردن</value>
+    <value>صرف‌نظر از این نوبت</value>
   </data>
   <data name="Occurrence_MoveDue" xml:space="preserve">
     <value>تاریخ سررسید</value>
@@ -614,22 +614,22 @@
     <value>مبلغ این نوبت</value>
   </data>
   <data name="Occurrence_ChangeHint" xml:space="preserve">
-    <value>تغییرات فقط برای همین موعد است و برنامه تغییر نمی‌کند.</value>
+    <value>تغییرات فقط برای این نوبت است؛ سایر نوبت‌های برنامهٔ مالی تغییر نمی‌کنند.</value>
   </data>
   <data name="Occurrence_SettledWith" xml:space="preserve">
     <value>ثبت‌شده: {0} در {1}</value>
   </data>
   <data name="Occurrence_Undo" xml:space="preserve">
-    <value>برگرداندن</value>
+    <value>واگرد</value>
   </data>
   <data name="Occurrence_UndoMessage" xml:space="preserve">
-    <value>تراکنشی که برنامه ثبت کرده حذف می‌شود؛ تراکنشی که خودتان ثبت کرده‌اید حفظ و فقط از موعد جدا می‌شود. موعد دوباره باز می‌شود و خودکار ثبت نخواهد شد.</value>
+    <value>تراکنش ایجادشده از این برنامهٔ مالی حذف می‌شود. اگر تراکنش را جداگانه ثبت و مرتبط کرده باشید، فقط ارتباط آن برداشته می‌شود. این نوبت دوباره در انتظار ثبت قرار می‌گیرد و خودکار ثبت نخواهد شد.</value>
   </data>
   <data name="Plan_NextDue" xml:space="preserve">
     <value>بعدی: {0}</value>
   </data>
   <data name="Plan_Paused" xml:space="preserve">
-    <value>متوقف</value>
+    <value>متوقف‌شدهٔ موقت</value>
   </data>
   <data name="Plan_Ended" xml:space="preserve">
     <value>پایان‌یافته</value>
@@ -731,7 +731,7 @@
     <value>در ماه‌های کوتاه‌تر، روز آخر ماه</value>
   </data>
   <data name="MissingDay_Skip" xml:space="preserve">
-    <value>رد کردن ماه‌هایی که این روز را ندارند</value>
+    <value>صرف‌نظر از ماه‌هایی که این روز را ندارند</value>
   </data>
   <data name="End_Never" xml:space="preserve">
     <value>بدون پایان</value>
@@ -746,7 +746,7 @@
     <value>از امروز به بعد</value>
   </data>
   <data name="Past_Include" xml:space="preserve">
-    <value>بررسی موعدهای گذشته هم</value>
+    <value>بررسی سررسیدهای گذشته</value>
   </data>
   <data name="DayRule_OnDay" xml:space="preserve">
     <value>روز {0}</value>
@@ -794,7 +794,7 @@
     <value>هر</value>
   </data>
   <data name="Plan_Calendar" xml:space="preserve">
-    <value>تقویم این برنامه</value>
+    <value>تقویم این برنامهٔ مالی</value>
   </data>
   <data name="Plan_Day" xml:space="preserve">
     <value>روز</value>
@@ -827,13 +827,13 @@
     <value>ساعت یادآوری</value>
   </data>
   <data name="Plan_ReminderText" xml:space="preserve">
-    <value>{0} روز قبل، {1}</value>
+    <value>یادآوری: {0} روز قبل، ساعت {1}</value>
   </data>
   <data name="Plan_AutoPost" xml:space="preserve">
     <value>ثبت خودکار در سررسید</value>
   </data>
   <data name="Plan_AutoPostHint" xml:space="preserve">
-    <value>فقط تراکنش را برای بررسی شما در همین اپ ثبت می‌کند و هیچ پرداخت یا انتقالی انجام نمی‌دهد. فقط برای مبلغ ثابت.</value>
+    <value>تراکنش را به‌صورت خودکار در «Zanance» ثبت می‌کند تا بررسی کنید؛ پرداخت یا انتقال واقعی انجام نمی‌شود. فقط برای مبالغ ثابت قابل استفاده است.</value>
   </data>
   <data name="Plan_NextOccurrences" xml:space="preserve">
     <value>موعدهای بعدی</value>
@@ -851,13 +851,13 @@
     <value>توقف موقت</value>
   </data>
   <data name="Plan_PauseMessage" xml:space="preserve">
-    <value>در مدت توقف، موعدی ایجاد نمی‌شود. تراکنش‌های گذشته تغییری نمی‌کنند.</value>
+    <value>این برنامهٔ مالی در «Zanance» موقتاً متوقف می‌شود؛ تعهدات و پرداخت‌های واقعی شما متوقف نمی‌شوند. تراکنش‌های قبلی حفظ می‌شوند.</value>
   </data>
   <data name="Plan_EndAction" xml:space="preserve">
     <value>پایان برنامه</value>
   </data>
   <data name="Plan_EndMessage" xml:space="preserve">
-    <value>برنامه از امروز پایان می‌یابد. تراکنش‌ها و سابقهٔ گذشته حفظ می‌شوند.</value>
+    <value>این برنامهٔ مالی از امروز در «Zanance» پایان می‌یابد؛ قرارداد یا پرداخت واقعی لغو نمی‌شود. تراکنش‌ها و سابقهٔ قبلی حفظ می‌شوند.</value>
   </data>
   <data name="Plan_Delete" xml:space="preserve">
     <value>حذف برنامه</value>
@@ -866,16 +866,16 @@
     <value>این برنامه حذف شود؟ هیچ موعد ثبت‌شده‌ای ندارد.</value>
   </data>
   <data name="Home_Scope" xml:space="preserve">
-    <value>{0} · {1} · ارز گزارش {2}</value>
+    <value>بازه: {0} · حساب‌ها: {1} · ارز ارزش‌گذاری: {2}</value>
   </data>
   <data name="Home_AccountsInTotals" xml:space="preserve">
-    <value>حساب‌های داخل جمع کل</value>
+    <value>حساب‌های منظورشده در جمع کل</value>
   </data>
   <data name="Home_Unreviewed" xml:space="preserve">
-    <value>{0} تراکنش نیاز به بررسی دارد</value>
+    <value>تراکنش‌های نیازمند بررسی: {0}</value>
   </data>
   <data name="Home_Due" xml:space="preserve">
-    <value>{0} موعد نیاز به اقدام دارد</value>
+    <value>سررسیدشده یا معوق: {0}</value>
   </data>
   <data name="Home_Refunds" xml:space="preserve">
     <value>هزینه‌ها پس از کسر {0} برگشت وجه</value>
@@ -887,7 +887,7 @@
     <value>موعدهای نزدیک</value>
   </data>
   <data name="Home_ExpenseByCategory" xml:space="preserve">
-    <value>هزینه به تفکیک دسته</value>
+    <value>هزینه‌ها به تفکیک دسته</value>
   </data>
   <data name="Home_NoExpenses" xml:space="preserve">
     <value>در این دوره هزینه‌ای ثبت نشده است.</value>
@@ -896,37 +896,37 @@
     <value>سایر دسته‌ها</value>
   </data>
   <data name="Home_ChartCurrency" xml:space="preserve">
-    <value>نمودار فقط حساب‌های {0} را نشان می‌دهد؛ ارزهای دیگر تبدیل نمی‌شوند.</value>
+    <value>نمودار فقط حساب‌هایی با ارز «{0}» را نشان می‌دهد؛ ارزهای دیگر تبدیل نمی‌شوند.</value>
   </data>
   <data name="Tx_FilterTotal" xml:space="preserve">
-    <value>{0} تراکنش · جمع {1}</value>
+    <value>تراکنش‌ها: {0} · جمع: {1}</value>
   </data>
   <data name="Backup_Intro" xml:space="preserve">
-    <value>داده‌های شما فقط روی همین دستگاه است. فایل پشتیبان در صورت گم‌شدن یا تعویض دستگاه از آن محافظت می‌کند.</value>
+    <value>از پروفایل خود نسخهٔ پشتیبان بسازید و یک کپی را خارج از این دستگاه نگه دارید تا در صورت گم‌شدن یا تعویض دستگاه، بتوانید داده‌ها را بازیابی کنید.</value>
   </data>
   <data name="Backup_CreateAndShare" xml:space="preserve">
     <value>ساخت فایل پشتیبان</value>
   </data>
   <data name="Backup_ShareHint" xml:space="preserve">
-    <value>پس از ساخت، محل نگهداری را انتخاب کنید؛ مثلاً Google Drive، OneDrive، ایمیل یا رایانه.</value>
+    <value>پس از ساخت نسخهٔ پشتیبان، محل نگهداری یک کپی را انتخاب کنید؛ مثلاً «Google Drive»، «OneDrive»، ایمیل یا رایانه.</value>
   </data>
   <data name="Backup_Created" xml:space="preserve">
-    <value>پشتیبان ساخته شد.</value>
+    <value>نسخهٔ پشتیبان ساخته شد.</value>
   </data>
   <data name="Backup_Share" xml:space="preserve">
     <value>اشتراک‌گذاری</value>
   </data>
   <data name="Backup_ShareTitle" xml:space="preserve">
-    <value>ذخیرهٔ پشتیبان</value>
+    <value>ذخیرهٔ نسخهٔ پشتیبان</value>
   </data>
   <data name="Backup_OnDevice" xml:space="preserve">
-    <value>پشتیبان‌های روی این دستگاه</value>
+    <value>نسخه‌های پشتیبان روی این دستگاه</value>
   </data>
   <data name="Backup_OnDeviceHint" xml:space="preserve">
-    <value>ده نسخهٔ آخر نگه داشته می‌شود. با از دست رفتن دستگاه این‌ها هم از بین می‌روند؛ یک نسخه جای دیگری نگه دارید.</value>
+    <value>ده نسخهٔ پشتیبان آخر روی این دستگاه نگه داشته می‌شود. برای زمانی که دستگاه گم یا خراب شود، یک کپی را در جای دیگری نگه دارید.</value>
   </data>
   <data name="Backup_RestoreIntro" xml:space="preserve">
-    <value>بازیابی، همهٔ داده‌های این دستگاه را با پشتیبان جایگزین می‌کند؛ ادغام نمی‌کند و تغییرات بعد از پشتیبان از دست می‌رود. پیش از آن یک نسخهٔ ایمن از داده‌های فعلی نگه داشته می‌شود.</value>
+    <value>بازیابی، داده‌های پروفایل فعلی را با این نسخهٔ پشتیبان جایگزین می‌کند؛ داده‌ها ادغام نمی‌شوند و تغییرات پس از پشتیبان‌گیری در این پروفایل از دست می‌روند. پروفایل‌های دیگر تغییر نمی‌کنند. پیش از شروع، یک نسخهٔ احتیاطی روی این دستگاه ساخته می‌شود.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
     <value>انتخاب فایل پشتیبان</value>
@@ -938,28 +938,28 @@
     <value>ساخته‌شده در: {0}</value>
   </data>
   <data name="Backup_PreviewDevice" xml:space="preserve">
-    <value>دستگاه: {0} · نسخهٔ اپ {1}</value>
+    <value>دستگاه: {0} · نسخهٔ برنامه: {1}</value>
   </data>
   <data name="Backup_PreviewCounts" xml:space="preserve">
-    <value>{0} حساب · {1} تراکنش · {2} برنامه</value>
+    <value>حساب‌ها: {0} · تراکنش‌ها: {1} · برنامه‌های مالی: {2}</value>
   </data>
   <data name="Backup_ReplaceWarning" xml:space="preserve">
-    <value>همهٔ داده‌های فعلی این دستگاه با این پشتیبان جایگزین می‌شود.</value>
+    <value>همهٔ داده‌های پروفایل فعلی با این نسخهٔ پشتیبان جایگزین می‌شود. پروفایل‌های دیگر تغییر نمی‌کنند.</value>
   </data>
   <data name="Backup_Replace" xml:space="preserve">
-    <value>جایگزینی داده‌های این دستگاه</value>
+    <value>جایگزینی داده‌های این پروفایل</value>
   </data>
   <data name="Backup_ReplaceTitle" xml:space="preserve">
-    <value>همهٔ داده‌ها جایگزین شود؟</value>
+    <value>داده‌های این پروفایل جایگزین شود؟</value>
   </data>
   <data name="Backup_ReplaceMessage" xml:space="preserve">
-    <value>پیش از آن، نسخهٔ ایمنی از داده‌های فعلی روی همین دستگاه نگه داشته می‌شود.</value>
+    <value>داده‌های پروفایل فعلی، از جمله تغییرات پس از پشتیبان‌گیری، جایگزین می‌شود و ادغامی انجام نمی‌شود. ابتدا یک نسخهٔ احتیاطی روی این دستگاه ساخته می‌شود. پروفایل‌های دیگر تغییر نمی‌کنند.</value>
   </data>
   <data name="Backup_Restored" xml:space="preserve">
-    <value>پشتیبان بازیابی شد</value>
+    <value>نسخهٔ پشتیبان بازیابی شد</value>
   </data>
   <data name="Backup_RestoredMessage" xml:space="preserve">
-    <value>مانده‌ها را بررسی کنید. یادآوری‌ها دوباره تنظیم می‌شوند.</value>
+    <value>نسخهٔ پشتیبان بازیابی شد. ماندهٔ حساب‌ها و تنظیمات یادآوری را بررسی کنید.</value>
   </data>
   <data name="Backup_SizeKb" xml:space="preserve">
     <value>{0} کیلوبایت</value>
@@ -974,7 +974,7 @@
     <value>بودجهٔ ماهانه</value>
   </data>
   <data name="Budget_Currency" xml:space="preserve">
-    <value>ماه‌های {1} · {0}</value>
+    <value>تقویم: {1} · ارز: {0}</value>
   </data>
   <data name="Budget_PreviousMonth" xml:space="preserve">
     <value>ماه قبل</value>
@@ -1010,22 +1010,22 @@
     <value>سقف دسته‌ها</value>
   </data>
   <data name="Budget_CategoriesHint" xml:space="preserve">
-    <value>اختیاری. سقف دسته همان هزینه‌های سقف کل را بررسی می‌کند و چیزی دوبار شمرده نمی‌شود.</value>
+    <value>اختیاری است. هزینه‌های هر دسته بخشی از هزینه‌های سقف کل هستند؛ این مبالغ دوباره به جمع اضافه نمی‌شوند.</value>
   </data>
   <data name="Budget_ConfirmedOnly" xml:space="preserve">
     <value>فقط تراکنش‌های تأییدشده</value>
   </data>
   <data name="Budget_IncludesUnreviewed" xml:space="preserve">
-    <value>شامل {0} تراکنشی که هنوز بررسی نشده است.</value>
+    <value>تراکنش‌های بررسی‌نشدهٔ محاسبه‌شده: {0}.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
     <value>هزینه‌های برنامه‌ریزی‌شدهٔ این ماه: {0} ({1} موعد)</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
-    <value>{0} مورد با مبلغ نامعلوم</value>
+    <value>موارد با مبلغ نامعلوم: {0}</value>
   </data>
   <data name="Budget_Equivalent" xml:space="preserve">
-    <value>برنامه‌های سالانه و غیرماهانه حدوداً معادل {0} در ماه است (فقط برای مقایسه).</value>
+    <value>معادل ماهانهٔ برنامه‌های سالانه و سایر برنامه‌های غیرماهانه حدود {0} است؛ فقط برای مقایسه.</value>
   </data>
   <data name="Budget_CopyNext" xml:space="preserve">
     <value>کپی به ماه بعد</value>
@@ -1037,7 +1037,7 @@
     <value>بودجهٔ {0} با همین سقف‌ها ساخته شود؟</value>
   </data>
   <data name="Budget_CopyReplaceMessage" xml:space="preserve">
-    <value>{0} از قبل بودجه دارد. با این سقف‌ها جایگزین شود؟</value>
+    <value>برای «{0}» از قبل بودجه تعریف شده است. سقف‌های آن با این مقادیر جایگزین شود؟</value>
   </data>
   <data name="Budget_Delete" xml:space="preserve">
     <value>حذف بودجه</value>
@@ -1052,7 +1052,7 @@
     <value>بدون سقف کل</value>
   </data>
   <data name="Budget_ScopeHint" xml:space="preserve">
-    <value>هزینه‌ها منهای برگشت وجه در حساب‌های داخل جمع کل با این ارز حساب می‌شود. انتقال، موجودی آغازین و تعدیل هرگز حساب نمی‌شوند.</value>
+    <value>هزینه‌ها پس از کسر برگشت وجه، برای حساب‌های انتخاب‌شدهٔ این بودجه و با ارز بودجه محاسبه می‌شوند. انتقال‌ها، موجودی آغازین و اصلاح مانده محاسبه نمی‌شوند.</value>
   </data>
   <data name="Budget_Alerts" xml:space="preserve">
     <value>اعلان در ۸۰٪ و هنگام عبور از سقف</value>
@@ -1085,7 +1085,7 @@
     <value>حساب‌ها</value>
   </data>
   <data name="Report_Plans" xml:space="preserve">
-    <value>برنامه و واقعی</value>
+    <value>برنامه‌ریزی‌شده و ثبت‌شده</value>
   </data>
   <data name="Report_SoFar" xml:space="preserve">
     <value>تا امروز</value>
@@ -1106,7 +1106,7 @@
     <value>ناخالص</value>
   </data>
   <data name="Report_Refunds" xml:space="preserve">
-    <value>برگشت</value>
+    <value>برگشت وجه</value>
   </data>
   <data name="Report_Net" xml:space="preserve">
     <value>خالص</value>
@@ -1118,10 +1118,10 @@
     <value>برگشت وجه کسرشده</value>
   </data>
   <data name="Report_SavingsRate" xml:space="preserve">
-    <value>سهم پس‌انداز از درآمد</value>
+    <value>درصد درآمد باقی‌مانده</value>
   </data>
   <data name="Report_BalanceHint" xml:space="preserve">
-    <value>تغییر مانده حساب‌ها ممکن است متفاوت باشد؛ انتقال، موجودی آغازین و تعدیل، درآمد یا هزینه نیستند. گزارش حساب‌ها را ببینید.</value>
+    <value>تغییر ماندهٔ حساب‌ها ممکن است با تفاوت درآمد و هزینه یکسان نباشد؛ انتقال‌ها، موجودی آغازین و اصلاح مانده، درآمد یا هزینه محسوب نمی‌شوند. گزارش حساب‌ها را ببینید.</value>
   </data>
   <data name="Report_PartialHint" xml:space="preserve">
     <value>* ماه جاری هنوز تمام نشده است؛ آن را با ماه کامل مقایسه نکنید.</value>
@@ -1139,7 +1139,7 @@
     <value>انتقال خروجی</value>
   </data>
   <data name="Report_Adjustments" xml:space="preserve">
-    <value>تعدیل‌ها</value>
+    <value>اصلاحات مانده</value>
   </data>
   <data name="Report_Closing" xml:space="preserve">
     <value>مانده در پایان دوره</value>
@@ -1154,7 +1154,7 @@
     <value>ثبت‌شده</value>
   </data>
   <data name="Report_PlanDetails" xml:space="preserve">
-    <value>{0} از {1} انجام‌شده</value>
+    <value>انجام‌شده: {0} از {1}</value>
   </data>
   <data name="Forecast_Title" xml:space="preserve">
     <value>پیش‌بینی</value>
@@ -1172,16 +1172,16 @@
     <value>حساب‌های داخل جمع کل · از {0} تا {1}</value>
   </data>
   <data name="Forecast_Unreviewed" xml:space="preserve">
-    <value>شامل {0} تراکنشی که هنوز بررسی نشده است.</value>
+    <value>تراکنش‌های بررسی‌نشدهٔ محاسبه‌شده: {0}.</value>
   </data>
   <data name="Forecast_EndBalance" xml:space="preserve">
-    <value>برآورد مانده پس از برنامه‌های ثبت‌شده</value>
+    <value>ماندهٔ برآوردی با در نظر گرفتن برنامه‌های مالی</value>
   </data>
   <data name="Forecast_Lowest" xml:space="preserve">
-    <value>کمترین: {0} در {1}</value>
+    <value>کمترین مانده: {0} در {1}</value>
   </data>
   <data name="Forecast_Shortfall" xml:space="preserve">
-    <value>ممکن است حدود {0} مانده منفی شود.</value>
+    <value>ممکن است ماندهٔ حساب‌ها در حوالی {0} منفی شود.</value>
   </data>
   <data name="Forecast_Incomplete" xml:space="preserve">
     <value>ناقص: {0} مورد برنامه‌ریزی‌شده هنوز مبلغ ندارد.</value>
@@ -1193,7 +1193,7 @@
     <value>در این بازه موردی برنامه‌ریزی نشده است.</value>
   </data>
   <data name="Forecast_OverdueAssumed" xml:space="preserve">
-    <value>معوق؛ امروز فرض شده</value>
+    <value>معوق؛ تاریخ فرضی: امروز</value>
   </data>
   <data name="Forecast_Recorded" xml:space="preserve">
     <value>از قبل ثبت‌شده</value>
@@ -1202,7 +1202,7 @@
     <value>تراکنش ثبت‌شده</value>
   </data>
   <data name="Forecast_Disclaimer" xml:space="preserve">
-    <value>فقط برنامه‌ها و تراکنش‌های ثبت‌شده لحاظ شده‌اند؛ خریدهای روزمرهٔ برنامه‌ریزی‌نشده، تغییر درآمد و سایر موارد ثبت‌نشده در آن نیستند. بودجه کسر نمی‌شود. این یک برآورد است، نه پولی که خرجش امن باشد.</value>
+    <value>این پیش‌بینی فقط برنامه‌های مالی و تراکنش‌های ثبت‌شده را در نظر می‌گیرد. هزینه‌های روزمرهٔ برنامه‌ریزی‌نشده، تغییرات ثبت‌نشدهٔ درآمد و سایر موارد ثبت‌نشده محاسبه نمی‌شوند. بودجه و برآورد هزینهٔ روزمره از آن کسر نمی‌شوند. این برآورد، تضمینی برای امکان خرج‌کردن پول نیست.</value>
   </data>
   <data name="Reminder_Generic" xml:space="preserve">
     <value>یک مورد مالی نیاز به بررسی دارد.</value>
@@ -1229,7 +1229,7 @@
     <value>نمایش نام و مبلغ</value>
   </data>
   <data name="Settings_ShowDetailsHint" xml:space="preserve">
-    <value>خاموش: اعلان فقط می‌گوید موردی نیاز به بررسی دارد تا چیز خصوصی روی صفحهٔ قفل دیده نشود.</value>
+    <value>در حالت خاموش، نام‌ها و مبالغ در اعلان نمایش داده نمی‌شوند و فقط یک پیام عمومی می‌بینید.</value>
   </data>
   <data name="Settings_ReminderDefaults" xml:space="preserve">
     <value>پیش‌فرض یادآوری‌های جدید</value>
@@ -1238,7 +1238,7 @@
     <value>نرخ‌های ارز</value>
   </data>
   <data name="Rates_Intro" xml:space="preserve">
-    <value>نرخ‌هایی که وارد می‌کنید فقط برای نمایش جمع کل به ارز گزارش استفاده می‌شوند. مبالغ ثبت‌شده، بودجه‌ها و تاریخچه هرگز تغییر نمی‌کنند.</value>
+    <value>نرخ‌های ثبت‌شده برای محاسبهٔ جمع مبالغ به ارز ارزش‌گذاری استفاده می‌شوند؛ ارز و مبلغ اصلی تراکنش‌ها و بودجه‌ها تغییر نمی‌کند. نمایش مبالغ تبدیل‌شده به نرخ و تاریخ آن وابسته است.</value>
   </data>
   <data name="Rates_Missing" xml:space="preserve">
     <value>هنوز نرخی از {0} به {1} ثبت نشده است. تا افزودن نرخ، جمع به {1} ناقص می‌ماند.</value>
@@ -1253,7 +1253,7 @@
     <value>نرخ</value>
   </data>
   <data name="Rates_Estimate" xml:space="preserve">
-    <value>نرخ تخمینی (نه تبدیل واقعی)</value>
+    <value>نرخ تخمینی (نه نرخ یک تبدیل انجام‌شده)</value>
   </data>
   <data name="Rates_EstimateBadge" xml:space="preserve">
     <value>تخمینی</value>
@@ -1271,7 +1271,7 @@
     <value>نرخی بزرگ‌تر از صفر وارد کنید.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
-    <value>مجموع ≈ {0} (نرخ‌های {1})</value>
+    <value>مجموع ≈ {0} (نرخ‌های مورخ {1})</value>
   </data>
   <data name="Home_CombinedIncomplete" xml:space="preserve">
     <value>جمع کل ناقص است؛ نرخ {0} موجود نیست</value>
@@ -1289,7 +1289,7 @@
     <value>تا</value>
   </data>
   <data name="Export_IncludeNotes" xml:space="preserve">
-    <value>شامل یادداشت و طرف حساب</value>
+    <value>افزودن یادداشت‌ها و طرف‌های حساب</value>
   </data>
   <data name="Export_Warning" xml:space="preserve">
     <value>این فایل شامل داده‌های مالی است و رمزنگاری نشده است. فقط با افراد و سرویس‌های مورد اعتماد به اشتراک بگذارید. این فایل پشتیبان نیست؛ برنامه‌ها، بودجه‌ها و تنظیمات در آن نیستند.</value>
@@ -1298,25 +1298,25 @@
     <value>خروجی و اشتراک‌گذاری</value>
   </data>
   <data name="Export_Done" xml:space="preserve">
-    <value>{0} تراکنش خروجی گرفته شد.</value>
+    <value>خروجی {0} تراکنش آماده شد.</value>
   </data>
   <data name="Import_Title" xml:space="preserve">
     <value>ورود تراکنش‌ها (CSV)</value>
   </data>
   <data name="Import_Intro" xml:space="preserve">
-    <value>فایل‌های خروجی همین اپ شناسهٔ خود را حفظ می‌کنند و ورود دوباره تکراری نمی‌سازد. برای فایل‌های دیگر ستون‌ها و قالب‌ها را خودتان تعیین می‌کنید. تراکنش‌های واردشده برای بررسی علامت می‌خورند.</value>
+    <value>شناسهٔ تراکنش‌ها در خروجی این برنامه حفظ می‌شود تا با وارد کردن دوبارهٔ همان فایل، تراکنش تکراری ایجاد نشود. برای فایل‌های دیگر، ستون‌ها و قالب‌ها را مشخص کنید. تراکنش‌های واردشده نیازمند بررسی علامت‌گذاری می‌شوند.</value>
   </data>
   <data name="Import_Pick" xml:space="preserve">
     <value>انتخاب فایل CSV</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>فایل سطری ندارد.</value>
+    <value>فایل هیچ ردیف داده‌ای ندارد.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>– در فایل نیست –</value>
   </data>
   <data name="Import_Account" xml:space="preserve">
-    <value>ورود به حساب</value>
+    <value>حساب مقصد برای ورود داده‌ها</value>
   </data>
   <data name="Import_DateColumn" xml:space="preserve">
     <value>ستون تاریخ</value>
@@ -1328,13 +1328,13 @@
     <value>ستون مبلغ</value>
   </data>
   <data name="Import_DecimalPoint" xml:space="preserve">
-    <value>ممیز نقطه 1,234.56</value>
+    <value>ممیز نقطه؛ نمونه: «1,234.56»</value>
   </data>
   <data name="Import_DecimalComma" xml:space="preserve">
-    <value>ممیز ویرگول 1.234,56</value>
+    <value>ممیز ویرگول؛ نمونه: «1.234,56»</value>
   </data>
   <data name="Import_Sign" xml:space="preserve">
-    <value>جهت</value>
+    <value>نحوهٔ تشخیص درآمد و هزینه</value>
   </data>
   <data name="Import_SignNegativeExpense" xml:space="preserve">
     <value>منفی = هزینه</value>
@@ -1361,7 +1361,7 @@
     <value>حساب، ستون تاریخ و مبلغ و قالب تاریخ را انتخاب کنید.</value>
   </data>
   <data name="Import_Preview" xml:space="preserve">
-    <value>{0} جدید · {1} قبلاً واردشده (رد می‌شود) · {2} ناخوانا</value>
+    <value>جدید: {0} · قبلاً واردشده: {1} (نادیده گرفته می‌شود) · نامعتبر: {2}</value>
   </data>
   <data name="Import_InvalidLine" xml:space="preserve">
     <value>سطر {0}: {1}</value>
@@ -1373,19 +1373,19 @@
     <value>تاریخ با این قالب خوانده نشد</value>
   </data>
   <data name="Import_Error_Kind" xml:space="preserve">
-    <value>نوع نامعلوم</value>
+    <value>نوع تراکنش نامعتبر یا ناشناخته است</value>
   </data>
   <data name="Import_Error_Account" xml:space="preserve">
     <value>حساب پیدا نشد</value>
   </data>
   <data name="Import_Error_Amount" xml:space="preserve">
-    <value>مبلغ ناخوانا یا مبهم است</value>
+    <value>مبلغ قابل تشخیص نیست یا چند برداشت از آن ممکن است</value>
   </data>
   <data name="Import_Duplicates" xml:space="preserve">
-    <value>{0} سطر با تراکنش‌های موجود تاریخ و مبلغ یکسان دارد؛ ممکن است واقعاً خریدهای جداگانه باشند.</value>
+    <value>تعداد ردیف‌های هم‌تاریخ و هم‌مبلغ با تراکنش‌های موجود: {0}. این ردیف‌ها ممکن است تراکنش‌های جداگانه و معتبر باشند.</value>
   </data>
   <data name="Import_BeforeOpening" xml:space="preserve">
-    <value>{0} سطر پیش از تاریخ آغاز حساب است و در مانده اثر نمی‌گذارد. اگر باید حساب شوند، تاریخ آغاز را جابه‌جا کنید.</value>
+    <value>تعداد ردیف‌های پیش از تاریخ موجودی آغازین: {0}. این ردیف‌ها در ماندهٔ حساب اثر ندارند. پیش از تغییر تاریخ موجودی آغازین، خود مبلغ موجودی را نیز بررسی کنید.</value>
   </data>
   <data name="Import_SkipDuplicates" xml:space="preserve">
     <value>کنار گذاشتن موارد احتمالاً تکراری</value>
@@ -1397,22 +1397,22 @@
     <value>چیزی وارد نشد: {0} سطر معتبر نیست ({1}).</value>
   </data>
   <data name="Import_Done" xml:space="preserve">
-    <value>{0} تراکنش وارد شد و {1} مورد رد شد. آن‌ها را در تراکنش‌ها بررسی کنید.</value>
+    <value>تراکنش‌های واردشده: {0} · موارد نادیده‌گرفته‌شده: {1}. تراکنش‌های جدید را در بخش «تراکنش‌ها» بررسی کنید.</value>
   </data>
   <data name="Import_History" xml:space="preserve">
     <value>ورودهای قبلی</value>
   </data>
   <data name="Import_Batch" xml:space="preserve">
-    <value>{0} · {1} تراکنش</value>
+    <value>تاریخ: {0} · تراکنش‌ها: {1}</value>
   </data>
   <data name="Import_Undo" xml:space="preserve">
-    <value>لغو ورود</value>
+    <value>واگرد ورود داده‌ها</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>تراکنش‌های این ورود حذف شوند؟ تراکنش‌های قبلی دست نمی‌خورند.</value>
+    <value>تراکنش‌های واردشده در این مرحله حذف شوند؟ تراکنش‌هایی که پیش از آن وجود داشتند، حفظ می‌شوند.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
-    <value>تجربهٔ کاربری</value>
+    <value>حالت نمایش</value>
   </data>
   <data name="Mode_Simple" xml:space="preserve">
     <value>ساده</value>
@@ -1421,19 +1421,19 @@
     <value>پیشرفته</value>
   </data>
   <data name="Mode_Hint" xml:space="preserve">
-    <value>هر دو همان داده و محاسبات را نشان می‌دهند. حالت پیشرفته گزینه‌های بیشتری را مستقیم نشان می‌دهد و بازگشت به ساده چیزی را پاک نمی‌کند.</value>
+    <value>در هر دو حالت، داده‌ها و محاسبات یکسان‌اند. در حالت پیشرفته گزینه‌های بیشتری مستقیماً در دسترس است. بازگشت به حالت ساده، داده یا تنظیمی را حذف نمی‌کند.</value>
   </data>
   <data name="Settings_Security" xml:space="preserve">
     <value>حریم خصوصی و امنیت</value>
   </data>
   <data name="Lock_Setting" xml:space="preserve">
-    <value>قفل اپ</value>
+    <value>قفل برنامه</value>
   </data>
   <data name="Lock_Hint" xml:space="preserve">
-    <value>از اثر انگشت، چهره یا قفل صفحهٔ دستگاه استفاده می‌کند. هنگام خروج، اپ پوشانده می‌شود و پس از ۳۰ ثانیه دوباره می‌پرسد. قفل، اپ را پنهان می‌کند و داده‌های روی دستگاه را رمزنگاری نمی‌کند.</value>
+    <value>از اثر انگشت، تشخیص چهره یا رمز دستگاه استفاده می‌کند. هنگام خروج، محتوای برنامه پنهان می‌شود؛ اگر پس از ۳۰ ثانیه برگردید، باید دوباره قفل را باز کنید. قفل برنامه به‌تنهایی داده‌های دستگاه را رمزگذاری نمی‌کند.</value>
   </data>
   <data name="Lock_NotAvailableHint" xml:space="preserve">
-    <value>برای استفاده از قفل اپ، ابتدا قفل صفحه را روی دستگاه فعال کنید.</value>
+    <value>برای استفاده از قفل برنامه، ابتدا قفل صفحهٔ دستگاه را فعال کنید.</value>
   </data>
   <data name="Lock_Message" xml:space="preserve">
     <value>برای دیدن اطلاعات مالی، قفل را باز کنید.</value>
@@ -1442,25 +1442,25 @@
     <value>باز کردن قفل</value>
   </data>
   <data name="Lock_Reason" xml:space="preserve">
-    <value>باز کردن قفل Zanance</value>
+    <value>باز کردن قفل «Zanance»</value>
   </data>
   <data name="Lock_EnableReason" xml:space="preserve">
-    <value>فعال‌کردن قفل اپ</value>
+    <value>فعال کردن قفل برنامه</value>
   </data>
   <data name="Lock_DisableReason" xml:space="preserve">
-    <value>غیرفعال‌کردن قفل اپ</value>
+    <value>غیرفعال کردن قفل برنامه</value>
   </data>
   <data name="Lock_ConfirmExport" xml:space="preserve">
     <value>تأیید خروجی گرفتن</value>
   </data>
   <data name="Lock_ConfirmBackup" xml:space="preserve">
-    <value>تأیید ساخت پشتیبان</value>
+    <value>تأیید پشتیبان‌گیری</value>
   </data>
   <data name="Lock_ConfirmRestore" xml:space="preserve">
     <value>تأیید بازیابی</value>
   </data>
   <data name="Plan_AdvancedSummary" xml:space="preserve">
-    <value>این برنامه از این تنظیم استفاده می‌کند: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
+    <value>تنظیمات فعال این برنامهٔ مالی: {0}. برای تغییر آن‌ها، حالت پیشرفته را در تنظیمات انتخاب کنید.</value>
   </data>
   <data name="Budget_HiddenLimits" xml:space="preserve">
     <value>سقف دسته‌ها ({0} مورد) حفظ شده است. برای ویرایش، حالت پیشرفته را در تنظیمات فعال کنید.</value>
@@ -1478,13 +1478,13 @@
     <value>انتخاب نماد</value>
   </data>
   <data name="Account_ArchiveWithPlans" xml:space="preserve">
-    <value>{0} برنامهٔ فعال از این حساب استفاده می‌کند ({1}). با بایگانی، از امروز پایان می‌یابند؛ تراکنش‌ها و سابقهٔ گذشته حفظ می‌شوند.</value>
+    <value>تعداد برنامه‌های مالی فعال این حساب: {0} ({1}). با بایگانی حساب، این برنامه‌ها از امروز در «Zanance» پایان می‌یابند؛ قراردادها و پرداخت‌های واقعی لغو نمی‌شوند. تراکنش‌ها و سابقهٔ قبلی حفظ می‌شوند.</value>
   </data>
   <data name="Reconcile_Title" xml:space="preserve">
     <value>تطبیق مانده</value>
   </data>
   <data name="Reconcile_Intro" xml:space="preserve">
-    <value>مانده‌ای را که می‌بینید (مثلاً در اپ بانک) وارد کنید تا با ثبت‌های شما مقایسه شود.</value>
+    <value>ماندهٔ واقعی حساب، مثلاً مبلغ نمایش‌داده‌شده در برنامهٔ بانک، را وارد کنید تا با ماندهٔ ثبت‌شده مقایسه شود.</value>
   </data>
   <data name="Reconcile_Observed" xml:space="preserve">
     <value>مانده‌ای که می‌بینید</value>
@@ -1499,37 +1499,37 @@
     <value>ثبت‌شده {0} · اختلاف {1}</value>
   </data>
   <data name="Reconcile_Unreviewed" xml:space="preserve">
-    <value>{0} تراکنش این حساب هنوز بررسی نشده است.</value>
+    <value>تراکنش‌های بررسی‌نشدهٔ این حساب: {0}.</value>
   </data>
   <data name="Reconcile_Duplicates" xml:space="preserve">
-    <value>{0} تراکنش تاریخ و مبلغ یکسان دارند؛ تکراری‌بودن را بررسی کنید.</value>
+    <value>تراکنش‌های احتمالاً تکراری: {0}. هرکدام با تراکنش دیگری تاریخ و مبلغ یکسان دارد؛ آن‌ها را بررسی کنید.</value>
   </data>
   <data name="Reconcile_Missing" xml:space="preserve">
-    <value>آیا تراکنشی جا افتاده یا در حساب دیگری ثبت شده؟ فقط اگر نه، تعدیل ثبت کنید.</value>
+    <value>ابتدا بررسی کنید تراکنشی جا نیفتاده یا در حساب دیگری ثبت نشده باشد. اگر اختلاف با اصلاح تراکنش‌ها برطرف نشد، اصلاح مانده ثبت کنید.</value>
   </data>
   <data name="Reconcile_Reason" xml:space="preserve">
-    <value>دلیل تعدیل</value>
+    <value>دلیل اصلاح مانده</value>
   </data>
   <data name="Reconcile_ReasonRequired" xml:space="preserve">
-    <value>دلیل تعدیل را وارد کنید.</value>
+    <value>دلیل اصلاح مانده را وارد کنید.</value>
   </data>
   <data name="Reconcile_Adjust" xml:space="preserve">
-    <value>ثبت تعدیل</value>
+    <value>ثبت اصلاح مانده</value>
   </data>
   <data name="Reconcile_AdjustMessage" xml:space="preserve">
-    <value>تعدیل فقط مانده را تغییر می‌دهد؛ درآمد یا هزینه نیست و در بودجه حساب نمی‌شود.</value>
+    <value>این اصلاح فقط ماندهٔ حساب را تغییر می‌دهد؛ درآمد یا هزینه محسوب نمی‌شود و در بودجه اثر ندارد.</value>
   </data>
   <data name="Reconcile_Done" xml:space="preserve">
-    <value>تعدیل ثبت شد و مانده‌ها اکنون یکسان‌اند.</value>
+    <value>اصلاح مانده ثبت شد. ماندهٔ ثبت‌شده اکنون با مبلغ واردشده مطابقت دارد.</value>
   </data>
   <data name="Entry_Icon" xml:space="preserve">
     <value>نماد این تراکنش</value>
   </data>
   <data name="Entry_MakeRecurring" xml:space="preserve">
-    <value>تبدیل به برنامه</value>
+    <value>ساخت برنامهٔ تکرارشونده</value>
   </data>
   <data name="Entry_PayBack" xml:space="preserve">
-    <value>برگشت درآمد</value>
+    <value>ثبت برگشت درآمد</value>
   </data>
   <data name="Home_ConfirmedOnly" xml:space="preserve">
     <value>شامل {0} تراکنش بررسی‌نشده · فقط تأییدشده: {1}</value>
@@ -1562,22 +1562,22 @@
     <value>حذف داده‌ها</value>
   </data>
   <data name="Settings_DeleteAll" xml:space="preserve">
-    <value>حذف همه داده‌ها در این دستگاه</value>
+    <value>حذف داده‌های این پروفایل</value>
   </data>
   <data name="Settings_DeleteAllHint" xml:space="preserve">
-    <value>همه حساب‌ها، تراکنش‌ها، برنامه‌ها، بودجه‌ها و تنظیمات را از این دستگاه پاک می‌کند. فایل‌های پشتیبانی که جای دیگری ذخیره کرده‌اید دست نمی‌خورند.</value>
+    <value>حساب‌ها، تراکنش‌ها، برنامه‌های مالی، بودجه‌ها و تنظیمات پروفایل فعلی حذف می‌شوند. پروفایل‌های دیگر و فایل‌های پشتیبان جداگانه تغییر نمی‌کنند.</value>
   </data>
   <data name="Settings_DeleteAllTitle" xml:space="preserve">
-    <value>همه چیز حذف شود؟</value>
+    <value>داده‌های این پروفایل حذف شود؟</value>
   </data>
   <data name="Settings_DeleteAllMessage" xml:space="preserve">
-    <value>این کار برگشت‌پذیر نیست. اگر ممکن است دوباره به داده‌ها نیاز داشته باشید، اول پشتیبان بگیرید.</value>
+    <value>داده‌های پروفایل فعلی حذف می‌شوند و این کار واگرد ندارد. اگر به داده‌ها نیاز خواهید داشت، ابتدا نسخهٔ پشتیبان بسازید. پروفایل‌های دیگر تغییر نمی‌کنند.</value>
   </data>
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
-    <value>حذف همه داده‌ها را تأیید کنید</value>
+    <value>حذف داده‌های پروفایل فعلی را تأیید کنید</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
-    <value>روی یک مورد برنامه بزنید تا آن را کنار بگذارید یا تاریخ یا مبلغ دیگری فرض کنید، مثلاً حقوق دیرتر یا قبض گران‌تر. این فقط همین نما را تغییر می‌دهد.</value>
+    <value>یک مورد از برنامه‌های مالی را انتخاب کنید تا از پیش‌بینی کنار گذاشته شود یا تاریخ و مبلغ دیگری برایش فرض کنید؛ مثلاً دریافت دیرتر حقوق یا افزایش مبلغ قبض. فقط این پیش‌بینی تغییر می‌کند.</value>
   </data>
   <data name="Forecast_WhatIfActive" xml:space="preserve">
     <value>تغییرات فرضی اعمال شده است</value>
@@ -1616,7 +1616,7 @@
     <value>، </value>
   </data>
   <data name="Report_PlanOpen" xml:space="preserve">
-    <value>باز: {0}</value>
+    <value>در انتظار ثبت: {0}</value>
   </data>
   <data name="Report_PlanVariance" xml:space="preserve">
     <value>اختلاف {0}</value>
@@ -1634,7 +1634,7 @@
     <value>موجودی آغازین را نمی‌دانم</value>
   </data>
   <data name="Account_OpeningUnknownHint" xml:space="preserve">
-    <value>موجودی از صفر شروع می‌شود و ناقص علامت می‌خورد. بعداً در جزئیات حساب آن را با موجودی بانک مقایسه کنید تا کامل شود.</value>
+    <value>محاسبه با موجودی آغازین صفر شروع می‌شود و مانده «ناقص» علامت می‌خورد. بعداً در جزئیات حساب، آن را با ماندهٔ واقعی تطبیق دهید.</value>
   </data>
   <data name="Account_Incomplete" xml:space="preserve">
     <value>ناقص</value>
@@ -1649,7 +1649,7 @@
     <value>الگوهای سریع</value>
   </data>
   <data name="Templates_Intro" xml:space="preserve">
-    <value>هر الگو یک تراکنش جدید را با حساب، دسته، عنوان و در صورت تمایل مبلغ پر می‌کند. بررسی و ذخیرهٔ تراکنش همچنان با خودتان است.</value>
+    <value>الگو، حساب، دسته، عنوان و در صورت انتخاب شما مبلغِ فرم تراکنش جدید را از قبل پر می‌کند. پیش از ذخیره، اطلاعات را خودتان بررسی می‌کنید.</value>
   </data>
   <data name="Templates_Empty" xml:space="preserve">
     <value>هنوز الگویی ندارید. یک تراکنش را باز کنید و «ذخیره به‌عنوان الگو» را بزنید.</value>
@@ -1697,22 +1697,22 @@
     <value>صندوق اضطراری، سفر یا بیمهٔ سال بعد: هدف را تعیین کنید، در حساب‌هایتان پول کنار بگذارید و ببینید هر ماه چقدر باید پس‌انداز کنید.</value>
   </data>
   <data name="Goals_Note" xml:space="preserve">
-    <value>کنار گذاشتن پول فقط آن را نشانه‌گذاری می‌کند؛ پولی جابه‌جا نمی‌شود و هزینه هم حساب نمی‌شود. برای جابه‌جایی پول انتقال و هنگام خرج کردن هزینه ثبت کنید.</value>
+    <value>کنار گذاشتن پول برای هدف فقط یک تخصیص در برنامه است؛ پولی جابه‌جا نمی‌شود و هزینه محسوب نمی‌شود. جابه‌جایی واقعی را به‌صورت انتقال و خرج‌کردن را به‌صورت هزینه ثبت کنید.</value>
   </data>
   <data name="Goals_Finished" xml:space="preserve">
     <value>تکمیل‌شده و بایگانی‌شده</value>
   </data>
   <data name="Goals_Earmarked" xml:space="preserve">
-    <value>کنار گذاشته: {0} · اختصاص‌نیافته: {1}</value>
+    <value>کنارگذاشته‌شده: {0} · تخصیص‌نیافته: {1}</value>
   </data>
   <data name="Goals_Shortfall" xml:space="preserve">
-    <value>بیش از موجودی‌ها: {0}</value>
+    <value>کسری موجودی برای مبالغ کنارگذاشته‌شده: {0}</value>
   </data>
   <data name="Goal_Funded" xml:space="preserve">
-    <value>پوشش‌داده: {0} از {1}</value>
+    <value>تأمین‌شده: {0} از {1}</value>
   </data>
   <data name="Goal_By" xml:space="preserve">
-    <value>لازم تا {0}</value>
+    <value>مهلت هدف: {0}</value>
   </data>
   <data name="Goal_Reached" xml:space="preserve">
     <value>به هدف رسیدید</value>
@@ -1754,7 +1754,7 @@
     <value>مثلاً صندوق اضطراری</value>
   </data>
   <data name="Goal_NameRequired" xml:space="preserve">
-    <value>لطفاً یک نام وارد کنید.</value>
+    <value>نام هدف را وارد کنید.</value>
   </data>
   <data name="Goal_Target" xml:space="preserve">
     <value>مبلغ هدف</value>
@@ -1763,7 +1763,7 @@
     <value>تا تاریخ مشخصی لازم است</value>
   </data>
   <data name="Goal_Frequency" xml:space="preserve">
-    <value>پول کنار می‌گذارم</value>
+    <value>دورهٔ کنار گذاشتن پول</value>
   </data>
   <data name="Goal_Monthly" xml:space="preserve">
     <value>ماهانه</value>
@@ -1784,7 +1784,7 @@
     <value>پایین</value>
   </data>
   <data name="Goal_PriorityHint" xml:space="preserve">
-    <value>اگر موجودی حساب از مبلغ کنار گذاشته کمتر شود، اول اهداف با اولویت پایین‌تر پشتوانه‌شان را از دست می‌دهند.</value>
+    <value>اگر موجودی حساب برای همهٔ مبالغ کنارگذاشته‌شده کافی نباشد، ابتدا هدف‌های با اولویت بالاتر پوشش داده می‌شوند؛ کسری به هدف‌های با اولویت پایین‌تر می‌رسد.</value>
   </data>
   <data name="Goal_Details" xml:space="preserve">
     <value>هدف</value>
@@ -1802,7 +1802,7 @@
     <value>آزاد کردن</value>
   </data>
   <data name="Goal_SetAsideIn" xml:space="preserve">
-    <value>کنار گذاشته در {0}</value>
+    <value>کنارگذاشته‌شده در «{0}»</value>
   </data>
   <data name="Goal_ReleasedFrom" xml:space="preserve">
     <value>آزادشده از {0}</value>
@@ -1814,7 +1814,7 @@
     <value>حساب فعالی با ارز {0} ندارید. برای کنار گذاشتن پول یک حساب اضافه کنید.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>این فقط پول را در حساب نشانه‌گذاری می‌کند. برای انتقال پول به حساب پس‌انداز یک انتقال ثبت کنید.</value>
+    <value>این کار فقط بخشی از موجودی حساب را در برنامه به هدف اختصاص می‌دهد. برای جابه‌جایی واقعی پول، از بانک یا روش معمول خود استفاده کنید و سپس انتقال را در این برنامه ثبت کنید.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>سابقه</value>
@@ -1826,7 +1826,7 @@
     <value>این مورد حذف شود؟</value>
   </data>
   <data name="Goal_Complete" xml:space="preserve">
-    <value>علامت تکمیل</value>
+    <value>ثبت تکمیل</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>فعال کردن دوباره</value>
@@ -1838,13 +1838,13 @@
     <value>حذف هدف</value>
   </data>
   <data name="Goal_DeleteMessage" xml:space="preserve">
-    <value>هدف و مبالغ کنار گذاشته برای آن حذف می‌شوند. حساب‌ها و تراکنش‌ها تغییری نمی‌کنند.</value>
+    <value>هدف و سوابق تخصیص پول به آن حذف می‌شوند؛ خود پول، ماندهٔ حساب‌ها و تراکنش‌ها تغییر نمی‌کنند.</value>
   </data>
   <data name="Account_Earmarked" xml:space="preserve">
-    <value>کنار گذاشته برای اهداف: {0} · آزاد: {1}</value>
+    <value>کنارگذاشته‌شده برای هدف‌ها: {0} · تخصیص‌نیافته به هدف‌ها: {1}</value>
   </data>
   <data name="Rollover_Title" xml:space="preserve">
-    <value>باقی‌ماندهٔ ماه قبل</value>
+    <value>انتقال ماندهٔ بودجه</value>
   </data>
   <data name="Rollover_None" xml:space="preserve">
     <value>شروع از نو</value>
@@ -1853,22 +1853,22 @@
     <value>افزودن باقی‌مانده</value>
   </data>
   <data name="Rollover_Both" xml:space="preserve">
-    <value>افزودن باقی‌مانده، کسر اضافه‌خرج</value>
+    <value>افزودن باقی‌مانده و کسر مازاد هزینه</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
-    <value>از بودجه‌های ماه‌های قبل (بدون فاصله) استفاده می‌کند. پولی جابه‌جا نمی‌شود و فقط سقف‌های این ماه تغییر می‌کنند.</value>
+    <value>ماندهٔ بودجه از دوره‌های قبلیِ پیوسته منتقل می‌شود. پولی جابه‌جا نمی‌شود؛ فقط سقف‌های این دوره تغییر می‌کنند.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
-    <value>شامل {0} باقی‌مانده از ماه قبل (سقف خود ماه: {1})</value>
+    <value>شامل {0} باقی‌مانده از دورهٔ قبل؛ سقف پایهٔ این دوره: {1}</value>
   </data>
   <data name="Rollover_Deducted" xml:space="preserve">
-    <value>اضافه‌خرج ماه قبل ({0}) کسر شده است (سقف خود ماه: {1})</value>
+    <value>مازاد هزینهٔ دورهٔ قبل، به مبلغ {0}، کسر شده است؛ سقف پایهٔ این دوره: {1}</value>
   </data>
   <data name="Rollover_Active_Surplus" xml:space="preserve">
-    <value>باقی‌ماندهٔ ماه قبل به این بودجه اضافه می‌شود.</value>
+    <value>باقی‌ماندهٔ دورهٔ قبل به این بودجه اضافه می‌شود.</value>
   </data>
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
-    <value>باقی‌ماندهٔ ماه قبل اضافه و اضافه‌خرج آن کسر می‌شود.</value>
+    <value>باقی‌ماندهٔ دورهٔ قبل اضافه می‌شود و مازاد هزینهٔ آن از سقف این دوره کسر می‌شود.</value>
   </data>
   <data name="Split_Title" xml:space="preserve">
     <value>تقسیم بین دسته‌ها</value>
@@ -1883,7 +1883,7 @@
     <value>مبلغ قابل تقسیم</value>
   </data>
   <data name="Split_Hint" xml:space="preserve">
-    <value>موجودی حساب فقط یک بار به همین مبلغ تغییر می‌کند و هر دسته و بودجه‌اش فقط سهم خودش را می‌بیند.</value>
+    <value>ماندهٔ حساب فقط یک‌بار به اندازهٔ مبلغ کل تغییر می‌کند. برای هر دسته و بودجهٔ آن، فقط سهم همان دسته محاسبه می‌شود.</value>
   </data>
   <data name="Split_Remaining" xml:space="preserve">
     <value>باقی‌مانده برای تقسیم: {0}</value>
@@ -1901,22 +1901,22 @@
     <value>حذف سهم</value>
   </data>
   <data name="Split_Join" xml:space="preserve">
-    <value>یکی کردن دوباره</value>
+    <value>ادغام در یک تراکنش</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
     <value>فقط درآمد یا هزینه‌ای که به برنامه، برگشت وجه یا مبلغ قابل بازپرداخت وصل نیست قابل تقسیم است.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
-    <value>بخشی از یک تقسیم: جمع {0} در {1} سهم. حذف، همهٔ سهم‌ها را پاک می‌کند.</value>
+    <value>بخشی از یک تراکنش تقسیم‌شده است: مبلغ کل {0} در {1} بخش. با حذف آن، همهٔ بخش‌ها حذف می‌شوند.</value>
   </data>
   <data name="Split_EnterAll" xml:space="preserve">
     <value>برای هر سهم مبلغ وارد کنید یا سهم‌های خالی را حذف کنید.</value>
   </data>
   <data name="Occurrence_PayPart" xml:space="preserve">
-    <value>ثبت به‌عنوان پرداخت بخشی</value>
+    <value>ثبت پرداخت جزئی</value>
   </data>
   <data name="Occurrence_PayPartHint" xml:space="preserve">
-    <value>پرداخت بخشی، این مورد را با باقی‌مانده باز نگه می‌دارد؛ با پرداخت باقی‌مانده تسویه می‌شود.</value>
+    <value>با ثبت پرداخت جزئی، باقی‌ماندهٔ این نوبت در انتظار ثبت می‌ماند. پس از ثبت کل مبلغ، وضعیت آن تسویه‌شده می‌شود.</value>
   </data>
   <data name="Occurrence_PaidSoFar" xml:space="preserve">
     <value>پرداخت‌شده تاکنون: {0} · باقی‌مانده: {1}</value>
@@ -1949,7 +1949,7 @@
     <value>تاریخ بازبینی</value>
   </data>
   <data name="Contract_Hint" xml:space="preserve">
-    <value>۱۴ روز قبل از آخرین روز لغو و در خود آن روز یادآوری می‌گیرید. Zanance فقط یادآوری می‌کند؛ لغو با خودتان است و برنامه تا وقتی خودتان پایانش ندهید ادامه دارد.</value>
+    <value>در صورت فعال بودن اعلان‌ها، ۱۴ روز پیش از آخرین مهلت لغو و در همان روز یادآوری می‌گیرید. برای لغو قرارداد باید خودتان اقدام کنید. برنامهٔ مالی نیز تا زمانی که آن را پایان ندهید، ادامه دارد.</value>
   </data>
   <data name="Reminder_ContractGeneric" xml:space="preserve">
     <value>یکی از تاریخ‌های قرارداد نزدیک است.</value>
@@ -1979,31 +1979,31 @@
     <value>کل مبلغ</value>
   </data>
   <data name="Entry_ReimbursedBy" xml:space="preserve">
-    <value>پرداخت‌کننده</value>
+    <value>بازپرداخت‌کننده</value>
   </data>
   <data name="Entry_ReimbursedByPlaceholder" xml:space="preserve">
     <value>مثلاً کارفرما، یک دوست</value>
   </data>
   <data name="Entry_ReimbursableHint" xml:space="preserve">
-    <value>پولی که پس می‌گیرید به‌عنوان برگشت همین هزینه ثبت می‌شود، نه درآمد. تا آن موقع به‌صورت باز نمایش داده می‌شود.</value>
+    <value>پول دریافتی به‌عنوان برگشت وجهِ همین هزینه ثبت می‌شود، نه درآمد. تا زمان دریافت، در انتظار بازپرداخت نمایش داده می‌شود.</value>
   </data>
   <data name="Entry_ReimbursableInvalid" xml:space="preserve">
     <value>مبلغ بازپرداخت باید بیشتر از صفر و حداکثر برابر هزینه باشد.</value>
   </data>
   <data name="Entry_ReimbursementOpen" xml:space="preserve">
-    <value>بازپرداخت {0} توسط {1}؛ باقی‌مانده: {2}</value>
+    <value>طلب از «{1}»: {0} · باقی‌مانده برای دریافت: {2}</value>
   </data>
   <data name="Entry_ReimbursementDone" xml:space="preserve">
     <value>مبلغ {0} به‌طور کامل توسط {1} بازپرداخت شد.</value>
   </data>
   <data name="Entry_ReimbursedBySomeone" xml:space="preserve">
-    <value>کسی</value>
+    <value>شخص دیگر</value>
   </data>
   <data name="Entry_RecordReimbursement" xml:space="preserve">
     <value>ثبت پول دریافتی</value>
   </data>
   <data name="Entry_ReimbursementTitle" xml:space="preserve">
-    <value>پول بازپرداخت‌شده</value>
+    <value>بازپرداخت هزینه</value>
   </data>
   <data name="Reimbursements_Title" xml:space="preserve">
     <value>طلب‌های من</value>
@@ -2012,13 +2012,13 @@
     <value>هزینه‌هایی که دیگران برمی‌گردانند. برای ثبت پول دریافتی، هر مورد را باز کنید.</value>
   </data>
   <data name="Reimbursements_Empty" xml:space="preserve">
-    <value>در حال حاضر کسی به شما بدهکار نیست.</value>
+    <value>هزینه‌ای در انتظار بازپرداخت ثبت نشده است.</value>
   </data>
   <data name="Reimbursements_Total" xml:space="preserve">
-    <value>هنوز دریافت نشده</value>
+    <value>مجموع طلب‌های دریافت‌نشده</value>
   </data>
   <data name="Home_Reimbursements" xml:space="preserve">
-    <value>بازپرداخت {0} هزینه هنوز مانده است</value>
+    <value>هزینه‌های در انتظار بازپرداخت: {0}</value>
   </data>
   <data name="Entry_Tags" xml:space="preserve">
     <value>برچسب‌ها</value>
@@ -2051,10 +2051,10 @@
     <value>طرف حساب یا عنوان شامل</value>
   </data>
   <data name="Rule_MatchPlaceholder" xml:space="preserve">
-    <value>مثلاً Market</value>
+    <value>مثلاً سوپرمارکت</value>
   </data>
   <data name="Rule_TextRequired" xml:space="preserve">
-    <value>حداقل دو حرف وارد کنید و یک دسته انتخاب کنید.</value>
+    <value>حداقل دو نویسه وارد کنید و یک دسته انتخاب کنید.</value>
   </data>
   <data name="Rule_Delete" xml:space="preserve">
     <value>قانون حذف شود؟</value>
@@ -2081,7 +2081,7 @@
     <value>پولی که کسی به شما بدهکار است. قرض دادن و پس گرفتن آن انتقال است، نه هزینه یا درآمد.</value>
   </data>
   <data name="Account_Counterparty" xml:space="preserve">
-    <value>طرف قرض</value>
+    <value>وام‌دهنده یا وام‌گیرنده</value>
   </data>
   <data name="Account_CounterpartyPlaceholder" xml:space="preserve">
     <value>مثلاً بانک، یک دوست</value>
@@ -2096,7 +2096,7 @@
     <value>ثبت بازپرداخت</value>
   </data>
   <data name="Account_RecordReturn" xml:space="preserve">
-    <value>ثبت پول پس‌گرفته</value>
+    <value>ثبت بازپرداخت دریافتی</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
     <value>وام‌ها، قرض‌ها و دارایی‌ها</value>
@@ -2111,10 +2111,10 @@
     <value>دارایی</value>
   </data>
   <data name="Account_AssetHint" xml:space="preserve">
-    <value>خودرو، ملک یا چیز باارزش دیگر با ارزشی که خودتان تخمین می‌زنید. ارزش جدید را با تعدیل مانده در جزئیات حساب ثبت کنید؛ این هیچ‌وقت درآمد یا هزینه نیست و تخمین، پول نقد نیست.</value>
+    <value>برای ثبت ارزش تخمینی خودرو، ملک یا دارایی دیگر است. تغییر ارزش را در جزئیات حساب، به‌صورت اصلاح مانده ثبت کنید؛ این تغییر درآمد یا هزینه محسوب نمی‌شود. ارزش تخمینی، پول نقد در دسترس نیست.</value>
   </data>
   <data name="Accounts_AssetsValue" xml:space="preserve">
-    <value>دارایی‌های تخمینی: {0}</value>
+    <value>ارزش تخمینی دارایی‌ها: {0}</value>
   </data>
   <data name="Bulk_Select" xml:space="preserve">
     <value>انتخاب</value>
@@ -2129,7 +2129,7 @@
     <value>تراکنش‌های انتخاب‌شده</value>
   </data>
   <data name="Bulk_Reviewed" xml:space="preserve">
-    <value>بررسی شد</value>
+    <value>ثبت بررسی</value>
   </data>
   <data name="Bulk_Tag" xml:space="preserve">
     <value>برچسب</value>
@@ -2147,13 +2147,13 @@
     <value>این برچسب به همهٔ تراکنش‌های انتخاب‌شده اضافه می‌شود.</value>
   </data>
   <data name="Bulk_DeleteMessage" xml:space="preserve">
-    <value>{0} تراکنش حذف شود؟ تا چند ثانیه قابل برگشت است.</value>
+    <value>تعداد تراکنش‌های انتخاب‌شده برای حذف: {0}. حذف شوند؟ فقط تا چند ثانیه امکان واگرد دارید.</value>
   </data>
   <data name="Weekend_Title" xml:space="preserve">
-    <value>اگر تاریخ به آخر هفته بیفتد</value>
+    <value>اگر سررسید در تعطیلی آخر هفته باشد</value>
   </data>
   <data name="Weekend_Keep" xml:space="preserve">
-    <value>بماند</value>
+    <value>بدون تغییر</value>
   </data>
   <data name="Weekend_Before" xml:space="preserve">
     <value>روز کاری قبل</value>
@@ -2162,7 +2162,7 @@
     <value>روز کاری بعد</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>آخر هفتهٔ اینجا: {0} (بر اساس منطقه؛ در تنظیمات قابل تغییر). تعطیلات رسمی در نظر گرفته نمی‌شوند.</value>
+    <value>روزهای تعطیل آخر هفته: {0}؛ بر اساس منطقهٔ انتخاب‌شده در تنظیمات. تعطیلات رسمی فقط با فعال کردن گزینهٔ مربوط به آن‌ها در نظر گرفته می‌شوند.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
     <value>پیش از آخر هفته</value>
@@ -2186,13 +2186,13 @@
     <value>مبلغ واقعی صورت‌حساب</value>
   </data>
   <data name="Settlement_Advances" xml:space="preserve">
-    <value>پیش‌پرداخت‌های پرداخت‌شده ({0} مورد): {1}</value>
+    <value>پیش‌پرداخت‌های ثبت‌شده: {0} مورد · جمع: {1}</value>
   </data>
   <data name="Settlement_Extra" xml:space="preserve">
     <value>پرداخت اضافه: {0} (به‌عنوان هزینه ثبت می‌شود)</value>
   </data>
   <data name="Settlement_Back" xml:space="preserve">
-    <value>برگشت پول: {0} (به‌عنوان برگشت پیش‌پرداخت‌ها ثبت می‌شود)</value>
+    <value>برگشت وجه: {0} (به‌عنوان برگشت پیش‌پرداخت‌ها ثبت می‌شود)</value>
   </data>
   <data name="Settlement_Even" xml:space="preserve">
     <value>پیش‌پرداخت‌ها دقیقاً برابر صورت‌حساب است؛ چیزی ثبت نمی‌شود.</value>
@@ -2204,10 +2204,10 @@
     <value>پرداخت اضافهٔ «{0}»</value>
   </data>
   <data name="Settlement_BackTitle" xml:space="preserve">
-    <value>برگشت پول «{0}»</value>
+    <value>برگشت وجه بابت «{0}»</value>
   </data>
   <data name="Plan_SecondDay" xml:space="preserve">
-    <value>هر ماه یک روز دیگر هم</value>
+    <value>تکرار در روز دیگری از همان ماه</value>
   </data>
   <data name="Plan_SecondDayNumber" xml:space="preserve">
     <value>روز ماه</value>
@@ -2216,19 +2216,19 @@
     <value>و روز {0}</value>
   </data>
   <data name="Report_SharePdf" xml:space="preserve">
-    <value>اشتراک به‌صورت PDF</value>
+    <value>اشتراک‌گذاری به‌صورت PDF</value>
   </data>
   <data name="Report_PdfTitle" xml:space="preserve">
     <value>گزارش مالی {0}</value>
   </data>
   <data name="Report_PdfScope" xml:space="preserve">
-    <value>حساب‌های داخل جمع کل · ارز گزارش {0}</value>
+    <value>حساب‌های منظورشده در جمع کل · ارز ارزش‌گذاری: {0}</value>
   </data>
   <data name="Report_PdfCreated" xml:space="preserve">
     <value>تهیه‌شده در {0}</value>
   </data>
   <data name="Report_PdfDisclaimer" xml:space="preserve">
-    <value>با Zanance از ثبت‌های خودتان تهیه شده است. این سند رسمی بانک یا مرجع مالیاتی نیست.</value>
+    <value>بر اساس تراکنش‌های ثبت‌شدهٔ شما در «Zanance» تهیه شده است. این گزارش، صورت‌حساب رسمی بانک یا مرجع مالیاتی نیست.</value>
   </data>
   <data name="Attachment_Title" xml:space="preserve">
     <value>رسیدها و مدارک</value>
@@ -2249,7 +2249,7 @@
     <value>فایل خوانده نشد.</value>
   </data>
   <data name="Account_InterestRate" xml:space="preserve">
-    <value>نرخ سود (٪ سالانه)</value>
+    <value>نرخ سود سالانه (٪)</value>
   </data>
   <data name="Account_Installment" xml:space="preserve">
     <value>قسط ماهانه</value>
@@ -2264,7 +2264,7 @@
     <value>برآورد بازپرداخت</value>
   </data>
   <data name="Loan_Next" xml:space="preserve">
-    <value>قسط بعدی {0}، شامل اصل {1} و سود {2}</value>
+    <value>قسط بعدی: {0} · اصل بدهی: {1} · سود: {2}</value>
   </data>
   <data name="Loan_Payoff" xml:space="preserve">
     <value>تسویه پس از {0} قسط، حدود {1}. سود باقی‌مانده: {2}</value>
@@ -2273,7 +2273,7 @@
     <value>با این قسط، مانده در ۵۰ سال تسویه نمی‌شود.</value>
   </data>
   <data name="Loan_Disclaimer" xml:space="preserve">
-    <value>برآورد بر پایهٔ نرخ و قسطی که وارد کرده‌اید، با سود ماهانه روی مانده. قرارداد شما ممکن است طور دیگری محاسبه کند.</value>
+    <value>این برآورد با نرخ و مبلغ قسطِ واردشده و محاسبهٔ سود ماهانه بر ماندهٔ بدهی به دست می‌آید. روش محاسبه در قرارداد شما ممکن است متفاوت باشد.</value>
   </data>
   <data name="Loan_AddTerms" xml:space="preserve">
     <value>برای دیدن روند کاهش مانده، نرخ سود و قسط ماهانه را در «ویرایش» وارد کنید.</value>
@@ -2297,10 +2297,10 @@
     <value>دریافت در</value>
   </data>
   <data name="Loan_ConfirmPay" xml:space="preserve">
-    <value>اصل {0} به صورت انتقال و سود {1} به صورت هزینهٔ «{2}» ثبت می‌شود.</value>
+    <value>اصل بدهی به مبلغ {0} به‌صورت انتقال و سود به مبلغ {1} به‌صورت هزینه در حساب «{2}» ثبت می‌شود.</value>
   </data>
   <data name="Loan_ConfirmReceive" xml:space="preserve">
-    <value>اصل {0} به صورت انتقال و سود {1} به صورت درآمد «{2}» ثبت می‌شود.</value>
+    <value>اصل طلب به مبلغ {0} به‌صورت انتقال و سود به مبلغ {1} به‌صورت درآمد در حساب «{2}» ثبت می‌شود.</value>
   </data>
   <data name="Loan_InterestTitle" xml:space="preserve">
     <value>سود «{0}»</value>
@@ -2312,7 +2312,7 @@
     <value>قسط {0} · {1}</value>
   </data>
   <data name="Loan_RowSplit" xml:space="preserve">
-    <value>اصل {0} · سود {1}</value>
+    <value>اصل مبلغ: {0} · سود: {1}</value>
   </data>
   <data name="Loan_RowRemaining" xml:space="preserve">
     <value>مانده {0}</value>
@@ -2354,7 +2354,7 @@
     <value>واحد نمایش ارز</value>
   </data>
   <data name="Unit_Intro" xml:space="preserve">
-    <value>مبالغ یک ارز را با واحد رایج روزمره نمایش دهید و وارد کنید، مثلاً تومان به جای ریال. مبالغ همچنان به خود ارز ذخیره، خروجی و تبدیل می‌شوند.</value>
+    <value>مبالغ یک ارز را با واحد رایج، مثلاً تومان به‌جای ریال، نمایش دهید و وارد کنید. ذخیره‌سازی، خروجی داده‌ها و تبدیل ارز همچنان با ارز اصلی انجام می‌شود.</value>
   </data>
   <data name="Unit_Add" xml:space="preserve">
     <value>تعریف واحد</value>
@@ -2363,7 +2363,7 @@
     <value>نام واحد</value>
   </data>
   <data name="Unit_Factor" xml:space="preserve">
-    <value>هر واحد برابر است با (به ارز)</value>
+    <value>ارزش یک واحد به ارز اصلی</value>
   </data>
   <data name="Unit_Definition" xml:space="preserve">
     <value>هر {0} برابر {1}</value>
@@ -2372,7 +2372,7 @@
     <value>نمونه: {0} به صورت {1} نمایش داده می‌شود</value>
   </data>
   <data name="Unit_Invalid" xml:space="preserve">
-    <value>یک ارز انتخاب کنید و نامی تا ۲۰ نویسه، بدون | و ; وارد کنید.</value>
+    <value>ارز را انتخاب کنید و نامی با حداکثر ۲۰ نویسه وارد کنید. استفاده از «|» و «;» مجاز نیست.</value>
   </data>
   <data name="Unit_Remove" xml:space="preserve">
     <value>واحد حذف شود؟</value>
@@ -2393,7 +2393,7 @@
     <value>استفاده از مبلغ برنامه</value>
   </data>
   <data name="Forecast_AssumeAmountMessage" xml:space="preserve">
-    <value>مبلغ به {0}، فقط برای همین نما. برنامه تغییر نمی‌کند.</value>
+    <value>مبلغ فرضی را با ارز «{0}» وارد کنید. فقط این پیش‌بینی تغییر می‌کند، نه برنامهٔ مالی اصلی.</value>
   </data>
   <data name="Forecast_AmountAssumed" xml:space="preserve">
     <value>مبلغ فرضی</value>
@@ -2411,7 +2411,7 @@
     <value>حذف یک فیلتر ذخیره‌شده</value>
   </data>
   <data name="Filter_NameMessage" xml:space="preserve">
-    <value>نام، مثلاً «خرید خانه این ماه». بازه، نوع، حساب، دسته، جست‌وجو و وضعیت بررسی ذخیره می‌شوند.</value>
+    <value>نامی وارد کنید؛ مثلاً «خریدهای خوراکی این ماه». بازه، نوع تراکنش، حساب، دسته، عبارت جست‌وجو و وضعیت بررسی ذخیره می‌شوند.</value>
   </data>
   <data name="Filter_Replace" xml:space="preserve">
     <value>فیلتری با نام «{0}» وجود دارد. جایگزین شود؟</value>
@@ -2435,25 +2435,25 @@
     <value>هنوز اختصاص نیافته</value>
   </data>
   <data name="Envelope_Available" xml:space="preserve">
-    <value>موجودی حساب‌ها امروز</value>
+    <value>ماندهٔ امروز حساب‌ها</value>
   </data>
   <data name="Envelope_ForGoals" xml:space="preserve">
-    <value>کنار گذاشته برای هدف‌ها</value>
+    <value>کنارگذاشته‌شده برای هدف‌ها</value>
   </data>
   <data name="Envelope_InEnvelopes" xml:space="preserve">
     <value>باقی‌مانده در پاکت‌ها</value>
   </data>
   <data name="Envelope_OverAssigned" xml:space="preserve">
-    <value>بیش از موجودی حساب‌ها اختصاص داده شده است. یک پاکت یا هدف را کم کنید.</value>
+    <value>مجموع تخصیص‌ها از موجودی حساب‌ها بیشتر است. مبلغ اختصاص‌یافته به یک پاکت یا هدف را کاهش دهید.</value>
   </data>
   <data name="Envelope_Overspent" xml:space="preserve">
-    <value>پاکت‌ها به اندازهٔ {0} بیش از سهمشان خرج شده‌اند؛ این پول از موجودی کم شده است.</value>
+    <value>هزینهٔ پاکت‌ها به اندازهٔ {0} از بودجه‌شان بیشتر شده است. این مبلغ قبلاً از ماندهٔ حساب کسر شده است.</value>
   </data>
   <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
     <value>مبلغ اختصاص‌نیافته فقط برای ماه جاری و بر پایهٔ موجودی امروز نمایش داده می‌شود.</value>
   </data>
   <data name="Envelope_Hint" xml:space="preserve">
-    <value>فقط حساب‌های هم‌ارز و داخل محدودهٔ این بودجه حساب می‌شوند؛ وام، قرض داده‌شده و دارایی نه.</value>
+    <value>فقط حساب‌های انتخاب‌شده برای این بودجه با همان ارز محاسبه می‌شوند. حساب‌های وام، قرض داده‌شده و دارایی در این محاسبه نیستند.</value>
   </data>
   <data name="HomeLayout_Title" xml:space="preserve">
     <value>چیدمان خانه</value>
@@ -2486,7 +2486,7 @@
     <value>سررسیدهای پیش رو</value>
   </data>
   <data name="HomeSection_Categories" xml:space="preserve">
-    <value>هزینه بر اساس دسته</value>
+    <value>هزینه‌ها به تفکیک دسته</value>
   </data>
   <data name="HomeSection_Accounts" xml:space="preserve">
     <value>حساب‌ها</value>
@@ -2513,13 +2513,13 @@
     <value>{0}، انتخاب‌شده</value>
   </data>
   <data name="Plan_SplitConflict" xml:space="preserve">
-    <value>موعدهای بعد از این تاریخ ثبت شده‌اند و با تاریخ‌های جدید جور درنمی‌آیند. تاریخ «تغییرات از» را دیرتر انتخاب کنید یا روز را تغییر ندهید.</value>
+    <value>برای بعضی نوبت‌های پس از این تاریخ، تراکنش ثبت شده است و تاریخ جدید با آن‌ها سازگار نیست. برای «اعمال تغییرات از» تاریخ دیرتری انتخاب کنید یا روز تکرار را تغییر ندهید.</value>
   </data>
   <data name="Tab_Insights" xml:space="preserve">
     <value>تحلیل</value>
   </data>
   <data name="Plan_InDays" xml:space="preserve">
-    <value>{0} روز دیگر</value>
+    <value>زمان باقی‌مانده: {0} روز</value>
   </data>
   <data name="Plan_Tomorrow" xml:space="preserve">
     <value>فردا</value>
@@ -2564,19 +2564,19 @@
     <value>سقف هزینه‌های منعطف</value>
   </data>
   <data name="Flex_Bills" xml:space="preserve">
-    <value>قبض‌ها</value>
+    <value>هزینه‌های دوره‌ای</value>
   </data>
   <data name="Flex_Fixed" xml:space="preserve">
-    <value>قبض‌های ثابت</value>
+    <value>هزینه‌های ثابت</value>
   </data>
   <data name="Flex_FixedDetail" xml:space="preserve">
-    <value>{0} از {1} پیش‌بینی‌شده پرداخت شد · {2} مانده</value>
+    <value>پرداخت‌شده: {0} از {1} پیش‌بینی‌شده · باقی‌مانده: {2}</value>
   </data>
   <data name="Flex_Paid" xml:space="preserve">
-    <value>{0} پرداخت شد · هنوز برنامه‌ای برای این قبض‌ها نیست</value>
+    <value>پرداخت‌شده: {0} · هنوز برای این هزینه‌ها برنامهٔ مالی ثبت نشده است</value>
   </data>
   <data name="Flex_NonMonthly" xml:space="preserve">
-    <value>قبض‌های غیرماهانه</value>
+    <value>هزینه‌های غیرماهانه</value>
   </data>
   <data name="Flex_NonMonthlyDetail" xml:space="preserve">
     <value>سهم این ماه {0} · پرداخت‌شده {1}</value>
@@ -2585,10 +2585,10 @@
     <value>برنامهٔ این ماه: {0}</value>
   </data>
   <data name="Flex_Hint" xml:space="preserve">
-    <value>قبض‌ها از برنامه‌های شما می‌آیند؛ سقف بالا فقط برای هزینه‌های منعطف است. هر مبلغ فقط یک بار شمرده می‌شود.</value>
+    <value>هزینه‌های دوره‌ای از برنامه‌های مالی شما محاسبه می‌شوند. سقف بالا فقط برای هزینه‌های منعطف است و هر مبلغ یک‌بار محاسبه می‌شود.</value>
   </data>
   <data name="Flex_EditorHint" xml:space="preserve">
-    <value>در روش منعطف هر دستهٔ هزینه ثابت، غیرماهانه یا منعطف است (در تنظیم دسته). سقف دسته‌ها استفاده نمی‌شود.</value>
+    <value>در بودجهٔ منعطف، نوع هر دستهٔ هزینه را در تنظیمات همان دسته روی «ثابت»، «غیرماهانه» یا «منعطف» قرار دهید. در این روش از سقف جداگانهٔ دسته‌ها استفاده نمی‌شود.</value>
   </data>
   <data name="SpendingType_Title" xml:space="preserve">
     <value>در بودجهٔ منعطف</value>
@@ -2603,10 +2603,10 @@
     <value>غیرماهانه</value>
   </data>
   <data name="SpendingType_Hint" xml:space="preserve">
-    <value>ثابت: هر ماه همان قبض، مثل اجاره. غیرماهانه: چند بار در سال، مثل بیمه. منعطف: هزینه‌های روزمره.</value>
+    <value>ثابت: پرداخت منظم ماهانه، مثل اجاره. غیرماهانه: پرداختی با فاصلهٔ بیش از یک ماه، مثل بیمهٔ سالانه. منعطف: هزینه‌های روزمره.</value>
   </data>
   <data name="Holiday_Skip" xml:space="preserve">
-    <value>از تعطیلات رسمی هم جابه‌جا شود</value>
+    <value>جابه‌جایی سررسید در تعطیلات رسمی هم اعمال شود</value>
   </data>
   <data name="Holiday_Hint" xml:space="preserve">
     <value>تعطیلات رسمی {0} مثل روزهای آخر هفته حساب می‌شوند.</value>
@@ -2618,31 +2618,31 @@
     <value>تعطیلات مخصوص ایالت‌ها در نظر گرفته نمی‌شوند.</value>
   </data>
   <data name="Holiday_Short" xml:space="preserve">
-    <value>با تعطیلات</value>
+    <value>با احتساب تعطیلات رسمی</value>
   </data>
   <data name="Receipt_Read" xml:space="preserve">
-    <value>خواندن</value>
+    <value>استخراج اطلاعات رسید</value>
   </data>
   <data name="Receipt_Title" xml:space="preserve">
     <value>رسید</value>
   </data>
   <data name="Receipt_Nothing" xml:space="preserve">
-    <value>از این رسید مبلغ، تاریخ یا فروشگاهی خوانده نشد.</value>
+    <value>مبلغ، تاریخ یا نام فروشنده در این رسید شناسایی نشد.</value>
   </data>
   <data name="Receipt_Review" xml:space="preserve">
-    <value>از رسید: {0}. لطفاً پیش از ذخیره بررسی کنید.</value>
+    <value>اطلاعات استخراج‌شده از رسید: {0}. پیش از ذخیره، درستی آن‌ها را بررسی کنید.</value>
   </data>
   <data name="Import_Error_Currency" xml:space="preserve">
     <value>ارز با ارز حساب یکی نیست</value>
   </data>
   <data name="Import_Error_Direction" xml:space="preserve">
-    <value>جهت اصلاح (افزایش یا کاهش) مشخص نیست</value>
+    <value>جهت اصلاح مانده (افزایش یا کاهش) مشخص نیست</value>
   </data>
   <data name="Import_Error_RefundTarget" xml:space="preserve">
-    <value>خرید مربوط به این برگشت وجه نه در فایل هست نه در برنامه</value>
+    <value>تراکنش خرید مربوط به این برگشت وجه در فایل یا برنامه پیدا نشد</value>
   </data>
   <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
-    <value>برگشت وجه باید به حسابی با همان ارزِ خرید برود.</value>
+    <value>برگشت وجه را در حسابی ثبت کنید که ارز آن با ارز تراکنش خرید یکسان باشد.</value>
   </data>
   <data name="Error_Title" xml:space="preserve">
     <value>مشکلی پیش آمد</value>
@@ -2651,7 +2651,7 @@
     <value>این کار انجام نشد. لطفاً دوباره امتحان کنید.</value>
   </data>
   <data name="Backup_Error_RestoreFailed" xml:space="preserve">
-    <value>پشتیبان بازیابی نشد. نسخهٔ داده‌های شما از پیش از بازیابی در فهرست پشتیبان‌های این دستگاه نگه داشته شده است.</value>
+    <value>بازیابی کامل نشد. ممکن است بخشی از داده‌ها جایگزین شده باشد. پیش از ادامه، وضعیت داده‌ها و نسخه‌های پشتیبان موجود را بررسی کنید.</value>
   </data>
   <data name="LedgerError_RefundOriginalMissing" xml:space="preserve">
     <value>خرید مربوط به این برگشت وجه وجود ندارد.</value>
@@ -2669,16 +2669,16 @@
     <value>روز {0}</value>
   </data>
   <data name="Settings_MonthStartHint" xml:space="preserve">
-    <value>برای دورهٔ حقوق، مثلاً روز ۲۵. بودجه، خانه، گزارش‌ها و فیلتر تراکنش‌ها از این ماه استفاده می‌کنند؛ تاریخ برنامه‌ها تغییر نمی‌کند.</value>
+    <value>می‌توانید شروع ماه مالی را با روز دریافت حقوق، مثلاً روز ۲۵، هماهنگ کنید. بازه‌های ماهانه در بودجه، صفحهٔ خانه، گزارش‌ها و فیلتر تراکنش‌ها از این تنظیم استفاده می‌کنند؛ سررسید برنامه‌های مالی تغییر نمی‌کند.</value>
   </data>
   <data name="Budget_Suggestion" xml:space="preserve">
-    <value>پیشنهاد: {0} – میانگین {1} ماه گذشته، گردشده به بالا.</value>
+    <value>پیشنهاد: {0}؛ میانگین هزینهٔ {1} ماه گذشته، با گرد کردن به بالا.</value>
   </data>
   <data name="Budget_SuggestionOne" xml:space="preserve">
-    <value>پیشنهاد: {0} – هزینهٔ ماه گذشته، گردشده به بالا.</value>
+    <value>پیشنهاد: {0}؛ هزینهٔ ماه گذشته، با گرد کردن به بالا.</value>
   </data>
   <data name="Budget_UseSuggestion" xml:space="preserve">
-    <value>استفاده</value>
+    <value>استفاده از پیشنهاد</value>
   </data>
   <data name="Budget_FillSuggestions" xml:space="preserve">
     <value>پر کردن سقف‌های خالی با پیشنهادها</value>
@@ -2705,16 +2705,16 @@
     <value>دورهٔ بعد</value>
   </data>
   <data name="Budget_SuggestionWeeks" xml:space="preserve">
-    <value>پیشنهاد: {0} – میانگین {1} هفتهٔ گذشته، گردشده به بالا.</value>
+    <value>پیشنهاد: {0}؛ میانگین هزینهٔ {1} هفتهٔ گذشته، با گرد کردن به بالا.</value>
   </data>
   <data name="Budget_SuggestionFortnights" xml:space="preserve">
-    <value>پیشنهاد: {0} – میانگین {1} دورهٔ دوهفته‌ای گذشته، گردشده به بالا.</value>
+    <value>پیشنهاد: {0}؛ میانگین هزینهٔ {1} دورهٔ دوهفته‌ای گذشته، با گرد کردن به بالا.</value>
   </data>
   <data name="Budget_SuggestionOnePeriod" xml:space="preserve">
-    <value>پیشنهاد: {0} – هزینهٔ دورهٔ گذشته، گردشده به بالا.</value>
+    <value>پیشنهاد: {0}؛ هزینهٔ دورهٔ گذشته، با گرد کردن به بالا.</value>
   </data>
   <data name="Budget_WeeklyLimitsOnly" xml:space="preserve">
-    <value>بودجه‌های هفتگی و دوهفته‌ای با سقف کار می‌کنند؛ پاکت‌ها و Flex روش‌های ماهانه‌اند.</value>
+    <value>برای بودجه‌های هفتگی و دوهفته‌ای، فقط روش «سقف هزینه» در دسترس است. روش‌های «پاکت‌ها» و «منعطف» مخصوص بودجهٔ ماهانه‌اند.</value>
   </data>
   <data name="Profile_Title" xml:space="preserve">
     <value>پروفایل‌ها</value>
@@ -2723,10 +2723,10 @@
     <value>پروفایل اصلی</value>
   </data>
   <data name="Profile_Intro" xml:space="preserve">
-    <value>حساب‌وکتاب‌های جدا روی همین دستگاه، مثلاً شخصی و کاری. هر پروفایل حساب‌ها، تراکنش‌ها، تنظیمات، قفل برنامه و پشتیبان خودش را دارد.</value>
+    <value>اطلاعات مالی شخصی و کاری خود را در پروفایل‌های جدا روی این دستگاه نگه دارید. هر پروفایل حساب‌ها، تراکنش‌ها، تنظیمات مالی، قفل و نسخه‌های پشتیبان مستقل دارد.</value>
   </data>
   <data name="Profile_Note" xml:space="preserve">
-    <value>یادآورها و هشدارهای بودجه از پروفایل باز می‌آیند. فضای ابری متصل بین پروفایل‌های این دستگاه مشترک است، اما هر پروفایل فقط پشتیبان‌های خودش را می‌بیند. فهرست نام پروفایل‌ها برای هر کسی که برنامه را باز کند دیده می‌شود.</value>
+    <value>یادآوری‌ها و هشدارهای بودجه مربوط به پروفایلی هستند که اکنون باز است. اتصال به فضای ابری بین پروفایل‌های این دستگاه مشترک است، اما هر پروفایل فقط نسخه‌های پشتیبان خودش را فهرست می‌کند. هر کسی که بتواند برنامه را باز کند، نام پروفایل‌ها را می‌بیند.</value>
   </data>
   <data name="Profile_Open" xml:space="preserve">
     <value>اکنون باز است</value>
@@ -2741,7 +2741,7 @@
     <value>نام پروفایل</value>
   </data>
   <data name="Profile_OpenNew" xml:space="preserve">
-    <value>«{0}» اکنون باز شود؟ پروفایل تازه با راه‌اندازی شروع می‌شود.</value>
+    <value>پروفایل «{0}» باز شود؟ ابتدا تنظیمات اولیهٔ این پروفایل را انجام می‌دهید.</value>
   </data>
   <data name="Profile_Rename" xml:space="preserve">
     <value>تغییر نام</value>
@@ -2750,10 +2750,10 @@
     <value>حذف پروفایل</value>
   </data>
   <data name="Profile_DeleteMessage" xml:space="preserve">
-    <value>«{0}» با همهٔ حساب‌ها، تراکنش‌ها، برنامه‌ها و تنظیماتش حذف شود؟</value>
+    <value>پروفایل «{0}» و همهٔ داده‌های آن، شامل حساب‌ها، تراکنش‌ها، برنامه‌های مالی و تنظیمات، حذف شوند؟</value>
   </data>
   <data name="Profile_DeleteFinal" xml:space="preserve">
-    <value>این کار برگشت‌پذیر نیست. پشتیبان‌های این پروفایل روی این دستگاه هم حذف می‌شوند؛ فایل‌هایی که به اشتراک گذاشته‌اید یا در فضای ابری دارید می‌مانند و می‌توانند داده‌ها را برگردانند.</value>
+    <value>این حذف قابل واگرد نیست. نسخه‌های پشتیبان این پروفایل روی دستگاه نیز حذف می‌شوند. کپی‌هایی که در جای دیگری یا در فضای ابری نگه داشته‌اید، حذف نمی‌شوند و برای بازیابی داده‌ها قابل استفاده‌اند.</value>
   </data>
   <data name="Profile_UnlockReason" xml:space="preserve">
     <value>باز کردن پروفایل محافظت‌شده</value>
@@ -2765,7 +2765,7 @@
     <value>پشتیبان ابری</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>اختیاری: پشتیبان‌های رمزگذاری‌شده را در فضای ابری خودتان نگه دارید. برنامه فقط برای همین کار و فقط پس از اتصال شما به اینترنت وصل می‌شود.</value>
+    <value>می‌توانید نسخه‌های پشتیبان رمزگذاری‌شده را در فضای ابری خود نگه دارید. استفاده از این قابلیت اختیاری است و پس از اتصال حساب ابری، به اینترنت نیاز دارد.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2777,37 +2777,37 @@
     <value>اتصال</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>پشتیبان‌ها در پوشهٔ خصوصی برنامه در {0} شما ذخیره می‌شوند. برنامه فقط همان پوشه را می‌بیند؛ پشتیبان‌ها با رمز شما رمزگذاری می‌شوند و رمز هرگز بارگذاری نمی‌شود.</value>
+    <value>نسخه‌های پشتیبان در پوشهٔ مخصوص برنامه در حساب «{0}» شما ذخیره می‌شوند. دسترسی برنامه به فایل‌های ابری به همین پوشه محدود است. فایل پشتیبان با رمز عبور شما رمزگذاری می‌شود؛ خود رمز عبور بارگذاری نمی‌شود.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>قطع اتصال</value>
   </data>
   <data name="Cloud_DisconnectMessage" xml:space="preserve">
-    <value>از {0} روی این دستگاه خارج شوید؟ پشتیبان‌هایی که آنجا ذخیره شده‌اند در حساب شما می‌مانند.</value>
+    <value>اتصال برنامه به حساب «{0}» در این دستگاه قطع شود؟ نسخه‌های پشتیبان ذخیره‌شده در آن حساب حذف نمی‌شوند.</value>
   </data>
   <data name="Cloud_BackUpNow" xml:space="preserve">
-    <value>اکنون پشتیبان بگیر</value>
+    <value>پشتیبان‌گیری اکنون</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
     <value>نمایش پشتیبان‌ها</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>پشتیبان ابری همیشه از رمزی استفاده می‌کند که در بخش «ایجاد پشتیبان» وارد کرده‌اید.</value>
+    <value>نسخهٔ پشتیبان ابری با رمز عبوری رمزگذاری می‌شود که در بخش «تهیهٔ نسخهٔ پشتیبان» وارد می‌کنید.</value>
   </data>
   <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>پشتیبان ابری همیشه رمزگذاری می‌شود: رمز را روشن کنید و در بخش «ایجاد پشتیبان» وارد کنید.</value>
+    <value>برای پشتیبان‌گیری ابری، در بخش «تهیهٔ نسخهٔ پشتیبان» گزینهٔ «محافظت با رمز عبور» را فعال کنید و رمز عبور را وارد کنید.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>پشتیبان در {0} ذخیره شد.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>روی یک پشتیبان بزنید تا آن را (با رمز و پیش‌نمایش) بازیابی یا از فضای ابری حذف کنید.</value>
+    <value>یک نسخهٔ پشتیبان را انتخاب کنید تا پس از وارد کردن رمز عبور و بررسی پیش‌نمایش، آن را بازیابی کنید؛ یا آن نسخه را از فضای ابری حذف کنید.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>ورود به {0} انجام نشد. لطفاً دوباره تلاش کنید.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>ورود انجام شد. می‌توانید این زبانه را ببندید و به Zanance برگردید.</value>
+    <value>مرحلهٔ ورود در مرورگر پایان یافت. به برنامهٔ «Zanance» برگردید تا نتیجهٔ اتصال را ببینید.</value>
     <comment>Windows: page in the browser after a Google sign-in (D-50).</comment>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
@@ -2820,49 +2820,49 @@
     <value>حذف پشتیبان ابری</value>
   </data>
   <data name="Cloud_DeleteMessage" xml:space="preserve">
-    <value>«{0}» از فضای ابری شما حذف شود؟ داده‌های این دستگاه تغییری نمی‌کنند.</value>
+    <value>نسخهٔ پشتیبان «{0}» از فضای ابری شما حذف شود؟ داده‌های روی این دستگاه تغییر نمی‌کنند.</value>
   </data>
   <data name="Help_IncludeInTotals_Title" xml:space="preserve">
     <value>در جمع کل حساب شود</value>
   </data>
   <data name="Help_IncludeInTotals_Text" xml:space="preserve">
-    <value>وقتی روشن باشد، موجودی این حساب در جمع کل صفحهٔ خانه، گزارش‌ها و بودجه‌ها حساب می‌شود. برای پولی که می‌خواهید ببینید ولی جزو پول در دسترس نباشد خاموشش کنید؛ مثلاً حساب پس‌انداز برای یک هدف، حساب کاری یا حسابی که برای کس دیگری اداره می‌کنید. موجودی خود حساب در هر حال حفظ می‌شود.</value>
+    <value>این گزینه مشخص می‌کند حساب در جمع‌هایی که از فهرست «حساب‌های منظورشده در جمع کل» استفاده می‌کنند، محاسبه شود یا نه. گزارش‌ها و بودجه‌هایی با انتخاب حساب مستقل، از انتخاب خودشان پیروی می‌کنند. این تنظیم ماندهٔ حساب را تغییر نمی‌دهد و از گزینهٔ «قابل استفاده برای پرداخت» مستقل است.</value>
   </data>
   <data name="Help_IncludeInTotals_Example" xml:space="preserve">
     <value>حساب جاری شما ۱٬۲۰۰ و حساب پس‌انداز سفر ۸۰۰ دارد. اگر هر دو در جمع باشند، صفحهٔ خانه ۲٬۰۰۰ نشان می‌دهد؛ اگر حساب پس‌انداز خارج باشد، ۱٬۲۰۰.</value>
   </data>
   <data name="Account_IncludeInTotalsHint" xml:space="preserve">
-    <value>در موجودی صفحهٔ خانه، گزارش‌ها و بودجه‌ها حساب می‌شود.</value>
+    <value>در جمع‌هایی محاسبه می‌شود که از حساب‌های منظورشده در جمع کل استفاده می‌کنند.</value>
   </data>
   <data name="Help_AccountType_Title" xml:space="preserve">
     <value>نوع حساب</value>
   </data>
   <data name="Help_AccountType_Text" xml:space="preserve">
-    <value>نوع حساب تعیین می‌کند حساب چطور نمایش و حساب شود. نقد، جاری، پس‌انداز و کارت اعتباری پولی است که روزمره استفاده می‌کنید. وام بدهی شماست، پول قرض‌داده طلب شما از دیگری است و دارایی (مثلاً خودرو یا طلا) ارزشی دارد که خودتان به‌روز می‌کنید. وام، پول قرض‌داده و دارایی جدا از پولی که می‌توانید خرج کنید نگه داشته می‌شوند.</value>
+    <value>نوع حساب، نحوهٔ نمایش و محاسبهٔ آن را مشخص می‌کند. حساب‌های نقدی، جاری و پس‌انداز برای ثبت پول شما هستند؛ کارت اعتباری، ماندهٔ کارت را نشان می‌دهد. وام دریافتی بدهی شماست و قرض داده‌شده، طلب شما از دیگران. حساب دارایی برای ثبت ارزش تخمینی چیزهایی مانند خودرو یا ملک است. ارزش دارایی‌ها و طلب‌ها با پول در دسترس برای پرداخت یکسان نیست.</value>
   </data>
   <data name="Help_AccountType_Example" xml:space="preserve">
     <value>کارت اعتباری‌ای که ۳۰۰ با آن خرج شده −۳۰۰ نشان می‌دهد. خودرویی به ارزش ۹٬۰۰۰ دارایی است و موجودی قابل خرج شما را بیشتر نشان نمی‌دهد.</value>
   </data>
   <data name="Help_OpeningBalance_Title" xml:space="preserve">
-    <value>موجودی اولیه</value>
+    <value>موجودی آغازین</value>
   </data>
   <data name="Help_OpeningBalance_Text" xml:space="preserve">
-    <value>مبلغی که در ابتدای روز انتخاب‌شده، پیش از هر تراکنشی که برای آن روز یا بعد از آن ثبت می‌کنید، در حساب است. Zanance تراکنش‌های شما را به آن اضافه می‌کند؛ پس موجودی نمایش‌داده‌شده همان چیزی است که ثبت کرده‌اید و از بانک خوانده نمی‌شود.</value>
+    <value>موجودی حساب در ابتدای روز انتخاب‌شده، پیش از تراکنش‌های همان روز است. برنامهٔ «Zanance» اثر تراکنش‌های ثبت‌شده از آن تاریخ به بعد را روی این مبلغ محاسبه می‌کند. ماندهٔ نمایش‌داده‌شده بر اساس داده‌های شماست و از بانک دریافت نمی‌شود.</value>
   </data>
   <data name="Help_OpeningBalance_Example" xml:space="preserve">
-    <value>بانک امروز صبح ۲٬۳۵۰ نشان می‌دهد. ۲٬۳۵۰ را با تاریخ امروز وارد کنید و خریدهای امروز را به‌صورت تراکنش ثبت کنید.</value>
+    <value>اگر موجودی ابتدای امروز، پیش از تمام تراکنش‌های امروز، ۲٬۳۵۰ بوده است، همین مبلغ را با تاریخ امروز وارد کنید. سپس تراکنش‌های امروز را جداگانه ثبت کنید.</value>
   </data>
   <data name="Help_OpeningUnknown_Title" xml:space="preserve">
-    <value>موجودی اولیه را نمی‌دانم</value>
+    <value>موجودی آغازین نامعلوم</value>
   </data>
   <data name="Help_OpeningUnknown_Text" xml:space="preserve">
-    <value>اگر هنوز مبلغ را نمی‌دانید این را انتخاب کنید. حساب از صفر شروع می‌شود و جمع‌هایی که آن را شامل می‌شوند «ناقص» علامت می‌خورند تا با عدد دقیق اشتباه گرفته نشوند. مبلغ واقعی را بعداً در خود حساب وارد کنید.</value>
+    <value>وقتی موجودی آغازین را نمی‌دانید، این گزینه را انتخاب کنید. محاسبه از صفر شروع می‌شود، اما مانده و جمع‌های مرتبط با برچسب «ناقص» نمایش داده می‌شوند. بعداً ماندهٔ ثبت‌شده را با موجودی واقعی تطبیق دهید.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
     <value>ارز ارزش‌گذاری</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>فقط برای جمع‌های تبدیل‌شده: مبالغ ارزهای دیگر با نرخ‌هایی که وارد می‌کنید به این ارز تبدیل می‌شوند و تاریخ نرخ‌ها نشان داده می‌شود. جمع هر ارز همیشه همان‌طور می‌ماند و چیز جدیدی با این ارز ساخته نمی‌شود. بدون نرخ، جمع تبدیل‌شده ناقص علامت می‌خورد.</value>
+    <value>برای نمایش مجموع مبالغ چند ارز، از این ارز استفاده می‌شود. تبدیل بر اساس نرخ‌های ثبت‌شدهٔ شماست و تاریخ نرخ‌ها نیز نمایش داده می‌شود. مبالغ اصلی و جمعِ جداگانهٔ هر ارز تغییر نمی‌کنند و تراکنش جدیدی ایجاد نمی‌شود. اگر نرخی موجود نباشد، مجموع تبدیل‌شده «ناقص» نمایش داده می‌شود.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
     <value>حساب‌ها به EUR و USD و ارز ارزش‌گذاری EUR: خانه ۲٬۰۰۰ EUR و ۴٬۰۰۰ USD را نشان می‌دهد و پس از ثبت نرخ USD زیر آن‌ها «حدود ۵٬۶۸۰ EUR با نرخ‌های ۱۲ اوت» می‌آید.</value>
@@ -2880,25 +2880,25 @@
     <value>ساده و پیشرفته</value>
   </data>
   <data name="Help_Mode_Text" xml:space="preserve">
-    <value>هر دو همان داده‌ها و محاسبات را نشان می‌دهند. حالت پیشرفته گزینه‌های بیشتری را مستقیم نشان می‌دهد؛ مثلاً سقف دسته‌ها، محدودهٔ حساب‌ها، بودجهٔ هفتگی و قراردادها. برگشت به حالت ساده هیچ چیزی را حذف نمی‌کند و گزینه‌هایی که استفاده شده‌اند هر جا لازم باشد خلاصه نمایش داده می‌شوند.</value>
+    <value>هر دو حالت از داده‌ها و محاسبات یکسان استفاده می‌کنند. حالت پیشرفته گزینه‌های بیشتری، مثل سقف هزینهٔ دسته‌ها، انتخاب حساب‌ها، بودجهٔ هفتگی و جزئیات قرارداد، نشان می‌دهد. بازگشت به حالت ساده، داده یا تنظیمی را حذف نمی‌کند؛ تنظیمات پیشرفتهٔ فعال در محل مربوط به‌صورت خلاصه نمایش داده می‌شوند.</value>
   </data>
   <data name="Help_AppLock_Title" xml:space="preserve">
     <value>قفل برنامه</value>
   </data>
   <data name="Help_AppLock_Text" xml:space="preserve">
-    <value>هنگام باز کردن Zanance و برگشت پس از ۳۰ ثانیه، اثر انگشت، چهره یا رمز دستگاه را می‌خواهد. قفل برنامه را پنهان می‌کند ولی داده‌های روی دستگاه را رمزگذاری نمی‌کند.</value>
+    <value>برای باز کردن برنامهٔ «Zanance» و بازگشت به آن پس از ۳۰ ثانیه، باید با اثر انگشت، تشخیص چهره یا رمز دستگاه تأیید هویت کنید. قفل برنامه دسترسی به صفحه‌ها را محدود می‌کند؛ خود این قابلیت، داده‌های روی دستگاه را رمزگذاری نمی‌کند.</value>
   </data>
   <data name="Help_NotificationDetails_Title" xml:space="preserve">
     <value>نام و مبلغ در اعلان‌ها</value>
   </data>
   <data name="Help_NotificationDetails_Text" xml:space="preserve">
-    <value>به‌طور پیش‌فرض یادآور فقط می‌گوید پرداختی در پیش است تا چیز خصوصی روی صفحهٔ قفل دیده نشود. با روشن کردن این گزینه، نام برنامه و مبلغ هم در اعلان دیده می‌شود.</value>
+    <value>یادآوری‌ها به‌طور پیش‌فرض متن عمومی دارند. با فعال کردن این گزینه، نام‌ها و مبالغ مالی نیز در اعلان‌ها نمایش داده می‌شوند و بسته به تنظیمات دستگاه، ممکن است روی صفحهٔ قفل دیده شوند.</value>
   </data>
   <data name="Help_NotificationDetails_Example" xml:space="preserve">
     <value>خاموش: «امروز پرداختی دارید.» روشن: «اجاره – ۹۰۰ یورو امروز.»</value>
   </data>
   <data name="Help_AmountMode_Title" xml:space="preserve">
-    <value>مبلغ برنامه</value>
+    <value>مبلغ برنامهٔ مالی</value>
   </data>
   <data name="Help_AmountMode_Text" xml:space="preserve">
     <value>ثابت: همیشه همان مبلغ. تخمینی: حدوداً همین مبلغ، مثلاً برق؛ پیش‌بینی‌ها آن را تخمینی نشان می‌دهند. نامعلوم: هنوز مبلغی ندارد؛ هنگام سررسید آن را وارد می‌کنید و تا آن موقع پیش‌بینی‌ها «ناقص» علامت می‌خورند.</value>
@@ -2907,7 +2907,7 @@
     <value>تعطیلات آخر هفته و رسمی</value>
   </data>
   <data name="Help_WeekendRule_Text" xml:space="preserve">
-    <value>اگر سررسید در تعطیلی آخر هفته بیفتد (یا اگر بخواهید، در تعطیلات رسمی منطقهٔ شما)، پرداخت می‌تواند مثل بیشتر بانک‌ها در روز کاری قبل یا بعد از آن انتظار برود.</value>
+    <value>اگر سررسید در تعطیلات آخر هفته باشد، تاریخ برنامهٔ مالی در «Zanance» به روز کاری قبل یا بعد منتقل می‌شود. تعطیلات رسمیِ پشتیبانی‌شده فقط با فعال کردن گزینهٔ مربوط لحاظ می‌شوند. تاریخ پرداخت واقعی را با پرداخت‌کننده یا ارائه‌دهنده بررسی کنید.</value>
   </data>
   <data name="Help_WeekendRule_Example" xml:space="preserve">
     <value>حقوق روز ۳۰ است و آن روز تعطیل است: با «روز کاری قبل»، حقوق در آخرین روز کاری پیش از آن انتظار می‌رود. روزهای آخر هفته از منطقهٔ انتخاب‌شده در تنظیمات می‌آیند.</value>
@@ -2916,19 +2916,19 @@
     <value>ثبت خودکار</value>
   </data>
   <data name="Help_AutoPost_Text" xml:space="preserve">
-    <value>در روز سررسید، تراکنش برنامه دفعهٔ بعد که برنامه را باز کنید خودکار ثبت می‌شود و «بررسی‌نشده» علامت می‌خورد تا آن را چک کنید. بدون این گزینه، پرداخت در بخش برنامه‌ها می‌ماند تا خودتان تأییدش کنید. هیچ پرداختی دو بار ثبت نمی‌شود.</value>
+    <value>در اولین اجرای «Zanance» در روز سررسید یا پس از آن، تراکنش آن نوبت خودکار ثبت و برای بررسی علامت‌گذاری می‌شود. اگر ثبت خودکار غیرفعال باشد، مورد در بخش «برنامه‌ها» می‌ماند تا آن را ثبت کنید. هر نوبت فقط یک‌بار خودکار ثبت می‌شود؛ اما ثبت دستیِ جداگانه می‌تواند مورد تکراری ایجاد کند. پرداخت واقعی انجام نمی‌شود.</value>
   </data>
   <data name="Help_AutoPost_Example" xml:space="preserve">
     <value>اجارهٔ ۹۰۰ روز اول ماه سررسید دارد. وقتی روز دوم برنامه را باز کنید، تراکنش ثبت شده و منتظر بررسی شماست.</value>
   </data>
   <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
-    <value>اعمال تغییر از</value>
+    <value>اعمال تغییرات از</value>
   </data>
   <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
     <value>تغییر می‌تواند روی همهٔ پرداخت‌ها یا فقط از یک تاریخ به بعد اعمال شود. پرداخت‌های پیش از آن تاریخ مبلغ و روز قبلی خود را نگه می‌دارند تا سابقهٔ شما درست بماند.</value>
   </data>
   <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
-    <value>اجاره از اسفند از ۹۰۰ به ۹۵۰ می‌رسد: تغییر را از اول اسفند اعمال کنید تا ماه‌های قبل ۹۰۰ بمانند.</value>
+    <value>اگر در یک برنامهٔ شمسی، اجاره از اسفند از ۹۰۰ به ۹۵۰ افزایش می‌یابد، تغییر را از اول اسفند اعمال کنید تا مبلغ ماه‌های قبل ۹۰۰ بماند.</value>
   </data>
   <data name="Help_Reimbursable_Title" xml:space="preserve">
     <value>بازپرداخت به شما</value>
@@ -2937,13 +2937,13 @@
     <value>هزینه‌ای را علامت بزنید که کسی آن را به شما برمی‌گرداند؛ مثلاً سفر کاری یا شامی که برای دوستان پرداخته‌اید. تا پول برنگردد هزینه می‌ماند؛ پول برگشتی به‌صورت برگشت همین هزینه ثبت می‌شود، نه درآمد، و مبلغ‌های باز در «طلب‌های من» دیده می‌شوند.</value>
   </data>
   <data name="Help_Reimbursable_Example" xml:space="preserve">
-    <value>۱۲۰ برای ناهار همکاران می‌پردازید و شرکت آن را برمی‌گرداند: هزینه را علامت بزنید و وقتی ۱۲۰ برگشت، آن را برگشت همین هزینه ثبت کنید.</value>
+    <value>برای ناهار همکاران ۱۲۰ پرداخت کرده‌اید و کارفرما قرار است آن را پس بدهد. هزینه را برای دریافت از کارفرما علامت‌گذاری کنید و پس از دریافت پول، برگشت وجهی مرتبط با همان هزینه ثبت کنید.</value>
   </data>
   <data name="Help_ForeignAmount_Title" xml:space="preserve">
     <value>پرداخت با ارز دیگر</value>
   </data>
   <data name="Help_ForeignAmount_Text" xml:space="preserve">
-    <value>وقتی در سفر یا آنلاین با ارز دیگری پرداخته‌اید، مبلغ اصلی را نگه دارید. حساب با مبلغ به ارز خودش کم می‌شود و مبلغ اصلی کنار تراکنش نمایش داده می‌شود.</value>
+    <value>برای پرداخت با ارز دیگر، مبلغ اصلی خرید را نیز ثبت کنید. مبلغ تراکنش باید همان مبلغ کسرشده از حساب، به ارز حساب باشد. مبلغ اصلی در کنار آن برای اطلاع شما نمایش داده می‌شود.</value>
   </data>
   <data name="Help_ForeignAmount_Example" xml:space="preserve">
     <value>هتل ۱۵۰ دلار است و از کارت شما ۱۳۹٫۲۰ یورو کم می‌شود: مبلغ ۱۳۹٫۲۰ یورو، مبلغ اصلی ۱۵۰ دلار.</value>
@@ -2952,34 +2952,34 @@
     <value>نوع هزینه</value>
   </data>
   <data name="Help_SpendingType_Text" xml:space="preserve">
-    <value>در بودجهٔ Flex استفاده می‌شود. ثابت: قبضی که هر ماه یکسان است، مثل اجاره. غیرماهانه: قبض‌هایی که چند بار در سال می‌آیند، مثل بیمه؛ سهم ماهانه می‌گیرند. منعطف: هزینه‌های روزمره که یک سقف مشترک دارند.</value>
+    <value>این گزینه برای بودجهٔ «منعطف» است. ثابت: پرداخت منظم ماهانه، مثل اجاره. غیرماهانه: پرداخت‌هایی مثل بیمهٔ سالانه که معادل ماهانهٔ آن‌ها محاسبه می‌شود. منعطف: هزینه‌های روزمره با یک سقف مشترک.</value>
   </data>
   <data name="Help_SpendingType_Example" xml:space="preserve">
-    <value>بیمهٔ خودرو ۶۰۰ در سال غیرماهانه است: بودجه هر ماه ۵۰ برایش کنار می‌گذارد.</value>
+    <value>بیمهٔ سالانهٔ خودرو به مبلغ ۶۰۰، هزینهٔ غیرماهانه است. معادل ماهانهٔ آن ۵۰ محاسبه می‌شود؛ این محاسبه، پولی را به‌صورت خودکار کنار نمی‌گذارد.</value>
   </data>
   <data name="Help_BudgetMethod_Title" xml:space="preserve">
     <value>روش بودجه</value>
   </data>
   <data name="Help_BudgetMethod_Text" xml:space="preserve">
-    <value>سقف: حداکثری برای ماه و در صورت تمایل برای هر دسته؛ ساده‌ترین روش. پاکت‌ها: پولی را که الان دارید بین دسته‌ها تقسیم می‌کنید و بودجه نشان می‌دهد چقدر هنوز تقسیم نشده است. Flex: قبض‌های ثابت از برنامه‌ها می‌آیند، قبض‌های غیرماهانه سهم ماهانه می‌گیرند و یک سقف برای بقیهٔ هزینه‌ها است.</value>
+    <value>سقف هزینه: حداکثر هزینهٔ دوره و در صورت نیاز، سقف هر دسته را تعیین می‌کنید. پاکت‌ها: موجودی فعلی را در بودجه بین دسته‌ها تقسیم می‌کنید و مبلغ اختصاص‌نیافته را می‌بینید. منعطف: پرداخت‌های ثابت از برنامه‌های مالی گرفته می‌شوند، برای پرداخت‌های غیرماهانه معادل ماهانه محاسبه می‌شود و سایر هزینه‌ها یک سقف مشترک دارند.</value>
   </data>
   <data name="Help_BudgetMethod_Example" xml:space="preserve">
-    <value>Flex با اجارهٔ ۹۰۰ به‌عنوان برنامه: بیمهٔ سالانهٔ ۶۰۰ ماهی ۵۰ سهم می‌گیرد و یک سقف منعطف ۷۰۰ برای خوراک، رستوران و بقیه است.</value>
+    <value>در روش «منعطف»، اجارهٔ ۹۰۰ از برنامهٔ مالی خوانده می‌شود. معادل ماهانهٔ بیمهٔ سالانهٔ ۶۰۰ برابر ۵۰ است. سقف منعطف ۷۰۰ نیز برای خوراک، رستوران و سایر هزینه‌های روزمره تعیین می‌شود.</value>
   </data>
   <data name="Help_Rollover_Title" xml:space="preserve">
-    <value>انتقال مانده</value>
+    <value>انتقال ماندهٔ بودجه</value>
   </data>
   <data name="Help_Rollover_Text" xml:space="preserve">
-    <value>تعیین می‌کند با ماندهٔ دورهٔ قبل چه شود. هیچ: هر دوره از نو شروع می‌شود. مازاد: پولی که خرج نکرده‌اید به سقف جدید اضافه می‌شود. مازاد و کسری: بیش‌خرجی هم از سقف جدید کم می‌شود.</value>
+    <value>«شروع از نو»: هر دوره با سقف خودش آغاز می‌شود. «افزودن باقی‌مانده»: بخش مصرف‌نشدهٔ بودجهٔ قبلی به سقف دورهٔ جدید اضافه می‌شود. «افزودن باقی‌مانده و کسر مازاد هزینه»: هزینهٔ بیش از سقفِ دورهٔ قبل نیز از سقف جدید کم می‌شود. این تنظیم پولی جابه‌جا نمی‌کند.</value>
   </data>
   <data name="Help_Rollover_Example" xml:space="preserve">
-    <value>سقف ۵۰۰ است و ماه پیش ۴۵۰ خرج کرده‌اید: با «مازاد» سقف این ماه ۵۵۰ می‌شود. اگر ۵۶۰ خرج کرده بودید، با «مازاد و کسری» ۴۴۰ می‌شد.</value>
+    <value>اگر سقف هر دوره ۵۰۰ باشد و در دورهٔ قبل ۴۵۰ خرج کرده باشید، با «افزودن باقی‌مانده» سقف این دوره ۵۵۰ می‌شود. اگر ۵۶۰ خرج کرده باشید، با «افزودن باقی‌مانده و کسر مازاد هزینه» سقف این دوره ۴۴۰ می‌شود.</value>
   </data>
   <data name="Help_BudgetPeriod_Title" xml:space="preserve">
     <value>دورهٔ بودجه</value>
   </data>
   <data name="Help_BudgetPeriod_Text" xml:space="preserve">
-    <value>علاوه بر ماه می‌توانید برای هر هفته یا هر دو هفته بودجه بگذارید؛ مثلاً اگر هر دو هفته حقوق می‌گیرید یا سقف هفتگی برای خوراک می‌خواهید. هر دوره سقف‌های خودش را دارد و بودجهٔ ماهانه جدا می‌ماند. پاکت‌ها و Flex روش‌های ماهانه‌اند.</value>
+    <value>می‌توانید بودجهٔ ماهانه، هفتگی یا دوهفته‌ای داشته باشید؛ مثلاً برای دریافت حقوق هر دو هفته یا تعیین سقف هفتگی خوراک. هر دوره سقف‌های مستقل دارد. روش‌های «پاکت‌ها» و «منعطف» فقط برای بودجهٔ ماهانه در دسترس‌اند.</value>
   </data>
   <data name="Help_BudgetPeriod_Example" xml:space="preserve">
     <value>سقف هفتگی ۱۲۰ برای خوراک از شنبه تا جمعه؛ هفتهٔ بعد دوباره با ۱۲۰ یا با انتقال مانده بیشتر شروع می‌شود.</value>
@@ -2988,16 +2988,16 @@
     <value>دوره‌های دوهفته‌ای</value>
   </data>
   <data name="Help_FortnightStart_Text" xml:space="preserve">
-    <value>بودجه‌های دوهفته‌ای از این روز هر ۱۴ روز تکرار می‌شوند. یک روز حقوق را انتخاب کنید تا هر دوره از یک حقوق تا حقوق بعدی باشد.</value>
+    <value>دوره‌های بودجه از این تاریخ، هر ۱۴ روز تکرار می‌شوند. اگر هر دو هفته حقوق می‌گیرید، تاریخ دریافت حقوق را انتخاب کنید تا دورهٔ بودجه با آن هماهنگ شود.</value>
   </data>
   <data name="Help_FortnightStart_Example" xml:space="preserve">
     <value>هر دو هفته یک بار جمعه حقوق می‌گیرید و آخرین بار ۱۸ سپتامبر بوده: دوره‌ها ۱۸ سپتامبر تا ۱ اکتبر، ۲ تا ۱۵ اکتبر و به همین ترتیب‌اند.</value>
   </data>
   <data name="Help_BackupPassword_Title" xml:space="preserve">
-    <value>رمز پشتیبان</value>
+    <value>رمز عبور نسخهٔ پشتیبان</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>فایل پشتیبان با این رمز رمزگذاری می‌شود (AES-256). هیچ‌کس، حتی سازندهٔ برنامه، بدون رمز نمی‌تواند آن را باز کند؛ پس رمز را جای امنی نگه دارید. رمز در برنامه ذخیره نمی‌شود و رمز فراموش‌شده قابل بازیابی نیست.</value>
+    <value>با فعال کردن محافظت با رمز عبور، فایل پشتیبان با روش «AES-256» رمزگذاری می‌شود. برای بازیابی آن به همین رمز نیاز دارید. برنامه رمز را ذخیره نمی‌کند و سازنده راهی برای بازیابی رمز فراموش‌شده ندارد؛ آن را در جای امنی نگه دارید.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>اولویت هدف</value>
@@ -3012,7 +3012,7 @@
     <value>نحوهٔ نمایش جمع‌ها را انتخاب کنید</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
-    <value>بستن نمادها</value>
+    <value>پنهان کردن نمادها</value>
   </data>
   <data name="Account_Icon" xml:space="preserve">
     <value>نماد</value>
@@ -3021,19 +3021,19 @@
     <value>ثبت سریع</value>
   </data>
   <data name="Home_TemplateDescription" xml:space="preserve">
-    <value>تراکنش جدید با الگوی {0}</value>
+    <value>ایجاد تراکنش جدید با الگوی «{0}»</value>
   </data>
   <data name="Home_ForecastEnd" xml:space="preserve">
     <value>پایان ماه ≈ {0}</value>
   </data>
   <data name="Home_ForecastLow" xml:space="preserve">
-    <value>کمترین {0} در {1}</value>
+    <value>کمترین مانده: {0} در تاریخ {1}</value>
   </data>
   <data name="Home_BudgetPerDay" xml:space="preserve">
     <value>روزانه حدود {0} برای {1} روز باقی‌مانده</value>
   </data>
   <data name="Home_BudgetLastDay" xml:space="preserve">
-    <value>{0} برای امروز، روز آخر</value>
+    <value>باقی‌مانده برای امروز، آخرین روز دوره: {0}</value>
   </data>
   <data name="Entry_NewExpense" xml:space="preserve">
     <value>هزینهٔ جدید</value>
@@ -3054,13 +3054,13 @@
     <value>دیروز</value>
   </data>
   <data name="Home_ReadReceipt" xml:space="preserve">
-    <value>خواندن عکس یا PDF رسید</value>
+    <value>استخراج اطلاعات از عکس یا فایل PDF رسید</value>
   </data>
   <data name="Receipt_WillAttach" xml:space="preserve">
     <value>رسید هنگام ذخیره به تراکنش پیوست می‌شود.</value>
   </data>
   <data name="Receipt_NothingNew" xml:space="preserve">
-    <value>از این رسید مبلغ، تاریخ یا فروشگاهی خوانده نشد. آن‌ها را خودتان وارد کنید؛ رسید هنگام ذخیره پیوست می‌شود.</value>
+    <value>مبلغ، تاریخ یا نام فروشنده در رسید شناسایی نشد. این اطلاعات را وارد کنید؛ رسید هنگام ذخیره به تراکنش پیوست می‌شود.</value>
   </data>
   <data name="Receipt_AttachFailed" xml:space="preserve">
     <value>تراکنش ذخیره شد، اما رسید پیوست نشد. می‌توانید آن را در جزئیات تراکنش پیوست کنید.</value>
@@ -3069,19 +3069,19 @@
     <value>یادآوری پرداخت‌های سررسیدشده</value>
   </data>
   <data name="Notify_OfferText" xml:space="preserve">
-    <value>Zanance می‌تواند پیش از سررسید اجاره، قبض‌ها یا حقوق، و وقتی بودجه نزدیک تمام شدن است، به شما یادآوری کند. یادآورها فقط روی همین دستگاه ساخته می‌شوند و تا خودتان اجازه ندهید، روی صفحهٔ قفل مبلغی نشان داده نمی‌شود. هر وقت بخواهید می‌توانید این را در تنظیمات تغییر دهید.</value>
+    <value>برنامهٔ «Zanance» می‌تواند نزدیک سررسید پرداخت‌ها و دریافت‌های برنامه‌ریزی‌شده، یا نزدیک سقف بودجه، به شما یادآوری کند. یادآوری‌ها روی این دستگاه ساخته می‌شوند و به‌طور پیش‌فرض نام و مبلغ مالی ندارند. نمایش جزئیات را می‌توانید در تنظیمات تغییر دهید.</value>
   </data>
   <data name="Notify_Allow" xml:space="preserve">
     <value>اجازهٔ یادآوری</value>
   </data>
   <data name="Notify_NotNow" xml:space="preserve">
-    <value>حالا نه</value>
+    <value>فعلاً نه</value>
   </data>
   <data name="Notify_OffTitle" xml:space="preserve">
-    <value>اعلان‌ها خاموش است</value>
+    <value>اعلان‌ها غیرفعال‌اند</value>
   </data>
   <data name="Notify_OffText" xml:space="preserve">
-    <value>اعلان‌های Zanance در تنظیمات سیستم خاموش است و یادآورها نمی‌توانند نمایش داده شوند. تنظیمات را باز کنید و اعلان‌های Zanance را روشن کنید.</value>
+    <value>اعلان‌های «Zanance» در تنظیمات دستگاه غیرفعال‌اند؛ بنابراین یادآوری‌ها نمایش داده نمی‌شوند. تنظیمات دستگاه را باز کنید و اجازهٔ نمایش اعلان‌های برنامه را بدهید.</value>
   </data>
   <data name="Common_OpenSettings" xml:space="preserve">
     <value>باز کردن تنظیمات</value>
@@ -3096,10 +3096,10 @@
     <value>انتخاب عکس یا PDF</value>
   </data>
   <data name="Camera_OffTitle" xml:space="preserve">
-    <value>دسترسی به دوربین خاموش است</value>
+    <value>دسترسی به دوربین غیرفعال است</value>
   </data>
   <data name="Camera_OffText" xml:space="preserve">
-    <value>Zanance اجازهٔ استفاده از دوربین را ندارد. تنظیمات را باز کنید و دسترسی Zanance به دوربین را روشن کنید، یا به‌جای آن یک عکس یا PDF انتخاب کنید.</value>
+    <value>برنامهٔ «Zanance» اجازهٔ استفاده از دوربین را ندارد. دسترسی به دوربین را در تنظیمات دستگاه فعال کنید، یا یک عکس یا فایل PDF انتخاب کنید.</value>
   </data>
   <data name="Camera_NotAvailable" xml:space="preserve">
     <value>روی این دستگاه برنامهٔ دوربین در دسترس نیست. به‌جای آن یک عکس یا PDF انتخاب کنید.</value>
@@ -3111,13 +3111,13 @@
     <value>زبان و منطقه</value>
   </data>
   <data name="Settings_MoneyMonths" xml:space="preserve">
-    <value>پول و ماه‌ها</value>
+    <value>تنظیمات مالی</value>
   </data>
   <data name="More_App" xml:space="preserve">
     <value>برنامه</value>
   </data>
   <data name="More_AccountsHint" xml:space="preserve">
-    <value>موجودی‌ها، وام‌ها و دارایی‌ها، تطبیق</value>
+    <value>ماندهٔ حساب‌ها، وام‌ها، دارایی‌ها و تطبیق مانده</value>
   </data>
   <data name="More_ReimbursementsHint" xml:space="preserve">
     <value>هزینه‌هایی که دیگران پس می‌دهند</value>
@@ -3126,19 +3126,19 @@
     <value>دسته‌های هزینه و درآمد</value>
   </data>
   <data name="More_TemplatesHint" xml:space="preserve">
-    <value>تراکنش‌های تکراری با یک لمس</value>
+    <value>الگوهای آماده برای ثبت سریع تراکنش</value>
   </data>
   <data name="More_RulesHint" xml:space="preserve">
     <value>پیشنهاد دسته از روی طرف حساب یا عنوان</value>
   </data>
   <data name="More_RatesHint" xml:space="preserve">
-    <value>نرخ‌های شما برای جمع کل ارزها</value>
+    <value>نرخ‌های تبدیل برای محاسبهٔ مجموع مبالغ</value>
   </data>
   <data name="More_UnitsHint" xml:space="preserve">
     <value>واحدهای روزمره، مثل تومان به‌جای ریال</value>
   </data>
   <data name="More_BackupHint" xml:space="preserve">
-    <value>پشتیبان رمزگذاری‌شده و بازیابی</value>
+    <value>تهیه و بازیابی نسخهٔ پشتیبان</value>
   </data>
   <data name="More_ImportExportHint" xml:space="preserve">
     <value>فایل CSV برای صفحه‌گسترده و برنامه‌های دیگر</value>
@@ -3153,19 +3153,19 @@
     <value>نسخه، داده‌های شما و مجوزها</value>
   </data>
   <data name="About_Title" xml:space="preserve">
-    <value>دربارهٔ Zanance</value>
+    <value>دربارهٔ «Zanance»</value>
   </data>
   <data name="About_DataTitle" xml:space="preserve">
     <value>داده‌های شما</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Zanance به حساب کاربری نیاز ندارد و تبلیغ نشان نمی‌دهد. داده‌های مالی شما روی همین دستگاه و در پشتیبان‌هایی که خودتان می‌سازید نگه داشته می‌شود و برای سازنده یا هیچ‌کس دیگری فرستاده نمی‌شود. پشتیبان ابری اختیاری است و فقط پس از اتصال، از فضای ابری خود شما استفاده می‌کند.</value>
+    <value>برای مدیریت محلی امور مالی در «Zanance» به حساب کاربری آنلاین نیاز ندارید و برنامه تبلیغ نمایش نمی‌دهد. داده‌های مالی روی دستگاه شما نگهداری می‌شوند. برای پشتیبان‌گیری ابری، باید فضای ابری خود را متصل کنید؛ ایجاد و اشتراک‌گذاری نسخه‌ها با انتخاب شما انجام می‌شود.</value>
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>مجوزهای متن‌باز</value>
   </data>
   <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance با نرم‌افزارها و فونت‌های زیر ساخته شده است. مجوز آن‌ها نمایش این اطلاعات را لازم می‌داند.</value>
+    <value>برنامهٔ «Zanance» از نرم‌افزارها و قلم‌های زیر استفاده می‌کند. متن مجوزها و اطلاعیه‌های مربوط در این بخش آمده است.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>نمایش متن مجوزها</value>
@@ -3183,7 +3183,7 @@
     <value>اولین هزینه را ثبت کنید</value>
   </data>
   <data name="Home_StartPlan" xml:space="preserve">
-    <value>یک پرداخت منظم اضافه کنید، مثلاً اجاره یا حقوق</value>
+    <value>یک برنامهٔ مالی دوره‌ای، مثل اجاره یا دریافت حقوق، اضافه کنید</value>
   </data>
   <data name="Home_StartBudget" xml:space="preserve">
     <value>بودجهٔ ماهانه تعیین کنید</value>
@@ -3192,7 +3192,7 @@
     <value>پنهان کردن</value>
   </data>
   <data name="Forecast_NoPlansHint" xml:space="preserve">
-    <value>درآمد و قبض‌های منظم را به‌صورت برنامه اضافه کنید تا ببینید موجودی‌تان چطور تغییر می‌کند.</value>
+    <value>درآمدها و پرداخت‌های دوره‌ای را به‌صورت برنامهٔ مالی اضافه کنید تا روند احتمالی ماندهٔ حساب‌ها را ببینید.</value>
   </data>
   <data name="Common_Selected" xml:space="preserve">
     <value>انتخاب‌شده</value>
@@ -3207,34 +3207,34 @@
     <value>ارز پیش‌فرض برای موارد جدید</value>
   </data>
   <data name="Help_DefaultCurrency_Text" xml:space="preserve">
-    <value>حساب‌ها، هدف‌ها، بودجه‌ها و نرخ‌های جدید با این ارز شروع می‌شوند و هر بار می‌توانید آن را عوض کنید. حساب‌ها و ثبت‌های فعلی ارز خود را نگه می‌دارند و هر ثبت همیشه به ارز حساب خودش است.</value>
+    <value>در فرم ساخت حساب، هدف، بودجه یا نرخ تبدیل، این ارز از ابتدا انتخاب می‌شود و می‌توانید آن را تغییر دهید. ارز حساب‌ها و تراکنش‌های موجود تغییر نمی‌کند. مبلغ هر تراکنش به ارز حساب مربوط ثبت می‌شود.</value>
   </data>
   <data name="Help_DefaultCurrency_Example" xml:space="preserve">
     <value>حساب‌های شما به EUR و USD هستند. اگر اینجا EUR باشد، حساب جدید با EUR شروع می‌شود و حساب USD شما همان USD می‌ماند.</value>
   </data>
   <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
-    <value>فقط موارد جدید از این استفاده می‌کنند. حساب‌ها و ثبت‌های فعلی ارز خود را نگه می‌دارند.</value>
+    <value>فقط انتخاب اولیهٔ ارز برای موارد جدید است؛ ارز حساب‌ها و تراکنش‌های موجود تغییر نمی‌کند.</value>
   </data>
   <data name="Settings_DefaultAccount" xml:space="preserve">
-    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+    <value>حساب پیش‌فرض تراکنش‌ها</value>
   </data>
   <data name="Settings_DefaultAccountNone" xml:space="preserve">
     <value>هیچ‌کدام؛ هر بار انتخاب شود</value>
   </data>
   <data name="Help_DefaultAccount_Title" xml:space="preserve">
-    <value>حساب پیش‌فرض برای ثبت‌های جدید</value>
+    <value>حساب پیش‌فرض تراکنش‌ها</value>
   </data>
   <data name="Help_DefaultAccount_Text" xml:space="preserve">
-    <value>ثبت سریع در خانه، ویجت و رسیدها از این حساب استفاده می‌کنند. فرم ثبت همیشه آن را نشان می‌دهد و می‌توانید برای یک ثبت حساب دیگری انتخاب کنید. فقط حساب نقد، بانکی و کارت می‌تواند پیش‌فرض باشد؛ بدون آن، فرم می‌پرسد از کدام حساب استفاده شود.</value>
+    <value>در ثبت سریعِ صفحهٔ خانه، ابزارک و ثبت از روی رسید، این حساب از ابتدا انتخاب می‌شود. پیش از ذخیرهٔ تراکنش می‌توانید حساب دیگری انتخاب کنید. فقط حساب‌های نقدی، جاری، پس‌انداز و کارت اعتباری می‌توانند پیش‌فرض باشند. بدون حساب پیش‌فرض، باید حساب هر تراکنش را انتخاب کنید.</value>
   </data>
   <data name="Help_DefaultAccount_Example" xml:space="preserve">
-    <value>پیش‌فرض «اصلی (EUR)»: «هزینه» در خانه با حساب اصلی باز می‌شود. اگر در فرم «حساب دلار» را انتخاب کنید، فقط همان ثبت به آنجا می‌رود.</value>
+    <value>اگر «اصلی (EUR)» حساب پیش‌فرض باشد، فرم «هزینه» با همین حساب باز می‌شود. انتخاب «حساب دلار» در فرم فقط حساب همان تراکنش را تغییر می‌دهد.</value>
   </data>
   <data name="Settings_ShowConverted" xml:space="preserve">
     <value>نمایش جمع‌های تبدیل‌شده</value>
   </data>
   <data name="Settings_RateFreshness" xml:space="preserve">
-    <value>نرخ‌ها پس از این مدت شاید قدیمی باشند</value>
+    <value>هشدار قدیمی‌بودن نرخ پس از</value>
   </data>
   <data name="Settings_FreshnessDays" xml:space="preserve">
     <value>{0} روز</value>
@@ -3246,22 +3246,22 @@
     <value>نرخ‌های قدیمی</value>
   </data>
   <data name="Help_RateFreshness_Text" xml:space="preserve">
-    <value>اگر نرخی که در جمع تبدیل‌شده به کار رفته قدیمی‌تر از این مدت باشد و پیش از ماه جاری وارد شده باشد، کنار جمع «شاید قدیمی باشد» می‌آید. این یادآوری برای به‌روز کردن نرخ است، نه حکمی دربارهٔ دقت آن.</value>
+    <value>اگر نرخِ استفاده‌شده از مدت انتخابی قدیمی‌تر باشد و تاریخ آن پیش از ماه جاری باشد، کنار مجموع تبدیل‌شده هشدار نمایش داده می‌شود. این هشدار فقط یادآور بررسی و به‌روزرسانی نرخ است؛ درست یا نادرست‌بودن نرخ را تعیین نمی‌کند.</value>
   </data>
   <data name="Help_RateFreshness_Example" xml:space="preserve">
     <value>۳۰ روز: نرخ USD ثبت‌شده در ۱۲ اوت، در ۱۵ سپتامبر علامت می‌خورد؛ نرخ ۲ سپتامبر نه.</value>
   </data>
   <data name="Entry_ChooseAccount" xml:space="preserve">
-    <value>حساب این ثبت را انتخاب کنید.</value>
+    <value>حساب این تراکنش را انتخاب کنید.</value>
   </data>
   <data name="Entry_CurrencyChanged" xml:space="preserve">
     <value>مبلغ اکنون به {0} است (قبلاً {1}). پیش از ذخیره بررسی کنید.</value>
   </data>
   <data name="Entry_UndoAccountChange" xml:space="preserve">
-    <value>برگرداندن تغییر حساب</value>
+    <value>واگرد تغییر حساب</value>
   </data>
   <data name="Entry_TemplateAccountArchived" xml:space="preserve">
-    <value>حساب این الگو بایگانی شده است؛ حساب و مبلغ را انتخاب کنید.</value>
+    <value>حساب الگو بایگانی شده است. حساب دیگری انتخاب کنید و مبلغ را پیش از ذخیره بررسی کنید.</value>
   </data>
   <data name="Entry_EffectFrom" xml:space="preserve">
     <value>از {1}: {0}</value>
@@ -3285,7 +3285,7 @@
     <value>تغییر</value>
   </data>
   <data name="Home_CombinedOutdated" xml:space="preserve">
-    <value>مجموع ≈ {0} (نرخ‌های {1}؛ شاید قدیمی باشد)</value>
+    <value>مجموع تبدیل‌شده: حدود {0}؛ تاریخ نرخ‌ها: {1}؛ ممکن است نرخ‌ها قدیمی باشند</value>
   </data>
   <data name="Home_RateEstimate" xml:space="preserve">
     <value>شامل نرخ تخمینی</value>
@@ -3294,40 +3294,40 @@
     <value>ممکن است موجودی شما حدود {0} منفی شود</value>
   </data>
   <data name="Account_CurrencyLockedBy" xml:space="preserve">
-    <value>ارز قابل تغییر نیست، چون این مبالغ با آن ثبت شده‌اند: {0}. برای ارز دیگر، حساب تازه‌ای بسازید و پول را با انتقال جابه‌جا کنید.</value>
+    <value>ارز حساب قابل تغییر نیست، زیرا موارد زیر به آن وابسته‌اند: {0}. برای ارز دیگر، حساب جدیدی بسازید و در صورت جابه‌جایی واقعی پول، انتقال مربوط را ثبت کنید.</value>
   </data>
   <data name="Account_LockEntries" xml:space="preserve">
-    <value>{0} ثبت</value>
+    <value>تراکنش‌ها: {0}</value>
   </data>
   <data name="Account_LockPlans" xml:space="preserve">
-    <value>{0} برنامه</value>
+    <value>برنامه‌های مالی: {0}</value>
   </data>
   <data name="Account_LockTemplates" xml:space="preserve">
-    <value>{0} الگوی سریع</value>
+    <value>الگوهای سریع: {0}</value>
   </data>
   <data name="Account_LockEarmarks" xml:space="preserve">
-    <value>{0} مبلغ کنارگذاشته برای هدف‌ها</value>
+    <value>مبالغ اختصاص‌یافته به هدف‌ها: {0}</value>
   </data>
   <data name="Account_LockBudgets" xml:space="preserve">
-    <value>{0} بودجه</value>
+    <value>بودجه‌ها: {0}</value>
   </data>
   <data name="Account_LockInstallment" xml:space="preserve">
     <value>قسط وام</value>
   </data>
   <data name="Account_DefaultCleared" xml:space="preserve">
-    <value>این حساب پیش‌فرض شما بود. ثبت سریع اکنون حساب را می‌پرسد؛ در تنظیمات › پول و ماه‌ها حساب پیش‌فرض تازه‌ای انتخاب کنید.</value>
+    <value>این حساب، پیش‌فرض شما بود. اکنون هنگام ثبت سریع باید حساب را انتخاب کنید. برای تعیین پیش‌فرض جدید، به بخش «تنظیمات مالی» در «تنظیمات» بروید.</value>
   </data>
   <data name="Account_Usable" xml:space="preserve">
     <value>قابل استفاده برای پرداخت</value>
   </data>
   <data name="Account_UsableHint" xml:space="preserve">
-    <value>در پولی حساب می‌شود که می‌تواند قبض‌ها را بپردازد، مثلاً در کمترین موجودی پیش‌بینی‌شده.</value>
+    <value>ماندهٔ این حساب در محاسبات پولِ در دسترس برای پرداخت، از جمله کمترین ماندهٔ پیش‌بینی‌شده، لحاظ می‌شود.</value>
   </data>
   <data name="Help_UsableForPayments_Title" xml:space="preserve">
     <value>قابل استفاده برای پرداخت</value>
   </data>
   <data name="Help_UsableForPayments_Text" xml:space="preserve">
-    <value>بخشی از پول در جمع‌های شما هست ولی برای پرداخت‌های روزمره نیست، مثلاً حساب پس‌انداز با مهلت برداشت یا پولی در کشور دیگر. این گزینه را برای چنین حساب‌هایی خاموش کنید: پیش‌بینی کمترین موجودی آن‌ها را کنار می‌گذارد، ولی همهٔ جمع‌ها هنوز آن‌ها را دارند. Zanance هرگز به‌جای شما تصمیم نمی‌گیرد.</value>
+    <value>ممکن است بخواهید حسابی در جمع دارایی‌ها دیده شود، اما برای پرداخت‌های روزمره در دسترس نباشد؛ مثل سپردهٔ مدت‌دار. با غیرفعال کردن این گزینه، حساب از محاسبات مربوط به پولِ قابل استفاده برای پرداخت کنار گذاشته می‌شود. تنظیم مربوط به محاسبه در جمع کل مستقل است و تغییر نمی‌کند.</value>
   </data>
   <data name="Help_UsableForPayments_Example" xml:space="preserve">
     <value>حساب جاری ۱٬۲۵۰ EUR (روشن) و سپردهٔ مدت‌دار ۵٬۰۰۰ EUR (خاموش): کمترین موجودی پیش‌بینی‌شده فقط به ۱٬۲۵۰ EUR نگاه می‌کند.</value>
@@ -3339,7 +3339,7 @@
     <value>مثلاً IR</value>
   </data>
   <data name="Account_AddEntryHere" xml:space="preserve">
-    <value>ثبت در این حساب</value>
+    <value>ثبت تراکنش در این حساب</value>
   </data>
   <data name="Accounts_Default" xml:space="preserve">
     <value>پیش‌فرض</value>
@@ -3351,7 +3351,7 @@
     <value>کارت‌های اعتباری</value>
   </data>
   <data name="AccountGroup_Receivables" xml:space="preserve">
-    <value>طلب من</value>
+    <value>طلب‌های من</value>
   </data>
   <data name="AccountGroup_Debts" xml:space="preserve">
     <value>بدهی‌ها</value>
@@ -3366,16 +3366,16 @@
     <value>موجودی یک حساب</value>
   </data>
   <data name="GoalType_Earmark" xml:space="preserve">
-    <value>پول کنارگذاشته</value>
+    <value>پول کنارگذاشته‌شده</value>
   </data>
   <data name="Goal_TypeQuestion" xml:space="preserve">
-    <value>به چه چیزی می‌خواهید برسید؟</value>
+    <value>نوع هدف را انتخاب کنید</value>
   </data>
   <data name="Help_GoalType_Title" xml:space="preserve">
     <value>انواع هدف</value>
   </data>
   <data name="Help_GoalType_Text" xml:space="preserve">
-    <value>هدف موجودی، موجودی یک حساب را دنبال می‌کند: هر واریز، انتقال یا برداشت پیشرفت را تغییر می‌دهد و چیزی رزرو نمی‌شود. پول کنارگذاشته بخشی از پول حساب‌ها را برای هدف علامت می‌زند؛ این پول رزرو شده، می‌تواند محافظت شود و در همان حساب می‌ماند.</value>
+    <value>هدف موجودی حساب، ماندهٔ ثبت‌شدهٔ یک حساب را دنبال می‌کند. هدف پول کنارگذاشته‌شده، بخشی از موجودی را در برنامه به یک هدف اختصاص می‌دهد، بدون اینکه پولی منتقل یا برداشت آن در بانک محدود شود. هدف مقدار دارایی، وزن یا تعدادِ ثبت‌شدهٔ یک دارایی را دنبال می‌کند، نه تغییر قیمت آن.</value>
   </data>
   <data name="Help_GoalType_Example" xml:space="preserve">
     <value>«حساب پس‌انداز تا ۵٬۰۰۰ EUR» هدف موجودی است. «سفر: ۸۰۰ EUR کنارگذاشته در حساب جاری» پول کنارگذاشته است.</value>
@@ -3393,7 +3393,7 @@
     <value>برنامهٔ شما</value>
   </data>
   <data name="Goal_Schedule" xml:space="preserve">
-    <value>زمان‌های واریز</value>
+    <value>زمان‌بندی پس‌انداز</value>
   </data>
   <data name="Goal_EveryTwoWeeks" xml:space="preserve">
     <value>هر دو هفته</value>
@@ -3402,7 +3402,7 @@
     <value>اولین نوبت (مثلاً روز حقوق بعدی)</value>
   </data>
   <data name="Goal_Method" xml:space="preserve">
-    <value>چه مقدار</value>
+    <value>روش تعیین مبلغ</value>
   </data>
   <data name="Help_ContributionMethod_Title" xml:space="preserve">
     <value>چقدر کنار بگذارید</value>
@@ -3450,10 +3450,10 @@
     <value>برای رسیدن تا {0}: هر نوبت {1} ({2} نوبت)</value>
   </data>
   <data name="Goal_PreviewNeededNow" xml:space="preserve">
-    <value>تاریخ گذشته است؛ اکنون {0} لازم است</value>
+    <value>مهلت هدف گذشته است؛ هنوز {0} لازم است</value>
   </data>
   <data name="Goal_PreviewShare" xml:space="preserve">
-    <value>درآمد قابل‌احتساب ماه گذشته {0} ({1} ثبت) × {2}٪ = {3}</value>
+    <value>درآمد قابل محاسبهٔ ماه گذشته: {0} از {1} تراکنش؛ سهم {2}٪: {3}</value>
   </data>
   <data name="Goal_PreviewCut" xml:space="preserve">
     <value>هر ماه {1} کمتر برای {0} خرج کنید. تا آن را اعمال نکنید، چیزی تغییر نمی‌کند.</value>
@@ -3468,7 +3468,7 @@
     <value>بودجهٔ این ماه برای «{0}» سقفی ندارد. اول در صفحهٔ بودجه سقف بگذارید.</value>
   </data>
   <data name="Goal_EstimateNote" xml:space="preserve">
-    <value>برآورد بر اساس فرض‌های شماست، نه قول.</value>
+    <value>این برآورد بر اساس فرض‌های شماست و تضمینی برای نتیجه نیست.</value>
   </data>
   <data name="Goal_Protect" xml:space="preserve">
     <value>محافظت از این پول</value>
@@ -3501,7 +3501,7 @@
     <value>حدود {0} با {1} در هر نوبت</value>
   </data>
   <data name="Goal_OverdueNeeded" xml:space="preserve">
-    <value>تاریخ گذشته است؛ اکنون {0} لازم است.</value>
+    <value>مهلت هدف گذشته است؛ هنوز {0} لازم است.</value>
   </data>
   <data name="Goal_AccountArchived" xml:space="preserve">
     <value>حساب این هدف بایگانی شده است؛ حساب دیگری انتخاب کنید یا هدف را تکمیل کنید.</value>
@@ -3510,7 +3510,7 @@
     <value>موجودی {0} است؛ پیشرفت صفر درصد حساب می‌شود.</value>
   </data>
   <data name="GoalState_Paused" xml:space="preserve">
-    <value>متوقف</value>
+    <value>متوقف‌شدهٔ موقت</value>
   </data>
   <data name="Goal_Pause" xml:space="preserve">
     <value>توقف موقت</value>
@@ -3522,10 +3522,10 @@
     <value>بازگرداندن</value>
   </data>
   <data name="Goal_CompleteMessage" xml:space="preserve">
-    <value>به‌عنوان تکمیل‌شده علامت بخورد؟ سابقه می‌ماند و پول کنارگذاشته آزاد می‌شود.</value>
+    <value>وضعیت هدف به «تکمیل‌شده» تغییر کند؟ سابقه حفظ می‌شود و مبالغ اختصاص‌یافته از این هدف آزاد می‌شوند؛ پولی از حساب برداشت یا منتقل نمی‌شود.</value>
   </data>
   <data name="Goal_CompleteBalanceMessage" xml:space="preserve">
-    <value>به‌عنوان تکمیل‌شده علامت بخورد؟ سابقه می‌ماند و حساب تغییری نمی‌کند.</value>
+    <value>وضعیت هدف به «تکمیل‌شده» تغییر کند؟ سابقه حفظ می‌شود و ماندهٔ حساب تغییر نمی‌کند.</value>
   </data>
   <data name="Home_GoalOverdue" xml:space="preserve">
     <value>تاریخ هدف «{0}» گذشته است</value>
@@ -3540,10 +3540,10 @@
     <value>دارایی‌های مقداری</value>
   </data>
   <data name="More_HoldingsHint" xml:space="preserve">
-    <value>طلا، سکه و چیزهای دیگری که به وزن یا تعداد دارید</value>
+    <value>ثبت طلا، سکه و سایر دارایی‌ها بر اساس وزن یا تعداد</value>
   </data>
   <data name="Holdings_Empty" xml:space="preserve">
-    <value>طلا، سکه یا چیزهای دیگری را که به وزن یا تعداد دارید ثبت کنید. ارزش آن‌ها جداگانه نشان داده می‌شود و هرگز با پول شما جمع نمی‌شود.</value>
+    <value>طلا، سکه و سایر دارایی‌های خود را بر اساس وزن یا تعداد ثبت کنید. ارزش آن‌ها جدا از ماندهٔ حساب‌ها نمایش داده می‌شود و در صورت وجود قیمت، در ارزش خالص دارایی لحاظ می‌شود.</value>
   </data>
   <data name="Holdings_AdvancedHint" xml:space="preserve">
     <value>افزودن دارایی در حالت پیشرفته ممکن است (تنظیمات).</value>
@@ -3555,16 +3555,16 @@
     <value>ارزش معلوم</value>
   </data>
   <data name="Holdings_Note" xml:space="preserve">
-    <value>ارزش‌ها برآوردی از قیمت‌هایی است که وارد کرده‌اید. دارایی‌های مقداری جزو موجودی حساب‌ها و جمع دارایی نیستند.</value>
+    <value>ارزش‌ها بر اساس قیمت‌های ثبت‌شدهٔ شما برآورد می‌شوند. دارایی‌های مقداری جزو ماندهٔ حساب‌ها نیستند، اما در صورت وجود قیمت، در ارزش خالص دارایی محاسبه می‌شوند.</value>
   </data>
   <data name="Holding_ValueUnknown" xml:space="preserve">
     <value>ارزش نامعلوم – قیمت وارد کنید</value>
   </data>
   <data name="Holding_Value" xml:space="preserve">
-    <value>ارزش {0} · قیمت {1}</value>
+    <value>ارزش: {0} · تاریخ قیمت: {1}</value>
   </data>
   <data name="Holding_ValuePurchase" xml:space="preserve">
-    <value>ارزش {0} · قیمت خرید {1}</value>
+    <value>ارزش: {0} · بر اساس قیمت خرید مورخ {1}</value>
   </data>
   <data name="Holding_None" xml:space="preserve">
     <value>چیزی باقی نمانده</value>
@@ -3606,19 +3606,19 @@
     <value>سود یا زیان فروش‌ها: {0}</value>
   </data>
   <data name="Holding_Buy" xml:space="preserve">
-    <value>خرید</value>
+    <value>ثبت خرید</value>
   </data>
   <data name="Holding_Sell" xml:space="preserve">
-    <value>فروش</value>
+    <value>ثبت فروش</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
-    <value>جابه‌جایی</value>
+    <value>ثبت جابه‌جایی</value>
   </data>
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>افزودن (موجود یا هدیه)</value>
   </data>
   <data name="Holding_Remove" xml:space="preserve">
-    <value>خارج کردن</value>
+    <value>ثبت خروج دارایی</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>اصلاح مقدار</value>
@@ -3666,13 +3666,13 @@
     <value>در تاریخ {0} فقط {1} در {2} موجود بود.</value>
   </data>
   <data name="Holding_EditType" xml:space="preserve">
-    <value>ویرایش نوع</value>
+    <value>ویرایش نوع دارایی</value>
   </data>
   <data name="Holding_Archive" xml:space="preserve">
     <value>بایگانی</value>
   </data>
   <data name="Holding_ArchiveMessage" xml:space="preserve">
-    <value>این نوع از فهرست‌ها و صفحهٔ خانه حذف می‌شود و تاریخچه‌اش می‌ماند.</value>
+    <value>این نوع دارایی بایگانی و از فهرست‌های فعال و صفحهٔ خانه پنهان می‌شود. سابقهٔ آن حفظ می‌شود.</value>
   </data>
   <data name="Holding_DefaultLocation" xml:space="preserve">
     <value>خانه</value>
@@ -3690,10 +3690,10 @@
     <value>مثلاً طلای ۱۸ عیار</value>
   </data>
   <data name="AssetType_NameRequired" xml:space="preserve">
-    <value>لطفاً نام را وارد کنید.</value>
+    <value>نام نوع دارایی را وارد کنید.</value>
   </data>
   <data name="AssetType_Kind" xml:space="preserve">
-    <value>گونه</value>
+    <value>نوع دارایی</value>
   </data>
   <data name="AssetKind_PreciousMetal" xml:space="preserve">
     <value>فلز گران‌بها</value>
@@ -3702,7 +3702,7 @@
     <value>سکه یا شمش</value>
   </data>
   <data name="AssetKind_CountableItem" xml:space="preserve">
-    <value>شیء شمارشی</value>
+    <value>دارایی شمارشی</value>
   </data>
   <data name="AssetKind_Other" xml:space="preserve">
     <value>سایر</value>
@@ -3717,7 +3717,7 @@
     <value>تعداد</value>
   </data>
   <data name="AssetType_DimensionLocked" xml:space="preserve">
-    <value>پس از اولین ثبت، وزن یا تعداد قابل تغییر نیست.</value>
+    <value>پس از اولین ثبت، روش اندازه‌گیری (وزن یا تعداد) قابل تغییر نیست.</value>
   </data>
   <data name="AssetType_Metal" xml:space="preserve">
     <value>فلز</value>
@@ -3747,10 +3747,10 @@
     <value>دیگر / نامعلوم</value>
   </data>
   <data name="AssetType_PurityPlaceholder" xml:space="preserve">
-    <value>قیراط (۱۸) یا عیار هزارم (۷۵۰)؛ خالی = نامعلوم</value>
+    <value>عیار از ۲۴ (مثلاً ۱۸) یا از ۱۰۰۰ (مثلاً ۷۵۰)؛ خالی یعنی نامعلوم</value>
   </data>
   <data name="AssetType_PurityInvalid" xml:space="preserve">
-    <value>قیراط (۱ تا ۲۴) یا عیار هزارم (۱ تا ۱۰۰۰) وارد کنید.</value>
+    <value>عیار را از ۱ تا ۲۴ یا بر حسب هزارم از ۱ تا ۱۰۰۰ وارد کنید.</value>
   </data>
   <data name="AssetType_CountUnit" xml:space="preserve">
     <value>نام هر واحد</value>
@@ -3765,16 +3765,16 @@
     <value>وزنی بیشتر از صفر با حداکثر سه رقم اعشار وارد کنید.</value>
   </data>
   <data name="AssetType_Divisible" xml:space="preserve">
-    <value>کسر مجاز است (مثلاً نیم سکه)</value>
+    <value>مقدار اعشاری مجاز است (مثلاً ۰٫۵ واحد)</value>
   </data>
   <data name="AssetType_PriceCurrency" xml:space="preserve">
     <value>ارز قیمت‌ها</value>
   </data>
   <data name="AssetEvent_NewTitle" xml:space="preserve">
-    <value>ثبت تغییر</value>
+    <value>ثبت رویداد دارایی</value>
   </data>
   <data name="AssetEvent_EditTitle" xml:space="preserve">
-    <value>ویرایش تغییر</value>
+    <value>ویرایش رویداد دارایی</value>
   </data>
   <data name="AssetEvent_Kind" xml:space="preserve">
     <value>چه اتفاقی افتاد؟</value>
@@ -3804,19 +3804,19 @@
     <value>آنچه از قبل دارید. پولی از حسابی کم نمی‌شود.</value>
   </data>
   <data name="AssetEvent_PurchaseHint" xml:space="preserve">
-    <value>از یک حساب پرداخت می‌شود. قیمت خرید هزینه نیست؛ کارمزد به‌عنوان هزینه ثبت می‌شود.</value>
+    <value>مبلغ خرید از ماندهٔ ثبت‌شدهٔ حساب کم می‌شود. در گزارش‌های این برنامه، خرید دارایی هزینه محسوب نمی‌شود؛ کارمزد به‌عنوان هزینه ثبت می‌شود.</value>
   </data>
   <data name="AssetEvent_SaleHint" xml:space="preserve">
-    <value>به یک حساب واریز می‌شود. پول دریافتی درآمد نیست.</value>
+    <value>مبلغ فروش به ماندهٔ ثبت‌شدهٔ حساب اضافه می‌شود. در گزارش‌های این برنامه، اصل مبلغ فروش دارایی درآمد محسوب نمی‌شود.</value>
   </data>
   <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
     <value>از یک مکان به مکان دیگر. مقدار کل تغییر نمی‌کند.</value>
   </data>
   <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
-    <value>بدون پرداخت دریافت شده است. درآمد حساب نمی‌شود.</value>
+    <value>دارایی را بدون پرداخت دریافت کرده‌اید. این رویداد در گزارش‌های برنامه، درآمد نقدی محسوب نمی‌شود.</value>
   </data>
   <data name="AssetEvent_OutflowHint" xml:space="preserve">
-    <value>بخشیده، مصرف یا گم شده است. هزینه حساب نمی‌شود.</value>
+    <value>دارایی بخشیده، مصرف یا گم شده است. مقدار آن کم می‌شود، اما این رویداد در گزارش‌های برنامه هزینهٔ نقدی محسوب نمی‌شود.</value>
   </data>
   <data name="AssetEvent_CorrectionHint" xml:space="preserve">
     <value>مقدار را اصلاح می‌کند، مثلاً پس از وزن‌کردن دوباره. ذکر دلیل لازم است.</value>
@@ -3828,7 +3828,7 @@
     <value>مقداری بیشتر از صفر با حداکثر سه رقم اعشار وارد کنید.</value>
   </data>
   <data name="AssetEvent_WholeUnits" xml:space="preserve">
-    <value>این نوع فقط با عدد صحیح شمرده می‌شود.</value>
+    <value>تعداد این نوع دارایی باید عدد صحیح باشد.</value>
   </data>
   <data name="AssetEvent_Increase" xml:space="preserve">
     <value>بیشتر از ثبت‌شده</value>
@@ -3879,7 +3879,7 @@
     <value>ارزش در آن زمان به {0} (اختیاری)</value>
   </data>
   <data name="AssetEvent_BasisHint" xml:space="preserve">
-    <value>برای میانگین قیمت خرید استفاده می‌شود. اگر نمی‌دانید خالی بگذارید.</value>
+    <value>برای محاسبهٔ میانگین بهای تمام‌شده استفاده می‌شود. اگر مبلغ نامعلوم است، خالی بگذارید.</value>
   </data>
   <data name="AssetEvent_Reason" xml:space="preserve">
     <value>دلیل (اختیاری)</value>
@@ -3888,7 +3888,7 @@
     <value>دلیل</value>
   </data>
   <data name="AssetEvent_ReasonMissing" xml:space="preserve">
-    <value>اصلاح به دلیل نیاز دارد.</value>
+    <value>دلیل اصلاح مقدار را وارد کنید.</value>
   </data>
   <data name="AssetEvent_AccountMissing" xml:space="preserve">
     <value>یک حساب انتخاب کنید.</value>
@@ -3912,7 +3912,7 @@
     <value>عیار</value>
   </data>
   <data name="Help_Purity_Text" xml:space="preserve">
-    <value>عیار به قیراط (۲۴ = خالص) یا به هزارم وارد می‌شود. طلای ۱۸ و ۲۴ عیار دو نوع جدا هستند، چون گرم‌های آن‌ها برابر نیست. با داشتن عیار، برنامه مقدار فلز خالص را نشان می‌دهد؛ بدون آن چیزی حدس زده نمی‌شود.</value>
+    <value>عیار را بر مبنای ۲۴ یا بر حسب هزارم وارد کنید. طلای ۱۸ و ۲۴ عیار را جدا تعریف کنید، چون در وزن یکسان، مقدار طلای خالص آن‌ها متفاوت است. با ثبت عیار، مقدار فلز خالص محاسبه می‌شود؛ اگر عیار نامعلوم باشد، مقدار خالص برآورد نمی‌شود.</value>
   </data>
   <data name="Help_Purity_Example" xml:space="preserve">
     <value>۱۸ عیار = ۷۵۰ از ۱۰۰۰: در ۲۰ گرم طلای ۱۸ عیار حدود ۱۵ گرم طلای خالص هست.</value>
@@ -3921,7 +3921,7 @@
     <value>انواع تغییر</value>
   </data>
   <data name="Help_AssetEvents_Text" xml:space="preserve">
-    <value>خرید از یک حساب پول برمی‌دارد و فروش به یک حساب پول واریز می‌کند؛ هیچ‌کدام هزینه یا درآمد نیست. موجودی قبلی، هدیه، جابه‌جایی، خارج‌کردن و اصلاح فقط مقدار را تغییر می‌دهند. موجودی در هیچ تاریخی منفی نمی‌شود.</value>
+    <value>ثبت خرید، ماندهٔ ثبت‌شدهٔ حساب را کم می‌کند و ثبت فروش آن را افزایش می‌دهد؛ برنامه پول واقعی جابه‌جا نمی‌کند. اصل مبلغ خرید و فروش دارایی در گزارش‌های این برنامه هزینه یا درآمد نیست. سایر رویدادها مقدار یا محل نگهداری را تغییر می‌دهند. ثبت رویدادی که مقدار دارایی را در تاریخی منفی کند، مجاز نیست.</value>
   </data>
   <data name="Help_AssetEvents_Example" xml:space="preserve">
     <value>خرید ۱۰ گرم به قیمت ۱٬۰۰۰ EUR با ۲۰ EUR کارمزد: موجودی حساب ۱٬۰۲۰ EUR کم می‌شود که فقط ۲۰ EUR آن هزینه است.</value>
@@ -3930,7 +3930,7 @@
     <value>قیمت و ارزش</value>
   </data>
   <data name="Help_HoldingPrices_Text" xml:space="preserve">
-    <value>قیمت هر گرم یا هر واحد، یا ارزش کل موجودی را وارد کنید. آخرین قیمت تا هر روز، ارزش همان روز را می‌سازد؛ قیمت جدید ارزش‌های قبلی یا مقدار را تغییر نمی‌دهد. قیمت‌های خرید هم با علامت به کار می‌روند.</value>
+    <value>قیمت هر گرم یا واحد، یا ارزش کل مقدار موجود را وارد کنید. برای ارزش‌گذاری هر روز، آخرین قیمت ثبت‌شده در همان روز یا پیش از آن استفاده می‌شود. قیمت، مقدار دارایی را تغییر نمی‌دهد. قیمت خرید نیز ممکن است مبنا قرار بگیرد و با برچسب مشخص شود. ثبت قیمت با تاریخ گذشته می‌تواند ارزش‌گذاری روزهای بعد از آن تاریخ را تغییر دهد.</value>
   </data>
   <data name="Help_HoldingPrices_Example" xml:space="preserve">
     <value>قیمت هر گرم ۵۰ EUR × ۷۳۰ گرم = ۳۶٬۵۰۰ EUR.</value>
@@ -3942,7 +3942,7 @@
     <value>فروش دارایی</value>
   </data>
   <data name="Entry_HoldingMoney" xml:space="preserve">
-    <value>این پول مربوط به خرید یا فروش یک دارایی است و همان‌جا همراه با مقدار تغییر یا حذف می‌شود.</value>
+    <value>این تراکنش مربوط به خرید یا فروش یک دارایی مقداری است. برای ویرایش یا حذف آن، رویداد مربوط را در بخش دارایی باز کنید تا مبلغ و مقدار با هم اصلاح شوند.</value>
   </data>
   <data name="Entry_OpenHolding" xml:space="preserve">
     <value>باز کردن دارایی</value>
@@ -3954,10 +3954,10 @@
     <value>خروجی دارایی‌ها</value>
   </data>
   <data name="Export_HoldingsDone" xml:space="preserve">
-    <value>دارایی‌ها با تعداد {0} تغییر خروجی گرفته شد. پول خریدها و فروش‌ها در خروجی تراکنش‌ها است.</value>
+    <value>فایل خروجی دارایی‌ها با {0} رویداد ساخته شد. مبالغ خرید و فروش در فایل خروجی تراکنش‌ها قرار دارند.</value>
   </data>
   <data name="Import_HoldingsPreview" xml:space="preserve">
-    <value>فایل دارایی‌ها: تعداد {0} نوع، {1} تغییر، {2} قیمت؛ {3} ردیف نامعتبر.</value>
+    <value>فایل دارایی‌ها: {0} نوع دارایی، {1} رویداد و {2} قیمت؛ ردیف‌های نامعتبر: {3}.</value>
   </data>
   <data name="Import_HoldingsInvalid" xml:space="preserve">
     <value>فایل دارایی‌ها فقط به‌طور کامل وارد می‌شود. ابتدا ردیف‌های نامعتبر را اصلاح کنید.</value>
@@ -3981,7 +3981,7 @@
     <value>تبدیل به دارایی مقداری</value>
   </data>
   <data name="Account_ConvertPreview" xml:space="preserve">
-    <value>«{0}» به یک دارایی به تعداد ۱ عدد با ارزش {1} (قیمت امروز) تبدیل می‌شود. حساب با تراکنش‌هایش بایگانی می‌شود و قابل بازگردانی است. تا تأیید نکنید چیزی تغییر نمی‌کند.</value>
+    <value>حساب «{0}» به یک دارایی مقداری با تعداد ۱ واحد و ارزش {1} در تاریخ امروز تبدیل می‌شود. حساب و تراکنش‌هایش بایگانی می‌شوند و امکان خروج از بایگانی باقی می‌ماند. تا تأیید نکنید، تغییری اعمال نمی‌شود.</value>
   </data>
   <data name="Account_ConvertConfirm" xml:space="preserve">
     <value>تبدیل</value>
@@ -3993,7 +3993,7 @@
     <value>حساب دارایی ارزش‌گذاری‌شده</value>
   </data>
   <data name="Entry_AssetAccountMessage" xml:space="preserve">
-    <value>این حساب ارزش چیزی را که دارید نگه می‌دارد. تغییر ارزش معمولاً اصلاح موجودی است و طلا یا سکه بهتر است به‌صورت دارایی مقداری ثبت شود. با این حال به‌عنوان هزینه یا درآمد ثبت شود؟</value>
+    <value>این حساب برای ثبت ارزش یک دارایی است. تغییر ارزش معمولاً با «اصلاح مانده» ثبت می‌شود. برای ثبت وزن یا تعداد طلا و سکه، از بخش «دارایی‌های مقداری» استفاده کنید. با این حال، تراکنش به‌عنوان هزینه یا درآمد ثبت شود؟</value>
   </data>
   <data name="Entry_AssetAccountYes" xml:space="preserve">
     <value>ثبت شود</value>
@@ -4029,10 +4029,10 @@
     <value>حساب‌ها</value>
   </data>
   <data name="Report_ScopeInTotals" xml:space="preserve">
-    <value>حساب‌های داخل جمع</value>
+    <value>حساب‌های منظورشده در جمع کل</value>
   </data>
   <data name="Report_ScopeUsable" xml:space="preserve">
-    <value>حساب‌های قابل‌خرج</value>
+    <value>حساب‌های قابل استفاده برای پرداخت</value>
   </data>
   <data name="Report_ScopeOneAccount" xml:space="preserve">
     <value>یک حساب</value>
@@ -4062,16 +4062,16 @@
     <value>وضعیت داده‌ها: {0}</value>
   </data>
   <data name="Report_NoIssues" xml:space="preserve">
-    <value>برای این نما موردی باز نیست</value>
+    <value>برای این گزارش، مورد نیازمند بررسی شناسایی نشده است</value>
   </data>
   <data name="Report_Surplus" xml:space="preserve">
     <value>مازاد</value>
   </data>
   <data name="Report_SurplusDetail" xml:space="preserve">
-    <value>درآمد {0} · خرج {1}</value>
+    <value>درآمد: {0} · هزینهٔ خالص: {1}</value>
   </data>
   <data name="Report_Rate" xml:space="preserve">
-    <value>سهم ماندهٔ درآمد: {0}</value>
+    <value>سهم باقی‌مانده از درآمد: {0}</value>
   </data>
   <data name="Report_OtherCurrencies" xml:space="preserve">
     <value>ارزهای دیگر (جمع نشده): {0}</value>
@@ -4080,19 +4080,19 @@
     <value>تبدیل‌شده: حدود {0}</value>
   </data>
   <data name="Report_SpendingLine" xml:space="preserve">
-    <value>خرج (هزینه‌ها {0} − بازپرداخت‌ها {1})</value>
+    <value>هزینهٔ خالص (هزینه‌ها: {0}، منهای برگشت وجه: {1})</value>
   </data>
   <data name="Report_TransfersBetween" xml:space="preserve">
     <value>انتقال بین حساب‌های شما</value>
   </data>
   <data name="Report_SeparateLines" xml:space="preserve">
-    <value>ردیف‌های جدا، خرج حساب نمی‌شوند</value>
+    <value>جداگانه نمایش داده می‌شوند و هزینه محسوب نمی‌شوند</value>
   </data>
   <data name="Report_IncomeSpending" xml:space="preserve">
-    <value>درآمد و خرج</value>
+    <value>درآمد و هزینهٔ خالص</value>
   </data>
   <data name="Report_SpendingChange" xml:space="preserve">
-    <value>تغییر خرج</value>
+    <value>تغییر هزینهٔ خالص</value>
   </data>
   <data name="Report_Comparison" xml:space="preserve">
     <value>{0} در برابر {1}</value>
@@ -4104,7 +4104,7 @@
     <value>جدید</value>
   </data>
   <data name="Report_NoChanges" xml:space="preserve">
-    <value>هنوز خرجی برای مقایسه نیست.</value>
+    <value>در بازه‌های انتخاب‌شده هزینه‌ای برای مقایسه ثبت نشده است.</value>
   </data>
   <data name="Report_TagShared" xml:space="preserve">
     <value>با چند برچسب: {0}</value>
@@ -4119,13 +4119,13 @@
     <value>حدود تاریخ {1}: {0}</value>
   </data>
   <data name="Report_UsesProtected" xml:space="preserve">
-    <value>برنامه‌های شما حدود {1} مبلغ {0} از پول محافظت‌شده را مصرف می‌کنند.</value>
+    <value>طبق برنامه‌های مالی فعلی، ممکن است حوالی {1} به مبلغ {0} از پول محافظت‌شده نیاز پیدا کنید.</value>
   </data>
   <data name="Report_LowestBalance" xml:space="preserve">
-    <value>کمترین موجودی {0} در {1}.</value>
+    <value>کمترین ماندهٔ پیش‌بینی‌شده: {0} در تاریخ {1}.</value>
   </data>
   <data name="Report_EssentialNotIncluded" xml:space="preserve">
-    <value>خرج روزمره لحاظ نشده</value>
+    <value>هزینه‌های روزمره محاسبه نشده‌اند</value>
   </data>
   <data name="Report_Incomplete" xml:space="preserve">
     <value>ناقص – مبالغ نامعلوم: {0}</value>
@@ -4134,13 +4134,13 @@
     <value>برآورد با برنامه‌های فعلی شما – تضمینی نیست</value>
   </data>
   <data name="Report_NoUsableAccounts" xml:space="preserve">
-    <value>حساب قابل‌خرجی با این ارز نیست.</value>
+    <value>حسابی با این ارز برای پرداخت‌ها انتخاب نشده است.</value>
   </data>
   <data name="Report_UsableToday" xml:space="preserve">
-    <value>موجودی قابل‌خرج، پایان {0}</value>
+    <value>ماندهٔ حساب‌های قابل استفاده برای پرداخت در پایان {0}</value>
   </data>
   <data name="Report_DayToDay" xml:space="preserve">
-    <value>خرج روزمره · {0} × {1}</value>
+    <value>هزینهٔ روزمره · {0} × {1}</value>
   </data>
   <data name="Report_LowestOn" xml:space="preserve">
     <value>کمترین موجودی · {0}</value>
@@ -4149,13 +4149,13 @@
     <value>پول کنارگذاشتهٔ محافظت‌شده</value>
   </data>
   <data name="Report_ComesAfter" xml:space="preserve">
-    <value>{0} در {1} پس از کمترین نقطه می‌آید</value>
+    <value>دریافت {0} در تاریخ {1}، پس از زمانِ کمترین مانده پیش‌بینی شده است</value>
   </data>
   <data name="Report_Next30Title" xml:space="preserve">
     <value>پرداخت‌های ۳۰ روز آینده</value>
   </data>
   <data name="Report_NoCommitments" xml:space="preserve">
-    <value>در ۳۰ روز آینده پرداختی نیست</value>
+    <value>برای ۳۰ روز آینده، پرداخت برنامه‌ریزی‌شده‌ای ثبت نشده است</value>
   </data>
   <data name="Report_UnknownCount" xml:space="preserve">
     <value>نامعلوم: {0}</value>
@@ -4170,7 +4170,7 @@
     <value>سهم ماهانه {0}</value>
   </data>
   <data name="Report_ShareNotSetAside" xml:space="preserve">
-    <value>سهم ماهانه فقط یک سهم است، نه پول کنارگذاشته.</value>
+    <value>معادل ماهانه فقط برای برنامه‌ریزی محاسبه می‌شود؛ به این معنی نیست که پولی کنار گذاشته شده است.</value>
   </data>
   <data name="Report_Debt" xml:space="preserve">
     <value>وام‌ها</value>
@@ -4179,19 +4179,19 @@
     <value>قسط بعدی {0} در {1}</value>
   </data>
   <data name="Report_AddPaymentDay" xml:space="preserve">
-    <value>وامی قسط دارد ولی برنامه ندارد – روز پرداخت را اضافه کنید.</value>
+    <value>برای یکی از وام‌ها مبلغ قسط ثبت شده، اما برنامهٔ مالی ندارد. برنامه‌ای با سررسید پرداخت قسط اضافه کنید.</value>
   </data>
   <data name="Report_DebtRatio" xml:space="preserve">
-    <value>اقساط: {0} از درآمد · بهره {1} · اصل {2}</value>
+    <value>اقساط: {0} از درآمد · سود: {1} · اصل وام: {2}</value>
   </data>
   <data name="Report_OwedToMe" xml:space="preserve">
     <value>طلب‌های من</value>
   </data>
   <data name="Report_NoReceivables" xml:space="preserve">
-    <value>کسی به شما بدهکار نیست.</value>
+    <value>طلب تسویه‌نشده‌ای ثبت نشده است.</value>
   </data>
   <data name="Report_Receivables" xml:space="preserve">
-    <value>باز: {0} · موارد: {1}</value>
+    <value>طلب باقی‌مانده: {0} · تعداد موارد: {1}</value>
   </data>
   <data name="Report_Over90" xml:space="preserve">
     <value>قدیمی‌تر از ۹۰ روز: {0}</value>
@@ -4230,10 +4230,10 @@
     <value>درآمد (میانهٔ ۳ ماه)</value>
   </data>
   <data name="Report_CapSpending" xml:space="preserve">
-    <value>خرج (میانه، بدون قبض‌های غیرماهانه)</value>
+    <value>هزینهٔ خالص (میانه، بدون پرداخت‌های غیرماهانه)</value>
   </data>
   <data name="Report_CapNonMonthly" xml:space="preserve">
-    <value>سهم ماهانهٔ قبض‌های غیرماهانه</value>
+    <value>معادل ماهانهٔ پرداخت‌های غیرماهانه</value>
   </data>
   <data name="Report_CapPrincipal" xml:space="preserve">
     <value>اصل وام</value>
@@ -4242,16 +4242,16 @@
     <value>برنامهٔ هدف‌های دیگر</value>
   </data>
   <data name="Report_EstimateNotPromise" xml:space="preserve">
-    <value>یک برآورد است، نه قول. پذیرفتن پیشنهاد بودجه یا تراکنشی را تغییر نمی‌دهد.</value>
+    <value>این مبلغ برآوردی است و تضمینی برای نتیجه نیست. پذیرش پیشنهاد، بودجه یا تراکنشی را تغییر نمی‌دهد.</value>
   </data>
   <data name="Report_Needs" xml:space="preserve">
     <value>نیاز ماهانه {0}</value>
   </data>
   <data name="Report_Accept" xml:space="preserve">
-    <value>پذیرفتن</value>
+    <value>پذیرش پیشنهاد</value>
   </data>
   <data name="Report_Accepted" xml:space="preserve">
-    <value>برنامهٔ {1}: ماهانه {0} از ماه آینده.</value>
+    <value>برنامهٔ پس‌انداز هدف «{1}»: ماهانه {0} از ماه آینده.</value>
   </data>
   <data name="Report_NotEnoughHistory" xml:space="preserve">
     <value>هنوز سابقهٔ کافی نیست (۳ ماه کامل لازم است)</value>
@@ -4263,13 +4263,13 @@
     <value>معادل {0} ماه</value>
   </data>
   <data name="Report_CoverageDetail" xml:space="preserve">
-    <value>قابل‌خرج {0} · هزینهٔ ضروری ماهانه {1}</value>
+    <value>پول قابل استفاده برای پرداخت: {0} · هزینهٔ ضروری ماهانه: {1}</value>
   </data>
   <data name="Report_OfWhichProtected" xml:space="preserve">
     <value>شامل پول محافظت‌شده {0}</value>
   </data>
   <data name="Report_UsableMoney" xml:space="preserve">
-    <value>پول قابل‌خرج</value>
+    <value>پول قابل استفاده برای پرداخت</value>
   </data>
   <data name="Report_EssentialMonth" xml:space="preserve">
     <value>هزینهٔ ضروری ماهانه</value>
@@ -4278,7 +4278,7 @@
     <value>ارزش خالص دارایی</value>
   </data>
   <data name="Report_NetWorthIn" xml:space="preserve">
-    <value>ارزش خالص به {0}</value>
+    <value>ارزش خالص دارایی به «{0}»</value>
   </data>
   <data name="Report_WealthMoney" xml:space="preserve">
     <value>پول</value>
@@ -4314,7 +4314,7 @@
     <value>آخرین پشتیبان در {0}</value>
   </data>
   <data name="Issue_NoBackup" xml:space="preserve">
-    <value>هنوز پشتیبانی گرفته نشده</value>
+    <value>هنوز نسخهٔ پشتیبان تهیه نشده است</value>
   </data>
   <data name="Issue_Unreviewed" xml:space="preserve">
     <value>بررسی‌نشده: {0}</value>
@@ -4332,10 +4332,10 @@
     <value>دارایی‌های بدون قیمت: {0}</value>
   </data>
   <data name="Issue_OpeningUnknown" xml:space="preserve">
-    <value>موجودی اولیهٔ نامعلوم: {0}</value>
+    <value>موجودی آغازین نامعلوم: {0}</value>
   </data>
   <data name="Issue_NotReconciled" xml:space="preserve">
-    <value>بیش از ۶۰ روز با بانک مقایسه نشده: {0}</value>
+    <value>حساب‌های بدون تطبیق مانده در بیش از ۶۰ روز: {0}</value>
   </data>
   <data name="Issue_WithoutCategory" xml:space="preserve">
     <value>بدون دسته: {0}</value>
@@ -4344,10 +4344,10 @@
     <value>تکراری‌های احتمالی: {0}</value>
   </data>
   <data name="Issue_Aggregated" xml:space="preserve">
-    <value>ورودی‌های تجمیعی (زمان نامعلوم): {0}</value>
+    <value>تراکنش‌های تجمیعی (تاریخ دقیق خریدها نامعلوم): {0}</value>
   </data>
   <data name="Issue_BeforeOpening" xml:space="preserve">
-    <value>پیش از تاریخ افتتاح: {0}</value>
+    <value>تراکنش‌های پیش از تاریخ موجودی آغازین: {0}</value>
   </data>
   <data name="Issue_BackupOld_Action" xml:space="preserve">
     <value>پشتیبان‌گیری</value>
@@ -4392,10 +4392,10 @@
     <value>به زبان ساده</value>
   </data>
   <data name="Kpi_Included" xml:space="preserve">
-    <value>شامل</value>
+    <value>موارد محاسبه‌شده</value>
   </data>
   <data name="Kpi_Excluded" xml:space="preserve">
-    <value>شامل نمی‌شود</value>
+    <value>موارد خارج از محاسبه</value>
   </data>
   <data name="Kpi_ShowEntries" xml:space="preserve">
     <value>نمایش تراکنش‌ها</value>
@@ -4407,13 +4407,13 @@
     <value>از بودجهٔ این دوره چقدر مانده است؟</value>
   </data>
   <data name="Kpi_K01_Definition" xml:space="preserve">
-    <value>سقف به‌علاوهٔ مقدار منتقل‌شده، منهای هزینه‌ها پس از کسر بازپرداخت‌ها.</value>
+    <value>سقف بودجه با اعمال ماندهٔ منتقل‌شده از دورهٔ قبل، منهای هزینهٔ خالص. هزینهٔ خالص برابر هزینه‌ها پس از کسر برگشت وجه است.</value>
   </data>
   <data name="Kpi_K01_Included" xml:space="preserve">
-    <value>هزینه‌ها و بازپرداخت‌های حساب‌ها و دسته‌های بودجه|زیردسته‌ها همراه دستهٔ اصلی</value>
+    <value>هزینه‌ها و برگشت وجهِ حساب‌ها و دسته‌های این بودجه|زیردسته‌ها همراه با دستهٔ اصلی</value>
   </data>
   <data name="Kpi_K01_Excluded" xml:space="preserve">
-    <value>انتقال‌ها و پرداخت کارت|اصل وام|خرید و فروش دارایی|اصلاح موجودی و موجودی اولیه|درآمد</value>
+    <value>انتقال‌ها و بازپرداخت بدهی کارت اعتباری|اصل وام|خرید و فروش دارایی‌های مقداری|اصلاح مانده و موجودی آغازین|درآمد</value>
   </data>
   <data name="Kpi_K02_Title" xml:space="preserve">
     <value>کمترین موجودی و حاشیهٔ نقدینگی</value>
@@ -4422,43 +4422,43 @@
     <value>آیا پیش از درآمد بعدی کم می‌آورم؟</value>
   </data>
   <data name="Kpi_K02_Definition" xml:space="preserve">
-    <value>موجودی قابل‌خرج امروز، به‌علاوهٔ دریافت‌ها و منهای پرداخت‌های برنامه‌ریزی‌شدهٔ هر روز، منهای خرج روزمره اگر برآورد آن را تعیین کرده باشید. کمترین نقطه منهای پول محافظت‌شده حاشیهٔ نقدینگی است – یک برآورد، هرگز «قابل خرج امن» نیست.</value>
+    <value>محاسبه از ماندهٔ امروزِ حساب‌های قابل استفاده برای پرداخت شروع می‌شود و اثر دریافت‌ها و پرداخت‌های برنامه‌ریزی‌شده و برآورد اختیاریِ هزینهٔ روزمره را در هر روز لحاظ می‌کند. حاشیهٔ نقدینگی، کمترین ماندهٔ پیش‌بینی‌شده پس از کسر پول محافظت‌شده است. این عدد برآورد است، نه تضمین امکان خرج‌کردن آن.</value>
   </data>
   <data name="Kpi_K02_Included" xml:space="preserve">
-    <value>حساب‌های قابل‌استفاده برای پرداخت|تراکنش‌های ثبت‌شده برای روزهای بعد|پرداخت‌های باز برنامه، معوق‌ها در امروز|برآورد خرج روزمره، اگر تعیین شده باشد|پول کنارگذاشتهٔ محافظت‌شده</value>
+    <value>حساب‌های قابل استفاده برای پرداخت|تراکنش‌های ثبت‌شده با تاریخ آینده|پرداخت‌های تسویه‌نشدهٔ برنامه‌های مالی؛ موارد معوق با فرض پرداخت امروز|برآورد هزینهٔ روزمره، در صورت تعیین آن|مبالغ کنارگذاشته‌شده و محافظت‌شده</value>
   </data>
   <data name="Kpi_K02_Excluded" xml:space="preserve">
-    <value>بودجه‌ها و سهم‌های ماهانه|دارایی‌ها، بدهی‌ها و طلب‌ها|سقف اعتبار|خریدهای کارتی – فقط پرداخت کارت حساب می‌شود</value>
+    <value>بودجه‌ها و معادل‌های ماهانهٔ هزینه‌ها|دارایی‌های مقداری، بدهی‌ها و طلب‌ها|سقف اعتبار|خرید با کارت اعتباری؛ در این محاسبه، بازپرداخت بدهی کارت از حساب قابل استفاده برای پرداخت لحاظ می‌شود</value>
   </data>
   <data name="Kpi_K03_Title" xml:space="preserve">
     <value>پیشرفت هدف‌ها</value>
   </data>
   <data name="Kpi_K03_Question" xml:space="preserve">
-    <value>هدف‌هایم کجا هستند؟</value>
+    <value>چقدر به هدف‌هایم نزدیک شده‌ام؟</value>
   </data>
   <data name="Kpi_K03_Definition" xml:space="preserve">
-    <value>مقدار رسیده تقسیم بر هدف؛ باقیمانده آن چیزی است که هنوز لازم است.</value>
+    <value>پیشرفت از نسبت مقدار تأمین‌شده به مقدار هدف محاسبه می‌شود. باقی‌مانده، مقدار لازم برای رسیدن به هدف است.</value>
   </data>
   <data name="Kpi_K03_Included" xml:space="preserve">
-    <value>هدف موجودی: موجودی حساب آن|پول کنارگذاشته: مقدار کنارگذاشته و پوشش‌داده‌شده</value>
+    <value>هدف موجودی حساب: ماندهٔ ثبت‌شدهٔ حساب|هدف پول کنارگذاشته‌شده: مبالغ اختصاص‌یافته با پشتوانهٔ موجودی|هدف مقدار دارایی: وزن یا تعداد ثبت‌شدهٔ دارایی</value>
   </data>
   <data name="Kpi_K03_Excluded" xml:space="preserve">
-    <value>پول منتقل‌شده از حساب‌های دیگر به‌عنوان درآمد|تغییر قیمت‌ها</value>
+    <value>انتقال بین حساب‌ها، درآمد جدید محسوب نمی‌شود|تغییر قیمت، مقدار هدف دارایی را افزایش نمی‌دهد</value>
   </data>
   <data name="Kpi_K04_Title" xml:space="preserve">
     <value>پرداخت‌های ۳۰ روز آینده</value>
   </data>
   <data name="Kpi_K04_Question" xml:space="preserve">
-    <value>چه پرداخت‌هایی در راه است و چقدر است؟</value>
+    <value>چه پرداخت‌هایی در پیش دارم و مبلغ آن‌ها چقدر است؟</value>
   </data>
   <data name="Kpi_K04_Definition" xml:space="preserve">
-    <value>آنچه از پرداخت‌های باز برنامه در ۳۰ روز آینده هنوز مانده، همراه معوق‌ها. مبالغ معلوم، برآوردی (≈) و نامعلوم جدا می‌مانند.</value>
+    <value>مبلغ باقی‌ماندهٔ پرداخت‌های برنامه‌ریزی‌شده با سررسید در ۳۰ روز آینده، همراه با موارد معوق نمایش داده می‌شود. مبالغ مشخص، تخمینی و نامعلوم جداگانه گزارش می‌شوند.</value>
   </data>
   <data name="Kpi_K04_Included" xml:space="preserve">
-    <value>برنامه‌های هزینه|انتقال به کارت، وام یا حساب‌های کنارگذاشته|فقط بخش باقیماندهٔ پرداخت نیمه‌پرداخت‌شده</value>
+    <value>برنامه‌های مالیِ هزینه|انتقال به حساب کارت اعتباری، وام یا حساب‌های خارج از پرداخت‌های روزمره|فقط ماندهٔ پرداخت‌هایی که بخشی از آن‌ها ثبت شده است</value>
   </data>
   <data name="Kpi_K04_Excluded" xml:space="preserve">
-    <value>پرداخت‌های تسویه‌شده و ردشده|انتقال بین حساب‌های قابل‌خرج|مبالغ نامعلوم شمرده می‌شوند، هرگز صفر جمع نمی‌شوند</value>
+    <value>نوبت‌های تسویه‌شده و صرف‌نظرشده|انتقال بین حساب‌های قابل استفاده برای پرداخت|مبالغ نامعلوم؛ تعداد آن‌ها جداگانه گزارش می‌شود و مبلغشان صفر فرض نمی‌شود</value>
   </data>
   <data name="Kpi_K05_Title" xml:space="preserve">
     <value>مازاد</value>
@@ -4467,22 +4467,22 @@
     <value>آیا بیشتر از خرجم درآمد داشتم؟</value>
   </data>
   <data name="Kpi_K05_Definition" xml:space="preserve">
-    <value>درآمدی که کسب کردید منهای آنچه در این دوره خرج مصرف کردید.</value>
+    <value>درآمد ثبت‌شده پس از کسر درآمد پس‌داده‌شده، منهای هزینه‌ها پس از کسر برگشت وجه و مبالغ جبران‌شده توسط دیگران، در دورهٔ انتخابی.</value>
   </data>
   <data name="Kpi_K05_Included" xml:space="preserve">
-    <value>درآمد حساب‌های دامنه، منهای درآمد برگشتی|هزینه‌ها پس از کسر بازپرداخت‌ها|بهره و کارمزد، یک بار به‌عنوان هزینه</value>
+    <value>درآمد حساب‌های انتخاب‌شده، پس از کسر درآمد پس‌داده‌شده|هزینه‌ها پس از کسر برگشت وجه و مبالغ جبران‌شده|سود پرداختی و کارمزد، هر کدام فقط یک‌بار به‌عنوان هزینه</value>
   </data>
   <data name="Kpi_K05_Excluded" xml:space="preserve">
-    <value>انتقال بین حساب‌های شما|پرداخت کارت و اصل وام|خرید و فروش دارایی|اصلاح موجودی و موجودی اولیه|تغییر قیمت و نرخ</value>
+    <value>انتقال بین حساب‌های شما|بازپرداخت بدهی کارت اعتباری و اصل وام|خرید و فروش دارایی‌های مقداری|اصلاح مانده و موجودی آغازین|تغییر قیمت و نرخ ارز</value>
   </data>
   <data name="Kpi_K06_Title" xml:space="preserve">
-    <value>سهم ماندهٔ درآمد</value>
+    <value>سهم باقی‌مانده از درآمد</value>
   </data>
   <data name="Kpi_K06_Question" xml:space="preserve">
     <value>چه سهمی از درآمدم ماند؟</value>
   </data>
   <data name="Kpi_K06_Definition" xml:space="preserve">
-    <value>مازاد تقسیم بر درآمد شما. بدون درآمد در دسترس نیست – هرگز ۰٪ نیست.</value>
+    <value>مازاد دوره بر درآمد تقسیم و به‌صورت درصد نمایش داده می‌شود. اگر درآمدی برای محاسبه وجود نداشته باشد، نتیجه «در دسترس نیست» است، نه صفر درصد.</value>
   </data>
   <data name="Kpi_K06_Included" xml:space="preserve">
     <value>همانند مازاد</value>
@@ -4497,13 +4497,13 @@
     <value>با پول قابل‌خرجم چند ماه هزینه‌های ضروری پوشش داده می‌شود؟</value>
   </data>
   <data name="Kpi_K07_Definition" xml:space="preserve">
-    <value>پول قابل‌خرج تقسیم بر میانهٔ خرج ضروری سه ماه کامل اخیر، به‌علاوهٔ سهم ماهانهٔ قبض‌های ضروری غیرماهانه.</value>
+    <value>ابتدا میانهٔ هزینه‌های ضروریِ سه ماه کامل گذشته با معادل ماهانهٔ پرداخت‌های ضروریِ غیرماهانه جمع می‌شود. سپس پول قابل استفاده برای پرداخت بر این برآوردِ هزینهٔ ضروری ماهانه تقسیم می‌شود تا تعداد ماه‌های قابل پوشش به دست آید.</value>
   </data>
   <data name="Kpi_K07_Included" xml:space="preserve">
     <value>حساب‌های قابل‌استفاده برای پرداخت|دسته‌های ضروری (مسکن، خوراک، انرژی، تلفن، حمل‌ونقل، سلامت، بیمه)</value>
   </data>
   <data name="Kpi_K07_Excluded" xml:space="preserve">
-    <value>دارایی‌ها، بدهی‌ها و طلب‌ها|سقف اعتبار|پول محافظت‌شده نام برده می‌شود، کم نمی‌شود</value>
+    <value>دارایی‌های مقداری، بدهی‌ها و طلب‌ها|سقف اعتبار|پول محافظت‌شده جداگانه مشخص می‌شود، اما از صورت این محاسبه کسر نمی‌شود</value>
   </data>
   <data name="Kpi_K08_Title" xml:space="preserve">
     <value>پرداخت‌های منظم در یک سال</value>
@@ -4512,13 +4512,13 @@
     <value>تعهدات منظم من در یک سال چقدر هزینه دارد؟</value>
   </data>
   <data name="Kpi_K08_Definition" xml:space="preserve">
-    <value>مبالغ مورد انتظار برنامه‌های هزینهٔ فعال در ۱۲ ماه آینده: ثابت، غیرماهانه و برآوردی. سهم ماهانه پول کنارگذاشته نیست.</value>
+    <value>مبالغ برنامه‌های هزینهٔ فعال در ۱۲ ماه آینده، شامل پرداخت‌های ثابت، غیرماهانه و تخمینی. معادل ماهانه فقط برای برنامه‌ریزی است و به معنی کنارگذاشتن پول نیست.</value>
   </data>
   <data name="Kpi_K08_Included" xml:space="preserve">
     <value>برنامه‌های هزینه و قراردادهای فعال</value>
   </data>
   <data name="Kpi_K08_Excluded" xml:space="preserve">
-    <value>مبالغ نامعلوم (جداگانه شمرده می‌شوند)|برنامه‌های پایان‌یافته و پرداخت‌های ردشده|برنامه‌های درآمد</value>
+    <value>مبالغ نامعلوم؛ تعدادشان جداگانه گزارش می‌شود|برنامه‌های مالی پایان‌یافته و نوبت‌های صرف‌نظرشده|برنامه‌های دریافت درآمد</value>
   </data>
   <data name="Kpi_K09_Title" xml:space="preserve">
     <value>اقساط وام</value>
@@ -4527,40 +4527,40 @@
     <value>چه بخشی از درآمدم صرف قسط وام می‌شود؟</value>
   </data>
   <data name="Kpi_K09_Definition" xml:space="preserve">
-    <value>اقساط برنامه‌ریزی‌شدهٔ ماه تقسیم بر درآمد. تقسیم به بهره و اصل برآوردی از نرخ وام است.</value>
+    <value>مجموع اقساط برنامه‌ریزی‌شدهٔ ماه بر درآمد تقسیم می‌شود. سهم اصل وام و سودِ اقساط بر اساس نرخ وام برآورد می‌شود.</value>
   </data>
   <data name="Kpi_K09_Included" xml:space="preserve">
     <value>وام‌هایی که برنامهٔ پرداخت قسط دارند</value>
   </data>
   <data name="Kpi_K09_Excluded" xml:space="preserve">
-    <value>خریدهای کارتی|اصل وام هرگز خرج نیست</value>
+    <value>خرید با کارت اعتباری|بازپرداخت اصل وام، هزینه محسوب نمی‌شود</value>
   </data>
   <data name="Kpi_K10_Title" xml:space="preserve">
     <value>ارزش خالص دارایی</value>
   </data>
   <data name="Kpi_K10_Question" xml:space="preserve">
-    <value>امروز ارزش خالص من چقدر است و از چه تشکیل شده؟</value>
+    <value>ارزش خالص داراییِ ثبت‌شدهٔ من چقدر است و چه چیزهایی را شامل می‌شود؟</value>
   </data>
   <data name="Kpi_K10_Definition" xml:space="preserve">
     <value>برای هر ارز: پول + طلب‌ها + دارایی‌های ارزش‌گذاری‌شده + دارایی‌های مقداری با آخرین قیمت − بدهی‌ها. ارزها بدون نرخ هرگز جمع نمی‌شوند.</value>
   </data>
   <data name="Kpi_K10_Included" xml:space="preserve">
-    <value>همهٔ حساب‌های بایگانی‌نشده|بازپرداخت‌های باز و پول قرض‌داده|دارایی‌ها با آخرین قیمت</value>
+    <value>حساب‌هایی با تاریخ موجودی آغازین تا روز انتخابی، از جمله حساب‌های بایگانی‌شده با ماندهٔ غیرصفر|هزینه‌های در انتظار جبران و قرض‌های داده‌شده|دارایی‌های مقداریِ بایگانی‌نشده با قیمت ثبت‌شده در روز انتخابی یا پیش از آن</value>
   </data>
   <data name="Kpi_K10_Excluded" xml:space="preserve">
-    <value>سقف اعتبار|پول کنارگذاشته (داخل پول شماست)|بودجه‌ها|دارایی‌های بدون قیمت – فهرست می‌شوند</value>
+    <value>سقف اعتبار|مبالغ کنارگذاشته‌شده به‌عنوان دارایی اضافه؛ این مبالغ از قبل در ماندهٔ حساب‌ها هستند|بودجه‌ها|دارایی‌های مقداری بدون قیمت؛ جداگانه فهرست می‌شوند</value>
   </data>
   <data name="Kpi_K11_Title" xml:space="preserve">
-    <value>تغییر خرج</value>
+    <value>تغییر هزینهٔ خالص</value>
   </data>
   <data name="Kpi_K11_Question" xml:space="preserve">
-    <value>خرجم کجا تغییر کرد؟</value>
+    <value>هزینه‌های کدام دسته‌ها تغییر کرده‌اند؟</value>
   </data>
   <data name="Kpi_K11_Definition" xml:space="preserve">
-    <value>خرج هر دسته اکنون در برابر دورهٔ قبل. تا دوره تمام نشده، همان تعداد روز مقایسه می‌شود.</value>
+    <value>هزینهٔ خالص هر دسته در دورهٔ انتخابی با دورهٔ قبل مقایسه می‌شود. اگر دوره هنوز کامل نشده باشد، در هر دو دوره تعداد روزهای یکسان بررسی می‌شود.</value>
   </data>
   <data name="Kpi_K11_Included" xml:space="preserve">
-    <value>هزینه‌ها پس از کسر بازپرداخت‌ها</value>
+    <value>هزینه‌ها پس از کسر برگشت وجه</value>
   </data>
   <data name="Kpi_K11_Excluded" xml:space="preserve">
     <value>همانند مازاد|«تورم شخصی» نیست</value>
@@ -4572,13 +4572,13 @@
     <value>چه کسی چه مبلغی به من بدهکار است و از کی؟</value>
   </data>
   <data name="Kpi_K12_Definition" xml:space="preserve">
-    <value>بازپرداخت‌های باز و موجودی پول قرض‌داده، با مدت و سررسید اختیاری.</value>
+    <value>مبالغی که بابت هزینه‌ها باید از دیگران پس بگیرید و ماندهٔ قرض‌های داده‌شده، همراه با مدت باقی‌ماندن طلب و سررسید اختیاری.</value>
   </data>
   <data name="Kpi_K12_Included" xml:space="preserve">
-    <value>هزینه‌هایی که دیگران برمی‌گردانند، منهای آنچه برگشته|حساب‌های پول قرض‌داده</value>
+    <value>هزینه‌های قابل دریافت از دیگران، پس از کسر مبالغ دریافت‌شده|ماندهٔ حساب‌های قرض داده‌شده</value>
   </data>
   <data name="Kpi_K12_Excluded" xml:space="preserve">
-    <value>مبالغ برگشته|تا دریافت نشود پول قابل‌خرج نیست</value>
+    <value>مبالغی که پس گرفته‌اید|طلب تا پیش از دریافت، پول در دسترس برای پرداخت نیست</value>
   </data>
   <data name="Kpi_K13_Title" xml:space="preserve">
     <value>ترکیب دارایی</value>
@@ -4587,10 +4587,10 @@
     <value>ثروتم در چه ارزها و دارایی‌هایی است؟</value>
   </data>
   <data name="Kpi_K13_Definition" xml:space="preserve">
-    <value>سهم هر ارز و دارایی به ارز ارزش‌گذاری، از بخشی که ارزش معلوم دارد.</value>
+    <value>سهم هر ارز و دارایی مقداری از مجموعِ بخش‌های قابل ارزش‌گذاری، پس از تبدیل به ارز ارزش‌گذاری نمایش داده می‌شود.</value>
   </data>
   <data name="Kpi_K13_Included" xml:space="preserve">
-    <value>موجودی‌های مثبت، طلب‌ها، دارایی‌های ارزش‌گذاری‌شده</value>
+    <value>مانده‌های مثبت، طلب‌ها، حساب‌های داراییِ ارزش‌گذاری‌شده و دارایی‌های مقداریِ دارای قیمت</value>
   </data>
   <data name="Kpi_K13_Excluded" xml:space="preserve">
     <value>بدهی‌ها (جدا نشان داده می‌شوند)|ارزهای بدون نرخ و دارایی‌های بدون قیمت – فهرست می‌شوند</value>
@@ -4602,10 +4602,10 @@
     <value>آیا می‌توانم به این عدد تکیه کنم؟</value>
   </data>
   <data name="Kpi_K14_Definition" xml:space="preserve">
-    <value>فهرستی از آنچه ممکن است عددی را کم‌اعتبار کند، هر کدام با صفحهٔ رفع آن – هرگز یک امتیاز نیست.</value>
+    <value>مواردی از داده‌ها را نشان می‌دهد که ممکن است بر این عدد اثر بگذارند و شما را به صفحهٔ بررسی هر مورد هدایت می‌کند. این فهرست به داده‌ها امتیاز دقت نمی‌دهد.</value>
   </data>
   <data name="Kpi_K14_Included" xml:space="preserve">
-    <value>تراکنش‌های بررسی‌نشده، بدون دسته، مبالغ نامعلوم|نرخ‌های ناموجود یا قدیمی، دارایی‌های بدون قیمت|موجودی اولیهٔ نامعلوم، حساب‌های ۶۰ روز مقایسه‌نشده|پشتیبان قدیمی‌تر از ۳۰ روز، تکراری‌های احتمالی</value>
+    <value>تراکنش‌های بررسی‌نشده یا بدون دسته و مبالغ نامعلوم|نرخ‌های ثبت‌نشده یا قدیمی و دارایی‌های مقداری بدون قیمت|موجودی آغازین نامعلوم و حساب‌های بدون تطبیق مانده در ۶۰ روز|نسخهٔ پشتیبان قدیمی‌تر از ۳۰ روز و موارد احتمالاً تکراری</value>
   </data>
   <data name="Kpi_K14_Excluded" xml:space="preserve">
     <value>هر نوع امتیاز دقت</value>
@@ -4614,19 +4614,19 @@
     <value>ظرفیت پس‌انداز برای هدف‌ها</value>
   </data>
   <data name="Kpi_Capacity_Question" xml:space="preserve">
-    <value>ماهانه چقدر می‌تواند به هدف‌ها برسد؟</value>
+    <value>برآورد می‌شود هر ماه چقدر بتوانم برای هدف‌ها کنار بگذارم؟</value>
   </data>
   <data name="Kpi_Capacity_Definition" xml:space="preserve">
-    <value>میانهٔ درآمد سه ماه کامل اخیر منهای میانهٔ خرج، سهم ماهانهٔ قبض‌های غیرماهانه، اصل وام و برنامهٔ هدف‌های دیگر. سقفی برای پیشنهاد، هرگز تخصیص نیست.</value>
+    <value>از میانهٔ درآمد سه ماه کامل گذشته، میانهٔ هزینهٔ خالص، معادل ماهانهٔ پرداخت‌های غیرماهانه، بازپرداخت اصل وام و برنامهٔ پس‌انداز هدف‌های دیگر کم می‌شود. نتیجه فقط سقفی برای پیشنهاد پس‌انداز است؛ خودکار پولی به هدف اختصاص نمی‌دهد.</value>
   </data>
   <data name="Kpi_Capacity_Included" xml:space="preserve">
-    <value>حساب‌های قابل‌خرج این ارز|برنامه‌های پذیرفته‌شدهٔ هدف‌های دیگر</value>
+    <value>حساب‌های قابل استفاده برای پرداخت با ارز انتخابی|برنامه‌های پس‌انداز پذیرفته‌شده برای هدف‌های دیگر</value>
   </data>
   <data name="Kpi_Capacity_Excluded" xml:space="preserve">
-    <value>تراکنش‌های پرداخت قبض‌های غیرماهانه (به جایشان سهم ماهانه)|انتقال‌ها و دارایی‌ها</value>
+    <value>تراکنش‌های پرداخت هزینه‌های غیرماهانه؛ معادل ماهانهٔ آن‌ها به‌جای مبلغ پرداختی استفاده می‌شود|انتقال‌ها و دارایی‌های مقداری</value>
   </data>
   <data name="Home_HeadroomProtected" xml:space="preserve">
-    <value>برنامه‌های شما حدود {0} پول محافظت‌شده را مصرف می‌کنند</value>
+    <value>طبق برنامه‌های مالی، ممکن است حوالی {0} به پول محافظت‌شده نیاز داشته باشید</value>
   </data>
   <data name="Home_Review" xml:space="preserve">
     <value>مرور {0}</value>
@@ -4659,13 +4659,13 @@
     <value>بررسی تراکنش‌ها</value>
   </data>
   <data name="Review_Plans" xml:space="preserve">
-    <value>تسویه یا رد پرداخت‌های سررسیده</value>
+    <value>ثبت یا صرف‌نظر از نوبت‌های سررسیدشده</value>
   </data>
   <data name="Review_Reconcile" xml:space="preserve">
-    <value>مقایسهٔ موجودی‌ها با بانک</value>
+    <value>تطبیق ماندهٔ حساب‌ها</value>
   </data>
   <data name="Review_Goals" xml:space="preserve">
-    <value>نگاه به هدف‌ها</value>
+    <value>بررسی هدف‌ها</value>
   </data>
   <data name="Review_Backup" xml:space="preserve">
     <value>پشتیبان‌گیری</value>
@@ -4674,7 +4674,7 @@
     <value>بررسی‌نشده: {0}</value>
   </data>
   <data name="Review_PlansDetail" xml:space="preserve">
-    <value>باز تا پایان ماه: {0}</value>
+    <value>سررسیدهای ثبت‌نشده تا پایان ماه: {0}</value>
   </data>
   <data name="Review_ReconcileDetail" xml:space="preserve">
     <value>مقایسه‌نشده در ۶۰ روز: {0}</value>
@@ -4686,49 +4686,49 @@
     <value>آخرین پشتیبان: {0}</value>
   </data>
   <data name="Account_LastReconciled" xml:space="preserve">
-    <value>آخرین مقایسه با بانک: {0}</value>
+    <value>آخرین تطبیق مانده: {0}</value>
   </data>
   <data name="Account_NeverReconciled" xml:space="preserve">
-    <value>هنوز با بانک مقایسه نشده</value>
+    <value>ماندهٔ حساب هنوز تطبیق داده نشده است</value>
   </data>
   <data name="Account_HasDueDate" xml:space="preserve">
-    <value>تا تاریخ مشخصی برگردانده شود</value>
+    <value>سررسید بازپرداخت مشخص است</value>
   </data>
   <data name="Entry_ReimbursementDue" xml:space="preserve">
-    <value>تا تاریخ مشخصی برگشت داده شود</value>
+    <value>تاریخ مورد انتظار دریافت مشخص است</value>
   </data>
   <data name="Category_Essential" xml:space="preserve">
-    <value>خرج ضروری</value>
+    <value>هزینهٔ ضروری</value>
   </data>
   <data name="Help_Essential_Title" xml:space="preserve">
-    <value>خرج ضروری</value>
+    <value>هزینهٔ ضروری</value>
   </data>
   <data name="Help_Essential_Text" xml:space="preserve">
-    <value>هزینه‌هایی که به‌آسانی نمی‌توان کنار گذاشت، مثل اجاره، خوراک، انرژی یا بیمه. نشان می‌دهند پول قابل‌خرج شما چقدر دوام می‌آورد و به پیشنهاد برآورد خرج روزمره کمک می‌کنند.</value>
+    <value>هزینه‌هایی که معمولاً نمی‌توان از آن‌ها صرف‌نظر کرد، مثل اجاره، خوراک، انرژی و بیمه. این دسته‌ها برای برآورد مدت پوشش هزینه‌های ضروری با پول موجود و پیشنهاد هزینهٔ روزمره استفاده می‌شوند.</value>
   </data>
   <data name="Help_Essential_Example" xml:space="preserve">
-    <value>قابل‌خرج ۶٬۰۰۰ EUR، خرج ضروری ماه‌ها ۱٬۴۵۰ / ۱٬۵۰۰ / ۱٬۶۲۰ → معادل ۴٫۰ ماه.</value>
+    <value>اگر پول در دسترس ۶٬۰۰۰ یورو و هزینهٔ ضروری سه ماه ۱٬۴۵۰، ۱٬۵۰۰ و ۱٬۶۲۰ یورو باشد، میانه ۱٬۵۰۰ یورو است. بدون پرداخت ضروریِ غیرماهانهٔ اضافی، این پول هزینهٔ حدود ۴ ماه را پوشش می‌دهد.</value>
   </data>
   <data name="Settings_Essential" xml:space="preserve">
-    <value>خرج روزمره</value>
+    <value>هزینهٔ روزمره</value>
   </data>
   <data name="Settings_EssentialPlaceholder" xml:space="preserve">
-    <value>خالی = لحاظ نمی‌شود</value>
+    <value>خالی بگذارید تا محاسبه نشود</value>
   </data>
   <data name="Settings_EssentialCurrency" xml:space="preserve">
-    <value>به {0}؛ برای حاشیهٔ نقدینگی برنامه‌ها</value>
+    <value>مبلغ به «{0}»؛ برای محاسبهٔ حاشیهٔ نقدینگی</value>
   </data>
   <data name="Settings_EssentialSuggestion" xml:space="preserve">
     <value>سه ماه اخیر: روزانه {0}</value>
   </data>
   <data name="Settings_UseSuggestion" xml:space="preserve">
-    <value>استفاده</value>
+    <value>استفاده از پیشنهاد</value>
   </data>
   <data name="Settings_EssentialSaved" xml:space="preserve">
-    <value>ذخیره شد. حاشیهٔ نقدینگی اکنون خرج روزمره را لحاظ می‌کند.</value>
+    <value>ذخیره شد. برآورد هزینهٔ روزمره در محاسبهٔ حاشیهٔ نقدینگی لحاظ می‌شود.</value>
   </data>
   <data name="Settings_EssentialCleared" xml:space="preserve">
-    <value>حذف شد. خرج روزمره لحاظ نمی‌شود.</value>
+    <value>برآورد حذف شد. هزینهٔ روزمره دیگر در محاسبهٔ حاشیهٔ نقدینگی لحاظ نمی‌شود.</value>
   </data>
   <data name="Settings_PerDay" xml:space="preserve">
     <value>روز</value>
@@ -4740,16 +4740,16 @@
     <value>ماه</value>
   </data>
   <data name="Help_EssentialEstimate_Title" xml:space="preserve">
-    <value>خرج روزمره</value>
+    <value>هزینهٔ روزمره</value>
   </data>
   <data name="Help_EssentialEstimate_Text" xml:space="preserve">
-    <value>پیش‌بینی فقط برنامه‌های شما را می‌شناسد. خرید روزانه و خرج‌های روزمره برنامه‌ریزی نشده‌اند، پس حاشیهٔ نقدینگی آن‌ها را لحاظ نمی‌کند مگر این‌که اینجا برآوردی تعیین کنید. زنانس فقط مقداری از سه ماه اخیر پیشنهاد می‌دهد؛ تصمیم با شماست.</value>
+    <value>هزینه‌های روزمره‌ای که در برنامه‌های مالی ثبت نکرده‌اید، در حاشیهٔ نقدینگی محاسبه نمی‌شوند؛ مگر اینکه اینجا برای آن‌ها برآورد تعیین کنید. پیشنهاد «Zanance» بر اساس داده‌های سه ماه گذشته است و انتخاب مبلغ با شماست.</value>
   </data>
   <data name="Help_EssentialEstimate_Example" xml:space="preserve">
     <value>روزانه ۲۰ EUR: تا کمترین نقطه ۲۴ روز است، پس ۴۸۰ EUR کم می‌شود.</value>
   </data>
   <data name="Goal_Coverage" xml:space="preserve">
-    <value>پوشش هزینه‌های ضروری با پول قابل‌خرج: {0}</value>
+    <value>مدت پوشش هزینه‌های ضروری با پول در دسترس: {0}</value>
   </data>
   <data name="Entry_Aggregated" xml:space="preserve">
     <value>جمع چند خرید</value>
@@ -4770,19 +4770,19 @@
     <value>نگه‌داشتن هر دو (دو بار شمرده می‌شود)</value>
   </data>
   <data name="Aggregate_Overlap" xml:space="preserve">
-    <value>«{0}» ({1}) این بازه را از قبل جمع زده است. ورودی‌های جزئی: {2}. با پیوند و جایگزینی، مبلغ {3} در ورودی تجمیعی می‌ماند؛ با بازگردانی به حالت قبل برمی‌گردد.</value>
+    <value>تراکنش تجمیعی «{0}» به مبلغ {1} این بازه را پوشش می‌دهد. مجموع تراکنش‌های جزئی: {2}. با «پیوند و جایگزینی»، ماندهٔ تراکنش تجمیعی {3} می‌شود. با «واگرد» می‌توانید تغییر را برگردانید.</value>
   </data>
   <data name="Help_Aggregated_Title" xml:space="preserve">
-    <value>ورودی‌های تجمیعی</value>
+    <value>تراکنش‌های تجمیعی</value>
   </data>
   <data name="Help_Aggregated_Text" xml:space="preserve">
-    <value>چند خرید یک بازه را به‌صورت یک مبلغ ثبت کنید، مثلاً همهٔ خرید خوراک شهریور. مانند هر تراکنش شمرده می‌شود؛ عددهایی که به روز نیاز دارند زمان آن را نامعلوم می‌دانند. اگر بعداً ورودی‌های جزئی همان حساب و دسته را در آن بازه اضافه کنید، زنانس می‌پرسد که آیا در ورودی تجمیعی جایگزین شوند.</value>
+    <value>می‌توانید مجموع چند خرید در یک بازه را با یک تراکنش ثبت کنید. مبلغ در محاسبات لحاظ می‌شود، اما تاریخ دقیق خریدها برای شاخص‌های روزانه نامعلوم است. اگر بعداً جزئیات خریدهای همان حساب و دسته را در همان بازه اضافه کنید، «Zanance» دربارهٔ مرتبط کردن آن‌ها و کاهش مبلغ تجمیعی سؤال می‌کند تا دوبار محاسبه نشوند.</value>
   </data>
   <data name="Help_Aggregated_Example" xml:space="preserve">
-    <value>خوراک شهریور ۴۱۲ EUR؛ بعداً شش رسید به مبلغ ۳۹۵ EUR → ورودی تجمیعی ۱۷ EUR را نگه می‌دارد.</value>
+    <value>هزینهٔ خوراک یک ماه را ۴۱۲ یورو ثبت کرده‌اید. پس از افزودن شش رسید به مجموع ۳۹۵ یورو و انتخاب جایگزینی، مبلغ باقی‌ماندهٔ تراکنش تجمیعی ۱۷ یورو می‌شود.</value>
   </data>
   <data name="Import_AggregateOverlap" xml:space="preserve">
-    <value>ردیف‌های داخل یک ورودی تجمیعی (دو بار شمرده می‌شوند): {0}. پس از ورود، ورودی تجمیعی یا ردیف‌ها را ویرایش کنید.</value>
+    <value>ردیف‌های هم‌پوشان با تراکنش تجمیعی: {0}. این مبالغ دوبار محاسبه می‌شوند؛ پس از ورود داده، تراکنش تجمیعی یا تراکنش‌های واردشده را اصلاح کنید.</value>
   </data>
   <data name="Home_Next30" xml:space="preserve">
     <value>پرداخت‌های ۳۰ روز آینده: {0}</value>
@@ -4794,10 +4794,10 @@
     <value>مصرف‌شده: {0}</value>
   </data>
   <data name="Report_BudgetLimit" xml:space="preserve">
-    <value>سقف با مقدار منتقل‌شده</value>
+    <value>سقف پس از انتقال ماندهٔ بودجه</value>
   </data>
   <data name="Report_BudgetSpent" xml:space="preserve">
-    <value>خرج‌شده (هزینه‌ها − بازپرداخت‌ها)</value>
+    <value>هزینهٔ خالص (هزینه‌ها منهای برگشت وجه)</value>
   </data>
   <data name="Report_BudgetRemaining" xml:space="preserve">
     <value>باقیمانده</value>
@@ -4809,7 +4809,7 @@
     <value>دارایی</value>
   </data>
   <data name="Goal_HoldingLocation" xml:space="preserve">
-    <value>کجا</value>
+    <value>محل نگهداری</value>
   </data>
   <data name="Goal_AllLocations" xml:space="preserve">
     <value>همهٔ مکان‌ها</value>
@@ -4830,7 +4830,7 @@
     <value>با سرعت اخیر شما، ماهانه {0} (میانهٔ {1} ماه): حدود {2}</value>
   </data>
   <data name="Goal_TrendNoPace" xml:space="preserve">
-    <value>با سرعت فعلی تاریخی به دست نمی‌آید.</value>
+    <value>با روند فعلی، زمان رسیدن به هدف قابل برآورد نیست.</value>
   </data>
   <data name="Goal_TrendHistory" xml:space="preserve">
     <value>هنوز سابقهٔ کافی نیست ({0} از {1} ماه).</value>
@@ -4842,7 +4842,7 @@
     <value>یک‌باره</value>
   </data>
   <data name="Goal_TrendNote" xml:space="preserve">
-    <value>برآوردی از ماه‌های کامل است، نه قول. برنامهٔ خود شما جداگانه می‌ماند.</value>
+    <value>این برآورد بر اساس ماه‌های کامل گذشته است و تضمینی برای آینده نیست. برنامهٔ پس‌انداز انتخابی شما جداگانه نمایش داده می‌شود.</value>
   </data>
   <data name="Goal_AssumedPrice" xml:space="preserve">
     <value>قیمت فرضی شما به {0} ({1})</value>
@@ -4851,16 +4851,16 @@
     <value>با قیمت شما: ماهانه {0} از ظرفیت {1}</value>
   </data>
   <data name="Goal_AssumedPriceNote" xml:space="preserve">
-    <value>فقط برای این برآورد است؛ هرگز ارزش دارایی شما نیست.</value>
+    <value>این قیمت فقط برای همین برآورد استفاده می‌شود و قیمت ثبت‌شده برای ارزش‌گذاری دارایی را تغییر نمی‌دهد.</value>
   </data>
   <data name="Help_GoalTrend_Title" xml:space="preserve">
     <value>با سرعت فعلی شما</value>
   </data>
   <data name="Help_GoalTrend_Text" xml:space="preserve">
-    <value>زنانس بررسی می‌کند در هر یک از ماه‌های کامل اخیر (تا شش ماه) چه مقدار به هدف رسید و میانه را می‌گیرد. ماهی که خیلی بیشتر از بقیه باشد «یک‌باره» علامت می‌خورد. با کمتر از سه ماه کامل هنوز سرعتی محاسبه نمی‌شود.</value>
+    <value>برنامهٔ «Zanance» میانهٔ پیشرفت ماهانه را از ماه‌های کامل گذشته، حداکثر شش ماه، محاسبه می‌کند. مقدارِ بسیار بیشتر از سایر ماه‌ها با برچسب «یک‌باره» مشخص می‌شود. برای محاسبهٔ روند، دست‌کم سه ماه کامل لازم است.</value>
   </data>
   <data name="Help_GoalTrend_Example" xml:space="preserve">
-    <value>۲۰۰، ۲۵۰، ۲۳۰ و ۹۰۰ → سرعت ماهانه ۲۴۰؛ ۹۰۰ یک‌باره است.</value>
+    <value>برای مقادیر ماهانهٔ ۲۰۰، ۲۵۰، ۲۳۰ و ۹۰۰، میانه ۲۴۰ است. مقدار ۹۰۰ به‌عنوان مورد «یک‌باره» مشخص می‌شود.</value>
   </data>
   <data name="Report_R5" xml:space="preserve">
     <value>روند ثروت</value>
@@ -4902,7 +4902,7 @@
     <value>تغییر</value>
   </data>
   <data name="Report_Flows" xml:space="preserve">
-    <value>پس‌انداز (درآمد − خرج)</value>
+    <value>مازاد دوره (درآمد منهای هزینهٔ خالص)</value>
   </data>
   <data name="Report_PriceEffect" xml:space="preserve">
     <value>تغییر قیمت دارایی‌ها</value>
@@ -4911,7 +4911,7 @@
     <value>تغییر نرخ ارز</value>
   </data>
   <data name="Report_Corrections" xml:space="preserve">
-    <value>اصلاح‌ها، حساب‌های جدید، دارایی‌های بدون پول</value>
+    <value>اصلاحات، حساب‌های جدید و رویدادهای غیرنقدی دارایی</value>
   </data>
   <data name="Report_Remainder" xml:space="preserve">
     <value>توضیح‌داده‌نشده</value>
@@ -4923,7 +4923,7 @@
     <value>دارایی بدون قیمت در یکی از تاریخ‌ها</value>
   </data>
   <data name="Report_Cause_UnknownOpeningBalance" xml:space="preserve">
-    <value>موجودی اولیهٔ نامعلوم</value>
+    <value>موجودی آغازین نامعلوم</value>
   </data>
   <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
     <value>خرید یا فروش دارایی با قیمتی غیر از ارزش‌گذاری آن</value>
@@ -4938,10 +4938,10 @@
     <value>ثروتم با پس‌انداز رشد کرد یا با قیمت‌ها و نرخ‌ها؟</value>
   </data>
   <data name="Kpi_K10H_Definition" xml:space="preserve">
-    <value>تغییر ارزش خالص تقسیم‌شده به پس‌انداز، تغییر قیمت دارایی‌ها، تغییر نرخ ارز و اصلاح‌ها. آنچه این‌ها توضیح نمی‌دهند با علتش نشان داده می‌شود، هرگز پنهان نمی‌شود.</value>
+    <value>تغییر ارزش خالص دارایی به مازاد درآمد نسبت به هزینه، اثر قیمت دارایی‌های مقداری، تغییر نرخ ارز و اصلاحات تفکیک می‌شود. بخشِ توضیح‌داده‌نشده نیز همراه با علت‌های شناسایی‌شده نمایش داده می‌شود.</value>
   </data>
   <data name="Kpi_K10H_Included" xml:space="preserve">
-    <value>ارزش خالص در هر دو تاریخ با قیمت‌ها و نرخ‌های همان روز|درآمد منهای خرج در این فاصله|برای هر تغییر قیمت: مقدار موجود در آن زمان × تغییر</value>
+    <value>ارزش خالص دارایی در ابتدا و انتهای بازه با قیمت‌ها و نرخ‌های مربوط|درآمد منهای هزینهٔ خالص در این فاصله|اثر هر تغییر قیمت: مقدار دارایی در آن زمان ضربدر اختلاف قیمت</value>
   </data>
   <data name="Kpi_K10H_Excluded" xml:space="preserve">
     <value>انتقال بین حساب‌های شما|حدس برای قیمت یا نرخ ناموجود|مالیات</value>
@@ -4950,16 +4950,16 @@
     <value>ذخیرهٔ این پیش‌بینی</value>
   </data>
   <data name="Snapshot_SaveMessage" xml:space="preserve">
-    <value>یک نام، تا بعداً آن را با آنچه واقعاً رخ داد مقایسه کنید.</value>
+    <value>نامی برای پیش‌بینی وارد کنید تا بعداً آن را با تراکنش‌ها و مانده‌های ثبت‌شده مقایسه کنید.</value>
   </data>
   <data name="Snapshot_ListTitle" xml:space="preserve">
     <value>پیش‌بینی‌های ذخیره‌شده</value>
   </data>
   <data name="Snapshot_Saved" xml:space="preserve">
-    <value>{0} · {1} · کمترین {2} در {3}</value>
+    <value>شروع: {0} · ارز: {1} · کمترین مانده: {2} در تاریخ {3}</value>
   </data>
   <data name="Snapshot_Detail" xml:space="preserve">
-    <value>ذخیره در {0}، تا {1}؛ کمترین {2} در {3}</value>
+    <value>ذخیره‌شده در {0}، تا {1}؛ کمترین مانده: {2} در تاریخ {3}</value>
   </data>
   <data name="Snapshot_Assumptions" xml:space="preserve">
     <value>فرض‌ها: {0}</value>
@@ -4974,40 +4974,40 @@
     <value>مقایسه تا {0}</value>
   </data>
   <data name="Snapshot_Chart" xml:space="preserve">
-    <value>پیش‌بینی ذخیره‌شده و واقعیت</value>
+    <value>پیش‌بینی ذخیره‌شده و نتایج ثبت‌شده</value>
   </data>
   <data name="Snapshot_SavedPath" xml:space="preserve">
     <value>ذخیره‌شده</value>
   </data>
   <data name="Snapshot_ActualPath" xml:space="preserve">
-    <value>واقعی</value>
+    <value>ثبت‌شده</value>
   </data>
   <data name="Snapshot_Difference" xml:space="preserve">
     <value>تفاوت</value>
   </data>
   <data name="Snapshot_Parts" xml:space="preserve">
-    <value>تفاوت از کجا آمده</value>
+    <value>دلایل اختلاف</value>
   </data>
   <data name="Snapshot_RecordedLater" xml:space="preserve">
-    <value>ثبت‌شده بعداً (با تاریخ پیش از ذخیره)</value>
+    <value>تراکنش‌های افزوده‌شده پس از ذخیرهٔ پیش‌بینی، با تاریخِ قبل از آن</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>خرج برنامه‌ریزی‌نشده</value>
+    <value>هزینهٔ برنامه‌ریزی‌نشده</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
     <value>درآمد برنامه‌ریزی‌نشده</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>برنامه‌هایی که متفاوت پرداخت شدند</value>
+    <value>اختلاف تراکنش‌های ثبت‌شده با برنامه‌های مالی</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>جمع این بخش‌ها برابر تفاوت آخرین روز مقایسه است.</value>
+    <value>مجموع این بخش‌ها با اختلافِ آخرین روزِ مقایسه‌شده برابر است.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>حذف این پیش‌بینی</value>
   </data>
   <data name="Snapshot_DeleteMessage" xml:space="preserve">
-    <value>پیش‌بینی ذخیره‌شده حذف می‌شود؛ برنامه‌ها و تراکنش‌های شما می‌مانند.</value>
+    <value>فقط این پیش‌بینی ذخیره‌شده حذف می‌شود؛ برنامه‌های مالی و تراکنش‌های شما تغییر نمی‌کنند.</value>
   </data>
   <data name="Snapshot_NotFound" xml:space="preserve">
     <value>این پیش‌بینی دیگر وجود ندارد.</value>
@@ -5022,37 +5022,37 @@
     <value>نسخهٔ احتیاطی پیش از بازیابی</value>
   </data>
   <data name="Help_SafetyCopy_Text" xml:space="preserve">
-    <value>پیش از این‌که پشتیبان داده‌های شما را جایگزین کند، زنانس یک نسخهٔ احتیاطی از داده‌های فعلی را روی همین دستگاه نگه می‌دارد تا اگر بازیابی ناموفق بود چیزی از دست نرود. این نسخهٔ احتیاطی رمزگذاری نشده است؛ در فضای خصوصی برنامه می‌ماند و فقط تازه‌ترین نسخه‌ها نگه داشته می‌شوند. فایل پشتیبانی که خودتان می‌سازید همیشه با رمز شما رمزگذاری می‌شود.</value>
+    <value>پیش از جایگزینی داده‌های پروفایل فعلی، «Zanance» یک نسخهٔ احتیاطی روی دستگاه می‌سازد. این نسخه رمزگذاری نشده و در فضای خصوصی برنامه نگهداری می‌شود؛ فقط نسخه‌های اخیر باقی می‌مانند. نسخهٔ پشتیبان محلی با فعال کردن محافظت با رمز عبور رمزگذاری می‌شود. پشتیبان ابری همیشه به این محافظت نیاز دارد.</value>
   </data>
   <data name="HomeSection_Goals" xml:space="preserve">
     <value>هدف‌ها</value>
   </data>
   <data name="About_FilesTitle" xml:space="preserve">
-    <value>فایل‌ها چه چیزی دارند</value>
+    <value>محتوای فایل‌ها</value>
   </data>
   <data name="About_FilesBackupTitle" xml:space="preserve">
     <value>پشتیبان</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>همه‌ی آنچه وارد کرده‌اید: حساب‌ها، تراکنش‌ها، برنامه‌ها، بودجه‌ها، نرخ‌ها، هدف‌ها، دارایی‌ها با رویدادها و قیمت‌هایشان، پیش‌بینی‌های ذخیره‌شده، واحدهای نمایش و چیدمان خانه. با گذرواژه‌ی شما رمزگذاری می‌شود. تنظیمات دستگاه (پوسته، زبان، ارقام، یادآورها) در آن نیست.</value>
+    <value>نسخهٔ پشتیبان شامل داده‌های پروفایل فعلی است؛ از جمله حساب‌ها، تراکنش‌ها، برنامه‌های مالی، بودجه‌ها، نرخ‌ها، هدف‌ها، دارایی‌های مقداری، پیش‌بینی‌های ذخیره‌شده، واحدهای نمایش و چیدمان خانه. نسخهٔ محلی با فعال کردن محافظت با رمز عبور رمزگذاری می‌شود؛ برای نسخهٔ ابری این محافظت الزامی است. تنظیمات سراسری دستگاه، مثل ظاهر، زبان و نمایش ارقام، در پشتیبان نیست.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>خروجی CSV</value>
   </data>
   <data name="About_FilesCsv" xml:space="preserve">
-    <value>تراکنش‌ها، و دارایی‌ها در فایلی جداگانه، برای صفحه‌گسترده. خروجی CSV پشتیبان نیست: برنامه‌ها، بودجه‌ها، هدف‌ها و پیش‌بینی‌های ذخیره‌شده در آن نیستند.</value>
+    <value>تراکنش‌ها و دارایی‌های مقداری در فایل‌های CSV جداگانه برای استفاده در صفحه‌گسترده صادر می‌شوند. این فایل‌ها رمزگذاری نشده‌اند و جای نسخهٔ پشتیبان را نمی‌گیرند؛ برنامه‌های مالی، بودجه‌ها، هدف‌ها و پیش‌بینی‌های ذخیره‌شده در آن‌ها نیستند.</value>
   </data>
   <data name="About_FilesPdfTitle" xml:space="preserve">
     <value>گزارش PDF</value>
   </data>
   <data name="About_FilesPdf" xml:space="preserve">
-    <value>گزارشی که انتخاب کرده‌اید، با دوره، ارز و حساب‌هایی که در بر می‌گیرد. برای خواندن و فرستادن است و نمی‌توان آن را بازیابی کرد.</value>
+    <value>گزارش انتخاب‌شده همراه با بازه، ارز و حساب‌های مربوط در فایل PDF قرار می‌گیرد. این فایل برای مطالعه و اشتراک‌گذاری است و نمی‌توان آن را مانند نسخهٔ پشتیبان در برنامه بازیابی کرد.</value>
   </data>
   <data name="About_PlatformsTitle" xml:space="preserve">
     <value>سیستم‌عامل‌ها</value>
   </data>
   <data name="About_PlatformsText" xml:space="preserve">
-    <value>هر نسخه پیش از انتشار روی این سیستم‌ها بررسی می‌شود.</value>
+    <value>وضعیت پشتیبانی و بررسی در هر سیستم‌عامل.</value>
   </data>
   <data name="About_Platform_Verified" xml:space="preserve">
     <value>بررسی‌شده</value>
@@ -5064,21 +5064,21 @@
     <value>گزارش مشکل</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance خودش چیزی نمی‌فرستد: نه داده‌ی استفاده و نه گزارش خرابی. این دکمه متن کوتاهی با نسخه‌ی برنامه و نوع دستگاه آماده می‌کند و خودتان انتخاب می‌کنید آن را کجا بفرستید. لطفاً پیش از فرستادن، مبلغ‌ها، نام حساب‌ها و دیگر جزئیات مالی را پاک کنید.</value>
+    <value>برنامهٔ «Zanance» آمار استفاده یا گزارش خرابی را خودکار ارسال نمی‌کند. این دکمه گزارشی با نسخهٔ برنامه و اطلاعات دستگاه آماده می‌کند. پیش از ارسال، متن را بررسی و اطلاعات شخصی و مالی را حذف کنید؛ مقصد ارسال را خودتان انتخاب می‌کنید.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>آماده کردن گزارش مشکل</value>
   </data>
   <data name="About_ProblemReport" xml:space="preserve">
-    <value>Zanance {0} · {1} {2}
+    <value>نسخهٔ «Zanance»: {0} · دستگاه: {1} {2}
 
-چه اتفاقی افتاد:
+شرح مشکل:
 
-چه انتظاری داشتم:
+نتیجهٔ مورد انتظار:
 
-مراحل تکرار:
+مراحل بازتولید مشکل:
 
-(لطفاً پیش از فرستادن، مبلغ‌ها، نام حساب‌ها و دیگر جزئیات مالی را پاک کنید.)</value>
+(پیش از ارسال، مبالغ، نام حساب‌ها و سایر اطلاعات شخصی و مالی را حذف کنید.)</value>
   </data>
   <data name="Budget_MethodActive" xml:space="preserve">
     <value>روش این بودجه: {0}. برای تغییر آن، حالت پیشرفته را در تنظیمات فعال کنید.</value>
@@ -5093,10 +5093,10 @@
     <value>هیچ برنامه‌ای روی این دستگاه نتوانست فایل را باز کند.</value>
   </data>
   <data name="Entry_DeleteQuestion" xml:space="preserve">
-    <value>این ثبت حذف شود؟</value>
+    <value>این تراکنش حذف شود؟</value>
   </data>
   <data name="Account_NameTaken" xml:space="preserve">
-    <value>حساب دیگری همین نام را دارد. نام دیگری انتخاب کنید تا فهرست‌ها و فایل‌ها آن‌ها را از هم تشخیص دهند.</value>
+    <value>حساب دیگری با این نام وجود دارد. برای تشخیص حساب‌ها در فهرست‌ها و فایل‌ها، نام متفاوتی انتخاب کنید.</value>
   </data>
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>دستکم یک حساب برای این بودجه انتخاب کنید.</value>
@@ -5105,7 +5105,7 @@
     <value>انتقال</value>
   </data>
   <data name="Category_NameTaken" xml:space="preserve">
-    <value>دستهٔ دیگری در همین جا همین نام را دارد.</value>
+    <value>در این بخش، دستهٔ دیگری با این نام وجود دارد.</value>
   </data>
   <data name="Profile_NameTaken" xml:space="preserve">
     <value>پروفایل دیگری همین نام را دارد.</value>
@@ -5249,19 +5249,19 @@
     <value>نامشخص</value>
   </data>
   <data name="Backup_Error_SafetyCopyFailed" xml:space="preserve">
-    <value>پشتیبان بازیابی نشد، چون پیش از آن نمی‌شد از داده‌های فعلی نسخهٔ ایمنی ساخت. داده‌های شما تغییری نکرده است.</value>
+    <value>نسخهٔ احتیاطیِ داده‌های فعلی ساخته نشد؛ بنابراین بازیابی شروع نشد و داده‌های شما تغییر نکرده‌اند.</value>
   </data>
   <data name="Rule_LastDayOfNamedMonth" xml:space="preserve">
     <value>روز آخر {0}</value>
   </data>
   <data name="Occurrence_OverdueOneDay" xml:space="preserve">
-    <value>یک روز معوق</value>
+    <value>یک روز از سررسید گذشته است</value>
   </data>
   <data name="Plan_ReminderOnDueDay" xml:space="preserve">
-    <value>روز سررسید، {0}</value>
+    <value>یادآوری: روز سررسید، ساعت {0}</value>
   </data>
   <data name="Plan_ReminderOneDay" xml:space="preserve">
-    <value>یک روز قبل، {0}</value>
+    <value>یادآوری: یک روز قبل، ساعت {0}</value>
   </data>
   <data name="Report_OneDay" xml:space="preserve">
     <value>یک روز</value>

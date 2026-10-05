@@ -16,6 +16,7 @@
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Only report,holding
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Mode simple -Only budget,plan
     ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Calendar Hijri -Only home,budget,plan,transactions,entry
+    ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark -Calendar Gregorian -Digits latin
 #>
 param(
     # Comma-separated or a PowerShell list (en,fa); a [string] parameter would join a list with spaces.
@@ -33,7 +34,9 @@ param(
     # The experience mode of the walk-through; Simple shows what stays visible of the Advanced data (05 §5).
     [ValidateSet('advanced', 'simple')] [string]$Mode = 'advanced',
     # The calendar of every language (dates, budget months, plans); default: the calendar follows the language.
-    [ValidateSet('', 'Gregorian', 'Persian', 'Hijri')] [string]$Calendar = '')
+    [ValidateSet('', 'Gregorian', 'Persian', 'Hijri')] [string]$Calendar = '',
+    # Digits of the Persian interface; default: Persian digits (the app's default).
+    [ValidateSet('persian', 'latin')] [string]$Digits = 'persian')
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -72,6 +75,7 @@ $env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
 $env:VAFADAR_SNAPSHOT_ONLY = ($Only -join ',')
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
 $env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar
+$env:VAFADAR_SNAPSHOT_DIGITS = $Digits
 $process = Start-Process $exe.FullName -PassThru
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 elseif ($process.ExitCode -ne 0) { 'the app ended with exit code 0x{0:X8}' -f $process.ExitCode }

@@ -18,6 +18,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Changed – Persian wording
+
+- The Persian texts were reviewed throughout: consistent terms («تراکنش»، «برگشت وجه»، «نسخهٔ احتیاطی»، «برنامهٔ
+  مالی»), correct half-spaces, and the same meaning as the corrected English – deleting and restoring affect the
+  current profile, a failed restore says whether data may have changed, and goals explain all three types.
+- After a cloud sign-in in the browser, the page now says that the browser step ended and the result is shown in
+  the app, instead of announcing a sign-in that could still fail.
+
 ### Changed – English wording
 
 - The English texts were reviewed throughout: plain US English, "transaction" for what you record, and texts that

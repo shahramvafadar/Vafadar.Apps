@@ -162,8 +162,14 @@ lightened (`CategoryLookup.DisplayColor`).
   month are written in the plan's own calendar (`IDateFormatter.Format(date, style, calendar)`), "on the last day of
   February" names the month. Restore errors depend on the stage: before the data is replaced the text may say that
   nothing changed (`Backup_Error_SafetyCopyFailed`); from then on it may not (`Backup_Error_RestoreFailed`).
-* Translation follow-up of D-52: the English meaning changed for these keys; their Persian and German texts still say
-  the earlier meaning and are reviewed in the next translation step: `Holdings_Note`, `Settings_DeleteAll*`,
+* Persian copy (D-53): formal "شما" with plural verbs; Persian ی and ک and correct half-spaces; «تراکنش» for a
+  transaction ("ثبت" is the verb), «برگشت وجه» for a refund, «پس‌دادن درآمد» for an income repayment, «نسخهٔ
+  احتیاطی» for the safety copy, «برنامهٔ مالی» where "برنامه" could mean the app, «ارزش خالص دارایی» for net worth,
+  «دارایی‌های مقداری» for holdings; the product name stays «Zanance» (quoted in a Persian sentence, never
+  transliterated); a missing record is not a fact about the world («طلبی ثبت نشده است», not «کسی به شما بدهکار
+  نیست»); a label quoted in another text matches the label.
+* Translation follow-up of D-52: the English meaning changed for these keys. Persian follows since D-53; the German
+  texts still say the earlier meaning and are reviewed in the next translation step: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,
   `Backup_Error_RestoreFailed`, `Onb_WelcomeText`, `Backup_Intro`, `About_DataText`, `About_FilesBackup`,
   `About_FilesCsv`, `About_ProblemText`, `About_PlatformsText`, `Settings_ShowDetailsHint`,

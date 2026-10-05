@@ -86,7 +86,7 @@
     <value>درباره</value>
   </data>
   <data name="Settings_Version" xml:space="preserve">
-    <value>نسخه {0}</value>
+    <value>نسخهٔ {0}</value>
   </data>
   <data name="Calendar_Gregorian" xml:space="preserve">
     <value>میلادی</value>
@@ -104,7 +104,7 @@
     <value>بازیابی نسخهٔ پشتیبان</value>
   </data>
   <data name="Backup_LastBackup" xml:space="preserve">
-    <value>آخرین پشتیبان: {0}</value>
+    <value>آخرین نسخهٔ پشتیبان: {0}</value>
   </data>
   <data name="Backup_Never" xml:space="preserve">
     <value>هنوز نسخهٔ پشتیبانی تهیه نشده است</value>
@@ -131,7 +131,7 @@
     <value>خیر</value>
   </data>
   <data name="Common_Undo" xml:space="preserve">
-    <value>بازگردانی</value>
+    <value>واگرد</value>
   </data>
   <data name="Common_Search" xml:space="preserve">
     <value>جست‌وجو</value>
@@ -140,7 +140,7 @@
     <value>امروز</value>
   </data>
   <data name="Common_DiscardTitle" xml:space="preserve">
-    <value>تغییرات کنار گذاشته شود؟</value>
+    <value>تغییرات ذخیره‌نشده کنار گذاشته شوند؟</value>
   </data>
   <data name="Common_DiscardMessage" xml:space="preserve">
     <value>تغییرات شما ذخیره نشده است.</value>
@@ -161,49 +161,49 @@
     <value>انتخاب تاریخ</value>
   </data>
   <data name="Backup_UsePassword" xml:space="preserve">
-    <value>محافظت با رمز (توصیه می‌شود)</value>
+    <value>محافظت با رمز عبور (توصیه می‌شود)</value>
   </data>
   <data name="Backup_Password" xml:space="preserve">
-    <value>رمز پشتیبان</value>
+    <value>رمز عبور نسخهٔ پشتیبان</value>
   </data>
   <data name="Backup_PasswordConfirm" xml:space="preserve">
-    <value>تکرار رمز</value>
+    <value>تکرار رمز عبور</value>
   </data>
   <data name="Backup_PasswordWarning" xml:space="preserve">
-    <value>این رمز را امن نگه دارید. بدون آن پشتیبان باز نمی‌شود و هیچ‌کس، حتی توسعه‌دهنده، نمی‌تواند آن را بازیابی کند. این رمز همان PIN قفل اپ نیست.</value>
+    <value>رمز عبور را در جای امنی نگه دارید؛ برای بازیابی این نسخهٔ پشتیبان به آن نیاز دارید. سازندهٔ برنامه نمی‌تواند رمز فراموش‌شده را بازیابی کند. این رمز، مستقل از رمز باز کردن قفل دستگاه است.</value>
   </data>
   <data name="Backup_NoPasswordWarning" xml:space="preserve">
-    <value>بدون رمز، هر کسی که فایل را داشته باشد می‌تواند اطلاعات شما را بخواند.</value>
+    <value>بدون محافظت با رمز عبور، هر کسی که به فایل دسترسی داشته باشد می‌تواند محتوای آن را بخواند.</value>
   </data>
   <data name="Backup_PasswordTooShort" xml:space="preserve">
     <value>دست‌کم {0} نویسه وارد کنید.</value>
   </data>
   <data name="Backup_PasswordMismatch" xml:space="preserve">
-    <value>رمزها یکسان نیستند.</value>
+    <value>رمز عبور و تکرار آن یکسان نیستند.</value>
   </data>
   <data name="Backup_Error_InvalidFormat" xml:space="preserve">
-    <value>این فایل پشتیبان این اپ نیست.</value>
+    <value>این فایل، نسخهٔ پشتیبان معتبری برای این برنامه نیست.</value>
   </data>
   <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
-    <value>این پشتیبان به نسخهٔ جدیدتری از اپ نیاز دارد.</value>
+    <value>برای بازیابی این نسخهٔ پشتیبان، برنامه را به‌روز کنید.</value>
   </data>
   <data name="Backup_Error_PasswordRequired" xml:space="preserve">
-    <value>این پشتیبان رمز دارد. رمز آن را وارد کنید.</value>
+    <value>این نسخهٔ پشتیبان رمزگذاری شده است. رمز عبور آن را وارد کنید.</value>
   </data>
   <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
-    <value>رمز اشتباه است یا فایل آسیب دیده است. چیزی تغییر نکرد.</value>
+    <value>رمز عبور نادرست است یا فایل پشتیبان آسیب دیده است. داده‌ها تغییر نکرده‌اند.</value>
   </data>
   <data name="Backup_Error_Corrupted" xml:space="preserve">
-    <value>پشتیبان آسیب دیده است. چیزی تغییر نکرد.</value>
+    <value>فایل پشتیبان آسیب دیده است. داده‌ها تغییر نکرده‌اند.</value>
   </data>
   <data name="Backup_Error_WrongApp" xml:space="preserve">
-    <value>این پشتیبان متعلق به اپ دیگری است. چیزی تغییر نکرد.</value>
+    <value>این نسخهٔ پشتیبان متعلق به برنامهٔ دیگری است. داده‌ها تغییر نکرده‌اند.</value>
   </data>
   <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
-    <value>این پشتیبان با نسخهٔ جدیدتر اپ ساخته شده است. ابتدا اپ را به‌روز کنید.</value>
+    <value>این نسخهٔ پشتیبان با نسخهٔ جدیدتری از برنامه ساخته شده است. ابتدا برنامه را به‌روز کنید.</value>
   </data>
   <data name="Backup_Error_Storage" xml:space="preserve">
-    <value>فایل خوانده یا نوشته نشد. فضای خالی را بررسی و دوباره تلاش کنید.</value>
+    <value>خواندن یا ذخیرهٔ فایل انجام نشد. فضای خالی و دسترسی به فایل را بررسی کنید و دوباره تلاش کنید.</value>
   </data>
   <data name="Settings_Region" xml:space="preserve">
     <value>کشور یا منطقه</value>
@@ -215,7 +215,7 @@
     <value>تعیین نشده (دستگاه: {0})</value>
   </data>
   <data name="Settings_RegionHint" xml:space="preserve">
-    <value>فقط روز اول هفته را پیشنهاد می‌دهد. زبان، ارز و تقویم همان‌طور که انتخاب کرده‌اید می‌مانند و از موقعیت مکانی استفاده نمی‌شود.</value>
+    <value>برای پیشنهاد شروع هفته، تعیین روزهای آخر هفته و تعطیلات رسمیِ پشتیبانی‌شده استفاده می‌شود. زبان، ارز و تقویم شما تغییر نمی‌کنند و موقعیت مکانی دستگاه دریافت نمی‌شود.</value>
   </data>
   <data name="Settings_WeekStart" xml:space="preserve">
     <value>روز اول هفته</value>
@@ -227,7 +227,7 @@
     <value>ظاهر</value>
   </data>
   <data name="Theme_System" xml:space="preserve">
-    <value>مثل دستگاه</value>
+    <value>مطابق تنظیم دستگاه</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
     <value>روشن</value>
@@ -245,6 +245,6 @@
     <value>{0}، انتخاب‌شده</value>
   </data>
   <data name="Calendar_Hijri" xml:space="preserve">
-    <value>قمری (هجری قمری، ام‌القری)</value>
+    <value>هجری قمری (ام‌القری)</value>
   </data>
 </root>

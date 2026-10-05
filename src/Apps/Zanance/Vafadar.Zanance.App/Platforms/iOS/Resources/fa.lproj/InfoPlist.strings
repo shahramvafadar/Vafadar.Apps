@@ -1,5 +1,5 @@
 /* Face ID prompt for the optional app lock (SEC-01). */
-"NSFaceIDUsageDescription" = "برای باز کردن قفل اپ، وقتی قفل روشن است، Zanance از Face ID استفاده می‌کند.";
+"NSFaceIDUsageDescription" = "اگر قفل برنامه فعال باشد، «Zanance» برای باز کردن آن از «Face ID» استفاده می‌کند.";
 
 /* Camera prompt for photographing receipts (D-38). */
-"NSCameraUsageDescription" = "Zanance از دوربین برای عکس گرفتن از رسیدها استفاده می‌کند. عکس روی همین دستگاه خوانده می‌شود و همین‌جا می‌ماند.";
+"NSCameraUsageDescription" = "برنامهٔ «Zanance» برای اسکن رسیدها از دوربین استفاده می‌کند. متن رسید روی دستگاه شما پردازش می‌شود.";
