@@ -74,13 +74,13 @@
     <value>Mehr</value>
   </data>
   <data name="More_About" xml:space="preserve">
-    <value>Über</value>
+    <value>Über Zanance</value>
   </data>
   <data name="Home_Balance" xml:space="preserve">
     <value>Erfasster Saldo</value>
   </data>
   <data name="Home_BalanceHint" xml:space="preserve">
-    <value>Basierend auf Ihren Einträgen – kein Bankkontostand.</value>
+    <value>Auf Grundlage Ihrer erfassten Buchungen; nicht von Ihrer Bank abgerufen.</value>
   </data>
   <data name="Home_AccountsSection" xml:space="preserve">
     <value>Konten</value>
@@ -104,7 +104,7 @@
     <value>Summe</value>
   </data>
   <data name="Accounts_NotInTotals" xml:space="preserve">
-    <value>Nicht in Summen</value>
+    <value>Nicht in Gesamtsummen</value>
   </data>
   <data name="Account_NewTitle" xml:space="preserve">
     <value>Neues Konto</value>
@@ -140,7 +140,7 @@
     <value>Saldo am</value>
   </data>
   <data name="Account_OpeningHint" xml:space="preserve">
-    <value>Der Saldo zu Beginn dieses Tages, vor dessen Buchungen. Sie tragen ihn selbst ein – er wird nicht von einer Bank gelesen.</value>
+    <value>Geben Sie den Saldo zu Beginn des gewählten Tages ein, vor allen Buchungen dieses Tages. Der Betrag wird nicht von Ihrer Bank abgerufen.</value>
   </data>
   <data name="Account_OpeningNegative" xml:space="preserve">
     <value>Saldo ist negativ (z. B. Kartenschulden oder Überziehung)</value>
@@ -149,40 +149,40 @@
     <value>In Summen einbeziehen</value>
   </data>
   <data name="Account_IsDefault" xml:space="preserve">
-    <value>Standardkonto für neue Einträge</value>
+    <value>Standardkonto für neue Buchungen</value>
   </data>
   <data name="Account_Archive" xml:space="preserve">
     <value>Konto archivieren</value>
   </data>
   <data name="Account_Unarchive" xml:space="preserve">
-    <value>Aus dem Archiv holen</value>
+    <value>Archivierung aufheben</value>
   </data>
   <data name="Account_ArchiveMessage" xml:space="preserve">
-    <value>Das Konto behält seine Historie und bleibt in früheren Berichten, nimmt aber keine neuen Buchungen an.</value>
+    <value>Der Verlauf des Kontos und frühere Berichte bleiben erhalten. Für das archivierte Konto können keine neuen Buchungen erfasst werden.</value>
   </data>
   <data name="Account_CurrencyLocked" xml:space="preserve">
     <value>Die Währung kann nicht geändert werden, da das Konto bereits Buchungen hat.</value>
   </data>
   <data name="Account_NameRequired" xml:space="preserve">
-    <value>Bitte einen Namen eingeben.</value>
+    <value>Geben Sie einen Kontonamen ein.</value>
   </data>
   <data name="Account_DefaultName" xml:space="preserve">
     <value>Mein Konto</value>
   </data>
   <data name="Amount_Invalid" xml:space="preserve">
-    <value>Gültigen Betrag eingeben, zum Beispiel 12,50</value>
+    <value>Geben Sie einen gültigen Betrag ein, zum Beispiel 12,50.</value>
   </data>
   <data name="Onb_WelcomeTitle" xml:space="preserve">
     <value>Willkommen</value>
   </data>
   <data name="Onb_WelcomeText" xml:space="preserve">
-    <value>Ihre Finanzen bleiben auf diesem Gerät. Kein Konto und keine Anmeldung nötig. Sicherungen sind optional und liegen in Ihrer Hand.</value>
+    <value>Verwalten Sie Ihre Finanzen auf diesem Gerät, ohne ein Onlinekonto anzulegen. Sie entscheiden, ob Sie Sicherungen erstellen und wo Sie diese speichern.</value>
   </data>
   <data name="Onb_CurrencyTitle" xml:space="preserve">
-    <value>Berichtswährung</value>
+    <value>Bewertungswährung</value>
   </data>
   <data name="Onb_CurrencyText" xml:space="preserve">
-    <value>Summen und Berichte verwenden diese Währung. Jedes Konto behält seine eigene Währung.</value>
+    <value>Umgerechnete Gesamtsummen werden in dieser Währung angezeigt. Jedes Konto behält seine eigene Währung.</value>
   </data>
   <data name="Onb_LaterText" xml:space="preserve">
     <value>Sprache, Kalender und Währung können Sie später in den Einstellungen ändern.</value>
@@ -194,7 +194,7 @@
     <value>Beginnen Sie mit dem Konto, das Sie am häufigsten nutzen. Weitere können Sie später hinzufügen.</value>
   </data>
   <data name="Onb_ZeroHint" xml:space="preserve">
-    <value>Mit 0 zu beginnen ist in Ordnung – den echten Saldo können Sie jederzeit eintragen.</value>
+    <value>Ist der Anfangssaldo unbekannt, wählen Sie „Anfangssaldo unbekannt“. Sie können das Konto später abgleichen.</value>
   </data>
   <data name="Onb_Start" xml:space="preserve">
     <value>Loslegen</value>
@@ -218,7 +218,7 @@
     <value>Keine Buchung passt zu diesen Filtern.</value>
   </data>
   <data name="Tx_Search" xml:space="preserve">
-    <value>Titel, Empfänger, Notiz oder Betrag suchen</value>
+    <value>Nach Titel, Zahlungspartner, Notiz oder Betrag suchen</value>
   </data>
   <data name="Tx_Add" xml:space="preserve">
     <value>Buchung erfassen</value>
@@ -302,13 +302,13 @@
     <value>Konto</value>
   </data>
   <data name="Entry_FromAccount" xml:space="preserve">
-    <value>Von Konto</value>
+    <value>Quellkonto</value>
   </data>
   <data name="Entry_ToAccount" xml:space="preserve">
-    <value>Auf Konto</value>
+    <value>Zielkonto</value>
   </data>
   <data name="Entry_ToAmount" xml:space="preserve">
-    <value>Erhaltener Betrag ({0})</value>
+    <value>Betrag im Zielkonto ({0})</value>
   </data>
   <data name="Entry_Fee" xml:space="preserve">
     <value>Gebühr (optional)</value>
@@ -317,13 +317,13 @@
     <value>Wird als Ausgabe des Quellkontos erfasst.</value>
   </data>
   <data name="Entry_TransferHint" xml:space="preserve">
-    <value>Umbuchungen verschieben Geld zwischen Ihren Konten – sie sind weder Einnahme noch Ausgabe.</value>
+    <value>Eine Umbuchung erfasst eine Geldbewegung zwischen Ihren Konten. Sie zählt weder als Einnahme noch als Ausgabe. Zanance führt keine Überweisung aus.</value>
   </data>
   <data name="Entry_MoreDetails" xml:space="preserve">
     <value>Weitere Angaben</value>
   </data>
   <data name="Entry_Payee" xml:space="preserve">
-    <value>Empfänger / Zahler</value>
+    <value>Zahlungspartner</value>
   </data>
   <data name="Entry_Note" xml:space="preserve">
     <value>Notiz</value>
@@ -362,7 +362,7 @@
     <value>Als geprüft markieren</value>
   </data>
   <data name="Entry_FromPlan" xml:space="preserve">
-    <value>Aus einer Planung erfasst</value>
+    <value>Aus einer Planung erstellt</value>
   </data>
   <data name="Entry_Details" xml:space="preserve">
     <value>Buchung</value>
@@ -431,7 +431,7 @@
     <value>Name</value>
   </data>
   <data name="Category_NameRequired" xml:space="preserve">
-    <value>Geben Sie einen Namen ein.</value>
+    <value>Geben Sie einen Kategorienamen ein.</value>
   </data>
   <data name="Category_Kind" xml:space="preserve">
     <value>Verwendet für</value>
@@ -452,7 +452,7 @@
     <value>Kategorie archivieren</value>
   </data>
   <data name="Category_Unarchive" xml:space="preserve">
-    <value>Kategorie wiederherstellen</value>
+    <value>Archivierung aufheben</value>
   </data>
   <data name="Category_ArchiveMessage" xml:space="preserve">
     <value>Die Kategorie verschwindet aus Auswahllisten. Bestehende Buchungen und Berichte behalten sie.</value>
@@ -545,7 +545,7 @@
     <value>Noch keine Planungen. Erfassen Sie regelmäßige Einnahmen und Rechnungen oder eine einmalige künftige Zahlung.</value>
   </data>
   <data name="Plans_NothingDue" xml:space="preserve">
-    <value>Nichts fällig. Alles erledigt.</value>
+    <value>Keine fälligen oder überfälligen Termine erfasst.</value>
   </data>
   <data name="Plans_NothingUpcoming" xml:space="preserve">
     <value>Für die nächsten 60 Tage ist nichts geplant.</value>
@@ -611,7 +611,7 @@
     <value>Fälligkeitsdatum</value>
   </data>
   <data name="Occurrence_AmountThisTime" xml:space="preserve">
-    <value>Betrag diesmal</value>
+    <value>Betrag für diesen Termin</value>
   </data>
   <data name="Occurrence_ChangeHint" xml:space="preserve">
     <value>Änderungen gelten nur für diese Fälligkeit; die Planung bleibt unverändert.</value>
@@ -623,7 +623,7 @@
     <value>Rückgängig</value>
   </data>
   <data name="Occurrence_UndoMessage" xml:space="preserve">
-    <value>Eine von der Planung erfasste Buchung wird gelöscht; eine selbst erfasste Buchung bleibt erhalten und wird nur getrennt. Die Fälligkeit ist wieder offen und wird nicht automatisch erfasst.</value>
+    <value>Eine aus der Planung erstellte Buchung wird gelöscht. Eine selbst erfasste Buchung bleibt erhalten; nur ihre Verknüpfung wird entfernt. Der Termin ist wieder offen und wird nicht automatisch erfasst.</value>
   </data>
   <data name="Plan_NextDue" xml:space="preserve">
     <value>Nächste: {0}</value>
@@ -740,7 +740,7 @@
     <value>An einem Datum</value>
   </data>
   <data name="End_AfterCount" xml:space="preserve">
-    <value>Nach einer Anzahl</value>
+    <value>Nach festgelegter Anzahl</value>
   </data>
   <data name="Past_FromToday" xml:space="preserve">
     <value>Ab heute</value>
@@ -755,7 +755,7 @@
     <value>Letzter Tag des Monats</value>
   </data>
   <data name="Plan_RuleInvalid" xml:space="preserve">
-    <value>Prüfen Sie die Wiederholung.</value>
+    <value>Prüfen Sie die Wiederholungseinstellungen.</value>
   </data>
   <data name="Plan_NoDates" xml:space="preserve">
     <value>Keine weiteren Termine.</value>
@@ -764,13 +764,13 @@
     <value>Geben Sie einen Namen ein.</value>
   </data>
   <data name="Plan_IntervalMustBePositive" xml:space="preserve">
-    <value>Der Abstand muss mindestens 1 sein.</value>
+    <value>Das Wiederholungsintervall muss mindestens 1 betragen.</value>
   </data>
   <data name="Plan_EndBeforeStart" xml:space="preserve">
     <value>Das Enddatum darf nicht vor dem ersten Termin liegen.</value>
   </data>
   <data name="Plan_CountMustBePositive" xml:space="preserve">
-    <value>Geben Sie eine Anzahl über null ein.</value>
+    <value>Geben Sie mindestens einen Termin an.</value>
   </data>
   <data name="Plan_Name" xml:space="preserve">
     <value>Name</value>
@@ -851,13 +851,13 @@
     <value>Pausieren</value>
   </data>
   <data name="Plan_PauseMessage" xml:space="preserve">
-    <value>Während der Pause wird nichts fällig. Vergangene Buchungen bleiben unverändert.</value>
+    <value>Die Planung wird in Zanance pausiert. Tatsächliche Zahlungsverpflichtungen werden dadurch nicht ausgesetzt. Bereits erfasste Buchungen bleiben erhalten.</value>
   </data>
   <data name="Plan_EndAction" xml:space="preserve">
     <value>Planung beenden</value>
   </data>
   <data name="Plan_EndMessage" xml:space="preserve">
-    <value>Die Planung endet heute. Vergangene Buchungen und der Verlauf bleiben erhalten.</value>
+    <value>Die Planung endet heute in Zanance. Verträge oder Zahlungen außerhalb der App werden dadurch nicht beendet. Erfasste Buchungen und der Verlauf bleiben erhalten.</value>
   </data>
   <data name="Plan_Delete" xml:space="preserve">
     <value>Planung löschen</value>
@@ -866,19 +866,19 @@
     <value>Diese Planung löschen? Es gibt keine erfassten Fälligkeiten.</value>
   </data>
   <data name="Home_Scope" xml:space="preserve">
-    <value>{0} · {1} · Berichtswährung {2}</value>
+    <value>{0} · {1} · Bewertungswährung {2}</value>
   </data>
   <data name="Home_AccountsInTotals" xml:space="preserve">
-    <value>Konten in Summen</value>
+    <value>In Gesamtsummen berücksichtigte Konten</value>
   </data>
   <data name="Home_Unreviewed" xml:space="preserve">
-    <value>Zu prüfen: {0}</value>
+    <value>Zu prüfende Buchungen: {0}</value>
   </data>
   <data name="Home_Due" xml:space="preserve">
     <value>Fällig oder überfällig: {0}</value>
   </data>
   <data name="Home_Refunds" xml:space="preserve">
-    <value>Ausgaben abzüglich {0} Erstattungen</value>
+    <value>Ausgaben nach Abzug von Erstattungen in Höhe von {0}</value>
   </data>
   <data name="Home_Result" xml:space="preserve">
     <value>Ergebnis</value>
@@ -890,7 +890,7 @@
     <value>Ausgaben nach Kategorie</value>
   </data>
   <data name="Home_NoExpenses" xml:space="preserve">
-    <value>Keine Ausgaben in diesem Zeitraum.</value>
+    <value>Keine Ausgaben für diesen Zeitraum erfasst.</value>
   </data>
   <data name="Home_OtherCategories" xml:space="preserve">
     <value>Weitere Kategorien</value>
@@ -899,37 +899,37 @@
     <value>Das Diagramm zeigt nur {0}-Konten; andere Währungen werden nicht umgerechnet.</value>
   </data>
   <data name="Tx_FilterTotal" xml:space="preserve">
-    <value>{0} Buchungen · Summe {1}</value>
+    <value>Buchungen: {0} · Summe: {1}</value>
   </data>
   <data name="Backup_Intro" xml:space="preserve">
-    <value>Ihre Daten liegen nur auf diesem Gerät. Eine Backup-Datei schützt sie, wenn das Gerät verloren geht oder ersetzt wird.</value>
+    <value>Erstellen Sie eine Sicherung dieses Profils und bewahren Sie eine Kopie außerhalb dieses Geräts auf. So können Sie Ihre Daten nach einem Geräteverlust oder -wechsel wiederherstellen.</value>
   </data>
   <data name="Backup_CreateAndShare" xml:space="preserve">
-    <value>Backup-Datei erstellen</value>
+    <value>Sicherungsdatei erstellen</value>
   </data>
   <data name="Backup_ShareHint" xml:space="preserve">
-    <value>Wählen Sie danach, wo Sie es aufbewahren – z. B. Google Drive, OneDrive, E-Mail oder Ihr Computer.</value>
+    <value>Wählen Sie anschließend, wo Sie eine Kopie aufbewahren möchten, etwa in Google Drive, OneDrive oder auf Ihrem Computer. Sie können die Datei auch per E-Mail versenden.</value>
   </data>
   <data name="Backup_Created" xml:space="preserve">
-    <value>Backup erstellt.</value>
+    <value>Sicherung erstellt.</value>
   </data>
   <data name="Backup_Share" xml:space="preserve">
     <value>Teilen</value>
   </data>
   <data name="Backup_ShareTitle" xml:space="preserve">
-    <value>Backup speichern</value>
+    <value>Sicherung speichern</value>
   </data>
   <data name="Backup_OnDevice" xml:space="preserve">
-    <value>Backups auf diesem Gerät</value>
+    <value>Sicherungen auf diesem Gerät</value>
   </data>
   <data name="Backup_OnDeviceHint" xml:space="preserve">
-    <value>Die letzten 10 werden behalten. Mit dem Gerät gehen sie verloren – bewahren Sie eine Kopie woanders auf.</value>
+    <value>Auf diesem Gerät bleiben die 10 neuesten Sicherungen erhalten. Bewahren Sie zusätzlich eine Kopie an einem anderen Ort auf.</value>
   </data>
   <data name="Backup_RestoreIntro" xml:space="preserve">
-    <value>Die Wiederherstellung ersetzt alle Daten auf diesem Gerät durch das Backup. Es wird nicht zusammengeführt; Änderungen seit dem Backup gehen verloren. Zuvor wird eine Sicherheitskopie der aktuellen Daten angelegt.</value>
+    <value>Die Sicherung ersetzt die Daten des aktuell geöffneten Profils; die Daten werden nicht zusammengeführt. Änderungen seit der Sicherung gehen in diesem Profil verloren. Andere Profile bleiben unverändert. Vor der Wiederherstellung wird auf diesem Gerät eine Sicherheitskopie erstellt.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Backup-Datei wählen</value>
+    <value>Sicherungsdatei auswählen</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Datei prüfen</value>
@@ -941,25 +941,25 @@
     <value>Gerät: {0} · App-Version {1}</value>
   </data>
   <data name="Backup_PreviewCounts" xml:space="preserve">
-    <value>{0} Konten · {1} Buchungen · {2} Planungen</value>
+    <value>Konten: {0} · Buchungen: {1} · Planungen: {2}</value>
   </data>
   <data name="Backup_ReplaceWarning" xml:space="preserve">
-    <value>Alle aktuellen Daten auf diesem Gerät werden durch dieses Backup ersetzt.</value>
+    <value>Alle Daten des aktuell geöffneten Profils werden durch diese Sicherung ersetzt. Andere Profile bleiben unverändert.</value>
   </data>
   <data name="Backup_Replace" xml:space="preserve">
-    <value>Daten auf diesem Gerät ersetzen</value>
+    <value>Profildaten ersetzen</value>
   </data>
   <data name="Backup_ReplaceTitle" xml:space="preserve">
-    <value>Alle Daten ersetzen?</value>
+    <value>Daten dieses Profils ersetzen?</value>
   </data>
   <data name="Backup_ReplaceMessage" xml:space="preserve">
-    <value>Zuerst wird eine Sicherheitskopie der aktuellen Daten auf diesem Gerät angelegt.</value>
+    <value>Die Daten des geöffneten Profils werden ersetzt, einschließlich der Änderungen seit der Sicherung. Es erfolgt keine Zusammenführung. Zuvor wird eine Sicherheitskopie erstellt. Andere Profile bleiben unverändert.</value>
   </data>
   <data name="Backup_Restored" xml:space="preserve">
-    <value>Backup wiederhergestellt</value>
+    <value>Sicherung wiederhergestellt</value>
   </data>
   <data name="Backup_RestoredMessage" xml:space="preserve">
-    <value>Prüfen Sie Ihre Salden. Erinnerungen werden neu eingerichtet.</value>
+    <value>Die Sicherung wurde wiederhergestellt. Prüfen Sie Ihre Salden und die Erinnerungseinstellungen.</value>
   </data>
   <data name="Backup_SizeKb" xml:space="preserve">
     <value>{0} KB</value>
@@ -974,7 +974,7 @@
     <value>Monatsbudget</value>
   </data>
   <data name="Budget_Currency" xml:space="preserve">
-    <value>{0} · {1} Monate</value>
+    <value>{0} · Kalender: {1}</value>
   </data>
   <data name="Budget_PreviousMonth" xml:space="preserve">
     <value>Vorheriger Monat</value>
@@ -1016,13 +1016,13 @@
     <value>Nur bestätigte Buchungen</value>
   </data>
   <data name="Budget_IncludesUnreviewed" xml:space="preserve">
-    <value>Enthält {0} noch zu prüfende Buchungen.</value>
+    <value>Enthaltene Buchungen, die noch geprüft werden müssen: {0}.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
     <value>Geplante Ausgaben diesen Monat: {0} (Fälligkeiten: {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
-    <value>{0} mit unbekanntem Betrag</value>
+    <value>Unbekannte Beträge: {0}</value>
   </data>
   <data name="Budget_Equivalent" xml:space="preserve">
     <value>Jährliche und andere nicht monatliche Planungen entsprechen etwa {0} pro Monat (nur zum Vergleich).</value>
@@ -1037,7 +1037,7 @@
     <value>Budget für {0} mit denselben Limits anlegen?</value>
   </data>
   <data name="Budget_CopyReplaceMessage" xml:space="preserve">
-    <value>{0} hat bereits ein Budget. Durch diese Limits ersetzen?</value>
+    <value>Für {0} gibt es bereits ein Budget. Soll es durch diese Limits ersetzt werden?</value>
   </data>
   <data name="Budget_Delete" xml:space="preserve">
     <value>Budget löschen</value>
@@ -1052,7 +1052,7 @@
     <value>Kein Gesamtlimit</value>
   </data>
   <data name="Budget_ScopeHint" xml:space="preserve">
-    <value>Zählt Ausgaben abzüglich Erstattungen der Konten in Summen in dieser Währung. Umbuchungen, Anfangssalden und Korrekturen zählen nie.</value>
+    <value>Berücksichtigt Ausgaben abzüglich Erstattungen der für dieses Budget ausgewählten Konten in der Budgetwährung. Umbuchungen, Anfangssalden und Saldokorrekturen zählen nicht mit.</value>
   </data>
   <data name="Budget_Alerts" xml:space="preserve">
     <value>Bei 80 % und bei Überschreitung benachrichtigen</value>
@@ -1085,7 +1085,7 @@
     <value>Konten</value>
   </data>
   <data name="Report_Plans" xml:space="preserve">
-    <value>Plan und Ist</value>
+    <value>Geplant und erfasst</value>
   </data>
   <data name="Report_SoFar" xml:space="preserve">
     <value>bisher</value>
@@ -1094,7 +1094,7 @@
     <value>Noch nichts erfasst. Berichte erscheinen, sobald Buchungen vorhanden sind.</value>
   </data>
   <data name="Report_NoData" xml:space="preserve">
-    <value>Keine Einnahmen oder Ausgaben in diesem Zeitraum.</value>
+    <value>Für diesen Zeitraum sind keine Einnahmen oder Ausgaben erfasst.</value>
   </data>
   <data name="Report_GrossByCategory" xml:space="preserve">
     <value>Bruttoausgaben nach Kategorie (vor Erstattungen)</value>
@@ -1118,13 +1118,13 @@
     <value>Bereits abgezogene Erstattungen</value>
   </data>
   <data name="Report_SavingsRate" xml:space="preserve">
-    <value>Behaltener Anteil der Einnahmen</value>
+    <value>Verbleibender Einnahmenanteil</value>
   </data>
   <data name="Report_BalanceHint" xml:space="preserve">
     <value>Kontosalden können sich anders verändern: Umbuchungen, Anfangssalden und Korrekturen sind keine Einnahmen oder Ausgaben. Siehe Bericht Konten.</value>
   </data>
   <data name="Report_PartialHint" xml:space="preserve">
-    <value>* Der aktuelle Monat ist noch nicht vorbei – nicht wie einen vollen Monat vergleichen.</value>
+    <value>* Der aktuelle Monat ist noch nicht abgeschlossen. Vergleichen Sie ihn nicht mit einem vollständigen Monat.</value>
   </data>
   <data name="Report_Opening" xml:space="preserve">
     <value>Saldo zu Beginn</value>
@@ -1133,10 +1133,10 @@
     <value>Anfangssaldo</value>
   </data>
   <data name="Report_TransfersIn" xml:space="preserve">
-    <value>Umbuchungen eingehend</value>
+    <value>Eingehende Umbuchungen</value>
   </data>
   <data name="Report_TransfersOut" xml:space="preserve">
-    <value>Umbuchungen ausgehend</value>
+    <value>Ausgehende Umbuchungen</value>
   </data>
   <data name="Report_Adjustments" xml:space="preserve">
     <value>Korrekturen</value>
@@ -1169,22 +1169,22 @@
     <value>90 Tage</value>
   </data>
   <data name="Forecast_Basis" xml:space="preserve">
-    <value>Konten in Summen · von {0} bis {1}</value>
+    <value>In Gesamtsummen berücksichtigte Konten · von {0} bis {1}</value>
   </data>
   <data name="Forecast_Unreviewed" xml:space="preserve">
-    <value>Enthält {0} noch zu prüfende Buchungen.</value>
+    <value>Enthaltene Buchungen, die noch geprüft werden müssen: {0}.</value>
   </data>
   <data name="Forecast_EndBalance" xml:space="preserve">
-    <value>Geschätzter Saldo nach erfassten Planungen</value>
+    <value>Geschätzter Endsaldo laut Planung</value>
   </data>
   <data name="Forecast_Lowest" xml:space="preserve">
     <value>Tiefster Stand: {0} am {1}</value>
   </data>
   <data name="Forecast_Shortfall" xml:space="preserve">
-    <value>Der Saldo könnte um den {0} unter null fallen.</value>
+    <value>Etwa am {0} könnte der Saldo unter null fallen.</value>
   </data>
   <data name="Forecast_Incomplete" xml:space="preserve">
-    <value>Unvollständig: {0} geplante Posten haben noch keinen Betrag.</value>
+    <value>Unvollständig: Geplante Posten ohne bekannten Betrag: {0}.</value>
   </data>
   <data name="Forecast_Path" xml:space="preserve">
     <value>Geschätzter Saldo pro Tag</value>
@@ -1202,25 +1202,25 @@
     <value>Erfasste Buchung</value>
   </data>
   <data name="Forecast_Disclaimer" xml:space="preserve">
-    <value>Enthalten sind nur erfasste Planungen und Buchungen – nicht geplante Alltagskäufe, Einkommensänderungen und andere nicht erfasste Posten. Budgets werden nicht abgezogen. Dies ist eine Schätzung, kein sicher ausgebbares Geld.</value>
+    <value>Diese Prognose berücksichtigt nur erfasste Planungen und Buchungen. Nicht erfasste Alltagsausgaben, Einkommensänderungen und andere unbekannte Vorgänge fehlen. Budgets werden nicht abgezogen. Die Prognose ist eine Schätzung, keine Zusicherung, dass Sie diesen Betrag bedenkenlos ausgeben können.</value>
   </data>
   <data name="Reminder_Generic" xml:space="preserve">
-    <value>Ein finanzieller Posten braucht Ihre Aufmerksamkeit.</value>
+    <value>Bitte prüfen Sie einen anstehenden Finanztermin.</value>
   </data>
   <data name="Reminder_Details" xml:space="preserve">
     <value>{0} fällig am {1}</value>
   </data>
   <data name="Reminder_BudgetGeneric" xml:space="preserve">
-    <value>Ihr Budget braucht Aufmerksamkeit.</value>
+    <value>Bitte prüfen Sie Ihr Budget.</value>
   </data>
   <data name="Reminder_NotOnThisDevice" xml:space="preserve">
-    <value>Erinnerungen werden auf diesem Gerät nicht als Mitteilung angezeigt. Fälligkeiten stehen immer unter Planung.</value>
+    <value>Auf diesem Gerät werden Erinnerungen nicht als Benachrichtigung angezeigt. Fällige Termine finden Sie weiterhin unter „Planung“.</value>
   </data>
   <data name="Reminder_PermissionDenied" xml:space="preserve">
-    <value>Mitteilungen sind aus. Fälligkeiten stehen weiterhin unter Planung.</value>
+    <value>Benachrichtigungen sind deaktiviert. Fällige Termine finden Sie weiterhin unter „Planung“.</value>
   </data>
   <data name="Settings_Notifications" xml:space="preserve">
-    <value>Mitteilungen</value>
+    <value>Benachrichtigungen</value>
   </data>
   <data name="Settings_Enable" xml:space="preserve">
     <value>Einschalten</value>
@@ -1229,7 +1229,7 @@
     <value>Namen und Beträge anzeigen</value>
   </data>
   <data name="Settings_ShowDetailsHint" xml:space="preserve">
-    <value>Aus: Mitteilungen sagen nur, dass etwas zu prüfen ist – nichts Privates erscheint auf dem Sperrbildschirm.</value>
+    <value>Wenn diese Option deaktiviert ist, enthalten Benachrichtigungen keine Finanznamen oder Beträge.</value>
   </data>
   <data name="Settings_ReminderDefaults" xml:space="preserve">
     <value>Standard für neue Erinnerungen</value>
@@ -1238,16 +1238,16 @@
     <value>Wechselkurse</value>
   </data>
   <data name="Rates_Intro" xml:space="preserve">
-    <value>Eingegebene Kurse dienen nur zur Anzeige von Gesamtsummen in der Berichtswährung. Erfasste Beträge, Budgets und Verlauf ändern sich nie.</value>
+    <value>Die eingegebenen Wechselkurse werden für umgerechnete Gesamtsummen in der Bewertungswährung verwendet. Bereits erfasste Beträge werden dadurch nicht verändert. Historische Auswertungen verwenden die für den jeweiligen Zeitpunkt hinterlegten Kurse.</value>
   </data>
   <data name="Rates_Missing" xml:space="preserve">
     <value>Noch kein Kurs für {0} → {1}. Summen in {1} bleiben unvollständig, bis Sie einen erfassen.</value>
   </data>
   <data name="Rates_From" xml:space="preserve">
-    <value>Von Währung</value>
+    <value>Ausgangswährung</value>
   </data>
   <data name="Rates_To" xml:space="preserve">
-    <value>Nach Währung</value>
+    <value>Zielwährung</value>
   </data>
   <data name="Rates_Rate" xml:space="preserve">
     <value>Kurs</value>
@@ -1289,22 +1289,22 @@
     <value>Bis</value>
   </data>
   <data name="Export_IncludeNotes" xml:space="preserve">
-    <value>Notizen und Empfänger einbeziehen</value>
+    <value>Notizen und Zahlungspartner einbeziehen</value>
   </data>
   <data name="Export_Warning" xml:space="preserve">
-    <value>Die Datei enthält Finanzdaten und ist nicht verschlüsselt. Teilen Sie sie nur mit vertrauenswürdigen Personen und Diensten. Sie ist kein Backup: Planungen, Budgets und Einstellungen fehlen.</value>
+    <value>Die Datei enthält unverschlüsselte Finanzdaten. Teilen Sie sie nur mit vertrauenswürdigen Personen und Diensten. Sie ersetzt keine Sicherung: Planungen, Budgets und Einstellungen sind nicht enthalten.</value>
   </data>
   <data name="Export_Button" xml:space="preserve">
     <value>Exportieren und teilen</value>
   </data>
   <data name="Export_Done" xml:space="preserve">
-    <value>{0} Buchungen exportiert.</value>
+    <value>Exportierte Buchungen: {0}.</value>
   </data>
   <data name="Import_Title" xml:space="preserve">
     <value>Buchungen importieren (CSV)</value>
   </data>
   <data name="Import_Intro" xml:space="preserve">
-    <value>Von dieser App exportierte Dateien behalten ihre IDs – doppelter Import erzeugt nichts doppelt. Bei anderen Dateien wählen Sie Spalten und Formate. Importierte Buchungen werden zur Prüfung markiert.</value>
+    <value>Beim Export aus Zanance behalten Buchungen ihre IDs. Beim erneuten Import werden bereits vorhandene IDs übersprungen. Bei anderen Dateien legen Sie Spalten und Formate fest. Importierte Buchungen werden als ungeprüft markiert.</value>
   </data>
   <data name="Import_Pick" xml:space="preserve">
     <value>CSV-Datei wählen</value>
@@ -1343,7 +1343,7 @@
     <value>Alle sind Ausgaben</value>
   </data>
   <data name="Import_SignAllIncome" xml:space="preserve">
-    <value>Alles Einnahmen</value>
+    <value>Alle sind Einnahmen</value>
   </data>
   <data name="Import_TitleColumn" xml:space="preserve">
     <value>Titelspalte (optional)</value>
@@ -1373,7 +1373,7 @@
     <value>Datum in diesem Format nicht lesbar</value>
   </data>
   <data name="Import_Error_Kind" xml:space="preserve">
-    <value>unbekannte Art</value>
+    <value>Unbekannte Buchungsart</value>
   </data>
   <data name="Import_Error_Account" xml:space="preserve">
     <value>Konto nicht gefunden</value>
@@ -1382,31 +1382,31 @@
     <value>Betrag nicht lesbar oder mehrdeutig</value>
   </data>
   <data name="Import_Duplicates" xml:space="preserve">
-    <value>{0} Zeilen haben dasselbe Datum und denselben Betrag wie vorhandene Buchungen. Es können trotzdem echte, getrennte Käufe sein.</value>
+    <value>Zeilen mit demselben Datum und Betrag wie vorhandene Buchungen: {0}. Es kann sich dennoch um eigenständige Vorgänge handeln.</value>
   </data>
   <data name="Import_BeforeOpening" xml:space="preserve">
-    <value>{0} Zeilen liegen vor dem Eröffnungsdatum des Kontos und ändern den Saldo nicht. Verschieben Sie das Eröffnungsdatum, wenn sie zählen sollen.</value>
+    <value>Zeilen vor dem Datum des Anfangssaldos: {0}. Diese Buchungen beeinflussen den Saldo nicht. Prüfen Sie Anfangsdatum und Anfangssaldo gemeinsam, bevor Sie frühere Buchungen einbeziehen.</value>
   </data>
   <data name="Import_SkipDuplicates" xml:space="preserve">
     <value>Mögliche Duplikate auslassen</value>
   </data>
   <data name="Import_Button" xml:space="preserve">
-    <value>{0} Buchungen importieren</value>
+    <value>Buchungen importieren: {0}</value>
   </data>
   <data name="Import_Rejected" xml:space="preserve">
-    <value>Nichts importiert: {0} Zeilen sind ungültig ({1}).</value>
+    <value>Es wurde nichts importiert. Ungültige Zeilen: {0} ({1}).</value>
   </data>
   <data name="Import_Done" xml:space="preserve">
-    <value>{0} Buchungen importiert, {1} übersprungen. Prüfen Sie sie unter Buchungen.</value>
+    <value>Importierte Buchungen: {0} · übersprungen: {1}. Prüfen Sie die importierten Buchungen unter „Buchungen“.</value>
   </data>
   <data name="Import_History" xml:space="preserve">
     <value>Frühere Importe</value>
   </data>
   <data name="Import_Batch" xml:space="preserve">
-    <value>{0} · {1} Buchungen</value>
+    <value>{0} · Buchungen: {1}</value>
   </data>
   <data name="Import_Undo" xml:space="preserve">
-    <value>Import rückgängig</value>
+    <value>Import rückgängig machen</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
     <value>Buchungen dieses Imports entfernen? Vorher vorhandene Buchungen bleiben unberührt.</value>
@@ -1421,7 +1421,7 @@
     <value>Erweitert</value>
   </data>
   <data name="Mode_Hint" xml:space="preserve">
-    <value>Beide zeigen dieselben Daten und Berechnungen. Erweitert zeigt mehr Optionen direkt; ein Zurückwechseln entfernt nichts.</value>
+    <value>Beide Ansichten verwenden dieselben Daten und Berechnungen. „Erweitert“ zeigt zusätzliche Optionen direkt an. Beim Wechsel zu „Einfach“ bleiben Ihre Daten und Einstellungen erhalten.</value>
   </data>
   <data name="Settings_Security" xml:space="preserve">
     <value>Datenschutz &amp; Sicherheit</value>
@@ -1430,13 +1430,13 @@
     <value>App sperren</value>
   </data>
   <data name="Lock_Hint" xml:space="preserve">
-    <value>Nutzt Fingerabdruck, Gesicht oder Displaysperre des Geräts. Beim Verlassen wird die App verdeckt und fragt nach 30 Sekunden erneut. Die Sperre verbirgt die App; sie verschlüsselt die Daten auf dem Gerät nicht.</value>
+    <value>Die App-Sperre verwendet die Entsperrmethode Ihres Geräts, etwa Fingerabdruck, Gesichtserkennung oder Geräte-PIN. Beim Verlassen wird der Inhalt verdeckt. Nach einer Abwesenheit von mindestens 30 Sekunden müssen Sie die App erneut entsperren. Die App-Sperre selbst verschlüsselt keine Daten.</value>
   </data>
   <data name="Lock_NotAvailableHint" xml:space="preserve">
     <value>Richten Sie eine Displaysperre ein, um die App-Sperre zu nutzen.</value>
   </data>
   <data name="Lock_Message" xml:space="preserve">
-    <value>Entsperren, um Ihre Finanzen zu sehen.</value>
+    <value>Entsperren Sie die App, um Ihre Finanzdaten zu sehen.</value>
   </data>
   <data name="Lock_Unlock" xml:space="preserve">
     <value>Entsperren</value>
@@ -1454,7 +1454,7 @@
     <value>Export bestätigen</value>
   </data>
   <data name="Lock_ConfirmBackup" xml:space="preserve">
-    <value>Backup bestätigen</value>
+    <value>Sicherung bestätigen</value>
   </data>
   <data name="Lock_ConfirmRestore" xml:space="preserve">
     <value>Wiederherstellung bestätigen</value>
@@ -1463,7 +1463,7 @@
     <value>Diese Planung nutzt: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um diese Optionen zu ändern.</value>
   </data>
   <data name="Budget_HiddenLimits" xml:space="preserve">
-    <value>{0} Kategorie-Limits bleiben erhalten. Wechseln Sie in den Einstellungen zu Erweitert, um sie zu bearbeiten.</value>
+    <value>Beibehaltene Kategorie-Limits: {0}. Wählen Sie unter „Einstellungen“ die Ansicht „Erweitert“, um sie zu bearbeiten.</value>
   </data>
   <data name="Home_Forecast" xml:space="preserve">
     <value>Monatsende ≈ {0} · tiefster Stand {1} am {2}</value>
@@ -1478,16 +1478,16 @@
     <value>Symbol auswählen</value>
   </data>
   <data name="Account_ArchiveWithPlans" xml:space="preserve">
-    <value>{0} aktive Planungen nutzen dieses Konto ({1}). Mit dem Archivieren enden sie ab heute; vergangene Buchungen und Verlauf bleiben.</value>
+    <value>Aktive Planungen für dieses Konto: {0} ({1}). Durch die Archivierung enden diese Planungen ab heute in Zanance. Tatsächliche Verträge und Zahlungen bleiben unberührt; erfasste Buchungen und der Verlauf bleiben erhalten.</value>
   </data>
   <data name="Reconcile_Title" xml:space="preserve">
-    <value>Abgleichen</value>
+    <value>Saldo abgleichen</value>
   </data>
   <data name="Reconcile_Intro" xml:space="preserve">
     <value>Geben Sie den Saldo ein, den Sie sehen – z. B. in Ihrer Banking-App –, um ihn mit Ihren Buchungen zu vergleichen.</value>
   </data>
   <data name="Reconcile_Observed" xml:space="preserve">
-    <value>Angezeigter Saldo</value>
+    <value>Tatsächlicher Saldo</value>
   </data>
   <data name="Reconcile_Compare" xml:space="preserve">
     <value>Vergleichen</value>
@@ -1499,13 +1499,13 @@
     <value>Erfasst {0} · Differenz {1}</value>
   </data>
   <data name="Reconcile_Unreviewed" xml:space="preserve">
-    <value>{0} Buchungen dieses Kontos sind noch zu prüfen.</value>
+    <value>Noch zu prüfende Buchungen auf diesem Konto: {0}.</value>
   </data>
   <data name="Reconcile_Duplicates" xml:space="preserve">
-    <value>{0} Buchungen haben dasselbe Datum und denselben Betrag – auf Duplikate prüfen.</value>
+    <value>Mögliche Duplikate mit gleichem Datum und Betrag: {0}. Prüfen Sie diese Buchungen.</value>
   </data>
   <data name="Reconcile_Missing" xml:space="preserve">
-    <value>Fehlt eine Buchung oder steht sie auf einem anderen Konto? Nur wenn nicht, eine Korrektur erfassen.</value>
+    <value>Prüfen Sie zuerst, ob eine Buchung fehlt oder dem falschen Konto zugeordnet ist. Erfassen Sie eine Saldokorrektur nur, wenn sich die Differenz dadurch nicht erklären lässt.</value>
   </data>
   <data name="Reconcile_Reason" xml:space="preserve">
     <value>Grund der Korrektur</value>
@@ -1526,13 +1526,13 @@
     <value>Symbol für diese Buchung</value>
   </data>
   <data name="Entry_MakeRecurring" xml:space="preserve">
-    <value>Wiederkehrend machen</value>
+    <value>Planung daraus erstellen</value>
   </data>
   <data name="Entry_PayBack" xml:space="preserve">
-    <value>Zurückzahlen</value>
+    <value>Rückzahlung erfassen</value>
   </data>
   <data name="Home_ConfirmedOnly" xml:space="preserve">
-    <value>Enthält {0} ungeprüfte Buchungen · nur bestätigt: {1}</value>
+    <value>Enthaltene ungeprüfte Buchungen: {0} · Saldo nur aus bestätigten Buchungen: {1}</value>
   </data>
   <data name="Category_Merge" xml:space="preserve">
     <value>Zusammenführen</value>
@@ -1553,7 +1553,7 @@
     <value>Konten in diesem Budget</value>
   </data>
   <data name="Budget_ScopeLimited" xml:space="preserve">
-    <value>Nur {0} ausgewählte Konten zählen zu diesem Budget.</value>
+    <value>Für dieses Budget ausgewählte Konten: {0}.</value>
   </data>
   <data name="Tx_AllCategories" xml:space="preserve">
     <value>Alle Kategorien</value>
@@ -1562,19 +1562,19 @@
     <value>Daten löschen</value>
   </data>
   <data name="Settings_DeleteAll" xml:space="preserve">
-    <value>Alle Daten auf diesem Gerät löschen</value>
+    <value>Daten dieses Profils löschen</value>
   </data>
   <data name="Settings_DeleteAllHint" xml:space="preserve">
-    <value>Entfernt alle Konten, Buchungen, Planungen, Budgets und Einstellungen von diesem Gerät. Anderswo gespeicherte Sicherungsdateien bleiben erhalten.</value>
+    <value>Löscht die Finanzdaten und Einstellungen des aktuell geöffneten Profils. Andere Profile und bereits gespeicherte Sicherungsdateien bleiben erhalten.</value>
   </data>
   <data name="Settings_DeleteAllTitle" xml:space="preserve">
-    <value>Alles löschen?</value>
+    <value>Daten dieses Profils löschen?</value>
   </data>
   <data name="Settings_DeleteAllMessage" xml:space="preserve">
-    <value>Das kann nicht rückgängig gemacht werden. Erstellen Sie vorher eine Sicherung, falls Sie die Daten noch brauchen.</value>
+    <value>Alle Daten des geöffneten Profils werden gelöscht. Dies kann nicht rückgängig gemacht werden. Erstellen Sie vorher eine Sicherung, falls Sie die Daten später benötigen. Andere Profile bleiben unverändert.</value>
   </data>
   <data name="Lock_ConfirmDeleteAll" xml:space="preserve">
-    <value>Löschen aller Daten bestätigen</value>
+    <value>Löschen der Daten dieses Profils bestätigen</value>
   </data>
   <data name="Forecast_WhatIfHint" xml:space="preserve">
     <value>Tippen Sie auf einen Planungseintrag, um ihn auszulassen oder ein anderes Datum oder einen anderen Betrag anzunehmen, z. B. ein späteres Gehalt oder eine höhere Rechnung. Das ändert nur diese Ansicht.</value>
@@ -1610,7 +1610,7 @@
     <value>Geplantes Datum wieder verwenden</value>
   </data>
   <data name="Reminder_Summary" xml:space="preserve">
-    <value>{0} Zahlungen fällig</value>
+    <value>Fällige Zahlungen: {0}</value>
   </data>
   <data name="Reminder_ListSeparator" xml:space="preserve">
     <value>, </value>
@@ -1634,7 +1634,7 @@
     <value>Anfangssaldo unbekannt</value>
   </data>
   <data name="Account_OpeningUnknownHint" xml:space="preserve">
-    <value>Der Saldo beginnt bei null und wird als unvollständig markiert. Gleichen Sie ihn später in den Kontodetails mit Ihrem Banksaldo ab.</value>
+    <value>Für den unbekannten Anfangssaldo wird vorläufig null verwendet. Der berechnete Saldo wird als unvollständig gekennzeichnet. Gleichen Sie ihn später in den Kontodetails mit dem tatsächlichen Saldo ab.</value>
   </data>
   <data name="Account_Incomplete" xml:space="preserve">
     <value>Unvollständig</value>
@@ -1643,13 +1643,13 @@
     <value>Anfangssaldo unbekannt: Dieser Saldo ist möglicherweise unvollständig. Gleichen Sie ihn unten mit dem tatsächlichen Saldo ab.</value>
   </data>
   <data name="Home_OpeningUnknown" xml:space="preserve">
-    <value>Unvollständig: Der Anfangssaldo von {0} Konto/Konten ist unbekannt.</value>
+    <value>Unvollständig: Konten mit unbekanntem Anfangssaldo: {0}.</value>
   </data>
   <data name="Templates_Title" xml:space="preserve">
     <value>Schnellvorlagen</value>
   </data>
   <data name="Templates_Intro" xml:space="preserve">
-    <value>Eine Vorlage füllt eine neue Buchung mit Konto, Kategorie, Titel und auf Wunsch dem Betrag. Prüfen und speichern Sie die Buchung weiterhin selbst.</value>
+    <value>Eine Vorlage füllt Konto, Kategorie, Titel und auf Wunsch den Betrag einer neuen Buchung vorab aus. Sie prüfen und speichern die Buchung anschließend selbst.</value>
   </data>
   <data name="Templates_Empty" xml:space="preserve">
     <value>Noch keine Vorlagen. Öffnen Sie eine Buchung und wählen Sie „Als Vorlage speichern“.</value>
@@ -1697,16 +1697,16 @@
     <value>Notgroschen, Reise oder die Versicherung im nächsten Jahr: Legen Sie ein Ziel fest, reservieren Sie Geld auf Ihren Konten und sehen Sie, wie viel Sie monatlich sparen sollten.</value>
   </data>
   <data name="Goals_Note" xml:space="preserve">
-    <value>Reservieren markiert Geld nur; es bewegt kein Geld und zählt nicht als Ausgabe. Buchen Sie eine Umbuchung, um Geld zu bewegen, und eine Ausgabe, wenn Sie es ausgeben.</value>
+    <value>Eine Reservierung ordnet vorhandenes Geld einem Ziel zu. Sie bewegt kein Geld und zählt nicht als Ausgabe. Erfassen Sie tatsächliche Geldbewegungen zwischen Ihren Konten als Umbuchung und Ausgaben als Ausgabenbuchung.</value>
   </data>
   <data name="Goals_Finished" xml:space="preserve">
-    <value>Erreicht und archiviert</value>
+    <value>Abgeschlossen und archiviert</value>
   </data>
   <data name="Goals_Earmarked" xml:space="preserve">
     <value>Reserviert {0} · nicht zugeordnet {1}</value>
   </data>
   <data name="Goals_Shortfall" xml:space="preserve">
-    <value>{0} mehr als die Salden</value>
+    <value>Nicht durch Kontosalden gedeckt: {0}</value>
   </data>
   <data name="Goal_Funded" xml:space="preserve">
     <value>{0} von {1}</value>
@@ -1736,7 +1736,7 @@
     <value>Aktiv</value>
   </data>
   <data name="GoalState_Completed" xml:space="preserve">
-    <value>Erreicht</value>
+    <value>Abgeschlossen</value>
   </data>
   <data name="GoalState_Archived" xml:space="preserve">
     <value>Archiviert</value>
@@ -1754,13 +1754,13 @@
     <value>z. B. Notgroschen</value>
   </data>
   <data name="Goal_NameRequired" xml:space="preserve">
-    <value>Bitte einen Namen eingeben.</value>
+    <value>Geben Sie einen Namen für das Ziel ein.</value>
   </data>
   <data name="Goal_Target" xml:space="preserve">
     <value>Zielbetrag</value>
   </data>
   <data name="Goal_HasDate" xml:space="preserve">
-    <value>Bis zu einem Datum benötigt</value>
+    <value>Zieldatum festlegen</value>
   </data>
   <data name="Goal_Frequency" xml:space="preserve">
     <value>Ich lege Geld zurück</value>
@@ -1814,7 +1814,7 @@
     <value>Kein aktives Konto in {0}. Legen Sie eines an, um Geld zurückzulegen.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Das markiert nur Geld auf dem Konto. Um Geld auf ein Sparkonto zu bewegen, buchen Sie eine Umbuchung.</value>
+    <value>Der Betrag wird in Zanance für das Ziel reserviert und bleibt auf dem Konto. Eine tatsächliche Übertragung auf ein anderes Konto erfassen Sie separat als Umbuchung.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Verlauf</value>
@@ -1826,7 +1826,7 @@
     <value>Diesen Eintrag entfernen?</value>
   </data>
   <data name="Goal_Complete" xml:space="preserve">
-    <value>Als erreicht markieren</value>
+    <value>Ziel abschließen</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Wieder aktivieren</value>
@@ -1841,34 +1841,34 @@
     <value>Das Ziel und die Reservierungen dafür werden entfernt. Konten und Buchungen bleiben unverändert.</value>
   </data>
   <data name="Account_Earmarked" xml:space="preserve">
-    <value>Für Ziele zurückgelegt: {0} · frei: {1}</value>
+    <value>Für Ziele reserviert: {0} · keinem Ziel zugeordnet: {1}</value>
   </data>
   <data name="Rollover_Title" xml:space="preserve">
-    <value>Rest des Vormonats</value>
+    <value>Budgetübertrag</value>
   </data>
   <data name="Rollover_None" xml:space="preserve">
     <value>Neu beginnen</value>
   </data>
   <data name="Rollover_Surplus" xml:space="preserve">
-    <value>Rest hinzufügen</value>
+    <value>Restbudget übertragen</value>
   </data>
   <data name="Rollover_Both" xml:space="preserve">
-    <value>Rest addieren, Überziehung abziehen</value>
+    <value>Restbudget und Überschreitung übertragen</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
-    <value>Nutzt die Budgets der Vormonate ohne Lücke. Es wird kein Geld bewegt; nur die Limits dieses Monats ändern sich.</value>
+    <value>Berücksichtigt die Budgets unmittelbar aufeinanderfolgender Vorperioden. Es wird kein Geld bewegt; nur die Limits des aktuellen Zeitraums ändern sich.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
-    <value>Enthält {0} Rest aus dem Vormonat (eigenes Limit {1})</value>
+    <value>Enthält {0} Restbudget aus dem vorherigen Zeitraum (Grundlimit: {1})</value>
   </data>
   <data name="Rollover_Deducted" xml:space="preserve">
-    <value>{0} Überziehung aus dem Vormonat abgezogen (eigenes Limit {1})</value>
+    <value>Abgezogene Budgetüberschreitung aus dem vorherigen Zeitraum: {0} (Grundlimit: {1})</value>
   </data>
   <data name="Rollover_Active_Surplus" xml:space="preserve">
-    <value>Der Rest des Vormonats wird diesem Budget hinzugefügt.</value>
+    <value>Das Restbudget des vorherigen Zeitraums wird diesem Budget hinzugefügt.</value>
   </data>
   <data name="Rollover_Active_SurplusAndDeficit" xml:space="preserve">
-    <value>Der Rest des Vormonats wird addiert und Überziehung abgezogen.</value>
+    <value>Restbudget aus dem vorherigen Zeitraum wird hinzugefügt; eine Budgetüberschreitung wird abgezogen.</value>
   </data>
   <data name="Split_Title" xml:space="preserve">
     <value>Auf Kategorien aufteilen</value>
@@ -1883,7 +1883,7 @@
     <value>Aufzuteilender Betrag</value>
   </data>
   <data name="Split_Hint" xml:space="preserve">
-    <value>Der Saldo ändert sich einmal um diesen Betrag; jede Kategorie und ihr Budget sehen nur ihren Teil.</value>
+    <value>Der Saldo wird insgesamt nur um diesen Betrag verändert. Jede Kategorie und ihr Budget berücksichtigen nur den zugeordneten Teilbetrag.</value>
   </data>
   <data name="Split_Remaining" xml:space="preserve">
     <value>Noch zuzuordnen: {0}</value>
@@ -1904,10 +1904,10 @@
     <value>Zu einer Buchung zusammenfassen</value>
   </data>
   <data name="Split_NotPossible" xml:space="preserve">
-    <value>Nur Einnahmen oder Ausgaben ohne Planung, Erstattung oder zu erstattenden Betrag können aufgeteilt werden.</value>
+    <value>Nur Einnahmen und Ausgaben können aufgeteilt werden. Sie dürfen weder mit einer Planung noch mit einer Erstattung verknüpft oder als erstattungsfähig markiert sein.</value>
   </data>
   <data name="Split_PartOf" xml:space="preserve">
-    <value>Teil einer Aufteilung: insgesamt {0} in {1} Teilen. Löschen entfernt alle Teile.</value>
+    <value>Teil einer aufgeteilten Buchung. Gesamtbetrag: {0} · Teilbuchungen: {1}. Beim Löschen werden alle Teilbuchungen entfernt.</value>
   </data>
   <data name="Split_EnterAll" xml:space="preserve">
     <value>Geben Sie für jeden Teil einen Betrag ein oder entfernen Sie leere Teile.</value>
@@ -1916,7 +1916,7 @@
     <value>Als Teilzahlung erfassen</value>
   </data>
   <data name="Occurrence_PayPartHint" xml:space="preserve">
-    <value>Eine Teilzahlung lässt den Posten mit dem Rest offen; die Zahlung des Rests erledigt ihn.</value>
+    <value>Bei einer Teilzahlung bleibt der Restbetrag offen. Erst wenn der vollständige Betrag erfasst ist, gilt der Termin als erledigt.</value>
   </data>
   <data name="Occurrence_PaidSoFar" xml:space="preserve">
     <value>Bisher bezahlt {0} · offen {1}</value>
@@ -1934,7 +1934,7 @@
     <value>Vertrags- oder Kundennummer</value>
   </data>
   <data name="Contract_End" xml:space="preserve">
-    <value>Vertragslaufzeit endet</value>
+    <value>Ende der Vertragslaufzeit</value>
   </data>
   <data name="Contract_Renews" xml:space="preserve">
     <value>Verlängert sich automatisch</value>
@@ -1943,25 +1943,25 @@
     <value>verlängert sich automatisch</value>
   </data>
   <data name="Contract_Deadline" xml:space="preserve">
-    <value>Letzter Kündigungstag</value>
+    <value>Spätester Kündigungstermin</value>
   </data>
   <data name="Contract_Review" xml:space="preserve">
     <value>Überprüfen am</value>
   </data>
   <data name="Contract_Hint" xml:space="preserve">
-    <value>Sie werden 14 Tage vor dem letzten Kündigungstag und am Tag selbst erinnert. Zanance erinnert nur; kündigen müssen Sie selbst, und die Planung läuft weiter, bis Sie sie beenden.</value>
+    <value>Bei aktivierten Erinnerungen erinnert Zanance Sie 14 Tage vor dem eingetragenen Kündigungstermin und am Termin selbst. Zanance kündigt keinen Vertrag. Sie müssen selbst kündigen und die Planung in der App bei Bedarf beenden.</value>
   </data>
   <data name="Reminder_ContractGeneric" xml:space="preserve">
     <value>Ein Vertragstermin steht bevor.</value>
   </data>
   <data name="Reminder_CancelBy" xml:space="preserve">
-    <value>Letzter Kündigungstag: {0}</value>
+    <value>Spätester Kündigungstermin: {0}</value>
   </data>
   <data name="Reminder_ReviewOn" xml:space="preserve">
     <value>Zeit, den Vertrag zu überprüfen ({0})</value>
   </data>
   <data name="Home_CancelBy" xml:space="preserve">
-    <value>{0}: letzter Kündigungstag ist {1}</value>
+    <value>{0}: spätestens am {1} kündigen</value>
   </data>
   <data name="Home_ReviewOn" xml:space="preserve">
     <value>{0}: Vertrag am {1} überprüfen</value>
@@ -1970,7 +1970,7 @@
     <value>(+{0} weitere)</value>
   </data>
   <data name="Entry_Reimbursable" xml:space="preserve">
-    <value>Jemand zahlt mir das zurück</value>
+    <value>Erstattung durch andere erwartet</value>
   </data>
   <data name="Entry_ReimbursableAmount" xml:space="preserve">
     <value>Zu erstattender Betrag</value>
@@ -1979,7 +1979,7 @@
     <value>Der ganze Betrag</value>
   </data>
   <data name="Entry_ReimbursedBy" xml:space="preserve">
-    <value>Erstattet von</value>
+    <value>Erwartete Erstattung von</value>
   </data>
   <data name="Entry_ReimbursedByPlaceholder" xml:space="preserve">
     <value>z. B. Arbeitgeber, ein Freund</value>
@@ -1988,10 +1988,10 @@
     <value>Das zurückerhaltene Geld wird als Erstattung dieser Ausgabe erfasst, nicht als Einnahme. Bis dahin wird es als offen angezeigt.</value>
   </data>
   <data name="Entry_ReimbursableInvalid" xml:space="preserve">
-    <value>Der erstattete Betrag muss größer als null und höchstens die Ausgabe sein.</value>
+    <value>Der erwartete Erstattungsbetrag muss größer als null sein und darf den Ausgabenbetrag nicht überschreiten.</value>
   </data>
   <data name="Entry_ReimbursementOpen" xml:space="preserve">
-    <value>{1} erstattet {0}; noch offen: {2}</value>
+    <value>Von {1} erwartet: {0} · noch offen: {2}</value>
   </data>
   <data name="Entry_ReimbursementDone" xml:space="preserve">
     <value>{1} hat {0} vollständig erstattet.</value>
@@ -2000,19 +2000,19 @@
     <value>Jemand</value>
   </data>
   <data name="Entry_RecordReimbursement" xml:space="preserve">
-    <value>Erhaltenes Geld erfassen</value>
+    <value>Erstattung erfassen</value>
   </data>
   <data name="Entry_ReimbursementTitle" xml:space="preserve">
-    <value>Erstattetes Geld</value>
+    <value>Erstattung einer Ausgabe</value>
   </data>
   <data name="Reimbursements_Title" xml:space="preserve">
     <value>Mir geschuldet</value>
   </data>
   <data name="Reimbursements_Intro" xml:space="preserve">
-    <value>Ausgaben, die andere zurückzahlen. Öffnen Sie eine, um erhaltenes Geld zu erfassen.</value>
+    <value>Hier stehen Ausgaben, deren Erstattung Sie von anderen erwarten. Öffnen Sie einen Eintrag, um eine erhaltene Erstattung zu erfassen.</value>
   </data>
   <data name="Reimbursements_Empty" xml:space="preserve">
-    <value>Derzeit schuldet Ihnen niemand Geld.</value>
+    <value>Keine offenen Erstattungen erfasst.</value>
   </data>
   <data name="Reimbursements_Total" xml:space="preserve">
     <value>Noch zu erhalten</value>
@@ -2033,10 +2033,10 @@
     <value>Keine verschlagworteten Ausgaben in diesem Zeitraum. Schlagwörter fügen Sie in den Details einer Buchung hinzu.</value>
   </data>
   <data name="Report_TagCount" xml:space="preserve">
-    <value>{0} Buchungen</value>
+    <value>Buchungen: {0}</value>
   </data>
   <data name="Report_TagsNote" xml:space="preserve">
-    <value>Eine Buchung mit mehreren Schlagwörtern erscheint unter jedem, daher ergeben die Schlagwörter nicht die Gesamtausgaben.</value>
+    <value>Buchungen mit mehreren Schlagwörtern werden unter jedem dieser Schlagwörter berücksichtigt. Die Summen je Schlagwort lassen sich deshalb nicht zu den Gesamtausgaben addieren.</value>
   </data>
   <data name="Rules_Title" xml:space="preserve">
     <value>Kategorisierungsregeln</value>
@@ -2045,10 +2045,10 @@
     <value>Kategorisierungsregeln</value>
   </data>
   <data name="Rules_Intro" xml:space="preserve">
-    <value>Enthält Empfänger oder Titel einer neuen Buchung den Text, wird die Kategorie vorgeschlagen. Sie sehen den Vorschlag immer und können ihn ändern; gespeicherte Buchungen ändern sich nie.</value>
+    <value>Enthält der Zahlungspartner oder der Titel einer neuen Buchung den angegebenen Text, schlägt Zanance die zugehörige Kategorie vor. Sie können den Vorschlag ändern. Bereits gespeicherte Buchungen bleiben unverändert.</value>
   </data>
   <data name="Rule_Match" xml:space="preserve">
-    <value>Empfänger oder Titel enthält</value>
+    <value>Zahlungspartner oder Titel enthält</value>
   </data>
   <data name="Rule_MatchPlaceholder" xml:space="preserve">
     <value>z. B. Markt</value>
@@ -2087,16 +2087,16 @@
     <value>z. B. Bank, ein Freund</value>
   </data>
   <data name="Account_LentBy" xml:space="preserve">
-    <value>Geliehen von {0}</value>
+    <value>Kreditgeber: {0}</value>
   </data>
   <data name="Account_BorrowedBy" xml:space="preserve">
-    <value>Verliehen an {0}</value>
+    <value>Kreditnehmer: {0}</value>
   </data>
   <data name="Account_RecordRepayment" xml:space="preserve">
     <value>Rückzahlung erfassen</value>
   </data>
   <data name="Account_RecordReturn" xml:space="preserve">
-    <value>Zurückerhaltenes Geld erfassen</value>
+    <value>Erhaltene Rückzahlung erfassen</value>
   </data>
   <data name="Accounts_Debts" xml:space="preserve">
     <value>Kredite, Verliehenes und Vermögenswerte</value>
@@ -2111,7 +2111,7 @@
     <value>Vermögenswert</value>
   </data>
   <data name="Account_AssetHint" xml:space="preserve">
-    <value>Ein Auto, eine Immobilie oder ein anderer Wert, zu einem von Ihnen geschätzten Wert. Einen neuen Wert erfassen Sie als Saldokorrektur in den Kontodetails; er ist nie Einnahme oder Ausgabe, und eine Schätzung ist kein Bargeld.</value>
+    <value>Erfassen Sie hier den geschätzten Wert eines Autos, einer Immobilie oder eines anderen Vermögensgegenstands. Wertänderungen tragen Sie in den Kontodetails als Saldokorrektur ein. Sie zählen nicht als Einnahme oder Ausgabe und erhöhen nicht das verfügbare Geld.</value>
   </data>
   <data name="Accounts_AssetsValue" xml:space="preserve">
     <value>Geschätzte Vermögenswerte: {0}</value>
@@ -2147,34 +2147,34 @@
     <value>Das Schlagwort wird allen ausgewählten Buchungen hinzugefügt.</value>
   </data>
   <data name="Bulk_DeleteMessage" xml:space="preserve">
-    <value>{0} Buchungen löschen? Sie können das einige Sekunden lang rückgängig machen.</value>
+    <value>Ausgewählte Buchungen löschen? Anzahl: {0}. Sie können dies noch einige Sekunden lang rückgängig machen.</value>
   </data>
   <data name="Weekend_Title" xml:space="preserve">
-    <value>Fällt der Termin aufs Wochenende</value>
+    <value>Bei Fälligkeit am Wochenende</value>
   </data>
   <data name="Weekend_Keep" xml:space="preserve">
     <value>Beibehalten</value>
   </data>
   <data name="Weekend_Before" xml:space="preserve">
-    <value>Werktag davor</value>
+    <value>Arbeitstag davor</value>
   </data>
   <data name="Weekend_After" xml:space="preserve">
-    <value>Werktag danach</value>
+    <value>Arbeitstag danach</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>Wochenende hier: {0} (aus Ihrer Region, einstellbar in den Einstellungen). Feiertage werden nicht berücksichtigt.</value>
+    <value>Wochenendtage laut eingestellter Region: {0}. Sie können die Region in den Einstellungen ändern. Unterstützte Feiertage werden nur berücksichtigt, wenn die Feiertagsoption aktiviert ist.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
-    <value>vor dem Wochenende</value>
+    <value>vorheriger Arbeitstag</value>
   </data>
   <data name="Weekend_AfterShort" xml:space="preserve">
-    <value>nach dem Wochenende</value>
+    <value>nächster Arbeitstag</value>
   </data>
   <data name="Settlement_Title" xml:space="preserve">
     <value>Abrechnung der Abschläge</value>
   </data>
   <data name="Settlement_Intro" xml:space="preserve">
-    <value>Für Abschläge wie Strom oder Heizung: Geben Sie die tatsächliche Rechnung des Zeitraums ein. Nur die Differenz wird gebucht, damit die Rechnung nicht doppelt zählt.</value>
+    <value>Für Abschlagszahlungen, etwa für Strom oder Heizung: Geben Sie den endgültigen Rechnungsbetrag für den Abrechnungszeitraum ein. Nur die Differenz zu den erfassten Abschlägen wird zusätzlich gebucht.</value>
   </data>
   <data name="Settlement_From" xml:space="preserve">
     <value>Zeitraum von</value>
@@ -2183,10 +2183,10 @@
     <value>bis</value>
   </data>
   <data name="Settlement_Actual" xml:space="preserve">
-    <value>Tatsächliche Rechnung</value>
+    <value>Endgültiger Rechnungsbetrag</value>
   </data>
   <data name="Settlement_Advances" xml:space="preserve">
-    <value>{0} Abschläge bezahlt: {1}</value>
+    <value>Erfasste Abschläge: {0} · Gesamtbetrag: {1}</value>
   </data>
   <data name="Settlement_Extra" xml:space="preserve">
     <value>Nachzahlung: {0} (als Ausgabe gebucht)</value>
@@ -2222,7 +2222,7 @@
     <value>{0} – Finanzbericht</value>
   </data>
   <data name="Report_PdfScope" xml:space="preserve">
-    <value>Konten in der Summe · Berichtswährung {0}</value>
+    <value>In Gesamtsummen berücksichtigte Konten · Bewertungswährung: {0}</value>
   </data>
   <data name="Report_PdfCreated" xml:space="preserve">
     <value>Erstellt am {0}</value>
@@ -2267,13 +2267,13 @@
     <value>Nächste Rate {0}: Tilgung {1}, Zinsen {2}</value>
   </data>
   <data name="Loan_Payoff" xml:space="preserve">
-    <value>Getilgt nach {0} Raten, etwa {1}. Restliche Zinsen: {2}</value>
+    <value>Geschätzte Tilgung bis {1} · verbleibende Raten: {0} · restliche Zinsen: {2}</value>
   </data>
   <data name="Loan_NeverPaidOff" xml:space="preserve">
     <value>Mit dieser Rate wird der Saldo nicht innerhalb von 50 Jahren getilgt.</value>
   </data>
   <data name="Loan_Disclaimer" xml:space="preserve">
-    <value>Schätzung aus dem eingegebenen Zinssatz und der Rate, mit monatlichen Zinsen auf den Saldo. Ihr Vertrag kann anders rechnen.</value>
+    <value>Die Schätzung verwendet Ihren eingegebenen Zinssatz und die Rate. Zinsen werden monatlich auf die Restschuld berechnet. Die Berechnung in Ihrem Kreditvertrag kann davon abweichen.</value>
   </data>
   <data name="Loan_AddTerms" xml:space="preserve">
     <value>Tragen Sie unter „Bearbeiten“ Zinssatz und Monatsrate ein, um den Verlauf zu sehen.</value>
@@ -2291,22 +2291,22 @@
     <value>Es gibt kein Konto in dieser Währung für die Rate.</value>
   </data>
   <data name="Loan_PayFrom" xml:space="preserve">
-    <value>Bezahlen von</value>
+    <value>Zahlungskonto</value>
   </data>
   <data name="Loan_ReceiveInto" xml:space="preserve">
-    <value>Eingang auf</value>
+    <value>Empfangskonto</value>
   </data>
   <data name="Loan_ConfirmPay" xml:space="preserve">
-    <value>Tilgung {0} wird als Umbuchung und Zinsen {1} als Ausgabe von {2} erfasst.</value>
+    <value>Der Tilgungsanteil von {0} wird als Umbuchung erfasst. Zinsen von {1} werden als Ausgabe vom Konto „{2}“ erfasst.</value>
   </data>
   <data name="Loan_ConfirmReceive" xml:space="preserve">
-    <value>Tilgung {0} wird als Umbuchung und Zinsen {1} als Einnahme von {2} erfasst.</value>
+    <value>Der Tilgungsanteil von {0} wird als Umbuchung erfasst. Zinsen von {1} werden als Einnahme auf dem Konto „{2}“ erfasst.</value>
   </data>
   <data name="Loan_InterestTitle" xml:space="preserve">
     <value>Zinsen – {0}</value>
   </data>
   <data name="Loan_ScheduleSummary" xml:space="preserve">
-    <value>Offen {0} · {1} Raten · Zinsen insgesamt {2}</value>
+    <value>Restschuld: {0} · Raten: {1} · Zinsen insgesamt: {2}</value>
   </data>
   <data name="Loan_Row" xml:space="preserve">
     <value>Rate {0} · {1}</value>
@@ -2336,10 +2336,10 @@
     <value>fünften</value>
   </data>
   <data name="DayRule_NthWeekday" xml:space="preserve">
-    <value>Am {0} {1}</value>
+    <value>Am {0} {1} des Monats</value>
   </data>
   <data name="DayRule_LastWeekday" xml:space="preserve">
-    <value>Am letzten {0}</value>
+    <value>Am letzten {0} des Monats</value>
   </data>
   <data name="Rule_NthWeekday" xml:space="preserve">
     <value>am {0} {1}</value>
@@ -2363,7 +2363,7 @@
     <value>Name der Einheit</value>
   </data>
   <data name="Unit_Factor" xml:space="preserve">
-    <value>Eine Einheit entspricht (in der Währung)</value>
+    <value>Wert einer Einheit in der Basiswährung</value>
   </data>
   <data name="Unit_Definition" xml:space="preserve">
     <value>1 {0} = {1}</value>
@@ -2411,10 +2411,10 @@
     <value>Gespeicherten Filter entfernen</value>
   </data>
   <data name="Filter_NameMessage" xml:space="preserve">
-    <value>Name, z. B. „Lebensmittel diesen Monat“. Zeitraum, Art, Konto, Kategorie, Suche und Prüfstatus werden gespeichert.</value>
+    <value>Geben Sie einen Namen ein, zum Beispiel „Lebensmittel diesen Monat“. Gespeichert werden Zeitraum, Buchungsart, Konto, Kategorie, Suchtext und Prüfstatus.</value>
   </data>
   <data name="Filter_Replace" xml:space="preserve">
-    <value>Ein Filter „{0}“ existiert. Ersetzen?</value>
+    <value>Ein Filter mit dem Namen „{0}“ ist bereits vorhanden. Ersetzen?</value>
   </data>
   <data name="Filter_Hint" xml:space="preserve">
     <value>Häufige Filter speichern</value>
@@ -2444,16 +2444,16 @@
     <value>Noch in Umschlägen</value>
   </data>
   <data name="Envelope_OverAssigned" xml:space="preserve">
-    <value>Es ist mehr zugewiesen, als Ihre Konten enthalten. Senken Sie einen Umschlag oder ein Ziel.</value>
+    <value>Es wurde mehr Geld zugewiesen, als auf den berücksichtigten Konten vorhanden ist. Verringern Sie den einem Umschlag oder Ziel zugewiesenen Betrag.</value>
   </data>
   <data name="Envelope_Overspent" xml:space="preserve">
-    <value>Umschläge sind um {0} überzogen; dieses Geld ist bereits vom Saldo abgegangen.</value>
+    <value>Die Ausgaben für die Umschläge übersteigen die zugewiesenen Beträge um {0}. Diese Ausgaben wurden bereits vom Saldo abgezogen.</value>
   </data>
   <data name="Envelope_CurrentMonthOnly" xml:space="preserve">
     <value>Nicht zugewiesenes Geld wird für den laufenden Monat anhand des heutigen Saldos angezeigt.</value>
   </data>
   <data name="Envelope_Hint" xml:space="preserve">
-    <value>Es zählen nur Konten in Währung und Umfang dieses Budgets; Kredite, verliehenes Geld und Vermögenswerte nicht.</value>
+    <value>Es zählen nur die für dieses Budget ausgewählten Konten in der Budgetwährung. Kredite, verliehenes Geld und Vermögenswertkonten sind ausgeschlossen.</value>
   </data>
   <data name="HomeLayout_Title" xml:space="preserve">
     <value>Startseite anpassen</value>
@@ -2513,7 +2513,7 @@
     <value>{0}, ausgewählt</value>
   </data>
   <data name="Plan_SplitConflict" xml:space="preserve">
-    <value>Fälligkeiten nach diesem Datum sind bereits erfasst und passen nicht zu den neuen Terminen. Wählen Sie ein späteres „Änderungen gelten ab“ oder behalten Sie den Tag.</value>
+    <value>Für spätere Termine sind bereits Buchungen erfasst, die nicht zu den neuen Terminen passen. Wählen Sie unter „Änderungen gelten ab“ ein späteres Datum oder behalten Sie den bisherigen Tag bei.</value>
   </data>
   <data name="Tab_Insights" xml:space="preserve">
     <value>Analyse</value>
@@ -2570,25 +2570,25 @@
     <value>Fixkosten</value>
   </data>
   <data name="Flex_FixedDetail" xml:space="preserve">
-    <value>{0} von {1} erwartet bezahlt · noch {2}</value>
+    <value>Bezahlt: {0} · erwartet: {1} · noch offen: {2}</value>
   </data>
   <data name="Flex_Paid" xml:space="preserve">
-    <value>{0} bezahlt · noch keine Pläne für diese Rechnungen</value>
+    <value>Bezahlt: {0} · für diese Rechnungen sind noch keine Planungen erfasst</value>
   </data>
   <data name="Flex_NonMonthly" xml:space="preserve">
     <value>Nicht monatliche Kosten</value>
   </data>
   <data name="Flex_NonMonthlyDetail" xml:space="preserve">
-    <value>{0} diesen Monat zurücklegen · {1} bezahlt</value>
+    <value>Rechnerischer Monatsanteil: {0} · bezahlt: {1}</value>
   </data>
   <data name="Flex_Total" xml:space="preserve">
     <value>Monatsplan: {0}</value>
   </data>
   <data name="Flex_Hint" xml:space="preserve">
-    <value>Rechnungen kommen aus Ihren Plänen; das Limit oben gilt nur für flexible Ausgaben. Jeder Betrag zählt einmal.</value>
+    <value>Geplante Rechnungen werden aus Ihren Planungen übernommen. Das obige Limit gilt nur für flexible Ausgaben. Kein Betrag wird doppelt berücksichtigt.</value>
   </data>
   <data name="Flex_EditorHint" xml:space="preserve">
-    <value>Bei Flex ist jede Ausgabenkategorie fest, nicht monatlich oder flexibel (in der Kategorie festgelegt). Kategorielimits werden nicht verwendet.</value>
+    <value>Im Flex-Budget ordnen Sie jede Ausgabenkategorie den festen, nicht monatlichen oder flexiblen Ausgaben zu. Diese Zuordnung erfolgt in den Kategorieeinstellungen. Kategorie-Limits werden nicht verwendet.</value>
   </data>
   <data name="SpendingType_Title" xml:space="preserve">
     <value>Im Flex-Budget</value>
@@ -2606,7 +2606,7 @@
     <value>Fest: jeden Monat dieselbe Rechnung, z. B. Miete. Nicht monatlich: einige Male im Jahr, z. B. Versicherung. Flexibel: alltägliche Ausgaben.</value>
   </data>
   <data name="Holiday_Skip" xml:space="preserve">
-    <value>Auch Feiertage auslassen</value>
+    <value>Auch an Feiertagen verschieben</value>
   </data>
   <data name="Holiday_Hint" xml:space="preserve">
     <value>Gesetzliche Feiertage in {0} zählen wie Wochenendtage.</value>
@@ -2621,28 +2621,28 @@
     <value>auch Feiertage</value>
   </data>
   <data name="Receipt_Read" xml:space="preserve">
-    <value>Lesen</value>
+    <value>Beleg auslesen</value>
   </data>
   <data name="Receipt_Title" xml:space="preserve">
     <value>Beleg</value>
   </data>
   <data name="Receipt_Nothing" xml:space="preserve">
-    <value>Aus diesem Beleg konnten kein Betrag, kein Datum und kein Geschäft gelesen werden.</value>
+    <value>Auf diesem Beleg konnten weder Betrag noch Datum oder Händlername erkannt werden.</value>
   </data>
   <data name="Receipt_Review" xml:space="preserve">
-    <value>Aus dem Beleg: {0}. Bitte vor dem Speichern prüfen.</value>
+    <value>Erkannte Angaben: {0}. Prüfen Sie diese vor dem Speichern.</value>
   </data>
   <data name="Import_Error_Currency" xml:space="preserve">
-    <value>die Währung passt nicht zum Konto</value>
+    <value>Währung stimmt nicht mit der Kontowährung überein</value>
   </data>
   <data name="Import_Error_Direction" xml:space="preserve">
-    <value>die Korrektur hat keine Richtung (Erhöhung oder Minderung)</value>
+    <value>Richtung der Saldokorrektur fehlt (Erhöhung oder Verringerung)</value>
   </data>
   <data name="Import_Error_RefundTarget" xml:space="preserve">
-    <value>der Kauf zu dieser Erstattung ist weder in der Datei noch in der App</value>
+    <value>Ursprünglicher Kauf zur Erstattung weder in der Datei noch in der App gefunden</value>
   </data>
   <data name="LedgerError_RefundCurrencyMismatch" xml:space="preserve">
-    <value>Eine Erstattung muss auf ein Konto in der Währung des Kaufs gehen.</value>
+    <value>Erfassen Sie die Erstattung auf einem Konto in derselben Währung wie den ursprünglichen Kauf.</value>
   </data>
   <data name="Error_Title" xml:space="preserve">
     <value>Etwas ist schiefgelaufen</value>
@@ -2651,7 +2651,7 @@
     <value>Die Aktion konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.</value>
   </data>
   <data name="Backup_Error_RestoreFailed" xml:space="preserve">
-    <value>Die Sicherung konnte nicht wiederhergestellt werden. Die Kopie Ihrer Daten von vor der Wiederherstellung bleibt in der Liste der Sicherungen auf diesem Gerät.</value>
+    <value>Die Wiederherstellung wurde nicht abgeschlossen. Die Daten des aktuellen Profils wurden möglicherweise bereits verändert. Behalten Sie die Sicherungsdatei und prüfen Sie das Profil, bevor Sie weitere Änderungen vornehmen.</value>
   </data>
   <data name="LedgerError_RefundOriginalMissing" xml:space="preserve">
     <value>Der Kauf zu dieser Erstattung existiert nicht.</value>
@@ -2669,7 +2669,7 @@
     <value>{0}. Tag</value>
   </data>
   <data name="Settings_MonthStartHint" xml:space="preserve">
-    <value>Für einen Gehaltszyklus, z. B. den 25. Budgets, Start, Berichte und die Buchungsfilter nutzen diesen Monat; Pläne behalten ihre Termine.</value>
+    <value>Legen Sie den Monatsbeginn passend zu Ihrem Gehaltseingang fest, zum Beispiel auf den 25. Monatsbudgets, Startseite, Berichte und Buchungsfilter verwenden diesen Finanzmonat. Die Termine Ihrer Planungen bleiben unverändert.</value>
   </data>
   <data name="Budget_Suggestion" xml:space="preserve">
     <value>Vorschlag: {0} – der Durchschnitt der letzten {1} Monate, aufgerundet.</value>
@@ -2723,13 +2723,13 @@
     <value>Hauptprofil</value>
   </data>
   <data name="Profile_Intro" xml:space="preserve">
-    <value>Getrennte Finanzen auf diesem Gerät, z. B. privat und geschäftlich. Jedes Profil hat eigene Konten, Buchungen, Einstellungen, App-Sperre und Sicherungen.</value>
+    <value>Verwalten Sie getrennte Finanzdaten auf diesem Gerät, etwa für private und geschäftliche Zwecke. Jedes Profil hat eigene Konten, Buchungen, Profileinstellungen, eine eigene App-Sperre und eigene Sicherungen.</value>
   </data>
   <data name="Profile_Note" xml:space="preserve">
-    <value>Erinnerungen und Budgethinweise kommen aus dem geöffneten Profil. Ein verbundener Cloud-Speicher gilt für alle Profile dieses Geräts, aber jedes Profil sieht nur seine eigenen Sicherungen. Die Liste der Profilnamen sieht jede Person, die die App öffnen kann.</value>
+    <value>Erinnerungen und Budgethinweise beziehen sich auf das aktuell geöffnete Profil. Alle Profile dieses Geräts nutzen dieselbe Cloud-Verbindung; in jedem Profil werden jedoch nur dessen eigene Sicherungen angezeigt. Wer die App öffnen kann, kann die Profilnamen sehen.</value>
   </data>
   <data name="Profile_Open" xml:space="preserve">
-    <value>Jetzt geöffnet</value>
+    <value>Aktuell geöffnet</value>
   </data>
   <data name="Profile_OpenAction" xml:space="preserve">
     <value>Öffnen</value>
@@ -2750,10 +2750,10 @@
     <value>Profil löschen</value>
   </data>
   <data name="Profile_DeleteMessage" xml:space="preserve">
-    <value>„{0}“ mit allen Konten, Buchungen, Plänen und Einstellungen löschen?</value>
+    <value>Das Profil „{0}“ einschließlich aller Finanzdaten und Profileinstellungen löschen?</value>
   </data>
   <data name="Profile_DeleteFinal" xml:space="preserve">
-    <value>Das lässt sich nicht rückgängig machen. Seine Sicherungen auf diesem Gerät werden ebenfalls gelöscht; geteilte oder in Ihrer Cloud gespeicherte Sicherungsdateien bleiben und können die Daten zurückbringen.</value>
+    <value>Dies kann nicht rückgängig gemacht werden. Auch die lokalen Sicherungen dieses Profils werden gelöscht. Bereits geteilte oder in der Cloud gespeicherte Sicherungsdateien bleiben erhalten und können weiterhin zur Wiederherstellung verwendet werden.</value>
   </data>
   <data name="Profile_UnlockReason" xml:space="preserve">
     <value>Geschütztes Profil öffnen</value>
@@ -2765,7 +2765,7 @@
     <value>Cloud-Sicherung</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Optional: verschlüsselte Sicherungen im eigenen Cloud-Speicher ablegen. Die App nutzt das Internet nur dafür und erst, nachdem Sie verbunden haben.</value>
+    <value>Sie können verschlüsselte Sicherungen in Ihrem eigenen Cloud-Speicher ablegen. Nach dem Verbinden nutzt Zanance die Internetverbindung für den Zugriff auf diese Sicherungen.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2777,7 +2777,7 @@
     <value>Verbinden</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>Sicherungen werden in einem privaten App-Ordner Ihres {0} gespeichert. Die App sieht nur diesen Ordner; die Sicherungen sind mit Ihrem Passwort verschlüsselt, das nie hochgeladen wird.</value>
+    <value>Sicherungen werden in einem privaten App-Ordner in Ihrem Konto bei {0} gespeichert. Zanance greift nur auf diesen Ordner zu. Die Sicherungen werden mit Ihrem Passwort verschlüsselt; das Passwort wird nicht hochgeladen.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Trennen</value>
@@ -2789,13 +2789,13 @@
     <value>Jetzt sichern</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Sicherungen zeigen</value>
+    <value>Sicherungen anzeigen</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>Cloud-Sicherungen verwenden immer das Passwort aus „Sicherung erstellen“.</value>
   </data>
   <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>Cloud-Sicherungen sind immer verschlüsselt: Passwort einschalten und unter „Sicherung erstellen“ eingeben.</value>
+    <value>Cloud-Sicherungen erfordern Passwortschutz. Aktivieren Sie „Mit Passwort schützen“ und geben Sie unter „Sicherung erstellen“ das Passwort ein.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>Die Sicherung wurde in {0} gespeichert.</value>
@@ -2804,17 +2804,17 @@
     <value>Tippen Sie auf eine Sicherung, um sie (mit Passwort und Vorschau) wiederherzustellen oder aus der Cloud zu löschen.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
-    <value>Die Anmeldung bei {0} hat nicht geklappt. Bitte erneut versuchen.</value>
+    <value>Die Anmeldung bei {0} ist fehlgeschlagen. Versuchen Sie es erneut.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
     <value>Anmeldung abgeschlossen. Sie können diesen Tab schließen und zu Zanance zurückkehren.</value>
     <comment>Windows: page in the browser after a Google sign-in (D-50).</comment>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
-    <value>Bitte {0} erneut verbinden.</value>
+    <value>Verbinden Sie Zanance erneut mit {0}.</value>
   </data>
   <data name="Cloud_Error_Offline" xml:space="preserve">
-    <value>{0} ist nicht erreichbar. Bitte die Internetverbindung prüfen.</value>
+    <value>Der Dienst {0} ist nicht erreichbar. Prüfen Sie Ihre Internetverbindung.</value>
   </data>
   <data name="Cloud_DeleteTitle" xml:space="preserve">
     <value>Cloud-Sicherung löschen</value>
@@ -2826,13 +2826,13 @@
     <value>In Summen einbeziehen</value>
   </data>
   <data name="Help_IncludeInTotals_Text" xml:space="preserve">
-    <value>Wenn eingeschaltet, zählt der Kontostand in der Summe auf der Startseite, in Berichten und Budgets. Schalten Sie es aus für Geld, das Sie sehen, aber nicht als verfügbar zählen möchten – etwa ein Sparkonto für ein späteres Ziel, ein Geschäftskonto oder ein Konto, das Sie für jemand anderen führen. Der Kontostand selbst bleibt in jedem Fall erhalten.</value>
+    <value>Legt fest, ob dieses Konto in Gesamtsummen berücksichtigt wird, die diese Auswahl verwenden. Der eigene Kontosaldo bleibt unverändert. Eine ausdrücklich gewählte Kontenauswahl in Berichten oder Budgets kann davon abweichen. Ob das Geld für Zahlungen verfügbar ist, legen Sie separat fest.</value>
   </data>
   <data name="Help_IncludeInTotals_Example" xml:space="preserve">
     <value>Ihr Girokonto hat 1.200, ein Urlaubs-Sparkonto 800. Sind beide einbezogen, zeigt die Startseite 2.000; ohne das Sparkonto 1.200.</value>
   </data>
   <data name="Account_IncludeInTotalsHint" xml:space="preserve">
-    <value>Zählt im Kontostand der Startseite, in Berichten und Budgets.</value>
+    <value>Berücksichtigt dieses Konto in Gesamtsummen mit dieser Kontenauswahl.</value>
   </data>
   <data name="Help_AccountType_Title" xml:space="preserve">
     <value>Kontotyp</value>
@@ -2847,22 +2847,22 @@
     <value>Anfangssaldo</value>
   </data>
   <data name="Help_OpeningBalance_Text" xml:space="preserve">
-    <value>Der Betrag auf dem Konto zu Beginn des gewählten Tages, vor allen Buchungen, die Sie für diesen Tag oder später erfassen. Zanance rechnet Ihre Buchungen dazu; der angezeigte Stand ist also das, was Sie erfasst haben – er wird nicht von einer Bank gelesen.</value>
+    <value>Der Anfangssaldo ist der Kontostand zu Beginn des gewählten Tages, vor den Buchungen dieses Tages. Zanance berechnet daraus und aus Ihren erfassten Buchungen den angezeigten Saldo. Es wird kein Kontostand von Ihrer Bank abgerufen.</value>
   </data>
   <data name="Help_OpeningBalance_Example" xml:space="preserve">
-    <value>Ihre Bank zeigt heute Morgen 2.350. Geben Sie 2.350 mit dem heutigen Datum ein und erfassen Sie die heutigen Einkäufe als Buchungen.</value>
+    <value>Zu Beginn des heutigen Tages, vor allen heutigen Buchungen, betrug der Saldo 2.350. Tragen Sie 2.350 mit dem heutigen Datum als Anfangssaldo ein und erfassen Sie anschließend die heutigen Buchungen.</value>
   </data>
   <data name="Help_OpeningUnknown_Title" xml:space="preserve">
     <value>Anfangssaldo unbekannt</value>
   </data>
   <data name="Help_OpeningUnknown_Text" xml:space="preserve">
-    <value>Wählen Sie dies, wenn Sie den Betrag noch nicht kennen. Das Konto beginnt bei null, und Summen mit diesem Konto werden als unvollständig markiert, damit sie nie für exakte Zahlen gehalten werden. Den echten Betrag können Sie später im Konto eintragen.</value>
+    <value>Wählen Sie diese Option, wenn Sie den Anfangssaldo nicht kennen. Für die Berechnung wird vorläufig null verwendet; betroffene Summen werden als unvollständig gekennzeichnet. Sie können den Anfangssaldo später ergänzen oder den aktuellen Saldo abgleichen.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
     <value>Bewertungswährung</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>Nur für umgerechnete Summen: Beträge in anderen Währungen werden mit den von Ihnen erfassten Kursen in diese Währung umgerechnet, und das Datum der Kurse wird angezeigt. Die Summen je Währung bleiben immer unverändert, und nichts Neues wird in dieser Währung angelegt. Ohne Kurs ist die umgerechnete Summe als unvollständig markiert.</value>
+    <value>Die Bewertungswährung wird für umgerechnete Gesamtsummen verwendet. Beträge in anderen Währungen werden mit Ihren erfassten Wechselkursen umgerechnet; das Kursdatum wird angezeigt. Die ursprünglichen Beträge je Währung bleiben unverändert. Fehlt ein benötigter Kurs, wird die umgerechnete Summe als unvollständig gekennzeichnet.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
     <value>Konten in EUR und USD, Bewertungswährung EUR: Die Startseite zeigt 2.000 EUR und 4.000 USD und darunter „≈ 5.680 EUR zu Kursen vom 12. Aug.“, sobald ein USD-Kurs erfasst ist.</value>
@@ -2871,7 +2871,7 @@
     <value>Finanzmonat</value>
   </data>
   <data name="Help_MonthStartDay_Text" xml:space="preserve">
-    <value>Budgets, Startseite, Berichte und die Buchungsfilter arbeiten mit Monaten. Kommt Ihr Geld an einem festen Tag, lassen Sie den Monat an diesem Tag beginnen, damit jeder Monat von Zahltag zu Zahltag reicht. Pläne und ihre Termine verschieben sich nicht.</value>
+    <value>Für monatliche Auswertungen können Sie den Beginn des Finanzmonats selbst festlegen, etwa auf den Tag des Gehaltseingangs. Monatsbudgets, Startseite, Berichte und Buchungsfilter verwenden dann diesen Zeitraum. Wöchentliche Budgets und die Termine Ihrer Planungen bleiben davon unberührt.</value>
   </data>
   <data name="Help_MonthStartDay_Example" xml:space="preserve">
     <value>Ihr Gehalt kommt am 25. Beginnt der Monat am 25., reicht „September“ vom 25. September bis 24. Oktober.</value>
@@ -2880,25 +2880,25 @@
     <value>Einfach und Erweitert</value>
   </data>
   <data name="Help_Mode_Text" xml:space="preserve">
-    <value>Beide zeigen dieselben Daten und Berechnungen. Erweitert zeigt mehr Optionen direkt – etwa Kategorielimits, Kontenauswahl, Wochenbudgets und Verträge. Zurückschalten entfernt nichts; bereits genutzte Optionen werden dort zusammengefasst, wo sie wirken.</value>
+    <value>Beide Ansichten verwenden dieselben Daten und Berechnungen. „Erweitert“ zeigt zusätzliche Optionen direkt an, etwa Kategorie-Limits, Kontenauswahl, Wochenbudgets und Vertragsangaben. Beim Wechsel zu „Einfach“ bleiben Daten und Einstellungen erhalten. Bereits verwendete Optionen werden an den relevanten Stellen zusammengefasst.</value>
   </data>
   <data name="Help_AppLock_Title" xml:space="preserve">
     <value>App-Sperre</value>
   </data>
   <data name="Help_AppLock_Text" xml:space="preserve">
-    <value>Fragt beim Öffnen von Zanance und bei der Rückkehr nach 30 Sekunden nach Fingerabdruck, Gesicht oder Geräte-PIN. Die Sperre verbirgt die App; sie verschlüsselt die Daten auf dem Gerät nicht.</value>
+    <value>Beim Öffnen und nach einer Abwesenheit von mindestens 30 Sekunden müssen Sie Zanance mit der Entsperrmethode Ihres Geräts entsperren, etwa per Fingerabdruck, Gesichtserkennung oder Geräte-PIN. Die App-Sperre schützt den Zugriff auf die App; sie ersetzt keine Datenverschlüsselung.</value>
   </data>
   <data name="Help_NotificationDetails_Title" xml:space="preserve">
     <value>Namen und Beträge in Benachrichtigungen</value>
   </data>
   <data name="Help_NotificationDetails_Text" xml:space="preserve">
-    <value>Standardmäßig sagt eine Erinnerung nur, dass eine Zahlung fällig ist, damit nichts Privates auf dem Sperrbildschirm erscheint. Schalten Sie dies ein, um Name und Betrag des Plans in der Benachrichtigung zu sehen.</value>
+    <value>Erinnerungen enthalten standardmäßig nur allgemeine Hinweise. Aktivieren Sie diese Option, um Finanznamen und Beträge in Benachrichtigungen anzuzeigen. Je nach Geräteeinstellung können diese Angaben auch auf dem Sperrbildschirm erscheinen.</value>
   </data>
   <data name="Help_NotificationDetails_Example" xml:space="preserve">
     <value>Aus: „Heute ist eine Zahlung fällig.“ Ein: „Miete – 900,00 EUR heute.“</value>
   </data>
   <data name="Help_AmountMode_Title" xml:space="preserve">
-    <value>Betrag des Plans</value>
+    <value>Betrag der Planung</value>
   </data>
   <data name="Help_AmountMode_Text" xml:space="preserve">
     <value>Fest: immer derselbe Betrag. Geschätzt: ungefähr dieser Betrag, etwa Strom; Prognosen zeigen ihn als Schätzung. Unbekannt: noch kein Betrag – Sie tragen ihn bei Fälligkeit ein, bis dahin sind Prognosen als unvollständig markiert.</value>
@@ -2907,37 +2907,37 @@
     <value>Wochenenden und Feiertage</value>
   </data>
   <data name="Help_WeekendRule_Text" xml:space="preserve">
-    <value>Fällt ein Termin auf ein Wochenende – oder, wenn Sie es wählen, auf einen Feiertag Ihrer Region –, kann die Zahlung wie bei vielen Banken am Werktag davor oder danach erwartet werden.</value>
+    <value>Fällt ein Termin auf einen eingestellten Wochenendtag, verschiebt Zanance ihn auf den vorherigen oder nächsten Arbeitstag. Unterstützte Feiertage werden nur bei aktivierter Feiertagsoption berücksichtigt. Den tatsächlichen Zahlungstermin müssen Sie mit dem Zahlungspartner klären.</value>
   </data>
   <data name="Help_WeekendRule_Example" xml:space="preserve">
-    <value>Gehalt am 30., einem Samstag: mit „Werktag davor“ wird es am Freitag, dem 29., erwartet.</value>
+    <value>Das Gehalt ist für Samstag, den 30., geplant. Mit „Arbeitstag davor“ setzt Zanance den Termin auf Freitag, den 29., sofern dieser nach den gewählten Regeln ein Arbeitstag ist.</value>
   </data>
   <data name="Help_AutoPost_Title" xml:space="preserve">
     <value>Automatisch buchen</value>
   </data>
   <data name="Help_AutoPost_Text" xml:space="preserve">
-    <value>Am Fälligkeitstag wird die Buchung des Plans beim nächsten Öffnen der App für Sie erfasst und als ungeprüft markiert, damit Sie sie kontrollieren können. Ohne diese Option wartet die Zahlung unter Pläne auf Ihre Bestätigung. Eine Zahlung wird nie doppelt erfasst.</value>
+    <value>Wenn Sie Zanance am Fälligkeitstag oder später öffnen, wird die geplante Buchung automatisch erstellt und als ungeprüft markiert. Ohne diese Option bleibt der Termin unter „Planung“ offen, bis Sie ihn bestätigen. Jeder Termin wird nur einmal automatisch erfasst; eine zusätzlich manuell erfasste Buchung kann dennoch ein Duplikat erzeugen.</value>
   </data>
   <data name="Help_AutoPost_Example" xml:space="preserve">
-    <value>Miete von 900 ist am 1. fällig. Öffnen Sie die App am 2., ist die Buchung schon da und wartet auf Ihre Prüfung.</value>
+    <value>Eine Miete von 900 ist am 1. fällig. Öffnen Sie Zanance am 2., erstellt die App die geplante Buchung und markiert sie als ungeprüft.</value>
   </data>
   <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
     <value>Änderung gilt ab</value>
   </data>
   <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
-    <value>Eine Änderung kann für alle Zahlungen oder erst ab einem Datum gelten. Zahlungen davor behalten ihren alten Betrag und Tag, damit Ihre Historie stimmt.</value>
+    <value>Eine Änderung kann für alle Termine oder erst ab einem gewählten Datum gelten. Frühere Termine behalten ihre bisherigen Beträge und Daten.</value>
   </data>
   <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
     <value>Die Miete steigt im März von 900 auf 950: ab 1. März anwenden, Januar und Februar bleiben bei 900.</value>
   </data>
   <data name="Help_Reimbursable_Title" xml:space="preserve">
-    <value>Wird Ihnen erstattet</value>
+    <value>Erstattung durch andere</value>
   </data>
   <data name="Help_Reimbursable_Text" xml:space="preserve">
-    <value>Markieren Sie eine Ausgabe, die Ihnen jemand erstattet – etwa eine Dienstreise oder ein Essen, das Sie für Freunde bezahlt haben. Sie bleibt eine Ausgabe, bis das Geld zurückkommt; die Erstattung wird als Rückerstattung dieser Ausgabe erfasst, nie als Einnahme, offene Beträge stehen unter „Mir geschuldet“.</value>
+    <value>Markieren Sie eine Ausgabe, deren Erstattung Sie erwarten, etwa eine Dienstreise oder ein Essen für Freunde. Erhaltenes Geld erfassen Sie als Erstattung zur ursprünglichen Ausgabe, nicht als neue Einnahme. Dadurch verringern sich die Nettoausgaben. Offene Erstattungsbeträge finden Sie unter „Mir geschuldet“.</value>
   </data>
   <data name="Help_Reimbursable_Example" xml:space="preserve">
-    <value>Sie zahlen 120 für ein Teamessen, der Arbeitgeber erstattet es: Ausgabe markieren; wenn die 120 kommen, als deren Rückerstattung erfassen.</value>
+    <value>Sie zahlen 120 für ein Teamessen, das Ihr Arbeitgeber erstattet. Markieren Sie die Ausgabe als erstattungsfähig. Wenn das Geld eingeht, erfassen Sie eine Erstattung von 120 zur ursprünglichen Ausgabe.</value>
   </data>
   <data name="Help_ForeignAmount_Title" xml:space="preserve">
     <value>In anderer Währung bezahlt</value>
@@ -2952,28 +2952,28 @@
     <value>Ausgabenart</value>
   </data>
   <data name="Help_SpendingType_Text" xml:space="preserve">
-    <value>Wird für Flex-Budgets verwendet. Fix: jeden Monat dieselbe Rechnung, etwa Miete. Nicht monatlich: Rechnungen, die einige Male im Jahr kommen, etwa Versicherungen – sie bekommen einen Monatsanteil. Flexibel: Alltagsausgaben, die sich ein Limit teilen.</value>
+    <value>Diese Zuordnung wird im Flex-Budget verwendet. „Fest“ steht für regelmäßige Monatskosten wie Miete. „Nicht monatlich“ umfasst etwa jährliche Versicherungsbeiträge; dafür wird ein rechnerischer Monatsanteil ausgewiesen. „Flexibel“ umfasst Alltagsausgaben mit einem gemeinsamen Limit.</value>
   </data>
   <data name="Help_SpendingType_Example" xml:space="preserve">
-    <value>Eine Kfz-Versicherung von 600 im Jahr ist nicht monatlich: Das Budget legt dafür jeden Monat 50 zurück.</value>
+    <value>Eine Kfz-Versicherung von 600 pro Jahr entspricht rechnerisch 50 pro Monat. Dieser Monatsanteil dient der Planung; es wird kein Geld automatisch zurückgelegt.</value>
   </data>
   <data name="Help_BudgetMethod_Title" xml:space="preserve">
     <value>Budgetmethode</value>
   </data>
   <data name="Help_BudgetMethod_Text" xml:space="preserve">
-    <value>Limits: ein Höchstbetrag für den Monat und auf Wunsch je Kategorie – die einfachste Wahl. Umschläge: Sie verteilen das Geld, das Sie jetzt haben, auf Kategorien; das Budget zeigt, was noch nicht verteilt ist. Flex: Fixkosten kommen aus Ihren Plänen, nicht monatliche Kosten erhalten einen Monatsanteil, und ein Limit deckt alles Übrige.</value>
+    <value>„Ausgabenlimits“: ein Höchstbetrag für den Budgetzeitraum und optional je Kategorie. „Umschläge“: Sie weisen vorhandenes Geld einzelnen Kategorien zu und sehen, wie viel noch nicht zugewiesen ist. „Flex“: Feste Kosten werden aus Ihren Planungen übernommen, nicht monatliche Kosten als Monatsanteile ausgewiesen. Ein gemeinsames Limit gilt für flexible Ausgaben. Umschläge und Flex sind nur für Monatsbudgets verfügbar.</value>
   </data>
   <data name="Help_BudgetMethod_Example" xml:space="preserve">
-    <value>Flex mit Miete von 900 als Plan: Eine Jahresversicherung von 600 bekommt 50 im Monat, ein flexibles Limit von 700 deckt Lebensmittel, Essen gehen und den Rest.</value>
+    <value>Im Flex-Budget sind 900 Miete als Planung erfasst. Für eine Jahresversicherung von 600 werden rechnerisch 50 pro Monat berücksichtigt. Ein flexibles Limit von 700 gilt für Lebensmittel, Restaurantbesuche und andere Alltagsausgaben.</value>
   </data>
   <data name="Help_Rollover_Title" xml:space="preserve">
-    <value>Übertrag</value>
+    <value>Budgetübertrag</value>
   </data>
   <data name="Help_Rollover_Text" xml:space="preserve">
-    <value>Bestimmt, was mit dem Rest des vorigen Zeitraums geschieht. Keiner: jeder Zeitraum beginnt neu. Überschuss: nicht ausgegebenes Geld kommt zum neuen Limit hinzu. Überschuss und Defizit: auch Mehrausgaben werden vom neuen Limit abgezogen.</value>
+    <value>Legt fest, wie das vorherige Budget berücksichtigt wird. „Neu beginnen“: Das neue Limit bleibt unverändert. „Restbudget übertragen“: Nicht verbrauchtes Budget wird hinzugefügt. „Restbudget und Überschreitung übertragen“: Eine Überschreitung wird vom neuen Limit abgezogen. Es wird kein Geld übertragen.</value>
   </data>
   <data name="Help_Rollover_Example" xml:space="preserve">
-    <value>Limit 500, im Vormonat 450 ausgegeben: Mit Überschuss liegt das Limit diesen Monat bei 550. Bei 560 Ausgaben ergäbe „Überschuss und Defizit“ 440.</value>
+    <value>Bei einem Grundlimit von 500 und Ausgaben von 450 erhöht „Restbudget übertragen“ das nächste Limit auf 550. Bei Ausgaben von 560 ergibt „Restbudget und Überschreitung übertragen“ ein nächstes Limit von 440.</value>
   </data>
   <data name="Help_BudgetPeriod_Title" xml:space="preserve">
     <value>Budgetzeitraum</value>
@@ -2982,7 +2982,7 @@
     <value>Neben dem Monat können Sie pro Woche oder pro zwei Wochen budgetieren – etwa bei zweiwöchentlichem Gehalt oder für ein wöchentliches Lebensmittellimit. Jeder Zeitraum hat eigene Limits; das Monatsbudget bleibt getrennt. Umschläge und Flex sind Monatsmethoden.</value>
   </data>
   <data name="Help_BudgetPeriod_Example" xml:space="preserve">
-    <value>Ein Wochenlimit von 120 für Lebensmittel von Montag bis Sonntag; die nächste Woche beginnt wieder mit 120, mit Übertrag auch mehr.</value>
+    <value>Ein Wochenbudget kann beispielsweise von Montag bis Sonntag gelten und ein Lebensmittellimit von 120 haben. Die nächste Woche beginnt wieder mit 120. Ein Budgetübertrag kann das Limit erhöhen oder bei einer Überschreitung verringern.</value>
   </data>
   <data name="Help_FortnightStart_Title" xml:space="preserve">
     <value>Zweiwochenzeiträume</value>
@@ -2997,7 +2997,7 @@
     <value>Sicherungspasswort</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>Die Sicherungsdatei wird mit diesem Passwort verschlüsselt (AES-256). Ohne das Passwort kann sie niemand öffnen – auch nicht der Entwickler –, bewahren Sie es also sicher auf. Es wird nicht in der App gespeichert, ein vergessenes Passwort lässt sich nicht wiederherstellen.</value>
+    <value>Bei aktiviertem Passwortschutz wird die Sicherungsdatei mit AES-256 verschlüsselt. Bewahren Sie das Passwort sicher auf: Sie benötigen es zur Wiederherstellung. Zanance speichert es nicht dauerhaft, und der Entwickler kann ein vergessenes Passwort nicht wiederherstellen.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorität eines Ziels</value>
@@ -3009,7 +3009,7 @@
     <value>Ihr Geld, klar geplant.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Wählen Sie, wie Summen gezeigt werden</value>
+    <value>Anzeige der Gesamtsummen festlegen</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Symbole ausblenden</value>
@@ -3054,13 +3054,13 @@
     <value>Gestern</value>
   </data>
   <data name="Home_ReadReceipt" xml:space="preserve">
-    <value>Belegfoto oder PDF lesen</value>
+    <value>Belegfoto oder PDF auslesen</value>
   </data>
   <data name="Receipt_WillAttach" xml:space="preserve">
     <value>Der Beleg wird beim Speichern an die Buchung angehängt.</value>
   </data>
   <data name="Receipt_NothingNew" xml:space="preserve">
-    <value>Aus diesem Beleg konnten kein Betrag, kein Datum und kein Geschäft gelesen werden. Tragen Sie sie selbst ein; der Beleg wird beim Speichern angehängt.</value>
+    <value>Auf diesem Beleg konnten weder Betrag noch Datum oder Händlername erkannt werden. Geben Sie diese Angaben selbst ein. Der Beleg wird beim Speichern angehängt.</value>
   </data>
   <data name="Receipt_AttachFailed" xml:space="preserve">
     <value>Die Buchung wurde gespeichert, der Beleg konnte aber nicht angehängt werden. Sie können ihn in den Details der Buchung anhängen.</value>
@@ -3069,7 +3069,7 @@
     <value>Erinnerungen an fällige Zahlungen</value>
   </data>
   <data name="Notify_OfferText" xml:space="preserve">
-    <value>Zanance kann Sie erinnern, bevor Miete, Rechnungen oder Ihr Gehalt fällig sind, und wenn ein Budget fast aufgebraucht ist. Erinnerungen entstehen nur auf diesem Gerät, und der Sperrbildschirm zeigt keine Beträge, solange Sie es nicht erlauben. Sie können das jederzeit in den Einstellungen ändern.</value>
+    <value>Zanance kann an geplante Zahlungen und Einnahmen sowie an fast ausgeschöpfte Budgets erinnern. Die Erinnerungen werden auf diesem Gerät erstellt. Finanznamen und Beträge werden nur angezeigt, wenn Sie dies erlauben. Die Optionen können Sie jederzeit in den Einstellungen ändern.</value>
   </data>
   <data name="Notify_Allow" xml:space="preserve">
     <value>Erinnerungen erlauben</value>
@@ -3078,10 +3078,10 @@
     <value>Jetzt nicht</value>
   </data>
   <data name="Notify_OffTitle" xml:space="preserve">
-    <value>Mitteilungen sind aus</value>
+    <value>Benachrichtigungen deaktiviert</value>
   </data>
   <data name="Notify_OffText" xml:space="preserve">
-    <value>Mitteilungen für Zanance sind in den Systemeinstellungen ausgeschaltet, deshalb können keine Erinnerungen erscheinen. Öffnen Sie die Einstellungen und erlauben Sie Mitteilungen für Zanance.</value>
+    <value>Benachrichtigungen für Zanance sind in den Systemeinstellungen deaktiviert. Deshalb werden keine Erinnerungen angezeigt. Öffnen Sie die Systemeinstellungen und erlauben Sie Benachrichtigungen für Zanance.</value>
   </data>
   <data name="Common_OpenSettings" xml:space="preserve">
     <value>Einstellungen öffnen</value>
@@ -3096,7 +3096,7 @@
     <value>Foto oder PDF auswählen</value>
   </data>
   <data name="Camera_OffTitle" xml:space="preserve">
-    <value>Kamerazugriff ist aus</value>
+    <value>Kamerazugriff deaktiviert</value>
   </data>
   <data name="Camera_OffText" xml:space="preserve">
     <value>Zanance darf die Kamera nicht verwenden. Öffnen Sie die Einstellungen und erlauben Sie Zanance den Kamerazugriff, oder wählen Sie stattdessen ein Foto oder PDF.</value>
@@ -3111,13 +3111,13 @@
     <value>Sprache und Region</value>
   </data>
   <data name="Settings_MoneyMonths" xml:space="preserve">
-    <value>Geld und Monate</value>
+    <value>Währungen und Finanzmonat</value>
   </data>
   <data name="More_App" xml:space="preserve">
     <value>App</value>
   </data>
   <data name="More_AccountsHint" xml:space="preserve">
-    <value>Salden, Kredite und Vermögen, Abgleich</value>
+    <value>Kontosalden, Kredite, Vermögenswerte und Saldoabgleich</value>
   </data>
   <data name="More_ReimbursementsHint" xml:space="preserve">
     <value>Ausgaben, die andere zurückzahlen</value>
@@ -3126,10 +3126,10 @@
     <value>Ausgaben- und Einnahmekategorien</value>
   </data>
   <data name="More_TemplatesHint" xml:space="preserve">
-    <value>Wiederkehrende Buchungen mit einem Tipp</value>
+    <value>Vorlagen für häufige Buchungen</value>
   </data>
   <data name="More_RulesHint" xml:space="preserve">
-    <value>Kategorie nach Empfänger oder Titel vorschlagen</value>
+    <value>Kategorie nach Zahlungspartner oder Titel vorschlagen</value>
   </data>
   <data name="More_RatesHint" xml:space="preserve">
     <value>Ihre Kurse für Gesamtsummen</value>
@@ -3138,7 +3138,7 @@
     <value>Alltagseinheiten, z. B. Toman für Rial</value>
   </data>
   <data name="More_BackupHint" xml:space="preserve">
-    <value>Verschlüsselte Sicherungen und Wiederherstellen</value>
+    <value>Sicherungen erstellen und wiederherstellen</value>
   </data>
   <data name="More_ImportExportHint" xml:space="preserve">
     <value>CSV-Dateien für Tabellen und andere Apps</value>
@@ -3147,7 +3147,7 @@
     <value>Getrennte Daten, z. B. privat und geschäftlich</value>
   </data>
   <data name="More_SettingsHint" xml:space="preserve">
-    <value>Sprache, Design, App-Sperre, Erinnerungen</value>
+    <value>Sprache, Darstellung, App-Sperre und Erinnerungen</value>
   </data>
   <data name="More_AboutHint" xml:space="preserve">
     <value>Version, Ihre Daten und Lizenzen</value>
@@ -3159,13 +3159,13 @@
     <value>Ihre Daten</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Zanance braucht kein Konto und zeigt keine Werbung. Ihre Finanzdaten bleiben auf diesem Gerät und in den Sicherungen, die Sie selbst erstellen, und werden weder an den Entwickler noch an andere gesendet. Die Cloud-Sicherung ist freiwillig und nutzt nur Ihren eigenen Speicher, sobald Sie ihn verbinden.</value>
+    <value>Für die lokale Nutzung von Zanance ist kein Onlinekonto erforderlich. Die App zeigt keine Werbung und sendet Ihre Finanzdaten nicht automatisch an den Entwickler. Sie entscheiden selbst, ob Sie Sicherungen erstellen, einen eigenen Cloud-Speicher verbinden oder Daten teilen.</value>
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>Open-Source-Lizenzen</value>
   </data>
   <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance nutzt die folgende Software und Schriften. Ihre Lizenzen verlangen diese Hinweise.</value>
+    <value>Zanance verwendet die folgende Software und die folgenden Schriftarten. Die zugehörigen Lizenzhinweise sind hier aufgeführt.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Lizenztexte anzeigen</value>
@@ -3183,7 +3183,7 @@
     <value>Erste Ausgabe erfassen</value>
   </data>
   <data name="Home_StartPlan" xml:space="preserve">
-    <value>Regelmäßige Zahlung anlegen, z. B. Miete oder Gehalt</value>
+    <value>Regelmäßige Zahlung oder Einnahme planen</value>
   </data>
   <data name="Home_StartBudget" xml:space="preserve">
     <value>Monatsbudget festlegen</value>
@@ -3192,7 +3192,7 @@
     <value>Ausblenden</value>
   </data>
   <data name="Forecast_NoPlansHint" xml:space="preserve">
-    <value>Legen Sie regelmäßige Einnahmen und Rechnungen als Pläne an, um zu sehen, wie sich Ihr Saldo entwickelt.</value>
+    <value>Erfassen Sie regelmäßige Einnahmen und Rechnungen als Planungen, um die voraussichtliche Entwicklung Ihres Saldos zu sehen.</value>
   </data>
   <data name="Common_Selected" xml:space="preserve">
     <value>Ausgewählt</value>
@@ -3201,10 +3201,10 @@
     <value>Ziele</value>
   </data>
   <data name="Settings_DefaultCurrency" xml:space="preserve">
-    <value>Standardwährung für neue Einträge</value>
+    <value>Standardwährung für neue Daten</value>
   </data>
   <data name="Help_DefaultCurrency_Title" xml:space="preserve">
-    <value>Standardwährung für neue Einträge</value>
+    <value>Standardwährung für neue Daten</value>
   </data>
   <data name="Help_DefaultCurrency_Text" xml:space="preserve">
     <value>Neue Konten, Ziele, Budgets und Wechselkurse beginnen in dieser Währung; Sie können sie jedes Mal ändern. Bestehende Konten und Buchungen behalten ihre Währung, und eine Buchung ist immer in der Währung ihres Kontos.</value>
@@ -3213,7 +3213,7 @@
     <value>Ihre Konten sind in EUR und USD. Mit EUR hier beginnt ein neues Konto in EUR; Ihr USD-Konto bleibt in USD.</value>
   </data>
   <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
-    <value>Nur neue Einträge verwenden dies. Bestehende Konten und Buchungen behalten ihre Währung.</value>
+    <value>Wird bei neuen Konten, Zielen, Budgets und Wechselkursen vorausgewählt. Bestehende Daten behalten ihre Währung.</value>
   </data>
   <data name="Settings_DefaultAccount" xml:space="preserve">
     <value>Standardkonto für neue Buchungen</value>
@@ -3228,13 +3228,13 @@
     <value>Die Schnellerfassung auf der Startseite, das Widget und Belege verwenden dieses Konto. Das Formular zeigt es immer an, und Sie können für eine einzelne Buchung ein anderes wählen. Nur Bargeld-, Bank- und Kartenkonten können Standard sein; ohne Standard fragt das Formular nach dem Konto.</value>
   </data>
   <data name="Help_DefaultAccount_Example" xml:space="preserve">
-    <value>Standard „Hauptkonto (EUR)“: Ausgabe auf der Startseite öffnet mit dem Hauptkonto. Wählen Sie im Formular „Dollarkonto“, geht nur diese Buchung dorthin.</value>
+    <value>Ist „Hauptkonto (EUR)“ als Standard festgelegt, wird es bei einer neuen Ausgabe auf der Startseite vorausgewählt. Wählen Sie im Formular „Dollarkonto“, wird nur diese Buchung diesem Konto zugeordnet.</value>
   </data>
   <data name="Settings_ShowConverted" xml:space="preserve">
     <value>Umgerechnete Summen anzeigen</value>
   </data>
   <data name="Settings_RateFreshness" xml:space="preserve">
-    <value>Kurse gelten als möglicherweise veraltet nach</value>
+    <value>Auf möglicherweise veraltete Kurse hinweisen nach</value>
   </data>
   <data name="Settings_FreshnessDays" xml:space="preserve">
     <value>{0} Tagen</value>
@@ -3255,13 +3255,13 @@
     <value>Wählen Sie das Konto für diese Buchung.</value>
   </data>
   <data name="Entry_CurrencyChanged" xml:space="preserve">
-    <value>Der Betrag ist jetzt in {0} (vorher {1}). Bitte vor dem Speichern prüfen.</value>
+    <value>Der eingegebene Betrag wird jetzt als {0} statt als {1} behandelt; es wurde nichts umgerechnet. Prüfen Sie den Betrag vor dem Speichern.</value>
   </data>
   <data name="Entry_UndoAccountChange" xml:space="preserve">
-    <value>Kontowechsel rückgängig</value>
+    <value>Kontowechsel rückgängig machen</value>
   </data>
   <data name="Entry_TemplateAccountArchived" xml:space="preserve">
-    <value>Das Konto der Vorlage ist archiviert – wählen Sie ein Konto und den Betrag.</value>
+    <value>Das Konto der Vorlage ist archiviert. Wählen Sie ein anderes Konto und prüfen Sie den Betrag.</value>
   </data>
   <data name="Entry_EffectFrom" xml:space="preserve">
     <value>{0} von {1}</value>
@@ -3270,13 +3270,13 @@
     <value>{0} auf {1}</value>
   </data>
   <data name="Entry_ImpliedRate" xml:space="preserve">
-    <value>1 {0} = {1} {2}, aus Ihren Beträgen</value>
+    <value>Aus Ihren Beträgen berechnet: 1 {0} = {1} {2}</value>
   </data>
   <data name="Budget_ShownCurrency" xml:space="preserve">
     <value>Budgetwährung</value>
   </data>
   <data name="Home_QuickAddTarget" xml:space="preserve">
-    <value>auf {0} · {1}</value>
+    <value>Konto: {0} · {1}</value>
   </data>
   <data name="Home_QuickAddChoose" xml:space="preserve">
     <value>Kein Standardkonto – die Schnellerfassung fragt nach einem</value>
@@ -3291,43 +3291,43 @@
     <value>enthält einen geschätzten Kurs</value>
   </data>
   <data name="Home_BalanceBelowZero" xml:space="preserve">
-    <value>Ihr Kontostand könnte um den {0} unter null fallen</value>
+    <value>Etwa am {0} könnte Ihr Saldo unter null fallen</value>
   </data>
   <data name="Account_CurrencyLockedBy" xml:space="preserve">
-    <value>Die Währung kann sich nicht ändern, weil diese Beträge in ihr erfasst sind: {0}. Für eine andere Währung legen Sie ein neues Konto an und verschieben das Geld mit einer Umbuchung.</value>
+    <value>Die Kontowährung kann nicht geändert werden, weil bereits zugehörige Daten vorliegen: {0}. Legen Sie für eine andere Währung ein neues Konto an und erfassen Sie eine tatsächliche Geldübertragung separat als Umbuchung.</value>
   </data>
   <data name="Account_LockEntries" xml:space="preserve">
-    <value>{0} Buchungen</value>
+    <value>Buchungen: {0}</value>
   </data>
   <data name="Account_LockPlans" xml:space="preserve">
-    <value>{0} Pläne</value>
+    <value>Planungen: {0}</value>
   </data>
   <data name="Account_LockTemplates" xml:space="preserve">
-    <value>{0} Vorlagen</value>
+    <value>Vorlagen: {0}</value>
   </data>
   <data name="Account_LockEarmarks" xml:space="preserve">
-    <value>{0} für Ziele zurückgelegte Beträge</value>
+    <value>Reservierungen für Ziele: {0}</value>
   </data>
   <data name="Account_LockBudgets" xml:space="preserve">
-    <value>{0} Budgets</value>
+    <value>Budgets: {0}</value>
   </data>
   <data name="Account_LockInstallment" xml:space="preserve">
     <value>die Kreditrate</value>
   </data>
   <data name="Account_DefaultCleared" xml:space="preserve">
-    <value>Das war Ihr Standardkonto. Die Schnellerfassung fragt jetzt nach einem Konto; wählen Sie ein neues Standardkonto unter Einstellungen › Geld und Monate.</value>
+    <value>Dieses Konto war Ihr Standardkonto. Die Schnellerfassung fragt nun nach einem Konto. Wählen Sie ein neues Standardkonto unter „Einstellungen“ → „Währungen und Finanzmonat“.</value>
   </data>
   <data name="Account_Usable" xml:space="preserve">
     <value>Für Zahlungen verfügbar</value>
   </data>
   <data name="Account_UsableHint" xml:space="preserve">
-    <value>Zählt zum Geld, mit dem Sie Rechnungen bezahlen können, z. B. beim niedrigsten erwarteten Kontostand.</value>
+    <value>Berücksichtigt dieses Konto bei der Prognose des für Zahlungen verfügbaren Saldos.</value>
   </data>
   <data name="Help_UsableForPayments_Title" xml:space="preserve">
     <value>Für Zahlungen verfügbar</value>
   </data>
   <data name="Help_UsableForPayments_Text" xml:space="preserve">
-    <value>Manches Geld steht in Ihren Summen, ist aber nicht für alltägliche Zahlungen gedacht, etwa ein Sparkonto mit Kündigungsfrist oder Geld im Ausland. Schalten Sie dies dafür aus: Die Prognose des niedrigsten Kontostands lässt solche Konten dann weg, die Summen enthalten sie weiterhin. Zanance entscheidet das nie für Sie.</value>
+    <value>Nicht jedes Konto soll für alltägliche Zahlungen verfügbar sein, etwa ein Sparkonto mit Kündigungsfrist. Deaktivieren Sie diese Option, um das Konto aus der entsprechenden Liquiditätsprognose auszuschließen. Die separate Einstellung „In Summen einbeziehen“ bleibt unverändert. Sie entscheiden, welche Konten verfügbar sind.</value>
   </data>
   <data name="Help_UsableForPayments_Example" xml:space="preserve">
     <value>Girokonto 1.250 EUR (an) und Festgeld 5.000 EUR (aus): Der niedrigste erwartete Kontostand betrachtet nur die 1.250 EUR.</value>
@@ -3393,7 +3393,7 @@
     <value>Ihr Plan</value>
   </data>
   <data name="Goal_Schedule" xml:space="preserve">
-    <value>Einzahlungstermine</value>
+    <value>Termine zum Zurücklegen</value>
   </data>
   <data name="Goal_EveryTwoWeeks" xml:space="preserve">
     <value>Alle zwei Wochen</value>
@@ -3423,7 +3423,7 @@
     <value>Weniger ausgeben</value>
   </data>
   <data name="Goal_ContributionAmount" xml:space="preserve">
-    <value>Betrag je Termin</value>
+    <value>Sparbetrag je Termin</value>
   </data>
   <data name="Goal_CutAmount" xml:space="preserve">
     <value>Weniger ausgeben pro Monat</value>
@@ -3447,13 +3447,13 @@
     <value>Mit {0} je Termin ({1}): {2}-mal → ~ {3}</value>
   </data>
   <data name="Goal_PreviewRequired" xml:space="preserve">
-    <value>Bis {0} erreicht: {1} je Termin ({2} Termine)</value>
+    <value>Bis {0} erforderlich: {1} je Termin · Anzahl der Termine: {2}</value>
   </data>
   <data name="Goal_PreviewNeededNow" xml:space="preserve">
-    <value>Das Datum ist vorbei – jetzt fehlen {0}</value>
+    <value>Das Zieldatum ist verstrichen. Jetzt noch erforderlich: {0}</value>
   </data>
   <data name="Goal_PreviewShare" xml:space="preserve">
-    <value>Anrechenbares Einkommen des letzten Monats {0} ({1} Buchungen) × {2} % = {3}</value>
+    <value>Berücksichtigte Einnahmen des Vormonats: {0} · Buchungen: {1} · Anteil: {2} % · Sparbetrag: {3}</value>
   </data>
   <data name="Goal_PreviewCut" xml:space="preserve">
     <value>Jeden Monat {1} weniger für {0} ausgeben. Nichts ändert sich, bis Sie es übernehmen.</value>
@@ -3468,7 +3468,7 @@
     <value>Das Budget dieses Monats hat kein Limit für {0}. Legen Sie zuerst eines auf der Budgetseite an.</value>
   </data>
   <data name="Goal_EstimateNote" xml:space="preserve">
-    <value>Schätzungen unter Ihren Annahmen, keine Zusagen.</value>
+    <value>Schätzungen auf Grundlage Ihrer Annahmen, keine Zusagen.</value>
   </data>
   <data name="Goal_Protect" xml:space="preserve">
     <value>Dieses Geld schützen</value>
@@ -3477,13 +3477,13 @@
     <value>Geschütztes Geld</value>
   </data>
   <data name="Help_GoalProtect_Text" xml:space="preserve">
-    <value>Für ein geschütztes Ziel zurückgelegtes Geld zählt in Prognosen nicht zum frei verfügbaren Geld, etwa eine Notreserve. Es bleibt auf Ihrem Konto und Sie können es weiter ausgeben; die App warnt nur, wenn Ihre Pläne es aufbrauchen würden.</value>
+    <value>Für geschützte Ziele reserviertes Geld wird bei der Berechnung des prognostizierten Spielraums abgezogen, etwa eine Notreserve. Es bleibt auf dem Konto und kann weiterhin ausgegeben werden. Zanance weist darauf hin, wenn Ihre Planungen diese Reserve beanspruchen würden.</value>
   </data>
   <data name="Help_GoalProtect_Example" xml:space="preserve">
     <value>Notreserve 1.000 EUR geschützt: Bleiben laut Ihren Plänen um den 24. Okt. 670 EUR, sagt die App, dass sie 330 EUR des geschützten Geldes verwenden würden.</value>
   </data>
   <data name="Goal_ChooseAccount" xml:space="preserve">
-    <value>Wählen Sie das Konto, dem dieses Ziel folgt.</value>
+    <value>Wählen Sie das Konto, dessen Saldo für dieses Ziel zählt.</value>
   </data>
   <data name="Goal_AccountHasGoal" xml:space="preserve">
     <value>Dieses Konto hat schon ein Kontostand-Ziel. Wählen Sie ein anderes Konto oder schließen bzw. archivieren Sie zuerst das andere Ziel.</value>
@@ -3495,13 +3495,13 @@
     <value>{0} % · noch {1}</value>
   </data>
   <data name="Goal_SuggestPerDate" xml:space="preserve">
-    <value>{0} je Termin zurücklegen (noch {1} Termine)</value>
+    <value>Je Termin {0} zurücklegen · verbleibende Termine: {1}</value>
   </data>
   <data name="Goal_EtaPlan" xml:space="preserve">
     <value>~ {0} mit {1} je Termin</value>
   </data>
   <data name="Goal_OverdueNeeded" xml:space="preserve">
-    <value>Das Datum ist vorbei – jetzt fehlen {0}.</value>
+    <value>Das Zieldatum ist verstrichen. Jetzt noch erforderlich: {0}.</value>
   </data>
   <data name="Goal_AccountArchived" xml:space="preserve">
     <value>Das Konto dieses Ziels ist archiviert – wählen Sie ein anderes Konto oder schließen Sie das Ziel ab.</value>
@@ -3519,13 +3519,13 @@
     <value>Fortsetzen</value>
   </data>
   <data name="Goal_Restore" xml:space="preserve">
-    <value>Wiederherstellen</value>
+    <value>Archivierung aufheben</value>
   </data>
   <data name="Goal_CompleteMessage" xml:space="preserve">
-    <value>Als erledigt markieren? Der Verlauf bleibt; das zurückgelegte Geld wird freigegeben.</value>
+    <value>Als abgeschlossen markieren? Der Verlauf bleibt erhalten. Reservierungen für dieses Ziel werden freigegeben; Ihr Kontostand ändert sich nicht.</value>
   </data>
   <data name="Goal_CompleteBalanceMessage" xml:space="preserve">
-    <value>Als erledigt markieren? Der Verlauf bleibt und das Konto ändert sich nicht.</value>
+    <value>Als abgeschlossen markieren? Der Verlauf bleibt erhalten und das Konto bleibt unverändert.</value>
   </data>
   <data name="Home_GoalOverdue" xml:space="preserve">
     <value>{0}: Das Zieldatum ist vorbei</value>
@@ -3543,10 +3543,10 @@
     <value>Gold, Münzen und anderes nach Gewicht oder Stückzahl</value>
   </data>
   <data name="Holdings_Empty" xml:space="preserve">
-    <value>Erfassen Sie Gold, Münzen oder anderes nach Gewicht oder Stückzahl. Der Wert wird getrennt gezeigt und nie mit Ihrem Geld vermischt.</value>
+    <value>Erfassen Sie Gold, Münzen und andere Gegenstände nach Gewicht oder Stückzahl. Ihr geschätzter Wert wird getrennt von den Kontosalden angezeigt.</value>
   </data>
   <data name="Holdings_AdvancedHint" xml:space="preserve">
-    <value>Bestände hinzufügen ist im erweiterten Modus möglich (Einstellungen).</value>
+    <value>Wählen Sie in den Einstellungen die Ansicht „Erweitert“, um Bestände hinzuzufügen.</value>
   </data>
   <data name="Holdings_Add" xml:space="preserve">
     <value>Bestand hinzufügen</value>
@@ -3555,7 +3555,7 @@
     <value>Bekannter Wert</value>
   </data>
   <data name="Holdings_Note" xml:space="preserve">
-    <value>Werte sind Schätzungen aus Ihren eingegebenen Preisen. Bestände zählen nicht zu Kontoständen oder Vermögenssummen.</value>
+    <value>Die Werte werden anhand Ihrer eingegebenen Preise geschätzt. Bestände gehören nicht zu den Kontosalden, werden aber bei bekanntem Preis im Nettovermögen berücksichtigt.</value>
   </data>
   <data name="Holding_ValueUnknown" xml:space="preserve">
     <value>Wert unbekannt – Preis eintragen</value>
@@ -3573,7 +3573,7 @@
     <value>Unvollständig – Arten ohne Preis: {0}</value>
   </data>
   <data name="Holding_FineMetal" xml:space="preserve">
-    <value>{1}, fein: ≈ {0} g (Arten mit bekannter Reinheit: {2})</value>
+    <value>Feinmetallgehalt ({1}): ≈ {0} g · Bestandsarten mit bekannter Reinheit: {2}</value>
   </data>
   <data name="Holding_FineExcluded" xml:space="preserve">
     <value>ohne bekannte Reinheit: {0}</value>
@@ -3597,25 +3597,25 @@
     <value>Dieser Bestand existiert nicht mehr.</value>
   </data>
   <data name="Holding_AverageCost" xml:space="preserve">
-    <value>Durchschnittlicher Einstand: {0}</value>
+    <value>Durchschnittlicher Einstandspreis: {0}</value>
   </data>
   <data name="Holding_Unrealised" xml:space="preserve">
-    <value>Nicht realisiertes Ergebnis (Schätzung): {0}</value>
+    <value>Nicht realisierter Gewinn oder Verlust (geschätzt): {0}</value>
   </data>
   <data name="Holding_Realised" xml:space="preserve">
-    <value>Ergebnis der Verkäufe: {0}</value>
+    <value>Realisierter Gewinn oder Verlust: {0}</value>
   </data>
   <data name="Holding_Buy" xml:space="preserve">
-    <value>Kaufen</value>
+    <value>Kauf erfassen</value>
   </data>
   <data name="Holding_Sell" xml:space="preserve">
-    <value>Verkaufen</value>
+    <value>Verkauf erfassen</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Verlagern</value>
   </data>
   <data name="Holding_AddExisting" xml:space="preserve">
-    <value>Hinzufügen</value>
+    <value>Bestand erfassen</value>
   </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Entfernen</value>
@@ -3642,7 +3642,7 @@
     <value>Aus einem Kauf</value>
   </data>
   <data name="Holding_TotalNeedsQuantity" xml:space="preserve">
-    <value>Ein Gesamtwert braucht an diesem Datum einen Bestand.</value>
+    <value>Ein Gesamtwert kann nur erfasst werden, wenn für dieses Datum eine Bestandsmenge vorhanden ist.</value>
   </data>
   <data name="Holding_DeletePrice" xml:space="preserve">
     <value>Diesen Preis löschen?</value>
@@ -3666,13 +3666,13 @@
     <value>Am {0} waren in {2} nur {1} vorhanden.</value>
   </data>
   <data name="Holding_EditType" xml:space="preserve">
-    <value>Art bearbeiten</value>
+    <value>Bestandsart bearbeiten</value>
   </data>
   <data name="Holding_Archive" xml:space="preserve">
     <value>Archivieren</value>
   </data>
   <data name="Holding_ArchiveMessage" xml:space="preserve">
-    <value>Die Art verschwindet aus Listen und der Startseite. Ihr Verlauf bleibt.</value>
+    <value>Die Bestandsart wird aus den aktiven Listen und von der Startseite ausgeblendet. Ihr Verlauf bleibt erhalten.</value>
   </data>
   <data name="Holding_DefaultLocation" xml:space="preserve">
     <value>Zuhause</value>
@@ -3690,7 +3690,7 @@
     <value>z. B. Goldschmuck 18 Karat</value>
   </data>
   <data name="AssetType_NameRequired" xml:space="preserve">
-    <value>Bitte einen Namen eingeben.</value>
+    <value>Geben Sie einen Namen für die Bestandsart ein.</value>
   </data>
   <data name="AssetType_Kind" xml:space="preserve">
     <value>Art</value>
@@ -3708,7 +3708,7 @@
     <value>Sonstiges</value>
   </data>
   <data name="AssetType_MeasuredBy" xml:space="preserve">
-    <value>Gemessen nach</value>
+    <value>Mengenerfassung nach</value>
   </data>
   <data name="AssetType_ByWeight" xml:space="preserve">
     <value>Gewicht</value>
@@ -3717,7 +3717,7 @@
     <value>Stückzahl</value>
   </data>
   <data name="AssetType_DimensionLocked" xml:space="preserve">
-    <value>Gewicht oder Stückzahl kann nach dem ersten Eintrag nicht mehr geändert werden.</value>
+    <value>Nach dem ersten erfassten Vorgang können Sie nicht mehr zwischen Gewicht und Stückzahl wechseln. Die Bestandsmenge kann weiterhin geändert werden.</value>
   </data>
   <data name="AssetType_Metal" xml:space="preserve">
     <value>Metall</value>
@@ -3750,7 +3750,7 @@
     <value>Karat (18) oder Feingehalt (750); leer = unbekannt</value>
   </data>
   <data name="AssetType_PurityInvalid" xml:space="preserve">
-    <value>Karat (1–24) oder Feingehalt (1–1000) eingeben.</value>
+    <value>Geben Sie die Reinheit in Karat (1–24) oder in Tausendsteln (1–1000) ein.</value>
   </data>
   <data name="AssetType_CountUnit" xml:space="preserve">
     <value>Name einer Einheit</value>
@@ -3762,7 +3762,7 @@
     <value>Gewicht einer Einheit in g (optional)</value>
   </data>
   <data name="AssetType_WeightInvalid" xml:space="preserve">
-    <value>Gewicht größer als null mit höchstens drei Nachkommastellen eingeben.</value>
+    <value>Geben Sie ein Gewicht größer als null mit höchstens drei Nachkommastellen ein.</value>
   </data>
   <data name="AssetType_Divisible" xml:space="preserve">
     <value>Bruchteile erlaubt (z. B. halbe Münze)</value>
@@ -3792,7 +3792,7 @@
     <value>Verlagert</value>
   </data>
   <data name="AssetEvent_GiftReceived" xml:space="preserve">
-    <value>Geschenk oder Erbe</value>
+    <value>Geschenk oder Erbschaft</value>
   </data>
   <data name="AssetEvent_Outflow" xml:space="preserve">
     <value>Weggegeben oder verloren</value>
@@ -3804,19 +3804,19 @@
     <value>Was Sie bereits besitzen. Es wird kein Geld von einem Konto abgebucht.</value>
   </data>
   <data name="AssetEvent_PurchaseHint" xml:space="preserve">
-    <value>Von einem Konto bezahlt. Der Preis ist keine Ausgabe; eine Gebühr wird als Ausgabe erfasst.</value>
+    <value>Der Kaufpreis verringert den erfassten Kontosaldo, zählt in Zanance aber nicht als Konsumausgabe. Eine Gebühr wird separat als Ausgabe erfasst.</value>
   </data>
   <data name="AssetEvent_SaleHint" xml:space="preserve">
-    <value>Auf ein Konto eingezahlt. Der Erlös ist kein Einkommen.</value>
+    <value>Der Verkaufserlös erhöht den erfassten Kontosaldo, zählt in Zanance aber nicht als Einnahme.</value>
   </data>
   <data name="AssetEvent_LocationTransferHint" xml:space="preserve">
     <value>Von einem Ort zum anderen. Die Gesamtmenge bleibt gleich.</value>
   </data>
   <data name="AssetEvent_GiftReceivedHint" xml:space="preserve">
-    <value>Ohne Bezahlung erhalten. Es ist kein Einkommen.</value>
+    <value>Ohne Gegenleistung erhalten. Der Zugang wird in Zanance nicht als Einnahme gebucht.</value>
   </data>
   <data name="AssetEvent_OutflowHint" xml:space="preserve">
-    <value>Verschenkt, verbraucht oder verloren. Es ist keine Ausgabe.</value>
+    <value>Verschenkt, verbraucht oder verloren. Der Bestandsabgang wird in Zanance nicht als Ausgabe gebucht.</value>
   </data>
   <data name="AssetEvent_CorrectionHint" xml:space="preserve">
     <value>Korrigiert die Menge, z. B. nach erneutem Wiegen. Ein Grund ist nötig.</value>
@@ -3825,7 +3825,7 @@
     <value>Menge</value>
   </data>
   <data name="AssetEvent_QuantityInvalid" xml:space="preserve">
-    <value>Menge größer als null mit höchstens drei Nachkommastellen eingeben.</value>
+    <value>Geben Sie eine Menge größer als null mit höchstens drei Nachkommastellen ein.</value>
   </data>
   <data name="AssetEvent_WholeUnits" xml:space="preserve">
     <value>Diese Art wird in ganzen Einheiten gezählt.</value>
@@ -3846,7 +3846,7 @@
     <value>Nach</value>
   </data>
   <data name="AssetEvent_LocationsDiffer" xml:space="preserve">
-    <value>Zwei verschiedene Orte wählen.</value>
+    <value>Wählen Sie zwei verschiedene Orte.</value>
   </data>
   <data name="AssetEvent_AddLocation" xml:space="preserve">
     <value>Ort hinzufügen</value>
@@ -3855,16 +3855,16 @@
     <value>z. B. Tresor zu Hause oder Bankschließfach</value>
   </data>
   <data name="AssetEvent_Paid" xml:space="preserve">
-    <value>Bezahlter Preis</value>
+    <value>Bezahlter Betrag</value>
   </data>
   <data name="AssetEvent_Received" xml:space="preserve">
-    <value>Erhaltenes Geld</value>
+    <value>Erhaltener Betrag</value>
   </data>
   <data name="AssetEvent_PriceTotal" xml:space="preserve">
     <value>Gesamt</value>
   </data>
   <data name="AssetEvent_SecondAmount" xml:space="preserve">
-    <value>Dasselbe in {0} (für den Einstand; optional)</value>
+    <value>Entsprechender Betrag in {0} (für die Kostenbasis; optional)</value>
   </data>
   <data name="AssetEvent_Fee" xml:space="preserve">
     <value>Gebühr (optional)</value>
@@ -3879,7 +3879,7 @@
     <value>Wert zu diesem Zeitpunkt in {0} (optional)</value>
   </data>
   <data name="AssetEvent_BasisHint" xml:space="preserve">
-    <value>Wird für den durchschnittlichen Einstand verwendet. Leer lassen, wenn unbekannt.</value>
+    <value>Wird zur Berechnung des durchschnittlichen Einstandspreises verwendet. Lassen Sie das Feld leer, wenn der Wert unbekannt ist.</value>
   </data>
   <data name="AssetEvent_Reason" xml:space="preserve">
     <value>Grund (optional)</value>
@@ -3888,10 +3888,10 @@
     <value>Grund</value>
   </data>
   <data name="AssetEvent_ReasonMissing" xml:space="preserve">
-    <value>Eine Korrektur braucht einen Grund.</value>
+    <value>Geben Sie einen Grund für die Mengenkorrektur an.</value>
   </data>
   <data name="AssetEvent_AccountMissing" xml:space="preserve">
-    <value>Konto wählen.</value>
+    <value>Wählen Sie ein Konto.</value>
   </data>
   <data name="AssetEvent_At" xml:space="preserve">
     <value>{0} in {1}</value>
@@ -3912,7 +3912,7 @@
     <value>Reinheit</value>
   </data>
   <data name="Help_Purity_Text" xml:space="preserve">
-    <value>Die Reinheit wird in Karat (24 = rein) oder als Feingehalt in Tausendsteln angegeben. Gold mit 18 und 24 Karat sind zwei Arten, weil ihre Gramm nicht gleich sind. Mit Reinheit zeigt die App das enthaltene Feinmetall; ohne sie wird nichts geschätzt.</value>
+    <value>Geben Sie die Reinheit in Karat oder als Feingehalt in Tausendsteln an. In der Berechnung entsprechen 24 Karat reinem Metall. Gold mit 18 und 24 Karat wird als unterschiedliche Bestandsart geführt, weil sich der Feinmetallanteil bei gleichem Gesamtgewicht unterscheidet. Ist die Reinheit unbekannt, wird kein Feinmetallgehalt berechnet.</value>
   </data>
   <data name="Help_Purity_Example" xml:space="preserve">
     <value>18 Karat = 750/1000: 20 g Gold mit 18 Karat enthalten etwa 15 g Feingold.</value>
@@ -3921,7 +3921,7 @@
     <value>Arten von Änderungen</value>
   </data>
   <data name="Help_AssetEvents_Text" xml:space="preserve">
-    <value>Ein Kauf nimmt Geld von einem Konto, ein Verkauf zahlt Geld ein; beides ist weder Ausgabe noch Einkommen. Vorhandenes, Geschenke, Verlagerungen, Abgänge und Korrekturen ändern nur die Menge. Ein Bestand kann an keinem Tag negativ werden.</value>
+    <value>Beim Erfassen eines Kaufs sinkt der Kontosaldo, beim Erfassen eines Verkaufs steigt er. In Zanance zählen Kaufpreis und Verkaufserlös nicht als Konsumausgabe oder Einnahme; Gebühren werden separat erfasst. Anfangsbestände, Geschenke, Verlagerungen, Abgänge und Mengenkorrekturen verändern nur die Bestandsdaten. Vorgänge dürfen keinen negativen Bestand verursachen.</value>
   </data>
   <data name="Help_AssetEvents_Example" xml:space="preserve">
     <value>10 g für 1.000 EUR plus 20 EUR Gebühr gekauft: Das Konto sinkt um 1.020 EUR, davon sind 20 EUR Ausgabe.</value>
@@ -3930,7 +3930,7 @@
     <value>Preise und Wert</value>
   </data>
   <data name="Help_HoldingPrices_Text" xml:space="preserve">
-    <value>Geben Sie einen Preis pro Gramm oder Einheit oder den Gesamtwert Ihres Bestands ein. Der letzte Preis bis zu einem Tag ergibt den Wert dieses Tages; ein neuer Preis ändert weder frühere Werte noch die Menge. Kaufpreise werden ebenfalls verwendet und gekennzeichnet.</value>
+    <value>Erfassen Sie einen Preis pro Gramm oder Einheit oder den Gesamtwert des Bestands. Für einen Stichtag wird der zuletzt für diesen oder einen früheren Tag erfasste Preis verwendet. Ein Preis mit einem späteren Datum verändert frühere Stichtagswerte nicht; die Menge bleibt unverändert. Auch Kaufpreise werden verwendet und entsprechend gekennzeichnet.</value>
   </data>
   <data name="Help_HoldingPrices_Example" xml:space="preserve">
     <value>50 EUR pro g × 730 g = 36.500 EUR.</value>
@@ -3942,7 +3942,7 @@
     <value>Bestandsverkauf</value>
   </data>
   <data name="Entry_HoldingMoney" xml:space="preserve">
-    <value>Dieses Geld gehört zu einem Kauf oder Verkauf eines Bestands. Es wird dort zusammen mit der Menge geändert oder gelöscht.</value>
+    <value>Diese Buchung gehört zu einem Bestandskauf oder -verkauf. Bearbeiten oder löschen Sie den zugehörigen Bestandsvorgang, damit Betrag und Menge gemeinsam angepasst werden.</value>
   </data>
   <data name="Entry_OpenHolding" xml:space="preserve">
     <value>Bestand öffnen</value>
@@ -3954,13 +3954,13 @@
     <value>Bestände exportieren</value>
   </data>
   <data name="Export_HoldingsDone" xml:space="preserve">
-    <value>Bestände mit {0} Änderungen exportiert. Das Geld von Käufen und Verkäufen steht im Export der Buchungen.</value>
+    <value>Bestände exportiert. Enthaltene Vorgänge: {0}. Die zugehörigen Geldbewegungen stehen im Buchungsexport.</value>
   </data>
   <data name="Import_HoldingsPreview" xml:space="preserve">
-    <value>Bestandsdatei: {0} Arten, {1} Änderungen, {2} Preise; {3} ungültige Zeilen.</value>
+    <value>Bestandsdatei – Arten: {0} · Vorgänge: {1} · Preise: {2} · ungültige Zeilen: {3}</value>
   </data>
   <data name="Import_HoldingsInvalid" xml:space="preserve">
-    <value>Eine Bestandsdatei wird nur vollständig importiert. Bitte zuerst die ungültigen Zeilen korrigieren.</value>
+    <value>Eine Bestandsdatei kann nur vollständig importiert werden. Korrigieren Sie zuerst die ungültigen Zeilen.</value>
   </data>
   <data name="Import_HoldingsConflict" xml:space="preserve">
     <value>Nichts importiert: Am {0} würde ein Bestand negativ.</value>
@@ -3981,16 +3981,16 @@
     <value>In einen Bestand umwandeln</value>
   </data>
   <data name="Account_ConvertPreview" xml:space="preserve">
-    <value>„{0}“ wird ein Bestand von 1 Stück im Wert von {1} (Preis von heute). Das Konto wird mit seinen Buchungen archiviert und kann wiederhergestellt werden. Vor Ihrer Bestätigung ändert sich nichts.</value>
+    <value>„{0}“ wird in einen Bestand mit der Menge 1 Stück und dem heutigen Wert {1} umgewandelt. Das bisherige Konto und seine Buchungen werden archiviert; die Archivierung kann aufgehoben werden. Die Änderung erfolgt erst nach Ihrer Bestätigung.</value>
   </data>
   <data name="Account_ConvertConfirm" xml:space="preserve">
     <value>Umwandeln</value>
   </data>
   <data name="Holding_FineMetalOne" xml:space="preserve">
-    <value>{1}, fein: ≈ {0} g</value>
+    <value>Feinmetallgehalt ({1}): ≈ {0} g</value>
   </data>
   <data name="Entry_AssetAccountTitle" xml:space="preserve">
-    <value>Ein Vermögenswert-Konto</value>
+    <value>Vermögenswertkonto</value>
   </data>
   <data name="Entry_AssetAccountMessage" xml:space="preserve">
     <value>Dieses Konto enthält den Wert von etwas, das Sie besitzen. Eine Wertänderung ist meist eine Saldokorrektur, und Gold oder Münzen werden besser als Bestand geführt. Trotzdem als Ausgabe oder Einnahme erfassen?</value>
@@ -4002,7 +4002,7 @@
     <value>Ziele: {0} · Bestandsarten: {1}</value>
   </data>
   <data name="Report_R1" xml:space="preserve">
-    <value>Periode</value>
+    <value>Zeitraumübersicht</value>
   </data>
   <data name="Report_R2" xml:space="preserve">
     <value>Verpflichtungen</value>
@@ -4011,13 +4011,13 @@
     <value>Ziele</value>
   </data>
   <data name="Report_R4" xml:space="preserve">
-    <value>Vermögen</value>
+    <value>Bestände</value>
   </data>
   <data name="Report_R6" xml:space="preserve">
     <value>Datenstatus</value>
   </data>
   <data name="Report_Scope" xml:space="preserve">
-    <value>Umfang:</value>
+    <value>Berichtsauswahl:</value>
   </data>
   <data name="Report_ChangeScope" xml:space="preserve">
     <value>Ändern</value>
@@ -4029,10 +4029,10 @@
     <value>Konten</value>
   </data>
   <data name="Report_ScopeInTotals" xml:space="preserve">
-    <value>Konten in Summen</value>
+    <value>In Gesamtsummen berücksichtigte Konten</value>
   </data>
   <data name="Report_ScopeUsable" xml:space="preserve">
-    <value>Verfügbare Konten</value>
+    <value>Für Zahlungen verfügbare Konten</value>
   </data>
   <data name="Report_ScopeOneAccount" xml:space="preserve">
     <value>Ein Konto</value>
@@ -4041,7 +4041,7 @@
     <value>Zeitraum</value>
   </data>
   <data name="Report_ConfirmedOnly" xml:space="preserve">
-    <value>Nur bestätigte</value>
+    <value>Nur bestätigte Buchungen</value>
   </data>
   <data name="Report_Next30" xml:space="preserve">
     <value>Nächste 30 Tage</value>
@@ -4071,7 +4071,7 @@
     <value>Einnahmen {0} · Ausgaben {1}</value>
   </data>
   <data name="Report_Rate" xml:space="preserve">
-    <value>Behaltener Anteil des Einkommens: {0}</value>
+    <value>Verbleibender Einnahmenanteil: {0}</value>
   </data>
   <data name="Report_OtherCurrencies" xml:space="preserve">
     <value>Andere Währungen (nicht addiert): {0}</value>
@@ -4080,13 +4080,13 @@
     <value>Umgerechnet: ≈ {0}</value>
   </data>
   <data name="Report_SpendingLine" xml:space="preserve">
-    <value>Ausgaben (Kosten {0} − Erstattungen {1})</value>
+    <value>Nettoausgaben (Ausgaben {0} − Erstattungen {1})</value>
   </data>
   <data name="Report_TransfersBetween" xml:space="preserve">
     <value>Umbuchungen zwischen Ihren Konten</value>
   </data>
   <data name="Report_SeparateLines" xml:space="preserve">
-    <value>Separate Zeilen, keine Ausgaben</value>
+    <value>Separat ausgewiesen; nicht als Ausgaben gezählt</value>
   </data>
   <data name="Report_IncomeSpending" xml:space="preserve">
     <value>Einnahmen und Ausgaben</value>
@@ -4098,7 +4098,7 @@
     <value>{0} vs. {1}</value>
   </data>
   <data name="Report_ChangeDetail" xml:space="preserve">
-    <value>Jetzt {0} · vorher {1}</value>
+    <value>Aktueller Zeitraum: {0} · Vergleichszeitraum: {1}</value>
   </data>
   <data name="Report_New" xml:space="preserve">
     <value>neu</value>
@@ -4107,22 +4107,22 @@
     <value>Noch keine Ausgaben zum Vergleichen.</value>
   </data>
   <data name="Report_TagShared" xml:space="preserve">
-    <value>mit mehreren Tags: {0}</value>
+    <value>mit mehreren Schlagwörtern: {0}</value>
   </data>
   <data name="Report_Capital" xml:space="preserve">
-    <value>Bestände gekauft oder verkauft</value>
+    <value>Käufe und Verkäufe von Beständen</value>
   </data>
   <data name="Report_Headroom" xml:space="preserve">
     <value>Spielraum</value>
   </data>
   <data name="Report_Around" xml:space="preserve">
-    <value>{0} um den {1}</value>
+    <value>{0} · ungefähr am {1}</value>
   </data>
   <data name="Report_UsesProtected" xml:space="preserve">
-    <value>Ihre Pläne würden um den {1} {0} Ihres geschützten Geldes verbrauchen.</value>
+    <value>Ihre Planungen würden ungefähr am {1} auf geschütztes Geld in Höhe von {0} zurückgreifen.</value>
   </data>
   <data name="Report_LowestBalance" xml:space="preserve">
-    <value>Niedrigster Stand {0} am {1}.</value>
+    <value>Niedrigster Saldo: {0} am {1}.</value>
   </data>
   <data name="Report_EssentialNotIncluded" xml:space="preserve">
     <value>Alltagsausgaben nicht enthalten</value>
@@ -4131,13 +4131,13 @@
     <value>unvollständig – unbekannte Beträge: {0}</value>
   </data>
   <data name="Report_EstimateNotGuarantee" xml:space="preserve">
-    <value>Schätzung mit Ihren aktuellen Plänen – keine Garantie</value>
+    <value>Schätzung auf Grundlage Ihrer aktuellen Planungen; keine Garantie</value>
   </data>
   <data name="Report_NoUsableAccounts" xml:space="preserve">
-    <value>Kein verfügbares Konto in dieser Währung.</value>
+    <value>Kein Konto in dieser Währung ist für Zahlungen als verfügbar markiert.</value>
   </data>
   <data name="Report_UsableToday" xml:space="preserve">
-    <value>Verfügbarer Stand, Ende {0}</value>
+    <value>Für Zahlungen verfügbarer Saldo am Ende des Tages {0}</value>
   </data>
   <data name="Report_DayToDay" xml:space="preserve">
     <value>Alltagsausgaben · {0} × {1}</value>
@@ -4146,31 +4146,31 @@
     <value>Niedrigster Stand · {0}</value>
   </data>
   <data name="Report_Protected" xml:space="preserve">
-    <value>Geschütztes zurückgelegtes Geld</value>
+    <value>Geschützte Rücklagen</value>
   </data>
   <data name="Report_ComesAfter" xml:space="preserve">
-    <value>{0} am {1} kommt nach dem Tiefpunkt</value>
+    <value>Der Eingang von {0} am {1} liegt nach dem niedrigsten Saldo.</value>
   </data>
   <data name="Report_Next30Title" xml:space="preserve">
     <value>Nächste 30 Tage</value>
   </data>
   <data name="Report_NoCommitments" xml:space="preserve">
-    <value>Keine Zahlungen in den nächsten 30 Tagen</value>
+    <value>Keine offenen geplanten Zahlungen für die nächsten 30 Tage erfasst.</value>
   </data>
   <data name="Report_UnknownCount" xml:space="preserve">
     <value>unbekannt: {0}</value>
   </data>
   <data name="Report_Yearly" xml:space="preserve">
-    <value>Regelmäßige Zahlungen, nächste 12 Monate</value>
+    <value>Regelmäßige Zahlungen der nächsten 12 Monate</value>
   </data>
   <data name="Report_YearlyTotals" xml:space="preserve">
     <value>Fest {0} · nicht monatlich {1} · geschätzt {2}</value>
   </data>
   <data name="Report_MonthlyShare" xml:space="preserve">
-    <value>Anteil {0}/Monat</value>
+    <value>Monatlicher Vergleichsbetrag: {0}</value>
   </data>
   <data name="Report_ShareNotSetAside" xml:space="preserve">
-    <value>Ein Monatsanteil ist ein Anteil, kein zurückgelegtes Geld.</value>
+    <value>Der Monatsbetrag ist nur ein rechnerischer Vergleichswert. Dadurch wird kein Geld zurückgelegt.</value>
   </data>
   <data name="Report_Debt" xml:space="preserve">
     <value>Kredite</value>
@@ -4179,16 +4179,16 @@
     <value>Nächste Rate {0} am {1}</value>
   </data>
   <data name="Report_AddPaymentDay" xml:space="preserve">
-    <value>Ein Kredit hat eine Rate, aber keinen Plan – Zahltag hinzufügen.</value>
+    <value>Für einen Kredit ist eine Rate, aber keine Zahlungsplanung hinterlegt. Ergänzen Sie die Planung mit dem Zahlungstermin.</value>
   </data>
   <data name="Report_DebtRatio" xml:space="preserve">
-    <value>Raten: {0} des Einkommens · Zinsen {1} · Tilgung {2}</value>
+    <value>Ratenanteil an den Einnahmen: {0} · Zinsen: {1} · Tilgung: {2}</value>
   </data>
   <data name="Report_OwedToMe" xml:space="preserve">
     <value>Mir geschuldet</value>
   </data>
   <data name="Report_NoReceivables" xml:space="preserve">
-    <value>Niemand schuldet Ihnen Geld.</value>
+    <value>Keine offenen Forderungen erfasst.</value>
   </data>
   <data name="Report_Receivables" xml:space="preserve">
     <value>Offen: {0} · Posten: {1}</value>
@@ -4209,7 +4209,7 @@
     <value>{0} Tage</value>
   </data>
   <data name="Report_Due" xml:space="preserve">
-    <value>fällig {0}</value>
+    <value>fällig am {0}</value>
   </data>
   <data name="Report_DueOverdue" xml:space="preserve">
     <value>überfällig seit {0}</value>
@@ -4227,7 +4227,7 @@
     <value>{0} pro Monat</value>
   </data>
   <data name="Report_CapIncome" xml:space="preserve">
-    <value>Einkommen (Median von 3 Monaten)</value>
+    <value>Einnahmen (Median von 3 vollständigen Monaten)</value>
   </data>
   <data name="Report_CapSpending" xml:space="preserve">
     <value>Ausgaben (Median, ohne nicht monatliche Rechnungen)</value>
@@ -4239,10 +4239,10 @@
     <value>Kredittilgung</value>
   </data>
   <data name="Report_CapGoals" xml:space="preserve">
-    <value>Pläne anderer Ziele</value>
+    <value>Sparpläne anderer Ziele</value>
   </data>
   <data name="Report_EstimateNotPromise" xml:space="preserve">
-    <value>Eine Schätzung, kein Versprechen. Ein Vorschlag ändert kein Budget und keine Buchung.</value>
+    <value>Dies ist eine Schätzung, keine Zusage. Auch wenn Sie den Vorschlag übernehmen, werden keine Budgets oder Buchungen geändert.</value>
   </data>
   <data name="Report_Needs" xml:space="preserve">
     <value>braucht {0}/Monat</value>
@@ -4254,16 +4254,16 @@
     <value>Plan für {1}: {0} pro Monat ab nächstem Monat.</value>
   </data>
   <data name="Report_NotEnoughHistory" xml:space="preserve">
-    <value>Noch nicht genug Verlauf (3 volle Monate nötig)</value>
+    <value>Noch nicht genügend Daten: 3 vollständige Monate erforderlich</value>
   </data>
   <data name="Report_Coverage" xml:space="preserve">
-    <value>Gedeckte Grundkosten</value>
+    <value>Reichweite für notwendige Ausgaben</value>
   </data>
   <data name="Report_Months" xml:space="preserve">
     <value>{0} Monate</value>
   </data>
   <data name="Report_CoverageDetail" xml:space="preserve">
-    <value>Verfügbar {0} · Grundkosten pro Monat {1}</value>
+    <value>Verfügbar: {0} · notwendige Ausgaben pro Monat: {1}</value>
   </data>
   <data name="Report_OfWhichProtected" xml:space="preserve">
     <value>davon geschützt {0}</value>
@@ -4272,7 +4272,7 @@
     <value>Verfügbares Geld</value>
   </data>
   <data name="Report_EssentialMonth" xml:space="preserve">
-    <value>Grundkosten pro Monat</value>
+    <value>Notwendige Ausgaben pro Monat</value>
   </data>
   <data name="Report_NetWorth" xml:space="preserve">
     <value>Nettovermögen</value>
@@ -4332,10 +4332,10 @@
     <value>Bestände ohne Preis: {0}</value>
   </data>
   <data name="Issue_OpeningUnknown" xml:space="preserve">
-    <value>Anfangsstand unbekannt: {0}</value>
+    <value>Anfangssaldo unbekannt: {0}</value>
   </data>
   <data name="Issue_NotReconciled" xml:space="preserve">
-    <value>Seit über 60 Tagen nicht mit der Bank verglichen: {0}</value>
+    <value>Seit über 60 Tagen nicht abgeglichen: {0}</value>
   </data>
   <data name="Issue_WithoutCategory" xml:space="preserve">
     <value>Ohne Kategorie: {0}</value>
@@ -4347,7 +4347,7 @@
     <value>Sammelbuchungen (Zeitpunkt unbekannt): {0}</value>
   </data>
   <data name="Issue_BeforeOpening" xml:space="preserve">
-    <value>Vor einem Eröffnungsdatum: {0}</value>
+    <value>Buchungen vor dem Datum des Anfangssaldos: {0}</value>
   </data>
   <data name="Issue_BackupOld_Action" xml:space="preserve">
     <value>Jetzt sichern</value>
@@ -4356,7 +4356,7 @@
     <value>Prüfen</value>
   </data>
   <data name="Issue_UnknownAmounts_Action" xml:space="preserve">
-    <value>Pläne öffnen</value>
+    <value>Planung öffnen</value>
   </data>
   <data name="Issue_MissingRates_Action" xml:space="preserve">
     <value>Kurse eintragen</value>
@@ -4371,7 +4371,7 @@
     <value>Konto öffnen</value>
   </data>
   <data name="Issue_NotReconciled_Action" xml:space="preserve">
-    <value>Stand vergleichen</value>
+    <value>Saldo abgleichen</value>
   </data>
   <data name="Issue_WithoutCategory_Action" xml:space="preserve">
     <value>Buchungen zeigen</value>
@@ -4389,7 +4389,7 @@
     <value>Diese Zahl erklären</value>
   </data>
   <data name="Kpi_InWords" xml:space="preserve">
-    <value>In Worten</value>
+    <value>Einfach erklärt</value>
   </data>
   <data name="Kpi_Included" xml:space="preserve">
     <value>Enthalten</value>
@@ -4407,43 +4407,43 @@
     <value>Wie viel ist vom Budget dieses Zeitraums übrig?</value>
   </data>
   <data name="Kpi_K01_Definition" xml:space="preserve">
-    <value>Das Limit plus Übertrag, minus Ausgaben abzüglich Erstattungen.</value>
+    <value>Budgetlimit zuzüglich Budgetübertrag, abzüglich Nettoausgaben. Die Nettoausgaben entsprechen den Ausgaben abzüglich Erstattungen.</value>
   </data>
   <data name="Kpi_K01_Included" xml:space="preserve">
     <value>Ausgaben und Erstattungen der Konten und Kategorien des Budgets|Unterkategorien mit ihrer Oberkategorie</value>
   </data>
   <data name="Kpi_K01_Excluded" xml:space="preserve">
-    <value>Umbuchungen und Kartenzahlungen|Kredittilgung|Käufe und Verkäufe von Beständen|Korrekturen und Anfangsstände|Einnahmen</value>
+    <value>Umbuchungen und Rückzahlungen auf Kreditkartenkonten|Kredittilgung|Käufe und Verkäufe von Beständen|Saldokorrekturen und Anfangssalden|Einnahmen</value>
   </data>
   <data name="Kpi_K02_Title" xml:space="preserve">
-    <value>Tiefster Stand und Spielraum</value>
+    <value>Niedrigster Saldo und Spielraum</value>
   </data>
   <data name="Kpi_K02_Question" xml:space="preserve">
-    <value>Wird das Geld vor dem nächsten Einkommen knapp?</value>
+    <value>Könnte mein Geld vor der nächsten Einnahme knapp werden?</value>
   </data>
   <data name="Kpi_K02_Definition" xml:space="preserve">
-    <value>Der verfügbare Stand von heute, plus geplante Eingänge und minus geplante Zahlungen jedes Tages, minus Alltagsausgaben, wenn Sie eine Schätzung festgelegt haben. Der Tiefpunkt minus geschütztes Geld ist der Spielraum – eine Schätzung, nie „sicher ausgebbar“.</value>
+    <value>Ausgehend vom heute für Zahlungen verfügbaren Saldo werden geplante Eingänge addiert und geplante Ausgänge abgezogen. Eine hinterlegte Schätzung für Alltagsausgaben wird ebenfalls abgezogen. Der niedrigste errechnete Saldo abzüglich geschützter Rücklagen ergibt den Spielraum. Dies ist eine Schätzung, keine Zusage, dass Sie diesen Betrag bedenkenlos ausgeben können.</value>
   </data>
   <data name="Kpi_K02_Included" xml:space="preserve">
-    <value>Für Zahlungen verfügbare Konten|Für spätere Tage erfasste Buchungen|Offene Planzahlungen, überfällige heute|Ihre Alltagsschätzung, falls festgelegt|Zurückgelegtes, als geschützt markiertes Geld</value>
+    <value>Für Zahlungen verfügbare Konten|Buchungen mit einem zukünftigen Datum|Offene geplante Zahlungen; überfällige Zahlungen werden für heute angesetzt|Ihre Schätzung für Alltagsausgaben, falls hinterlegt|Geschützte Rücklagen</value>
   </data>
   <data name="Kpi_K02_Excluded" xml:space="preserve">
-    <value>Budgets und Monatsanteile|Bestände, Schulden und Forderungen|Kreditrahmen|Kartenkäufe – nur die Kartenzahlung zählt</value>
+    <value>Budgets und rechnerische Monatsbeträge|Bestände, Schulden und Forderungen|Kreditrahmen|Kreditkartenkäufe werden hier nicht gezählt; stattdessen zählen Rückzahlungen von verfügbaren Konten</value>
   </data>
   <data name="Kpi_K03_Title" xml:space="preserve">
     <value>Fortschritt der Ziele</value>
   </data>
   <data name="Kpi_K03_Question" xml:space="preserve">
-    <value>Wie weit sind meine Ziele?</value>
+    <value>Wie weit bin ich mit meinen Zielen gekommen?</value>
   </data>
   <data name="Kpi_K03_Definition" xml:space="preserve">
-    <value>Das Erreichte geteilt durch das Ziel; der Rest ist, was noch fehlt.</value>
+    <value>Der erreichte Betrag oder die erreichte Menge wird durch den Zielwert geteilt. Der Rest zeigt, wie viel noch fehlt.</value>
   </data>
   <data name="Kpi_K03_Included" xml:space="preserve">
-    <value>Kontostand-Ziel: der Stand seines Kontos|Zurückgelegtes Geld: das zurückgelegte, gedeckte Geld</value>
+    <value>Kontostand-Ziel: der erfasste Saldo des zugehörigen Kontos|Rücklagenziel: die durch den Kontosaldo gedeckten Reservierungen|Mengenziel: die erfasste Menge des zugehörigen Bestands</value>
   </data>
   <data name="Kpi_K03_Excluded" xml:space="preserve">
-    <value>Von anderen Konten umgebuchtes Geld als Einkommen|Preisänderungen</value>
+    <value>Umbuchungen erzeugen keine zusätzlichen Einnahmen, können aber den Saldo eines Kontostand-Ziels verändern|Preisänderungen zählen nicht zum Fortschritt eines Mengenziels</value>
   </data>
   <data name="Kpi_K04_Title" xml:space="preserve">
     <value>Zahlungen der nächsten 30 Tage</value>
@@ -4452,10 +4452,10 @@
     <value>Welche Zahlungen kommen und wie hoch sind sie?</value>
   </data>
   <data name="Kpi_K04_Definition" xml:space="preserve">
-    <value>Was von offenen Planzahlungen der nächsten 30 Tage noch zu zahlen ist, überfällige eingeschlossen. Bekannte, geschätzte (≈) und unbekannte Beträge bleiben getrennt.</value>
+    <value>Die noch offenen Beträge geplanter Zahlungen mit Fälligkeit in den nächsten 30 Tagen, einschließlich bereits überfälliger Zahlungen. Bekannte, geschätzte (≈) und unbekannte Beträge werden getrennt ausgewiesen.</value>
   </data>
   <data name="Kpi_K04_Included" xml:space="preserve">
-    <value>Ausgabenpläne|Umbuchungen auf Karten, Kredite oder zurückgelegte Konten|Nur der offene Teil einer teilweise bezahlten Zahlung</value>
+    <value>Geplante Ausgaben|Umbuchungen auf Kreditkarten-, Kredit- oder nicht für Zahlungen verfügbare Konten|Bei Teilzahlungen nur der noch offene Betrag</value>
   </data>
   <data name="Kpi_K04_Excluded" xml:space="preserve">
     <value>Erledigte und übersprungene Zahlungen|Umbuchungen zwischen verfügbaren Konten|Unbekannte Beträge werden gezählt, nie als null addiert</value>
@@ -4464,46 +4464,46 @@
     <value>Überschuss</value>
   </data>
   <data name="Kpi_K05_Question" xml:space="preserve">
-    <value>Habe ich mehr verdient als ausgegeben?</value>
+    <value>Habe ich mehr Einnahmen erhalten als ausgegeben?</value>
   </data>
   <data name="Kpi_K05_Definition" xml:space="preserve">
-    <value>Ihr Einkommen minus Ihre Konsumausgaben im Zeitraum.</value>
+    <value>Die erfassten Einnahmen des gewählten Zeitraums abzüglich zurückgezahlter Einnahmen und abzüglich der Ausgaben nach Erstattungen und Kostenerstattungen.</value>
   </data>
   <data name="Kpi_K05_Included" xml:space="preserve">
-    <value>Einkommen auf den Konten des Umfangs, minus zurückgezahltes Einkommen|Ausgaben, verringert um Erstattungen|Zinsen und Gebühren, einmal als Ausgaben</value>
+    <value>Einnahmen der einbezogenen Konten abzüglich zurückgezahlter Einnahmen|Ausgaben abzüglich Erstattungen und Kostenerstattungen|Zinsen und Gebühren, jeweils einmal als Ausgabe gezählt</value>
   </data>
   <data name="Kpi_K05_Excluded" xml:space="preserve">
-    <value>Umbuchungen zwischen Ihren Konten|Kartenzahlungen und Kredittilgung|Käufe und Verkäufe von Beständen|Korrekturen und Anfangsstände|Preis- und Kursänderungen</value>
+    <value>Umbuchungen zwischen Ihren Konten|Rückzahlungen auf Kreditkartenkonten und Kredittilgung|Käufe und Verkäufe von Beständen|Saldokorrekturen und Anfangssalden|Preis- und Kursänderungen</value>
   </data>
   <data name="Kpi_K06_Title" xml:space="preserve">
-    <value>Behaltener Anteil des Einkommens</value>
+    <value>Verbleibender Einnahmenanteil</value>
   </data>
   <data name="Kpi_K06_Question" xml:space="preserve">
-    <value>Welcher Anteil meines Einkommens blieb übrig?</value>
+    <value>Welcher Prozentsatz meiner Einnahmen blieb übrig?</value>
   </data>
   <data name="Kpi_K06_Definition" xml:space="preserve">
-    <value>Der Überschuss geteilt durch Ihr Einkommen. Ohne Einkommen nicht verfügbar – nie 0 %.</value>
+    <value>Der Überschuss wird durch die Einnahmen geteilt und als Prozentsatz angezeigt. Ohne Einnahmen ist dieser Wert nicht verfügbar; er wird dann nicht als 0 % ausgewiesen.</value>
   </data>
   <data name="Kpi_K06_Included" xml:space="preserve">
     <value>Wie beim Überschuss</value>
   </data>
   <data name="Kpi_K06_Excluded" xml:space="preserve">
-    <value>Kein Maß für Vermögensänderung, Preissteigerung oder umgebuchtes Sparen</value>
+    <value>Kein Maß für Vermögensänderungen, Preissteigerungen oder Umbuchungen auf Sparkonten</value>
   </data>
   <data name="Kpi_K07_Title" xml:space="preserve">
-    <value>Gedeckte Grundkosten</value>
+    <value>Reichweite für notwendige Ausgaben</value>
   </data>
   <data name="Kpi_K07_Question" xml:space="preserve">
-    <value>Wie viele Monate decke ich Grundkosten mit dem verfügbaren Geld?</value>
+    <value>Für wie viele Monate könnte mein verfügbares Geld die notwendigen Ausgaben decken?</value>
   </data>
   <data name="Kpi_K07_Definition" xml:space="preserve">
-    <value>Verfügbares Geld geteilt durch die mittleren Grundausgaben der letzten drei vollen Monate, plus Monatsanteile nicht monatlicher Grundrechnungen.</value>
+    <value>Das für Zahlungen verfügbare Geld wird durch die geschätzten notwendigen Monatsausgaben geteilt. Diese setzen sich aus dem Median der notwendigen Ausgaben der letzten drei vollständigen Monate und den Monatsanteilen notwendiger, nicht monatlich fälliger Rechnungen zusammen.</value>
   </data>
   <data name="Kpi_K07_Included" xml:space="preserve">
-    <value>Für Zahlungen verfügbare Konten|Als Grundbedarf markierte Kategorien (Wohnen, Essen, Energie, Telefon, Mobilität, Gesundheit, Versicherung)</value>
+    <value>Für Zahlungen verfügbare Konten|Als Grundbedarf markierte Kategorien, etwa Wohnen, Lebensmittel, Energie, Telefon, Mobilität, Gesundheit und Versicherungen</value>
   </data>
   <data name="Kpi_K07_Excluded" xml:space="preserve">
-    <value>Bestände, Schulden und Forderungen|Kreditrahmen|Geschütztes Geld wird genannt, nicht abgezogen</value>
+    <value>Bestände, Schulden und Forderungen|Kreditrahmen|Geschützte Rücklagen werden separat benannt, aber nicht vom verfügbaren Betrag abgezogen</value>
   </data>
   <data name="Kpi_K08_Title" xml:space="preserve">
     <value>Regelmäßige Zahlungen im Jahr</value>
@@ -4512,7 +4512,7 @@
     <value>Was kosten meine regelmäßigen Verpflichtungen im Jahr?</value>
   </data>
   <data name="Kpi_K08_Definition" xml:space="preserve">
-    <value>Die erwarteten Beträge aktiver Ausgabenpläne der nächsten 12 Monate: fest, nicht monatlich und geschätzt. Ein Monatsanteil ist kein zurückgelegtes Geld.</value>
+    <value>Die erwarteten Beträge aktiver Ausgabenplanungen für die nächsten 12 Monate, einschließlich fester, nicht monatlicher und geschätzter Beträge. Rechnerische Monatsanteile dienen nur der Planung; sie reservieren kein Geld.</value>
   </data>
   <data name="Kpi_K08_Included" xml:space="preserve">
     <value>Aktive Ausgabenpläne und Verträge</value>
@@ -4527,10 +4527,10 @@
     <value>Welcher Teil meines Einkommens geht in Kreditraten?</value>
   </data>
   <data name="Kpi_K09_Definition" xml:space="preserve">
-    <value>Geplante Raten des Monats geteilt durch Einkommen. Die Aufteilung in Zinsen und Tilgung ist eine Schätzung aus dem Zinssatz.</value>
+    <value>Die geplanten Kreditraten des Monats werden durch die Einnahmen geteilt. Der Zins- und Tilgungsanteil wird anhand des erfassten Zinssatzes geschätzt.</value>
   </data>
   <data name="Kpi_K09_Included" xml:space="preserve">
-    <value>Kredite mit einem Plan, der die Rate zahlt</value>
+    <value>Kredite mit einer Planung zur Erfassung der Ratenzahlungen</value>
   </data>
   <data name="Kpi_K09_Excluded" xml:space="preserve">
     <value>Kartenkäufe|Tilgung ist nie eine Ausgabe</value>
@@ -4539,16 +4539,16 @@
     <value>Nettovermögen</value>
   </data>
   <data name="Kpi_K10_Question" xml:space="preserve">
-    <value>Was besitze ich heute, und woraus besteht es?</value>
+    <value>Wie hoch ist mein heute erfasstes Nettovermögen, und woraus setzt es sich zusammen?</value>
   </data>
   <data name="Kpi_K10_Definition" xml:space="preserve">
     <value>Je Währung: Geld + Forderungen + bewertete Vermögenswerte + Bestände zum letzten Preis − Schulden. Währungen werden ohne Kurs nie addiert.</value>
   </data>
   <data name="Kpi_K10_Included" xml:space="preserve">
-    <value>Alle nicht archivierten Konten|Offene Erstattungen und verliehenes Geld|Bestände zum letzten Preis</value>
+    <value>Konten mit einem Anfangsdatum bis zum gewählten Stichtag, einschließlich archivierter Konten mit einem Saldo ungleich null|Offene Kostenerstattungen und verliehenes Geld|Nicht archivierte Bestände mit einem Preis am oder vor dem gewählten Stichtag</value>
   </data>
   <data name="Kpi_K10_Excluded" xml:space="preserve">
-    <value>Kreditrahmen|Zurückgelegtes Geld (es ist in Ihrem Geld)|Budgets|Bestände ohne Preis – sie werden aufgeführt</value>
+    <value>Kreditrahmen|Rücklagen werden nicht zusätzlich addiert, da sie bereits in den Kontosalden enthalten sind|Budgets|Bestände ohne Preis; sie werden gesondert aufgeführt</value>
   </data>
   <data name="Kpi_K11_Title" xml:space="preserve">
     <value>Veränderung der Ausgaben</value>
@@ -4572,10 +4572,10 @@
     <value>Wer schuldet mir was, und seit wann?</value>
   </data>
   <data name="Kpi_K12_Definition" xml:space="preserve">
-    <value>Offene Erstattungen und Stände verliehenen Geldes, mit Alter und optionalem Fälligkeitsdatum.</value>
+    <value>Noch offene Kostenerstattungen und verliehene Beträge, jeweils mit der seit ihrer Erfassung vergangenen Zeit und einem optionalen Fälligkeitsdatum.</value>
   </data>
   <data name="Kpi_K12_Included" xml:space="preserve">
-    <value>Ausgaben, die andere zurückzahlen, minus Zurückerhaltenes|Konten verliehenen Geldes</value>
+    <value>Von anderen zu erstattende Ausgaben abzüglich bereits erhaltener Erstattungen|Konten für verliehenes Geld</value>
   </data>
   <data name="Kpi_K12_Excluded" xml:space="preserve">
     <value>Zurückgezahlte Beträge|Es ist nie verfügbares Geld, bevor es eingeht</value>
@@ -4584,13 +4584,13 @@
     <value>Zusammensetzung</value>
   </data>
   <data name="Kpi_K13_Question" xml:space="preserve">
-    <value>In welchen Währungen und Werten liegt mein Vermögen?</value>
+    <value>Wie verteilt sich mein erfasstes Vermögen auf Währungen und Vermögenswerte?</value>
   </data>
   <data name="Kpi_K13_Definition" xml:space="preserve">
-    <value>Der Anteil jeder Währung und jedes Bestands in der Bewertungswährung, vom Teil mit bekanntem Wert.</value>
+    <value>Die Anteile der einzelnen Währungen und Bestände am bewertbaren Vermögen. Die Berechnung erfolgt in der Bewertungswährung und berücksichtigt nur Positionen mit bekanntem Wert.</value>
   </data>
   <data name="Kpi_K13_Included" xml:space="preserve">
-    <value>Positive Stände, Forderungen, bewertete Vermögenswerte und Bestände</value>
+    <value>Positive Kontosalden, Forderungen, bewertete Vermögenswertkonten und bewertete Bestände</value>
   </data>
   <data name="Kpi_K13_Excluded" xml:space="preserve">
     <value>Schulden (getrennt gezeigt)|Währungen ohne Kurs und Bestände ohne Preis – sie werden aufgeführt</value>
@@ -4602,10 +4602,10 @@
     <value>Kann ich mich auf diese Zahl verlassen?</value>
   </data>
   <data name="Kpi_K14_Definition" xml:space="preserve">
-    <value>Eine Liste dessen, was eine Zahl unsicher machen kann, jeweils mit dem Bildschirm zur Behebung – nie eine Punktzahl.</value>
+    <value>Zeigt Datenprobleme, die diesen Wert beeinflussen können, und verweist auf die passenden Seiten zur Prüfung. Es wird keine Punktzahl für die Genauigkeit vergeben.</value>
   </data>
   <data name="Kpi_K14_Included" xml:space="preserve">
-    <value>Ungeprüfte Buchungen, Buchungen ohne Kategorie, unbekannte Beträge|Fehlende oder alte Kurse, Bestände ohne Preis|Unbekannte Anfangsstände, 60 Tage nicht verglichene Konten|Letzte Sicherung älter als 30 Tage, mögliche Duplikate</value>
+    <value>Ungeprüfte Buchungen, Buchungen ohne Kategorie und unbekannte Beträge|Fehlende oder veraltete Wechselkurse und Bestände ohne Preis|Unbekannte Anfangssalden und seit über 60 Tagen nicht abgeglichene Konten|Letzte Sicherung älter als 30 Tage und mögliche doppelte Buchungen</value>
   </data>
   <data name="Kpi_K14_Excluded" xml:space="preserve">
     <value>Jede Genauigkeitsbewertung</value>
@@ -4617,19 +4617,19 @@
     <value>Wie viel könnte monatlich in Ziele fließen?</value>
   </data>
   <data name="Kpi_Capacity_Definition" xml:space="preserve">
-    <value>Mittleres Einkommen der letzten drei vollen Monate minus mittlere Ausgaben, Monatsanteile nicht monatlicher Rechnungen, Kredittilgung und Pläne anderer Ziele. Eine Grenze für Vorschläge, nie eine Zuteilung.</value>
+    <value>Median der Einnahmen der letzten drei vollständigen Monate, abzüglich des Medians der Ausgaben, der Monatsanteile nicht monatlicher Rechnungen, der Kredittilgung und der Sparpläne anderer Ziele. Der Wert begrenzt Vorschläge; dadurch wird kein Geld zugewiesen.</value>
   </data>
   <data name="Kpi_Capacity_Included" xml:space="preserve">
-    <value>Verfügbare Konten der Währung|Übernommene Beitragspläne anderer Ziele</value>
+    <value>Für Zahlungen verfügbare Konten in dieser Währung|Bereits übernommene Sparpläne anderer Ziele</value>
   </data>
   <data name="Kpi_Capacity_Excluded" xml:space="preserve">
-    <value>Buchungen, die nicht monatliche Rechnungen bezahlten (stattdessen ihre Anteile)|Umbuchungen und Bestände</value>
+    <value>Zahlungen für nicht monatliche Rechnungen; stattdessen werden deren Monatsanteile angesetzt|Umbuchungen und Bestände</value>
   </data>
   <data name="Home_HeadroomProtected" xml:space="preserve">
-    <value>Ihre Pläne würden um den {0} geschütztes Geld verbrauchen</value>
+    <value>Ihre Planungen würden ungefähr am {0} auf geschützte Rücklagen zurückgreifen.</value>
   </data>
   <data name="Home_Review" xml:space="preserve">
-    <value>{0} abschließen</value>
+    <value>Rückblick: {0}</value>
   </data>
   <data name="Review_Title" xml:space="preserve">
     <value>Monatsrückblick</value>
@@ -4638,10 +4638,10 @@
     <value>Rückblick {0}</value>
   </data>
   <data name="Review_Intro" xml:space="preserve">
-    <value>Eine kurze Routine für den gerade beendeten Monat. Jeder Schritt öffnet seinen Bildschirm; haken Sie ihn ab, wenn Sie fertig sind.</value>
+    <value>Prüfen Sie den gerade beendeten Monat. Öffnen Sie die einzelnen Schritte und markieren Sie sie nach der Prüfung als erledigt.</value>
   </data>
   <data name="Review_Nothing" xml:space="preserve">
-    <value>Gerade gibt es nichts abzuschließen.</value>
+    <value>Zurzeit steht kein Monatsrückblick an.</value>
   </data>
   <data name="Review_Progress" xml:space="preserve">
     <value>Erledigt: {0} von {1}</value>
@@ -4659,10 +4659,10 @@
     <value>Buchungen prüfen</value>
   </data>
   <data name="Review_Plans" xml:space="preserve">
-    <value>Fällige Zahlungen erledigen oder überspringen</value>
+    <value>Fällige Termine prüfen und als erledigt oder übersprungen markieren</value>
   </data>
   <data name="Review_Reconcile" xml:space="preserve">
-    <value>Stände mit der Bank vergleichen</value>
+    <value>Kontosalden abgleichen</value>
   </data>
   <data name="Review_Goals" xml:space="preserve">
     <value>Ziele ansehen</value>
@@ -4674,10 +4674,10 @@
     <value>Ungeprüft: {0}</value>
   </data>
   <data name="Review_PlansDetail" xml:space="preserve">
-    <value>Offen bis Monatsende: {0}</value>
+    <value>Noch offene Termine mit Fälligkeit bis Monatsende: {0}</value>
   </data>
   <data name="Review_ReconcileDetail" xml:space="preserve">
-    <value>60 Tage nicht verglichen: {0}</value>
+    <value>Seit über 60 Tagen nicht abgeglichene Konten: {0}</value>
   </data>
   <data name="Review_GoalsDetail" xml:space="preserve">
     <value>Aktive Ziele: {0}</value>
@@ -4686,16 +4686,16 @@
     <value>Letzte Sicherung: {0}</value>
   </data>
   <data name="Account_LastReconciled" xml:space="preserve">
-    <value>Zuletzt mit der Bank verglichen: {0}</value>
+    <value>Zuletzt abgeglichen: {0}</value>
   </data>
   <data name="Account_NeverReconciled" xml:space="preserve">
-    <value>Noch nicht mit der Bank verglichen</value>
+    <value>Noch nicht abgeglichen</value>
   </data>
   <data name="Account_HasDueDate" xml:space="preserve">
-    <value>Bis zu einem Tag zurückzuzahlen</value>
+    <value>Rückzahlungstermin festlegen</value>
   </data>
   <data name="Entry_ReimbursementDue" xml:space="preserve">
-    <value>Bis zu einem Tag zurück erwartet</value>
+    <value>Erstattungstermin festlegen</value>
   </data>
   <data name="Category_Essential" xml:space="preserve">
     <value>Grundbedarf</value>
@@ -4704,10 +4704,10 @@
     <value>Grundbedarf</value>
   </data>
   <data name="Help_Essential_Text" xml:space="preserve">
-    <value>Kosten, auf die Sie kaum verzichten können, etwa Miete, Essen, Energie oder Versicherung. Sie bestimmen, wie lange Ihr verfügbares Geld reichen würde, und helfen bei einer Alltagsschätzung.</value>
+    <value>Notwendige Ausgaben, auf die Sie kaum verzichten können, etwa Miete, Lebensmittel, Energie oder Versicherungen. Sie werden verwendet, um die finanzielle Reichweite zu schätzen und einen Vorschlag für Alltagsausgaben zu berechnen.</value>
   </data>
   <data name="Help_Essential_Example" xml:space="preserve">
-    <value>Verfügbar 6.000 EUR, Grundbedarf 1.450 / 1.500 / 1.620 → 4,0 Monate.</value>
+    <value>Bei 6.000 EUR verfügbarem Geld und notwendigen Monatsausgaben von 1.450, 1.500 und 1.620 EUR beträgt der Median 1.500 EUR. Ohne zusätzliche Monatsanteile ergibt das eine geschätzte Reichweite von 4 Monaten.</value>
   </data>
   <data name="Settings_Essential" xml:space="preserve">
     <value>Alltagsausgaben</value>
@@ -4716,7 +4716,7 @@
     <value>leer = nicht enthalten</value>
   </data>
   <data name="Settings_EssentialCurrency" xml:space="preserve">
-    <value>In {0}; für den Spielraum Ihrer Pläne</value>
+    <value>Betrag in {0}; wird bei der Berechnung des Spielraums berücksichtigt</value>
   </data>
   <data name="Settings_EssentialSuggestion" xml:space="preserve">
     <value>Letzte 3 Monate: {0} pro Tag</value>
@@ -4725,10 +4725,10 @@
     <value>Übernehmen</value>
   </data>
   <data name="Settings_EssentialSaved" xml:space="preserve">
-    <value>Gespeichert. Der Spielraum enthält jetzt Alltagsausgaben.</value>
+    <value>Gespeichert. Die Schätzung für Alltagsausgaben wird nun vom errechneten Spielraum abgezogen.</value>
   </data>
   <data name="Settings_EssentialCleared" xml:space="preserve">
-    <value>Entfernt. Alltagsausgaben sind nicht enthalten.</value>
+    <value>Schätzung entfernt. Alltagsausgaben werden bei der Berechnung des Spielraums nicht berücksichtigt.</value>
   </data>
   <data name="Settings_PerDay" xml:space="preserve">
     <value>Tag</value>
@@ -4743,10 +4743,10 @@
     <value>Alltagsausgaben</value>
   </data>
   <data name="Help_EssentialEstimate_Text" xml:space="preserve">
-    <value>Die Vorschau kennt nur Ihre Pläne. Lebensmittel und andere tägliche Ausgaben sind nicht geplant, daher lässt der Spielraum sie weg, außer Sie legen hier eine Schätzung fest. Zanance schlägt nur einen Wert aus den letzten drei Monaten vor; Sie entscheiden.</value>
+    <value>Nicht geplante Alltagsausgaben, etwa für Lebensmittel, werden beim Spielraum nur berücksichtigt, wenn Sie hier eine Schätzung hinterlegen. Zanance kann anhand der letzten drei Monate einen Wert vorschlagen. Sie entscheiden, ob Sie diesen übernehmen.</value>
   </data>
   <data name="Help_EssentialEstimate_Example" xml:space="preserve">
-    <value>20 EUR pro Tag: 24 Tage bis zum Tiefpunkt ziehen 480 EUR ab.</value>
+    <value>Bei 20 EUR pro Tag und 24 Tagen bis zum niedrigsten Saldo werden insgesamt 480 EUR für Alltagsausgaben abgezogen.</value>
   </data>
   <data name="Goal_Coverage" xml:space="preserve">
     <value>Grundkosten durch verfügbares Geld gedeckt: {0}</value>
@@ -4761,7 +4761,7 @@
     <value>Bis</value>
   </data>
   <data name="Entry_AggregatedMarker" xml:space="preserve">
-    <value>Zusammengefasst</value>
+    <value>Sammelbuchung</value>
   </data>
   <data name="Aggregate_Replace" xml:space="preserve">
     <value>Verknüpfen und ersetzen</value>
@@ -4770,16 +4770,16 @@
     <value>Beide behalten (zählt doppelt)</value>
   </data>
   <data name="Aggregate_Overlap" xml:space="preserve">
-    <value>„{0}“ ({1}) fasst diesen Zeitraum bereits zusammen. Einzelbuchungen: {2}. Verknüpfen und ersetzen lässt {3} in der Sammelbuchung; Rückgängig stellt sie wieder her.</value>
+    <value>Die Sammelbuchung „{0}“ ({1}) deckt diesen Zeitraum bereits ab. Einzelbuchungen: {2}. Mit „Verknüpfen und ersetzen“ verbleiben {3} in der Sammelbuchung. „Rückgängig“ stellt den vorherigen Betrag wieder her.</value>
   </data>
   <data name="Help_Aggregated_Title" xml:space="preserve">
     <value>Sammelbuchungen</value>
   </data>
   <data name="Help_Aggregated_Text" xml:space="preserve">
-    <value>Erfassen Sie mehrere Käufe eines Zeitraums als einen Betrag, etwa alle Lebensmittel im September. Er zählt wie jede Buchung; Zahlen, die den Tag brauchen, nennen den Zeitpunkt unbekannt. Fügen Sie später Einzelbuchungen für dasselbe Konto und dieselbe Kategorie im Zeitraum hinzu, fragt Zanance, ob sie in der Sammelbuchung ersetzt werden.</value>
+    <value>Fassen Sie mehrere Käufe eines Zeitraums in einer Buchung zusammen, etwa alle Lebensmitteleinkäufe im September. Der Betrag wird berücksichtigt, aber die einzelnen Kaufdaten sind unbekannt. Auswertungen, die genaue Tage benötigen, weisen darauf hin. Erfassen Sie später passende Einzelbuchungen für dasselbe Konto, dieselbe Kategorie und denselben Zeitraum, können diese mit der Sammelbuchung verknüpft und von ihrem Restbetrag abgezogen werden.</value>
   </data>
   <data name="Help_Aggregated_Example" xml:space="preserve">
-    <value>Lebensmittel September 412 EUR; später sechs Belege über 395 EUR → die Sammelbuchung behält 17 EUR.</value>
+    <value>Sie erfassen für Lebensmittel im September eine Sammelbuchung über 412 EUR. Später ergänzen und verknüpfen Sie sechs Einzelbuchungen über insgesamt 395 EUR. In der Sammelbuchung verbleiben 17 EUR.</value>
   </data>
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>Zeilen innerhalb einer Sammelbuchung (zählen doppelt): {0}. Bearbeiten Sie nach dem Import die Sammelbuchung oder die Zeilen.</value>
@@ -4803,13 +4803,13 @@
     <value>Verbleibend</value>
   </data>
   <data name="GoalType_HoldingQuantity" xml:space="preserve">
-    <value>Eine Menge eines Bestands</value>
+    <value>Bestandsmenge</value>
   </data>
   <data name="Goal_Holding" xml:space="preserve">
     <value>Bestand</value>
   </data>
   <data name="Goal_HoldingLocation" xml:space="preserve">
-    <value>Wo</value>
+    <value>Ort</value>
   </data>
   <data name="Goal_AllLocations" xml:space="preserve">
     <value>Alle Orte</value>
@@ -4818,10 +4818,10 @@
     <value>Fortschritt ist die gehaltene Menge; Preisänderungen zählen nie.</value>
   </data>
   <data name="Goal_ChooseHolding" xml:space="preserve">
-    <value>Bestand wählen.</value>
+    <value>Wählen Sie einen Bestand.</value>
   </data>
   <data name="Goal_HoldingUnavailable" xml:space="preserve">
-    <value>Der Bestand ist archiviert – einen anderen wählen oder das Ziel abschließen.</value>
+    <value>Der Bestand ist archiviert. Wählen Sie einen anderen Bestand oder schließen Sie das Ziel ab.</value>
   </data>
   <data name="Goal_TrendTitle" xml:space="preserve">
     <value>In Ihrem Tempo</value>
@@ -4830,10 +4830,10 @@
     <value>Bei Ihrem jüngsten Tempo von {0} pro Monat (Median aus {1} Monaten): ~ {2}</value>
   </data>
   <data name="Goal_TrendNoPace" xml:space="preserve">
-    <value>Kein Datum bei Ihrem aktuellen Tempo.</value>
+    <value>Mit dem aktuellen Fortschritt lässt sich kein Zieldatum berechnen.</value>
   </data>
   <data name="Goal_TrendHistory" xml:space="preserve">
-    <value>Noch nicht genug Verlauf ({0} von {1} Monaten).</value>
+    <value>Noch nicht genügend Daten: {0} von {1} benötigten Monaten vorhanden.</value>
   </data>
   <data name="Goal_TrendSoFar" xml:space="preserve">
     <value>Diesen Monat bisher: {0}</value>
@@ -4842,7 +4842,7 @@
     <value>einmalig</value>
   </data>
   <data name="Goal_TrendNote" xml:space="preserve">
-    <value>Eine Schätzung aus vollen Monaten, kein Versprechen. Ihr eigener Plan bleibt eine eigene Zeile.</value>
+    <value>Die Schätzung basiert auf vollständigen Monaten und ist keine Zusage. Ihr eigener Sparplan wird getrennt angezeigt.</value>
   </data>
   <data name="Goal_AssumedPrice" xml:space="preserve">
     <value>Ihr angenommener Preis in {0} ({1})</value>
@@ -4851,34 +4851,34 @@
     <value>Zu Ihrem Preis: {0} pro Monat aus Ihrem Spielraum von {1}</value>
   </data>
   <data name="Goal_AssumedPriceNote" xml:space="preserve">
-    <value>Nur für diese Schätzung; nie der Wert Ihres Bestands.</value>
+    <value>Dieser Preis gilt nur für diese Schätzung. Die gespeicherte Bewertung Ihres Bestands bleibt unverändert.</value>
   </data>
   <data name="Help_GoalTrend_Title" xml:space="preserve">
     <value>In Ihrem Tempo</value>
   </data>
   <data name="Help_GoalTrend_Text" xml:space="preserve">
-    <value>Zanance betrachtet, was in jedem der letzten vollen Monate (bis zu sechs) zum Ziel kam, und nimmt den Median. Ein Monat weit über den anderen wird als einmalig markiert. Mit weniger als drei vollen Monaten gibt es noch kein Tempo.</value>
+    <value>Zanance berechnet den Median Ihres monatlichen Fortschritts aus bis zu sechs vollständigen Monaten. Ein ungewöhnlich hoher Monatswert wird als einmaliger Zuwachs gekennzeichnet. Für die Berechnung werden mindestens drei vollständige Monate benötigt.</value>
   </data>
   <data name="Help_GoalTrend_Example" xml:space="preserve">
-    <value>200, 250, 230 und 900 → Tempo 240 pro Monat; 900 ist einmalig.</value>
+    <value>Bei Monatswerten von 200, 250, 230 und 900 beträgt der Median 240. Der ungewöhnlich hohe Wert 900 wird als einmaliger Zuwachs markiert.</value>
   </data>
   <data name="Report_R5" xml:space="preserve">
     <value>Vermögensverlauf</value>
   </data>
   <data name="Report_AdvancedOnly" xml:space="preserve">
-    <value>Im erweiterten Modus verfügbar (Einstellungen).</value>
+    <value>Verfügbar in der Ansicht „Erweitert“. Diese können Sie in den Einstellungen aktivieren.</value>
   </data>
   <data name="Report_History" xml:space="preserve">
     <value>Nettovermögen im Zeitverlauf</value>
   </data>
   <data name="Report_NoHistory" xml:space="preserve">
-    <value>Noch nicht genug Verlauf.</value>
+    <value>Noch nicht genügend Daten für einen Verlauf vorhanden.</value>
   </data>
   <data name="Report_HistoryIncomplete" xml:space="preserve">
     <value>* unvollständig: ein Bestand ohne Preis oder eine Währung ohne Kurs an diesem Tag</value>
   </data>
   <data name="Report_WealthChangeTitle" xml:space="preserve">
-    <value>Gespart oder Preise?</value>
+    <value>Sparen oder Wertänderungen?</value>
   </data>
   <data name="Report_LastMonth" xml:space="preserve">
     <value>Letzter Monat</value>
@@ -4887,10 +4887,10 @@
     <value>Dieses Jahr</value>
   </data>
   <data name="Report_Last12Months" xml:space="preserve">
-    <value>12 Monate</value>
+    <value>Letzte 12 Monate</value>
   </data>
   <data name="Report_ChangeRange" xml:space="preserve">
-    <value>Vom Ende des {0} bis {1}</value>
+    <value>Vom Tagesende am {0} bis {1}</value>
   </data>
   <data name="Report_WealthStart" xml:space="preserve">
     <value>Nettovermögen am Anfang</value>
@@ -4911,34 +4911,34 @@
     <value>Wechselkursänderungen</value>
   </data>
   <data name="Report_Corrections" xml:space="preserve">
-    <value>Korrekturen, neue Konten, Bestände ohne Geld</value>
+    <value>Saldokorrekturen, neue Konten und Bestandsänderungen ohne Geldfluss</value>
   </data>
   <data name="Report_Remainder" xml:space="preserve">
     <value>Nicht erklärt</value>
   </data>
   <data name="Report_RemainderCauses" xml:space="preserve">
-    <value>Nicht erklärt wegen: {0}</value>
+    <value>Ursachen des nicht erklärten Anteils: {0}</value>
   </data>
   <data name="Report_Cause_MissingValuation" xml:space="preserve">
     <value>ein Bestand ohne Preis an einem der Tage</value>
   </data>
   <data name="Report_Cause_UnknownOpeningBalance" xml:space="preserve">
-    <value>ein unbekannter Anfangsstand</value>
+    <value>ein unbekannter Anfangssaldo</value>
   </data>
   <data name="Report_Cause_TradedAtOtherPrice" xml:space="preserve">
-    <value>Bestände zu einem anderen Preis als ihrer Bewertung gekauft oder verkauft</value>
+    <value>Käufe oder Verkäufe zu Preisen, die vom angesetzten Bewertungswert abweichen</value>
   </data>
   <data name="Report_Cause_MissingRate" xml:space="preserve">
     <value>eine Währung ohne Kurs</value>
   </data>
   <data name="Kpi_K10H_Title" xml:space="preserve">
-    <value>Gespart oder Preise?</value>
+    <value>Sparen oder Wertänderungen?</value>
   </data>
   <data name="Kpi_K10H_Question" xml:space="preserve">
-    <value>Wuchs mein Vermögen durch Sparen oder durch Preise und Kurse?</value>
+    <value>Wie haben Sparen, Preise und Wechselkurse mein erfasstes Nettovermögen verändert?</value>
   </data>
   <data name="Kpi_K10H_Definition" xml:space="preserve">
-    <value>Die Veränderung des Nettovermögens, aufgeteilt in Gespartes, Preisänderungen der Bestände, Wechselkursänderungen und Korrekturen. Was diese nicht erklären, wird mit Ursache gezeigt, nie versteckt.</value>
+    <value>Die Veränderung des Nettovermögens wird in den Einnahmenüberschuss, Preisänderungen der Bestände, Wechselkursänderungen und Korrekturen aufgeteilt. Ein verbleibender, nicht erklärter Anteil wird mit den erkannten Ursachen ausgewiesen.</value>
   </data>
   <data name="Kpi_K10H_Included" xml:space="preserve">
     <value>Nettovermögen an beiden Tagen mit Preisen und Kursen dieser Tage|Einnahmen minus Ausgaben dazwischen|Für jede Preisänderung: die damals gehaltene Menge × die Änderung</value>
@@ -4947,40 +4947,40 @@
     <value>Umbuchungen zwischen Ihren Konten|Schätzungen für fehlende Preise oder Kurse|Steuern</value>
   </data>
   <data name="Snapshot_SaveTitle" xml:space="preserve">
-    <value>Diese Vorschau speichern</value>
+    <value>Diese Prognose speichern</value>
   </data>
   <data name="Snapshot_SaveMessage" xml:space="preserve">
-    <value>Ein Name, damit Sie sie später mit der Wirklichkeit vergleichen können.</value>
+    <value>Geben Sie einen Namen für die Prognose ein. Sie können sie später mit den erfassten Ergebnissen vergleichen.</value>
   </data>
   <data name="Snapshot_ListTitle" xml:space="preserve">
-    <value>Gespeicherte Vorschauen</value>
+    <value>Gespeicherte Prognosen</value>
   </data>
   <data name="Snapshot_Saved" xml:space="preserve">
-    <value>{0} · {1} · Tiefstand {2} am {3}</value>
+    <value>Basisdatum: {0} · {1} · niedrigster Saldo: {2} am {3}</value>
   </data>
   <data name="Snapshot_Detail" xml:space="preserve">
-    <value>Gespeichert am {0}, bis {1}; Tiefstand {2} am {3}</value>
+    <value>Gespeichert am {0} · bis {1} · niedrigster Saldo: {2} am {3}</value>
   </data>
   <data name="Snapshot_Assumptions" xml:space="preserve">
     <value>Annahmen: {0}</value>
   </data>
   <data name="Snapshot_ReadOnly" xml:space="preserve">
-    <value>Eine gespeicherte Vorschau ändert sich nie; spätere Planänderungen zeigt der Vergleich.</value>
+    <value>Eine gespeicherte Prognose bleibt unverändert. Spätere Änderungen an Ihren Planungen werden im Vergleich sichtbar.</value>
   </data>
   <data name="Snapshot_NotStarted" xml:space="preserve">
-    <value>Die Vorschau beginnt heute – vergleichen Sie ab morgen.</value>
+    <value>Diese Prognose beginnt heute. Ein Vergleich ist ab morgen möglich.</value>
   </data>
   <data name="Snapshot_Compared" xml:space="preserve">
     <value>Verglichen bis {0}</value>
   </data>
   <data name="Snapshot_Chart" xml:space="preserve">
-    <value>Gespeicherte Vorschau und Wirklichkeit</value>
+    <value>Gespeicherte Prognose und erfasster Verlauf</value>
   </data>
   <data name="Snapshot_SavedPath" xml:space="preserve">
-    <value>Gespeichert</value>
+    <value>Prognose</value>
   </data>
   <data name="Snapshot_ActualPath" xml:space="preserve">
-    <value>Tatsächlich</value>
+    <value>Erfasst</value>
   </data>
   <data name="Snapshot_Difference" xml:space="preserve">
     <value>Differenz</value>
@@ -4998,22 +4998,22 @@
     <value>Ungeplante Einnahmen</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Pläne anders bezahlt</value>
+    <value>Abweichungen bei erfassten geplanten Buchungen</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
     <value>Die Teile ergeben zusammen die Differenz des letzten verglichenen Tages.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
-    <value>Diese Vorschau löschen</value>
+    <value>Diese Prognose löschen</value>
   </data>
   <data name="Snapshot_DeleteMessage" xml:space="preserve">
-    <value>Die gespeicherte Vorschau wird gelöscht; Ihre Pläne und Buchungen bleiben.</value>
+    <value>Die gespeicherte Prognose wird gelöscht. Ihre Planungen und Buchungen bleiben erhalten.</value>
   </data>
   <data name="Snapshot_NotFound" xml:space="preserve">
-    <value>Diese Vorschau existiert nicht mehr.</value>
+    <value>Diese Prognose ist nicht mehr vorhanden.</value>
   </data>
   <data name="Backup_PreviewSnapshots" xml:space="preserve">
-    <value>Gespeicherte Vorschauen: {0}</value>
+    <value>Gespeicherte Prognosen: {0}</value>
   </data>
   <data name="Goal_NoCapacity" xml:space="preserve">
     <value>Derzeit kein Spielraum für dieses Ziel.</value>
@@ -5022,7 +5022,7 @@
     <value>Sicherheitskopie vor einer Wiederherstellung</value>
   </data>
   <data name="Help_SafetyCopy_Text" xml:space="preserve">
-    <value>Bevor eine Sicherung Ihre Daten ersetzt, behält Zanance eine Sicherheitskopie der aktuellen Daten auf diesem Gerät, damit bei einem Fehler nichts verloren geht. Die Sicherheitskopie ist nicht verschlüsselt; sie bleibt im privaten Speicher der App, und nur die neuesten Kopien werden behalten. Eine Sicherungsdatei, die Sie selbst erstellen, ist immer mit Ihrem Passwort verschlüsselt.</value>
+    <value>Vor dem Ersetzen der Daten des aktuellen Profils erstellt Zanance eine Sicherheitskopie auf diesem Gerät. Diese Kopie ist nicht verschlüsselt und liegt im privaten Speicher der App; nur die neuesten Sicherheitskopien werden aufbewahrt. Selbst erstellte lokale Sicherungen sind verschlüsselt, wenn der Passwortschutz aktiviert ist. Für Cloud-Sicherungen ist der Passwortschutz erforderlich.</value>
   </data>
   <data name="HomeSection_Goals" xml:space="preserve">
     <value>Ziele</value>
@@ -5034,25 +5034,25 @@
     <value>Sicherung</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Alles, was Sie erfasst haben: Konten, Buchungen, Pläne, Budgets, Kurse, Ziele, Bestände mit ihren Ereignissen und Preisen, Prognose-Schnappschüsse, Anzeigeeinheiten und das Layout der Startseite. Sie wird mit Ihrem Passwort verschlüsselt. Geräteeinstellungen (Design, Sprache, Ziffern, Erinnerungen) sind nicht enthalten.</value>
+    <value>Eine Sicherung enthält die Daten des aktuellen Profils, darunter Konten, Buchungen, Planungen, Budgets, Wechselkurse, Ziele, Bestände, gespeicherte Prognosen, Anzeigeeinheiten und das Layout der Startseite. Lokale Sicherungen sind bei aktiviertem Passwortschutz verschlüsselt; für Cloud-Sicherungen ist dieser erforderlich. Geräteweite Einstellungen wie Darstellung, Sprache und Ziffernanzeige sind nicht enthalten.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV-Export</value>
   </data>
   <data name="About_FilesCsv" xml:space="preserve">
-    <value>Ihre Buchungen und, in einer eigenen Datei, Ihre Bestände für eine Tabellenkalkulation. Ein CSV-Export ist keine Sicherung: Pläne, Budgets, Ziele und Schnappschüsse sind nicht enthalten.</value>
+    <value>Buchungen und Bestände werden als getrennte CSV-Dateien für Tabellenkalkulationen exportiert. Die Dateien sind nicht verschlüsselt. Ein CSV-Export ist keine vollständige Sicherung: Planungen, Budgets, Ziele und gespeicherte Prognosen fehlen.</value>
   </data>
   <data name="About_FilesPdfTitle" xml:space="preserve">
     <value>PDF-Bericht</value>
   </data>
   <data name="About_FilesPdf" xml:space="preserve">
-    <value>Der gewählte Bericht mit Zeitraum, Währung und den einbezogenen Konten. Er dient zum Lesen und Weitergeben und lässt sich nicht wiederherstellen.</value>
+    <value>Enthält den gewählten Bericht mit Zeitraum, Währung und einbezogenen Konten. Die PDF-Datei dient zum Lesen und Weitergeben; sie kann nicht zur Wiederherstellung von App-Daten verwendet werden.</value>
   </data>
   <data name="About_PlatformsTitle" xml:space="preserve">
     <value>Plattformen</value>
   </data>
   <data name="About_PlatformsText" xml:space="preserve">
-    <value>Jede Version wird vor der Veröffentlichung auf diesen Systemen geprüft.</value>
+    <value>Unterstützte Plattformen und ihr Prüfstatus.</value>
   </data>
   <data name="About_Platform_Verified" xml:space="preserve">
     <value>Geprüft</value>
@@ -5064,7 +5064,7 @@
     <value>Problem melden</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance sendet nichts von selbst: keine Nutzungsdaten und keine Absturzberichte. Die Schaltfläche bereitet einen kurzen Text mit App-Version und Gerätetyp vor, und Sie entscheiden, wohin Sie ihn senden. Bitte entfernen Sie vorher Beträge, Kontonamen und andere finanzielle Angaben.</value>
+    <value>Zanance sendet keine automatischen Nutzungsanalysen oder Absturzberichte. Diese Schaltfläche erstellt einen Bericht mit App-Version und Geräteinformationen. Prüfen Sie ihn, entfernen Sie finanzielle und persönliche Angaben und wählen Sie selbst, wohin Sie ihn senden.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Problembericht vorbereiten</value>
@@ -5072,22 +5072,22 @@
   <data name="About_ProblemReport" xml:space="preserve">
     <value>Zanance {0} · {1} {2}
 
-Was ist passiert:
+Was ist passiert?
 
-Was ich erwartet habe:
+Was habe ich erwartet?
 
-Schritte zum Wiederholen:
+Schritte zum Nachstellen des Problems:
 
-(Bitte vor dem Senden Beträge, Kontonamen und andere finanzielle Angaben entfernen.)</value>
+(Entfernen Sie vor dem Senden Beträge, Kontonamen und andere finanzielle oder persönliche Angaben.)</value>
   </data>
   <data name="Budget_MethodActive" xml:space="preserve">
-    <value>Methode dieses Budgets: {0}. Wechseln Sie in den Einstellungen zu Erweitert, um sie zu ändern.</value>
+    <value>Budgetmethode: {0}. Zum Ändern wählen Sie in den Einstellungen die Ansicht „Erweitert“.</value>
   </data>
   <data name="Icon_Default" xml:space="preserve">
     <value>Standardsymbol</value>
   </data>
   <data name="Lock_NotUnlocked" xml:space="preserve">
-    <value>Die App ist noch gesperrt. Tippen Sie auf Entsperren, um es erneut zu versuchen.</value>
+    <value>Die App ist noch gesperrt. Wählen Sie „Entsperren“, um es erneut zu versuchen.</value>
   </data>
   <data name="Attachment_OpenFailed" xml:space="preserve">
     <value>Keine App auf diesem Gerät konnte die Datei öffnen.</value>
@@ -5096,7 +5096,7 @@ Schritte zum Wiederholen:
     <value>Diese Buchung löschen?</value>
   </data>
   <data name="Account_NameTaken" xml:space="preserve">
-    <value>Ein anderes Konto hat bereits diesen Namen. Wählen Sie einen anderen, damit Listen und Dateien die Konten unterscheiden können.</value>
+    <value>Ein anderes Konto verwendet bereits diesen Namen. Wählen Sie einen eindeutigen Namen.</value>
   </data>
   <data name="Budget_NoAccountChosen" xml:space="preserve">
     <value>Wählen Sie mindestens ein Konto für dieses Budget.</value>
@@ -5105,7 +5105,7 @@ Schritte zum Wiederholen:
     <value>Transfer</value>
   </data>
   <data name="Category_NameTaken" xml:space="preserve">
-    <value>Eine andere Kategorie hier hat bereits diesen Namen.</value>
+    <value>Auf dieser Ebene gibt es bereits eine Kategorie mit diesem Namen.</value>
   </data>
   <data name="Profile_NameTaken" xml:space="preserve">
     <value>Ein anderes Profil hat bereits diesen Namen.</value>

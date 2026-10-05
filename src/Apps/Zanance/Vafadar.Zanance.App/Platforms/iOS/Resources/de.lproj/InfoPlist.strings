@@ -2,4 +2,4 @@
 "NSFaceIDUsageDescription" = "Zanance nutzt Face ID, um die App zu entsperren, wenn die App-Sperre aktiv ist.";
 
 /* Camera prompt for photographing receipts (D-38). */
-"NSCameraUsageDescription" = "Zanance nutzt die Kamera, um Belege zu fotografieren. Das Foto wird auf diesem Gerät gelesen und bleibt dort.";
+"NSCameraUsageDescription" = "Zanance verwendet die Kamera zum Erfassen von Belegen. Der Text der Belege wird auf Ihrem Gerät verarbeitet.";

@@ -4,5 +4,5 @@
     <string name="widget_income">+ Einnahme</string>
     <string name="widget_transfer">Umbuchung</string>
     <string name="widget_open">Zanance öffnen</string>
-    <string name="widget_description">Ausgabe, Einnahme oder Umbuchung mit einem Tipp erfassen. Zeigt keine Beträge.</string>
+    <string name="widget_description">Öffnet das Formular zum Erfassen einer Ausgabe, Einnahme oder Umbuchung. Das Widget zeigt keine Beträge.</string>
 </resources>

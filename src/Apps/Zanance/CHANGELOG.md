@@ -18,6 +18,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Changed – German wording
+
+- The German texts were reviewed throughout: formal "Sie", consistent terms (Buchung, Umbuchung, Sicherung,
+  Prognose, Nettovermögen) and the same meaning as the corrected English – deleting and restoring affect the current
+  profile, a failed restore says whether data may have changed, and credit card repayments are no longer called
+  card payments.
+
 ### Changed – Persian wording
 
 - The Persian texts were reviewed throughout: consistent terms («تراکنش»، «برگشت وجه»، «نسخهٔ احتیاطی»، «برنامهٔ

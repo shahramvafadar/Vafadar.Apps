@@ -168,8 +168,13 @@ lightened (`CategoryLookup.DisplayColor`).
   «دارایی‌های مقداری» for holdings; the product name stays «Zanance» (quoted in a Persian sentence, never
   transliterated); a missing record is not a fact about the world («طلبی ثبت نشده است», not «کسی به شما بدهکار
   نیست»); a label quoted in another text matches the label.
-* Translation follow-up of D-52: the English meaning changed for these keys. Persian follows since D-53; the German
-  texts still say the earlier meaning and are reviewed in the next translation step: `Holdings_Note`, `Settings_DeleteAll*`,
+* German copy (D-54): formal "Sie"; Buchung for a transaction, Umbuchung for a transfer between own accounts,
+  Erstattung / Kostenerstattung, "Rückzahlung auf ein Kreditkartenkonto" ("Kartenzahlung" reads as a card purchase),
+  Sicherung / Sicherheitskopie, Prognose, Nettovermögen, Bewertungswährung, Bestände; Median is not Durchschnitt;
+  counts as "Buchungen: {0}" so that no "1 Buchungen" appears; quoted option names use „…“ and match the label;
+  German texts must fit the narrowest layout (360 px).
+* Translation follow-up of D-52 (closed): the English meaning changed for these keys; Persian follows since D-53 and
+  German since D-54: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,
   `Backup_Error_RestoreFailed`, `Onb_WelcomeText`, `Backup_Intro`, `About_DataText`, `About_FilesBackup`,
   `About_FilesCsv`, `About_ProblemText`, `About_PlatformsText`, `Settings_ShowDetailsHint`,

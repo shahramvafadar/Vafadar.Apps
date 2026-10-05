@@ -83,7 +83,7 @@
     <value>Kalender</value>
   </data>
   <data name="Settings_About" xml:space="preserve">
-    <value>Über</value>
+    <value>Über diese App</value>
   </data>
   <data name="Settings_Version" xml:space="preserve">
     <value>Version {0}</value>
@@ -152,7 +152,7 @@
     <value>Weiter bearbeiten</value>
   </data>
   <data name="Common_SaveFailed" xml:space="preserve">
-    <value>Speichern fehlgeschlagen. Ihre Eingaben bleiben erhalten – bitte erneut versuchen.</value>
+    <value>Ihre Änderungen konnten nicht gespeichert werden. Die Eingaben sind erhalten geblieben. Versuchen Sie es erneut.</value>
   </data>
   <data name="Common_Saved" xml:space="preserve">
     <value>Gespeichert</value>
@@ -164,16 +164,16 @@
     <value>Mit Passwort schützen (empfohlen)</value>
   </data>
   <data name="Backup_Password" xml:space="preserve">
-    <value>Backup-Passwort</value>
+    <value>Sicherungspasswort</value>
   </data>
   <data name="Backup_PasswordConfirm" xml:space="preserve">
-    <value>Passwort wiederholen</value>
+    <value>Sicherungspasswort bestätigen</value>
   </data>
   <data name="Backup_PasswordWarning" xml:space="preserve">
-    <value>Bewahren Sie dieses Passwort sicher auf. Ohne es lässt sich das Backup nicht öffnen – niemand, auch nicht der Entwickler, kann es wiederherstellen. Es ist nicht die PIN der App-Sperre.</value>
+    <value>Bewahren Sie das Passwort sicher auf. Sie benötigen es zur Wiederherstellung dieser Sicherung. Ein vergessenes Sicherungspasswort kann auch vom Entwickler nicht wiederhergestellt werden. Es ist unabhängig von der PIN zum Entsperren Ihres Geräts.</value>
   </data>
   <data name="Backup_NoPasswordWarning" xml:space="preserve">
-    <value>Ohne Passwort kann jeder, der die Datei erhält, Ihre Daten lesen.</value>
+    <value>Ohne Passwortschutz kann jede Person mit Zugriff auf diese Datei deren Inhalt lesen.</value>
   </data>
   <data name="Backup_PasswordTooShort" xml:space="preserve">
     <value>Verwenden Sie mindestens {0} Zeichen.</value>
@@ -182,28 +182,28 @@
     <value>Die Passwörter stimmen nicht überein.</value>
   </data>
   <data name="Backup_Error_InvalidFormat" xml:space="preserve">
-    <value>Diese Datei ist kein Backup dieser App.</value>
+    <value>Diese Datei ist keine gültige Sicherung für diese App.</value>
   </data>
   <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
-    <value>Für dieses Backup ist eine neuere App-Version nötig.</value>
+    <value>Für diese Sicherung benötigen Sie eine neuere Version der App.</value>
   </data>
   <data name="Backup_Error_PasswordRequired" xml:space="preserve">
-    <value>Dieses Backup ist geschützt. Geben Sie sein Passwort ein.</value>
+    <value>Diese Sicherung ist passwortgeschützt. Geben Sie das Sicherungspasswort ein.</value>
   </data>
   <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
-    <value>Falsches Passwort oder die Datei ist beschädigt. Es wurde nichts geändert.</value>
+    <value>Das Passwort ist falsch oder die Sicherungsdatei ist beschädigt. Es wurden keine Daten geändert.</value>
   </data>
   <data name="Backup_Error_Corrupted" xml:space="preserve">
-    <value>Das Backup ist beschädigt. Es wurde nichts geändert.</value>
+    <value>Die Sicherungsdatei ist beschädigt. Es wurden keine Daten geändert.</value>
   </data>
   <data name="Backup_Error_WrongApp" xml:space="preserve">
-    <value>Dieses Backup gehört zu einer anderen App. Es wurde nichts geändert.</value>
+    <value>Diese Sicherung gehört zu einer anderen App. Es wurden keine Daten geändert.</value>
   </data>
   <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
-    <value>Dieses Backup wurde mit einer neueren App-Version erstellt. Aktualisieren Sie zuerst die App.</value>
+    <value>Diese Sicherung wurde mit einer neueren App-Version erstellt. Aktualisieren Sie zuerst die App.</value>
   </data>
   <data name="Backup_Error_Storage" xml:space="preserve">
-    <value>Die Datei konnte nicht gelesen oder geschrieben werden. Prüfen Sie den freien Speicher und versuchen Sie es erneut.</value>
+    <value>Die Datei konnte nicht gelesen oder gespeichert werden. Prüfen Sie den freien Speicherplatz und die Zugriffsrechte und versuchen Sie es erneut.</value>
   </data>
   <data name="Settings_Region" xml:space="preserve">
     <value>Land oder Region</value>
@@ -215,7 +215,7 @@
     <value>Nicht festgelegt (Gerät: {0})</value>
   </data>
   <data name="Settings_RegionHint" xml:space="preserve">
-    <value>Schlägt nur den ersten Wochentag vor. Sprache, Währung und Kalender bleiben wie gewählt; es wird kein Standort verwendet.</value>
+    <value>Bestimmt regionale Vorgaben, Wochenendregeln und unterstützte Feiertage. Sprache, Währung und Kalender bleiben unverändert. Ihr Standort wird nicht abgefragt.</value>
   </data>
   <data name="Settings_WeekStart" xml:space="preserve">
     <value>Erster Wochentag</value>
@@ -227,7 +227,7 @@
     <value>Darstellung</value>
   </data>
   <data name="Theme_System" xml:space="preserve">
-    <value>Wie das Gerät</value>
+    <value>Geräteeinstellung verwenden</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
     <value>Hell</value>
