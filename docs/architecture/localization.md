@@ -12,6 +12,7 @@ app's settings; the UI updates immediately, without restarting.
 | German (Deutsch) | `de` | Left-to-right | Gregorian |
 | Spanish (Español) | `es` | Left-to-right | Gregorian |
 | French (Français) | `fr` | Left-to-right | Gregorian |
+| Italian (Italiano) | `it` | Left-to-right | Gregorian |
 
 English is the neutral language: `AppResources.resx` holds English and is the fallback for anything not translated.
 The list lives in `AppLanguages` (Vafadar.Localization); an app can offer a subset via `LocalizationOptions`.
@@ -19,7 +20,8 @@ A device language is matched by its two-letter code, so `es-ES`, `es-MX`, `es-AR
 the one general Spanish translation (`tú`). The language does not set the country, the currencies or the calendar;
 numbers and dates follow the neutral `es` culture of the platform, not the conventions of each Spanish-speaking
 country. French works the same way: one translation with `vous` for `fr-FR`, `fr-CA`, `fr-BE`, `fr-CH` …, no
-country, currency (not EUR) or calendar taken from the language, and the neutral `fr` formats.
+country, currency (not EUR) or calendar taken from the language, and the neutral `fr` formats. Italian likewise:
+one translation with `tu` for `it-IT`, `it-CH` …; it does not bring Swiss number formats, CHF or holidays.
 
 ## How it works
 
@@ -100,6 +102,8 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   | Spanish | Hijri | `1448/04/14` | `viernes, 14 de Rabi al-Thani de 1448` |
   | French | Gregorian | `25/09/2026` | `vendredi 25 septembre 2026` |
   | French | Persian | `1405/07/03` | `vendredi 3 Mehr 1405` |
+  | Italian | Gregorian | `25/09/2026` | `venerdì 25 settembre 2026` |
+  | Italian | Persian | `1405/07/03` | `venerdì 3 Mehr 1405` |
 
   `MonthYear` (`Rabi al-Thani 1448`), `DayMonth` (`14 Rabi al-Thani`), `DayMonthShort` (`14 Rab II`, `Sep 25`, for
   date tiles and chart axes) and `Month` (`Rabi al-Thani`) follow the same rules. `Format(date, style, calendar)`
@@ -109,7 +113,13 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   (Spanish `d 'de' MMMM`, `MMMM 'de' yyyy`), also for converted calendars ("3 de Mehr", "Mehr de 1405"); the short
   form for date tiles drops such quoted words ("25 sep"), so a tile never shows "de" as part of the month. The
   separator after the weekday also comes from the culture's long pattern: ", " in English, German and Spanish, a
-  space in French ("vendredi 3 Mehr 1405") and Persian.
+  space in French, Italian ("venerdì 3 Mehr 1405") and Persian.
+* **Weekday grammar**: phrases such as "the first Sunday" agree with the weekday's gender. Italian "domenica" is
+  feminine ("la prima domenica", "l’ultima domenica"), the other weekdays masculine ("il primo lunedì").
+  `WeekdayGrammar` picks the `_Feminine` keys (`Ordinal_Feminine_{n}`, `Rule_NthWeekday_Feminine`,
+  `Rule_LastWeekday_Feminine`, `DayRule_LastWeekday_Feminine`) from the culture and the `DayOfWeek` value, never from
+  the spelling of the name. The other languages hold the same texts in these keys as in the plain ones, only for key
+  parity; a new language with gendered weekdays extends `WeekdayGrammar.IsFeminine`.
 * **Three calendars** (`CalendarSystem`): Gregorian, Persian (solar Hijri) and lunar Hijri. The lunar calendar is
   **Umm al-Qura** (the official calendar of Saudi Arabia, e.g. 1 Ramadan 1446 = 1 March 2025), which .NET covers for
   1318–1500 AH (30 April 1900 to 16 November 2077). `Vafadar.Core.Dates.LunarHijri` is the one place that converts
@@ -142,8 +152,8 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
 
 Persian text uses [Vazirmatn](https://github.com/rastikerdar/vazirmatn) (SIL Open Font License), which also covers
 Latin and Arabic; English, German and Spanish use Figtree with Urbanist for titles (`App.xaml.cs`). The PDF report
-embeds Vazirmatn for every language. All bundled fonts contain the Spanish and French letters (ñ, ü, á–ú, ¿, ¡,
-ç, œ, ’, « »). Figtree and Urbanist have no narrow no-break space (U+202F), which French uses before "?", "!" and
+embeds Vazirmatn for every language. All bundled fonts contain the Spanish, French and Italian letters (ñ, ü, á–ú,
+¿, ¡, ç, œ, à, è, é, ì, ò, ù, ’, « »). Figtree and Urbanist have no narrow no-break space (U+202F), which French uses before "?", "!" and
 ";" and as the thousands separator of amounts; the platforms take it from a system font (checked in the Windows
 snapshots), the PDF's Vazirmatn has it.
 
@@ -165,7 +175,8 @@ snapshots), the PDF's Vazirmatn has it.
    iOS `Info.plist` and to the Android `locales_config.xml`; add the widget and permission texts of the platforms.
 4. Add the language to `eng/scripts/Add-Strings.ps1`, so every new string asks for it.
 5. Add store listing texts for the language.
-6. Set its default calendar in `LocalizationOptions` (e.g. Arabic → `CalendarSystem.Hijri`) and check the date table
+6. If the language inflects words by the weekday's gender, extend `WeekdayGrammar` (see "Weekday grammar").
+7. Set its default calendar in `LocalizationOptions` (e.g. Arabic → `CalendarSystem.Hijri`) and check the date table
    above in that language.
 
 ### Before adding Arabic

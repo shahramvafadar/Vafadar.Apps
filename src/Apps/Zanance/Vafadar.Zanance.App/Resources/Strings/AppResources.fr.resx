@@ -2289,17 +2289,32 @@
     <value>premier</value>
     <comment>Masculine ordinal before a weekday: le premier lundi.</comment>
   </data>
+  <data name="Ordinal_Feminine_1" xml:space="preserve">
+    <value>premier</value>
+  </data>
   <data name="Ordinal_2" xml:space="preserve">
+    <value>deuxième</value>
+  </data>
+  <data name="Ordinal_Feminine_2" xml:space="preserve">
     <value>deuxième</value>
   </data>
   <data name="Ordinal_3" xml:space="preserve">
     <value>troisième</value>
     <comment>Masculine ordinal before a weekday: le troisième vendredi.</comment>
   </data>
+  <data name="Ordinal_Feminine_3" xml:space="preserve">
+    <value>troisième</value>
+  </data>
   <data name="Ordinal_4" xml:space="preserve">
     <value>quatrième</value>
   </data>
+  <data name="Ordinal_Feminine_4" xml:space="preserve">
+    <value>quatrième</value>
+  </data>
   <data name="Ordinal_5" xml:space="preserve">
+    <value>cinquième</value>
+  </data>
+  <data name="Ordinal_Feminine_5" xml:space="preserve">
     <value>cinquième</value>
   </data>
   <data name="DayRule_NthWeekday" xml:space="preserve">
@@ -2308,10 +2323,19 @@
   <data name="DayRule_LastWeekday" xml:space="preserve">
     <value>Le dernier {0}</value>
   </data>
+  <data name="DayRule_LastWeekday_Feminine" xml:space="preserve">
+    <value>Le dernier {0}</value>
+  </data>
   <data name="Rule_NthWeekday" xml:space="preserve">
     <value>le {0} {1}</value>
   </data>
+  <data name="Rule_NthWeekday_Feminine" xml:space="preserve">
+    <value>le {0} {1}</value>
+  </data>
   <data name="Rule_LastWeekday" xml:space="preserve">
+    <value>le dernier {0}</value>
+  </data>
+  <data name="Rule_LastWeekday_Feminine" xml:space="preserve">
     <value>le dernier {0}</value>
   </data>
   <data name="Rule_YearWeekday" xml:space="preserve">

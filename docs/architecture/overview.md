@@ -11,7 +11,7 @@ together and the rules that keep it maintainable as more apps are added. Detaile
 | Many small apps, mostly independent, sometimes a web and mobile version of the same idea | One repository with shared libraries; each app is a self-contained folder ([ADR 0001](../adr/0001-monorepo-with-shared-libraries.md)) |
 | Mostly mobile apps, Microsoft stack | .NET 10 LTS + .NET MAUI; Blazor for web ([ADR 0002](../adr/0002-dotnet-10-and-central-build-configuration.md), [ADR 0003](../adr/0003-ui-technology.md)) |
 | Personal use first, but published to Google Play / App Store | Store-grade quality: signing, privacy policy, privacy matrix, localization, tests, CI |
-| Multilingual from day one (English, Persian, German; Spanish and French since 2026-10-06) | Runtime language switching, right-to-left layout, calendar chosen independently of language ([ADR 0007](../adr/0007-localization.md)) |
+| Multilingual from day one (English, Persian, German; Spanish, French and Italian since 2026-10-06) | Runtime language switching, right-to-left layout, calendar chosen independently of language ([ADR 0007](../adr/0007-localization.md)) |
 | Data must never be lost | Local-first SQLite database + encrypted backups to the user's own Google Drive / OneDrive ([ADR 0005](../adr/0005-local-first-data.md), [ADR 0006](../adr/0006-backup-to-user-cloud-storage.md)) |
 | No server needed for most apps | Apps work fully offline; backup storage belongs to the user; a backend is added only per app when needed |
 | Public source code, not open source | "All rights reserved" license; secrets injected at build time, never committed ([ADR 0009](../adr/0009-secrets-and-source-available-license.md)) |

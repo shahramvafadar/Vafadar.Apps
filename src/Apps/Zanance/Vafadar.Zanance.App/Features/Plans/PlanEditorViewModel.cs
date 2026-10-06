@@ -592,12 +592,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
         var selected = SelectedDayRule;
         _dayRules = DayRulesFor(AnchorDay);
-        var weekday = _localization.CurrentCulture.DateTimeFormat.GetDayName(Start.DayOfWeek);
+        var culture = _localization.CurrentCulture;
+        var weekday = culture.DateTimeFormat.GetDayName(Start.DayOfWeek);
+        // The ordinal and "last" agree with the weekday's gender (Italian "Ultima domenica", D-57).
         DayRuleNames = [.. _dayRules.Select(r => r switch
         {
             MonthDayRule.LastDayOfMonth => _translator["DayRule_LastDay"],
-            MonthDayRule.NthWeekday => _translator.Format("DayRule_NthWeekday", _translator[$"Ordinal_{MonthDayRules.WeekOf(AnchorDay)}"], weekday),
-            MonthDayRule.LastWeekday => _translator.Format("DayRule_LastWeekday", weekday),
+            MonthDayRule.NthWeekday => _translator.Format("DayRule_NthWeekday", _translator[WeekdayGrammar.OrdinalKey(MonthDayRules.WeekOf(AnchorDay), culture, Start.DayOfWeek)], weekday),
+            MonthDayRule.LastWeekday => _translator.Format(WeekdayGrammar.TemplateKey("DayRule_LastWeekday", culture, Start.DayOfWeek), weekday),
             _ => _translator.Format("DayRule_OnDay", AnchorDay),
         })];
         if (IndexOfDayRule(selected) is var dayIndex && dayIndex != DayRuleIndex)

@@ -89,15 +89,17 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, ILoc
             ? translator["Rule_LastDay"]
             : translator.Format("Rule_OnDay", PeriodMath.DayOf(rule.Start, rule.Calendar));
 
-    // "on the 2nd Monday" or "on the last Friday"; a start in the fifth week is the last weekday (REC-12).
+    // "on the 2nd Monday" or "on the last Friday"; a start in the fifth week is the last weekday (REC-12). The words
+    // agree with the weekday's gender (Italian "la prima domenica", D-57).
     private string WeekdayText(RecurrenceRule rule)
     {
-        var weekday = culture.DateTimeFormat.GetDayName(rule.Start.DayOfWeek);
+        var dayOfWeek = rule.Start.DayOfWeek;
+        var weekday = culture.DateTimeFormat.GetDayName(dayOfWeek);
         var day = PeriodMath.DayOf(rule.Start, rule.Calendar);
         var week = MonthDayRules.WeekOf(day);
         return rule.DayRule == MonthDayRule.NthWeekday && week <= 4
-            ? translator.Format("Rule_NthWeekday", translator[$"Ordinal_{week}"], weekday)
-            : translator.Format("Rule_LastWeekday", weekday);
+            ? translator.Format(WeekdayGrammar.TemplateKey("Rule_NthWeekday", culture, dayOfWeek), translator[WeekdayGrammar.OrdinalKey(week, culture, dayOfWeek)], weekday)
+            : translator.Format(WeekdayGrammar.TemplateKey("Rule_LastWeekday", culture, dayOfWeek), weekday);
     }
 
     // A yearly weekday rule names the month through the start date, e.g. "on the 4th Thursday (26 November)". Day and

@@ -38,6 +38,6 @@
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
 - [x] Final app name: **Zanance** (owner decision 2026-09-26)
 - [x] Icon, splash and notification icon from the approved brand master (D-26)
-- [x] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04); Spanish and French store texts are in the listing, their store screenshots are still to be taken – `docs/store/listing.md`, `docs/store/screenshots/<language>/` (from the Windows development build at phone size; replace with device screenshots if Play asks for a higher resolution)
+- [x] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04); Spanish, French and Italian store texts are in the listing, their store screenshots are still to be taken – `docs/store/listing.md`, `docs/store/screenshots/<language>/` (from the Windows development build at phone size; replace with device screenshots if Play asks for a higher resolution)
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track

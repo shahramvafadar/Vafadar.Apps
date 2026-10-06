@@ -209,6 +209,64 @@ Zanance enregistre et organise vos informations : elle n’effectue aucun paiem
 | accounts | Vos comptes, au même endroit |
 | dark | Vos finances, aussi en mode sombre |
 
+## Italiano
+
+**Title:** Zanance – Budget e finanze
+
+**Subtitle (App Store):** Spese, risparmi e obiettivi
+
+**Short description:** Gestisci spese, budget e risparmi. Senza account Zanance né pubblicità.
+
+**Full description** (offline variant; the variant with cloud backup is below):
+
+Le tue finanze, con un piano chiaro.
+
+Con Zanance registri entrate, spese e trasferimenti, pianifichi le scadenze e segui i tuoi obiettivi di risparmio. I saldi e i report si basano sui dati che inserisci: non sono saldi recuperati dalla banca.
+
+NEL QUOTIDIANO
+• Conti per contanti, banca, risparmi, carte di credito, prestiti e denaro prestato.
+• Movimenti con categorie, tag, rimborsi e spese che altre persone ti rimborseranno.
+• Modelli rapidi, filtri salvati, regole per suggerire categorie e widget di inserimento rapido.
+• Foto delle ricevute e documenti PDF allegati ai movimenti. I dati letti dalle ricevute vanno verificati prima di salvarli.
+
+PER PIANIFICARE
+• Piani per stipendio, affitto, bollette, abbonamenti e altri pagamenti, con promemoria e date dei contratti.
+• Budget mensili, settimanali o di due settimane. Puoi far iniziare il mese nel giorno dello stipendio.
+• Limiti di spesa, metodo delle buste e budget Flessibile con pagamenti fissi, non mensili e spese variabili.
+• Obiettivi di saldo, accantonamento o quantità di un bene, con stime dei contributi e dei progressi.
+• Previsioni del saldo e simulazioni. Le stime dipendono dai dati e dalle ipotesi inseriti, non garantiscono risultati.
+
+UNA VISIONE PIÙ AMPIA
+• Più valute, tassi di cambio inseriti da te e unità di visualizzazione personalizzate.
+• Beni registrati per peso o quantità, come oro, monete e lingotti, con prezzi e valore stimato separati dal denaro disponibile.
+• Report, patrimonio netto nel tempo, revisione mensile ed esportazione PDF.
+• Calendario gregoriano, persiano solare o dell’egira lunare, indipendente dalla lingua.
+• Profili separati sullo stesso dispositivo, tema chiaro e scuro e blocco dell’app tramite i metodi di sblocco supportati dal dispositivo.
+• Importazione ed esportazione CSV. I file CSV e i report PDF non sono backup e non sono crittografati.
+
+PRIVACY E BACKUP
+Questa versione funziona senza internet, senza account Zanance e senza pubblicità. I dati finanziari vengono conservati sul dispositivo. Scegli tu quando esportarli o creare un backup e dove conservarne una copia.
+
+I backup locali sono crittografati quando attivi la protezione con password. Conservala al sicuro: lo sviluppatore non può recuperarla. Il blocco dell’app non equivale alla crittografia del database. I backup del dispositivo possono includere i dati dell’app in base alle impostazioni del sistema.
+
+Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancari, non disdice contratti e non fornisce documenti fiscali ufficiali.
+
+**Release note:** Zanance è ora disponibile in italiano, con testi dell’app, promemoria e messaggi di sistema localizzati.
+
+**Screenshot captions** (use only with matching screenshots of the release):
+
+| Screen | Title | Subtitle |
+|---|---|---|
+| home | Le tue finanze a colpo d’occhio | Saldi, scadenze e voci da verificare. |
+| transactions | Ogni movimento, al posto giusto | Entrate, spese e trasferimenti con categorie e tag. |
+| entry | Registra una spesa | Importo, conto e categoria in un unico modulo. |
+| plans | Tieni d’occhio le scadenze | Pianifica affitto, stipendio e pagamenti ricorrenti. |
+| budget | Un budget adatto al tuo ritmo | Limiti di spesa, buste o metodo Flessibile. |
+| goals | Dai una direzione ai risparmi | Obiettivi, accantonamenti e stime dei progressi. |
+| holdings | Segui anche i tuoi beni | Oro, monete e quantità con valori stimati separati. |
+| reports | Capisci i tuoi numeri | Report e spiegazioni basati sui dati registrati. |
+| dark | Chiaro o scuro, scegli tu | La stessa organizzazione, con il tema che preferisci. |
+
 ## Variant with cloud backup (D-35)
 
 Use these instead of the "no internet" sentences when the release is built with the OAuth clients of cloud backup.
@@ -279,6 +337,40 @@ VOS DONNÉES, VOS CHOIX
 Aucun compte Zanance à créer. Vos données sont stockées sur votre appareil et ne sont pas envoyées automatiquement au développeur. L’application n’affiche aucune publicité et n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Vous pouvez connecter votre propre compte Google Drive ou OneDrive pour y conserver des sauvegardes chiffrées. Les sauvegardes locales sont chiffrées lorsque vous activez la protection par mot de passe ; les sauvegardes cloud exigent cette protection. Vous choisissez quand exporter vos données ou créer une sauvegarde.
 
 Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
+
+**IT â€“ full description of a release with cloud backup** (complete text, used instead of the offline description above):
+
+Le tue finanze, con un piano chiaro.
+
+Con Zanance registri entrate, spese e trasferimenti, pianifichi le scadenze e segui i tuoi obiettivi di risparmio. I saldi e i report si basano sui dati che inserisci: non sono saldi recuperati dalla banca.
+
+NEL QUOTIDIANO
+• Conti per contanti, banca, risparmi, carte di credito, prestiti e denaro prestato.
+• Movimenti con categorie, tag, rimborsi e spese che altre persone ti rimborseranno.
+• Modelli rapidi, filtri salvati, regole per suggerire categorie e widget di inserimento rapido.
+• Foto delle ricevute e documenti PDF allegati ai movimenti. I dati letti dalle ricevute vanno verificati prima di salvarli.
+
+PER PIANIFICARE
+• Piani per stipendio, affitto, bollette, abbonamenti e altri pagamenti, con promemoria e date dei contratti.
+• Budget mensili, settimanali o di due settimane. Puoi far iniziare il mese nel giorno dello stipendio.
+• Limiti di spesa, metodo delle buste e budget Flessibile con pagamenti fissi, non mensili e spese variabili.
+• Obiettivi di saldo, accantonamento o quantità di un bene, con stime dei contributi e dei progressi.
+• Previsioni del saldo e simulazioni. Le stime dipendono dai dati e dalle ipotesi inseriti, non garantiscono risultati.
+
+UNA VISIONE PIÙ AMPIA
+• Più valute, tassi di cambio inseriti da te e unità di visualizzazione personalizzate.
+• Beni registrati per peso o quantità, come oro, monete e lingotti, con prezzi e valore stimato separati dal denaro disponibile.
+• Report, patrimonio netto nel tempo, revisione mensile ed esportazione PDF.
+• Calendario gregoriano, persiano solare o dell’egira lunare, indipendente dalla lingua.
+• Profili separati sullo stesso dispositivo, tema chiaro e scuro e blocco dell’app tramite i metodi di sblocco supportati dal dispositivo.
+• Importazione ed esportazione CSV. I file CSV e i report PDF non sono backup e non sono crittografati.
+
+PRIVACY E BACKUP
+Zanance funziona senza un account Zanance e senza pubblicità. I dati finanziari sono conservati sul dispositivo. Puoi scegliere di collegare il tuo Google Drive o OneDrive per conservare backup crittografati nel tuo spazio cloud. La connessione internet è usata per questa funzione facoltativa dopo il collegamento.
+
+I backup nel cloud richiedono una password. I backup locali sono crittografati quando attivi la protezione con password. Conservala al sicuro: lo sviluppatore non può recuperarla. Il blocco dell’app non equivale alla crittografia del database. I backup del dispositivo possono includere i dati dell’app in base alle impostazioni del sistema.
+
+Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancari, non disdice contratti e non fornisce documenti fiscali ufficiali.
 
 ## Screenshots (per language, light theme; one dark)
 

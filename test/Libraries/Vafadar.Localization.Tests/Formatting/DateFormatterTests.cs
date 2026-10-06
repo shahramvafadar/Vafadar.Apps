@@ -178,6 +178,28 @@ public sealed class DateFormatterTests : IDisposable
         Assert.DoesNotContain(" de ", text, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.Long, "venerdì 25 settembre 2026")]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.MonthYear, "settembre 2026")]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.DayMonth, "25 settembre")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Long, "venerdì 3 Mehr 1405")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Short, "1405/07/03")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.DayMonth, "14 Rabi al-Thani")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.DayMonthShort, "14 Rab II")]
+    public void Italian_dates_have_no_comma_after_the_weekday(CalendarSystem calendar, DateFormatStyle style, string expected)
+    {
+        Assert.Equal(expected, CreateFormatter(AppLanguages.Italian, calendar).Format(Date, style));
+    }
+
+    [Fact]
+    public void Italian_date_tiles_keep_the_two_Rabi_months_apart()
+    {
+        var hijri = CreateFormatter(AppLanguages.Italian, CalendarSystem.Hijri);
+
+        Assert.Equal("12 Rab I", hijri.Format(Vafadar.Core.Dates.LunarHijri.ToDate(1448, 3, 12), DateFormatStyle.DayMonthShort));
+        Assert.StartsWith("25 set", CreateFormatter(AppLanguages.Italian, CalendarSystem.Gregorian).Format(Date, DateFormatStyle.DayMonthShort), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Short_month_names_for_date_tiles_stay_distinct()
     {

@@ -18,7 +18,7 @@ public sealed record ReceiptSuggestion(decimal? Amount, DateOnly? Date, string? 
 
 /// <summary>
 /// Reads the total, the date and the merchant from the text of a receipt (on-device OCR, D-31). It prefers a line with a
-/// total keyword (Total, Summe, Gesamt, جمع, مبلغ قابل پرداخت …) and falls back to the largest amount. Persian and
+/// total keyword (Total, Summe, Gesamt, Totale, جمع, مبلغ قابل پرداخت …) and falls back to the largest amount. Persian and
 /// Arabic digits are accepted; dates may be Gregorian, Solar Hijri or lunar Hijri (a year from 1300 to 1500 is read in the
 /// Hijri calendar that gives the date nearer to today: solar years are now around 1405, lunar years around 1447).
 /// </summary>
@@ -34,9 +34,17 @@ public static partial class ReceiptParser
         "total ttc", "net à payer", "net a payer", "montant à payer", "montant a payer", "total à payer", "total a payer",
         "total à régler", "total a regler", "total réglé", "total regle", "total payé", "total paye", "montant total",
         "total toutes taxes comprises",
+        "totale", "totale da pagare", "totale pagato", "totale complessivo", "totale documento", "totale scontrino",
+        "importo totale", "importo da pagare", "importo pagato", "netto a pagare", "totale dovuto",
     ];
 
-    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ", "importe", "monto", "montant", "à payer", "a payer"];
+    private static readonly string[] WeakTotal =
+        ["betrag", "gesamt", "جمع", "مبلغ", "importe", "monto", "montant", "à payer", "a payer", "importo", "da pagare"];
+
+    // Phrases that name the total although they contain a word of NotTotal: Italian "TOTALE IVA INCLUSA" is the total
+    // with tax ("totale iva" alone is the tax), and "NETTO A PAGARE" is the amount to pay (German "netto" is not).
+    // They are taken out of a line only for the NotTotal check.
+    private static readonly string[] TotalDespiteExclusion = ["iva inclusa", "iva compresa", "netto a pagare"];
 
     // Spanish "IVA" and "efectivo" are not listed: "TOTAL IVA INCLUIDO" and "TOTAL EFECTIVO" name the purchase total; a
     // tax-only row has no total word, and cash handed over is "efectivo entregado".
@@ -50,6 +58,9 @@ public static partial class ReceiptParser
         "sous total", "sous-total", "total ht", "total hors taxes", "hors taxes", "dont tva", "montant tva", "remise", "remises",
         "réduction", "reduction", "rabais", "escompte", "pourboire", "pourboires", "espèces reçues", "especes recues",
         "montant remis", "monnaie rendue", "rendu monnaie", "à rendre", "a rendre",
+        // Italian "contanti" alone is not listed: "TOTALE CONTANTI" is the total paid in cash.
+        "subtotale", "sub totale", "imponibile", "totale imponibile", "totale iva", "importo iva", "di cui iva", "sconto", "sconti",
+        "sconto totale", "risparmio", "resto", "resto dovuto", "contanti ricevuti", "contanti consegnati", "importo ricevuto", "mancia",
     ];
 
     private static readonly string[] NotPrice =
@@ -59,6 +70,8 @@ public static partial class ReceiptParser
         "numero de operacion",
         "téléphone", "telephone", "tél", "code postal", "siret", "siren", "numéro de facture", "numero de facture",
         "numéro de ticket", "numero de ticket", "n° facture", "n° ticket",
+        "cellulare", "cap", "partita iva", "p iva", "codice fiscale", "numero documento", "numero scontrino", "numero fattura",
+        "documento n", "fattura n", "scontrino n",
     ];
 
     private static readonly string[] NotMerchant =
@@ -67,6 +80,7 @@ public static partial class ReceiptParser
         "recibo", "factura", "comprobante", "ticket", "teléfono", "telefono", "nif", "cif", "rfc",
         "reçu", "recu", "facture", "ticket de caisse", "justificatif", "téléphone", "telephone", "tél", "siret", "siren",
         "numéro de facture", "numero de facture",
+        "scontrino", "ricevuta", "fattura", "documento commerciale", "documento non fiscale", "partita iva", "p iva", "codice fiscale",
     ];
 
     /// <summary>Reads a receipt text.</summary>
@@ -135,7 +149,7 @@ public static partial class ReceiptParser
                 // "Total TTC 24,00 (dont TVA 4,00)": the tax part of the line is no reason to drop its total.
                 var line = TaxBreakdown().Replace(lines[i], " ");
                 var tokens = Tokens(line);
-                if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(tokens, k)))
+                if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(WithoutTotalPhrases(tokens), k)))
                 {
                     continue;
                 }
@@ -188,6 +202,9 @@ public static partial class ReceiptParser
         text.Replace('ي', 'ی').Replace('ى', 'ی').Replace('ك', 'ک').Replace("\u200C", string.Empty, StringComparison.Ordinal);
 
     private static bool Has(string tokens, string phrase) => tokens.Contains(" " + phrase + " ", StringComparison.Ordinal);
+
+    private static string WithoutTotalPhrases(string tokens) =>
+        TotalDespiteExclusion.Aggregate(tokens, (text, phrase) => text.Replace(" " + phrase + " ", " ", StringComparison.Ordinal));
 
     private static DateOnly? FindDate(string[] lines, DateOnly today)
     {
@@ -292,8 +309,8 @@ public static partial class ReceiptParser
     [GeneratedRegex(@"(?<=(?<!\d)\d{1,3}(?: \d{3})*) (?=\d{3}(?!\d))", RegexOptions.CultureInvariant)]
     private static partial Regex SpaceGroups();
 
-    // A French tax breakdown on a total line: "(dont TVA 4,00)" or "dont TVA 4,00".
-    [GeneratedRegex(@"\(?\s*\bdont\s+t\.?v\.?a\b[^)]*\)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    // A tax breakdown on a total line: French "(dont TVA 4,00)" or "dont TVA 4,00", Italian "(di cui IVA 4,33)".
+    [GeneratedRegex(@"\(?\s*\b(?:dont\s+t\.?v\.?a|di\s+cui\s+iva)\b[^)]*\)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
     private static partial Regex TaxBreakdown();
 
     // Letters (with "\u00B0" for "n\u00B0 facture") of the words a line is matched by.

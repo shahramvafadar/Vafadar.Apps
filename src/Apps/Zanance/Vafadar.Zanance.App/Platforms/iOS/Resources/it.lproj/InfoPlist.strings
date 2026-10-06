@@ -1,0 +1,3 @@
+/* Descriptions for optional biometric app lock and receipt capture. */
+"NSFaceIDUsageDescription" = "Zanance usa Face ID per sbloccare l’app quando il blocco dell’app è attivo.";
+"NSCameraUsageDescription" = "Zanance usa la fotocamera per scansionare le ricevute. Il testo delle ricevute viene elaborato sul dispositivo.";

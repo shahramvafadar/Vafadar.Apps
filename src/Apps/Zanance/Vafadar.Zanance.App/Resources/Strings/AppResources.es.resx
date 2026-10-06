@@ -558,7 +558,7 @@
     <value>¿Vincular «{0}» ({1}) a este vencimiento? No se creará una transacción nueva.</value>
   </data>
   <data name="Occurrence_Change" xml:space="preserve">
-    <value>Editar solo este vencimiento</value>
+    <value>Editar vencimiento</value>
   </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Omitir</value>
@@ -2284,17 +2284,32 @@
     <value>primer</value>
     <comment>Apocopated masculine ordinal before a weekday: el primer lunes.</comment>
   </data>
+  <data name="Ordinal_Feminine_1" xml:space="preserve">
+    <value>primer</value>
+  </data>
   <data name="Ordinal_2" xml:space="preserve">
+    <value>segundo</value>
+  </data>
+  <data name="Ordinal_Feminine_2" xml:space="preserve">
     <value>segundo</value>
   </data>
   <data name="Ordinal_3" xml:space="preserve">
     <value>tercer</value>
     <comment>Apocopated masculine ordinal before a weekday: el tercer viernes.</comment>
   </data>
+  <data name="Ordinal_Feminine_3" xml:space="preserve">
+    <value>tercer</value>
+  </data>
   <data name="Ordinal_4" xml:space="preserve">
     <value>cuarto</value>
   </data>
+  <data name="Ordinal_Feminine_4" xml:space="preserve">
+    <value>cuarto</value>
+  </data>
   <data name="Ordinal_5" xml:space="preserve">
+    <value>quinto</value>
+  </data>
+  <data name="Ordinal_Feminine_5" xml:space="preserve">
     <value>quinto</value>
   </data>
   <data name="DayRule_NthWeekday" xml:space="preserve">
@@ -2303,10 +2318,19 @@
   <data name="DayRule_LastWeekday" xml:space="preserve">
     <value>El último {0}</value>
   </data>
+  <data name="DayRule_LastWeekday_Feminine" xml:space="preserve">
+    <value>El último {0}</value>
+  </data>
   <data name="Rule_NthWeekday" xml:space="preserve">
     <value>el {0} {1}</value>
   </data>
+  <data name="Rule_NthWeekday_Feminine" xml:space="preserve">
+    <value>el {0} {1}</value>
+  </data>
   <data name="Rule_LastWeekday" xml:space="preserve">
+    <value>el último {0}</value>
+  </data>
+  <data name="Rule_LastWeekday_Feminine" xml:space="preserve">
     <value>el último {0}</value>
   </data>
   <data name="Rule_YearWeekday" xml:space="preserve">
@@ -3578,7 +3602,7 @@
     <value>Registrar traslado</value>
   </data>
   <data name="Holding_AddExisting" xml:space="preserve">
-    <value>Añadir existente o regalo</value>
+    <value>Añadir sin compra</value>
   </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Registrar salida</value>

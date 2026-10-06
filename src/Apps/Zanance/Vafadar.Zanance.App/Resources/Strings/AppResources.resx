@@ -2327,17 +2327,37 @@
   <data name="Ordinal_1" xml:space="preserve">
     <value>first</value>
   </data>
+  <data name="Ordinal_Feminine_1" xml:space="preserve">
+    <value>first</value>
+    <comment>Same as Ordinal_1; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
+  </data>
   <data name="Ordinal_2" xml:space="preserve">
     <value>second</value>
+  </data>
+  <data name="Ordinal_Feminine_2" xml:space="preserve">
+    <value>second</value>
+    <comment>Same as Ordinal_2; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
   </data>
   <data name="Ordinal_3" xml:space="preserve">
     <value>third</value>
   </data>
+  <data name="Ordinal_Feminine_3" xml:space="preserve">
+    <value>third</value>
+    <comment>Same as Ordinal_3; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
+  </data>
   <data name="Ordinal_4" xml:space="preserve">
     <value>fourth</value>
   </data>
+  <data name="Ordinal_Feminine_4" xml:space="preserve">
+    <value>fourth</value>
+    <comment>Same as Ordinal_4; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
+  </data>
   <data name="Ordinal_5" xml:space="preserve">
     <value>fifth</value>
+  </data>
+  <data name="Ordinal_Feminine_5" xml:space="preserve">
+    <value>fifth</value>
+    <comment>Same as Ordinal_5; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
   </data>
   <data name="DayRule_NthWeekday" xml:space="preserve">
     <value>The {0} {1}</value>
@@ -2345,11 +2365,23 @@
   <data name="DayRule_LastWeekday" xml:space="preserve">
     <value>The last {0}</value>
   </data>
+  <data name="DayRule_LastWeekday_Feminine" xml:space="preserve">
+    <value>The last {0}</value>
+    <comment>Same as DayRule_LastWeekday; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
+  </data>
   <data name="Rule_NthWeekday" xml:space="preserve">
     <value>on the {0} {1}</value>
   </data>
+  <data name="Rule_NthWeekday_Feminine" xml:space="preserve">
+    <value>on the {0} {1}</value>
+    <comment>Same as Rule_NthWeekday; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
+  </data>
   <data name="Rule_LastWeekday" xml:space="preserve">
     <value>on the last {0}</value>
+  </data>
+  <data name="Rule_LastWeekday_Feminine" xml:space="preserve">
+    <value>on the last {0}</value>
+    <comment>Same as Rule_LastWeekday; a separate key for languages whose Sunday is grammatically feminine (Italian), chosen by WeekdayGrammar.</comment>
   </data>
   <data name="Rule_YearWeekday" xml:space="preserve">
     <value>{0} ({1})</value>

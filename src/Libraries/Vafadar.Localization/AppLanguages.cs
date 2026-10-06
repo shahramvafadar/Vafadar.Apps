@@ -24,6 +24,9 @@ public static class AppLanguages
     /// <summary>French (one general translation with "vous" for every French-speaking region, e.g. fr-FR and fr-CA).</summary>
     public static AppLanguage French { get; } = new("fr", "Français", "French");
 
+    /// <summary>Italian (one general translation with "tu" for every Italian-speaking region, e.g. it-IT and it-CH).</summary>
+    public static AppLanguage Italian { get; } = new("it", "Italiano", "Italian");
+
     /// <summary>Gets all supported languages in display order.</summary>
-    public static IReadOnlyList<AppLanguage> All { get; } = [English, Persian, German, Spanish, French];
+    public static IReadOnlyList<AppLanguage> All { get; } = [English, Persian, German, Spanish, French, Italian];
 }

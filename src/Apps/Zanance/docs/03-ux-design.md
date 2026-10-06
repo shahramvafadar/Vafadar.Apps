@@ -182,6 +182,13 @@ lightened (`CategoryLookup.DisplayColor`).
   spaces before ":", ";", "?", "!" and "%"; "le dernier jour du mois (août)" avoids "de août". The translation comes
   finished from the owner and is not rewritten; a label that does not fit may only use the owner's approved short
   form after the problem was seen.
+* Italian copy (D-57): one general Italian with the informal "tu" and sentence case; Movimenti (transactions),
+  Trasferimento, Rimborso, Entrata restituita, Piani / Scadenza (feminine: Scaduta, Completata, Saltata), Previsione,
+  Margine disponibile, Backup / Copia di sicurezza, Patrimonio netto; no French spaces before ":", "?" and "!".
+  Weekday phrases follow the weekday's gender ("la prima domenica") through `WeekdayGrammar`. As with French, the
+  translation is not rewritten, and a short form is used only after a label was seen not to fit.
+* Two buttons side by side (holding actions, change/skip an occurrence) use 8 px side padding instead of 16, so that
+  longer translated labels fit at 360 px without a smaller font.
 * Translation follow-up of D-52 (closed): the English meaning changed for these keys; Persian follows since D-53 and
   German since D-54: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,

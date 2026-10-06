@@ -18,6 +18,22 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Added – Italian
+
+- Zanance is now available in Italian: the whole interface, help texts, notifications, the widget, the iOS permission
+  prompts and the PDF report. A phone set to Italian (Italy, Switzerland …) uses it; the language does not set your
+  country, currencies or calendar.
+- Italian dates in all three calendars ("venerdì 25 settembre 2026", "venerdì 3 Mehr 1405"), and plans on a Sunday
+  read correctly: "la prima domenica", "Ultima domenica" ("il primo lunedì" for the other weekdays).
+- Italian receipts are read with their total ("TOTALE", "IMPORTO TOTALE", "NETTO A PAGARE", "TOTALE IVA INCLUSA";
+  "(di cui IVA 4,33)" is skipped), never "TOTALE IVA", the taxable amount, a discount, the cash handed over or the
+  change.
+
+### Changed – Spanish
+
+- Two buttons fit the narrowest screens: "Añadir sin compra" (holdings you already own or received as a gift) and
+  "Editar vencimiento" (changes only this occurrence, the plan stays as it is).
+
 ### Added – French
 
 - Zanance is now available in French: the whole interface, help texts, notifications, the widget, the iOS permission

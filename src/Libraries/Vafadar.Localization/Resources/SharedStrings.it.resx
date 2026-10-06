@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Common_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="Common_Delete" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Impostazioni</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="Settings_Calendar" xml:space="preserve">
+    <value>Calendario</value>
+  </data>
+  <data name="Settings_About" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
+  <data name="Settings_Version" xml:space="preserve">
+    <value>Versione {0}</value>
+  </data>
+  <data name="Calendar_Gregorian" xml:space="preserve">
+    <value>Gregoriano</value>
+  </data>
+  <data name="Calendar_Persian" xml:space="preserve">
+    <value>Persiano (egira solare)</value>
+  </data>
+  <data name="Backup_Title" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Backup_Create" xml:space="preserve">
+    <value>Crea backup</value>
+  </data>
+  <data name="Backup_Restore" xml:space="preserve">
+    <value>Ripristina backup</value>
+  </data>
+  <data name="Backup_LastBackup" xml:space="preserve">
+    <value>Ultimo backup: {0}</value>
+  </data>
+  <data name="Backup_Never" xml:space="preserve">
+    <value>Nessun backup ancora</value>
+  </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>Avanti</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>Indietro</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>Fine</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="Common_Add" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>Sì</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Common_Undo" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="Common_Today" xml:space="preserve">
+    <value>Oggi</value>
+  </data>
+  <data name="Common_DiscardTitle" xml:space="preserve">
+    <value>Scartare le modifiche?</value>
+  </data>
+  <data name="Common_DiscardMessage" xml:space="preserve">
+    <value>Le modifiche non sono state salvate.</value>
+  </data>
+  <data name="Common_Discard" xml:space="preserve">
+    <value>Scarta</value>
+  </data>
+  <data name="Common_KeepEditing" xml:space="preserve">
+    <value>Continua a modificare</value>
+  </data>
+  <data name="Common_SaveFailed" xml:space="preserve">
+    <value>Impossibile salvare le modifiche. I dati inseriti sono stati conservati. Riprova.</value>
+  </data>
+  <data name="Common_Saved" xml:space="preserve">
+    <value>Salvato</value>
+  </data>
+  <data name="Common_SelectDate" xml:space="preserve">
+    <value>Seleziona data</value>
+  </data>
+  <data name="Backup_UsePassword" xml:space="preserve">
+    <value>Proteggi con password (consigliato)</value>
+  </data>
+  <data name="Backup_Password" xml:space="preserve">
+    <value>Password del backup</value>
+  </data>
+  <data name="Backup_PasswordConfirm" xml:space="preserve">
+    <value>Conferma password del backup</value>
+  </data>
+  <data name="Backup_PasswordWarning" xml:space="preserve">
+    <value>Conserva questa password al sicuro. Serve a ripristinare il backup. Lo sviluppatore non può recuperarla se la dimentichi. È distinta dal PIN di sblocco del dispositivo.</value>
+  </data>
+  <data name="Backup_NoPasswordWarning" xml:space="preserve">
+    <value>Senza protezione con password, chiunque abbia il file può leggerne il contenuto.</value>
+  </data>
+  <data name="Backup_PasswordTooShort" xml:space="preserve">
+    <value>Usa almeno {0} caratteri.</value>
+  </data>
+  <data name="Backup_PasswordMismatch" xml:space="preserve">
+    <value>Le password non corrispondono.</value>
+  </data>
+  <data name="Backup_Error_InvalidFormat" xml:space="preserve">
+    <value>Il file non è un backup valido per questa app.</value>
+  </data>
+  <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
+    <value>Questo backup richiede una versione più recente dell’app.</value>
+  </data>
+  <data name="Backup_Error_PasswordRequired" xml:space="preserve">
+    <value>Questo backup è protetto. Inserisci la sua password.</value>
+  </data>
+  <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
+    <value>La password non è corretta oppure il file di backup è danneggiato. Nessun dato è stato modificato.</value>
+  </data>
+  <data name="Backup_Error_Corrupted" xml:space="preserve">
+    <value>Il file di backup è danneggiato. Nessun dato è stato modificato.</value>
+  </data>
+  <data name="Backup_Error_WrongApp" xml:space="preserve">
+    <value>Questo backup appartiene a un’altra app. Nessun dato è stato modificato.</value>
+  </data>
+  <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
+    <value>Questo backup è stato creato con una versione più recente dell’app. Aggiorna prima l’app.</value>
+  </data>
+  <data name="Backup_Error_Storage" xml:space="preserve">
+    <value>Impossibile leggere o salvare il file. Controlla lo spazio disponibile e l’accesso al file, poi riprova.</value>
+  </data>
+  <data name="Settings_Region" xml:space="preserve">
+    <value>Paese o regione</value>
+  </data>
+  <data name="Settings_RegionNotSet" xml:space="preserve">
+    <value>Non impostato</value>
+  </data>
+  <data name="Settings_RegionSuggested" xml:space="preserve">
+    <value>Non impostato (dispositivo: {0})</value>
+  </data>
+  <data name="Settings_RegionHint" xml:space="preserve">
+    <value>Usato per le impostazioni regionali predefinite, le regole del fine settimana e le festività supportate. Lingua, valuta e calendario restano invariati. La posizione non viene rilevata.</value>
+  </data>
+  <data name="Settings_WeekStart" xml:space="preserve">
+    <value>Primo giorno della settimana</value>
+  </data>
+  <data name="Settings_WeekStartAutomatic" xml:space="preserve">
+    <value>Automatico ({0})</value>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Aspetto</value>
+  </data>
+  <data name="Theme_System" xml:space="preserve">
+    <value>Segui il dispositivo</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Chiaro</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Scuro</value>
+  </data>
+  <data name="Help_Example" xml:space="preserve">
+    <value>Esempio: {0}</value>
+  </data>
+  <data name="Help_ButtonDescription" xml:space="preserve">
+    <value>Aiuto: {0}</value>
+  </data>
+  <data name="Common_ChipSelected" xml:space="preserve">
+    <value>{0}, selezionato</value>
+  </data>
+  <data name="Calendar_Hijri" xml:space="preserve">
+    <value>Egira lunare (Umm al-Qura)</value>
+  </data>
+</root>

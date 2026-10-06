@@ -80,7 +80,7 @@ dotnet test --solution Vafadar.Tests.slnf                                       
 dotnet clean Vafadar.Tests.slnf                                                    # afterwards: free the disk
 dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data --startup-project src/Apps/Zanance/Vafadar.Zanance.Data
 ./eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark] [-WindowSize 1280x820] [-Empty] [-Only budget,report] [-Mode simple] [-Calendar Hijri] [-Digits latin]   # screenshots of every screen
-./eng/scripts/Add-Strings.ps1 -JsonPath strings.json                               # strings in en, fa, de, es and fr
+./eng/scripts/Add-Strings.ps1 -JsonPath strings.json                               # strings in en, fa, de, es, fr and it
 ./eng/scripts/Build-AndroidApk.ps1                                                 # installable APK in artifacts/android
 ```
 
@@ -111,10 +111,11 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   (`dotnet ef dbcontext optimize …`, command in `docs/architecture/data-and-backup.md`); a test fails when it is stale.
 * Startup: no database work while the app is built (`IMauiInitializeService`, Android `Application.onCreate`); the
   database is migrated in `App.CreateWindow` (D-46). Keep startup work small – measure before and after.
-* UI strings: every key in **all** of `.resx` en/fa/de/es/fr (tests enforce it); a new string needs a real translation
-  in every language – never copy English into a translation file. Spanish uses the informal `tú`, French the polite `vous` – use `eng/scripts/Add-Strings.ps1`.
+* UI strings: every key in **all** of `.resx` en/fa/de/es/fr/it (tests enforce it); a new string needs a real translation
+  in every language – never copy English into a translation file. Spanish uses the informal `tú`, French the polite `vous`, Italian the informal `tu` – use `eng/scripts/Add-Strings.ps1`.
   App strings: `Vafadar.Zanance.App/Resources/Strings/AppResources`; shared strings:
-  `Vafadar.Localization/Resources/SharedStrings`. German texts must fit the narrowest layout.
+  `Vafadar.Localization/Resources/SharedStrings`. German texts must fit the narrowest layout. Weekday phrases go
+  through `WeekdayGrammar` (Italian Sunday is feminine).
 * Right to left: amounts go through `MoneyText` (isolates and marks keep their order on every platform); a Persian
   sentence must not start with an amount or a Latin value – rephrase or quote it (« »); show tags with
   `EntryTags.Display`. Windows ignores Unicode isolates without marks. Persian digits are for display only

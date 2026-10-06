@@ -45,3 +45,5 @@ the Persian calendar too.
   culture's own patterns.
 * French (`fr`, 2026-10-06) followed the same way, with `vous`; the separator after the weekday also comes from the
   culture (none in French).
+* Italian (`it`, 2026-10-06) followed with `tu`. It added grammatical gender for weekday phrases ("la prima
+  domenica"): `WeekdayGrammar` chooses `_Feminine` resource keys by culture and `DayOfWeek`.
