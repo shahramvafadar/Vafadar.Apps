@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Common_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Common_Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="Settings_Calendar" xml:space="preserve">
+    <value>Calendrier</value>
+  </data>
+  <data name="Settings_About" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="Settings_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Calendar_Gregorian" xml:space="preserve">
+    <value>Grégorien</value>
+  </data>
+  <data name="Calendar_Persian" xml:space="preserve">
+    <value>Persan (hégirien solaire)</value>
+  </data>
+  <data name="Backup_Title" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
+  <data name="Backup_Create" xml:space="preserve">
+    <value>Créer une sauvegarde</value>
+  </data>
+  <data name="Backup_Restore" xml:space="preserve">
+    <value>Restaurer une sauvegarde</value>
+  </data>
+  <data name="Backup_LastBackup" xml:space="preserve">
+    <value>Dernière sauvegarde : {0}</value>
+  </data>
+  <data name="Backup_Never" xml:space="preserve">
+    <value>Aucune sauvegarde pour le moment</value>
+  </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>Terminé</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="Common_Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="Common_Undo" xml:space="preserve">
+    <value>Annuler l’action</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
+  <data name="Common_Today" xml:space="preserve">
+    <value>Aujourd’hui</value>
+  </data>
+  <data name="Common_DiscardTitle" xml:space="preserve">
+    <value>Abandonner les modifications ?</value>
+  </data>
+  <data name="Common_DiscardMessage" xml:space="preserve">
+    <value>Vos modifications n’ont pas été enregistrées.</value>
+  </data>
+  <data name="Common_Discard" xml:space="preserve">
+    <value>Abandonner</value>
+  </data>
+  <data name="Common_KeepEditing" xml:space="preserve">
+    <value>Continuer la modification</value>
+  </data>
+  <data name="Common_SaveFailed" xml:space="preserve">
+    <value>Impossible d’enregistrer vos modifications. Votre saisie a été conservée. Réessayez.</value>
+  </data>
+  <data name="Common_Saved" xml:space="preserve">
+    <value>Enregistré</value>
+  </data>
+  <data name="Common_SelectDate" xml:space="preserve">
+    <value>Choisir une date</value>
+  </data>
+  <data name="Backup_UsePassword" xml:space="preserve">
+    <value>Protéger par mot de passe (recommandé)</value>
+  </data>
+  <data name="Backup_Password" xml:space="preserve">
+    <value>Mot de passe de sauvegarde</value>
+  </data>
+  <data name="Backup_PasswordConfirm" xml:space="preserve">
+    <value>Confirmer le mot de passe de sauvegarde</value>
+  </data>
+  <data name="Backup_PasswordWarning" xml:space="preserve">
+    <value>Conservez ce mot de passe en lieu sûr. Il est nécessaire pour restaurer cette sauvegarde. Le développeur ne peut pas récupérer un mot de passe de sauvegarde oublié. Il est distinct du code PIN de déverrouillage de votre appareil.</value>
+  </data>
+  <data name="Backup_NoPasswordWarning" xml:space="preserve">
+    <value>Sans protection par mot de passe, toute personne disposant de ce fichier peut lire son contenu.</value>
+  </data>
+  <data name="Backup_PasswordTooShort" xml:space="preserve">
+    <value>Utilisez au moins {0} caractères.</value>
+  </data>
+  <data name="Backup_PasswordMismatch" xml:space="preserve">
+    <value>Les mots de passe ne correspondent pas.</value>
+  </data>
+  <data name="Backup_Error_InvalidFormat" xml:space="preserve">
+    <value>Ce fichier n’est pas une sauvegarde valide pour cette application.</value>
+  </data>
+  <data name="Backup_Error_UnsupportedFormatVersion" xml:space="preserve">
+    <value>Cette sauvegarde nécessite une version plus récente de l’application.</value>
+  </data>
+  <data name="Backup_Error_PasswordRequired" xml:space="preserve">
+    <value>Cette sauvegarde est protégée. Saisissez son mot de passe.</value>
+  </data>
+  <data name="Backup_Error_InvalidPasswordOrCorrupted" xml:space="preserve">
+    <value>Le mot de passe est incorrect ou le fichier de sauvegarde est endommagé. Aucune donnée n’a été modifiée.</value>
+  </data>
+  <data name="Backup_Error_Corrupted" xml:space="preserve">
+    <value>Le fichier de sauvegarde est endommagé. Aucune donnée n’a été modifiée.</value>
+  </data>
+  <data name="Backup_Error_WrongApp" xml:space="preserve">
+    <value>Cette sauvegarde appartient à une autre application. Aucune donnée n’a été modifiée.</value>
+  </data>
+  <data name="Backup_Error_CreatedByNewerAppVersion" xml:space="preserve">
+    <value>Cette sauvegarde a été créée avec une version plus récente de l’application. Mettez d’abord l’application à jour.</value>
+  </data>
+  <data name="Backup_Error_Storage" xml:space="preserve">
+    <value>Impossible de lire ou d’enregistrer le fichier. Vérifiez l’espace de stockage disponible et l’accès au fichier, puis réessayez.</value>
+  </data>
+  <data name="Settings_Region" xml:space="preserve">
+    <value>Pays ou région</value>
+  </data>
+  <data name="Settings_RegionNotSet" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  <data name="Settings_RegionSuggested" xml:space="preserve">
+    <value>Non défini (appareil : {0})</value>
+  </data>
+  <data name="Settings_RegionHint" xml:space="preserve">
+    <value>Utilisé pour les réglages régionaux par défaut, les règles de week-end et les jours fériés pris en charge. Votre langue, votre devise et votre calendrier restent inchangés. Votre position géographique n’est pas consultée.</value>
+  </data>
+  <data name="Settings_WeekStart" xml:space="preserve">
+    <value>Premier jour de la semaine</value>
+  </data>
+  <data name="Settings_WeekStartAutomatic" xml:space="preserve">
+    <value>Automatique ({0})</value>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Apparence</value>
+  </data>
+  <data name="Theme_System" xml:space="preserve">
+    <value>Suivre le réglage de l’appareil</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Clair</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+  <data name="Help_Example" xml:space="preserve">
+    <value>Exemple : {0}</value>
+  </data>
+  <data name="Help_ButtonDescription" xml:space="preserve">
+    <value>Aide : {0}</value>
+  </data>
+  <data name="Common_ChipSelected" xml:space="preserve">
+    <value>{0}, sélectionné</value>
+  </data>
+  <data name="Calendar_Hijri" xml:space="preserve">
+    <value>Hégirien lunaire (Umm al-Qura)</value>
+  </data>
+</root>

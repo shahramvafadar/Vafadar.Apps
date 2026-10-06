@@ -177,6 +177,11 @@ lightened (`CategoryLookup.DisplayColor`).
   ("Traspaso" in quick add), Reembolso, Devolución de ingresos, Presupuesto, Previsión, Copia de seguridad / copia
   preventiva, Patrimonio neto; "el primer lunes", not "primero". The translation comes finished from the owner and is
   not rewritten; a label that does not fit may only use the owner's approved short form after the problem was seen.
+* French copy (D-56): one general French with the polite "vous"; Opération (transaction), Virement, Remboursement,
+  Revenu restitué, Planification / Échéance, Prévision, Sauvegarde / copie de précaution, Patrimoine net; typographic
+  spaces before ":", ";", "?", "!" and "%"; "le dernier jour du mois (août)" avoids "de août". The translation comes
+  finished from the owner and is not rewritten; a label that does not fit may only use the owner's approved short
+  form after the problem was seen.
 * Translation follow-up of D-52 (closed): the English meaning changed for these keys; Persian follows since D-53 and
   German since D-54: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,

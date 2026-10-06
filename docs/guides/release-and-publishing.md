@@ -44,7 +44,7 @@ Each app is versioned independently.
 ## Per app: first Play Console release
 
 - [ ] Create the app in Play Console with the package name from `ApplicationId` (`pro.vafadar.<app>`)
-- [ ] Store listing in English, Persian, German and Spanish: title, short and full description, screenshots (phone, tablet),
+- [ ] Store listing in English, Persian, German, Spanish and French: title, short and full description, screenshots (phone, tablet),
       feature graphic, icon (512×512)
 - [ ] App content: privacy policy URL, **Data safety** form (from the [privacy matrix](../privacy/privacy-matrix.md)),
       ads (none), content rating questionnaire, target audience, financial features declaration if applicable

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="widget_expense">+ Dépense</string>
+    <string name="widget_income">+ Revenu</string>
+    <string name="widget_transfer">Virement</string>
+    <string name="widget_open">Ouvrir Zanance</string>
+    <string name="widget_description">Ouvrez Zanance pour enregistrer une dépense, un revenu ou un virement. Aucun montant financier n’est affiché dans ce widget.</string>
+</resources>

@@ -122,7 +122,10 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
     private static string FormatOwn(DateTime dateTime, DateFormatStyle style, CultureInfo culture, int year, int month, int day, string[] monthNames)
     {
         var monthName = monthNames[month - 1];
-        var separator = culture.TextInfo.IsRightToLeft ? " " : ", ";
+        // After the weekday: the culture's own separator ("dddd, d. MMMM" → ", "; French "dddd d MMMM" → " ").
+        var separator = WeekdaySeparator().Match(culture.DateTimeFormat.LongDatePattern) is { Success: true } after
+            ? after.Groups[1].Value
+            : culture.TextInfo.IsRightToLeft ? " " : ", ";
         var dayMonth = Joiner(culture.DateTimeFormat.MonthDayPattern);
         var monthYear = Joiner(culture.DateTimeFormat.YearMonthPattern);
         return style switch
@@ -145,4 +148,8 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
 
     [GeneratedRegex(@"\s*'[^']*'\s*")]
     private static partial Regex QuotedLiteral();
+
+    // The punctuation and spaces right after the weekday at the start of a long date pattern.
+    [GeneratedRegex(@"^dddd([^dMy']+)")]
+    private static partial Regex WeekdaySeparator();
 }

@@ -1,0 +1,3 @@
+/* Permission descriptions for the optional app lock and receipt camera. */
+"NSFaceIDUsageDescription" = "Zanance utilise Face ID pour déverrouiller l’application lorsque son verrouillage est activé.";
+"NSCameraUsageDescription" = "Zanance utilise l’appareil photo pour scanner les reçus. Le texte des reçus est traité sur votre appareil.";

@@ -18,6 +18,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Added – French
+
+- Zanance is now available in French: the whole interface, help texts, notifications, the widget, the iOS permission
+  prompts and the PDF report. A phone set to any French variant (France, Canada, Belgium, Switzerland …) uses it; the
+  language does not set your country, currencies or calendar.
+- French dates in all three calendars ("vendredi 25 septembre 2026", "vendredi 3 Mehr 1405").
+- French receipts are read with their total ("TOTAL TTC", "NET À PAYER", "Total TTC 24,00 (dont TVA 4,00)" gives
+  24,00), never "Total HT", the tax, the cash handed over or the change; amounts like "1 234,56" are read whole.
+
 ### Added – Spanish
 
 - Zanance is now available in Spanish: the whole interface, help texts, notifications, the widget, the iOS permission

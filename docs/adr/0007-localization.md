@@ -43,3 +43,5 @@ the Persian calendar too.
   (`es-ES`, `es-MX`, … fall back to it), Gregorian by default. It needed no change to this decision: resources,
   satellite assemblies and platform files per culture, and dates whose connecting words ("de") come from the
   culture's own patterns.
+* French (`fr`, 2026-10-06) followed the same way, with `vous`; the separator after the weekday also comes from the
+  culture (none in French).

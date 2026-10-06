@@ -5,7 +5,7 @@ integration is in Vafadar.Maui). Design: [docs/architecture/localization.md](../
 
 | Type | Purpose |
 |---|---|
-| `AppLanguage`, `AppLanguages` | Supported languages (`en`, `fa`, `de`, `es`), native names, RTL flag |
+| `AppLanguage`, `AppLanguages` | Supported languages (`en`, `fa`, `de`, `es`, `fr`), native names, RTL flag |
 | `CalendarSystem` | `Gregorian`, `Persian` (solar Hijri), `Hijri` (lunar, Umm al-Qura) |
 | `ILocalizationService` / `LocalizationService` | Current language, calendar, optional region and first day of the week; persists the choice; applies cultures; `Changed` event |
 | `Regions` | Region codes and names, and the conventional first day of the week per region (a region only suggests formats, never location) |

@@ -155,6 +155,29 @@ public sealed class DateFormatterTests : IDisposable
         Assert.StartsWith(calendar switch { CalendarSystem.Persian => "3 ", CalendarSystem.Hijri => "14 ", _ => "25 " }, text, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.Long, "vendredi 25 septembre 2026")]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.MonthYear, "septembre 2026")]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.Short, "25/09/2026")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Long, "vendredi 3 Mehr 1405")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Short, "1405/07/03")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.DayMonth, "14 Rabi al-Thani")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.DayMonthShort, "14 Rab II")]
+    public void French_dates_have_no_comma_after_the_weekday_and_no_de(CalendarSystem calendar, DateFormatStyle style, string expected)
+    {
+        Assert.Equal(expected, CreateFormatter(AppLanguages.French, calendar).Format(Date, style));
+    }
+
+    [Fact]
+    public void A_French_date_tile_has_a_plain_space_and_no_preposition()
+    {
+        // "25 sept." – the tile splits at an ordinary space; the abbreviation may vary with the platform.
+        var text = CreateFormatter(AppLanguages.French, CalendarSystem.Gregorian).Format(Date, DateFormatStyle.DayMonthShort);
+
+        Assert.StartsWith("25 sept", text, StringComparison.Ordinal);
+        Assert.DoesNotContain(" de ", text, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Short_month_names_for_date_tiles_stay_distinct()
     {

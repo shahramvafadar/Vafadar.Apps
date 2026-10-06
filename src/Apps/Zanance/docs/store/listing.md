@@ -158,6 +158,57 @@ Zanance registra y organiza información: no realiza pagos ni transferencias ban
 | accounts | Tus cuentas, en un solo lugar |
 | dark | Elige entre modo claro y oscuro |
 
+## Français
+
+**Title:** Zanance – Budget et finances
+
+**Subtitle (App Store):** Vos finances, en toute clarté
+
+**Short description:** Comptes, budgets, objectifs : vos finances, sans publicité ni compte Zanance.
+
+**Full description** (offline variant; the variant with cloud backup is below):
+
+Vos finances, en toute clarté.
+
+Enregistrez vos revenus, dépenses et virements entre comptes. Planifiez les prochaines échéances, préparez vos budgets et suivez l’évolution possible de votre solde à partir de vos propres données.
+
+L’ESSENTIEL, AU MÊME ENDROIT
+• Comptes d’espèces, bancaires, d’épargne et de carte de crédit, emprunts et argent prêté.
+• Catégories, étiquettes, remboursements et suivi des sommes que d’autres vous doivent.
+• Opérations ponctuelles ou récurrentes, rappels et dates importantes des contrats.
+• Budgets mensuels, hebdomadaires ou de deux semaines, avec plafonds de dépenses. Méthodes Enveloppes et Flexible pour les budgets mensuels.
+• Objectifs fondés sur le solde d’un compte, l’argent mis de côté ou la quantité d’un bien.
+• Or, pièces et autres biens suivis au poids ou à l’unité, avec vos prix et mouvements enregistrés.
+• Rapports, graphiques, prévisions de solde et prévisions enregistrées à comparer aux résultats ultérieurs.
+• Plusieurs devises, taux de change saisis par vous et unités d’affichage personnalisées.
+• Calendriers grégorien, persan et hégirien lunaire (Umm al-Qura), indépendants de la langue.
+• Photos de reçus et PDF joints aux opérations, avec lecture du texte sur l’appareil. Vérifiez toujours les informations détectées.
+• Profils séparés, ajout rapide, thèmes clair et sombre et verrouillage selon les options de l’appareil.
+• Importation et exportation CSV et rapports PDF. Une exportation ne remplace pas une sauvegarde.
+
+EN FRANÇAIS
+Utilisez Zanance en français. Changer de langue ne change pas la devise de vos comptes.
+
+VOS DONNÉES, VOS CHOIX
+Aucun compte Zanance à créer. Vos données sont stockées sur votre appareil et ne sont pas envoyées automatiquement au développeur. L’application n’affiche aucune publicité et n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Cette version fonctionne sans accès à Internet. Vous choisissez quand exporter vos données ou créer un fichier de sauvegarde, et où en conserver une copie. Les sauvegardes locales sont chiffrées lorsque vous activez la protection par mot de passe. Sans cette protection, le fichier peut être lu par toute personne qui en dispose.
+
+Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
+
+**Release note:** Zanance est désormais disponible en français : interface, aides et messages de l’application.
+
+**Screenshot captions:**
+
+| Screen | Caption |
+|---|---|
+| home | Vos finances en un coup d’œil |
+| operations | Vos revenus et dépenses, au quotidien |
+| entry | Une nouvelle opération en quelques gestes |
+| plans | Anticipez vos prochaines échéances |
+| budget | Un budget adapté à votre rythme |
+| reports | Comprenez vos chiffres |
+| accounts | Vos comptes, au même endroit |
+| dark | Vos finances, aussi en mode sombre |
+
 ## Variant with cloud backup (D-35)
 
 Use these instead of the "no internet" sentences when the release is built with the OAuth clients of cloud backup.
@@ -200,6 +251,34 @@ CONTROL SOBRE TUS DATOS
 No necesitas crear una cuenta de Zanance. Los datos se guardan en tu dispositivo y no se envían automáticamente al desarrollador. La app no muestra anuncios ni envía estadísticas de uso o informes de fallos automáticamente. Puedes conectar tu propia cuenta de Google Drive o OneDrive para guardar copias cifradas. Las copias locales se cifran cuando activas la protección con contraseña; las copias en la nube la requieren. Tú decides cuándo exportar los datos o crear una copia.
 
 Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
+
+**FR – full description of a release with cloud backup** (complete text, used instead of the offline description above):
+
+Vos finances, en toute clarté.
+
+Enregistrez vos revenus, dépenses et virements entre comptes. Planifiez les prochaines échéances, préparez vos budgets et suivez l’évolution possible de votre solde à partir de vos propres données.
+
+L’ESSENTIEL, AU MÊME ENDROIT
+• Comptes d’espèces, bancaires, d’épargne et de carte de crédit, emprunts et argent prêté.
+• Catégories, étiquettes, remboursements et suivi des sommes que d’autres vous doivent.
+• Opérations ponctuelles ou récurrentes, rappels et dates importantes des contrats.
+• Budgets mensuels, hebdomadaires ou de deux semaines, avec plafonds de dépenses. Méthodes Enveloppes et Flexible pour les budgets mensuels.
+• Objectifs fondés sur le solde d’un compte, l’argent mis de côté ou la quantité d’un bien.
+• Or, pièces et autres biens suivis au poids ou à l’unité, avec vos prix et mouvements enregistrés.
+• Rapports, graphiques, prévisions de solde et prévisions enregistrées à comparer aux résultats ultérieurs.
+• Plusieurs devises, taux de change saisis par vous et unités d’affichage personnalisées.
+• Calendriers grégorien, persan et hégirien lunaire (Umm al-Qura), indépendants de la langue.
+• Photos de reçus et PDF joints aux opérations, avec lecture du texte sur l’appareil. Vérifiez toujours les informations détectées.
+• Profils séparés, ajout rapide, thèmes clair et sombre et verrouillage selon les options de l’appareil.
+• Importation et exportation CSV et rapports PDF. Une exportation ne remplace pas une sauvegarde.
+
+EN FRANÇAIS
+Utilisez Zanance en français. Changer de langue ne change pas la devise de vos comptes.
+
+VOS DONNÉES, VOS CHOIX
+Aucun compte Zanance à créer. Vos données sont stockées sur votre appareil et ne sont pas envoyées automatiquement au développeur. L’application n’affiche aucune publicité et n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Vous pouvez connecter votre propre compte Google Drive ou OneDrive pour y conserver des sauvegardes chiffrées. Les sauvegardes locales sont chiffrées lorsque vous activez la protection par mot de passe ; les sauvegardes cloud exigent cette protection. Vous choisissez quand exporter vos données ou créer une sauvegarde.
+
+Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
 
 ## Screenshots (per language, light theme; one dark)
 

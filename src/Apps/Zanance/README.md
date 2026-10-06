@@ -1,7 +1,7 @@
 # Zanance
 
 Personal finance manager: record income and expenses, organize them into accounts and categories, and understand
-where the money goes with reports. Local-first and offline, multilingual (English, Persian, German, Spanish, with Gregorian, Persian or lunar Hijri calendar) and backed up
+where the money goes with reports. Local-first and offline, multilingual (English, Persian, German, Spanish, French, with Gregorian, Persian or lunar Hijri calendar) and backed up
 with encrypted files the user keeps wherever they like, or – in builds with cloud backup (D-35) – in the user's own Google Drive or OneDrive.
 
 | | |

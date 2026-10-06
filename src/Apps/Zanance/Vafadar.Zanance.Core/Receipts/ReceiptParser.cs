@@ -31,9 +31,12 @@ public static partial class ReceiptParser
         "endbetrag", "rechnungsbetrag", "zahlbetrag", "zu zahlen", "invoice total", "amount payable", "jumlah",
         "جمع کل", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل",
         "importe total", "total a pagar", "total pagado", "total de la compra", "importe a pagar", "monto total", "monto a pagar",
+        "total ttc", "net à payer", "net a payer", "montant à payer", "montant a payer", "total à payer", "total a payer",
+        "total à régler", "total a regler", "total réglé", "total regle", "total payé", "total paye", "montant total",
+        "total toutes taxes comprises",
     ];
 
-    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ", "importe", "monto"];
+    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ", "importe", "monto", "montant", "à payer", "a payer"];
 
     // Spanish "IVA" and "efectivo" are not listed: "TOTAL IVA INCLUIDO" and "TOTAL EFECTIVO" name the purchase total; a
     // tax-only row has no total word, and cash handed over is "efectivo entregado".
@@ -44,6 +47,9 @@ public static partial class ReceiptParser
         "تخفیف", "مالیات", "تعداد", "باقیمانده", "دریافتی",
         "sub total", "base imponible", "descuento", "descuentos", "ahorro", "efectivo entregado", "recibido", "cambio", "vuelto",
         "vuelta", "propina",
+        "sous total", "sous-total", "total ht", "total hors taxes", "hors taxes", "dont tva", "montant tva", "remise", "remises",
+        "réduction", "reduction", "rabais", "escompte", "pourboire", "pourboires", "espèces reçues", "especes recues",
+        "montant remis", "monnaie rendue", "rendu monnaie", "à rendre", "a rendre",
     ];
 
     private static readonly string[] NotPrice =
@@ -51,12 +57,16 @@ public static partial class ReceiptParser
         "tel", "telefon", "fax", "plz", "iban", "bic", "nr", "no", "ust", "id", "steuernummer", "تلفن", "کد",
         "teléfono", "telefono", "código postal", "codigo postal", "nif", "cif", "rfc", "ruc", "cuit", "folio", "número de operación",
         "numero de operacion",
+        "téléphone", "telephone", "tél", "code postal", "siret", "siren", "numéro de facture", "numero de facture",
+        "numéro de ticket", "numero de ticket", "n° facture", "n° ticket",
     ];
 
     private static readonly string[] NotMerchant =
     [
         "receipt", "rechnung", "beleg", "quittung", "kassenbon", "bon", "invoice", "tel", "fax", "ust", "vat", "فاکتور", "رسید", "تلفن",
         "recibo", "factura", "comprobante", "ticket", "teléfono", "telefono", "nif", "cif", "rfc",
+        "reçu", "recu", "facture", "ticket de caisse", "justificatif", "téléphone", "telephone", "tél", "siret", "siren",
+        "numéro de facture", "numero de facture",
     ];
 
     /// <summary>Reads a receipt text.</summary>
@@ -70,7 +80,10 @@ public static partial class ReceiptParser
         }
 
         // Persian and Arabic separators become Latin ones; OCR sometimes puts a space after the decimal separator ("2, 90").
+        // A no-break space between digit groups ("1 234,56" in French) always groups thousands, so it is removed here;
+        // a plain space is joined only on a total line (FindTotal), where it cannot glue a quantity to a price.
         var normalized = SplitDecimals().Replace(Digits.ToAscii(text).Replace('٫', '.').Replace('٬', ',').Replace('،', ','), "$1$2$3");
+        normalized = NoBreakGroups().Replace(normalized, string.Empty);
         var lines = normalized.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         return new ReceiptSuggestion(FindTotal(lines), FindDate(lines, today ?? DateOnly.FromDateTime(DateTime.Today)), FindMerchant(lines));
     }
@@ -119,16 +132,18 @@ public static partial class ReceiptParser
         {
             for (var i = lines.Length - 1; i >= 0; i--)
             {
-                var tokens = Tokens(lines[i]);
+                // "Total TTC 24,00 (dont TVA 4,00)": the tax part of the line is no reason to drop its total.
+                var line = TaxBreakdown().Replace(lines[i], " ");
+                var tokens = Tokens(line);
                 if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(tokens, k)))
                 {
                     continue;
                 }
 
-                var amounts = Amounts(lines[i], strict: false).ToList();
+                var amounts = Amounts(SpaceGroups().Replace(line, string.Empty), strict: false).ToList();
                 if (amounts.Count == 0 && i + 1 < lines.Length && !NotTotal.Any(k => Has(Tokens(lines[i + 1]), k)))
                 {
-                    amounts = [.. Amounts(lines[i + 1], strict: false)];
+                    amounts = [.. Amounts(SpaceGroups().Replace(lines[i + 1], string.Empty), strict: false)];
                 }
 
                 if (amounts.Count > 0)
@@ -269,6 +284,19 @@ public static partial class ReceiptParser
     [GeneratedRegex(@"(\d)([.,]) +(\d{2})\b", RegexOptions.CultureInvariant)]
     private static partial Regex SplitDecimals();
 
-    [GeneratedRegex(@"[\p{L}\p{M}\u200C]+", RegexOptions.CultureInvariant)]
+    // A no-break or narrow no-break space followed by exactly three digits: a thousands group ("1 234,56").
+    [GeneratedRegex(@"(?<=\d)[\u00A0\u202F](?=\d{3}(?!\d))", RegexOptions.CultureInvariant)]
+    private static partial Regex NoBreakGroups();
+
+    // A plain space inside "1 234,56" or "12 345": up to three digits, then groups of exactly three.
+    [GeneratedRegex(@"(?<=(?<!\d)\d{1,3}(?: \d{3})*) (?=\d{3}(?!\d))", RegexOptions.CultureInvariant)]
+    private static partial Regex SpaceGroups();
+
+    // A French tax breakdown on a total line: "(dont TVA 4,00)" or "dont TVA 4,00".
+    [GeneratedRegex(@"\(?\s*\bdont\s+t\.?v\.?a\b[^)]*\)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex TaxBreakdown();
+
+    // Letters (with "\u00B0" for "n\u00B0 facture") of the words a line is matched by.
+    [GeneratedRegex(@"[\p{L}\p{M}\u200C\u00B0]+", RegexOptions.CultureInvariant)]
     private static partial Regex WordPattern();
 }
