@@ -32,8 +32,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 ### Changed – Date input
 
 - Dates are entered with three number boxes – day, month and year – in your calendar, with the full date written
-  below. Tap a box and type; the next box follows automatically. This replaces the calendar dialog, which opened
-  empty on Android.
+  below. Tap a box and type; the next box follows automatically. The calendar button next to the boxes opens the
+  month view to pick a day; it opened empty on Android before and now shows the month in the app's colors.
 - A number that cannot be part of a date shows red and is not taken; a day past the end of the month becomes the last
   day of that month when you leave the field.
 

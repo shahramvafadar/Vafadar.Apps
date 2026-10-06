@@ -214,6 +214,6 @@ lightened (`CategoryLookup.DisplayColor`).
 | `SfCircularChart` / `SfCartesianChart` | Home donut, reports, forecast path |
 | `SfSegmentedControl` | Entry kind, Simple/Advanced, report period |
 | `SfNumericEntry` or custom keypad | Amount entry (custom parsing for Persian digits) |
-| Own `DateField` (replaced `SfCalendar` in dialog mode, D-59) | Date input by three number boxes (day, month, year) in the display calendar, the full date below; a box with a number that cannot be part of a date shows red, a day past the month's end becomes its last day when the field is left |
+| Own `DateField` with `SfCalendar` in dialog mode (D-59) | Date input by three number boxes (day, month, year) in the display calendar, a calendar button that opens the month view (Persian via `CalendarIdentifier.Persian`, lunar Hijri via `CalendarIdentifier.UmAlQura` for 1900–2077, otherwise Gregorian) and the full date below; a box with a number that cannot be part of a date shows red, a day past the month's end becomes its last day when the field is left |
 | `SfChip` / `SfChipGroup` | Filters |
 | `SfBusyIndicator`, `SfPopup` | Long operations, confirmations |

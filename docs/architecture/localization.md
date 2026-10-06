@@ -136,7 +136,8 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   screen never compares with a single calendar itself. A plan in another calendar than the display names its
   calendar ("Every month on day 2 · Gregorian").
 * **Date input**: `DateField` (Vafadar.Maui) has three number boxes – day, month, year – in the display calendar,
-  with the full date written below. `CalendarDates` (Vafadar.Localization) converts the parts in every calendar,
+  a calendar button that opens the Syncfusion month view in the same calendar (`CalendarIdentifier.Persian` or
+  `UmAlQura`; a date outside the Umm al-Qura range opens in the Gregorian view), and the full date written below. `CalendarDates` (Vafadar.Localization) converts the parts in every calendar,
   knows the month lengths (a lunar month has 29 or 30 days) and the order of the boxes: Gregorian dates follow the
   culture (`M/d/yyyy` in English, `d.M.yyyy` in German), Persian and lunar Hijri dates are entered year/month/day,
   and in Persian the boxes are laid out from the right so that they read `1405 / 07 / 03` (D-59). Dates from

@@ -1,4 +1,7 @@
+using FluentIcons.Common;
+using FluentIcons.Maui;
 using Microsoft.Extensions.DependencyInjection;
+using Syncfusion.Maui.Calendar;
 using Vafadar.Core.Text;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
@@ -7,14 +10,17 @@ namespace Vafadar.Maui.Controls;
 
 /// <summary>
 /// A date input with three number boxes – day, month and year – in the user's display calendar (Gregorian, Persian or
-/// lunar Hijri), with the full date written below ("Tuesday, 6 October 2026"). The value is always a Gregorian
-/// <see cref="DateOnly"/>. An unset value (before 1900, e.g. <c>default(DateOnly)</c>) becomes today.
+/// lunar Hijri), a calendar button that opens a month view in the same calendar, and the full date written below
+/// ("Tuesday, 6 October 2026"). The value is always a Gregorian <see cref="DateOnly"/>. An unset value (before 1900,
+/// e.g. <c>default(DateOnly)</c>) becomes today.
 /// </summary>
 /// <remarks>
 /// <para>
-/// The boxes replace a calendar dialog (D-59): the Syncfusion dialog opened empty on Android, and a month view makes
-/// a date far away slow to reach. Each box takes digits only (Persian and Arabic digits are read as well), selects
-/// its number when focused so that typing replaces it, and moves on to the next box once it is full.
+/// The boxes make a date quick to type or change by hand; the calendar shows the month around it (D-59). The calendar
+/// is a Syncfusion calendar in dialog mode with an explicit popup size, shown in the app's colors. Its own view is
+/// 1 × 1 behind the calendar button: at 0 × 0 (an earlier version) the dialog opened as an empty box on Android.
+/// Each box takes digits only (Persian and Arabic digits are read as well), selects its number when focused so that
+/// typing replaces it, and moves on to the next box once it is full.
 /// </para>
 /// <para>
 /// A complete, existing date is taken over at once. While the boxes hold a date that does not exist (day 31 of a
@@ -35,6 +41,9 @@ public sealed class DateField : ContentView
     private readonly Dictionary<DatePart, Entry> _boxes = [];
     private readonly Label[] _separators;
     private readonly Label _preview;
+    private readonly SfCalendar _calendar;
+    private readonly SymbolIcon _calendarIcon;
+    private readonly Button _calendarButton;
     private bool _typing;
     private bool _writing;
 
@@ -63,9 +72,58 @@ public sealed class DateField : ContentView
         _separators = [Separator(), Separator()];
         _preview = new Label { FontSize = 13, Margin = new Thickness(2, 4, 0, 0), TextColor = ThemeColors.SecondaryText };
 
+        _calendar = new SfCalendar
+        {
+            Mode = CalendarMode.Dialog,
+            SelectionMode = CalendarSelectionMode.Single,
+            FooterView = new CalendarFooterView { ShowActionButtons = true, ShowTodayButton = true },
+            // The dialog's content is drawn at the size of the calendar view itself: at 0 × 0 it opened as an empty box
+            // on Android. 1 × 1 behind the calendar button takes no room and keeps the dialog filled.
+            WidthRequest = 1,
+            HeightRequest = 1,
+            PopupWidth = 330,
+            PopupHeight = 420,
+        };
+        _calendar.AcceptCommand = new Command(AcceptCalendar);
+        _calendar.DeclineCommand = new Command(() => _calendar.IsOpen = false);
+
+        // The calendar button: an icon under a transparent button that takes taps, keyboard focus and the spoken name.
+        _calendarIcon = new SymbolIcon
+        {
+            Symbol = Symbol.Calendar,
+            FontSize = 24,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            InputTransparent = true,
+            ForegroundColor = ThemeColors.Primary,
+        };
+        AutomationProperties.SetIsInAccessibleTree(_calendarIcon, false);
+        _calendarButton = new Button
+        {
+            Text = string.Empty,
+            WidthRequest = 44,
+            HeightRequest = 44,
+            MinimumWidthRequest = 44,
+            MinimumHeightRequest = 44,
+            Padding = 0,
+            BorderWidth = 0,
+            CornerRadius = 22,
+            BackgroundColor = Colors.Transparent,
+        };
+        _calendarButton.Clicked += (_, _) => OpenCalendar();
+        var calendarArea = new Grid
+        {
+            WidthRequest = 44,
+            HeightRequest = 44,
+            Margin = new Thickness(6, 0, 0, 0),
+            VerticalOptions = LayoutOptions.Center,
+            Children = { _calendar, _calendarIcon, _calendarButton },
+        };
+        Grid.SetColumn(calendarArea, 5);
+
         var row = new Grid
         {
-            ColumnDefinitions = [new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto)],
+            ColumnDefinitions = [new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto)],
             ColumnSpacing = 2,
             HorizontalOptions = LayoutOptions.Start,
         };
@@ -73,6 +131,8 @@ public sealed class DateField : ContentView
         {
             row.Children.Add(view);
         }
+
+        row.Children.Add(calendarArea);
 
         Content = new VerticalStackLayout { Spacing = 0, Children = { row, _preview } };
         Arrange();
@@ -139,6 +199,7 @@ public sealed class DateField : ContentView
     private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(() =>
     {
         _preview.TextColor = ThemeColors.SecondaryText;
+        _calendarIcon.ForegroundColor = ThemeColors.Primary;
         foreach (var separator in _separators)
         {
             separator.TextColor = ThemeColors.SecondaryText;
@@ -186,6 +247,8 @@ public sealed class DateField : ContentView
             box.Placeholder = name;
             SemanticProperties.SetDescription(box, name);
         }
+
+        SemanticProperties.SetDescription(_calendarButton, translator["Common_SelectDate"]);
     }
 
     // Writes the stored date into the boxes and the line below.
@@ -289,6 +352,76 @@ public sealed class DateField : ContentView
         {
             _boxes[part].Unfocus();
         }
+    }
+
+    // Opens the month view in the display calendar at the stored date.
+    private void OpenCalendar()
+    {
+        _calendar.Identifier = Calendar switch
+        {
+            CalendarSystem.Persian => CalendarIdentifier.Persian,
+            // The dialog's Umm al-Qura calendar covers 30 April 1900 to 16 November 2077 (1318–1500 AH); a date outside
+            // opens in the Gregorian dialog.
+            CalendarSystem.Hijri when Date >= new DateOnly(1900, 4, 30) && Date <= new DateOnly(2077, 11, 16) => CalendarIdentifier.UmAlQura,
+            _ => CalendarIdentifier.Gregorian,
+        };
+        _calendar.FlowDirection = FlowDirection;
+        StyleCalendar();
+        _calendar.MonthView.FirstDayOfWeek = Localization?.FirstDayOfWeek ?? DayOfWeek.Monday;
+        _calendar.SelectedDate = Date.ToDateTime(TimeOnly.MinValue);
+        _calendar.DisplayDate = Date.ToDateTime(TimeOnly.MinValue);
+        _calendar.IsOpen = true;
+    }
+
+    // The dialog in the app's colors and font for the current theme (Syncfusion's own default is a violet light theme).
+    private void StyleCalendar()
+    {
+        var card = ThemeColors.Card;
+        var text = ThemeColors.Text;
+        var muted = ThemeColors.SecondaryText;
+        var primary = ThemeColors.Primary;
+        var font = Application.Current?.Resources.TryGetValue("AppFont", out var value) == true && value is string family ? family : null;
+        CalendarTextStyle Style(Color color, double size, FontAttributes attributes = FontAttributes.None)
+        {
+            var style = new CalendarTextStyle { TextColor = color, FontSize = size, FontAttributes = attributes };
+            if (font is not null)
+            {
+                style.FontFamily = font;
+            }
+
+            return style;
+        }
+
+        _calendar.Background = card;
+        // The area behind the days has no property of its own; it comes from Syncfusion's theme key.
+        _calendar.Resources["SfCalendarTheme"] = "CommonTheme";
+        _calendar.Resources["SfCalendarNormalBackground"] = card;
+        _calendar.SelectionBackground = primary;
+        _calendar.TodayHighlightBrush = primary;
+        _calendar.HeaderView.Background = card;
+        _calendar.HeaderView.TextStyle = Style(text, 16, FontAttributes.Bold);
+        // Day cells stay transparent: a cell background draws a grid between the days.
+        _calendar.MonthView.TrailingLeadingDatesBackground = Colors.Transparent;
+        _calendar.MonthView.TodayBackground = Colors.Transparent;
+        _calendar.MonthView.TextStyle = Style(text, 14);
+        _calendar.MonthView.TodayTextStyle = Style(primary, 14, FontAttributes.Bold);
+        _calendar.MonthView.SelectionTextStyle = Style(ThemeColors.OnPrimary, 14, FontAttributes.Bold);
+        _calendar.MonthView.TrailingLeadingDatesTextStyle = Style(muted, 14);
+        _calendar.MonthView.HeaderView.Background = card;
+        _calendar.MonthView.HeaderView.TextStyle = Style(muted, 12);
+        _calendar.FooterView.Background = card;
+        _calendar.FooterView.DividerColor = ThemeColors.Outline;
+        _calendar.FooterView.TextStyle = Style(primary, 14, FontAttributes.Bold);
+    }
+
+    private void AcceptCalendar()
+    {
+        if (_calendar.SelectedDate is DateTime selected)
+        {
+            Date = DateOnly.FromDateTime(selected);
+        }
+
+        _calendar.IsOpen = false;
     }
 
     // When no box has the focus any more: a day beyond the end of the month becomes its last day ("31" in a 30-day

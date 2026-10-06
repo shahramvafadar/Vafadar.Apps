@@ -12,6 +12,15 @@ internal static class ThemeColors
     /// <summary>Gets the text color on the page background.</summary>
     public static Color Text => IsDark ? Color.FromArgb("#E9EEF5") : Color.FromArgb("#0F1B2D");
 
+    /// <summary>Gets the background of cards and dialogs (the same as the apps' CardBackground).</summary>
+    public static Color Card => IsDark ? Color.FromArgb("#1C2536") : Colors.White;
+
+    /// <summary>Gets the text color on the action color (the same as the apps' OnPrimary).</summary>
+    public static Color OnPrimary => IsDark ? Color.FromArgb("#0A1830") : Colors.White;
+
+    /// <summary>Gets the action color (the same as the apps' Primary).</summary>
+    public static Color Primary => IsDark ? Color.FromArgb("#79A6FF") : Color.FromArgb("#1D56C9");
+
     /// <summary>Gets the color of secondary text (the same as the apps' SecondaryText).</summary>
     public static Color SecondaryText => IsDark ? Color.FromArgb("#AEB8C6") : Color.FromArgb("#4A5568");
 
