@@ -562,6 +562,9 @@
   <data name="Occurrence_Change" xml:space="preserve">
     <value>Modifier</value>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>Affiche les champs de cette seule échéance : date, montant et note. La planification ne change pas.</value>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Ignorer</value>
   </data>
@@ -1790,6 +1793,9 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Terminer l’objectif</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>Marque cet objectif comme terminé après votre confirmation. L’historique est conservé.</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Réactiver</value>
@@ -3601,8 +3607,14 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>Saisir un achat</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>Ouvre un formulaire pour saisir la quantité achetée et le prix payé. L’appli n’effectue aucun achat.</value>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>Saisir une vente</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>Ouvre un formulaire pour saisir la quantité vendue et le montant reçu. L’appli ne vend rien.</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Déplacer</value>
@@ -3610,11 +3622,17 @@
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>Ajouter sans achat</value>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>Ouvre un formulaire pour ajouter vos biens déjà détenus, reçus en cadeau ou hérités, sans saisir d’achat.</value>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Retirer</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>Corriger</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>Ouvre un formulaire pour ajuster la quantité saisie, par exemple après une nouvelle pesée.</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Prix</value>

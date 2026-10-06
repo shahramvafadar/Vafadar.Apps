@@ -604,6 +604,9 @@
   <data name="Occurrence_Change" xml:space="preserve">
     <value>Nur diesmal ändern</value>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>Zeigt Felder zum Ändern nur dieses Termins: Datum, Betrag und Notiz. Der Plan bleibt unverändert.</value>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Überspringen</value>
   </data>
@@ -1827,6 +1830,9 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Ziel abschließen</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>Markiert dieses Ziel nach Ihrer Bestätigung als abgeschlossen. Der Verlauf bleibt erhalten.</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Wieder aktivieren</value>
@@ -3632,8 +3638,14 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>Kauf erfassen</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>Öffnet ein Formular für gekaufte Mengen und gezahlte Preise. Die App führt keine Käufe aus.</value>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>Verkauf erfassen</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>Öffnet ein Formular für verkaufte Mengen und erhaltene Beträge. Die App führt keine Verkäufe aus.</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Verlagern</value>
@@ -3641,11 +3653,17 @@
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>Bestand erfassen</value>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>Öffnet ein Formular für vorhandene, geschenkte oder geerbte Bestände, ohne einen Kauf zu erfassen.</value>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Entfernen</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>Menge korrigieren</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>Öffnet ein Formular zum Anpassen der erfassten Menge, etwa nach erneutem Wiegen.</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Preise</value>

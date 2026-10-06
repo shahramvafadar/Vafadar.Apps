@@ -84,7 +84,7 @@
 
                 <!-- Change this occurrence only; two buttons in a row use less side padding so that longer labels fit at 360 px -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsOpen}">
-                    <Button Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Occurrence_Change}" Command="{Binding ToggleChangeCommand}" />
+                    <Button Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Occurrence_Change}" SemanticProperties.Hint="{v:Translate Occurrence_Change_A11yHint}" Command="{Binding ToggleChangeCommand}" />
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Occurrence_Skip}" Command="{Binding SkipCommand}" />
                 </Grid>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowChange}">

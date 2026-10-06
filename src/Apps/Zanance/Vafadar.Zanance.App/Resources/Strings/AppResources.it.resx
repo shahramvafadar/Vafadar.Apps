@@ -563,6 +563,9 @@
     <value>Modifica</value>
     <comment>Edits this occurrence only, including its date or amount; never the entire recurring plan.</comment>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>Mostra i campi di questa sola scadenza: data, importo e nota. Il piano resta invariato.</value>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Salta</value>
   </data>
@@ -1789,6 +1792,9 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Completa</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>Segna questo obiettivo come completato dopo la tua conferma. Lo storico viene conservato.</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Riattiva</value>
@@ -3614,8 +3620,14 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>Registra acquisto</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>Apre un modulo per annotare la quantità acquistata e il prezzo pagato. L’app non effettua acquisti.</value>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>Registra vendita</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>Apre un modulo per annotare la quantità venduta e l’importo ricevuto. L’app non effettua vendite.</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Sposta</value>
@@ -3624,11 +3636,17 @@
     <value>Già posseduto</value>
     <comment>Adds already owned or gifted units without recording a purchase. A compact alternative is supplied separately.</comment>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>Apre un modulo per aggiungere beni che possiedi già, doni o eredità, senza registrare acquisti.</value>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Rimuovi</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>Correggi quantità</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>Apre un modulo per correggere la quantità registrata, ad esempio dopo averla pesata di nuovo.</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Prezzi</value>

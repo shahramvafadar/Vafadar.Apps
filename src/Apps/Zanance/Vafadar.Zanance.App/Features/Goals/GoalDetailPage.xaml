@@ -118,7 +118,7 @@
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
                 <!-- Life cycle (ZEX-S0303): pause or resume, complete or reopen, archive or restore -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                    <Button Style="{StaticResource SecondaryButton}" Text="{Binding CompleteText}" Command="{Binding ToggleCompleteCommand}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{Binding CompleteText}" SemanticProperties.Hint="{Binding CompleteHint}" Command="{Binding ToggleCompleteCommand}" />
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{Binding PauseText}" Command="{Binding TogglePauseCommand}" IsVisible="{Binding CanPause}" />
                 </Grid>
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Goal_Archive}" Command="{Binding ArchiveCommand}" IsVisible="{Binding IsActive}" />

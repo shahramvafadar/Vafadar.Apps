@@ -606,6 +606,10 @@
   <data name="Occurrence_Change" xml:space="preserve">
     <value>Edit this occurrence</value>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>Shows fields to change the date, amount or note of this occurrence only. The plan stays the same.</value>
+    <comment>Screen reader hint of the Occurrence_Change button, read after its label; not shown on screen.</comment>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Skip</value>
   </data>
@@ -1831,6 +1835,10 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Mark as completed</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>Marks this goal as completed after a confirmation. The history is kept.</value>
+    <comment>Screen reader hint of the Goal_Complete button, read after its label; not shown on screen.</comment>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Make active again</value>
@@ -3644,8 +3652,16 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>Record purchase</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>Opens a form to record units you bought and the price paid. Nothing is bought in the app.</value>
+    <comment>Screen reader hint of the Holding_Buy button, read after its label; not shown on screen.</comment>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>Record sale</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>Opens a form to record units you sold and the money received. Nothing is sold in the app.</value>
+    <comment>Screen reader hint of the Holding_Sell button, read after its label; not shown on screen.</comment>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Move</value>
@@ -3653,11 +3669,19 @@
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>Add (owned or gift)</value>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>Opens a form to add units you already own or received as a gift, without a purchase.</value>
+    <comment>Screen reader hint of the Holding_AddExisting button, read after its label; not shown on screen.</comment>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>Correct the quantity</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>Opens a form to correct the recorded quantity, for example after weighing again.</value>
+    <comment>Screen reader hint of the Holding_Correct button, read after its label; not shown on screen.</comment>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Prices</value>

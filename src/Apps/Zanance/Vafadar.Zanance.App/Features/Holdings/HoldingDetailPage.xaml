@@ -41,14 +41,14 @@
                 <!-- Actions: Advanced records everything; Simple only corrects the quantity. Two buttons share a row, so
                      they use less side padding than other buttons: longer labels (es, fr, it) fit at 360 px. -->
                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8" IsVisible="{Binding IsAdvanced}">
-                    <Button Style="{StaticResource PrimaryButton}" Padding="8,10" Text="{v:Translate Holding_Buy}" Command="{Binding RecordCommand}" CommandParameter="Purchase" />
-                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Sell}" Command="{Binding RecordCommand}" CommandParameter="Sale" IsEnabled="{Binding HasStock}" />
+                    <Button Style="{StaticResource PrimaryButton}" Padding="8,10" Text="{v:Translate Holding_Buy}" SemanticProperties.Hint="{v:Translate Holding_Buy_A11yHint}" Command="{Binding RecordCommand}" CommandParameter="Purchase" />
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Sell}" SemanticProperties.Hint="{v:Translate Holding_Sell_A11yHint}" Command="{Binding RecordCommand}" CommandParameter="Sale" IsEnabled="{Binding HasStock}" />
                     <Button Grid.Row="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Move}" Command="{Binding RecordCommand}" CommandParameter="LocationTransfer" IsEnabled="{Binding HasStock}" />
-                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_AddExisting}" Command="{Binding RecordCommand}" CommandParameter="Opening" />
+                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_AddExisting}" SemanticProperties.Hint="{v:Translate Holding_AddExisting_A11yHint}" Command="{Binding RecordCommand}" CommandParameter="Opening" />
                     <Button Grid.Row="2" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Remove}" Command="{Binding RecordCommand}" CommandParameter="Outflow" IsEnabled="{Binding HasStock}" />
-                    <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Correct}" Command="{Binding RecordCommand}" CommandParameter="Correction" />
+                    <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Holding_Correct}" SemanticProperties.Hint="{v:Translate Holding_Correct_A11yHint}" Command="{Binding RecordCommand}" CommandParameter="Correction" />
                 </Grid>
-                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Holding_Correct}" Command="{Binding RecordCommand}" CommandParameter="Correction"
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Holding_Correct}" SemanticProperties.Hint="{v:Translate Holding_Correct_A11yHint}" Command="{Binding RecordCommand}" CommandParameter="Correction"
                         IsVisible="{Binding IsAdvanced, Converter={StaticResource InvertedBoolConverter}}" />
 
                 <!-- Prices: per gram or unit, or the total of what is held -->

@@ -83,6 +83,10 @@ public sealed partial class GoalDetailViewModel(
     [ObservableProperty]
     public partial string? CompleteText { get; set; }
 
+    /// <summary>The screen reader hint of the complete button; none while it reactivates a completed goal.</summary>
+    [ObservableProperty]
+    public partial string? CompleteHint { get; set; }
+
     /// <summary>Gets a value indicating whether money can be set aside (active goals of money set aside).</summary>
     [ObservableProperty]
     public partial bool CanSetAside { get; set; }
@@ -187,6 +191,7 @@ public sealed partial class GoalDetailViewModel(
         CanPause = goal.State is GoalState.Active or GoalState.Paused;
         PauseText = translator[goal.State == GoalState.Paused ? "Goal_Resume" : "Goal_Pause"];
         CompleteText = goal.State is GoalState.Active or GoalState.Paused ? translator["Goal_Complete"] : translator["Goal_Reactivate"];
+        CompleteHint = goal.State is GoalState.Active or GoalState.Paused ? translator["Goal_Complete_A11yHint"] : null;
         DirectionNames = [translator["Goal_SetAside"], translator["Goal_Release"]];
 
         var names = accounts.ToDictionary(a => a.Id, a => a.Name);

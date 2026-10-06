@@ -560,6 +560,9 @@
   <data name="Occurrence_Change" xml:space="preserve">
     <value>Editar vencimiento</value>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>Muestra campos para editar solo este vencimiento: fecha, importe y nota. El plan no cambia.</value>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Omitir</value>
   </data>
@@ -1785,6 +1788,9 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>Completar objetivo</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>Marca este objetivo como completado tras tu confirmación. El historial se conserva.</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>Volver a activar</value>
@@ -3595,8 +3601,14 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>Registrar compra</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>Abre un formulario para anotar cuánto compraste y cuánto pagaste. La app no realiza compras.</value>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>Registrar venta</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>Abre un formulario para anotar cuánto vendiste y cuánto recibiste. La app no realiza ventas.</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Registrar traslado</value>
@@ -3604,11 +3616,17 @@
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>Añadir sin compra</value>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>Abre un formulario para añadir bienes que ya tienes, regalos o herencias, sin registrar una compra.</value>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>Registrar salida</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>Corregir cantidad</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>Abre un formulario para ajustar la cantidad registrada, por ejemplo, tras volver a pesarla.</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Precios</value>

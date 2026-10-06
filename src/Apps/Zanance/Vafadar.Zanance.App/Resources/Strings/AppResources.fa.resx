@@ -604,6 +604,9 @@
   <data name="Occurrence_Change" xml:space="preserve">
     <value>تغییر همین نوبت</value>
   </data>
+  <data name="Occurrence_Change_A11yHint" xml:space="preserve">
+    <value>تاریخ، مبلغ و یادداشت همین نوبت را برای ویرایش نمایش می‌دهد. برنامهٔ اصلی تغییر نمی‌کند.</value>
+  </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>صرف‌نظر از این نوبت</value>
   </data>
@@ -1827,6 +1830,9 @@
   </data>
   <data name="Goal_Complete" xml:space="preserve">
     <value>ثبت تکمیل</value>
+  </data>
+  <data name="Goal_Complete_A11yHint" xml:space="preserve">
+    <value>پس از تأیید شما، هدف را تکمیل‌شده علامت می‌زند و سابقه‌اش را نگه می‌دارد.</value>
   </data>
   <data name="Goal_Reactivate" xml:space="preserve">
     <value>فعال کردن دوباره</value>
@@ -3632,8 +3638,14 @@
   <data name="Holding_Buy" xml:space="preserve">
     <value>ثبت خرید</value>
   </data>
+  <data name="Holding_Buy_A11yHint" xml:space="preserve">
+    <value>فرم ثبت مقدار خریداری‌شده و مبلغ پرداختی را باز می‌کند. خریدی در برنامه انجام نمی‌شود.</value>
+  </data>
   <data name="Holding_Sell" xml:space="preserve">
     <value>ثبت فروش</value>
+  </data>
+  <data name="Holding_Sell_A11yHint" xml:space="preserve">
+    <value>فرم ثبت مقدار فروخته‌شده و مبلغ دریافتی را باز می‌کند. فروشی در برنامه انجام نمی‌شود.</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>ثبت جابه‌جایی</value>
@@ -3641,11 +3653,17 @@
   <data name="Holding_AddExisting" xml:space="preserve">
     <value>افزودن (موجود یا هدیه)</value>
   </data>
+  <data name="Holding_AddExisting_A11yHint" xml:space="preserve">
+    <value>فرم افزودن دارایی موجود، هدیه یا ارث را باز می‌کند. خریدی ثبت نمی‌شود.</value>
+  </data>
   <data name="Holding_Remove" xml:space="preserve">
     <value>ثبت خروج دارایی</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
     <value>اصلاح مقدار</value>
+  </data>
+  <data name="Holding_Correct_A11yHint" xml:space="preserve">
+    <value>فرم اصلاح مقدار ثبت‌شده را باز می‌کند؛ مثلاً پس از وزن‌کردن دوباره.</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>قیمت‌ها</value>

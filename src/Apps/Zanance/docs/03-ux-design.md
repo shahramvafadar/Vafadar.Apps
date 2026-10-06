@@ -189,6 +189,9 @@ lightened (`CategoryLookup.DisplayColor`).
   translation is not rewritten, and a short form is used only after a label was seen not to fit.
 * Two buttons side by side (holding actions, change/skip an occurrence) use 8 px side padding instead of 16, so that
   longer translated labels fit at 360 px without a smaller font.
+* A button whose label had to be short keeps that label as its accessible name (voice control users say what they
+  see) and explains the action in `SemanticProperties.Hint` (`{Key}_A11yHint`, one or two sentences, about 100
+  characters at most), e.g. that nothing is bought in the app (D-58).
 * Translation follow-up of D-52 (closed): the English meaning changed for these keys; Persian follows since D-53 and
   German since D-54: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,

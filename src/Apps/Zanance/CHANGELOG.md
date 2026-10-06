@@ -29,6 +29,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   "(di cui IVA 4,33)" is skipped), never "TOTALE IVA", the taxable amount, a discount, the cash handed over or the
   change.
 
+### Added – Screen reader hints
+
+- Screen readers (TalkBack, VoiceOver, Narrator) now explain six short action buttons after their label: record a
+  purchase or sale, add holdings you already own, correct a quantity, change one occurrence and complete a goal –
+  for example that nothing is bought or sold in the app and that the plan stays as it is. Written by the owner in
+  every language.
+
 ### Changed – French
 
 - Four buttons fit the narrowest screens (owner's wording): "Saisir un achat" and "Saisir une vente" (record a
