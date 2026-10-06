@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Adds or updates UI strings in all languages of a .resx set (neutral/en, fa, de) in one step.
+    Adds or updates UI strings in all languages of a .resx set (neutral/en, fa, de, es) in one step.
 
 .DESCRIPTION
     Every UI string must exist in every language (a test enforces it). The input is a UTF-8 JSON file:
@@ -8,7 +8,7 @@
     {
       "target": "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources",
       "remove": ["Old_Key"],
-      "entries": [ { "key": "Goal_Title", "en": "Goal", "fa": "هدف", "de": "Ziel", "comment": "optional" } ]
+      "entries": [ { "key": "Goal_Title", "en": "Goal", "fa": "هدف", "de": "Ziel", "es": "Objetivo", "comment": "optional" } ]
     }
 
     "target" is the repository-relative path without ".resx"; shared strings live in
@@ -22,7 +22,8 @@ param([Parameter(Mandatory)] [string]$JsonPath)
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 $spec = [System.IO.File]::ReadAllText((Resolve-Path $JsonPath), [System.Text.Encoding]::UTF8) | ConvertFrom-Json
-foreach ($lang in @('en', 'fa', 'de')) {
+# Every language must be given; a missing one stops the script (no English copied into a translation).
+foreach ($lang in @('en', 'fa', 'de', 'es')) {
     $suffix = if ($lang -eq 'en') { '' } else { ".$lang" }
     $path = Join-Path $root ($spec.target + $suffix + '.resx')
     $doc = New-Object System.Xml.XmlDocument

@@ -107,6 +107,57 @@ Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی
 Zanance همه‌چیز را در پایگاه‌داده‌ای روی گوشی شما نگه می‌دارد. پشتیبان‌ها با رمز شما رمزگذاری می‌شوند و فقط به جایی
 می‌روند که خودتان بفرستید. پشتیبان دستگاه اندروید، بسته به تنظیمات شما، ممکن است دادهٔ اپ را هم شامل شود.
 
+## Español
+
+**Título:** Zanance: gastos y presupuesto
+
+**Subtítulo (App Store):** Tu dinero, con un plan claro
+
+**Descripción breve:** Organiza gastos, presupuestos y objetivos. Sin anuncios ni cuenta en línea.
+
+**Descripción completa** (offline variant; the variant with cloud backup is below):
+
+Organiza tu dinero con claridad, a tu ritmo.
+
+Registra ingresos, gastos y transferencias entre tus cuentas. Planifica pagos e ingresos, prepara presupuestos y consulta cómo puede evolucionar tu saldo a partir de lo que has registrado.
+
+TODO EN UN MISMO LUGAR
+• Cuentas de efectivo, bancarias, de ahorro, tarjetas de crédito, préstamos y dinero que has prestado.
+• Categorías, etiquetas, reembolsos y seguimiento de importes que otras personas deben devolverte.
+• Planes periódicos o de una sola vez, con recordatorios y fechas de revisión de contratos.
+• Presupuestos mensuales, semanales o de dos semanas. Elige límites de gasto, sobres o el método flexible.
+• Objetivos de ahorro basados en el saldo de una cuenta, en dinero reservado o en la cantidad de un bien.
+• Bienes como oro y monedas, registrados por peso o cantidad, con sus precios y operaciones.
+• Informes, gráficos, previsiones de saldo y previsiones guardadas para compararlas con los resultados registrados.
+• Varias monedas, tipos de cambio introducidos por ti y unidades de visualización.
+• Calendarios gregoriano, persa e islámico lunar (Umm al-Qura), independientes del idioma.
+• Recibos en foto o PDF adjuntos a las transacciones, con lectura de texto en el dispositivo. Revisa siempre los datos detectados.
+• Perfiles separados, registro rápido, modo claro y oscuro, y bloqueo de la app según las opciones del dispositivo.
+• Importación y exportación CSV e informes PDF. Una exportación no sustituye a una copia de seguridad.
+
+EN TU IDIOMA
+Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
+
+CONTROL SOBRE TUS DATOS
+No necesitas crear una cuenta en línea. Esta versión funciona sin acceso a internet y no muestra anuncios ni envía estadísticas de uso o informes de fallos automáticamente. Los datos se guardan en tu dispositivo. Tú eliges cuándo exportarlos o compartir una copia. Las copias locales se cifran cuando activas la protección con contraseña. Guarda la contraseña y una copia fuera del dispositivo.
+
+Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
+
+**Novedades (release note):** Ahora puedes usar Zanance en español. Incluye la interfaz, las guías, los avisos y los tres calendarios.
+
+**Screenshot captions:**
+
+| Screen | Caption |
+|---|---|
+| home | Tu dinero, de un vistazo |
+| transactions | Tus movimientos, en orden |
+| entry | Registra tus gastos al momento |
+| plans | Ten presentes tus próximos pagos |
+| budget | Un presupuesto a tu medida |
+| reports | Entiende tus ingresos y gastos |
+| accounts | Tus cuentas, en un solo lugar |
+| dark | Elige entre modo claro y oscuro |
+
 ## Variant with cloud backup (D-35)
 
 Use these instead of the "no internet" sentences when the release is built with the OAuth clients of cloud backup.
@@ -121,6 +172,34 @@ Use these instead of the "no internet" sentences when the release is built with 
 | FA کوتاه | مدیریت خصوصی پول: برنامه، بودجه و گزارش. بدون حساب، بدون تبلیغ. |
 | FA جمله | همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد. اپ فقط وقتی به اینترنت وصل می‌شود که Google Drive یا OneDrive خودتان را برای پشتیبان رمزگذاری‌شده متصل کنید. |
 | FA مورد | • پشتیبان رمزگذاری‌شده در دست خودتان یا در Google Drive یا OneDrive خودتان، ورود و خروج CSV |
+
+**ES – full description of a release with cloud backup** (complete text, used instead of the offline description above):
+
+Organiza tu dinero con claridad, a tu ritmo.
+
+Registra ingresos, gastos y transferencias entre tus cuentas. Planifica pagos e ingresos, prepara presupuestos y consulta cómo puede evolucionar tu saldo a partir de lo que has registrado.
+
+TODO EN UN MISMO LUGAR
+• Cuentas de efectivo, bancarias, de ahorro, tarjetas de crédito, préstamos y dinero que has prestado.
+• Categorías, etiquetas, reembolsos y seguimiento de importes que otras personas deben devolverte.
+• Planes periódicos o de una sola vez, con recordatorios y fechas de revisión de contratos.
+• Presupuestos mensuales, semanales o de dos semanas. Elige límites de gasto, sobres o el método flexible.
+• Objetivos de ahorro basados en el saldo de una cuenta, en dinero reservado o en la cantidad de un bien.
+• Bienes como oro y monedas, registrados por peso o cantidad, con sus precios y operaciones.
+• Informes, gráficos, previsiones de saldo y previsiones guardadas para compararlas con los resultados registrados.
+• Varias monedas, tipos de cambio introducidos por ti y unidades de visualización.
+• Calendarios gregoriano, persa e islámico lunar (Umm al-Qura), independientes del idioma.
+• Recibos en foto o PDF adjuntos a las transacciones, con lectura de texto en el dispositivo. Revisa siempre los datos detectados.
+• Perfiles separados, registro rápido, modo claro y oscuro, y bloqueo de la app según las opciones del dispositivo.
+• Importación y exportación CSV e informes PDF. Una exportación no sustituye a una copia de seguridad.
+
+EN TU IDIOMA
+Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
+
+CONTROL SOBRE TUS DATOS
+No necesitas crear una cuenta de Zanance. Los datos se guardan en tu dispositivo y no se envían automáticamente al desarrollador. La app no muestra anuncios ni envía estadísticas de uso o informes de fallos automáticamente. Puedes conectar tu propia cuenta de Google Drive o OneDrive para guardar copias cifradas. Las copias locales se cifran cuando activas la protección con contraseña; las copias en la nube la requieren. Tú decides cuándo exportar los datos o crear una copia.
+
+Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
 
 ## Screenshots (per language, light theme; one dark)
 

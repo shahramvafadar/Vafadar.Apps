@@ -18,6 +18,9 @@ public static class AppLanguages
     /// <summary>German.</summary>
     public static AppLanguage German { get; } = new("de", "Deutsch", "German");
 
+    /// <summary>Spanish (one general translation for every Spanish-speaking region, e.g. es-ES and es-MX).</summary>
+    public static AppLanguage Spanish { get; } = new("es", "Español", "Spanish");
+
     /// <summary>Gets all supported languages in display order.</summary>
-    public static IReadOnlyList<AppLanguage> All { get; } = [English, Persian, German];
+    public static IReadOnlyList<AppLanguage> All { get; } = [English, Persian, German, Spanish];
 }

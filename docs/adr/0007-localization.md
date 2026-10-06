@@ -36,3 +36,10 @@ the Persian calendar too.
   outside, so dates never fail. A one-day difference to local moon sighting is accepted; a per-user adjustment can be
   added later if users ask for it.
 * Details: [Localization, right-to-left and calendars](../architecture/localization.md#dates-and-calendars).
+
+## Amendment 2026-10-06: Spanish
+
+* Spanish (`es`) is the fourth language: one general translation with `tú` for every Spanish-speaking region
+  (`es-ES`, `es-MX`, … fall back to it), Gregorian by default. It needed no change to this decision: resources,
+  satellite assemblies and platform files per culture, and dates whose connecting words ("de") come from the
+  culture's own patterns.

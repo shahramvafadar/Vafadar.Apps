@@ -10,9 +10,14 @@ app's settings; the UI updates immediately, without restarting.
 | English | `en` | Left-to-right | Gregorian |
 | Persian (فارسی) | `fa` | **Right-to-left** | Persian (Solar Hijri) |
 | German (Deutsch) | `de` | Left-to-right | Gregorian |
+| Spanish (Español) | `es` | Left-to-right | Gregorian |
 
 English is the neutral language: `AppResources.resx` holds English and is the fallback for anything not translated.
 The list lives in `AppLanguages` (Vafadar.Localization); an app can offer a subset via `LocalizationOptions`.
+A device language is matched by its two-letter code, so `es-ES`, `es-MX`, `es-AR` and every other Spanish region get
+the one general Spanish translation (`tú`). The language does not set the country, the currencies or the calendar;
+numbers and dates follow the neutral `es` culture of the platform, not the conventions of each Spanish-speaking
+country.
 
 ## How it works
 
@@ -88,12 +93,17 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
   | English | Hijri | `1448/04/14` | `Friday, 14 Rabi al-Thani 1448` |
   | Persian | Hijri | `1448/04/14` | `جمعه 14 ربیع‌الثانی 1448` |
   | German | Hijri | `1448/04/14` | `Freitag, 14 Rabi al-Thani 1448` |
+  | Spanish | Gregorian | `25/09/2026` | `viernes, 25 de septiembre de 2026` |
+  | Spanish | Persian | `1405/07/03` | `viernes, 3 de Mehr de 1405` |
+  | Spanish | Hijri | `1448/04/14` | `viernes, 14 de Rabi al-Thani de 1448` |
 
   `MonthYear` (`Rabi al-Thani 1448`), `DayMonth` (`14 Rabi al-Thani`), `DayMonthShort` (`14 Rab II`, `Sep 25`, for
   date tiles and chart axes) and `Month` (`Rabi al-Thani`) follow the same rules. `Format(date, style, calendar)`
   writes a date in another calendar than the display one without changing the user's choice, e.g. the day of a
   Gregorian plan while the dates are shown in the Persian calendar. The short names stay distinct: cutting names to three letters would
-  show "Rab" for both Rabi months.
+  show "Rab" for both Rabi months. The words between day, month and year come from the culture's own patterns
+  (Spanish `d 'de' MMMM`, `MMMM 'de' yyyy`), also for converted calendars ("3 de Mehr", "Mehr de 1405"); the short
+  form for date tiles drops such quoted words ("25 sep"), so a tile never shows "de" as part of the month.
 * **Three calendars** (`CalendarSystem`): Gregorian, Persian (solar Hijri) and lunar Hijri. The lunar calendar is
   **Umm al-Qura** (the official calendar of Saudi Arabia, e.g. 1 Ramadan 1446 = 1 March 2025), which .NET covers for
   1318–1500 AH (30 April 1900 to 16 November 2077). `Vafadar.Core.Dates.LunarHijri` is the one place that converts
@@ -125,25 +135,28 @@ neutral file's keys and the same placeholders. A forgotten translation fails the
 ## Fonts
 
 Persian text uses [Vazirmatn](https://github.com/rastikerdar/vazirmatn) (SIL Open Font License), which also covers
-Latin and Arabic; English and German use Figtree with Urbanist for titles (`App.xaml.cs`). The PDF report embeds
-Vazirmatn for every language.
+Latin and Arabic; English, German and Spanish use Figtree with Urbanist for titles (`App.xaml.cs`). The PDF report
+embeds Vazirmatn for every language. All bundled fonts contain the Spanish letters (ñ, ü, á–ú, ¿, ¡).
 
 ## Platform notes
 
 * Android: `android:supportsRtl="true"` is set in `AndroidManifest.xml` (required for RTL).
 * iOS: the supported languages are declared in `Info.plist` (`CFBundleLocalizations`), so system UI (e.g. permission
   dialogs) uses the right language.
-* Android 13+ per-app language settings (system settings → app → language) are not wired yet. If added later, the
-  system choice must be synchronized with the saved in-app choice.
+* Android 13+ per-app language (system settings → app → language): the languages are declared in
+  `Resources/xml/locales_config.xml` and kept in step with the in-app choice by `AppLocales` (D-32).
+* The Android widget and the iOS permission prompts have their own files per language (`values-{culture}/widget.xml`,
+  `{culture}.lproj/InfoPlist.strings`).
 
 ## Adding a language
 
 1. Add it to `AppLanguages` (Vafadar.Localization) and to `AppLanguages.All`.
 2. Add `*.{culture}.resx` next to every neutral `.resx` in `src/` (the completeness test lists what is missing).
-3. Add the culture to `SatelliteResourceLanguages` in `Directory.Build.props` and to `CFBundleLocalizations` in each
-   iOS `Info.plist`.
-4. Add store listing texts for the language.
-5. Set its default calendar in `LocalizationOptions` (e.g. Arabic → `CalendarSystem.Hijri`) and check the date table
+3. Add the culture to `SatelliteResourceLanguages` in `Directory.Build.props`, to `CFBundleLocalizations` in each
+   iOS `Info.plist` and to the Android `locales_config.xml`; add the widget and permission texts of the platforms.
+4. Add the language to `eng/scripts/Add-Strings.ps1`, so every new string asks for it.
+5. Add store listing texts for the language.
+6. Set its default calendar in `LocalizationOptions` (e.g. Arabic → `CalendarSystem.Hijri`) and check the date table
    above in that language.
 
 ### Before adding Arabic

@@ -173,6 +173,10 @@ lightened (`CategoryLookup.DisplayColor`).
   Sicherung / Sicherheitskopie, Prognose, Nettovermögen, Bewertungswährung, Bestände; Median is not Durchschnitt;
   counts as "Buchungen: {0}" so that no "1 Buchungen" appears; quoted option names use „…“ and match the label;
   German texts must fit the narrowest layout (360 px).
+* Spanish copy (D-55): one general Spanish with the informal "tú"; Transacción (tab "Movimientos"), Transferencia
+  ("Traspaso" in quick add), Reembolso, Devolución de ingresos, Presupuesto, Previsión, Copia de seguridad / copia
+  preventiva, Patrimonio neto; "el primer lunes", not "primero". The translation comes finished from the owner and is
+  not rewritten; a label that does not fit may only use the owner's approved short form after the problem was seen.
 * Translation follow-up of D-52 (closed): the English meaning changed for these keys; Persian follows since D-53 and
   German since D-54: `Holdings_Note`, `Settings_DeleteAll*`,
   `Lock_ConfirmDeleteAll`, `Backup_RestoreIntro`, `Backup_Replace*`, `Backup_RestoredMessage`,

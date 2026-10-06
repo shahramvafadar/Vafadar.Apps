@@ -128,6 +128,33 @@ public sealed class DateFormatterTests : IDisposable
         Assert.Equal("Februar", CreateFormatter(AppLanguages.German, CalendarSystem.Persian).Format(new DateOnly(2026, 2, 28), DateFormatStyle.Month, CalendarSystem.Gregorian));
     }
 
+    [Theory]
+    [InlineData(CalendarSystem.Gregorian, DateFormatStyle.Long, "viernes, 25 de septiembre de 2026")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Long, "viernes, 3 de Mehr de 1405")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.Short, "1405/07/03")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.MonthYear, "Mehr de 1405")]
+    [InlineData(CalendarSystem.Persian, DateFormatStyle.DayMonth, "3 de Mehr")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.DayMonth, "14 de Rabi al-Thani")]
+    [InlineData(CalendarSystem.Hijri, DateFormatStyle.Long, "viernes, 14 de Rabi al-Thani de 1448")]
+    public void Spanish_dates_use_de_between_day_month_and_year_in_every_calendar(CalendarSystem calendar, DateFormatStyle style, string expected)
+    {
+        Assert.Equal(expected, CreateFormatter(AppLanguages.Spanish, calendar).Format(Date, style));
+    }
+
+    [Theory]
+    [InlineData(CalendarSystem.Gregorian)]
+    [InlineData(CalendarSystem.Persian)]
+    [InlineData(CalendarSystem.Hijri)]
+    public void Spanish_date_tiles_have_no_de_in_the_month(CalendarSystem calendar)
+    {
+        // A date tile splits "day month"; "25 de sep" would show "de sep" as the month.
+        var text = CreateFormatter(AppLanguages.Spanish, calendar).Format(Date, DateFormatStyle.DayMonthShort);
+
+        Assert.DoesNotContain(" de ", text, StringComparison.Ordinal);
+        Assert.Equal(2, text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length - (calendar == CalendarSystem.Hijri ? 1 : 0));
+        Assert.StartsWith(calendar switch { CalendarSystem.Persian => "3 ", CalendarSystem.Hijri => "14 ", _ => "25 " }, text, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Short_month_names_for_date_tiles_stay_distinct()
     {

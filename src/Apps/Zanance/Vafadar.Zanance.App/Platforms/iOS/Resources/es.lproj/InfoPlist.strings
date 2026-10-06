@@ -1,0 +1,3 @@
+/* Usage descriptions for app lock and receipt scanning. */
+"NSFaceIDUsageDescription" = "Zanance usa Face ID para desbloquear la app cuando el bloqueo está activado.";
+"NSCameraUsageDescription" = "Zanance usa la cámara para escanear recibos. El texto de los recibos se procesa en tu dispositivo.";

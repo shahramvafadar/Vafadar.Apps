@@ -47,7 +47,7 @@
     <!-- Nothing in this repository is published as a NuGet package. -->
     <IsPackable>false</IsPackable>
     <!-- Only ship satellite (translation) assemblies of referenced packages for the languages the apps support. -->
-    <SatelliteResourceLanguages>en;fa;de</SatelliteResourceLanguages>
+    <SatelliteResourceLanguages>en;fa;de;es</SatelliteResourceLanguages>
   </PropertyGroup>
 
 </Project>

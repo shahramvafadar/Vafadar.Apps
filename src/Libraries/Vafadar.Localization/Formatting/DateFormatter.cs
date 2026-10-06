@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Vafadar.Core.Dates;
 
 namespace Vafadar.Localization.Formatting;
@@ -12,7 +13,7 @@ namespace Vafadar.Localization.Formatting;
 /// Persian with the lunar Hijri calendar) the date is converted here and formatted with the month names of
 /// <see cref="PersianMonthNamesLatin"/>, <see cref="HijriMonthNamesPersian"/> or <see cref="HijriMonthNamesLatin"/>.
 /// </remarks>
-public sealed class DateFormatter(ILocalizationService localization) : IDateFormatter
+public sealed partial class DateFormatter(ILocalizationService localization) : IDateFormatter
 {
     private static readonly PersianCalendar Persian = new();
 
@@ -92,8 +93,10 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
             DateFormatStyle.Long => "D",
             DateFormatStyle.MonthYear => "Y",
             DateFormatStyle.DayMonth => "M",
-            // The culture's day-month pattern with its short month names, e.g. "Sep 25" or "25. Sept.".
-            DateFormatStyle.DayMonthShort => culture.DateTimeFormat.MonthDayPattern.Replace("MMMM", "MMM", StringComparison.Ordinal),
+            // The culture's day-month pattern with its short month names, e.g. "Sep 25", "25. Sept." or "25 sept": a quoted
+            // literal goes (Spanish "d 'de' MMMM"), so a date tile never reads "de" as part of the month.
+            DateFormatStyle.DayMonthShort => QuotedLiteral().Replace(culture.DateTimeFormat.MonthDayPattern, " ")
+                .Replace("MMMM", "MMM", StringComparison.Ordinal).Trim(),
             DateFormatStyle.Month => "MMMM",
             _ => "d",
         };
@@ -113,20 +116,33 @@ public sealed class DateFormatter(ILocalizationService localization) : IDateForm
         _ => shortNames ? HijriMonthNamesLatinShort : HijriMonthNamesLatin,
     };
 
-    // The same layout for every converted calendar: weekday, day, month name and year; numeric dates year first.
+    // The same layout for every converted calendar: weekday, day, month name and year; numeric dates year first. The
+    // words between day, month and year are the culture's own: Spanish writes "3 de Mehr de 1405" ("d 'de' MMMM",
+    // "MMMM 'de' yyyy"); English, German and Persian have no such word. The short form for date tiles has none.
     private static string FormatOwn(DateTime dateTime, DateFormatStyle style, CultureInfo culture, int year, int month, int day, string[] monthNames)
     {
         var monthName = monthNames[month - 1];
         var separator = culture.TextInfo.IsRightToLeft ? " " : ", ";
+        var dayMonth = Joiner(culture.DateTimeFormat.MonthDayPattern);
+        var monthYear = Joiner(culture.DateTimeFormat.YearMonthPattern);
         return style switch
         {
             DateFormatStyle.Long => string.Create(
                 CultureInfo.InvariantCulture,
-                $"{culture.DateTimeFormat.GetDayName(dateTime.DayOfWeek)}{separator}{day} {monthName} {year}"),
-            DateFormatStyle.MonthYear => string.Create(CultureInfo.InvariantCulture, $"{monthName} {year}"),
-            DateFormatStyle.DayMonth or DateFormatStyle.DayMonthShort => string.Create(CultureInfo.InvariantCulture, $"{day} {monthName}"),
+                $"{culture.DateTimeFormat.GetDayName(dateTime.DayOfWeek)}{separator}{day}{dayMonth}{monthName}{monthYear}{year}"),
+            DateFormatStyle.MonthYear => string.Create(CultureInfo.InvariantCulture, $"{monthName}{monthYear}{year}"),
+            DateFormatStyle.DayMonth => string.Create(CultureInfo.InvariantCulture, $"{day}{dayMonth}{monthName}"),
+            DateFormatStyle.DayMonthShort => string.Create(CultureInfo.InvariantCulture, $"{day} {monthName}"),
             DateFormatStyle.Month => monthName,
             _ => string.Create(CultureInfo.InvariantCulture, $"{year:0000}/{month:00}/{day:00}"),
         };
     }
+
+    // " de " for a pattern with the quoted word 'de' (Spanish), otherwise a plain space.
+    private static string Joiner(string pattern) => QuotedLiteral().Match(pattern) is { Success: true } literal
+        ? $" {literal.Value.Trim().Trim('\'').Trim()} "
+        : " ";
+
+    [GeneratedRegex(@"\s*'[^']*'\s*")]
+    private static partial Regex QuotedLiteral();
 }

@@ -18,6 +18,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Date tiles and chart axes use distinct short month names ("Rab I", "Rab II") instead of the first three letters.
 - This prepares languages such as Arabic; the remaining steps are listed in the localization guide.
 
+### Added – Spanish
+
+- Zanance is now available in Spanish: the whole interface, help texts, notifications, the widget, the iOS permission
+  prompts and the PDF report. A phone set to any Spanish variant (Spain, Mexico, Argentina …) uses it; the language
+  does not change your country, currencies or calendar.
+- Dates in Spanish read naturally in all three calendars ("viernes, 25 de septiembre de 2026", "3 de Mehr de 1405").
+- Spanish receipts are read with their total ("TOTAL A PAGAR", "IMPORTE TOTAL", "TOTAL IVA INCLUIDO"), never the
+  subtotal, the cash handed over or the change.
+
 ### Changed – German wording
 
 - The German texts were reviewed throughout: formal "Sie", consistent terms (Buchung, Umbuchung, Sicherung,

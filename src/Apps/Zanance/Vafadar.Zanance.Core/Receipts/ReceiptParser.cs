@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using Vafadar.Core.Dates;
 using Vafadar.Core.Text;
@@ -29,20 +30,34 @@ public static partial class ReceiptParser
         "total", "grand total", "total due", "amount due", "balance due", "to pay", "summe", "gesamtsumme", "gesamtbetrag",
         "endbetrag", "rechnungsbetrag", "zahlbetrag", "zu zahlen", "invoice total", "amount payable", "jumlah",
         "جمع کل", "مبلغ قابل پرداخت", "قابل پرداخت", "مبلغ کل",
+        "importe total", "total a pagar", "total pagado", "total de la compra", "importe a pagar", "monto total", "monto a pagar",
     ];
 
-    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ"];
+    private static readonly string[] WeakTotal = ["betrag", "gesamt", "جمع", "مبلغ", "importe", "monto"];
 
+    // Spanish "IVA" and "efectivo" are not listed: "TOTAL IVA INCLUIDO" and "TOTAL EFECTIVO" name the purchase total; a
+    // tax-only row has no total word, and cash handed over is "efectivo entregado".
     private static readonly string[] NotTotal =
     [
         "sub", "subtotal", "zwischensumme", "mwst", "ust", "steuer", "netto", "nettobetrag", "tax", "vat", "rabatt", "ersparnis",
         "gesamtersparnis", "discount", "items", "artikel", "bar", "gegeben", "rückgeld", "change", "cash", "tip",
         "تخفیف", "مالیات", "تعداد", "باقیمانده", "دریافتی",
+        "sub total", "base imponible", "descuento", "descuentos", "ahorro", "efectivo entregado", "recibido", "cambio", "vuelto",
+        "vuelta", "propina",
     ];
 
-    private static readonly string[] NotPrice = ["tel", "telefon", "fax", "plz", "iban", "bic", "nr", "no", "ust", "id", "steuernummer", "تلفن", "کد"];
+    private static readonly string[] NotPrice =
+    [
+        "tel", "telefon", "fax", "plz", "iban", "bic", "nr", "no", "ust", "id", "steuernummer", "تلفن", "کد",
+        "teléfono", "telefono", "código postal", "codigo postal", "nif", "cif", "rfc", "ruc", "cuit", "folio", "número de operación",
+        "numero de operacion",
+    ];
 
-    private static readonly string[] NotMerchant = ["receipt", "rechnung", "beleg", "quittung", "kassenbon", "bon", "invoice", "tel", "fax", "ust", "vat", "فاکتور", "رسید", "تلفن"];
+    private static readonly string[] NotMerchant =
+    [
+        "receipt", "rechnung", "beleg", "quittung", "kassenbon", "bon", "invoice", "tel", "fax", "ust", "vat", "فاکتور", "رسید", "تلفن",
+        "recibo", "factura", "comprobante", "ticket", "teléfono", "telefono", "nif", "cif", "rfc",
+    ];
 
     /// <summary>Reads a receipt text.</summary>
     /// <param name="text">The recognised text.</param>
@@ -123,8 +138,10 @@ public static partial class ReceiptParser
             }
         }
 
-        // No total line: the largest price-like amount, never a postal code, phone number or id.
-        var prices = lines.Where(l => !NotPrice.Any(k => Has(Tokens(l), k))).SelectMany(l => Amounts(l, strict: true)).ToList();
+        // No total line: the largest price-like amount, never a postal code, phone number or id, and never cash handed
+        // over, change, tax or a discount (a receipt with only "cash 100,00 / change 12,00" has no readable total).
+        var prices = lines.Where(l => !NotPrice.Any(k => Has(Tokens(l), k)) && !NotTotal.Any(k => Has(Tokens(l), k)))
+            .SelectMany(l => Amounts(l, strict: true)).ToList();
         return prices.Count > 0 ? prices.Max() : null;
     }
 
@@ -150,7 +167,7 @@ public static partial class ReceiptParser
     // The lower-case words of a line, padded with spaces so that whole words and phrases can be found. Keywords match the
     // Arabic letter forms of PDFs and OCR (ي, ى, ك) and words written with or without a half-space ("باقی‌مانده").
     private static string Tokens(string line) =>
-        " " + string.Join(' ', WordPattern().Matches(FoldPersian(line.ToLowerInvariant())).Select(m => m.Value)) + " ";
+        " " + string.Join(' ', WordPattern().Matches(FoldPersian(line.Normalize(NormalizationForm.FormC).ToLowerInvariant())).Select(m => m.Value)) + " ";
 
     private static string FoldPersian(string text) =>
         text.Replace('ي', 'ی').Replace('ى', 'ی').Replace('ك', 'ک').Replace("\u200C", string.Empty, StringComparison.Ordinal);
