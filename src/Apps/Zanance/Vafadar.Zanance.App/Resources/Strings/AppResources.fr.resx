@@ -560,7 +560,7 @@
     <value>Associer « {0} » ({1}) à cette échéance ? Aucune nouvelle opération ne sera créée.</value>
   </data>
   <data name="Occurrence_Change" xml:space="preserve">
-    <value>Modifier cette échéance</value>
+    <value>Modifier</value>
   </data>
   <data name="Occurrence_Skip" xml:space="preserve">
     <value>Ignorer</value>
@@ -3599,10 +3599,10 @@
     <value>Plus-value ou moins-value réalisée : {0}</value>
   </data>
   <data name="Holding_Buy" xml:space="preserve">
-    <value>Enregistrer un achat</value>
+    <value>Saisir un achat</value>
   </data>
   <data name="Holding_Sell" xml:space="preserve">
-    <value>Enregistrer une vente</value>
+    <value>Saisir une vente</value>
   </data>
   <data name="Holding_Move" xml:space="preserve">
     <value>Déplacer</value>
@@ -3614,7 +3614,7 @@
     <value>Retirer</value>
   </data>
   <data name="Holding_Correct" xml:space="preserve">
-    <value>Corriger la quantité</value>
+    <value>Corriger</value>
   </data>
   <data name="Holding_Prices" xml:space="preserve">
     <value>Prix</value>

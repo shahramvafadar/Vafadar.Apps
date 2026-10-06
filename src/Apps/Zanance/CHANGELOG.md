@@ -29,6 +29,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   "(di cui IVA 4,33)" is skipped), never "TOTALE IVA", the taxable amount, a discount, the cash handed over or the
   change.
 
+### Changed – French
+
+- Four buttons fit the narrowest screens (owner's wording): "Saisir un achat" and "Saisir une vente" (record a
+  purchase or sale, nothing is bought or sold), "Corriger" (correct the quantity held) and "Modifier" (changes only
+  this occurrence, the plan stays as it is).
+
 ### Changed – Spanish
 
 - Two buttons fit the narrowest screens: "Añadir sin compra" (holdings you already own or received as a gift) and
