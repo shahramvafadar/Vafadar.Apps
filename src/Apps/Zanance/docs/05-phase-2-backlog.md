@@ -29,6 +29,21 @@ Design, decisions and the **reference backlog with every work item and its state
 ([backlog](enhancements/2026-10-multi-unit-goals-insights/06-implementation-backlog.md)). This table does not repeat
 those items, so there is only one place for their status.
 
+## Accessibility pass – after the features and the debugging
+
+**Status: planned (owner, 2026-10-06).** Once the planned features are finished and debugged, the app is gone through
+with the screen readers of every platform and fixed where needed:
+
+| Item | Scope |
+|---|---|
+| Android – TalkBack | Every screen and dialog reachable and read in a sensible order; every button, chip, switch, field and icon with a spoken name (and a hint where the label is short, as in D-58); errors and changed results announced; custom-drawn controls (Syncfusion charts, calendar, progress bars, the currency box) usable or given a readable text alternative; the quick add widget |
+| iOS – VoiceOver | The same checks on an iPhone with the iOS release |
+| Windows – Narrator | The same checks; keyboard-only use (Tab order, focus ring, Enter/Space on every action) |
+| All platforms | Large text (system font scaling up to 200 %) without cut or overlapping text, colour contrast in both themes, touch targets of at least 44 px, no information given by colour alone, Persian (right to left) read in the right order |
+
+Each finding gets a fix and, where possible, a test; the pass ends with a written check list per platform in
+`07-acceptance-test-plan.md`.
+
 ## Phase 2B – online, each with its own decision gate
 
 | Item | Gate before any work |
