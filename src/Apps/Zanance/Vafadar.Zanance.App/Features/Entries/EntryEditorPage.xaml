@@ -233,16 +233,13 @@
                                 <v:HelpButton Grid.Column="1" Topic="Aggregated" />
                                 <Switch Grid.Column="2" IsToggled="{Binding IsAggregated}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_Aggregated}" />
                             </Grid>
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsAggregated}">
-                                <VerticalStackLayout>
-                                    <Label Text="{v:Translate Entry_AggregatedFrom}" Style="{StaticResource FieldLabel}" />
-                                    <v:DateField Date="{Binding AggregatedFrom}" />
-                                </VerticalStackLayout>
-                                <VerticalStackLayout Grid.Column="1">
-                                    <Label Text="{v:Translate Entry_AggregatedTo}" Style="{StaticResource FieldLabel}" />
-                                    <v:DateField Date="{Binding AggregatedTo}" />
-                                </VerticalStackLayout>
-                            </Grid>
+                            <!-- One date under the other: the date boxes need the full width at 360 px -->
+                            <VerticalStackLayout IsVisible="{Binding IsAggregated}">
+                                <Label Text="{v:Translate Entry_AggregatedFrom}" Style="{StaticResource FieldLabel}" />
+                                <v:DateField Date="{Binding AggregatedFrom}" />
+                                <Label Text="{v:Translate Entry_AggregatedTo}" Style="{StaticResource FieldLabel}" />
+                                <v:DateField Date="{Binding AggregatedTo}" />
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
 
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />

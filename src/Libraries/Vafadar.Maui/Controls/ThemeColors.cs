@@ -12,6 +12,12 @@ internal static class ThemeColors
     /// <summary>Gets the text color on the page background.</summary>
     public static Color Text => IsDark ? Color.FromArgb("#E9EEF5") : Color.FromArgb("#0F1B2D");
 
+    /// <summary>Gets the color of secondary text (the same as the apps' SecondaryText).</summary>
+    public static Color SecondaryText => IsDark ? Color.FromArgb("#AEB8C6") : Color.FromArgb("#4A5568");
+
+    /// <summary>Gets the color of a value that is not valid (the same as the apps' ExpenseText).</summary>
+    public static Color Danger => IsDark ? Color.FromArgb("#FF8E82") : Color.FromArgb("#C0392B");
+
     /// <summary>Returns a readable text color on <paramref name="background"/>.</summary>
     public static Color OnColor(Color background)
     {

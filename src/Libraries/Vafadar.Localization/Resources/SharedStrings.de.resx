@@ -247,4 +247,13 @@
   <data name="Calendar_Hijri" xml:space="preserve">
     <value>Hidschri (Mondkalender, Umm al-Qura)</value>
   </data>
+  <data name="DateField_Day" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="DateField_Month" xml:space="preserve">
+    <value>Monat</value>
+  </data>
+  <data name="DateField_Year" xml:space="preserve">
+    <value>Jahr</value>
+  </data>
 </root>

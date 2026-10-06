@@ -201,4 +201,13 @@
   <data name="Calendar_Hijri" xml:space="preserve">
     <value>Islámico (lunar, Umm al-Qura)</value>
   </data>
+  <data name="DateField_Day" xml:space="preserve">
+    <value>Día</value>
+  </data>
+  <data name="DateField_Month" xml:space="preserve">
+    <value>Mes</value>
+  </data>
+  <data name="DateField_Year" xml:space="preserve">
+    <value>Año</value>
+  </data>
 </root>

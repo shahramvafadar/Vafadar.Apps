@@ -29,6 +29,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   "(di cui IVA 4,33)" is skipped), never "TOTALE IVA", the taxable amount, a discount, the cash handed over or the
   change.
 
+### Changed – Date input
+
+- Dates are entered with three number boxes – day, month and year – in your calendar, with the full date written
+  below. Tap a box and type; the next box follows automatically. This replaces the calendar dialog, which opened
+  empty on Android.
+- A number that cannot be part of a date shows red and is not taken; a day past the end of the month becomes the last
+  day of that month when you leave the field.
+
 ### Added – Screen reader hints
 
 - Screen readers (TalkBack, VoiceOver, Narrator) now explain six short action buttons after their label: record a

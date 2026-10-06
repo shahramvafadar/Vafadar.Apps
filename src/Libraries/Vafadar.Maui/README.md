@@ -9,7 +9,7 @@ Shared .NET MAUI infrastructure for all apps.
 | `Localization.FlowDirectionExtensions` | Applies left-to-right / right-to-left to pages and windows |
 | `Mvvm.ViewModelBase` | CommunityToolkit.Mvvm base with `IsBusy` / `IsNotBusy` |
 | `Localization.FlowDirectionExtensions.ApplyToModalPages()` | Gives modal pages the current text direction before they appear |
-| `Controls.DateField` | Date input in the user's display calendar (Gregorian, Persian or lunar Hijri) with a Syncfusion calendar dialog |
+| `Controls.DateField` | Date input by numbers (day, month, year boxes) in the user's display calendar (Gregorian, Persian or lunar Hijri), with the full date written below |
 | `Controls.ChoiceChips` | Single-choice chips; wrapping for forms, `IsCompact` for one-line scrolling filter bars |
 | `Controls.HelpButton` | The round "?" next to a setting; shows `Help_{Topic}_Title`, `Help_{Topic}_Text` and the optional `Help_{Topic}_Example` from the app's strings; screen readers say "Help: <title>" |
 | `Controls.InvertedBoolConverter`, `IsNotNullConverter`, `IsPositiveConverter` | Common XAML converters |

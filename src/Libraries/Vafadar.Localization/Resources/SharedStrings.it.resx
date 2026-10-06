@@ -201,4 +201,13 @@
   <data name="Calendar_Hijri" xml:space="preserve">
     <value>Egira lunare (Umm al-Qura)</value>
   </data>
+  <data name="DateField_Day" xml:space="preserve">
+    <value>Giorno</value>
+  </data>
+  <data name="DateField_Month" xml:space="preserve">
+    <value>Mese</value>
+  </data>
+  <data name="DateField_Year" xml:space="preserve">
+    <value>Anno</value>
+  </data>
 </root>

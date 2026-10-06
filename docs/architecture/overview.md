@@ -172,7 +172,7 @@ Vafadar.Zanance.App/
 * **Compiled bindings** everywhere (`x:DataType` on every page) and XAML source generation (`MauiXamlInflator=SourceGen`):
   faster, trimming-safe, and binding errors are compile-time errors.
 * **Dependency injection** for pages and view models (constructor injection); Shell resolves pages from DI.
-* **Syncfusion MAUI controls** for complex UI (charts, data grid, date pickers, …). Only `Syncfusion.Maui.Core` is
+* **Syncfusion MAUI controls** for complex UI (charts, progress bars, combo boxes, …). Only `Syncfusion.Maui.Core` is
   referenced by default; apps add the control packages they use.
 * **Startup sequence**: `UseVafadar()` registers the license and services → `IMauiInitializeService`s run while the
   app is built (saved language is applied, database is migrated) → `App.CreateWindow` creates the shell with the

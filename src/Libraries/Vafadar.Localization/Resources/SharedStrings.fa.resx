@@ -247,4 +247,13 @@
   <data name="Calendar_Hijri" xml:space="preserve">
     <value>هجری قمری (ام‌القری)</value>
   </data>
+  <data name="DateField_Day" xml:space="preserve">
+    <value>روز</value>
+  </data>
+  <data name="DateField_Month" xml:space="preserve">
+    <value>ماه</value>
+  </data>
+  <data name="DateField_Year" xml:space="preserve">
+    <value>سال</value>
+  </data>
 </root>

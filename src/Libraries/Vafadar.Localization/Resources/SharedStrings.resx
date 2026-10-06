@@ -251,4 +251,16 @@
     <value>Hijri (lunar, Umm al-Qura)</value>
     <comment>The lunar Hijri calendar; Umm al-Qura is the official variant (Saudi Arabia), see LunarHijri.</comment>
   </data>
+  <data name="DateField_Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>Name of the day box of the date field (placeholder and screen reader name).</comment>
+  </data>
+  <data name="DateField_Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>Name of the month box of the date field (placeholder and screen reader name).</comment>
+  </data>
+  <data name="DateField_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Name of the year box of the date field (placeholder and screen reader name).</comment>
+  </data>
 </root>
