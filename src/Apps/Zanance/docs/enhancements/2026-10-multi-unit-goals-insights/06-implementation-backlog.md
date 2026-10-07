@@ -1,5 +1,10 @@
 # 06 – Implementation backlog (reference)
 
+> **2026-10-07:** the open stories continue in the canonical backlog of enhancement ZCR
+> ([04-backlog.md](../2026-10-commercial-release/04-backlog.md)): S0306 → ZCR-LOC-02, S0610 → ZCR-LOC-03,
+> S0611 → ZCR-LOC-04, S0404 → ZCR-LOC-05, S0408 → ZCR-QA-04, device checks → ZCR-QA-01, iOS (S0903) → ZCR-QA-07.
+> Their state is tracked there; this file keeps the history of ZEX.
+
 **This is the single reference backlog of enhancement ZEX.** Every work item of the package has an entry here; the
 project's main backlog ([05 – Phase 2 backlog](../../05-phase-2-backlog.md)) only links to it. All stories are
 **approved by the owner on 2026-10-03** (all proposals ZEX-P01…P23 as preferred) and are implemented phase by phase (see [Phases](#phases)); each story's state is kept in the [state table](#state).

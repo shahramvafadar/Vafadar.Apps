@@ -1,5 +1,10 @@
 # 05 – Phase 2 backlog
 
+> **Since 2026-10-07 the state of all remaining work is tracked only in the canonical backlog of enhancement ZCR:
+> [enhancements/2026-10-commercial-release/04-backlog.md](enhancements/2026-10-commercial-release/04-backlog.md).**
+> This file keeps the history of Phase 2A; the accessibility pass and the Phase 2B items below continue there (ZCR-A11Y,
+> ZCR-SYNC, ZCR-SHR, ZCR-BANK, ZCR-AI, ZCR-FX, ZCR-BIL).
+
 Nothing here was built in phase 1, not even behind a disabled flag (HAND-05). Phase 2A started on 2026-09-26; finished items are marked below. The phase-1 model keeps each item
 possible (SC-01).
 
@@ -31,7 +36,7 @@ those items, so there is only one place for their status.
 
 ## Accessibility pass – after the features and the debugging
 
-**Status: planned (owner, 2026-10-06).** Once the planned features are finished and debugged, the app is gone through
+**Status: planned (owner, 2026-10-06); tracked as ZCR-A11Y-01…04 in wave 2 of the delivery plan.** Once the planned features are finished and debugged, the app is gone through
 with the screen readers of every platform and fixed where needed:
 
 | Item | Scope |
@@ -53,4 +58,4 @@ Each finding gets a fix and, where possible, a test; the pass ends with a writte
 | Bank connection | Provider, cost, markets, read-only (F2-BANK-01..04) |
 | AI | Official provider access without user API keys; data minimisation (F2-AI-01..09) |
 | Online exchange rates | Source, cost, caching (FX-08) |
-| Pro purchase, support link, ads | Store policy review, restore of purchases (MON-01..08) |
+| Pro purchase, support link, ads | *Superseded by D-61:* Free/Plus/Pro with Plus Lifetime (ZCR-ENT, ZCR-BIL); support links and ads still need their own review (MON-07) |

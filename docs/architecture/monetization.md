@@ -1,5 +1,9 @@
 # Monetization
 
+> **Zanance (2026-10-07, D-61):** Free → Plus → Pro with Plus Lifetime replaces the "Free + Pro one-time" model for
+> Zanance; design in `src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/`. The store-policy rules below
+> still apply; the planned library will follow the entitlement architecture described there.
+
 Apps are primarily for personal use. Some are published for free, some as "free + Pro", and some offer a way to
 thank the developer ("buy me a coffee"). This document records how that is done without violating store policies.
 

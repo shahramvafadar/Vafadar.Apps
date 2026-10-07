@@ -49,6 +49,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 
 ## Phase 4 – Monetization
 
+Zanance: Free/Plus/Pro since D-61 – waves 3 and 6 of `src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/`.
+
 - [ ] `Vafadar.Monetization`: Google Play Billing / StoreKit, Pro unlock, tip jar
 - [ ] Verify current store policies for tips and purchases
 
