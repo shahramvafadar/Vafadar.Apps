@@ -80,6 +80,7 @@ dotnet test --solution Vafadar.Tests.slnf                                       
 dotnet clean Vafadar.Tests.slnf                                                    # afterwards: free the disk
 dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data --startup-project src/Apps/Zanance/Vafadar.Zanance.Data
 ./eng/scripts/Run-Snapshots.ps1 -Languages fa [-Theme dark] [-WindowSize 1280x820] [-Empty] [-Only budget,report] [-Mode simple] [-Calendar Hijri] [-Digits latin]   # screenshots of every screen
+./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Help [-WindowSize 360x800]   # every "?" help dialog
 ./eng/scripts/Add-Strings.ps1 -JsonPath strings.json                               # strings in en, fa, de, es, fr and it
 ./eng/scripts/Build-AndroidApk.ps1                                                 # installable APK in artifacts/android
 ```

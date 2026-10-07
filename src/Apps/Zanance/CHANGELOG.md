@@ -29,6 +29,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
   "(di cui IVA 4,33)" is skipped), never "TOTALE IVA", the taxable amount, a discount, the cash handed over or the
   change.
 
+### Changed – Help texts
+
+- The explanations and examples of all 38 "?" help topics were rewritten in all six languages, so that each says
+  the same thing everywhere and matches what the app does (e.g. "include in totals" is the default selection, an
+  unknown opening balance is not zero, app lock, backup password and safety copy are three different things).
+- Seven topics got an example for the first time: unknown opening balance, Simple/Advanced mode, app lock, plan
+  amount, backup password, goal priority and the safety copy before a restore.
+
 ### Changed – Date input
 
 - Dates are entered with three number boxes – day, month and year – in your calendar, with the full date written

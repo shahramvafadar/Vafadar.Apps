@@ -17,6 +17,7 @@
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Mode simple -Only budget,plan
     ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Calendar Hijri -Only home,budget,plan,transactions,entry
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark -Calendar Gregorian -Digits latin
+    ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Help -WindowSize 360x800    # every "?" help dialog
 #>
 param(
     # Comma-separated or a PowerShell list (en,fa); a [string] parameter would join a list with spaces.
@@ -29,6 +30,8 @@ param(
     [string]$WindowSize = '',
     # The empty states of a new user (one account, nothing recorded) instead of the screens with sample data.
     [switch]$Empty,
+    # Every "?" help dialog (title, text, example) instead of the screens: <language>-help-<topic>-popup1.png.
+    [switch]$Help,
     # Comma-separated name prefixes of the screens to shoot, e.g. 'report,holding'; default: all screens.
     [string[]]$Only = @(),
     # The experience mode of the walk-through; Simple shows what stays visible of the Advanced data (05 §5).
@@ -72,6 +75,7 @@ $env:VAFADAR_SNAPSHOT_LANGUAGES = ($Languages -join ',')
 $env:VAFADAR_SNAPSHOT_THEME = $Theme
 $env:VAFADAR_WINDOW_SIZE = $WindowSize
 $env:VAFADAR_SNAPSHOT_EMPTY = if ($Empty) { '1' } else { '' }
+$env:VAFADAR_SNAPSHOT_HELP = if ($Help) { '1' } else { '' }
 $env:VAFADAR_SNAPSHOT_ONLY = ($Only -join ',')
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
 $env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar

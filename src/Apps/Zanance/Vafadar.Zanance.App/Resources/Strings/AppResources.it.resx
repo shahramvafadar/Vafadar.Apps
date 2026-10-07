@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -2836,11 +2836,11 @@
     <value>Includi nei totali</value>
   </data>
   <data name="Help_IncludeInTotals_Text" xml:space="preserve">
-    <value>Include il conto nell’insieme predefinito usato per i totali della Home, i report e i budget. Un report o un budget con una selezione specifica usa invece i conti scelti per quella vista. Disattiva l’opzione per tenere un conto fuori dai totali predefiniti, ad esempio un conto di lavoro o gestito per un’altra persona. Il conto conserva comunque il proprio saldo.</value>
+    <value>Attiva questa opzione per includere il conto nei totali abituali, come il saldo della Home. Se la disattivi, il conto resta visibile ma non viene sommato a quei totali. Se un report o un budget ha una propria selezione di conti, usa quella selezione. Il saldo del conto e la disponibilità per i pagamenti non cambiano.</value>
     <comment>Default account scope only; explicit report and budget scopes may differ.</comment>
   </data>
   <data name="Help_IncludeInTotals_Example" xml:space="preserve">
-    <value>Il conto corrente contiene 1.200 e quello per le vacanze 800. Includendoli entrambi, Home mostra 2.000; escludendo il conto per le vacanze, mostra 1.200.</value>
+    <value>Due conti nella stessa valuta hanno 1.200 e 800. Includendoli entrambi, il totale è 2.000. Escludendo il secondo, è 1.200; sul secondo conto restano comunque 800.</value>
   </data>
   <data name="Account_IncludeInTotalsHint" xml:space="preserve">
     <value>Incluso nella selezione predefinita di Home, report e budget.</value>
@@ -2850,172 +2850,181 @@
     <value>Tipo di conto</value>
   </data>
   <data name="Help_AccountType_Text" xml:space="preserve">
-    <value>Il tipo determina come il conto viene mostrato e conteggiato. Contanti, conto corrente, risparmio e carta di credito riguardano il denaro d’uso quotidiano. Un prestito ricevuto è denaro che devi restituire; il denaro prestato è un credito verso qualcuno. Un bene valorizzato, come un’auto o dell’oro, ha un valore che aggiorni tu. Prestiti, crediti e beni valorizzati restano separati dal denaro spendibile.</value>
+    <value>Scegli il tipo in base a ciò che vuoi registrare. Contanti, conto corrente e risparmio rappresentano il tuo denaro. Una carta di debito appartiene al conto bancario; la carta di credito serve per acquisti che rimborserai dopo. Un prestito ricevuto è un tuo debito; il denaro prestato è un credito verso altri. Un conto patrimoniale rappresenta un valore stimato, per esempio quello di un’auto, non denaro subito spendibile.</value>
   </data>
   <data name="Help_AccountType_Example" xml:space="preserve">
-    <value>Una carta di credito con 300 di spese mostra −300. Un’auto del valore di 9.000 è un bene e non aumenta il saldo spendibile.</value>
+    <value>Un acquisto a credito di 300 non ancora rimborsato porta il saldo della carta a −300. Un’auto stimata a 9.000 è un bene, non 9.000 disponibili per fare acquisti.</value>
   </data>
   <data name="Help_OpeningBalance_Title" xml:space="preserve">
     <value>Saldo iniziale</value>
   </data>
   <data name="Help_OpeningBalance_Text" xml:space="preserve">
-    <value>È l’importo nel conto all’inizio del giorno scelto, prima dei movimenti di quel giorno o dei giorni successivi. Zanance applica i movimenti a questo importo: il saldo mostrato deriva dai dati registrati e non viene letto dalla banca.</value>
+    <value>Inserisci il saldo all’inizio del giorno scelto, prima dei movimenti di quel giorno. È la data da cui inizi a tenere i conti in Zanance, non necessariamente quella di apertura del conto in banca. L’app calcola poi il saldo usando questo importo e i movimenti successivi. Non conteggiare un movimento sia nel saldo iniziale sia come movimento separato.</value>
   </data>
   <data name="Help_OpeningBalance_Example" xml:space="preserve">
-    <value>All’inizio di oggi, prima di qualsiasi movimento, il saldo era 2.350. Inserisci 2.350 con la data di oggi, poi registra i movimenti della giornata.</value>
+    <value>All’inizio della giornata avevi 1.000, poi hai speso 50. Inserisci 1.000 come saldo iniziale e registra la spesa di 50: il saldo sarà 950.</value>
   </data>
   <data name="Help_OpeningUnknown_Title" xml:space="preserve">
     <value>Saldo iniziale sconosciuto</value>
   </data>
   <data name="Help_OpeningUnknown_Text" xml:space="preserve">
-    <value>Scegli questa opzione se non conosci ancora l’importo. Il conto parte da zero e i totali che lo includono sono indicati come incompleti, per non confonderli con valori esatti. Puoi inserire il saldo effettivo in seguito nel conto.</value>
+    <value>Scegli questa opzione se non conosci il saldo iniziale. Puoi registrare movimenti senza inventare un importo. Zanance usa temporaneamente zero e indica che il saldo è incompleto: non significa che il conto fosse davvero vuoto. In seguito inserisci il saldo iniziale corretto oppure confronta il saldo registrato con quello reale nei dettagli del conto.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
     <value>Valuta di riferimento</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>Serve solo per i totali convertiti: gli importi in altre valute vengono convertiti con i tassi inseriti da te, mostrando la data dei tassi. I totali per singola valuta restano invariati e non viene creato alcun movimento nella valuta di riferimento. Se manca un tasso, il totale convertito è indicato come incompleto.</value>
+    <value>Scegli la valuta in cui mostrare il valore complessivo di conti in valute diverse. Zanance usa i tassi di cambio che inserisci. Non cambia denaro e non modifica la valuta dei conti o i movimenti registrati. Se manca un tasso necessario, il totale convertito è incompleto. I totali originali per valuta restano visibili.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
-    <value>Conti in EUR e USD, valuta di riferimento EUR: Home mostra 2.000 EUR e 4.000 USD. Quando è disponibile un tasso USD, mostra anche «≈ 5.680 EUR con i tassi del 12 agosto».</value>
+    <value>Hai 100 EUR e 100 USD. Con un tasso di esempio di 1 USD = 0,90 EUR, il valore complessivo è 190 EUR. Nei conti restano 100 EUR e 100 USD.</value>
   </data>
   <data name="Help_MonthStartDay_Title" xml:space="preserve">
     <value>Mese finanziario</value>
   </data>
   <data name="Help_MonthStartDay_Text" xml:space="preserve">
-    <value>Budget, Home, report e filtri dei movimenti usano periodi mensili. Se ricevi lo stipendio in un giorno fisso, puoi far iniziare il mese in quel giorno, così ogni periodo va da uno stipendio al successivo. I piani e le loro scadenze non cambiano.</value>
+    <value>Scegli il giorno da cui parte il tuo mese finanziario. Il giorno 1 corrisponde al mese del calendario; un altro giorno può adattarsi meglio a quando ricevi lo stipendio. Budget mensili, Home, report e filtri mensili useranno questo periodo. Le date dei movimenti, le scadenze e i periodi dei budget settimanali non cambiano.</value>
   </data>
   <data name="Help_MonthStartDay_Example" xml:space="preserve">
-    <value>Ricevi lo stipendio il 25. Impostando il giorno 25 come inizio mese, «Settembre» va dal 25 settembre al 24 ottobre.</value>
+    <value>Con calendario gregoriano e inizio il giorno 25, settembre va dal 25 settembre al 24 ottobre. Una bolletta in scadenza il 1° ottobre resta in scadenza quel giorno.</value>
   </data>
   <data name="Help_Mode_Title" xml:space="preserve">
     <value>Semplice e Avanzata</value>
   </data>
   <data name="Help_Mode_Text" xml:space="preserve">
-    <value>Le due modalità usano gli stessi dati e calcoli. Avanzata mostra direttamente più opzioni, come limiti per categoria, selezione dei conti, budget settimanali e contratti. Passare a Semplice non elimina dati o impostazioni: le opzioni rilevanti già in uso vengono riepilogate.</value>
+    <value>Scegli quante opzioni vuoi vedere. La modalità Semplice mette in primo piano le attività quotidiane. Quella Avanzata mostra più controlli per budget, selezione dei conti e contratti. Dati e calcoli sono gli stessi. Tornare a Semplice non elimina dati e non disattiva le opzioni già impostate; quelle avanzate rilevanti vengono riassunte.</value>
   </data>
   <data name="Help_AppLock_Title" xml:space="preserve">
     <value>Blocco dell’app</value>
   </data>
   <data name="Help_AppLock_Text" xml:space="preserve">
-    <value>Richiede impronta, volto o PIN del dispositivo quando apri Zanance e quando torni dopo 30 secondi. Il blocco nasconde l’app, ma non crittografa i dati sul dispositivo.</value>
+    <value>Attiva questa opzione per sbloccare Zanance all’apertura e dopo almeno 30 secondi fuori dall’app. Viene usato il metodo del dispositivo, come impronta, riconoscimento del volto o PIN. Il blocco limita l’accesso all’app: da solo non cifra i file finanziari. La password dei backup è separata.</value>
   </data>
   <data name="Help_NotificationDetails_Title" xml:space="preserve">
     <value>Nomi e importi nelle notifiche</value>
   </data>
   <data name="Help_NotificationDetails_Text" xml:space="preserve">
-    <value>Per impostazione predefinita, i promemoria usano un testo generico. Attiva l’opzione per includere nomi e importi finanziari. In base alle impostazioni del dispositivo, questi dettagli potrebbero apparire sulla schermata di blocco.</value>
+    <value>Attiva questa opzione per mostrare nomi dei pagamenti e importi nei promemoria. Se la lasci disattivata, ricevi comunque promemoria generici senza questi dettagli. Le impostazioni del dispositivo stabiliscono se appaiono sulla schermata di blocco. Se mostri i dettagli, chi vede la notifica può leggere anche quei dati.</value>
   </data>
   <data name="Help_NotificationDetails_Example" xml:space="preserve">
-    <value>Disattivato: «Un pagamento scade oggi». Attivato: «Affitto – 900,00 EUR oggi».</value>
+    <value>Senza dettagli, il promemoria non mostra nome e importo del pagamento. Con i dettagli può indicare l’affitto di 900 EUR in scadenza.</value>
   </data>
   <data name="Help_AmountMode_Title" xml:space="preserve">
     <value>Importo del piano</value>
   </data>
   <data name="Help_AmountMode_Text" xml:space="preserve">
-    <value>Fisso: sempre lo stesso importo. Stimato: un importo approssimativo, ad esempio per l’elettricità, indicato come stima nelle previsioni. Sconosciuto: non c’è ancora un importo. Lo inserirai alla scadenza e, fino ad allora, le previsioni saranno indicate come incomplete.</value>
+    <value>Indica quanto è certo l’importo previsto.
+Fisso: conosci l’importo e pensi che rimanga uguale.
+Stimato: inserisci una stima, indicata come approssimativa nelle previsioni.
+Sconosciuto: non sai ancora l’importo. La previsione resta incompleta anziché considerarlo pari a zero. Quando registri il pagamento o l’incasso, usa l’importo reale.</value>
   </data>
   <data name="Help_WeekendRule_Title" xml:space="preserve">
     <value>Fine settimana e festività</value>
   </data>
   <data name="Help_WeekendRule_Text" xml:space="preserve">
-    <value>Se una scadenza cade nel fine settimana, questa regola sposta la data pianificata in Zanance al giorno lavorativo precedente o successivo. Le festività supportate sono incluse solo se attivate. Verifica la data effettiva del pagamento con chi paga o con il fornitore.</value>
+    <value>Scegli cosa fare se una data cade in un giorno di fine settimana impostato: mantenerla, anticiparla al giorno lavorativo precedente o spostarla al successivo. Le festività supportate contano solo se attivi l’opzione. Cambia soltanto la data in Zanance, non un ordine bancario né una scadenza contrattuale.</value>
   </data>
   <data name="Help_WeekendRule_Example" xml:space="preserve">
-    <value>Lo stipendio è previsto sabato 30. Con «Giorno lavorativo precedente», Zanance lo pianifica per venerdì 29, purché venerdì sia lavorativo secondo le regole scelte.</value>
+    <value>Se sabato e domenica sono non lavorativi nelle impostazioni, una scadenza di domenica spostata al giorno lavorativo successivo passa al lunedì, a meno che una regola festiva attiva escluda anche quel lunedì.</value>
   </data>
   <data name="Help_AutoPost_Title" xml:space="preserve">
     <value>Registrazione automatica</value>
   </data>
   <data name="Help_AutoPost_Text" xml:space="preserve">
-    <value>Quando apri Zanance il giorno della scadenza o in seguito, l’app registra il movimento pianificato e lo contrassegna come da verificare. Se la registrazione automatica è disattivata, la voce resta in Piani finché non la confermi. Ogni ricorrenza viene registrata automaticamente una sola volta, ma un movimento inserito separatamente può comunque duplicarla.</value>
+    <value>Per un piano a importo fisso, crea il movimento previsto quando apri Zanance il giorno della scadenza o dopo. Il movimento viene segnato come da verificare. Registra ciò che avevi pianificato: non controlla la banca e non esegue pagamenti. Verifica data e importo. Non registrare anche lo stesso pagamento separatamente.</value>
   </data>
   <data name="Help_AutoPost_Example" xml:space="preserve">
-    <value>L’affitto di 900 scade il giorno 1. Quando apri l’app il giorno 2, Zanance registra il movimento pianificato e lo contrassegna come da verificare.</value>
+    <value>Prevedi un affitto di 900 per il giorno 1. Aprendo Zanance il giorno 2, viene creata una spesa di 900 da verificare. Non viene inviato denaro al proprietario.</value>
   </data>
   <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
     <value>Applica la modifica a partire da</value>
   </data>
   <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
-    <value>Una modifica può valere per tutti i pagamenti o solo a partire da una data. Quelli precedenti mantengono importi e giorni originali, così lo storico resta corretto.</value>
+    <value>Scegli la prima data da cui applicare le nuove impostazioni. Le scadenze precedenti mantengono importi e date originali. Usala quando cambia un pagamento ricorrente, senza riscrivere i mesi passati. Cambia solo il piano in Zanance, non il contratto né le istruzioni di pagamento in banca.</value>
   </data>
   <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
-    <value>L’affitto aumenta da 900 a 950 a marzo. Applica la modifica dal 1° marzo: gennaio e febbraio restano a 900.</value>
+    <value>L’affitto passa da 900 a 950 a marzo. Applica il cambiamento dal 1° marzo: gennaio e febbraio restano a 900; le scadenze da marzo usano 950.</value>
   </data>
   <data name="Help_Reimbursable_Title" xml:space="preserve">
     <value>Spese da rimborsare</value>
   </data>
   <data name="Help_Reimbursable_Text" xml:space="preserve">
-    <value>Contrassegna una spesa che qualcuno ti rimborserà, ad esempio una trasferta o una cena pagata per gli amici. Resta una spesa finché il denaro non rientra. L’importo ricevuto viene registrato come rimborso della spesa, mai come entrata. Le somme in attesa sono elencate in «Rimborsi da ricevere».</value>
+    <value>Usala per una spesa che hai pagato tu e che qualcuno ti rimborserà, in tutto o in parte. Indica chi ti deve il denaro e quanto prevedi di ricevere. La somma resta in sospeso finché non registri l’incasso. Collegala alla spesa originale come rimborso, non come nuova entrata, così la spesa netta diminuisce correttamente.</value>
   </data>
   <data name="Help_Reimbursable_Example" xml:space="preserve">
-    <value>Paghi 120 per un pranzo di lavoro che il datore ti rimborserà. Contrassegna la spesa come rimborsabile. Quando ricevi i 120, registra un rimborso collegato a quella spesa.</value>
+    <value>Paghi 60 per una cena condivisa e un amico ti deve 20. Registra la spesa di 60 e il rimborso atteso di 20. Dopo aver registrato il rimborso, il tuo costo netto sarà 40.</value>
   </data>
   <data name="Help_ForeignAmount_Title" xml:space="preserve">
     <value>Pagato in un’altra valuta</value>
   </data>
   <data name="Help_ForeignAmount_Text" xml:space="preserve">
-    <value>Conserva l’importo originale quando paghi all’estero o online in un’altra valuta. Il conto viene addebitato nella propria valuta. L’importo originale compare insieme al movimento.</value>
+    <value>Usala quando la ricevuta è in una valuta diversa da quella del conto addebitato. L’importo principale deve essere quello effettivamente sottratto, nella valuta del conto. Conserva anche valuta e importo della ricevuta come importo originale. È un’informazione aggiuntiva, non una seconda spesa né un sostituto dell’addebito bancario.</value>
   </data>
   <data name="Help_ForeignAmount_Example" xml:space="preserve">
-    <value>Un hotel costa 150 USD e sulla carta vengono addebitati 139,20 EUR: importo 139,20 EUR, importo originale 150 USD.</value>
+    <value>La ricevuta indica 100 USD, ma sul conto in euro sono addebitati 92 EUR. Registra una spesa di 92 EUR e un importo originale di 100 USD. Non aggiungere una seconda spesa di 100.</value>
   </data>
   <data name="Help_SpendingType_Title" xml:space="preserve">
     <value>Tipo di spesa</value>
   </data>
   <data name="Help_SpendingType_Text" xml:space="preserve">
-    <value>Usato dal budget Flessibile. Fissa: lo stesso pagamento ogni mese, come l’affitto. Non mensile: pagamenti poche volte all’anno, come l’assicurazione, ripartiti in quote mensili per pianificare. Variabile: spese quotidiane che condividono un unico limite.</value>
+    <value>Questa scelta determina come trattare una categoria nel budget Flessibile.
+Fissa: pagamenti mensili abituali, come l’affitto.
+Non mensile: spese meno frequenti, come un’assicurazione annuale; viene mostrato un equivalente mensile per pianificare.
+Flessibile: spese quotidiane con un limite comune. La classificazione non crea pagamenti e non accantona denaro.</value>
   </data>
   <data name="Help_SpendingType_Example" xml:space="preserve">
-    <value>Un’assicurazione auto annuale di 600 è una spesa non mensile. Il budget mostra una quota mensile di pianificazione di 50, ma non accantona realmente denaro.</value>
+    <value>Un’assicurazione annuale di 600 è non mensile. La quota mensile di pianificazione è 50. Non vengono creati dodici pagamenti né accantonati 50 al mese sul conto bancario.</value>
   </data>
   <data name="Help_BudgetMethod_Title" xml:space="preserve">
     <value>Metodo di budget</value>
   </data>
   <data name="Help_BudgetMethod_Text" xml:space="preserve">
-    <value>Limiti di spesa: un massimo mensile e, se vuoi, per categoria. È la scelta più semplice. Buste: assegni il denaro già disponibile alle categorie e vedi quanto non è ancora assegnato. Flessibile: i pagamenti fissi derivano dai piani, quelli non mensili hanno una quota mensile e un unico limite copre tutte le altre spese.</value>
+    <value>Scegli come pianificare le spese.
+Limiti: imposta un massimo per il periodo e, se serve, per categoria.
+Buste: distribuisci tra le categorie il denaro che hai già e vedi quanto resta da assegnare.
+Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequenti; usa un limite comune per le spese quotidiane. Buste e Flessibile sono metodi mensili. Nessuno sposta denaro o blocca pagamenti bancari.</value>
   </data>
   <data name="Help_BudgetMethod_Example" xml:space="preserve">
-    <value>Nel budget Flessibile, l’affitto di 900 deriva dal relativo piano. Un’assicurazione annuale di 600 ha una quota mensile di pianificazione di 50. Un limite variabile di 700 copre alimentari, pasti fuori casa e altre spese quotidiane.</value>
+    <value>Hai 1.000 e non hai ancora riservato denaro agli obiettivi. Assegnando 600 alle buste, restano 400 da assegnare. I 600 sono destinati a spese future, non sono già stati spesi.</value>
   </data>
   <data name="Help_Rollover_Title" xml:space="preserve">
     <value>Riporto del budget</value>
   </data>
   <data name="Help_Rollover_Text" xml:space="preserve">
-    <value>Scegli come il budget non utilizzato e l’eccesso di spesa influenzano il periodo successivo. Riparti dal nuovo limite: usa solo il nuovo limite. Riporta il budget non utilizzato: aggiunge quanto rimasto nel periodo precedente. Riporta avanzo ed eccesso di spesa: sottrae anche quanto speso oltre il limite precedente.</value>
+    <value>Scegli cosa accade al budget non utilizzato nel periodo successivo. Ripartire da zero usa solo il nuovo limite. Riportare l’avanzo aggiunge la parte non spesa. Riportare anche gli sforamenti sottrae quanto speso in eccesso. Il calcolo segue budget consecutivi e si ferma dove ne manca uno. Cambia il limite di spesa, non il saldo bancario né il denaro degli obiettivi.</value>
   </data>
   <data name="Help_Rollover_Example" xml:space="preserve">
-    <value>Con un limite mensile di 500 e spese di 450, «Riporta il budget non utilizzato» porta il limite successivo a 550. Se le spese erano 560, «Riporta avanzo ed eccesso di spesa» lo porta a 440.</value>
+    <value>Supponi che il limite base di ogni periodo sia 500. Se spendi 450, riportare i 50 rimasti porta il limite successivo a 550. Se spendi 560, diventa 440 quando è attivo anche il riporto degli sforamenti.</value>
   </data>
   <data name="Help_BudgetPeriod_Title" xml:space="preserve">
     <value>Periodo del budget</value>
   </data>
   <data name="Help_BudgetPeriod_Text" xml:space="preserve">
-    <value>Oltre al mese, puoi usare una settimana o due settimane, ad esempio se ricevi lo stipendio ogni due settimane o vuoi un limite settimanale per gli alimentari. Ogni periodo ha limiti propri e il budget mensile resta separato. Buste e Flessibile sono metodi mensili.</value>
+    <value>Scegli se il budget copre un mese, una settimana o 14 giorni. Quelli settimanali e di due settimane usano limiti; Buste e Flessibile sono disponibili solo per il mese. Ogni periodo ha il proprio limite. Un budget settimanale non divide né sostituisce quello mensile. Una spesa può apparire in entrambe le viste: non sommare tra loro i relativi totali.</value>
   </data>
   <data name="Help_BudgetPeriod_Example" xml:space="preserve">
-    <value>Un limite settimanale di 120 per gli alimentari, da lunedì a domenica. La settimana successiva riparte da 120, o da un importo superiore se è attivo il riporto.</value>
+    <value>Puoi fissare 100 a settimana per gli alimentari e un limite mensile separato di 400. Un acquisto di 20 usa 20 di entrambi i limiti pertinenti, ma rimane un’unica spesa di 20.</value>
   </data>
   <data name="Help_FortnightStart_Title" xml:space="preserve">
     <value>Periodi di due settimane</value>
   </data>
   <data name="Help_FortnightStart_Text" xml:space="preserve">
-    <value>I budget di due settimane si ripetono ogni 14 giorni a partire da questa data. Scegli un giorno di stipendio per far coincidere ogni periodo con il tempo tra due stipendi.</value>
+    <value>Scegli il primo giorno di un periodo di due settimane. Ogni periodo dura esattamente 14 giorni e il successivo inizia subito dopo. Puoi scegliere un giorno di paga se ricevi entrate ogni due settimane. Non è la stessa cosa che dividere il mese in due metà: i periodi possono attraversare il cambio di mese.</value>
   </data>
   <data name="Help_FortnightStart_Example" xml:space="preserve">
-    <value>Ricevi lo stipendio ogni due venerdì, l’ultimo il 18 settembre. I periodi vanno dal 18 settembre al 1° ottobre, dal 2 al 15 ottobre e così via.</value>
+    <value>Partendo dal 1° settembre, i periodi sono 1–14 settembre, 15–28 settembre e 29 settembre–12 ottobre. Ciascuno comprende 14 giorni, inclusi il primo e l’ultimo.</value>
   </data>
   <data name="Help_BackupPassword_Title" xml:space="preserve">
     <value>Password del backup</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>Quando attivi la protezione con password, il backup viene crittografato con AES-256. Per ripristinarlo serve la password del backup. L’app non la conserva per usi successivi e lo sviluppatore non può recuperarla se la dimentichi. Conservala al sicuro.</value>
+    <value>La protezione con password cifra il file di backup. Per ripristinarlo serve la password usata quando è stato creato, anche su un altro dispositivo. Conservala in un luogo sicuro: lo sviluppatore non può recuperarla e il PIN del dispositivo non la sostituisce. Senza questa protezione, chi ottiene il file può leggerne il contenuto.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorità di un obiettivo</value>
   </data>
   <data name="Help_GoalPriority_Text" xml:space="preserve">
-    <value>Se il denaro accantonato non basta per tutti gli obiettivi, quelli con priorità più alta vengono coperti per primi. La priorità non cambia gli importi: determina solo l’ordine in cui vengono segnalate le carenze.</value>
+    <value>La priorità conta quando hai assegnato agli obiettivi più denaro di quanto il conto contenga. Zanance considera coperti prima gli obiettivi più importanti e mostra la carenza su quelli meno prioritari. Il progresso visualizzato può quindi cambiare, ma non viene spostato denaro e gli importi assegnati restano uguali.</value>
   </data>
   <data name="Onb_Tagline" xml:space="preserve">
     <value>Il tuo denaro, con un piano chiaro.</value>
@@ -3219,10 +3228,10 @@
     <value>Valuta predefinita per le nuove voci</value>
   </data>
   <data name="Help_DefaultCurrency_Text" xml:space="preserve">
-    <value>Nuovi conti, obiettivi, budget e tassi di cambio propongono questa valuta. Puoi sceglierne un’altra ogni volta. I conti e i movimenti esistenti mantengono la propria valuta. Ogni movimento è registrato nella valuta del suo conto.</value>
+    <value>È la valuta preselezionata quando crei un conto, un obiettivo, un budget o un tasso di cambio. Puoi sceglierne un’altra nel modulo. Cambiarla non converte denaro e non modifica i conti esistenti. Ogni movimento usa la valuta del proprio conto. La valuta dei totali convertiti si imposta separatamente.</value>
   </data>
   <data name="Help_DefaultCurrency_Example" xml:space="preserve">
-    <value>Hai conti in EUR e USD. Se scegli EUR qui, un nuovo conto parte in EUR, mentre quello in USD resta in USD.</value>
+    <value>Scegli EUR come valuta predefinita. Un conto nuovo parte con EUR selezionato, ma il conto in USD che avevi già e i suoi movimenti restano in USD.</value>
   </data>
   <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
     <value>Vale solo per le nuove voci. Conti e movimenti esistenti mantengono la propria valuta.</value>
@@ -3237,10 +3246,10 @@
     <value>Conto predefinito per i nuovi movimenti</value>
   </data>
   <data name="Help_DefaultAccount_Text" xml:space="preserve">
-    <value>L’inserimento rapido in Home, il widget e la scansione delle ricevute preselezionano questo conto. Puoi cambiarlo nel modulo del movimento. Puoi impostare come predefinito solo un conto per contanti, bancario o carta di credito. Senza un conto predefinito, ti verrà chiesto di sceglierne uno.</value>
+    <value>Scegli il conto che usi più spesso per le operazioni quotidiane. Inserimento rapido, widget e scansione delle ricevute lo preselezionano. Puoi cambiarlo prima di salvare il movimento. È soltanto una scelta iniziale: non sposta denaro e non cambia i movimenti precedenti. Senza conto predefinito, ne scegli uno ogni volta.</value>
   </data>
   <data name="Help_DefaultAccount_Example" xml:space="preserve">
-    <value>Con «Principale (EUR)» come conto predefinito, scegliere Spesa in Home preseleziona Principale. Se nel modulo scegli «Conto in dollari», il cambio vale solo per quel movimento.</value>
+    <value>Il conto corrente è predefinito, ma hai pagato il pranzo in contanti. Seleziona Contanti per quel movimento. Per il successivo, il conto predefinito resterà il conto corrente.</value>
   </data>
   <data name="Settings_ShowConverted" xml:space="preserve">
     <value>Mostra i totali convertiti</value>
@@ -3258,10 +3267,10 @@
     <value>Tassi potenzialmente datati</value>
   </data>
   <data name="Help_RateFreshness_Text" xml:space="preserve">
-    <value>Un totale convertito segnala «tassi potenzialmente datati» se usa un tasso più vecchio di questa soglia, inserito prima del mese attuale. È un promemoria per aggiornarlo, non una valutazione della sua correttezza.</value>
+    <value>Scegli quando ricevere un avviso per controllare un tasso di cambio. Il totale convertito viene segnalato se la data del tasso supera i giorni scelti ed è precedente al mese finanziario corrente. Conta la data del tasso, non il giorno in cui lo hai digitato. L’avviso non dimostra un errore e non aggiorna nulla. Scegliere «Mai» disattiva questo avviso sui tassi datati.</value>
   </data>
   <data name="Help_RateFreshness_Example" xml:space="preserve">
-    <value>Con una soglia di 30 giorni, il 15 settembre viene segnalato un tasso USD del 12 agosto, ma non uno del 2 settembre.</value>
+    <value>Con una soglia di 30 giorni, viene segnalato un tasso datato 45 giorni fa nel mese finanziario precedente. Un tasso di 7 giorni fa non viene segnalato.</value>
   </data>
   <data name="Entry_ChooseAccount" xml:space="preserve">
     <value>Scegli il conto per questo movimento.</value>
@@ -3339,10 +3348,10 @@
     <value>Utilizzabile per i pagamenti</value>
   </data>
   <data name="Help_UsableForPayments_Text" xml:space="preserve">
-    <value>Alcuni conti non sono destinati ai pagamenti quotidiani, ad esempio risparmi con preavviso di prelievo o denaro tenuto all’estero. Disattiva questa opzione per escludere il conto dalla previsione del saldo minimo. L’impostazione separata «Includi nei totali» non cambia. Sei tu a scegliere i conti utilizzabili.</value>
+    <value>Attivala per i conti il cui denaro vuoi considerare per i prossimi pagamenti. Disattivala per fondi da lasciare fuori dalla previsione, come un deposito vincolato. Il conto viene escluso dal saldo previsto per i pagamenti, ma non viene chiuso o bloccato. Anche la sua selezione separata per i totali abituali resta invariata.</value>
   </data>
   <data name="Help_UsableForPayments_Example" xml:space="preserve">
-    <value>Conto corrente da 1.250 EUR attivato e risparmio vincolato da 5.000 EUR disattivato: il saldo minimo previsto considera solo i 1.250 EUR.</value>
+    <value>Il conto quotidiano contiene 1.200 ed è utilizzabile. Un deposito di 5.000 è escluso. La previsione dei pagamenti parte da 1.200, non da 6.200.</value>
   </data>
   <data name="Account_Country" xml:space="preserve">
     <value>Paese (facoltativo)</value>
@@ -3387,10 +3396,13 @@
     <value>Tipi di obiettivo</value>
   </data>
   <data name="Help_GoalType_Text" xml:space="preserve">
-    <value>Un obiettivo di saldo segue il saldo di un conto: ogni versamento, trasferimento in entrata o prelievo cambia il progresso, senza riservare denaro. Un obiettivo di denaro accantonato assegna all’obiettivo una parte dei tuoi saldi: il denaro viene riservato, può essere contrassegnato come protetto e resta nel conto.</value>
+    <value>Scegli come misurare il progresso.
+Saldo del conto: segue il saldo registrato di un conto, senza riservare denaro.
+Denaro accantonato: assegna parte dei tuoi saldi all’obiettivo dentro Zanance, senza spostare denaro.
+Quantità posseduta: segue un peso o un numero di unità, non il prezzo. Un aumento del prezzo da solo non fa avanzare un obiettivo di quantità.</value>
   </data>
   <data name="Help_GoalType_Example" xml:space="preserve">
-    <value>«Portare il conto di risparmio a 5.000 EUR» è un obiettivo di saldo. «Vacanze: 800 EUR accantonati nel conto corrente» è un obiettivo di denaro accantonato.</value>
+    <value>Per un obiettivo di saldo di 5.000, avere 2.000 significa il 40%. Per un obiettivo di 10 g d’oro, possederne 4 g significa sempre il 40%, qualunque sia il prezzo.</value>
   </data>
   <data name="Goal_Account" xml:space="preserve">
     <value>Conto</value>
@@ -3420,10 +3432,10 @@
     <value>Quanto accantonare</value>
   </data>
   <data name="Help_ContributionMethod_Text" xml:space="preserve">
-    <value>Importo fisso: la stessa somma a ogni data. Quota delle entrate: una percentuale delle entrate del mese scorso, escludendo trasferimenti, rimborsi e denaro spostato dai risparmi. Riduzione delle spese: spendere meno in una categoria. Il budget cambia solo quando tocchi «Applica al budget».</value>
+    <value>Scegli come pianificare i contributi. L’importo fisso usa la stessa cifra a ogni data. La quota di reddito applica una percentuale alle entrate ammesse del mese precedente; trasferimenti e rimborsi non sono entrate. La riduzione delle spese prevede di spendere meno in una categoria. Il budget cambia solo quando applichi esplicitamente la riduzione. Nessuna opzione trasferisce o risparmia denaro al posto tuo.</value>
   </data>
   <data name="Help_ContributionMethod_Example" xml:space="preserve">
-    <value>Stipendio di 3.000 EUR e 500 EUR spostati dai risparmi: il 10% suggerisce 300 EUR, non 350 EUR.</value>
+    <value>Le entrate ammesse del mese scorso sono 3.000 e hai spostato 500 dai risparmi. Un contributo del 10% è 300, non 350: spostare il tuo denaro non crea una nuova entrata.</value>
   </data>
   <data name="Contribution_Fixed" xml:space="preserve">
     <value>Importo fisso</value>
@@ -3489,10 +3501,10 @@
     <value>Denaro protetto</value>
   </data>
   <data name="Help_GoalProtect_Text" xml:space="preserve">
-    <value>Il denaro accantonato per un obiettivo protetto, come un fondo di emergenza, viene escluso dal margine liberamente spendibile nelle previsioni. Resta sul conto e puoi comunque spenderlo. L’app avvisa solo se i tuoi piani potrebbero utilizzarlo.</value>
+    <value>Usala per il denaro che hai accantonato e non vuoi spendere, come un fondo di emergenza. La previsione esclude questa riserva dal margine rimasto per le spese e avvisa se i pagamenti previsti la userebbero. Conta solo la parte coperta dal denaro nei conti utilizzabili per i pagamenti. Il denaro resta nel conto: questa opzione non blocca prelievi né pagamenti bancari.</value>
   </data>
   <data name="Help_GoalProtect_Example" xml:space="preserve">
-    <value>Fondo di emergenza protetto di 1.000 EUR: se i piani lasciano 670 EUR intorno al 24 ottobre, l’app indica che verrebbero usati 330 EUR di denaro protetto.</value>
+    <value>Proteggi una riserva di 1.000 e il saldo previsto scende a 670. La previsione indica che useresti 330 della riserva, non che il saldo bancario sia −330.</value>
   </data>
   <data name="Goal_ChooseAccount" xml:space="preserve">
     <value>Scegli il conto da seguire per questo obiettivo.</value>
@@ -3928,37 +3940,37 @@
     <value>Peso o numero di pezzi</value>
   </data>
   <data name="Help_AssetDimension_Text" xml:space="preserve">
-    <value>Gioielli, granuli e lingotti di dimensioni variabili si registrano per peso. Monete e lingotti di dimensioni fisse si contano. Puoi indicare il peso per unità: viene mostrato come informazione aggiuntiva, mai come un secondo bene.</value>
+    <value>Scegli come misurare il bene. Usa il peso per grammi o chilogrammi e il conteggio per pezzi singoli, come monete identiche. Per i pezzi contati puoi indicare anche il peso di uno. Il peso totale descrive gli stessi pezzi, non un altro bene aggiuntivo. Dopo aver registrato un movimento di questo tipo, non puoi più passare da peso a conteggio o viceversa.</value>
   </data>
   <data name="Help_AssetDimension_Example" xml:space="preserve">
-    <value>«Oro 18 carati: 50 g» per peso; «Moneta Bahar Azadi: 3 monete (24,4 g)» per numero di pezzi.</value>
+    <value>Puoi registrare gioielli come 50 g oppure tre monete uguali per numero di pezzi. Se ogni moneta dell’esempio pesa 10 g, il peso totale è 30 g: non tre monete più altri 30 g.</value>
   </data>
   <data name="Help_Purity_Title" xml:space="preserve">
     <value>Purezza</value>
   </data>
   <data name="Help_Purity_Text" xml:space="preserve">
-    <value>Inserisci la purezza in carati (24 per l’oro puro) o il titolo in millesimi. Registra oro 18 carati e 24 carati come tipi distinti, perché contengono proporzioni diverse di oro puro. Se la purezza è nota, l’app stima il peso del metallo puro. Se non la inserisci, non ne presume una.</value>
+    <value>La purezza indica quanta parte del peso è metallo puro. Inserisci i carati su una scala di 24 oppure il titolo in millesimi. Mantieni purezze diverse come tipi di bene separati. Se non conosci la purezza, lascia vuoto il campo: l’app non stimerà il peso del metallo puro. Questo dato descrive la composizione, non il prezzo.</value>
   </data>
   <data name="Help_Purity_Example" xml:space="preserve">
-    <value>18 carati = 750/1000: 20 g di oro 18 carati contengono circa 15 g di oro puro.</value>
+    <value>Per oro a 18 carati, inserisci 18 o 750. Entrambi indicano una purezza del 75%. Un peso totale di 20 g contiene quindi circa 15 g di oro puro.</value>
   </data>
   <data name="Help_AssetEvents_Title" xml:space="preserve">
     <value>Tipi di variazione</value>
   </data>
   <data name="Help_AssetEvents_Text" xml:space="preserve">
-    <value>Un acquisto addebita denaro a un conto e una vendita lo accredita. In Zanance non sono spese o entrate. Beni già posseduti, regali, spostamenti, rimozioni e correzioni modificano solo la quantità. La quantità posseduta non può diventare negativa in nessuna data.</value>
+    <value>Scegli cosa è realmente successo al bene. Registrare un acquisto o una vendita cambia sia la quantità sia il saldo registrato del conto collegato. Zanance considera prezzo di acquisto e ricavo di vendita come movimenti patrimoniali, non come spese quotidiane o entrate; le commissioni sono spese. Beni già posseduti, doni, spostamenti e correzioni di quantità non muovono denaro nei conti. L’app non compra né vende al posto tuo.</value>
   </data>
   <data name="Help_AssetEvents_Example" xml:space="preserve">
-    <value>Acquisto di 10 g per 1.000 EUR più 20 EUR di commissione: il saldo del conto diminuisce di 1.020 EUR, di cui solo 20 EUR sono una spesa.</value>
+    <value>Registri l’acquisto di 10 g per 1.000 più 20 di commissione. Il saldo diminuisce di 1.020, la quantità aumenta di 10 g e solo la commissione di 20 conta come spesa.</value>
   </data>
   <data name="Help_HoldingPrices_Title" xml:space="preserve">
     <value>Prezzi e valore</value>
   </data>
   <data name="Help_HoldingPrices_Text" xml:space="preserve">
-    <value>Inserisci un prezzo per grammo o per unità, oppure il valore totale dei beni posseduti. Per ogni data, la valutazione usa il prezzo più recente disponibile a quella data. Un prezzo retrodatato può quindi cambiare le valutazioni storiche da quella data in poi, ma non le quantità registrate. Possono essere usati anche i prezzi d’acquisto, indicati come tali.</value>
+    <value>Inserisci un prezzo per grammo o pezzo, oppure il valore totale della quantità posseduta. Zanance stima così il valore senza cambiare quantità o saldi dei conti. Per una data usa l’ultimo prezzo datato quel giorno o prima, anche un prezzo di acquisto registrato quando applicabile. Un prezzo retrodatato può cambiare le valutazioni a partire da quella data.</value>
   </data>
   <data name="Help_HoldingPrices_Example" xml:space="preserve">
-    <value>50 EUR per g × 730 g = 36.500 EUR.</value>
+    <value>Per 10 g, un prezzo di esempio di 50 al grammo dà un valore di 500. Un prezzo di 55 datato domani darà 550 domani, senza cambiare i 500 di oggi né la quantità di 10 g.</value>
   </data>
   <data name="EntryKind_AssetPurchase" xml:space="preserve">
     <value>Acquisto di un bene</value>
@@ -4731,10 +4743,10 @@
     <value>Spese essenziali</value>
   </data>
   <data name="Help_Essential_Text" xml:space="preserve">
-    <value>Costi difficili da evitare, come affitto, alimentazione, energia o assicurazioni. Servono a stimare per quanto tempo il denaro utilizzabile potrebbe coprire le spese essenziali e a suggerire una stima delle spese quotidiane.</value>
+    <value>Segna le categorie che ritieni necessarie nella tua vita quotidiana, come casa, alimenti di base, energia o trasporti indispensabili. Zanance le usa per stimare per quanto tempo il denaro utilizzabile potrebbe coprire quei costi. Decidi tu cosa è essenziale per la tua situazione. L’etichetta non crea bollette, imposta limiti o impedisce altre spese.</value>
   </data>
   <data name="Help_Essential_Example" xml:space="preserve">
-    <value>Denaro utilizzabile: 6.000 EUR. Spese essenziali mensili: 1.450 / 1.500 / 1.620 → copertura di 4,0 mesi.</value>
+    <value>Con 6.000 utilizzabili e costi essenziali stimati di 1.500 al mese, la copertura è di circa quattro mesi senza nuove entrate. È una stima, non una garanzia.</value>
   </data>
   <data name="Settings_Essential" xml:space="preserve">
     <value>Spese quotidiane</value>
@@ -4770,10 +4782,10 @@
     <value>Spese quotidiane</value>
   </data>
   <data name="Help_EssentialEstimate_Text" xml:space="preserve">
-    <value>I piani potrebbero non includere tutte le spese quotidiane, come gli alimentari. Inserisci una stima per includere queste spese aggiuntive nella previsione del margine disponibile. Zanance può suggerire un importo basato sugli ultimi tre mesi. Scegli tu quale usare.</value>
+    <value>I piani possono includere affitto e bollette, ma non ogni acquisto quotidiano. Inserisci una stima di queste spese aggiuntive per includerle nella previsione del denaro rimasto dopo i pagamenti previsti. Scegli un importo giornaliero, settimanale o mensile; lasciarlo vuoto esclude la stima aggiuntiva. Non ricontare spese già comprese nei piani. Non viene creato alcun movimento di spesa.</value>
   </data>
   <data name="Help_EssentialEstimate_Example" xml:space="preserve">
-    <value>20 EUR al giorno per i 24 giorni prima del saldo minimo: vengono sottratti 480 EUR.</value>
+    <value>Una stima aggiuntiva di 20 al giorno riduce di 200 il saldo previsto tra dieci giorni. Il saldo attuale non cambia per il solo fatto di aver inserito la stima.</value>
   </data>
   <data name="Goal_Coverage" xml:space="preserve">
     <value>Copertura delle spese essenziali con il denaro utilizzabile: {0}</value>
@@ -4803,10 +4815,10 @@
     <value>Movimenti riepilogativi</value>
   </data>
   <data name="Help_Aggregated_Text" xml:space="preserve">
-    <value>Registra più acquisti di un intervallo come un unico importo, ad esempio tutti gli alimentari di settembre. Il totale conta come un normale movimento. Gli indicatori che richiedono le date precise segnalano che non sono note. Se aggiungi in seguito movimenti dettagliati per lo stesso conto, categoria e intervallo, Zanance chiede se sostituirne gli importi nel riepilogo.</value>
+    <value>Usa un movimento per il totale di più acquisti quando mancano i dettagli, indicando il periodo coperto. Il totale conta come spesa, ma le date precise dei singoli acquisti restano sconosciute. Se poi aggiungi acquisti dello stesso conto, categoria e periodo, collegali per ridurre l’importo residuo del movimento riepilogativo. Lasciare entrambi gli importi interi conterebbe la spesa due volte.</value>
   </data>
   <data name="Help_Aggregated_Example" xml:space="preserve">
-    <value>Alimentari di settembre: 412 EUR. Aggiungi in seguito sei ricevute per 395 EUR: nel movimento riepilogativo restano 17 EUR.</value>
+    <value>Registri 400 per gli alimentari del mese, poi aggiungi ricevute singole per 350. Collegandole, restano 50 nel movimento riepilogativo: il totale è ancora 400, non 750.</value>
   </data>
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>Righe comprese in un movimento riepilogativo, che verrebbero contate due volte: {0}. Dopo l’importazione, modifica il riepilogo o le righe.</value>
@@ -4884,10 +4896,10 @@
     <value>Al tuo ritmo</value>
   </data>
   <data name="Help_GoalTrend_Text" xml:space="preserve">
-    <value>Zanance stima il ritmo recente dalla mediana dei progressi mensili, su un massimo di sei mesi completi. Un mese molto al di sopra degli altri viene segnalato come possibile evento isolato. Servono almeno tre mesi completi per stimare il ritmo.</value>
+    <value>Stima quando potresti raggiungere l’obiettivo mantenendo il ritmo recente. Usa da tre a sei mesi finanziari completi, non il mese corrente ancora aperto. Il ritmo è la mediana: il valore centrale dopo aver ordinato i risultati, oppure la media dei due centrali. Gli aumenti insoliti sono segnalati come possibili eventi singoli, non eliminati. Il tuo piano di contributi resta separato e la data non è garantita.</value>
   </data>
   <data name="Help_GoalTrend_Example" xml:space="preserve">
-    <value>Progressi mensili di 200, 250, 230 e 900 danno una mediana di 240 al mese. Il valore 900 viene segnalato come possibile evento isolato.</value>
+    <value>I progressi mensili 200, 250, 230 e 900 diventano, in ordine, 200, 230, 250, 900. I due valori centrali danno un ritmo di 240 al mese. Il 900 insolito viene segnalato, non considerato un contributo mensile abituale.</value>
   </data>
   <data name="Report_R5" xml:space="preserve">
     <value>Patrimonio</value>
@@ -5050,7 +5062,7 @@
     <value>Copia di sicurezza prima del ripristino</value>
   </data>
   <data name="Help_SafetyCopy_Text" xml:space="preserve">
-    <value>Prima di sostituire i dati del profilo attuale, Zanance crea una copia di sicurezza sul dispositivo. La copia non è crittografata e resta nello spazio privato dell’app; vengono conservate solo quelle recenti. I backup locali creati da te sono crittografati se attivi la protezione con password. I backup nel cloud la richiedono sempre.</value>
+    <value>Prima che un ripristino sostituisca i dati del profilo attuale, Zanance crea una copia precauzionale su questo dispositivo. Conserva solo quelle recenti nello spazio privato dell’app; queste copie non sono cifrate. Non sostituiscono un backup protetto da password conservato altrove. Il ripristino sostituisce i dati senza unirli: crea prima un backup aggiornato se vuoi conservare i dati di oggi.</value>
   </data>
   <data name="HomeSection_Goals" xml:space="preserve">
     <value>Obiettivi</value>
@@ -5296,5 +5308,26 @@ Passaggi per riprodurre il problema:
   </data>
   <data name="Report_OneDay" xml:space="preserve">
     <value>1 giorno</value>
+  </data>
+  <data name="Help_OpeningUnknown_Example" xml:space="preserve">
+    <value>Sai di aver speso 20 oggi, ma non quanto avevi a inizio giornata. Registra la spesa e considera incompleto il saldo mostrato finché non lo confronti con quello reale.</value>
+  </data>
+  <data name="Help_Mode_Example" xml:space="preserve">
+    <value>Imposti limiti per categoria in Avanzata e poi torni a Semplice. I limiti restano attivi: cambiare modalità non azzera il budget.</value>
+  </data>
+  <data name="Help_AppLock_Example" xml:space="preserve">
+    <value>Dopo un minuto fuori da Zanance devi sbloccarla di nuovo per vedere i dati. Un file già esportato non è protetto da questo blocco.</value>
+  </data>
+  <data name="Help_AmountMode_Example" xml:space="preserve">
+    <value>Un affitto di 900 può essere fisso. Una riparazione che prevedi costi circa 80 può essere stimata. Se non hai ancora un preventivo, l’importo può restare sconosciuto.</value>
+  </data>
+  <data name="Help_BackupPassword_Example" xml:space="preserve">
+    <value>Copi un backup protetto su un telefono nuovo. Per ripristinarlo devi usare la password originale del backup, non il codice di sblocco del nuovo telefono.</value>
+  </data>
+  <data name="Help_GoalPriority_Example" xml:space="preserve">
+    <value>Un conto contiene 700. Hai assegnato 500 a un fondo di emergenza prioritario e 400 a un viaggio meno prioritario. Il fondo è coperto; per il viaggio sono coperti 200 e ne mancano 200.</value>
+  </data>
+  <data name="Help_SafetyCopy_Example" xml:space="preserve">
+    <value>Stai per ripristinare il backup della scorsa settimana. Prima crea un backup protetto dei dati di oggi e conservalo altrove. La copia precauzionale automatica da sola non basta se perdi questo dispositivo.</value>
   </data>
 </root>

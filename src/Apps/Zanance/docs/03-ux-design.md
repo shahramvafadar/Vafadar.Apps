@@ -187,6 +187,9 @@ lightened (`CategoryLookup.DisplayColor`).
   Margine disponibile, Backup / Copia di sicurezza, Patrimonio netto; no French spaces before ":", "?" and "!".
   Weekday phrases follow the weekday's gender ("la prima domenica") through `WeekdayGrammar`. As with French, the
   translation is not rewritten, and a short form is used only after a label was seen not to fit.
+* Help dialogs (D-60): the text explains what the setting changes and what it does not, then one example with neutral,
+  fictitious amounts; the "Example:" label is added by `HelpButton`, never written into `Help_*_Example`. Review all of
+  them with `Run-Snapshots.ps1 -Help` after a change.
 * Two buttons side by side (holding actions, change/skip an occurrence) use 8 px side padding instead of 16, so that
   longer translated labels fit at 360 px without a smaller font.
 * A button whose label had to be short keeps that label as its accessible name (voice control users say what they

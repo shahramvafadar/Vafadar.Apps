@@ -2856,10 +2856,10 @@
     <value>In Summen einbeziehen</value>
   </data>
   <data name="Help_IncludeInTotals_Text" xml:space="preserve">
-    <value>Legt fest, ob dieses Konto in Gesamtsummen berücksichtigt wird, die diese Auswahl verwenden. Der eigene Kontosaldo bleibt unverändert. Eine ausdrücklich gewählte Kontenauswahl in Berichten oder Budgets kann davon abweichen. Ob das Geld für Zahlungen verfügbar ist, legen Sie separat fest.</value>
+    <value>Aktivieren Sie diese Option, damit das Konto in die üblichen Gesamtsummen eingeht, etwa den Saldo auf der Startseite. Ohne diese Option bleibt das Konto sichtbar, wird dort aber nicht mitgerechnet. Haben Sie in einem Bericht oder Budget eigene Konten ausgewählt, gilt diese Auswahl. Der Kontostand und die Verfügbarkeit für Zahlungen ändern sich nicht.</value>
   </data>
   <data name="Help_IncludeInTotals_Example" xml:space="preserve">
-    <value>Ihr Girokonto hat 1.200, ein Urlaubs-Sparkonto 800. Sind beide einbezogen, zeigt die Startseite 2.000; ohne das Sparkonto 1.200.</value>
+    <value>Zwei Konten in derselben Währung haben 1.200 und 800. Mit beiden Konten beträgt die Summe 2.000. Ohne das zweite beträgt sie 1.200; auf dem zweiten Konto bleiben weiterhin 800.</value>
   </data>
   <data name="Account_IncludeInTotalsHint" xml:space="preserve">
     <value>Berücksichtigt dieses Konto in Gesamtsummen mit dieser Kontenauswahl.</value>
@@ -2868,172 +2868,181 @@
     <value>Kontotyp</value>
   </data>
   <data name="Help_AccountType_Text" xml:space="preserve">
-    <value>Der Typ bestimmt, wie das Konto angezeigt und gezählt wird. Bargeld, Girokonto, Sparkonto und Kreditkarte sind Geld für den Alltag. Ein Kredit ist Geld, das Sie schulden, verliehenes Geld schuldet Ihnen jemand, und ein Vermögenswert (etwa ein Auto oder Gold) hat einen Wert, den Sie selbst aktualisieren. Kredite, verliehenes Geld und Vermögenswerte stehen getrennt vom Geld, das Sie ausgeben können.</value>
+    <value>Wählen Sie den Typ passend zum Inhalt des Kontos. Bargeld, Giro- und Sparkonten erfassen Ihr Geld. Eine Debitkarte gehört zum Bankkonto; „Kreditkarte“ ist für Ausgaben, die Sie später zurückzahlen. Ein Kredit erfasst Ihre Schulden, verliehenes Geld Ihre Forderungen. Ein Vermögenswert erfasst einen geschätzten Wert, etwa den eines Autos. Forderungen und Sachwerte sind kein sofort verfügbares Geld.</value>
   </data>
   <data name="Help_AccountType_Example" xml:space="preserve">
-    <value>Eine Kreditkarte mit 300 Ausgaben zeigt −300. Ein Auto im Wert von 9.000 ist ein Vermögenswert und lässt Ihr verfügbares Geld nicht größer erscheinen.</value>
+    <value>Ein noch nicht ausgeglichener Kreditkartenkauf über 300 ergibt einen Kartensaldo von −300. Ein Auto mit einem geschätzten Wert von 9.000 ist ein Vermögenswert, kein Einkaufsguthaben.</value>
   </data>
   <data name="Help_OpeningBalance_Title" xml:space="preserve">
     <value>Anfangssaldo</value>
   </data>
   <data name="Help_OpeningBalance_Text" xml:space="preserve">
-    <value>Der Anfangssaldo ist der Kontostand zu Beginn des gewählten Tages, vor den Buchungen dieses Tages. Zanance berechnet daraus und aus Ihren erfassten Buchungen den angezeigten Saldo. Es wird kein Kontostand von Ihrer Bank abgerufen.</value>
+    <value>Geben Sie den Kontostand zu Beginn des gewählten Tages ein, vor den Buchungen dieses Tages. Gemeint ist Ihr Start der Erfassung in Zanance, nicht unbedingt die Eröffnung des Bankkontos. Von diesem Betrag aus berücksichtigt die App spätere Einnahmen und Ausgaben. Zählen Sie dieselbe Zahlung nicht im Anfangssaldo und anschließend noch einmal als Buchung.</value>
   </data>
   <data name="Help_OpeningBalance_Example" xml:space="preserve">
-    <value>Zu Beginn des heutigen Tages, vor allen heutigen Buchungen, betrug der Saldo 2.350. Tragen Sie 2.350 mit dem heutigen Datum als Anfangssaldo ein und erfassen Sie anschließend die heutigen Buchungen.</value>
+    <value>Zu Tagesbeginn waren 1.000 auf dem Konto. Danach haben Sie 50 ausgegeben. Erfassen Sie 1.000 als Anfangssaldo und 50 als Ausgabe; Zanance zeigt 950.</value>
   </data>
   <data name="Help_OpeningUnknown_Title" xml:space="preserve">
     <value>Anfangssaldo unbekannt</value>
   </data>
   <data name="Help_OpeningUnknown_Text" xml:space="preserve">
-    <value>Wählen Sie diese Option, wenn Sie den Anfangssaldo nicht kennen. Für die Berechnung wird vorläufig null verwendet; betroffene Summen werden als unvollständig gekennzeichnet. Sie können den Anfangssaldo später ergänzen oder den aktuellen Saldo abgleichen.</value>
+    <value>Wählen Sie diese Option, wenn Sie den Anfangssaldo nicht kennen. Sie können Buchungen erfassen, ohne einen Betrag zu schätzen. Zanance rechnet vorläufig mit null und kennzeichnet den Saldo als unvollständig. Das bedeutet nicht, dass das Konto tatsächlich leer war. Ergänzen Sie später den richtigen Anfangssaldo oder gleichen Sie den erfassten Saldo in den Kontodetails mit dem tatsächlichen ab.</value>
   </data>
   <data name="Help_ReportCurrency_Title" xml:space="preserve">
     <value>Bewertungswährung</value>
   </data>
   <data name="Help_ReportCurrency_Text" xml:space="preserve">
-    <value>Die Bewertungswährung wird für umgerechnete Gesamtsummen verwendet. Beträge in anderen Währungen werden mit Ihren erfassten Wechselkursen umgerechnet; das Kursdatum wird angezeigt. Die ursprünglichen Beträge je Währung bleiben unverändert. Fehlt ein benötigter Kurs, wird die umgerechnete Summe als unvollständig gekennzeichnet.</value>
+    <value>Wählen Sie die Währung, in der der gemeinsame Wert unterschiedlich geführter Konten angezeigt wird. Zanance rechnet mit Ihren eingetragenen Wechselkursen. Es wird kein Geld gewechselt; Kontowährungen und Buchungsbeträge bleiben unverändert. Fehlt ein benötigter Kurs, ist die umgerechnete Summe unvollständig. Die einzelnen Summen je Währung bleiben sichtbar.</value>
   </data>
   <data name="Help_ReportCurrency_Example" xml:space="preserve">
-    <value>Konten in EUR und USD, Bewertungswährung EUR: Die Startseite zeigt 2.000 EUR und 4.000 USD und darunter „≈ 5.680 EUR zu Kursen vom 12. Aug.“, sobald ein USD-Kurs erfasst ist.</value>
+    <value>Sie haben 100 EUR und 100 USD. Bei einem beispielhaften Kurs von 1 USD = 0,90 EUR beträgt der gemeinsame Wert 190 EUR. Auf den Konten bleiben 100 EUR und 100 USD.</value>
   </data>
   <data name="Help_MonthStartDay_Title" xml:space="preserve">
     <value>Finanzmonat</value>
   </data>
   <data name="Help_MonthStartDay_Text" xml:space="preserve">
-    <value>Für monatliche Auswertungen können Sie den Beginn des Finanzmonats selbst festlegen, etwa auf den Tag des Gehaltseingangs. Monatsbudgets, Startseite, Berichte und Buchungsfilter verwenden dann diesen Zeitraum. Wöchentliche Budgets und die Termine Ihrer Planungen bleiben davon unberührt.</value>
+    <value>Legen Sie fest, an welchem Tag Ihr Finanzmonat beginnt. Der erste Tag entspricht dem Kalendermonat; ein anderer Tag kann besser zu Ihrem Gehaltseingang passen. Monatsbudgets, Startseite, Berichte und monatliche Buchungsfilter verwenden diesen Zeitraum. Buchungsdaten, geplante Zahlungstermine und Wochenbudgets bleiben unverändert.</value>
   </data>
   <data name="Help_MonthStartDay_Example" xml:space="preserve">
-    <value>Ihr Gehalt kommt am 25. Beginnt der Monat am 25., reicht „September“ vom 25. September bis 24. Oktober.</value>
+    <value>Im gregorianischen Kalender läuft der September bei Starttag 25 vom 25. September bis zum 24. Oktober. Eine Rechnung mit Fälligkeit am 1. Oktober bleibt am 1. Oktober fällig.</value>
   </data>
   <data name="Help_Mode_Title" xml:space="preserve">
     <value>Einfach und Erweitert</value>
   </data>
   <data name="Help_Mode_Text" xml:space="preserve">
-    <value>Beide Ansichten verwenden dieselben Daten und Berechnungen. „Erweitert“ zeigt zusätzliche Optionen direkt an, etwa Kategorie-Limits, Kontenauswahl, Wochenbudgets und Vertragsangaben. Beim Wechsel zu „Einfach“ bleiben Daten und Einstellungen erhalten. Bereits verwendete Optionen werden an den relevanten Stellen zusammengefasst.</value>
+    <value>Wählen Sie, wie viele Optionen Sie sehen möchten. „Einfach“ stellt Alltagsaufgaben in den Vordergrund. „Erweitert“ zeigt zusätzliche Einstellungen für Budgets, Kontenauswahl und Verträge. Beide Ansichten nutzen dieselben Daten und Berechnungen. Beim Wechsel zurück bleiben Daten und bereits gesetzte Optionen erhalten; relevante erweiterte Einstellungen werden zusammengefasst.</value>
   </data>
   <data name="Help_AppLock_Title" xml:space="preserve">
     <value>App-Sperre</value>
   </data>
   <data name="Help_AppLock_Text" xml:space="preserve">
-    <value>Beim Öffnen und nach einer Abwesenheit von mindestens 30 Sekunden müssen Sie Zanance mit der Entsperrmethode Ihres Geräts entsperren, etwa per Fingerabdruck, Gesichtserkennung oder Geräte-PIN. Die App-Sperre schützt den Zugriff auf die App; sie ersetzt keine Datenverschlüsselung.</value>
+    <value>Mit dieser Option müssen Sie Zanance beim Öffnen und nach mindestens 30 Sekunden Abwesenheit entsperren. Dazu dient die Entsperrmethode Ihres Geräts, etwa Fingerabdruck, Gesichtserkennung oder Geräte-PIN. Die App-Sperre beschränkt den Zugriff auf die App; sie verschlüsselt nicht automatisch Ihre Finanzdateien. Das Sicherungspasswort ist davon unabhängig.</value>
   </data>
   <data name="Help_NotificationDetails_Title" xml:space="preserve">
     <value>Namen und Beträge in Benachrichtigungen</value>
   </data>
   <data name="Help_NotificationDetails_Text" xml:space="preserve">
-    <value>Erinnerungen enthalten standardmäßig nur allgemeine Hinweise. Aktivieren Sie diese Option, um Finanznamen und Beträge in Benachrichtigungen anzuzeigen. Je nach Geräteeinstellung können diese Angaben auch auf dem Sperrbildschirm erscheinen.</value>
+    <value>Aktivieren Sie diese Option, wenn Erinnerungen Zahlungsnamen und Beträge enthalten dürfen. Ohne sie erhalten Sie weiterhin allgemeine Erinnerungen, aber ohne diese Details. Ob Benachrichtigungen auf dem Sperrbildschirm erscheinen, bestimmen Ihre Geräteeinstellungen. Sind Details eingeschaltet, können andere Personen diese beim Blick auf die Benachrichtigung sehen.</value>
   </data>
   <data name="Help_NotificationDetails_Example" xml:space="preserve">
-    <value>Aus: „Heute ist eine Zahlung fällig.“ Ein: „Miete – 900,00 EUR heute.“</value>
+    <value>Ohne Details zeigt die Erinnerung weder Zahlungsnamen noch Betrag. Mit Details kann sie etwa die fällige Miete von 900 EUR nennen.</value>
   </data>
   <data name="Help_AmountMode_Title" xml:space="preserve">
     <value>Betrag der Planung</value>
   </data>
   <data name="Help_AmountMode_Text" xml:space="preserve">
-    <value>Fest: immer derselbe Betrag. Geschätzt: ungefähr dieser Betrag, etwa Strom; Prognosen zeigen ihn als Schätzung. Unbekannt: noch kein Betrag – Sie tragen ihn bei Fälligkeit ein, bis dahin sind Prognosen als unvollständig markiert.</value>
+    <value>Wählen Sie, wie sicher der geplante Betrag ist.
+Fest: Der Betrag steht fest und bleibt voraussichtlich gleich.
+Geschätzt: Sie tragen eine Schätzung ein; Prognosen kennzeichnen sie als ungefähr.
+Unbekannt: Der Betrag steht noch nicht fest. Prognosen bleiben unvollständig, statt null anzunehmen. Beim Erfassen der tatsächlichen Zahlung verwenden Sie den wirklich gezahlten oder erhaltenen Betrag.</value>
   </data>
   <data name="Help_WeekendRule_Title" xml:space="preserve">
     <value>Wochenenden und Feiertage</value>
   </data>
   <data name="Help_WeekendRule_Text" xml:space="preserve">
-    <value>Fällt ein Termin auf einen eingestellten Wochenendtag, verschiebt Zanance ihn auf den vorherigen oder nächsten Arbeitstag. Unterstützte Feiertage werden nur bei aktivierter Feiertagsoption berücksichtigt. Den tatsächlichen Zahlungstermin müssen Sie mit dem Zahlungspartner klären.</value>
+    <value>Legen Sie fest, was Zanance bei einem Termin an einem eingestellten Wochenendtag tun soll: Datum beibehalten, auf den vorherigen oder auf den nächsten Arbeitstag verschieben. Unterstützte Feiertage zählen nur bei aktivierter Feiertagsoption. Es ändert sich nur das Datum in Zanance, nicht ein Bankauftrag oder Ihre vertragliche Zahlungsfrist.</value>
   </data>
   <data name="Help_WeekendRule_Example" xml:space="preserve">
-    <value>Das Gehalt ist für Samstag, den 30., geplant. Mit „Arbeitstag davor“ setzt Zanance den Termin auf Freitag, den 29., sofern dieser nach den gewählten Regeln ein Arbeitstag ist.</value>
+    <value>Sind Samstag und Sonntag als Wochenendtage eingestellt, wird ein Sonntagstermin beim Verschieben auf den nächsten Arbeitstag zum Montag – sofern keine aktivierte Feiertagsregel auch den Montag ausschließt.</value>
   </data>
   <data name="Help_AutoPost_Title" xml:space="preserve">
     <value>Automatisch buchen</value>
   </data>
   <data name="Help_AutoPost_Text" xml:space="preserve">
-    <value>Wenn Sie Zanance am Fälligkeitstag oder später öffnen, wird die geplante Buchung automatisch erstellt und als ungeprüft markiert. Ohne diese Option bleibt der Termin unter „Planung“ offen, bis Sie ihn bestätigen. Jeder Termin wird nur einmal automatisch erfasst; eine zusätzlich manuell erfasste Buchung kann dennoch ein Duplikat erzeugen.</value>
+    <value>Bei einer Planung mit festem Betrag wird die Buchung erstellt, sobald Sie Zanance am Fälligkeitstag oder danach öffnen. Sie wird als ungeprüft markiert. Erfasst wird die geplante Zahlung: Die App prüft kein Bankkonto und führt keine Zahlung aus. Kontrollieren Sie Betrag und Datum. Erfassen Sie dieselbe Zahlung nicht zusätzlich von Hand.</value>
   </data>
   <data name="Help_AutoPost_Example" xml:space="preserve">
-    <value>Eine Miete von 900 ist am 1. fällig. Öffnen Sie Zanance am 2., erstellt die App die geplante Buchung und markiert sie als ungeprüft.</value>
+    <value>Sie planen 900 Miete zum Monatsersten. Beim Öffnen am Zweiten entsteht eine Ausgabe über 900 zur Prüfung. Die App überweist Ihrem Vermieter nichts.</value>
   </data>
   <data name="Help_PlanApplyFrom_Title" xml:space="preserve">
     <value>Änderung gilt ab</value>
   </data>
   <data name="Help_PlanApplyFrom_Text" xml:space="preserve">
-    <value>Eine Änderung kann für alle Termine oder erst ab einem gewählten Datum gelten. Frühere Termine behalten ihre bisherigen Beträge und Daten.</value>
+    <value>Wählen Sie das erste Datum, ab dem die neuen Einstellungen gelten sollen. Frühere Termine behalten ihre bisherigen Beträge und Daten. So ändern Sie regelmäßige Zahlungen, ohne vergangene Monate umzuschreiben. Geändert wird nur die Planung in Zanance, nicht Ihr Vertrag oder ein Zahlungsauftrag bei der Bank.</value>
   </data>
   <data name="Help_PlanApplyFrom_Example" xml:space="preserve">
-    <value>Die Miete steigt im März von 900 auf 950: ab 1. März anwenden, Januar und Februar bleiben bei 900.</value>
+    <value>Die Miete steigt im März von 900 auf 950. Lassen Sie die Änderung ab dem 1. März gelten: Januar und Februar bleiben bei 900, die Termine ab März verwenden 950.</value>
   </data>
   <data name="Help_Reimbursable_Title" xml:space="preserve">
     <value>Erstattung durch andere</value>
   </data>
   <data name="Help_Reimbursable_Text" xml:space="preserve">
-    <value>Markieren Sie eine Ausgabe, deren Erstattung Sie erwarten, etwa eine Dienstreise oder ein Essen für Freunde. Erhaltenes Geld erfassen Sie als Erstattung zur ursprünglichen Ausgabe, nicht als neue Einnahme. Dadurch verringern sich die Nettoausgaben. Offene Erstattungsbeträge finden Sie unter „Mir geschuldet“.</value>
+    <value>Nutzen Sie diese Option für eine von Ihnen bezahlte Ausgabe, die jemand ganz oder teilweise erstatten soll. Tragen Sie die Person und den erwarteten Betrag ein. Die Forderung bleibt offen, bis Sie den Geldeingang erfassen. Ordnen Sie ihn als Erstattung der ursprünglichen Ausgabe zu, nicht als neue Einnahme. So sinken Ihre Nettoausgaben richtig.</value>
   </data>
   <data name="Help_Reimbursable_Example" xml:space="preserve">
-    <value>Sie zahlen 120 für ein Teamessen, das Ihr Arbeitgeber erstattet. Markieren Sie die Ausgabe als erstattungsfähig. Wenn das Geld eingeht, erfassen Sie eine Erstattung von 120 zur ursprünglichen Ausgabe.</value>
+    <value>Sie bezahlen 60 für ein gemeinsames Essen; ein Freund schuldet Ihnen 20. Erfassen Sie 60 als Ausgabe und 20 als erwartete Erstattung. Nach Erfassung der Erstattung beträgt Ihr eigener Aufwand 40.</value>
   </data>
   <data name="Help_ForeignAmount_Title" xml:space="preserve">
     <value>In anderer Währung bezahlt</value>
   </data>
   <data name="Help_ForeignAmount_Text" xml:space="preserve">
-    <value>Behalten Sie den Originalbetrag, wenn Sie im Ausland oder online in einer anderen Währung bezahlt haben. Das Konto wird mit dem Betrag in seiner eigenen Währung belastet; der Originalbetrag steht bei der Buchung.</value>
+    <value>Nutzen Sie diese Angabe, wenn der Beleg eine andere Währung als das belastete Konto verwendet. Der Buchungsbetrag ist der tatsächlich abgebuchte Betrag in der Kontowährung. Betrag und Währung des Belegs speichern Sie zusätzlich als Originalbetrag. Das ist keine zweite Ausgabe und ersetzt nicht den von der Bank abgebuchten Betrag.</value>
   </data>
   <data name="Help_ForeignAmount_Example" xml:space="preserve">
-    <value>Ein Hotel kostet 150 USD, Ihre Karte wird mit 139,20 EUR belastet: Betrag 139,20 EUR, Original 150 USD.</value>
+    <value>Auf dem Beleg stehen 100 USD, vom Eurokonto wurden 92 EUR abgebucht. Erfassen Sie 92 EUR als Ausgabe und 100 USD als Originalbetrag, nicht als zusätzliche Ausgabe.</value>
   </data>
   <data name="Help_SpendingType_Title" xml:space="preserve">
     <value>Ausgabenart</value>
   </data>
   <data name="Help_SpendingType_Text" xml:space="preserve">
-    <value>Diese Zuordnung wird im Flex-Budget verwendet. „Fest“ steht für regelmäßige Monatskosten wie Miete. „Nicht monatlich“ umfasst etwa jährliche Versicherungsbeiträge; dafür wird ein rechnerischer Monatsanteil ausgewiesen. „Flexibel“ umfasst Alltagsausgaben mit einem gemeinsamen Limit.</value>
+    <value>Diese Zuordnung bestimmt, wie eine Kategorie im Flex-Budget behandelt wird.
+Fest: regelmäßige Monatskosten, etwa Miete.
+Nicht monatlich: seltener fällige Rechnungen, etwa eine Jahresversicherung; dafür wird ein Monatsanteil geplant.
+Flexibel: Alltagsausgaben innerhalb eines gemeinsamen Limits. Die Zuordnung löst keine Zahlung aus und legt kein Geld zurück.</value>
   </data>
   <data name="Help_SpendingType_Example" xml:space="preserve">
-    <value>Eine Kfz-Versicherung von 600 pro Jahr entspricht rechnerisch 50 pro Monat. Dieser Monatsanteil dient der Planung; es wird kein Geld automatisch zurückgelegt.</value>
+    <value>Eine Jahresversicherung über 600 ist nicht monatlich. Ihr rechnerischer Monatsanteil beträgt 50. Dadurch entstehen weder zwölf Zahlungen noch monatliche Rücklagen auf Ihrem Bankkonto.</value>
   </data>
   <data name="Help_BudgetMethod_Title" xml:space="preserve">
     <value>Budgetmethode</value>
   </data>
   <data name="Help_BudgetMethod_Text" xml:space="preserve">
-    <value>„Ausgabenlimits“: ein Höchstbetrag für den Budgetzeitraum und optional je Kategorie. „Umschläge“: Sie weisen vorhandenes Geld einzelnen Kategorien zu und sehen, wie viel noch nicht zugewiesen ist. „Flex“: Feste Kosten werden aus Ihren Planungen übernommen, nicht monatliche Kosten als Monatsanteile ausgewiesen. Ein gemeinsames Limit gilt für flexible Ausgaben. Umschläge und Flex sind nur für Monatsbudgets verfügbar.</value>
+    <value>Wählen Sie, wie Sie Ausgaben planen möchten.
+Ausgabenlimits: ein Höchstbetrag je Zeitraum und bei Bedarf je Kategorie.
+Umschläge: vorhandenes Geld auf Kategorien verteilen und den noch freien Rest sehen.
+Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betrachten; ein gemeinsames Limit für Alltagsausgaben. Umschläge und Flex sind monatliche Methoden. Keine Methode verschiebt Geld oder sperrt Bankzahlungen.</value>
   </data>
   <data name="Help_BudgetMethod_Example" xml:space="preserve">
-    <value>Im Flex-Budget sind 900 Miete als Planung erfasst. Für eine Jahresversicherung von 600 werden rechnerisch 50 pro Monat berücksichtigt. Ein flexibles Limit von 700 gilt für Lebensmittel, Restaurantbesuche und andere Alltagsausgaben.</value>
+    <value>Sie haben 1.000 und noch nichts für Ziele reserviert. Wenn Sie 600 auf Umschläge verteilen, bleiben 400 ohne Zuordnung. Die 600 sind für spätere Ausgaben eingeplant, noch nicht ausgegeben.</value>
   </data>
   <data name="Help_Rollover_Title" xml:space="preserve">
     <value>Budgetübertrag</value>
   </data>
   <data name="Help_Rollover_Text" xml:space="preserve">
-    <value>Legt fest, wie das vorherige Budget berücksichtigt wird. „Neu beginnen“: Das neue Limit bleibt unverändert. „Restbudget übertragen“: Nicht verbrauchtes Budget wird hinzugefügt. „Restbudget und Überschreitung übertragen“: Eine Überschreitung wird vom neuen Limit abgezogen. Es wird kein Geld übertragen.</value>
+    <value>Entscheiden Sie, was mit dem Restbudget passiert. Neu beginnen verwendet nur das neue Limit. Restbudget übertragen erhöht es um den ungenutzten Betrag. Werden auch Überschreitungen übertragen, mindern diese das nächste Limit. Die Berechnung folgt lückenlos aufeinanderfolgenden Budgets und endet an einer Lücke. Kontostand und für Ziele reserviertes Geld ändern sich dadurch nicht.</value>
   </data>
   <data name="Help_Rollover_Example" xml:space="preserve">
-    <value>Bei einem Grundlimit von 500 und Ausgaben von 450 erhöht „Restbudget übertragen“ das nächste Limit auf 550. Bei Ausgaben von 560 ergibt „Restbudget und Überschreitung übertragen“ ein nächstes Limit von 440.</value>
+    <value>Angenommen, das Grundlimit beträgt je Zeitraum 500. Nach Ausgaben von 450 erhöhen die übertragenen 50 das nächste Limit auf 550. Bei Ausgaben von 560 sinkt es auf 440, sofern auch Überschreitungen übertragen werden.</value>
   </data>
   <data name="Help_BudgetPeriod_Title" xml:space="preserve">
     <value>Budgetzeitraum</value>
   </data>
   <data name="Help_BudgetPeriod_Text" xml:space="preserve">
-    <value>Neben dem Monat können Sie pro Woche oder pro zwei Wochen budgetieren – etwa bei zweiwöchentlichem Gehalt oder für ein wöchentliches Lebensmittellimit. Jeder Zeitraum hat eigene Limits; das Monatsbudget bleibt getrennt. Umschläge und Flex sind Monatsmethoden.</value>
+    <value>Wählen Sie einen Monat, eine Woche oder 14 Tage als Budgetzeitraum. Wochen- und Zweiwochenbudgets arbeiten mit Ausgabenlimits; Umschläge und Flex sind nur monatlich verfügbar. Jeder Zeitraum hat ein eigenes Limit. Ein Wochenbudget teilt oder ersetzt das Monatsbudget nicht. Eine Ausgabe kann in beiden Ansichten erscheinen; addieren Sie deren Ausgabensummen nicht.</value>
   </data>
   <data name="Help_BudgetPeriod_Example" xml:space="preserve">
-    <value>Ein Wochenbudget kann beispielsweise von Montag bis Sonntag gelten und ein Lebensmittellimit von 120 haben. Die nächste Woche beginnt wieder mit 120. Ein Budgetübertrag kann das Limit erhöhen oder bei einer Überschreitung verringern.</value>
+    <value>Sie setzen für Lebensmittel ein Wochenlimit von 100 und ein separates Monatslimit von 400. Ein Einkauf über 20 beansprucht beide passenden Limits, bleibt aber eine einzige Ausgabe über 20.</value>
   </data>
   <data name="Help_FortnightStart_Title" xml:space="preserve">
     <value>Zweiwochenzeiträume</value>
   </data>
   <data name="Help_FortnightStart_Text" xml:space="preserve">
-    <value>Zweiwochenbudgets wiederholen sich ab diesem Tag alle 14 Tage. Wählen Sie einen Zahltag, damit jeder Zeitraum von Gehalt zu Gehalt reicht.</value>
+    <value>Wählen Sie den ersten Tag eines Zweiwochenbudgets. Jeder Zeitraum dauert genau 14 Tage; der nächste schließt direkt an. Bei zweiwöchentlichem Gehalt kann der Zahltag der Start sein. Das ist nicht dasselbe wie zwei Monatshälften: Die Zeiträume können über Monatsgrenzen hinweg laufen.</value>
   </data>
   <data name="Help_FortnightStart_Example" xml:space="preserve">
-    <value>Gehalt jeden zweiten Freitag, zuletzt am 18. September: Die Zeiträume laufen vom 18. September bis 1. Oktober, vom 2. bis 15. Oktober und so weiter.</value>
+    <value>Ab dem 1. September ergeben sich 1.–14. September, 15.–28. September und 29. September–12. Oktober. Jeder Zeitraum umfasst einschließlich Anfangs- und Endtag 14 Tage.</value>
   </data>
   <data name="Help_BackupPassword_Title" xml:space="preserve">
     <value>Sicherungspasswort</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>Bei aktiviertem Passwortschutz wird die Sicherungsdatei mit AES-256 verschlüsselt. Bewahren Sie das Passwort sicher auf: Sie benötigen es zur Wiederherstellung. Zanance speichert es nicht dauerhaft, und der Entwickler kann ein vergessenes Passwort nicht wiederherstellen.</value>
+    <value>Der Passwortschutz verschlüsselt die Sicherungsdatei. Zum Wiederherstellen benötigen Sie das Passwort, mit dem genau diese Datei erstellt wurde – auch auf einem anderen Gerät. Bewahren Sie es sicher auf: Der Entwickler kann es nicht wiederherstellen, und die Geräte-PIN ersetzt es nicht. Ohne Passwortschutz kann jeder, der die Datei erhält, ihren Inhalt lesen.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorität eines Ziels</value>
   </data>
   <data name="Help_GoalPriority_Text" xml:space="preserve">
-    <value>Reicht das zurückgelegte Geld nicht für alle Ziele, werden Ziele mit höherer Priorität zuerst gedeckt. Die Priorität ändert keinen Betrag; sie bestimmt nur die Reihenfolge, in der Fehlbeträge angezeigt werden.</value>
+    <value>Die Priorität ist wichtig, wenn Sie Zielen mehr Geld zugewiesen haben, als das Konto tatsächlich enthält. Zanance berücksichtigt zuerst Ziele mit höherer Priorität und zeigt die Unterdeckung bei niedrigeren Prioritäten. Dadurch kann sich deren angezeigter Fortschritt ändern. Es wird aber kein Geld verschoben und keine Zuweisung geändert.</value>
   </data>
   <data name="Onb_Tagline" xml:space="preserve">
     <value>Ihr Geld, klar geplant.</value>
@@ -3237,10 +3246,10 @@
     <value>Standardwährung für neue Daten</value>
   </data>
   <data name="Help_DefaultCurrency_Text" xml:space="preserve">
-    <value>Neue Konten, Ziele, Budgets und Wechselkurse beginnen in dieser Währung; Sie können sie jedes Mal ändern. Bestehende Konten und Buchungen behalten ihre Währung, und eine Buchung ist immer in der Währung ihres Kontos.</value>
+    <value>Diese Währung ist bei neuen Konten, Zielen, Budgets und Wechselkurseinträgen vorausgewählt. Im jeweiligen Formular können Sie eine andere wählen. Bestehende Konten und Geldbeträge werden dadurch nicht umgerechnet. Buchungen verwenden immer die Währung ihres Kontos. Die Währung für umgerechnete Gesamtsummen stellen Sie separat ein.</value>
   </data>
   <data name="Help_DefaultCurrency_Example" xml:space="preserve">
-    <value>Ihre Konten sind in EUR und USD. Mit EUR hier beginnt ein neues Konto in EUR; Ihr USD-Konto bleibt in USD.</value>
+    <value>Sie wählen EUR als Vorgabe. Bei einem neuen Konto ist EUR ausgewählt. Ein bereits vorhandenes USD-Konto und seine Buchungen bleiben in USD.</value>
   </data>
   <data name="Settings_DefaultCurrencyHint" xml:space="preserve">
     <value>Wird bei neuen Konten, Zielen, Budgets und Wechselkursen vorausgewählt. Bestehende Daten behalten ihre Währung.</value>
@@ -3255,10 +3264,10 @@
     <value>Standardkonto für neue Buchungen</value>
   </data>
   <data name="Help_DefaultAccount_Text" xml:space="preserve">
-    <value>Die Schnellerfassung auf der Startseite, das Widget und Belege verwenden dieses Konto. Das Formular zeigt es immer an, und Sie können für eine einzelne Buchung ein anderes wählen. Nur Bargeld-, Bank- und Kartenkonten können Standard sein; ohne Standard fragt das Formular nach dem Konto.</value>
+    <value>Wählen Sie das Konto, das Sie im Alltag am häufigsten nutzen. Schnellerfassung, Widget und Belegerfassung wählen es automatisch vor. Vor dem Speichern können Sie ein anderes Konto wählen. Diese Vorgabe verschiebt kein Geld und ändert keine früheren Buchungen. Ohne Standardkonto wählen Sie das Konto jedes Mal selbst.</value>
   </data>
   <data name="Help_DefaultAccount_Example" xml:space="preserve">
-    <value>Ist „Hauptkonto (EUR)“ als Standard festgelegt, wird es bei einer neuen Ausgabe auf der Startseite vorausgewählt. Wählen Sie im Formular „Dollarkonto“, wird nur diese Buchung diesem Konto zugeordnet.</value>
+    <value>Ihr Girokonto ist voreingestellt, das Mittagessen haben Sie aber bar bezahlt. Wählen Sie in dieser Buchung Bargeld. Für die nächste Buchung bleibt das Girokonto die Vorgabe.</value>
   </data>
   <data name="Settings_ShowConverted" xml:space="preserve">
     <value>Umgerechnete Summen anzeigen</value>
@@ -3276,10 +3285,10 @@
     <value>Veraltete Kurse</value>
   </data>
   <data name="Help_RateFreshness_Text" xml:space="preserve">
-    <value>Eine umgerechnete Summe zeigt „möglicherweise veraltet“, wenn ein verwendeter Kurs älter ist als diese Zeit und vor dem aktuellen Monat erfasst wurde. Das ist eine Erinnerung zum Aktualisieren, keine Aussage über die Genauigkeit.</value>
+    <value>Legen Sie fest, wann Zanance an die Prüfung eines Wechselkurses erinnern soll. Eine umgerechnete Summe wird markiert, wenn das Kursdatum mehr als die gewählte Zahl von Tagen zurückliegt und vor dem aktuellen Finanzmonat liegt. Entscheidend ist das Kursdatum, nicht der Tag der Eingabe. Die Warnung beweist keinen Fehler und aktualisiert nichts. „Nie“ schaltet diese Alterswarnung aus.</value>
   </data>
   <data name="Help_RateFreshness_Example" xml:space="preserve">
-    <value>30 Tage: Ein USD-Kurs vom 12. August wird am 15. September markiert, ein Kurs vom 2. September nicht.</value>
+    <value>Bei einer Grenze von 30 Tagen wird ein 45 Tage alter Kurs aus dem vorherigen Finanzmonat markiert. Ein Kurs von vor 7 Tagen wird nicht markiert.</value>
   </data>
   <data name="Entry_ChooseAccount" xml:space="preserve">
     <value>Wählen Sie das Konto für diese Buchung.</value>
@@ -3357,10 +3366,10 @@
     <value>Für Zahlungen verfügbar</value>
   </data>
   <data name="Help_UsableForPayments_Text" xml:space="preserve">
-    <value>Nicht jedes Konto soll für alltägliche Zahlungen verfügbar sein, etwa ein Sparkonto mit Kündigungsfrist. Deaktivieren Sie diese Option, um das Konto aus der entsprechenden Liquiditätsprognose auszuschließen. Die separate Einstellung „In Summen einbeziehen“ bleibt unverändert. Sie entscheiden, welche Konten verfügbar sind.</value>
+    <value>Aktivieren Sie diese Option für Konten, deren Geld Sie für kommende Zahlungen einplanen möchten. Deaktivieren Sie sie etwa bei einem gebundenen Sparguthaben, das außen vor bleiben soll. Das Konto wird dann in der Zahlungsprognose nicht mitgerechnet. Es wird weder geschlossen noch gesperrt; die separate Auswahl für Gesamtsummen bleibt unverändert.</value>
   </data>
   <data name="Help_UsableForPayments_Example" xml:space="preserve">
-    <value>Girokonto 1.250 EUR (an) und Festgeld 5.000 EUR (aus): Der niedrigste erwartete Kontostand betrachtet nur die 1.250 EUR.</value>
+    <value>Ihr nutzbares Girokonto enthält 1.200, ein nicht berücksichtigtes Sparguthaben 5.000. Die Zahlungsprognose beginnt mit 1.200, nicht mit 6.200.</value>
   </data>
   <data name="Account_Country" xml:space="preserve">
     <value>Land (optional)</value>
@@ -3405,10 +3414,13 @@
     <value>Arten von Zielen</value>
   </data>
   <data name="Help_GoalType_Text" xml:space="preserve">
-    <value>Ein Kontostand-Ziel folgt dem Stand eines Kontos: Jede Einzahlung, Umbuchung oder Abhebung ändert den Fortschritt, und es reserviert nichts. Zurückgelegtes Geld markiert einen Teil des Geldes auf Ihren Konten für das Ziel; dieses Geld ist reserviert, kann geschützt werden und bleibt auf dem Konto.</value>
+    <value>Wählen Sie, woran der Fortschritt gemessen wird.
+Kontosaldo: Der erfasste Stand eines Kontos zählt; nichts wird reserviert.
+Zurückgelegtes Geld: Sie weisen dem Ziel einen Teil Ihrer Kontosalden in Zanance zu, ohne Geld zu bewegen.
+Bestandsmenge: Gewicht oder Stückzahl zählt, nicht der Preis. Ein Preisanstieg allein bringt ein Mengenziel nicht voran.</value>
   </data>
   <data name="Help_GoalType_Example" xml:space="preserve">
-    <value>„Sparkonto auf 5.000 EUR“ ist ein Kontostand-Ziel. „Urlaub: 800 EUR auf dem Girokonto zurückgelegt“ ist zurückgelegtes Geld.</value>
+    <value>Beim Sparziel von 5.000 entsprechen 2.000 Kontoguthaben einem Fortschritt von 40 %. Beim Goldziel von 10 g entsprechen 4 g ebenfalls 40 %, unabhängig vom Goldpreis.</value>
   </data>
   <data name="Goal_Account" xml:space="preserve">
     <value>Konto</value>
@@ -3438,10 +3450,10 @@
     <value>Wie viel zurücklegen</value>
   </data>
   <data name="Help_ContributionMethod_Text" xml:space="preserve">
-    <value>Fester Betrag: an jedem Termin derselbe Betrag. Anteil am Einkommen: ein Prozentsatz des Einkommens im letzten Monat – nur echtes Einkommen zählt, nie Umbuchungen, Erstattungen oder Geld vom Sparkonto. Weniger ausgeben: in einer Kategorie sparen; das Budget ändert sich nur, wenn Sie „Ins Budget übernehmen“ tippen.</value>
+    <value>Planen Sie die Beiträge zu diesem Ziel. Ein fester Betrag ist an jedem Beitragstermin gleich. Ein Einkommensanteil nutzt einen Prozentsatz der berücksichtigten Einnahmen des Vormonats; Umbuchungen und Erstattungen sind keine Einnahmen. Eine Ausgabenkürzung plant weniger Ausgaben in einer Kategorie. Erst Ihre ausdrückliche Übernahme ändert das Budget. Keine Option überweist oder spart automatisch Geld.</value>
   </data>
   <data name="Help_ContributionMethod_Example" xml:space="preserve">
-    <value>Gehalt 3.000 EUR und 500 EUR vom Sparkonto: 10 % ergeben 300 EUR, nicht 350 EUR.</value>
+    <value>Im Vormonat wurden 3.000 an berücksichtigten Einnahmen erfasst und 500 vom Sparkonto umgebucht. Ein Anteil von 10 % ergibt 300, nicht 350: Eigenes Geld umzubuchen ist keine neue Einnahme.</value>
   </data>
   <data name="Contribution_Fixed" xml:space="preserve">
     <value>Fester Betrag</value>
@@ -3507,10 +3519,10 @@
     <value>Geschütztes Geld</value>
   </data>
   <data name="Help_GoalProtect_Text" xml:space="preserve">
-    <value>Für geschützte Ziele reserviertes Geld wird bei der Berechnung des prognostizierten Spielraums abgezogen, etwa eine Notreserve. Es bleibt auf dem Konto und kann weiterhin ausgegeben werden. Zanance weist darauf hin, wenn Ihre Planungen diese Reserve beanspruchen würden.</value>
+    <value>Nutzen Sie diese Option für zurückgelegtes Geld, das Sie nicht ausgeben möchten, etwa eine Notreserve. Die Prognose zählt diese Reserve nicht zum verbleibenden Spielraum und warnt, wenn geplante Ausgaben sie beanspruchen würden. Es zählt nur Geld, das auf für Zahlungen nutzbaren Konten vorhanden ist. Das Geld bleibt auf dem Konto; diese Einstellung sperrt keine Abhebungen oder Bankzahlungen.</value>
   </data>
   <data name="Help_GoalProtect_Example" xml:space="preserve">
-    <value>Notreserve 1.000 EUR geschützt: Bleiben laut Ihren Plänen um den 24. Okt. 670 EUR, sagt die App, dass sie 330 EUR des geschützten Geldes verwenden würden.</value>
+    <value>Sie schützen 1.000 als Reserve. Der prognostizierte Saldo sinkt auf 670. Das bedeutet, dass Ihre Planung 330 der Reserve beanspruchen würde – nicht, dass der Bankkontostand −330 beträgt.</value>
   </data>
   <data name="Goal_ChooseAccount" xml:space="preserve">
     <value>Wählen Sie das Konto, dessen Saldo für dieses Ziel zählt.</value>
@@ -3945,37 +3957,37 @@
     <value>Gewicht oder Stückzahl</value>
   </data>
   <data name="Help_AssetDimension_Text" xml:space="preserve">
-    <value>Schmuck, Granulat und Barren ohne feste Größe werden nach Gewicht geführt. Münzen und Barren fester Größe werden gezählt; ihr Gewicht kann je Einheit angegeben werden und wird dann nur angezeigt, nie als zweiter Bestand.</value>
+    <value>Wählen Sie die Maßeinheit des Bestands. Gewicht eignet sich für Gramm oder Kilogramm, Stückzahl für einzelne Gegenstände wie gleiche Münzen. Bei gezählten Stücken können Sie zusätzlich das Gewicht eines Stücks angeben. Das Gesamtgewicht beschreibt dann dieselben Stücke, keinen weiteren Bestand. Nach dem ersten Bestandsvorgang können Sie bei dieser Art nicht mehr zwischen Gewicht und Stückzahl wechseln.</value>
   </data>
   <data name="Help_AssetDimension_Example" xml:space="preserve">
-    <value>„Gold 18 Karat: 50 g“ nach Gewicht; „Bahar-Azadi-Münze: 3 Münzen (24,4 g)“ nach Stückzahl.</value>
+    <value>Schmuck kann als 50 g erfasst werden. Drei gleiche Münzen können Sie nach Stückzahl führen. Wiegt im Beispiel jede Münze 10 g, sind das insgesamt 30 g – nicht drei Münzen plus weitere 30 g.</value>
   </data>
   <data name="Help_Purity_Title" xml:space="preserve">
     <value>Reinheit</value>
   </data>
   <data name="Help_Purity_Text" xml:space="preserve">
-    <value>Geben Sie die Reinheit in Karat oder als Feingehalt in Tausendsteln an. In der Berechnung entsprechen 24 Karat reinem Metall. Gold mit 18 und 24 Karat wird als unterschiedliche Bestandsart geführt, weil sich der Feinmetallanteil bei gleichem Gesamtgewicht unterscheidet. Ist die Reinheit unbekannt, wird kein Feinmetallgehalt berechnet.</value>
+    <value>Die Reinheit gibt an, welcher Anteil des Gewichts aus reinem Metall besteht. Geben Sie Karat auf einer Skala bis 24 oder den Feingehalt in Tausendsteln ein. Unterschiedliche Reinheiten führen Sie als getrennte Bestandsarten. Lassen Sie das Feld leer, wenn Sie die Reinheit nicht kennen; die App schätzt dann keinen Feinmetallanteil. Gemeint ist die Zusammensetzung, nicht der Preis.</value>
   </data>
   <data name="Help_Purity_Example" xml:space="preserve">
-    <value>18 Karat = 750/1000: 20 g Gold mit 18 Karat enthalten etwa 15 g Feingold.</value>
+    <value>Bei 18-karätigem Gold geben Sie 18 oder 750 ein. Beides bedeutet 75 % Reinheit. In 20 g dieses Goldes stecken ungefähr 15 g reines Gold.</value>
   </data>
   <data name="Help_AssetEvents_Title" xml:space="preserve">
     <value>Arten von Änderungen</value>
   </data>
   <data name="Help_AssetEvents_Text" xml:space="preserve">
-    <value>Beim Erfassen eines Kaufs sinkt der Kontosaldo, beim Erfassen eines Verkaufs steigt er. In Zanance zählen Kaufpreis und Verkaufserlös nicht als Konsumausgabe oder Einnahme; Gebühren werden separat erfasst. Anfangsbestände, Geschenke, Verlagerungen, Abgänge und Mengenkorrekturen verändern nur die Bestandsdaten. Vorgänge dürfen keinen negativen Bestand verursachen.</value>
+    <value>Wählen Sie den tatsächlich erfolgten Bestandsvorgang. Ein erfasster Kauf oder Verkauf ändert Menge und erfassten Saldo des verknüpften Kontos. Zanance behandelt Kaufpreis und Verkaufserlös als Vermögensbewegungen, nicht als Alltagsausgaben oder Einnahmen; Gebühren sind Ausgaben. Vorhandene Bestände, Geschenke, Ortswechsel und Mengenkorrekturen bewegen kein Kontogeld. Die App handelt oder überweist nicht für Sie.</value>
   </data>
   <data name="Help_AssetEvents_Example" xml:space="preserve">
-    <value>10 g für 1.000 EUR plus 20 EUR Gebühr gekauft: Das Konto sinkt um 1.020 EUR, davon sind 20 EUR Ausgabe.</value>
+    <value>Sie erfassen den Kauf von 10 g für 1.000 plus 20 Gebühr. Der Kontosaldo sinkt um 1.020, der Bestand steigt um 10 g. Nur die Gebühr von 20 zählt als Ausgabe.</value>
   </data>
   <data name="Help_HoldingPrices_Title" xml:space="preserve">
     <value>Preise und Wert</value>
   </data>
   <data name="Help_HoldingPrices_Text" xml:space="preserve">
-    <value>Erfassen Sie einen Preis pro Gramm oder Einheit oder den Gesamtwert des Bestands. Für einen Stichtag wird der zuletzt für diesen oder einen früheren Tag erfasste Preis verwendet. Ein Preis mit einem späteren Datum verändert frühere Stichtagswerte nicht; die Menge bleibt unverändert. Auch Kaufpreise werden verwendet und entsprechend gekennzeichnet.</value>
+    <value>Tragen Sie einen Preis je Gramm oder Stück oder den Gesamtwert Ihrer vorhandenen Menge ein. Zanance schätzt damit den Bestandswert; Menge und Kontosalden bleiben unverändert. Für einen Stichtag gilt der letzte Preis mit diesem oder einem früheren Datum, gegebenenfalls auch ein erfasster Kaufpreis. Ein rückdatierter Preis kann Bewertungen ab diesem Datum verändern.</value>
   </data>
   <data name="Help_HoldingPrices_Example" xml:space="preserve">
-    <value>50 EUR pro g × 730 g = 36.500 EUR.</value>
+    <value>Für 10 g ergibt ein Beispielpreis von 50 je Gramm einen Wert von 500. Ein auf morgen datierter Preis von 55 ergibt morgen 550, ändert aber weder den heutigen Wert von 500 noch die Menge von 10 g.</value>
   </data>
   <data name="EntryKind_AssetPurchase" xml:space="preserve">
     <value>Bestandskauf</value>
@@ -4746,10 +4758,10 @@
     <value>Grundbedarf</value>
   </data>
   <data name="Help_Essential_Text" xml:space="preserve">
-    <value>Notwendige Ausgaben, auf die Sie kaum verzichten können, etwa Miete, Lebensmittel, Energie oder Versicherungen. Sie werden verwendet, um die finanzielle Reichweite zu schätzen und einen Vorschlag für Alltagsausgaben zu berechnen.</value>
+    <value>Markieren Sie Kategorien, die Sie für Ihren Alltag als notwendig ansehen, etwa Wohnen, Grundnahrungsmittel, Energie oder notwendige Fahrten. Daraus schätzt Zanance, wie lange Ihr verfügbares Geld diese Kosten decken könnte. Sie entscheiden, was in Ihrer Situation notwendig ist. Die Markierung erstellt keine Rechnung, setzt kein Budgetlimit und verhindert keine anderen Ausgaben.</value>
   </data>
   <data name="Help_Essential_Example" xml:space="preserve">
-    <value>Bei 6.000 EUR verfügbarem Geld und notwendigen Monatsausgaben von 1.450, 1.500 und 1.620 EUR beträgt der Median 1.500 EUR. Ohne zusätzliche Monatsanteile ergibt das eine geschätzte Reichweite von 4 Monaten.</value>
+    <value>Bei 6.000 verfügbarem Geld und geschätzten notwendigen Kosten von 1.500 pro Monat reicht es ohne neue Einnahmen ungefähr vier Monate. Das ist eine Schätzung, keine Garantie.</value>
   </data>
   <data name="Settings_Essential" xml:space="preserve">
     <value>Alltagsausgaben</value>
@@ -4785,10 +4797,10 @@
     <value>Alltagsausgaben</value>
   </data>
   <data name="Help_EssentialEstimate_Text" xml:space="preserve">
-    <value>Nicht geplante Alltagsausgaben, etwa für Lebensmittel, werden beim Spielraum nur berücksichtigt, wenn Sie hier eine Schätzung hinterlegen. Zanance kann anhand der letzten drei Monate einen Wert vorschlagen. Sie entscheiden, ob Sie diesen übernehmen.</value>
+    <value>Ihre Planungen enthalten vielleicht Miete und Rechnungen, aber nicht jeden Einkauf. Hinterlegen Sie für diese zusätzlichen Alltagsausgaben eine Schätzung, damit die Prognose sie beim verbleibenden Geld berücksichtigt. Wählen Sie einen Tages-, Wochen- oder Monatsbetrag; leer bedeutet, dass diese Zusatzschätzung entfällt. Bereits geplante Ausgaben nicht noch einmal einrechnen. Es entsteht keine Ausgabenbuchung.</value>
   </data>
   <data name="Help_EssentialEstimate_Example" xml:space="preserve">
-    <value>Bei 20 EUR pro Tag und 24 Tagen bis zum niedrigsten Saldo werden insgesamt 480 EUR für Alltagsausgaben abgezogen.</value>
+    <value>Eine zusätzliche Tagesschätzung von 20 mindert den prognostizierten Saldo über die nächsten zehn Tage um 200. Ihr heutiger Kontostand ändert sich durch die Eingabe nicht.</value>
   </data>
   <data name="Goal_Coverage" xml:space="preserve">
     <value>Grundkosten durch verfügbares Geld gedeckt: {0}</value>
@@ -4818,10 +4830,10 @@
     <value>Sammelbuchungen</value>
   </data>
   <data name="Help_Aggregated_Text" xml:space="preserve">
-    <value>Fassen Sie mehrere Käufe eines Zeitraums in einer Buchung zusammen, etwa alle Lebensmitteleinkäufe im September. Der Betrag wird berücksichtigt, aber die einzelnen Kaufdaten sind unbekannt. Auswertungen, die genaue Tage benötigen, weisen darauf hin. Erfassen Sie später passende Einzelbuchungen für dasselbe Konto, dieselbe Kategorie und denselben Zeitraum, können diese mit der Sammelbuchung verknüpft und von ihrem Restbetrag abgezogen werden.</value>
+    <value>Fassen Sie mehrere Käufe in einer Buchung zusammen, wenn die Einzelangaben fehlen, und wählen Sie den Zeitraum. Der Gesamtbetrag zählt als Ausgabe, die genauen Kaufdaten bleiben unbekannt. Ergänzen Sie später passende Einzelkäufe für dasselbe Konto, dieselbe Kategorie und denselben Zeitraum, verknüpfen Sie diese mit der Sammelbuchung. Deren Restbetrag sinkt entsprechend; beide vollständig stehenzulassen würde doppelt zählen.</value>
   </data>
   <data name="Help_Aggregated_Example" xml:space="preserve">
-    <value>Sie erfassen für Lebensmittel im September eine Sammelbuchung über 412 EUR. Später ergänzen und verknüpfen Sie sechs Einzelbuchungen über insgesamt 395 EUR. In der Sammelbuchung verbleiben 17 EUR.</value>
+    <value>Sie erfassen 400 für die Lebensmitteleinkäufe des Monats. Später ergänzen Sie Einzelbelege über insgesamt 350. Nach dem Verknüpfen bleiben 50 in der Sammelbuchung: insgesamt weiterhin 400 statt 750.</value>
   </data>
   <data name="Import_AggregateOverlap" xml:space="preserve">
     <value>Zeilen innerhalb einer Sammelbuchung (zählen doppelt): {0}. Bearbeiten Sie nach dem Import die Sammelbuchung oder die Zeilen.</value>
@@ -4899,10 +4911,10 @@
     <value>In Ihrem Tempo</value>
   </data>
   <data name="Help_GoalTrend_Text" xml:space="preserve">
-    <value>Zanance berechnet den Median Ihres monatlichen Fortschritts aus bis zu sechs vollständigen Monaten. Ein ungewöhnlich hoher Monatswert wird als einmaliger Zuwachs gekennzeichnet. Für die Berechnung werden mindestens drei vollständige Monate benötigt.</value>
+    <value>Die Schätzung zeigt, wann Sie das Ziel bei Ihrem bisherigen Tempo erreichen könnten. Sie nutzt drei bis sechs vollständige Finanzmonate, nicht den laufenden Monat. Das Tempo ist der Median: der mittlere Monatswert nach dem Sortieren beziehungsweise der Mittelwert der beiden mittleren Werte. Ungewöhnlich hohe Zuwächse werden als möglicherweise einmalig markiert, nicht gelöscht. Ihr eigener Beitragsplan bleibt getrennt; der Termin ist nicht garantiert.</value>
   </data>
   <data name="Help_GoalTrend_Example" xml:space="preserve">
-    <value>Bei Monatswerten von 200, 250, 230 und 900 beträgt der Median 240. Der ungewöhnlich hohe Wert 900 wird als einmaliger Zuwachs markiert.</value>
+    <value>Die Monatsfortschritte 200, 250, 230 und 900 ergeben sortiert 200, 230, 250, 900. Die mittleren Werte ergeben 240 pro Monat. Die auffälligen 900 werden markiert, nicht als normaler Monatsbeitrag angenommen.</value>
   </data>
   <data name="Report_R5" xml:space="preserve">
     <value>Vermögensverlauf</value>
@@ -5064,7 +5076,7 @@
     <value>Sicherheitskopie vor einer Wiederherstellung</value>
   </data>
   <data name="Help_SafetyCopy_Text" xml:space="preserve">
-    <value>Vor dem Ersetzen der Daten des aktuellen Profils erstellt Zanance eine Sicherheitskopie auf diesem Gerät. Diese Kopie ist nicht verschlüsselt und liegt im privaten Speicher der App; nur die neuesten Sicherheitskopien werden aufbewahrt. Selbst erstellte lokale Sicherungen sind verschlüsselt, wenn der Passwortschutz aktiviert ist. Für Cloud-Sicherungen ist der Passwortschutz erforderlich.</value>
+    <value>Bevor eine Wiederherstellung die Daten des aktuellen Profils ersetzt, erstellt Zanance auf diesem Gerät eine Sicherheitskopie. Nur die neuesten bleiben im privaten App-Speicher; diese Sicherheitskopien sind nicht verschlüsselt. Sie ersetzen keine passwortgeschützte Sicherung an einem anderen Ort. Eine Wiederherstellung ersetzt Daten, statt sie zusammenzuführen. Sichern Sie den aktuellen Stand deshalb vorher selbst, wenn Sie ihn behalten möchten.</value>
   </data>
   <data name="HomeSection_Goals" xml:space="preserve">
     <value>Ziele</value>
@@ -5307,5 +5319,26 @@ Schritte zum Nachstellen des Problems:
   </data>
   <data name="Report_OneDay" xml:space="preserve">
     <value>1 Tag</value>
+  </data>
+  <data name="Help_OpeningUnknown_Example" xml:space="preserve">
+    <value>Sie wissen, dass Sie heute 20 ausgegeben haben, kennen aber den Anfangssaldo nicht. Erfassen Sie die Ausgabe. Verlassen Sie sich erst nach dem Abgleich mit Ihrem Konto auf den angezeigten Saldo.</value>
+  </data>
+  <data name="Help_Mode_Example" xml:space="preserve">
+    <value>Sie legen in „Erweitert“ Kategorie-Limits fest und wechseln zurück zu „Einfach“. Die Limits gelten weiterhin; Ihr Budget wird nicht zurückgesetzt.</value>
+  </data>
+  <data name="Help_AppLock_Example" xml:space="preserve">
+    <value>Nach einer Minute außerhalb der App müssen Sie Zanance erneut entsperren. Eine bereits exportierte Datei wird durch diese Sperre nicht geschützt.</value>
+  </data>
+  <data name="Help_AmountMode_Example" xml:space="preserve">
+    <value>Eine Miete von 900 kann fest sein. Eine Reparatur für voraussichtlich etwa 80 ist geschätzt. Ohne Kostenschätzung bleibt der Reparaturbetrag unbekannt.</value>
+  </data>
+  <data name="Help_BackupPassword_Example" xml:space="preserve">
+    <value>Sie kopieren eine geschützte Sicherung auf ein neues Handy. Zur Wiederherstellung benötigen Sie das ursprüngliche Sicherungspasswort, nicht den Entsperrcode des neuen Handys.</value>
+  </data>
+  <data name="Help_GoalPriority_Example" xml:space="preserve">
+    <value>Ein Konto enthält 700. Davon haben Sie 500 für die wichtige Notreserve und 400 für eine weniger wichtige Reise vorgesehen. Die Notreserve ist voll gedeckt; für die Reise sind 200 gedeckt und 200 fehlen.</value>
+  </data>
+  <data name="Help_SafetyCopy_Example" xml:space="preserve">
+    <value>Sie möchten die Sicherung der letzten Woche wiederherstellen. Erstellen Sie zunächst eine geschützte Sicherung des heutigen Stands und bewahren Sie sie anderswo auf. Die automatische Sicherheitskopie allein hilft nicht beim Verlust dieses Geräts.</value>
   </data>
 </root>

@@ -250,6 +250,15 @@ internal static class DebugSnapshots
         foreach (var language in languages)
         {
             await SetLanguageAsync(app, localization, language);
+#if WINDOWS
+            // VAFADAR_SNAPSHOT_HELP=1 opens every "?" help (Help_{Topic}_Title) instead of the screens and saves the window
+            // with the dialog as <language>-help-<topic>-popup1.png, to review the texts at the chosen size and theme.
+            if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_HELP") == "1")
+            {
+                await CaptureHelpAsync(app, folder, language);
+                continue;
+            }
+#endif
             // VAFADAR_SNAPSHOT_ONLY=report,holding shoots only the screens whose name starts with one of the prefixes.
             var only = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY")?.Split(',', StringSplitOptions.RemoveEmptyEntries);
             // A filter that matches nothing (e.g. "home budget", a list joined with spaces) must not end as an empty run.
@@ -635,6 +644,37 @@ internal static class DebugSnapshots
                     }
                 }
             }
+        }
+    }
+
+    // Opens the help of every topic that has a title, saves the window with the open dialog and closes the dialog again.
+    private static async Task CaptureHelpAsync(App app, string folder, string language)
+    {
+        var topics = Resources.Strings.AppStrings.ResourceManager
+            .GetResourceSet(System.Globalization.CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: true)!
+            .Cast<System.Collections.DictionaryEntry>()
+            .Select(e => (string)e.Key)
+            .Where(k => k.StartsWith("Help_", StringComparison.Ordinal) && k.EndsWith("_Title", StringComparison.Ordinal))
+            .Select(k => k["Help_".Length..^"_Title".Length])
+            .Order(StringComparer.Ordinal);
+        foreach (var topic in topics)
+        {
+            var shown = Vafadar.Maui.Controls.HelpButton.ShowAsync(topic);
+            await Task.Delay(700);
+            await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, $"{language}-help-{topic}.png"));
+            if (app.Windows[0].Handler?.PlatformView is Microsoft.UI.Xaml.Window { Content.XamlRoot: { } root })
+            {
+                foreach (var popup in Microsoft.UI.Xaml.Media.VisualTreeHelper.GetOpenPopupsForXamlRoot(root))
+                {
+                    if (popup.Child is Microsoft.UI.Xaml.Controls.ContentDialog dialog)
+                    {
+                        dialog.Hide();
+                    }
+                }
+            }
+
+            await shown;
+            await Task.Delay(200);
         }
     }
 
