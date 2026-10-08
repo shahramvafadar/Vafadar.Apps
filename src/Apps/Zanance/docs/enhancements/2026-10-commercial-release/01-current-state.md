@@ -6,6 +6,8 @@ missing), **Partial**, **Missing**, **Blocked**, **Deferred by owner**. A class,
 evidence; each row names the implementation, the tests and the UI path. Backlog ids refer to
 [04-backlog.md](04-backlog.md).
 
+Maintenance update 2026-10-08 (D-62/D-63): optional backup protection and first-run restore are implemented. The app now has a device-wide four-digit PIN with 20 verifier/attempt/recovery tests and Windows UI checks, and an Android foreground screenshot choice. Android backup rules exclude only device-bound SecureStorage ciphertext; plaintext database backup and database encryption remain open. Historical rows below describe the 2026-10-07 audit and must not be used as current evidence for those changed items.
+
 ## 1. Product capabilities
 
 All capabilities below are open to every user today. There is **no plan, quota, entitlement, purchase or paywall code**

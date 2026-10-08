@@ -3198,7 +3198,7 @@
     <value>برای مدیریت محلی امور مالی در «Zanance» به حساب کاربری آنلاین نیاز ندارید و برنامه تبلیغ نمایش نمی‌دهد. داده‌های مالی روی دستگاه شما نگهداری می‌شوند. برای پشتیبان‌گیری ابری، باید فضای ابری خود را متصل کنید؛ ایجاد و اشتراک‌گذاری نسخه‌ها با انتخاب شما انجام می‌شود.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
-    <value>نمایش متن مجوزها</value>
+    <value>اطلاعیه‌های کتابخانه‌های ثالث</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
@@ -5340,5 +5340,92 @@
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>مجوزهای متن‌باز</value>
+  </data>
+  <data name="Pin_Setting" xml:space="preserve">
+    <value>رمز ورود برنامه</value>
+  </data>
+  <data name="Pin_Enabled" xml:space="preserve">
+    <value>رمز چهاررقمی روی این دستگاه فعال است.</value>
+  </data>
+  <data name="Pin_Disabled" xml:space="preserve">
+    <value>رمز ورود برنامه تنظیم نشده است.</value>
+  </data>
+  <data name="Pin_Manage" xml:space="preserve">
+    <value>تنظیم یا تغییر رمز ورود</value>
+  </data>
+  <data name="Pin_Current" xml:space="preserve">
+    <value>رمز فعلی</value>
+  </data>
+  <data name="Pin_New" xml:space="preserve">
+    <value>رمز چهاررقمی جدید</value>
+  </data>
+  <data name="Pin_Confirm" xml:space="preserve">
+    <value>تکرار رمز جدید</value>
+  </data>
+  <data name="Pin_Remove" xml:space="preserve">
+    <value>حذف رمز ورود برنامه</value>
+  </data>
+  <data name="Pin_SetupHint" xml:space="preserve">
+    <value>یک رمز چهاررقمی انتخاب کنید. این رمز از قفل دستگاه و رمز بکاپ جداست و برای همهٔ پروفایل‌های این دستگاه اعمال می‌شود.</value>
+  </data>
+  <data name="Pin_RecoveryHint" xml:space="preserve">
+    <value>رمز را به خاطر بسپارید و بکاپ داشته باشید. اگر آن را فراموش کنید، با تأیید قفل دستگاه می‌توانید آن را بازنشانی کنید. بدون قفل دستگاه، بازیابی رمز در برنامه ممکن نیست.</value>
+  </data>
+  <data name="Pin_EnterHint" xml:space="preserve">
+    <value>رمز چهاررقمی ورود برنامه را وارد کنید.</value>
+  </data>
+  <data name="Pin_FourDigits" xml:space="preserve">
+    <value>دقیقاً چهار رقم وارد کنید.</value>
+  </data>
+  <data name="Pin_Mismatch" xml:space="preserve">
+    <value>دو رمز جدید یکسان نیستند.</value>
+  </data>
+  <data name="Pin_Incorrect" xml:space="preserve">
+    <value>رمز اشتباه است. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Pin_Wait" xml:space="preserve">
+    <value>تعداد تلاش‌ها زیاد است. پس از {0} ثانیه دوباره تلاش کنید.</value>
+  </data>
+  <data name="Pin_Unavailable" xml:space="preserve">
+    <value>خواندن یا ذخیرهٔ امن رمز ممکن نشد. دسترسی قفل می‌ماند. دوباره تلاش کنید یا از بازیابی با قفل دستگاه استفاده کنید.</value>
+  </data>
+  <data name="Pin_Forgot" xml:space="preserve">
+    <value>رمز را فراموش کرده‌اید؟</value>
+  </data>
+  <data name="Pin_ResetReason" xml:space="preserve">
+    <value>برای بازنشانی رمز Zanance، قفل دستگاه را تأیید کنید.</value>
+  </data>
+  <data name="Pin_ResetConfirm" xml:space="preserve">
+    <value>رمز ورود برنامه حذف شود؟ اطلاعات مالی حفظ می‌شود. می‌توانید در تنظیمات رمز جدیدی انتخاب کنید.</value>
+  </data>
+  <data name="Pin_NoRecovery" xml:space="preserve">
+    <value>بازیابی با قفل دستگاه در دسترس نیست. رمز ورود برنامه فعال می‌ماند.</value>
+  </data>
+  <data name="Screen_Block" xml:space="preserve">
+    <value>جلوگیری از اسکرین‌شات در Android</value>
+  </data>
+  <data name="Screen_Hint" xml:space="preserve">
+    <value>در Android برای گرفتن اسکرین‌شات، این گزینه را خاموش کنید. پیش‌نمایش برنامه‌های اخیر همچنان پنهان می‌ماند. در iOS و Windows اسکرین‌شات مسدود نمی‌شود.</value>
+  </data>
+  <data name="Help_AppPin_Title" xml:space="preserve">
+    <value>رمز ورود برنامه</value>
+  </data>
+  <data name="Help_AppPin_Text" xml:space="preserve">
+    <value>رمز چهاررقمی اختیاری، ورود به Zanance را در این دستگاه در هر اجرای تازه و پس از ۳۰ ثانیه دوربودن محافظت می‌کند. تغییر یا حذف آن به رمز فعلی نیاز دارد. پنج تلاش اشتباه، تأخیر یک‌دقیقه‌ای ایجاد می‌کند؛ خطاهای بعدی آن را تا پانزده دقیقه افزایش می‌دهند، حتی پس از اجرای دوباره. فقط اثر امن رمز در فضای محافظت‌شدهٔ دستگاه ذخیره می‌شود و در بکاپ قرار نمی‌گیرد. این رمز پایگاه داده را رمزگذاری نمی‌کند. بازیابی با قفل دستگاه نیازمند تأیید موفق دستگاه است؛ لغو یا نبود امکان تأیید، قفل برنامه را باز نمی‌کند.</value>
+  </data>
+  <data name="Help_AppPin_Example" xml:space="preserve">
+    <value>پیش از دادن گوشی بازشده به دیگری، رمز ورود را تنظیم کنید. بکاپ داشته باشید و رمز را به خاطر بسپارید؛ در صورت نیاز با قفل دستگاه آن را بازنشانی کنید.</value>
+  </data>
+  <data name="Help_Screenshots_Title" xml:space="preserve">
+    <value>اسکرین‌شات و پیش‌نمایش</value>
+  </data>
+  <data name="Help_Screenshots_Text" xml:space="preserve">
+    <value>در Android اسکرین‌شات به‌طور پیش‌فرض مسدود است. برای ذخیره یا اشتراک تصویر، این تنظیم را خاموش کنید؛ تصویر ممکن است اطلاعات مالی شما را داشته باشد. انتخاب برای همهٔ پروفایل‌های این دستگاه است و در بکاپ ذخیره نمی‌شود. هنگام رفتن برنامه به پس‌زمینه، محافظت همیشه دوباره فعال می‌شود تا پیش‌نمایش برنامه‌های اخیر پنهان بماند. پوشش حریم خصوصی iOS حفظ می‌شود؛ iOS و Windows مانع اسکرین‌شات نمی‌شوند.</value>
+  </data>
+  <data name="Help_Screenshots_Example" xml:space="preserve">
+    <value>برای اشتراک یک نمودار، جلوگیری از اسکرین‌شات را خاموش و پس از آن دوباره فعال کنید. پیش از اشتراک، تصویر را بررسی کنید.</value>
+  </data>
+  <data name="About_Rights" xml:space="preserve">
+    <value>برنامهٔ Zanance اختصاصی است. © Shahram Vafadar. تمام حقوق محفوظ است. اطلاعیه‌های کتابخانه‌های ثالث، حقی برای استفاده از سورس Zanance ایجاد نمی‌کنند.</value>
   </data>
 </root>

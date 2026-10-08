@@ -6,6 +6,17 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added – Privacy controls (2026-10-08, D-63)
+
+- Optional four-digit app PIN in Settings, shared by all profiles on this device. Change or remove it with the current
+  PIN; reset a forgotten PIN only after confirming the device lock. Repeated wrong attempts cause increasing waits,
+  even after restarting. The PIN is separate from backup passwords and is not carried in portable backups.
+- Android screenshot blocking can be turned off in Settings and takes effect immediately. Recent-apps previews
+  remain hidden. iOS and Windows do not prevent screenshots.
+- About states that Zanance belongs to Shahram Vafadar, with all rights reserved. Third-party notices refer only to
+  the included libraries and fonts.
+- Secure-storage failure never silently disables a configured PIN; device-authenticated recovery is available.
+
 ### Changed – Backup and first run (2026-10-08, D-62)
 
 - Cloud backups can now be created without a backup password, just like local backups. Password protection remains

@@ -291,6 +291,12 @@ internal static class DebugSnapshots
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
                 await Task.Delay(1500);
                 await CaptureAsync(app, folder, $"{language}-{name}");
+#if WINDOWS
+                if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
+                {
+                    await CaptureSecurityAsync(app, services, settingsPage, folder, language);
+                }
+#endif
                 if (FindScrollView(app.Windows[0].Page) is { } scroll && scroll.ContentSize.Height > scroll.Height + 40)
                 {
                     await scroll.ScrollToAsync(0, scroll.ContentSize.Height, animated: false);
@@ -668,7 +674,7 @@ internal static class DebugSnapshots
     }
 
     // Opens the help of every topic that has a title, saves the window with the open dialog and closes the dialog again.
-    private static async Task CaptureHelpAsync(App app, string folder, string language)
+    private static async Task CaptureHelpAsync(App app, string folder, string language, IEnumerable<string>? selectedTopics = null)
     {
         var topics = Resources.Strings.AppStrings.ResourceManager
             .GetResourceSet(System.Globalization.CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: true)!
@@ -677,7 +683,7 @@ internal static class DebugSnapshots
             .Where(k => k.StartsWith("Help_", StringComparison.Ordinal) && k.EndsWith("_Title", StringComparison.Ordinal))
             .Select(k => k["Help_".Length..^"_Title".Length])
             .Order(StringComparer.Ordinal);
-        foreach (var topic in topics)
+        foreach (var topic in topics.Where(t => selectedTopics is null || selectedTopics.Contains(t, StringComparer.Ordinal)))
         {
             var shown = Vafadar.Maui.Controls.HelpButton.ShowAsync(topic);
             await Task.Delay(700);
@@ -696,6 +702,58 @@ internal static class DebugSnapshots
             await shown;
             await Task.Delay(200);
         }
+    }
+
+    // D-63: exclusively fictitious credentials; refuse to touch a PIN already present on the development device.
+    private static async Task CaptureSecurityAsync(App app, IServiceProvider services, Features.Settings.SettingsPage settingsPage, string folder, string language)
+    {
+        var appLock = services.GetRequiredService<Security.AppLockService>();
+        if (appLock.PinEnabled || appLock.PinUnavailable) { throw new InvalidOperationException("Security snapshots require an unconfigured development PIN."); }
+        if (FindScrollView(settingsPage) is { } scroll && settingsPage.FindByName<Border>("SecurityCard") is { } card)
+        {
+            await scroll.ScrollToAsync(card, ScrollToPosition.Start, animated: false);
+            await Task.Delay(400);
+            await CaptureAsync(app, folder, $"{language}-settings-security");
+        }
+
+        var translator = services.GetRequiredService<Translator>();
+        var pinPage = new Security.PinSettingsPage(appLock, translator);
+        await settingsPage.Navigation.PushModalAsync(pinPage, animated: false);
+        await Task.Delay(400);
+        await CaptureAsync(app, folder, $"{language}-pin-setup");
+        var pinVm = (Security.PinSettingsViewModel)pinPage.BindingContext;
+        await pinVm.SaveCommand.ExecuteAsync(null);
+        await Task.Delay(300);
+        await CaptureAsync(app, folder, $"{language}-pin-validation");
+        var configuredHere = false;
+        try
+        {
+            pinVm.NewPin = pinVm.ConfirmPin = "0123";
+            await pinVm.SaveCommand.ExecuteAsync(null);
+            configuredHere = appLock.PinEnabled;
+            if (!configuredHere) { throw new InvalidOperationException("The sample PIN could not be saved."); }
+            await Task.Delay(300);
+            pinPage = new Security.PinSettingsPage(appLock, translator);
+            await settingsPage.Navigation.PushModalAsync(pinPage, animated: false);
+            await Task.Delay(400);
+            await CaptureAsync(app, folder, $"{language}-pin-change");
+            await ((Security.PinSettingsViewModel)pinPage.BindingContext).BackCommand.ExecuteAsync(null);
+            var lockPage = new Security.LockPage(appLock, translator, promptOnAppearing: false);
+            await settingsPage.Navigation.PushModalAsync(lockPage, animated: false);
+            await Task.Delay(400);
+            await CaptureAsync(app, folder, $"{language}-pin-unlock");
+            await settingsPage.Navigation.PopModalAsync(animated: false);
+            await CaptureHelpAsync(app, folder, language, ["AppPin", "Screenshots"]);
+        }
+        finally
+        {
+            if (configuredHere)
+            {
+                var result = await appLock.Pin.RemoveAsync("0123");
+                if (result.Outcome != Core.Security.PinOutcome.Success) { throw new InvalidOperationException("The sample PIN could not be removed."); }
+            }
+        }
+        await ((Features.Settings.SettingsViewModel)settingsPage.BindingContext).LoadAsync();
     }
 
     private static async Task RenderAsync(Microsoft.UI.Xaml.UIElement root, string path)

@@ -85,3 +85,8 @@ Other workflows:
 The normal snapshot walk-through captures all three onboarding steps in each requested language, including the
 ends of longer forms, and the restore page before an account exists. Back returns to the same draft, then the
 walk-through completes onboarding and continues to the requested routes. Sample data is fictitious throughout.
+
+D-63: `Run-Snapshots.ps1 -Only settings,about,notices` additionally captures the security card, PIN setup/validation/
+change/unlock and the two privacy help dialogs. It creates only a fictitious PIN and removes it in finally; it refuses
+to modify a pre-existing development PIN. Run en/fa/de in both themes at 360/412 px and wide. Snapshots do not prove
+Android secure flags, device-authenticated recovery, iOS keychain or physical-device acceptance.

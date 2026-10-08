@@ -70,6 +70,8 @@ public static class MauiProgram
             .AddSingleton<Presentation.ThemeService>()
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
             .AddSingleton<AppLockService>()
+            .AddSingleton<Vafadar.Zanance.Core.Security.IPinStorage, SecurePinStorage>()
+            .AddSingleton<Vafadar.Zanance.Core.Security.PinLock>()
             .AddSingleton<Profiles.ProfileService>();
 
 #if IOS

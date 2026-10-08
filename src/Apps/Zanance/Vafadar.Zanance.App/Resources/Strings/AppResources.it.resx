@@ -3180,7 +3180,7 @@ Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequen
     <value>Zanance funziona senza un account online e non mostra pubblicità. I dati finanziari restano su questo dispositivo. Scegli tu quando esportarli o creare backup. I backup nel cloud, facoltativi, vengono conservati nel tuo account cloud collegato. Zanance non invia automaticamente i tuoi dati finanziari allo sviluppatore.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
-    <value>Visualizza licenze</value>
+    <value>Avvisi sui componenti di terze parti</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
@@ -5329,5 +5329,92 @@ Passaggi per riprodurre il problema:
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>Licenze di terze parti</value>
+  </data>
+  <data name="Pin_Setting" xml:space="preserve">
+    <value>PIN dell’app</value>
+  </data>
+  <data name="Pin_Enabled" xml:space="preserve">
+    <value>Un PIN a quattro cifre è attivo su questo dispositivo.</value>
+  </data>
+  <data name="Pin_Disabled" xml:space="preserve">
+    <value>Non hai impostato un PIN per l’app.</value>
+  </data>
+  <data name="Pin_Manage" xml:space="preserve">
+    <value>Imposta o cambia il PIN</value>
+  </data>
+  <data name="Pin_Current" xml:space="preserve">
+    <value>PIN attuale</value>
+  </data>
+  <data name="Pin_New" xml:space="preserve">
+    <value>Nuovo PIN a quattro cifre</value>
+  </data>
+  <data name="Pin_Confirm" xml:space="preserve">
+    <value>Ripeti il nuovo PIN</value>
+  </data>
+  <data name="Pin_Remove" xml:space="preserve">
+    <value>Rimuovi il PIN dell’app</value>
+  </data>
+  <data name="Pin_SetupHint" xml:space="preserve">
+    <value>Scegli quattro cifre. Questo PIN è separato dal blocco del dispositivo e dalla password dei backup e vale per tutti i profili su questo dispositivo.</value>
+  </data>
+  <data name="Pin_RecoveryHint" xml:space="preserve">
+    <value>Ricorda il PIN e conserva un backup. Se lo dimentichi, puoi reimpostarlo dopo l’autenticazione con il blocco del dispositivo. Senza questo blocco, non puoi recuperare il PIN nell’app.</value>
+  </data>
+  <data name="Pin_EnterHint" xml:space="preserve">
+    <value>Inserisci il PIN a quattro cifre dell’app.</value>
+  </data>
+  <data name="Pin_FourDigits" xml:space="preserve">
+    <value>Inserisci esattamente quattro cifre.</value>
+  </data>
+  <data name="Pin_Mismatch" xml:space="preserve">
+    <value>I due nuovi PIN non coincidono.</value>
+  </data>
+  <data name="Pin_Incorrect" xml:space="preserve">
+    <value>PIN errato. Riprova.</value>
+  </data>
+  <data name="Pin_Wait" xml:space="preserve">
+    <value>Troppi tentativi. Riprova tra {0} secondi.</value>
+  </data>
+  <data name="Pin_Unavailable" xml:space="preserve">
+    <value>Impossibile leggere o salvare il PIN protetto. L’accesso resta bloccato. Riprova o usa il blocco del dispositivo per il recupero.</value>
+  </data>
+  <data name="Pin_Forgot" xml:space="preserve">
+    <value>Hai dimenticato il PIN?</value>
+  </data>
+  <data name="Pin_ResetReason" xml:space="preserve">
+    <value>Autenticati con il blocco del dispositivo per reimpostare il PIN di Zanance.</value>
+  </data>
+  <data name="Pin_ResetConfirm" xml:space="preserve">
+    <value>Rimuovere il PIN dell’app? I tuoi dati finanziari saranno conservati. Puoi impostare un nuovo PIN nelle impostazioni.</value>
+  </data>
+  <data name="Pin_NoRecovery" xml:space="preserve">
+    <value>Il recupero con il blocco del dispositivo non è disponibile. Il PIN dell’app resta attivo.</value>
+  </data>
+  <data name="Screen_Block" xml:space="preserve">
+    <value>Blocca le schermate su Android</value>
+  </data>
+  <data name="Screen_Hint" xml:space="preserve">
+    <value>Su Android, disattiva questa opzione per acquisire schermate. L’anteprima delle app recenti resta nascosta. iOS e Windows non bloccano le schermate.</value>
+  </data>
+  <data name="Help_AppPin_Title" xml:space="preserve">
+    <value>PIN dell’app</value>
+  </data>
+  <data name="Help_AppPin_Text" xml:space="preserve">
+    <value>Un PIN facoltativo a quattro cifre protegge Zanance su questo dispositivo a ogni avvio e dopo 30 secondi di assenza. Per cambiarlo o rimuoverlo serve il PIN attuale. Cinque errori impongono un minuto di attesa; altri errori la aumentano fino a quindici minuti, anche dopo il riavvio. Viene salvato solo un verificatore con sale nello spazio protetto del dispositivo, mai nei backup. Il PIN non cifra il database. Il recupero richiede un’autenticazione riuscita con il dispositivo; l’annullamento o l’assenza di autenticazione non sbloccano l’app.</value>
+  </data>
+  <data name="Help_AppPin_Example" xml:space="preserve">
+    <value>Imposta un PIN prima di prestare il telefono sbloccato. Conserva un backup e ricorda il PIN; se necessario, reimpostalo con il blocco del dispositivo.</value>
+  </data>
+  <data name="Help_Screenshots_Title" xml:space="preserve">
+    <value>Schermate e anteprime</value>
+  </data>
+  <data name="Help_Screenshots_Text" xml:space="preserve">
+    <value>Android blocca le schermate per impostazione predefinita. Disattiva questa opzione per salvare o condividere una schermata; il file può contenere i tuoi dati finanziari. La scelta vale per tutti i profili del dispositivo e non è inclusa nei backup. La protezione si riattiva sempre in background per nascondere l’anteprima delle app recenti. iOS conserva la copertura della privacy; iOS e Windows non impediscono le schermate.</value>
+  </data>
+  <data name="Help_Screenshots_Example" xml:space="preserve">
+    <value>Disattiva il blocco per condividere un grafico, poi riattivalo. Controlla la schermata prima di condividerla.</value>
+  </data>
+  <data name="About_Rights" xml:space="preserve">
+    <value>Zanance è software proprietario. © Shahram Vafadar. Tutti i diritti riservati. Gli avvisi sui componenti di terze parti non concedono diritti sul codice sorgente di Zanance.</value>
   </data>
 </root>

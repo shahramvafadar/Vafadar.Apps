@@ -176,3 +176,14 @@ iCloud / computer backups by default.
   stores large media.
 * Backup is not sync: restoring replaces the data on the device. Multi-device sync is discussed in
   [web-and-shared-data.md](web-and-shared-data.md).
+
+## App access and screenshot preference (D-63)
+
+Zanance stores a versioned PBKDF2-SHA256 app PIN verifier and durable attempt state in platform SecureStorage,
+separately from all profile databases. No plain PIN is stored. The independent PIN gates the UI, pending links and
+sensitive operations; it does not encrypt SQLite, attachments, safety copies or exports. The PIN and screenshot
+choice are not in portable backups and restore does not overwrite this device gate. Android excludes SecureStorage
+ciphertext from OS cloud backup/device transfer to avoid restoring ciphertext without its Keystore key. A restored
+required marker without its verifier fails closed and requires device-authenticated recovery. Other OS-backup data
+remains under the existing policy pending the commercial security decision. iOS keychain follows OS persistence
+rules, including possible retention after uninstall; verify on a signed device before release.

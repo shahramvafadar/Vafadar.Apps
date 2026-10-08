@@ -131,7 +131,7 @@
 
             <!-- Privacy and security (SEC-01..03) -->
             <Label Text="{v:Translate Settings_Security}" Style="{StaticResource SectionHeader}" />
-            <Border Style="{StaticResource Card}">
+            <Border x:Name="SecurityCard" Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" IsVisible="{Binding LockAvailable}">
                         <Label Text="{v:Translate Lock_Setting}" VerticalOptions="Center" />
@@ -141,6 +141,22 @@
                     <Label Text="{v:Translate Lock_NotAvailableHint}" Style="{StaticResource Secondary}"
                            IsVisible="{Binding LockAvailable, Converter={StaticResource InvertedBoolConverter}}" />
                     <Label Text="{v:Translate Lock_Hint}" Style="{StaticResource Secondary}" />
+                    <BoxView HeightRequest="1" Color="{DynamicResource DividerColor}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{v:Translate Pin_Setting}" FontAttributes="Bold" VerticalOptions="Center" />
+                        <v:HelpButton Grid.Column="1" Topic="AppPin" />
+                    </Grid>
+                    <Label Text="{v:Translate Pin_Enabled}" Style="{StaticResource Secondary}" IsVisible="{Binding PinEnabled}" />
+                    <Label Text="{v:Translate Pin_Disabled}" Style="{StaticResource Secondary}" IsVisible="{Binding PinEnabled, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Button Text="{v:Translate Pin_Manage}" Command="{Binding ManagePinCommand}" Style="{StaticResource SecondaryButton}" />
+                    <BoxView HeightRequest="1" Color="{DynamicResource DividerColor}" />
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <Label Text="{v:Translate Screen_Block}" VerticalOptions="Center" />
+                        <v:HelpButton Grid.Column="1" Topic="Screenshots" />
+                        <Switch Grid.Column="2" IsToggled="{Binding BlockScreenshots}" OnColor="{DynamicResource Primary}"
+                            SemanticProperties.Description="{v:Translate Screen_Block}" />
+                    </Grid>
+                    <Label Text="{v:Translate Screen_Hint}" Style="{StaticResource Secondary}" />
                 </VerticalStackLayout>
             </Border>
 

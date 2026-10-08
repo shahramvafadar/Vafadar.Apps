@@ -177,6 +177,29 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool LockEnabled { get; set; }
 
+    /// <summary>Gets or sets the device-wide Android foreground screenshot choice (D-63).</summary>
+    [ObservableProperty]
+    public partial bool BlockScreenshots { get; set; }
+
+    /// <summary>Gets whether the separate app PIN is configured.</summary>
+    [ObservableProperty]
+    public partial bool PinEnabled { get; set; }
+
+    partial void OnBlockScreenshotsChanged(bool value)
+    {
+        if (!_refreshing) { ScreenProtection.Set(value); }
+    }
+
+    [RelayCommand]
+    private async Task ManagePinAsync()
+    {
+        if (Application.Current?.Windows.FirstOrDefault()?.Page is { } root)
+        {
+            var page = new PinSettingsPage(_lock, _translator);
+            await root.Navigation.PushModalAsync(page);
+        }
+    }
+
     [ObservableProperty]
     public partial bool NotificationsSupported { get; set; }
 
@@ -233,6 +256,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
             PersianDigits = Presentation.DigitPreferences.PersianDigits;
             LockEnabled = settings.AppLockEnabled;
             LockAvailable = settings.AppLockEnabled || await _lock.Authenticator.IsAvailableAsync();
+            PinEnabled = _lock.PinEnabled;
+            BlockScreenshots = ScreenProtection.BlockScreenshots;
             ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
             ReminderTime = settings.ReminderTime.ToTimeSpan();
             NotificationsEnabled = NotificationsSupported && await _reminders.Scheduler.AreEnabledAsync();
@@ -364,7 +389,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     /// <summary>Turns the app lock on or off after the device owner confirmed it (SEC-01).</summary>
     public async Task SetLockAsync(bool enabled)
     {
-        if (_refreshing || enabled == _lock.IsEnabled)
+        if (_refreshing || enabled == _lock.DeviceLockEnabled)
         {
             return;
         }

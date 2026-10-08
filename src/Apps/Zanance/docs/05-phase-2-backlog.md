@@ -62,3 +62,6 @@ Each finding gets a fix and, where possible, a test; the pass ends with a writte
 | AI | Official provider access without user API keys; data minimisation (F2-AI-01..09) |
 | Online exchange rates | Source, cost, caching (FX-08) |
 | Pro purchase, support link, ads | *Superseded by D-61:* Free/Plus/Pro with Plus Lifetime (ZCR-ENT, ZCR-BIL); support links and ads still need their own review (MON-07) |
+
+D-63 privacy maintenance: device-wide four-digit PIN, durable attempt limiting, authenticated recovery and Android
+screenshot choice are implemented in ZCR-SEC-10. Broader database/key encryption and device acceptance stay open.

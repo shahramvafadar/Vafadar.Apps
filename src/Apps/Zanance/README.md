@@ -59,3 +59,7 @@ the app when done (`Diagnostics/DebugSnapshots.cs`).
 * [Changelog](CHANGELOG.md)
 * Shared concepts: [architecture](../../../docs/architecture/overview.md), [localization](../../../docs/architecture/localization.md),
   [data and backup](../../../docs/architecture/data-and-backup.md), [privacy matrix](../../../docs/privacy/privacy-matrix.md)
+
+Privacy controls (D-63): optional four-digit app PIN across local profiles, protected verifier and restart-persistent
+attempt limiting; separate Android foreground screenshot preference, on by default, with recents protection retained.
+Owner-written source is proprietary and all rights reserved; bundled third-party notices apply only to dependencies.

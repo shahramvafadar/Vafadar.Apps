@@ -23,6 +23,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
 | ZCR-SEC-07 | OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Proposed | OD-10 |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
+| ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Proposed | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Proposed | – |
@@ -253,3 +254,13 @@ release blocker.
 At least 20 languages in addition to the six existing ones, as the last feature wave, after the release texts are
 stable: owner-provided translations with cultural review, never machine-filled files; each language with its
 calendar defaults, number formats, receipts terms and display checks as for es/fr/it.
+
+### ZCR-SEC-10 - Device privacy maintenance (D-63)
+
+Owner-approved on 2026-10-08: optional four-digit device-wide app PIN, protected salted verifier, durable growing
+attempt delay, current-PIN change/removal, device-authenticated lost-PIN recovery; optional Android screenshot block
+with persistent recents protection; proprietary ownership clarified separately from bundled component notices.
+Verified: 1041 tests and strict Windows/Android builds, en/fa/de light/dark 360/412/wide UI and Windows unlock workflow.
+Physical-device authentication/recents and iOS are still gates. Only device-bound Android secure-storage ciphertext
+is excluded from OS backup/transfer. SEC-01..07 database encryption, key wrapping and broader OS-backup policy stay
+Proposed; this access gate does not complete those sections or introduce commercial limits.

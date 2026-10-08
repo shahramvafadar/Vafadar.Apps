@@ -134,9 +134,16 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   only the protection choice on the device, never passwords. Explain that an unprotected portable file is readable
   by anyone who obtains it. First-run restore must not force or create an extra account; preserve restored preferences.
   About keeps a compact link to the required bundled notices, without an inline component list.
+* App access (D-63): optional four-digit PIN across all profiles on this device; salted verifier and durable growing
+  attempt delays only in platform SecureStorage, never portable backups. Current PIN required to change/remove;
+  recovery only after successful device authentication plus confirmation. No NotAvailable fallback for a PIN lock.
+  Keep the startup frame covered until secure state is read. This gate does not encrypt the database.
+* Ownership: owner-written source remains all rights reserved; bundled third-party notices apply to their components
+  only and grant no rights to Zanance source. Keep that distinction clear in the app.
 * Privacy: no analytics, ads, crash reporting or network SDKs; offline builds declare no `INTERNET` permission
   (cloud backup builds only, D-35). Notifications are generic unless the user allows details. The recent-apps preview
-  is always hidden (Android `FLAG_SECURE`, iOS cover). Permissions are asked in context, with the platform's own
+  is always hidden (Android recents exclusion/secure background flags, iOS cover). Android foreground screenshots
+  are blocked by default but can be allowed in Settings (D-63); iOS/Windows screenshots are not blocked. Permissions are asked in context, with the platform's own
   dialog after a short explanation (D-38); Android takes photos through the camera app without the camera permission.
 * Tests accompany every feature; name tests by behaviour and tag acceptance scenarios with `[Trait("AT", "AT-xx")]`.
 * The Debug snapshot walk-through (`Diagnostics/DebugSnapshots.cs`) seeds fictitious data only. Add new screens to its

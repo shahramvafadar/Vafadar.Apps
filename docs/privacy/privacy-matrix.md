@@ -15,6 +15,8 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 | Attachments (receipt photos, PDF files) | ⚙️ | On-device SQLite | ⚙️ only inside the optionally encrypted backup file (D-62) and OS backups; never in CSV/PDF exports | The user |
 | Local profile names (only when more than one profile exists) | ⚙️ | On-device preferences, outside the profiles' databases | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
 | App settings (language, calendar, theme, display units) | ✅ | On-device preferences | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
+| App PIN verifier and attempt limit (D-63) | ⚙️ | Platform SecureStorage, outside financial databases | Not in portable backups; Android OS backup/transfer exclude device-bound ciphertext; iOS keychain follows OS policy | The app checks a salted verifier; no plain PIN is stored |
+| Screenshot preference (D-63) | ✅ | Device preferences | Not in portable backups; OS preferences may be backed up | The user |
 | Backup files | ⚙️ | On the device (last 10), the connected cloud app folder or wherever the user shares them | ⚙️ when the user shares or uploads one | Anyone obtaining an unprotected file; encrypted files require the password (D-62) |
 | CSV / PDF exports | ⚙️ | App cache, then the app the user picks in the share sheet | ⚙️ only when the user shares one (unencrypted, with a warning) | Whoever receives the file |
 | Reminders | ⚙️ | Local notification service | ❌ | The user (generic text unless details are allowed) |

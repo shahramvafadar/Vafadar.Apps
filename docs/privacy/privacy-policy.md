@@ -68,8 +68,16 @@ have no internet permission at all.
 
 ## App lock
 
-If you turn on the app lock, unlocking uses your device's own screen lock, fingerprint or face recognition. The app
-never receives or stores your fingerprint, face data or PIN.
+You can use your device's own screen lock, fingerprint or face recognition; the app does not receive or store the
+device credential or biometric data. Zanance also offers a separate four-digit app PIN. It stores a salted verifier
+and attempt-limit state in the platform's protected storage, not the plain PIN and not in portable backups.
+Repeated incorrect attempts cause growing waits. PIN change/removal needs the current PIN; forgotten-PIN recovery
+requires successful device authentication and confirmation. Without device authentication there is no in-app recovery.
+This access gate does not encrypt the financial database. Android excludes its device-bound secure-storage ciphertext
+from OS backup/transfer; iOS keychain persistence follows OS policy (uninstalling need not remove its entries).
+
+Android screenshots are blocked by default, but you can allow them in Settings. A screenshot can contain financial
+information; review it before sharing. Recent-apps protection remains enabled. iOS and Windows do not block screenshots.
 
 ## Purchases and donations
 

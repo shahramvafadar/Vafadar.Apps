@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Security.PinSettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:local="clr-namespace:Vafadar.Zanance.App.Security"
+    x:DataType="local:PinSettingsViewModel" Title="{v:Translate Pin_Setting}">
+    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+            <Button Text="{v:Translate Common_Back}" Command="{Binding BackCommand}" Style="{StaticResource TextButton}" />
+            <Label Grid.Column="1" Text="{v:Translate Pin_Setting}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+            <v:HelpButton Grid.Column="2" Topic="AppPin" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="12">
+                <Label Text="{v:Translate Pin_SetupHint}" Style="{StaticResource Secondary}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <VerticalStackLayout IsVisible="{Binding HasPin}">
+                            <Label Text="{v:Translate Pin_Current}" Style="{StaticResource FieldLabel}" Margin="0" />
+                            <Entry Text="{Binding CurrentPin}" IsPassword="True" Keyboard="Numeric" MaxLength="4"
+                                FlowDirection="LeftToRight" AutomationId="CurrentPin" SemanticProperties.Description="{v:Translate Pin_Current}" />
+                            <Label Text="{Binding CurrentError}" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding CurrentError, Converter={StaticResource IsNotNullConverter}}" />
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Pin_New}" Style="{StaticResource FieldLabel}" Margin="0" />
+                        <Entry Text="{Binding NewPin}" IsPassword="True" Keyboard="Numeric" MaxLength="4"
+                            FlowDirection="LeftToRight" AutomationId="NewPin" SemanticProperties.Description="{v:Translate Pin_New}" />
+                        <Label Text="{Binding NewError}" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding NewError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Pin_Confirm}" Style="{StaticResource FieldLabel}" />
+                        <Entry Text="{Binding ConfirmPin}" IsPassword="True" Keyboard="Numeric" MaxLength="4"
+                            FlowDirection="LeftToRight" AutomationId="ConfirmPin" SemanticProperties.Description="{v:Translate Pin_Confirm}" />
+                        <Label Text="{Binding ConfirmError}" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding ConfirmError, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{v:Translate Pin_RecoveryHint}" Style="{StaticResource Secondary}" />
+                <Label Text="{Binding PageError}" TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding PageError, Converter={StaticResource IsNotNullConverter}}" />
+                <Button Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                <Button Text="{v:Translate Pin_Remove}" Command="{Binding RemoveCommand}" Style="{StaticResource SecondaryButton}"
+                    IsVisible="{Binding HasPin}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

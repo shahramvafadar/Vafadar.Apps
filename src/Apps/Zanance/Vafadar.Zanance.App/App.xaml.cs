@@ -12,6 +12,7 @@ namespace Vafadar.Zanance.App;
 public partial class App : Application
 {
     private readonly IServiceProvider _services;
+    private Page? _startupPage;
 
     public App(IServiceProvider services)
     {
@@ -156,7 +157,9 @@ public partial class App : Application
             ? CreateShell()
             : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
 
-        var window = new Window(root) { Title = Translator.Instance["App_Name"] };
+        // Keep financial content out of the first frame while the secure PIN state is read (D-63).
+        _startupPage = root;
+        var window = new Window(new ContentPage()) { Title = Translator.Instance["App_Name"] };
 #if WINDOWS
         // The window title in the app's colours with the symbol in front of it (D-45). The default title keeps the
         // Windows theme: white on the light page when Windows is dark, black on the dark page when it is light.
@@ -180,6 +183,15 @@ public partial class App : Application
         Dispatcher.Dispatch(async () =>
         {
             await _services.GetRequiredService<AppLockService>().StartAsync();
+            await _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() =>
+            {
+                if (_startupPage is { } page && Windows.FirstOrDefault() is { } window)
+                {
+                    _startupPage = null;
+                    window.Page = page;
+                }
+                return Task.CompletedTask;
+            });
 
             // A widget tap that started the app (D-30) opens its screen now that the shell exists.
             if (_pendingLink is { } link)

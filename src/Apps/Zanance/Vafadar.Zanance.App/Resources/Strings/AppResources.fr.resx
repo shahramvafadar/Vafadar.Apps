@@ -3166,7 +3166,7 @@ Flexible : séparez les factures mensuelles et la part mensuelle des factures m
     <value>Zanance fonctionne sans compte en ligne et n’affiche aucune publicité. Vos données financières sont stockées sur cet appareil. Vous choisissez quand les exporter ou créer des sauvegardes. Les sauvegardes cloud facultatives sont conservées dans votre propre compte cloud connecté. Zanance n’envoie pas automatiquement vos données financières au développeur.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
-    <value>Voir les licences</value>
+    <value>Avis des composants tiers</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
@@ -5317,5 +5317,92 @@ Ce que j’attendais :
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>Licences tierces</value>
+  </data>
+  <data name="Pin_Setting" xml:space="preserve">
+    <value>Code PIN de l’application</value>
+  </data>
+  <data name="Pin_Enabled" xml:space="preserve">
+    <value>Un code PIN à quatre chiffres est activé sur cet appareil.</value>
+  </data>
+  <data name="Pin_Disabled" xml:space="preserve">
+    <value>Aucun code PIN n’est défini pour l’application.</value>
+  </data>
+  <data name="Pin_Manage" xml:space="preserve">
+    <value>Définir ou modifier le code PIN</value>
+  </data>
+  <data name="Pin_Current" xml:space="preserve">
+    <value>Code PIN actuel</value>
+  </data>
+  <data name="Pin_New" xml:space="preserve">
+    <value>Nouveau code PIN à quatre chiffres</value>
+  </data>
+  <data name="Pin_Confirm" xml:space="preserve">
+    <value>Répétez le nouveau code PIN</value>
+  </data>
+  <data name="Pin_Remove" xml:space="preserve">
+    <value>Supprimer le code PIN de l’application</value>
+  </data>
+  <data name="Pin_SetupHint" xml:space="preserve">
+    <value>Choisissez quatre chiffres. Ce code est distinct du verrouillage de l’appareil et du mot de passe des sauvegardes, et s’applique à tous les profils de cet appareil.</value>
+  </data>
+  <data name="Pin_RecoveryHint" xml:space="preserve">
+    <value>Mémorisez votre code PIN et conservez une sauvegarde. En cas d’oubli, vous pouvez le réinitialiser après authentification avec le verrouillage de l’appareil. Sans ce verrouillage, aucune récupération dans l’application n’est possible.</value>
+  </data>
+  <data name="Pin_EnterHint" xml:space="preserve">
+    <value>Saisissez le code PIN à quatre chiffres de l’application.</value>
+  </data>
+  <data name="Pin_FourDigits" xml:space="preserve">
+    <value>Saisissez exactement quatre chiffres.</value>
+  </data>
+  <data name="Pin_Mismatch" xml:space="preserve">
+    <value>Les deux nouveaux codes PIN ne correspondent pas.</value>
+  </data>
+  <data name="Pin_Incorrect" xml:space="preserve">
+    <value>Code PIN incorrect. Réessayez.</value>
+  </data>
+  <data name="Pin_Wait" xml:space="preserve">
+    <value>Trop de tentatives. Réessayez dans {0} secondes.</value>
+  </data>
+  <data name="Pin_Unavailable" xml:space="preserve">
+    <value>Le code PIN protégé n’a pas pu être lu ou enregistré. L’accès reste verrouillé. Réessayez ou utilisez le verrouillage de l’appareil pour le récupérer.</value>
+  </data>
+  <data name="Pin_Forgot" xml:space="preserve">
+    <value>Code PIN oublié ?</value>
+  </data>
+  <data name="Pin_ResetReason" xml:space="preserve">
+    <value>Authentifiez-vous avec le verrouillage de l’appareil pour réinitialiser le code PIN de Zanance.</value>
+  </data>
+  <data name="Pin_ResetConfirm" xml:space="preserve">
+    <value>Supprimer le code PIN de l’application ? Vos données financières seront conservées. Vous pourrez définir un nouveau code dans les paramètres.</value>
+  </data>
+  <data name="Pin_NoRecovery" xml:space="preserve">
+    <value>La récupération avec le verrouillage de l’appareil est indisponible. Votre code PIN reste activé.</value>
+  </data>
+  <data name="Screen_Block" xml:space="preserve">
+    <value>Bloquer les captures sur Android</value>
+  </data>
+  <data name="Screen_Hint" xml:space="preserve">
+    <value>Sur Android, désactivez cette option pour prendre des captures. L’aperçu des applications récentes reste masqué. iOS et Windows ne bloquent pas les captures.</value>
+  </data>
+  <data name="Help_AppPin_Title" xml:space="preserve">
+    <value>Code PIN de l’application</value>
+  </data>
+  <data name="Help_AppPin_Text" xml:space="preserve">
+    <value>Un code PIN facultatif à quatre chiffres protège Zanance sur cet appareil à chaque démarrage et après 30 secondes d’absence. Le code actuel est nécessaire pour le modifier ou le supprimer. Cinq erreurs imposent une minute d’attente ; les erreurs suivantes prolongent ce délai jusqu’à quinze minutes, même après un redémarrage. Seul un vérificateur salé est conservé dans le stockage protégé de l’appareil, jamais dans les sauvegardes. La base de données n’est pas chiffrée par ce code. La récupération nécessite une authentification réussie avec l’appareil ; une annulation ou une authentification indisponible ne déverrouillent pas l’application.</value>
+  </data>
+  <data name="Help_AppPin_Example" xml:space="preserve">
+    <value>Définissez un code PIN avant de prêter votre téléphone déverrouillé. Conservez une sauvegarde et mémorisez le code ; au besoin, réinitialisez-le avec le verrouillage de l’appareil.</value>
+  </data>
+  <data name="Help_Screenshots_Title" xml:space="preserve">
+    <value>Captures et aperçus</value>
+  </data>
+  <data name="Help_Screenshots_Text" xml:space="preserve">
+    <value>Android bloque les captures par défaut. Désactivez ce réglage pour enregistrer ou partager une capture ; elle peut contenir vos données financières. Ce choix s’applique à tous les profils de cet appareil et n’est pas inclus dans les sauvegardes. La protection est toujours réactivée en arrière-plan pour masquer l’aperçu des applications récentes. iOS conserve son écran de confidentialité ; iOS et Windows n’empêchent pas les captures.</value>
+  </data>
+  <data name="Help_Screenshots_Example" xml:space="preserve">
+    <value>Désactivez le blocage pour partager un graphique, puis réactivez-le. Vérifiez la capture avant de la partager.</value>
+  </data>
+  <data name="About_Rights" xml:space="preserve">
+    <value>Zanance est un logiciel propriétaire. © Shahram Vafadar. Tous droits réservés. Les avis des composants tiers n’accordent aucun droit sur le code source de Zanance.</value>
   </data>
 </root>

@@ -3198,7 +3198,7 @@ Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betracht
     <value>Für die lokale Nutzung von Zanance ist kein Onlinekonto erforderlich. Die App zeigt keine Werbung und sendet Ihre Finanzdaten nicht automatisch an den Entwickler. Sie entscheiden selbst, ob Sie Sicherungen erstellen, einen eigenen Cloud-Speicher verbinden oder Daten teilen.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
-    <value>Lizenztexte anzeigen</value>
+    <value>Hinweise zu Drittanbieter-Komponenten</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>© 2026 Shahram Vafadar · vafadar.pro</value>
@@ -5340,5 +5340,92 @@ Schritte zum Nachstellen des Problems:
   </data>
   <data name="About_LicencesTitle" xml:space="preserve">
     <value>Open-Source-Lizenzen</value>
+  </data>
+  <data name="Pin_Setting" xml:space="preserve">
+    <value>App-PIN</value>
+  </data>
+  <data name="Pin_Enabled" xml:space="preserve">
+    <value>Eine vierstellige PIN ist auf diesem Gerät aktiv.</value>
+  </data>
+  <data name="Pin_Disabled" xml:space="preserve">
+    <value>Keine App-PIN eingerichtet.</value>
+  </data>
+  <data name="Pin_Manage" xml:space="preserve">
+    <value>PIN einrichten oder ändern</value>
+  </data>
+  <data name="Pin_Current" xml:space="preserve">
+    <value>Aktuelle PIN</value>
+  </data>
+  <data name="Pin_New" xml:space="preserve">
+    <value>Neue vierstellige PIN</value>
+  </data>
+  <data name="Pin_Confirm" xml:space="preserve">
+    <value>Neue PIN wiederholen</value>
+  </data>
+  <data name="Pin_Remove" xml:space="preserve">
+    <value>App-PIN entfernen</value>
+  </data>
+  <data name="Pin_SetupHint" xml:space="preserve">
+    <value>Wählen Sie vier Ziffern. Diese PIN ist unabhängig von Gerätesperre und Backup-Passwort und gilt für alle Profile auf diesem Gerät.</value>
+  </data>
+  <data name="Pin_RecoveryHint" xml:space="preserve">
+    <value>Merken Sie sich Ihre PIN und bewahren Sie ein Backup auf. Eine vergessene PIN lässt sich nach Bestätigung der Gerätesperre zurücksetzen. Ohne Gerätesperre ist keine Wiederherstellung in der App möglich.</value>
+  </data>
+  <data name="Pin_EnterHint" xml:space="preserve">
+    <value>Geben Sie Ihre vierstellige App-PIN ein.</value>
+  </data>
+  <data name="Pin_FourDigits" xml:space="preserve">
+    <value>Geben Sie genau vier Ziffern ein.</value>
+  </data>
+  <data name="Pin_Mismatch" xml:space="preserve">
+    <value>Die neuen PINs stimmen nicht überein.</value>
+  </data>
+  <data name="Pin_Incorrect" xml:space="preserve">
+    <value>Falsche PIN. Versuchen Sie es erneut.</value>
+  </data>
+  <data name="Pin_Wait" xml:space="preserve">
+    <value>Zu viele Versuche. Versuchen Sie es in {0} Sekunden erneut.</value>
+  </data>
+  <data name="Pin_Unavailable" xml:space="preserve">
+    <value>Die geschützte PIN konnte nicht gelesen oder gespeichert werden. Der Zugriff bleibt gesperrt. Versuchen Sie es erneut oder nutzen Sie die Gerätesperre zur Wiederherstellung.</value>
+  </data>
+  <data name="Pin_Forgot" xml:space="preserve">
+    <value>PIN vergessen?</value>
+  </data>
+  <data name="Pin_ResetReason" xml:space="preserve">
+    <value>Bestätigen Sie die Gerätesperre, um die Zanance-PIN zurückzusetzen.</value>
+  </data>
+  <data name="Pin_ResetConfirm" xml:space="preserve">
+    <value>App-PIN entfernen? Ihre Finanzdaten bleiben erhalten. Sie können in den Einstellungen eine neue PIN festlegen.</value>
+  </data>
+  <data name="Pin_NoRecovery" xml:space="preserve">
+    <value>Die Wiederherstellung über die Gerätesperre ist nicht verfügbar. Ihre App-PIN bleibt aktiv.</value>
+  </data>
+  <data name="Screen_Block" xml:space="preserve">
+    <value>Screenshots unter Android sperren</value>
+  </data>
+  <data name="Screen_Hint" xml:space="preserve">
+    <value>Unter Android können Sie dies ausschalten, um Screenshots zu erstellen. Die Vorschau zuletzt verwendeter Apps bleibt verborgen. iOS und Windows sperren keine Screenshots.</value>
+  </data>
+  <data name="Help_AppPin_Title" xml:space="preserve">
+    <value>App-PIN</value>
+  </data>
+  <data name="Help_AppPin_Text" xml:space="preserve">
+    <value>Eine optionale vierstellige PIN schützt Zanance auf diesem Gerät bei jedem Neustart und nach 30 Sekunden Abwesenheit. Zum Ändern oder Entfernen ist die aktuelle PIN nötig. Fünf Fehlversuche führen zu einer Minute Wartezeit; weitere Fehler erhöhen sie bis auf fünfzehn Minuten, auch nach einem Neustart. Nur ein gesalzener Prüfwert wird im geschützten Gerätespeicher gespeichert, nie in Backups. Die Datenbank wird dadurch nicht verschlüsselt. Die Wiederherstellung über die Gerätesperre erfordert eine erfolgreiche Geräteauthentifizierung; Abbruch oder fehlende Authentifizierung entsperren die App nicht.</value>
+  </data>
+  <data name="Help_AppPin_Example" xml:space="preserve">
+    <value>Richten Sie eine PIN ein, bevor Sie Ihr entsperrtes Telefon verleihen. Behalten Sie ein Backup und merken Sie sich die PIN; bei Bedarf setzen Sie sie über die Gerätesperre zurück.</value>
+  </data>
+  <data name="Help_Screenshots_Title" xml:space="preserve">
+    <value>Screenshots und Vorschauen</value>
+  </data>
+  <data name="Help_Screenshots_Text" xml:space="preserve">
+    <value>Android sperrt Screenshots standardmäßig. Schalten Sie dies aus, wenn Sie einen Screenshot speichern oder teilen möchten; die Datei kann Ihre Finanzdaten enthalten. Die Auswahl gilt für alle Profile auf diesem Gerät und ist nicht in Backups enthalten. Beim Verlassen des Vordergrunds wird der Schutz immer wieder aktiviert, sodass die Vorschau zuletzt verwendeter Apps verborgen bleibt. iOS behält seine Datenschutzabdeckung; iOS und Windows verhindern keine Screenshots.</value>
+  </data>
+  <data name="Help_Screenshots_Example" xml:space="preserve">
+    <value>Schalten Sie die Sperre aus, um ein Diagramm zu teilen, und danach wieder ein. Prüfen Sie den Screenshot vor dem Teilen.</value>
+  </data>
+  <data name="About_Rights" xml:space="preserve">
+    <value>Zanance ist proprietäre Software. © Shahram Vafadar. Alle Rechte vorbehalten. Hinweise zu Drittanbieter-Komponenten gewähren keine Rechte am Zanance-Quellcode.</value>
   </data>
 </root>

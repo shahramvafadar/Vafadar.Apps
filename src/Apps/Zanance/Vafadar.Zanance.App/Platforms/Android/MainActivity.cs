@@ -15,12 +15,13 @@ namespace Vafadar.Zanance.App;
         | ConfigChanges.LayoutDirection)]
 public class MainActivity : MauiAppCompatActivity
 {
-    // Financial data never appears in the recent-apps preview or in screenshots, with or without the app lock
-    // (SEC-02, owner decision D-23). Set before the first frame is drawn.
+    // Start protected before the first frame, then apply the saved foreground choice (D-63).
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
+        if (OperatingSystem.IsAndroidVersionAtLeast(33)) { SetRecentsScreenshotEnabled(false); }
+        Security.ScreenProtection.SetBackground(false);
         UpdateSystemBarIcons();
 
         // A recreated activity or a start from the recent apps delivers the old intent again; only a fresh tap counts.
@@ -28,6 +29,20 @@ public class MainActivity : MauiAppCompatActivity
         {
             OpenFromWidget(intent);
         }
+    }
+
+    protected override void OnPause()
+    {
+        // Set before Android captures the recent-apps preview, even when foreground screenshots are allowed (D-63).
+        Window?.AddFlags(WindowManagerFlags.Secure);
+        Security.ScreenProtection.SetBackground(true);
+        base.OnPause();
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+        Security.ScreenProtection.SetBackground(false);
     }
 
     // Google's consent dialog and Microsoft's browser sign-in return here (cloud backup, D-35), and so does the camera

@@ -5,6 +5,17 @@
 Simple by default, power on demand (PR-04, UX-01); numbers are always explainable (REP-01); never shame the user
 (UX-07); every screen works in English, German and Persian (RTL) with runtime switching (LOC-01..03).
 
+### Privacy settings (D-63)
+
+Device authentication and the independent four-digit app PIN have separate controls. PIN status is explicit; a full
+form sets/changes/removes it with current/new/confirmation fields, all validation errors next to their fields, a
+visible Back action, and masked numeric inputs accepting native digits. PIN takes precedence if both are enabled.
+The unlock cover exposes no financial data; a forgotten-PIN button requires successful device authentication and
+explicit confirmation before removal. No-device-auth and cancellation leave access locked. The first startup frame
+is blank until protected state is read. A separate Android screenshot switch is on by default, applies immediately,
+and explains platform limits and persistent recents protection. Both topics have full help and examples in six
+languages. About states proprietary ownership separately from its compact third-party notices button.
+
 ### First run (D-62)
 
 Three steps remain: language; theme, Simple/Advanced, reporting currency and calendar; first account. Simple is the
