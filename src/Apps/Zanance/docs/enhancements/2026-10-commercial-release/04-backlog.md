@@ -307,7 +307,10 @@ This does not authorize commercial enforcement or another wave. Next proposed se
 
 Research and independent proof authorized by the owner. Proposed ADR 0010 inventories current plaintext data,
 compares legacy Community/current self-built/official Commercial SQLCipher and SEE, designs per-profile keys and
-safe migration/restart/rollback states. Four independent Windows AT-75 tests pass; separate Android Release fixture
-builds with trimming/AOT. Android emulator runtime awaits installation approval; no runtime pass is inferred from
-build success. ADR acceptance and production library/recovery/OS-backup decisions remain owner gates. No real data,
-production database connection, native provider, main solution or app permission changes. Not Done yet.
+safe migration/restart/rollback states. Technical research/proof delivery is complete: four independent Windows
+AT-75 tests pass; the separate Release AOT/trimmed Android fixture passes on an isolated API 36 x86_64 AVD using the
+existing installed emulator. A second process recovers the Keystore-wrapped key and reopens the unchanged fictitious
+profile; modified envelopes are rejected. Main 1,134 tests and strict Windows/Android builds pass. ADR acceptance
+and production library/recovery/OS-backup decisions remain owner gates. No real data, production connection, native
+provider, main solution or app permission changes. Status remains In progress solely until owner approval of ADR
+0010, as required by this section definition; implementation has not begun.

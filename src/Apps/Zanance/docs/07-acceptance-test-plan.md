@@ -89,6 +89,8 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 
 Four separate Windows harness tests pass: encrypted DB/WAL marker controls, SHM leakage check (not encryption),
 wrong/missing key, integrity, ciphertext change, rotation/export, EF entity round-trip, DPAPI profile context and
-PBKDF2/AES-GCM envelope authentication. Fixture data only. Android complete Release AOT/trimmed APK builds; emulator
-runtime/device-key restart remains pending. No production encryption, iOS runtime, hardware-backed guarantee or
-crash-safe migration acceptance is implied. See proposed ADR 0010 and experiments/Zanance.Encryption.
+PBKDF2/AES-GCM envelope authentication. Fixture data only. Android complete signed Release AOT/trimmed APK passes
+on API 36 x86_64: common encryption checks on two fresh processes, Keystore-wrapped profile recovery after force-stop,
+unchanged envelope/database hashes and envelope-tamper rejection. No main package was installed on the isolated AVD.
+No production encryption, ARM64 device, iOS runtime, hardware-backed guarantee or crash-safe migration acceptance
+is implied. ADR acceptance remains pending owner review. See proposed ADR 0010 and experiments/Zanance.Encryption.

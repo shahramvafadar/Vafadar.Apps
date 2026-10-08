@@ -74,4 +74,5 @@ uses AT-73/74; real-provider and physical-device acceptance remain open in S15/A
 
 
 SEC-01 research (D-68, 2026-10-08) prepares ADR 0010 and an independent fictitious encryption harness. Production
-database encryption is still absent; Windows proof passes, Android runtime and architecture acceptance are pending.
+database encryption is still absent; Windows and isolated Android API 36 x86_64 runtime proof pass, including
+Keystore-wrapped fictitious profile recovery after process restart. Architecture acceptance awaits owner review.

@@ -109,6 +109,8 @@ formats before commercial work. AT-73/74 local verification is separate from rea
 The next proposed section remains ZCR-SEC-01; no commercial limits were enabled.
 
 
-SEC-01 research/proof approved on 2026-10-08 (D-68). ADR 0010 and independent harness are prepared; Windows evidence
-passes, Android runtime is pending emulator installation approval. Owner review will decide adoption; no production
-connection or real-data migration is authorized. Exactly one next section is proposed: SEC-07, subject to OD-10.
+SEC-01 research/proof approved on 2026-10-08 (D-68). Technical delivery is complete: four Windows tests and two
+Android API 36 x86_64 process runs pass, including recovery of the same Keystore-wrapped fictitious profile. The
+existing installed emulator was used through an isolated AVD; no download was needed. ADR 0010 is ready for owner
+review and remains proposed. No production connection or real-data migration is authorized. Exactly one next
+section is proposed: SEC-07, subject to OD-10; do not start it without owner approval.

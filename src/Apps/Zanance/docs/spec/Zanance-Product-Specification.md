@@ -1317,6 +1317,8 @@ remain compatible. AT-73/74 local checks do not prove real-provider or physical-
 
 
 D-68 / SEC-01 research status (2026-10-08): proposed ADR 0010 compares database encryption/provider/key choices and
-safe migration. Four Windows feasibility tests pass outside the main 1,134-test suite; Android fixture APK builds
-with trimming/AOT, runtime pending emulator approval. App data remains plaintext, the production connection and
-permissions are unchanged, and ADR acceptance/library procurement/recovery are owner-review gates.
+safe migration. Four Windows feasibility tests pass outside the main 1,134-test suite; the signed Android Release
+AOT/trimmed fixture passes on an isolated API 36 x86_64 emulator, including recovery of the same Keystore-wrapped
+fictitious profile in a second process and tamper rejection. Technical delivery is complete for owner review. App
+data remains plaintext, the production connection and permissions are unchanged, and ADR acceptance/library
+procurement/recovery are owner-review gates. ARM64 phone, iOS and real migration acceptance remain later work.

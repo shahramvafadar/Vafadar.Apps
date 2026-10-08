@@ -9,7 +9,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 ### Engineering - Encryption architecture research (2026-10-08, D-68)
 
 - Prepared a proposed database/key architecture and safe migration plan for review, with an independent fictitious
-  Windows/Android harness. Application storage, database connections and existing backup protection are unchanged.
+  Windows/Android harness. Encryption and device-wrapped key recovery after process restart are verified on the
+  isolated Android emulator. Application storage, database connections and existing backup protection are unchanged.
 
 
 ### Changed - Backup discovery and regional formats (2026-10-08, D-67)

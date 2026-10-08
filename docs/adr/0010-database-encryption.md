@@ -131,27 +131,38 @@ SQLite 3.39.2, bundle 2.1.11, Microsoft.Data.Sqlite.Core / EF Sqlite.Core 10.0.1
 wrong/missing key, changed ciphertext, live WAL/SHM inspection, integrity, direct key rotation, plaintext-to-encrypted
 sqlcipher_export, an EF entity SaveChanges/LINQ read, CurrentUser DPAPI and authenticated PBKDF2 key envelopes.
 
-| Metric: 500 fictitious rows, each with 2 KiB attachment-like BLOB | Windows sample |
-|---|---:|
-| Plain create/write transaction | 31 ms |
-| Encrypted create/write, verification, live sidecar scan and checkpoint | 57 ms |
-| Keyed reopen plus row/text/amount/BLOB checks | 23 ms |
-| Encrypted DB bytes | 2,056,192 |
-| Live WAL / SHM bytes | 2,076,512 / 32,768 |
+| Metric: 500 fictitious rows, each with 2 KiB attachment-like BLOB | Windows sample | Android second-process sample |
+|---|---:|---:|
+| Plain create/write transaction | 39 ms | 430 ms |
+| Encrypted create/write, verification, live sidecar scan and checkpoint | 57 ms | 161 ms |
+| Keyed reopen plus row/text/amount/BLOB checks | 22 ms | 33 ms |
+| Encrypted DB bytes | 2,056,192 | 2,056,192 |
+| Live WAL / SHM bytes | 2,076,512 / 32,768 | 2,076,512 / 32,768 |
 
 These single-run operations are not equivalent benchmarking workloads; cold/warm order and scanning affect timings.
 They prove feasibility, not an overhead ratio or startup SLA. Plaintext control contains the marker; encrypted DB,
 WAL and SHM do not contain UTF-8/UTF-16 marker or schema text. SHM remains unencrypted structural metadata.
 No absence-of-marker scan is a cryptographic audit. Integrity and row/amount checks supplement it. File-based SQL
 temporary storage is explicitly disabled with temp_store=MEMORY; native compile-time defaults still need release
-qualification. Real ledger migrations, compiled Zanance model, large-data stress and independent-process recovery
+qualification. Real ledger migrations, compiled Zanance model, large-data stress and interrupted-migration recovery
 are not inferred from these tests.
 
-Android evidence: **pending emulator installation approval and runtime execution**. The independent Release harness
-has been built without warnings/errors with AOT/trimming and complete assemblies, including a device-key wrapping
-extension and authenticated context. Signature/package and ZIP integrity are verified. Both arm64-v8a and x86_64
-SQLCipher ELF load segments are aligned to 16 KiB; that structural check is not a 16 KiB-page runtime test.
-No Android runtime success is claimed from APK compilation. Final report will replace this paragraph after execution.
+Android evidence: **passed on Android API 36, x86_64, Google APIs system image revision 7**, using the existing
+installed SDK/emulator and a new isolated AVD under artifacts/encryption-proof. No download was needed and existing
+AVDs were not used. The signed independent Release AOT/trimmed APK ran on .NET 10.0.11 with SQLCipher 4.5.2 Community
+and SQLite 3.39.2. Both fresh runs passed the common encrypted-file, wrong/missing-key, integrity, tamper, rekey and
+export checks. The first process created a fictitious profile with its random DEK wrapped by Android Keystore
+AES-GCM. After force-stopping only the fixture, a different process recovered the envelope and reopened that same
+profile; wrapped-envelope and database SHA-256 hashes stayed unchanged. Altered envelope ciphertext was rejected
+on both runs. Stale reports are removed before each run; the PASS label was also read through Android uiautomator.
+The main Zanance package was absent from this isolated AVD. No real profile or financial file was opened.
+
+Signature/package, embedded assembly stores, ZIP integrity and absence of INTERNET permission are verified.
+Both arm64-v8a and x86_64 SQLCipher ELF load segments are aligned to 16 KiB; that structural check is not a
+16 KiB-page runtime test. Only x86_64 execution is verified; ARM64 phones, hardware-backed/authentication-bound
+keys, reboot/key invalidation and iOS remain later gates. Android exercises native/ADO.NET and Keystore, not the
+full Zanance EF compiled model. Fixture APK SHA-256: c948531a50d53bdedec2e7f904a8c1ecb3bccbd6277d926647b1c6f9171908a6.
+Raw first/second-process reports and Windows result are retained locally under artifacts/encryption-proof.
 Main Windows/Android builds pass the CI warning policy with zero warnings/errors; all 1,134 main tests pass,
 and test output was cleaned. Production sources and restore graph remain free of the experiment provider.
 

@@ -24,19 +24,26 @@ $env:ContinuousIntegrationBuild = 'true'
 ./eng/scripts/Build-AndroidApk.ps1 -Project experiments/Zanance.Encryption/Android/Android.csproj -Output artifacts/encryption-proof/android
 ./eng/scripts/Get-SigningInfo.ps1 -Path artifacts/encryption-proof/android/pro.vafadar.zanance.encryptionproof-Signed.apk
 # Use a running emulator serial explicitly; never install over the finance application's package.
-adb -s emulator-5554 install -r artifacts/encryption-proof/android/pro.vafadar.zanance.encryptionproof-Signed.apk
-adb -s emulator-5554 shell am start -n pro.vafadar.zanance.encryptionproof/pro.vafadar.zanance.encryptionproof.MainActivity
-adb -s emulator-5554 shell run-as pro.vafadar.zanance.encryptionproof cat files/fictitious-proof/result.json
-adb -s emulator-5554 shell run-as pro.vafadar.zanance.encryptionproof cat files/fictitious-proof/key-wrapping.txt
+adb -s emulator-5570 install -r artifacts/encryption-proof/android/pro.vafadar.zanance.encryptionproof-Signed.apk
+adb -s emulator-5570 shell am start -n pro.vafadar.zanance.encryptionproof/pro.vafadar.zanance.encryptionproof.MainActivity
+adb -s emulator-5570 shell run-as pro.vafadar.zanance.encryptionproof cat files/fictitious-proof/result.json
+adb -s emulator-5570 shell run-as pro.vafadar.zanance.encryptionproof cat files/fictitious-proof/key-wrapping.txt
 # Repeat after stopping this harness only, to verify device-wrapped profile reopening in another process.
-adb -s emulator-5554 shell am force-stop pro.vafadar.zanance.encryptionproof
-adb -s emulator-5554 shell am start -n pro.vafadar.zanance.encryptionproof/pro.vafadar.zanance.encryptionproof.MainActivity
+adb -s emulator-5570 shell am force-stop pro.vafadar.zanance.encryptionproof
+adb -s emulator-5570 shell am start -n pro.vafadar.zanance.encryptionproof/pro.vafadar.zanance.encryptionproof.MainActivity
 ```
 
 The fixture writes only under its package files directory and its own Keystore alias. No INTERNET permission or OS
 backup. The Release build uses trimming and managed AOT, includes assemblies, and retains debug access solely for
 retrieving fixture reports. It is not a production security configuration. Windows EF integration is tested; the
 Android probe exercises native/ADO.NET encryption and Keystore, not the full Zanance EF compiled model or UI.
+
+Verified on 2026-10-08 with the existing installed emulator and Google APIs API 36 x86_64 image revision 7. A new
+isolated AVD lives under artifacts/encryption-proof/avd, with separate Android user/emulator homes under
+artifacts/encryption-proof/android-user; existing AVDs and the main Zanance package were not used. Both first-run
+creation and recovery of the same device-wrapped fictitious profile in a new process passed. Database/envelope
+hashes stayed unchanged; tampered envelopes were rejected. Stale reports are removed before each run so a
+previous PASS cannot be mistaken for a new result. Always select the intended isolated emulator serial explicitly.
 
 Installing an emulator/system image requires owner approval under AGENTS.md. The harness does not download an image,
 change device settings, read another package's files or call network/cloud services. Uninstall only this fixture

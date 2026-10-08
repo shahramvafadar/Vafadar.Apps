@@ -198,6 +198,10 @@ approval and exact-binary Windows/Android/iOS verification, with random per-prof
 No PIN-to-data-key derivation. D-62 optional portable-backup protection remains intact.
 Four independent AT-75 Windows tests pass: native encryption/sidecar leakage controls, wrong/missing key, integrity,
 tamper rejection, export, rekey, EF round-trip, CurrentUser DPAPI and authenticated PBKDF2 envelopes. Main 1,134 tests
-pass. The Android Release AOT/trimmed fixture APK is built; emulator installation approval/runtime remains pending.
+pass. The signed Android Release AOT/trimmed fixture passes two process runs on an isolated Android API 36 x86_64
+AVD using the existing installed emulator. Android Keystore recovers the same fictitious profile after process
+restart; ciphertext database/envelope hashes remain unchanged and tampered envelopes are rejected. Strict Windows
+and Android builds have no warnings/errors. No download, existing AVD or main app data was needed. ADR acceptance
+remains an owner gate; hardware-backed keys, ARM64 device and iOS runtime are not inferred from this evidence.
 The migration document defines crash/restart states and excludes new plaintext snapshots, but migration fault
 injection and production adoption belong to later sections. Proposed next section after owner review: ZCR-SEC-07.
