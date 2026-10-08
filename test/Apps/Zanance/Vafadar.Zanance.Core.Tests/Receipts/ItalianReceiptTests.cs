@@ -26,12 +26,13 @@ public sealed class ItalianReceiptTests
     [InlineData("BOTTEGA ALBA\nTOTALE CONTANTI 15,00\nCONTANTI CONSEGNATI 20,00\nRESTO 5,00", "15.00", null, "BOTTEGA ALBA")]
     [InlineData("EMPORIO LUNA\nPARTITA IVA 12.345.678.901\nTOTALE 23,40", "23.40", null, "EMPORIO LUNA")]
     [InlineData("BOTTEGA ALBA\nSUBTOTALE 70,00\nSCONTO 10,00\nDA PAGARE 60,00", "60.00", null, "BOTTEGA ALBA")]
-    [InlineData("BOTTEGA ALBA\nProdotto 12,50\nSCONTO 120,00\nRESTO 20,00", "12.50", null, "BOTTEGA ALBA")]
-    public void The_total_the_date_and_the_shop_are_read(string text, string amount, string? date, string merchant)
+    [InlineData("BOTTEGA ALBA\nProdotto 12,50\nSCONTO 120,00\nRESTO 20,00", null, null, "BOTTEGA ALBA")]
+    public void The_total_the_date_and_the_shop_are_read(string text, string? amount, string? date, string merchant)
     {
         var receipt = ReceiptParser.Parse(text, Today);
 
-        Assert.Equal(decimal.Parse(amount, CultureInfo.InvariantCulture), receipt.Amount);
+        // A product price, discount and change do not prove the purchase total.
+        Assert.Equal(amount is null ? null : decimal.Parse(amount, CultureInfo.InvariantCulture), receipt.Amount);
         Assert.Equal(date is null ? null : DateOnly.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture), receipt.Date);
         Assert.Equal(merchant, receipt.Merchant);
     }

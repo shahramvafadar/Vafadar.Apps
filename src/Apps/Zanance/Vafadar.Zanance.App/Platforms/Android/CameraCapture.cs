@@ -41,6 +41,11 @@ internal static class CameraCapture
                 return null;
             }
 
+            if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
+            {
+                throw new InvalidDataException("The camera source file is too large.");
+            }
+
             return await File.ReadAllBytesAsync(file.AbsolutePath);
         }
         finally

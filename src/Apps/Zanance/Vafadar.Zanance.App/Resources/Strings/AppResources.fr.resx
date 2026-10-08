@@ -5405,4 +5405,25 @@ Ce que j’attendais :
   <data name="About_Rights" xml:space="preserve">
     <value>Zanance est un logiciel propriétaire. © Shahram Vafadar. Tous droits réservés. Les avis des composants tiers n’accordent aucun droit sur le code source de Zanance.</value>
   </data>
+  <data name="Receipt_TotalFound" xml:space="preserve">
+    <value>Le total de l’achat a été trouvé. Vérifiez-le avant d’enregistrer.</value>
+  </data>
+  <data name="Receipt_TotalReview" xml:space="preserve">
+    <value>Le total doit être vérifié. Comparez le texte au reçu ; choisissez un montant complet ci-dessous ou saisissez-le vous-même.</value>
+  </data>
+  <data name="Receipt_TotalMissing" xml:space="preserve">
+    <value>Aucun total trouvé. Les prix des articles ne sont pas utilisés comme total. Vérifiez le reçu et saisissez le montant.</value>
+  </data>
+  <data name="Receipt_UnitReview" xml:space="preserve">
+    <value>Choisissez un compte correspondant à la devise et à l’unité du reçu. Un symbole ambigu, une autre devise ou trop de décimales nécessitent une saisie manuelle ; aucune conversion de devise n’est effectuée.</value>
+  </data>
+  <data name="Receipt_UnspecifiedUnit" xml:space="preserve">
+    <value>devise du compte (ISO)</value>
+  </data>
+  <data name="Receipt_UseAmount" xml:space="preserve">
+    <value>Utiliser {0}</value>
+  </data>
+  <data name="Receipt_UnitChanged" xml:space="preserve">
+    <value>L’unité d’affichage a changé. Choisissez à nouveau le montant du reçu ou saisissez-le de nouveau avant d’enregistrer.</value>
+  </data>
 </root>

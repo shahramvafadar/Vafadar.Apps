@@ -90,3 +90,8 @@ D-63: `Run-Snapshots.ps1 -Only settings,about,notices` additionally captures the
 change/unlock and the two privacy help dialogs. It creates only a fictitious PIN and removes it in finally; it refuses
 to modify a pre-existing development PIN. Run en/fa/de in both themes at 360/412 px and wide. Snapshots do not prove
 Android secure flags, device-authenticated recovery, iOS keychain or physical-device acceptance.
+
+D-64: `Run-Snapshots.ps1 -Only receipt` captures found, conflicting, damaged, missing and currency-conflicting totals,
+plus a reread without a new amount. It checks fictitious draft state, manual choice without saving, preservation of
+the old amount and blocking a changed display unit before Save. Run en/fa/de, both themes, 360/412 px and wide. These
+layout/draft checks do not replace real file-picker/image recognition or physical Android/iOS camera acceptance.

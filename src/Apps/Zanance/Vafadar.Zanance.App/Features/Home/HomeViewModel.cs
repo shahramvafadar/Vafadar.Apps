@@ -766,7 +766,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             return;
         }
 
-        (string Name, string ContentType, byte[] Data)? file;
+        PreparedAttachment? file;
         try
         {
             file = await ChooseReceiptAsync();
@@ -791,7 +791,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         await _lock.RunWhenUnlockedAsync(() => OpenReceiptAsync(picked));
     }
 
-    private async Task<(string Name, string ContentType, byte[] Data)?> ChooseReceiptAsync()
+    private async Task<PreparedAttachment?> ChooseReceiptAsync()
     {
         if (PermissionPrompts.CanTakePhoto)
         {
@@ -801,7 +801,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             if (choice == takePhoto)
             {
                 return await PermissionPrompts.TakePhotoAsync(_translator) is { } photo
-                    ? AttachmentFiles.FromCamera(_translator["Camera_PhotoName"], photo)
+                    ? await AttachmentFiles.FromCameraAsync(_translator["Camera_PhotoName"], photo)
                     : null;
             }
 
@@ -811,10 +811,10 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             }
         }
 
-        return await AttachmentFiles.PickAsync(_translator["Attachment_Pick"]);
+        return await AttachmentFiles.PickAsync(_translator["Attachment_Pick"], forRecognition: true);
     }
 
-    private async Task OpenReceiptAsync((string Name, string ContentType, byte[] Data) picked)
+    private async Task OpenReceiptAsync(PreparedAttachment picked)
     {
         if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
         {
@@ -827,7 +827,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         IsBusy = true;
         try
         {
-            receipt = Core.Receipts.ReceiptParser.Parse(await Vafadar.Documents.Maui.DocumentReader.ReadAsync(picked.Data, picked.ContentType), Today);
+            var document = await Vafadar.Documents.Maui.DocumentReader.ReadDocumentAsync(picked.RecognitionData ?? picked.Data, picked.ContentType);
+            receipt = Core.Receipts.ReceiptParser.Parse(document.Text, Today, document.IsAmbiguous);
         }
         finally
         {
@@ -844,20 +845,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             ["kind"] = nameof(EntryKind.Expense),
             ["receiptFile"] = new PendingAttachment(picked.Name, picked.ContentType, picked.Data),
         };
-        if (receipt.Amount is { } amount)
-        {
-            query["receiptAmount"] = amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        if (receipt.Date is { } date)
-        {
-            query["receiptDate"] = date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        if (receipt.Merchant is { } merchant)
-        {
-            query["receiptPayee"] = merchant;
-        }
+        query["receipt"] = receipt;
 
         await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
     }

@@ -16,7 +16,19 @@ public sealed class SpanishReceiptTests
     [InlineData("COMERCIO EJEMPLO\nTOTAL $ 116.00\nRECIBIDO $ 200.00\nVUELTO $ 84.00", "116.00")]
     public void The_total_is_read(string text, string expected)
     {
-        Assert.Equal(decimal.Parse(expected, System.Globalization.CultureInfo.InvariantCulture), ReceiptParser.Parse(text, new DateOnly(2026, 10, 6)).Amount);
+        var receipt = ReceiptParser.Parse(text, new DateOnly(2026, 10, 6));
+        var amount = decimal.Parse(expected, System.Globalization.CultureInfo.InvariantCulture);
+        if (text.Contains('$'))
+        {
+            // The number is complete but $ does not identify a specific currency; it needs review, not autofill.
+            Assert.Null(receipt.Amount);
+            Assert.Equal(ReceiptAmountStatus.Review, receipt.AmountStatus);
+            Assert.Equal(amount, Assert.Single(receipt.Candidates).Amount);
+        }
+        else
+        {
+            Assert.Equal(amount, receipt.Amount);
+        }
     }
 
     [Fact]
@@ -37,9 +49,9 @@ public sealed class SpanishReceiptTests
     [Fact]
     public void A_phone_number_is_no_price()
     {
-        // No total word: the largest price, not the phone number or the tax id.
+        // No total word: neither an item price nor an identifier proves the purchase total.
         var receipt = ReceiptParser.Parse("TIENDA EJEMPLO\nTELÉFONO 912.345.678\nNIF B12.345.678\nPAN 1,20\nLECHE 0,95", new DateOnly(2026, 10, 6));
 
-        Assert.Equal(1.20m, receipt.Amount);
+        Assert.Null(receipt.Amount);
     }
 }

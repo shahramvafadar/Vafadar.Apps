@@ -145,6 +145,10 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   is always hidden (Android recents exclusion/secure background flags, iOS cover). Android foreground screenshots
   are blocked by default but can be allowed in Settings (D-63); iOS/Windows screenshots are not blocked. Permissions are asked in context, with the platform's own
   dialog after a short explanation (D-38); Android takes photos through the camera app without the camera permission.
+* Receipt reading (D-64): use complete purchase-total evidence, never the largest item price or an unfiltered last
+  number. Preserve OCR line/angle/page relationships and explicit currency/unit; uncertain totals remain for review.
+  Recognition uses its own bounded upright image; only the compact metadata-free copy enters attachments/backups.
+  Home and attachment rereads never save before confirmation or erase an existing amount when no new total is found.
 * Tests accompany every feature; name tests by behaviour and tag acceptance scenarios with `[Trait("AT", "AT-xx")]`.
 * The Debug snapshot walk-through (`Diagnostics/DebugSnapshots.cs`) seeds fictitious data only. Add new screens to its
   route list.

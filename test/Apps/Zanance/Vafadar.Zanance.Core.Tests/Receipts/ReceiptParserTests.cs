@@ -65,12 +65,14 @@ public sealed class ReceiptParserTests
     }
 
     [Fact]
-    public void Without_a_total_line_the_largest_amount_is_suggested_and_dates_are_not_amounts()
+    public void Without_a_total_line_no_item_price_is_suggested_and_the_date_is_kept()
     {
         var receipt = ReceiptParser.Parse("Kiosk\n12.03.2027\nZeitung 2,50\nWasser 1,20");
 
-        Assert.Equal(2.50m, receipt.Amount);
+        // An item price is not evidence for the purchase total.
+        Assert.Null(receipt.Amount);
         Assert.Equal(new DateOnly(2027, 3, 12), receipt.Date);
+        Assert.Equal("Kiosk", receipt.Merchant);
     }
 
     [Theory]
@@ -122,7 +124,8 @@ public sealed class ReceiptParserTests
     {
         var receipt = ReceiptParser.Parse("Hotel Adlon\nHauptstr. 12, 10115 Berlin\nTel. 030 1234567\nUSt-IdNr DE123456789\nSUMNE 4,10");
 
-        Assert.Equal(4.10m, receipt.Amount);
+        // A misspelled label is uncertain evidence, not a reason to choose the largest price.
+        Assert.Null(receipt.Amount);
         Assert.Equal("Hotel Adlon", receipt.Merchant);
     }
 

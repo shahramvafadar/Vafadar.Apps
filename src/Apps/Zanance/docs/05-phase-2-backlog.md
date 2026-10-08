@@ -65,3 +65,7 @@ Each finding gets a fix and, where possible, a test; the pass ends with a writte
 
 D-63 privacy maintenance: device-wide four-digit PIN, durable attempt limiting, authenticated recovery and Android
 screenshot choice are implemented in ZCR-SEC-10. Broader database/key encryption and device acceptance stay open.
+
+D-64 receipt maintenance supersedes the largest-price fallback in P2-27/P2-30: semantic total evidence, preserved
+OCR geometry, independent bounded recognition pixels and review in both entry paths. Finished local implementation
+and remaining device/image-quality acceptance are tracked only in canonical ZCR-LOC-12 / ZCR-QA-05.

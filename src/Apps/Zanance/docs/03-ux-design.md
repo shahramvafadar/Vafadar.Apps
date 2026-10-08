@@ -241,3 +241,19 @@ lightened (`CategoryLookup.DisplayColor`).
 | Own `DateField` with `SfCalendar` in dialog mode (D-59) | Date input by three number boxes (day, month, year) in the display calendar, a calendar button that opens the month view (Persian via `CalendarIdentifier.Persian`, lunar Hijri via `CalendarIdentifier.UmAlQura` for 1900–2077, otherwise Gregorian) and the full date below; a box with a number that cannot be part of a date shows red, a day past the month's end becomes its last day when the field is left |
 | `SfChip` / `SfChipGroup` | Filters |
 | `SfBusyIndicator`, `SfPopup` | Long operations, confirmations |
+
+## Receipt review (D-64)
+
+Home scan still creates an Expense draft. Reading an attachment opens the existing entry draft. Both carry the same
+Core evidence model: Found, Review or NotFound, independent of OCR character confidence. A clear total fills the
+amount only with a selected, compatible account. Conflicting/damaged totals do not fill it automatically; show the
+relevant source rows (at most 400 characters) and up to four complete choices as real 44 px buttons. Source text keeps
+its receipt script and decimal punctuation; formatted choice labels follow native-digit preferences and isolate the
+number/unit in RTL. A damaged fragment or signed total is not a selectable positive expense.
+
+Date and merchant suggestions remain usable without a total. No new amount preserves an existing amount; no scan,
+choice or reread saves anything. The user checks and saves explicitly. An explicit foreign currency, unclear symbol
+or excessive precision does not silently become the account currency. Toman is explicitly ten rials, without foreign
+exchange. An unlabelled total is labelled as the account ISO unit, independent of UI language and display preferences.
+The existing currency-change notice remains; if a display unit changes while a receipt value is still applied, Save
+stops and asks the user to choose or enter the amount again. This is receipt review, not an image editor.

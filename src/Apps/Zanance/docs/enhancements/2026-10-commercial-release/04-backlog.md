@@ -34,6 +34,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
+| ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Proposed | owner translations |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | Proposed | sample files |
@@ -42,7 +43,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Proposed | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Proposed | QA-03 |
-| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | Proposed | sample receipts |
+| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | Proposed | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
@@ -264,3 +265,19 @@ Verified: 1041 tests and strict Windows/Android builds, en/fa/de light/dark 360/
 Physical-device authentication/recents and iOS are still gates. Only device-bound Android secure-storage ciphertext
 is excluded from OS backup/transfer. SEC-01..07 database encryption, key wrapping and broader OS-backup policy stay
 Proposed; this access gate does not complete those sections or introduce commercial limits.
+
+### ZCR-LOC-12 - Receipt total maintenance (D-64)
+
+Owner-approved scope: fix purchase-total detection and OCR row reconstruction, preserve date/store, process images
+locally with bounded memory and independent recognition/storage copies, and review before saving in Home and rereads.
+No ledger/debt/default-kind, schema, commercial, cloud or unrelated design changes. Regressions were run red before
+implementation. Evidence: ReceiptEvidenceTests, existing six-language receipt tests, TextLayoutTests and PdfTextTests;
+Windows actual file-picker/OCR: inclusive-tax 4.10, 2.39-degree skew 24.90, EXIF-rotated 4.10, two totals
+requiring a manual choice, USD/EUR conflict and missing-total abstention; explicit save/stored-JPEG reread 4.10,
+including preserving the prior amount when absent. Picker/draft cancellation, unreadable PDF and failed image
+preparation left the fictitious ledger and attachments unchanged. Stored JPEGs were bounded and had no EXIF.
+Final validation: 1100 C# tests passed, zero warnings/errors in Windows/Android CI-mode builds; en/fa/de, both
+themes, 360x800 / 412x892 / 1280x900 running-app snapshots and draft checks passed; test output cleaned.
+All source/candidate data is transient. JPEG attachments are metadata-free on Windows as well as phones. Recognition
+quality on physical Android/iOS, Persian-script OCR on Android and a representative corpus remain ZCR-QA-05 gates;
+no improvement percentage is claimed and no new OCR SDK or automatic receipt crop is introduced.

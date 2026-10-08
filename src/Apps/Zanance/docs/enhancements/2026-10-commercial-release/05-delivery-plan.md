@@ -96,3 +96,7 @@ Definition of Done and testable output · proposed next section.
 Owner-approved maintenance on 2026-10-08 (D-63, ZCR-SEC-10) precedes commercial work: independent four-digit app PIN,
 attempt limiting/recovery, screenshot preference and ownership clarification. The database encryption/key recovery
 sequence is unchanged; approval is still required before beginning its next section.
+
+Owner-approved receipt maintenance on 2026-10-08 (D-64, ZCR-LOC-12) is locally verified: total evidence, OCR geometry,
+independent bounded image preparation and review in both entry paths. Device/corpus acceptance remains ZCR-QA-05.
+This does not begin a commercial section; the next proposed section remains ZCR-SEC-01 and awaits owner approval.

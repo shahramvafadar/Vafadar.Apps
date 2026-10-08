@@ -5397,4 +5397,25 @@ Pasos para reproducirlo:
   <data name="About_Rights" xml:space="preserve">
     <value>Zanance es software propietario. © Shahram Vafadar. Todos los derechos reservados. Los avisos de componentes de terceros no otorgan derechos sobre el código fuente de Zanance.</value>
   </data>
+  <data name="Receipt_TotalFound" xml:space="preserve">
+    <value>Se ha encontrado el total de la compra. Revísalo antes de guardar.</value>
+  </data>
+  <data name="Receipt_TotalReview" xml:space="preserve">
+    <value>El total necesita revisión. Compara el texto con el recibo; elige un importe completo abajo o introdúcelo tú.</value>
+  </data>
+  <data name="Receipt_TotalMissing" xml:space="preserve">
+    <value>No se ha encontrado el total. Los precios de los artículos no se usan como total. Revisa el recibo e introduce el importe.</value>
+  </data>
+  <data name="Receipt_UnitReview" xml:space="preserve">
+    <value>Elige una cuenta que corresponda a la moneda y unidad del recibo. Si el símbolo es ambiguo, la moneda difiere o hay demasiados decimales, introduce el importe manualmente; no se convierte la moneda.</value>
+  </data>
+  <data name="Receipt_UnspecifiedUnit" xml:space="preserve">
+    <value>moneda de la cuenta (ISO)</value>
+  </data>
+  <data name="Receipt_UseAmount" xml:space="preserve">
+    <value>Usar {0}</value>
+  </data>
+  <data name="Receipt_UnitChanged" xml:space="preserve">
+    <value>La unidad de visualización ha cambiado. Vuelve a elegir el importe del recibo o introdúcelo de nuevo antes de guardar.</value>
+  </data>
 </root>

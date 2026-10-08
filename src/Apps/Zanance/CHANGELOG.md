@@ -6,6 +6,20 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Receipt total suggestions (2026-10-08, D-64)
+
+- Read the purchase total beside inclusive tax text; do not substitute tax, item prices, loyalty points, document
+  numbers, quantities, unit prices, tendered cash or change. Broken numeric tokens and negative totals need review;
+  a zero total never falls back to an item price.
+- Keep OCR line relationships, full word boxes, rotation and PDF page boundaries, including small decimal separators
+  and separate price columns. Suspicious legacy geometry is marked for review.
+- Recognize new photos from a separate, bounded upright image up to 3200 px; store only a metadata-free JPEG up to
+  1600 px on every platform. Reading an existing attachment cannot recover detail already lost in its stored copy.
+- The entry form shows whether the total was found, needs review or was not found, with source rows and a few
+  complete choices. Missing totals keep the existing amount, date/store suggestions still work, and nothing saves
+  before confirmation. Explicit currencies and rial/toman units stay attached to the number; conflicting or unclear
+  units need manual entry. Changes of display unit cannot silently reinterpret an applied receipt amount.
+
 ### Added – Privacy controls (2026-10-08, D-63)
 
 - Optional four-digit app PIN in Settings, shared by all profiles on this device. Change or remove it with the current

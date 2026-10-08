@@ -34,7 +34,8 @@ public sealed partial class EntryDetailViewModel(
     ILocalizationService localization,
     IDateFormatter dates,
     UndoService undo,
-    HoldingStore holdings) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    HoldingStore holdings,
+    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private Guid? _holdingTypeId;
@@ -295,39 +296,25 @@ public sealed partial class EntryDetailViewModel(
             return;
         }
 
-        string? text;
+        Vafadar.Documents.TextLayoutResult document;
         IsBusy = true;
         try
         {
-            text = await DocumentReader.ReadAsync(attachment.Data, attachment.ContentType);
+            document = await DocumentReader.ReadDocumentAsync(attachment.Data, attachment.ContentType);
         }
         finally
         {
             IsBusy = false;
         }
 
-        var receipt = Core.Receipts.ReceiptParser.Parse(text);
+        var receipt = Core.Receipts.ReceiptParser.Parse(document.Text, DateOnly.FromDateTime(time.GetLocalNow().DateTime), document.IsAmbiguous);
         if (receipt.IsEmpty)
         {
             await Shell.Current.DisplayAlertAsync(translator["Receipt_Title"], translator["Receipt_Nothing"], translator["Common_Ok"]);
             return;
         }
 
-        var query = new Dictionary<string, object> { ["id"] = _id };
-        if (receipt.Amount is { } amount)
-        {
-            query["receiptAmount"] = amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        if (receipt.Date is { } date)
-        {
-            query["receiptDate"] = date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        if (receipt.Merchant is { } merchant)
-        {
-            query["receiptPayee"] = merchant;
-        }
+        var query = new Dictionary<string, object> { ["id"] = _id, ["receipt"] = receipt };
 
         await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
     }

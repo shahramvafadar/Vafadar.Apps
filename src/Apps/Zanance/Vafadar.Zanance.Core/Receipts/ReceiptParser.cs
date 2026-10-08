@@ -7,18 +7,27 @@ using Vafadar.Core.Text;
 namespace Vafadar.Zanance.Core.Receipts;
 
 /// <summary>Values read from a receipt. Every value is a suggestion the user reviews before anything is saved (D-31).</summary>
-/// <param name="Amount">The total, as a number in the receipt's notation (not yet in minor units).</param>
+/// <param name="Amount">A found purchase total in the receipt's unit; null when review is required (not yet minor units).</param>
 /// <param name="Date">The purchase date.</param>
 /// <param name="Merchant">The shop or company, usually the first line.</param>
 public sealed record ReceiptSuggestion(decimal? Amount, DateOnly? Date, string? Merchant)
 {
+    /// <summary>Gets whether the numeric evidence is usable or needs review.</summary>
+    public ReceiptAmountStatus AmountStatus { get; init; }
+
+    /// <summary>Gets at most four complete total candidates, with their original rows and units.</summary>
+    public IReadOnlyList<ReceiptAmountCandidate> Candidates { get; init; } = [];
+
+    /// <summary>Gets the relevant rows when a damaged number cannot form a candidate.</summary>
+    public string? AmountSource { get; init; }
+
     /// <summary>Gets a value indicating whether nothing usable was found.</summary>
-    public bool IsEmpty => Amount is null && Date is null && Merchant is null;
+    public bool IsEmpty => Amount is null && Date is null && Merchant is null && AmountStatus == ReceiptAmountStatus.NotFound;
 }
 
 /// <summary>
 /// Reads the total, the date and the merchant from the text of a receipt (on-device OCR, D-31). It prefers a line with a
-/// total keyword (Total, Summe, Gesamt, Totale, جمع, مبلغ قابل پرداخت …) and falls back to the largest amount. Persian and
+/// total keyword (Total, Summe, Gesamt, Totale, جمع, مبلغ قابل پرداخت …). Item prices never substitute for a total. Persian and
 /// Arabic digits are accepted; dates may be Gregorian, Solar Hijri or lunar Hijri (a year from 1300 to 1500 is read in the
 /// Hijri calendar that gives the date nearer to today: solar years are now around 1405, lunar years around 1447).
 /// </summary>
@@ -44,16 +53,16 @@ public static partial class ReceiptParser
     // Phrases that name the total although they contain a word of NotTotal: Italian "TOTALE IVA INCLUSA" is the total
     // with tax ("totale iva" alone is the tax), and "NETTO A PAGARE" is the amount to pay (German "netto" is not).
     // They are taken out of a line only for the NotTotal check.
-    private static readonly string[] TotalDespiteExclusion = ["iva inclusa", "iva compresa", "netto a pagare"];
+    private static readonly string[] TotalDespiteExclusion = ["iva inclusa", "iva compresa", "iva incluido", "iva incluida", "tva comprise", "tva incluse", "netto a pagare"];
 
-    // Spanish "IVA" and "efectivo" are not listed: "TOTAL IVA INCLUIDO" and "TOTAL EFECTIVO" name the purchase total; a
-    // tax-only row has no total word, and cash handed over is "efectivo entregado".
+    // Inclusive-tax phrases name the gross total; "TOTAL IVA/TVA" alone names tax. Cash handed over is
+    // "efectivo entregado", not the purchase-total phrase "TOTAL EFECTIVO".
     private static readonly string[] NotTotal =
     [
         "sub", "subtotal", "zwischensumme", "mwst", "ust", "steuer", "netto", "nettobetrag", "tax", "vat", "rabatt", "ersparnis",
         "gesamtersparnis", "discount", "items", "artikel", "bar", "gegeben", "rückgeld", "change", "cash", "tip",
         "تخفیف", "مالیات", "تعداد", "باقیمانده", "دریافتی",
-        "sub total", "base imponible", "descuento", "descuentos", "ahorro", "efectivo entregado", "recibido", "cambio", "vuelto",
+        "sub total", "base imponible", "total iva", "total tva", "descuento", "descuentos", "ahorro", "efectivo entregado", "recibido", "cambio", "vuelto",
         "vuelta", "propina",
         "sous total", "sous-total", "total ht", "total hors taxes", "hors taxes", "dont tva", "montant tva", "remise", "remises",
         "réduction", "reduction", "rabais", "escompte", "pourboire", "pourboires", "espèces reçues", "especes recues",
@@ -86,7 +95,8 @@ public static partial class ReceiptParser
     /// <summary>Reads a receipt text.</summary>
     /// <param name="text">The recognised text.</param>
     /// <param name="today">The day the receipt is read, to tell solar from lunar Hijri years; default: today.</param>
-    public static ReceiptSuggestion Parse(string? text, DateOnly? today = null)
+    /// <param name="uncertainLayout">Whether the document reader found an ambiguous relationship between columns.</param>
+    public static ReceiptSuggestion Parse(string? text, DateOnly? today = null, bool uncertainLayout = false)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -96,18 +106,26 @@ public static partial class ReceiptParser
         // Persian and Arabic separators become Latin ones; OCR sometimes puts a space after the decimal separator ("2, 90").
         // A no-break space between digit groups ("1 234,56" in French) always groups thousands, so it is removed here;
         // a plain space is joined only on a total line (FindTotal), where it cannot glue a quantity to a price.
-        var normalized = SplitDecimals().Replace(Digits.ToAscii(text).Replace('٫', '.').Replace('٬', ',').Replace('،', ','), "$1$2$3");
+        var normalized = SplitDecimals().Replace(FoldPersian(Digits.ToAscii(text)).Replace('٫', '.').Replace('٬', ',').Replace('،', ','), "$1$2$3");
         normalized = NoBreakGroups().Replace(normalized, string.Empty);
-        var lines = normalized.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        return new ReceiptSuggestion(FindTotal(lines), FindDate(lines, today ?? DateOnly.FromDateTime(DateTime.Today)), FindMerchant(lines));
+        // Keep page boundaries as an unmatchable row so neighbouring-page totals cannot borrow an amount.
+        var lines = normalized.Replace("\f", "\n[page boundary]\n", StringComparison.Ordinal)
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var evidence = FindTotal(lines, uncertainLayout);
+        return new ReceiptSuggestion(evidence.Amount, FindDate(lines, today ?? DateOnly.FromDateTime(DateTime.Today)), FindMerchant(lines))
+        {
+            AmountStatus = evidence.AmountStatus,
+            Candidates = evidence.Candidates,
+            AmountSource = evidence.AmountSource,
+        };
     }
 
     /// <summary>Reads an amount like <c>1.234,56</c>, <c>1,234.56</c>, <c>12,50</c> or <c>125,000</c>.</summary>
     public static bool TryAmount(string text, out decimal amount)
     {
         amount = 0;
-        var value = text.Trim().TrimStart('-', '+');
-        if (value.Length == 0)
+        var value = text.Trim();
+        if (value.Length == 0 || !CompleteNumber().IsMatch(value))
         {
             return false;
         }
@@ -135,63 +153,153 @@ public static partial class ReceiptParser
             normalized = value;
         }
 
-        return decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount) && amount > 0;
+        return decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount) && amount >= 0;
     }
 
-    private static decimal? FindTotal(string[] lines)
+    private static ReceiptSuggestion FindTotal(string[] lines, bool uncertainLayout)
     {
-        // A strong total keyword first, then a weak one; the last matching line wins because a subtotal comes earlier.
-        // Tax, discount, item-count, cash-given and change lines never hold the total.
+        var sources = new List<string>();
+        var paymentSources = new List<string>();
         foreach (var keywords in new[] { StrongTotal, WeakTotal })
         {
-            for (var i = lines.Length - 1; i >= 0; i--)
+            var candidates = new List<ReceiptAmountCandidate>();
+            var damaged = uncertainLayout;
+            for (var i = 0; i < lines.Length; i++)
             {
-                // "Total TTC 24,00 (dont TVA 4,00)": the tax part of the line is no reason to drop its total.
-                var line = TaxBreakdown().Replace(lines[i], " ");
+                // Remove bounded tax annotations, not everything after "inkl.": the gross amount may follow it.
+                var line = InclusiveTax().Replace(TaxBreakdown().Replace(lines[i], " "), " ");
                 var tokens = Tokens(line);
-                if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(WithoutTotalPhrases(tokens), k)))
+                if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(WithoutTotalPhrases(tokens), k))
+                    || NonMoney.Any(k => Has(tokens, k)) || UnitPriceLine().IsMatch(line))
                 {
                     continue;
                 }
 
-                var amounts = Amounts(SpaceGroups().Replace(line, string.Empty), strict: false).ToList();
-                if (amounts.Count == 0 && i + 1 < lines.Length && !NotTotal.Any(k => Has(Tokens(lines[i + 1]), k)))
+                if (PaymentOnly.Any(k => Has(tokens, k)))
                 {
-                    amounts = [.. Amounts(SpaceGroups().Replace(lines[i + 1], string.Empty), strict: false)];
+                    paymentSources.Add(lines[i]);
+                    continue;
                 }
 
-                if (amounts.Count > 0)
+                sources.Add(lines[i]);
+                var amountLine = line;
+                var candidateSource = lines[i];
+                // Only a price/unit-only next row is evidence for a detached total. A document number, another label
+                // or the next page must never become the total of the preceding row.
+                if (!line.Any(char.IsDigit) && i + 1 < lines.Length && PriceOnly().IsMatch(lines[i + 1])
+                    && !NotPrice.Concat(NotTotal).Concat(NonMoney).Any(k => Has(Tokens(lines[i + 1]), k)))
                 {
-                    return amounts[^1];
+                    amountLine = lines[i + 1];
+                    candidateSource += "\n" + amountLine;
+                    sources.Add(amountLine);
                 }
+
+                var identifier = IdentifierTail().Match(amountLine);
+                if (identifier.Success)
+                {
+                    amountLine = amountLine[..identifier.Index];
+                }
+
+                amountLine = SpaceGroups().Replace(amountLine, string.Empty);
+                amountLine = TimePattern().Replace(DatePattern().Replace(amountLine, m => new string(' ', m.Length)), m => new string(' ', m.Length));
+                var matches = AmountPattern().Matches(amountLine);
+                var unitMatches = CurrencyUnits().Matches(amountLine).Cast<Match>()
+                    .Where(u => Vafadar.Zanance.Core.Money.Currencies.TryGet(u.Value.ToUpperInvariant(), out _)
+                        || u.Value is "€" or "£" or "$" or "ریال" or "تومان").ToArray();
+                damaged |= unitMatches.Select(u => Unit(u.Value)).Distinct().Count() > 1;
+                var prefixUnits = unitMatches.Length > 0 && matches.Count > 0 && unitMatches[0].Index < matches[0].Index;
+                // Reject the complete damaged token. A later valid number must not hide an OCR letter in the total.
+                damaged |= NumericToken().Matches(amountLine).Cast<Match>()
+                    .Any(m => !CompleteNumber().IsMatch(m.Value) && !m.Value.All(char.IsDigit));
+                var valid = new List<ReceiptAmountCandidate>();
+                foreach (Match match in matches)
+                {
+                    var after = amountLine[(match.Index + match.Length)..].TrimStart();
+                    var before = amountLine[..match.Index].TrimEnd();
+                    if (before.EndsWith('-') || before.EndsWith('−') || after.StartsWith('-') || after.StartsWith('−')
+                        || before.EndsWith('(') && after.StartsWith(')'))
+                    {
+                        damaged = true;
+                        continue;
+                    }
+
+                    if (after.StartsWith('%') || MeasureSuffix().IsMatch(after))
+                    {
+                        continue;
+                    }
+
+                    if (!TryAmount(match.Value, out var amount) || amount >= 100_000_000_000m)
+                    {
+                        damaged = true;
+                        continue;
+                    }
+
+                    var unitMatch = unitMatches.Where(u => u.Index >= match.Index + match.Length
+                        ? string.IsNullOrWhiteSpace(amountLine[(match.Index + match.Length)..u.Index])
+                        : u.Index + u.Length <= match.Index && string.IsNullOrWhiteSpace(amountLine[(u.Index + u.Length)..match.Index]))
+                        .OrderBy(u => prefixUnits ? u.Index > match.Index : u.Index < match.Index)
+                        .ThenBy(u => u.Index >= match.Index + match.Length ? u.Index - match.Index - match.Length : match.Index - u.Index - u.Length)
+                        .FirstOrDefault();
+                    unitMatch ??= unitMatches.Length == 1 ? unitMatches[0] : null;
+                    // More than one printed unit beside a single number has no unambiguous association.
+                    var unit = unitMatch is not null ? Unit(unitMatch.Value)
+                        : (Code: (string?)null, Factor: 1, Label: unitMatches.Length > 1 ? "?" : (string?)null);
+                    valid.Add(new ReceiptAmountCandidate(amount, candidateSource, unit.Code, unit.Factor, unit.Label));
+                    if (Vafadar.Zanance.Core.Money.Currencies.TryGet(unit.Code, out var currency) && currency.MinorDigits == 3
+                        && match.Value.Count(c => c is '.' or ',') == 1 && match.Value.Length - Math.Max(match.Value.LastIndexOf('.'), match.Value.LastIndexOf(',')) - 1 == 3)
+                    {
+                        // Without a receipt locale, 12.345 KWD may mean 12.345 or 12,345. Keep both interpretations for
+                        // review rather than turning a legitimate three-decimal currency into a confident thousand.
+                        valid.Add(new ReceiptAmountCandidate(amount / 1000, candidateSource, unit.Code, unit.Factor, unit.Label));
+                        damaged = true;
+                    }
+
+                    damaged |= unit.Label is not null && unit.Code is null;
+                }
+
+                // A malformed OCR token is not permission to salvage a trailing fragment, nor to read the next row.
+                damaged |= valid.Count == 0;
+                candidates.AddRange(valid);
             }
-        }
 
-        // No total line: the largest price-like amount, never a postal code, phone number or id, and never cash handed
-        // over, change, tax or a discount (a receipt with only "cash 100,00 / change 12,00" has no readable total).
-        var prices = lines.Where(l => !NotPrice.Any(k => Has(Tokens(l), k)) && !NotTotal.Any(k => Has(Tokens(l), k)))
-            .SelectMany(l => Amounts(l, strict: true)).ToList();
-        return prices.Count > 0 ? prices.Max() : null;
-    }
-
-    private static IEnumerable<decimal> Amounts(string line, bool strict)
-    {
-        // Dates and times are not amounts.
-        var text = TimePattern().Replace(DatePattern().Replace(line, " "), " ");
-        foreach (Match match in AmountPattern().Matches(text))
-        {
-            // Strict: only numbers written like prices (with decimals or thousands groups).
-            if (strict && !match.Value.Contains(',') && !match.Value.Contains('.'))
+            if (sources.Count == 0)
             {
                 continue;
             }
 
-            if (TryAmount(match.Value, out var amount) && amount < 100_000_000_000m)
+            var distinct = candidates.DistinctBy(c => (c.Amount, c.CurrencyCode, c.MajorUnitFactor, c.UnitLabel)).ToArray();
+            var found = distinct.Length == 1 && !damaged;
+            return new ReceiptSuggestion(found ? distinct[0].Amount : null, null, null)
             {
-                yield return amount;
-            }
+                AmountStatus = found ? ReceiptAmountStatus.Found : ReceiptAmountStatus.Review,
+                Candidates = distinct.Take(4).ToArray(),
+                AmountSource = string.Join('\n', sources.Distinct().Take(4)),
+            };
         }
+
+        return new ReceiptSuggestion(null, null, null)
+        {
+            AmountStatus = paymentSources.Count > 0 ? ReceiptAmountStatus.Review : ReceiptAmountStatus.NotFound,
+            AmountSource = paymentSources.Count > 0 ? string.Join('\n', paymentSources.Distinct().Take(4)) : null,
+        };
     }
+
+    private static (string? Code, int Factor, string? Label) Unit(string value)
+    {
+        return value switch
+        {
+            "€" => ("EUR", 1, "EUR"),
+            "£" => ("GBP", 1, "GBP"),
+            "$" => (null, 1, "$"),
+            "ریال" => ("IRR", 1, "ریال"),
+            "تومان" => ("IRR", 10, "تومان"),
+            _ => (value.ToUpperInvariant(), 1, value.ToUpperInvariant()),
+        };
+    }
+
+    private static readonly string[] NonMoney = ["points", "loyalty", "punkte", "puntos", "punti", "امتیاز", "liters", "litres", "liter", "litri", "لیتر", "kg", "weight", "وزن", "quantity", "qty", "unit price", "einzelpreis", "stückpreis", "prix unitaire", "precio unitario", "prezzo unitario"];
+
+    private static readonly string[] PaymentOnly = ["balance due", "remaining", "deposit", "prepayment", "paid", "pagado", "pagato", "payé", "paye", "réglé", "regle", "مانده", "پیش پرداخت"];
 
     // The lower-case words of a line, padded with spaces so that whole words and phrases can be found. Keywords match the
     // Arabic letter forms of PDFs and OCR (ي, ى, ك) and words written with or without a half-space ("باقی‌مانده").
@@ -283,14 +391,35 @@ public static partial class ReceiptParser
         lines.Take(4).FirstOrDefault(l =>
         {
             var tokens = Tokens(l);
-            return l.Count(char.IsLetter) >= 3
+            return l != "[page boundary]" && l.Count(char.IsLetter) >= 3
                 && !NotMerchant.Any(k => Has(tokens, k))
                 && !StrongTotal.Concat(WeakTotal).Any(k => Has(tokens, k))
                 && !l.Contains("www.", StringComparison.OrdinalIgnoreCase) && !l.Contains('@');
         })?.Trim();
 
-    [GeneratedRegex(@"\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{1,2})?|\d+(?:[.,]\d{1,2})?", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"(?<![\p{L}\p{N}.,+−-])[+−-]?\d+(?:[.,]\d+)*[−-]?(?![\p{L}\p{N}.,])", RegexOptions.CultureInvariant)]
     private static partial Regex AmountPattern();
+
+    [GeneratedRegex(@"^(?:\d+|\d+[.,]\d{1,2}|\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{1,2})?)$", RegexOptions.CultureInvariant)]
+    private static partial Regex CompleteNumber();
+
+    [GeneratedRegex(@"(?<![\p{L}\p{N}])[+−-]?\d[\p{L}\p{N}.,]*[−-]?", RegexOptions.CultureInvariant)]
+    private static partial Regex NumericToken();
+
+    [GeneratedRegex(@"^(?:[A-Z]{3}|[€£$]|ریال|تومان)?\s*\d+(?:[.,\s]\d+)*\s*(?:[A-Z]{3}|[€£$]|ریال|تومان)?$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex PriceOnly();
+
+    [GeneratedRegex(@"(?:\b[A-Z]{3}\b|[€£$]|ریال|تومان)", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex CurrencyUnits();
+
+    [GeneratedRegex(@"^(?:[A-Z]{3}\s*)?\s*/\s*(?:l|kg|g|liter|litre)\b|^(?:l|kg|g|ml|grams?|liters?|litres?|litri)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex MeasureSuffix();
+
+    [GeneratedRegex(@"/\s*(?:l|kg|g|liter|litre)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex UnitPriceLine();
+
+    [GeneratedRegex(@"\b(?:beleg\s*(?:nr|nummer)|receipt\s*#|nr\.?|no\.?|id|tel(?:efon|ephone)?|fax|folio|nif|siret|numero\s+(?:documento|scontrino|fattura)|numéro\s+de\s+(?:facture|ticket))\s*[:.#]?\s*[\p{L}\d]", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex IdentifierTail();
 
     [GeneratedRegex(@"\b\d{1,4}[./-]\d{1,2}[./-]\d{2,4}\b", RegexOptions.CultureInvariant)]
     private static partial Regex DatePattern();
@@ -298,7 +427,7 @@ public static partial class ReceiptParser
     [GeneratedRegex(@"\b\d{1,2}:\d{2}(?::\d{2})?\b", RegexOptions.CultureInvariant)]
     private static partial Regex TimePattern();
 
-    [GeneratedRegex(@"(\d)([.,]) +(\d{2})\b", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"(\d)[ \u00A0\u202F]*([.,])[ \u00A0\u202F]*(\d{1,2})(?!\d)", RegexOptions.CultureInvariant)]
     private static partial Regex SplitDecimals();
 
     // A no-break or narrow no-break space followed by exactly three digits: a thousands group ("1 234,56").
@@ -310,8 +439,11 @@ public static partial class ReceiptParser
     private static partial Regex SpaceGroups();
 
     // A tax breakdown on a total line: French "(dont TVA 4,00)" or "dont TVA 4,00", Italian "(di cui IVA 4,33)".
-    [GeneratedRegex(@"\(?\s*\b(?:dont\s+t\.?v\.?a|di\s+cui\s+iva)\b[^)]*\)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"\([^)]*\b(?:mwst|ust|tax|vat|tva|iva)\b[^)]*\)|\b(?:dont\s+t\.?v\.?a|di\s+cui\s+iva)\s+\d+(?:[.,]\d+)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
     private static partial Regex TaxBreakdown();
+
+    [GeneratedRegex(@"\b(?:inkl\.?|inklusive|including)\s*(?:\d+(?:[.,]\d+)?\s*%\s*)?(?:mwst|ust|tax|vat)\.?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    private static partial Regex InclusiveTax();
 
     // Letters (with "\u00B0" for "n\u00B0 facture") of the words a line is matched by.
     [GeneratedRegex(@"[\p{L}\p{M}\u200C\u00B0]+", RegexOptions.CultureInvariant)]

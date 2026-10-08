@@ -14,6 +14,10 @@
   without losing the draft; restore protected and unprotected files without an extra account. For each released cloud
   provider, upload/restore with protection on and off, with a real OAuth client. Windows checks do not close this gate.
 
+- [ ] D-64 receipt acceptance (AT-71, ZCR-QA-05): physical Android/iOS camera and file selection, EXIF, skew,
+  missing/conflicting totals, currency/unit review, stored-image reread, cancel/error and explicit-save checks on
+  representative receipts. Windows synthetic-image/UI checks and C# regressions pass; they do not close this gate.
+
 ## Privacy and security
 
 - [ ] Privacy matrix (06) reviewed against the release APK/AAB: package list, merged manifest permissions, network traffic

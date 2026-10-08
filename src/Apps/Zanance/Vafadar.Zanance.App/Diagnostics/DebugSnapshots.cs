@@ -212,6 +212,18 @@ internal static class DebugSnapshots
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
+            ("receipt-found", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\n28.09.2026\nSUMME 4,10 EUR (inkl. MwSt. 0,27)") }),
+            ("receipt-review", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\nTOTAL 12,34 EUR\nTOTAL 15,00 EUR") }),
+            ("receipt-damaged", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\nTOTAL 12,O9") }),
+            ("receipt-missing", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\n28.09.2026\nWater 1,20\nBread 2,50") }),
+            ("receipt-conflict", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\nTOTAL 12,34 USD") }),
+            ("receipt-reread-missing", AppShell.EntryEditorRoute, new() { ["id"] = expenseId,
+                ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\n28.09.2026\nWater 1,20\nBread 2,50") }),
             ("split", AppShell.SplitRoute, new() { ["id"] = expenseId }),
             ("reimbursements", AppShell.ReimbursementsRoute, null),
             ("rules", AppShell.RulesRoute, null),
@@ -290,6 +302,13 @@ internal static class DebugSnapshots
             {
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
                 await Task.Delay(1500);
+                if (name.StartsWith("receipt-", StringComparison.Ordinal)
+                    && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)?.BindingContext
+                        is Features.Entries.EntryEditorViewModel receiptEditor)
+                {
+                    await VerifyReceiptEditorAsync(services, name, receiptEditor, expenseId);
+                }
+
                 await CaptureAsync(app, folder, $"{language}-{name}");
 #if WINDOWS
                 if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
@@ -597,6 +616,72 @@ internal static class DebugSnapshots
         var first = Occurrences.Between(rent, states, rentStart, rentStart, today).Single();
         await plans.SettleAsync(first, Occurrences.CreateEntry(first, 95_000, rentStart, ReviewState.Confirmed));
         return (rent.Id, rentStart.AddMonths(1));
+    }
+
+    /// <summary>Checks receipt draft behaviour on fictitious data; saving remains an explicit user action.</summary>
+    private static async Task VerifyReceiptEditorAsync(IServiceProvider services, string name,
+        Features.Entries.EntryEditorViewModel editor, Guid expenseId)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var before = (await store.GetEntriesAsync()).Count;
+        var culture = services.GetRequiredService<ILocalizationService>().CurrentCulture;
+        if (name == "receipt-found")
+        {
+            if (!Core.Money.MoneyText.TryParse(editor.AmountText, "EUR", culture, out var amount) || amount != 410)
+            {
+                throw new InvalidOperationException("A clear receipt did not fill the purchase total.");
+            }
+
+            var units = Core.Money.DisplayUnits.All;
+            try
+            {
+                Core.Money.DisplayUnits.Set(units.Append(new Core.Money.DisplayUnit("EUR", "Euro x10", 1)));
+                await editor.SaveCommand.ExecuteAsync(null);
+                if (editor.SaveError is null || (await store.GetEntriesAsync()).Count != before)
+                {
+                    throw new InvalidOperationException("A changed display unit silently reinterpreted a receipt.");
+                }
+            }
+            finally
+            {
+                Core.Money.DisplayUnits.Set(units);
+                editor.UseReceiptAmountCommand.Execute(editor.ReceiptChoices[0]);
+                editor.SaveError = null;
+            }
+        }
+        else if (name == "receipt-review")
+        {
+            var original = editor.AmountText;
+            if (!string.IsNullOrWhiteSpace(original) || editor.ReceiptChoices.Count != 2)
+            {
+                throw new InvalidOperationException("Conflicting totals filled a draft automatically.");
+            }
+
+            editor.UseReceiptAmountCommand.Execute(editor.ReceiptChoices[0]);
+            if (!Core.Money.MoneyText.TryParse(editor.AmountText, "EUR", culture, out var chosen) || chosen != 1234)
+            {
+                throw new InvalidOperationException("A manual receipt choice did not fill the form.");
+            }
+
+            editor.AmountText = original;
+        }
+        else if (name == "receipt-reread-missing")
+        {
+            var existing = await store.GetEntryAsync(expenseId);
+            if (!Core.Money.MoneyText.TryParse(editor.AmountText, "EUR", culture, out var amount) || existing?.Amount != amount)
+            {
+                throw new InvalidOperationException("A receipt without a total erased the existing amount.");
+            }
+        }
+        else if (!string.IsNullOrWhiteSpace(editor.AmountText))
+        {
+            throw new InvalidOperationException("Unsafe receipt evidence filled the draft automatically.");
+        }
+
+        if ((await store.GetEntriesAsync()).Count != before)
+        {
+            throw new InvalidOperationException("Reviewing a receipt changed the ledger before confirmation.");
+        }
     }
 
     private static ScrollView? FindScrollView(Page? root)

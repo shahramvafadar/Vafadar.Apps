@@ -39,13 +39,20 @@ public static class TextRecognizer
         var words = new List<LayoutWord>();
         using var request = new Vision.VNRecognizeTextRequest((request, error) =>
         {
+            var lineId = 0;
             foreach (var observation in request.GetResults<Vision.VNRecognizedTextObservation>() ?? [])
             {
-                if (observation.TopCandidates(1).FirstOrDefault()?.String is { Length: > 0 } text)
+                if (observation.TopCandidates(1).FirstOrDefault() is { String.Length: > 0 } candidate)
                 {
                     // Vision's origin is the lower left corner; read from the top.
                     var box = observation.BoundingBox;
-                    words.Add(new LayoutWord(1 - box.Y - box.Height, 1 - box.Y, box.X, text));
+                    var left = observation.TopLeft;
+                    var right = observation.TopRight;
+                    var angle = -Math.Atan2(right.Y - left.Y, right.X - left.X) * 180 / Math.PI;
+                    words.Add(new LayoutWord(1 - box.Y - box.Height, 1 - box.Y, box.X, candidate.String)
+                    {
+                        Right = box.X + box.Width, LineId = lineId++, Angle = angle, Confidence = candidate.Confidence,
+                    });
                 }
             }
         })
@@ -84,18 +91,28 @@ public static class TextRecognizer
         }
 
         var words = new List<LayoutWord>();
+        var blockId = 0;
         foreach (var block in result.TextBlocks)
         {
+            var lineId = 0;
             foreach (var line in block.Lines)
             {
                 foreach (var element in line.Elements)
                 {
                     if (element.BoundingBox is { } box && !string.IsNullOrEmpty(element.Text))
                     {
-                        words.Add(new LayoutWord(box.Top, box.Bottom, box.Left, element.Text));
+                        words.Add(new LayoutWord(box.Top, box.Bottom, box.Left, element.Text)
+                        {
+                            Right = box.Right, BlockId = blockId, LineId = lineId, Angle = line.Angle,
+                            Confidence = element.Confidence,
+                        });
                     }
                 }
+
+                lineId++;
             }
+
+            blockId++;
         }
 
         return words;
@@ -135,7 +152,12 @@ public static class TextRecognizer
             global::Windows.Graphics.Imaging.ExifOrientationMode.RespectExifOrientation,
             global::Windows.Graphics.Imaging.ColorManagementMode.DoNotColorManage);
         var result = await engine.RecognizeAsync(bitmap);
-        return [.. result.Lines.SelectMany(l => l.Words).Select(w => new LayoutWord(w.BoundingRect.Y, w.BoundingRect.Y + w.BoundingRect.Height, w.BoundingRect.X, w.Text))];
+        // Windows returns upright word boxes; applying TextAngle again would skew them a second time.
+        return [.. result.Lines.SelectMany((line, index) => line.Words.Select(w => new LayoutWord(
+            w.BoundingRect.Y, w.BoundingRect.Y + w.BoundingRect.Height, w.BoundingRect.X, w.Text)
+        {
+            Right = w.BoundingRect.X + w.BoundingRect.Width, LineId = index, Angle = 0, SourceAngle = result.TextAngle,
+        }))];
     }
 #endif
 }

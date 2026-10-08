@@ -46,7 +46,7 @@
 | DF-16 | Android Auto Backup | App database and preferences. | The user's Google account backup. | Implemented — unverified (enabled by owner decision). | Disclose in the Privacy Policy and Data Safety; test restore on a new device. |
 | DF-17 | iOS device / iCloud backup | App data. | The user's iCloud or computer backup. | Implemented — unverified (operating-system default). | Disclose; verify with the iOS release. |
 | DF-18 | Preferences | Language, calendar, optional region, first day of the week, theme, currency display units, Home layout, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
-| DF-20 | Attachments | Receipt photos and PDF files the user picks for an entry; on Android and iOS photos are re-encoded as JPEG without metadata; a photo that cannot be re-encoded is not stored. | App database, the encrypted backup and OS backups; never in exports; opened with an app the user chooses through a temporary copy that is deleted on the next start. | Implemented — verified. | Uses the system file picker without any camera, storage or photo permission; removed at the next start after their entry is deleted. |
+| DF-20 | Attachments | Receipt photos and PDF files the user picks for an entry; on Android, iOS and Windows photos are re-encoded as JPEG without metadata; a photo that cannot be re-encoded is not stored. | App database, the encrypted backup and OS backups; never in exports; opened with an app the user chooses through a temporary copy that is deleted on the next start. | Implemented — verified. | Uses the system file picker without any camera, storage or photo permission; removed at the next start after their entry is deleted. |
 | DF-19 | Syncfusion license validation | License key compiled into the app (build secret, never in the repository). | Local check. | Implemented — offline validation verified by an automated test. | Confirm no network call in the release build (none possible on Android without the INTERNET permission). |
 
 ## 4. Per-Flow Detail Form
@@ -86,3 +86,8 @@ A financial account in the ledger differs from an app login account. Connecting 
 An encrypted backup in the user's own storage does not automatically exempt identity collection, metadata, or SDK behavior from Data Safety assessment. Evaluate every flow against current definitions; do not derive the declaration from marketing claims.
 
 **Review sources:** S01 and S02 in Section 30 of the main specification. This file deliberately does not fabricate a legal conclusion or a submission-ready status.
+
+D-64: original photo bytes are transient during recognition only; a separate upright copy is bounded to 3200 px,
+while only the 1600 px metadata-free JPEG is attached and backed up. Source rows/candidates/currency evidence are
+not additional database fields or exports. No new permission, SDK or network path. A stored-image reread cannot
+recover lost detail. Recognition/rendering errors and cancellation do not post ledger entries.

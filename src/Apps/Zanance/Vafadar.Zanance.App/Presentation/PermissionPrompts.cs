@@ -134,9 +134,7 @@ internal static class PermissionPrompts
             }
 
             await using var stream = await file.OpenReadAsync();
-            using var buffer = new MemoryStream();
-            await stream.CopyToAsync(buffer);
-            return buffer.ToArray();
+            return await AttachmentFiles.ReadSourceAsync(stream);
         }
         catch (PermissionException)
         {

@@ -5417,4 +5417,25 @@ Passaggi per riprodurre il problema:
   <data name="About_Rights" xml:space="preserve">
     <value>Zanance è software proprietario. © Shahram Vafadar. Tutti i diritti riservati. Gli avvisi sui componenti di terze parti non concedono diritti sul codice sorgente di Zanance.</value>
   </data>
+  <data name="Receipt_TotalFound" xml:space="preserve">
+    <value>Totale dell’acquisto trovato. Controllalo prima di salvare.</value>
+  </data>
+  <data name="Receipt_TotalReview" xml:space="preserve">
+    <value>Il totale va controllato. Confronta il testo con la ricevuta; scegli un importo completo qui sotto o inseriscilo tu.</value>
+  </data>
+  <data name="Receipt_TotalMissing" xml:space="preserve">
+    <value>Totale non trovato. I prezzi dei prodotti non vengono usati come totale. Controlla la ricevuta e inserisci l’importo.</value>
+  </data>
+  <data name="Receipt_UnitReview" xml:space="preserve">
+    <value>Scegli un conto con la valuta e l’unità della ricevuta. Un simbolo ambiguo, una valuta diversa o troppi decimali richiedono l’inserimento manuale; non viene effettuata alcuna conversione valutaria.</value>
+  </data>
+  <data name="Receipt_UnspecifiedUnit" xml:space="preserve">
+    <value>valuta del conto (ISO)</value>
+  </data>
+  <data name="Receipt_UseAmount" xml:space="preserve">
+    <value>Usa {0}</value>
+  </data>
+  <data name="Receipt_UnitChanged" xml:space="preserve">
+    <value>L’unità di visualizzazione è cambiata. Scegli di nuovo l’importo della ricevuta o reinseriscilo prima di salvare.</value>
+  </data>
 </root>

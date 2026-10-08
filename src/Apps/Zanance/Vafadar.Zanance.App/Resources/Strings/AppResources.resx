@@ -5454,4 +5454,25 @@ Steps to reproduce:
   <data name="About_Rights" xml:space="preserve">
     <value>Zanance is proprietary software. © Shahram Vafadar. All rights reserved. Third-party component notices do not grant rights to Zanance source code.</value>
   </data>
+  <data name="Receipt_TotalFound" xml:space="preserve">
+    <value>Purchase total found. Check it before saving.</value>
+  </data>
+  <data name="Receipt_TotalReview" xml:space="preserve">
+    <value>The total needs review. Compare the source with the receipt; choose a complete amount below or enter it yourself.</value>
+  </data>
+  <data name="Receipt_TotalMissing" xml:space="preserve">
+    <value>No purchase total was found. Item prices are not used as totals. Enter the total after checking the receipt.</value>
+  </data>
+  <data name="Receipt_UnitReview" xml:space="preserve">
+    <value>Choose an account matching the receipt currency and unit. An unclear symbol, conflicting currency or unsupported precision needs manual entry; no currency conversion is made.</value>
+  </data>
+  <data name="Receipt_UnspecifiedUnit" xml:space="preserve">
+    <value>account currency (ISO)</value>
+  </data>
+  <data name="Receipt_UseAmount" xml:space="preserve">
+    <value>Use {0}</value>
+  </data>
+  <data name="Receipt_UnitChanged" xml:space="preserve">
+    <value>The display unit changed. Choose the receipt amount again or re-enter it before saving.</value>
+  </data>
 </root>

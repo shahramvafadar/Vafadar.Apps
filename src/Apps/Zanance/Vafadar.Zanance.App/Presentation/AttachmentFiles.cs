@@ -1,3 +1,4 @@
+using Vafadar.Documents.Maui;
 using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.App.Presentation;
@@ -5,16 +6,21 @@ namespace Vafadar.Zanance.App.Presentation;
 /// <summary>A picked file that is attached to an entry once the entry is saved (a receipt read on Home, D-37).</summary>
 internal sealed record PendingAttachment(string FileName, string ContentType, byte[] Data);
 
+/// <summary>A metadata-free stored copy, with a transient original only while recognition is in progress.</summary>
+internal sealed record PreparedAttachment(string Name, string ContentType, byte[] Data, byte[]? RecognitionData = null);
+
 /// <summary>
-/// Picks and prepares attachments (F2-TX-04). The system file picker needs no storage permission; photos are always
-/// re-encoded as JPEG of at most 1600 px, which keeps receipts small in the database and backups and drops metadata such
-/// as the location.
+/// Picks and prepares attachments (F2-TX-04). Photos are stored as metadata-free JPEGs of at most 1600 px. Recognition
+/// uses a separate bounded, upright copy of the transient original (D-64), never included in PendingAttachment.
 /// </summary>
 internal static class AttachmentFiles
 {
     private const float MaxEdge = 1600;
 
-    public static async Task<(string Name, string ContentType, byte[] Data)?> PickAsync(string title)
+    /// <summary>The encoded source-file limit, before preparing the much smaller stored photo.</summary>
+    internal const int MaxSourceBytes = 64 * 1024 * 1024;
+
+    public static async Task<PreparedAttachment?> PickAsync(string title, bool forRecognition = false)
     {
         var file = await FilePicker.Default.PickAsync(new PickOptions
         {
@@ -32,31 +38,49 @@ internal static class AttachmentFiles
         }
 
         await using var stream = await file.OpenReadAsync();
-        using var buffer = new MemoryStream();
-        await stream.CopyToAsync(buffer);
-        return Prepare(file.FileName, string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType, buffer.ToArray());
+        return await PrepareAsync(file.FileName, string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType,
+            await ReadSourceAsync(stream), forRecognition);
     }
 
-    /// <summary>Prepares a photo just taken with the camera like a picked one (smaller, upright, without metadata).</summary>
-    public static (string Name, string ContentType, byte[] Data) FromCamera(string name, byte[] data) =>
-        Prepare(name + ".jpg", "image/jpeg", data);
+    /// <summary>Reads a picked/captured source with an encoded-byte bound, including non-seekable picker streams.</summary>
+    internal static async Task<byte[]> ReadSourceAsync(Stream stream)
+    {
+        using var buffer = new MemoryStream();
+        var chunk = new byte[81920];
+        int read;
+        while ((read = await stream.ReadAsync(chunk)) > 0)
+        {
+            if (buffer.Length + read > MaxSourceBytes)
+            {
+                throw new InvalidDataException("The source file is too large.");
+            }
 
-    private static (string Name, string ContentType, byte[] Data) Prepare(string name, string contentType, byte[] data)
+            buffer.Write(chunk, 0, read);
+        }
+        return buffer.ToArray();
+    }
+
+    /// <summary>Prepares a camera photo for storage, retaining the transient original only for recognition.</summary>
+    public static Task<PreparedAttachment> FromCameraAsync(string name, byte[] data) =>
+        PrepareAsync(name + ".jpg", "image/jpeg", data, forRecognition: true);
+
+    private static async Task<PreparedAttachment> PrepareAsync(string name, string contentType, byte[] data, bool forRecognition)
     {
         if (contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
         {
-            if (Shrink(data) is { } smaller)
+            try
             {
-                return (Path.ChangeExtension(name, ".jpg"), "image/jpeg", smaller);
+                var smaller = await DocumentImages.PrepareAsync(data, (int)MaxEdge, 0.8f);
+                return new(Path.ChangeExtension(name, ".jpg"), "image/jpeg", smaller, forRecognition ? data : null);
             }
-
-#if ANDROID || IOS
-            // A photo that cannot be re-encoded would keep its metadata (e.g. the location): it is not stored.
-            throw new InvalidDataException("The photo could not be re-encoded.");
-#endif
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                // Never retain a camera original with location metadata as the stored-copy fallback.
+                throw new InvalidDataException("The photo could not be re-encoded.", ex);
+            }
         }
 
-        return (name, contentType, data);
+        return new(name, contentType, data);
     }
 
     private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");
@@ -110,68 +134,4 @@ internal static class AttachmentFiles
         _ => "application/octet-stream",
     };
 
-    private static byte[]? Shrink(byte[] data)
-    {
-#if ANDROID
-        // Android decodes without the EXIF orientation and the re-encoded file drops it: turn the pixels upright first,
-        // or a portrait photo is stored on its side (and cannot be read as a receipt).
-        try
-        {
-            using var exif = new Android.Media.ExifInterface(new MemoryStream(data));
-            var degrees = exif.GetAttributeInt(Android.Media.ExifInterface.TagOrientation, 1) switch
-            {
-                6 => 90,
-                3 => 180,
-                8 => 270,
-                _ => 0,
-            };
-
-            // Read the size first and decode at the largest power-of-two step that still leaves at least the stored size:
-            // a 50-megapixel photo decoded in full needs about 200 MB and can end the app with an out-of-memory error.
-            using var bounds = new Android.Graphics.BitmapFactory.Options { InJustDecodeBounds = true };
-            Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length, bounds);
-            var sample = 1;
-            while (Math.Max(bounds.OutWidth, bounds.OutHeight) / (sample * 2) >= MaxEdge)
-            {
-                sample *= 2;
-            }
-
-            using var options = new Android.Graphics.BitmapFactory.Options { InSampleSize = sample };
-            using var bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length, options);
-            if (bitmap is null)
-            {
-                return null;
-            }
-
-            var scale = Math.Min(1f, MaxEdge / (float)Math.Max(bitmap.Width, bitmap.Height));
-            using var matrix = new Android.Graphics.Matrix();
-            matrix.PostScale(scale, scale);
-            matrix.PostRotate(degrees);
-            using var upright = Android.Graphics.Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
-            using var output = new MemoryStream();
-            upright.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 80, output);
-            return output.ToArray();
-        }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            return null;
-        }
-#elif IOS
-        try
-        {
-            using var input = new MemoryStream(data);
-            var image = Microsoft.Maui.Graphics.Platform.PlatformImage.FromStream(input);
-            var scaled = image.Width > MaxEdge || image.Height > MaxEdge ? image.Downsize(MaxEdge, disposeOriginal: true) : image;
-            using var output = new MemoryStream();
-            scaled.Save(output, ImageFormat.Jpeg, 0.8f);
-            return output.ToArray();
-        }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            return null;
-        }
-#else
-        return null;
-#endif
-    }
 }

@@ -10,6 +10,7 @@ using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Receipts;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
@@ -23,6 +24,9 @@ public sealed record AccountChoice(Guid Id, string Name, string CurrencyCode)
 
 /// <summary>A quick template above a new entry, with the icon and colour of its category (TX-04).</summary>
 public sealed record TemplateChip(EntryTemplate Template, Symbol Icon, Color IconColor);
+
+/// <summary>A bounded receipt choice; choosing it fills the form, never saves the entry.</summary>
+public sealed record ReceiptChoice(ReceiptAmountCandidate Candidate, string Label);
 
 /// <summary>A category tile in the entry editor.</summary>
 public sealed partial class CategoryChoice(Guid id, string name, Symbol icon, Color color) : ObservableObject
@@ -77,6 +81,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private bool _isNew;
     private int _startDay = 1;
     private Presentation.PendingAttachment? _pendingAttachment;
+    private ReceiptSuggestion? _receipt;
+    private string? _receiptAppliedText;
+    private string? _receiptAppliedCurrency;
+    private long _receiptDisplayFactor = 1;
     private readonly Presentation.UndoService _undo;
 
     public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo)
@@ -559,36 +567,73 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string? ReceiptNote { get; set; }
 
+    /// <summary>Gets or sets the receipt's relevant source rows, kept only while reviewing.</summary>
+    [ObservableProperty]
+    public partial string? ReceiptSource { get; set; }
+
+    /// <summary>Gets or sets the source script's direction; Latin source keeps its original decimal punctuation.</summary>
+    [ObservableProperty]
+    public partial FlowDirection ReceiptSourceDirection { get; set; }
+
+    /// <summary>Gets or sets the warning for an explicit unit that the selected account cannot accept.</summary>
+    [ObservableProperty]
+    public partial string? ReceiptUnitNotice { get; set; }
+
+    /// <summary>Gets the complete numeric choices; damaged fragments are never selectable.</summary>
+    public ObservableCollection<ReceiptChoice> ReceiptChoices { get; } = [];
+
     // Values read from a receipt fill the form for review; they count as unsaved changes and nothing is saved until Save.
     private void ApplyReceipt(IDictionary<string, object> query)
     {
+        if (!query.TryGetValue("receipt", out var result) || result is not ReceiptSuggestion receipt)
+        {
+            return;
+        }
+
+        _receipt = receipt;
         var applied = new List<string>();
         var culture = _localization.CurrentCulture;
-        if (query.TryGetValue("receiptAmount", out var amount) && amount is string amountText
-            && decimal.TryParse(amountText, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var value))
+        ReceiptSource = receipt.AmountSource is { } source ? source[..Math.Min(400, source.Length)] : null;
+        ReceiptSourceDirection = ReceiptSource?.Any(c => c is >= '؀' and <= 'ۿ') == true
+            ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+        ReceiptChoices.Clear();
+        foreach (var candidate in receipt.Candidates)
         {
-            // A receipt total is in the ISO unit of the currency, never in a display unit such as the toman (ZEX-S0103).
-            AmountText = Account is not null && Currencies.TryGet(Account.CurrencyCode, out var receiptCurrency)
-                ? MoneyText.ForInput(MoneyAmount.ToMinor(value, receiptCurrency), receiptCurrency.Code, culture)
-                : value.ToString("0.##", culture);
+            // Isolate the number and printed unit together in RTL; this is the receipt unit, not a display-unit guess.
+            var text = "\u2066\u200E" + candidate.Amount.ToString("0.############################", culture) + " "
+                + (candidate.UnitLabel ?? _translator["Receipt_UnspecifiedUnit"]) + "\u200E\u2069";
+            ReceiptChoices.Add(new(candidate, _translator.Format("Receipt_UseAmount", Vafadar.Localization.Formatting.NativeDigits.Apply(text) ?? text)));
+        }
+
+        if (receipt.AmountStatus == ReceiptAmountStatus.Found && receipt.Candidates.Count == 1
+            && receipt.Candidates[0].TryMinor(Account?.CurrencyCode, out var minor))
+        {
+            SetReceiptAmount(minor);
             applied.Add(_translator["Entry_Amount"]);
         }
 
-        if (query.TryGetValue("receiptDate", out var date) && date is string dateText
-            && DateOnly.TryParseExact(dateText, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var day))
+        if (receipt.Date is { } day)
         {
             Date = day;
             applied.Add(_translator["Entry_Date"]);
         }
 
-        if (query.TryGetValue("receiptPayee", out var payee) && payee is string payeeText && string.IsNullOrWhiteSpace(Payee))
+        if (receipt.Merchant is { } payeeText && string.IsNullOrWhiteSpace(Payee))
         {
             Payee = payeeText;
             ShowDetails = true;
             applied.Add(_translator["Entry_Payee"]);
         }
 
-        var notes = new List<string>();
+        var notes = new List<string>
+        {
+            _translator[receipt.AmountStatus switch
+            {
+                ReceiptAmountStatus.Found => "Receipt_TotalFound",
+                ReceiptAmountStatus.Review => "Receipt_TotalReview",
+                _ => "Receipt_TotalMissing",
+            }],
+        };
         if (applied.Count > 0)
         {
             notes.Add(_translator.Format("Receipt_Review", string.Join(_translator["Reminder_ListSeparator"], applied)));
@@ -602,6 +647,39 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         ReceiptNote = notes.Count == 0 ? null : string.Join(" ", notes);
+        UpdateReceiptUnitNotice();
+    }
+
+    // A manual choice is still only an unsaved form edit, and explicit currency conflicts need manual amount entry.
+    [RelayCommand]
+    private void UseReceiptAmount(ReceiptChoice choice)
+    {
+        if (choice.Candidate.TryMinor(Account?.CurrencyCode, out var minor))
+        {
+            SetReceiptAmount(minor);
+            ReceiptUnitNotice = null;
+        }
+        else
+        {
+            ReceiptUnitNotice = _translator["Receipt_UnitReview"];
+        }
+    }
+
+    private void SetReceiptAmount(long minor)
+    {
+        // TryMinor verified the account before this method was called.
+        var currency = Account!.CurrencyCode;
+        AmountText = MoneyText.ForInput(minor, currency, _localization.CurrentCulture);
+        _receiptAppliedText = AmountText;
+        _receiptAppliedCurrency = currency;
+        _receiptDisplayFactor = DisplayUnits.TryGet(currency, out var unit) ? unit.Factor : 1;
+    }
+
+    private void UpdateReceiptUnitNotice()
+    {
+        ReceiptUnitNotice = _receipt is { Candidates.Count: > 0 }
+            && _receipt.Candidates.Any(c => !c.TryMinor(Account?.CurrencyCode, out _))
+            ? _translator["Receipt_UnitReview"] : null;
     }
 
     [ObservableProperty]
@@ -761,6 +839,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         UpdateCurrencies();
+        if (!_loading && _receipt is not null)
+        {
+            UpdateReceiptUnitNotice();
+            // Selecting the first account may resolve a clear ISO total; never overwrite a user-entered amount.
+            if (oldValue is null && string.IsNullOrWhiteSpace(AmountText)
+                && _receipt.AmountStatus == ReceiptAmountStatus.Found && _receipt.Candidates.Count == 1
+                && _receipt.Candidates[0].TryMinor(newValue?.CurrencyCode, out var receiptMinor))
+            {
+                SetReceiptAmount(receiptMinor);
+            }
+        }
     }
 
     partial void OnToAccountChanged(AccountChoice? oldValue, AccountChoice? newValue)
@@ -1023,6 +1112,15 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (Account is null)
         {
             SaveError = _translator[HasNoAccounts ? "Entry_NoAccounts" : "Entry_ChooseAccount"];
+            return;
+        }
+
+        var displayFactor = DisplayUnits.TryGet(Account.CurrencyCode, out var receiptUnit) ? receiptUnit.Factor : 1;
+        if (_receiptAppliedText == AmountText && _receiptAppliedCurrency == Account.CurrencyCode && displayFactor != _receiptDisplayFactor)
+        {
+            // A display preference changed elsewhere while the form was open: never reinterpret the receipt digits.
+            ReceiptUnitNotice = _translator["Receipt_UnitChanged"];
+            SaveError = ReceiptUnitNotice;
             return;
         }
 

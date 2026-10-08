@@ -26,7 +26,7 @@ public sealed class PdfTextTests
     {
         var pdf = MinimalPdf.Create([.. Enumerable.Range(1, 7).Select(n => new MinimalPdf.Run[] { new($"Seite {n} von sieben der Rechnung Nummer 4711", 40, 40) })]);
 
-        var rows = PdfText.Extract(pdf, maxPages: 3)!.Split('\n');
+        var rows = PdfText.Extract(pdf, maxPages: 3)!.Split(['\n', '\f']);
 
         Assert.Equal([.. new[] { 1, 2, 7 }.Select(n => $"Seite {n} von sieben der Rechnung Nummer 4711")], rows);
         Assert.Equal(7, PdfText.PageCount(pdf));

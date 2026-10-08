@@ -74,6 +74,7 @@ public static class PdfText
 
                     page.ExtractText(out TextLineCollection lines);
                     var offset = index * PageOffset;
+                    var lineId = 0;
                     foreach (var line in lines.TextLine)
                     {
                         foreach (var word in line.WordCollection)
@@ -84,9 +85,14 @@ public static class PdfText
                             if (!string.IsNullOrEmpty(text))
                             {
                                 var box = word.Bounds;
-                                words.Add(new LayoutWord(offset + box.Top, offset + box.Bottom, box.Left, text));
+                                words.Add(new LayoutWord(offset + box.Top, offset + box.Bottom, box.Left, text)
+                                {
+                                    Right = box.Right, Page = index, LineId = lineId, Angle = 0,
+                                });
                             }
                         }
+
+                        lineId++;
                     }
                 }
 
