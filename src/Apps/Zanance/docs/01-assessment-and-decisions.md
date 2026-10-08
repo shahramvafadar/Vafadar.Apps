@@ -246,3 +246,42 @@ Strict Windows and Android Debug/Release builds have no errors/warnings. Complet
 package pro.vafadar.zanance 0.1.0 / code 1, minimum 24 / target 36, both arm64/x86_64 assembly stores and app AOT
 images, signature/ZIP/Cloud permission guard pass, and actual emulator installation/cold start pass. Release metadata
 contains neither DebugGoalReminders nor DebugSnapshots. Physical phone and iOS acceptance remain open.
+
+## D-71 - Optional period review reminder (2026-10-09)
+
+ZCR-LOC-03 implements the remaining ZEX-S0610 reminder under the D-69 continuation instruction. A profile-level
+ReviewReminderEnabled switch in Settings is off by default, visible in both modes, with translated help and an
+example. At 09:00 device-local on the first day of the next financial month, remind the user to review the month
+that just closed. Follow the display calendar and MonthStartDay used by Home/review, independently of language,
+numeric culture and the new-budget calendar. Fixed delivery time is independent of new-plan reminder defaults.
+Require account data dated before the boundary, skip finished reviews and missed times, and bound future requests
+by the existing 62-day horizon and shared 30-pending queue. No catch-up burst. Rebuild on ordinary data/settings,
+calendar, startup/resume, profile and restore changes. Enabling explicitly requests platform notification permission;
+denial preserves the choice with the existing permission feedback. Windows retains the choice without delivery.
+
+Title/body are generic unless the existing notification-details opt-in permits the period label. Taps use the app-lock
+gate and open the currently due review, including an empty state if already finished. A delayed tap never overwrites
+old review progress. Reminders never mark steps or write financial data. Finishing a review now uses the serialized
+settings update so it cannot overwrite a concurrent reminder choice. An additive migration defaults old profiles to
+false; regenerate the compiled model. The profile choice is included in existing portable database backups, while
+OS notification permission stays device-local. No new SDK, capability or network path.
+
+AT-78 adds nine planner and six SQLite/coordinator cases. The 1,168-test main suite covers Gregorian/Persian/Hijri
+year boundaries, pay-cycle dates, partial/finished reviews, empty/new profiles, missed times, stable IDs, generic
+en/fa/de text, explicit details, denied permission, cancellation and absence of financial/review mutations. Existing
+upgrade/portable-backup cases now cover the new field, and the busy queue case includes review reminders.
+Strict Windows/Android builds, running-app en/fa/de light/dark 360/412/wide Settings/help review and isolated Android
+native scheduler/delivery/tap and persisted opt-out checks are recorded with this section. The Debug fixture uses
+only marked fictitious reminder data and expedites one notification without altering device time/settings. This
+does not prove exact-time/Doze, reboot, ARM64 phone or iOS delivery; those remain device gates.
+
+Native requests are 9 October (+02:00), 9 November and 9 December (+01:00), all at 09:00. A generic notification tap
+opens September's review with 0 of 5 steps done. Explicit Finish removes October's pending request (3 to 2); UI opt-out
+and process restart leave zero requests and zero ledger entries. The expedited diagnostic uses its own id so a normal
+pending-queue rebuild cannot cancel that artificial delivery; normal production ids/dates are unchanged.
+Complete signed Release APK: 80,484,267 bytes, SHA-256
+6ed0e03be9cce3d57018ddce75290121817616f3bd1a31c0da220473c84ed1e4; pro.vafadar.zanance 0.1.0/code 1, min 24/target 36,
+v2/v3 signatures, Cloud permission guard, ZIP integrity and embedded arm64/x86_64 assembly stores/app AOT pass.
+All three Debug diagnostic types are absent from Release metadata. Actual Release installation and cold start pass.
+Single emulator cold activity readings: 4.864 s before and 5.338 s after; not a repeated performance benchmark or
+physical-device result. Test output is cleaned, and original Windows development DB files retain matching hashes.

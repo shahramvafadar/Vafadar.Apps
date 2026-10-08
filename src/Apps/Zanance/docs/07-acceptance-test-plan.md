@@ -118,3 +118,15 @@ both Debug fixture types. ARM64 phone, Doze/reboot and iOS acceptance remain ope
 requires an empty installation or its own marked single account, never existing user data. It verifies normal 09:00 pending requests before expediting one fictitious
 notification for delivery/tap testing without changing system time. This does not prove exact-time or battery-policy
 delivery.
+
+## AT-78 - Optional period review reminder (D-71 / LOC-03)
+
+Nine planner and six real-store/coordinator cases cover off-by-default/empty profiles, Gregorian/Persian/Hijri
+year boundaries, financial month start, finished/partial reviews, missed-time suppression, stable rebuilds, generic
+en/fa/de delivery, details opt-in, permission refusal and cancellation without ledger or review-progress changes.
+Upgrade defaults existing settings to off; the compiled model matches, the backup round-trip preserves the opt-in,
+and plan/goal/review requests share the bounded queue. Main suite: 1,168 passed. Settings/help are reviewed in en/fa/de,
+light/dark, at 360/412/wide. Android API 36 x86_64 checks native future 09:00 requests, a real generic notification,
+tap to review and UI opt-out persisted across process restart on fictitious data. One notification is expedited by a
+Debug-only fixture; no system time/settings change. Complete signed Release APK is separately inspected and installed.
+Physical ARM64 phone, exact-time/Doze/reboot and iOS acceptance remain open; no production-release claim.

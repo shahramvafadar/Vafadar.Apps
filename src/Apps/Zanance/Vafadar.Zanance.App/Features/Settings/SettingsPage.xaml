@@ -150,9 +150,9 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Notifications (REM-01, REM-03, REM-05) -->
+            <!-- Notifications (REM-01, REM-03, REM-05, ZCR-LOC-03) -->
             <Label Text="{v:Translate Settings_Notifications}" Style="{StaticResource SectionHeader}" />
-            <Border Style="{StaticResource Card}">
+            <Border x:Name="NotificationCard" Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{v:Translate Reminder_NotOnThisDevice}" Style="{StaticResource Secondary}"
                            IsVisible="{Binding NotificationsSupported, Converter={StaticResource InvertedBoolConverter}}" />
@@ -169,6 +169,13 @@
                         </Grid>
                         <Label Text="{v:Translate Settings_ShowDetailsHint}" Style="{StaticResource Secondary}" />
                     </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <Label Text="{v:Translate Settings_ReviewReminder}" VerticalOptions="Center" />
+                        <v:HelpButton Grid.Column="1" Topic="ReviewReminder" />
+                        <Switch Grid.Column="2" IsToggled="{Binding ReviewReminderEnabled}" OnColor="{DynamicResource Primary}"
+                            MinimumHeightRequest="44" SemanticProperties.Description="{v:Translate Settings_ReviewReminder}" />
+                    </Grid>
+                    <Label Text="{v:Translate Settings_ReviewReminderHint}" Style="{StaticResource Secondary}" />
                     <BoxView HeightRequest="1" Color="{DynamicResource DividerColor}" />
                     <Label Text="{v:Translate Settings_ReminderDefaults}" Style="{StaticResource FieldLabel}" Margin="0,4,0,0" />
                     <Grid ColumnDefinitions="70,*" ColumnSpacing="8">

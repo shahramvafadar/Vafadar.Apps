@@ -149,3 +149,14 @@ Debug package; use uiautomator for the screen because FLAG_SECURE stays enabled.
 force-stop/restart checks pending cancellation and persistence. The fixture and snapshot types are compiled out of
 Release; inspect Release metadata, then build the complete signed handoff APK without the fixture environment item.
 This proves the real scheduler/delivery/tap path, not exact-time, Doze, reboot or physical-device/iOS acceptance.
+
+## Android review notification fixture (D-71 / AT-78)
+
+VAFADAR_REVIEW_REMINDER_PROOF=1 in an AndroidEnvironment item on a complete Debug APK enables DebugReviewReminders.
+Use an isolated installation only. It refuses data outside its own marker or the earlier goal-reminder fixture,
+and refuses any ledger data. One fictitious account has an earlier opening date and a financial month start matching
+today (clamped to 28); the profile reminder is enabled once. It checks native pending 09:00 requests and unchanged
+review/ledger state, then displays one immediately for a tap check without changing system time or settings.
+Read only files/review-reminder-proof.json with adb run-as for that fixture. UI opt-out and process restart must leave
+zero pending review requests. Subsequent starts preserve the UI choice. The diagnostic is absent from Release;
+remove the fixture environment import before building and inspecting the complete signed handoff APK.

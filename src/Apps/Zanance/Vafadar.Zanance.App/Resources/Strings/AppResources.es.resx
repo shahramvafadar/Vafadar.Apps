@@ -5593,4 +5593,25 @@ Primer vencimiento: {1}</value>
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>Aportaciones a objetivos previstas: {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>Recordarme revisar cada período</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>Desactivado por defecto. A las 09:00 del primer día tras el cierre de tu mes financiero.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>La revisión de tu período está lista cuando tengas tiempo.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>Revisa tu mes financiero: {0}.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>Recordatorio de revisión del período</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>Es opcional y está desactivado por defecto. Zanance te recuerda a las 09:00, hora local del dispositivo, el primer día tras el cierre de tu mes financiero. Usa el calendario y el día de inicio del mes elegidos en Ajustes. El perfil necesita una cuenta abierta antes de ese día. Se omiten las revisiones terminadas y las horas de recordatorio que ya pasaron. Al tocar la notificación se abre la revisión pendiente actual; no se completa ningún paso ni se registra dinero. Se necesita permiso para notificaciones. Los nombres y las fechas quedan ocultos salvo que permitas los detalles. Las restricciones de batería pueden retrasar la entrega. Desactivar esta opción elimina los recordatorios de revisión pendientes en este dispositivo.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>Si tu mes financiero gregoriano empieza el día 25, septiembre abarca del 25 de septiembre al 24 de octubre. El recordatorio llega el 25 de octubre a las 09:00, no el 1 de octubre. Los valores predeterminados de los recordatorios de planes que aparecen debajo no cambian esta hora.</value>
+  </data>
 </root>

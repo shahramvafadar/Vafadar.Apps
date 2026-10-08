@@ -83,3 +83,7 @@ review remain gates; repeat before billing/sync SDKs. Never claim no SDK diagnos
 D-70 / LOC-02 device gate: verify contribution reminder opt-in/refusal, local 09:00 scheduling with the saved calendar,
 generic/details text, pause/reach/resume/disable cancellation and notification taps through the app lock on a signed
 APK. Android emulator fixture delivery does not close ARM64 phone, Doze/timezone/reboot or iOS device acceptance.
+
+D-71 / LOC-03 device gate: verify review-reminder opt-in/refusal, selected-calendar/pay-cycle boundaries and local
+09:00 delivery, generic/details text, tap through app lock, finishing/opt-out cancellation, profile switch/restore,
+Doze and reboot. Local tests and isolated API 36 x86_64 native delivery/tap do not close ARM64 phone or iOS acceptance.

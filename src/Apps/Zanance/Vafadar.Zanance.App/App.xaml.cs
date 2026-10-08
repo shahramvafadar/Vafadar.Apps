@@ -315,6 +315,11 @@ public partial class App : Application
         {
             await Shell.Current.GoToAsync(AppShell.BudgetRoute);
         }
+        else if (parts is ["review"])
+        {
+            // A delayed tap opens the currently due review; it never finishes an older period automatically.
+            await Shell.Current.GoToAsync(AppShell.ReviewRoute);
+        }
         else if (parts is ["entry", var kind] && Enum.TryParse<Core.Ledger.EntryKind>(kind, out var entryKind)
                  && entryKind is Core.Ledger.EntryKind.Expense or Core.Ledger.EntryKind.Income or Core.Ledger.EntryKind.Transfer)
         {

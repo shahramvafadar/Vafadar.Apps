@@ -167,12 +167,14 @@ public sealed class GoalReminderDeliveryTests : IDisposable
             ReminderEnabled = true, ReminderDaysBefore = 0, ReminderTime = new TimeOnly(10, 0),
             Rule = new RecurrenceRule { Frequency = Frequency.Daily, Start = new DateOnly(2026, 1, 31) },
         }, Ct);
+        await _store.UpdateSettingsAsync(s => s.ReviewReminderEnabled = true, Ct);
         await _reminders.RefreshAsync();
 
         Assert.Equal(Vafadar.Zanance.Core.Reminders.ReminderPlanner.MaxPending, _scheduler.Pending.Count);
         Assert.Equal($"goal|{goal.Id}", _scheduler.Pending[0].Link);
         Assert.Equal(_scheduler.Pending.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id), _scheduler.Pending);
         Assert.Contains(_scheduler.Pending, n => n.Link.StartsWith("occurrence|", StringComparison.Ordinal));
+        Assert.Contains(_scheduler.Pending, n => n.Link == "review");
         Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
     }
 

@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Core.Settings.ZananceSettings",
                 typeof(ZananceSettings),
                 baseEntityType,
-                propertyCount: 24,
+                propertyCount: 25,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -186,6 +186,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(ZananceSettings).GetField("<ReviewProgress>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 200);
+
+            var reviewReminderEnabled = runtimeEntityType.AddProperty(
+                "ReviewReminderEnabled",
+                typeof(bool),
+                propertyInfo: typeof(ZananceSettings).GetProperty("ReviewReminderEnabled", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(ZananceSettings).GetField("<ReviewReminderEnabled>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: false);
 
             var updatedAt = runtimeEntityType.AddProperty(
                 "UpdatedAt",

@@ -91,3 +91,7 @@ D-70 / ZCR-LOC-02 wires the existing contribution-plan reminder flag to the goal
 Dates follow saved rules; progress/lifecycle/source changes cancel pending requests, generic text is the default,
 and a tap only opens the goal. AT-77 covers planner and real-store delivery coordination. Current state and device
 evidence live in the canonical backlog and acceptance plan; no ledger/schema or commercial-policy change.
+
+D-71 / ZCR-LOC-03 completes the optional ZEX-S0610 period review reminder locally/on the isolated emulator.
+The off-by-default choice is portable; financial boundary/calendar scheduling and cancellation are tested (AT-78).
+Physical-device/Doze/reboot and iOS acceptance remain separate from implementation and build proof.

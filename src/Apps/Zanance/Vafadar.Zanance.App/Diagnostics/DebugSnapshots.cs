@@ -27,6 +27,7 @@ internal static class DebugSnapshots
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
+        if (DebugReviewReminders.StartIfRequested(app, services)) { return; }
         if (DebugGoalReminders.StartIfRequested(app, services)) { return; }
 #endif
         // VAFADAR_START_ROUTE opens one screen with the real window chrome (navigation bar, back button) for a check
@@ -346,6 +347,7 @@ internal static class DebugSnapshots
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("regional-settings", AppShell.SettingsRoute, null),
+            ("review-reminder", AppShell.SettingsRoute, null),
             ("profiles", AppShell.ProfilesRoute, null),
             ("about", AppShell.AboutRoute, null),
             ("notices", AppShell.NoticesRoute, null),
@@ -392,6 +394,15 @@ internal static class DebugSnapshots
                 if (name == "regional-settings")
                 {
                     await CaptureHelpAsync(app, folder, language, ["RegionalFormat"]);
+                }
+
+                if (name == "review-reminder" && Shell.Current.CurrentPage is Features.Settings.SettingsPage reviewSettings
+                    && FindScrollView(reviewSettings) is { } reviewScroll)
+                {
+                    await reviewScroll.ScrollToAsync(reviewSettings.FindByName<Border>("NotificationCard"), ScrollToPosition.Start, animated: false);
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-notifications");
+                    await CaptureHelpAsync(app, folder, language, ["ReviewReminder"]);
                 }
 
                 if (name == "goal-edit" && Shell.Current.CurrentPage is Features.Goals.GoalEditorPage goalPage)

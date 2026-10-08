@@ -151,9 +151,8 @@ public sealed partial class PeriodReviewViewModel(
             return;
         }
 
-        var settings = await store.GetSettingsAsync();
-        settings.ReviewProgress = PeriodReview.Finish(_state);
-        await store.SaveSettingsAsync(settings);
+        var state = _state;
+        await store.UpdateSettingsAsync(settings => settings.ReviewProgress = PeriodReview.Finish(state));
         await Shell.Current.GoToAsync("..");
     }
 }

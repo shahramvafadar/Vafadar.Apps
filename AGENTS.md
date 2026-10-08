@@ -161,6 +161,10 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
 * Goal contribution reminders (D-70): optional, off by default, 09:00 device-local on saved rule/calendar dates.
   Suppress inactive/reached/unavailable goals, bound the shared pending queue, and keep text generic unless opted in.
   Taps only open details through app lock. A reminder-only edit preserves the rule; never record financial movements.
+* Period review reminders (D-71): profile opt-in, off by default; 09:00 device-local on the first day after the
+  financial month closes, using the same display calendar and MonthStartDay as Home/review. Skip empty/finished periods
+  and missed times; share the pending queue and privacy choice. A tap opens the currently due review through app lock,
+  without completing steps or posting money. Plan reminder defaults do not control this fixed time.
 * Receipt reading (D-64): use complete purchase-total evidence, never the largest item price or an unfiltered last
   number. Preserve OCR line/angle/page relationships and explicit currency/unit; uncertain totals remain for review.
   Recognition uses its own bounded upright image; only the compact metadata-free copy enters attachments/backups.

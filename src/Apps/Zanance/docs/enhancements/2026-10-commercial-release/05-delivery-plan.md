@@ -122,3 +122,8 @@ D-70 / LOC-02 proceeds under the D-69 continuation instruction while ADR/library
 Goal reminders reuse the stored opt-in, recurrence/progress engines and platform notification service; no commercial
 limits, production database encryption or OS-backup policy are introduced. The next independent ready local section
 is LOC-03, the optional period review reminder.
+
+D-71 / LOC-03 completes the optional period review reminder under the D-69 continuation instruction. Local tests,
+translated running Settings/help and isolated native notification checks are distinct from physical-device acceptance.
+The next independent ready section is LOC-04, aggregated-entry/import linking; pending ADR/library and OD-10 choices
+continue to gate database encryption and OS-backup policy.

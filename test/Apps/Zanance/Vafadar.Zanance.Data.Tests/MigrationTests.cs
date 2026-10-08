@@ -41,8 +41,11 @@ public sealed class MigrationTests : IDisposable
         // Rows are written with the columns of the first schema: the current model has columns the old tables lack.
         var accountId = Guid.CreateVersion7();
         var entryId = Guid.CreateVersion7();
+        var settingsId = Guid.CreateVersion7();
         await using (var db = await factory.CreateDbContextAsync(Ct))
         {
+            await db.Database.ExecuteSqlAsync(
+                $"INSERT INTO Settings (Id, ReportCurrencyCode, Mode, BudgetCalendar, WeekStart, ReminderDaysBefore, ReminderTime, NotificationsShowDetails, AppLockEnabled, OnboardingCompleted, CreatedAt, UpdatedAt) VALUES ({settingsId}, 'EUR', 0, 0, 1, 3, '09:00:00', 0, 0, 1, 0, 0)", Ct);
             await db.Database.ExecuteSqlAsync(
                 $"INSERT INTO Accounts (Id, Name, Type, CurrencyCode, OpeningBalance, OpeningDate, OpeningBalanceKnown, IncludeInTotals, IsArchived, SortOrder, CreatedAt, UpdatedAt) VALUES ({accountId}, 'Checking', 0, 'EUR', 1000, '2026-01-01', 1, 1, 0, 0, 0, 0)",
                 Ct);
@@ -61,5 +64,7 @@ public sealed class MigrationTests : IDisposable
         var accounts = await store.GetAccountsAsync(cancellationToken: Ct);
         var entries = await store.GetEntriesAsync(cancellationToken: Ct);
         Assert.Equal(750, LedgerCalculator.Balance(accounts.Single(), entries, new DateOnly(2026, 12, 31)));
+        Assert.False((await store.GetSettingsAsync(Ct)).ReviewReminderEnabled);
+        Assert.Equal(settingsId, (await store.GetSettingsAsync(Ct)).Id);
     }
 }

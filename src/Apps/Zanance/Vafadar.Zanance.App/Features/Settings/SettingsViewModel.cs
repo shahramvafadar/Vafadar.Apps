@@ -198,6 +198,26 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool ShowDetails { get; set; }
 
+    /// <summary>Gets or sets the profile's optional financial-period review reminder.</summary>
+    [ObservableProperty]
+    public partial bool ReviewReminderEnabled { get; set; }
+
+    partial void OnReviewReminderEnabledChanged(bool value)
+    {
+        if (!_refreshing) { _ = Presentation.Failures.GuardAsync(() => SaveReviewReminderAsync(value)); }
+    }
+
+    private async Task SaveReviewReminderAsync(bool enabled)
+    {
+        // Persist the choice first, so a later off toggle cannot be overwritten by a slow permission answer.
+        await _store.UpdateSettingsAsync(settings => settings.ReviewReminderEnabled = enabled);
+        if (enabled && ReviewReminderEnabled && NotificationsSupported)
+        {
+            NotificationsEnabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+        }
+        await _reminders.RefreshAsync();
+    }
+
     [ObservableProperty]
     public partial string ReminderDaysText { get; set; }
 
@@ -230,6 +250,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ];
             DefaultAccount = DefaultAccounts.FirstOrDefault(o => o.Id == settings.DefaultAccountId) ?? DefaultAccounts[0];
             ShowDetails = settings.NotificationsShowDetails;
+            ReviewReminderEnabled = settings.ReviewReminderEnabled;
             ModeIndex = (int)settings.Mode;
             var culture = _localization.CurrentCulture;
             StartDayNames =

@@ -11,7 +11,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Reminders;
 
 /// <summary>
-/// Keeps device notifications in line with the data: reminders for due plan occurrences (REM-01..10), goal contributions
+/// Keeps device notifications in line with the data: reminders for due plan occurrences (REM-01..10), goal contributions, period reviews
 /// and the 80 %/100 % budget alerts (BUD-06). It rebuilds everything on start, resume, after changes and after a restore, so there are no
 /// duplicates and nothing outdated (REM-07, AT-36, AT-37).
 /// </summary>
@@ -185,6 +185,21 @@ public sealed class ReminderService(
                     }));
             }
 
+            // Match Home and the review page's display calendar, independently of the language or new-budget defaults.
+            var reviewCalendar = localization.CurrentCalendar switch
+            {
+                CalendarSystem.Persian => PeriodCalendar.Persian,
+                CalendarSystem.Hijri => PeriodCalendar.Hijri,
+                _ => PeriodCalendar.Gregorian,
+            };
+            var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Values.Min(a => a.OpeningDate);
+            notifications.AddRange(ReviewReminderPlanner.Plan(settings.ReviewReminderEnabled, settings.ReviewProgress,
+                now, reviewCalendar, settings.MonthStartDay, firstData).Select(reminder =>
+                new ReminderNotification(reminder.Id, translator["App_Name"],
+                    settings.NotificationsShowDetails
+                        ? translator.Format("Reminder_ReviewDetails", dates.Format(reminder.PeriodFirst, DateFormatStyle.MonthYear))
+                        : translator["Reminder_ReviewGeneric"], reminder.NotifyAt, "review")));
+
             // Snoozed reminders survive the rebuild while their occurrence is still open (REM-04, AT-36).
             bool IsOpen(string link)
             {
@@ -210,7 +225,7 @@ public sealed class ReminderService(
                 .Where(s => notifications.All(n => n.Id != s.Id))
                 .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
 
-            // One device queue across plan, contract, goal and snooze reminders, within the iOS pending limit.
+            // One device queue across plan, contract, goal, review and snooze reminders, within the iOS pending limit.
             await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
                 .Take(ReminderPlanner.MaxPending).ToList());
             await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);

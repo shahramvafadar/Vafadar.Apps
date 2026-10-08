@@ -83,3 +83,6 @@ No Phase 1 finance or OS-backup behaviour changed; see the canonical backlog and
 
 D-70 / LOC-02 is a Phase 2 goal contribution reminder using the existing Phase 1 platform scheduler. Generic privacy,
 contextual permission and app-lock navigation stay the same; there is no new ledger, schema or permission.
+
+D-71 / LOC-03 adds a profile-level optional financial-period review reminder using the existing notification
+permission, privacy and scheduling infrastructure. No Phase 1 ledger invariants or cloud/network capabilities change.

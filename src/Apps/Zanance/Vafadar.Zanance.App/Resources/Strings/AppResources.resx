@@ -5650,4 +5650,25 @@ First due date: {1}</value>
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>Goal contributions due: {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>Remind me to review each period</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>Off by default. At 09:00 on the first day after your financial month ends.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>Your period review is ready when you are.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>Review your financial month: {0}.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>Period review reminder</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>Optional and off by default. Zanance reminds you at 09:00 device-local time on the first day after your financial month closes, using the calendar and month start day selected in Settings. A profile needs an account opened before that day. Finished reviews and missed reminder times are skipped. Tap to open the currently due review; no step is marked done and no money is recorded. Notification permission is needed. Names and dates stay hidden unless you allow notification details. Battery restrictions can delay delivery. Turning this off removes pending review reminders on this device.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>If your Gregorian financial month starts on the 25th, September runs from 25 September to 24 October. The reminder is on 25 October at 09:00, not on 1 October. The plan reminder defaults below do not change this time.</value>
+  </data>
 </root>

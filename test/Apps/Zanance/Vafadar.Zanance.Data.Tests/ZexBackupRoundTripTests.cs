@@ -56,6 +56,7 @@ public sealed class ZexBackupRoundTripTests : IDisposable
         settings.DisplayUnits = "IRR:Toman:1";
         settings.HomeLayout = "Goals,Budget";
         settings.EssentialEstimate = 20_00;
+        settings.ReviewReminderEnabled = true;
         await store.SaveSettingsAsync(settings, Ct);
 
         var package = await original.GetRequiredService<IBackupService>().CreatePackageAsync("correct horse", Ct);
@@ -84,6 +85,7 @@ public sealed class ZexBackupRoundTripTests : IDisposable
         Assert.Equal([100_000, 90_000], Assert.Single(await restoredStore.GetForecastSnapshotsAsync(Ct)).Points().Select(p => p.Balance));
 
         var restoredSettings = await restoredStore.GetSettingsAsync(Ct);
+        Assert.True(restoredSettings.ReviewReminderEnabled);
         Assert.Equal(("IRR:Toman:1", "Goals,Budget", 20_00L), (restoredSettings.DisplayUnits, restoredSettings.HomeLayout, restoredSettings.EssentialEstimate!.Value));
     }
 

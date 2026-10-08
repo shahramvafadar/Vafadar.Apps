@@ -5613,4 +5613,25 @@ Prima scadenza: {1}</value>
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>Contributi agli obiettivi previsti: {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>Ricordami di rivedere ogni periodo</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>Disattivato per impostazione predefinita. Alle 09:00 del primo giorno dopo la fine del tuo mese finanziario.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>La revisione del tuo periodo è pronta quando hai tempo.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>Rivedi il tuo mese finanziario: {0}.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>Promemoria di revisione del periodo</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>Facoltativo e disattivato per impostazione predefinita. Zanance ti ricorda alle 09:00, ora locale del dispositivo, il primo giorno dopo la chiusura del tuo mese finanziario. Usa il calendario e il giorno di inizio del mese scelti nelle Impostazioni. Il profilo deve avere un conto aperto prima di quel giorno. Le revisioni completate e gli orari dei promemoria già trascorsi vengono saltati. Toccare la notifica apre la revisione attualmente dovuta; nessun passaggio viene completato automaticamente e nessun movimento di denaro viene registrato. È necessaria l’autorizzazione alle notifiche. Nomi e date restano nascosti salvo che tu consenta i dettagli. Le restrizioni della batteria possono ritardare la consegna. Disattivare questa opzione rimuove i promemoria di revisione in attesa su questo dispositivo.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>Se il tuo mese finanziario gregoriano inizia il 25, settembre va dal 25 settembre al 24 ottobre. Il promemoria arriva il 25 ottobre alle 09:00, non il 1° ottobre. Le impostazioni predefinite dei promemoria dei piani qui sotto non cambiano questo orario.</value>
+  </data>
 </root>

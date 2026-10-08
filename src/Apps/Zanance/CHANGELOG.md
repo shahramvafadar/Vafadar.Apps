@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Period review reminders (2026-10-09, D-71)
+
+- Choose an optional period-end review reminder in Settings; it is off by default.
+- It follows your selected calendar and financial month start day, at 09:00 device-local time after the month closes.
+- Finished periods and missed reminder times are skipped. Tapping opens the current review without completing steps
+  or recording money. Details remain hidden unless you allow them.
+
 ### Added - Goal contribution reminders (2026-10-09, D-70)
 
 - Choose an optional reminder for goal contribution dates, with help explaining 9:00 device-local delivery.

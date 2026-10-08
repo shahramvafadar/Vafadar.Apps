@@ -217,3 +217,12 @@ part of database backup/restore; no schema change. Platform notification permiss
 planner evaluates current balance/funded earmark/held quantity and saved recurrence dates, then the device
 coordinator groups, privacy-filters and replaces future requests. No contribution, transfer or ledger write occurs.
 A reminder-only editor change clones the existing rule so calendar, anchor and ending are not rewritten.
+
+## Period review reminder persistence (D-71)
+
+Settings.ReviewReminderEnabled is profile-scoped and off by default. PeriodReviewReminder adds a non-null SQLite
+INTEGER column with default false; compiled model is regenerated. The existing database backup captures the choice
+and restore migration defaults old packages to off. Notification permission is device-local and is never imported.
+Scheduling uses the review's display calendar, MonthStartDay and earliest account date; current ReviewProgress
+suppresses completed periods. No ledger entry or review step is changed. Finishing uses UpdateSettingsAsync so
+concurrent preference changes cannot be lost. Native requests share the bounded queue with other reminder types.

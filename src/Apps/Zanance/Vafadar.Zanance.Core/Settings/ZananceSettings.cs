@@ -77,6 +77,9 @@ public sealed class ZananceSettings : Entity, IAuditableEntity
     /// </summary>
     public string? ReviewProgress { get; set; }
 
+    /// <summary>Gets or sets the optional period-end review reminder; off until explicitly enabled in this profile.</summary>
+    public bool ReviewReminderEnabled { get; set; }
+
     /// <summary>Gets or sets the account preselected in the entry form (ACC-02).</summary>
     public Guid? DefaultAccountId { get; set; }
 

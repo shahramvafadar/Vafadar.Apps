@@ -5624,4 +5624,25 @@
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>تعداد هدف‌های با موعد مشارکت: {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>یادآوری مرور پایان هر دوره</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>پیش‌فرض خاموش است؛ ساعت ۹ صبح اولین روز پس از پایان ماه مالی شما.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>مرور دوره آماده است؛ هر وقت فرصت داشتید آن را انجام دهید.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>ماه مالی «{0}» را مرور کنید.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>یادآوری مرور دوره</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>این گزینه اختیاری و پیش‌فرض خاموش است. Zanance در اولین روز پس از پایان ماه مالی، ساعت ۹ صبح به وقت دستگاه یادآوری می‌کند؛ تقویم و روز شروع ماه از تنظیمات شما گرفته می‌شوند. پروفایل باید حسابی داشته باشد که پیش از آن روز باز شده باشد. مرورهای تکمیل‌شده و زمان‌های یادآوری گذشته کنار گذاشته می‌شوند. با لمس اعلان، مرور دوره‌ای که اکنون باید انجام شود باز می‌شود؛ هیچ مرحله‌ای خودکار تکمیل و هیچ مبلغی ثبت نمی‌شود. اجازهٔ اعلان لازم است. نام‌ها و تاریخ‌ها تنها با فعال‌کردن جزئیات اعلان نمایش داده می‌شوند. محدودیت باتری ممکن است ارسال را به تأخیر بیندازد. خاموش‌کردن این گزینه، یادآوری‌های مرور در انتظار را از این دستگاه حذف می‌کند.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>اگر ماه مالی در تقویم میلادی از روز ۲۵ شروع شود، دورهٔ سپتامبر از ۲۵ سپتامبر تا ۲۴ اکتبر است. یادآوری ساعت ۹ صبح ۲۵ اکتبر خواهد بود، نه اول اکتبر. پیش‌فرض‌های یادآوری پلن در پایین این بخش، این ساعت را تغییر نمی‌دهند.</value>
+  </data>
 </root>

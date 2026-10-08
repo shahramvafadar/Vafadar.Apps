@@ -5601,4 +5601,25 @@ Première échéance : {1}</value>
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>Contributions aux objectifs prévues : {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>Me rappeler de faire le bilan de chaque période</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>Désactivé par défaut. À 09 h 00 le premier jour après la fin de votre mois financier.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>Le bilan de votre période est prêt quand vous le souhaitez.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>Faites le bilan de votre mois financier : {0}.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>Rappel du bilan de période</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>Facultatif et désactivé par défaut. Zanance vous rappelle de faire le bilan à 09 h 00, heure locale de l’appareil, le premier jour après la clôture de votre mois financier. Le calendrier et le jour de début du mois choisis dans les paramètres sont utilisés. Le profil doit contenir un compte ouvert avant ce jour. Les bilans terminés et les heures de rappel dépassées sont ignorés. Toucher la notification ouvre le bilan actuellement dû ; aucune étape n’est terminée automatiquement et aucun mouvement d’argent n’est enregistré. L’autorisation des notifications est nécessaire. Les noms et dates restent masqués sauf si vous autorisez les détails. Les restrictions de batterie peuvent retarder la réception. Désactiver cette option supprime les rappels de bilan en attente sur cet appareil.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>Si votre mois financier grégorien commence le 25, septembre va du 25 septembre au 24 octobre. Le rappel arrive le 25 octobre à 09 h 00, et non le 1er octobre. Les valeurs par défaut des rappels de plans ci-dessous ne modifient pas cette heure.</value>
+  </data>
 </root>

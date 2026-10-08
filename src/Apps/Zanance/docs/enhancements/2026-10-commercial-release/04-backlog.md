@@ -27,7 +27,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; physical-device gate remains) | – |
-| ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Proposed | – |
+| ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Proposed | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Proposed | owner translations |
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Proposed | OD-12 |
@@ -158,7 +158,12 @@ isolated AVD; Debug fixture types are absent from Release. ARM64 phone, Doze/reb
 No schema, SDK or permission added; no real data touched.
 
 ### ZCR-LOC-03 – Period review reminder (from ZEX-S0610)
-Scope: optional reminder after a period ends. Done: planner tests; off by default.
+Delivered in D-71: optional profile choice in Settings, off by default, generic by default. Schedule 09:00 device-local
+after the financial month closes, following the review calendar and month start day. Skip empty/finished periods and
+missed times; taps open the current review without posting money or marking steps. Additive migration, compiled model
+and portable-backup/old-schema checks; nine planner and six real-store/coordinator cases, 1,168 main tests pass.
+Running-app en/fa/de light/dark 360/412/wide settings/help and API 36 x86_64 native scheduling/delivery/tap/persisted
+opt-out are checked. Complete signed Release APK inspected/installed; phone/Doze/reboot/iOS gates remain open.
 
 ### ZCR-LOC-04 – Aggregated entries and import (from ZEX-S0611)
 Scope: when an import overlaps an aggregated entry, offer linking details to reduce the aggregate (same account,

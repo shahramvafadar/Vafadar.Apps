@@ -5624,4 +5624,25 @@ Erster Termin: {1}</value>
   <data name="Reminder_GoalSummary" xml:space="preserve">
     <value>Anstehende Zielbeiträge: {0}</value>
   </data>
+  <data name="Settings_ReviewReminder" xml:space="preserve">
+    <value>An den Monatsrückblick erinnern</value>
+  </data>
+  <data name="Settings_ReviewReminderHint" xml:space="preserve">
+    <value>Standardmäßig aus. Um 09:00 Uhr am ersten Tag nach Ende Ihres Finanzmonats.</value>
+  </data>
+  <data name="Reminder_ReviewGeneric" xml:space="preserve">
+    <value>Ihr Monatsrückblick ist bereit, sobald Sie Zeit haben.</value>
+  </data>
+  <data name="Reminder_ReviewDetails" xml:space="preserve">
+    <value>Prüfen Sie Ihren Finanzmonat: {0}.</value>
+  </data>
+  <data name="Help_ReviewReminder_Title" xml:space="preserve">
+    <value>Erinnerung an den Monatsrückblick</value>
+  </data>
+  <data name="Help_ReviewReminder_Text" xml:space="preserve">
+    <value>Optional und standardmäßig aus. Zanance erinnert Sie am ersten Tag nach Ende Ihres Finanzmonats um 09:00 Uhr Ortszeit des Geräts. Es gelten der Kalender und der Monatsbeginn aus den Einstellungen. Im Profil muss ein Konto vor diesem Tag eröffnet worden sein. Abgeschlossene Rückblicke und verpasste Erinnerungszeiten werden übersprungen. Antippen öffnet den aktuell fälligen Rückblick; kein Schritt wird automatisch abgeschlossen und kein Geld gebucht. Die Berechtigung für Benachrichtigungen ist erforderlich. Namen und Daten bleiben verborgen, sofern Sie keine Benachrichtigungsdetails erlauben. Akkubeschränkungen können die Zustellung verzögern. Ausschalten entfernt ausstehende Rückblick-Erinnerungen auf diesem Gerät.</value>
+  </data>
+  <data name="Help_ReviewReminder_Example" xml:space="preserve">
+    <value>Beginnt Ihr gregorianischer Finanzmonat am 25., läuft September vom 25. September bis zum 24. Oktober. Die Erinnerung kommt am 25. Oktober um 09:00 Uhr, nicht am 1. Oktober. Die darunterstehenden Vorgaben für Planerinnerungen ändern diese Uhrzeit nicht.</value>
+  </data>
 </root>

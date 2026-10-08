@@ -299,3 +299,12 @@ generic privacy, permission refusal, inexact system delivery and no automatic fi
 loading an existing choice never asks for permission. Include the toggle in unsaved-change detection. Reminder-only
 edits preserve the saved rule; changing display preferences does not reinterpret its dates. Tapping a delivered
 notification opens goal details after the app lock; a grouped reminder opens the goals list.
+
+## Period review reminders (D-71)
+
+Settings > Notifications offers "Remind me to review each period" in both experience modes, off by default, with
+help and a pay-cycle example. The fixed 09:00 device-local time is stated separately from new-plan reminder defaults.
+Follow the selected display calendar and financial month start day. Keep the existing unsupported/permission-denied
+feedback visible. No account before a closed period means no reminder; finished periods and missed times are skipped.
+Generic notifications reveal no period label unless details are allowed. A tap opens the currently due review via
+app lock; finishing and step completion remain explicit actions. Changing the choice never records money.

@@ -96,3 +96,9 @@ enter only the local device scheduler. Goal names/dates appear in notification t
 otherwise title and body are generic. The existing contribution-plan flag is in database backups; native permission
 is device-local. Paused/completed/reached/unavailable goals stop pending reminders. Taps pass the app lock and never
 record contributions or transfer money. No new SDK, permission, external recipient or schema.
+
+D-71 / LOC-03 extends DF-08 with optional period review reminders. ReviewReminderEnabled is an off-by-default
+profile/database setting and travels in existing portable backups. Pending requests contain a local delivery date,
+stable id and generic review deep link; period labels are included only with the existing notification-details opt-in.
+No amounts/accounts in these requests, no financial/automatic-review writes, new permission, SDK or network path.
+Notification permission and scheduling stay on the device. The independent Debug fixture is not present in Release.

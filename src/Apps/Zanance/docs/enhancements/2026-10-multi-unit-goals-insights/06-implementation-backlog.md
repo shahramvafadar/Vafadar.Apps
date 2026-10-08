@@ -96,7 +96,7 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0607 | Debt burden and receivables (K09, K12) | 4 | Implemented – unverified (a loan plan is a plan that transfers to the loan, no extra link column; due dates and aging tested) |
 | ZEX-S0608 | Data quality (R6, K14): reconciliation date, backup status | 4 | Implemented – verified (K14 tests; reconcile date stored; backup item on Home) |
 | ZEX-S0609 | KPI explanations | 4 | Implemented – unverified (sheets for K01–K14 and capacity from every card; texts checked in three languages by the resource test) |
-| ZEX-S0610 | Period-end review | 4 | Implemented – verified (review state tested; the optional reminder is not built) |
+| ZEX-S0610 | Period-end review | 4 | Implemented – verified (optional reminder completed under ZCR-LOC-03 / D-71; physical-device gate remains) |
 | ZEX-S0611 | Aggregated entries and overlap handling | 4 | Implemented – unverified (editor, overlap choice and Undo; an import only warns about overlaps) |
 | ZEX-S0612 | Essential expense coverage (K07) | 4 | Implemented – verified (K07 tests, essential defaults) |
 | ZEX-S0701 | Holding-quantity goal | 5 | Implemented – verified (G14 tested; a money goal never follows a holding, so no "includes price effect" note is needed) |
