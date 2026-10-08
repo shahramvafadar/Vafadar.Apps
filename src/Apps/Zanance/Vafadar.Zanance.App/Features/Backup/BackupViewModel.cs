@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Backup.Security;
 using Vafadar.Backup.Storage;
 using Vafadar.Backup;
@@ -17,13 +18,14 @@ namespace Vafadar.Zanance.App.Features.Backup;
 public sealed record LocalBackup(BackupFileInfo File, string Title, string Details);
 
 /// <summary>
-/// Backup and restore (UI-13, BAK-01..12). A backup is an encrypted file the user keeps wherever they like – shared to
+/// Backup and restore (UI-13, BAK-01..12). A backup is an optionally encrypted file the user keeps wherever they like – shared to
 /// Google Drive, OneDrive, e-mail or a computer. A restore replaces all data after a preview and a safety copy; it is
 /// never a merge (BAK-02).
 /// </summary>
 public sealed partial class BackupViewModel : ViewModelBase
 {
     private const int MinimumPasswordLength = 8;
+    private const string PasswordProtectionKey = "backup.usePassword";
 
     private readonly IBackupService _backup;
     private readonly AutoPostProcessor _autoPost;
@@ -36,6 +38,42 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly LocalFolderBackupStorage _local;
     private readonly LocalFolderBackupStorage _safety;
     private byte[]? _package;
+    private Page? _page;
+    private Func<Task>? _returnToOnboarding;
+
+    private Page DialogPage => _page ?? throw new InvalidOperationException("The backup page has not been attached.");
+
+    /// <summary>Gets whether only restoration is offered before onboarding is completed (D-62).</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanCreateBackup))]
+    public partial bool IsRestoreOnly { get; set; }
+
+    /// <summary>Gets whether creating or uploading a backup is offered on this page.</summary>
+    public bool CanCreateBackup => !IsRestoreOnly;
+
+    /// <summary>Sets the host for dialogs, including first run when no Shell exists.</summary>
+    public void AttachPage(Page page) => _page = page;
+
+    /// <summary>Switches to restore without creating a financial account; cancellation preserves the wizard.</summary>
+    public void BeginOnboardingRestore(Func<Task> returnToOnboarding)
+    {
+        _returnToOnboarding = returnToOnboarding;
+        IsRestoreOnly = true;
+    }
+
+    /// <summary>Returns to the same onboarding step and discards the selected package and password.</summary>
+    [RelayCommand]
+    private async Task BackToOnboardingAsync()
+    {
+        if (!IsBusy)
+        {
+            ResetRestore();
+            if (_returnToOnboarding is not null)
+            {
+                await _returnToOnboarding();
+            }
+        }
+    }
 
     public BackupViewModel(
         IBackupService backup,
@@ -64,7 +102,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         Password = string.Empty;
         PasswordConfirm = string.Empty;
         RestorePassword = string.Empty;
-        UsePassword = true;
+        UsePassword = Preferences.Default.Get(PasswordProtectionKey, true);
         LastBackupText = string.Empty;
     }
 
@@ -75,6 +113,17 @@ public sealed partial class BackupViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial bool UsePassword { get; set; }
+
+    partial void OnUsePasswordChanged(bool value)
+    {
+        // Remember only the choice on this device, never the password. New installations default to encryption.
+        Preferences.Default.Set(PasswordProtectionKey, value);
+        if (!value)
+        {
+            Password = string.Empty;
+            PasswordConfirm = string.Empty;
+        }
+    }
 
     [ObservableProperty]
     public partial string Password { get; set; }
@@ -173,7 +222,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     {
         var share = _translator["Backup_Share"];
         var restore = _translator["Backup_Restore"];
-        var choice = await Shell.Current.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
+        var choice = IsRestoreOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
         if (choice == share)
         {
             await ShareAsync(backup.File);
@@ -261,7 +310,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             return;
         }
 
-        if (!await Shell.Current.DisplayAlertAsync(_translator["Backup_ReplaceTitle"], _translator["Backup_ReplaceMessage"], _translator["Backup_Replace"], _translator["Common_Cancel"])
+        if (!await DialogPage.DisplayAlertAsync(_translator["Backup_ReplaceTitle"], _translator["Backup_ReplaceMessage"], _translator["Backup_Replace"], _translator["Common_Cancel"])
             || !await _lock.ConfirmAsync(_translator["Lock_ConfirmRestore"]))
         {
             return;
@@ -281,6 +330,12 @@ public sealed partial class BackupViewModel : ViewModelBase
             var password = NeedsRestorePassword ? RestorePassword : null;
             replacing = true;
             await _autoPost.RunExclusiveAsync(() => _backup.RestorePackageAsync(package, password));
+
+            if (IsRestoreOnly)
+            {
+                // Existing accounts make onboarding unnecessary; restored profile preferences remain intact (D-62).
+                await _services.GetRequiredService<ZananceStore>().CompleteRestoredOnboardingAsync();
+            }
 
             // The restored settings may switch the app lock on or off.
             await _lock.ReloadAsync();
@@ -328,8 +383,12 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
             await Presentation.Failures.GuardAsync(async () =>
             {
-                await Shell.Current.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
-                (Application.Current as App)?.ShowMainShell();
+                await DialogPage.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
+                if (IsRestoreOnly && _returnToOnboarding is not null)
+                {
+                    await _returnToOnboarding();
+                }
+                (Application.Current as App)?.ShowCurrentProfile();
             });
         }
     }

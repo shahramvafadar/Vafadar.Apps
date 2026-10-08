@@ -4,6 +4,9 @@
 and pushed; then exactly one next section is proposed and work stops until the next approval. One approval never
 covers a whole wave. Item states live only in [04-backlog.md](04-backlog.md).
 
+The owner approved D-62 maintenance (ZCR-LOC-11) on 2026-10-08 before continuing the commercial waves.
+This covers only backup, first run and About; wave 1 and other sections still require their own approval.
+
 ## Waves (dependency order)
 
 | Wave | Content | Exit criterion |

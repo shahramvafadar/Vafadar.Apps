@@ -1,10 +1,17 @@
 # Data and backup
 
 Apps are **local-first**: all data is stored in a SQLite database on the device and the app works without network.
-To make sure data is never lost, the app creates encrypted backup packages (password known only to the user) that the
+To make sure data is never lost, the app creates backup packages with optional password encryption that the
 user keeps or shares. The libraries can also store them in cloud storage **owned by the user** (Google Drive or
 OneDrive). In Zanance they are offered only in builds with configured OAuth clients, as an explicit choice of the
-user, and cloud backups are always encrypted with a password (D-35, replacing D-17).
+user, and local and cloud backups both offer optional password encryption (D-62 supersedes the mandatory cloud password in D-35).
+The device remembers only the protection choice, defaulting to on; passwords are never saved. A password may be
+reused, but encrypted backup creation requires entry and confirmation each time. Connected cloud account access
+does not encrypt the portable file: anyone obtaining an unprotected package can read it.
+
+First-run restore uses the same validation, preview, confirmation and safety-copy flow before any account is created.
+Restored accounts complete onboarding without a duplicate account, preserving profile preferences. Empty backups
+still need onboarding. Theme is device-wide and not restored from a package (D-62).
 
 ## Local database
 
@@ -137,8 +144,8 @@ Both are free for the user within their existing quota and cost the developer no
 |---|---|
 | Offered | Only when the build has the OAuth client of the provider for that platform (`MicrosoftEntraClientId` for all; `GoogleOAuthClientIdAndroid`, `GoogleOAuthClientIdIos`, `GoogleOAuthClientIdWindows`). Both providers work on Android, iOS and Windows. A build without clients has no cloud section (and on Android no `INTERNET` permission) |
 | Connect | The user taps *Connect*, reads where the backups go and that only the app folder is visible, then signs in with the provider's own screen ([authentication](authentication.md)) |
-| Back up | *Back up now* uses the password entered under *Create backup*; without a password nothing is uploaded. Retention (`MaxBackupsToKeep`) applies in the cloud folder as well |
-| Restore | *Show backups* lists the files; tapping one downloads it and runs the normal restore flow (password, preview, safety copy, confirmation) |
+| Back up | *Back up now* follows the protection choice under *Create backup*: when on, enter and confirm a password; when off, upload a package without file encryption (D-62). Retention (`MaxBackupsToKeep`) applies in the cloud folder as well |
+| Restore | *Show backups* lists the files; tapping one downloads it and runs the normal restore flow (password if encrypted, preview, safety copy, confirmation) |
 | Disconnect | Signs out and removes the cached tokens (Google: the grant is revoked); backups stay in the user's account |
 
 Backups are per local profile: each profile backs up its own database into its own **backup set**

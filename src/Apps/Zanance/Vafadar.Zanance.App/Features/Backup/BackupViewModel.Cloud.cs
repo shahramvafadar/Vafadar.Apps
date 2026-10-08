@@ -93,7 +93,7 @@ public sealed partial class BackupViewModel
         CloudError = null;
 
         // The user decides to go online: what is stored where, said before the provider's sign-in opens.
-        if (!await Shell.Current.DisplayAlertAsync(row.Title, _translator.Format("Cloud_ConnectMessage", row.Title), _translator["Cloud_Connect"], _translator["Common_Cancel"]))
+        if (!await DialogPage.DisplayAlertAsync(row.Title, _translator.Format("Cloud_ConnectMessage", row.Title), _translator["Cloud_Connect"], _translator["Common_Cancel"]))
         {
             return;
         }
@@ -129,7 +129,7 @@ public sealed partial class BackupViewModel
     [RelayCommand]
     private async Task DisconnectAsync(CloudAccountRow row)
     {
-        if (!await Shell.Current.DisplayAlertAsync(row.Title, _translator.Format("Cloud_DisconnectMessage", row.Title), _translator["Cloud_Disconnect"], _translator["Common_Cancel"]))
+        if (!await DialogPage.DisplayAlertAsync(row.Title, _translator.Format("Cloud_DisconnectMessage", row.Title), _translator["Cloud_Disconnect"], _translator["Common_Cancel"]))
         {
             return;
         }
@@ -146,14 +146,8 @@ public sealed partial class BackupViewModel
         CloudError = null;
         CloudResult = null;
 
-        // A backup that leaves the device is always encrypted (BAK-05, D-35).
-        if (!UsePassword)
-        {
-            CloudError = _translator["Cloud_PasswordRequired"];
-            return;
-        }
-
-        if (PasswordProblem() is { } problem)
+        // D-62: the same optional file protection applies to local and connected cloud destinations.
+        if (UsePassword && PasswordProblem() is { } problem)
         {
             CloudError = problem;
             return;
@@ -167,7 +161,7 @@ public sealed partial class BackupViewModel
         IsBusy = true;
         try
         {
-            await _backup.CreateBackupAsync(Storage(row.Provider), Password);
+            await _backup.CreateBackupAsync(Storage(row.Provider), UsePassword ? Password : null);
             Password = string.Empty;
             PasswordConfirm = string.Empty;
             CloudResult = _translator.Format("Cloud_Uploaded", row.Title);
@@ -213,7 +207,7 @@ public sealed partial class BackupViewModel
         CloudError = null;
         var restore = _translator["Backup_Restore"];
         var delete = _translator["Common_Delete"];
-        var choice = await Shell.Current.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, restore, delete);
+        var choice = IsRestoreOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, restore, delete);
         if (choice == delete)
         {
             await DeleteCloudAsync(backup);
@@ -244,7 +238,7 @@ public sealed partial class BackupViewModel
     private async Task DeleteCloudAsync(CloudBackup backup)
     {
         var row = CloudAccounts.First(a => a.Provider == backup.Provider);
-        if (!await Shell.Current.DisplayAlertAsync(_translator["Cloud_DeleteTitle"], _translator.Format("Cloud_DeleteMessage", backup.Title), _translator["Common_Delete"], _translator["Common_Cancel"]))
+        if (!await DialogPage.DisplayAlertAsync(_translator["Cloud_DeleteTitle"], _translator.Format("Cloud_DeleteMessage", backup.Title), _translator["Common_Delete"], _translator["Common_Cancel"]))
         {
             return;
         }

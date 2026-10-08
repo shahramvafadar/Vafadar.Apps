@@ -2795,7 +2795,7 @@
     <value>Cloud-Sicherung</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Sie können verschlüsselte Sicherungen in Ihrem eigenen Cloud-Speicher ablegen. Nach dem Verbinden nutzt Zanance die Internetverbindung für den Zugriff auf diese Sicherungen.</value>
+    <value>Optional: Speichern Sie Sicherungen in Ihrem eigenen Cloud-Konto. Passwortschutz ist Ihre Wahl. Die App nutzt das Internet nur dafür und erst nach dem Verbinden.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2807,7 +2807,7 @@
     <value>Verbinden</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>Sicherungen werden in einem privaten App-Ordner in Ihrem Konto bei {0} gespeichert. Zanance greift nur auf diesen Ordner zu. Die Sicherungen werden mit Ihrem Passwort verschlüsselt; das Passwort wird nicht hochgeladen.</value>
+    <value>Sicherungen werden in einem privaten App-Ordner in Ihrem {0} gespeichert. Die App kann nur auf diesen Ordner zugreifen. Passwortschutz ist optional: Ohne ihn kann jeder, der eine Sicherungsdatei erhält, sie lesen.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Trennen</value>
@@ -2822,16 +2822,13 @@
     <value>Sicherungen anzeigen</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>Cloud-Sicherungen verwenden immer das Passwort aus „Sicherung erstellen“.</value>
-  </data>
-  <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>Cloud-Sicherungen erfordern Passwortschutz. Aktivieren Sie „Mit Passwort schützen“ und geben Sie unter „Sicherung erstellen“ das Passwort ein.</value>
+    <value>Cloud-Sicherungen folgen der obigen Wahl zum Passwortschutz. Sie können dasselbe Passwort wiederverwenden; es wird nie gespeichert. Ohne Schutz ist zum Wiederherstellen kein Sicherungspasswort nötig.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>Die Sicherung wurde in {0} gespeichert.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>Tippen Sie auf eine Sicherung, um sie (mit Passwort und Vorschau) wiederherzustellen oder aus der Cloud zu löschen.</value>
+    <value>Wählen Sie eine Sicherung zur Vorschau und Wiederherstellung. Verschlüsselte Dateien benötigen ihr ursprüngliches Passwort. Das Löschen einer Cloud-Sicherung ist eine separate Aktion.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>Die Anmeldung bei {0} ist fehlgeschlagen. Versuchen Sie es erneut.</value>
@@ -3036,7 +3033,7 @@ Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betracht
     <value>Sicherungspasswort</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>Der Passwortschutz verschlüsselt die Sicherungsdatei. Zum Wiederherstellen benötigen Sie das Passwort, mit dem genau diese Datei erstellt wurde – auch auf einem anderen Gerät. Bewahren Sie es sicher auf: Der Entwickler kann es nicht wiederherstellen, und die Geräte-PIN ersetzt es nicht. Ohne Passwortschutz kann jeder, der die Datei erhält, ihren Inhalt lesen.</value>
+    <value>Der Passwortschutz verschlüsselt lokale und Cloud-Sicherungsdateien. Sie können dasselbe Passwort wiederverwenden, müssen es aber jedes Mal eingeben und bestätigen; Zanance speichert es nie. Zum Wiederherstellen einer verschlüsselten Datei benötigen Sie ihr ursprüngliches Passwort, auch auf einem anderen Gerät. Bewahren Sie es sicher auf: Der Entwickler kann es nicht wiederherstellen, und Ihre Geräte-PIN ersetzt es nicht. Sie können den Schutz ausschalten; jeder, der eine unverschlüsselte Datei erhält, kann ihren Inhalt lesen, auch wenn sie in Ihrem eigenen Cloud-Konto gespeichert war.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorität eines Ziels</value>
@@ -3048,7 +3045,7 @@ Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betracht
     <value>Ihr Geld, klar geplant.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Anzeige der Gesamtsummen festlegen</value>
+    <value>Wählen Sie Ihre Einstellungen</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Symbole ausblenden</value>
@@ -3199,12 +3196,6 @@ Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betracht
   </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Für die lokale Nutzung von Zanance ist kein Onlinekonto erforderlich. Die App zeigt keine Werbung und sendet Ihre Finanzdaten nicht automatisch an den Entwickler. Sie entscheiden selbst, ob Sie Sicherungen erstellen, einen eigenen Cloud-Speicher verbinden oder Daten teilen.</value>
-  </data>
-  <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Open-Source-Lizenzen</value>
-  </data>
-  <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance verwendet die folgende Software und die folgenden Schriftarten. Die zugehörigen Lizenzhinweise sind hier aufgeführt.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Lizenztexte anzeigen</value>
@@ -5088,7 +5079,7 @@ Bestandsmenge: Gewicht oder Stückzahl zählt, nicht der Preis. Ein Preisanstieg
     <value>Sicherung</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Eine Sicherung enthält die Daten des aktuellen Profils, darunter Konten, Buchungen, Planungen, Budgets, Wechselkurse, Ziele, Bestände, gespeicherte Prognosen, Anzeigeeinheiten und das Layout der Startseite. Lokale Sicherungen sind bei aktiviertem Passwortschutz verschlüsselt; für Cloud-Sicherungen ist dieser erforderlich. Geräteweite Einstellungen wie Darstellung, Sprache und Ziffernanzeige sind nicht enthalten.</value>
+    <value>Eine Sicherung enthält die Daten des aktuellen Profils, darunter Konten, Buchungen, Planungen, Budgets, Wechselkurse, Ziele, Bestände, gespeicherte Prognosen, Anzeigeeinheiten und das Layout der Startseite. Lokale und Cloud-Sicherungen sind bei aktiviertem Passwortschutz verschlüsselt; er ist für beide optional. Geräteweite Einstellungen wie Darstellung, Sprache und Ziffernanzeige sind nicht enthalten.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV-Export</value>
@@ -5340,5 +5331,14 @@ Schritte zum Nachstellen des Problems:
   </data>
   <data name="Help_SafetyCopy_Example" xml:space="preserve">
     <value>Sie möchten die Sicherung der letzten Woche wiederherstellen. Erstellen Sie zunächst eine geschützte Sicherung des heutigen Stands und bewahren Sie sie anderswo auf. Die automatische Sicherheitskopie allein hilft nicht beim Verlust dieses Geräts.</value>
+  </data>
+  <data name="Onb_RestoreButton" xml:space="preserve">
+    <value>Ich habe bereits eine Sicherung</value>
+  </data>
+  <data name="Onb_RestoreText" xml:space="preserve">
+    <value>Stellen Sie Ihre bisherigen Konten und Daten aus einer Sicherung wieder her, statt ein neues Konto anzulegen. Wenn Sie abbrechen, können Sie zur Einrichtung zurückkehren.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Open-Source-Lizenzen</value>
   </data>
 </root>

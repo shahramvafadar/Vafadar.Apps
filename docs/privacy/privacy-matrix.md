@@ -12,10 +12,10 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 | Data | Zanance | Stored where | Leaves the device? | Who can read it |
 |---|---|---|---|---|
 | Financial entries (accounts, transactions, plans, budgets, categories, notes, tags) | ✅ | On-device SQLite | ⚙️ only in backup files / exports the user shares, and in OS backups | The user |
-| Attachments (receipt photos, PDF files) | ⚙️ | On-device SQLite | ⚙️ only inside the encrypted backup file and OS backups; never in CSV/PDF exports | The user |
+| Attachments (receipt photos, PDF files) | ⚙️ | On-device SQLite | ⚙️ only inside the optionally encrypted backup file (D-62) and OS backups; never in CSV/PDF exports | The user |
 | Local profile names (only when more than one profile exists) | ⚙️ | On-device preferences, outside the profiles' databases | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
 | App settings (language, calendar, theme, display units) | ✅ | On-device preferences | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
-| Backup files | ⚙️ | On the device (last 10) and wherever the user shares them | ⚙️ only when the user shares one | The user (encrypted: only with the password) |
+| Backup files | ⚙️ | On the device (last 10), the connected cloud app folder or wherever the user shares them | ⚙️ when the user shares or uploads one | Anyone obtaining an unprotected file; encrypted files require the password (D-62) |
 | CSV / PDF exports | ⚙️ | App cache, then the app the user picks in the share sheet | ⚙️ only when the user shares one (unencrypted, with a warning) | Whoever receives the file |
 | Reminders | ⚙️ | Local notification service | ❌ | The user (generic text unless details are allowed) |
 | Google / Microsoft account, OAuth tokens | ⚙️ | Device only: Play services (Google, Android), MSAL cache (Android storage, iOS keychain, Windows DPAPI), Google refresh token (iOS keychain, Windows DPAPI) | ❌ | Only in builds with cloud backup clients and after the user connects (D-35, D-50); removed on disconnect |

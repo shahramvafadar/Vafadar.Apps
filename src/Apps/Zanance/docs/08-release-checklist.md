@@ -10,6 +10,10 @@
 - [ ] Performance measured on the reference device with 10,000 entries (Q-02) and recorded – calculation budget test with 10,000 entries, 20 accounts and 100 plans passes
 - [ ] Deviations in spec Section 31.3 accepted by the owner or resolved
 
+- [ ] D-62 device acceptance: fresh install → choose theme/experience or restore an existing backup; cancel and return
+  without losing the draft; restore protected and unprotected files without an extra account. For each released cloud
+  provider, upload/restore with protection on and off, with a real OAuth client. Windows checks do not close this gate.
+
 ## Privacy and security
 
 - [ ] Privacy matrix (06) reviewed against the release APK/AAB: package list, merged manifest permissions, network traffic

@@ -122,19 +122,38 @@ internal static class DebugSnapshots
 
         if (app.Windows[0].Page is OnboardingPage onboarding && onboarding.BindingContext is OnboardingViewModel vm)
         {
+            // The snapshot theme is selected after the first page is created; show that choice in its picker too.
+            vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             foreach (var language in languages)
             {
-                localization.SetLanguage(localization.SupportedLanguages.First(l => l.CultureName == language));
+                vm.Step = 1;
+                vm.SelectedLanguage = localization.SupportedLanguages.First(l => l.CultureName == language);
                 await Task.Delay(500);
                 await CaptureAsync(app, folder, $"{language}-onboarding-1");
-            }
 
-            vm.NextCommand.Execute(null);
-            await Task.Delay(500);
-            await CaptureAsync(app, folder, $"{languages[^1]}-onboarding-2");
-            vm.NextCommand.Execute(null);
-            await Task.Delay(500);
-            await CaptureAsync(app, folder, $"{languages[^1]}-onboarding-3");
+                // D-62: restore is available before any account exists, and Back preserves the wizard draft.
+                await vm.RestoreBackupCommand.ExecuteAsync(null);
+                await Task.Delay(500);
+                await CaptureAsync(app, folder, $"{language}-onboarding-restore");
+                if (onboarding.Navigation.ModalStack.LastOrDefault()?.BindingContext is Features.Backup.BackupViewModel restore)
+                {
+                    await restore.BackToOnboardingCommand.ExecuteAsync(null);
+                }
+
+                for (var step = 2; step <= OnboardingViewModel.StepCount; step++)
+                {
+                    await vm.NextCommand.ExecuteAsync(null);
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-onboarding-{step}");
+                    if (FindScrollView(onboarding) is { } scroll)
+                    {
+                        await scroll.ScrollToAsync(0, scroll.ContentSize.Height, animated: false);
+                        await Task.Delay(300);
+                        await CaptureAsync(app, folder, $"{language}-onboarding-{step}-end");
+                        await scroll.ScrollToAsync(0, 0, animated: false);
+                    }
+                }
+            }
             vm.Account.OpeningText = "1250.50";
             await vm.NextCommand.ExecuteAsync(null);
             await Task.Delay(1500);
@@ -595,7 +614,8 @@ internal static class DebugSnapshots
 
     private static async Task CaptureAsync(App app, string folder, string name)
     {
-        var page = app.Windows[0].Page;
+        var rootPage = app.Windows[0].Page;
+        var page = rootPage?.Navigation.ModalStack.LastOrDefault() ?? rootPage;
         var visible = page is Shell shell ? (shell.CurrentPage as VisualElement) ?? shell : page as VisualElement;
         if (visible?.Parent is Shell && page is VisualElement root)
         {

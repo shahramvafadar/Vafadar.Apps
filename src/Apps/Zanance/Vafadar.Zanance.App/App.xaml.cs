@@ -129,6 +129,19 @@ public partial class App : Application
         }
     }
 
+    /// <summary>Opens the existing restore flow before a first account is created (D-62).</summary>
+    public async Task ShowOnboardingRestoreAsync()
+    {
+        if (Windows.FirstOrDefault()?.Page is OnboardingPage onboarding)
+        {
+            var page = _services.GetRequiredService<Features.Backup.BackupPage>()
+                .WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+            // The modal keeps the wizard and its unsaved draft attached until restore succeeds or is cancelled (D-62).
+            page.BeginOnboardingRestore(() => onboarding.Navigation.PopModalAsync(animated: false));
+            await onboarding.Navigation.PushModalAsync(page, animated: false);
+        }
+    }
+
     protected override Window CreateWindow(IActivationState? activationState)
     {
         // The database is created or upgraded here, before the first page reads it, and not while the app is built:

@@ -8,6 +8,9 @@
 Nothing here was built in phase 1, not even behind a disabled flag (HAND-05). Phase 2A started on 2026-09-26; finished items are marked below. The phase-1 model keeps each item
 possible (SC-01).
 
+D-62 first-run/backup maintenance is recorded as ZCR-LOC-11 in the canonical backlog; it introduces no commercial
+limits and does not approve another development wave.
+
 ## Phase 2A – local, in suggested order
 
 | Item | Requirements | Model hook already present |

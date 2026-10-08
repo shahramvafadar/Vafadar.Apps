@@ -130,6 +130,10 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
 * MAUI: compiled bindings (`x:DataType` everywhere; `RelativeSource` bindings need their own `x:DataType`);
   CommunityToolkit.Mvvm `[ObservableProperty]` on partial properties; a `DateField` must never be bound to an unset
   `DateOnly` (initialize dates).
+* Backup (D-62): password encryption is optional for local and connected cloud backups, on by default. Remember
+  only the protection choice on the device, never passwords. Explain that an unprotected portable file is readable
+  by anyone who obtains it. First-run restore must not force or create an extra account; preserve restored preferences.
+  About keeps a compact link to the required bundled notices, without an inline component list.
 * Privacy: no analytics, ads, crash reporting or network SDKs; offline builds declare no `INTERNET` permission
   (cloud backup builds only, D-35). Notifications are generic unless the user allows details. The recent-apps preview
   is always hidden (Android `FLAG_SECURE`, iOS cover). Permissions are asked in context, with the platform's own

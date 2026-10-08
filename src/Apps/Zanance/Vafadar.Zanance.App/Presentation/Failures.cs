@@ -33,10 +33,10 @@ internal static class Failures
         Observed?.Invoke(exception);
         try
         {
-            if (Shell.Current is { } shell)
+            if (Application.Current?.Windows.FirstOrDefault()?.Page is { } page)
             {
                 var translator = Translator.Instance;
-                await shell.DisplayAlertAsync(translator["Error_Title"], translator["Error_Unexpected"], translator["Common_Ok"]);
+                await page.DisplayAlertAsync(translator["Error_Title"], translator["Error_Unexpected"], translator["Common_Ok"]);
             }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)

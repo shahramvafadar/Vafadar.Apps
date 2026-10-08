@@ -2776,7 +2776,7 @@
     <value>Backup nel cloud</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Facoltativo: conserva backup crittografati nel tuo spazio cloud. L’app usa internet solo per questa funzione e solo dopo aver collegato il servizio.</value>
+    <value>Facoltativo: conserva i backup nel tuo account cloud. Puoi scegliere la protezione con password. L’app usa internet solo per questo e dopo la connessione.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2788,7 +2788,7 @@
     <value>Collega</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>I backup verranno salvati in una cartella privata dell’app nel tuo {0}. L’app può accedere solo a quella cartella. I backup sono crittografati con la tua password, che non viene mai caricata.</value>
+    <value>I backup saranno salvati in una cartella privata dell’app nel tuo {0}. L’app può accedere solo a quella cartella. La password è facoltativa: senza, chiunque ottenga il file può leggerlo.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Scollega</value>
@@ -2803,16 +2803,13 @@
     <value>Mostra backup</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>I backup nel cloud usano sempre la password inserita in «Crea backup».</value>
-  </data>
-  <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>I backup nel cloud sono sempre crittografati: attiva la protezione con password e inseriscila in «Crea backup».</value>
+    <value>I backup cloud seguono la scelta di protezione indicata sopra. Puoi riutilizzare la stessa password; non viene mai salvata. Senza protezione, il ripristino non richiede una password del backup.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>Il backup è stato salvato in {0}.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>Tocca un backup per ripristinarlo, con password e anteprima, oppure per eliminarlo dal cloud.</value>
+    <value>Tocca un backup per visualizzarlo e ripristinarlo. I file cifrati richiedono la loro password originale. Eliminare un backup cloud è un’azione separata.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>Impossibile accedere a {0}. Riprova.</value>
@@ -3018,7 +3015,7 @@ Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequen
     <value>Password del backup</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>La protezione con password cifra il file di backup. Per ripristinarlo serve la password usata quando è stato creato, anche su un altro dispositivo. Conservala in un luogo sicuro: lo sviluppatore non può recuperarla e il PIN del dispositivo non la sostituisce. Senza questa protezione, chi ottiene il file può leggerne il contenuto.</value>
+    <value>La protezione con password cifra i backup locali e cloud. Puoi riutilizzare la stessa password, ma devi inserirla e confermarla ogni volta; Zanance non la salva mai. Per ripristinare un file cifrato serve la sua password originale, anche su un altro dispositivo. Conservala al sicuro: lo sviluppatore non può recuperarla e il PIN del dispositivo non la sostituisce. Puoi disattivare la protezione; chiunque ottenga un file non cifrato può leggerne il contenuto, anche se era salvato nel tuo account cloud.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorità di un obiettivo</value>
@@ -3030,7 +3027,7 @@ Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequen
     <value>Il tuo denaro, con un piano chiaro.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Scegli come mostrare i totali</value>
+    <value>Scegli le tue preferenze</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Nascondi icone</value>
@@ -3181,12 +3178,6 @@ Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequen
   </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Zanance funziona senza un account online e non mostra pubblicità. I dati finanziari restano su questo dispositivo. Scegli tu quando esportarli o creare backup. I backup nel cloud, facoltativi, vengono conservati nel tuo account cloud collegato. Zanance non invia automaticamente i tuoi dati finanziari allo sviluppatore.</value>
-  </data>
-  <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Licenze di terze parti</value>
-  </data>
-  <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance usa i software e i caratteri elencati di seguito. Le relative licenze richiedono queste informazioni.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Visualizza licenze</value>
@@ -5074,7 +5065,7 @@ Quantità posseduta: segue un peso o un numero di unità, non il prezzo. Un aume
     <value>Backup</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Un backup contiene i dati del profilo attuale: conti, movimenti, piani, budget, tassi, obiettivi, beni, previsioni salvate, unità di visualizzazione e disposizione della Home. I backup locali sono crittografati se attivi la protezione con password, obbligatoria per quelli nel cloud. Le preferenze generali del dispositivo, come tema, lingua e visualizzazione delle cifre, non sono incluse.</value>
+    <value>Un backup contiene i dati del profilo attuale: conti, movimenti, piani, budget, tassi, obiettivi, beni, previsioni salvate, unità di visualizzazione e disposizione della Home. I backup locali e cloud sono crittografati se attivi la protezione con password, facoltativa per entrambi. Le preferenze generali del dispositivo, come tema, lingua e visualizzazione delle cifre, non sono incluse.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Esportazione CSV</value>
@@ -5329,5 +5320,14 @@ Passaggi per riprodurre il problema:
   </data>
   <data name="Help_SafetyCopy_Example" xml:space="preserve">
     <value>Stai per ripristinare il backup della scorsa settimana. Prima crea un backup protetto dei dati di oggi e conservalo altrove. La copia precauzionale automatica da sola non basta se perdi questo dispositivo.</value>
+  </data>
+  <data name="Onb_RestoreButton" xml:space="preserve">
+    <value>Ho già un backup</value>
+  </data>
+  <data name="Onb_RestoreText" xml:space="preserve">
+    <value>Ripristina i tuoi conti e dati da un backup invece di creare un nuovo conto. Se annulli, puoi tornare alla configurazione.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Licenze di terze parti</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-# 0006. Encrypted backups to the user's own Google Drive / OneDrive
+# 0006. Optionally encrypted backups to the user's own Google Drive / OneDrive
 
 - Status: Accepted
 - Date: 2026-09-25
@@ -21,7 +21,9 @@ privacy obligations and give the developer access to personal data.
 
 ## Consequences
 
-* No server, no cost, and the developer cannot read backups.
+* No developer-operated backup server. D-62 makes password encryption optional for both local and cloud packages;
+  anyone who obtains an unencrypted package can read it. Encryption is on by default, passwords are never saved,
+  and the UI explains the consequences before the user creates an unprotected package.
 * Users need a Google or Microsoft account for cloud backup (local export always works without one).
 * A forgotten encryption password makes that backup unrecoverable – the UI must warn clearly.
 * Backup is not multi-device sync; that would be a separate decision per app.

@@ -3,6 +3,11 @@
 Each slice is a usable vertical increment: domain + persistence + UI + tests, committed separately. A slice is done
 only when its acceptance scenarios pass; status is tracked in the table at the end.
 
+D-62 maintenance (2026-10-08): S2 offers theme/experience choices and existing-backup restore without a new
+account; S6 allows optional password protection for local and cloud destinations. Tests cover protected and
+unprotected packages, preserved preferences, no duplicate account and an empty profile. Cloud sign-in and
+physical-device gates remain open; current tracking is ZCR-LOC-11.
+
 ## Phase 1A – everyday ledger
 
 | Slice | Goal | Scope | Acceptance | Migration / recovery risk |

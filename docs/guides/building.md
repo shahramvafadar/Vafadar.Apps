@@ -79,3 +79,9 @@ Other workflows:
 * `codeql.yml` – security analysis of C# and workflow files (weekly and on changes).
 * `release-android.yml` – manual: builds a signed `.aab` for Google Play (see [release guide](release-and-publishing.md)).
 * Dependabot (`.github/dependabot.yml`) opens weekly update pull requests for NuGet packages, the SDK and actions.
+
+### First-run snapshot coverage (D-62)
+
+The normal snapshot walk-through captures all three onboarding steps in each requested language, including the
+ends of longer forms, and the restore page before an account exists. Back returns to the same draft, then the
+walk-through completes onboarding and continues to the requested routes. Sample data is fictitious throughout.

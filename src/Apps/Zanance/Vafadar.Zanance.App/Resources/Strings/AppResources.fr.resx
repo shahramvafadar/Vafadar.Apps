@@ -2762,7 +2762,7 @@
     <value>Sauvegarde cloud</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Facultatif : conservez des sauvegardes chiffrées dans votre propre stockage cloud. L’application utilise Internet uniquement à cette fin, et seulement après votre connexion.</value>
+    <value>Facultatif : conservez vos sauvegardes dans votre propre compte cloud. Vous choisissez la protection par mot de passe. L’application utilise internet uniquement pour cela, après votre connexion.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2774,7 +2774,7 @@
     <value>Connecter</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>Les sauvegardes seront conservées dans un dossier privé de l’application sur votre espace {0}. L’application n’a accès qu’à ce dossier. Les sauvegardes sont chiffrées avec votre mot de passe, qui n’est jamais envoyé au cloud.</value>
+    <value>Les sauvegardes seront stockées dans un dossier privé de l’application sur votre {0}. L’application ne peut accéder qu’à ce dossier. Le mot de passe est facultatif : sans lui, toute personne obtenant le fichier peut le lire.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Déconnecter</value>
@@ -2789,16 +2789,13 @@
     <value>Afficher les sauvegardes</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>Les sauvegardes cloud utilisent toujours le mot de passe saisi dans « Créer une sauvegarde ».</value>
-  </data>
-  <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>Les sauvegardes cloud sont toujours chiffrées : activez la protection par mot de passe et saisissez-le dans « Créer une sauvegarde ».</value>
+    <value>Les sauvegardes cloud suivent le choix de protection ci-dessus. Vous pouvez réutiliser le même mot de passe ; il n’est jamais enregistré. Sans protection, la restauration ne demande aucun mot de passe de sauvegarde.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>La sauvegarde a été enregistrée dans {0}.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>Sélectionnez une sauvegarde pour la restaurer après saisie du mot de passe et affichage d’un aperçu, ou pour la supprimer du cloud.</value>
+    <value>Sélectionnez une sauvegarde pour la prévisualiser et la restaurer. Les fichiers chiffrés nécessitent leur mot de passe d’origine. La suppression d’une sauvegarde cloud est une action distincte.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>Impossible de se connecter à {0}. Réessayez.</value>
@@ -3004,7 +3001,7 @@ Flexible : séparez les factures mensuelles et la part mensuelle des factures m
     <value>Mot de passe de sauvegarde</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>La protection par mot de passe chiffre le fichier de sauvegarde. Pour le restaurer, même sur un autre appareil, vous avez besoin du mot de passe utilisé à sa création. Conservez-le en lieu sûr : le développeur ne peut pas le récupérer et le code de déverrouillage de l’appareil ne le remplace pas. Sans cette protection, toute personne ayant le fichier peut en lire le contenu.</value>
+    <value>La protection par mot de passe chiffre les sauvegardes locales et cloud. Vous pouvez réutiliser le même mot de passe, mais devez le saisir et le confirmer à chaque fois ; Zanance ne l’enregistre jamais. La restauration d’un fichier chiffré nécessite son mot de passe d’origine, même sur un autre appareil. Conservez-le en lieu sûr : le développeur ne peut pas le récupérer et le code de votre appareil ne le remplace pas. Vous pouvez désactiver la protection ; toute personne obtenant un fichier non chiffré peut en lire le contenu, même s’il était stocké dans votre propre compte cloud.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priorité d’un objectif</value>
@@ -3016,7 +3013,7 @@ Flexible : séparez les factures mensuelles et la part mensuelle des factures m
     <value>Votre argent, vos projets, en toute clarté.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Choisissez l’affichage des totaux</value>
+    <value>Choisissez vos préférences</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Masquer les icônes</value>
@@ -3167,12 +3164,6 @@ Flexible : séparez les factures mensuelles et la part mensuelle des factures m
   </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Zanance fonctionne sans compte en ligne et n’affiche aucune publicité. Vos données financières sont stockées sur cet appareil. Vous choisissez quand les exporter ou créer des sauvegardes. Les sauvegardes cloud facultatives sont conservées dans votre propre compte cloud connecté. Zanance n’envoie pas automatiquement vos données financières au développeur.</value>
-  </data>
-  <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Licences tierces</value>
-  </data>
-  <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance utilise les logiciels et polices suivants. Leurs licences imposent l’affichage de ces mentions.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Voir les licences</value>
@@ -5061,7 +5052,7 @@ Quantité détenue : suit un poids ou un nombre d’unités, pas leur prix. Une
     <value>Sauvegarde</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Une sauvegarde contient les données du profil actuel : comptes, opérations, planifications, budgets, taux, objectifs, biens, prévisions enregistrées, unités d’affichage et disposition de l’accueil. Les sauvegardes locales sont chiffrées lorsque la protection par mot de passe est activée ; les sauvegardes cloud l’exigent. Les préférences communes à l’appareil, comme le thème, la langue et l’affichage des chiffres, ne sont pas incluses.</value>
+    <value>Une sauvegarde contient les données du profil actuel : comptes, opérations, planifications, budgets, taux, objectifs, biens, prévisions enregistrées, unités d’affichage et disposition de l’accueil. Les sauvegardes locales et cloud sont chiffrées lorsque la protection par mot de passe est activée ; elle est facultative pour les deux. Les préférences communes à l’appareil, comme le thème, la langue et l’affichage des chiffres, ne sont pas incluses.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Exportation CSV</value>
@@ -5317,5 +5308,14 @@ Ce que j’attendais :
   </data>
   <data name="Help_SafetyCopy_Example" xml:space="preserve">
     <value>Vous allez restaurer la sauvegarde de la semaine dernière. Créez d’abord une sauvegarde protégée des données d’aujourd’hui et conservez-la ailleurs. La copie automatique ne suffit pas en cas de perte de cet appareil.</value>
+  </data>
+  <data name="Onb_RestoreButton" xml:space="preserve">
+    <value>J’ai déjà une sauvegarde</value>
+  </data>
+  <data name="Onb_RestoreText" xml:space="preserve">
+    <value>Restaurez vos comptes et données existants depuis une sauvegarde au lieu de créer un compte. Vous pouvez revenir à la configuration si vous annulez.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Licences tierces</value>
   </data>
 </root>

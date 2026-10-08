@@ -5,6 +5,16 @@
 Simple by default, power on demand (PR-04, UX-01); numbers are always explainable (REP-01); never shame the user
 (UX-07); every screen works in English, German and Persian (RTL) with runtime switching (LOC-01..03).
 
+### First run (D-62)
+
+Three steps remain: language; theme, Simple/Advanced, reporting currency and calendar; first account. Simple is the
+default suggestion; the theme is applied immediately. The first and last steps offer "I already have a backup"
+instead of account creation. Restore opens a page with a visible Back button and only restoration actions; a return
+preserves the draft. A restored profile with accounts opens directly, retaining its currency, default account and
+experience; the device theme/language remain local. An empty backup returns to onboarding. All controls are real
+buttons; narrow screens scroll while Back/Next remain visible. The progress and action areas have an opaque theme
+background above the scrolling form, keeping Windows content from drawing behind them.
+
 ## 2. Navigation (D-11, D-27)
 
 ```
@@ -40,9 +50,9 @@ show them in full.
 | UI-10 | Budget | Month selector, total card (limit, spent net, remaining, %), category limits, copy to next month | limits, method and periods edited in Advanced; existing ones shown in Simple (ZEX-S0502) |
 | UI-11 | Reports | Expense by category (gross donut + refunds card + net table), income vs expense, monthly trend (6/12), account movement, budget, plan vs actual; tap → drill-down list | same data, Advanced filters |
 | UI-12 | Import / Export | Export CSV (period, accounts, include notes?), sensitive-data warning, share; Import: pick file → mapping → preview (valid/invalid/duplicates) → apply → result with "undo this import" | same |
-| UI-13 | Backup & restore | Last successful backup, create encrypted backup file (password + confirmation, "cannot be recovered" warning), restore: pick file → password → preview (date, counts) → safety copy → confirm | same |
+| UI-13 | Backup & restore | Last successful backup, create local or cloud backup with optional password protection (on by default, choice remembered on device; password + confirmation when on, unreadable-without-password / readable-file warnings), restore: pick file → password if encrypted → preview (date, counts) → safety copy → confirm | same |
 | UI-14 | Settings & privacy | Language and region (language, calendar, region, week start) · Money and months (report currency, month start) · Appearance (theme, Persian digits) · Experience (Simple/Advanced) · Privacy and security (app lock) · Notifications (turn on, names and amounts, reminder defaults) · Delete data | same |
-| UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; what a backup, a CSV export and a PDF report contain; the platforms each release is checked on; a problem report the user sends themselves (nothing is sent automatically, ZEX-S0905); the open-source components with licence and copyright, and their full licence texts on a page of their own (`Resources/Raw/ThirdPartyNotices.txt`) | same |
+| UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; what a backup, a CSV export and a PDF report contain; the platforms each release is checked on; a problem report the user sends themselves (nothing is sent automatically, ZEX-S0905); a compact button to the required full third-party notices on a page of their own; no inline component list (D-62) (`Resources/Raw/ThirdPartyNotices.txt`) | same |
 
 What each mode shows is decided by one table, `FeaturePolicy` (`Vafadar.Zanance.Core/Settings/FeaturePolicy.cs`);
 pages ask it instead of reading the mode. Simple keeps every existing item visible, at least as a summary

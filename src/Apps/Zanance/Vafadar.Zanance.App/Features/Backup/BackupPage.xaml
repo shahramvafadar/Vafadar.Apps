@@ -13,8 +13,13 @@
         <ScrollView>
             <VerticalStackLayout Padding="16" Spacing="8">
 
+                <!-- First-run restore uses this page directly, before a Shell or financial account exists (D-62). -->
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Back}" Command="{Binding BackToOnboardingCommand}"
+                        IsVisible="{Binding IsRestoreOnly}" IsEnabled="{Binding IsNotBusy}" />
+                <Label Text="{v:Translate Onb_RestoreText}" Style="{StaticResource Secondary}" IsVisible="{Binding IsRestoreOnly}" />
+
                 <!-- Status -->
-                <Border Style="{StaticResource Card}">
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanCreateBackup}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <fi:SymbolIcon Symbol="ShieldCheckmark" FontSize="32" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
@@ -25,8 +30,8 @@
                 </Border>
 
                 <!-- Create -->
-                <Label Text="{v:Translate Backup_Create}" Style="{StaticResource SectionHeader}" />
-                <Border Style="{StaticResource Card}">
+                <Label Text="{v:Translate Backup_Create}" Style="{StaticResource SectionHeader}" IsVisible="{Binding CanCreateBackup}" />
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanCreateBackup}">
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                             <Label Text="{v:Translate Backup_UsePassword}" VerticalOptions="Center" />
@@ -99,6 +104,7 @@
                                                 CommandParameter="{Binding .}" />
                                         <FlexLayout Wrap="Wrap" IsVisible="{Binding IsConnected}">
                                             <Button Style="{StaticResource TextButton}" Text="{v:Translate Cloud_BackUpNow}"
+                                                    IsVisible="{Binding CanCreateBackup, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
                                                     Command="{Binding BackupToCloudCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
                                                     CommandParameter="{Binding .}" />
                                             <Button Style="{StaticResource TextButton}" Text="{v:Translate Cloud_ShowBackups}"
@@ -112,7 +118,7 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Label Text="{v:Translate Cloud_PasswordHint}" Style="{StaticResource Secondary}" FontSize="12" />
+                        <Label Text="{v:Translate Cloud_PasswordHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CanCreateBackup}" />
                         <Label Text="{Binding CloudError}" Style="{StaticResource ErrorText}" IsVisible="{Binding CloudError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding CloudResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding CloudResult, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>

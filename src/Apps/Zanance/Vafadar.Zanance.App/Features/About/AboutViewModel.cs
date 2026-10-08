@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -7,9 +6,6 @@ using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.About;
-
-/// <summary>A component in the notices: its name, and its licence with the copyright holder.</summary>
-public sealed record NoticeComponent(string Name, string Licence);
 
 /// <summary>
 /// About Zanance (D-39, ZEX-S0905): version, what happens with the user's data, what each file contains, the checked
@@ -29,9 +25,6 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
     [ObservableProperty]
     public partial string VersionText { get; set; } = string.Empty;
 
-    /// <summary>Gets the components with their licences, one row each.</summary>
-    public ObservableCollection<NoticeComponent> Components { get; } = [];
-
     /// <summary>Gets the full notices, re-flowed so that they read well at any width.</summary>
     [ObservableProperty]
     public partial string NoticesText { get; set; } = string.Empty;
@@ -49,16 +42,6 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
         using (var reader = new StreamReader(stream))
         {
             text = (await reader.ReadToEndAsync()).Replace("\r\n", "\n", StringComparison.Ordinal);
-        }
-
-        // The component lines ("name – licence – copyright"): after the title and the introduction, before the texts.
-        var head = text[..Math.Max(0, text.IndexOf(Separator, StringComparison.Ordinal))];
-        foreach (var line in head.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Skip(3))
-        {
-            var dash = line.IndexOf(" – ", StringComparison.Ordinal);
-            Components.Add(dash < 0
-                ? new NoticeComponent(line, string.Empty)
-                : new NoticeComponent(line[..dash], line[(dash + 3)..].Replace(" – ", " · ", StringComparison.Ordinal)));
         }
 
         NoticesText = Reflow(text);

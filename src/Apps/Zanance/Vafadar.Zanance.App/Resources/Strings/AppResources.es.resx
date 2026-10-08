@@ -2757,7 +2757,7 @@
     <value>Copia en la nube</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Opcional: guarda copias cifradas en tu propio almacenamiento en la nube. La app solo usa internet para esta función y después de que conectes tu cuenta.</value>
+    <value>Opcional: guarda copias de seguridad en tu propia cuenta en la nube. Tú eliges si protegerlas con contraseña. La aplicación usa internet solo para esto y después de que te conectes.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2769,7 +2769,7 @@
     <value>Conectar</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>Las copias se guardarán en una carpeta privada de la app en tu cuenta de {0}. La app solo puede acceder a esa carpeta. Las copias se cifran con tu contraseña, que nunca se sube a la nube.</value>
+    <value>Las copias se guardarán en una carpeta privada de la aplicación en tu {0}. La aplicación solo puede acceder a esa carpeta. La contraseña es opcional: sin ella, cualquiera que obtenga el archivo podrá leerlo.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Desconectar</value>
@@ -2784,16 +2784,13 @@
     <value>Ver copias</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>Las copias en la nube siempre usan la contraseña introducida en «Crear copia de seguridad».</value>
-  </data>
-  <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>Las copias en la nube siempre están cifradas. Activa la protección con contraseña e introdúcela en «Crear copia de seguridad».</value>
+    <value>Las copias en la nube siguen la opción de contraseña de arriba. Puedes reutilizar la misma contraseña; nunca se guarda. Sin protección, no necesitas una contraseña de copia para restaurar.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>La copia se guardó en {0}.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>Selecciona una copia para restaurarla, tras introducir su contraseña y revisar la vista previa, o para eliminarla de la nube.</value>
+    <value>Toca una copia para verla y restaurarla. Los archivos cifrados necesitan su contraseña original. Eliminar una copia de la nube es una acción aparte.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>No se pudo iniciar sesión en {0}. Inténtalo de nuevo.</value>
@@ -2998,7 +2995,7 @@ Flexible: separa las facturas mensuales y la parte mensual de las menos frecuent
     <value>Contraseña de la copia</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>La protección con contraseña cifra el archivo de copia de seguridad. Para restaurarlo necesitas la contraseña con la que se creó, también en otro dispositivo. Guárdala en un lugar seguro: el desarrollador no puede recuperarla y el PIN del dispositivo no la sustituye. Sin esa protección, cualquiera que consiga el archivo puede leer su contenido.</value>
+    <value>La protección con contraseña cifra las copias locales y en la nube. Puedes reutilizar la misma contraseña, pero debes introducirla y confirmarla cada vez; Zanance nunca la guarda. Para restaurar un archivo cifrado necesitas su contraseña original, incluso en otro dispositivo. Guárdala de forma segura: el desarrollador no puede recuperarla y el PIN de tu dispositivo no la sustituye. Puedes desactivar la protección; cualquiera que obtenga un archivo sin cifrar puede leer su contenido, aunque estuviera guardado en tu propia cuenta en la nube.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Prioridad del objetivo</value>
@@ -3010,7 +3007,7 @@ Flexible: separa las facturas mensuales y la parte mensual de las menos frecuent
     <value>Tu dinero, con un plan claro.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Elige cómo mostrar los totales</value>
+    <value>Elige tus preferencias</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Ocultar iconos</value>
@@ -3161,12 +3158,6 @@ Flexible: separa las facturas mensuales y la parte mensual de las menos frecuent
   </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Zanance funciona sin una cuenta en línea y no muestra anuncios. Los datos financieros se guardan en este dispositivo. Tú decides cuándo exportarlos o crear copias de seguridad. Las copias opcionales en la nube se guardan en tu propia cuenta conectada. Zanance no envía automáticamente tus registros financieros al desarrollador.</value>
-  </data>
-  <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Licencias de terceros</value>
-  </data>
-  <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance usa los siguientes programas y fuentes. Sus licencias requieren incluir estos avisos.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Ver licencias</value>
@@ -5055,7 +5046,7 @@ Cantidad de bienes: sigue un peso o número de unidades, no su precio. Una subid
     <value>Copia de seguridad</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>La copia contiene los datos del perfil actual: cuentas, transacciones, planes, presupuestos, tipos de cambio, objetivos, bienes, previsiones guardadas, unidades y diseño de Inicio. Las copias locales se cifran si activas la contraseña; las de la nube la requieren. No incluye preferencias generales del dispositivo, como apariencia, idioma o dígitos.</value>
+    <value>La copia contiene los datos del perfil actual: cuentas, transacciones, planes, presupuestos, tipos de cambio, objetivos, bienes, previsiones guardadas, unidades y diseño de Inicio. Las copias locales y en la nube se cifran si activas la contraseña; es opcional para ambas. No incluye preferencias generales del dispositivo, como apariencia, idioma o dígitos.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Exportación CSV</value>
@@ -5309,5 +5300,14 @@ Pasos para reproducirlo:
   </data>
   <data name="Help_SafetyCopy_Example" xml:space="preserve">
     <value>Vas a restaurar la copia de la semana pasada. Antes crea una copia protegida de los datos de hoy y guárdala en otro lugar. La copia preventiva automática no basta si pierdes este dispositivo.</value>
+  </data>
+  <data name="Onb_RestoreButton" xml:space="preserve">
+    <value>Ya tengo una copia de seguridad</value>
+  </data>
+  <data name="Onb_RestoreText" xml:space="preserve">
+    <value>Restaura tus cuentas y datos anteriores desde una copia de seguridad en lugar de crear una cuenta nueva. Si cancelas, puedes volver a la configuración.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Licencias de terceros</value>
   </data>
 </root>

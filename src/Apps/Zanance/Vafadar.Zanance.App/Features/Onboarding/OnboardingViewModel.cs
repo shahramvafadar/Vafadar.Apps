@@ -12,8 +12,8 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Onboarding;
 
 /// <summary>
-/// Three steps: language · report currency and calendar · first account (ONB-01..03). Nothing requires sign-in,
-/// network or permissions.
+/// Three steps: language, display and financial preferences, then a first account; an existing backup can be restored
+/// instead (D-62). Creating a profile requires no sign-in, network or permissions.
 /// </summary>
 public sealed partial class OnboardingViewModel : ViewModelBase
 {
@@ -22,14 +22,18 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     private readonly ZananceStore _store;
     private readonly ILocalizationService _localization;
     private readonly Translator _translator;
+    private readonly Presentation.ThemeService _theme;
     private bool _refreshing;
     private Account? _firstAccount;
 
-    public OnboardingViewModel(ZananceStore store, ILocalizationService localization, Translator translator, TimeProvider time)
+    public OnboardingViewModel(ZananceStore store, ILocalizationService localization, Translator translator, TimeProvider time,
+        Presentation.ThemeService theme)
     {
         _store = store;
         _localization = localization;
         _translator = translator;
+        _theme = theme;
+        ThemeIndex = (int)theme.Choice;
         Account = new AccountFormModel(translator, time);
         Languages = [.. localization.SupportedLanguages];
         CurrencyCodes = [.. Currencies.All.Select(c => c.Code)];
@@ -64,6 +68,34 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial CalendarOption? SelectedCalendar { get; set; }
+
+    /// <summary>Gets the translated theme choices in ThemeChoice order.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> ThemeNames { get; set; } = [];
+
+    /// <summary>Gets or sets the device-wide theme, applied immediately for preview.</summary>
+    [ObservableProperty]
+    public partial int ThemeIndex { get; set; }
+
+    /// <summary>Gets the translated experience choices in ExperienceMode order.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> ModeNames { get; set; } = [];
+
+    /// <summary>Gets or sets the experience of a new profile; Simple remains the default.</summary>
+    [ObservableProperty]
+    public partial int ModeIndex { get; set; }
+
+    partial void OnThemeIndexChanged(int value)
+    {
+        if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value))
+        {
+            _theme.Set((Presentation.ThemeChoice)value);
+        }
+    }
+
+    /// <summary>Opens restore without creating an account or saving the draft profile preferences.</summary>
+    [RelayCommand]
+    private Task RestoreBackupAsync() => Application.Current is App app ? app.ShowOnboardingRestoreAsync() : Task.CompletedTask;
 
     public bool IsStep1 => Step == 1;
 
@@ -140,6 +172,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         }
 
         IsBusy = true;
+        var completed = false;
         try
         {
             await _store.EnsureDefaultCategoriesAsync();
@@ -153,12 +186,12 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
             // Budget months follow the calendar chosen here; later changes apply to future budgets only (BUD-08).
             settings.BudgetCalendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
-            // A new profile starts in Simple, set explicitly rather than by the column default (ZEX-F15, 05 §1 rule 7).
-            settings.Mode = Core.Settings.ExperienceMode.Simple;
+            // D-62: the user's explicit choice overrides the Simple suggestion for a new profile only.
+            settings.Mode = (Core.Settings.ExperienceMode)ModeIndex;
             settings.OnboardingCompleted = true;
             await _store.SaveSettingsAsync(settings);
 
-            ((App)Application.Current!).ShowMainShell();
+            completed = true;
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
@@ -169,6 +202,12 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         {
             IsBusy = false;
         }
+
+        if (completed && Application.Current is App app)
+        {
+            // Finish the form's layout updates before Windows disconnects its visual tree (D-62).
+            app.Dispatcher.Dispatch(app.ShowMainShell);
+        }
     }
 
     private void Refresh()
@@ -177,6 +216,13 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         try
         {
             SelectedLanguage = _localization.CurrentLanguage;
+            // Replacing the translated choice lists can reset selection on some platforms; retain both choices.
+            var themeIndex = ThemeIndex;
+            var modeIndex = ModeIndex;
+            ThemeNames = [_translator["Theme_System"], _translator["Theme_Light"], _translator["Theme_Dark"]];
+            ModeNames = [_translator["Mode_Simple"], _translator["Mode_Advanced"]];
+            ThemeIndex = themeIndex;
+            ModeIndex = modeIndex;
             Calendars =
             [
                 new CalendarOption(CalendarSystem.Gregorian, _translator["Calendar_Gregorian"]),

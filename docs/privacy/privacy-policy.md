@@ -18,7 +18,8 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
   you connect your own Google Drive or OneDrive for backups, and only for that.
 * Your data leaves the device only when **you** share a backup or export file or store a backup in your own cloud
   storage, and through the device backup of your phone (Google or Apple), depending on your device settings.
-* Backup files are encrypted with a password you choose; without the password nobody, including me, can read them.
+* Password protection is optional for both local and cloud backup files. With it enabled, files are encrypted with
+  your chosen password. Without it, anyone who obtains the file can read its contents.
 * The apps contain **no advertising and no analytics or tracking**.
 
 ## Data the apps store
@@ -30,14 +31,15 @@ Android and iOS.
 
 ## Backups and export
 
-* **Backup file.** You can create an encrypted backup (AES-256) and share it through your device's share menu to a
+* **Backup file.** You can create a backup with optional password encryption (AES-256) and share it through your device's share menu to a
   destination you choose. The last backups are also kept on the device. The password is not stored; if you forget
   it, the backup cannot be recovered.
 * **CSV and PDF export.** You can export entries (CSV) or a report (PDF) and share them. These files are **not
   encrypted**; where they go is your decision. Attachments are never included in exports.
 * **Cloud backup (optional).** You can connect your own Google Drive or OneDrive (Android, iOS, Windows) and store
-  backups there. Nothing is uploaded until you connect and choose "Back up now". Cloud backups are always encrypted
-  with your password, which is never uploaded. The app asks only for access to its own app folder
+  backups there. Nothing is uploaded until you connect and choose "Back up now". Cloud backups follow your password-protection choice. If enabled,
+  they are encrypted with your password, which is never saved or uploaded. If disabled, the file is readable by
+  anyone who obtains it, even though it is stored in your own cloud account. The app asks only for access to its own app folder
   (`drive.appdata`, `Files.ReadWrite.AppFolder`) and, for Google, your e-mail address to show which account is
   connected. Sign-in happens in Google's or Microsoft's own screen (on Windows and iOS in your browser); the app never sees your account password. The access it receives stays on your device (on iOS in the keychain, on Windows protected for your Windows user account). The
   files are stored under your Google or Microsoft account terms; I have no access to them. "Disconnect" signs out on

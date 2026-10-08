@@ -2809,7 +2809,7 @@
     <value>Cloud backup</value>
   </data>
   <data name="Cloud_Intro" xml:space="preserve">
-    <value>Optional: keep encrypted backups in your own cloud storage. The app uses the internet only for this, and only after you connect.</value>
+    <value>Optional: keep backups in your own cloud account. Password protection is your choice. The app uses the internet only for this, and only after you connect.</value>
   </data>
   <data name="Cloud_GoogleDrive" xml:space="preserve">
     <value>Google Drive</value>
@@ -2821,7 +2821,7 @@
     <value>Connect</value>
   </data>
   <data name="Cloud_ConnectMessage" xml:space="preserve">
-    <value>Backups will be stored in a private app folder of your {0}. The app can see only that folder; the backups are encrypted with your password, which is never uploaded.</value>
+    <value>Backups will be stored in a private app folder of your {0}. The app can see only that folder. Password protection is optional: without it, anyone who obtains a backup file can read it.</value>
   </data>
   <data name="Cloud_Disconnect" xml:space="preserve">
     <value>Disconnect</value>
@@ -2836,16 +2836,13 @@
     <value>Show backups</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
-    <value>Cloud backups always use the password entered under "Create backup".</value>
-  </data>
-  <data name="Cloud_PasswordRequired" xml:space="preserve">
-    <value>Cloud backups are always encrypted: turn on the password and enter it under "Create backup".</value>
+    <value>Cloud backups follow the password protection choice above. You can reuse the same password; it is never saved. Without protection, restoring needs no backup password.</value>
   </data>
   <data name="Cloud_Uploaded" xml:space="preserve">
     <value>The backup was stored in {0}.</value>
   </data>
   <data name="Cloud_RestoreHint" xml:space="preserve">
-    <value>Tap a backup to restore it (with its password and a preview) or to delete it from the cloud.</value>
+    <value>Tap a backup to preview and restore it. Encrypted files require their original password. Deleting a cloud backup is a separate action.</value>
   </data>
   <data name="Cloud_Error_SignIn" xml:space="preserve">
     <value>Could not sign in to {0}. Try again.</value>
@@ -3050,7 +3047,7 @@ Flex: track monthly bills and the monthly share of less frequent bills separatel
     <value>Backup password</value>
   </data>
   <data name="Help_BackupPassword_Text" xml:space="preserve">
-    <value>Password protection encrypts the backup file. To restore that file, you need the password used when it was created, even on a different device. Keep the password somewhere safe: the developer cannot recover it for you, and your device unlock PIN cannot replace it. Without password protection, anyone who obtains the backup file can read its contents.</value>
+    <value>Password protection encrypts local and cloud backup files. You can reuse the same password, but must enter and confirm it each time; Zanance never saves it. Restoring an encrypted file needs its original password, even on another device. Keep it safe: the developer cannot recover it and your device PIN cannot replace it. You can turn protection off; anyone who obtains an unencrypted file can read its contents, even if it was stored in your own cloud account.</value>
   </data>
   <data name="Help_GoalPriority_Title" xml:space="preserve">
     <value>Priority of a goal</value>
@@ -3062,7 +3059,7 @@ Flex: track monthly bills and the monthly share of less frequent bills separatel
     <value>Your money, clearly planned.</value>
   </data>
   <data name="Onb_CurrencyIntro" xml:space="preserve">
-    <value>Choose how totals are shown</value>
+    <value>Choose your preferences</value>
   </data>
   <data name="Account_HideIcons" xml:space="preserve">
     <value>Hide icons</value>
@@ -3213,12 +3210,6 @@ Flex: track monthly bills and the monthly share of less frequent bills separatel
   </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Zanance works without an online account and does not show ads. Your financial data is stored on this device. You choose when to export it or create backups. Optional cloud backups are stored in your own connected cloud account. Zanance does not automatically send your financial records to the developer.</value>
-  </data>
-  <data name="About_LicencesTitle" xml:space="preserve">
-    <value>Third-party licenses</value>
-  </data>
-  <data name="About_LicencesText" xml:space="preserve">
-    <value>Zanance uses the following software and fonts. Their licenses require these notices.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>View licenses</value>
@@ -5106,7 +5097,7 @@ Holding quantity: follow a weight or number of items, not their price. A rise in
     <value>Backup</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>A backup contains the current profile's data, including accounts, transactions, plans, budgets, rates, goals, holdings, saved forecasts, display units and the Home layout. Local backups are encrypted when password protection is enabled; cloud backups require it. Device-wide preferences, such as theme, language and digit display, are not included.</value>
+    <value>A backup contains the current profile's data, including accounts, transactions, plans, budgets, rates, goals, holdings, saved forecasts, display units and the Home layout. Local and cloud backups are encrypted when password protection is enabled; it is optional for both. Device-wide preferences, such as theme, language and digit display, are not included.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV export</value>
@@ -5366,5 +5357,14 @@ Steps to reproduce:
   </data>
   <data name="Help_SafetyCopy_Example" xml:space="preserve">
     <value>You are about to restore last week’s backup. First create a protected backup of today’s data and keep it elsewhere. The automatic safety copy alone does not protect you if this device is lost.</value>
+  </data>
+  <data name="Onb_RestoreButton" xml:space="preserve">
+    <value>I already have a backup</value>
+  </data>
+  <data name="Onb_RestoreText" xml:space="preserve">
+    <value>Restore your existing accounts and records from a backup instead of creating a new account. You can return to setup if you cancel.</value>
+  </data>
+  <data name="About_LicencesTitle" xml:space="preserve">
+    <value>Third-party licenses</value>
   </data>
 </root>

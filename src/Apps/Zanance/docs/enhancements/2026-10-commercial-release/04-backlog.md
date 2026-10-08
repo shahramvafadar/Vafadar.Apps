@@ -33,6 +33,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
+| ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Proposed | owner translations |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | Proposed | sample files |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
@@ -170,6 +171,15 @@ years, an "uncertain" state for lunar or announced holidays; never presented as 
 ### ZCR-LOC-09 – Automatic local backup
 Scope: wire the existing interval to an app-start/resume check that writes an encrypted local backup when due
 (password stored in the keystore only if the user agrees), with retention. Done: tests and setting text (owner).
+
+### ZCR-LOC-11 – Backup, first run and About (D-62)
+
+Approved by the owner on 2026-10-08 before further commercial development. Scope: optional cloud backup password,
+theme/experience in onboarding, restore before creating the first account, and a compact notices link on About.
+No password persistence, new schema or SDK; no commercial enforcement. Local verification covers protected and
+unprotected restores, preserved profile settings and no duplicate account, all tests, both builds, and Windows
+layouts in en/fa/de, light/dark, 360/412 px and wide. Provider sign-in with real OAuth clients and physical-device
+gates remain open. Evidence and policy: D-62, spec §31, acceptance plan and architecture/data-and-backup.
 
 ### ZCR-LOC-10 – Copy follow-ups
 Scope: D-53 "Sign-in complete", D-54 "as an expense of {2}", listing texts that name three languages. Texts: owner.

@@ -46,6 +46,17 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     public event EventHandler? Changed;
 
     /// <summary>
+    /// Completes first run after restoring a profile with accounts, preserving its preferences and creating no
+    /// account (D-62). An empty backup still needs onboarding.
+    /// </summary>
+    public async Task CompleteRestoredOnboardingAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var hasAccounts = await db.Accounts.AnyAsync(cancellationToken);
+        await UpdateSettingsAsync(settings => settings.OnboardingCompleted = hasAccounts, cancellationToken);
+    }
+
+    /// <summary>
     /// Returns the settings synchronously – for startup code on the UI thread, where blocking on async code could
     /// deadlock. Returns defaults (not saved) when no settings exist yet.
     /// </summary>

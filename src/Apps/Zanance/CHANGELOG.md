@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed – Backup and first run (2026-10-08, D-62)
+
+- Cloud backups can now be created without a backup password, just like local backups. Password protection remains
+  on by default; the device remembers your choice, never your password. An encrypted backup can reuse the same password.
+- First run offers theme and Simple/Advanced choices, plus restoration of an existing backup before creating an
+  account. Restored accounts and preferences are kept; cancelling returns to setup.
+- About has a compact link to the required third-party notices instead of a long list of components.
+
 ### Added – Lunar Hijri calendar
 
 - A third calendar in Settings and at onboarding: lunar Hijri (Umm al-Qura, the official calendar of Saudi Arabia),
