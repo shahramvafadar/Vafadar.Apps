@@ -3,7 +3,7 @@
   <Import Project="$(RepoRoot)eng\Maui.props" />
 
   <PropertyGroup>
-    <Description>Reading documents on the device: text recognition with the system engines (Vision on iOS, Windows.Media.Ocr, ML Kit on Android), PDF pages rendered by the system and one reader for photos and PDF files. Nothing leaves the device.</Description>
+    <Description>Reading documents on the device: text recognition with the system engines (Vision on iOS, Windows.Media.Ocr, ML Kit on Android), PDF pages rendered by the system and one reader for photos and PDF files. Images and recognized text are processed locally; Android hosts must account for ML Kit diagnostics when network access is allowed.</Description>
   </PropertyGroup>
 
   <ItemGroup>

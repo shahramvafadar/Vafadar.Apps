@@ -1,11 +1,14 @@
 # 05 – Delivery plan
 
 **Way of working:** one section at a time. The owner approves a section; it is built, tested, documented, committed
-and pushed; then exactly one next section is proposed and work stops until the next approval. One approval never
-covers a whole wave. Item states live only in [04-backlog.md](04-backlog.md).
+and pushed; then exactly one next section is proposed. The owner authorized continuous delivery of ready planned
+work on 2026-10-08 (D-69), superseding the per-section wait for that scope. Unresolved owner decisions, licence
+costs, provider identities and publishing still require explicit decisions. Item states live only in
+[04-backlog.md](04-backlog.md).
 
 The owner approved D-62 maintenance (ZCR-LOC-11) on 2026-10-08 before continuing the commercial waves.
-This covers only backup, first run and About; wave 1 and other sections still require their own approval.
+That maintenance approval covered only backup, first run and About. The later D-69 continuation authorizes ready
+planned sections; unresolved choices still require owner decisions.
 
 ## Waves (dependency order)
 

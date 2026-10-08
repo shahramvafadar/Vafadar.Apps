@@ -11,12 +11,23 @@
 .EXAMPLE
     ./eng/scripts/Build-AndroidApk.ps1
     ./eng/scripts/Build-AndroidApk.ps1 -Configuration Debug
+    ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline
 #>
 param(
     [ValidateSet('Release', 'Debug')] [string]$Configuration = 'Release',
     [string]$Project = 'src\Apps\Zanance\Vafadar.Zanance.App\Vafadar.Zanance.App.csproj',
-    [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\android'))
+    [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\android'),
+    [switch]$Offline)
 $ErrorActionPreference = 'Stop'
+if ($Offline -and $Configuration -ne 'Release') {
+    throw 'Offline privacy verification requires Release; Debug includes debugger network access.'
+}
+# Empty global properties override local provider configuration without reading, logging or changing it.
+$cloudProperties = @()
+if ($Offline) {
+    $cloudProperties = @('-p:MicrosoftEntraClientId=', '-p:GoogleOAuthClientIdAndroid=',
+        '-p:GoogleOAuthClientIdIos=', '-p:GoogleOAuthClientIdWindows=')
+}
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))
 New-Item -ItemType Directory -Force $Output | Out-Null
 
@@ -25,11 +36,11 @@ New-Item -ItemType Directory -Force $Output | Out-Null
 # the solution open restores in the background too and can overwrite it meanwhile (NETSDK1005, APT2126): then the
 # build is tried once more.
 for ($attempt = 1; $attempt -le 2; $attempt++) {
-    $log = dotnet restore $Project -p:VafadarMauiTargetFrameworks=net10.0-android -nologo 2>&1
+    $log = dotnet restore $Project -p:VafadarMauiTargetFrameworks=net10.0-android -p:ContinuousIntegrationBuild=true @cloudProperties -nologo 2>&1
     if ($LASTEXITCODE -eq 0) {
         # EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
         $log = dotnet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
-            -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -o $Output -nologo --no-restore 2>&1
+            -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -p:ContinuousIntegrationBuild=true @cloudProperties -o $Output -nologo --no-restore 2>&1
     }
 
     if ($LASTEXITCODE -eq 0 -or $attempt -eq 2 -or -not ($log | Select-String -Pattern 'NETSDK1005|APT2126' -Quiet)) {
@@ -47,7 +58,7 @@ if ($LASTEXITCODE -ne 0) {
 # CI treats warnings as errors; list them so they are fixed before pushing.
 $warnings = $log | Select-String -Pattern ': warning ' | Select-Object -ExpandProperty Line -Unique
 if ($warnings) {
-    $warnings | Write-Warning
+    throw "The APK build produced warnings; resolve them before handing it off."
 }
 
 $apk = Get-ChildItem $Output -Filter '*-Signed.apk' | Sort-Object LastWriteTime -Descending | Select-Object -First 1

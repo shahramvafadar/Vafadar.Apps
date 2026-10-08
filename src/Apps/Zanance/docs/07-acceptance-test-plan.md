@@ -94,3 +94,11 @@ on API 36 x86_64: common encryption checks on two fresh processes, Keystore-wrap
 unchanged envelope/database hashes and envelope-tamper rejection. No main package was installed on the isolated AVD.
 No production encryption, ARM64 device, iOS runtime, hardware-backed guarantee or crash-safe migration acceptance
 is implied. ADR acceptance remains pending owner review. See proposed ADR 0010 and experiments/Zanance.Encryption.
+
+
+## AT-76 - Build-specific SDK and Android permission boundaries (D-69 / SEC-09)
+
+Eleven PowerShell policy cases cover the current allowlist, wrong network variant, unexpected privileged capabilities,
+wrong package, Debug and missing reminder capability. Complete signed Offline and Cloud Release APKs pass their
+explicit guards; the Cloud artifact is rejected under the Offline policy. SDK inventory and qualified privacy copy
+are documented. These tests do not prove native SDK traffic, real OAuth, signed iOS privacy labels or future SDKs.

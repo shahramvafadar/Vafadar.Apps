@@ -2,8 +2,9 @@ namespace Vafadar.Documents.Maui;
 
 /// <summary>
 /// On-device text recognition of images with the system engines: Vision on iOS, Windows.Media.Ocr on Windows and ML Kit
-/// with its bundled Latin model on Android (Android has no system engine). Nothing leaves the device: the model ships
-/// in the app, and apps remove the network permissions ML Kit asks for.
+/// with its bundled Latin model on Android (Android has no system engine). Images/text are processed locally.
+/// ML Kit may collect SDK diagnostics when the host app grants network access; offline hosts must remove its
+/// network permissions. A bundled model alone does not prevent diagnostics transmission.
 /// </summary>
 public static class TextRecognizer
 {

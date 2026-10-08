@@ -205,3 +205,16 @@ and Android builds have no warnings/errors. No download, existing AVD or main ap
 remains an owner gate; hardware-backed keys, ARM64 device and iOS runtime are not inferred from this evidence.
 The migration document defines crash/restart states and excludes new plaintext snapshots, but migration fault
 injection and production adoption belong to later sections. Proposed next section after owner review: ZCR-SEC-07.
+
+
+## D-69 - Continuous ready-section delivery and build-specific SDK review (2026-10-08)
+
+Owner authorizes continuing all ready planned development without stopping between finished sections. This supersedes
+per-section waiting, not unresolved product/licence/provider/spending/release decisions. ADR 0010 and OD-10 remain
+pending owner choice; no production encryption or OS-backup change is inferred from the continuation instruction.
+SEC-09 reviews the current SDK/permission graph and distinguishes Android Offline Release, Cloud Release, Debug and
+source-only iOS evidence. ML Kit native diagnostics are independent of app cloud sign-in; qualify broad no-network
+claims in the document library and policy. Add a shipped-APK allowlist guard with eleven AT-76 cases and an explicit
+Offline build switch that overrides provider properties without reading or editing owner configuration. Strict
+Windows/Android builds, main tests and complete signed variant artifacts verify the current baseline; future online
+SDKs, physical traffic/real OAuth and signed iOS privacy manifests require repeated review. No new SDK or app UI.

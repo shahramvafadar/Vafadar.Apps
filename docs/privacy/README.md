@@ -30,3 +30,7 @@ Data safety, Apple App Privacy) straightforward.
 
 > These documents are a technical description and a starting point, not legal advice. Have the final policy
 > reviewed if an app processes data beyond what is described here or is offered in regions with specific rules.
+
+
+[Zanance SDK/build review](zanance-sdk-review.md) records the current online/offline permission and diagnostics
+boundaries; repeat it on SDK changes and before adding billing/sync providers.

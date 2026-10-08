@@ -600,3 +600,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Automatic cloud backups. Cloud backup is not yet verified on a device with real OAuth clients; the iOS app has not
   been built on a Mac yet.
+
+
+### Engineering - Build-specific privacy review (2026-10-08, D-69)
+
+- Clarified that Android cloud-enabled builds can permit OCR SDK diagnostics before cloud sign-in.
+- Added explicit offline Release packaging and a permission guard for complete APKs. No new SDK, permission or
+  financial-storage behaviour was introduced.

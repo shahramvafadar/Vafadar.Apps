@@ -1,7 +1,8 @@
 # Vafadar.Documents.Maui
 
 Reading photos and PDF files on the device (Android, iOS, Windows). Builds on
-[Vafadar.Documents](../Vafadar.Documents/README.md). Nothing leaves the device.
+[Vafadar.Documents](../Vafadar.Documents/README.md). Images and recognized text are processed locally; Android SDK
+diagnostics depend on the host application's network permission.
 
 | Type | Purpose |
 |---|---|
@@ -24,8 +25,12 @@ How a file is read:
 3. A photo: a separate bounded, upright JPEG is prepared at up to 3200 px / quality 95 and recognised. This must receive the transient original when available, not an app's smaller stored attachment.
 
 Android apps using this library should remove the network permissions ML Kit declares
-(`ACCESS_NETWORK_STATE`, and `INTERNET` in release builds), as Zanance does in its manifests. ML Kit reads Latin script
-only; the Windows engine uses the languages installed in the user profile.
+(`ACCESS_NETWORK_STATE`, and `INTERNET` in offline release builds), as Zanance does in its manifests. Hosts that
+permit INTERNET must disclose ML Kit's possible diagnostics/usage collection even before cloud sign-in; no app-level
+HTTP handler can constrain the SDK's own transport. Google's [SDK disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
+covers device/app information, installation identifiers and performance/API metrics. It describes the latest SDK;
+revalidate the exact native version on upgrades. ML Kit reads Latin script only; the Windows engine uses installed
+user-profile languages.
 
 Why not the Syncfusion OCR Processor or Smart Data Extractor: the OCR Processor (Tesseract) has no Android or iOS
 runtime and would only wrap these same engines there; the Smart Data Extractor ships about 180 MB of ONNX models, too

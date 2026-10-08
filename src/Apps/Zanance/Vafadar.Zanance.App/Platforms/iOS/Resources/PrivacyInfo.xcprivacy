@@ -10,7 +10,7 @@ More information: https://aka.ms/maui-privacy-manifest
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- Zanance does not track and collects no data (no network access). -->
+    <!-- No tracking declared. Optional cloud-backup flows and merged SDK manifests still need release review (D-69). -->
     <key>NSPrivacyTracking</key>
     <false/>
     <key>NSPrivacyTrackingDomains</key>

@@ -82,3 +82,7 @@ nationwide holiday rules. Follow the canonical commercial backlog for the next a
 D-68 / SEC-01 is independent security research, not a Phase 2A product feature. Its current evidence and remaining
 owner/adoption/device gates are recorded in the canonical commercial backlog and proposed ADR 0010. Windows and
 isolated Android API 36 x86_64 runtime proof pass; production encryption is not implemented.
+
+
+D-69 authorizes continuous implementation of ready canonical sections; unresolved owner decisions remain gates.
+SEC-09 reviews the current SDK baseline; repeat the review before future online SDKs are introduced.

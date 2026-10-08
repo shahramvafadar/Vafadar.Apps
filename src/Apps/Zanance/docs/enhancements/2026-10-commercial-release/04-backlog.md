@@ -24,7 +24,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-07 | OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Proposed | OD-10 |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
-| ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Proposed | – |
+| ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Proposed | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Proposed | – |
@@ -314,3 +314,16 @@ profile; modified envelopes are rejected. Main 1,134 tests and strict Windows/An
 and production library/recovery/OS-backup decisions remain owner gates. No real data, production connection, native
 provider, main solution or app permission changes. Status remains In progress solely until owner approval of ADR
 0010, as required by this section definition; implementation has not begun.
+
+
+### SEC-09 current-build review (2026-10-08, D-69)
+
+Continuous implementation of ready planned sections is authorized by the owner; unresolved ADR/library and OD-10
+choices remain owner gates. Review current sources/resolved wrappers, separate signed Android Offline/Cloud Release
+permission boundaries, qualified SDK diagnostics and store drafts in docs/privacy/zanance-sdk-review.md. Eleven
+AT-76 PowerShell policy cases reject unexpected permissions and configuration errors; no new SDK, app UI or finance
+model. Signed iOS/native traffic/real OAuth and future billing/sync SDK reviews remain explicit gates. Strict
+Windows/Android builds have zero errors/warnings; all 1,134 main tests and the eleven policy cases pass.
+Both signed APK variants pass their shipped permission checks, signature and assembly/ZIP checks. Offline Release
+reaches fresh first-run UI on the isolated emulator. Do not infer production or native-traffic acceptance from these
+checks. The baseline is delivered in this commit; future-SDK revalidation is mandatory.

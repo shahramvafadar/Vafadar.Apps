@@ -241,7 +241,10 @@ repository.
 * **Since 2026-10-07 all remaining work is tracked in one canonical backlog:**
   `src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/04-backlog.md` (Free/Plus/Pro, D-61). Work goes one
   approved section at a time (`05-delivery-plan.md`): build, test, document, push, propose exactly one next section,
-  then wait for the owner. New languages come last. No commercial limits on test builds before the owner approves.
+  then wait for the owner unless a later explicit instruction authorizes continuous delivery. On 2026-10-08 the owner
+  authorized continuing all ready planned work without stopping between sections (D-69); unresolved product, licence,
+  provider, spending and release decisions remain owner gates. New languages come last. No commercial limits on test
+  builds before the owner approves.
 * Waiting for the owner: Google OAuth client ids (Android, iOS, Desktop app) and the Entra iOS platform for cloud
   backup (D-50); a Mac with Xcode and the Apple signing setup for the iOS build; tests on a physical device; a competitor
   and user-feedback review of reports and KPIs (postponed by the owner).

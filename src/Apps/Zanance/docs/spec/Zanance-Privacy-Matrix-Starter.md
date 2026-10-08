@@ -107,3 +107,9 @@ no automatic upload, broader scope, new SDK or location access.
 
 SEC-01 / D-68 is a separate fictitious-only experiment and architecture proposal. No real-data or production
 permission/SDK changes; local database encryption and financial-data OS-backup protection remain unimplemented.
+
+
+D-69 / SEC-09: the current SDK/build review is [recorded here](../../../../../docs/privacy/zanance-sdk-review.md).
+Android Cloud grants process-wide INTERNET before sign-in; ML Kit diagnostics may be transmitted independently of
+a connected account. No application advertising/analytics/crash service is added. Complete Release APK permission
+checks cover Offline and Cloud variants; iOS signed-binary/native-traffic and future billing/sync reviews remain gates.

@@ -127,3 +127,13 @@ Use [experiments/Zanance.Encryption](../../experiments/Zanance.Encryption/README
 It is outside the main solution, references no app and writes fictitious data only. Never add its deprecated native
 bundle to production references. Android fixture id: pro.vafadar.zanance.encryptionproof. Emulator/tool downloads
 need owner approval; never use the main finance package as a fixture or infer runtime success from APK compilation.
+
+
+## Offline Android variant and permission review
+
+`Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline` explicitly overrides all cloud client properties
+with empty global values, preserving the local secrets file and license registration. Release only: Debug requires
+debugger network access. The APK script enforces CI warnings-as-errors even without an environment variable.
+Run `eng/tests/AndroidPrivacy.Tests.ps1`, then `eng/scripts/Test-AndroidPrivacy.ps1 -Path <complete.apk> -Variant Offline`
+or `-Variant Cloud` for a genuinely cloud-configured Release build. The guard inspects the APK's declared permissions,
+rejects Debug and unknown capabilities, and prints no secrets. See [SDK review](../privacy/zanance-sdk-review.md).

@@ -16,7 +16,7 @@ readable by anyone who obtains it. First-run restore creates no extra account an
 
 | Online account | Local ledger | Ads / Analytics / AI | Pro | Privacy policy | Data safety |
 |---|---|---|---|---|---|
-| None in phase 1 | SQLite in app-private storage | Not included (no such SDK in `Directory.Packages.props`) | Planned, no billing in phase 1 | Draft (`docs/privacy/privacy-policy.md`) – must be published before release | To be completed from the release build |
+| None in phase 1 | SQLite in app-private storage | No application ads/analytics/AI feature; ML Kit diagnostics possible in Cloud (SEC-09) | Planned, no billing in phase 1 | Draft (`docs/privacy/privacy-policy.md`) – must be published before release | To be completed from the release build |
 
 ## Data flows
 
@@ -36,7 +36,7 @@ readable by anyone who obtains it. First-run restore creates no extra account an
 | DF-12 | Billing | – | – | Not included in phase 1 | – |
 | DF-13 | AI | – | – | Not included | – |
 | DF-14 | Sync / household | – | – | Not included | – |
-| DF-15 | Online rates / bank sync / other network use | – | – | Not included | Exchange rates are entered manually; the only network use is DF-04/05 in builds with cloud backup clients; offline builds declare no INTERNET permission |
+| DF-15 | Online rates / bank sync / other network use | – | – | Not included | Exchange rates are entered manually; application network flows are DF-04/05; Cloud builds may also permit native ML Kit diagnostics (DF-22); Offline Android Release declares no INTERNET permission |
 | DF-16 | **Android Auto Backup** | App database and preferences | User's Google account backup (Google) | Implemented – unverified (`allowBackup=true`, owner decision D-16) | Disclose in policy and Data safety; verify restore on a new device |
 | DF-17 | **iOS device / iCloud backup** | App data | User's iCloud or computer backup (Apple) | Implemented – unverified (OS default) | Disclose; iOS release later |
 | DF-23 | Local profiles | Profile names and the open profile (preferences, only with more than one profile); one database per profile | Local preferences and databases | Implemented – verified (data tests, build) | Names are visible to anyone who can open the app (said on the page); a profile with the app lock asks for the device owner before it opens (D-34) |
@@ -54,7 +54,7 @@ iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (recei
 |---|---|---|
 | POST_NOTIFICATIONS | Present | Reminders; offered once after the first start with an explanation, then requested when the user turns a reminder on; once the system no longer asks, "Turn on" opens the app's notification settings (D-38) |
 | RECEIVE_BOOT_COMPLETED | Present | Scheduled reminders are restored after a restart (REM-07) |
-| INTERNET | Removed in offline builds (D-20); kept in builds with cloud backup clients (D-35) | Only for the user's own Google Drive / OneDrive after they connect; Debug builds add it for the debugger |
+| INTERNET | Removed in offline builds (D-20); kept in builds with cloud backup clients (D-35) | Cloud APIs plus possible native SDK diagnostics before sign-in; Debug adds access for its debugger |
 | ACCESS_NETWORK_STATE | Removed | Not needed |
 | Exact alarms | Not requested | Reminders are inexact (REM-09) |
 | USE_BIOMETRIC, USE_FINGERPRINT | Merged from AndroidX Biometric | App lock (SEC-01); the system dialog handles the credential, the app never sees it. Listed in the merged manifest (`obj/…/AndroidManifest.xml`); normal permissions, no runtime prompt |
@@ -84,3 +84,9 @@ SDK, network destination or database field was added. Germany's holidays remain 
 D-68 / SEC-01: independent fictitious-only encryption experiment under a separate Android package. No production
 SDK, permission, user-data field, connection, export or key handling changed. Current plaintext database/safety-copy
 and OS-backup boundaries remain; proposed ADR 0010 must not be represented as implemented protection.
+
+
+D-69 / SEC-09: the current SDK/build review is [recorded here](../../../../docs/privacy/zanance-sdk-review.md).
+Android Cloud grants process-wide INTERNET before sign-in; ML Kit diagnostics may be transmitted independently of
+a connected account. No application advertising/analytics/crash service is added. Complete Release APK permission
+checks cover Offline and Cloud variants; iOS signed-binary/native-traffic and future billing/sync reviews remain gates.

@@ -74,3 +74,8 @@ SEC-01 / D-68 gate: proposed ADR 0010 and independent Windows/Android emulator p
 release gate. Android API 36 x86_64 runtime and Keystore process-restart proof pass for fictitious data only. ARM64
 phone, iOS, exact maintained native binaries, recovery, key loss, migration fault injection, OS backup and
 no-plaintext-safety-copy checks remain. Never ship the deprecated feasibility provider through app dependencies.
+
+
+D-69 / SEC-09: run the complete-APK permission guard for the selected Offline/Cloud Release variant; keep the SDK
+review and store declarations matched to that binary. Native traffic, real OAuth and signed iOS SDK privacy-manifest
+review remain gates; repeat before billing/sync SDKs. Never claim no SDK diagnostics in a cloud-enabled Android build.

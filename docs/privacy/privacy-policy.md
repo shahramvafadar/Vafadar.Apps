@@ -14,13 +14,15 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 ## Summary
 
 * Your data is stored **on your device**.
-* I do **not** operate servers that receive your data, and I cannot see it. Zanance connects to the internet only if
-  you connect your own Google Drive or OneDrive for backups, and only for that.
-* Your data leaves the device only when **you** share a backup or export file or store a backup in your own cloud
+* I do **not** operate servers that receive your financial data, and I cannot see it. Cloud-enabled builds can
+  access the internet for your own Google Drive or OneDrive backups. On Android, Google ML Kit may also transmit
+  SDK diagnostics described under receipt reading, independently of whether you have connected a cloud account.
+* Your financial files leave the device when **you** share a backup or export file or store a backup in your own cloud
   storage, and through the device backup of your phone (Google or Apple), depending on your device settings.
 * Password protection is optional for both local and cloud backup files. With it enabled, files are encrypted with
   your chosen password. Without it, anyone who obtains the file can read its contents.
-* The apps contain **no advertising and no analytics or tracking**.
+* I add no advertising, application analytics, tracking or crash-reporting service. Android builds with cloud backup
+  can permit Google ML Kit diagnostics; offline Android Release builds remove the network permission.
 
 ## Data the apps store
 
@@ -62,9 +64,10 @@ generic text; names and amounts appear only if you turn on "Show names and amoun
 If you choose "Read" on a receipt photo or PDF file, the text is read on your device. The text of a digital PDF is taken
 from the file itself; a photo or a scanned PDF page is recognised – by the system on iOS and Windows and by
 Google ML Kit, which is built into the app, on Android. The found amount, date and shop only fill the entry form for
-you to check. The file and the text are not sent anywhere by the app. On Android, Google ML Kit may send usage
-statistics to Google when the device is online in builds that offer cloud backup; builds without cloud backup
-have no internet permission at all.
+you to check. The file and the text are not sent anywhere by the app. On Android, Google ML Kit may send SDK
+diagnostics to Google in Android builds that offer cloud backup, even before a cloud account is connected. These
+can include device/app information, per-installation identifiers, performance and SDK event metrics. Offline Android
+Release builds have no internet permission. The current SDK/build-specific review is maintained in the privacy matrix.
 
 ## App lock
 
@@ -90,7 +93,8 @@ the purchased features can be unlocked. Zanance currently has no purchases.
 The apps request only the permissions they need. Zanance uses notifications (reminders, asked only when you turn
 one on), restarting reminders after the device restarts, biometric unlock (for the optional app lock) and, only in
 builds that offer cloud backup, internet access for your own Google Drive or OneDrive. It has no location,
-contacts, camera or photo library permission; attachments are picked with the system file picker. Each app's store listing shows the permissions it uses.
+contacts or photo-library permission. Android receipt photos use the camera app without a camera permission; iOS
+asks for camera access only when you choose to take a receipt photo. Existing files use the system file picker. Each app's store listing shows the permissions it uses.
 ## Children
 
 The apps are not directed at children under 13 and do not knowingly collect data from children.

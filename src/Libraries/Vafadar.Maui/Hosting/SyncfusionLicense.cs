@@ -21,7 +21,7 @@ public static class SyncfusionLicense
     public static bool Register(string? licenseKey)
     {
         // Syncfusion's usage telemetry is switched off before any Syncfusion type is used: the apps send nothing to
-        // anyone (privacy matrix). Syncfusion says it is inactive in production anyway; this makes it explicit.
+        // Syncfusion endpoints. Syncfusion says it is inactive in production anyway; this makes it explicit.
         DisableTelemetry();
 
         if (string.IsNullOrWhiteSpace(licenseKey) || Interlocked.Exchange(ref _registered, 1) == 1)

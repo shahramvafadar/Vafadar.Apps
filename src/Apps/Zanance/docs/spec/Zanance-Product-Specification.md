@@ -1322,3 +1322,11 @@ AOT/trimmed fixture passes on an isolated API 36 x86_64 emulator, including reco
 fictitious profile in a second process and tamper rejection. Technical delivery is complete for owner review. App
 data remains plaintext, the production connection and permissions are unchanged, and ADR acceptance/library
 procurement/recovery are owner-review gates. ARM64 phone, iOS and real migration acceptance remain later work.
+
+
+D-69 / SEC-09 current baseline: SDK and endpoint inventory, separate Offline/Cloud APK permission checks and eleven
+PowerShell AT-76 cases supplement the 1,134 .NET tests. Offline packaging preserves owner provider configuration and
+removes INTERNET from the shipped Android Release artifact; Cloud grants process-wide access and may permit ML Kit
+SDK diagnostics before account connection. No new SDK/UI/schema or OS-backup policy. Signed iOS manifests, physical
+traffic, real OAuth and later billing/sync SDKs remain review gates. Continuous ready-section delivery is authorized;
+unresolved ADR/library, OS-backup, commercial and provider decisions remain owner choices.
