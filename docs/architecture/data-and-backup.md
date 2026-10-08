@@ -187,3 +187,7 @@ ciphertext from OS cloud backup/device transfer to avoid restoring ciphertext wi
 required marker without its verifier fails closed and requires device-authenticated recovery. Other OS-backup data
 remains under the existing policy pending the commercial security decision. iOS keychain follows OS persistence
 rules, including possible retention after uninstall; verify on a signed device before release.
+
+D-65 plan/debt setup does not add database or portable-backup fields. Positive debt input maps to the existing
+signed reference-date opening balance. A repayment reminder is an ordinary Schedule transfer with unknown principal
+and automatic posting off until explicitly saved; it is not a ledger installment or an interest calculation.

@@ -100,3 +100,6 @@ sequence is unchanged; approval is still required before beginning its next sect
 Owner-approved receipt maintenance on 2026-10-08 (D-64, ZCR-LOC-12) is locally verified: total evidence, OCR geometry,
 independent bounded image preparation and review in both entry paths. Device/corpus acceptance remains ZCR-QA-05.
 This does not begin a commercial section; the next proposed section remains ZCR-SEC-01 and awaits owner approval.
+
+The owner separately approved D-65 plan/debt UX maintenance (ZCR-LOC-13) on 2026-10-08. This does not authorize
+commercial enforcement, another wave or unrelated entry/import work. AT-72 device acceptance remains separate.

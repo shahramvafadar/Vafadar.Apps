@@ -6,6 +6,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Plan and debt setup (2026-10-08, D-65)
+
+- A new plan starts with one occurrence. Selecting Monthly repeats on the first date's day in the displayed rule
+  calendar. A nearby summary and next dates explain the result, including short months.
+- End after a number of occurrences or on a date in either experience mode. Uncommon recurrence options expand
+  only when needed; categories use a compact picker.
+- Add a debt or receivable through two plain-language directions and positive amounts at a reference date.
+  Interest and installment estimates are optional. Debt details offer a separate repayment-reminder draft, without
+  recording a payment or automatically posting an estimated installment.
+
 ### Fixed - Receipt total suggestions (2026-10-08, D-64)
 
 - Read the purchase total beside inclusive tax text; do not substitute tax, item prices, loyalty points, document

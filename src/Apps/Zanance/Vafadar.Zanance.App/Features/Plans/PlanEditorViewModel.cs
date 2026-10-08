@@ -93,7 +93,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         ApplyFrom = Today;
         ReminderDaysText = "3";
         ReminderTime = new TimeSpan(9, 0, 0);
-        PresetIndex = 3;
+        // A blank plan is one-off; choosing Monthly anchors it to the first due date (D-65).
+        PresetIndex = 0;
         CalendarIndex = (int)Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
     }
 
@@ -107,8 +108,38 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial bool IsAdvanced { get; set; }
 
+    /// <summary>Gets or sets whether the less common date rules are expanded.</summary>
     [ObservableProperty]
-    public partial string? AdvancedSummary { get; set; }
+    public partial bool ShowRuleOptions { get; set; }
+
+    /// <summary>Gets or sets the schedule sentence beside the live preview.</summary>
+    [ObservableProperty]
+    public partial string RuleSummary { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the short-month explanation when a monthly anchor may be missing.</summary>
+    [ObservableProperty]
+    public partial string? ShortMonthHint { get; set; }
+
+    /// <summary>Gets or sets a date-rule error beside the affected schedule controls.</summary>
+    [ObservableProperty]
+    public partial string? RuleError { get; set; }
+
+    /// <summary>Gets or sets a principal-only explanation for debt transfers.</summary>
+    [ObservableProperty]
+    public partial bool IsDebtTransfer { get; set; }
+
+    /// <summary>Gets or sets the category shown by the compact picker.</summary>
+    [ObservableProperty]
+    public partial CategoryChoice? SelectedCategory { get; set; }
+
+    /// <summary>Gets the recurrence calendar used by this form's date fields.</summary>
+    public CalendarSystem RuleCalendar => Calendars.ToDisplay(Calendar);
+
+    /// <summary>Gets the named calendar beside the first due date, including for one-off plans.</summary>
+    public string RuleCalendarName => _translator[Calendars.NameKey(Calendar)];
+
+    [RelayCommand]
+    private void ToggleRuleOptions() => ShowRuleOptions = !ShowRuleOptions;
 
     public IReadOnlyList<string> UnitNames { get; }
 
@@ -340,11 +371,11 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     public bool ShowCustom => PresetIndex == PresetCustom;
 
-    public bool ShowMonthOptions => IsAdvanced && Frequency is Frequency.Monthly or Frequency.Yearly;
+    public bool ShowMonthOptions => Frequency is Frequency.Monthly or Frequency.Yearly;
 
     public bool ShowMissingDay => ShowMonthOptions && DayRuleIndex == 0 && AnchorDay > 28;
 
-    public bool ShowEnd => IsAdvanced && Frequency != Frequency.Once;
+    public bool ShowEnd => Frequency != Frequency.Once;
 
     public bool ShowEndDate => EndIndex == 1;
 
@@ -406,6 +437,24 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                 var states = await _plans.GetStatesAsync(id);
                 ApplyFrom = Occurrences.NextOpen(schedule, states, Today, Today)?.OriginalDate ?? Today;
             }
+            else if (query.TryGetValue("fromDebt", out var debtValue) && debtValue is Guid debtId
+                && _accounts.GetValueOrDefault(debtId) is { } debt && debt.Type.IsDebt())
+            {
+                // The date and reminder are reviewed here; opening this draft never saves a plan or a payment.
+                var money = accounts.FirstOrDefault(a => !a.IsArchived && a.Type.CanBeDefault() && a.CurrencyCode == debt.CurrencyCode
+                    && a.Id == settings.DefaultAccountId)
+                    ?? accounts.FirstOrDefault(a => !a.IsArchived && a.Type.CanBeDefault() && a.CurrencyCode == debt.CurrencyCode);
+                if (money is not null)
+                {
+                    Load(DebtSetup.Reminder(debt, money.Id, debt.DueDate ?? Today.AddMonths(1), Calendars.ToPeriod(_localization.CurrentCalendar)));
+                    CanChangeKind = false;
+                }
+                else
+                {
+                    HasNoAccounts = true;
+                    Account = null;
+                }
+            }
             else if (query.TryGetValue("fromEntry", out var entryValue) && entryValue is Guid entryId && await _store.GetEntryAsync(entryId) is { } entry)
             {
                 // A plan from an existing entry (TX-04): same values, first due date one month later.
@@ -416,6 +465,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                 Account = Accounts.FirstOrDefault(a => a.Id == entry.AccountId);
                 ToAccount = entry.ToAccountId is { } to ? Accounts.FirstOrDefault(a => a.Id == to) : Accounts.FirstOrDefault(a => a.Id != entry.AccountId);
                 AmountText = MoneyText.ForInput(entry.Amount, CurrencyOf(entry.AccountId), _localization.CurrentCulture);
+                PresetIndex = 3;
                 Start = entry.Date.AddMonths(1);
                 Note = entry.Note ?? string.Empty;
                 BuildCategories(entry.CategoryId);
@@ -435,10 +485,26 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             _loading = false;
         }
 
+        // The explicit repayment-reminder action needs the same contextual permission check as the toggle.
+        if (query.ContainsKey("fromDebt") && ReminderEnabled)
+        {
+            if (!_reminders.Scheduler.IsSupported)
+            {
+                ReminderNote = _translator["Reminder_NotOnThisDevice"];
+            }
+            else if (!await _reminders.EnsurePermissionAsync())
+            {
+                ReminderNote = _translator["Reminder_PermissionDenied"];
+            }
+        }
+
         ShowApplyFrom = _existing is not null && _hasHistory;
 
-        // Simple offers the common repeats; a custom repeat that is already set stays visible (UX-02).
-        PresetNames = IsAdvanced || PresetIndex == PresetCustom ? _allPresets : [.. _allPresets.Take(PresetCustom)];
+        // Common and custom dates are available in either experience mode; complexity is local to the form (D-65).
+        PresetNames = _allPresets;
+        ShowRuleOptions = _existing is not null && (_existing.Rule.DayRule != MonthDayRule.SpecificDay
+            || _existing.Rule.SecondDay is not null || _existing.Rule.WeekendShift != WeekendShift.None
+            || _existing.Rule.MissingDay != MissingDayPolicy.LastValidDay);
         Update();
         _snapshot = Snapshot();
         query.Clear();
@@ -539,7 +605,17 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     partial void OnToAccountChanged(AccountChoice? value) => Update();
 
-    partial void OnPresetIndexChanged(int value) => Update();
+    partial void OnPresetIndexChanged(int oldValue, int newValue)
+    {
+        // Moving from Monthly to Custom must start with "every 1 month", rather than quietly becoming daily.
+        if (!_loading && newValue == PresetCustom && oldValue < PresetCustom)
+        {
+            UnitIndex = oldValue switch { 1 or 2 => 1, 3 => 2, 4 => 3, _ => 0 };
+            IntervalText = oldValue == 2 ? "2" : "1";
+        }
+
+        Update();
+    }
 
     partial void OnIntervalTextChanged(string value) => Update();
 
@@ -560,6 +636,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     partial void OnCountTextChanged(string value) => Update();
 
     partial void OnPastIndexChanged(int value) => Update();
+
+    partial void OnSelectedCategoryChanged(CategoryChoice? value)
+    {
+        foreach (var category in Categories)
+        {
+            category.IsSelected = ReferenceEquals(category, value);
+        }
+    }
 
     // Permission is asked for only when the user turns a reminder on (REM-03); without it the plan still works.
     async partial void OnReminderEnabledChanged(bool value)
@@ -589,7 +673,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         }
 
         CurrencyCode = Account?.CurrencyCode ?? Currencies.Euro.Code;
-        ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
+        ShowToAmount = ShowAmount && IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
         var selected = SelectedDayRule;
         _dayRules = DayRulesFor(AnchorDay);
         var culture = _localization.CurrentCulture;
@@ -618,31 +702,22 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         OnPropertyChanged(nameof(ShowEndDate));
         OnPropertyChanged(nameof(ShowCount));
         OnPropertyChanged(nameof(ShowPastChoice));
+        OnPropertyChanged(nameof(RuleCalendar));
+        OnPropertyChanged(nameof(RuleCalendarName));
+        IsDebtTransfer = IsTransfer && ((_accounts.GetValueOrDefault(Account?.Id ?? Guid.Empty)?.Type.IsDebt() ?? false)
+            || (_accounts.GetValueOrDefault(ToAccount?.Id ?? Guid.Empty)?.Type.IsDebt() ?? false));
 
-        // Hidden settings that change the dates are summarised in Simple mode (UX-02).
-        var current = BuildRule();
-        AdvancedSummary = !IsAdvanced && (current.End != EndKind.Never || current.DayRule != MonthDayRule.SpecificDay || current.MissingDay != MissingDayPolicy.LastValidDay || current.SecondDay is not null)
-            ? _translator.Format("Plan_AdvancedSummary", new PlanText(_translator, _dates, _localization).Rule(current))
-            : null;
-
+        var rule = BuildRule();
+        RuleError = Recurrence.Validate(rule) is { } problem ? _translator[$"Plan_{problem}"] : null;
+        var text = new PlanText(_translator, _dates, _localization);
+        RuleSummary = text.EditorSummary(rule);
+        ShortMonthHint = text.ShortMonthHint(rule);
         Preview.Clear();
-        var rule = current;
-        if (Recurrence.Validate(rule) is not null)
-        {
-            Preview.Add(_translator["Plan_RuleInvalid"]);
-            return;
-        }
-
-        // Existing plans preview from today; new plans from the start (or today when past dates are left out).
+        // Existing plans preview from today; new plans from the first due date unless past dates are excluded.
         var from = _existing is not null || (ShowPastChoice && PastIndex == 0) ? Today : rule.Start;
-        foreach (var date in Recurrence.Next(rule, from, 6))
+        foreach (var date in text.UpcomingDates(rule, from))
         {
-            Preview.Add(_dates.Format(rule.ApplyWeekend(date.Date), DateFormatStyle.Long));
-        }
-
-        if (Preview.Count == 0)
-        {
-            Preview.Add(_translator["Plan_NoDates"]);
+            Preview.Add(date);
         }
     }
 
@@ -666,7 +741,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         Count = EndIndex == 2 && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(CountText), NumberStyles.None, CultureInfo.InvariantCulture, out var count) ? count : null,
     };
 
-    // Only the category chips are drawn again, with the chosen category; the plan keeps everything typed.
+    // Refresh category choices with their selection; theme changes must not replace the typed plan draft.
     Task Presentation.IThemeAware.RefreshThemeAsync()
     {
         BuildCategories(Categories.FirstOrDefault(c => c.IsSelected)?.Id);
@@ -675,6 +750,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     private void BuildCategories(Guid? selectedId)
     {
+        SelectedCategory = null;
         Categories.Clear();
         if (IsTransfer)
         {
@@ -692,6 +768,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                 IsSelected = category.Id == selectedId,
             });
         }
+
+        SelectedCategory = Categories.FirstOrDefault(c => c.Id == selectedId);
     }
 
     [RelayCommand]

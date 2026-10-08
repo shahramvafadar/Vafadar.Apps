@@ -5449,4 +5449,95 @@ Schritte zum Nachstellen des Problems:
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>Die Anzeigeeinheit hat sich geändert. Wählen Sie den Belegbetrag erneut oder geben Sie ihn vor dem Speichern neu ein.</value>
   </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>Kategorie wählen (optional)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>{0}
+Erster Termin: {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>Wiederholung anpassen</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>Fehlt der {0}. Tag, gilt der letzte Tag des Monats. Im nächsten Monat gilt wieder der {0}. Tag.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>Monate ohne den {0}. Tag werden ausgelassen. In anderen Monaten gilt weiterhin der {0}. Tag.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>Schuld oder Forderung erfassen</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>Neue Schuld oder Forderung</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>Schuld oder Forderung bearbeiten</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>Wer schuldet das Geld?</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>Ich schulde Geld</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>Mir wird Geld geschuldet</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>Restschuld am Stichtag</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>Forderung am Stichtag</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>Wem schulden Sie Geld?</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>Wer schuldet Ihnen Geld?</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>Stand am</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>Restbetrag unbekannt</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>Geben Sie den am Stichtag offenen Betrag positiv ein. Dies erfasst einen bestehenden Saldo, keine neue Zahlung. Spätere Rückzahlungen werden separat erfasst.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>Geben Sie einen positiven Betrag ein. Die gewählte Richtung legt fest, wer ihn schuldet.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>Raten und Zinsen (optional)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>Eine Schätzung legt keine Termine oder Erinnerungen an. Richten Sie eine Rückzahlungserinnerung separat ein und erfassen Sie Zahlungen erst nach ihrer Ausführung.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>Rückzahlungserinnerung einrichten</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>Prüfen Sie unten den ersten Termin und die Wiederholung. Eine Erinnerung zahlt kein Geld. Bei einer Rückzahlung wird nur der Tilgungsbetrag umgebucht; Zinsen und Gebühren sind separate Ausgaben. Der Betrag bleibt bis zu Ihrer Bestätigung unbekannt.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>Weitere Kontodetails</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>Schuldsaldo und Stichtag</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>Geben Sie den am Stichtag offenen Betrag positiv ein und wählen Sie, wer ihn schuldet. Das Vorzeichen wird automatisch gesetzt. Spätere Rückzahlungen ändern den Saldo separat. Eine Änderung des Stichtagsbetrags ersetzt nicht den heutigen Saldo und entfernt keine erfassten Rückzahlungen.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>Am Stichtag schuldeten Sie 1.000. Eine spätere Rückzahlung von 200 lässt 800 offen. Der Stichtagssaldo bleibt 1.000; die Rückzahlung von 200 wird separat erfasst.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>Termine und Wiederholungen</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>Wöchentliche Wiederholungen verwenden den Wochentag des ersten Termins. Monatliche Wiederholungen verwenden dieselbe Tagesnummer im genannten Kalender. Prüfen Sie die nächsten Termine. Bei einer begrenzten Anzahl zählt der erste Termin mit. Weitere Optionen ändern Kalender, Monatstag oder Feiertagsregel. Die Erinnerungszeit ist keine Zahlungszeit.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>Erster Termin: 20. Oktober. Monatlich: 20. November, 20. Dezember. Der letzte Tag des Monats ist ein anderes Muster.</value>
+  </data>
 </root>

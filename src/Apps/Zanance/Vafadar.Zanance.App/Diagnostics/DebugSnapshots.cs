@@ -229,6 +229,9 @@ internal static class DebugSnapshots
             ("rules", AppShell.RulesRoute, null),
             ("plans", "//plans", null),
             ("plan-new", AppShell.PlanEditorRoute, null),
+            ("plan-debt-reminder", AppShell.PlanEditorRoute, new() { ["fromDebt"] = loanId }),
+            ("debt-new", AppShell.AccountEditorRoute, new() { ["debt"] = true }),
+            ("receivable-new", AppShell.AccountEditorRoute, new() { ["debt"] = AccountType.Lent }),
             ("plan-edit", AppShell.PlanEditorRoute, new() { ["id"] = planId }),
             ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
             ("plan-weekday", AppShell.PlanDetailRoute, new() { ["id"] = weekdayPlanId }),
@@ -324,6 +327,11 @@ internal static class DebugSnapshots
                 }
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
+                if (name is "plan-new" or "plan-debt-reminder" or "debt-new" or "receivable-new" or "loan-edit")
+                {
+                    await ReviewPlanDebtDraftAsync(app, folder, $"{language}-{name}", name);
+                }
+
                 if (name == "reports" && Shell.Current.CurrentPage?.BindingContext is Features.Reports.ReportsViewModel reports)
                 {
                     await File.WriteAllBytesAsync(Path.Combine(folder, $"{language}-report.pdf"), await reports.CreatePdfAsync());
@@ -418,6 +426,98 @@ internal static class DebugSnapshots
                     await Shell.Current.GoToAsync("//home");
                     await Task.Delay(500);
                 }
+            }
+        }
+    }
+
+    // D-65: real rendered draft states and binding-independent domain checks; no fixture below saves a user draft.
+    private static async Task ReviewPlanDebtDraftAsync(App app, string folder, string file, string name)
+    {
+        var page = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage;
+        if (page is Features.Plans.PlanEditorPage planPage && page.BindingContext is Features.Plans.PlanEditorViewModel plan)
+        {
+            if (name == "plan-debt-reminder")
+            {
+                if (!plan.IsTransfer || plan.AmountModeIndex != (int)AmountMode.Unknown || plan.AutoPost || !plan.ReminderEnabled)
+                {
+                    throw new InvalidOperationException("A repayment reminder draft must not post an estimated installment.");
+                }
+            }
+            else
+            {
+                if (plan.PresetIndex != 0)
+                {
+                    throw new InvalidOperationException("A blank plan must start as a single occurrence.");
+                }
+
+                var (year, month, _) = Vafadar.Localization.CalendarDates.Parts(plan.Start, plan.RuleCalendar);
+                if (!Vafadar.Localization.CalendarDates.TryCreate(year, month, 20, plan.RuleCalendar, out var start))
+                {
+                    throw new InvalidOperationException("The sample monthly date is invalid.");
+                }
+
+                plan.Start = start;
+                plan.PresetIndex = 3;
+                plan.PresetIndex = 5;
+                if (plan.UnitIndex != 2 || plan.IntervalText != "1")
+                {
+                    throw new InvalidOperationException("Custom repetition must preserve the monthly unit and interval.");
+                }
+
+                plan.PresetIndex = 3;
+                plan.Name = "Monthly example";
+                plan.AmountText = "25";
+                plan.SelectedCategory = plan.Categories.FirstOrDefault();
+                plan.EndIndex = (int)EndKind.AfterCount;
+                plan.CountText = "3";
+                if (!plan.ShowEnd || plan.Preview.Count != 3 || plan.Name != "Monthly example" || plan.AmountText != "25")
+                {
+                    throw new InvalidOperationException("The common count/category choices changed the draft or lost its preview.");
+                }
+            }
+
+            if (FindScrollView(app.Windows[0].Page) is { } scroll)
+            {
+                await scroll.ScrollToAsync(planPage.FindByName<Border>("ScheduleCard"), ScrollToPosition.Start, animated: false);
+                await Task.Delay(400);
+                await CaptureAsync(app, folder, file + "-schedule");
+                if (name == "plan-new")
+                {
+                    plan.CalendarIndex = 0;
+                    plan.Start = new DateOnly(2027, 1, 31);
+                    plan.EndIndex = 0;
+                    plan.ShowRuleOptions = true;
+                    await Task.Delay(400);
+                    await scroll.ScrollToAsync(planPage.FindByName<Border>("ScheduleCard"), ScrollToPosition.Start, animated: false);
+                    await Task.Delay(400);
+                    await CaptureAsync(app, folder, file + "-month-end");
+                }
+            }
+        }
+        else if (page is Features.Accounts.AccountEditorPage accountPage && page.BindingContext is Features.Accounts.AccountEditorViewModel account)
+        {
+            if (!account.Form.IsDebtType || account.Form.ShowNegative)
+            {
+                throw new InvalidOperationException("The debt form must express the direction without a manual sign.");
+            }
+
+            var form = accountPage.FindByName<Features.Accounts.AccountFormView>("AccountForm");
+            if (FindScrollView(app.Windows[0].Page) is { } scroll)
+            {
+                await scroll.ScrollToAsync(form.FindByName<Label>("OpeningAmountLabel"), ScrollToPosition.Start, animated: false);
+                await Task.Delay(400);
+                await CaptureAsync(app, folder, file + "-amount");
+                account.Form.ShowDebtTerms = true;
+                account.Form.ExpandedAccountDetails = true;
+                if (name == "receivable-new")
+                {
+                    account.Form.HasDueDate = true;
+                }
+
+                await Task.Delay(400);
+                await scroll.ScrollToAsync(form.FindByName<Label>("OpeningAmountLabel"), ScrollToPosition.Start, animated: false);
+                await Task.Delay(400);
+                await CaptureAsync(app, folder, file + "-options");
             }
         }
     }

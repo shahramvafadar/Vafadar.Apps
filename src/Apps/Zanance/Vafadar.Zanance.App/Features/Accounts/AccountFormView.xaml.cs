@@ -1,14 +1,11 @@
 namespace Vafadar.Zanance.App.Features.Accounts;
 
+/// <summary>Shared account/debt fields; checkbox labels use commands rather than pointer-only gestures.</summary>
 public partial class AccountFormView : VerticalStackLayout
 {
+    /// <summary>Creates the compiled account form.</summary>
     public AccountFormView()
     {
         InitializeComponent();
     }
-
-    // The labels are part of their checkbox's touch target.
-    private void OnNegativeLabelTapped(object? sender, TappedEventArgs e) => NegativeBox.IsChecked = !NegativeBox.IsChecked;
-
-    private void OnUnknownLabelTapped(object? sender, TappedEventArgs e) => UnknownBox.IsChecked = !UnknownBox.IsChecked;
 }

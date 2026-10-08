@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
-    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:entries="clr-namespace:Vafadar.Zanance.App.Features.Entries"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     x:DataType="local:PlanEditorViewModel"
@@ -31,7 +30,7 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
                         <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}"
-                                       IsEnabled="{Binding CanChangeKind}" SemanticProperties.Description="{v:Translate Entry_Kind}" />
+                                       IsEnabled="{Binding CanChangeKind}" />
 
                         <Label Text="{v:Translate Plan_Name}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding Name}" Placeholder="{v:Translate Plan_NamePlaceholder}" MaxLength="120"
@@ -52,6 +51,7 @@
                         <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
                                IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
 
+                        <Label Text="{v:Translate Debt_PlanHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0" IsVisible="{Binding IsDebtTransfer}" />
                         <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" />
                         <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" SemanticProperties.Description="{v:Translate Entry_Account}" />
                         <VerticalStackLayout IsVisible="{Binding IsTransfer}">
@@ -60,52 +60,30 @@
                             <Entry Text="{Binding ToAmountText}" Keyboard="Numeric" Placeholder="0" IsVisible="{Binding ShowToAmount}" Margin="0,8,0,0"
                                    SemanticProperties.Description="{v:Translate LedgerError_DestinationAmountRequired}" />
                         </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Category -->
-                <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
-                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Categories}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="entries:CategoryChoice">
-                                    <!-- A real button over the chip, as in the entry editor -->
-                                    <Grid Margin="0,0,8,8">
-                                        <!-- Outline and fill come from the chip (CR08-03): a trigger setter with a binding stays applied -->
-                                        <Border Padding="4,4,14,4" StrokeThickness="1.5" Stroke="{Binding Outline}"
-                                                StrokeShape="RoundRectangle 22" BackgroundColor="{Binding Fill}" MinimumHeightRequest="44">
-                                            <HorizontalStackLayout Spacing="8">
-                                                <Border WidthRequest="32" HeightRequest="32" StrokeThickness="0" StrokeShape="RoundRectangle 16"
-                                                        BackgroundColor="{Binding Background}" VerticalOptions="Center">
-                                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="18" ForegroundColor="{Binding Color}"
-                                                                   HorizontalOptions="Center" VerticalOptions="Center" />
-                                                </Border>
-                                                <Label Text="{Binding Name}" FontSize="14" VerticalOptions="Center" />
-                                            </HorizontalStackLayout>
-                                        </Border>
-                                        <Button Style="{StaticResource OverlayButton}" CornerRadius="22"
-                                                Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:PlanEditorViewModel}}, x:DataType=local:PlanEditorViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
+                        <VerticalStackLayout IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}">
+                            <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" />
+                            <Picker Title="{v:Translate Plan_CategoryOptional}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"
+                                    ItemDisplayBinding="{Binding Name, x:DataType=entries:CategoryChoice}" SemanticProperties.Description="{v:Translate Entry_Category}" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- When -->
-                <Border Style="{StaticResource Card}">
+                <Border x:Name="ScheduleCard" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Plan_Start}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                        <v:DateField Date="{Binding Start}" />
+                        <Label Text="{Binding RuleCalendarName}" Style="{StaticResource Secondary}" Margin="0,0,0,4" />
+                        <v:DateField Date="{Binding Start}" CalendarOverride="{Binding RuleCalendar}" />
 
                         <VerticalStackLayout IsVisible="{Binding ShowPastChoice}">
                             <Label Text="{v:Translate Plan_PastStart}" Style="{StaticResource FieldLabel}" />
                             <v:ChoiceChips ItemsSource="{Binding PastNames}" SelectedIndex="{Binding PastIndex}" />
                         </VerticalStackLayout>
 
-                        <Label Text="{v:Translate Plan_Repeat}" Style="{StaticResource FieldLabel}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{v:Translate Plan_Repeat}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Grid.Column="1" Topic="PlanRepeat" Margin="0,8,0,0" />
+                        </Grid>
                         <v:ChoiceChips ItemsSource="{Binding PresetNames}" SelectedIndex="{Binding PresetIndex}" />
 
                         <Grid ColumnDefinitions="Auto,80,*" ColumnSpacing="8" IsVisible="{Binding ShowCustom}">
@@ -116,25 +94,56 @@
                                            VerticalOptions="Center" />
                         </Grid>
 
-                        <VerticalStackLayout IsVisible="{Binding ShowMonthOptions}">
-                            <Label Text="{v:Translate Plan_Calendar}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" />
-                            <Label Text="{v:Translate Plan_Day}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding DayRuleNames}" SelectedIndex="{Binding DayRuleIndex}" />
-                            <VerticalStackLayout IsVisible="{Binding ShowMissingDay}">
-                                <Label Text="{v:Translate Plan_MissingDay}" Style="{StaticResource FieldLabel}" />
-                                <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" />
+                        <Label Text="{Binding RuleSummary}" FontAttributes="Bold" Margin="0,12,0,0" />
+                        <Label Text="{Binding RuleError}" Style="{StaticResource ErrorText}" IsVisible="{Binding RuleError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding ShortMonthHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0"
+                               IsVisible="{Binding ShortMonthHint, Converter={StaticResource IsNotNullConverter}}" />
+                        <!-- Preview of the next dates (REC-04) -->
+                        <Label Text="{v:Translate Plan_Preview}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
+                        <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                            <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Preview}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Label Text="{Binding .}" FontSize="14" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>
-                            <VerticalStackLayout IsVisible="{Binding ShowSecondDay}">
-                                <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
-                                    <Label Text="{v:Translate Plan_SecondDay}" VerticalOptions="Center" />
-                                    <Switch Grid.Column="1" IsToggled="{Binding HasSecondDay}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_SecondDay}" />
-                                </Grid>
-                                <Grid ColumnDefinitions="70,*" ColumnSpacing="8" IsVisible="{Binding HasSecondDay}">
-                                    <Entry Text="{Binding SecondDayText}" Keyboard="Numeric" MaxLength="2" HorizontalTextAlignment="Center"
-                                           SemanticProperties.Description="{v:Translate Plan_SecondDayNumber}" />
-                                    <Label Grid.Column="1" Text="{v:Translate Plan_SecondDayNumber}" VerticalOptions="Center" />
-                                </Grid>
+                        </Border>
+
+                        <VerticalStackLayout IsVisible="{Binding ShowEnd}">
+                            <Label Text="{v:Translate Plan_End}" Style="{StaticResource FieldLabel}" />
+                            <v:ChoiceChips ItemsSource="{Binding EndNames}" SelectedIndex="{Binding EndIndex}" />
+                            <v:DateField Date="{Binding EndDate}" IsVisible="{Binding ShowEndDate}" CalendarOverride="{Binding RuleCalendar}" />
+                            <Grid ColumnDefinitions="100,*" ColumnSpacing="8" IsVisible="{Binding ShowCount}">
+                                <Entry Text="{Binding CountText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
+                                       SemanticProperties.Description="{v:Translate End_AfterCount}" />
+                                <Label Grid.Column="1" Text="{v:Translate Plan_Times}" VerticalOptions="Center" />
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <Button Text="{v:Translate Plan_ChangePattern}" Command="{Binding ToggleRuleOptionsCommand}" Style="{StaticResource TextButton}"
+                                HorizontalOptions="Start" IsVisible="{Binding ShowEnd}" />
+                        <VerticalStackLayout IsVisible="{Binding ShowRuleOptions}">
+                            <VerticalStackLayout IsVisible="{Binding ShowMonthOptions}">
+                                <Label Text="{v:Translate Plan_Calendar}" Style="{StaticResource FieldLabel}" />
+                                <v:ChoiceChips ItemsSource="{Binding CalendarNames}" SelectedIndex="{Binding CalendarIndex}" />
+                                <Label Text="{v:Translate Plan_Day}" Style="{StaticResource FieldLabel}" />
+                                <v:ChoiceChips ItemsSource="{Binding DayRuleNames}" SelectedIndex="{Binding DayRuleIndex}" />
+                                <VerticalStackLayout IsVisible="{Binding ShowMissingDay}">
+                                    <Label Text="{v:Translate Plan_MissingDay}" Style="{StaticResource FieldLabel}" />
+                                    <v:ChoiceChips ItemsSource="{Binding MissingDayNames}" SelectedIndex="{Binding MissingDayIndex}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout IsVisible="{Binding ShowSecondDay}">
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                        <Label Text="{v:Translate Plan_SecondDay}" VerticalOptions="Center" />
+                                        <Switch Grid.Column="1" IsToggled="{Binding HasSecondDay}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Plan_SecondDay}" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="70,*" ColumnSpacing="8" IsVisible="{Binding HasSecondDay}">
+                                        <Entry Text="{Binding SecondDayText}" Keyboard="Numeric" MaxLength="2" HorizontalTextAlignment="Center"
+                                               SemanticProperties.Description="{v:Translate Plan_SecondDayNumber}" />
+                                        <Label Grid.Column="1" Text="{v:Translate Plan_SecondDayNumber}" VerticalOptions="Center" />
+                                    </Grid>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate Weekend_Title}" Style="{StaticResource FieldLabel}" />
@@ -150,38 +159,12 @@
                             <Label Text="{Binding HolidayHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding CanSkipHolidays}" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout IsVisible="{Binding ShowEnd}">
-                            <Label Text="{v:Translate Plan_End}" Style="{StaticResource FieldLabel}" />
-                            <v:ChoiceChips ItemsSource="{Binding EndNames}" SelectedIndex="{Binding EndIndex}" />
-                            <v:DateField Date="{Binding EndDate}" IsVisible="{Binding ShowEndDate}" />
-                            <Grid ColumnDefinitions="100,*" ColumnSpacing="8" IsVisible="{Binding ShowCount}">
-                                <Entry Text="{Binding CountText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
-                                       SemanticProperties.Description="{v:Translate End_AfterCount}" />
-                                <Label Grid.Column="1" Text="{v:Translate Plan_Times}" VerticalOptions="Center" />
-                            </Grid>
-                        </VerticalStackLayout>
-
-                        <Label Text="{Binding AdvancedSummary}" Style="{StaticResource Secondary}" Margin="0,12,0,0"
-                               IsVisible="{Binding AdvancedSummary, Converter={StaticResource IsNotNullConverter}}" />
-
-                        <!-- Preview of the next dates (REC-04) -->
-                        <Label Text="{v:Translate Plan_Preview}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
-                        <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
-                            <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Preview}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <Label Text="{Binding .}" FontSize="14" />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
-                        </Border>
-
                         <VerticalStackLayout IsVisible="{Binding ShowApplyFrom}">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                 <Label Text="{v:Translate Plan_ApplyFrom}" Style="{StaticResource FieldLabel}" />
                                 <v:HelpButton Grid.Column="1" Topic="PlanApplyFrom" Margin="0,8,0,0" />
                             </Grid>
-                            <v:DateField Date="{Binding ApplyFrom}" />
+                            <v:DateField Date="{Binding ApplyFrom}" CalendarOverride="{Binding RuleCalendar}" />
                             <Label Text="{v:Translate Plan_ApplyFromHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -200,6 +183,7 @@
                                        SemanticProperties.Description="{v:Translate Plan_DaysBefore}" />
                                 <Label Grid.Column="1" Text="{v:Translate Plan_DaysBefore}" VerticalOptions="Center" />
                             </Grid>
+                            <Label Text="{v:Translate Plan_ReminderTime}" Style="{StaticResource FieldLabel}" />
                             <TimePicker Time="{Binding ReminderTime}" HorizontalOptions="Start" SemanticProperties.Description="{v:Translate Plan_ReminderTime}" />
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowReminderOnDueDate}">
                                 <Label Text="{v:Translate Plan_ReminderOnDueDate}" VerticalOptions="Center" />

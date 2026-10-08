@@ -5418,4 +5418,95 @@ Pasos para reproducirlo:
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>La unidad de visualización ha cambiado. Vuelve a elegir el importe del recibo o introdúcelo de nuevo antes de guardar.</value>
   </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>Elige una categoría (opcional)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>{0}
+Primer vencimiento: {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>Ajustar la repetición</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>Si un mes no tiene día {0}, se usa su último día. El mes siguiente vuelve al día {0}.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>Se omiten los meses sin día {0}. Los demás mantienen el día {0}.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>Añadir deuda o dinero que te deben</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>Nueva deuda o dinero que te deben</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>Editar deuda o dinero que te deben</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>¿Quién debe el dinero?</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>Yo debo dinero</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>Me deben dinero</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>Deuda pendiente en la fecha de referencia</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>Dinero que te deben en la fecha de referencia</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>¿A quién debes dinero?</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>¿Quién te debe dinero?</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>Saldo a fecha de</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>No sé el importe pendiente</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>Introduce el importe positivo pendiente en esa fecha. Esto registra un saldo existente, no un pago nuevo. Las devoluciones posteriores se registran aparte.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>Introduce un importe positivo; la dirección elegida indica quién lo debe.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>Cuotas e intereses (opcional)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>Una estimación no fija vencimientos ni envía recordatorios. Configura un recordatorio de devolución aparte y registra el pago solo cuando ocurra.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>Configurar recordatorio de devolución</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>Revisa abajo el primer vencimiento y la repetición. Un recordatorio no paga dinero. En la transferencia de devolución introduce solo el capital; los intereses y las comisiones son gastos aparte. El importe queda desconocido hasta que lo confirmes.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>Otros detalles de la cuenta</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>Saldo de la deuda y fecha de referencia</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>Introduce como número positivo el importe pendiente en la fecha de referencia y elige quién lo debe. El signo se determina automáticamente. Las devoluciones posteriores cambian el saldo aparte. Editar ese importe no sustituye el saldo actual ni elimina devoluciones registradas.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>Debías 1.000 en la fecha de referencia. Tras devolver 200, quedan 800. Mantén 1.000 como saldo de referencia y registra la devolución de 200 aparte.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>Vencimientos y planes repetidos</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>La repetición semanal usa el día de la semana del primer vencimiento. La mensual usa el mismo número de día en el calendario indicado. Revisa las próximas fechas. El primer vencimiento cuenta al limitar el número de repeticiones. Las opciones adicionales cambian el calendario, el día del mes o los festivos. La hora del recordatorio no es la hora de pago.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>Primer vencimiento: 20 de octubre. Mensual: 20 de noviembre y 20 de diciembre. Elegir el último día del mes es un patrón distinto.</value>
+  </data>
 </root>

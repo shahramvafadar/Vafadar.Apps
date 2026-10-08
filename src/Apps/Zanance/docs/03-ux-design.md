@@ -257,3 +257,19 @@ or excessive precision does not silently become the account currency. Toman is e
 exchange. An unlabelled total is labelled as the account ISO unit, independent of UI language and display preferences.
 The existing currency-change notice remains; if a display unit changes while a receipt value is still applied, Save
 stops and asks the user to choose or enter the amount again. This is receipt review, not an image editor.
+
+## Plan and debt forms (D-65)
+
+Place basic identity/account/amount and an optional category picker before the schedule. Keep first date, named
+recurrence calendar, Repeat, plain-language summary, inline rule error and next dates together. Once is the blank
+default; Monthly anchors to the selected start day. A count includes the first occurrence. Show ending choices in
+both modes; put calendar overrides, short-month policy, weekday/second-day and business-day rules behind an explicit
+button, automatically open for existing custom rules. Short months describe last-valid-day versus skipping.
+Changing to Custom preserves the unit/interval. The DateField override applies only to this rule's inputs/preview.
+
+Offer Add debt or money owed in Accounts. Use I owe / Owed to me, contextual counterparty labels and a positive
+amount at a reference date; no manual minus checkbox. Explain that existing balance does not record cash movement.
+Keep interest/installment estimates and other account options in optional sections; existing terms remain visible.
+After creation show details with actual repayment and Set repayment reminder as separate actions. The reminder is an
+unsaved transfer draft with unknown principal and automatic posting off. Interest remains a separate expense when
+an actual repayment is recorded. Choice groups expose individual button names to UI Automation and screen readers.

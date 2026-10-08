@@ -5426,4 +5426,95 @@ Ce que j’attendais :
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>L’unité d’affichage a changé. Choisissez à nouveau le montant du reçu ou saisissez-le de nouveau avant d’enregistrer.</value>
   </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>Choisir une catégorie (facultatif)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>{0}
+Première échéance : {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>Modifier la répétition</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>Si le jour {0} manque, le dernier jour du mois est utilisé. Le mois suivant revient au jour {0}.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>Les mois sans jour {0} sont ignorés. Les autres conservent le jour {0}.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>Ajouter une dette ou une créance</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>Nouvelle dette ou créance</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>Modifier la dette ou la créance</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>Qui doit cet argent ?</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>Je dois de l’argent</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>On me doit de l’argent</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>Dette restante à la date de référence</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>Créance restante à la date de référence</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>À qui devez-vous de l’argent ?</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>Qui vous doit de l’argent ?</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>Solde au</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>Je ne connais pas le montant restant</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>Saisissez un montant positif restant dû à cette date. Cela enregistre un solde existant, pas un nouveau paiement. Les remboursements ultérieurs sont enregistrés séparément.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>Saisissez un montant positif ; le sens choisi indique qui le doit.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>Mensualités et intérêts (facultatif)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>Une estimation ne crée ni échéances ni rappels. Configurez un rappel de remboursement séparément et enregistrez le paiement après son exécution.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>Configurer un rappel de remboursement</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>Vérifiez ci-dessous la première échéance et la répétition. Un rappel ne paie rien. Le transfert de remboursement couvre uniquement le capital ; intérêts et frais sont des dépenses séparées. Le montant reste inconnu jusqu’à votre confirmation.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>Autres détails du compte</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>Solde de la dette et date de référence</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>Saisissez positivement le montant encore dû à la date de référence et choisissez qui le doit. Le signe est déterminé automatiquement. Les remboursements ultérieurs modifient le solde séparément. Modifier ce montant ne remplace pas le solde actuel et ne supprime aucun remboursement enregistré.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>Vous deviez 1 000 à la date de référence. Un remboursement ultérieur de 200 laisse 800. Conservez 1 000 comme solde de référence et enregistrez le remboursement de 200 séparément.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>Échéances et plans récurrents</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>La répétition hebdomadaire utilise le jour de la semaine de la première échéance. La répétition mensuelle utilise le même numéro de jour dans le calendrier indiqué. Vérifiez les prochaines dates. La première échéance compte dans le nombre de répétitions. Les options supplémentaires modifient le calendrier, le jour du mois ou les jours fériés. L’heure du rappel n’est pas celle du paiement.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>Première échéance : 20 octobre. Chaque mois : 20 novembre, 20 décembre. Le dernier jour du mois est un autre motif.</value>
+  </data>
 </root>

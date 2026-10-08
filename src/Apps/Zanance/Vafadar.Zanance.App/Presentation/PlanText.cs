@@ -19,7 +19,7 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, ILoc
         var n = rule.Interval;
         var text = rule.Frequency switch
         {
-            Frequency.Once => translator.Format("Rule_Once", dates.Format(rule.Start, DateFormatStyle.Long)),
+            Frequency.Once => translator.Format("Rule_Once", dates.Format(rule.Start, DateFormatStyle.Long, Calendars.ToDisplay(rule.Calendar))),
             Frequency.Daily => n == 1 ? translator["Rule_Daily"] : translator.Format("Rule_EveryNDays", n),
             Frequency.Weekly => translator.Format(n == 1 ? "Rule_Weekly" : "Rule_EveryNWeeks", culture.DateTimeFormat.GetDayName(rule.Start.DayOfWeek), n),
             Frequency.Monthly => translator.Format(n == 1 ? "Rule_Monthly" : "Rule_EveryNMonths", DayText(rule), n),
@@ -50,10 +50,39 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, ILoc
 
         return rule.End switch
         {
-            EndKind.OnDate when rule.EndDate is { } end => text + " · " + translator.Format("Rule_Until", dates.Format(end, DateFormatStyle.Short)),
+            EndKind.OnDate when rule.EndDate is { } end => text + " · " + translator.Format("Rule_Until", dates.Format(end, DateFormatStyle.Short, Calendars.ToDisplay(rule.Calendar))),
             EndKind.AfterCount when rule.Count is { } count => text + " · " + translator.Format("Rule_Times", count),
             _ => text,
         };
+    }
+
+    /// <summary>Describes a draft and its first due date in the rule's own calendar (D-65).</summary>
+    public string EditorSummary(RecurrenceRule rule) => Recurrence.Validate(rule) is not null
+        ? translator["Plan_RuleInvalid"]
+        : translator.Format("Plan_ScheduleSummary", Rule(rule), dates.Format(rule.Start, DateFormatStyle.Long, Calendars.ToDisplay(rule.Calendar)));
+
+    /// <summary>Explains a missing monthly day without requiring the user to open the exception settings.</summary>
+    public string? ShortMonthHint(RecurrenceRule rule)
+    {
+        ArgumentNullException.ThrowIfNull(rule);
+        var day = PeriodMath.DayOf(rule.Start, rule.Calendar);
+        return rule.Frequency == Frequency.Monthly && rule.DayRule == MonthDayRule.SpecificDay && day > 28
+            ? translator.Format(rule.MissingDay == MissingDayPolicy.LastValidDay ? "Plan_ShortMonthLast" : "Plan_ShortMonthSkip", day)
+            : null;
+    }
+
+    /// <summary>Returns six actual upcoming dates, including weekend shifts, in the recurrence calendar.</summary>
+    public IReadOnlyList<string> UpcomingDates(RecurrenceRule rule, DateOnly from)
+    {
+        if (Recurrence.Validate(rule) is not null)
+        {
+            return [translator["Plan_RuleInvalid"]];
+        }
+
+        var result = Recurrence.Next(rule, from, 6)
+            .Select(date => dates.Format(rule.ApplyWeekend(date.Date), DateFormatStyle.Long, Calendars.ToDisplay(rule.Calendar)))
+            .ToList();
+        return result.Count > 0 ? result : [translator["Plan_NoDates"]];
     }
 
     /// <summary>The amount of an occurrence: exact, approximate (≈) or unknown (REC-03).</summary>

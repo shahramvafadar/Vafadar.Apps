@@ -114,6 +114,71 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial string? DebtHint { get; set; }
 
+    /// <summary>Gets the two plain-language directions in the dedicated debt form.</summary>
+    public IReadOnlyList<string> DebtDirectionNames => [_translator["Debt_IOwe"], _translator["Debt_OwedToMe"]];
+
+    /// <summary>Gets or sets the debt direction independently of generic account types.</summary>
+    [ObservableProperty]
+    public partial int DebtDirectionIndex { get; set; }
+
+    /// <summary>Gets or sets whether optional interest and repayment estimates are expanded.</summary>
+    [ObservableProperty]
+    public partial bool ShowDebtTerms { get; set; }
+
+    /// <summary>Gets or sets whether a debt's icon and account options are expanded.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowAccountDetails))]
+    public partial bool ExpandedAccountDetails { get; set; }
+
+    /// <summary>Gets a value indicating whether account details are visible without cluttering the debt form.</summary>
+    public bool ShowAccountDetails => !IsDebtType || ExpandedAccountDetails;
+
+    /// <summary>Gets a value indicating whether the general account explanation belongs in the main form.</summary>
+    public bool ShowAccountingHint => !IsDebtType && DebtHint is not null;
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleAccountDetails() => ExpandedAccountDetails = !ExpandedAccountDetails;
+
+    /// <summary>Gets a value indicating whether a generic account's sign can be entered.</summary>
+    public bool ShowNegative => !IsDebtType && !OpeningUnknown;
+
+    /// <summary>Gets the amount label at the historical reference date, never the current ledger balance.</summary>
+    public string OpeningLabel => _translator[Type == AccountType.Loan ? "Debt_BalanceOwed" : Type == AccountType.Lent ? "Debt_BalanceReceivable" : "Account_OpeningBalance"];
+
+    /// <summary>Gets the counterparty label matching the chosen direction.</summary>
+    public string CounterpartyLabel => _translator[IsLent ? "Debt_WhoOwes" : "Debt_ToWhom"];
+
+    /// <summary>Gets a reference-date label suited to debts.</summary>
+    public string OpeningDateLabel => _translator[IsDebtType ? "Debt_AsOf" : "Account_OpeningDate"];
+
+    /// <summary>Gets the unknown-amount checkbox wording.</summary>
+    public string UnknownLabel => _translator[IsDebtType ? "Debt_AmountUnknown" : "Account_OpeningUnknown"];
+
+    /// <summary>Gets the explanation of recording an existing balance rather than a new money movement.</summary>
+    public string OpeningHint => _translator[IsDebtType ? "Debt_OpeningHint" : "Account_OpeningHint"];
+
+    /// <summary>Gets the contextual amount-help topic.</summary>
+    public string OpeningHelpTopic => IsDebtType ? "DebtOpening" : "OpeningBalance";
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleDebtTerms() => ShowDebtTerms = !ShowDebtTerms;
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleUnknown() => OpeningUnknown = !OpeningUnknown;
+
+    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    private void ToggleNegative() => OpeningIsNegative = !OpeningIsNegative;
+
+    partial void OnDebtDirectionIndexChanged(int value)
+    {
+        if (IsDebtType)
+        {
+            TypeIndex = (int)(value == 1 ? AccountType.Lent : AccountType.Loan);
+        }
+    }
+
+    partial void OnOpeningUnknownChanged(bool value) => OnPropertyChanged(nameof(ShowNegative));
+
     private bool _isNew = true;
 
     // A new loan starts as money owed and outside the liquid total; both remain changeable (ACC-05).
@@ -122,6 +187,16 @@ public sealed partial class AccountFormModel : ObservableObject
         OnPropertyChanged(nameof(PreviewIcon));
         IsDebtType = Type.IsDebt();
         IsLent = Type == AccountType.Lent;
+        if (IsDebtType)
+        {
+            DebtDirectionIndex = IsLent ? 1 : 0;
+        }
+
+        foreach (var property in new[] { nameof(ShowAccountingHint), nameof(ShowAccountDetails), nameof(ShowNegative), nameof(OpeningLabel), nameof(CounterpartyLabel), nameof(OpeningDateLabel),
+            nameof(UnknownLabel), nameof(OpeningHint), nameof(OpeningHelpTopic) })
+        {
+            OnPropertyChanged(property);
+        }
         DebtHint = Type switch
         {
             AccountType.Loan => _translator["Account_LoanHint"],
@@ -129,6 +204,7 @@ public sealed partial class AccountFormModel : ObservableObject
             AccountType.Asset => _translator["Account_AssetHint"],
             _ => null,
         };
+        OnPropertyChanged(nameof(ShowAccountingHint));
         if (_isNew && Type.IsOutsideCash())
         {
             IncludeInTotals = false;
@@ -165,9 +241,16 @@ public sealed partial class AccountFormModel : ObservableObject
     /// <summary>Gets the selected account type.</summary>
     public AccountType Type => Enum.IsDefined((AccountType)TypeIndex) ? (AccountType)TypeIndex : AccountType.Checking;
 
-    /// <summary>Re-translates the type names after a language change.</summary>
-    public void RefreshTexts() =>
+    /// <summary>Re-translates account types and debt intent labels without replacing the form draft.</summary>
+    public void RefreshTexts()
+    {
         TypeNames = [.. Enum.GetValues<AccountType>().Select(t => _translator[$"AccountType_{t}"])];
+        foreach (var property in new[] { nameof(DebtDirectionNames), nameof(OpeningLabel), nameof(CounterpartyLabel),
+            nameof(OpeningDateLabel), nameof(UnknownLabel), nameof(OpeningHint), nameof(OpeningHelpTopic) })
+        {
+            OnPropertyChanged(property);
+        }
+    }
 
     /// <summary>Fills the form from an account.</summary>
     public void Load(Account account, CultureInfo culture, AccountCurrencyLock currencyLock)
@@ -194,6 +277,7 @@ public sealed partial class AccountFormModel : ObservableObject
         InstallmentText = account.Installment is { } installment ? MoneyText.ForInput(installment, account.CurrencyCode, culture) : string.Empty;
         _isNew = false;
         OnTypeIndexChanged(TypeIndex);
+        ShowDebtTerms = account.InterestRate is not null || account.Installment is not null;
     }
 
     /// <summary>Validates the input and writes it to <paramref name="target"/>.</summary>
@@ -220,6 +304,11 @@ public sealed partial class AccountFormModel : ObservableObject
         TermsError = null;
         if (Type.IsDebt())
         {
+            if (opening < 0)
+            {
+                AmountError = _translator["Debt_EnterPositive"];
+            }
+
             // A rate is a plain number with the culture's or a Latin decimal point, in any digit script.
             var rateText = Digits.ToAscii(RateText.Trim()).Replace(culture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('٫', '.').TrimEnd('%', '٪').Trim();
             if (rateText.Length > 0)
@@ -236,13 +325,22 @@ public sealed partial class AccountFormModel : ObservableObject
 
         if (NameError is not null || AmountError is not null || TermsError is not null)
         {
+            ShowDebtTerms |= TermsError is not null;
             return false;
+        }
+
+        var signedOpening = Type.IsDebt() ? DebtSetup.OpeningBalance(Type, opening) : OpeningIsNegative ? -opening : opening;
+        // Older accounts can have a reversed opening balance (e.g. a loan credit). Editing their name/terms must
+        // preserve that historical sign when the type and amount have not changed.
+        if (!_isNew && Type.IsDebt() && target.Type == Type && (target.OpeningBalance == opening || target.OpeningBalance == -opening))
+        {
+            signedOpening = target.OpeningBalance;
         }
 
         target.Name = Name.Trim();
         target.Type = Type;
         target.CurrencyCode = CurrencyCode;
-        target.OpeningBalance = OpeningIsNegative ? -opening : opening;
+        target.OpeningBalance = signedOpening;
         target.OpeningDate = OpeningDate;
         target.OpeningBalanceKnown = !OpeningUnknown;
         if (OpeningUnknown)

@@ -80,7 +80,7 @@ $env:VAFADAR_SNAPSHOT_ONLY = ($Only -join ',')
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
 $env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar
 $env:VAFADAR_SNAPSHOT_DIGITS = $Digits
-$process = Start-Process $exe.FullName -PassThru
+$process = Start-Process $exe.FullName -PassThru -WindowStyle Hidden
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 elseif ($process.ExitCode -ne 0) { 'the app ended with exit code 0x{0:X8}' -f $process.ExitCode }
 # Marks the database as sample data, so the next run removes it instead of moving it aside (only if it stays unchanged).

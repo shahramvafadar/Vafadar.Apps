@@ -61,3 +61,9 @@ privacy policy, Data safety and Financial features declaration match that build.
 
 D-63 privacy maintenance: device-wide four-digit PIN, durable attempt limiting, authenticated recovery and Android
 screenshot choice are implemented in ZCR-SEC-10. Broader database/key encryption and device acceptance stay open.
+
+## D-65 maintenance
+
+S2 account setup and S4 plan setup have clearer debt direction, optional terms and date-anchored recurrence controls.
+The data/settlement model is unchanged. Local validation is recorded under AT-72 / ZCR-LOC-13; physical-device
+acceptance remains open. This maintenance does not reopen or approve another commercial section.

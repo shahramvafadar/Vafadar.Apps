@@ -38,6 +38,9 @@
             <!-- Repayment estimate (F2-DEBT-02) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding IsDebt}">
                 <VerticalStackLayout Spacing="6">
+                    <Button Text="{v:Translate Debt_SetReminder}" Style="{StaticResource SecondaryButton}" Command="{Binding RepaymentReminderCommand}"
+                            IsVisible="{Binding IsArchived, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />
                     <Label Text="{v:Translate Loan_Title}" FontAttributes="Bold" />
                     <VerticalStackLayout Spacing="6" IsVisible="{Binding HasLoanTerms}">
                         <Label Text="{Binding LoanNextText}" />

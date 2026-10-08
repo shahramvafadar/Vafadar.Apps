@@ -34,6 +34,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
+| ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Proposed | owner translations |
@@ -281,3 +282,15 @@ themes, 360x800 / 412x892 / 1280x900 running-app snapshots and draft checks pass
 All source/candidate data is transient. JPEG attachments are metadata-free on Windows as well as phones. Recognition
 quality on physical Android/iOS, Persian-script OCR on Android and a representative corpus remain ZCR-QA-05 gates;
 no improvement percentage is claimed and no new OCR SDK or automatic receipt crop is introduced.
+
+### ZCR-LOC-13 - Plan and debt setup (D-65)
+
+Owner-approved maintenance: date-anchored monthly repetition, nearby rule summary/actual date preview, explicit rule
+calendar, common ending choices in both modes, collapsed uncommon rules and optional category picker. Dedicated
+debt/receivable direction with positive reference-date amounts, optional estimates, detail navigation and an unsaved
+repayment-reminder transfer draft (unknown principal, no automatic posting). No schema/ledger/backup format change,
+SDK or permission. Validation: 1121 tests including 21 new AT-72 cases; strict Windows/Android builds and running-app
+en/fa/de both-theme 360/412/wide review. Windows UI Automation verified positive debt/receivable signs, saving
+to details, first-date/monthly/custom binding, a saved unknown-principal reminder and cancellation with unchanged
+ledger counts. Modal dismissal followed by detail navigation is sequential on Windows. Physical-device AT-72 is still a release gate. LOC-06 and commercial waves
+retain their separate scope/approval requirements.

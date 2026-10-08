@@ -89,6 +89,8 @@
 
 | D-64 | Receipt evidence and review (owner, 2026-10-08): replace last-number/largest-price selection with complete purchase-total candidates and explicit Found/Review/NotFound states. Filter identifiers, percentages, measurements, tax, discount, tender/change and payment-only totals; keep bounded inclusive-tax annotations, signs, zero and damaged-token boundaries. Preserve explicit ISO currency or ambiguous symbol, and rial/toman factor; never perform foreign exchange, infer receipt locale from UI language or confuse engine character confidence with total semantics. Keep at most four complete choices and source rows in the unsaved editor; no new amount preserves the old one. Retain source line/block/page/full bounds and engine angle/confidence where available, deskew only using supplied geometry; Windows already returns upright boxes. Flag suspicious legacy column alignment and preserve PDF form-feed page boundaries. New images use independent upright recognition pixels up to 3200 px / quality 95; storage remains 1600 px / quality 80 metadata-free JPEG on every platform. Native subsampling/thumbnail decoding bounds large photos. No new SDK, permission, schema or network path; no automatic crop, perspective correction or arithmetic total invention without validated evidence. The original 19 receipt regressions failed in 18 cases before implementation; the detached separator regression also failed, then passed after correction. Verified: 1100 tests, zero-warning Windows/Android CI-mode builds, en/fa/de light/dark at 360/412/wide, actual Windows image selection (inclusive tax, skew, EXIF, ambiguity and currency conflict), stored-image rereading and cancellation/error invariants (AT-71, ZCR-LOC-12). Physical Android/iOS and representative-corpus receipt recognition remain open | F2, PRI, UX, AT-71 |
 
+| D-65 | Clear plan and debt setup: date-anchored recurrence calendar, nearby summary/preview, common endings, optional rules; dedicated debt direction, positive amounts, optional estimates and separate unsaved reminder. See the detailed D-65 validation below. | REC, F2-DEBT, UX, AT-72 |
+
 ## 3. Conflicts found and their resolution
 
 | Conflict | Resolution |
@@ -107,3 +109,29 @@
 | Over-claiming security or cloud readiness (RISK-03) | Status words; cloud hidden until verified (D-17) |
 | Persian calendar date input in Syncfusion controls unverified | Verify in slice S2; fall back to an own day/month/year picker |
 | Notification behaviour differs per Android version | Manual device tests (AT-34..38) before release |
+
+## D-65 - Clear plan and debt setup (owner, 2026-10-08)
+
+The owner approved implementation after reviewing plan/debt UX. A blank plan starts as Once. Choosing Monthly
+uses the selected first date's day in the explicitly named recurrence calendar; the start/end/effective-date inputs
+and the next six actual dates use that calendar even when the global display calendar differs. The rule summary,
+short-month explanation and inline validation sit next to Repeat. End date/count are common choices in Simple and
+Advanced; unusual day/weekend/holiday/calendar rules expand locally. Switching to Custom preserves the current unit
+and interval. Existing nonstandard rules remain expanded and unchanged. Category is a compact optional picker.
+
+Debt creation has a dedicated entry point and two directions: I owe / Owed to me. Enter a positive amount at the
+reference date; the direction supplies its accounting sign. Opening debt is not a new cash movement. Optional
+interest/installment fields describe estimates, separately from actual repayments and reminders. Saving a new debt
+opens its details. The explicit reminder action opens an unsaved transfer plan in the correct direction with unknown
+principal, reminders on and automatic posting off; no estimated installment is silently posted as principal.
+Notification permission follows the existing contextual flow. No new schema, SDK, permission or backup field.
+
+Validation: 1121 tests pass, including 21 new recurrence/calendar/translation and debt-direction/draft cases (AT-72); running-app fixtures cover
+blank/default, same-day monthly/count, calendar override/31st, positive debt/receivable and optional fields. Windows
+and Android CI-mode builds have zero errors/warnings. en/fa/de light/dark at 360x800, 412x892 and 1280x820
+were checked, plus Advanced mode. UI Automation verified debt -100.00 and receivable +200.00 from positive input,
+negative input rejection, first-date/monthly/custom changes, saving a reminder with unknown principal and automatic
+posting off, and cancellation: the fictitious ledger remained at ten entries. Combined modal dismissal/detail
+navigation failed on Windows; awaiting dismissal and then opening details passed the repeated creation workflow.
+Test output was cleaned. Physical-device acceptance remains a release gate.
+This is owner-approved maintenance (ZCR-LOC-13), not approval of a commercial wave.

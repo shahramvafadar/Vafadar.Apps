@@ -7,4 +7,11 @@
     <ProjectReference Include="..\..\..\..\src\Libraries\Vafadar.Documents\Vafadar.Documents.csproj" />
   </ItemGroup>
 
+  <!-- Presentation-only recurrence formatting has no MAUI dependency and is exercised with the app's actual texts. -->
+  <ItemGroup>
+    <Compile Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Presentation\PlanText.cs" Link="Presentation\PlanText.cs" />
+    <Compile Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Presentation\Calendars.cs" Link="Presentation\Calendars.cs" />
+    <EmbeddedResource Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Resources\Strings\AppResources*.resx" Link="Resources\%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

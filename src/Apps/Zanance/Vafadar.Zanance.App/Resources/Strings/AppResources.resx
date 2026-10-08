@@ -5475,4 +5475,95 @@ Steps to reproduce:
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>The display unit changed. Choose the receipt amount again or re-enter it before saving.</value>
   </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>Choose a category (optional)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>{0}
+First due date: {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>Change repeat details</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>If day {0} is missing, use the last day of that month. Return to day {0} in the next month.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>Skip months without day {0}. Other months still use day {0}.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>Add debt or money owed to you</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>New debt or money owed</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>Edit debt or money owed</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>Who owes the money?</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>I owe money</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>Someone owes me</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>Debt remaining at the reference date</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>Money owed to you at the reference date</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>Who do you owe?</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>Who owes you?</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>Balance as of</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>I do not know the remaining amount</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>Enter a positive amount still owed on this date. This records an existing balance, not a new payment. Later repayments are recorded separately.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>Enter a positive amount; the selected direction determines who owes it.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>Installments and interest (optional)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>An estimate does not set due dates or send reminders. Set a repayment reminder separately; record a payment only after it happens.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>Set repayment reminder</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>Review the first due date and repeat below. A reminder never pays money. For a repayment transfer, enter principal only; interest and fees are separate expenses. The amount stays unknown until you confirm it.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>Other account details</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>Debt balance and reference date</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>Enter the amount still owed on the reference date as a positive number. Choose who owes it; the account sign is handled for you. Payments after that date change the balance separately. Editing this reference amount does not replace the current balance or remove recorded repayments.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>You owed 1,000 on the reference date. A later repayment of 200 leaves 800. Keep 1,000 as the reference balance and record the 200 repayment separately.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>Due dates and repeating plans</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>Weekly repeats use the weekday of the first due date. Monthly repeats use the same day number in the named calendar. Review the upcoming dates. The first due date counts as the first occurrence when ending after a number of occurrences. More options change the calendar, month-day rule or handling of holidays. A reminder time is not a payment time.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>First due date: 20 October. Monthly: 20 November, 20 December. Choosing the last day of the month is a different pattern.</value>
+  </data>
 </root>

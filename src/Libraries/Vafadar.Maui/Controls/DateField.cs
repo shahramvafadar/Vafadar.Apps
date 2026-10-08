@@ -38,6 +38,16 @@ public sealed class DateField : ContentView
         coerceValue: (_, value) => value is DateOnly date && date < CalendarDates.MinDate ? DateOnly.FromDateTime(DateTime.Today)
             : value is DateOnly late && late > CalendarDates.MaxDate ? CalendarDates.MaxDate : value);
 
+    /// <summary>Identifies an optional calendar for this field without changing the device preference.</summary>
+    public static readonly BindableProperty CalendarOverrideProperty = BindableProperty.Create(
+        nameof(CalendarOverride), typeof(CalendarSystem?), typeof(DateField), null,
+        propertyChanged: (bindable, _, _) =>
+        {
+            var field = (DateField)bindable;
+            field.Arrange();
+            field.Write();
+        });
+
     private readonly Dictionary<DatePart, Entry> _boxes = [];
     private readonly Label[] _separators;
     private readonly Label _preview;
@@ -175,11 +185,18 @@ public sealed class DateField : ContentView
         set => SetValue(DateProperty, value);
     }
 
+    /// <summary>Gets or sets the calendar of a recurrence editor; other date fields follow the user's preference.</summary>
+    public CalendarSystem? CalendarOverride
+    {
+        get => (CalendarSystem?)GetValue(CalendarOverrideProperty);
+        set => SetValue(CalendarOverrideProperty, value);
+    }
+
     private static IServiceProvider? Services => IPlatformApplication.Current?.Services;
 
     private static ILocalizationService? Localization => Services?.GetService<ILocalizationService>();
 
-    private static CalendarSystem Calendar => Localization?.CurrentCalendar ?? CalendarSystem.Gregorian;
+    private CalendarSystem Calendar => CalendarOverride ?? Localization?.CurrentCalendar ?? CalendarSystem.Gregorian;
 
     private static Label Separator() => new()
     {
@@ -267,7 +284,7 @@ public sealed class DateField : ContentView
     private void WritePreview()
     {
         var formatter = Services?.GetService<IDateFormatter>();
-        _preview.Text = formatter?.Format(Date, DateFormatStyle.Long) ?? Date.ToString("D", Translator.Instance.Culture);
+        _preview.Text = formatter?.Format(Date, DateFormatStyle.Long, Calendar) ?? Date.ToString("D", Translator.Instance.Culture);
     }
 
     private void OnTyped(DatePart part)

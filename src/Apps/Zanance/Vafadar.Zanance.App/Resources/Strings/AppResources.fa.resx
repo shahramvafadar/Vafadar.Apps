@@ -827,7 +827,7 @@
     <value>روز پیش از سررسید</value>
   </data>
   <data name="Plan_ReminderTime" xml:space="preserve">
-    <value>ساعت یادآوری</value>
+    <value>ساعت ارسال یادآوری</value>
   </data>
   <data name="Plan_ReminderText" xml:space="preserve">
     <value>یادآوری: {0} روز قبل، ساعت {1}</value>
@@ -5448,5 +5448,96 @@
   </data>
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>واحد نمایش تغییر کرده است. پیش از ذخیره، مبلغ رسید را دوباره انتخاب یا وارد کنید.</value>
+  </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>انتخاب دسته (اختیاری)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>الگوی تکرار: {0}
+اولین سررسید: {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>تغییر جزئیات تکرار</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>اگر روز {0} در ماهی وجود نداشته باشد، آخرین روز آن ماه انتخاب می‌شود. در ماه بعد دوباره روز {0} مبناست.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>ماه‌هایی که روز {0} ندارند، رد می‌شوند. در ماه‌های دیگر همان روز {0} مبناست.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>ثبت بدهی یا طلب</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>ثبت بدهی یا طلب</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>ویرایش بدهی یا طلب</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>چه کسی بدهکار است؟</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>من بدهکارم</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>از کسی طلب دارم</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>بدهی باقی‌مانده در تاریخ مبنا</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>طلب باقی‌مانده در تاریخ مبنا</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>به چه کسی بدهکارید؟</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>چه کسی به شما بدهکار است؟</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>تاریخ مبنای مبلغ</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>مبلغ باقی‌مانده را نمی‌دانم</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>مبلغ باقی‌مانده در این تاریخ را مثبت وارد کنید. این کار ماندهٔ موجود را ثبت می‌کند؛ دریافت پول یا بازپرداخت جدید را باید جداگانه ثبت کنید.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>مبلغ را مثبت وارد کنید؛ جهت انتخاب‌شده مشخص می‌کند چه کسی بدهکار است.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>اقساط و سود (اختیاری)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>برآورد اقساط، موعد یا یادآوری ایجاد نمی‌کند. یادآوری بازپرداخت را جداگانه تنظیم کنید و پرداخت را فقط پس از انجام آن ثبت کنید.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>تنظیم یادآوری بازپرداخت</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>اولین سررسید و تکرار را در پایین بررسی کنید. یادآوری پولی پرداخت نمی‌کند. مبلغ انتقال بازپرداخت فقط اصل بدهی است؛ سود و کارمزد هزینه‌های جداگانه‌اند. مبلغ تا تأیید شما نامعلوم می‌ماند.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>سایر جزئیات حساب</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>مبلغ بدهی و تاریخ مبنا</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>مبلغی را که در تاریخ مبنا هنوز بدهکار یا طلبکار بودید، مثبت وارد کنید. مشخص کنید چه کسی بدهکار است؛ علامت مبلغ خودکار تعیین می‌شود. بازپرداخت‌های پس از آن تاریخ جداگانه مانده را تغییر می‌دهند. ویرایش مبلغ مبنا جایگزین ماندهٔ امروز نمی‌شود و بازپرداخت‌های ثبت‌شده را حذف نمی‌کند.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>مثلاً در تاریخ مبنا بدهی شما «۱٬۰۰۰» بوده است. با بازپرداخت بعدیِ «۲۰۰»، بدهی باقی‌مانده «۸۰۰» می‌شود. مبلغ مبنا همان «۱٬۰۰۰» است و بازپرداخت «۲۰۰» جدا ثبت می‌شود.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>سررسید و تکرار برنامهٔ مالی</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>تکرار هفتگی از روز هفتهٔ اولین سررسید استفاده می‌کند. تکرار ماهانه در همان شمارهٔ روز و در تقویم مشخص‌شده است. موعدهای بعدی را بررسی کنید. در پایان پس از چند نوبت، اولین سررسید هم یک نوبت محسوب می‌شود. گزینه‌های بیشتر تقویم، الگوی روز ماه یا برخورد با تعطیلات را تغییر می‌دهند. ساعت یادآوری، زمان پرداخت نیست.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>مثلاً اولین سررسید «۲۰ مهر» و تکرار ماهانه، موعدهای «۲۰ آبان» و «۲۰ آذر» را می‌سازد. انتخاب «آخرین روز ماه» الگوی متفاوتی است.</value>
   </data>
 </root>

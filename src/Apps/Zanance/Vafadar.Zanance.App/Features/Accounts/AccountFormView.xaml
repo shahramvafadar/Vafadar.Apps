@@ -12,18 +12,25 @@
     x:DataType="local:AccountFormModel"
     Spacing="0">
 
+    <VerticalStackLayout IsVisible="{Binding IsDebtType}">
+        <Label Text="{v:Translate Debt_Direction}" Style="{StaticResource FieldLabel}" />
+        <v:ChoiceChips ItemsSource="{Binding DebtDirectionNames}" SelectedIndex="{Binding DebtDirectionIndex}" />
+    </VerticalStackLayout>
+
     <Label Text="{v:Translate Account_Name}" Style="{StaticResource FieldLabel}" />
     <Entry Text="{Binding Name}" MaxLength="100" ReturnType="Next"
            SemanticProperties.Description="{v:Translate Account_Name}" />
     <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}"
            IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
-        <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
-        <v:HelpButton Grid.Column="1" Topic="AccountType" Margin="0,8,0,0" />
-    </Grid>
-    <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0"
-                   SemanticProperties.Description="{v:Translate Account_Type}" />
+    <VerticalStackLayout IsVisible="{Binding IsDebtType, Converter={StaticResource InvertedBoolConverter}}">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
+            <Label Text="{v:Translate Account_Type}" Style="{StaticResource FieldLabel}" />
+            <v:HelpButton Grid.Column="1" Topic="AccountType" Margin="0,8,0,0" />
+        </Grid>
+        <v:ChoiceChips ItemsSource="{Binding TypeNames}" SelectedIndex="{Binding TypeIndex}" Margin="0,4,0,0" />
+
+    </VerticalStackLayout>
 
     <Label Text="{v:Translate Account_Currency}" Style="{StaticResource FieldLabel}" />
     <Border Style="{StaticResource FieldBox}">
@@ -35,11 +42,47 @@
            SemanticProperties.Description="{Binding CurrencyLockText}" />
 
     <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0"
-           IsVisible="{Binding DebtHint, Converter={StaticResource IsNotNullConverter}}" />
+           IsVisible="{Binding ShowAccountingHint}" />
     <VerticalStackLayout IsVisible="{Binding IsDebtType}">
-        <Label Text="{v:Translate Account_Counterparty}" Style="{StaticResource FieldLabel}" />
+        <Label Text="{Binding CounterpartyLabel}" Style="{StaticResource FieldLabel}" />
         <Entry Text="{Binding Counterparty}" MaxLength="100" Placeholder="{v:Translate Account_CounterpartyPlaceholder}"
-               SemanticProperties.Description="{v:Translate Account_Counterparty}" />
+               SemanticProperties.Description="{Binding CounterpartyLabel}" />
+    </VerticalStackLayout>
+
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
+        <Label x:Name="OpeningAmountLabel" Text="{Binding OpeningLabel}" Style="{StaticResource FieldLabel}" />
+        <v:HelpButton Grid.Column="1" Topic="{Binding OpeningHelpTopic}" Margin="0,8,0,0" />
+    </Grid>
+    <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
+           IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
+           SemanticProperties.Description="{Binding OpeningLabel}" />
+    <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
+    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4" Margin="0,4,0,0">
+        <CheckBox x:Name="UnknownBox" IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
+                  SemanticProperties.Description="{Binding UnknownLabel}" />
+        <Grid Grid.Column="1">
+            <Label Text="{Binding UnknownLabel}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+            <Button Style="{StaticResource OverlayButton}" Command="{Binding ToggleUnknownCommand}" SemanticProperties.Description="{Binding UnknownLabel}" />
+        </Grid>
+        <v:HelpButton Grid.Column="2" Topic="OpeningUnknown" />
+    </Grid>
+    <Label Text="{v:Translate Account_OpeningUnknownHint}" Style="{StaticResource Secondary}" IsVisible="{Binding OpeningUnknown}" />
+    <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
+           IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0" IsVisible="{Binding ShowNegative}">
+        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{DynamicResource Primary}"
+                  SemanticProperties.Description="{v:Translate Account_OpeningNegative}" />
+        <Grid Grid.Column="1">
+            <Label Text="{v:Translate Account_OpeningNegative}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+            <Button Style="{StaticResource OverlayButton}" Command="{Binding ToggleNegativeCommand}" SemanticProperties.Description="{v:Translate Account_OpeningNegative}" />
+        </Grid>
+    </Grid>
+
+    <Label Text="{Binding OpeningDateLabel}" Style="{StaticResource FieldLabel}" />
+    <v:DateField Date="{Binding OpeningDate}" />
+    <Label Text="{Binding OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
+
+    <VerticalStackLayout IsVisible="{Binding IsDebtType}">
         <!-- Money lent: an optional day it should be paid back by (ZEX-K12) -->
         <VerticalStackLayout IsVisible="{Binding IsLent}" Margin="0,8,0,0" Spacing="4">
             <Grid ColumnDefinitions="*,Auto">
@@ -48,99 +91,73 @@
             </Grid>
             <v:DateField Date="{Binding DueDate}" IsVisible="{Binding HasDueDate}" />
         </VerticalStackLayout>
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-            <VerticalStackLayout>
-                <Label Text="{v:Translate Account_InterestRate}" Style="{StaticResource FieldLabel}" />
-                <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="0" MaxLength="8"
-                       SemanticProperties.Description="{v:Translate Account_InterestRate}" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="1">
-                <Label Text="{v:Translate Account_Installment}" Style="{StaticResource FieldLabel}" />
-                <Entry Text="{Binding InstallmentText}" Keyboard="Numeric" MaxLength="20"
-                       SemanticProperties.Description="{v:Translate Account_Installment}" />
-            </VerticalStackLayout>
-        </Grid>
-        <Label Text="{v:Translate Account_TermsHint}" Style="{StaticResource Secondary}" />
-        <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
-        <Label Text="{Binding TermsError}" Style="{StaticResource ErrorText}"
-               IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
+        <Button Text="{v:Translate Debt_EstimateOptions}" Command="{Binding ToggleDebtTermsCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
+        <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />
+        <VerticalStackLayout IsVisible="{Binding ShowDebtTerms}">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <VerticalStackLayout>
+                    <Label Text="{v:Translate Account_InterestRate}" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="0" MaxLength="8"
+                           SemanticProperties.Description="{v:Translate Account_InterestRate}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="{v:Translate Account_Installment}" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding InstallmentText}" Keyboard="Numeric" MaxLength="20"
+                           SemanticProperties.Description="{v:Translate Account_Installment}" />
+                </VerticalStackLayout>
+            </Grid>
+            <Label Text="{v:Translate Account_TermsHint}" Style="{StaticResource Secondary}" />
+            <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding TermsError}" Style="{StaticResource ErrorText}"
+                   IsVisible="{Binding TermsError, Converter={StaticResource IsNotNullConverter}}" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
-        <Label Text="{v:Translate Account_OpeningBalance}" Style="{StaticResource FieldLabel}" />
-        <v:HelpButton Grid.Column="1" Topic="OpeningBalance" Margin="0,8,0,0" />
-    </Grid>
-    <Entry Text="{Binding OpeningText}" Keyboard="Numeric" Placeholder="0"
-           IsEnabled="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}"
-           SemanticProperties.Description="{v:Translate Account_OpeningBalance}" />
-    <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
-    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4" Margin="0,4,0,0">
-        <CheckBox x:Name="UnknownBox" IsChecked="{Binding OpeningUnknown}" VerticalOptions="Center" Color="{DynamicResource Primary}"
-                  SemanticProperties.Description="{v:Translate Account_OpeningUnknown}" />
-        <Label Grid.Column="1" Text="{v:Translate Account_OpeningUnknown}" VerticalOptions="Center" LineBreakMode="WordWrap">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnUnknownLabelTapped" />
-            </Label.GestureRecognizers>
-        </Label>
-        <v:HelpButton Grid.Column="2" Topic="OpeningUnknown" />
-    </Grid>
-    <Label Text="{v:Translate Account_OpeningUnknownHint}" Style="{StaticResource Secondary}" IsVisible="{Binding OpeningUnknown}" />
-    <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}"
-           IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
-    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4" Margin="0,4,0,0" IsVisible="{Binding OpeningUnknown, Converter={StaticResource InvertedBoolConverter}}">
-        <CheckBox x:Name="NegativeBox" IsChecked="{Binding OpeningIsNegative}" VerticalOptions="Center" Color="{DynamicResource Primary}"
-                  SemanticProperties.Description="{v:Translate Account_OpeningNegative}" />
-        <Label Grid.Column="1" Text="{v:Translate Account_OpeningNegative}" VerticalOptions="Center" LineBreakMode="WordWrap">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnNegativeLabelTapped" />
-            </Label.GestureRecognizers>
-        </Label>
-    </Grid>
+    <Button Text="{v:Translate Debt_AccountDetails}" Command="{Binding ToggleAccountDetailsCommand}" Style="{StaticResource TextButton}"
+            HorizontalOptions="Start" IsVisible="{Binding IsDebtType}" />
+    <VerticalStackLayout IsVisible="{Binding ShowAccountDetails}">
+        <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" IsVisible="{Binding IsDebtType}" />
+        <!-- The icon: a preview of what the account shows and a real button that opens the choice. -->
+        <Label Text="{v:Translate Account_Icon}" Style="{StaticResource FieldLabel}" />
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border Style="{StaticResource IconTile}" WidthRequest="48" HeightRequest="48" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}">
+                <fi:SymbolIcon Symbol="{Binding PreviewIcon}" FontSize="24" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}"
+                    HorizontalOptions="Start" Padding="16,0">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding ShowIconPicker}" Value="True">
+                        <Setter Property="Text" Value="{v:Translate Account_HideIcons}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+        <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" Margin="0,8,0,0" />
 
-    <Label Text="{v:Translate Account_OpeningDate}" Style="{StaticResource FieldLabel}" />
-    <v:DateField Date="{Binding OpeningDate}" />
-    <Label Text="{v:Translate Account_OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
-
-    <!-- The icon: a preview of what the account shows and a real button that opens the choice. -->
-    <Label Text="{v:Translate Account_Icon}" Style="{StaticResource FieldLabel}" />
-    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-        <Border Style="{StaticResource IconTile}" WidthRequest="48" HeightRequest="48" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}">
-            <fi:SymbolIcon Symbol="{Binding PreviewIcon}" FontSize="24" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-        </Border>
-        <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}"
-                HorizontalOptions="Start" Padding="16,0">
-            <Button.Triggers>
-                <DataTrigger TargetType="Button" Binding="{Binding ShowIconPicker}" Value="True">
-                    <Setter Property="Text" Value="{v:Translate Account_HideIcons}" />
-                </DataTrigger>
-            </Button.Triggers>
-        </Button>
-    </Grid>
-    <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" Margin="0,8,0,0" />
-
-    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
-        <VerticalStackLayout VerticalOptions="Center">
-            <Label Text="{v:Translate Account_IncludeInTotals}" />
-            <Label Text="{v:Translate Account_IncludeInTotalsHint}" Style="{StaticResource Secondary}" FontSize="13" />
-        </VerticalStackLayout>
-        <v:HelpButton Grid.Column="1" Topic="IncludeInTotals" />
-        <Switch Grid.Column="2" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}"
-                SemanticProperties.Description="{v:Translate Account_IncludeInTotals}" />
-    </Grid>
-
-    <!-- Advanced (ZEX-P17, P18): whether the money pays bills (forecast minimum), and an optional country -->
-    <VerticalStackLayout IsVisible="{Binding ShowAdvanced}">
         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
             <VerticalStackLayout VerticalOptions="Center">
-                <Label Text="{v:Translate Account_Usable}" />
-                <Label Text="{v:Translate Account_UsableHint}" Style="{StaticResource Secondary}" FontSize="13" />
+                <Label Text="{v:Translate Account_IncludeInTotals}" />
+                <Label Text="{v:Translate Account_IncludeInTotalsHint}" Style="{StaticResource Secondary}" FontSize="13" />
             </VerticalStackLayout>
-            <v:HelpButton Grid.Column="1" Topic="UsableForPayments" />
-            <Switch Grid.Column="2" IsToggled="{Binding UsableForPayments}" OnColor="{DynamicResource Primary}"
-                    SemanticProperties.Description="{v:Translate Account_Usable}" />
+            <v:HelpButton Grid.Column="1" Topic="IncludeInTotals" />
+            <Switch Grid.Column="2" IsToggled="{Binding IncludeInTotals}" OnColor="{DynamicResource Primary}"
+                    SemanticProperties.Description="{v:Translate Account_IncludeInTotals}" />
         </Grid>
-        <Label Text="{v:Translate Account_Country}" Style="{StaticResource FieldLabel}" />
-        <Entry Text="{Binding CountryCode}" MaxLength="2" Placeholder="{v:Translate Account_CountryPlaceholder}"
-               SemanticProperties.Description="{v:Translate Account_Country}" />
+
+        <!-- Advanced (ZEX-P17, P18): whether the money pays bills (forecast minimum), and an optional country -->
+        <VerticalStackLayout IsVisible="{Binding ShowAdvanced}">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="{v:Translate Account_Usable}" />
+                    <Label Text="{v:Translate Account_UsableHint}" Style="{StaticResource Secondary}" FontSize="13" />
+                </VerticalStackLayout>
+                <v:HelpButton Grid.Column="1" Topic="UsableForPayments" />
+                <Switch Grid.Column="2" IsToggled="{Binding UsableForPayments}" OnColor="{DynamicResource Primary}"
+                        SemanticProperties.Description="{v:Translate Account_Usable}" />
+            </Grid>
+            <Label Text="{v:Translate Account_Country}" Style="{StaticResource FieldLabel}" />
+            <Entry Text="{Binding CountryCode}" MaxLength="2" Placeholder="{v:Translate Account_CountryPlaceholder}"
+                   SemanticProperties.Description="{v:Translate Account_Country}" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </VerticalStackLayout>

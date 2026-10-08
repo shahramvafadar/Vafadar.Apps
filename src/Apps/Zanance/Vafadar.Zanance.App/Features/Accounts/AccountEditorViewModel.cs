@@ -33,6 +33,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
             if (e.PropertyName == nameof(AccountFormModel.TypeIndex))
             {
                 UpdateCanBeDefault();
+                Title = _translator[Form.IsDebtType ? (IsExisting ? "Debt_EditTitle" : "Debt_NewTitle") : (IsExisting ? "Account_EditTitle" : "Account_NewTitle")];
             }
         };
         UpdateCanBeDefault();
@@ -93,7 +94,17 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         else
         {
             Form.CurrencyCode = settings.DefaultCurrencyCode;
+            if (query.TryGetValue("debt", out var debt) && debt is true)
+            {
+                Form.TypeIndex = (int)AccountType.Loan;
+            }
+            else if (debt is AccountType type && type.IsDebt())
+            {
+                Form.TypeIndex = (int)type;
+            }
         }
+
+        Title = _translator[Form.IsDebtType ? (IsExisting ? "Debt_EditTitle" : "Debt_NewTitle") : (IsExisting ? "Account_EditTitle" : "Account_NewTitle")];
 
         _snapshot = Snapshot();
     }
@@ -133,7 +144,15 @@ public sealed partial class AccountEditorViewModel : ViewModelBase, IQueryAttrib
         // Leaving the page is not part of saving: a navigation problem must not say "not saved".
         if (saved)
         {
-            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
+            await Presentation.Failures.GuardAsync(async () =>
+            {
+                // Windows must finish dismissing the modal before pushing the detail page onto the main shell.
+                await Shell.Current.GoToAsync("..");
+                if (!IsExisting && Form.IsDebtType)
+                {
+                    await Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = _account.Id });
+                }
+            });
         }
     }
 

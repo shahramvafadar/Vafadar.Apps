@@ -65,3 +65,8 @@ D-64: original photo bytes are transient during recognition only; a separate upr
 while only the 1600 px metadata-free JPEG is attached and backed up. Source rows/candidates/currency evidence are
 not additional database fields or exports. No new permission, SDK or network path. A stored-image reread cannot
 recover lost detail. Recognition/rendering errors and cancellation do not post ledger entries.
+
+D-65 uses existing account counterparty/reference balance/interest/installment and Schedule fields only. A reminder
+draft and its preview are transient until explicit Save; opening it records no ledger entry. Portable backups retain
+their existing schema. No new data category, SDK, network path or permission; notification permission is requested
+through the existing contextual reminder flow. Estimates never become principal payments automatically.

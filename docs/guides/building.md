@@ -95,3 +95,11 @@ D-64: `Run-Snapshots.ps1 -Only receipt` captures found, conflicting, damaged, mi
 plus a reread without a new amount. It checks fictitious draft state, manual choice without saving, preservation of
 the old amount and blocking a changed display unit before Save. Run en/fa/de, both themes, 360/412 px and wide. These
 layout/draft checks do not replace real file-picker/image recognition or physical Android/iOS camera acceptance.
+
+### Plan/debt review fixtures (D-65)
+
+Run-Snapshots accepts `plan-debt-reminder`, `debt-new` and `receivable-new` alongside `plan-new`, `plan-edit`,
+`loan-edit`, `loan-detail` and `accounts`. Plan/debt fixtures capture schedule/count, calendar/short-month and optional
+term states and check unsaved draft invariants. Run Simple and Advanced, en/fa/de, light/dark at 360/412/wide.
+Only fictitious data is seeded; the script preserves a non-fixture development database before the run.
+Background app launches use hidden windows and the app captures its own rendered window.

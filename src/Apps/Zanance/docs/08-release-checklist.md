@@ -18,6 +18,10 @@
   missing/conflicting totals, currency/unit review, stored-image reread, cancel/error and explicit-save checks on
   representative receipts. Windows synthetic-image/UI checks and C# regressions pass; they do not close this gate.
 
+- [ ] D-65 device acceptance (AT-72): new/existing plans, monthly anchors in Gregorian/Persian/Hijri, short months,
+  count/end date, custom rules, debt/receivable creation, actual repayment versus estimate and reminder permission;
+  draft cancellation must not post or alter balances. Windows fixture checks do not close this gate.
+
 ## Privacy and security
 
 - [ ] Privacy matrix (06) reviewed against the release APK/AAB: package list, merged manifest permissions, network traffic

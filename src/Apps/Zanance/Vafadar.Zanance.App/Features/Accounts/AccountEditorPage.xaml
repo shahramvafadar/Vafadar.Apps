@@ -19,7 +19,7 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
-                    <local:AccountFormView BindingContext="{Binding Form}" />
+                    <local:AccountFormView x:Name="AccountForm" BindingContext="{Binding Form}" />
                 </Border>
 
                 <!-- Only money accounts can be the default of new entries (ZEX-S0103) -->

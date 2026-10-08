@@ -13,6 +13,8 @@
         <ScrollView>
             <VerticalStackLayout Padding="16" Spacing="8">
 
+                <Button Text="{v:Translate Debt_Add}" Style="{StaticResource SecondaryButton}" Command="{Binding AddDebtCommand}" />
+
                 <!-- Empty state -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
                     <VerticalStackLayout Spacing="12">

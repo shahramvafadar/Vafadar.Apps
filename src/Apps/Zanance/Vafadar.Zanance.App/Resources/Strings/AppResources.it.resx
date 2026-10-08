@@ -5438,4 +5438,95 @@ Passaggi per riprodurre il problema:
   <data name="Receipt_UnitChanged" xml:space="preserve">
     <value>L’unità di visualizzazione è cambiata. Scegli di nuovo l’importo della ricevuta o reinseriscilo prima di salvare.</value>
   </data>
+  <data name="Plan_CategoryOptional" xml:space="preserve">
+    <value>Scegli una categoria (facoltativo)</value>
+  </data>
+  <data name="Plan_ScheduleSummary" xml:space="preserve">
+    <value>{0}
+Prima scadenza: {1}</value>
+  </data>
+  <data name="Plan_ChangePattern" xml:space="preserve">
+    <value>Modifica la ripetizione</value>
+  </data>
+  <data name="Plan_ShortMonthLast" xml:space="preserve">
+    <value>Se manca il giorno {0}, viene usato l’ultimo giorno del mese. Il mese successivo torna al giorno {0}.</value>
+  </data>
+  <data name="Plan_ShortMonthSkip" xml:space="preserve">
+    <value>I mesi senza giorno {0} vengono saltati. Gli altri mantengono il giorno {0}.</value>
+  </data>
+  <data name="Debt_Add" xml:space="preserve">
+    <value>Aggiungi un debito o un credito</value>
+  </data>
+  <data name="Debt_NewTitle" xml:space="preserve">
+    <value>Nuovo debito o credito</value>
+  </data>
+  <data name="Debt_EditTitle" xml:space="preserve">
+    <value>Modifica il debito o il credito</value>
+  </data>
+  <data name="Debt_Direction" xml:space="preserve">
+    <value>Chi deve il denaro?</value>
+  </data>
+  <data name="Debt_IOwe" xml:space="preserve">
+    <value>Devo del denaro</value>
+  </data>
+  <data name="Debt_OwedToMe" xml:space="preserve">
+    <value>Mi devono del denaro</value>
+  </data>
+  <data name="Debt_BalanceOwed" xml:space="preserve">
+    <value>Debito residuo alla data di riferimento</value>
+  </data>
+  <data name="Debt_BalanceReceivable" xml:space="preserve">
+    <value>Credito residuo alla data di riferimento</value>
+  </data>
+  <data name="Debt_ToWhom" xml:space="preserve">
+    <value>A chi devi del denaro?</value>
+  </data>
+  <data name="Debt_WhoOwes" xml:space="preserve">
+    <value>Chi ti deve del denaro?</value>
+  </data>
+  <data name="Debt_AsOf" xml:space="preserve">
+    <value>Saldo alla data del</value>
+  </data>
+  <data name="Debt_AmountUnknown" xml:space="preserve">
+    <value>Non conosco l’importo residuo</value>
+  </data>
+  <data name="Debt_OpeningHint" xml:space="preserve">
+    <value>Inserisci un importo positivo ancora dovuto a questa data. Questo registra un saldo esistente, non un nuovo pagamento. I rimborsi successivi si registrano separatamente.</value>
+  </data>
+  <data name="Debt_EnterPositive" xml:space="preserve">
+    <value>Inserisci un importo positivo; la direzione scelta indica chi lo deve.</value>
+  </data>
+  <data name="Debt_EstimateOptions" xml:space="preserve">
+    <value>Rate e interessi (facoltativo)</value>
+  </data>
+  <data name="Debt_EstimateHint" xml:space="preserve">
+    <value>Una stima non crea scadenze né promemoria. Imposta un promemoria di rimborso separatamente e registra il pagamento solo dopo averlo effettuato.</value>
+  </data>
+  <data name="Debt_SetReminder" xml:space="preserve">
+    <value>Imposta un promemoria di rimborso</value>
+  </data>
+  <data name="Debt_PlanHint" xml:space="preserve">
+    <value>Controlla sotto la prima scadenza e la ripetizione. Un promemoria non paga denaro. Nel trasferimento di rimborso inserisci solo il capitale; interessi e commissioni sono spese separate. L’importo resta sconosciuto fino alla tua conferma.</value>
+  </data>
+  <data name="Debt_AccountDetails" xml:space="preserve">
+    <value>Altri dettagli del conto</value>
+  </data>
+  <data name="Help_DebtOpening_Title" xml:space="preserve">
+    <value>Saldo del debito e data di riferimento</value>
+  </data>
+  <data name="Help_DebtOpening_Text" xml:space="preserve">
+    <value>Inserisci come numero positivo l’importo ancora dovuto alla data di riferimento e scegli chi lo deve. Il segno viene determinato automaticamente. I rimborsi successivi modificano il saldo separatamente. Modificare questo importo non sostituisce il saldo attuale e non elimina i rimborsi registrati.</value>
+  </data>
+  <data name="Help_DebtOpening_Example" xml:space="preserve">
+    <value>Dovevi 1.000 alla data di riferimento. Un rimborso successivo di 200 lascia 800. Mantieni 1.000 come saldo di riferimento e registra il rimborso di 200 separatamente.</value>
+  </data>
+  <data name="Help_PlanRepeat_Title" xml:space="preserve">
+    <value>Scadenze e piani ricorrenti</value>
+  </data>
+  <data name="Help_PlanRepeat_Text" xml:space="preserve">
+    <value>La ripetizione settimanale usa il giorno della settimana della prima scadenza. Quella mensile usa lo stesso numero di giorno nel calendario indicato. Controlla le prossime date. La prima scadenza conta nel limite di ripetizioni. Le opzioni aggiuntive cambiano il calendario, il giorno del mese o i festivi. L’ora del promemoria non è l’ora del pagamento.</value>
+  </data>
+  <data name="Help_PlanRepeat_Example" xml:space="preserve">
+    <value>Prima scadenza: 20 ottobre. Mensile: 20 novembre, 20 dicembre. L’ultimo giorno del mese è un modello diverso.</value>
+  </data>
 </root>

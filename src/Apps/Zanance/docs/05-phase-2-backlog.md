@@ -69,3 +69,7 @@ screenshot choice are implemented in ZCR-SEC-10. Broader database/key encryption
 D-64 receipt maintenance supersedes the largest-price fallback in P2-27/P2-30: semantic total evidence, preserved
 OCR geometry, independent bounded recognition pixels and review in both entry paths. Finished local implementation
 and remaining device/image-quality acceptance are tracked only in canonical ZCR-LOC-12 / ZCR-QA-05.
+
+D-65 debt/plan UX maintenance (ZCR-LOC-13): dedicated debt direction and positive reference-date amount, optional
+repayment estimates and separate reminder draft; recurrence calendar, summary/preview and count visible in both
+modes. P2-9/P2-18 calculations and principal/interest posting remain unchanged. Device acceptance is AT-72.

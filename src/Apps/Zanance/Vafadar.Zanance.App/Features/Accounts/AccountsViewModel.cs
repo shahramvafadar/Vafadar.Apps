@@ -151,6 +151,10 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
     [RelayCommand]
     private Task AddAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
 
+    /// <summary>Opens the dedicated debt/receivable form without creating an account until confirmation.</summary>
+    [RelayCommand]
+    private Task AddDebtAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["debt"] = true });
+
     [RelayCommand]
     private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
 }

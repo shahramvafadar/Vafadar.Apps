@@ -410,6 +410,12 @@ public sealed partial class AccountDetailViewModel(
         return Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
     }
 
+    /// <summary>Opens an unsaved principal-only transfer reminder; the estimate never becomes an automatic payment.</summary>
+    [RelayCommand]
+    private Task RepaymentReminderAsync() => _account is { } account && account.Type.IsDebt()
+        ? Shell.Current.GoToAsync(AppShell.PlanEditorRoute, new Dictionary<string, object> { ["fromDebt"] = account.Id })
+        : Task.CompletedTask;
+
     // ZEX-S0408: a preview first; only a confirmation creates the holding and archives the account (restorable).
     [RelayCommand]
     private async Task ConvertToHoldingAsync()
