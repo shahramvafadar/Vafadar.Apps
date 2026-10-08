@@ -181,6 +181,9 @@ The owner reviews the running app and expects polish beyond "it works" (`src/App
 
 ## 9. Checking the running app
 
+* Before asking the owner to test on an Android phone, always build and provide a complete, signed, installable APK
+  with `eng/scripts/Build-AndroidApk.ps1` (Release by default). Give its actual file path and verify the package and
+  signature. A Fast Deployment APK or a successful Android build alone is not a phone-test handoff (D-66).
 * Check every visible change in the running app before reporting it: **Persian (right to left), English and German;
   light and dark; a phone width (412 px), the 360 px minimum and a wide window** where layout is affected.
 * Windows Debug build: `VAFADAR_START_ROUTE` opens a screen, `VAFADAR_WINDOW_SIZE` sets the size,

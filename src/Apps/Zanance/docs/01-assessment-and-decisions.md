@@ -135,3 +135,16 @@ posting off, and cancellation: the fictitious ledger remained at ten entries. Co
 navigation failed on Windows; awaiting dismissal and then opening details passed the repeated creation workflow.
 Test output was cleaned. Physical-device acceptance remains a release gate.
 This is owner-approved maintenance (ZCR-LOC-13), not approval of a commercial wave.
+
+## D-66 - Installable APK for every Android phone test (owner, 2026-10-08)
+
+Always prepare and provide a complete signed APK when handing work to the owner for Android phone testing.
+Use the existing Release APK script, provide the actual artifact path, and verify package/signature and embedded
+assemblies. An ordinary Fast Deployment APK or a successful platform build is insufficient. The owner installs
+and performs physical-device acceptance; supplying the APK does not close that gate. This changes the delivery
+procedure only, with no application, schema, permission or licensing change.
+
+Verified for the D-65 handoff: the existing script published Release with the CI warning policy, without warnings
+or errors. The signed package is `pro.vafadar.zanance`, version 0.1.0 / code 1, minimum Android API 24; arm64-v8a
+phones and x86_64 emulators have embedded assembly stores and app AOT images. APK ZIP integrity and signature
+verification pass. The approximately 77.1 MiB artifact is provided locally; physical-device installation is pending.

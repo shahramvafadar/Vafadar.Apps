@@ -2,6 +2,8 @@
 
 ## Product and data
 
+- [ ] Every Android phone-test handoff includes a complete signed Release APK with package/signature verified
+  and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
 - [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
 - [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds

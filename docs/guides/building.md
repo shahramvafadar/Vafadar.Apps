@@ -32,6 +32,12 @@ The Windows Debug build also reads these environment variables (Debug builds onl
 
 ### Installing on an Android phone without Visual Studio
 
+Every Android phone-test handoff includes a freshly built complete signed APK, its actual file path and verified
+package/signature (owner rule, D-66). Build Release with `eng/scripts/Build-AndroidApk.ps1`; set the process
+environment property `ContinuousIntegrationBuild=true` for the same warning policy as CI. Do not substitute an
+ordinary Debug/Fast Deployment artifact. APK creation and signature verification do not prove installation or
+physical-device acceptance; the owner installs and tests the supplied file.
+
 The APK in `bin/Debug/net10.0-android` is made for **Fast Deployment**: Visual Studio copies the app's assemblies to the
 device separately, so that APK alone stops at start (logcat: *No assemblies found … Fast Deployment*). For a phone or
 for testers, build a complete APK with `eng/scripts/Build-AndroidApk.ps1` (Release by default, signed with the local
