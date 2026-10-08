@@ -166,7 +166,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             : _translator["Backup_Never"];
 
         LocalBackups.Clear();
-        foreach (var file in await _backup.ListBackupsAsync(_local))
+        foreach (var file in await _backup.DiscoverBackupsAsync(_local))
         {
             var created = BackupFileName.TryParse(file.FileName, out _, out var at) ? at : file.CreatedAt ?? _time.GetUtcNow();
             LocalBackups.Add(new LocalBackup(file, FormatTime(created), file.Size is { } size ? FormatSize(size) : string.Empty));
@@ -330,6 +330,10 @@ public sealed partial class BackupViewModel : ViewModelBase
             var password = NeedsRestorePassword ? RestorePassword : null;
             replacing = true;
             await _autoPost.RunExclusiveAsync(() => _backup.RestorePackageAsync(package, password));
+
+            // Portable formatting choices take effect on the UI thread after all backup sources have restored.
+            _localization.Initialize();
+            Presentation.DigitPreferences.Apply(_localization);
 
             if (IsRestoreOnly)
             {

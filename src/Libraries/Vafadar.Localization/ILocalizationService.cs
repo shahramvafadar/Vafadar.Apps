@@ -19,6 +19,12 @@ public interface ILocalizationService
     /// <summary>Gets the culture used for formatting (current language combined with the current calendar).</summary>
     CultureInfo CurrentCulture { get; }
 
+    /// <summary>Gets the independent regional formatting culture, or null to follow the UI language.</summary>
+    string? FormattingCultureName { get; }
+
+    /// <summary>Gets the independently selected digit shapes.</summary>
+    DigitStyle CurrentDigits { get; }
+
     /// <summary>Gets a value indicating whether the current language is right-to-left.</summary>
     bool IsRightToLeft { get; }
 
@@ -51,6 +57,12 @@ public interface ILocalizationService
 
     /// <summary>Sets or clears the region and saves the choice (PR-05).</summary>
     void SetRegion(string? region);
+
+    /// <summary>Chooses a specific regional culture for dates and numbers without changing language, currency or holidays.</summary>
+    void SetFormattingCulture(string? cultureName);
+
+    /// <summary>Chooses digit shapes without changing the language or numeric separators.</summary>
+    void SetDigits(DigitStyle digits);
 
     /// <summary>Sets the first day of the week, or <see langword="null"/> to follow the region or language.</summary>
     void SetFirstDayOfWeek(DayOfWeek? day);

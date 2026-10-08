@@ -932,7 +932,7 @@
     <value>Die Sicherung ersetzt die Daten des aktuell geöffneten Profils; die Daten werden nicht zusammengeführt. Änderungen seit der Sicherung gehen in diesem Profil verloren. Andere Profile bleiben unverändert. Vor der Wiederherstellung wird auf diesem Gerät eine Sicherheitskopie erstellt.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Sicherungsdatei auswählen</value>
+    <value>Sicherungsdatei vom Gerät wählen</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Datei prüfen</value>
@@ -2819,7 +2819,7 @@
     <value>Jetzt sichern</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Sicherungen anzeigen</value>
+    <value>Sicherungen aktualisieren</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>Cloud-Sicherungen folgen der obigen Wahl zum Passwortschutz. Sie können dasselbe Passwort wiederverwenden; es wird nie gespeichert. Ohne Schutz ist zum Wiederherstellen kein Sicherungspasswort nötig.</value>
@@ -5539,5 +5539,68 @@ Erster Termin: {1}</value>
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>Erster Termin: 20. Oktober. Monatlich: 20. November, 20. Dezember. Der letzte Tag des Monats ist ein anderes Muster.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>Regionales Format</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>Format der App-Sprache</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>Nur Datumsfolge und Zahlentrennzeichen. Sprache, Währung und Feiertage bleiben unabhängig.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>Ziffernform</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>Der App-Sprache folgen</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>Lateinisch (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>Persisch (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>Beispiel: {0} · {1}</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>Feiertagskalender</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>Kein Feiertagskalender</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>Für die Verschiebung von Planterminen an Feiertagen. Bestehende Pläne behalten ihre gespeicherten Regeln.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>Deutschland: nur bundesweite Feiertage, keine Feiertage einzelner Bundesländer. Bestehende Planregeln bleiben unverändert.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>Iran: Mondkalender-Feiertage sind ungefähr und können von offiziellen Bekanntgaben abweichen.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>Sprache und regionales Format</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>Die Sprache bestimmt Texte sowie Monats- und Tagesnamen. Das regionale Format bestimmt Datumsfolge, Uhrzeit und Dezimal-/Tausendertrennzeichen. Kalender, Ziffern, Feiertage und Währung sind separate Optionen. Gespeicherte Daten, Beträge und bestehende Planregeln ändern sich dadurch nicht.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>Englisch + deutsches Format + gregorianischer Kalender + deutsche Feiertage: 08.10.2026 und 1.234,56; die Texte bleiben Englisch.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>Sicherungen werden gesucht…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>Keine Zanance-Sicherungen im App-Ordner dieses Kontos. Eine Verbindung allein erstellt keine Sicherung.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>Gefundene Sicherungen: {0}. Zur Vorschau und Wiederherstellung auswählen.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>Weiteres Profil</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>Eine gespeicherte oder heruntergeladene .vbak-Datei wählen. Verbundene Cloud-Sicherungen stehen oben; kein manueller Download nötig.</value>
   </data>
 </root>

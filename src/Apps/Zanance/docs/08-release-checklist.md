@@ -57,3 +57,14 @@
 - [x] Store texts and screenshots in en/fa/de with fictitious data (REL-03/04); Spanish, French and Italian store texts are in the listing, their store screenshots are still to be taken – `docs/store/listing.md`, `docs/store/screenshots/<language>/` (from the Windows development build at phone size; replace with device screenshots if Play asks for a higher resolution)
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track
+
+### D-67 device gate
+
+- [ ] On the signed APK, connect each configured provider, see automatic/empty/error feedback, create a protected
+  and unprotected backup, refresh, preview, restore on a fresh installation and delete only the chosen file.
+- [ ] Verify Google package/certificate registration matches the installed APK; a changed debug certificate can
+  require owner console configuration, independently of the phone model.
+- [ ] English UI + German formats + Gregorian + German holidays + Latin digits; retain choices after restart and
+  restore, with state-holiday coverage explicitly excluded. Repeat Persian RTL and native pickers.
+
+Local automated/rendered checks and CI do not close these physical-device or provider gates.

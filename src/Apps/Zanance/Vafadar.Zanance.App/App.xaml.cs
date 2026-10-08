@@ -36,7 +36,7 @@ public partial class App : Application
         // Persian digits in the Persian interface (D-27). The translator refreshes the texts of open pages before the
         // service raises Changed, and a page that stays open (onboarding) would keep the old digits. This handler is
         // registered before any page binds to the translator, so it runs first.
-        Presentation.DigitPreferences.Apply(localization);
+        Presentation.DigitPreferences.Initialize(localization);
         Translator.Instance.PropertyChanged += (_, _) => Presentation.DigitPreferences.Apply(localization);
         Presentation.DigitPreferences.Changed += OnLocalizationChanged;
         localization.Changed += OnLocalizationChanged;
@@ -373,6 +373,13 @@ public partial class App : Application
     {
         // Reminder texts are translated when they are scheduled (REM-07).
         _services.GetRequiredService<ReminderService>().RefreshSoon();
+        // Keep open forms and the live regional preview intact; rebuild cached tab content after returning (D-67).
+        if (Windows.FirstOrDefault()?.Page is AppShell shell && !IsOnTab(shell))
+        {
+            _rebuildWhenBackOnTab = true;
+            return;
+        }
+
         QueueRebuild();
     });
 

@@ -65,6 +65,8 @@ public static class MauiProgram
             .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()))
             // Each local profile keeps its own backups, retention and last-backup time in shared folders (D-34).
             .AddVafadarBackup(options => options.FileSet = Profiles.ProfileService.CurrentBackupSet)
+            .AddSingleton<Vafadar.Backup.IBackupSource>(services => new Vafadar.Backup.SettingsBackupSource(
+                services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(), "display-settings.json", Vafadar.Localization.LocalizationService.PortableKeys))
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
             .AddSingleton<Presentation.ThemeService>()

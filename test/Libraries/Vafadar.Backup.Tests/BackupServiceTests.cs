@@ -278,6 +278,73 @@ public sealed class BackupServiceTests : IDisposable
         }
     }
 
+    [Fact]
+    [Trait("AT", "AT-73")]
+    public async Task Discovery_finds_old_profile_sets_without_widening_retention_or_accepting_other_apps()
+    {
+        string? set = "old-device-profile";
+        var service = new BackupService([_database], Environment(), _settings, _time,
+            new BackupOptions { FileSet = () => set, MaxBackupsToKeep = 1 });
+        await service.CreateBackupAsync(_storage, cancellationToken: Ct);
+        set = null;
+        _time.Advance(TimeSpan.FromMinutes(1));
+        await service.CreateBackupAsync(_storage, cancellationToken: Ct);
+        await CreateService(appId: AppId + "-other").CreateBackupAsync(_storage, cancellationToken: Ct);
+        await CreateService(appId: AppId + "-other~profile").CreateBackupAsync(_storage, cancellationToken: Ct);
+
+        var found = await service.DiscoverBackupsAsync(_storage, Ct);
+        Assert.Equal(2, found.Count);
+        Assert.DoesNotContain(found, f => f.FileName.Contains("-other", StringComparison.Ordinal));
+        Assert.Contains(found, f => f.FileName.Contains("~old-device-profile", StringComparison.Ordinal));
+        Assert.Single(await service.ListBackupsAsync(_storage, Ct));
+        await service.CreateBackupAsync(_storage, cancellationToken: Ct);
+        Assert.Equal(2, (await service.DiscoverBackupsAsync(_storage, Ct)).Count);
+        await service.RestoreAsync(_storage, found[1], cancellationToken: Ct);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("optional-passphrase")]
+    [Trait("AT", "AT-73")]
+    public async Task Portable_display_preferences_restore_with_optional_protection_and_exclude_device_credentials(string? password)
+    {
+        var keys = new[] { "localization.language", "localization.formattingCulture", "localization.digits" };
+        _settings.Set(keys[0], "en");
+        _settings.Set(keys[1], "de-DE");
+        _settings.Set(keys[2], "Latin");
+        _settings.Set("device.pin", "device-only");
+        var source = new SettingsBackupSource(_settings, "display-settings.json", keys);
+        var service = new BackupService([_database, source], Environment(), _settings, _time, new BackupOptions());
+        var file = await service.CreateBackupAsync(_storage, password, Ct);
+        var targetSettings = new InMemorySettingsStore();
+        targetSettings.Set("device.pin", "new-device-only");
+        var target = new BackupService([_database, new SettingsBackupSource(targetSettings, source.Name, keys)],
+            Environment(), targetSettings, _time, new BackupOptions());
+        await target.RestoreAsync(_storage, file, password, Ct);
+        Assert.Equal("en", targetSettings.Get(keys[0]));
+        Assert.Equal("de-DE", targetSettings.Get(keys[1]));
+        Assert.Equal("Latin", targetSettings.Get(keys[2]));
+        Assert.Equal("new-device-only", targetSettings.Get("device.pin"));
+
+        // Older packages without a display source retain the target device's existing display choices.
+        var old = await CreateService().CreatePackageAsync(cancellationToken: Ct);
+        await target.RestorePackageAsync(old, cancellationToken: Ct);
+        Assert.Equal("de-DE", targetSettings.Get(keys[1]));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-73")]
+    public async Task Imported_preferences_cannot_write_device_security_or_unlisted_keys()
+    {
+        _settings.Set("device.pin", "unchanged-device-state");
+        var source = new SettingsBackupSource(_settings, "display-settings.json", ["localization.language"]);
+        using var input = new MemoryStream("""{"localization.language":"en","device.pin":"replacement","auth.token":"foreign"}"""u8.ToArray());
+        await source.RestoreAsync(input, Ct);
+        Assert.Equal("en", _settings.Get("localization.language"));
+        Assert.Equal("unchanged-device-state", _settings.Get("device.pin"));
+        Assert.Null(_settings.Get("auth.token"));
+    }
+
     private BackupService CreateService(string appId = AppId, Version? version = null, int maxBackups = 10) =>
         new(
             [_database, _attachments],

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="http://vafadar.pro/schemas/maui"
+             xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Settings"
+             x:Class="Vafadar.Zanance.App.Features.Settings.RegionalPreferencesView"
+             x:DataType="local:RegionalPreferencesViewModel">
+    <VerticalStackLayout Spacing="4">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+            <Label Text="{v:Translate Regional_Format}" Style="{StaticResource FieldLabel}" />
+            <v:HelpButton Grid.Column="1" Topic="RegionalFormat" />
+        </Grid>
+        <Picker ItemsSource="{Binding Formats}" SelectedItem="{Binding SelectedFormat}"
+                SemanticProperties.Description="{v:Translate Regional_Format}" />
+        <Label Text="{v:Translate Regional_FormatHint}" Style="{StaticResource Secondary}" />
+        <Label Text="{v:Translate Regional_Digits}" Style="{StaticResource FieldLabel}" />
+        <Picker ItemsSource="{Binding DigitNames}" SelectedIndex="{Binding DigitIndex}"
+                SemanticProperties.Description="{v:Translate Regional_Digits}" />
+        <Label Text="{Binding Preview}" Style="{StaticResource Secondary}" />
+        <Label Text="{v:Translate Regional_Holidays}" Style="{StaticResource FieldLabel}" />
+        <Picker ItemsSource="{Binding HolidayRegions}" SelectedItem="{Binding SelectedHolidayRegion}"
+                SemanticProperties.Description="{v:Translate Regional_Holidays}" />
+        <Label Text="{Binding HolidayHint}" Style="{StaticResource Secondary}" />
+        <Label Text="{v:Translate Settings_WeekStart}" Style="{StaticResource FieldLabel}" />
+        <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
+                SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
+    </VerticalStackLayout>
+</ContentView>

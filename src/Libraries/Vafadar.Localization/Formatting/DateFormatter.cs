@@ -52,7 +52,7 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
 
     /// <inheritdoc />
     public string Format(DateOnly date, DateFormatStyle style = DateFormatStyle.Short) =>
-        FormatCore(date, style, localization.CurrentCulture, localization.CurrentCalendar);
+        FormatCore(date, style, localization.CurrentCulture, localization.CurrentCalendar, localization.FormattingCultureName is not null);
 
     /// <inheritdoc />
     /// <remarks>Another calendar gets its own culture of the current language (e.g. Persian with Gregorian months).</remarks>
@@ -60,10 +60,10 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
         FormatCore(
             date,
             style,
-            calendar == localization.CurrentCalendar ? localization.CurrentCulture : CultureFactory.Create(localization.CurrentLanguage, calendar),
-            calendar);
+            calendar == localization.CurrentCalendar ? localization.CurrentCulture : CultureFactory.Create(localization.CurrentLanguage, calendar, localization.FormattingCultureName),
+            calendar, localization.FormattingCultureName is not null);
 
-    private static string FormatCore(DateOnly date, DateFormatStyle style, CultureInfo culture, CalendarSystem calendar)
+    private static string FormatCore(DateOnly date, DateFormatStyle style, CultureInfo culture, CalendarSystem calendar, bool regional)
     {
         var dateTime = date.ToDateTime(TimeOnly.MinValue);
 
@@ -79,13 +79,13 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
             case CalendarSystem.Persian when culture.DateTimeFormat.Calendar is not PersianCalendar:
                 return FormatOwn(
                     dateTime, style, culture, Persian.GetYear(dateTime), Persian.GetMonth(dateTime), Persian.GetDayOfMonth(dateTime),
-                    shortNames ? PersianMonthNamesLatinShort : PersianMonthNamesLatin);
+                    shortNames ? PersianMonthNamesLatinShort : PersianMonthNamesLatin, regional);
 
             // The culture's Umm al-Qura calendar covers 1900–2077 only; LunarHijri covers every other year as well.
             case CalendarSystem.Hijri when culture.DateTimeFormat.Calendar is not UmAlQuraCalendar umAlQura
                                            || dateTime < umAlQura.MinSupportedDateTime || dateTime > umAlQura.MaxSupportedDateTime:
                 var (year, month, day) = LunarHijri.Parts(date);
-                return FormatOwn(dateTime, style, culture, year, month, day, HijriMonthNames(culture, shortNames));
+                return FormatOwn(dateTime, style, culture, year, month, day, HijriMonthNames(culture, shortNames), regional);
         }
 
         var format = style switch
@@ -119,7 +119,7 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
     // The same layout for every converted calendar: weekday, day, month name and year; numeric dates year first. The
     // words between day, month and year are the culture's own: Spanish writes "3 de Mehr de 1405" ("d 'de' MMMM",
     // "MMMM 'de' yyyy"); English, German and Persian have no such word. The short form for date tiles has none.
-    private static string FormatOwn(DateTime dateTime, DateFormatStyle style, CultureInfo culture, int year, int month, int day, string[] monthNames)
+    private static string FormatOwn(DateTime dateTime, DateFormatStyle style, CultureInfo culture, int year, int month, int day, string[] monthNames, bool regional)
     {
         var monthName = monthNames[month - 1];
         // After the weekday: the culture's own separator ("dddd, d. MMMM" → ", "; French "dddd d MMMM" → " ").
@@ -137,9 +137,23 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
             DateFormatStyle.DayMonth => string.Create(CultureInfo.InvariantCulture, $"{day}{dayMonth}{monthName}"),
             DateFormatStyle.DayMonthShort => string.Create(CultureInfo.InvariantCulture, $"{day} {monthName}"),
             DateFormatStyle.Month => monthName,
-            _ => string.Create(CultureInfo.InvariantCulture, $"{year:0000}/{month:00}/{day:00}"),
+            _ => regional ? FormatNumeric(year, month, day, culture) : string.Create(CultureInfo.InvariantCulture, $"{year:0000}/{month:00}/{day:00}"),
         };
     }
+
+    // Converted calendar parts can include a thirtieth day in month two: never construct a Gregorian date to format them.
+    private static string FormatNumeric(int year, int month, int day, CultureInfo culture) =>
+        NumericDateToken().Replace(culture.DateTimeFormat.ShortDatePattern, match => match.Value[0] switch
+        {
+            'y' => (match.Length <= 2 ? year % 100 : year).ToString(match.Length <= 2 ? "00" : "0000", CultureInfo.InvariantCulture),
+            'M' => month.ToString(match.Length > 1 ? "00" : "0", CultureInfo.InvariantCulture),
+            'd' => day.ToString(match.Length > 1 ? "00" : "0", CultureInfo.InvariantCulture),
+            '/' => culture.DateTimeFormat.DateSeparator,
+            _ => match.Value.Trim('\''),
+        });
+
+    [GeneratedRegex("'[^']*'|y+|M+|d+|/")]
+    private static partial Regex NumericDateToken();
 
     // " de " for a pattern with the quoted word 'de' (Spanish), otherwise a plain space.
     private static string Joiner(string pattern) => QuotedLiteral().Match(pattern) is { Success: true } literal

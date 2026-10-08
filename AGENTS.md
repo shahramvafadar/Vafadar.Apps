@@ -134,6 +134,12 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   only the protection choice on the device, never passwords. Explain that an unprotected portable file is readable
   by anyone who obtains it. First-run restore must not force or create an extra account; preserve restored preferences.
   About keeps a compact link to the required bundled notices, without an inline component list.
+* Regional display and cloud discovery (D-67): language/RTL stay independent from numeric formatting culture,
+  calendar, digit shapes, holiday region, week start and currency. Offer the choices in onboarding and Settings with
+  examples; preserve them through language changes and new backup packages. Portable preference sources use an
+  explicit allowlist and never include device security or credentials. Connected backup lists load automatically with
+  visible loading/empty/error feedback; restore discovery spans profile sets, retention does not. Germany holidays
+  are nationwide-only until separately extended. Keep open forms during display changes.
 * App access (D-63): optional four-digit PIN across all profiles on this device; salted verifier and durable growing
   attempt delays only in platform SecureStorage, never portable backups. Current PIN required to change/remove;
   recovery only after successful device authentication plus confirmation. No NotAvailable fallback for a PIN lock.

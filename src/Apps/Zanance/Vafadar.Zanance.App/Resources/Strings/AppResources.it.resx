@@ -891,7 +891,7 @@
     <value>Il ripristino sostituisce i dati del profilo attuale con quelli del backup, senza unirli. Le modifiche successive al backup andranno perse in questo profilo. Gli altri profili non vengono modificati. Prima del ripristino viene creata una copia di sicurezza su questo dispositivo.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Scegli file di backup</value>
+    <value>Scegli un file di backup dal dispositivo</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Verifica file</value>
@@ -2800,7 +2800,7 @@
     <value>Esegui backup</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Mostra backup</value>
+    <value>Aggiorna backup</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>I backup cloud seguono la scelta di protezione indicata sopra. Puoi riutilizzare la stessa password; non viene mai salvata. Senza protezione, il ripristino non richiede una password del backup.</value>
@@ -5528,5 +5528,68 @@ Prima scadenza: {1}</value>
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>Prima scadenza: 20 ottobre. Mensile: 20 novembre, 20 dicembre. L’ultimo giorno del mese è un modello diverso.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>Formato regionale</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>Formato della lingua dell’app</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>Solo l’ordine della data e i separatori numerici. Lingua, valuta e festività restano indipendenti.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>Forma delle cifre</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>In base alla lingua dell’app</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>Latine (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>Persiane (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>Esempio: {0} · {1}</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>Calendario delle festività</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>Nessun calendario delle festività</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>Usato per spostare le scadenze dei piani durante le festività. I piani esistenti mantengono le loro regole.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>Germania: solo festività nazionali, escluse quelle dei singoli Länder. Le regole dei piani esistenti non cambiano.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>Iran: le festività lunari sono approssimative e possono differire dalle date ufficiali.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>Lingua e formato regionale</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>La lingua determina testi e nomi di mesi e giorni. Il formato regionale determina ordine della data, orario e separatori decimali e delle migliaia. Calendario, cifre, festività e valuta si scelgono separatamente. Queste opzioni non modificano date, importi o regole salvate.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>Inglese + formato tedesco + calendario gregoriano + festività tedesche: 08.10.2026 e 1.234,56, con testi in inglese.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>Ricerca dei backup…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>Nessun backup Zanance nella cartella dell’app di questo account. Il collegamento da solo non crea un backup.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>Backup trovati: {0}. Scegline uno per visualizzarlo e ripristinarlo.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>Altro profilo</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>Scegli un file .vbak salvato o scaricato. I backup del cloud collegato sono elencati sopra, senza download manuale.</value>
   </data>
 </root>

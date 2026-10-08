@@ -26,6 +26,21 @@ public sealed partial class CloudAccountRow(ExternalIdentityProvider provider, s
     /// <summary>Gets or sets when a backup was last stored there, e.g. "Last backup: 29 September 2026 21:40" (BAK-08).</summary>
     [ObservableProperty]
     public partial string? LastBackupText { get; set; }
+
+    /// <summary>Gets the discovered files for this destination across all local profile sets.</summary>
+    public ObservableCollection<CloudBackup> Backups { get; } = [];
+
+    /// <summary>Gets or sets the loading, empty or completed listing feedback.</summary>
+    [ObservableProperty]
+    public partial string? Status { get; set; }
+
+    /// <summary>Gets or sets a destination-specific listing failure.</summary>
+    [ObservableProperty]
+    public partial string? Error { get; set; }
+
+    /// <summary>Gets whether this destination has discovered backups.</summary>
+    [ObservableProperty]
+    public partial bool HasBackups { get; set; }
 }
 
 /// <summary>A backup file in a connected cloud storage.</summary>
@@ -33,13 +48,14 @@ public sealed record CloudBackup(ExternalIdentityProvider Provider, BackupFileIn
 
 /// <summary>
 /// Cloud backup (D-35): an explicit choice of the user. Connecting asks for the app's own folder only
-/// (<c>drive.appdata</c>, <c>Files.ReadWrite.AppFolder</c>); cloud backups are always encrypted with a password the
-/// provider never sees. Nothing is uploaded automatically.
+/// (<c>drive.appdata</c>, <c>Files.ReadWrite.AppFolder</c>); password protection is optional (D-62).
+/// Connected destinations are listed automatically; nothing is uploaded automatically.
 /// </summary>
 public sealed partial class BackupViewModel
 {
     private readonly Vafadar.Authentication.Maui.CloudSignIn _cloud;
     private readonly IServiceProvider _services;
+    private readonly SemaphoreSlim _listingGate = new(1, 1);
 
     public ObservableCollection<CloudAccountRow> CloudAccounts { get; } = [];
 
@@ -60,11 +76,12 @@ public sealed partial class BackupViewModel
     private async Task LoadCloudAsync()
     {
         HasCloud = _cloud.IsAnyAvailable;
-        if (!HasCloud || CloudAccounts.Count > 0)
+        if (!HasCloud)
         {
             return;
         }
 
+        if (CloudAccounts.Count == 0)
         foreach (var provider in new[] { ExternalIdentityProvider.Google, ExternalIdentityProvider.Microsoft }.Where(_cloud.IsAvailable))
         {
             // A damaged token cache means "not connected", never a backup page that does not open.
@@ -84,6 +101,20 @@ public sealed partial class BackupViewModel
             };
             ShowLastCloudBackup(row);
             CloudAccounts.Add(row);
+        }
+
+        var wasBusy = IsBusy;
+        IsBusy = true;
+        try
+        {
+            foreach (var row in CloudAccounts.Where(r => r.IsConnected))
+            {
+                await ListCloudAsync(row);
+            }
+        }
+        finally
+        {
+            IsBusy = wasBusy;
         }
     }
 
@@ -116,6 +147,7 @@ public sealed partial class BackupViewModel
         }
 
         // Connected; listing may still fail (e.g. offline), which is reported as such.
+        IsBusy = true;
         try
         {
             await ListCloudAsync(row);
@@ -123,6 +155,10 @@ public sealed partial class BackupViewModel
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             CloudError = CloudProblem(row, ex);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
@@ -137,6 +173,8 @@ public sealed partial class BackupViewModel
         await SignIn(row.Provider).SignOutAsync();
         row.Account = null;
         row.LastBackupText = null;
+        row.Status = null;
+        row.Error = null;
         RemoveCloudBackups(row.Provider);
     }
 
@@ -248,6 +286,9 @@ public sealed partial class BackupViewModel
         {
             await Storage(backup.Provider).DeleteAsync(backup.File.Id);
             CloudBackups.Remove(backup);
+            row.Backups.Remove(backup);
+            row.HasBackups = row.Backups.Count > 0;
+            row.Status = row.Backups.Count == 0 ? _translator["Cloud_NoBackups"] : _translator.Format("Cloud_BackupsFound", row.Backups.Count);
             HasCloudBackups = CloudBackups.Count > 0;
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
@@ -274,19 +315,51 @@ public sealed partial class BackupViewModel
 
     private async Task ListCloudAsync(CloudAccountRow row)
     {
-        var files = await _backup.ListBackupsAsync(Storage(row.Provider));
+        await _listingGate.WaitAsync();
+        row.Error = null;
+        row.Status = _translator["Cloud_LoadingBackups"];
+        try
+        {
+            var files = await _backup.DiscoverBackupsAsync(Storage(row.Provider));
+            ApplyCloudFiles(row, files);
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            row.Status = null;
+            row.Error = CloudProblem(row, ex);
+        }
+        finally
+        {
+            _listingGate.Release();
+        }
+    }
+
+    /// <summary>Applies a completed listing; shared with fictitious rendered-state checks (D-67).</summary>
+    internal void ApplyCloudFiles(CloudAccountRow row, IReadOnlyList<BackupFileInfo> files)
+    {
         RemoveCloudBackups(row.Provider);
         foreach (var file in files)
         {
-            var created = BackupFileName.TryParse(file.FileName, out _, out var at) ? at : file.CreatedAt ?? _time.GetUtcNow();
-            CloudBackups.Add(new CloudBackup(row.Provider, file, $"{row.Title} · {FormatTime(created)}", file.Size is { } size ? FormatSize(size) : string.Empty));
+            var created = BackupFileName.TryParse(file.FileName, out var appId, out var at) ? at : file.CreatedAt ?? _time.GetUtcNow();
+            var profile = _translator[appId?.Contains("~", StringComparison.Ordinal) == true ? "Cloud_OtherProfile" : "Profile_Main"];
+            var backup = new CloudBackup(row.Provider, file, FormatTime(created),
+                $"{profile} · {(file.Size is { } size ? FormatSize(size) : string.Empty)}");
+            CloudBackups.Add(backup);
+            row.Backups.Add(backup);
         }
 
         HasCloudBackups = CloudBackups.Count > 0;
+        row.HasBackups = row.Backups.Count > 0;
+        row.Status = files.Count == 0 ? _translator["Cloud_NoBackups"] : _translator.Format("Cloud_BackupsFound", files.Count);
     }
 
     private void RemoveCloudBackups(ExternalIdentityProvider provider)
     {
+        CloudAccounts.FirstOrDefault(row => row.Provider == provider)?.Backups.Clear();
+        if (CloudAccounts.FirstOrDefault(row => row.Provider == provider) is { } account)
+        {
+            account.HasBackups = false;
+        }
         foreach (var backup in CloudBackups.Where(b => b.Provider == provider).ToList())
         {
             CloudBackups.Remove(backup);

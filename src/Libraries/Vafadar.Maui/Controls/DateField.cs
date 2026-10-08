@@ -217,9 +217,9 @@ public sealed class DateField : ContentView
     {
         _preview.TextColor = ThemeColors.SecondaryText;
         _calendarIcon.ForegroundColor = ThemeColors.Primary;
-        foreach (var separator in _separators)
+        foreach (var separatorLabel in _separators)
         {
-            separator.TextColor = ThemeColors.SecondaryText;
+            separatorLabel.TextColor = ThemeColors.SecondaryText;
         }
 
         ShowValidity();
@@ -243,7 +243,11 @@ public sealed class DateField : ContentView
     private void Arrange()
     {
         var culture = Localization?.CurrentCulture ?? Translator.Instance.Culture;
-        var order = CalendarDates.InputOrder(culture, Calendar);
+        var order = CalendarDates.InputOrder(culture, Calendar, Localization?.FormattingCultureName is not null);
+        foreach (var separatorLabel in _separators)
+        {
+            separatorLabel.Text = Localization?.FormattingCultureName is not null ? culture.DateTimeFormat.DateSeparator : "/";
+        }
         for (var i = 0; i < order.Count; i++)
         {
             Grid.SetColumn(_boxes[order[i]], i * 2);
@@ -359,7 +363,7 @@ public sealed class DateField : ContentView
     private void FocusNext(DatePart part)
     {
         var culture = Localization?.CurrentCulture ?? Translator.Instance.Culture;
-        var order = CalendarDates.InputOrder(culture, Calendar);
+        var order = CalendarDates.InputOrder(culture, Calendar, Localization?.FormattingCultureName is not null);
         var index = order.ToList().IndexOf(part);
         if (index + 1 < order.Count)
         {

@@ -33,6 +33,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         _localization = localization;
         _translator = translator;
         _theme = theme;
+        Regional = new(localization, translator, time);
         ThemeIndex = (int)theme.Choice;
         Account = new AccountFormModel(translator, time);
         Languages = [.. localization.SupportedLanguages];
@@ -47,6 +48,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     public AccountFormModel Account { get; }
 
     public AppLanguage[] Languages { get; }
+
+    /// <summary>Gets independent regional choices before creating an account.</summary>
+    public RegionalPreferencesViewModel Regional { get; }
 
     public IReadOnlyList<string> CurrencyCodes { get; }
 
@@ -127,6 +131,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         if (!_refreshing && value is not null && value.Calendar != _localization.CurrentCalendar)
         {
             _localization.SetCalendar(value.Calendar);
+            Regional.Refresh();
         }
     }
 
@@ -230,6 +235,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
                 new CalendarOption(CalendarSystem.Hijri, _translator["Calendar_Hijri"]),
             ];
             SelectedCalendar = Calendars.First(c => c.Calendar == _localization.CurrentCalendar);
+            Regional.Refresh();
             StepText = _translator.Format("Onb_Step", Step, StepCount);
             Account.RefreshTexts();
         }

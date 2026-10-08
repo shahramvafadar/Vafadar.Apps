@@ -67,3 +67,7 @@ screenshot choice are implemented in ZCR-SEC-10. Broader database/key encryption
 S2 account setup and S4 plan setup have clearer debt direction, optional terms and date-anchored recurrence controls.
 The data/settlement model is unchanged. Local validation is recorded under AT-72 / ZCR-LOC-13; physical-device
 acceptance remains open. This maintenance does not reopen or approve another commercial section.
+
+D-67 maintenance: automatic connected-backup discovery with destination feedback and cross-profile restore lists;
+independent regional formats/digits/holidays in first run and settings, with portable display choices. Local validation
+uses AT-73/74; real-provider and physical-device acceptance remain open in S15/AT-59.

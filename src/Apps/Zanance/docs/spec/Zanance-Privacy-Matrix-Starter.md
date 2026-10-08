@@ -96,3 +96,10 @@ D-65 uses existing account counterparty/reference balance/interest/installment a
 draft and its preview are transient until explicit Save; opening it records no ledger entry. Portable backups retain
 their existing schema. No new data category, SDK, network path or permission; notification permission is requested
 through the existing contextual reminder flow. Estimates never become principal payments automatically.
+
+### D-67 display and discovery delta
+
+Portable language/calendar/region/formatting-culture/digit/week-start preferences enter the optionally protected
+backup package via an explicit allowlist. Tokens, PIN verifiers, passwords and device security preferences do not.
+Connected-provider metadata listing now runs on opening the backup page; connection remains explicit and there is
+no automatic upload, broader scope, new SDK or location access.

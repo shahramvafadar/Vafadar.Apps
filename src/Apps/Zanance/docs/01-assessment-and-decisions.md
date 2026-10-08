@@ -90,6 +90,8 @@
 | D-64 | Receipt evidence and review (owner, 2026-10-08): replace last-number/largest-price selection with complete purchase-total candidates and explicit Found/Review/NotFound states. Filter identifiers, percentages, measurements, tax, discount, tender/change and payment-only totals; keep bounded inclusive-tax annotations, signs, zero and damaged-token boundaries. Preserve explicit ISO currency or ambiguous symbol, and rial/toman factor; never perform foreign exchange, infer receipt locale from UI language or confuse engine character confidence with total semantics. Keep at most four complete choices and source rows in the unsaved editor; no new amount preserves the old one. Retain source line/block/page/full bounds and engine angle/confidence where available, deskew only using supplied geometry; Windows already returns upright boxes. Flag suspicious legacy column alignment and preserve PDF form-feed page boundaries. New images use independent upright recognition pixels up to 3200 px / quality 95; storage remains 1600 px / quality 80 metadata-free JPEG on every platform. Native subsampling/thumbnail decoding bounds large photos. No new SDK, permission, schema or network path; no automatic crop, perspective correction or arithmetic total invention without validated evidence. The original 19 receipt regressions failed in 18 cases before implementation; the detached separator regression also failed, then passed after correction. Verified: 1100 tests, zero-warning Windows/Android CI-mode builds, en/fa/de light/dark at 360/412/wide, actual Windows image selection (inclusive tax, skew, EXIF, ambiguity and currency conflict), stored-image rereading and cancellation/error invariants (AT-71, ZCR-LOC-12). Physical Android/iOS and representative-corpus receipt recognition remain open | F2, PRI, UX, AT-71 |
 
 | D-65 | Clear plan and debt setup: date-anchored recurrence calendar, nearby summary/preview, common endings, optional rules; dedicated debt direction, positive amounts, optional estimates and separate unsaved reminder. See the detailed D-65 validation below. | REC, F2-DEBT, UX, AT-72 |
+| D-66 | Complete signed installable APK before every phone-test handoff; package/signature verified, device acceptance separate. | Delivery, Android |
+| D-67 | Cross-profile cloud restore discovery and independent regional format/digits/holiday choices, shared onboarding/settings UI and allowlisted portable display preferences. | BAK, LOC, UX, AT-73/74 |
 
 ## 3. Conflicts found and their resolution
 
@@ -148,3 +150,38 @@ Verified for the D-65 handoff: the existing script published Release with the CI
 or errors. The signed package is `pro.vafadar.zanance`, version 0.1.0 / code 1, minimum Android API 24; arm64-v8a
 phones and x86_64 emulators have embedded assembly stores and app AOT images. APK ZIP integrity and signature
 verification pass. The approximately 77.1 MiB artifact is provided locally; physical-device installation is pending.
+
+## D-67 – Cloud restore discovery and independent regional display (2026-10-08)
+
+Owner-approved maintenance: keep password protection optional for local and connected cloud backup (D-62); make
+cloud recovery discoverable; allow English UI with German date/number formats and German holidays. Cloud connection
+and opening the backup page list existing backups automatically; they never create or upload one. Each destination
+shows loading, empty, failure or completed-list feedback and a refresh action. Restore discovery includes every
+profile set of this app; retention remains limited to the current profile. File restore is labelled as a device
+.vbak file, with a cloud-list alternative. Preview, original password for protected files, safety copy and explicit
+replacement confirmation remain required.
+
+Language/resources/RTL stay independent from an optional specific formatting culture, calendar, digit shapes,
+holiday region and week-start override. Numerical dates and entry-field order follow the selected pattern; month
+and weekday names keep the UI language. Existing date values, money, currencies and saved plan recurrence rules
+are unchanged. A shared form in onboarding/settings includes examples and help. Germany uses the existing
+nationwide holiday rules only; no state coverage is claimed. Legacy choices survive, with invalid saved formatting
+values falling back safely. Open forms are retained until a cached tab rebuild can occur safely.
+
+A new allowlisted display-settings.json backup source carries language, calendar, holiday region, formatting culture,
+digits and week start. Old packages without this optional source remain restorable. No PIN, token, password,
+client id or screenshot preference enters the source. Snapshot runs retain and restore the prior portable choices
+and password-protection preference; they use fictitious cloud list states. The snapshot launcher now stops on a
+failed strict build instead of launching an older executable. No database schema or permission was added.
+
+Validation: all 1,134 automated tests pass (including AT-73/74); Windows and Android CI-policy builds finish with
+zero warnings/errors. Rendered en/fa/de checks cover light/dark at 360x800, 412x892 and 1280x820, including cloud
+empty/error/file states and regional help. Native picker selection verifies live German/US samples, independent
+Persian digit shapes and a retained settings page. Picker item collections remain stable between language changes.
+Test output was cleaned; the original development database was restored and compared by hash after fixture review.
+The complete Release APK at artifacts/android/pro.vafadar.zanance-Signed.apk is approximately 76.7 MiB, package
+pro.vafadar.zanance version 0.1.0 / code 1, API 24 minimum / 36 target, signed with the local Android debug certificate.
+Signature and ZIP integrity pass; both arm64-v8a and x86_64 contain assembly stores and the application AOT image.
+Real provider
+sign-in/upload/download/delete, Google signing-certificate registration and physical-device acceptance remain
+owner-device checks; fixtures and successful builds do not prove those operations.

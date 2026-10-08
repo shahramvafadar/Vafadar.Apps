@@ -191,3 +191,14 @@ rules, including possible retention after uninstall; verify on a signed device b
 D-65 plan/debt setup does not add database or portable-backup fields. Positive debt input maps to the existing
 signed reference-date opening balance. A repayment reminder is an ordinary Schedule transfer with unknown principal
 and automatic posting off until explicitly saved; it is not a ledger installment or an interest calculation.
+
+## Restore discovery and portable display choices (D-67)
+
+IBackupService.DiscoverBackupsAsync lists the current app id and its `~profile` file sets newest-first. It is used only
+for user-facing restore discovery. ListBackupsAsync and retention stay current-set-specific; discovery never widens
+a delete operation. Inspection still checks the package app id, version and checksums before replacement.
+
+SettingsBackupSource backs up only LocalizationService.PortableKeys into display-settings.json. Null values clear
+an explicit override on restore; arbitrary keys are ignored. Missing optional sources in older packages retain the
+current settings. The app initializes localization on the UI thread after the restore completes. Device security
+and authentication are never part of this source. No schema migration or compiled-model regeneration is needed.

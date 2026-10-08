@@ -30,6 +30,9 @@ public interface IBackupService
     /// <summary>Lists this app's backups in <paramref name="storage"/>, newest first.</summary>
     Task<IReadOnlyList<BackupFileInfo>> ListBackupsAsync(IBackupStorage storage, CancellationToken cancellationToken = default);
 
+    /// <summary>Lists this app's backups across all profile sets for discovery and restore, never for retention.</summary>
+    Task<IReadOnlyList<BackupFileInfo>> DiscoverBackupsAsync(IBackupStorage storage, CancellationToken cancellationToken = default);
+
     /// <summary>Downloads and restores a backup, replacing the current data.</summary>
     /// <exception cref="BackupException">The backup cannot be restored (wrong password, other app, damaged, ...).</exception>
     Task<BackupManifest> RestoreAsync(IBackupStorage storage, BackupFileInfo file, string? password = null, CancellationToken cancellationToken = default);

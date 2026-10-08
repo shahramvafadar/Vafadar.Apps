@@ -932,7 +932,7 @@
     <value>بازیابی، داده‌های پروفایل فعلی را با این نسخهٔ پشتیبان جایگزین می‌کند؛ داده‌ها ادغام نمی‌شوند و تغییرات پس از پشتیبان‌گیری در این پروفایل از دست می‌روند. پروفایل‌های دیگر تغییر نمی‌کنند. پیش از شروع، یک نسخهٔ احتیاطی روی این دستگاه ساخته می‌شود.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>انتخاب فایل پشتیبان</value>
+    <value>انتخاب فایل بکاپ از دستگاه</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>بررسی فایل</value>
@@ -2819,7 +2819,7 @@
     <value>پشتیبان‌گیری اکنون</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>نمایش پشتیبان‌ها</value>
+    <value>تازه‌سازی بکاپ‌ها</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>بکاپ ابری از انتخاب محافظت با رمز در بالا پیروی می‌کند. می‌توانید همان رمز را دوباره استفاده کنید؛ رمز هرگز ذخیره نمی‌شود. بدون این محافظت، بازیابی به رمز بکاپ نیاز ندارد.</value>
@@ -5539,5 +5539,68 @@
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>مثلاً اولین سررسید «۲۰ مهر» و تکرار ماهانه، موعدهای «۲۰ آبان» و «۲۰ آذر» را می‌سازد. انتخاب «آخرین روز ماه» الگوی متفاوتی است.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>قالب منطقه‌ای</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>قالب زبان برنامه</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>فقط ترتیب تاریخ و جداکننده‌های اعداد را تعیین می‌کند. زبان، ارز و تعطیلات مستقل هستند.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>شکل ارقام</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>مطابق زبان برنامه</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>لاتین (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>فارسی (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>نمونه: «{0}» · «{1}»</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>تقویم تعطیلات رسمی</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>بدون تقویم تعطیلات</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>برای جابه‌جایی سررسید پلن در تعطیلات استفاده می‌شود. قواعد ذخیره‌شدهٔ پلن‌های قبلی تغییر نمی‌کند.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>آلمان: فقط تعطیلات سراسری؛ تعطیلات ایالتی لحاظ نمی‌شود. قواعد پلن‌های قبلی تغییر نمی‌کند.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>ایران: تاریخ تعطیلات قمری تقریبی است و ممکن است با اعلام رسمی متفاوت باشد.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>زبان و قالب منطقه‌ای</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>زبان، متن‌ها و نام ماه‌ها و روزها را تعیین می‌کند. قالب منطقه‌ای، ترتیب تاریخ عددی، زمان و جداکننده‌های اعشار و هزارگان را تعیین می‌کند. تقویم، شکل ارقام، تعطیلات و ارز جداگانه انتخاب می‌شوند. این تنظیمات نمایشی، تاریخ‌ها و مبالغ ذخیره‌شده یا قواعد پلن‌های قبلی را تغییر نمی‌دهند.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>زبان انگلیسی + قالب آلمان + تقویم میلادی + تعطیلات آلمان: تاریخ «08.10.2026» و عدد «1.234,56» نمایش داده می‌شود و متن‌ها انگلیسی می‌مانند.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>در حال جست‌وجوی بکاپ‌ها…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>در پوشهٔ برنامهٔ این حساب، بکاپی از Zanance پیدا نشد. اتصال به‌تنهایی بکاپ ایجاد نمی‌کند.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>بکاپ‌های پیدا‌شده: «{0}». برای پیش‌نمایش و بازیابی، یکی را انتخاب کنید.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>پروفایل دیگر</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>فایل «.vbak» را که ذخیره یا دانلود کرده‌اید انتخاب کنید. بکاپ‌های فضای ابری متصل در بالا نمایش داده می‌شوند و نیازی به دانلود دستی ندارند.</value>
   </data>
 </root>

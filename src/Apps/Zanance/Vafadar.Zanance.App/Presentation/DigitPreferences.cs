@@ -4,8 +4,8 @@ using Vafadar.Localization.Formatting;
 namespace Vafadar.Zanance.App.Presentation;
 
 /// <summary>
-/// The user's choice of Persian digits (۱۲۳) in the Persian interface, a local preference (D-27). On by default; the
-/// other languages always use Latin digits. Stored values, exports and input are not affected.
+/// Applies portable digit-shape choices (D-67), retaining the legacy Persian-interface preference (D-27).
+/// Stored values, exports and input are not affected.
 /// </summary>
 internal static class DigitPreferences
 {
@@ -17,10 +17,22 @@ internal static class DigitPreferences
     /// <summary>Gets a value indicating whether the Persian interface shows Persian digits.</summary>
     public static bool PersianDigits => Preferences.Default.Get(Key, true);
 
+    /// <summary>Migrates an explicit legacy digit choice once, before application change handlers are registered.</summary>
+    public static void Initialize(ILocalizationService localization)
+    {
+        if (!Preferences.Default.ContainsKey("localization.digits") && Preferences.Default.ContainsKey(Key))
+        {
+            localization.SetDigits(PersianDigits ? DigitStyle.LanguageDefault : DigitStyle.Latin);
+        }
+
+        Apply(localization);
+    }
+
     /// <summary>Saves the choice and applies it.</summary>
     public static void Set(bool persianDigits, ILocalizationService localization)
     {
         Preferences.Default.Set(Key, persianDigits);
+        localization.SetDigits(persianDigits ? DigitStyle.Persian : DigitStyle.Latin);
         Apply(localization);
         Changed?.Invoke(null, EventArgs.Empty);
     }
@@ -29,7 +41,13 @@ internal static class DigitPreferences
     public static void Apply(ILocalizationService localization)
     {
         ArgumentNullException.ThrowIfNull(localization);
-        NativeDigits.IsEnabled = PersianDigits && IsPersian(localization);
+        NativeDigits.PreserveSeparators = localization.FormattingCultureName is not null || localization.CurrentDigits != DigitStyle.LanguageDefault;
+        NativeDigits.IsEnabled = localization.CurrentDigits switch
+        {
+            DigitStyle.Persian => true,
+            DigitStyle.Latin => false,
+            _ => IsPersian(localization),
+        };
     }
 
     /// <summary>Returns whether the interface language is Persian.</summary>

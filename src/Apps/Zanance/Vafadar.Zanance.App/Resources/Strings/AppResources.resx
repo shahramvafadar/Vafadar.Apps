@@ -936,7 +936,7 @@
     <value>Restoring replaces the current profile's data with this backup; it does not merge data. Changes made after the backup will be lost from this profile. Other profiles are not affected. A safety copy is created on this device before restoration starts.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Choose backup file</value>
+    <value>Choose backup file from device</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Check file</value>
@@ -2833,7 +2833,7 @@
     <value>Back up now</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Show backups</value>
+    <value>Refresh backups</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>Cloud backups follow the password protection choice above. You can reuse the same password; it is never saved. Without protection, restoring needs no backup password.</value>
@@ -5565,5 +5565,68 @@ First due date: {1}</value>
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>First due date: 20 October. Monthly: 20 November, 20 December. Choosing the last day of the month is a different pattern.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>Regional format</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>Use the app language format</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>Date order and numeric separators only. Language, currency and holidays stay independent.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>Digit shapes</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>Follow the app language</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>Latin (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>Persian (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>Example: {0} · {1}</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>Public holiday calendar</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>No holiday calendar</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>Used when a plan moves a due date around holidays. Existing plans keep their saved rules.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>Germany: nationwide holidays only; state holidays are not included. Existing plan rules stay unchanged.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>Iran: lunar holiday dates are approximate and may differ from official announcements.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>Language and regional format</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>Language controls labels and month/day names. Regional format controls numeric date order, time and decimal/group separators. Calendar, digit shapes, holidays and currency are separate choices. Changing these display choices never changes stored dates, amounts or existing plan rules.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>English + German format + Gregorian calendar + German holidays: 08.10.2026 and 1.234,56, while labels remain English.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>Looking for backups…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>No Zanance backups found in this account’s app folder. Connecting alone does not create a backup.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>Backups found: {0}. Choose one to preview and restore.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>Additional profile</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>Choose a .vbak file you saved or downloaded. Connected cloud backups are listed above; no manual download is needed.</value>
   </data>
 </root>

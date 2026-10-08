@@ -200,6 +200,113 @@ public sealed class LocalizationServiceTests : IDisposable
         Assert.Null(service.CurrentRegion);
         Assert.Throws<ArgumentException>(() => service.SetRegion("XX1"));
     }
+    [Fact]
+    [Trait("AT", "AT-74")]
+    public void English_with_German_formats_keeps_English_text_and_independent_holidays()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetLanguage(AppLanguages.English);
+        service.SetCalendar(CalendarSystem.Gregorian);
+        service.SetFormattingCulture("de-DE");
+        service.SetRegion("IR");
+
+        Assert.Equal("en", CultureInfo.CurrentUICulture.Name);
+        Assert.Equal("en", _translator.Culture.Name);
+        Assert.False(service.IsRightToLeft);
+        Assert.Equal("1.234,56", 1234.56m.ToString("N2", service.CurrentCulture));
+        Assert.Equal("08.10.2026", new Vafadar.Localization.Formatting.DateFormatter(service).Format(new DateOnly(2026, 10, 8)));
+        Assert.Equal("October", service.CurrentCulture.DateTimeFormat.GetMonthName(10));
+        Assert.Equal("IR", service.CurrentRegion);
+        Assert.Equal(CalendarSystem.Gregorian, service.CurrentCalendar);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-74")]
+    public void Explicit_regional_format_and_digits_survive_language_change_and_restart()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetFormattingCulture("de-DE");
+        service.SetDigits(DigitStyle.Latin);
+        service.SetRegion("DE");
+        service.SetCalendar(CalendarSystem.Gregorian);
+        service.SetLanguage(AppLanguages.Persian);
+        var restarted = CreateService();
+        restarted.Initialize();
+
+        Assert.True(restarted.IsRightToLeft);
+        Assert.Equal("de-DE", restarted.FormattingCultureName);
+        Assert.Equal(DigitStyle.Latin, restarted.CurrentDigits);
+        Assert.Equal("DE", restarted.CurrentRegion);
+        Assert.Equal("08.10.2026", new Vafadar.Localization.Formatting.DateFormatter(restarted).Format(new DateOnly(2026, 10, 8)));
+        Assert.Equal("1.234,56", 1234.56m.ToString("N2", restarted.CurrentCulture));
+        Assert.Equal(DayOfWeek.Monday, restarted.FirstDayOfWeek);
+    }
+
+    [Fact]
+    public void Clearing_regional_format_restores_language_formats_without_clearing_other_choices()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetLanguage(AppLanguages.English);
+        service.SetFormattingCulture("de-DE");
+        service.SetDigits(DigitStyle.Persian);
+        service.SetRegion("DE");
+        service.SetFirstDayOfWeek(DayOfWeek.Tuesday);
+        service.SetFormattingCulture(null);
+
+        Assert.Null(service.FormattingCultureName);
+        Assert.Equal("1,234.56", 1234.56m.ToString("N2", service.CurrentCulture));
+        Assert.Equal(DigitStyle.Persian, service.CurrentDigits);
+        Assert.Equal("DE", service.CurrentRegion);
+        Assert.Equal(DayOfWeek.Tuesday, service.FirstDayOfWeek);
+        Assert.Throws<ArgumentException>(() => service.SetFormattingCulture("en"));
+        Assert.Throws<ArgumentException>(() => service.SetFormattingCulture("unknown-culture"));
+        Assert.Throws<ArgumentOutOfRangeException>(() => service.SetDigits((DigitStyle)99));
+    }
+
+    [Fact]
+    public void Damaged_saved_display_choices_fall_back_to_existing_language_defaults()
+    {
+        _settings.Set(LocalizationService.FormattingKey, "invalid");
+        _settings.Set(LocalizationService.DigitsKey, "77");
+        var service = CreateService();
+        service.Initialize();
+        Assert.Null(service.FormattingCultureName);
+        Assert.Equal(DigitStyle.LanguageDefault, service.CurrentDigits);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-74")]
+    public void Regional_order_applies_to_converted_calendar_parts_and_alternate_calendar_labels()
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetLanguage(AppLanguages.English);
+        service.SetFormattingCulture("de-DE");
+        service.SetCalendar(CalendarSystem.Persian);
+        var date = new DateOnly(2026, 10, 8);
+        var formatter = new Vafadar.Localization.Formatting.DateFormatter(service);
+        Assert.Equal("16.07.1405", formatter.Format(date));
+        Assert.Equal("08.10.2026", formatter.Format(date, Vafadar.Localization.Formatting.DateFormatStyle.Short, CalendarSystem.Gregorian));
+        Assert.Equal([DatePart.Day, DatePart.Month, DatePart.Year], CalendarDates.InputOrder(service.CurrentCulture, CalendarSystem.Gregorian));
+    }
+
+    [Theory]
+    [InlineData("en", CalendarSystem.Persian, "Day,Month,Year")]
+    [InlineData("fa", CalendarSystem.Gregorian, "Year,Month,Day")]
+    [InlineData("fa", CalendarSystem.Persian, "Year,Month,Day")]
+    public void Regional_date_fields_follow_the_numeric_pattern_in_both_directions(string language, CalendarSystem calendar, string expected)
+    {
+        var service = CreateService();
+        service.Initialize();
+        service.SetLanguage(service.SupportedLanguages.First(l => l.CultureName == language));
+        service.SetFormattingCulture("de-DE");
+        service.SetCalendar(calendar);
+        Assert.Equal(expected, string.Join(',', CalendarDates.InputOrder(service.CurrentCulture, calendar, useRegionalPattern: true)));
+    }
+
     private LocalizationService CreateService(Action<LocalizationOptions>? configure = null)
     {
         var options = new LocalizationOptions();

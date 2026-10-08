@@ -62,7 +62,7 @@ show them in full.
 | UI-11 | Reports | Expense by category (gross donut + refunds card + net table), income vs expense, monthly trend (6/12), account movement, budget, plan vs actual; tap → drill-down list | same data, Advanced filters |
 | UI-12 | Import / Export | Export CSV (period, accounts, include notes?), sensitive-data warning, share; Import: pick file → mapping → preview (valid/invalid/duplicates) → apply → result with "undo this import" | same |
 | UI-13 | Backup & restore | Last successful backup, create local or cloud backup with optional password protection (on by default, choice remembered on device; password + confirmation when on, unreadable-without-password / readable-file warnings), restore: pick file → password if encrypted → preview (date, counts) → safety copy → confirm | same |
-| UI-14 | Settings & privacy | Language and region (language, calendar, region, week start) · Money and months (report currency, month start) · Appearance (theme, Persian digits) · Experience (Simple/Advanced) · Privacy and security (app lock) · Notifications (turn on, names and amounts, reminder defaults) · Delete data | same |
+| UI-14 | Settings & privacy | Language and region (language, calendar, independent regional format, digits, holiday region, week start) · Money and months (report currency, month start) · Appearance (theme) · Experience (Simple/Advanced) · Privacy and security (app lock) · Notifications (turn on, names and amounts, reminder defaults) · Delete data | same |
 | UI-15 | About Zanance (D-39) | Symbol, name, tagline, version; what happens with the data; what a backup, a CSV export and a PDF report contain; the platforms each release is checked on; a problem report the user sends themselves (nothing is sent automatically, ZEX-S0905); a compact button to the required full third-party notices on a page of their own; no inline component list (D-62) (`Resources/Raw/ThirdPartyNotices.txt`) | same |
 
 What each mode shows is decided by one table, `FeaturePolicy` (`Vafadar.Zanance.Core/Settings/FeaturePolicy.cs`);
@@ -128,9 +128,9 @@ lightened (`CategoryLookup.DisplayColor`).
 | Touch targets | ≥ 44 × 44 (buttons 48) |
 | Typography | Persian: Vazirmatn (OFL). English and German: Figtree for text, Urbanist Bold (the wordmark's face) for page titles and large amounts (both OFL). Page title 24, amount large 32, row title 15, body 14, secondary 13 |
 
-* Persian digits (۱۲۳) are shown in the Persian interface by default (Settings → "Persian digits"); the separators
-  become `٬` and `٫`. Only the displayed text changes (`NativeDigits`, applied to labels); stored values, CSV, PDF,
-  backups and input stay Latin, and input accepts Latin, Persian and Arabic digits.* Amounts use tabular figures and are isolated with Unicode directional marks so `−12.50 EUR` never breaks in RTL
+* Persian digits (۱۲۳) are shown in the Persian interface by default (Settings → digit shapes; independent options since D-67); the legacy automatic format uses `٬` and `٫`, while explicit regional formats/digit-shape choices preserve their selected separators. Only the displayed text changes (`NativeDigits`, applied to labels); stored values, CSV, PDF,
+  backups and input stay Latin, and input accepts Latin, Persian and Arabic digits.
+* Amounts use tabular figures and are isolated with Unicode directional marks so `−12.50 EUR` never breaks in RTL
   (VIS-02, LOC-03). Currency codes stay Latin.
 * Colour is never the only carrier: sign, icon and text label accompany it.
 * Direction-dependent icons (back, chevrons) mirror in RTL; charts, logos and money icons do not.
@@ -273,3 +273,20 @@ Keep interest/installment estimates and other account options in optional sectio
 After creation show details with actual repayment and Set repayment reminder as separate actions. The reminder is an
 unsaved transfer draft with unknown principal and automatic posting off. Interest remains a separate expense when
 an actual repayment is recorded. Choice groups expose individual button names to UI Automation and screen readers.
+
+## Independent regional display and cloud restore (D-67)
+
+Onboarding and Settings share regional format, digit shapes, holiday calendar and first-day-of-week controls,
+separate from language, display calendar and currency. Include a live numeric date/number example and a HelpButton
+explaining English labels with German formats. A chosen format survives language changes. Month/day words stay in
+the UI language. A holiday choice changes defaults for new plan drafts only; Germany is nationwide-only and Iran's
+lunar dates are approximate. Preserve legacy regions even when no holiday data is available.
+
+Each connected cloud destination owns its loading/empty/error/completed feedback and file list. Automatically
+refresh on entry and after connection, creation or deletion. An empty list explains that connection does not create
+a backup. Keep a visible refresh action. List backups across profile sets for restore while retaining set-specific
+cleanup. Use stacked date/details rows at narrow widths. Device file selection is a fallback for saved/downloaded
+.vbak files. Protection stays optional and its shared local/cloud choice is explained above the destinations.
+
+Changing regional display keeps the open form and live preview; cached tab pages rebuild after returning. New
+backup packages include only allowlisted portable display choices, never device credentials or security controls.

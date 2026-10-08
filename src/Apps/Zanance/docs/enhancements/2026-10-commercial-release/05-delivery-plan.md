@@ -103,3 +103,7 @@ This does not begin a commercial section; the next proposed section remains ZCR-
 
 The owner separately approved D-65 plan/debt UX maintenance (ZCR-LOC-13) on 2026-10-08. This does not authorize
 commercial enforcement, another wave or unrelated entry/import work. AT-72 device acceptance remains separate.
+
+Owner-approved D-67 maintenance (ZCR-LOC-14) on 2026-10-08 addresses cloud restore discovery and independent regional
+formats before commercial work. AT-73/74 local verification is separate from real-provider and device acceptance.
+The next proposed section remains ZCR-SEC-01; no commercial limits were enabled.

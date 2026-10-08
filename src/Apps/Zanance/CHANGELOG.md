@@ -6,6 +6,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Backup discovery and regional formats (2026-10-08, D-67)
+
+- Connected cloud backups load automatically and show progress, empty results or errors beside their destination.
+- Restore lists can find backups from other local profiles and previous installations, without changing retention.
+- Manual restore clearly identifies device .vbak files. Local and cloud password protection remains optional.
+- Choose regional date/number formats independently of language, currency and holidays in onboarding and settings.
+- Choose Latin or Persian digits in any language, see a live example, and carry display choices in new backups.
+- Existing forms remain open when display preferences change; older backup files stay compatible.
+
 ### Changed - Plan and debt setup (2026-10-08, D-65)
 
 - A new plan starts with one occurrence. Selecting Monthly repeats on the first date's day in the displayed rule

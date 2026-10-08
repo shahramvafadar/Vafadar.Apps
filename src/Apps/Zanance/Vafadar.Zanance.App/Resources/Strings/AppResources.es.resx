@@ -888,7 +888,7 @@
     <value>La restauración sustituye los datos del perfil actual por los de esta copia; no los combina. Se perderán los cambios posteriores a la copia en este perfil. Los demás perfiles no se modifican. Antes de empezar, se crea una copia preventiva en este dispositivo.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Elegir copia de seguridad</value>
+    <value>Elegir archivo de copia del dispositivo</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Comprobar archivo</value>
@@ -2781,7 +2781,7 @@
     <value>Crear copia ahora</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Ver copias</value>
+    <value>Actualizar copias</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>Las copias en la nube siguen la opción de contraseña de arriba. Puedes reutilizar la misma contraseña; nunca se guarda. Sin protección, no necesitas una contraseña de copia para restaurar.</value>
@@ -5508,5 +5508,68 @@ Primer vencimiento: {1}</value>
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>Primer vencimiento: 20 de octubre. Mensual: 20 de noviembre y 20 de diciembre. Elegir el último día del mes es un patrón distinto.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>Formato regional</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>Formato del idioma de la app</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>Solo el orden de la fecha y los separadores numéricos. El idioma, la moneda y los festivos son independientes.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>Forma de los dígitos</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>Según el idioma de la app</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>Latinos (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>Persas (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>Ejemplo: {0} · {1}</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>Calendario de festivos</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>Sin calendario de festivos</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>Se usa al desplazar vencimientos de planes por festivos. Los planes existentes conservan sus reglas.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>Alemania: solo festivos nacionales; no se incluyen los regionales. Las reglas de los planes existentes no cambian.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>Irán: los festivos lunares son aproximados y pueden diferir de las fechas oficiales.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>Idioma y formato regional</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>El idioma determina los textos y los nombres de meses y días. El formato regional determina el orden de la fecha, la hora y los separadores decimales y de miles. El calendario, los dígitos, los festivos y la moneda se eligen por separado. Estas opciones no cambian las fechas, los importes ni las reglas guardadas.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>Inglés + formato alemán + calendario gregoriano + festivos alemanes: 08.10.2026 y 1.234,56, con los textos en inglés.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>Buscando copias…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>No hay copias de Zanance en la carpeta de la app de esta cuenta. Conectar no crea una copia.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>Copias encontradas: {0}. Elige una para revisarla y restaurarla.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>Otro perfil</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>Elige un archivo .vbak guardado o descargado. Las copias de la nube conectada aparecen arriba; no necesitas descargarlas manualmente.</value>
   </data>
 </root>

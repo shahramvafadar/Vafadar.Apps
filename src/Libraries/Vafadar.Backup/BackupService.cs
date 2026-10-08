@@ -154,6 +154,14 @@ public sealed class BackupService : IBackupService
 
     /// <inheritdoc />
     public async Task<IReadOnlyList<BackupFileInfo>> ListBackupsAsync(IBackupStorage storage, CancellationToken cancellationToken = default)
+        => await ListCoreAsync(storage, allSets: false, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<BackupFileInfo>> DiscoverBackupsAsync(IBackupStorage storage, CancellationToken cancellationToken = default)
+        => await ListCoreAsync(storage, allSets: true, cancellationToken);
+
+    // Restore on another installation must discover unknown profile ids, while retention stays set-specific.
+    private async Task<IReadOnlyList<BackupFileInfo>> ListCoreAsync(IBackupStorage storage, bool allSets, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(storage);
 
@@ -163,7 +171,8 @@ public sealed class BackupService : IBackupService
         [
             .. files
                 .Select(file => (File: file, Parsed: BackupFileName.TryParse(file.FileName, out var appId, out var createdAt), AppId: appId, CreatedAt: createdAt))
-                .Where(x => x.Parsed && string.Equals(x.AppId, fileAppId, StringComparison.Ordinal))
+                .Where(x => x.Parsed && (string.Equals(x.AppId, allSets ? _app.AppId : fileAppId, StringComparison.Ordinal)
+                    || (allSets && x.AppId!.StartsWith(_app.AppId + "~", StringComparison.Ordinal))))
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(x => x.File),
         ];

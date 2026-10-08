@@ -18,8 +18,12 @@ public static class NativeDigits
     /// <remarks>Set by the app from the user's choice and the current language; read by the UI when it shows text.</remarks>
     public static bool IsEnabled { get; set; }
 
+    /// <summary>Gets or sets whether explicit regional separators must remain independent of the digit shapes.</summary>
+    public static bool PreserveSeparators { get; set; }
+
     /// <summary>Returns <paramref name="text"/> with Persian digits when <see cref="IsEnabled"/> is set.</summary>
-    public static string? Apply(string? text) => IsEnabled ? ToPersian(text) : text;
+    public static string? Apply(string? text) => !IsEnabled || text is null ? text
+        : PreserveSeparators ? Vafadar.Core.Text.Digits.ToPersian(text) : ToPersian(text);
 
     /// <summary>
     /// Replaces the Latin digits of <paramref name="text"/> with Persian digits, and a comma or dot between two digits

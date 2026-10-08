@@ -73,3 +73,7 @@ and remaining device/image-quality acceptance are tracked only in canonical ZCR-
 D-65 debt/plan UX maintenance (ZCR-LOC-13): dedicated debt direction and positive reference-date amount, optional
 repayment estimates and separate reminder draft; recurrence calendar, summary/preview and count visible in both
 modes. P2-9/P2-18 calculations and principal/interest posting remain unchanged. Device acceptance is AT-72.
+
+D-67 owner-approved maintenance adds connected backup discovery and independent regional display choices. It does
+not begin a commercial wave, add holiday countries/states or authorize sync/sharing. Germany uses the existing
+nationwide holiday rules. Follow the canonical commercial backlog for the next approved section.

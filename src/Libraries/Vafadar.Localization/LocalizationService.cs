@@ -9,10 +9,16 @@ namespace Vafadar.Localization;
 /// </summary>
 public sealed class LocalizationService : ILocalizationService
 {
+    /// <summary>The portable display choices; never includes tokens, PINs or device security preferences.</summary>
+    public static IReadOnlyList<string> PortableKeys { get; } =
+        [LanguageKey, CalendarKey, RegionKey, FirstDayKey, FormattingKey, DigitsKey];
+
     internal const string LanguageKey = "localization.language";
     internal const string CalendarKey = "localization.calendar";
     internal const string RegionKey = "localization.region";
     internal const string FirstDayKey = "localization.firstDayOfWeek";
+    internal const string FormattingKey = "localization.formattingCulture";
+    internal const string DigitsKey = "localization.digits";
 
     private readonly LocalizationOptions _options;
     private readonly ISettingsStore _settings;
@@ -64,6 +70,12 @@ public sealed class LocalizationService : ILocalizationService
     public CultureInfo CurrentCulture { get; private set; }
 
     /// <inheritdoc />
+    public string? FormattingCultureName { get; private set; }
+
+    /// <inheritdoc />
+    public DigitStyle CurrentDigits { get; private set; }
+
+    /// <inheritdoc />
     public bool IsRightToLeft => CurrentLanguage.IsRightToLeft;
 
     /// <inheritdoc />
@@ -103,6 +115,9 @@ public sealed class LocalizationService : ILocalizationService
 
         var region = _settings.Get(RegionKey);
         CurrentRegion = Regions.IsKnown(region) ? region!.ToUpperInvariant() : null;
+        FormattingCultureName = ValidFormattingCulture(_settings.Get(FormattingKey));
+        CurrentDigits = Enum.TryParse<DigitStyle>(_settings.Get(DigitsKey), out var digits) && Enum.IsDefined(digits)
+            ? digits : DigitStyle.LanguageDefault;
         Apply(language, SavedCalendar() ?? _options.DefaultCalendar(language));
     }
 
@@ -159,9 +174,40 @@ public sealed class LocalizationService : ILocalizationService
         Apply(CurrentLanguage, CurrentCalendar);
     }
 
+    /// <inheritdoc />
+    public void SetFormattingCulture(string? cultureName)
+    {
+        var valid = ValidFormattingCulture(cultureName);
+        if (!string.IsNullOrEmpty(cultureName) && valid is null)
+        {
+            throw new ArgumentException("A supported specific culture is required.", nameof(cultureName));
+        }
+
+        FormattingCultureName = valid;
+        _settings.Set(FormattingKey, valid);
+        Apply(CurrentLanguage, CurrentCalendar);
+    }
+
+    /// <inheritdoc />
+    public void SetDigits(DigitStyle digits)
+    {
+        if (!Enum.IsDefined(digits))
+        {
+            throw new ArgumentOutOfRangeException(nameof(digits));
+        }
+
+        CurrentDigits = digits;
+        _settings.Set(DigitsKey, digits.ToString());
+        Apply(CurrentLanguage, CurrentCalendar);
+    }
+
+    private static string? ValidFormattingCulture(string? name) =>
+        string.IsNullOrEmpty(name) ? null : CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+            .FirstOrDefault(c => string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase))?.Name;
+
     private void Apply(AppLanguage language, CalendarSystem calendar)
     {
-        var culture = CultureFactory.Create(language, calendar);
+        var culture = CultureFactory.Create(language, calendar, FormattingCultureName);
         culture.DateTimeFormat.FirstDayOfWeek = SavedFirstDay() ?? Regions.FirstDayOfWeek(CurrentRegion, culture);
 
         CurrentLanguage = language;
@@ -169,9 +215,10 @@ public sealed class LocalizationService : ILocalizationService
         CurrentCulture = culture;
 
         CultureInfo.DefaultThreadCurrentCulture = culture;
-        CultureInfo.DefaultThreadCurrentUICulture = culture;
+        var uiCulture = CultureInfo.GetCultureInfo(language.CultureName);
+        CultureInfo.DefaultThreadCurrentUICulture = uiCulture;
         CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.CurrentUICulture = uiCulture;
 
         _translator.SetCulture(culture);
         Changed?.Invoke(this, EventArgs.Empty);

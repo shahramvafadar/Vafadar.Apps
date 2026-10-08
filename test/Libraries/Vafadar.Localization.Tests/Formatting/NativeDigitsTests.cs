@@ -24,4 +24,22 @@ public sealed class NativeDigitsTests
         Assert.Equal("42", NativeDigits.Apply("42"));
         Assert.Null(NativeDigits.Apply(null));
     }
+
+    [Fact]
+    [Trait("AT", "AT-74")]
+    public void Explicit_regional_separators_survive_Persian_digit_shapes()
+    {
+        NativeDigits.IsEnabled = true;
+        NativeDigits.PreserveSeparators = true;
+        try
+        {
+            Assert.Equal("۱.۲۳۴,۵۶", NativeDigits.Apply("1.234,56"));
+            Assert.Equal("۰۸.۱۰.۲۰۲۶", NativeDigits.Apply("08.10.2026"));
+        }
+        finally
+        {
+            NativeDigits.IsEnabled = false;
+            NativeDigits.PreserveSeparators = false;
+        }
+    }
 }

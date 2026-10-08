@@ -25,14 +25,7 @@
                             SemanticProperties.Description="{v:Translate Settings_Calendar}" />
                     <Label Text="{Binding CalendarPreview}" Style="{StaticResource Secondary}" />
 
-                    <Label Text="{v:Translate Settings_Region}" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding Regions}" SelectedItem="{Binding SelectedRegion}"
-                            SemanticProperties.Description="{v:Translate Settings_Region}" />
-                    <Label Text="{v:Translate Settings_RegionHint}" Style="{StaticResource Secondary}" />
-
-                    <Label Text="{v:Translate Settings_WeekStart}" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding WeekStarts}" SelectedItem="{Binding SelectedWeekStart}"
-                            SemanticProperties.Description="{v:Translate Settings_WeekStart}" />
+                    <local:RegionalPreferencesView BindingContext="{Binding Regional}" />
                 </VerticalStackLayout>
             </Border>
 
@@ -110,10 +103,7 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" />
-                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0" IsVisible="{Binding IsPersian}">
-                        <Label Text="{v:Translate Settings_PersianDigits}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding PersianDigits}" SemanticProperties.Description="{v:Translate Settings_PersianDigits}" />
-                    </Grid>
+
                 </VerticalStackLayout>
             </Border>
 

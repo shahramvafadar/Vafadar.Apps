@@ -294,3 +294,11 @@ en/fa/de both-theme 360/412/wide review. Windows UI Automation verified positive
 to details, first-date/monthly/custom binding, a saved unknown-principal reminder and cancellation with unchanged
 ledger counts. Modal dismissal followed by detail navigation is sequential on Windows. Physical-device AT-72 is still a release gate. LOC-06 and commercial waves
 retain their separate scope/approval requirements.
+
+### Owner-approved maintenance on 2026-10-08 (D-67)
+
+ZCR-LOC-14: connected-backup discovery and independent regional display. Implemented: optional protection retained,
+automatic listing and destination feedback, restore discovery across profiles with unchanged retention, device-file
+fallback labels; shared regional controls in onboarding/settings, portable allowlisted display preferences and
+backward-compatible restore. AT-73/74 local tests and rendered checks; real provider and device gates remain QA-02.
+This does not authorize commercial enforcement or another wave. Next proposed section remains ZCR-SEC-01.

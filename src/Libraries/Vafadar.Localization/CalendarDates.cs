@@ -104,28 +104,30 @@ public static class CalendarDates
     /// </summary>
     /// <remarks>
     /// Gregorian dates follow the culture's short date pattern (English month/day/year, German day.month.year).
-    /// Persian and lunar Hijri dates are written year/month/day ("1405/07/03", as the app shows them). In a
+    /// Without an explicit regional pattern, Persian and lunar Hijri dates are written year/month/day ("1405/07/03", as the app shows them). In a
     /// right-to-left language the parts are listed day, month, year: laid out from the right, they read
-    /// "1405 / 07 / 03" on screen like the written date.
+    /// "1405 / 07 / 03" on screen like the written date. An explicit regional pattern controls all calendars.
     /// </remarks>
-    public static IReadOnlyList<DatePart> InputOrder(CultureInfo culture, CalendarSystem calendar)
+    public static IReadOnlyList<DatePart> InputOrder(CultureInfo culture, CalendarSystem calendar, bool useRegionalPattern = false)
     {
         ArgumentNullException.ThrowIfNull(culture);
-        if (culture.TextInfo.IsRightToLeft)
+        if (!useRegionalPattern && culture.TextInfo.IsRightToLeft)
         {
             return [DatePart.Day, DatePart.Month, DatePart.Year];
         }
 
-        if (calendar != CalendarSystem.Gregorian)
+        if (!useRegionalPattern && calendar != CalendarSystem.Gregorian)
         {
             return [DatePart.Year, DatePart.Month, DatePart.Day];
         }
 
         var pattern = culture.DateTimeFormat.ShortDatePattern;
-        return new[] { (DatePart.Day, pattern.IndexOf('d', StringComparison.Ordinal)), (DatePart.Month, pattern.IndexOf('M', StringComparison.Ordinal)), (DatePart.Year, pattern.IndexOf('y', StringComparison.Ordinal)) }
+        var order = new[] { (DatePart.Day, pattern.IndexOf('d', StringComparison.Ordinal)), (DatePart.Month, pattern.IndexOf('M', StringComparison.Ordinal)), (DatePart.Year, pattern.IndexOf('y', StringComparison.Ordinal)) }
             .OrderBy(p => p.Item2 < 0 ? int.MaxValue : p.Item2)
             .Select(p => p.Item1)
             .ToArray();
+        // MAUI mirrors the horizontal fields in RTL; reverse the logical order to retain the selected numeric layout.
+        return culture.TextInfo.IsRightToLeft ? order.Reverse().ToArray() : order;
     }
 
     // The years of MinDate and MaxDate in each calendar (a year at an edge is checked again by TryCreate).

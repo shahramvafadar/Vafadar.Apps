@@ -94,7 +94,68 @@ internal static class DebugSnapshots
         });
     }
 
+    // Fictitious destination feedback only; no account sign-in or cloud upload is performed by this fixture.
+    private static async Task CaptureCloudStatesAsync(App app, Features.Backup.BackupViewModel vm, string folder, string language)
+    {
+        var translator = Translator.Instance;
+        vm.HasCloud = true;
+        vm.CloudAccounts.Clear();
+        var row = new Features.Backup.CloudAccountRow(Vafadar.Authentication.ExternalIdentityProvider.Microsoft, translator["Cloud_OneDrive"])
+        {
+            Account = "backup-review@example.invalid",
+            Status = translator["Cloud_NoBackups"],
+        };
+        vm.CloudAccounts.Add(row);
+        vm.UsePassword = false;
+        vm.LocalBackups.Clear();
+        vm.HasLocalBackups = false;
+        await Task.Delay(300);
+        if (FindScrollView(app.Windows[0].Page) is { } scroll)
+        {
+            if (Shell.Current?.CurrentPage?.FindByName<Border>("CloudSection") is { } card)
+            {
+                await scroll.ScrollToAsync(card, ScrollToPosition.Start, animated: false);
+            }
+        }
+        await CaptureAsync(app, folder, $"{language}-backup-cloud-empty");
+        row.Status = null;
+        row.Error = translator.Format("Cloud_Error_Offline", row.Title);
+        await CaptureAsync(app, folder, $"{language}-backup-cloud-error");
+        row.Error = null;
+        var files = new[] { "", "~old-device" }.Select(profile =>
+            new Vafadar.Backup.BackupFileInfo(profile, $"pro.vafadar.zanance{profile}_20261008T120000Z.vbak", 123456,
+                DateTimeOffset.Parse("2026-10-08T12:00:00Z", System.Globalization.CultureInfo.InvariantCulture))).ToArray();
+        vm.ApplyCloudFiles(row, files);
+        if (!row.HasBackups || row.Backups.Count != 2)
+        {
+            throw new InvalidOperationException("Discovered cloud files did not become visible.");
+        }
+        await Task.Delay(300);
+        await CaptureAsync(app, folder, $"{language}-backup-cloud-files");
+        vm.CloudAccounts.Clear();
+        vm.HasCloud = false;
+    }
+
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
+    {
+        var settings = services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>();
+        var saved = LocalizationService.PortableKeys.ToDictionary(key => key, settings.Get);
+        var passwordChoice = Preferences.Default.Get("backup.usePassword", true);
+        try
+        {
+            await RunCoreAsync(app, services, folder);
+        }
+        finally
+        {
+            Preferences.Default.Set("backup.usePassword", passwordChoice);
+            foreach (var (key, value) in saved)
+            {
+                settings.Set(key, value);
+            }
+        }
+    }
+
+    private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
         var localization = services.GetRequiredService<ILocalizationService>();
         var languages = (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_LANGUAGES") ?? "en,fa").Split(',');
@@ -105,8 +166,14 @@ internal static class DebugSnapshots
 
         // VAFADAR_SNAPSHOT_DIGITS=latin shows Persian with Latin digits; the choice is saved, so other runs set the default
         // (Persian digits) back.
-        Presentation.DigitPreferences.Set(
-            !string.Equals(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_DIGITS"), "latin", StringComparison.OrdinalIgnoreCase), localization);
+        localization.SetDigits(string.Equals(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_DIGITS"), "latin", StringComparison.OrdinalIgnoreCase)
+            ? DigitStyle.Latin : DigitStyle.LanguageDefault);
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY")?.Contains("regional", StringComparison.Ordinal) == true)
+        {
+            localization.SetFormattingCulture("de-DE");
+            localization.SetRegion("DE");
+            localization.SetCalendar(CalendarSystem.Gregorian);
+        }
 
         // VAFADAR_SNAPSHOT_CALENDAR=Hijri (or Persian, Gregorian) shoots every language in that calendar, budget included
         // (onboarding takes the current calendar). The choice is saved, so runs without it remove it again and the
@@ -154,7 +221,7 @@ internal static class DebugSnapshots
                     }
                 }
             }
-            vm.Account.OpeningText = "1250.50";
+            vm.Account.OpeningText = Core.Money.MoneyText.ForInput(125050, "EUR", localization.CurrentCulture);
             await vm.NextCommand.ExecuteAsync(null);
             await Task.Delay(1500);
         }
@@ -275,6 +342,7 @@ internal static class DebugSnapshots
             ("report-review", AppShell.ReviewRoute, null),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
+            ("regional-settings", AppShell.SettingsRoute, null),
             ("profiles", AppShell.ProfilesRoute, null),
             ("about", AppShell.AboutRoute, null),
             ("notices", AppShell.NoticesRoute, null),
@@ -313,7 +381,16 @@ internal static class DebugSnapshots
                 }
 
                 await CaptureAsync(app, folder, $"{language}-{name}");
+                if (name == "backup" && Shell.Current!.CurrentPage?.BindingContext is Features.Backup.BackupViewModel backupVm)
+                {
+                    await CaptureCloudStatesAsync(app, backupVm, folder, language);
+                }
 #if WINDOWS
+                if (name == "regional-settings")
+                {
+                    await CaptureHelpAsync(app, folder, language, ["RegionalFormat"]);
+                }
+
                 if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
                 {
                     await CaptureSecurityAsync(app, services, settingsPage, folder, language);

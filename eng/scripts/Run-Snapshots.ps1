@@ -68,7 +68,8 @@ if (Test-Path $data) {
 New-Item -ItemType Directory -Force $Output | Out-Null
 Get-ChildItem $Output -File | ForEach-Object { [IO.File]::Delete($_.FullName) }
 
-dotnet build src\Apps\Zanance\Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
+dotnet build src\Apps\Zanance\Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -p:ContinuousIntegrationBuild=true -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
+if ($LASTEXITCODE -ne 0) { throw "Windows build failed; no previous executable was launched." }
 $exe = Get-ChildItem 'src\Apps\Zanance\Vafadar.Zanance.App\bin\Debug\net10.0-windows10.0.19041.0' -Recurse -Filter 'Vafadar.Zanance.App.exe' | Select-Object -First 1
 $env:VAFADAR_SNAPSHOTS = (Resolve-Path $Output)
 $env:VAFADAR_SNAPSHOT_LANGUAGES = ($Languages -join ',')

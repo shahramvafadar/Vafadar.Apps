@@ -109,3 +109,13 @@ Run-Snapshots accepts `plan-debt-reminder`, `debt-new` and `receivable-new` alon
 term states and check unsaved draft invariants. Run Simple and Advanced, en/fa/de, light/dark at 360/412/wide.
 Only fictitious data is seeded; the script preserves a non-fixture development database before the run.
 Background app launches use hidden windows and the app captures its own rendered window.
+
+### Regional and cloud-list review (D-67)
+
+`Run-Snapshots.ps1 -Languages 'en,fa,de' -Calendar Gregorian -Only regional-settings,backup` captures the independent
+German formatting/holiday choices and fictitious connected-cloud empty/error/files states, plus onboarding. Repeat
+light/dark at 360x800, 412x892 and 1280x820. Destination fixtures use the same file-to-row application path as live
+listing and assert discovered rows become visible. They never sign in, upload, restore or delete cloud files.
+Prior portable choices and backup protection preference are restored after the run. The launcher requires a strict
+Windows build and stops on failure; it never launches a stale executable. These checks do not validate real OAuth
+clients or signing-certificate registration.

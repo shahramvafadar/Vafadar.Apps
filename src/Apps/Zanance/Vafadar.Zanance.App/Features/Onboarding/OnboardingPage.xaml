@@ -9,6 +9,7 @@
     xmlns:loc="clr-namespace:Vafadar.Localization;assembly=Vafadar.Localization"
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Onboarding"
+    xmlns:settings="clr-namespace:Vafadar.Zanance.App.Features.Settings"
     x:DataType="local:OnboardingViewModel"
     BackgroundColor="{DynamicResource PageBackground}">
 
@@ -147,6 +148,7 @@
                                 <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
                                 <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
                                         SemanticProperties.Description="{v:Translate Settings_Calendar}" />
+                                <settings:RegionalPreferencesView BindingContext="{Binding Regional}" />
                             </VerticalStackLayout>
                         </Border>
                         <Label Text="{v:Translate Onb_LaterText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="8,16,8,0" />

@@ -891,7 +891,7 @@
     <value>La restauration remplace les données du profil actuel par celles de cette sauvegarde ; elle ne fusionne pas les données. Les modifications apportées depuis la sauvegarde seront perdues dans ce profil. Les autres profils ne sont pas concernés. Une copie de précaution est créée sur cet appareil avant le début de la restauration.</value>
   </data>
   <data name="Backup_PickFile" xml:space="preserve">
-    <value>Choisir un fichier de sauvegarde</value>
+    <value>Choisir un fichier de sauvegarde sur l’appareil</value>
   </data>
   <data name="Backup_Check" xml:space="preserve">
     <value>Vérifier le fichier</value>
@@ -2786,7 +2786,7 @@
     <value>Sauvegarder maintenant</value>
   </data>
   <data name="Cloud_ShowBackups" xml:space="preserve">
-    <value>Afficher les sauvegardes</value>
+    <value>Actualiser les sauvegardes</value>
   </data>
   <data name="Cloud_PasswordHint" xml:space="preserve">
     <value>Les sauvegardes cloud suivent le choix de protection ci-dessus. Vous pouvez réutiliser le même mot de passe ; il n’est jamais enregistré. Sans protection, la restauration ne demande aucun mot de passe de sauvegarde.</value>
@@ -5516,5 +5516,68 @@ Première échéance : {1}</value>
   </data>
   <data name="Help_PlanRepeat_Example" xml:space="preserve">
     <value>Première échéance : 20 octobre. Chaque mois : 20 novembre, 20 décembre. Le dernier jour du mois est un autre motif.</value>
+  </data>
+  <data name="Regional_Format" xml:space="preserve">
+    <value>Format régional</value>
+  </data>
+  <data name="Regional_FollowLanguage" xml:space="preserve">
+    <value>Format de la langue de l’application</value>
+  </data>
+  <data name="Regional_FormatHint" xml:space="preserve">
+    <value>Uniquement l’ordre des dates et les séparateurs numériques. La langue, la devise et les jours fériés restent indépendants.</value>
+  </data>
+  <data name="Regional_Digits" xml:space="preserve">
+    <value>Forme des chiffres</value>
+  </data>
+  <data name="Regional_DigitsAutomatic" xml:space="preserve">
+    <value>Selon la langue de l’application</value>
+  </data>
+  <data name="Regional_DigitsLatin" xml:space="preserve">
+    <value>Latins (0123)</value>
+  </data>
+  <data name="Regional_DigitsPersian" xml:space="preserve">
+    <value>Persans (۰۱۲۳)</value>
+  </data>
+  <data name="Regional_Preview" xml:space="preserve">
+    <value>Exemple : {0} · {1}</value>
+  </data>
+  <data name="Regional_Holidays" xml:space="preserve">
+    <value>Calendrier des jours fériés</value>
+  </data>
+  <data name="Regional_NoHolidays" xml:space="preserve">
+    <value>Aucun calendrier de jours fériés</value>
+  </data>
+  <data name="Regional_HolidaysHint" xml:space="preserve">
+    <value>Utilisé pour décaler les échéances des plans autour des jours fériés. Les plans existants conservent leurs règles.</value>
+  </data>
+  <data name="Regional_HolidaysGermany" xml:space="preserve">
+    <value>Allemagne : jours fériés nationaux uniquement, sans ceux des Länder. Les règles des plans existants restent inchangées.</value>
+  </data>
+  <data name="Regional_HolidaysIran" xml:space="preserve">
+    <value>Iran : les dates des fêtes lunaires sont approximatives et peuvent différer des annonces officielles.</value>
+  </data>
+  <data name="Help_RegionalFormat_Title" xml:space="preserve">
+    <value>Langue et format régional</value>
+  </data>
+  <data name="Help_RegionalFormat_Text" xml:space="preserve">
+    <value>La langue détermine les textes et les noms des mois et des jours. Le format régional détermine l’ordre des dates, l’heure et les séparateurs décimaux et de milliers. Le calendrier, les chiffres, les jours fériés et la devise se choisissent séparément. Ces choix ne modifient ni les dates ni les montants ni les règles enregistrées.</value>
+  </data>
+  <data name="Help_RegionalFormat_Example" xml:space="preserve">
+    <value>Anglais + format allemand + calendrier grégorien + jours fériés allemands : 08.10.2026 et 1.234,56, avec les textes en anglais.</value>
+  </data>
+  <data name="Cloud_LoadingBackups" xml:space="preserve">
+    <value>Recherche des sauvegardes…</value>
+  </data>
+  <data name="Cloud_NoBackups" xml:space="preserve">
+    <value>Aucune sauvegarde Zanance dans le dossier de l’application de ce compte. La connexion seule ne crée pas de sauvegarde.</value>
+  </data>
+  <data name="Cloud_BackupsFound" xml:space="preserve">
+    <value>Sauvegardes trouvées : {0}. Sélectionnez-en une pour la prévisualiser et la restaurer.</value>
+  </data>
+  <data name="Cloud_OtherProfile" xml:space="preserve">
+    <value>Autre profil</value>
+  </data>
+  <data name="Backup_FileHint" xml:space="preserve">
+    <value>Choisissez un fichier .vbak enregistré ou téléchargé. Les sauvegardes cloud connectées sont listées ci-dessus, sans téléchargement manuel.</value>
   </data>
 </root>

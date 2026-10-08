@@ -7,7 +7,7 @@ namespace Vafadar.Localization;
 /// </summary>
 internal static class CultureFactory
 {
-    public static CultureInfo Create(AppLanguage language, CalendarSystem calendar)
+    public static CultureInfo Create(AppLanguage language, CalendarSystem calendar, string? formattingCultureName = null)
     {
         var culture = (CultureInfo)CultureInfo.GetCultureInfo(language.CultureName).Clone();
         var format = culture.DateTimeFormat;
@@ -41,6 +41,20 @@ internal static class CultureFactory
             var numbers = culture.NumberFormat;
             numbers.NumberDecimalSeparator = numbers.CurrencyDecimalSeparator = numbers.PercentDecimalSeparator = ".";
             numbers.NumberGroupSeparator = numbers.CurrencyGroupSeparator = numbers.PercentGroupSeparator = ",";
+        }
+
+        if (formattingCultureName is not null)
+        {
+            var regional = CultureInfo.GetCultureInfo(formattingCultureName);
+            // Keep month/day names and text direction in the UI language. Copy formatting only after calendar setup.
+            culture.NumberFormat = (NumberFormatInfo)regional.NumberFormat.Clone();
+            var regionalDates = regional.DateTimeFormat;
+            format.DateSeparator = regionalDates.DateSeparator;
+            format.ShortDatePattern = regionalDates.ShortDatePattern;
+            format.ShortTimePattern = regionalDates.ShortTimePattern;
+            format.LongTimePattern = regionalDates.LongTimePattern;
+            format.LongDatePattern = System.Text.RegularExpressions.Regex.Replace(regionalDates.LongDatePattern, "'[^']*'", "");
+            format.FirstDayOfWeek = regionalDates.FirstDayOfWeek;
         }
 
         return culture;
