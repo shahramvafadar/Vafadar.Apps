@@ -103,3 +103,7 @@ Portable language/calendar/region/formatting-culture/digit/week-start preference
 backup package via an explicit allowlist. Tokens, PIN verifiers, passwords and device security preferences do not.
 Connected-provider metadata listing now runs on opening the backup page; connection remains explicit and there is
 no automatic upload, broader scope, new SDK or location access.
+
+
+SEC-01 / D-68 is a separate fictitious-only experiment and architecture proposal. No real-data or production
+permission/SDK changes; local database encryption and financial-data OS-backup protection remain unimplemented.

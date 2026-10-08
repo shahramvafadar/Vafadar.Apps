@@ -79,3 +79,8 @@ choices remain device-local; credentials, PIN state and tokens are excluded. Old
 source and leave current display choices intact. Connected cloud listing reads file metadata automatically when
 the backup page opens and after connection; no automatic upload or wider file permission is introduced. No location,
 SDK, network destination or database field was added. Germany's holidays remain nationwide-only.
+
+
+D-68 / SEC-01: independent fictitious-only encryption experiment under a separate Android package. No production
+SDK, permission, user-data field, connection, export or key handling changed. Current plaintext database/safety-copy
+and OS-backup boundaries remain; proposed ADR 0010 must not be represented as implemented protection.

@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><IsTestProject>true</IsTestProject></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Probe/Probe.csproj" /><PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" /><PackageReference Include="xunit.v3" /><PackageReference Include="System.Security.Cryptography.ProtectedData" /><Using Include="Xunit" /></ItemGroup>
+</Project>

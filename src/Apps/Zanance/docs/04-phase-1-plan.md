@@ -71,3 +71,7 @@ acceptance remains open. This maintenance does not reopen or approve another com
 D-67 maintenance: automatic connected-backup discovery with destination feedback and cross-profile restore lists;
 independent regional formats/digits/holidays in first run and settings, with portable display choices. Local validation
 uses AT-73/74; real-provider and physical-device acceptance remain open in S15/AT-59.
+
+
+SEC-01 research (D-68, 2026-10-08) prepares ADR 0010 and an independent fictitious encryption harness. Production
+database encryption is still absent; Windows proof passes, Android runtime and architecture acceptance are pending.

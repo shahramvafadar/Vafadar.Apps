@@ -68,3 +68,8 @@
   restore, with state-holiday coverage explicitly excluded. Repeat Persian RTL and native pickers.
 
 Local automated/rendered checks and CI do not close these physical-device or provider gates.
+
+
+SEC-01 / D-68 gate: proposed ADR 0010 and independent Windows proof do not clear the encryption release gate.
+Android runtime, iOS, exact maintained native binaries, recovery, key loss, migration fault injection, OS backup and
+no-plaintext-safety-copy checks remain. Never ship the deprecated feasibility provider through app dependencies.

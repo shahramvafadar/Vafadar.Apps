@@ -202,3 +202,10 @@ SettingsBackupSource backs up only LocalizationService.PortableKeys into display
 an explicit override on restore; arbitrary keys are ignored. Missing optional sources in older packages retain the
 current settings. The app initializes localization on the UI thread after the restore completes. Device security
 and authentication are never part of this source. No schema migration or compiled-model regeneration is needed.
+
+
+## Proposed database encryption (SEC-01)
+
+[ADR 0010](../adr/0010-database-encryption.md) is proposed for owner review. Independent proof code lives outside
+application references under experiments/Zanance.Encryption. Main database connections and backups remain unchanged;
+the existing unkeyed temporary snapshot/safety-copy paths must be redesigned before a production encryption claim.

@@ -119,3 +119,11 @@ listing and assert discovered rows become visible. They never sign in, upload, r
 Prior portable choices and backup protection preference are restored after the run. The launcher requires a strict
 Windows build and stops on failure; it never launches a stale executable. These checks do not validate real OAuth
 clients or signing-certificate registration.
+
+
+## Independent encryption feasibility
+
+Use [experiments/Zanance.Encryption](../../experiments/Zanance.Encryption/README.md) explicitly for SEC-01 proof runs.
+It is outside the main solution, references no app and writes fictitious data only. Never add its deprecated native
+bundle to production references. Android fixture id: pro.vafadar.zanance.encryptionproof. Emulator/tool downloads
+need owner approval; never use the main finance package as a fixture or infer runtime success from APK compilation.

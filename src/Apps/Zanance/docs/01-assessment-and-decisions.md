@@ -92,6 +92,7 @@
 | D-65 | Clear plan and debt setup: date-anchored recurrence calendar, nearby summary/preview, common endings, optional rules; dedicated debt direction, positive amounts, optional estimates and separate unsaved reminder. See the detailed D-65 validation below. | REC, F2-DEBT, UX, AT-72 |
 | D-66 | Complete signed installable APK before every phone-test handoff; package/signature verified, device acceptance separate. | Delivery, Android |
 | D-67 | Cross-profile cloud restore discovery and independent regional format/digits/holiday choices, shared onboarding/settings UI and allowlisted portable display preferences. | BAK, LOC, UX, AT-73/74 |
+| D-68 | SEC-01 research/proof isolation approved; proposed SQLCipher/key-envelope architecture, no production adoption or real-data migration. | SEC, ADR 0010, AT-75 |
 
 ## 3. Conflicts found and their resolution
 
@@ -185,3 +186,18 @@ Signature and ZIP integrity pass; both arm64-v8a and x86_64 contain assembly sto
 Real provider
 sign-in/upload/download/delete, Google signing-certificate registration and physical-device acceptance remain
 owner-device checks; fixtures and successful builds do not prove those operations.
+
+## D-68 - Independent encryption feasibility and proposed architecture (2026-10-08)
+
+Owner approved ZCR-SEC-01 research, Windows/Android independent sample and safe migration design, while explicitly
+excluding real data and the main database connection. ADR 0010 is proposed for review, not accepted. The harness
+lives outside app/solution references and uses generated fictitious data; Android uses a different package id.
+The deprecated 2.1.11 Community bundle proves mechanisms only: actual SQLCipher 4.5.2 / SQLite 3.39.2 is unsuitable
+as a maintained EF 10 production baseline. Recommend maintained official SQLCipher builds subject to owner licence
+approval and exact-binary Windows/Android/iOS verification, with random per-profile data keys and device envelopes.
+No PIN-to-data-key derivation. D-62 optional portable-backup protection remains intact.
+Four independent AT-75 Windows tests pass: native encryption/sidecar leakage controls, wrong/missing key, integrity,
+tamper rejection, export, rekey, EF round-trip, CurrentUser DPAPI and authenticated PBKDF2 envelopes. Main 1,134 tests
+pass. The Android Release AOT/trimmed fixture APK is built; emulator installation approval/runtime remains pending.
+The migration document defines crash/restart states and excludes new plaintext snapshots, but migration fault
+injection and production adoption belong to later sections. Proposed next section after owner review: ZCR-SEC-07.

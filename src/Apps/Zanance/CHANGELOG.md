@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Engineering - Encryption architecture research (2026-10-08, D-68)
+
+- Prepared a proposed database/key architecture and safe migration plan for review, with an independent fictitious
+  Windows/Android harness. Application storage, database connections and existing backup protection are unchanged.
+
+
 ### Changed - Backup discovery and regional formats (2026-10-08, D-67)
 
 - Connected cloud backups load automatically and show progress, empty results or errors beside their destination.

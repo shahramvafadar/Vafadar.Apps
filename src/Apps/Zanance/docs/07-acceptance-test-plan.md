@@ -83,3 +83,12 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 |---|---|---|
 | AT-73 | Discover and restore connected backups from previous profiles/installations; optional protection | Library regressions cover all-set discovery, foreign-app exclusion, unchanged set retention, protected/unprotected preference restore and old packages. Rendered destination empty/error/files and device-file fallback. Real Google/OneDrive account flows, upload/download/delete and fresh-phone recovery remain AT-59 device acceptance. |
 | AT-74 | Language independent of regional display | English + German numeric formats; Persian RTL with Latin/Persian digits; explicit choices survive language/restart; invalid saved choices fall back; converted-calendar numeric order and date field order. Onboarding/settings examples and help checked in en/fa/de, light/dark, 360/412/wide. Android native pickers and device acceptance remain pending. |
+
+
+## AT-75 - Independent encryption feasibility (D-68 / SEC-01)
+
+Four separate Windows harness tests pass: encrypted DB/WAL marker controls, SHM leakage check (not encryption),
+wrong/missing key, integrity, ciphertext change, rotation/export, EF entity round-trip, DPAPI profile context and
+PBKDF2/AES-GCM envelope authentication. Fixture data only. Android complete Release AOT/trimmed APK builds; emulator
+runtime/device-key restart remains pending. No production encryption, iOS runtime, hardware-backed guarantee or
+crash-safe migration acceptance is implied. See proposed ADR 0010 and experiments/Zanance.Encryption.

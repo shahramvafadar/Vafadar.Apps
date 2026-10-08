@@ -77,3 +77,7 @@ modes. P2-9/P2-18 calculations and principal/interest posting remain unchanged. 
 D-67 owner-approved maintenance adds connected backup discovery and independent regional display choices. It does
 not begin a commercial wave, add holiday countries/states or authorize sync/sharing. Germany uses the existing
 nationwide holiday rules. Follow the canonical commercial backlog for the next approved section.
+
+
+D-68 / SEC-01 is independent security research, not a Phase 2A product feature. Its current evidence and remaining
+Android/runtime/owner gates are recorded only in the canonical commercial backlog and proposed ADR 0010.

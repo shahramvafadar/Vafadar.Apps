@@ -144,6 +144,9 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   attempt delays only in platform SecureStorage, never portable backups. Current PIN required to change/remove;
   recovery only after successful device authentication plus confirmation. No NotAvailable fallback for a PIN lock.
   Keep the startup frame covered until secure state is read. This gate does not encrypt the database.
+* SEC-01 research (D-68): encryption probes use independent projects, fictitious directories and a distinct Android
+  package; never reference them from the app or touch its database. ADR 0010 remains proposed until owner review;
+  its deprecated Community native bundle is not a production dependency. Build proof is not runtime evidence.
 * Ownership: owner-written source remains all rights reserved; bundled third-party notices apply to their components
   only and grant no rights to Zanance source. Keep that distinction clear in the app.
 * Privacy: no analytics, ads, crash reporting or network SDKs; offline builds declare no `INTERNET` permission

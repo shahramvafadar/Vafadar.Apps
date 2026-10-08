@@ -1314,3 +1314,9 @@ are unchanged. Password protection remains optional in both local/cloud paths. I
 shapes and holiday/week choices are available before first-account creation and later, without changing UI language,
 currency, stored dates/amounts or existing plan rules. New packages carry allowlisted display preferences; old packages
 remain compatible. AT-73/74 local checks do not prove real-provider or physical-device acceptance.
+
+
+D-68 / SEC-01 research status (2026-10-08): proposed ADR 0010 compares database encryption/provider/key choices and
+safe migration. Four Windows feasibility tests pass outside the main 1,134-test suite; Android fixture APK builds
+with trimming/AOT, runtime pending emulator approval. App data remains plaintext, the production connection and
+permissions are unchanged, and ADR acceptance/library procurement/recovery are owner-review gates.

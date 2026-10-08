@@ -15,7 +15,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Proposed | GOV-01 |
-| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | Proposed | OD-04 |
+| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress | OD-04 |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | Proposed | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
@@ -302,3 +302,12 @@ automatic listing and destination feedback, restore discovery across profiles wi
 fallback labels; shared regional controls in onboarding/settings, portable allowlisted display preferences and
 backward-compatible restore. AT-73/74 local tests and rendered checks; real provider and device gates remain QA-02.
 This does not authorize commercial enforcement or another wave. Next proposed section remains ZCR-SEC-01.
+
+### SEC-01 evidence update (2026-10-08, D-68)
+
+Research and independent proof authorized by the owner. Proposed ADR 0010 inventories current plaintext data,
+compares legacy Community/current self-built/official Commercial SQLCipher and SEE, designs per-profile keys and
+safe migration/restart/rollback states. Four independent Windows AT-75 tests pass; separate Android Release fixture
+builds with trimming/AOT. Android emulator runtime awaits installation approval; no runtime pass is inferred from
+build success. ADR acceptance and production library/recovery/OS-backup decisions remain owner gates. No real data,
+production database connection, native provider, main solution or app permission changes. Not Done yet.

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Isolated fictitious-data harness; adb run-as retrieves its result, never the production package. -->
+  <application android:label="Zanance encryption proof" android:allowBackup="false" android:debuggable="true" />
+</manifest>
