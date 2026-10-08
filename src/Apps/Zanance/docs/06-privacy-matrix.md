@@ -90,3 +90,9 @@ D-69 / SEC-09: the current SDK/build review is [recorded here](../../../../docs/
 Android Cloud grants process-wide INTERNET before sign-in; ML Kit diagnostics may be transmitted independently of
 a connected account. No application advertising/analytics/crash service is added. Complete Release APK permission
 checks cover Offline and Cloud variants; iOS signed-binary/native-traffic and future billing/sync reviews remain gates.
+
+D-70 / LOC-02 extends DF-08 with optional goal-contribution notifications: goal id/deep link and contribution date
+enter only the local device scheduler. Goal names/dates appear in notification text only with details opted in;
+otherwise title and body are generic. The existing contribution-plan flag is in database backups; native permission
+is device-local. Paused/completed/reached/unavailable goals stop pending reminders. Taps pass the app lock and never
+record contributions or transfer money. No new SDK, permission, external recipient or schema.

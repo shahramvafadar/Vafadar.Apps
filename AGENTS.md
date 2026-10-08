@@ -158,6 +158,9 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   Keep summary/actual dates and ending count/date visible in both modes, uncommon rules optional. Debt direction
   supplies the sign of positive reference-date input. Estimates, actual repayments and unsaved reminder drafts stay
   separate; never post an estimated installment as principal or create ledger entries when opening a draft.
+* Goal contribution reminders (D-70): optional, off by default, 09:00 device-local on saved rule/calendar dates.
+  Suppress inactive/reached/unavailable goals, bound the shared pending queue, and keep text generic unless opted in.
+  Taps only open details through app lock. A reminder-only edit preserves the rule; never record financial movements.
 * Receipt reading (D-64): use complete purchase-total evidence, never the largest item price or an unfiltered last
   number. Preserve OCR line/angle/page relationships and explicit currency/unit; uncertain totals remain for review.
   Recognition uses its own bounded upright image; only the compact metadata-free copy enters attachments/backups.

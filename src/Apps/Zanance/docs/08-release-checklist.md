@@ -79,3 +79,7 @@ no-plaintext-safety-copy checks remain. Never ship the deprecated feasibility pr
 D-69 / SEC-09: run the complete-APK permission guard for the selected Offline/Cloud Release variant; keep the SDK
 review and store declarations matched to that binary. Native traffic, real OAuth and signed iOS SDK privacy-manifest
 review remain gates; repeat before billing/sync SDKs. Never claim no SDK diagnostics in a cloud-enabled Android build.
+
+D-70 / LOC-02 device gate: verify contribution reminder opt-in/refusal, local 09:00 scheduling with the saved calendar,
+generic/details text, pause/reach/resume/disable cancellation and notification taps through the app lock on a signed
+APK. Android emulator fixture delivery does not close ARM64 phone, Doze/timezone/reboot or iOS device acceptance.

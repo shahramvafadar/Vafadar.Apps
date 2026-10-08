@@ -209,3 +209,11 @@ and authentication are never part of this source. No schema migration or compile
 [ADR 0010](../adr/0010-database-encryption.md) is proposed for owner review. Independent proof code lives outside
 application references under experiments/Zanance.Encryption. Main database connections and backups remain unchanged;
 the existing unkeyed temporary snapshot/safety-copy paths must be redesigned before a production encryption claim.
+
+## Goal contribution reminder persistence (D-70)
+
+The existing ContributionPlan.ReminderEnabled opt-in is stored/replaced with its contribution plan and is already
+part of database backup/restore; no schema change. Platform notification permission is not portable. The optional
+planner evaluates current balance/funded earmark/held quantity and saved recurrence dates, then the device
+coordinator groups, privacy-filters and replaces future requests. No contribution, transfer or ledger write occurs.
+A reminder-only editor change clones the existing rule so calendar, anchor and ending are not rewritten.

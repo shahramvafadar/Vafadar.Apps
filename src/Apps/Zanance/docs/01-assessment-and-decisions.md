@@ -218,3 +218,31 @@ claims in the document library and policy. Add a shipped-APK allowlist guard wit
 Offline build switch that overrides provider properties without reading or editing owner configuration. Strict
 Windows/Android builds, main tests and complete signed variant artifacts verify the current baseline; future online
 SDKs, physical traffic/real OAuth and signed iOS privacy manifests require repeated review. No new SDK or app UI.
+
+## D-70 - Optional goal contribution reminders (2026-10-09)
+
+ZCR-LOC-02 uses the existing ContributionPlan.ReminderEnabled field, off by default and visible in both modes with
+help. Schedule at 09:00 device-local time on saved contribution dates; keep the saved rule calendar, anchor and
+ending when only the reminder is edited. The planner shares the 62-day horizon and 30-pending bound. Current
+progress suppresses active-but-reached, paused/completed/archived and missing/archived-source goals; a withdrawal
+can resume reminders for an active goal. Missed dates never produce late bursts. Group goal contributions sharing
+a minute and bound the combined device queue. Goal/holding changes rebuild it alongside entries/plans/settings,
+start/resume, profile switch and restore. Reopening a form never prompts for permission.
+
+Default notification title/body contain no goal name, account or amount; details require the existing opt-in.
+A tap goes through the device app-lock gate and opens the goal, never recording a contribution or moving money.
+No schema, new permission, SDK or network path. The saved opt-in travels with its existing contribution plan in
+backups; runtime permission stays device-local. Windows retains the choice but has no system notification delivery.
+
+AT-77 adds twelve planner cases and seven real-store/coordinator cases: month-end/Persian dates, weekly intervals,
+rule endings, lifecycle/source/reached cancellation, withdrawal, opt-out, stable rebuilds, bounds, generic/details
+privacy, grouping, permission denial and no ledger/allocation mutation. All 1,153 .NET tests pass.
+Running-app en/fa/de light/dark editor/help review passes at 360x800, 412x892 and 1280x820; original development
+DB files were restored with matching hashes. Android API 36 x86_64 native pending dates keep 09:00 at +02:00 and +01:00
+across DST; a generic notification was delivered and tapping it opened its goal. UI pause cancels pending
+requests, resume restores them, and saved opt-out survives process restart; ledger/allocation counts remain zero.
+The diagnostic expedites only a fictitious notification, not system time; it cannot prove exact-time/Doze delivery.
+Strict Windows and Android Debug/Release builds have no errors/warnings. Complete signed Release APK: 77.2 MiB,
+package pro.vafadar.zanance 0.1.0 / code 1, minimum 24 / target 36, both arm64/x86_64 assembly stores and app AOT
+images, signature/ZIP/Cloud permission guard pass, and actual emulator installation/cold start pass. Release metadata
+contains neither DebugGoalReminders nor DebugSnapshots. Physical phone and iOS acceptance remain open.

@@ -26,7 +26,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
-| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Proposed | – |
+| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Proposed | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Proposed | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Proposed | owner translations |
@@ -149,8 +149,13 @@ Scope: bugs found on the owner's phone; each bug its own fix with a test. Done w
 deferred by the owner.
 
 ### ZCR-LOC-02 – Goal contribution reminders (from ZEX-S0306)
-Scope: reminders on contribution dates using the reminder planner; generic lock-screen text. Texts: new strings
-(owner). Done: planner tests, device notification check.
+Scope delivered in D-70: opt-in on goal contribution dates at 09:00 device-local time using the saved rule/calendar,
+generic lock-screen text and existing notification permission/details settings. Twelve planner and seven coordinator/
+SQLite cases pass; 1,153 main tests pass. en/fa/de light/dark 360/412/wide editor/help reviewed. Android API 36 x86_64
+checks native pending requests across DST, real generic notification delivery and tap to the goal, pause/resume and
+saved opt-out after process restart, without financial writes. Complete signed Release APK installs/starts on the
+isolated AVD; Debug fixture types are absent from Release. ARM64 phone, Doze/reboot and iOS acceptance remain open.
+No schema, SDK or permission added; no real data touched.
 
 ### ZCR-LOC-03 – Period review reminder (from ZEX-S0610)
 Scope: optional reminder after a period ends. Done: planner tests; off by default.

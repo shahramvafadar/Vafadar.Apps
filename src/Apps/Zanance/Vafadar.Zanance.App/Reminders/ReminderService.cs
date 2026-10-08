@@ -3,6 +3,7 @@ using Vafadar.Core.Settings;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
@@ -10,14 +11,16 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Reminders;
 
 /// <summary>
-/// Keeps device notifications in line with the data: reminders for due plan occurrences (REM-01..10) and the 80 %/100 %
-/// budget alerts (BUD-06). It rebuilds everything on start, resume, after changes and after a restore, so there are no
+/// Keeps device notifications in line with the data: reminders for due plan occurrences (REM-01..10), goal contributions
+/// and the 80 %/100 % budget alerts (BUD-06). It rebuilds everything on start, resume, after changes and after a restore, so there are no
 /// duplicates and nothing outdated (REM-07, AT-36, AT-37).
 /// </summary>
 public sealed class ReminderService(
     IReminderScheduler scheduler,
     ZananceStore store,
     PlanStore plans,
+    GoalStore goals,
+    HoldingStore holdings,
     ISettingsStore preferences,
     Translator translator,
     IDateFormatter dates,
@@ -32,11 +35,13 @@ public sealed class ReminderService(
     /// <summary>Gets the scheduler (for permission prompts and tap handling).</summary>
     public IReminderScheduler Scheduler => scheduler;
 
-    /// <summary>Refreshes shortly after every change of entries, plans or settings (a burst of changes refreshes once).</summary>
+    /// <summary>Refreshes shortly after every change of entries, plans, goals or holdings (a burst of changes refreshes once).</summary>
     public void WatchChanges()
     {
         store.Changed += (_, _) => RefreshSoon();
         plans.Changed += (_, _) => RefreshSoon();
+        goals.Changed += (_, _) => RefreshSoon();
+        holdings.Changed += (_, _) => RefreshSoon();
     }
 
     /// <summary>
@@ -154,6 +159,32 @@ public sealed class ReminderService(
                 return new ReminderNotification(reminder.Id, reminder.Schedule.Name, translator.Format(key, dates.Format(reminder.Date, DateFormatStyle.Long)), reminder.NotifyAt, link);
             }));
 
+            // Contributions only remind the user. Progress includes funded earmarks and held quantities, not prices.
+            var contributionPlans = await goals.GetContributionPlansAsync();
+            if (contributionPlans.Any(p => p.ReminderEnabled))
+            {
+                var progress = GoalProgressService.Evaluate(
+                    await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts.Values.ToList(),
+                    await store.GetEntriesAsync(), contributionPlans, DateOnly.FromDateTime(now),
+                    await holdings.GetEventsAsync(), await holdings.GetTypesAsync());
+                notifications.AddRange(GoalReminderPlanner.Plan(progress, contributionPlans, now)
+                    .GroupBy(r => r.NotifyAt).Select(group =>
+                    {
+                        var first = group.First();
+                        var items = group.ToList();
+                        var single = items.Count == 1;
+                        var link = single ? string.Create(CultureInfo.InvariantCulture, $"goal|{first.Goal.Id}") : "goals";
+                        var title = settings.NotificationsShowDetails
+                            ? single ? first.Goal.Name : translator.Format("Reminder_GoalSummary", items.Count)
+                            : translator["App_Name"];
+                        var body = settings.NotificationsShowDetails
+                            ? single ? translator.Format("Reminder_GoalDetails", dates.Format(first.Date, DateFormatStyle.Long))
+                                : string.Join(translator["Reminder_ListSeparator"], items.Select(r => r.Goal.Name))
+                            : translator["Reminder_GoalGeneric"];
+                        return new ReminderNotification(first.Id, title, body, first.NotifyAt, link);
+                    }));
+            }
+
             // Snoozed reminders survive the rebuild while their occurrence is still open (REM-04, AT-36).
             bool IsOpen(string link)
             {
@@ -179,7 +210,9 @@ public sealed class ReminderService(
                 .Where(s => notifications.All(n => n.Id != s.Id))
                 .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
 
-            await scheduler.ReplaceAllAsync(notifications);
+            // One device queue across plan, contract, goal and snooze reminders, within the iOS pending limit.
+            await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
+                .Take(ReminderPlanner.MaxPending).ToList());
             await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)

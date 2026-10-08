@@ -5603,4 +5603,25 @@
   <data name="Backup_FileHint" xml:space="preserve">
     <value>فایل «.vbak» را که ذخیره یا دانلود کرده‌اید انتخاب کنید. بکاپ‌های فضای ابری متصل در بالا نمایش داده می‌شوند و نیازی به دانلود دستی ندارند.</value>
   </data>
+  <data name="Goal_ContributionReminder" xml:space="preserve">
+    <value>یادآوری برای پس‌انداز هدف</value>
+  </data>
+  <data name="Help_GoalReminder_Title" xml:space="preserve">
+    <value>یادآوری هدف</value>
+  </data>
+  <data name="Help_GoalReminder_Text" xml:space="preserve">
+    <value>در هر تاریخ مشارکت، اعلان اختیاری ساعت ۹ صبح به وقت محلی دستگاه می‌آید. تاریخ‌ها از برنامه و تقویم ذخیره‌شده پیروی می‌کنند. متن اعلان عمومی است، مگر نمایش جزئیات را در تنظیمات مجاز کنید. لمس اعلان، هدف را باز می‌کند؛ هیچ پولی جابه‌جا و هیچ مشارکتی ثبت نمی‌شود. برای هدف متوقف، تکمیل‌شده، رسیده به مبلغ هدف یا با منبع ناموجود، اعلان نمی‌آید. تاریخ‌های گذشته یادآوری دیرهنگام ندارند. با بازکردن یا بازگشت به برنامه، یادآوری‌های آینده آماده می‌شوند؛ سیستم ممکن است برای صرفه‌جویی باتری آن‌ها را دیرتر نمایش دهد.</value>
+  </data>
+  <data name="Help_GoalReminder_Example" xml:space="preserve">
+    <value>مثلاً برای مشارکت ماهانه با شروع ۱۵ مارس، یادآوری ساعت ۹ صبحِ ۱۵ آوریل آماده می‌شود. تصمیم دربارهٔ انجام و روش مشارکت با شماست.</value>
+  </data>
+  <data name="Reminder_GoalGeneric" xml:space="preserve">
+    <value>زمان مشارکت برای یک هدف رسیده است. برای بررسی، Zanance را باز کنید.</value>
+  </data>
+  <data name="Reminder_GoalDetails" xml:space="preserve">
+    <value>مشارکت برای تاریخ «{0}» برنامه‌ریزی شده است. برای بررسی، هدف را باز کنید.</value>
+  </data>
+  <data name="Reminder_GoalSummary" xml:space="preserve">
+    <value>تعداد هدف‌های با موعد مشارکت: {0}</value>
+  </data>
 </root>

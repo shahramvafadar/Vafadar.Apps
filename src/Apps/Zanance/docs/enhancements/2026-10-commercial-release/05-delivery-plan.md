@@ -117,3 +117,8 @@ Android API 36 x86_64 process runs pass, including recovery of the same Keystore
 existing installed emulator was used through an isolated AVD; no download was needed. ADR 0010 is ready for owner
 review and remains proposed. No production connection or real-data migration is authorized. Exactly one next
 section is proposed: SEC-07, subject to OD-10; do not start it without owner approval.
+
+D-70 / LOC-02 proceeds under the D-69 continuation instruction while ADR/library and OD-10 decisions remain pending.
+Goal reminders reuse the stored opt-in, recurrence/progress engines and platform notification service; no commercial
+limits, production database encryption or OS-backup policy are introduced. The next independent ready local section
+is LOC-03, the optional period review reminder.

@@ -137,3 +137,15 @@ debugger network access. The APK script enforces CI warnings-as-errors even with
 Run `eng/tests/AndroidPrivacy.Tests.ps1`, then `eng/scripts/Test-AndroidPrivacy.ps1 -Path <complete.apk> -Variant Offline`
 or `-Variant Cloud` for a genuinely cloud-configured Release build. The guard inspects the APK's declared permissions,
 rejects Debug and unknown capabilities, and prints no secrets. See [SDK review](../privacy/zanance-sdk-review.md).
+
+## Android goal notification fixture (D-70 / AT-77)
+
+On a fresh isolated emulator installation only, a complete Debug APK with an AndroidEnvironment item containing
+VAFADAR_GOAL_REMINDER_PROOF=1 runs the opt-in DebugGoalReminders fixture. It refuses accounts/goals outside its
+own marked identities or any ledger data. It creates one fictitious balance goal, asks through the system permission
+dialog, and verifies native pending local 09:00 requests before displaying one immediately for a notification-tap
+check. No system clock/settings changes. Read only its files/goal-reminder-proof.json with adb run-as on that isolated
+Debug package; use uiautomator for the screen because FLAG_SECURE stays enabled. UI pause/resume/edit opt-out plus
+force-stop/restart checks pending cancellation and persistence. The fixture and snapshot types are compiled out of
+Release; inspect Release metadata, then build the complete signed handoff APK without the fixture environment item.
+This proves the real scheduler/delivery/tap path, not exact-time, Doze, reboot or physical-device/iOS acceptance.

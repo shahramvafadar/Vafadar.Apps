@@ -73,7 +73,7 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0303 | Goal lifecycle and messages | 2 | Implemented – verified (trend messages come with S0702) |
 | ZEX-S0304 | Pin goals to Home; goal card | 2 | Implemented – unverified (snapshots only) |
 | ZEX-S0305 | Contribution schedule and scenario ETA | 2 | Implemented – verified |
-| ZEX-S0306 | Contribution methods: fixed, share of income, spending cut | 2 | Implemented – unverified (eligible income tested; reminders on contribution dates not yet) |
+| ZEX-S0306 | Contribution methods: fixed, share of income, spending cut | 2 | Implemented – verified (contribution reminders completed under ZCR-LOC-02 / D-70; physical-device gate remains) |
 | ZEX-S0307 | Earmark goals: money accounts only, protect flag, regression | 2 | Implemented – unverified (protected money is used by the headroom of phase 4) |
 | ZEX-S0401 | Asset types, units, purity and locations | 3 | Implemented – verified |
 | ZEX-S0402 | Opening holdings and history validation | 3 | Implemented – verified |

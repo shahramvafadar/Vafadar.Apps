@@ -5580,4 +5580,25 @@ Première échéance : {1}</value>
   <data name="Backup_FileHint" xml:space="preserve">
     <value>Choisissez un fichier .vbak enregistré ou téléchargé. Les sauvegardes cloud connectées sont listées ci-dessus, sans téléchargement manuel.</value>
   </data>
+  <data name="Goal_ContributionReminder" xml:space="preserve">
+    <value>Me rappeler de contribuer</value>
+  </data>
+  <data name="Help_GoalReminder_Title" xml:space="preserve">
+    <value>Rappels d’objectifs</value>
+  </data>
+  <data name="Help_GoalReminder_Text" xml:space="preserve">
+    <value>Une notification facultative à 9 h, à l’heure locale de votre appareil, à chaque date de contribution. Elle suit le calendrier et la programmation enregistrés. Le texte reste général, sauf si vous autorisez les détails dans les paramètres. Toucher la notification ouvre l’objectif ; cela ne déplace jamais d’argent et n’enregistre aucune contribution. Les objectifs en pause, terminés, atteints ou indisponibles restent silencieux. Les dates passées ne déclenchent pas de rappel tardif. Les prochains rappels sont préparés à l’ouverture ou à la reprise de l’application ; le système peut les retarder pour économiser la batterie.</value>
+  </data>
+  <data name="Help_GoalReminder_Example" xml:space="preserve">
+    <value>Pour une contribution mensuelle débutant le 15 mars, un rappel est préparé pour le 15 avril à 9 h. Vous décidez si vous contribuez et de quelle manière.</value>
+  </data>
+  <data name="Reminder_GoalGeneric" xml:space="preserve">
+    <value>Une contribution à un objectif est prévue. Ouvrez Zanance pour la consulter.</value>
+  </data>
+  <data name="Reminder_GoalDetails" xml:space="preserve">
+    <value>Contribution prévue le {0}. Ouvrez l’objectif pour la consulter.</value>
+  </data>
+  <data name="Reminder_GoalSummary" xml:space="preserve">
+    <value>Contributions aux objectifs prévues : {0}</value>
+  </data>
 </root>

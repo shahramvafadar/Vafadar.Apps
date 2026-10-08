@@ -80,3 +80,6 @@ Keystore-wrapped fictitious profile recovery after process restart. Architecture
 
 D-69 / SEC-09 reviews the existing SDK and Android Release permission baseline with separate Offline/Cloud artifacts.
 No Phase 1 finance or OS-backup behaviour changed; see the canonical backlog and SDK review for remaining gates.
+
+D-70 / LOC-02 is a Phase 2 goal contribution reminder using the existing Phase 1 platform scheduler. Generic privacy,
+contextual permission and app-lock navigation stay the same; there is no new ledger, schema or permission.

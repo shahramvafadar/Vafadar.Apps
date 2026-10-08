@@ -102,3 +102,19 @@ Eleven PowerShell policy cases cover the current allowlist, wrong network varian
 wrong package, Debug and missing reminder capability. Complete signed Offline and Cloud Release APKs pass their
 explicit guards; the Cloud artifact is rejected under the Offline policy. SDK inventory and qualified privacy copy
 are documented. These tests do not prove native SDK traffic, real OAuth, signed iOS privacy labels or future SDKs.
+
+## AT-77 - Goal contribution reminders (D-70 / LOC-02)
+
+Twelve Core cases cover month-end anchors, two-week intervals/count endings, Persian rule dates, lifecycle and
+source exclusions, reaching/withdrawal, opt-out, missed-date exclusion, stable ids and pending bounds. Seven linked
+coordinator/SQLite cases use actual app texts in en/fa/de and check generic defaults, opted-in names, grouping,
+permission denial without refresh-time prompts, pause/reached/archive/disable cancellation, and no ledger/allocation
+writes. Main suite: 1,153 passed. Goal editor and help are checked in en/fa/de, light/dark, at 360/412/wide.
+Android API 36 x86_64 fixture passes actual native 09:00 pending requests (October +02:00, November +01:00),
+generic notification delivery, tap to goal details, pause cancellation, resume and saved opt-out after process restart;
+ledger/allocation counts remain zero. Complete signed Release APK signature, ZIP, package, embedded arm64/x86_64
+assemblies/app AOT and Cloud permission guard pass; actual emulator install/cold start pass. Release metadata excludes
+both Debug fixture types. ARM64 phone, Doze/reboot and iOS acceptance remain open. The opt-in Android Debug fixture
+requires an empty installation or its own marked single account, never existing user data. It verifies normal 09:00 pending requests before expediting one fictitious
+notification for delivery/tap testing without changing system time. This does not prove exact-time or battery-policy
+delivery.

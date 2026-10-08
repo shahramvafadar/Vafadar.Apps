@@ -26,6 +26,9 @@ internal static class DebugSnapshots
 
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
+#if ANDROID
+        if (DebugGoalReminders.StartIfRequested(app, services)) { return; }
+#endif
         // VAFADAR_START_ROUTE opens one screen with the real window chrome (navigation bar, back button) for a check
         // of the whole window; the app stays open.
         if (Environment.GetEnvironmentVariable("VAFADAR_START_ROUTE") is { Length: > 0 } route)
@@ -391,6 +394,17 @@ internal static class DebugSnapshots
                     await CaptureHelpAsync(app, folder, language, ["RegionalFormat"]);
                 }
 
+                if (name == "goal-edit" && Shell.Current.CurrentPage is Features.Goals.GoalEditorPage goalPage)
+                {
+                    if (FindScrollView(goalPage) is { } goalScroll)
+                    {
+                        await goalScroll.ScrollToAsync(goalPage.FindByName<Switch>("ContributionReminderSwitch"), ScrollToPosition.Center, animated: false);
+                        await Task.Delay(500);
+                        await CaptureAsync(app, folder, $"{language}-{name}-reminder");
+                    }
+                    await CaptureHelpAsync(app, folder, language, ["GoalReminder"]);
+                }
+
                 if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
                 {
                     await CaptureSecurityAsync(app, services, settingsPage, folder, language);
@@ -673,6 +687,7 @@ internal static class DebugSnapshots
         {
             Method = Core.Goals.ContributionMethod.FixedAmount,
             Amount = 250_00,
+            ReminderEnabled = true,
             Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Start = today.AddDays(5) },
         });
         await SeedHoldingsAsync(services, checking, today);

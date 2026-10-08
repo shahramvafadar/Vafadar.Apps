@@ -5603,4 +5603,25 @@ Erster Termin: {1}</value>
   <data name="Backup_FileHint" xml:space="preserve">
     <value>Eine gespeicherte oder heruntergeladene .vbak-Datei wählen. Verbundene Cloud-Sicherungen stehen oben; kein manueller Download nötig.</value>
   </data>
+  <data name="Goal_ContributionReminder" xml:space="preserve">
+    <value>An Sparbeitrag erinnern</value>
+  </data>
+  <data name="Help_GoalReminder_Title" xml:space="preserve">
+    <value>Zielerinnerungen</value>
+  </data>
+  <data name="Help_GoalReminder_Text" xml:space="preserve">
+    <value>Eine optionale Benachrichtigung um 9 Uhr Ortszeit Ihres Geräts an jedem Beitragstermin. Sie folgt dem gespeicherten Zeitplan und dessen Kalender. Der Text bleibt allgemein, außer Sie erlauben Details in den Einstellungen. Antippen öffnet das Ziel; Geld wird weder verschoben noch ein Beitrag gebucht. Pausierte, abgeschlossene, erreichte oder nicht verfügbare Ziele bleiben still. Verpasste Termine werden nicht nachträglich gemeldet. Beim Öffnen oder Fortsetzen der App werden kommende Erinnerungen vorbereitet; das System kann sie zum Energiesparen später zustellen.</value>
+  </data>
+  <data name="Help_GoalReminder_Example" xml:space="preserve">
+    <value>Bei einem monatlichen Beitrag ab dem 15. März wird eine Erinnerung für den 15. April um 9 Uhr vorbereitet. Sie entscheiden, ob und wie Sie beitragen.</value>
+  </data>
+  <data name="Reminder_GoalGeneric" xml:space="preserve">
+    <value>Ein Sparbeitrag steht an. Öffnen Sie Zanance zur Prüfung.</value>
+  </data>
+  <data name="Reminder_GoalDetails" xml:space="preserve">
+    <value>Beitrag für {0} geplant. Öffnen Sie das Ziel zur Prüfung.</value>
+  </data>
+  <data name="Reminder_GoalSummary" xml:space="preserve">
+    <value>Anstehende Zielbeiträge: {0}</value>
+  </data>
 </root>

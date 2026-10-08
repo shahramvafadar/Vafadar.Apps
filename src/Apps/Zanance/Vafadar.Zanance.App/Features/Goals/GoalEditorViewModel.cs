@@ -6,6 +6,7 @@ using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Presentation;
+using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
@@ -49,6 +50,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
     private readonly HoldingStore _holdings;
+    private readonly ReminderService _reminders;
     private readonly Holdings.HoldingText _holdingText;
     private List<AssetType> _types = [];
     private List<AssetEvent> _events = [];
@@ -59,9 +61,10 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     private long _currentEarmarked;
     private bool _loading;
 
-    public GoalEditorViewModel(ZananceStore store, GoalStore goals, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, HoldingStore holdings, Holdings.HoldingText holdingText)
+    public GoalEditorViewModel(ZananceStore store, GoalStore goals, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, HoldingStore holdings, Holdings.HoldingText holdingText, ReminderService reminders)
     {
         _holdings = holdings;
+        _reminders = reminders;
         _holdingText = holdingText;
         _store = store;
         _goals = goals;
@@ -187,6 +190,14 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
     /// <summary>Gets or sets the first contribution date, e.g. the next pay day.</summary>
     [ObservableProperty]
     public partial DateOnly FirstDate { get; set; }
+
+    /// <summary>Gets or sets optional notifications on contribution dates, off by default.</summary>
+    [ObservableProperty]
+    public partial bool ReminderEnabled { get; set; }
+
+    /// <summary>Gets an explanation when this device cannot deliver the selected reminder.</summary>
+    [ObservableProperty]
+    public partial string? ReminderNote { get; set; }
 
     [ObservableProperty]
     public partial int MethodIndex { get; set; }
@@ -345,6 +356,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         CurrencyLocked = allocations.Count > 0;
 
         _existingPlan = (await _goals.GetContributionPlansAsync()).FirstOrDefault(p => p.GoalId == goal.Id);
+        ReminderEnabled = _existingPlan?.ReminderEnabled ?? false;
         var rule = ContributionSchedule.RuleFor(goal, _existingPlan, Today);
         ScheduleIndex = Math.Max(0, Array.IndexOf(Schedules, (rule.Frequency, rule.Interval)));
         FirstDate = rule.Start;
@@ -355,6 +367,24 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
             PercentText = plan.Percent is { } percent ? percent.ToString("0.##", _localization.CurrentCulture) : string.Empty;
             CutCategory = CutCategories.FirstOrDefault(c => plan.CategoryIds.Contains(c.Id));
         }
+    }
+
+    // Opening an existing goal never prompts. Only an explicit choice on this form asks for permission.
+    async partial void OnReminderEnabledChanged(bool value)
+    {
+        ReminderNote = null;
+        if (!value || _loading) { return; }
+        await Presentation.Failures.GuardAsync(async () =>
+        {
+            if (!_reminders.Scheduler.IsSupported)
+            {
+                ReminderNote = _translator["Reminder_NotOnThisDevice"];
+            }
+            else if (!await PermissionPrompts.EnableNotificationsAsync(_reminders, _translator))
+            {
+                ReminderNote = _translator["Reminder_PermissionDenied"];
+            }
+        });
     }
 
     partial void OnTypeIndexChanged(int value) => UpdateType();
@@ -580,10 +610,16 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
         var (frequency, interval) = Schedules[Math.Clamp(ScheduleIndex, 0, Schedules.Length - 1)];
         var calendar = frequency == Frequency.Monthly ? Presentation.Calendars.ToPeriod(_localization.CurrentCalendar) : PeriodCalendar.Gregorian;
         var method = IsAdvanced && !IsQuantityGoal ? (ContributionMethod)Math.Clamp(MethodIndex, 0, 2) : ContributionMethod.FixedAmount;
+        // A reminder-only edit keeps the saved calendar, anchor and ending; display changes never rewrite its dates.
+        var rule = _existingPlan is { Rule: { } savedRule }
+            && savedRule.Frequency == frequency && savedRule.Interval == interval && savedRule.Start == FirstDate
+            ? savedRule.Clone()
+            : new RecurrenceRule { Frequency = frequency, Interval = interval, Start = FirstDate, Calendar = calendar };
         var plan = new ContributionPlan
         {
             Method = method,
-            Rule = new RecurrenceRule { Frequency = frequency, Interval = interval, Start = FirstDate, Calendar = calendar },
+            ReminderEnabled = ReminderEnabled,
+            Rule = rule,
         };
 
         if (method is ContributionMethod.FixedAmount or ContributionMethod.SpendingCut && TryAmount(ContributionText, out var amount))
@@ -725,5 +761,5 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
 
     private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         TypeIndex, HoldingType?.Id, HoldingLocation?.Id, QuantityUnitIndex, Account?.Id, Name, AmountText, CurrencyCode, HasTargetDate, TargetDate,
-        ScheduleIndex, FirstDate, MethodIndex, ContributionText, PercentText, CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note);
+        ScheduleIndex, FirstDate, ReminderEnabled, MethodIndex, ContributionText, PercentText, CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note);
 }

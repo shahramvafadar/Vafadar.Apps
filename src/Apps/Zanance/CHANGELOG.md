@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Goal contribution reminders (2026-10-09, D-70)
+
+- Choose an optional reminder for goal contribution dates, with help explaining 9:00 device-local delivery.
+- Notifications stay generic unless you allow details; tapping one opens the goal and never moves money.
+- Paused, completed, reached or unavailable goals stop future reminders. An active goal can resume after a withdrawal.
+- Editing only the reminder keeps the saved calendar, anchor and ending of the contribution schedule.
+
 ### Engineering - Encryption architecture research (2026-10-08, D-68)
 
 - Prepared a proposed database/key architecture and safe migration plan for review, with an independent fictitious

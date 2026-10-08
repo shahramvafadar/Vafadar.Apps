@@ -290,3 +290,12 @@ cleanup. Use stacked date/details rows at narrow widths. Device file selection i
 
 Changing regional display keeps the open form and live preview; cached tab pages rebuild after returning. New
 backup packages include only allowlisted portable display choices, never device credentials or security controls.
+
+## Goal contribution reminders (D-70)
+
+Place the opt-in directly after the first contribution date, in both experience modes. Keep the label, 44 px help
+and native switch together at 360 px, with a full explanation of 09:00 device-local time, saved-calendar dates,
+generic privacy, permission refusal, inexact system delivery and no automatic financial action. Defaults are off;
+loading an existing choice never asks for permission. Include the toggle in unsaved-change detection. Reminder-only
+edits preserve the saved rule; changing display preferences does not reinterpret its dates. Tapping a delivered
+notification opens goal details after the app lock; a grouped reminder opens the goals list.

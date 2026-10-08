@@ -303,6 +303,14 @@ public partial class App : Application
         {
             await Shell.Current.GoToAsync("//plans");
         }
+        else if (parts is ["goal", var goal] && Guid.TryParse(goal, out var goalId))
+        {
+            await Shell.Current.GoToAsync(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = goalId });
+        }
+        else if (parts is ["goals"])
+        {
+            await Shell.Current.GoToAsync(AppShell.GoalsRoute);
+        }
         else if (parts is ["budget"])
         {
             await Shell.Current.GoToAsync(AppShell.BudgetRoute);

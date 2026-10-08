@@ -86,3 +86,8 @@ isolated Android API 36 x86_64 runtime proof pass; production encryption is not 
 
 D-69 authorizes continuous implementation of ready canonical sections; unresolved owner decisions remain gates.
 SEC-09 reviews the current SDK baseline; repeat the review before future online SDKs are introduced.
+
+D-70 / ZCR-LOC-02 wires the existing contribution-plan reminder flag to the goal editor and shared local scheduler.
+Dates follow saved rules; progress/lifecycle/source changes cancel pending requests, generic text is the default,
+and a tap only opens the goal. AT-77 covers planner and real-store delivery coordination. Current state and device
+evidence live in the canonical backlog and acceptance plan; no ledger/schema or commercial-policy change.

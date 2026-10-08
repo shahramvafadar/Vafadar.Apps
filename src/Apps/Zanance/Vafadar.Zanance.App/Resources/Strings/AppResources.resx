@@ -5629,4 +5629,25 @@ First due date: {1}</value>
   <data name="Backup_FileHint" xml:space="preserve">
     <value>Choose a .vbak file you saved or downloaded. Connected cloud backups are listed above; no manual download is needed.</value>
   </data>
+  <data name="Goal_ContributionReminder" xml:space="preserve">
+    <value>Remind me to contribute</value>
+  </data>
+  <data name="Help_GoalReminder_Title" xml:space="preserve">
+    <value>Goal reminders</value>
+  </data>
+  <data name="Help_GoalReminder_Text" xml:space="preserve">
+    <value>An optional notification at 9:00 in your device’s local time on each contribution date. It follows the saved schedule and its calendar. The notification is generic unless you allow details in Settings. Tapping it opens the goal; it never moves money or records a contribution. Paused, completed, reached or unavailable goals stay silent. Missed dates do not send late reminders. Zanance prepares upcoming reminders when you open or resume the app; the system may deliver them later to save battery.</value>
+  </data>
+  <data name="Help_GoalReminder_Example" xml:space="preserve">
+    <value>For a monthly contribution starting on 15 March, a reminder is prepared for 9:00 on 15 April. You decide whether and how to contribute.</value>
+  </data>
+  <data name="Reminder_GoalGeneric" xml:space="preserve">
+    <value>A goal contribution is due. Open Zanance to review it.</value>
+  </data>
+  <data name="Reminder_GoalDetails" xml:space="preserve">
+    <value>Contribution planned for {0}. Open the goal to review it.</value>
+  </data>
+  <data name="Reminder_GoalSummary" xml:space="preserve">
+    <value>Goal contributions due: {0}</value>
+  </data>
 </root>

@@ -89,6 +89,14 @@
                         <v:ChoiceChips ItemsSource="{Binding ScheduleNames}" SelectedIndex="{Binding ScheduleIndex}" />
                         <Label Text="{v:Translate Goal_FirstDate}" Style="{StaticResource FieldLabel}" />
                         <v:DateField Date="{Binding FirstDate}" />
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,8,0,0">
+                            <Label Text="{v:Translate Goal_ContributionReminder}" VerticalOptions="Center" />
+                            <v:HelpButton Grid.Column="1" Topic="GoalReminder" AutomationId="GoalReminderHelp" />
+                            <Switch x:Name="ContributionReminderSwitch" Grid.Column="2" IsToggled="{Binding ReminderEnabled}" OnColor="{DynamicResource Primary}"
+                                    AutomationId="GoalContributionReminder" SemanticProperties.Description="{v:Translate Goal_ContributionReminder}" />
+                        </Grid>
+                        <Label Text="{Binding ReminderNote}" Style="{StaticResource Secondary}" FontSize="12"
+                               IsVisible="{Binding ReminderNote, Converter={StaticResource IsNotNullConverter}}" />
 
                         <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
