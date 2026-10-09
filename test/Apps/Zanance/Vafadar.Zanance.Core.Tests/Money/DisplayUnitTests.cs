@@ -61,6 +61,25 @@ public sealed class DisplayUnitTests : IDisposable
         }
     }
 
+    /// <summary>Display-unit conversion retains the exact boundary fraction and ISO input alternative.</summary>
+    [Fact, Trait("AT", "AT-93")]
+    public void Minimum_signed_value_keeps_exact_toman_fraction_and_currency_input_magnitude()
+    {
+        Assert.Equal("−9,223,372,036,854,775.808 Toman", Plain(MoneyText.Format(long.MinValue, "IRR", English)));
+        Assert.Equal("9223372036854775.808", MoneyText.ForInput(long.MinValue, "IRR", English));
+        Assert.Equal("92233720368547758.08", MoneyText.ForInput(long.MinValue, "IRR", English, useUnit: false));
+    }
+
+    /// <summary>An unsigned boundary magnitude cannot silently exceed positive stored minor units.</summary>
+    [Fact, Trait("AT", "AT-93")]
+    public void Minimum_signed_toman_input_magnitude_is_not_silently_rounded_or_accepted_as_positive()
+    {
+        var input = MoneyText.ForInput(long.MinValue, "IRR", CultureInfo.GetCultureInfo("de"));
+        Assert.Equal("9223372036854775,808", input);
+        Assert.False(MoneyText.TryParse(input, "IRR", CultureInfo.GetCultureInfo("de"), out var minor));
+        Assert.Equal(0, minor);
+    }
+
     [Fact]
     public void Other_currencies_and_undefined_units_are_unchanged()
     {

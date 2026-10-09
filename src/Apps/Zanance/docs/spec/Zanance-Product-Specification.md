@@ -1440,3 +1440,12 @@ D-85 continues A11Y-03 with all four visible Windows Insights destinations in a 
 the retained body. Narrow windows reflow into two columns; wide readable content shows four. AT-92 invokes the
 actual native routes and checks complete caption/selection/target geometry and unchanged stored data. Final
 evidence/APK and independent platform/other-control limits are in quality/insights-navigation.md.
+
+D-86 continues A11Y-03 with complete wrapped budget identities and separate full-width spending/limit and
+envelope readouts, retaining compact native typography. A separately reproduced MoneyText signed-boundary crash
+is repaired by taking the magnitude after decimal conversion; input range and financial calculations stay unchanged.
+AT-93 adds 11 independent Core cases and actual native scroll/geometry/data-equality checks. Final evidence and
+remaining physical OS/screen-reader/device/iOS gates are in quality/budget-readouts.md. No schema or new strings.
+
+D-86 current strict main suite: 1,369 passed, zero failed/skipped; App.Tests remains 140. Historical slice counts
+above remain historical; local matrix/build/package evidence and external acceptance are kept separate.

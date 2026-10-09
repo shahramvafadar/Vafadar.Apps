@@ -448,3 +448,12 @@ On Windows show Budget, Reports, Forecast and Goals above the actual root-page b
 columns on narrow windows and four at 600 px of navigation width; never hide a destination behind clipped text.
 Wrap scaled captions, preserve the current underline, and bind spoken selected/name feedback live. Each whole
 caption is a native button target of at least 44 px. Retain body/bindings when attaching or resizing the surface.
+
+### Complete budget figures (D-86)
+
+Show the complete wrapped budget/category name first, spending on its own full-width row and its localized limit
+on the next. Envelope identity and amount also get their own rows. Keep existing 14 px body/bold and 13 px secondary
+sizes scalable; AmountReadout.CaptionStyle selects the existing typography while null retains the large default.
+Preserve the original sign, decimals, approximation, native digits and currency/unit as one packet. An oversized
+packet scrolls horizontally with the existing translated hint and complete spoken name. Do not shrink digits or
+truncate units to fit. See quality/budget-readouts.md for actual realized glyph and native scroll checks.

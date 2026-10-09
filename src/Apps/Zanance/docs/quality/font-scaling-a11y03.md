@@ -578,3 +578,8 @@ counts and negative observations are historical; full A11Y-03/platform acceptanc
 D-85 follows the directly observed clipped Forecast/hidden Goals Windows root tabs at 360 px / 200%. Growing
 visible root navigation and independent AT-92 runtime evidence are recorded in [insights-navigation.md](insights-navigation.md).
 Historical counts and independent remaining budget/currency/modal/custom-control findings here remain unchanged.
+
+D-86 follows the independently observed budget spending/limit clipping with complete identities and separate
+compact monetary viewports. A real signed-boundary formatter crash is also reproduced and corrected independently.
+See [budget-readouts.md](budget-readouts.md) for AT-93, actual native matrix/fixture-restoration and signed APK evidence.
+Historical counts above remain historical; modal/currency/custom-control and platform acceptance are still open.

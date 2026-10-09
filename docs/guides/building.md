@@ -293,3 +293,14 @@ The `insights-tabs` Debug route (D-85 / AT-92) invokes the four actual Windows n
 caption/selection geometry, checks idempotent body retention and resizes only the owned window. Compare full
 settings/accounts/entries JSON without financial Save. Centered WinUI character rectangles are checked against
 LayoutInformation.GetLayoutSlot and the actual caption viewport, alongside trim and minimum-target checks.
+
+The `budget-readouts` Debug route (D-86 / AT-93) retains the actual Budget page, substitutes only in-memory
+presentation collections for full signed-boundary/default/compact typography and restores them afterward.
+It checks actual native glyph geometry, horizontal Scroll endpoints and complete stored accounts/entries/settings/
+budgets/plans equality. Use en/fa/de, light/dark and 360/412/wide process-local font stress, preserving original
+development database/sidecar/marker files. Retain negative route/layout evidence; no Save or OS/security change.
+See `src/Apps/Zanance/docs/quality/budget-readouts.md` for the independent formatter cases and final package proof.
+
+Requested Windows snapshot runs hide their own native AppWindow and render its root directly: PowerShell
+WindowStyle.Hidden alone does not hide WinUI. Never activate the review window or send desktop input.
+Retired pages fail explicitly; do not wait on their stale native scroll controls or count interrupted captures.

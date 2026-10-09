@@ -31,13 +31,14 @@ public static class MoneyText
         string number, label;
         if (DisplayUnits.TryGet(currency.Code, out var unit))
         {
-            var value = ToDecimal(Math.Abs(minor), currency);
+            // D-86: take the magnitude after decimal conversion; Int64.MinValue has no positive Int64 counterpart.
+            var value = decimal.Abs(ToDecimal(minor, currency));
             number = value.ToString("N" + DecimalsOf(value, currency.MinorDigits + unit.Exponent), culture);
             label = unit.Name;
         }
         else
         {
-            number = MoneyAmount.Format(Math.Abs(minor), currency, culture);
+            number = decimal.Abs(MoneyAmount.ToDecimal(minor, currency)).ToString("N" + currency.MinorDigits, culture);
             label = currency.Code;
         }
 
@@ -57,11 +58,12 @@ public static class MoneyText
         var currency = CurrencyOf(currencyCode);
         if (useUnit && DisplayUnits.TryGet(currency.Code, out var unit))
         {
-            var value = ToDecimal(Math.Abs(minor), currency);
+            // D-86: take the magnitude after decimal conversion; Int64.MinValue has no positive Int64 counterpart.
+            var value = decimal.Abs(ToDecimal(minor, currency));
             return value.ToString("F" + DecimalsOf(value, currency.MinorDigits + unit.Exponent), culture);
         }
 
-        return MoneyAmount.ToDecimal(Math.Abs(minor), currency).ToString("F" + currency.MinorDigits, culture);
+        return decimal.Abs(MoneyAmount.ToDecimal(minor, currency)).ToString("F" + currency.MinorDigits, culture);
     }
 
     /// <summary>

@@ -184,3 +184,9 @@ development files/hashes; emulator evidence excludes owner data/credentials and 
 
 D-85 changes only the Windows visible Insights navigation. No data, SDK, permission, export or device-security
 policy change. AT-92 uses fictitious route navigation without financial Save and compares complete stored rows.
+
+D-86 changes budget layout and signed monetary formatting only. No SDK, permission, stored data model, export,
+network or device-security change. Runtime presentation fixtures are in memory with no Save; compare complete
+stored accounts/entries/settings/budgets/plans before and after. Android verification uses only the independently
+owned fictitious database and restores its original complete financial rows; no private profile/security reads.
+The owner archive and real financial data are outside these checks. Evidence: quality/budget-readouts.md.

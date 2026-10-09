@@ -159,3 +159,7 @@ remain separate from physical-device, real OS large-text, screen-reader and iOS 
 D-85 / AT-92 evidence in quality/insights-navigation.md covers complete visible Windows root destinations and
 actual native invocation/resize/data equality. Real OS text scale, screen readers, physical ARM64/iOS and other
 control findings remain independent release gates; the growing navigation does not establish those outcomes.
+
+D-86 / AT-93: verify complete budget figures and signed-boundary formatting using quality/budget-readouts.md.
+Keep native runtime data-equality/fixture-restoration checks, strict suites/builds and complete signed APK separate
+from physical OS scaling, screen readers, ARM64/iOS, OAuth, Store signing and owner product acceptance.

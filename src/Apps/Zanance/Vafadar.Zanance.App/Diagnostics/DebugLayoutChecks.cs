@@ -156,6 +156,48 @@ internal static class DebugLayoutChecks
                 identityWidth = identity.Width, identityBottom = identity.Y + identity.Height, amountTop = amount.Y });
         }
 
+        // An icon template also inherits BudgetLine; select actual figure rows and independently require every visible model row.
+        var budgetRows = Descendants(page).OfType<Grid>().Where(row => row.BindingContext is Features.Budget.BudgetLine
+            && row.Children.OfType<Presentation.AmountReadout>().Any() && IsVisibleThroughParents(row)).ToArray();
+        if (page.BindingContext is Features.Budget.BudgetViewModel budget
+            && budgetRows.Length != budget.TotalLines.Count + budget.CategoryLines.Count)
+        { throw new InvalidOperationException("A visible budget model row lacks its figure surface."); }
+        foreach (var row in budgetRows)
+        {
+            var line = (Features.Budget.BudgetLine)row.BindingContext;
+            var nameCaption = row.Children.OfType<Label>().Single();
+            var values = row.Children.OfType<Presentation.AmountReadout>().OrderBy(value => Grid.GetRow((BindableObject)value)).ToArray();
+            if (nameCaption.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || values.Length != 2)
+            { throw new InvalidOperationException("A budget row lacks its actual identity and separate figures."); }
+            var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(native);
+            var boundaries = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+            {
+                var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            var spendingCaption = (Label)Descendants(values[0]).OfType<ScrollView>().Single().Content;
+            var limitCaption = (Label)Descendants(values[1]).OfType<ScrollView>().Single().Content;
+            if (native.IsTextTrimmed || nameCaption.Text != line.Name || !native.IsTextScaleFactorEnabled
+                || boundaries.Count == 0 || boundaries.Min(rect => rect.Left) < -1
+                || boundaries.Max(rect => rect.Right) > slot.Width + 1 || boundaries.Max(rect => rect.Bottom) > slot.Height + 1
+                || values[0].AmountText != line.SpentText || values[1].AmountText != line.LimitText
+                || spendingCaption.FontSize != 14 || limitCaption.FontSize != 13 || spendingCaption.FontAttributes != FontAttributes.Bold
+                || values.Any(value => value.Width < row.Width - 1 || Grid.GetColumnSpan((BindableObject)value) != 2)
+                || values[0].Y < nameCaption.Y + nameCaption.Height - 1 || values[1].Y < values[0].Y + values[0].Height - 1)
+            {
+                File.WriteAllText(Path.Combine(folder, name + "-budget-layout-failure.json"),
+                    JsonSerializer.Serialize(new { line.Name, line.SpentText, line.LimitText, row.Width, row.Height,
+                        titleWidth = nameCaption.Width, titleHeight = nameCaption.Height, native.FontSize, native.IsTextTrimmed,
+                        spentWidth = values[0].Width, spentY = values[0].Y, spentHeight = values[0].Height,
+                        limitWidth = values[1].Width, limitY = values[1].Y, spendingFont = spendingCaption.FontSize,
+                        limitFont = limitCaption.FontSize, slot, boundaries }, new JsonSerializerOptions { WriteIndented = true }));
+                throw new InvalidOperationException("A budget identity or full spending/limit packet clips, overlaps or changes typography.");
+            }
+            evidence.Add(new { kind = "budget figures", line.Name, line.SpentText, line.LimitText, row.Width, row.Height,
+                native.IsTextScaleFactorEnabled, spendingFont = spendingCaption.FontSize, limitFont = limitCaption.FontSize,
+                spentWidth = values[0].Width, limitWidth = values[1].Width, separateRows = true, renderedTitleBoundaries = boundaries.Count });
+        }
         // D-80: check the actual caption and last native command button, never a source-text mirror.
         foreach (var action in Descendants(page).OfType<Presentation.WrappingAction>())
         {

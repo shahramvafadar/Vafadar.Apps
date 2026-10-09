@@ -80,7 +80,7 @@ D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests
 The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
 signed Release handoff remain separate from physical phone/iOS acceptance. That slice was followed by QA-06 performance; see the canonical backlog for the current remaining work.
 
-Current local quality baseline (D-85): main suite 1,358 passing, App.Tests 140. Date parts grow/reflow and large
+Current local quality baseline (D-86): main suite 1,369 passing, App.Tests 140. Date parts grow/reflow and large
 balances retain their complete signed decimal/currency packet with a real horizontal viewport when needed.
 Repeated Settings language choices preserve the form and stored data; retired navigation titles are detached.
 Windows child titles grow above the retained body; Windows/Android Back descriptions follow live language choices.
@@ -90,3 +90,6 @@ Ready accessibility/performance follow-ups continue under D-69; unresolved owner
 acceptance stays separate. Earlier test counts above describe their historical slices.
 
 All four Windows Insights destinations remain visible with growing captions; see [runtime evidence](docs/quality/insights-navigation.md).
+
+Budget names and complete compact figures use separate rows; signed boundary formatting no longer overflows.
+See [budget runtime evidence](docs/quality/budget-readouts.md) for independent native/suite/package checks.

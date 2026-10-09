@@ -410,3 +410,15 @@ to its existing route, check single attachment with retained body/bindings, and 
 Compare complete stored accounts/entries/settings without Save. Focused en/fa/de, light/dark and 360/412/wide
 matrix plus 100% narrow baseline; evidence and independent OS/screen-reader/phone/iOS limits are recorded in
 quality/insights-navigation.md. Android/iOS retain their own native top tabs.
+
+## AT-93 - Complete budget figures and signed boundary formatting (D-86)
+
+Eleven Core cases independently reproduce the original signed-boundary exception and verify the correction across
+ISO 0/2/3 minor digits, en/de culture, approximation, bidi isolation and IRR/Toman. Positive parsing still rejects
+the unsigned magnitude beyond Int64.MaxValue. Actual Windows native checks cover complete wrapped budget names,
+separate full-width spending/limit rows, compact/default scalable typography, original spoken monetary packets,
+overflow feedback and both native Scroll endpoints. Restore in-memory collections and compare complete stored
+accounts/entries/settings/budgets/plans. Cover en/fa/de, light/dark, 360/412/wide at process-local 200%, with a 100%
+narrow baseline. Normal Android Release checks use an independently owned fictitious budget fixture and prove
+its full restoration. Final counts/build/APK evidence and separate OS/screen-reader/phone/iOS limits are in
+quality/budget-readouts.md. Interrupted route captures never count as acceptance.

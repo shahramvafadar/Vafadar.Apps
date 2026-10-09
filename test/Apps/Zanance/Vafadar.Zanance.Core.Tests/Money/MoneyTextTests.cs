@@ -39,5 +39,35 @@ public sealed class MoneyTextTests
     public void Input_text_has_no_grouping_sign_or_currency() =>
         Assert.Equal("1234.50", MoneyText.ForInput(-123_450, "EUR", English));
 
+    /// <summary>The full signed storage range retains currency digits and the real minus sign.</summary>
+    [Theory, Trait("AT", "AT-93")]
+    [InlineData("EUR", "en", "−92,233,720,368,547,758.08 EUR")]
+    [InlineData("EUR", "de", "−92.233.720.368.547.758,08 EUR")]
+    [InlineData("JPY", "en", "−9,223,372,036,854,775,808 JPY")]
+    [InlineData("KWD", "en", "−9,223,372,036,854,775.808 KWD")]
+    public void Minimum_signed_minor_value_keeps_its_full_magnitude_sign_and_currency(string currency, string culture, string expected) =>
+        Assert.Equal(expected, Strip(MoneyText.Format(long.MinValue, currency, CultureInfo.GetCultureInfo(culture), showPlus: true)));
+
+    /// <summary>Absolute input formatting stays exact while the existing positive parser rejects out-of-range values.</summary>
+    [Theory, Trait("AT", "AT-93")]
+    [InlineData("EUR", "en", "92233720368547758.08")]
+    [InlineData("EUR", "de", "92233720368547758,08")]
+    [InlineData("JPY", "en", "9223372036854775808")]
+    [InlineData("KWD", "en", "9223372036854775.808")]
+    public void Minimum_signed_input_magnitude_formats_exactly_without_expanding_the_positive_parser(string currency, string culture, string expected)
+    {
+        var formatting = CultureInfo.GetCultureInfo(culture);
+        var input = MoneyText.ForInput(long.MinValue, currency, formatting);
+        Assert.Equal(expected, input);
+        Assert.False(MoneyText.TryParse(input, currency, formatting, out var parsed));
+        Assert.Equal(0, parsed);
+    }
+
+    /// <summary>Boundary magnitudes preserve the approximation marker and bidi packet.</summary>
+    [Fact, Trait("AT", "AT-93")]
+    public void Minimum_signed_value_preserves_approximation_and_direction_marks_without_currency() =>
+        Assert.Equal("\u2066\u200E≈ −92,233,720,368,547,758.08\u200E\u2069",
+            MoneyText.Format(long.MinValue, "EUR", English, showCurrency: false, approximate: true));
+
     private static string Strip(string text) => text.Trim('⁦', '⁩', '‎');
 }

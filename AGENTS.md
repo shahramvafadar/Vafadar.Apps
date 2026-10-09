@@ -337,3 +337,17 @@ repository.
 * Keep four real native targets of at least 44 px, complete scaled captions, exactly one underline and a live spoken
   selected state. Native invocation must open the existing route without financial/settings writes.
 * Centered native TextBlock caret bounds use its actual allocated layout slot; retain trim/viewport/target checks.
+
+## 21. Complete compact budget figures (D-86)
+
+* Budget identities wrap; spending, limits and envelope totals occupy separate full-width readouts. Retain their
+  existing scalable body/secondary typography and original MoneyText packet, full spoken description and overflow hint.
+* Format signed minor-unit magnitudes after decimal conversion: Int64.MinValue has no positive Int64 counterpart.
+  Keep input parser limits, rounding and ledger calculations unchanged. Exercise ISO minor digits and display units.
+* Budget review changes fictitious presentation collections only, restores them and compares complete stored data.
+  Native fixture preparation/restoration touches only the exact independently owned sample database, never profiles
+  or security storage. Failed or interrupted route captures are negative evidence, not acceptance.
+
+Requested Windows snapshot runs hide their own native AppWindow and render its root directly: PowerShell
+WindowStyle.Hidden alone does not hide WinUI. Never activate the review window or send desktop input.
+Retired pages fail explicitly; do not wait on their stale native scroll controls or count interrupted captures.

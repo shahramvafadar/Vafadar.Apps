@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete budget amounts (2026-10-09, D-86)
+
+- Budget names wrap; spending, limits and envelope amounts have their own rows. Long amounts can be read in full
+  by scrolling sideways, with the currency and sign preserved and the existing readable text sizes retained.
+- The lowest supported signed monetary value can be formatted without crashing. Financial calculations and the
+  accepted input range stay unchanged.
+
 ### Improved - Keep all Insights tabs visible (2026-10-09, D-85)
 
 - Budget, Reports, Forecast and Goals wrap into two rows in narrow Windows views.

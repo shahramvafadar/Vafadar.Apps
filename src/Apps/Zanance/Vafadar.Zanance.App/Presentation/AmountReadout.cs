@@ -3,7 +3,7 @@ using Vafadar.Localization;
 namespace Vafadar.Zanance.App.Presentation;
 
 /// <summary>
-/// Displays a complete, already formatted large amount at its native font scale. Oversized values scroll horizontally
+/// Displays a complete, already formatted amount at its native font scale. Oversized values scroll horizontally
 /// instead of splitting decimal digits or dropping the currency/sign; a translated hint appears only on overflow (D-81).
 /// </summary>
 public sealed class AmountReadout : ContentView
@@ -31,6 +31,10 @@ public sealed class AmountReadout : ContentView
             else { caption.SetDynamicResource(Label.TextColorProperty, "AmountText"); }
         });
 
+    /// <summary>Identifies optional existing caption typography; null keeps the large display default.</summary>
+    public static readonly BindableProperty CaptionStyleProperty = BindableProperty.Create(nameof(CaptionStyle), typeof(Style),
+        typeof(AmountReadout), null, propertyChanged: (bindable, _, _) => ((AmountReadout)bindable).ApplyCaptionStyle());
+
     private readonly Label _caption;
     private readonly ScrollView _scroll;
     private readonly Label _hint;
@@ -39,8 +43,7 @@ public sealed class AmountReadout : ContentView
     public AmountReadout()
     {
         _caption = new Label { LineBreakMode = LineBreakMode.NoWrap };
-        if (Application.Current?.Resources.TryGetValue("AmountLarge", out var value) == true && value is Style style)
-        { _caption.Style = style; }
+        ApplyCaptionStyle();
         _scroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility = ScrollBarVisibility.Always,
             VerticalScrollBarVisibility = ScrollBarVisibility.Never, MinimumHeightRequest = 44,
             FlowDirection = FlowDirection.LeftToRight, IsVisible = false, Content = _caption };
@@ -58,6 +61,18 @@ public sealed class AmountReadout : ContentView
 
     /// <summary>Gets or sets the original semantic amount color.</summary>
     public Color? TextColor { get => (Color?)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
+    /// <summary>Gets or sets existing caption typography without changing its full packet, scaling or scroll behavior.</summary>
+    public Style? CaptionStyle { get => (Style?)GetValue(CaptionStyleProperty); set => SetValue(CaptionStyleProperty, value); }
+
+    private void ApplyCaptionStyle()
+    {
+        // D-86: budget rows keep their existing body/secondary typography; other callers retain AmountLarge.
+        var style = CaptionStyle;
+        if (style is null && Application.Current?.Resources.TryGetValue("AmountLarge", out var value) == true)
+        { style = value as Style; }
+        _caption.Style = style;
+    }
 
     /// <inheritdoc />
     protected override void OnPropertyChanged(string? propertyName = null)

@@ -13,16 +13,25 @@
     Title="{v:Translate Budget_Title}">
 
     <ContentPage.Resources>
+        <!-- D-86: retain the original body/secondary sizes while giving each complete monetary packet its own viewport. -->
+        <Style x:Key="BudgetFigure" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+            <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        </Style>
+        <Style x:Key="BudgetSpentFigure" TargetType="Label" BasedOn="{StaticResource BudgetFigure}">
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
         <DataTemplate x:Key="LineTemplate" x:DataType="local:BudgetLine">
             <VerticalStackLayout Spacing="6" Padding="0,8">
-                <!-- Spent and limit under the name: next to it they squeezed the name letter by letter on a phone -->
-                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <!-- D-86: complete identities, spending and limits get separate rows; oversized packets scroll without losing units. -->
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="2">
                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" VerticalOptions="Center" />
-                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
-                        <Label Text="{Binding SpentText}" FontAttributes="Bold" />
-                        <Label Text="{Binding LimitText}" Style="{StaticResource Secondary}" />
-                    </HorizontalStackLayout>
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                    <p:AmountReadout Grid.Row="1" Grid.ColumnSpan="2" AmountText="{Binding SpentText}"
+                                     CaptionStyle="{StaticResource BudgetSpentFigure}" />
+                    <p:AmountReadout Grid.Row="2" Grid.ColumnSpan="2" AmountText="{Binding LimitText}"
+                                     CaptionStyle="{StaticResource Secondary}" />
                 </Grid>
                 <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                 <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontSize="13" />
@@ -97,10 +106,10 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding EnvelopeLines}" Spacing="4">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="reports:AmountLine">
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
-                                    <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center" />
-                                </Grid>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Label}" Style="{StaticResource Secondary}" />
+                                    <p:AmountReadout AmountText="{Binding Amount}" CaptionStyle="{StaticResource BudgetFigure}" />
+                                </VerticalStackLayout>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

@@ -584,3 +584,22 @@ AT-92 measures actual native glyph layout slots, target/name/selection geometry,
 single attachment and complete stored data equality. Centered WinUI caret bounds include allocation alignment;
 a tight text ActualWidth alone is not the arranged caption viewport. Keep that initial diagnostic failure evidence.
 See quality/insights-navigation.md for final build/runtime/APK evidence and remaining findings.
+
+## D-86 - Complete budget figures and signed boundary formatting (2026-10-09)
+
+The actual narrow Windows large-text budget render clips spending and limit units when two packets share one
+horizontal row. Give the wrapped identity, spending and limit separate rows spanning the whole available width.
+Envelope labels and values also use separate rows. Reuse AmountReadout's full signed packet, spoken description,
+translated overflow hint and native horizontal viewport, with optional CaptionStyle retaining the original scalable
+14 px body/bold and 13 px secondary typography. Existing large callers retain AmountLarge. No budget calculation,
+progress, carry, method, schema, financial Save, security or policy changes.
+
+The actual signed-boundary presentation fixture separately exposes Math.Abs(long.MinValue) throwing before
+MoneyText can format a negative value or its input magnitude. Convert to decimal before taking the magnitude,
+including display units. Eleven independent AT-93 cases fail before the fix and pass afterward: EUR/en/de, zero-
+and three-digit ISO currencies, approximation/bidi packets, IRR/Toman and unchanged out-of-range positive parsing.
+Unsigned input at that magnitude remains invalid; this does not expand the ledger or input range.
+
+AT-93 uses actual native caption geometry and Scroll patterns, restored in-memory presentation fixtures and full
+stored accounts/entries/settings/budgets/plans equality. Running-app evidence, negative captures, suite/builds,
+normal signed Android Release checks and package limits are recorded in quality/budget-readouts.md.

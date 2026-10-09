@@ -89,6 +89,11 @@ internal static class DebugSnapshots
         {
             try
             {
+#if WINDOWS
+                // PowerShell WindowStyle.Hidden does not hide a WinUI AppWindow. Requested snapshots render their
+                // own root directly; keep the review window hidden so it cannot interrupt or receive desktop input (D-86).
+                if (window.Handler?.PlatformView is Microsoft.UI.Xaml.Window nativeWindow) { nativeWindow.AppWindow.Hide(); }
+#endif
                 await RunAsync(app, services, folder);
             }
             catch (Exception ex)
@@ -266,6 +271,8 @@ internal static class DebugSnapshots
                 {
                     await vm.NextCommand.ExecuteAsync(null);
                     await Task.Delay(500);
+                    if (!ReferenceEquals(app.Windows[0].Page, onboarding))
+                    { throw new InvalidOperationException("The reviewed onboarding page was retired before its step capture."); }
                     await CaptureAsync(app, folder, $"{language}-onboarding-{step}");
                     if (FindScrollView(onboarding) is { } scroll)
                     {
@@ -381,6 +388,7 @@ internal static class DebugSnapshots
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
             ("insights-tabs", AppShell.BudgetRoute, null),
+            ("budget-readouts", AppShell.BudgetRoute, null),
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
@@ -472,6 +480,11 @@ internal static class DebugSnapshots
                     && Shell.Current.CurrentPage?.BindingContext is Features.Entries.EntryEditorViewModel assetEditor)
                 {
                     await CaptureAssetConfirmationAsync(app, services, assetEditor, folder, $"{language}-{name}", confirmationAsset.Id);
+                }
+
+                if (name == "budget-readouts" && Shell.Current.CurrentPage is Features.Budget.BudgetPage budgetReadouts)
+                {
+                    await ReviewBudgetReadoutsAsync(app, services, budgetReadouts, folder, language);
                 }
 
                 if (name == "insights-tabs")
@@ -1614,6 +1627,62 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-93: exercise real compact/default readouts with in-memory presentation fixtures and native scrolling, never Save.
+    private static async Task ReviewBudgetReadoutsAsync(App app, IServiceProvider services,
+        Features.Budget.BudgetPage page, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+            Budgets = await store.GetBudgetsAsync(), Plans = await plans.GetSchedulesAsync() });
+        var before = await StoredAsync();
+        var vm = (Features.Budget.BudgetViewModel)page.BindingContext;
+        if (vm.TotalLines.Count == 0) { throw new InvalidOperationException("The actual budget total is unavailable."); }
+        var total = vm.TotalLines[0]; var envelopeLines = vm.EnvelopeLines.ToArray();
+        var envelopeState = (vm.IsEnvelopes, vm.UnassignedText);
+        var localization = services.GetRequiredService<ILocalizationService>();
+        var translator = services.GetRequiredService<Translator>();
+        var negative = Core.Money.MoneyText.Format(long.MinValue, "EUR", localization.CurrentCulture);
+        var positive = Core.Money.MoneyText.Format(long.MaxValue, "EUR", localization.CurrentCulture);
+        try
+        {
+            vm.TotalLines[0] = total with { Name = string.Join(" / ", Enumerable.Repeat(total.Name, 6)),
+                SpentText = negative, LimitText = translator.Format("Budget_Of", positive) };
+            // Only presentation collections/flags change; no budget method, ledger value or preference is persisted.
+            vm.IsEnvelopes = true; vm.UnassignedText = positive;
+            vm.EnvelopeLines.Clear();
+            vm.EnvelopeLines.Add(new(translator["Envelope_Available"], positive, false));
+            vm.EnvelopeLines.Add(new(translator["Envelope_ForGoals"], negative, false));
+            vm.EnvelopeLines.Add(new(translator["Envelope_InEnvelopes"], negative, false));
+            await Task.Delay(600);
+            if (FindScrollView(page) is { } outer) { await outer.ScrollToAsync(0, 0, animated: false); }
+            await CaptureAsync(app, folder, language + "-budget-readouts-long");
+            await ReviewAmountReadoutsAsync(app, page, folder, language + "-budget-readouts-long");
+            var readouts = VisualDescendants(page).OfType<Presentation.AmountReadout>().Where(value => value.IsVisible).ToArray();
+            if (!readouts.Any(value => value.CaptionStyle is null && value.AmountText == positive)
+                || readouts.Count(value => value.AmountText == negative) < 3)
+            { throw new InvalidOperationException("Budget review lacks actual default/compact complete signed packets."); }
+        }
+        finally
+        {
+            vm.TotalLines[0] = total; (vm.IsEnvelopes, vm.UnassignedText) = envelopeState;
+            vm.EnvelopeLines.Clear(); foreach (var line in envelopeLines) { vm.EnvelopeLines.Add(line); }
+            // A retired native page cannot complete ScrollToAsync; keep route interruptions visible instead of hanging cleanup.
+            if (ReferenceEquals(Shell.Current.CurrentPage, page) && FindScrollView(page) is { } outer)
+            { await outer.ScrollToAsync(0, 0, animated: false); }
+        }
+        await Task.Delay(400);
+        if (!ReferenceEquals(Shell.Current.CurrentPage, page))
+        { throw new InvalidOperationException("The reviewed budget page was retired before its fixture-restoration capture."); }
+        await CaptureAsync(app, folder, language + "-budget-readouts-restored");
+        if (before != await StoredAsync()) { throw new InvalidOperationException("Budget readout review changed stored financial/settings data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-budget-readouts-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        { CompleteOriginalFigures = true, ExactLongSignedPackets = true, DefaultAndCompactTypography = true,
+            NativeScrollEnds = true, CompleteAccountsEntriesSettingsBudgetsPlansUnchanged = true,
+            PresentationFixtureRestored = vm.TotalLines[0] == total }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
     }
 
     // AT-92: invoke each actual native Insights destination, retaining the body on repeated attachment and resize.
