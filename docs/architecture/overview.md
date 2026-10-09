@@ -38,7 +38,7 @@ flowchart LR
     app --> prefs
     app -- "optionally encrypted backup (user's own account)" --> gd
     app -- "optionally encrypted backup (user's own account)" --> od
-    app -. "Pro unlock / tip jar (planned)" .-> store
+    app -. "Plus / Pro purchases (planned, D-61)" .-> store
     web -. planned .-> api
     app -. "sync, only where needed" .-> api
 ```
@@ -71,7 +71,7 @@ The repository has two kinds of code:
 | [Vafadar.Maui](../../src/Libraries/Vafadar.Maui/README.md) | MAUI bootstrap (`UseVafadar`), preferences, `{v:Translate}`, RTL, date field and chips, device authentication for app locks, Syncfusion setup, MVVM base | Core, Localization | ✅ |
 | [Vafadar.Authentication.Maui](../../src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft sign-in with MSAL and Google sign-in (Play services on Android, system browser + PKCE on iOS and Windows) on Android, iOS and Windows | Authentication | ✅ (device check with real clients pending) |
 | Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Zanance has its own backup screen; extract when a second app needs it) |
-| Vafadar.Monetization | "Pro" unlock and tip jar via Google Play Billing / StoreKit | – | 🔜 planned ([details](monetization.md)) |
+| Vafadar.Monetization | Planned store billing/entitlement infrastructure; Zanance follows Free/Plus/Pro and Plus Lifetime (D-61) | – | 🔜 planned ([details](monetization.md)) |
 | Vafadar.Web | Shared Blazor components, layout, localization for web apps | Localization | 🔜 when the first web app starts |
 
 A library is created when a second app needs the same thing, or when the concern is clearly generic from the start
@@ -187,7 +187,7 @@ Vafadar.Zanance.App/
 | Backup & restore | Package → optional encryption → user's cloud storage; retention; validated restore | [data-and-backup.md](data-and-backup.md) |
 | Authentication | Per-provider sign-in services (keyed DI) providing access tokens; server auth later | [authentication.md](authentication.md) |
 | Web + mobile | Shared Core, per-app API, optional sync | [web-and-shared-data.md](web-and-shared-data.md) |
-| Monetization | Free / Free + Pro / tip jar through store billing | [monetization.md](monetization.md) |
+| Monetization | App-specific store policy; Zanance Free/Plus/Pro and Plus Lifetime (D-61) | [monetization.md](monetization.md) |
 | Settings | `ISettingsStore` (MAUI `Preferences`), keys namespaced by feature (`localization.language`) | `Vafadar.Core` |
 | Time | Inject `TimeProvider`; never `DateTime.Now` in logic (testability, time zones) | [coding conventions](../guides/coding-conventions.md) |
 | Secrets | Build-time injection (`eng/AppSecrets.targets`), GitHub secrets in CI | [secrets guide](../guides/secrets-and-configuration.md) |

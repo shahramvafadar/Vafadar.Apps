@@ -1,6 +1,6 @@
 # 06 – Zanance privacy matrix
 
-App `pro.vafadar.zanance`, version 0.1.0 (development). Reviewed against the repository on 2026-10-08 (backup and device-privacy policies updated in D-62/D-63; real-device gates remain open).
+App `pro.vafadar.zanance`, version 0.1.0 (development). Documentation alignment refreshed 2026-10-09 (D-88), retaining the build-specific SDK review and D-62/D-63/D-67 policies; real-provider/device/iOS gates remain open.
 Statuses: Implemented – verified / Implemented – unverified / Planned / Not included / Unknown – needs verification.
 "Verified" means covered by automated tests or a reviewed build artifact; **device checks** (release APK on a real
 phone) are still pending for every row and are a release gate (08).
@@ -16,7 +16,7 @@ readable by anyone who obtains it. First-run restore creates no extra account an
 
 | Online account | Local ledger | Ads / Analytics / AI | Pro | Privacy policy | Data safety |
 |---|---|---|---|---|---|
-| None in phase 1 | SQLite in app-private storage | No application ads/analytics/AI feature; ML Kit diagnostics possible in Cloud (SEC-09) | Planned, no billing in phase 1 | Draft (`docs/privacy/privacy-policy.md`) – must be published before release | To be completed from the release build |
+| No mandatory app account; optional configured provider backup sign-in | Plaintext SQLite in app-private storage | No application ads/analytics/AI feature; ML Kit diagnostics possible in Cloud (SEC-09) | Free/Plus/Pro design (D-61); no billing/quota enforcement | Draft (`docs/privacy/privacy-policy.md`) – must be published before release | To be completed from the release build |
 
 ## Data flows
 

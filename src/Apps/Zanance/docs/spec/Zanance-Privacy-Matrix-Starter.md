@@ -1,12 +1,12 @@
 # Zanance — Privacy Matrix Starter Template
 
 **Document version:** 1.1  
-**Date:** 2026-09-25 (v1.0); revised 2026-09-26 (v1.1: statuses reviewed against the repository)  
+**Date:** 2026-09-25 (v1.0); revised 2026-09-26 (v1.1); current alignment refreshed 2026-10-09 (D-88)
 **App:** `pro.vafadar.zanance`  
 **Product reference:** `Zanance-Product-Specification.md`, particularly Sections 17–20 and 22  
 **File status:** Review template with statuses verified against the repository; not a submission-ready Data Safety declaration. The maintained app profile is `src/Apps/Zanance/docs/06-privacy-matrix.md` in the repository.
 
-> v1.0 was prepared without inspecting the repository. v1.1 records the state verified on 2026-09-26 from the source code, the package list (`Directory.Packages.props`) and the merged Android manifest. Device checks of the release package are still pending for every flow and remain a release gate. `Not included` means the capability and its SDKs are absent from the code; it must be re-checked for every release.
+> The original v1.1 review was dated 2026-09-26. Subsequent decisions and current rows are aligned with the maintained app privacy profile (D-88); targeted Windows/emulator evidence is recorded per scenario in the acceptance plan. Physical-device, real-provider and iOS acceptance remain release gates. `Not included` is scoped to the named feature/build and must be re-checked after dependency changes.
 
 ## 1. Allowed Statuses
 
@@ -22,17 +22,17 @@
 
 | App | Primary online account | Local ledger | Ads / Analytics / AI | Pro | Privacy Policy | Data Safety |
 |---|---|---|---|---|---|---|
-| Zanance / pro.vafadar.zanance | None in Phase 1; the app has no sign-in. | SQLite in app-private storage; complete Phase 1 ledger, plans, budgets and rates. | Not included; no such SDK is referenced. | Future plan; no payments in Phase 1. | Draft exists; must be published at a stable URL before release. | Must be completed from the release build. |
+| Zanance / pro.vafadar.zanance | No mandatory app account; optional configured Google/Microsoft backup connection (D-35/D-50). | Plaintext SQLite in app-private storage; implemented ledger and local profiles. | No application ads/analytics/AI; native ML Kit diagnostics possible in Cloud builds (SEC-09). | Free/Plus/Pro design (D-61); no billing or quota enforcement. | Draft exists; must be published at a stable URL before release. | Must be completed from the release build. |
 
 ## 3. Data Flows to Review
 
-| ID | Capability/flow | Potential data | Intended destination in the design | Status (2026-09-26) | Required evidence |
+| ID | Capability/flow | Potential data | Intended destination in the design | Current status (evidence scoped per row) | Required evidence |
 |---|---|---|---|---|---|
 | DF-01 | Accounts and transactions | Amount, currency, date, account name, category, title, payee, notes; quick templates (title, payee, optional amount); saved list filters; who pays back a reimbursable expense; tags; categorization rules (text and category); interest rate and installment of loans; lender or borrower of a loan. | Local app database. | Implemented — verified (automated tests). | Storage location (app-private), OS backup behavior (DF-16/17), device check. "Delete all data on this device" (Settings, confirmed twice) empties the database; shared backup files, exports and OS backups are not affected, and the app says so. |
-| DF-02 | Schedules and budgets | Due dates, amounts, income/expense plans, limits, exchange rates, savings goals and the money set aside for them. | Local. | Implemented — verified (automated tests). | No transmission: no network SDK, no INTERNET permission on Android. |
+| DF-02 | Schedules and budgets | Due dates, amounts, income/expense plans, limits, exchange rates, savings goals and the money set aside for them. | Local. | Implemented — verified (automated tests). | Local finance processing; offline Release has no INTERNET permission. Configured Cloud builds contain the separate authentication/storage and native SDK paths documented in the SDK review. |
 | DF-03 | Local backup | Complete ledger package, finance settings and content counts; Optional AES-256-GCM with a user password (D-62). | Kept on the device (last 10) and shared by the user to a destination of their choice. | Implemented — verified (library and fresh-install integration tests); device check pending. | Temporary files, restore on a new device. |
-| DF-04 | Google Drive backup | Package with optional password encryption and connection metadata (D-62). | User-selected cloud storage. | Not included in the Phase 1 release: hidden until real sign-in exists. | Authorization scopes, identity data, upload/download, deletion, account switching. |
-| DF-05 | OneDrive backup | Package with optional password encryption and connection metadata (D-62). | User-selected cloud storage. | Same as DF-04. | The same checks, performed independently for Microsoft. |
+| DF-04 | Google Drive backup | Package with optional password encryption and connection metadata (D-62). | User-selected cloud storage. | Implemented platform storage/sign-in; offered only with the configured provider client. Real end-to-end acceptance pending (D-35/D-50/D-67). | Authorization scopes, released signing certificate/client registration, upload/download/restore, deletion and account switching (AT-59). |
+| DF-05 | OneDrive backup | Package with optional password encryption and connection metadata (D-62). | User-selected cloud storage. | Implemented platform storage/MSAL; offered only with configured Microsoft client. Real end-to-end acceptance pending (D-35/D-50/D-67). | The same checks, performed independently for Microsoft, including Entra platform configuration. |
 | DF-06 | Export / Share | Entries of a chosen period (CSV; notes and payees optional) or the report of a period (PDF with totals, categories, accounts, plans and tags). | User-selected destination app via the share sheet. | Implemented — verified. | Unencrypted-file warning, formula neutralisation, temporary file in the app cache. |
 | DF-07 | Import | Selected CSV file and its contents. | Local processing and storage. | Implemented — verified. | No upload, preview, atomic batch with undo. |
 | DF-08 | Reminders | Occurrence ID and generic text; name and amount only if opted in. Several reminders at the same time become one summary (plan names only if opted in). A snoozed reminder keeps its text and link in local preferences until it fires or its occurrence closes. Contract reminders (last day to cancel, review date) follow the same privacy rule. | Device notification service (local). | Implemented — verified (unit); device check pending. | Lock-screen text, permission on demand, rebuild after restore. Windows: no notifications. |
@@ -42,12 +42,12 @@
 | DF-12 | Billing | None in Phase 1. | Authorized store service, in the future. | Not included. | Before any release with purchases: purchase flow, validation, retention. |
 | DF-13 | AI | None. | — | Not included. | — |
 | DF-14 | Sync / Household | None. | — | Not included. | — |
-| DF-15 | Online exchange rates / Bank Sync | None; rates are entered manually. | — | Not included. | The Android manifest declares no INTERNET permission. |
+| DF-15 | Online exchange rates / Bank Sync | None; rates are entered manually. | — | Not included. | Offline Release has no INTERNET permission; Cloud SDK/network review remains separate from the absent rate/bank feature. |
 | DF-16 | Android Auto Backup | App database and preferences. | The user's Google account backup. | Implemented — unverified (enabled by owner decision). | Disclose in the Privacy Policy and Data Safety; test restore on a new device. |
 | DF-17 | iOS device / iCloud backup | App data. | The user's iCloud or computer backup. | Implemented — unverified (operating-system default). | Disclose; verify with the iOS release. |
-| DF-18 | Preferences | Language, calendar, optional region, first day of the week, theme, currency display units, Home layout, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Included in OS backups, not in the app's backup package. |
-| DF-20 | Attachments | Receipt photos and PDF files the user picks for an entry; on Android, iOS and Windows photos are re-encoded as JPEG without metadata; a photo that cannot be re-encoded is not stored. | App database, the encrypted backup and OS backups; never in exports; opened with an app the user chooses through a temporary copy that is deleted on the next start. | Implemented — verified. | Uses the system file picker without any camera, storage or photo permission; removed at the next start after their entry is deleted. |
-| DF-19 | Syncfusion license validation | License key compiled into the app (build secret, never in the repository). | Local check. | Implemented — offline validation verified by an automated test. | Confirm no network call in the release build (none possible on Android without the INTERNET permission). |
+| DF-18 | Preferences | Language, calendar, optional region, first day of the week, theme, currency display units, Home layout, alert levels, dismissed Home guidance. | Local preferences. | Implemented — verified. | Allowlisted portable regional/display preferences also enter new app backup packages (D-67); credentials, PIN state and device security do not. Other preferences follow their recorded profile/device scope. |
+| DF-20 | Attachments | Receipt photos and PDF files the user picks for an entry; on Android, iOS and Windows photos are re-encoded as JPEG without metadata; a photo that cannot be re-encoded is not stored. | App database, optionally password-protected portable backup (D-62) and OS backups; never in CSV/PDF exports; opened with a chosen app through a temporary copy deleted on the next start. | Implemented — verified. | System file picker without storage/photo-library permission. Phone capture (D-38): Android camera app without Zanance camera permission; iOS contextual camera permission with NSCameraUsageDescription. Deleted attachments are cleaned after the Undo window at the next start. |
+| DF-19 | Syncfusion license validation | License key compiled into the app (build secret, never in the repository). | Local check. | Implemented — offline validation verified by an automated test. | Offline license validation and disabled Syncfusion telemetry are reviewed separately from other native SDKs; offline Release has no INTERNET permission. See the build-specific SDK review for Cloud. |
 
 ## 4. Per-Flow Detail Form
 

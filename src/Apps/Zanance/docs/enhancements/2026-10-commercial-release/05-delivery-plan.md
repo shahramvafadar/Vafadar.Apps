@@ -93,6 +93,11 @@ Definition of Done and testable output · proposed next section.
 
 ## Handoff
 
+D-88 / GOV-02 completes the original documentation-alignment list under D-69. Brand, profiles, sign-in source,
+optional backup protection/portable preferences and the D-61 plan model are current; original ZEX/ZCR review-only
+statements are explicitly historical. No app code or gate is changed. OD-11 external setup/acceptance and the
+unanswered OD-10/OD-12 product choices remain open; see the audited corrections in 01-current-state.md Section 5.
+
 * 2026-10-07 – wave 0 done (ZCR-GOV-01): documents in this folder, D-61, MON-02/03 superseded. Waiting for the
   owner's approval of ZCR-SEC-01 and answers to [06-open-decisions.md](06-open-decisions.md) (OD-01, OD-04, OD-10 first).
 

@@ -65,8 +65,8 @@ The objective is not to build a small business accounting system or to maximize 
 | PR-06 | Users must be able to export their data; security or data export must not be used to force a purchase. |
 | PR-07 | No shared capability, SDK, or online service may be introduced into Zanance merely because another app uses it. |
 | PR-08 | “Recording a payment” must never be presented as “executing a bank transfer.” |
-| PR-09 | Do not apply the MIT License or another open-source license to the product at this stage; comply with third-party dependency licenses. |
-| PR-10 | The final brand name, logo, and prices have not been determined; the implementation must not treat them as settled. The app uses a neutral placeholder icon until then. |
+| PR-09 | Owner-written Zanance source is proprietary, all rights reserved (D-63). Bundled third-party notices apply only to those components; comply with their licenses. |
+| PR-10 | Zanance is the approved untranslated product name (D-21); use the approved master symbol and generated assets (D-26). Free/Plus/Pro is the approved plan design (D-61); prices and offers remain design/sandbox values until separately approved for sale. |
 
 ### 1.3. Target Users and Baseline Scenarios
 
@@ -82,16 +82,16 @@ Phase 1 is not a payment tool, bank, custodial wallet, lending platform, formal 
 
 ## 2. Current State and Alignment with Shared Libraries
 
-Verified state of the repository on `2026-09-26` (v1.0 listed the owner's report; paths carry the `Vafadar.` prefix):
+Repository alignment refreshed on `2026-10-09` (D-88). Earlier v1.1 review dates remain historical; Section 31 and the canonical ZCR backlog record current implementation and acceptance boundaries:
 
 | Component | Verified state | Requirement for further work |
 |---|---|---|
 | `src/Libraries/Vafadar.Core` | Entity base (GUID v7), audit interface, settings and app-environment abstractions, digit normalization (Persian/Arabic/Latin). | Preserve common rules; do not introduce finance concepts into the generic core without a reason. |
 | `src/Libraries/Vafadar.Localization` | English, Persian, German, Spanish, French, Italian with runtime switching, RTL, Gregorian, Persian and lunar Hijri (Umm al-Qura) display calendars independent of language, date formatting. | Preserve this independence and test it across all screens and reports. |
 | `src/Libraries/Vafadar.Data` | SQLite with EF Core, UTC timestamps, audit interceptor, startup migrations, SQLite snapshot backup source. | Migrations must only add to the schema; sample data must not replace the user's database. |
-| `src/Libraries/Vafadar.Backup` | Backup package with manifest and SHA-256 checksums, AES-256-GCM encryption with a password, validation of app id, format and app version before restore, inspection without restore, retention of 10 versions, optional content summary. | Keep encryption, integrity and restore behavior covered by tests. |
-| `src/Libraries/Vafadar.Backup.GoogleDrive`, `…OneDrive` | Storage classes tested against fake HTTP only. | Not usable until real sign-in exists (Section 17.4); hidden in the app. |
-| `src/Libraries/Vafadar.Authentication` | Interfaces only; no Google/Microsoft sign-in. | Fake login flows or assumptions that OAuth is ready are prohibited. |
+| `src/Libraries/Vafadar.Backup` | Backup package with manifest and SHA-256 checksums, optional AES-256-GCM password protection (D-62), validation of app id, format and app version before restore, inspection without restore, retention of 10 versions, optional content summary. | Keep encryption, integrity and restore behavior covered by tests. |
+| `src/Libraries/Vafadar.Backup.GoogleDrive`, `…OneDrive` | Provider storage implementations, covered by fake-HTTP tests, with configured platform sign-in (D-35/D-50). | Offered only when the provider client is configured; real sign-in/upload/restore for each released platform and signing certificate remains AT-59. |
+| `src/Libraries/Vafadar.Authentication`, `…Authentication.Maui` | Shared identity/token contracts and platform implementations: MSAL for Microsoft; Play services on Android and browser PKCE on iOS/Windows for Google (D-35/D-50). | Configuration, provider-console registration and real end-to-end acceptance are independent of source implementation; no fabricated sign-in evidence. |
 | `src/Libraries/Vafadar.Maui` | Startup (`UseVafadar`), Syncfusion licensing, `{v:Translate}`, RTL helpers, date field (Gregorian/Persian), choice chips, converters, device authentication for app locks. | Use the existing approach; verify asset and license rights for a release. |
 | `src/Apps/Zanance` | Phase 1 implemented; cloud backup implemented but not yet verified on devices (Section 31). | Extend this app; do not create a parallel app or repository without justification. |
 **AR-01 — Sharing boundary:** Localization, backup, app lock, reminder infrastructure, and the mechanism for optional capabilities may be reusable. Balance calculations, financial recurrence, budgeting, refunds, and forecasting belong to the Zanance domain; generalizing them into a shared library requires a real need.
@@ -109,7 +109,7 @@ Verified state of the repository on `2026-09-26` (v1.0 listed the owner's report
 | Topic | Decision |
 |---|---|
 | Online app account | Optional; not part of core usage in Phase 1. |
-| Local data ownership | One personal workspace per installation; multiple independent in-app profiles and family use are future capabilities. |
+| Local data ownership | Independent local profiles are implemented, each with its own database and backup set (D-34). Profiles share the device-wide access gate and do not provide family sharing or per-person authorization. |
 | Source of data | Local data; optional cloud backup, not synchronization. |
 | Financial accounts | Multiple accounts, including cash, current/checking, savings, and a simple credit card account. |
 | Financial events | Income, expense, and transfer; refunds and adjustments have distinct meanings. |
@@ -760,9 +760,9 @@ A starter template is provided separately in `Zanance-Privacy-Matrix-Starter.md`
 
 **MON-01:** First make the product personally useful and dependable. Payment integration and final feature segmentation are not required in Phase 1; all implemented Phase 1 capabilities must be available for product testing.
 
-**MON-02** *(superseded by D-61)***:** Keep the future design compatible with a one-time Pro purchase for local capabilities. Assess ongoing AI, Bank Sync, or synchronization-service costs separately and transparently; a one-time purchase must not inadvertently create an unlimited commitment to an expensive service.
+**MON-02 (superseded by D-61):** Keep the future design compatible with a one-time Pro purchase for local capabilities. Assess ongoing AI, Bank Sync, or synchronization-service costs separately and transparently; a one-time purchase must not inadvertently create an unlimited commitment to an expensive service.
 
-**MON-03** *(superseded by D-61)***:** Finalize the Free/Pro boundary after real usage. Candidates to assess for Pro include advanced reports, advanced budgets/scenarios, personalization, and additional automation. This document sets no final price or limits for any of them.
+**MON-03 (superseded by D-61):** Finalize the Free/Pro boundary after real usage. Candidates to assess for Pro include advanced reports, advanced budgets/scenarios, personalization, and additional automation. This document sets no final price or limits for any of them.
 
 **MON-04:** Access to history, basic export, data deletion, basic protection, and restoration of the user's own data must not be held hostage to a purchase. Entitlement expiry or a store outage must not delete data. Creation of new paid items may be limited, but existing data remains readable and exportable.
 
@@ -1094,7 +1094,7 @@ Suggested order: goals and non-monthly expenses/rollover; then splits and partia
 
 ### 27.5. Phase 2B: Independent Projects
 
-Synchronization, household sharing, banking, and AI are not small ancillary features. Independently define the problem, cost, data, service authorization, stop criteria, and acceptance criteria for each. Building one does not require building the others.
+The canonical ZCR delivery plan governs Free/Plus/Pro entitlements and billing as well as synchronization, household sharing, banking and AI. Each needs its recorded product, cost, privacy and acceptance decisions. D-69 authorizes ready planned work; it does not settle open decisions or permit selling unbuilt services. Building one does not require building the others.
 
 ### 27.6. Unacceptable Delivery Claims
 
@@ -1111,13 +1111,13 @@ The owner has approved the main product decisions. The following were resolved t
 | Exact domain/project/class structure | Review the existing architecture; make the smallest changes consistent with the product rules. | `Vafadar.Zanance.Core` (domain, calculations), `.Data` (EF Core, stores), `.App` (MAUI). Money in minor units with an ISO 4217 table; a transfer is one entry; occurrences are computed, only changed ones are stored. |
 | Chart, date, and notification libraries | Prefer existing capabilities; review licensing, quality, and actual need before adding dependencies. | Syncfusion Charts and Calendar (licensed), Fluent UI System Icons (MIT), Plugin.LocalNotification (MIT) on Android/iOS, AndroidX Biometric (Apache 2.0). |
 | Database-file protection and recovery secrets | A short threat model, testable method, and recorded real limitations. | Database in app-private storage, not encrypted; app lock hides the UI only; backups optionally encrypted with a user password that cannot be recovered (D-62). OS backups (Android Auto Backup, iCloud) enabled and disclosed. |
-| Non-Android platform support | Inspect actual targets; preserve compatibility without claiming untested readiness. | Android, iOS and Windows build; Windows has no device notifications in Phase 1 (the due-date center works). Device tests pending. |
-| Completing backup OAuth | Review required configuration and actual sign-in; missing configuration blocks that capability, not a reason to require login for the app. | Blocked: needs OAuth client ids. Until then encrypted backup files are shared to any destination via the system share sheet. |
+| Non-Android platform support | Inspect actual targets; preserve compatibility without claiming untested readiness. | Windows and Android builds are verified; targeted Android emulator flows are documented. The iOS app target exists, but its build/device acceptance requires a Mac and Apple signing. Windows has no device notifications (the due-date center works). |
+| Completing backup OAuth | Review required configuration and actual sign-in; missing configuration blocks that capability, not a reason to require login for the app. | Platform implementations exist and providers are shown only when configured. AT-59 requires real sign-in/upload/restore for the released certificate and platform; configuration alone is insufficient. Local optionally protected files can be shared independently. |
 | Import approach and relationship identity | Design from sample files and round-trip tests; do not merge by guessing. | Own export recognized by its header and imported by stable id; other files by explicit mapping; one undoable batch per import. |
 | Reviewing automatic entries | Preserve this document's posted/confirmed model and choose appropriate UX. | Automatic and imported entries are Unreviewed; "Needs review" chips and filters on Home, Plans and Transactions; "Mark as reviewed" in the entry details. |
 | Missing-rate display and rounding rules | Consistent, explainable behavior; do not change original amounts. | Latest manual rate on or before the date, inverse rates allowed, half away from zero to the minor unit; combined totals only when all rates exist, otherwise "incomplete". |
 | Documentation location | Follow repository conventions; Section 29 paths/deliverables are suggestions. | `src/Apps/Zanance/docs`; this specification is kept in `src/Apps/Zanance/docs/spec`. |
-| Final Free/Pro split, pricing, ads, and online services | Do not implement without a new business decision or assume these matters are already settled. | Nothing implemented; no billing, ads, analytics or network SDKs. |
+| Free/Plus/Pro, pricing and online services | Follow D-61 and the canonical ZCR plan; unresolved quota, provider, cost and sale choices stay gated. | Plan design approved; billing, quotas, sync and shared services are not implemented. No ads/application analytics; configured Cloud builds contain authentication/storage and native SDKs documented in the SDK review. |
 
 **RISK-01:** The largest risk is turning Phase 1 into an endless project. Mitigation: explicit completion criteria and delivery of usable vertical slices.
 
@@ -1458,3 +1458,9 @@ physical-device/iOS gates are in quality/budget-periods.md.
 
 D-87 current strict main suite remains 1,369 passing (App.Tests 140). AT-94 adds actual native runtime checks;
 physical OS/screen-reader/device/iOS acceptance remains independent.
+
+D-88 completes documentation alignment ZCR-GOV-02: current approved brand/proprietary ownership, local profiles,
+platform sign-in source, optional backup protection/portable display preferences and D-61 plan design replace old
+assertions. Historical review/slice counts stay dated. No app code or build changed; D-87's 1,369-test/App.Tests 140
+and signed APK baseline is retained, not a new run. Provider/certificate, Mac/iOS, physical-device, encryption and
+open product/commercial choices remain separate gates. See ZCR 01-current-state.md Section 5 for audited corrections.

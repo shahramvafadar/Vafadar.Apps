@@ -14,14 +14,14 @@ Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · �
 | Financial entries (accounts, transactions, plans, budgets, categories, notes, tags) | ✅ | On-device SQLite | ⚙️ only in backup files / exports the user shares, and in OS backups | The user |
 | Attachments (receipt photos, PDF files) | ⚙️ | On-device SQLite | ⚙️ only inside the optionally encrypted backup file (D-62) and OS backups; never in CSV/PDF exports | The user |
 | Local profile names (only when more than one profile exists) | ⚙️ | On-device preferences, outside the profiles' databases | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
-| App settings (language, calendar, theme, display units) | ✅ | On-device preferences | ⚙️ OS backups (Android Auto Backup, iCloud / computer backup) | The user |
+| App settings (language, regional display, calendar, theme, units) | ✅ | On-device preferences and profile settings | ⚙️ OS backups; explicit portable allowlist in new Zanance backup packages (D-67), excluding device security/credentials | The user; file readability follows backup protection |
 | App PIN verifier and attempt limit (D-63) | ⚙️ | Platform SecureStorage, outside financial databases | Not in portable backups; Android OS backup/transfer exclude device-bound ciphertext; iOS keychain follows OS policy | The app checks a salted verifier; no plain PIN is stored |
 | Screenshot preference (D-63) | ✅ | Device preferences | Not in portable backups; OS preferences may be backed up | The user |
 | Backup files | ⚙️ | On the device (last 10), the connected cloud app folder or wherever the user shares them | ⚙️ when the user shares or uploads one | Anyone obtaining an unprotected file; encrypted files require the password (D-62) |
 | CSV / PDF exports | ⚙️ | App cache, then the app the user picks in the share sheet | ⚙️ only when the user shares one (unencrypted, with a warning) | Whoever receives the file |
 | Reminders | ⚙️ | Local notification service | ❌ | The user (generic text unless details are allowed) |
-| Google / Microsoft account, OAuth tokens | ⚙️ | Device only: Play services (Google, Android), MSAL cache (Android storage, iOS keychain, Windows DPAPI), Google refresh token (iOS keychain, Windows DPAPI) | ❌ | Only in builds with cloud backup clients and after the user connects (D-35, D-50); removed on disconnect |
-| Purchase status (Pro, tips) | 🔜 | – | – | Not in this release |
+| Google / Microsoft account, OAuth tokens | ⚙️ | Device-managed/protected token caches: Play services, MSAL, keychain or DPAPI per platform | ⚙️ authorization requests and access tokens are exchanged with the chosen identity/storage provider over HTTPS; no developer account service | Only in builds with cloud backup clients and after the user connects (D-35, D-50); removed on disconnect |
+| Purchase status (Plus/Pro, Plus Lifetime; D-61 design) | 🔜 | – | – | Not in this release |
 | Application crash reports / analytics | ❌ | – | – | No developer analytics/crash SDK configured |
 | Android ML Kit diagnostics | Possible in cloud-enabled builds | Native SDK metrics | Possible whenever INTERNET is permitted, even before cloud sign-in | Google SDK; see [SDK review](zanance-sdk-review.md) |
 | Advertising identifiers | ❌ | – | – | – |
@@ -40,6 +40,7 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 | Android `INTERNET` | ⚙️ | Only in builds with cloud backup clients (D-35), for the user's own Google Drive / OneDrive; offline builds remove it (D-20); Debug builds add it for the debugger |
 | Android `ACCESS_NETWORK_STATE` | ❌ | Removed from every build |
 | iOS Face ID (`NSFaceIDUsageDescription`) | ✅ | Optional app lock |
+| iOS camera (`NSCameraUsageDescription`) | ⚙️ | Receipt capture after contextual explanation and system permission (D-38); no Android camera permission |
 | Anything else | ❌ | – |
 
 ## 3. Third-party services and SDKs
@@ -48,7 +49,7 @@ Taken from the merged manifest of the release build; verify again on every SDK o
 |---|---|---|---|
 | Google Drive API + Google Identity | ⚙️ | Optionally password-protected backup files; the account e-mail | Only when the user connects Google Drive (Android, iOS, Windows; D-35, D-50); scopes `drive.appdata` (own folder only), `openid`, `email`; Android: tokens kept by Play services; iOS and Windows: system browser with PKCE, no client secret, refresh token in the keychain / under DPAPI, revoked on disconnect |
 | Microsoft Graph (OneDrive) + Microsoft identity (MSAL) | ⚙️ | Optionally password-protected backup files; the account name | Only when the user connects OneDrive (Android, iOS, Windows; D-35, D-50); scope `Files.ReadWrite.AppFolder` (own folder only); token cache on the device (MSAL storage on Android, keychain on iOS, DPAPI on Windows) |
-| Google Play Billing / StoreKit | 🔜 | Purchase status | Only if the app gets Pro / tips |
+| Google Play Billing / StoreKit | 🔜 | Purchase status | Zanance D-61 design; billing/entitlements not implemented or activated |
 | Syncfusion controls | ✅ | None | UI components, run locally; the license is validated offline. The `Syncfusion.Telemetry` package they bring is switched off at startup (`Telemetry.Disable()` in `Vafadar.Maui`) |
 | Plugin.LocalNotification | ✅ | Reminder text | Local notifications only, no push service |
 | Google ML Kit text recognition (Android) | ⚙️ | A receipt photo or scanned PDF page the user chooses to read | Runs on the device with a bundled model; in offline builds its usage statistics cannot be sent (no network permission); in builds with cloud backup ML Kit may send usage statistics to Google while online |

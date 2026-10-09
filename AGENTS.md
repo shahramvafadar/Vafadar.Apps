@@ -261,8 +261,9 @@ repository.
   authorized continuing all ready planned work without stopping between sections (D-69); unresolved product, licence,
   provider, spending and release decisions remain owner gates. New languages come last. No commercial limits on test
   builds before the owner approves.
-* Waiting for the owner: Google OAuth client ids (Android, iOS, Desktop app) and the Entra iOS platform for cloud
-  backup (D-50); a Mac with Xcode and the Apple signing setup for the iOS build; tests on a physical device; a competitor
+* Remaining owner/external gates: provider registration and real OAuth backup acceptance for each released platform
+  and certificate (D-50/AT-59), including Entra iOS; a verified Mac/Xcode and Apple signing setup for the iOS app build;
+  tests on a physical device; a competitor
   and user-feedback review of reports and KPIs (postponed by the owner).
 
 ## 13. Large-text review (D-77 / D-78)

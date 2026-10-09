@@ -19,5 +19,9 @@ repository and track what is actually implemented.
 | [Enhancement ZEX](enhancements/2026-10-multi-unit-goals-insights/README.md) | Design package for multi-unit holdings, trackable goals and explainable insights – approved 2026-10-03, implementation in phases |
 | [Specification](spec/Zanance-Product-Specification.md) | The owner's requirements; Section 31 = implementation status and deviations |
 
+Documentation alignment D-88 removes superseded brand, cloud-sign-in, profile and pricing statements; original
+review dates remain historical. Current remaining work lives in the canonical
+[ZCR backlog](enhancements/2026-10-commercial-release/04-backlog.md), with physical/provider/iOS gates kept open.
+
 Status words used everywhere: **Implemented – verified** (behaviour tested), **Implemented – unverified**,
 **Planned**, **Not included**, **Unknown – needs verification**. Nothing is reported as done without evidence.

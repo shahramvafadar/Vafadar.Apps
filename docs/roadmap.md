@@ -26,7 +26,7 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [x] App name (Zanance), icon, splash and colors (D-21, D-22, D-26)
 - [x] App design: meaning colours, Insights tab, calm Home, Persian digits (D-27)
 - [x] English and German fonts of the design (Figtree, Urbanist)
-- [x] Local backup: encrypted backup file, restore with safety copy, CSV import / export
+- [x] Local backup: optionally password-protected file (D-62), restore with safety copy, CSV import / export
 - [x] Cloud backup (OneDrive and Google Drive on Android, iOS and Windows) with sign-in (`Vafadar.Authentication.Maui`,
       D-35, D-50) – offered only in builds with OAuth clients; device verification with real clients pending
 - [ ] Device checks of the release build (08 release checklist)
@@ -36,7 +36,8 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 - [ ] Google Play developer account, app listing (en / fa / de), Data safety form
 - [ ] Google OAuth consent screen verification; Microsoft Entra app registration
 - [ ] Upload keystore, `production` environment secrets, internal → closed → production track
-- [x] Android Auto Backup stays enabled for Zanance (D-16)
+- [x] Android Auto Backup remains enabled (D-16); D-63 excludes device-bound secure-storage ciphertext.
+      Plaintext financial-data exclusion is proposed in ZCR-SEC-07 and awaits OD-10.
 
 ## Phase 3 – iOS
 
@@ -51,7 +52,9 @@ Details and status: [Zanance specification §31](../src/Apps/Zanance/docs/spec/Z
 
 Zanance: Free/Plus/Pro since D-61 – waves 3 and 6 of `src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/`.
 
-- [ ] `Vafadar.Monetization`: Google Play Billing / StoreKit, Pro unlock, tip jar
+- [ ] Zanance entitlements and store adapters: Plus monthly/yearly/Lifetime and Pro monthly/yearly per D-61;
+      quota, offer, cross-store and production-sale decisions remain open. No test-build limits before owner approval.
+- [ ] Extract a shared monetization library only when justified; other-app tip jars are separate from Zanance plans
 - [ ] Verify current store policies for tips and purchases
 
 ## Later

@@ -618,3 +618,22 @@ selected names and bold state. Invoke each actual native button to Month/Week/Tw
 serialized reload and verify the selected view/period text. Restore the original choice and compare complete
 accounts/entries/settings/budgets/plans without Save. Actual matrix, builds/suites and signed normal Android
 Release evidence are recorded in quality/budget-periods.md. External platform/owner acceptance remains separate.
+
+## D-88 - Align current documentation with implemented capabilities (2026-10-09)
+
+Complete ZCR-GOV-02 under D-69 by correcting the original audit's obsolete assertions: approved Zanance branding,
+proprietary source ownership, implemented independent profiles/platform sign-in, optional portable-backup protection,
+allowlisted display preferences and D-61 Free/Plus/Pro/Plus Lifetime design. Date the original ZEX/ZCR review-only
+state as historical and retain story/evidence links. Current pricing values are design/sandbox values, and no quota,
+billing, production encryption or OS-backup decision is introduced.
+
+Privacy documents distinguish Android external-camera capture from iOS contextual permission, offline Release from
+configured Cloud SDK/network behavior, and protected device token caches from actual provider authorization/API
+exchanges. Missing configuration and real-provider acceptance are separate from implementation. iOS source/target
+presence is not a verified app build; Mac/Xcode/signing and physical/provider/release gates remain open.
+
+A focused documentation assertion audit checks corrected requirements, current source/manifest anchors, relative
+links, preserved historical evidence counts and absence of code/build changes. Existing D-87 logs/APK supply the
+unchanged 1,369 main-test/App.Tests 140 engineering baseline; tests/builds are not repeated for text-only changes.
+The correction matrix is in enhancement ZCR's 01-current-state.md Section 5. OD-10/12 and other open owner choices
+remain pending, and no owner archive, finance data, security state or credential is accessed.

@@ -1,8 +1,9 @@
 # Enhancement ZCR – commercial release (Free, Plus, Pro)
 
-**Status (2026-10-07): wave 0 done – audit, plan model, architecture, canonical backlog and delivery plan. No code,
-data model, store product, price or service was changed.** The owner approves one section at a time
-([05-delivery-plan.md](05-delivery-plan.md)).
+**Status refreshed 2026-10-09 (D-88):** the 2026-10-07 wave-0 package was documentation-only. Subsequent
+maintenance and ready local sections have been delivered; their current states and remaining gates live in
+[04-backlog.md](04-backlog.md). D-69 authorizes continuous delivery of ready planned work; open product/licence,
+provider, spending and publication decisions remain owner gates ([05-delivery-plan.md](05-delivery-plan.md)).
 
 Decision: D-61 in [`../../01-assessment-and-decisions.md`](../../01-assessment-and-decisions.md). It supersedes the
 earlier monetization model of the specification (MON-02 one-time Pro purchase, MON-03 boundary after usage) and the

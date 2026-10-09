@@ -1,9 +1,9 @@
 # Zanance enhancement ZEX – multi-unit holdings, trackable goals and explainable insights
 
-**Status: Approved by the owner on 2026-10-03; implementation in phases (see [06](06-implementation-backlog.md#phases)).** Former status: awaiting owner approval. This package is a review, design and planning result only. No source code,
-test, migration, dependency, project file, CI or app setting was changed for it. Implementation may start only after
-the owner approves this design and gives a separate implementation goal (see [08](08-decisions-and-approval.md) and
-[09](09-implementation-goal-draft.md)).
+**Status refreshed 2026-10-09 (D-88): approved on 2026-10-03 and implemented in phases.**
+The original review was documentation-only; that restriction describes the initial package, not today's app.
+[06](06-implementation-backlog.md#state) retains per-story implementation history. Since 2026-10-07, all remaining
+work and external acceptance gates are tracked in the [canonical ZCR backlog](../2026-10-commercial-release/04-backlog.md).
 
 ## Scope
 
@@ -40,7 +40,7 @@ label, the "?" touch target and `AGENTS.md` – none of them changes a capabilit
 | [03 – UI and UX design](03-ui-ux-design.md) | Screen inventory, the ten key flows with wireframes and interaction notes, states, microcopy in fa/de/en, accessibility, platform notes |
 | [04 – KPI and report catalog](04-kpi-and-report-catalog.md) | K01–K14 in full, the liquidity headroom contract, the six report packages, numeric examples |
 | [05 – Simple / Advanced matrix](05-simple-advanced-matrix.md) | All 30 areas and every existing feature, the single display policy and the mode switch rules |
-| [06 – Implementation backlog](06-implementation-backlog.md) | **The single reference backlog of this enhancement**: epics, stories, tasks, dependencies, acceptance criteria |
+| [06 – Implementation backlog](06-implementation-backlog.md) | Historical ZEX story states; remaining work continues in the canonical ZCR backlog |
 | [07 – Acceptance and validation](07-acceptance-and-validation.md) | AT01–AT40 mapped to stories, definitions and tests with expected numbers; regression and release validation |
 | [08 – Decisions and approval](08-decisions-and-approval.md) | Accepted direction, design proposals needing approval, risks, approval gate |
 | [09 – Implementation goal draft](09-implementation-goal-draft.md) | The goal text drafted before approval – superseded by the phase plan in 06 |
@@ -75,5 +75,6 @@ renumbered. Where a story touches an existing requirement, the existing id is na
 ## Status words
 
 As everywhere in the Zanance documentation: **Implemented – verified**, **Implemented – unverified**, **Planned**,
-**Not included**, **Unknown – needs verification**. In this package every new work item is **Designed – awaiting
-approval**; nothing here is implemented.
+**Not included**, **Unknown – needs verification**. The initial design used **Designed – awaiting approval**.
+Current per-story evidence is recorded in [06](06-implementation-backlog.md#state); remaining work uses the ZCR
+backlog states. Neither implemented source nor a local test closes physical-device or release acceptance.

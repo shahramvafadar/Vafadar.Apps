@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Documentation (2026-10-09, D-88)
+
+- Corrected old statements about the approved brand, local profiles, cloud-backup sign-in, optional backup protection
+  and plan design. App behavior and release/device acceptance have not changed.
+
 ### Improved - Show all budget periods (2026-10-09, D-87)
 
 - Monthly, Weekly and Every 2 weeks are all visible. Their buttons wrap onto more rows when text is large or the

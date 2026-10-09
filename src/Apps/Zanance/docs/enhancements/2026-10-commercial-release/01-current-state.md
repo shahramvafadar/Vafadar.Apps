@@ -82,15 +82,23 @@ Entitlements, quotas, catalog, billing, trial, offers, Lifetime, paywall – Mis
 space, roles – Missing. AI, Tax, bank, online rates – Missing (decision gates). Additional 20+ languages – planned as
 the last feature wave.
 
-## 5. Outdated statements found (to correct in the touched documents)
+## 5. Documentation alignment audit (D-88)
 
-* "Monetization: one-time Pro purchase" – spec §3, §20 (MON-02/03), §27.5, §28; `docs/architecture/monetization.md`;
-  `docs/roadmap.md` Phase 4; privacy matrices – superseded by D-61 (this enhancement).
-* Spec §1.2 PR-10 (brand undecided), §2 (cloud backup "hidden/interfaces only"), §3 (profiles "future") – superseded
-  by D-21/D-26, D-35/D-50, D-34.
-* Spec §31 (updated 2026-09-29, test count 491, ZEX not mentioned, "no physical device run") – to be refreshed in the
-  documentation section ZCR-GOV-02.
-* "No Mac" / "OAuth not configured" in AGENTS.md §12, roadmap, D-50, enhancement ZEX docs – kept as the current
-  state until the owner confirms otherwise (OD-11).
-* `docs/privacy/privacy-matrix.md`: "camera ❌" – camera path exists since D-38.
-* ZEX README line 3/79 ("nothing implemented") contradicts its backlog state table.
+The original 2026-10-07 audit found the outdated statements below. Corrections on 2026-10-09 are documentation
+alignment with existing owner decisions and current source, not new product policy or external acceptance.
+
+| Original contradiction | Current correction and evidence |
+|---|---|
+| Generic one-time Pro model used for Zanance | D-61 Free/Plus/Pro and local-only Plus Lifetime govern spec Sections 3/20/27.5/28, monetization/overview, roadmap and privacy inventory. Historical MON-02/03 stay explicitly superseded; store prices, quotas and purchases remain unimplemented/decision-gated. |
+| PR-10 said brand/logo undecided | D-21/D-26 approved Zanance and its generated master assets; prices remain design/sandbox values. PR-09 retains D-63 proprietary/all-rights-reserved ownership and component-only third-party notices. |
+| Spec Section 2 described interfaces-only/hidden cloud sign-in | Actual Authentication.Maui, CloudSignIn platform matrix and Google/Microsoft services exist. Providers require configured clients; real sign-in/upload/restore for released certificates/platforms remains AT-59. |
+| Spec Section 3 described local profiles as future work | ProfileService already selects separate databases and backup sets (D-34). Profiles are local, share the device gate and do not imply family authorization. |
+| Section 31 had old date/count and no ZEX/emulator evidence | Current Section 31 is dated 2026-10-09 and records ZEX, targeted native flows, 1,369 passing main tests/App.Tests 140, and D-87's complete APK. Earlier slice counts remain historical; physical-device/iOS/release acceptance remains open. |
+| Generic blanket missing OAuth/Mac statements | AGENTS Section 12 and spec Section 28 require completed provider/certificate/platform registration, real acceptance and a verified Mac/Xcode/signing environment. OD-11 remains unconfirmed; source presence is not external completion. |
+| Camera denied or permission-free on every platform | The maintained matrix already records D-38 capture. The root/starter matrices now agree with PermissionPrompts.TakePhotoAsync and iOS Info.plist: Android camera app without a Zanance camera permission; iOS contextual camera permission. |
+| ZEX README said nothing implemented/awaiting implementation approval | Initial review-only state is dated as historical; current implementation points to the retained ZEX story table and canonical ZCR backlog. ZCR README likewise separates the original wave-0 review from later D-69 delivery. |
+| Starter matrix denied sign-in/portable preferences or implied every backup encrypted | Current rows match optional configured backup sign-in, D-62 optional protection and MauiProgram's explicit SettingsBackupSource/LocalizationService.PortableKeys allowlist. Device security/credentials remain excluded. Offline/Cloud network and SDK scopes are explicit. |
+
+The unchanged D-87 test/build/package logs support the retained engineering baseline; no new test count, app build
+or device claim is introduced by this documentation-only slice. The focused assertion audit checks these edited
+requirements, links and actual source/manifest anchors. Owner archive/data/secrets are untouched.

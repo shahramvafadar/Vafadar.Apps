@@ -14,7 +14,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | Id | Title | Wave | Prio | Size | State | Depends on |
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
-| ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Proposed | GOV-01 |
+| ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress | OD-04 |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | Proposed | SEC-01 |
@@ -87,11 +87,14 @@ Items of later waves are refined into sections before they start.
 Value: one honest picture of the product and one plan. Scope: documents in this folder, D-61, superseded markers.
 Out: any code, data model, store or service change. Done: documents pushed; owner chooses the first section.
 
-### ZCR-GOV-02 – Outdated statements
-Value: documents match reality. Scope: spec §31 (date, test count, ZEX, device runs), AGENTS.md §12, PR-10, §2, §3,
-privacy matrices (camera), ZEX README status lines. Out: requirement changes. Texts: none. Done: every statement in
-[01-current-state.md §5](01-current-state.md#5-outdated-statements-found-to-correct-in-the-touched-documents) fixed
-or confirmed by the owner (OD-11).
+### ZCR-GOV-02 – Outdated statements (Done 2026-10-09, D-88)
+Value: documents match reality. Scope: current brand/proprietary ownership, source-implemented sign-in/profiles,
+optional backup protection/portable preferences, D-61 plan design, platform and SDK/privacy boundaries, dated ZEX/ZCR
+review statements and current Section 31 evidence. Source/manifest checks and a focused documentation assertion audit
+verify the corrections listed in [01-current-state.md §5](01-current-state.md#5-documentation-alignment-audit-d-88).
+No app code, build configuration, financial data, policy or entitlement changes; unchanged D-87 tests/APK remain the
+local engineering baseline. OD-11 configuration/Mac/provider acceptance remains open, and documents now qualify it
+rather than claiming either a missing implementation or a completed external setup.
 
 ### ZCR-SEC-01 – Threat model, decision record, feasibility proof
 Value: database encryption that fits .NET 10/MAUI on all platforms, decided on evidence. Scope: threat model (lost
