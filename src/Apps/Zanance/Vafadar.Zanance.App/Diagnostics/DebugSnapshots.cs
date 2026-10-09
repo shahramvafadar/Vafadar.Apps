@@ -347,6 +347,7 @@ internal static class DebugSnapshots
             ("transactions", "//transactions", null),
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
+            ("entry-details", AppShell.EntryEditorRoute, null),
             ("headers", AppShell.SettingsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
@@ -540,6 +541,9 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-details" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage detailsPage)
+                { await ReviewEntryDetailsAsync(app, services, detailsPage, folder, language); }
                 if (name == "entry-tags" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
                     is Features.Entries.EntryEditorPage tagPage)
                 { await ReviewTagChoicesAsync(app, services, tagPage, folder, language); }
@@ -1637,6 +1641,81 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-96: disclosure names match the actual panel; native toggles retain every unsaved field without Save.
+    private static async Task ReviewEntryDetailsAsync(App app, IServiceProvider services,
+        Features.Entries.EntryEditorPage page, string folder, string language)
+    {
+        var vm = (Features.Entries.EntryEditorViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var translator = services.GetRequiredService<Translator>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
+        // Read the editor's actual unsaved-field contract instead of maintaining a second field list.
+        string Draft() => (string)(typeof(Features.Entries.EntryEditorViewModel)
+            .GetMethod("Snapshot", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+            .Invoke(vm, null) ?? throw new InvalidOperationException("The editor draft fingerprint is unavailable."));
+        var before = await StoredAsync(); var originalDraft = Draft(); var originalDetails = vm.ShowDetails;
+        var originalDirty = vm.IsDirty; var originalPayee = vm.Payee; var originalNote = vm.Note;
+        var originalTags = vm.TagsText; var originalSuggestions = vm.TagSuggestions;
+        var settings = await store.GetSettingsAsync();
+        if (originalDetails != Core.Settings.FeaturePolicy.Shows(settings, Core.Settings.Feature.EntryDetails))
+        { throw new InvalidOperationException("Initial detail visibility disagrees with the existing experience policy."); }
+        var group = page.FindByName<VerticalStackLayout>("EntryDetailsActionGroup");
+        var scroll = FindScrollView(page) ?? throw new InvalidOperationException("The detail disclosure has no actual viewport.");
+        var steps = new List<object>();
+        try
+        {
+            vm.Payee = "QA96 original payee"; vm.Note = "QA96 original note"; vm.TagsText = "QA96 original tag";
+            var typed = Draft(); var typedDirty = vm.IsDirty;
+            for (var index = 0; index < 2; index++)
+            {
+                await scroll.ScrollToAsync(group, ScrollToPosition.Center, animated: false);
+                await Task.Delay(350); await CaptureAsync(app, folder, language + "-entry-details-action-" + index);
+                var visible = group.Children.OfType<View>().Where(view => view.IsVisible).ToArray();
+                if (visible.Length != 1) { throw new InvalidOperationException("The detail disclosure exposes duplicate actions."); }
+                var control = visible[0];
+                var button = control is Presentation.WrappingAction action && action.Content is Grid face
+                    ? face.Children.OfType<Button>().Single() : control as Button;
+                if (button?.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                    || group.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement nativeGroup)
+                { throw new InvalidOperationException("The real detail disclosure is not realized."); }
+                var expanded = vm.ShowDetails;
+                var expected = translator[expanded ? "Entry_HideDetails" : "Entry_MoreDetails"];
+                var caption = control is Presentation.WrappingAction wrapping ? wrapping.Text : button.Text;
+                var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native);
+                var box = native.TransformToVisual(nativeGroup).TransformBounds(new Windows.Foundation.Rect(0, 0, native.ActualWidth, native.ActualHeight));
+                if (caption != expected || peer.GetName() != expected || button.Command != vm.ToggleDetailsCommand
+                    || box.Width < 44 || box.Height < 44 || box.Left < -1 || box.Right > nativeGroup.ActualWidth + 1)
+                {
+                    File.WriteAllText(Path.Combine(folder, language + "-entry-details-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+                    { expanded, caption, expected, NativeName = peer.GetName(), box, CorrectCommand = button.Command == vm.ToggleDetailsCommand }));
+                    throw new InvalidOperationException("The disclosure caption/name does not describe its current action or target.");
+                }
+                if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
+                    is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+                { throw new InvalidOperationException("The detail disclosure lacks its native Invoke pattern."); }
+                invoke.Invoke(); await Task.Delay(250);
+                if (vm.ShowDetails == expanded || Draft() != typed || vm.IsDirty != typedDirty
+                    || page.FindByName<Entry>("PayeeEntry").Text != vm.Payee
+                    || page.FindByName<Entry>("TagsEntry").Text != vm.TagsText
+                    || page.FindByName<Editor>("NoteEditor").Text != vm.Note)
+                { throw new InvalidOperationException("Native disclosure failed to toggle or changed an unsaved field."); }
+                steps.Add(new { ExpandedBefore = expanded, Caption = expected, box, NativeInvokeToggles = true, ExactTypedFieldsRetained = true });
+            }
+            File.WriteAllText(Path.Combine(folder, language + "-entry-details-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+            { InitialExpanded = originalDetails, InitialExperiencePolicyMatches = true, Steps = steps, NoFinancialSave = true }));
+        }
+        finally
+        {
+            vm.Payee = originalPayee; vm.Note = originalNote; vm.TagsText = originalTags;
+            vm.TagSuggestions = originalSuggestions; vm.ShowDetails = originalDetails;
+            if (Draft() != originalDraft || vm.IsDirty != originalDirty || before != await StoredAsync())
+            { throw new InvalidOperationException("Detail disclosure review changed stored rows or failed to restore the original draft."); }
+            File.WriteAllText(Path.Combine(folder, language + "-entry-details-restoration-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+            { CompleteAccountsEntriesSettingsUnchanged = true, OriginalDraftRestored = true, NativeInvocations = steps.Count, NoFinancialSave = true }));
+        }
     }
 
     // AT-95: real tag targets/captions and AddTag commands; only an unsaved fictitious presentation draft changes.

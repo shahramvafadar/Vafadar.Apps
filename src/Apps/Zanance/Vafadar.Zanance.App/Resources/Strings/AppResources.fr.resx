@@ -5704,4 +5704,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>Faites défiler horizontalement pour lire la valeur complète.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>Masquer les détails</value>
+  </data>
 </root>

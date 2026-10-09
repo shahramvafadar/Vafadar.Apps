@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear transaction details action (2026-10-09, D-90)
+
+- The transaction form says "Hide details" when its extra fields are open and "More details" when they are closed.
+- Both actions retain full captions at large text sizes; hiding keeps everything entered in the unsaved form.
+
 ### Fixed - Complete selectable tags (2026-10-09, D-89)
 
 - Suggested tags keep their full captions when text is large or the form is narrow, with larger touch targets.

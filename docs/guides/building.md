@@ -318,3 +318,10 @@ capture the checked caption before Invoke. Restore the exact original draft/sugg
 compare full stored Accounts/Entries/Settings without Save. Include loan/settings routes when reviewing the shared
 Suggestion appearance. Evidence and the dated local PowerShell-host startup limitation are recorded in
 `src/Apps/Zanance/docs/quality/tag-suggestions.md`; the normal APK script remains the standard build path.
+
+The `entry-details` Debug route (D-90 / AT-96) checks existing Simple/Advanced initial visibility and both actual
+native hide/show actions. Read the editor's actual draft fingerprint; retain typed fictitious values, complete
+captions/spoken names, one visible action and bounded >=44 px targets. Restore exact original draft/dirty state,
+suggestions and visibility and compare complete stored rows without Save. Include narrow baseline/Simple cohorts.
+Canonical scripts completed with the existing installed PowerShell engine for this slice; no system/security setting
+change was necessary. Evidence and independent platform gates: `src/Apps/Zanance/docs/quality/entry-details-disclosure.md`.

@@ -472,3 +472,10 @@ In transaction details, each suggested tag is a bounded growing row with a real 
 13 px font and blue action/page-surface colors; wrap the complete direction-safe tag caption and keep a useful
 44 px minimum target. Preserve the raw normalized tag separately from the display marker and pass it unchanged
 to AddTag. Choosing a suggestion edits only the open draft; explicit Save controls persistence. Limits stay the same.
+
+### Transaction detail disclosure (D-90)
+
+Name the action by the current panel: "Hide details" while expanded, established "More details" while collapsed.
+Exactly one real growing native action is visible; full translated captions/spoken names and 44 px targets follow
+native text scale inside the form width. Hiding preserves all unsaved fields. Simple/Advanced and receipt/edit
+initial visibility follow the existing policy; no automatic Save or data clearing.

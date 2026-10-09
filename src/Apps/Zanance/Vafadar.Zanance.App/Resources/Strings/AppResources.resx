@@ -5753,4 +5753,8 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>Scroll sideways to read the full value.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>Hide details</value>
+    <comment>Action label when the transaction detail fields are already expanded.</comment>
+  </data>
 </root>

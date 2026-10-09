@@ -1308,6 +1308,16 @@ The Syncfusion license key is a build secret: every MAUI app receives it from `e
 
 ---
 
+### 31.6. Transaction detail disclosure (D-90 / AT-96)
+
+D-90 continues A11Y-03 with state-matched transaction detail actions and retained unsaved fields. AT-96 checks
+48 actual native Invoke operations and 24 complete draft/stored-row restorations, including Simple/Advanced initial
+visibility. Main suite remains 1,369 (App.Tests 140); strict Windows and canonical Android Release have zero warnings/
+errors. Normal signed Release passes hide/show, retained payee/tag/note values and Keep editing/Discard in en/fa/de;
+complete fictitious financial rows remain unchanged. Canonical APK/privacy scripts and full package/signature pass.
+Evidence and independent OS/screen-reader/phone/iOS/provider/owner gates:
+[quality/entry-details-disclosure.md](../quality/entry-details-disclosure.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

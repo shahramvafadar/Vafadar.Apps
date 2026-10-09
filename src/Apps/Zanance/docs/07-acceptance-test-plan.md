@@ -456,3 +456,16 @@ AT-95 local status: final Windows matrix and normal signed Android Release pass;
 21 full original-draft/stored-row restorations, 1,369 main tests and strict Windows/equivalent-command Android builds.
 No added unit-case count. Complete signed D-89 APK and preserved fictitious data are verified; canonical PowerShell
 script startup, physical OS/screen readers/ARM64/iOS/provider/release acceptance remain separately unverified.
+
+## AT-96 - Detail visibility, current action names and retained drafts (D-90)
+
+Retain the expanded before-caption mismatch and the corrected interpretation of D-89's native helper observation.
+Use real native Invoke for hide/show, check initial Simple/Advanced policy, one visible full-caption action, spoken
+name, 44 px target and bounded native geometry. Enter fictitious payee/note/tag drafts; compare the editor's actual
+complete unsaved-field fingerprint and bound inputs after both toggles. Restore exact original fields/suggestions/
+visibility/dirty state and compare complete stored rows without Save. Evidence and independent acceptance limits:
+quality/entry-details-disclosure.md.
+
+AT-96 local status: final Windows matrix and normal signed Android Release pass; 48 actual native Invoke
+operations, 24 complete draft/stored-row restorations, 1,369 main tests and zero-warning strict builds. Signed
+D-90 APK and canonical privacy checks pass. No new unit count; platform/physical-device acceptance stays separate.

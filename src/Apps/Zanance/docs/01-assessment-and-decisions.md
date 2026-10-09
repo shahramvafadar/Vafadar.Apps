@@ -657,3 +657,23 @@ Windows and equivalent-command Android Release builds have no warnings/errors. T
 the original tag value, Keep editing/Discard and complete unchanged fictitious financial rows. PowerShell startup
 prevented the canonical script from running; no system setting was changed. See quality/tag-suggestions.md for the
 complete APK, signature, helper failures and independent platform/tooling/owner limits.
+
+## D-90 - Name the transaction detail action by its current state (2026-10-09)
+
+D-89's normal Release hierarchies show detail inputs already expanded before the helper taps "More details";
+Advanced initializes that state. The tap hides them correctly. Correct the misleading caption rather than claiming
+a repaired tap failure: say "Hide details" while expanded, retain "More details" while collapsed, with six real
+translations and mutually exclusive growing native actions. Keep the same ToggleDetails command, defaults,
+receipt/edit behavior and unsaved fields; explicit Save remains. No model, schema, SDK, permission or policy change.
+
+AT-96 retains the failed before-caption review, checks actual native commands/full names/targets and the editor's
+complete draft fingerprint, preserves bound payee/note/tag inputs through hide/show and restores original draft
+and complete stored rows. Final matrix/build/test/native/APK evidence: quality/entry-details-disclosure.md. D-69
+continuation and the independent owner/platform gates remain.
+
+D-90 verification: 48 real native visibility toggles and 24 complete draft/stored-row restorations pass across
+en/fa/de, both themes, 360/412/wide at process-local 200%, narrow 100% and Simple initial visibility. Main suite
+remains 1,369 (App.Tests 140); strict Windows and canonical Android Release have zero warnings/errors. Normal
+Release passes retained payee/tag/note drafts, Keep editing/Discard in all three languages, unchanged complete
+fictitious financial rows and the final secure-state handoff. Canonical APK/privacy scripts completed; full
+package/signature evidence and independent gates are in quality/entry-details-disclosure.md.

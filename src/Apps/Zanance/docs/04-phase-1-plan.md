@@ -142,3 +142,11 @@ Main suite remains 1,369 (App.Tests 140); strict Windows and equivalent-command 
 PowerShell startup blocks the canonical APK/privacy scripts locally; the complete signed package and matching binary
 policy are independently verified. Evidence and remaining tooling/OS/screen-reader/phone/iOS/owner gates:
 [quality/tag-suggestions.md](quality/tag-suggestions.md).
+
+D-90 continues A11Y-03 with state-matched transaction detail actions and retained unsaved fields. AT-96 checks
+48 actual native Invoke operations and 24 complete draft/stored-row restorations, including Simple/Advanced initial
+visibility. Main suite remains 1,369 (App.Tests 140); strict Windows and canonical Android Release have zero warnings/
+errors. Normal signed Release passes hide/show, retained payee/tag/note values and Keep editing/Discard in en/fa/de;
+complete fictitious financial rows remain unchanged. Canonical APK/privacy scripts and full package/signature pass.
+Evidence and independent OS/screen-reader/phone/iOS/provider/owner gates:
+[quality/entry-details-disclosure.md](quality/entry-details-disclosure.md).

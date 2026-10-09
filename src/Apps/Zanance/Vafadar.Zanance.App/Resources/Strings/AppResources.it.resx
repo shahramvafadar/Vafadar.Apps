@@ -5716,4 +5716,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>Scorri lateralmente per leggere il valore completo.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>Nascondi dettagli</value>
+  </data>
 </root>

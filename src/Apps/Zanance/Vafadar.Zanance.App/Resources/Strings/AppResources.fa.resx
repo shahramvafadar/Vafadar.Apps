@@ -5727,4 +5727,7 @@
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>برای دیدن مقدار کامل، به چپ یا راست پیمایش کنید.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>پنهان کردن جزئیات</value>
+  </data>
 </root>

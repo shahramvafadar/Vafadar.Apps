@@ -55,3 +55,7 @@ renders and original development data restoration remain separate from physical 
 
 Physical OS large text, TalkBack/Narrator, ARM64 phone, iOS, provider and Store/product acceptance remain separate
 gates. This slice does not complete A11Y-03, QA-06 or the unresolved encryption/OS-backup/product decisions.
+
+D-90 clarification: the retained pre-tap hierarchy already contains Payee and Tags because Advanced starts
+expanded. The subsequent tap correctly closes them. The actual defect was the unchanged More details caption for
+both states; the state-matched action and its independent runtime proof are in [entry-details-disclosure.md](entry-details-disclosure.md).

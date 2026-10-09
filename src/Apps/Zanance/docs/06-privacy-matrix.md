@@ -202,3 +202,9 @@ storage or the owner archive. Evidence: quality/budget-periods.md.
 Growing captions and typed display/raw tag values introduce no new stored field, portable source, permission, SDK,
 export, recipient or network behavior. Existing tag normalization/limits and explicit financial Save remain. Native
 review modifies only an unsaved fictitious draft and compares stored rows; diagnostics are absent from Release.
+
+## Transaction detail disclosure (D-90)
+
+State-matched captions and growing targets add no stored data, portable field, export, permission, SDK or network
+behavior. Hiding retains existing in-memory drafts; only explicit Save persists them. Native review uses fictitious
+inputs and restores complete stored data; diagnostic routes remain absent from Release.

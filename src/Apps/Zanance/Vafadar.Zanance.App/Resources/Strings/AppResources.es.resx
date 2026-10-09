@@ -5696,4 +5696,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>Desplázate hacia los lados para leer el valor completo.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>Ocultar detalles</value>
+  </data>
 </root>

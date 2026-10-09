@@ -222,3 +222,6 @@ storage or the owner archive. Evidence: quality/budget-periods.md.
 
 D-89 changes tag suggestion presentation only: raw existing tags remain separate from direction-safe captions,
 with no new stored field, export, permission, SDK or recipient. Explicit Save and existing backup handling remain.
+
+D-90 names the current transaction detail action and keeps in-memory values when hidden. No new stored field,
+portable source, export, recipient, permission or SDK; financial persistence still requires explicit Save.

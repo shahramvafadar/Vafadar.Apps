@@ -196,15 +196,23 @@
                 </Border>
 
                 <!-- More details -->
-                <Button Text="{v:Translate Entry_MoreDetails}" Command="{Binding ToggleDetailsCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
+                <VerticalStackLayout x:Name="EntryDetailsActionGroup" Spacing="0">
+                    <!-- D-90: name the current action; hiding details retains every value in the open draft. -->
+                    <p:WrappingAction Text="{v:Translate Entry_HideDetails}" Appearance="Text" HorizontalOptions="Start"
+                                      IsVisible="{Binding ShowDetails}" Command="{Binding ToggleDetailsCommand}"
+                                      MaximumWidthRequest="{Binding Width, Source={x:Reference EntryDetailsActionGroup}, x:DataType=VerticalStackLayout}" />
+                    <p:WrappingAction Text="{v:Translate Entry_MoreDetails}" Appearance="Text" HorizontalOptions="Start"
+                                      IsVisible="{Binding ShowDetails, Converter={StaticResource InvertedBoolConverter}}" Command="{Binding ToggleDetailsCommand}"
+                                      MaximumWidthRequest="{Binding Width, Source={x:Reference EntryDetailsActionGroup}, x:DataType=VerticalStackLayout}" />
+                </VerticalStackLayout>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowDetails}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Entry_Payee}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                        <Entry Text="{Binding Payee}" MaxLength="120" SemanticProperties.Description="{v:Translate Entry_Payee}" />
+                        <Entry x:Name="PayeeEntry" Text="{Binding Payee}" MaxLength="120" SemanticProperties.Description="{v:Translate Entry_Payee}" />
 
                         <!-- Tags (F2-TX-04) -->
                         <Label Text="{v:Translate Entry_Tags}" Style="{StaticResource FieldLabel}" />
-                        <Entry Text="{Binding TagsText}" Placeholder="{v:Translate Entry_TagsPlaceholder}" MaxLength="320"
+                        <Entry x:Name="TagsEntry" Text="{Binding TagsText}" Placeholder="{v:Translate Entry_TagsPlaceholder}" MaxLength="320"
                                SemanticProperties.Description="{v:Translate Entry_Tags}" />
                         <VerticalStackLayout x:Name="TagSuggestionsGroup" Spacing="6" BindableLayout.ItemsSource="{Binding TagSuggestions}" Margin="0,4,0,0">
                             <BindableLayout.ItemTemplate>
@@ -259,7 +267,7 @@
                         </VerticalStackLayout>
 
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />
-                        <Editor Text="{Binding Note}" AutoSize="TextChanges" MinimumHeightRequest="80" MaxLength="2000"
+                        <Editor x:Name="NoteEditor" Text="{Binding Note}" AutoSize="TextChanges" MinimumHeightRequest="80" MaxLength="2000"
                                 SemanticProperties.Description="{v:Translate Entry_Note}" />
 
                         <VerticalStackLayout IsVisible="{Binding ShowCategories}">

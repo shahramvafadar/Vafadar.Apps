@@ -366,3 +366,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   separate from the direction-safe display marker; forward the original value to AddTag and save only explicitly.
 * Native review reacquires regenerated controls, retains the caption checked before Invoke and restores the exact
   unsaved draft plus complete stored rows. Failed prototypes/helpers or unavailable script hosts are not acceptance.
+
+## 24. State-matched transaction details (D-90)
+
+* Name the actual action: Hide details while expanded, More details while collapsed. Keep one growing native action,
+  the established Simple/Advanced/receipt/edit visibility policy and every unsaved field; saving stays explicit.
+* Native review reads the current hierarchy before acting. An Advanced form can start expanded; do not treat an
+  intended close as a failed open. Restore the complete draft and compare complete stored rows without Save.

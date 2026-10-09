@@ -5727,4 +5727,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Amount_ScrollHint" xml:space="preserve">
     <value>Seitlich scrollen, um den vollständigen Wert zu lesen.</value>
   </data>
+  <data name="Entry_HideDetails" xml:space="preserve">
+    <value>Details ausblenden</value>
+  </data>
 </root>
