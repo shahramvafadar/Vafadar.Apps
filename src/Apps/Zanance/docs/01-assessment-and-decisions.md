@@ -510,3 +510,25 @@ Review awaits also use the native Scroll pattern rather than waiting for an even
 See quality/font-scaling-a11y03.md for final captures, native checks, negative review findings and the signed APK.
 No data model, financial formula, security/backup policy, permission, SDK or commercial restriction change.
 Headers, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates remain independent work.
+
+
+## D-82 - Repeated Settings language changes and retired navigation (2026-10-09)
+
+D-81's real reopened-language failure interrupts Translator.SetCulture: Android's retired ShellItemRenderer still
+receives translated section titles after its Shell handler is cleared, then SetupMenu reads a missing MauiContext.
+The picker/view-model and Translator already hold the requested language, but the synchronous exception prevents
+remaining captions and the platform locale notification. A fresh cold page is not a repair for repeated navigation.
+
+Before replacing the Shell root, remove only Title bindings from its retired item/section/content graph. Create the
+replacement first and retain normal tab restoration, deferred rebuilding while a form is open, and the lock gate.
+Do not blanket-disconnect controls, change framework packages or catch and hide the translation failure.
+
+The real reopened-form regression also finds a constructor write: initializing ReminderDaysText invokes the same
+save callback as user editing. Suppress writes only during synchronous construction/publication. The original
+negative run changes only UpdatedAt; all actual preference fields, accounts and entries already match. Require
+complete JSON equality, including that timestamp, after the repair. No financial or security rule changes.
+
+AT-89 uses actual native Picker SelectionItem and header Invoke patterns, keeps retired shells strongly referenced
+and checks frozen old titles, current captions, preserved open drafts and stored settings/accounts/entries. See
+quality/font-scaling-a11y03.md for final Windows, normal Release emulator, strict build/test and signed APK evidence.
+No new resource key, schema, data field, SDK, permission, portable preference or commercial restriction.

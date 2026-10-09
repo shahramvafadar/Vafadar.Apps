@@ -416,3 +416,12 @@ hint; never split a decimal number or silently remove its sign/unit. Give accoun
 their own rows. Home's account navigation is on the visible heading, leaving the value viewport interactive.
 Runtime review must reach both ends through the actual native Scroll pattern and inspect realized glyph bounds;
 a detached text probe can resolve a bundled font differently. Financial calculations and persistence are unchanged.
+
+
+## Reopening Settings after display changes (D-82)
+
+Each language choice must update the actual form captions, including after returning and reopening Settings.
+Keep the current form and unsaved estimate input during the change; replace cached tab content only after Back.
+Retired navigation titles stop receiving translations before their root is replaced. Current titles remain live.
+Opening a form publishes defaults without saving them; do not update stored settings or notification defaults.
+The settings-reopened Debug route checks real native selection/back behavior without financial Save or PIN changes.

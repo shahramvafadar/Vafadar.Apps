@@ -139,3 +139,9 @@ partial date drafts, calendar redraw and the original monetary sign/decimal/curr
 reach both ends of any oversized value with a real swipe and verify the full spoken packet. Account movement rows
 and Home's account heading remain usable. No Save is needed for draft review. Windows stress/normal emulator
 checks do not close actual OS, screen-reader, ARM64 phone or iOS acceptance; preserve existing security settings.
+
+
+D-82 / AT-89: install the complete signed APK from the quality report. Select Deutsch in Settings, return, reopen
+and select فارسی, then repeat with English. Captions, selected language and returned navigation must agree without
+a restart between choices; an open draft stays intact. Confirm cold persistence separately. Local native/Windows
+evidence does not close physical-device, real OS large text, screen-reader, provider or iOS acceptance.

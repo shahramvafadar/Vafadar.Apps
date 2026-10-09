@@ -411,6 +411,7 @@ internal static class DebugSnapshots
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("settings-display", AppShell.SettingsRoute, null),
+            ("settings-reopened", AppShell.SettingsRoute, null),
             ("settings-actions", AppShell.SettingsRoute, null),
             ("regional-settings", AppShell.SettingsRoute, null),
             ("review-reminder", AppShell.SettingsRoute, null),
@@ -499,6 +500,11 @@ internal static class DebugSnapshots
                 if (name == "settings-display" && Shell.Current.CurrentPage is Features.Settings.SettingsPage displaySettings)
                 {
                     await ReviewSettingsDisplayAsync(app, services, displaySettings, folder, language);
+                }
+
+                if (name == "settings-reopened")
+                {
+                    await ReviewReopenedSettingsAsync(app, services, folder, language);
                 }
 
 #if WINDOWS
@@ -1461,6 +1467,154 @@ internal static class DebugSnapshots
         File.WriteAllText(Path.Combine(folder, language + "-settings-display-proof.json"),
             System.Text.Json.JsonSerializer.Serialize(new { FormCoveredUntilPublication = true, NativeRetry = true,
                 LiveChoiceCaptions = true, UnsavedInputPreserved = true, StoredPreferencesAndEntriesUnchanged = true }));
+    }
+
+    // D-82: keep old shells alive so collection cannot conceal a translated title still reaching a retired renderer.
+    private static async Task ReviewReopenedSettingsAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var localization = services.GetRequiredService<ILocalizationService>();
+        var translator = services.GetRequiredService<Translator>();
+        var preferences = System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync());
+        var entries = System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync());
+        var accounts = System.Text.Json.JsonSerializer.Serialize(await store.GetAccountsAsync());
+        var retired = new List<(AppShell Shell, (BaseShellItem Item, string Title)[] Titles)>();
+        var changes = new List<object>();
+        foreach (var target in new[] { "de", "fa", "en", language })
+        {
+            if (Shell.Current.CurrentPage is not Features.Settings.SettingsPage page
+                || page.BindingContext is not Features.Settings.SettingsViewModel vm)
+            { throw new InvalidOperationException("Reopened Settings is unavailable."); }
+            for (var i = 0; i < 100 && !vm.Loading.IsReady; i++) { await Task.Delay(50); }
+            if (!vm.Loading.IsReady) { throw new InvalidOperationException("Reopened Settings did not publish."); }
+            var oldShell = (AppShell)app.Windows[0].Page!;
+            var changed = localization.CurrentLanguage.CultureName != target;
+            var draft = vm.EssentialText; var period = vm.EssentialPeriodIndex;
+            var choices = (vm.ModeIndex, vm.ThemeIndex, vm.FreshnessIndex, vm.StartDayIndex, vm.DefaultAccount?.Id);
+            try
+            {
+                vm.EssentialText = "17.25"; vm.EssentialPeriodIndex = 2;
+                var picker = VisualDescendants(page).OfType<Picker>().Single(p => ReferenceEquals(p.ItemsSource, vm.Languages));
+                await SelectSnapshotLanguageAsync(picker, vm.Languages.IndexOf(vm.Languages.First(l => l.CultureName == target)));
+                await Task.Delay(300);
+                if (!ReferenceEquals(Shell.Current.CurrentPage, page) || !ReferenceEquals(app.Windows[0].Page, oldShell)
+                    || localization.CurrentLanguage.CultureName != target || vm.SelectedLanguage?.CultureName != target
+                    || !Equals(picker.SelectedItem, vm.SelectedLanguage) || page.Title != translator["Settings_Title"]
+                    || vm.ModeNames[0] != translator["Mode_Simple"] || vm.ThemeNames[0] != translator["Theme_System"]
+                    || vm.EssentialText != "17.25" || vm.EssentialPeriodIndex != 2
+                    || choices != (vm.ModeIndex, vm.ThemeIndex, vm.FreshnessIndex, vm.StartDayIndex, vm.DefaultAccount?.Id))
+                { throw new InvalidOperationException("Reopened Settings lost its translated choices or open draft."); }
+                if (retired.SelectMany(r => r.Titles).Any(t => t.Item.Title != t.Title))
+                { throw new InvalidOperationException("A retired navigation title still receives translations."); }
+                await CaptureAsync(app, folder, $"{language}-settings-reopened-live-{target}");
+            }
+            finally { vm.EssentialText = draft; vm.EssentialPeriodIndex = period; }
+
+            var rebuilt = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            void OnRebuilt(object? sender, EventArgs e) => rebuilt.TrySetResult();
+            app.ShellRebuilt += OnRebuilt;
+            try
+            {
+                InvokeSnapshotBack(page);
+                if (changed) { await rebuilt.Task.WaitAsync(TimeSpan.FromSeconds(10)); }
+                else { await Task.Delay(300); }
+            }
+            finally { app.ShellRebuilt -= OnRebuilt; }
+            if (changed)
+            {
+                if (ReferenceEquals(app.Windows[0].Page, oldShell))
+                { throw new InvalidOperationException("Returning from Settings did not replace the old shell."); }
+                var titles = oldShell.Items.SelectMany(item => new BaseShellItem[] { item }
+                    .Concat(item.Items.SelectMany(section => new BaseShellItem[] { section }.Concat(section.Items))))
+                    .Select(item => (item, item.Title)).ToArray();
+                retired.Add((oldShell, titles));
+            }
+            var current = (AppShell)app.Windows[0].Page!;
+            var home = current.Items.SelectMany(i => i.Items).SelectMany(s => s.Items).Single(c => c.Route == "home");
+            if (home.Title != translator["Tab_Home"])
+            { throw new InvalidOperationException("Current navigation titles did not translate."); }
+            // ShellRebuilt reports navigation completion, not completion of Home's async read or native arrangement.
+            if (current.CurrentPage.BindingContext is Features.Home.HomeViewModel homeVm)
+            { await homeVm.LoadAsync().WaitAsync(TimeSpan.FromSeconds(10)); }
+            await WaitForReopenedLayoutAsync(current.CurrentPage);
+            await CaptureAsync(app, folder, $"{language}-settings-reopened-return-{target}");
+            await current.GoToAsync(AppShell.SettingsRoute, animate: false);
+            await Task.Delay(500);
+            changes.Add(new { Language = target, ActualNativeSelection = true, LiveDraftPreserved = true,
+                ShellRebuiltOnReturn = changed, RetiredShellsHeld = retired.Count });
+        }
+        var currentPreferences = System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync());
+        var entriesUnchanged = entries == System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync());
+        var accountsUnchanged = accounts == System.Text.Json.JsonSerializer.Serialize(await store.GetAccountsAsync());
+        if (preferences != currentPreferences || !entriesUnchanged || !accountsUnchanged)
+        {
+            using var before = System.Text.Json.JsonDocument.Parse(preferences);
+            using var after = System.Text.Json.JsonDocument.Parse(currentPreferences);
+            var changedFields = before.RootElement.EnumerateObject().Where(p =>
+                p.Value.GetRawText() != after.RootElement.GetProperty(p.Name).GetRawText()).Select(p => p.Name).ToArray();
+            File.WriteAllText(Path.Combine(folder, language + "-settings-reopened-data-failure.json"),
+                System.Text.Json.JsonSerializer.Serialize(new { ChangedPreferenceFields = changedFields, entriesUnchanged, accountsUnchanged }));
+            throw new InvalidOperationException("Reopened Settings changed stored preferences or financial data.");
+        }
+        File.WriteAllText(Path.Combine(folder, language + "-settings-reopened-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { Changes = changes, RetiredTitlesFrozen = true,
+                StoredPreferencesEntriesAccountsUnchanged = true, NoFinancialSave = true }));
+        GC.KeepAlive(retired);
+    }
+
+    // Wait for native arrangement; the following geometry checks still reject small or overlapping targets.
+    private static async Task WaitForReopenedLayoutAsync(Page page)
+    {
+        static bool Visible(VisualElement element)
+        {
+            for (Element? parent = element; parent is not null; parent = parent.Parent)
+            { if (parent is VisualElement { IsVisible: false }) { return false; } }
+            return true;
+        }
+        for (var attempt = 0; attempt < 100; attempt++)
+        {
+            await Task.Delay(50);
+            var heading = page.FindByName<Button>("BalanceHeadingAction");
+            var rows = VisualDescendants(page).OfType<Grid>().Where(row => row.BindingContext is Presentation.EntryRow
+                && row.Handler is not null && Visible(row));
+            if (page.Width > 0 && (heading is null || heading.Width > 0 && heading.Height > 0)
+                && rows.All(row => row.Width > 0 && row.Height > 0)) { return; }
+        }
+        throw new InvalidOperationException("The replacement page did not finish its native arrangement.");
+    }
+
+    // Select through the native data peer; this also covers choices virtualized inside the popup.
+    private static async Task SelectSnapshotLanguageAsync(Picker picker, int index)
+    {
+        if (picker.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox combo)
+        { throw new InvalidOperationException("The native language picker is unavailable."); }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer(combo);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.ExpandCollapse)
+            is not Microsoft.UI.Xaml.Automation.Provider.IExpandCollapseProvider expand)
+        { throw new InvalidOperationException("The language picker has no native expand pattern."); }
+        expand.Expand();
+        await Task.Delay(200);
+        if (index < 0 || index >= combo.Items.Count)
+        { throw new InvalidOperationException("The native language choice is unavailable."); }
+        // WinUI owns selection on the data peer; a valid choice need not have a realized popup container yet.
+        var itemPeer = new Microsoft.UI.Xaml.Automation.Peers.ComboBoxItemDataAutomationPeer(combo.Items[index], peer);
+        if (itemPeer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.SelectionItem)
+            is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
+        { throw new InvalidOperationException("The language choice has no native select pattern."); }
+        selection.Select(); expand.Collapse();
+    }
+
+    // Invoke the real header back action; it participates in the normal deferred shell replacement.
+    private static void InvokeSnapshotBack(Page page)
+    {
+        if (Shell.GetTitleView(page) is not Presentation.PageHeader header
+            || header.Children.OfType<ImageButton>().Single().Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button back)
+        { throw new InvalidOperationException("The Settings header back button is unavailable."); }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(back);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
+            is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("The Settings header has no native back pattern."); }
+        invoke.Invoke();
     }
 
     // The real retry button must invoke the page handler; direct view-model loading alone cannot prove its wiring.

@@ -391,7 +391,10 @@ public partial class App : Application
         // Back to the current tab only: a detail or editor page cannot be rebuilt without its query (an editor would
         // come back empty and save a copy).
         var tab = TabRoute(shell);
-        window.Page = CreateShell();
+        var replacement = CreateShell();
+        shell.RetireNavigationBindings();
+        shell.Navigated -= OnShellNavigated;
+        window.Page = replacement;
         if (tab is not null && Shell.Current is { } current)
         {
             try

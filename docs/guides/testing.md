@@ -124,3 +124,9 @@ native width, valid/partial date binding and three calendars without Save. Check
 spoken name, single-line realized glyph bounds, and both native Scroll-pattern ends. A detached bundled-font probe
 can differ from the realized caption, so retain negative evidence and use actual rendered boundaries. Keep actual
 external ValuePattern typing distinct from programmatic draft checks and Windows stress distinct from device QA.
+
+
+D-82 / AT-89 adds a real reopened-Settings regression with native selection/back patterns and strongly retained old
+Shells. It checks retired title detachment, live choice captions, preserved open drafts and complete stored
+settings/accounts/entries, including UpdatedAt. No new xUnit count or fake native controls. Full Release emulator
+checks repeat languages without restarting between choices; see the large-text report for final evidence/limits.

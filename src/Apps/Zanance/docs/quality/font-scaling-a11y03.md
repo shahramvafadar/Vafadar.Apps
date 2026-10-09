@@ -435,3 +435,69 @@ A11Y-03 remains in progress. The reopened native Settings language failure is th
 truncation and retained navigation captions remain queued. Other forms/dialogs, smaller monetary rows/custom controls, keyboard/screen readers,
 real OS 200%, physical ARM64, iOS and QA-06 performance/ANR acceptance remain independent. Continue ready work under
 D-69; unresolved product, licence, provider, spending and release decisions remain owner gates.
+
+## D-82 follow-up: repeated Settings language changes
+
+The normal D-81 Release reproduces a real native failure: choose Deutsch, return, reopen Settings and choose فارسی.
+The actual picker changes but captions remain German. A temporary public-state observation shows the view-model
+and Translator already holding fa, followed by NullReferenceException from the retired ShellItemRenderer's
+get_MauiContext / SetupMenu title callback. The synchronous exception interrupts remaining translation and native
+locale notifications. Cold restarts do not prove this repeated-navigation path.
+
+Before replacing a Shell root, remove only its translated item/section/content Title bindings and its application
+navigation subscription. Create the replacement first; preserve current forms, deferred rebuilding and the lock
+gate. A separate actual regression finds initial ReminderDaysText saving during Settings construction. Suppress
+only synchronous constructor/publication callbacks. The negative stored-data comparison identifies UpdatedAt
+alone; actual preference values/accounts/entries match. Require complete equality after the repair.
+
+### Final running Windows evidence
+
+Each of seven cohorts has 72 rendered captures: en/fa/de, light and dark at 360x800, 412x892 and 1280x820 with
+process-local 200% text, plus light/360x800 at 100%. Total 504 own-window/own-content images, not distinct screens
+or unit tests. Twenty-one proof files exercise four actual native language selections and real header Back actions
+per cohort/language. Keep at least three retired shells strongly alive, so collection cannot conceal stale title
+subscriptions. Their item/section/content titles remain frozen; current titles and choice captions translate. The
+current form, unsaved estimate draft and other choice values remain intact until Back. Complete settings JSON,
+including UpdatedAt, accounts and entries remain unchanged. Original development files/sidecars/marker are restored
+with matching hashes after both formal runs.
+
+Initial review failures are retained and excluded from the final count. WinUI selection belongs to the ComboBox's
+native data peer, not the visual container peer; a valid virtualized choice need not have a realized popup container.
+Replacement navigation completion also precedes Home's async read/native arrangement. The final baseline waits
+for the actual read and positive realized bounds, then still applies ordinary target/overlap/packet assertions;
+it does not skip a geometry failure. No real OS setting is changed or performance/ANR acceptance inferred from the
+review wait. All temporary public-state observations and diagnostic build flags are removed from product source;
+normal Release checks below use the complete uninstrumented APK.
+
+Main suite: 1,345 passed, zero failed/skipped (App.Tests 127); test output cleaned. AT-89 adds actual runtime
+regressions rather than fake native controls or copied view-model cases. Final strict Windows Debug has zero
+warnings/errors. The remaining strict Android/native/package evidence follows below.
+
+### Normal complete Release emulator and APK
+
+Only emulator-5570, API 36 x86_64 and the known owned fictitious QA03 profile are used. Actual Settings pickers choose
+Deutsch, فارسی and English with Back/reopen between choices and no cold restart between them. Selected picker/body
+captions and returned navigation match; the bottom tabs mirror correctly on the replacement Persian root. A final
+cold English launch verifies persistence. A preliminary helper compared the top More heading with a bottom tab;
+its false mirroring assertion is retained and corrected to compare actual bottom labels. It also assumed the System
+chip's literal English text; final checks use the real translated resource caption, "Use device setting, selected".
+No production change is made to satisfy either helper mistake.
+
+The owned main window retains SECURE; density 420/font_scale 1.0 stay unchanged. The known Debug APK is installed
+without launch solely to copy owned fictitious QA03 database/sidecars. Complete Accounts, Entries and Schedules equal
+the D-76 baseline, with three entries. Reinstall the final complete Release, check cold English Home and three actual
+native Transactions row buttons, confirm selected System/Advanced via UI, return Home and force-stop. No financial
+Save, PIN/permission operation, owner database/archive, private preferences/credentials/SecureStorage inspection,
+physical-phone action or system-setting change. Normal native text is separate from OS 200%/screen-reader acceptance.
+
+Final strict Windows Debug and complete Android Release builds have zero warnings/errors. Cloud permission boundary
+passes as static package validation, not real OAuth/network acceptance. Full APK: artifacts/android/zanance-d82-release.apk,
+81,156,181 bytes; SHA-256 eefff4a0388f658dd59e160cd88622bad327506b079c9ce7ce7b6fb65961dc5c.
+Package pro.vafadar.zanance, 0.1.0/code 1, min SDK 24/target 36; ZIP integrity and complete ARM64/x86_64 assembly stores
+and app AOT verified. v2/v3 local Debug-certificate signature verified; public certificate SHA-256 remains
+92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. This is a local phone-test handoff, not Store signing,
+publishing or physical-device acceptance. CI remains one separate delayed check after push.
+
+D-81's reopened-language failure is resolved by this slice. A11Y-03 stays in progress: growing Windows headers,
+retained native navigation descriptions, other controls/monetary rows/dialogs, keyboard/screen readers, real OS 200%,
+physical ARM64, iOS and QA-06 duration/ANR acceptance remain independent. Continue ready work under D-69.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Language changes after reopening Settings (2026-10-09, D-82)
+
+- Apply repeated language choices after returning and reopening Settings, without requiring a restart.
+- Keep the current form, selected preferences and unsaved estimate input during language changes.
+- Opening Settings no longer writes its initial reminder defaults or changes the last-saved timestamp.
+
 
 ### Improved - Complete dates and large balances (2026-10-09, D-81)
 

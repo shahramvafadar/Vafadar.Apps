@@ -302,3 +302,13 @@ repository.
   Keep navigation buttons off value viewports. Check both real native scroll ends and realized glyph boundaries.
 * Debug reviews use fictitious drafts without Save and native Scroll patterns at clamped boundaries. Detached
   text measurement is not proof of the bundled font's realized geometry. Keep negative evidence and original data.
+
+
+## 17. Retired navigation and Settings construction (D-82)
+
+* Remove translated Title bindings from the retired Shell item/section/content graph before replacing its root.
+  Keep active form bindings, deferred rebuilds and the lock cover; do not swallow translation failures.
+* Initial Settings property publication is synchronous and write-suppressed, including constructor defaults.
+  Opening or reopening the form must not save notification defaults or touch its settings timestamp.
+* The settings-reopened Debug route uses native SelectionItem/Invoke patterns and retains old shells explicitly;
+  check frozen retired titles, live choices/drafts and unchanged complete preference/account/entry JSON.

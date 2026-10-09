@@ -179,3 +179,13 @@ and own-window review uses fictitious profiles without Save; valid/partial dates
 checked separately. Original development files are restored with matching hashes. Native review uses only the
 known owned emulator fixture, preserves screenshot protection/system settings and excludes owner data/secrets.
 Collectors are absent from Release; presentation evidence is separate from OS/screen-reader/device acceptance.
+
+
+## Reopened Settings language review (D-82)
+
+No data field, SDK, permission, portable preference, network path, export or recipient is added. Retired navigation
+translation bindings are detached; active forms, lock coverage and security choices retain existing behavior.
+Synchronous constructor defaults no longer save notification settings. Debug-only native selection/back and
+own-window proof use fictitious profiles without Save/PIN/permission actions; original development files are
+restored with matching hashes. Native review uses only the owned emulator fixture, retains FLAG_SECURE/system
+settings and excludes owner data/credentials/SecureStorage. Release excludes all review instrumentation.

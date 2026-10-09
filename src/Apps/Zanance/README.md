@@ -80,8 +80,9 @@ D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests
 The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
 signed Release handoff remain separate from physical phone/iOS acceptance. That slice was followed by QA-06 performance; see the canonical backlog for the current remaining work.
 
-Current local quality baseline (D-81): main suite 1,345 passing, App.Tests 127. Date parts grow/reflow and large
+Current local quality baseline (D-82): main suite 1,345 passing, App.Tests 127. Date parts grow/reflow and large
 balances retain their complete signed decimal/currency packet with a real horizontal viewport when needed.
+Repeated Settings language choices preserve the form and stored data; retired navigation titles are detached.
 See docs/quality/font-scaling-a11y03.md for the actual running-app evidence and complete signed phone-test APK.
 Ready accessibility/performance follow-ups continue under D-69; unresolved owner/provider/physical-device/iOS
 acceptance stays separate. Earlier test counts above describe their historical slices.

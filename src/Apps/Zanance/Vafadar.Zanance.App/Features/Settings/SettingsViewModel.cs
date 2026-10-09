@@ -39,6 +39,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
         AppLockService appLock,
         Presentation.ThemeService theme)
     {
+        // D-82: initial reminder text uses the same setter as user input; construction must not save defaults.
+        _refreshing = true;
         _reminders = reminders;
         _lock = appLock;
         _theme = theme;
@@ -54,6 +56,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         ReminderDaysText = "3";
         NotificationsSupported = reminders.Scheduler.IsSupported;
         RefreshDisplay();
+        _refreshing = false;
     }
 
     public AppLanguage[] Languages { get; }

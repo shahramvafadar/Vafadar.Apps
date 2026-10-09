@@ -365,3 +365,18 @@ to reach both ends and return to the sign. Use the actual eligible split modal a
 budget/report readouts; the ordinary refunded expense fixture deliberately rejects splitting. Local geometry/CI
 is separate from keyboard/screen-reader, actual OS 200%, physical ARM64 and iOS acceptance. Final rendered/native/
 APK evidence and negative review findings are recorded in quality/font-scaling-a11y03.md.
+
+
+## AT-89 - Repeated native language selection and Settings reopening (D-82)
+
+Runtime regression, not extra copied-control unit cases. Use native Picker SelectionItem and header Invoke patterns
+to choose de/fa/en/original language, return and reopen the actual Settings page. Retain old shells strongly so
+collection cannot conceal a translated title still reaching the disconnected renderer. Old item/section/content
+titles stay frozen; current titles and choice captions translate. The open page and unsaved estimate draft stay
+intact until Back. Compare complete stored settings, accounts and entries, including the settings timestamp.
+
+Normal full Release Android checks repeat de/fa/en without a cold restart between choices; actual picker/body
+captions and returned navigation agree, RTL switches on the replacement root, and a final cold English restart
+checks persistence. Keep screenshot protection and device settings. Main suite remains 1,345, App.Tests 127.
+Final rendered/native/APK evidence and negative review findings are in quality/font-scaling-a11y03.md.
+Physical ARM64, real OS 200%, keyboard/screen readers, provider and iOS acceptance remain separate.

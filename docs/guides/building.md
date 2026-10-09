@@ -258,3 +258,15 @@ viewport geometry. Failed layout checks retain an own-window image and failure J
 Use the existing three-language, both-theme, 360/412/wide and process-local 200%/100% options. Preserve original
 development files first and verify their hashes after restoration. No system settings, FLAG_SECURE or stored money
 are changed; Release excludes these collectors. Complete signed APK and physical-device acceptance stay separate.
+
+
+## Reopened Settings review (D-82)
+
+Use -Only settings-reopened with the existing en/fa/de, light/dark, 360/412/wide and process-local scale options.
+The Debug-only route selects the actual realized native language Picker through SelectionItem, invokes the real
+header Back, waits for the normal deferred rebuild and reopens Settings. It keeps retired shells strongly alive,
+checks frozen old titles and live new captions, and preserves fictitious unsaved draft/choice values.
+*-settings-reopened-proof.json records complete stored preference/account/entry equality; a failure reports changed
+preference field names without values. Wait for replacement rows to lay out before measuring their geometry.
+Preserve/restore original development files with matching hashes. No financial Save, PIN or permission operation.
+Full Release emulator checks and the complete signed phone-test APK remain separate from this Windows route.

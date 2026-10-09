@@ -143,3 +143,11 @@ Account balances/movements get separate rows and Home navigation stays on its he
 date/amount geometry, both scroll ends and unchanged fictitious entries; main suite remains 1,345 (App.Tests 127).
 Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers, other controls, real OS,
 keyboard/screen-reader/phone/iOS and unresolved owner gates open. No model, financial or security policy change.
+
+
+D-82 resolves D-81's reopened native language failure under D-69: retired navigation Title bindings are detached
+before replacing their Shell, preserving active forms and the lock/deferred rebuild boundary. Settings constructor
+defaults no longer invoke a save. AT-89 checks actual native selection/back, strongly retained retired titles,
+live captions/drafts and complete unchanged stored settings/accounts/entries. Main suite remains 1,345 (App.Tests
+127); final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Header truncation and other controls,
+real OS/keyboard/screen-reader/phone/iOS and unresolved owner gates remain independent work.

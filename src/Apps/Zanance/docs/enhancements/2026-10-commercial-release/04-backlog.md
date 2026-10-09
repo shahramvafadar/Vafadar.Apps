@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-81 Home/rows/action docks, Settings, action captions, dates and large amounts; headers/other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-82 Home/rows/action docks, Settings/reopened languages, action captions, dates and large amounts; headers/other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -378,3 +378,11 @@ Account balances/movements get separate rows and Home navigation stays on its he
 date/amount geometry, both scroll ends and unchanged fictitious entries; main suite remains 1,345 (App.Tests 127).
 Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers, other controls, real OS,
 keyboard/screen-reader/phone/iOS and unresolved owner gates open. No model, financial or security policy change.
+
+
+D-82 resolves D-81's reopened native language failure under D-69: retired navigation Title bindings are detached
+before replacing their Shell, preserving active forms and the lock/deferred rebuild boundary. Settings constructor
+defaults no longer invoke a save. AT-89 checks actual native selection/back, strongly retained retired titles,
+live captions/drafts and complete unchanged stored settings/accounts/entries. Main suite remains 1,345 (App.Tests
+127); final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Header truncation and other controls,
+real OS/keyboard/screen-reader/phone/iOS and unresolved owner gates remain independent work.

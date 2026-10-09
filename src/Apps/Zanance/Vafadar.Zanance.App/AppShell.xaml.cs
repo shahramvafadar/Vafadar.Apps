@@ -188,4 +188,21 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(RulesRoute, typeof(Features.Categories.RulesPage));
         Routing.RegisterRoute(SettlementRoute, typeof(SettlementPage));
     }
+
+    /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>
+    internal void RetireNavigationBindings()
+    {
+        // D-82: Android's retired ShellItemRenderer can retain section events after its Shell handler is cleared.
+        // A later translated title then reads a missing MauiContext and aborts the entire language notification.
+        // Unsubscribe only this retired navigation graph; keep current titles and every active form unchanged.
+        foreach (var item in Items)
+        {
+            item.RemoveBinding(BaseShellItem.TitleProperty);
+            foreach (var section in item.Items)
+            {
+                section.RemoveBinding(BaseShellItem.TitleProperty);
+                foreach (var content in section.Items) { content.RemoveBinding(BaseShellItem.TitleProperty); }
+            }
+        }
+    }
 }
