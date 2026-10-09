@@ -432,3 +432,12 @@ verify selection, period text and TwoWeeks state. Restore original selection; co
 settings/budgets/plans without Save. Focus en/fa/de, both themes and 360/412/wide process-local 200% with a 100%
 narrow baseline. Signed Android Release checks and independent platform limits are in quality/budget-periods.md.
 These runtime checks supplement the suite; do not invent unit-test counts or change shared ChoiceChips behavior.
+
+### AT-04 focused Android hardware Back evidence (2026-10-09)
+
+Normal signed D-87 Release on the isolated API 36 x86_64 emulator: first Back dismisses the amount keyboard,
+next Back closes a clean Expense draft. An unsaved 17.25 draft asks before leaving; Keep editing preserves exact
+input, a second request asks again, and Discard returns Home without Save. Complete six-table fictitious data
+comparison and SQLite integrity pass. The historical D-77 blank-editor observation is resolved without a code
+change; see quality/font-scaling-a11y03.md. This English normal-text sequence does not close physical-device,
+other-editor or save-error acceptance. No application rebuild is necessary for this unchanged-binary check.

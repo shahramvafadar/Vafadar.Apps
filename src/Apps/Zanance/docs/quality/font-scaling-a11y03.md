@@ -587,3 +587,19 @@ Historical counts above remain historical; modal/currency/custom-control and pla
 D-87 follows the independently observed hidden third budget period option. All three choices now use the
 existing growing wrapping form group. Actual native invocation/geometry/data equality and signed APK evidence
 are in [budget-periods.md](budget-periods.md). Compact filters elsewhere and platform acceptance stay separate.
+
+## Native expense Back follow-up (2026-10-09)
+
+A focused repeat on the normal signed D-87 Release resolves the historical D-77 blank-editor Back observation
+without a code change: the first hardware Back dismisses the focused amount keyboard; the next Back returns Home.
+With an unsaved fictitious amount of 17.25, Back asks before leaving. Keep editing preserves the exact input; Back
+asks again, and Discard returns Home. Save is never invoked. Native accessibility represents the amount as its
+semantic caption followed by the input; an initial helper assertion expecting only the raw text failed and was
+corrected against the observed node. That helper failure is not a product regression.
+
+Complete Accounts, Entries, Schedules, Settings, Budgets and BudgetCategoryLimits in the independently owned
+three-entry emulator fixture equal the preceding pristine baseline; SQLite integrity passes. An unlaunched Debug
+reinstall is used only to copy that exact fictitious database, followed by reinstalling the same verified complete
+D-87 Release. No app source, OS setting, security flag, owner data or credential is changed. This English normal-text
+emulator sequence closes the specific historical Back finding; physical-device, other-editor, screen-reader,
+large-text and save-error acceptance remain separate. The existing signed D-87 APK remains the phone-test handoff.
