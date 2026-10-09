@@ -727,3 +727,14 @@ retention from a hidden complete snapshot without views. Before/after stage evid
 The measured account-publication median for 200 accounts falls from 5,339.89 to 10.69 ms. This does not complete Q-02
 or claim the remaining full entry read/visible row creation, ANR, physical device or release gates.
 Evidence: quality/home-hidden-account-views.md.
+
+## D-96 - Grow complete account type and status descriptions (2026-10-09)
+
+Native German 360 px/200% review found a two-line excluded caption clipped by its shorter MAUI label. Bound each
+badge to the actual group width before wrapped measurement, disable flex shrink and align at line start. Preserve
+all complete captions, scalable typography/colors/flags, compact grouping, balance ordering and real row action.
+AT-101 covers all eight flag combinations without Save, counts complete captions and checks actual glyphs against
+both native and MAUI bounds. Full language/theme/width review, 1,384 tests, strict Windows/Android Debug/Release,
+signed Release navigation and exact original-table readbacks pass. The initial slot-only false pass and tightened
+baseline failure are retained as negative evidence. Real OS/readers/phone/iOS and remaining A11Y-03 controls stay open.
+Evidence: quality/account-descriptions-readable.md.

@@ -507,3 +507,11 @@ BindableLayout source/native rows; show attaches the current complete collection
 retain native rows and refresh contexts. Keep account detail and the complete Accounts list reachable with unchanged
 commands. Review real native visibility switches, navigation, warm rebinds and stored data; wait for arrangement
 before geometry checks rather than weakening checks for unarranged rows.
+
+### Complete account descriptions (D-96)
+
+Type/default/excluded/incomplete captions retain complete scalable text and compact flex grouping. Bound each
+description to the actual group width before measuring wrapped height; do not shrink an already measured label
+into a taller native text block. The whole identity stack must grow above the amount. Check actual glyph bounds
+against both native and MAUI allocation; IsTextTrimmed and a native slot alone do not prove no clipping. Review
+all existing flag combinations with presentation-only fictitious values, retained rows and exact no-write data.

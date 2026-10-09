@@ -350,3 +350,8 @@ Home visibility review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -
 AT-100 invokes real native customization switches, account detail/list and Back on fictitious data, restores the
 original layout and compares complete data. AT-98 now records visible native retention separately from a hidden
 complete snapshot with zero views. Preserve development files and wait for real arrangement before captures.
+
+Account description review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only home,accounts -FontScale 2 -Theme dark -WindowSize 360x800`.
+AT-101 varies all eight existing status-flag combinations on fictitious presentation values, checks actual native
+glyphs against native and MAUI bounds, retains native rows and restores exact complete data without Save. Preserve
+development files; a native text slot or IsTextTrimmed alone does not detect a shorter enclosing MAUI allocation.

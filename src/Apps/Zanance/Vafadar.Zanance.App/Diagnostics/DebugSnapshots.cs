@@ -1807,6 +1807,7 @@ internal static class DebugSnapshots
                 await SetVisibleAsync(true);
                 await ReviewHomeSnapshotAsync(services, page, folder, language + "-visible");
                 await WaitForReopenedLayoutAsync(page);
+                await ReviewAccountDescriptionsAsync(app, services, page, folder, language);
                 await ScrollToEndIfNeededAsync(FindScrollView(page)
                     ?? throw new InvalidOperationException("Home has no account viewport."));
                 await Task.Delay(250);
@@ -1849,6 +1850,53 @@ internal static class DebugSnapshots
                 ShowHideAndVisibleReloadChecked = snapshot.Length > 0, HiddenAccountRowsAbsent = true,
                 ActualAccountDetailsAndCompleteListChecked = snapshot.Length > 0,
                 CompleteAccountsEntriesBudgetsAndOtherPreferencesUnchanged = true, OriginalLayoutRestored = true }));
+    }
+
+    // AT-101: every combination of existing default/excluded/incomplete badges uses only fictitious presentation data.
+    private static async Task ReviewAccountDescriptionsAsync(App app, IServiceProvider services,
+        Features.Home.HomePage page, string folder, string language)
+    {
+        var home = (Features.Home.HomeViewModel)page.BindingContext;
+        var original = home.Accounts.ToArray();
+        if (original.Length == 0) { return; }
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(), Budgets = await store.GetBudgetsAsync() });
+        var before = await StoredAsync();
+        var section = page.FindByName<VerticalStackLayout>("AccountsSection");
+        var rows = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();
+        var scroll = FindScrollView(page) ?? throw new InvalidOperationException("The account descriptions have no viewport.");
+        var cases = new List<object>();
+        try
+        {
+            for (var flags = 0; flags < 8; flags++)
+            {
+                var values = original.ToArray();
+                values[0] = original[0] with { IsDefault = (flags & 1) != 0, NotInTotals = (flags & 2) != 0, OpeningUnknown = (flags & 4) != 0 };
+                home.Accounts.ReplaceAll(values);
+                await WaitForReopenedLayoutAsync(page);
+                var current = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();
+                if (current.Length != original.Length || !rows.Zip(current).All(pair => ReferenceEquals(pair.First, pair.Second))
+                    || !current.Select((row, index) => ReferenceEquals(row.BindingContext, home.Accounts[index])).All(value => value))
+                { throw new InvalidOperationException("Account description changes lost complete values or rebuilt their native rows."); }
+                await ScrollToViewIfNeededAsync(scroll, current[0]);
+                await CaptureAsync(app, folder, language + "-account-descriptions-" + flags);
+                var labels = VisualDescendants(current[0]).OfType<Label>().Where(label => label.IsVisible
+                    && (ReferenceEquals(label.Parent, current[0].FindByName<FlexLayout>("AccountDescriptions")))).ToArray();
+                if (labels.Length != 1 + System.Numerics.BitOperations.PopCount((uint)flags))
+                { throw new InvalidOperationException("The account description fixture lost one of its existing captions."); }
+                cases.Add(new { Flags = flags, ActualVisibleDescriptionCount = labels.Length, NativeRowsRetained = true,
+                    CompleteSnapshot = home.Accounts.Count, OriginalAccountIdentityAndAmount = values[0].Id == original[0].Id
+                        && values[0].Name == original[0].Name && values[0].BalanceText == original[0].BalanceText });
+            }
+        }
+        finally { home.Accounts.ReplaceAll(original); }
+        await WaitForReopenedLayoutAsync(page);
+        if (!home.Accounts.SequenceEqual(original) || await StoredAsync() != before)
+        { throw new InvalidOperationException("Account description review changed the complete snapshot or stored data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-account-descriptions-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { Cases = cases, PresentationOnly = true, CompleteOriginalSnapshotRestored = true,
+                CompleteAccountsEntriesSettingsBudgetsUnchanged = true, NoSaveOrFinancialCalculation = true }));
     }
 
     // AT-98: visible bindings retain native account rows; hidden bindings keep the full snapshot without views or Save.

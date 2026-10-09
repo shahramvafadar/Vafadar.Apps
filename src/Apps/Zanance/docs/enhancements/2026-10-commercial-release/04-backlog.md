@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; modal/other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; modal/other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -451,3 +451,10 @@ total cold-start/Q-02 acceptance claim. Final language/theme/width/200% native v
 main tests, strict Windows/Android Debug/Release builds, signed Release and complete owned-sample readbacks pass.
 QA-06 full entry materialization, visible creation, cold duration/ANR and real device/platform acceptance remain open.
 Evidence: [quality/home-hidden-account-views.md](../../quality/home-hidden-account-views.md).
+
+D-96 / AT-101 completes account type/default/excluded/incomplete captions in the shared account row at large
+native text, retaining complete text, flags, balances and row actions. Final en/fa/de themes/widths/200% and normal
+text checks cover all eight flag combinations; 1,384 main tests, strict Windows/Android Debug/Release builds, signed
+Release navigation and exact 24-table original-sample readbacks pass. A11Y-03 other controls/modals and actual OS,
+screen-reader, phone/iOS and release acceptance remain open.
+Evidence: [quality/account-descriptions-readable.md](../../quality/account-descriptions-readable.md).

@@ -1356,6 +1356,15 @@ main tests, strict Windows/Android Debug/Release builds, signed Release and comp
 QA-06 full entry materialization, visible creation, cold duration/ANR and real device/platform acceptance remain open.
 Evidence: [quality/home-hidden-account-views.md](../quality/home-hidden-account-views.md).
 
+### 31.12. Complete account descriptions (D-96 / AT-101)
+
+D-96 / AT-101 completes account type/default/excluded/incomplete captions in the shared account row at large
+native text, retaining complete text, flags, balances and row actions. Final en/fa/de themes/widths/200% and normal
+text checks cover all eight flag combinations; 1,384 main tests, strict Windows/Android Debug/Release builds, signed
+Release navigation and exact 24-table original-sample readbacks pass. A11Y-03 other controls/modals and actual OS,
+screen-reader, phone/iOS and release acceptance remain open.
+Evidence: [quality/account-descriptions-readable.md](../quality/account-descriptions-readable.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

@@ -196,6 +196,36 @@ internal static class DebugLayoutChecks
             evidence.Add(new { kind = "financial row", type = row.BindingContext.GetType().Name, title.Text,
                 text.FontSize, text.IsTextScaleFactorEnabled, text.IsTextTrimmed, row.Width,
                 identityWidth = identity.Width, identityBottom = identity.Y + identity.Height, amountTop = amount.Y });
+            if (row.BindingContext is Features.Accounts.AccountItem)
+            {
+                // AT-101: a complete title does not prove that wrapping type/default/completeness badges fit.
+                foreach (var badge in Descendants(identity).OfType<Label>().Where(label => label != title && IsVisibleThroughParents(label)))
+                {
+                    if (badge.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native)
+                    { throw new InvalidOperationException("An account description has no actual native text."); }
+                    var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(native);
+                    var boundaries = new List<Windows.Foundation.Rect>();
+                    for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+                    {
+                        var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                        if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+                    }
+                    if (native.IsTextTrimmed || !native.IsTextScaleFactorEnabled || boundaries.Count == 0
+                        || boundaries.Min(rect => rect.Left) < -1 || boundaries.Max(rect => rect.Right) > slot.Width + 1
+                        || boundaries.Max(rect => rect.Bottom) > slot.Height + 1
+                        || boundaries.Max(rect => rect.Right) > badge.Width + 1
+                        || boundaries.Max(rect => rect.Bottom) > badge.Height + 1)
+                    {
+                        File.WriteAllText(Path.Combine(folder, name + "-account-description-failure.json"),
+                            JsonSerializer.Serialize(new { title.Text, Badge = badge.Text, native.IsTextTrimmed, native.FontSize,
+                                badge.Width, badge.Height, native.ActualWidth, native.ActualHeight, slot, boundaries,
+                                identityHeight = identity.Height, amountTop = amount.Y }, new JsonSerializerOptions { WriteIndented = true }));
+                        throw new InvalidOperationException("An account type or status description clips its actual glyphs.");
+                    }
+                    evidence.Add(new { kind = "account description", badge.Text, native.FontSize, native.IsTextScaleFactorEnabled,
+                        native.IsTextTrimmed, badge.Width, badge.Height, slot, renderedBoundaries = boundaries.Count });
+                }
+            }
         }
 
         // AT-94: these three period choices are a form decision; every real native target must stay visible without sideways scrolling.

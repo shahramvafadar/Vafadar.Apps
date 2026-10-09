@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete account descriptions (2026-10-09, D-96)
+
+- Account type, default-account, excluded-from-totals and incomplete-balance descriptions grow to show their full text at large text sizes, including narrow German screens.
+
 ### Fixed - Hidden Home accounts (2026-10-09, D-95)
 
 - Home no longer builds account cards when that section is hidden. Turning it on still shows every account with its current balance and opens the same account details.

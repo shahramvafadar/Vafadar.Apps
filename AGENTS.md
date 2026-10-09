@@ -406,3 +406,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Verify actual bound page counts/handlers, native visibility switches and account detail/list navigation, complete
   financial rows and unrelated preferences. Distinguish isolated publication gains from total cold duration/ANR.
   Temporary fictitious count/timing instrumentation is removed before final builds and its own cache is cleaned.
+
+## 29. Growing complete account descriptions (D-96)
+
+* Bound account type/default/excluded/incomplete labels before wrapped measurement; retain full native-scaled text,
+  semantic colors, compact grouping and a growing identity above the balance. Do not flex-shrink a measured badge.
+* Verify all eight existing presentation flag combinations and genuine Accounts rows. Check realized glyph bounds
+  against both native and enclosing MAUI width/height, retain rows, restore the full snapshot and compare stored
+  data without Save. A native slot or IsTextTrimmed alone can miss clipping by a shorter MAUI label.

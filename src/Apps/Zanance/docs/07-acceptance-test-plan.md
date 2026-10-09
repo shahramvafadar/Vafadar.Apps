@@ -511,3 +511,14 @@ status: 21 proof files/294 native operations across en/fa/de themes/widths/200% 
 tests, strict builds, normal signed Android Release and exact 24-table readbacks pass. Actual native before/after
 counts/timings are separately recorded. No new unit count, real OS/screen-reader/phone/iOS/Q-02 or release acceptance.
 Evidence: quality/home-hidden-account-views.md.
+
+## AT-101 - Complete account type and status descriptions (D-96)
+
+On the actual bound Home AccountRow, vary only the existing default/excluded/incomplete presentation flags through
+all eight combinations. Keep original identity/amount and every account, retain native rows/fresh contexts, count
+all shown captions, and check native caret/glyph bounds against native and MAUI width/height. Restore the original
+snapshot; compare complete stored Accounts/Entries/Settings/Budgets without Save. Check genuine Accounts page rows.
+Final local status: 21 proof files/168 cases, 1083 own-window renders across en/fa/de themes/widths/200% and
+normal text, 1,384 tests, strict builds, signed emulator Release/native details/Back and exact 24-table readbacks pass.
+Original slot-only false pass is not acceptance; tightened checks reject baseline clipping. No added unit count or
+real OS/readers/phone/iOS/release acceptance. Evidence: quality/account-descriptions-readable.md.

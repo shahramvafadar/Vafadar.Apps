@@ -17,12 +17,17 @@
     </Border>
     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
         <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
-        <!-- Wraps instead of cutting off: type, default, not in totals and incomplete do not fit one line on a phone -->
-        <FlexLayout Wrap="Wrap">
-            <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" Margin="0,0,8,0" />
-            <Label Text="{v:Translate Accounts_Default}" TextColor="{DynamicResource Primary}" FontSize="13" FontAttributes="Bold" Margin="0,0,8,0" IsVisible="{Binding IsDefault}" />
-            <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" Margin="0,0,8,0" IsVisible="{Binding NotInTotals}" />
-            <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
+        <!-- D-96: bound each badge before measuring its wrapped height. Flex shrink otherwise narrows already
+             measured text without growing its row, clipping the second line at large native text scale. -->
+        <FlexLayout x:Name="AccountDescriptions" Wrap="Wrap" AlignItems="Start">
+            <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" Margin="0,0,8,0" FlexLayout.Shrink="0"
+                   MaximumWidthRequest="{Binding Width, Source={x:Reference AccountDescriptions}, x:DataType=FlexLayout}" />
+            <Label Text="{v:Translate Accounts_Default}" TextColor="{DynamicResource Primary}" FontSize="13" FontAttributes="Bold" Margin="0,0,8,0" IsVisible="{Binding IsDefault}" FlexLayout.Shrink="0"
+                   MaximumWidthRequest="{Binding Width, Source={x:Reference AccountDescriptions}, x:DataType=FlexLayout}" />
+            <Label Text="{v:Translate Accounts_NotInTotals}" Style="{StaticResource Secondary}" Margin="0,0,8,0" IsVisible="{Binding NotInTotals}" FlexLayout.Shrink="0"
+                   MaximumWidthRequest="{Binding Width, Source={x:Reference AccountDescriptions}, x:DataType=FlexLayout}" />
+            <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" FlexLayout.Shrink="0"
+                   MaximumWidthRequest="{Binding Width, Source={x:Reference AccountDescriptions}, x:DataType=FlexLayout}" />
         </FlexLayout>
     </VerticalStackLayout>
     <Label Grid.Row="1" Grid.Column="1" Text="{Binding BalanceText}" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="End">

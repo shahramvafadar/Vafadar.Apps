@@ -603,3 +603,7 @@ reinstall is used only to copy that exact fictitious database, followed by reins
 D-87 Release. No app source, OS setting, security flag, owner data or credential is changed. This English normal-text
 emulator sequence closes the specific historical Back finding; physical-device, other-editor, screen-reader,
 large-text and save-error acceptance remain separate. The existing signed D-87 APK remains the phone-test handoff.
+
+D-96 / AT-101 adds complete type/default/excluded/incomplete account descriptions, all eight presentation
+flag combinations and actual native-plus-MAUI glyph allocation checks. Shared Home/Accounts evidence and remaining
+platform/other-control gates: account-descriptions-readable.md. Older review counts remain historical.

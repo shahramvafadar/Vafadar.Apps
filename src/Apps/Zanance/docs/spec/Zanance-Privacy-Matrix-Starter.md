@@ -246,3 +246,8 @@ snapshots remain; only hidden native account cards are absent. Temporary instrum
 exact independently owned fictitious samples, is removed before final builds, and its validated cache files are
 removed. Native layout tests restore only their own fictitious HomeLayout/auditing time and compare every other
 column of all original tables; complete original rows/integrity are verified after restoration.
+
+D-96 changes account description layout only; no new data, permission, SDK, export, portable preference or
+security field. The Debug geometry fixture changes only existing fictitious presentation flags, restores the full
+snapshot and compares complete stored data without Save. Normal signed Release navigation is read-only; exact
+original columns/rows of all 24 tables in three independently owned sample profiles and integrity are verified.
