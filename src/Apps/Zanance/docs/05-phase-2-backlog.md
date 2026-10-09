@@ -181,3 +181,11 @@ An actual pre-change native check fails for the hidden third option. AT-94 measu
 invokes the existing three choices, restores selection and compares complete stored data without Save. No shared
 control, financial calculation, schema or new string change. Final evidence and independent OS/screen-reader/
 physical-device/iOS gates are in quality/budget-periods.md.
+
+D-89 continues A11Y-03 with complete growing tag suggestions and original-value native selection. AT-95 checks
+84 actual native invocations and 21 exact draft/stored-data restorations across the three-language/theme/width
+matrix; normal signed Android Release confirms selection, Keep editing and Discard without financial writes.
+Main suite remains 1,369 (App.Tests 140); strict Windows and equivalent-command Android Release have no warnings/errors.
+PowerShell startup blocks the canonical APK/privacy scripts locally; the complete signed package and matching binary
+policy are independently verified. Evidence and remaining tooling/OS/screen-reader/phone/iOS/owner gates:
+[quality/tag-suggestions.md](quality/tag-suggestions.md).

@@ -441,3 +441,18 @@ input, a second request asks again, and Discard returns Home without Save. Compl
 comparison and SQLite integrity pass. The historical D-77 blank-editor observation is resolved without a code
 change; see quality/font-scaling-a11y03.md. This English normal-text sequence does not close physical-device,
 other-editor or save-error acceptance. No application rebuild is necessary for this unchanged-binary check.
+
+## AT-95 - Complete tag captions and original-value selection (D-89)
+
+Retain the normal Release undersized target and narrow Windows large-text clipped-caption evidence. Exercise the
+real editor with short Latin and admissible long Latin/German/Persian values. Validate full native names, caption
+height, 44 px native target bounds inside the actual group and original raw command parameters. Invoke each actual
+button, retain the unsaved selected value and remove it from suggestions, then restore original draft/dirty state
+and compare full stored Accounts/Entries/Settings without Save. Focus en/fa/de, both themes and 360/412/wide with
+process-local 200% and a 100% narrow baseline; include existing action variants after the shared appearance change.
+Final native/build/APK evidence and acceptance boundaries are in quality/tag-suggestions.md.
+
+AT-95 local status: final Windows matrix and normal signed Android Release pass; 84 native tag Invoke operations,
+21 full original-draft/stored-row restorations, 1,369 main tests and strict Windows/equivalent-command Android builds.
+No added unit-case count. Complete signed D-89 APK and preserved fictitious data are verified; canonical PowerShell
+script startup, physical OS/screen readers/ARM64/iOS/provider/release acceptance remain separately unverified.

@@ -206,16 +206,17 @@
                         <Label Text="{v:Translate Entry_Tags}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding TagsText}" Placeholder="{v:Translate Entry_TagsPlaceholder}" MaxLength="320"
                                SemanticProperties.Description="{v:Translate Entry_Tags}" />
-                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding TagSuggestions}" Margin="0,4,0,0">
+                        <VerticalStackLayout x:Name="TagSuggestionsGroup" Spacing="6" BindableLayout.ItemsSource="{Binding TagSuggestions}" Margin="0,4,0,0">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <Button Text="{Binding ., StringFormat='+ {0}'}" FontSize="13" Padding="12,0" HeightRequest="40" MinimumHeightRequest="40" Margin="0,0,6,6" CornerRadius="20"
-                                            BackgroundColor="{DynamicResource PageBackground}" TextColor="{DynamicResource Primary}"
-                                            Command="{Binding AddTagCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
-                                            CommandParameter="{Binding .}" />
+                                <DataTemplate x:DataType="local:TagSuggestion">
+                                    <!-- D-89: retain raw command values while captions and targets grow inside the form. -->
+                                    <p:WrappingAction Text="{Binding Caption}" Appearance="Suggestion" MinimumWidthRequest="44" HorizontalOptions="Start"
+                                                      MaximumWidthRequest="{Binding Width, Source={x:Reference TagSuggestionsGroup}, x:DataType=VerticalStackLayout}"
+                                                      Command="{Binding AddTagCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
+                                                      CommandParameter="{Binding Value}" />
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
-                        </FlexLayout>
+                        </VerticalStackLayout>
 
                         <!-- Reimbursable (F2-TX-03) -->
                         <VerticalStackLayout IsVisible="{Binding IsExpense}" Margin="0,12,0,0">

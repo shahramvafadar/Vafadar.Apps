@@ -264,7 +264,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public partial string TagsText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial IReadOnlyList<string> TagSuggestions { get; set; } = [];
+    public partial IReadOnlyList<TagSuggestion> TagSuggestions { get; set; } = [];
 
     private IReadOnlyList<string> _tagsInUse = [];
 
@@ -273,7 +273,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private void UpdateTagSuggestions()
     {
         var current = EntryTags.Parse(TagsText);
-        TagSuggestions = [.. _tagsInUse.Where(t => !current.Contains(t, StringComparer.CurrentCultureIgnoreCase)).Take(8)];
+        TagSuggestions = [.. _tagsInUse.Where(t => !current.Contains(t, StringComparer.CurrentCultureIgnoreCase)).Take(8)
+            .Select(tag => new TagSuggestion(tag))];
     }
 
     [RelayCommand]

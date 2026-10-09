@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete selectable tags (2026-10-09, D-89)
+
+- Suggested tags keep their full captions when text is large or the form is narrow, with larger touch targets.
+- Selecting a tag adds its original value to the open form. Saving remains explicit.
+
 ### Documentation (2026-10-09, D-88)
 
 - Corrected old statements about the approved brand, local profiles, cloud-backup sign-in, optional backup protection

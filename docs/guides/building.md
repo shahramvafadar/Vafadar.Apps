@@ -310,3 +310,11 @@ existing serialized reloads. Check every full caption/target/selected name insid
 the original selection and compare complete stored accounts/entries/settings/budgets/plans without Save.
 Use the same three-language/light-dark/360-412-wide process-local font review; keep negative failures and
 original development files. Evidence: `src/Apps/Zanance/docs/quality/budget-periods.md`.
+
+The `entry-tags` Debug route (D-89 / AT-95) checks four admissible fictitious tag captions on the actual editor.
+Invoke real native peers, pass the unchanged raw value, retain full direction-safe spoken captions, minimum 44 px
+targets and complete caption height within the bounded growing group. Reacquire controls after regeneration;
+capture the checked caption before Invoke. Restore the exact original draft/suggestions/details/dirty state and
+compare full stored Accounts/Entries/Settings without Save. Include loan/settings routes when reviewing the shared
+Suggestion appearance. Evidence and the dated local PowerShell-host startup limitation are recorded in
+`src/Apps/Zanance/docs/quality/tag-suggestions.md`; the normal APK script remains the standard build path.

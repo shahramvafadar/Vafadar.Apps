@@ -637,3 +637,23 @@ links, preserved historical evidence counts and absence of code/build changes. E
 unchanged 1,369 main-test/App.Tests 140 engineering baseline; tests/builds are not repeated for text-only changes.
 The correction matrix is in enhancement ZCR's 01-current-state.md Section 5. OD-10/12 and other open owner choices
 remain pending, and no owner archive, finance data, security state or credential is accessed.
+
+## D-89 - Full tag captions and usable native targets (2026-10-09)
+
+An observed normal Release tag target is under 44 dp; the narrow Windows large-text editor also clips long suggestion
+captions. Use bounded growing rows with the existing WrappingAction native overlay pattern, preserving the 13 px
+scalable font, page surface/blue action meaning and rounded appearance. A separate Suggestion appearance leaves
+existing action variants unchanged. Keep raw tag identity in TagSuggestion.Value, display through EntryTags.Display,
+and forward the raw command parameter. No tag-limit, normalization, financial Save, schema, SDK or policy change.
+
+Retain the failed FlexLayout wrapping prototype and recycled-caption helper evidence. AT-95 reacquires each real
+native target, checks full caption/name and bounds, invokes AddTag on an unsaved fictitious draft and restores exact
+original draft state with full stored-row equality. Final runtime/build/test/APK evidence is recorded in
+quality/tag-suggestions.md before completing this delivery step. D-69 continuation and owner/platform gates remain.
+
+D-89 verification: 84 real native tag invocations and 21 exact restorations pass across en/fa/de, both themes and
+360/412/wide at process-local 200%, with a 100% narrow baseline. Main suite remains 1,369 (App.Tests 140); strict
+Windows and equivalent-command Android Release builds have no warnings/errors. The normal signed Release verifies
+the original tag value, Keep editing/Discard and complete unchanged fictitious financial rows. PowerShell startup
+prevented the canonical script from running; no system setting was changed. See quality/tag-suggestions.md for the
+complete APK, signature, helper failures and independent platform/tooling/owner limits.

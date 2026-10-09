@@ -249,6 +249,7 @@ internal static class DebugLayoutChecks
             { throw new InvalidOperationException("A growing action lacks its actual caption/native button."); }
             if (text.IsTextTrimmed || caption.Width <= 0 || action.Width < 44 || action.Height < 44
                 || text.ActualHeight + 1 < text.DesiredSize.Height
+                || (action.Appearance == Presentation.ActionAppearance.Suggestion && caption.Height + 15 > action.Height)
                 || button.Command != action.Command || button.CommandParameter != action.CommandParameter
                 || SemanticProperties.GetDescription(button) != action.Text)
             { throw new InvalidOperationException("A growing action clips its caption or loses its command/name."); }

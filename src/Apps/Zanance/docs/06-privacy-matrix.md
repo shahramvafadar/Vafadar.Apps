@@ -196,3 +196,9 @@ security change. Actual native choice invocation is view navigation without Save
 entries/settings/budgets/plans and restore the original in-memory choice. Android checks use only the known
 independently owned sample database with complete fixture restoration, never other profiles/private security
 storage or the owner archive. Evidence: quality/budget-periods.md.
+
+## Tag suggestion layout (D-89)
+
+Growing captions and typed display/raw tag values introduce no new stored field, portable source, permission, SDK,
+export, recipient or network behavior. Existing tag normalization/limits and explicit financial Save remain. Native
+review modifies only an unsaved fictitious draft and compares stored rows; diagnostics are absent from Release.

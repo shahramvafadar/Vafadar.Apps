@@ -359,3 +359,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   all original choices, two-way selection, translated selected names, native font scaling and at least 44 px targets.
 * Check each actual caption/target within the growing group and invoke the real native buttons. Period navigation
   reloads the existing views without Save; compare complete stored data and restore the original in-memory choice.
+
+## 23. Complete selectable tags (D-89)
+
+* Suggested tag captions wrap inside a bounded growing row, with at least 44 px native targets. Keep raw tag identity
+  separate from the direction-safe display marker; forward the original value to AddTag and save only explicitly.
+* Native review reacquires regenerated controls, retains the caption checked before Invoke and restores the exact
+  unsaved draft plus complete stored rows. Failed prototypes/helpers or unavailable script hosts are not acceptance.

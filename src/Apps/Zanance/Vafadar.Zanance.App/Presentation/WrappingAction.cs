@@ -12,6 +12,8 @@ public enum ActionAppearance
     Secondary,
     /// <summary>A transparent blue action.</summary>
     Text,
+    /// <summary>A rounded blue tag suggestion on the existing page surface (D-89).</summary>
+    Suggestion,
     /// <summary>An outlined red action where data can be lost.</summary>
     Destructive,
 }
@@ -89,14 +91,17 @@ public sealed class WrappingAction : ContentView
         var primary = Appearance == ActionAppearance.Primary;
         var text = Appearance == ActionAppearance.Text;
         var destructive = Appearance == ActionAppearance.Destructive;
-        _face.Padding = text ? new Thickness(8, 8) : new Thickness(IsCompact ? 8 : 16, 10);
-        _caption.FontSize = IsCompact ? 12 : 15;
+        var suggestion = Appearance == ActionAppearance.Suggestion;
+        _face.Padding = suggestion ? new Thickness(12, 8) : text ? new Thickness(8, 8) : new Thickness(IsCompact ? 8 : 16, 10);
+        _caption.FontSize = suggestion ? 13 : IsCompact ? 12 : 15;
+        _face.StrokeShape = new RoundRectangle { CornerRadius = suggestion ? 20 : 14 };
+        _button.CornerRadius = suggestion ? 20 : 14;
         _face.MinimumHeightRequest = text ? 44 : 48;
-        _face.StrokeThickness = primary || text ? 0 : 1;
+        _face.StrokeThickness = primary || text || suggestion ? 0 : 1;
         if (text) { _face.RemoveDynamicResource(BackgroundColorProperty); _face.BackgroundColor = Colors.Transparent; }
-        else { _face.SetDynamicResource(BackgroundColorProperty, primary ? "Primary" : "CardBackground"); }
+        else { _face.SetDynamicResource(BackgroundColorProperty, primary ? "Primary" : suggestion ? "PageBackground" : "CardBackground"); }
         _face.SetDynamicResource(Border.StrokeProperty, destructive ? "ExpenseText" : "StrokeStrong");
-        _caption.SetDynamicResource(Label.TextColorProperty, primary ? "OnPrimary" : text ? "Primary" : destructive ? "ExpenseText" : "AmountText");
+        _caption.SetDynamicResource(Label.TextColorProperty, primary ? "OnPrimary" : text || suggestion ? "Primary" : destructive ? "ExpenseText" : "AmountText");
         _caption.FontAttributes = primary ? FontAttributes.Bold : FontAttributes.None;
     }
 }

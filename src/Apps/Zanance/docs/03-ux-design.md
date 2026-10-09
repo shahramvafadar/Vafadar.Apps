@@ -465,3 +465,10 @@ ChoiceChips mode, with full scaled captions, selected native spoken state and at
 when space is narrow; the group can share a row in a wide readable column. Keep the adjacent period help action.
 Do not require horizontal discovery of the last choice. Period selection changes the existing view only, with no
 financial Save. Compact horizontal filter strips elsewhere remain independent. Evidence: quality/budget-periods.md.
+
+### Tag suggestions (D-89)
+
+In transaction details, each suggested tag is a bounded growing row with a real native action. Keep the scalable
+13 px font and blue action/page-surface colors; wrap the complete direction-safe tag caption and keep a useful
+44 px minimum target. Preserve the raw normalized tag separately from the display marker and pass it unchanged
+to AddTag. Choosing a suggestion edits only the open draft; explicit Save controls persistence. Limits stay the same.

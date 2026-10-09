@@ -1464,3 +1464,11 @@ platform sign-in source, optional backup protection/portable display preferences
 assertions. Historical review/slice counts stay dated. No app code or build changed; D-87's 1,369-test/App.Tests 140
 and signed APK baseline is retained, not a new run. Provider/certificate, Mac/iOS, physical-device, encryption and
 open product/commercial choices remain separate gates. See ZCR 01-current-state.md Section 5 for audited corrections.
+
+D-89 continues A11Y-03 with complete growing tag suggestions and original-value native selection. AT-95 checks
+84 actual native invocations and 21 exact draft/stored-data restorations across the three-language/theme/width
+matrix; normal signed Android Release confirms selection, Keep editing and Discard without financial writes.
+Main suite remains 1,369 (App.Tests 140); strict Windows and equivalent-command Android Release have no warnings/errors.
+PowerShell startup blocks the canonical APK/privacy scripts locally; the complete signed package and matching binary
+policy are independently verified. Evidence and remaining tooling/OS/screen-reader/phone/iOS/owner gates:
+[quality/tag-suggestions.md](../quality/tag-suggestions.md).

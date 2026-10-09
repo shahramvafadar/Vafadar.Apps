@@ -167,3 +167,11 @@ from physical OS scaling, screen readers, ARM64/iOS, OAuth, Store signing and ow
 D-87 / AT-94: quality/budget-periods.md records the hidden-choice failure, actual visible caption/target geometry,
 real selection/data-retention checks and signed Release handoff. Keep OS 200%, keyboard/screen readers, physical
 ARM64/iOS, real OAuth and Store/product acceptance separate.
+
+D-89 continues A11Y-03 with complete growing tag suggestions and original-value native selection. AT-95 checks
+84 actual native invocations and 21 exact draft/stored-data restorations across the three-language/theme/width
+matrix; normal signed Android Release confirms selection, Keep editing and Discard without financial writes.
+Main suite remains 1,369 (App.Tests 140); strict Windows and equivalent-command Android Release have no warnings/errors.
+PowerShell startup blocks the canonical APK/privacy scripts locally; the complete signed package and matching binary
+policy are independently verified. Evidence and remaining tooling/OS/screen-reader/phone/iOS/owner gates:
+[quality/tag-suggestions.md](quality/tag-suggestions.md).

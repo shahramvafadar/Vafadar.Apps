@@ -346,6 +346,7 @@ internal static class DebugSnapshots
             ("home", "//home", null),
             ("transactions", "//transactions", null),
             ("entry-new", AppShell.EntryEditorRoute, null),
+            ("entry-tags", AppShell.EntryEditorRoute, null),
             ("headers", AppShell.SettingsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
@@ -539,6 +540,9 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-tags" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage tagPage)
+                { await ReviewTagChoicesAsync(app, services, tagPage, folder, language); }
                 if ((app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage) is ContentPage readoutPage)
                 {
                     await ReviewAmountReadoutsAsync(app, readoutPage, folder, language + "-" + name);
@@ -1633,6 +1637,71 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-95: real tag targets/captions and AddTag commands; only an unsaved fictitious presentation draft changes.
+    private static async Task ReviewTagChoicesAsync(App app, IServiceProvider services,
+        Features.Entries.EntryEditorPage page, string folder, string language)
+    {
+        var vm = (Features.Entries.EntryEditorViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
+        var before = await StoredAsync(); var originalTags = vm.TagsText; var originalSuggestions = vm.TagSuggestions;
+        var originalDetails = vm.ShowDetails; var originalDirty = vm.IsDirty;
+        string[] tags = ["short", "Long label 0123456789012345678", "Fahrzeugversicherung unterwegs", "برچسب فارسی برای بررسی نمایش"];
+        var group = page.FindByName<VerticalStackLayout>("TagSuggestionsGroup");
+        var scroll = FindScrollView(page) ?? throw new InvalidOperationException("The tag draft lacks its actual scroll viewport.");
+        var checks = new List<object>();
+        try
+        {
+            vm.ShowDetails = true; vm.TagSuggestions = [.. tags.Select(tag => new Features.Entries.TagSuggestion(tag))];
+            await Task.Delay(500); await scroll.ScrollToAsync(group, ScrollToPosition.Center, animated: false);
+            await Task.Delay(400); await CaptureAsync(app, folder, language + "-entry-tags-targets");
+            if (group.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement nativeGroup)
+            { throw new InvalidOperationException("The real tag group is not realized."); }
+            foreach (var raw in tags)
+            {
+                // Adding a tag regenerates suggestions; reacquire the actual current binding/control each time.
+                vm.TagsText = originalTags;
+                vm.TagSuggestions = [.. tags.Select(tag => new Features.Entries.TagSuggestion(tag))];
+                await Task.Delay(300);
+                var action = group.Children.OfType<Presentation.WrappingAction>().Single(item => Equals(item.CommandParameter, raw));
+                await scroll.ScrollToAsync(action, ScrollToPosition.Center, animated: false);
+                await Task.Delay(250);
+                await CaptureAsync(app, folder, language + "-entry-tags-action-" + checks.Count);
+                if (action.Content is not Grid face || face.Children.LastOrDefault() is not Button button
+                    || button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native)
+                { throw new InvalidOperationException("The real tag button is not realized."); }
+                var box = native.TransformToVisual(nativeGroup).TransformBounds(new Windows.Foundation.Rect(0, 0, native.ActualWidth, native.ActualHeight));
+                if (box.Width < 44 || box.Height < 44 || box.Left < -1 || box.Right > nativeGroup.ActualWidth + 1
+                    || Math.Abs(action.MaximumWidthRequest - group.Width) > 1 || button.Command != vm.AddTagCommand
+                    || action.Text != new Features.Entries.TagSuggestion(raw).Caption)
+                {
+                    File.WriteAllText(Path.Combine(folder, language + "-entry-tags-target-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+                    { raw, box, action.MaximumWidthRequest, groupWidth = group.Width, nativeGroup.ActualWidth,
+                        correctCommand = button.Command == vm.AddTagCommand, action.Text }));
+                    throw new InvalidOperationException("A tag target/caption/command exceeds its actual group or loses its raw identity.");
+                }
+                var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native);
+                if (peer.GetName() != action.Text || peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
+                    is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+                { throw new InvalidOperationException("The tag button lacks its full native name or Invoke pattern."); }
+                var checkedCaption = action.Text;
+                invoke.Invoke(); await Task.Delay(150);
+                if (!Core.Ledger.EntryTags.Parse(vm.TagsText).Contains(raw) || vm.TagSuggestions.Any(item => item.Value == raw))
+                { throw new InvalidOperationException("A native tag action did not add the original raw tag to the unsaved draft."); }
+                checks.Add(new { Text = checkedCaption, raw, box, NativeInvokeAddsOriginalTag = true });
+            }
+            File.WriteAllText(Path.Combine(folder, language + "-entry-tags-proof.json"), System.Text.Json.JsonSerializer.Serialize(checks));
+        }
+        finally
+        { vm.TagsText = originalTags; vm.TagSuggestions = originalSuggestions; vm.ShowDetails = originalDetails; }
+        if (vm.TagsText != originalTags || !ReferenceEquals(vm.TagSuggestions, originalSuggestions)
+            || vm.ShowDetails != originalDetails || vm.IsDirty != originalDirty || before != await StoredAsync())
+        { throw new InvalidOperationException("Tag-choice review changed stored rows or failed to restore the original draft."); }
+        File.WriteAllText(Path.Combine(folder, language + "-entry-tags-restoration-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        { CompleteAccountsEntriesSettingsUnchanged = true, ExactOriginalDraftAndSuggestionsRestored = true, NativeInvocations = checks.Count, NoFinancialSave = true }));
     }
 
     // AT-94: invoke all three actual native period choices and retain stored financial/preferences rows without Save.
