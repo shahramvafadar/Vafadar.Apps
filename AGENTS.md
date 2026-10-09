@@ -321,3 +321,11 @@ repository.
   lifetime-scoped toolbar tracker; preserve icons/commands, ignore retired shells and unsubscribe on disposal.
 * The headers Debug route measures real glyph/target/name geometry, retained draft/body during own-window resize,
   single attachment after nested return and native Back without stored changes. Keep negative reload findings.
+
+## 19. In-memory estimate drafts on Settings reload (D-84)
+
+* Full covered reload still refreshes preferences/accounts/device availability. Retain only dirty explicit-Save
+  estimate text/period/currency against the last published baseline, scoped by profile and settings-row identity.
+* Do not reinterpret a retained estimate in a changed default currency or relabel another currency's suggestion.
+  Accept a submitted baseline only after successful Save; later typing and retired-context completions stay separate.
+* Keep draft state in memory, with no autosave/schema change. Verify actual nested return and complete no-write data.

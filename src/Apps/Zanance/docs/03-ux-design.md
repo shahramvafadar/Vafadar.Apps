@@ -433,3 +433,11 @@ body. Long words can wrap; the body viewport starts below the entire header. Cen
 wide windows. Attach once and preserve inherited form bindings; modal editors retain their own Cancel/header.
 The Back tooltip and spoken name follow the current app language. Android retains its native arrow and back
 handling while translating only the accessible description, including on retained toolbars after language changes.
+
+## Settings estimate reload (D-84)
+
+Returning to an open Settings form refreshes saved preferences and device/account availability without losing an
+unsaved essential-spending estimate. Preserve exact text, selected period and its original currency until explicit
+Save or leaving the form. Clean inputs refresh normally; drafts never cross profile/settings contexts. Hide any
+suggestion computed for a different currency. Successful Save marks only submitted input as saved, so later typing
+remains a draft. This does not persist unfinished input across app restart.

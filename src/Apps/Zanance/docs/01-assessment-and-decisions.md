@@ -551,3 +551,21 @@ body/bindings, unsaved drafts during resize, single attachment after nested retu
 The existing Settings Appearing reload resets an unsaved estimate after a nested return; retain that independent
 negative finding for the next repair, rather than claiming this header change fixes its load policy.
 See quality/font-scaling-a11y03.md for final runtime/build/test/APK evidence. Continue ready work under D-69.
+
+## D-84 - Preserve the open Settings estimate across reload (2026-10-09)
+
+The D-83 runtime review finds that Settings.OnAppearing reloads persisted preferences after a nested return and
+resets an unsaved estimate. Keep full covered reads, retry and availability/account refresh; merge only this explicit
+Save field's raw text, period and currency against its last published baseline. Clean fields take new saved values;
+dirty fields keep exact incomplete/invalid text. Scope the baseline by profile and settings-row identity, since a
+restored copy can share row ids. Keep all draft state in memory; no autosave or persistence/schema change.
+
+Retain the input's currency when a default changes, and hide a newly computed suggestion in a different currency.
+Save captures one submitted input and accepts it as the baseline only after persistence succeeds. Later typing
+remains dirty; a late save for a retired profile cannot replace the new baseline or label a changed draft as saved.
+Existing money parsing, explicit Save/clear validation and notification/security policies remain.
+
+AT-91 adds 13 actual linked-source cases, including real SQLite no-write/currency checks, incomplete input, period-
+only changes, clean reloads, copied profile ids and edits during Save. The real headers route now retains its draft
+through nested return rather than restoring it before navigation. Final runtime/build/test/APK evidence is in
+quality/settings-estimate-draft.md. D-69 continuous delivery and unresolved owner gates remain.

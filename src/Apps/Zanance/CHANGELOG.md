@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Keep an unfinished Settings estimate (2026-10-09, D-84)
+
+- Returning from a child page keeps the estimate text, period and currency you have not saved yet.
+- Refresh other settings normally, and avoid showing a suggestion in the wrong currency.
+- Keep typing made during Save as a new draft; estimates are still saved only when you choose Save.
+
 ### Improved - Complete page titles and current Back labels (2026-10-09, D-83)
 
 - Windows page titles wrap and grow with large text above the page content.

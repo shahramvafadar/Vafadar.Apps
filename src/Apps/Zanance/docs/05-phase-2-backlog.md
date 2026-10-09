@@ -158,3 +158,9 @@ live Back description. AT-90 records native glyph/name/target geometry, actual r
 single headers after nested return and unchanged stored data. Final evidence/APK is in quality/font-scaling-a11y03.md.
 Modal/Insights/custom controls, the existing nested-return Settings draft reload, real OS/keyboard/screen readers,
 physical ARM64/iOS, QA-06 durations/ANR and unresolved owner decisions remain independent work.
+
+D-84 resolves the independently observed Settings nested-return estimate reset. Full covered refresh remains;
+raw unsaved text/period/currency stay scoped to the current profile/settings row. Save accepts only successfully
+submitted input; no autosave, financial rule or schema change. AT-91 adds 13 cases, and the real retained-body
+runtime route now checks drafts after nested return. See quality/settings-estimate-draft.md for final evidence/APK.
+Continue modal/Insights/custom-control and other ready work under D-69; unresolved owner/platform gates remain.

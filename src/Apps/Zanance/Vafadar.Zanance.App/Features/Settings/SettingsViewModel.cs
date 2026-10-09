@@ -9,6 +9,7 @@ using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.App.Profiles;
 
 namespace Vafadar.Zanance.App.Features.Settings;
 
@@ -23,6 +24,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly ReminderService _reminders;
     private readonly AppLockService _lock;
     private readonly Presentation.ThemeService _theme;
+    private readonly ProfileService _profiles;
+    private readonly EstimateDraftState _estimateDraft = new();
     private bool _refreshing;
     private SettingsSnapshot? _snapshot;
 
@@ -37,13 +40,15 @@ public sealed partial class SettingsViewModel : ViewModelBase
         ZananceStore store,
         ReminderService reminders,
         AppLockService appLock,
-        Presentation.ThemeService theme)
+        Presentation.ThemeService theme,
+        ProfileService profiles)
     {
         // D-82: initial reminder text uses the same setter as user input; construction must not save defaults.
         _refreshing = true;
         _reminders = reminders;
         _lock = appLock;
         _theme = theme;
+        _profiles = profiles;
         _localization = localization;
         _translator = translator;
         _dates = dates;
@@ -255,12 +260,18 @@ public sealed partial class SettingsViewModel : ViewModelBase
             ValuationEnabled = settings.ValuationCurrencyEnabled;
             IsAdvanced = settings.Shows(Feature.MoneySettings);
             FreshnessIndex = Math.Max(0, Array.IndexOf(FreshnessDays, settings.RateFreshnessDays));
-            _essentialCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
-            EssentialText = settings.EssentialEstimate is { } estimate
-                ? MoneyText.ForInput(estimate, _essentialCurrency, _localization.CurrentCulture) : string.Empty;
-            EssentialPeriodIndex = (int)settings.EssentialEstimatePeriod;
-            EssentialSavedText = null;
-            _essentialSuggestion = snapshot.EssentialSuggestion;
+            var incomingCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
+            var incoming = new EstimateInput(settings.EssentialEstimate is { } estimate
+                ? MoneyText.ForInput(estimate, incomingCurrency, _localization.CurrentCulture) : string.Empty,
+                (int)settings.EssentialEstimatePeriod, incomingCurrency);
+            var presented = _estimateDraft.Publish(_profiles.Current.Id, settings.Id, incoming,
+                new(EssentialText, EssentialPeriodIndex, _essentialCurrency));
+            _essentialCurrency = presented.CurrencyCode;
+            EssentialText = presented.Text;
+            EssentialPeriodIndex = presented.PeriodIndex;
+            if (presented == incoming) { EssentialSavedText = null; }
+            // A suggestion calculated in a newly selected default currency cannot be relabeled as the retained draft's unit.
+            _essentialSuggestion = presented.CurrencyCode == incomingCurrency ? snapshot.EssentialSuggestion : null;
             DefaultAccounts = [new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]),
                 .. snapshot.DefaultAccounts.Select(a => new DefaultAccountOption(a.Id, $"{a.Name} ({a.CurrencyCode})"))];
             DefaultAccount = DefaultAccounts.FirstOrDefault(o => o.Id == settings.DefaultAccountId) ?? DefaultAccounts[0];
@@ -336,12 +347,14 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task SaveEssentialAsync()
     {
+        var profileId = _profiles.Current.Id;
         var settings = await _store.GetSettingsAsync();
-        if (string.IsNullOrWhiteSpace(EssentialText))
+        var submitted = new EstimateInput(EssentialText, EssentialPeriodIndex, _essentialCurrency);
+        if (string.IsNullOrWhiteSpace(submitted.Text))
         {
             settings.EssentialEstimate = null;
         }
-        else if (MoneyText.TryParse(EssentialText, _essentialCurrency, _localization.CurrentCulture, out var amount) && amount > 0)
+        else if (MoneyText.TryParse(submitted.Text, submitted.CurrencyCode, _localization.CurrentCulture, out var amount) && amount > 0)
         {
             settings.EssentialEstimate = amount;
         }
@@ -351,10 +364,13 @@ public sealed partial class SettingsViewModel : ViewModelBase
             return;
         }
 
-        settings.EssentialEstimatePeriod = (Core.Settings.EstimatePeriod)Math.Clamp(EssentialPeriodIndex, 0, 2);
-        settings.EssentialEstimateCurrency = _essentialCurrency;
+        settings.EssentialEstimatePeriod = (Core.Settings.EstimatePeriod)Math.Clamp(submitted.PeriodIndex, 0, 2);
+        settings.EssentialEstimateCurrency = submitted.CurrencyCode;
         await _store.SaveSettingsAsync(settings);
-        EssentialSavedText = _translator[settings.EssentialEstimate is null ? "Settings_EssentialCleared" : "Settings_EssentialSaved"];
+        _estimateDraft.AcceptSave(profileId, settings.Id, submitted);
+        EssentialSavedText = _profiles.Current.Id == profileId
+            && new EstimateInput(EssentialText, EssentialPeriodIndex, _essentialCurrency) == submitted
+            ? _translator[settings.EssentialEstimate is null ? "Settings_EssentialCleared" : "Settings_EssentialSaved"] : null;
     }
 
     partial void OnFreshnessIndexChanged(int value)

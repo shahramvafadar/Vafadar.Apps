@@ -111,3 +111,9 @@ financial semantics or closing native duration, ANR, physical-device or iOS acce
 D-83 / AT-90 maintains existing child-page headers and native Back descriptions without changing Phase 1 scope.
 Actual running Windows/emulator evidence and the complete signed APK are in quality/font-scaling-a11y03.md;
 main suite remains 1,345 passing. OS/screen-reader/device/iOS and remaining layout/draft findings stay open.
+
+D-84 resolves the independently observed Settings nested-return estimate reset. Full covered refresh remains;
+raw unsaved text/period/currency stay scoped to the current profile/settings row. Save accepts only successfully
+submitted input; no autosave, financial rule or schema change. AT-91 adds 13 cases, and the real retained-body
+runtime route now checks drafts after nested return. See quality/settings-estimate-draft.md for final evidence/APK.
+Continue modal/Insights/custom-control and other ready work under D-69; unresolved owner/platform gates remain.

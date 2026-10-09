@@ -1647,13 +1647,11 @@ internal static class DebugSnapshots
             }
             window.Width = originalWidth;
             await Task.Delay(600);
-            // Settings already reloads on Appearing; keep this header test separate from that draft-policy finding.
-            (editor.EssentialText, editor.EssentialPeriodIndex) = original;
             await Shell.Current.GoToAsync(AppShell.CategoriesRoute, animate: false);
             await Task.Delay(500);
             await Shell.Current.GoToAsync("..", animate: false);
             await Task.Delay(600);
-            AssertBody();
+            AssertDraft();
             await CaptureAsync(app, folder, language + "-headers-nested-return");
         }
         finally
@@ -1673,7 +1671,7 @@ internal static class DebugSnapshots
         if (before != after) { throw new InvalidOperationException("A header, resize or Back operation wrote stored financial/settings data."); }
         File.WriteAllText(Path.Combine(folder, language + "-headers-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
         {
-            RetainedDraftDuringResize = true, SingleHeaderAndSameBodyAfterNestedReturn = true, NativeBack = true,
+            RetainedDraftDuringResize = true, RetainedDraftAfterNestedReturn = true, SingleHeaderAndSameBodyAfterNestedReturn = true, NativeBack = true,
             CompleteStoredDataUnchanged = true, ResizedColumns = widths,
         }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 

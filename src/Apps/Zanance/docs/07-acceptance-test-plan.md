@@ -392,3 +392,12 @@ Normal full Release Android repeats real de/fa/en picker/Back/reopen and checks 
 content description immediately after each choice. Preserve FLAG_SECURE, device settings and owned fixture rows.
 Final matrix/build/test/APK evidence is in quality/font-scaling-a11y03.md. OS 200%, screen readers, physical ARM64
 and iOS acceptance remain separate.
+
+## AT-91 - Retain the unsaved Settings estimate after a nested return (D-84)
+
+Thirteen linked-production-source cases cover exact partial/invalid/empty/native-digit text, period-only edits,
+changed default currency, clean external refresh, profile/row boundaries, successful Save and later typing. SQLite
+cases verify complete stored preferences and no entries without Save. Runtime headers checks retain the real
+Settings draft after a nested return, plus existing body/resize/native Back/data equality assertions. Keep three
+languages, both themes and 360/412/wide checks focused on this changed form. Final native/build/test/APK evidence
+and limits are in quality/settings-estimate-draft.md; no physical OS/screen-reader/device/iOS acceptance inference.

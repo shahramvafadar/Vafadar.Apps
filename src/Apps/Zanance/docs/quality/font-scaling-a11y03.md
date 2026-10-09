@@ -570,3 +570,7 @@ or physical-device acceptance. CI is one separate delayed check after push.
 A11Y-03 stays in progress: modal/Insights headers, custom controls, the independently observed Settings nested-return
 estimate reload, real OS/keyboard/screen-reader/physical ARM64/iOS and QA-06 durations/ANR remain open. Continue
 ready work under D-69; unresolved product/licence/provider/spending/release choices remain owner gates.
+
+D-84 follow-up: the independent nested-return estimate reset above is repaired; the runtime route now retains the
+draft through return, with current source/native/APK evidence in settings-estimate-draft.md. The preceding D-83
+counts and negative observations are historical; full A11Y-03/platform acceptance remains open.

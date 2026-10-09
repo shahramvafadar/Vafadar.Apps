@@ -280,3 +280,11 @@ native Back. *-headers-proof.json compares complete stored data; *-layout-checks
 geometry and native Back peer names. Modal editor headers and Insights tabs retain separate review boundaries.
 Preserve/restore original development files and hashes. Android checks use normal full signed Release, the owned
 emulator, native hierarchy/real Back and no screenshot/security/system-setting override.
+
+## Settings estimate draft regression (D-84)
+
+Use -Only headers with the existing language/theme/width/font-scale options. The actual Settings page keeps its
+unsaved estimate through native own-window resizing and a nested Categories return; *-headers-proof.json adds
+RetainedDraftAfterNestedReturn alongside complete stored-data equality. This replaces D-83's restored-before-return
+fixture boundary. Preserve original development files/hashes. Emulator review may open and immediately close an
+existing modal without entering credentials or invoking Save; full signed Release and device acceptance stay separate.

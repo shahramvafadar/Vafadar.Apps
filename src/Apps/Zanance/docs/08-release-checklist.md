@@ -150,3 +150,8 @@ D-83 / AT-90: use the complete signed APK in the quality report. After real de/f
 Settings form and after Back/reopen, verify the native arrow has the current translated spoken name. Check actual
 OS large text separately. Windows child titles must show all words above the body with a usable Back target at
 360/412/wide, both themes and RTL. Emulator/Windows evidence does not close screen-reader/device/iOS acceptance.
+
+D-84 / AT-91: use the complete signed APK in quality/settings-estimate-draft.md. Enter an unsaved estimate/period,
+open a child/modal and return; text, period and currency must remain until explicit Save or leaving the form. A clean
+field can refresh persisted changes. No unfinished input is promised across restart. Local native/Windows checks
+remain separate from physical-device, real OS large-text, screen-reader and iOS acceptance.

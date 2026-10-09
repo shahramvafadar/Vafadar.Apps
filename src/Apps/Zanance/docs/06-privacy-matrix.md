@@ -174,3 +174,10 @@ Windows retains the actual page body/bindings and native Back handling; Android 
 with a lifetime-scoped translation subscription. Debug-only own-window/native geometry checks use fictitious
 profiles without Save; original development files are restored with matching hashes. Emulator review retains
 FLAG_SECURE and system settings, excludes owner data/credentials/SecureStorage and physical devices.
+
+## Open estimate draft retention (D-84)
+
+Draft text/period/currency and publication context remain in memory only; no new stored field, portable preference,
+export, network path, SDK or permission. Refresh never saves an estimate; existing explicit Save validation remains.
+Profile/settings-row scope prevents draft carryover. Runtime review uses fictitious profiles and preserves original
+development files/hashes; emulator evidence excludes owner data/credentials and system/security changes.
