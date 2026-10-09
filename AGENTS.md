@@ -414,3 +414,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Verify all eight existing presentation flag combinations and genuine Accounts rows. Check realized glyph bounds
   against both native and enclosing MAUI width/height, retain rows, restore the full snapshot and compare stored
   data without Save. A native slot or IsTextTrimmed alone can miss clipping by a shorter MAUI label.
+
+## 30. Complete debt entry action and native modal review (D-97)
+
+* Keep the full debt/receivable action text, native scaling, semantic Secondary appearance and existing command in
+  a growing real button. Verify actual glyph bounds, complete spoken name and native open/cancel of the same draft.
+* Wait for actual MAUI/native date input arrangement in newly opened animated modals before geometric assertions;
+  scroll the reference date through native UIA. Retain full digit checks; do not treat zero-size controls as clipping.
+* Opening/cancelling the unsaved debt form must leave complete stored accounts, entries, settings, budgets and
+  schedules unchanged, with no principal posting or Save. Keep remaining platform/control acceptance gates open.

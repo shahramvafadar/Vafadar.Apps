@@ -185,3 +185,10 @@ text checks cover all eight flag combinations; 1,384 main tests, strict Windows/
 Release navigation and exact 24-table original-sample readbacks pass. A11Y-03 other controls/modals and actual OS,
 screen-reader, phone/iOS and release acceptance remain open.
 Evidence: [quality/account-descriptions-readable.md](quality/account-descriptions-readable.md).
+
+D-97 / AT-102 completes the existing Accounts debt/receivable action caption with a growing real button,
+unchanged text/scaling/command and native open/cancel verification of the same unsaved Loan form. Complete stored
+accounts/entries/settings/budgets/schedules remain unchanged. Final en/fa/de themes/widths/200% and normal text,
+1,384 tests, strict Windows/Android Debug/Release, signed Release navigation and exact 24-table readbacks pass.
+A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
+Evidence: [quality/debt-entry-action-readable.md](quality/debt-entry-action-readable.md).

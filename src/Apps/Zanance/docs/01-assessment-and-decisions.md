@@ -738,3 +738,13 @@ both native and MAUI bounds. Full language/theme/width review, 1,384 tests, stri
 signed Release navigation and exact original-table readbacks pass. The initial slot-only false pass and tightened
 baseline failure are retained as negative evidence. Real OS/readers/phone/iOS and remaining A11Y-03 controls stay open.
 Evidence: quality/account-descriptions-readable.md.
+
+## D-97 - Grow the complete debt entry action (2026-10-10)
+
+Actual German 360 px/200% Accounts review found the Add debt/receivable caption extending beyond its native
+button. Use the existing Secondary WrappingAction with unchanged complete text, native scaling and AddDebtCommand.
+AT-102 checks actual glyph/MAUI/native bounds and spoken name, then invokes the existing unsaved Loan draft and
+Cancel while comparing full stored accounts, entries, settings, budgets and schedules. Wait for actual modal date
+arrangement before capture; retain the existing digit assertions and unchanged production date field. Final language,
+theme/width review, 1,384 tests, strict builds, signed Release navigation and exact original-table readbacks pass.
+Other A11Y-03 controls and actual OS/readers/phone/iOS gates remain open. Evidence: quality/debt-entry-action-readable.md.

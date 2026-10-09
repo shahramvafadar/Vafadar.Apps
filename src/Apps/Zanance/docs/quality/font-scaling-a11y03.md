@@ -607,3 +607,7 @@ large-text and save-error acceptance remain separate. The existing signed D-87 A
 D-96 / AT-101 adds complete type/default/excluded/incomplete account descriptions, all eight presentation
 flag combinations and actual native-plus-MAUI glyph allocation checks. Shared Home/Accounts evidence and remaining
 platform/other-control gates: account-descriptions-readable.md. Older review counts remain historical.
+
+D-97 / AT-102 adds the complete Accounts debt/receivable caption and native unsaved-draft open/cancel checks,
+including actual modal date arrangement and native scrolling. Evidence and remaining platform/control gates:
+debt-entry-action-readable.md. Earlier counts remain historical.

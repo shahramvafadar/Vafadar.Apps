@@ -15,7 +15,8 @@
         <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16" Spacing="8">
 
-                <Button Text="{v:Translate Debt_Add}" Style="{StaticResource SecondaryButton}" Command="{Binding AddDebtCommand}" />
+                <!-- D-97: the complete debt/receivable caption grows with native text scale; the same real button opens the draft. -->
+                <p:WrappingAction Text="{v:Translate Debt_Add}" Appearance="Secondary" Command="{Binding AddDebtCommand}" />
 
                 <!-- Empty state -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">

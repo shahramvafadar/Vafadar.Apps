@@ -515,3 +515,10 @@ description to the actual group width before measuring wrapped height; do not sh
 into a taller native text block. The whole identity stack must grow above the amount. Check actual glyph bounds
 against both native and MAUI allocation; IsTextTrimmed and a native slot alone do not prove no clipping. Review
 all existing flag combinations with presentation-only fictitious values, retained rows and exact no-write data.
+
+### Complete debt entry action (D-97)
+
+Accounts uses Secondary WrappingAction for its complete debt/receivable caption, retaining native scaling, semantic
+colors, spoken name and the existing new-debt command. Check realized glyphs within both MAUI label and native
+target. A newly opened animated modal needs actual arranged dimensions before checking date inputs; bring the
+reference date into view through native Scroll without focus or Save. Opening/cancelling a draft never posts principal.

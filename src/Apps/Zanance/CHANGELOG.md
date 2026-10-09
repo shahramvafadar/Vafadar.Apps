@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete debt entry action (2026-10-10, D-97)
+
+- The Accounts button for adding debt or money owed shows its complete caption on narrow screens at large text sizes. It opens the same debt form.
+
 ### Fixed - Complete account descriptions (2026-10-09, D-96)
 
 - Account type, default-account, excluded-from-totals and incomplete-balance descriptions grow to show their full text at large text sizes, including narrow German screens.

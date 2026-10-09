@@ -522,3 +522,13 @@ Final local status: 21 proof files/168 cases, 1083 own-window renders across en/
 normal text, 1,384 tests, strict builds, signed emulator Release/native details/Back and exact 24-table readbacks pass.
 Original slot-only false pass is not acceptance; tightened checks reject baseline clipping. No added unit count or
 real OS/readers/phone/iOS/release acceptance. Evidence: quality/account-descriptions-readable.md.
+
+## AT-102 - Complete debt entry action and unchanged unsaved draft (D-97)
+
+On the actual Accounts page, check the complete translated caption, realized native glyphs within native target and
+MAUI label, complete native name, scaling and at least 44 px target. UIA Invoke opens the existing new unsaved Loan
+draft; wait for actual modal date arrangement, capture first view and scroll the reference date into view. UIA Cancel
+returns to the same page. Compare full Accounts/Entries/Settings/Budgets/Schedules before and after, without Save.
+Final local status: 573 renders, 21 proof files/42 open-cancel invocations, 1,384 tests, strict builds, signed
+Release navigation and exact 24-table readbacks pass. Baseline clipping and unarranged-modal diagnostics are negative
+evidence, excluded from final counts. No real OS/readers/phone/iOS/release acceptance. Evidence: quality/debt-entry-action-readable.md.

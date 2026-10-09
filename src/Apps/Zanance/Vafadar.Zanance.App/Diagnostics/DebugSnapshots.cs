@@ -609,6 +609,8 @@ internal static class DebugSnapshots
                 }
                 if (name == "home-layout" && Shell.Current.CurrentPage is Features.Home.HomeLayoutPage layoutPage)
                 { await ReviewHomeLayoutActionsAsync(app, services, layoutPage, folder, language); }
+                if (name == "accounts" && Shell.Current.CurrentPage is Features.Accounts.AccountsPage accountsPage)
+                { await ReviewDebtEntryActionAsync(app, services, accountsPage, folder, language); }
 #endif
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
@@ -1850,6 +1852,103 @@ internal static class DebugSnapshots
                 ShowHideAndVisibleReloadChecked = snapshot.Length > 0, HiddenAccountRowsAbsent = true,
                 ActualAccountDetailsAndCompleteListChecked = snapshot.Length > 0,
                 CompleteAccountsEntriesBudgetsAndOtherPreferencesUnchanged = true, OriginalLayoutRestored = true }));
+    }
+
+    // AT-102: the existing debt entry point must expose its complete caption and open/cancel the same unsaved form.
+    private static async Task ReviewDebtEntryActionAsync(App app, IServiceProvider services,
+        Features.Accounts.AccountsPage page, string folder, string language)
+    {
+        var model = (Features.Accounts.AccountsViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        var translator = services.GetRequiredService<Translator>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(),
+            Settings = await store.GetSettingsAsync(), Budgets = await store.GetBudgetsAsync(), Schedules = await plans.GetSchedulesAsync(),
+        });
+        static Microsoft.UI.Xaml.Controls.TextBlock? FindCaption(Microsoft.UI.Xaml.DependencyObject root, string text)
+        {
+            if (root is Microsoft.UI.Xaml.Controls.TextBlock caption && caption.Text == text) { return caption; }
+            for (var index = 0; index < Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(root); index++)
+            {
+                if (FindCaption(Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(root, index), text) is { } found) { return found; }
+            }
+            return null;
+        }
+        static void Invoke(Button button)
+        {
+            if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider provider)
+            { throw new InvalidOperationException("The actual debt action has no native Invoke pattern."); }
+            provider.Invoke();
+        }
+        var before = await StoredAsync();
+        var button = VisualDescendants(page).OfType<Button>().Single(candidate => candidate.Command == model.AddDebtCommand);
+        var growing = VisualDescendants(page).OfType<Presentation.WrappingAction>().SingleOrDefault(candidate => candidate.Command == model.AddDebtCommand);
+        VisualElement action = growing is null ? button : growing;
+        await ScrollToViewIfNeededAsync(FindScrollView(page) ?? throw new InvalidOperationException("The debt entry point has no viewport."), action);
+        await CaptureAsync(app, folder, language + "-accounts-debt-action");
+        var expected = translator["Debt_Add"];
+        var target = button.Handler?.PlatformView as Microsoft.UI.Xaml.Controls.Button
+            ?? throw new InvalidOperationException("The debt entry point has no actual native target.");
+        var mauiCaption = growing?.Content is Grid face ? face.Children.OfType<Border>().Single().Content as Label : null;
+        var caption = mauiCaption?.Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBlock ?? FindCaption(target, expected)
+            ?? throw new InvalidOperationException("The debt entry point has no realized complete native caption.");
+        var origin = caption.TransformToVisual(target).TransformPoint(new Windows.Foundation.Point());
+        var boundaries = new List<Windows.Foundation.Rect>();
+        for (var offset = 0; offset <= caption.ContentEnd.Offset - caption.ContentStart.Offset; offset++)
+        {
+            var pointer = caption.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+            if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+        }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(target);
+        if (caption.Text != expected || peer.GetName() != expected || !caption.IsTextScaleFactorEnabled || caption.IsTextTrimmed
+            || !target.IsEnabled || target.ActualWidth < 44 || target.ActualHeight < 44 || boundaries.Count == 0
+            || origin.X + boundaries.Min(rect => rect.Left) < -1 || origin.X + boundaries.Max(rect => rect.Right) > target.ActualWidth + 1
+            || origin.Y + boundaries.Max(rect => rect.Bottom) > target.ActualHeight + 1
+            || (mauiCaption is not null && (boundaries.Max(rect => rect.Right) > mauiCaption.Width + 1
+                || boundaries.Max(rect => rect.Bottom) > mauiCaption.Height + 1)))
+        {
+            File.WriteAllText(Path.Combine(folder, language + "-debt-action-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+            { expected, caption.Text, caption.FontSize, caption.IsTextTrimmed, target.ActualWidth, target.ActualHeight, origin, boundaries }));
+            throw new InvalidOperationException("The debt entry point clips its caption or loses its complete native name/target.");
+        }
+        Invoke(button);
+        for (var attempt = 0; attempt < 100 && page.Navigation.ModalStack.LastOrDefault() is not Features.Accounts.AccountEditorPage; attempt++)
+        { await Task.Delay(50); }
+        if (page.Navigation.ModalStack.LastOrDefault() is not Features.Accounts.AccountEditorPage editor
+            || editor.BindingContext is not Features.Accounts.AccountEditorViewModel draft)
+        { throw new InvalidOperationException("The actual debt action did not open its account editor."); }
+        for (var attempt = 0; attempt < 100 && (!draft.Form.IsDebtType || draft.IsDirty || draft.Title != translator["Debt_NewTitle"]); attempt++)
+        { await Task.Delay(50); }
+        if (draft.IsExisting || draft.Form.Type != AccountType.Loan || draft.IsDirty || draft.Title != translator["Debt_NewTitle"] || await StoredAsync() != before)
+        { throw new InvalidOperationException("Opening the debt draft changed stored data or selected a different existing form."); }
+        // The animated modal can expose its binding before WinUI arranges the newly visible debt date inputs.
+        var date = VisualDescendants(editor).OfType<Vafadar.Maui.Controls.DateField>().First();
+        var dateBoxes = VisualDescendants(date).OfType<Entry>().ToArray();
+        bool DateArranged() => date.Width > 0 && date.Height > 0 && dateBoxes.Length == 3
+            && dateBoxes.All(box => box.Width > 0 && box.Height > 0
+                && box.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.TextBox { ActualWidth: > 0, ActualHeight: > 0 });
+        for (var attempt = 0; attempt < 100 && !DateArranged(); attempt++) { await Task.Delay(50); }
+        if (!DateArranged()) { throw new InvalidOperationException("The debt draft date inputs did not finish native arrangement."); }
+        await CaptureAsync(app, folder, language + "-accounts-debt-draft");
+        await ScrollToViewIfNeededAsync(FindScrollView(editor)
+            ?? throw new InvalidOperationException("The debt draft has no native viewport."), date);
+        await CaptureAsync(app, folder, language + "-accounts-debt-date");
+        Invoke(VisualDescendants(editor).OfType<Button>().Single(candidate => candidate.Command == draft.CancelCommand));
+        for (var attempt = 0; attempt < 100 && page.Navigation.ModalStack.Count > 0; attempt++) { await Task.Delay(50); }
+        await WaitForReopenedLayoutAsync(page);
+        if (page.Navigation.ModalStack.Count != 0 || !ReferenceEquals(Shell.Current.CurrentPage, page) || await StoredAsync() != before)
+        { throw new InvalidOperationException("Cancelling the debt draft changed stored data or the current Accounts page."); }
+        await CaptureAsync(app, folder, language + "-accounts-debt-return");
+        File.WriteAllText(Path.Combine(folder, language + "-debt-action-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Caption = expected, target.ActualWidth, target.ActualHeight, caption.FontSize, CompleteNativeCaptionAndName = true,
+            NativeOpenAndCancelInvocations = 2, SameAccountsPage = true, NewUnsavedLoanDraft = true,
+            CompleteAccountsEntriesSettingsBudgetsSchedulesUnchanged = true, NoSaveOrPrincipalPosting = true,
+        }));
     }
 
     // AT-101: every combination of existing default/excluded/incomplete badges uses only fictitious presentation data.

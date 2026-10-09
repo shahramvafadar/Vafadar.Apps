@@ -355,3 +355,8 @@ Account description review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,d
 AT-101 varies all eight existing status-flag combinations on fictitious presentation values, checks actual native
 glyphs against native and MAUI bounds, retains native rows and restores exact complete data without Save. Preserve
 development files; a native text slot or IsTextTrimmed alone does not detect a shorter enclosing MAUI allocation.
+
+Debt entry review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only accounts -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-102 checks the real debt command caption/target, UIA opens/cancels the existing unsaved Loan draft and compares
+full stored data including schedules. Wait for actual modal date input arrangement and native-scroll the reference
+date before capture. Keep all digit-width assertions and preserve original development files; do not Save.

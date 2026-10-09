@@ -346,7 +346,15 @@ internal static class DebugLayoutChecks
                 var available = native.ActualWidth - native.Padding.Left - native.Padding.Right
                     - native.BorderThickness.Left - native.BorderThickness.Right;
                 if (available + 1 < glyphs.DesiredSize.Width || box.Width < 44 || box.Height < 44)
-                { throw new InvalidOperationException("A date input clips its complete digit count or has an undersized target."); }
+                {
+                    File.WriteAllText(Path.Combine(folder, name + "-date-input-failure.json"), JsonSerializer.Serialize(new
+                    {
+                        box.Text, box.MaxLength, box.Width, box.Height, native.ActualWidth, native.ActualHeight,
+                        native.FontSize, native.Padding, native.BorderThickness, availableWidth = available,
+                        requiredDigitWidth = glyphs.DesiredSize.Width, field.Date, fieldWidth = field.Width, fieldHeight = field.Height,
+                    }, new JsonSerializerOptions { WriteIndented = true }));
+                    throw new InvalidOperationException("A date input clips its complete digit count or has an undersized target.");
+                }
                 evidence.Add(new { kind = "date input", box.Text, box.MaxLength, box.Width, box.Height,
                     native.FontSize, availableWidth = available, requiredDigitWidth = glyphs.DesiredSize.Width,
                     spokenName = SemanticProperties.GetDescription(box), field.Date });

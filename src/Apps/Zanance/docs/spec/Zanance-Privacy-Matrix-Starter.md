@@ -251,3 +251,7 @@ D-96 changes account description layout only; no new data, permission, SDK, expo
 security field. The Debug geometry fixture changes only existing fictitious presentation flags, restores the full
 snapshot and compares complete stored data without Save. Normal signed Release navigation is read-only; exact
 original columns/rows of all 24 tables in three independently owned sample profiles and integrity are verified.
+
+D-97 changes only the existing debt entry action layout; no new data, permission, SDK, export, security field
+or portable preference. The fictitious native review opens/cancels an unsaved debt draft, compares complete stored
+data including schedules and never saves or posts principal. Exact 24-table readbacks of three owned samples pass.
