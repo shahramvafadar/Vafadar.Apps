@@ -441,3 +441,10 @@ unsaved essential-spending estimate. Preserve exact text, selected period and it
 Save or leaving the form. Clean inputs refresh normally; drafts never cross profile/settings contexts. Hide any
 suggestion computed for a different currency. Successful Save marks only submitted input as saved, so later typing
 remains a draft. This does not persist unfinished input across app restart.
+
+### Visible Insights destinations (D-85)
+
+On Windows show Budget, Reports, Forecast and Goals above the actual root-page body in a growing row. Use two
+columns on narrow windows and four at 600 px of navigation width; never hide a destination behind clipped text.
+Wrap scaled captions, preserve the current underline, and bind spoken selected/name feedback live. Each whole
+caption is a native button target of at least 44 px. Retain body/bindings when attaching or resizing the surface.

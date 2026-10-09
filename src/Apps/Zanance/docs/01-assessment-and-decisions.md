@@ -569,3 +569,18 @@ AT-91 adds 13 actual linked-source cases, including real SQLite no-write/currenc
 only changes, clean reloads, copied profile ids and edits during Save. The real headers route now retains its draft
 through nested return rather than restoring it before navigation. Final runtime/build/test/APK evidence is in
 quality/settings-estimate-draft.md. D-69 continuous delivery and unresolved owner gates remain.
+
+## D-85 - Keep all Insights destinations visible with large text (2026-10-09)
+
+The current 360 px / process-local 200% Windows budget render clips Forecast and puts Goals outside the visible
+Shell TitleView. Move the four Windows root destinations to a growing Auto row above the same retained body.
+Narrow columns show two rows; at 600 px of actual navigation width, four destinations share one row. Keep the
+existing route names, selected underline, scalable display font and semantic palette. Attach once and retain
+body bindings through reparenting and own-window resizing. Android/iOS keep their existing native top tabs.
+
+Every painted caption has a real native OverlayButton last, with full translated name, route parameter and a
+44 px minimum target. Selected hints translate live; invoking an unselected target uses the existing Shell route.
+AT-92 measures actual native glyph layout slots, target/name/selection geometry, all four native Invoke destinations,
+single attachment and complete stored data equality. Centered WinUI caret bounds include allocation alignment;
+a tight text ActualWidth alone is not the arranged caption viewport. Keep that initial diagnostic failure evidence.
+See quality/insights-navigation.md for final build/runtime/APK evidence and remaining findings.

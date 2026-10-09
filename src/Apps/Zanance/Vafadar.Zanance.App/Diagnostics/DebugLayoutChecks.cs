@@ -6,9 +6,9 @@ namespace Vafadar.Zanance.App.Diagnostics;
 /// <summary>Measures actual native financial rows and persistent actions in the fictitious snapshot review.</summary>
 internal static class DebugLayoutChecks
 {
-    /// <summary>Includes actual growing actions, date inputs and large captions in the own-window review.</summary>
+    /// <summary>Includes actual growing navigation, actions, date inputs and large captions in the own-window review.</summary>
     internal static bool AppliesTo(ContentPage page) => Descendants(page).Any(element =>
-        element is Presentation.PageHeader or Presentation.AmountReadout or Vafadar.Maui.Controls.DateField && IsVisibleThroughParents(element));
+        element is Presentation.InsightsTabs or Presentation.PageHeader or Presentation.AmountReadout or Vafadar.Maui.Controls.DateField && IsVisibleThroughParents(element));
 
     /// <summary>Rejects action overlap or clipped realized financial identities after the native layout pass.</summary>
     internal static void Check(ContentPage page, string folder, string name)
@@ -45,6 +45,59 @@ internal static class DebugLayoutChecks
             evidence.Add(new { kind = "page header", title.Text, title.Width, title.Height, native.FontSize,
                 native.IsTextScaleFactorEnabled, native.IsTextTrimmed, spoken, backWidth = back.Width, backHeight = back.Height,
                 renderedBoundaries = boundaries.Count, rootWidth = page.Content?.Width });
+        }
+        foreach (var tabs in Descendants(page).OfType<Presentation.InsightsTabs>())
+        {
+            var selectedCount = 0;
+            foreach (var tab in tabs.Children.OfType<Grid>())
+            {
+                var caption = tab.Children.OfType<Label>().Single();
+                var button = tab.Children.OfType<Button>().Single();
+                var bar = tab.Children.OfType<BoxView>().Single();
+                if (caption.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native
+                    || button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeButton)
+                { throw new InvalidOperationException("An Insights destination is not realized."); }
+                var boundaries = new List<Windows.Foundation.Rect>();
+                for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+                {
+                    var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                    if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+                }
+                // Centered WinUI character rectangles include the offset within the actual allocated layout slot;
+                // ActualWidth is the tight text width and is not the caption's arranged viewport.
+                var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(native);
+                var spoken = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(nativeButton).GetName();
+                var selected = (string?)button.CommandParameter == tabs.CurrentRoute;
+                if (selected) { selectedCount++; }
+                if (native.IsTextTrimmed || !native.IsTextScaleFactorEnabled || button.Width < 44 || button.Height < 44
+                    || spoken != caption.Text || button.Command is null || tab.Children.Last() != button
+                    || selected != (bar.Opacity == 1) || selected && SemanticProperties.GetHint(button) != Vafadar.Localization.Translator.Instance["Common_Selected"]
+                    || boundaries.Count == 0 || boundaries.Min(rect => rect.Left) < -1
+                    || slot.Width > caption.Width + 1 || slot.Height > caption.Height + 1
+                    || boundaries.Max(rect => rect.Right) > slot.Width + 1
+                    || boundaries.Max(rect => rect.Bottom) > slot.Height + 1
+                    || tab.X < -1 || tab.X + tab.Width > tabs.Width + 1
+                    || tabs.Parent is not Grid host || host.Children.OfType<VisualElement>().Single(child => Grid.GetRow(child) == 1).Y < tabs.Y + tabs.Height - 1)
+                {
+                    File.WriteAllText(Path.Combine(folder, name + "-insights-layout-failure.json"),
+                        JsonSerializer.Serialize(new { caption.Text, spoken, selected, tab.X, tab.Y, tab.Width, tab.Height,
+                            tabsWidth = tabs.Width, buttonWidth = button.Width, buttonHeight = button.Height, native.FontSize,
+                            native.ActualWidth, native.ActualHeight, native.IsTextTrimmed, native.IsTextScaleFactorEnabled,
+                            native.ActualOffset, native.HorizontalAlignment, native.VerticalAlignment, native.Padding, native.Margin, captionWidth = caption.Width, captionHeight = caption.Height, slot,
+                            hint = SemanticProperties.GetHint(button), expectedHint = Vafadar.Localization.Translator.Instance["Common_Selected"],
+                            hasCommand = button.Command is not null, lastButton = tab.Children.Last() == button, bar.Opacity,
+                            tabsTop = tabs.Y, tabsHeight = tabs.Height, parentType = tabs.Parent?.GetType().Name,
+                            bodyY = (tabs.Parent as Grid)?.Children.OfType<VisualElement>().Single(child => Grid.GetRow(child) == 1).Y, boundaries },
+                            new JsonSerializerOptions { WriteIndented = true }));
+                    throw new InvalidOperationException("An Insights destination clips text, overlaps the body or loses its selected command target.");
+                }
+                evidence.Add(new { kind = "Insights destination", caption.Text, spoken, selected, tabs.CurrentRoute,
+                    native.FontSize, native.IsTextScaleFactorEnabled, tab.X, tab.Y, tab.Width, tab.Height,
+                    slot, columns = tabs.ColumnDefinitions.Count, buttonWidth = button.Width, buttonHeight = button.Height,
+                    renderedBoundaries = boundaries.Count });
+            }
+            if (selectedCount != 1 || tabs.Children.Count != 4 || Presentation.InsightsTabs.RouteOf(page) != tabs.CurrentRoute)
+            { throw new InvalidOperationException("Insights must show four destinations with one current page."); }
         }
         if (page.FindByName<Button>("BalanceHeadingAction") is { } heading && IsVisibleThroughParents(heading))
         {

@@ -574,3 +574,7 @@ ready work under D-69; unresolved product/licence/provider/spending/release choi
 D-84 follow-up: the independent nested-return estimate reset above is repaired; the runtime route now retains the
 draft through return, with current source/native/APK evidence in settings-estimate-draft.md. The preceding D-83
 counts and negative observations are historical; full A11Y-03/platform acceptance remains open.
+
+D-85 follows the directly observed clipped Forecast/hidden Goals Windows root tabs at 360 px / 200%. Growing
+visible root navigation and independent AT-92 runtime evidence are recorded in [insights-navigation.md](insights-navigation.md).
+Historical counts and independent remaining budget/currency/modal/custom-control findings here remain unchanged.

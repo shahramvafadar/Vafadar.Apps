@@ -155,3 +155,7 @@ D-84 / AT-91: use the complete signed APK in quality/settings-estimate-draft.md.
 open a child/modal and return; text, period and currency must remain until explicit Save or leaving the form. A clean
 field can refresh persisted changes. No unfinished input is promised across restart. Local native/Windows checks
 remain separate from physical-device, real OS large-text, screen-reader and iOS acceptance.
+
+D-85 / AT-92 evidence in quality/insights-navigation.md covers complete visible Windows root destinations and
+actual native invocation/resize/data equality. Real OS text scale, screen readers, physical ARM64/iOS and other
+control findings remain independent release gates; the growing navigation does not establish those outcomes.

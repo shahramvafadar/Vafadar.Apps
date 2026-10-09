@@ -181,3 +181,6 @@ Draft text/period/currency and publication context remain in memory only; no new
 export, network path, SDK or permission. Refresh never saves an estimate; existing explicit Save validation remains.
 Profile/settings-row scope prevents draft carryover. Runtime review uses fictitious profiles and preserves original
 development files/hashes; emulator evidence excludes owner data/credentials and system/security changes.
+
+D-85 changes only the Windows visible Insights navigation. No data, SDK, permission, export or device-security
+policy change. AT-92 uses fictitious route navigation without financial Save and compares complete stored rows.

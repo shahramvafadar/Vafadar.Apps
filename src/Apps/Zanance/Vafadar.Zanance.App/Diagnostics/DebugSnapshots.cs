@@ -380,6 +380,7 @@ internal static class DebugSnapshots
             ("account", AppShell.AccountEditorRoute, null),
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
+            ("insights-tabs", AppShell.BudgetRoute, null),
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
@@ -471,6 +472,11 @@ internal static class DebugSnapshots
                     && Shell.Current.CurrentPage?.BindingContext is Features.Entries.EntryEditorViewModel assetEditor)
                 {
                     await CaptureAssetConfirmationAsync(app, services, assetEditor, folder, $"{language}-{name}", confirmationAsset.Id);
+                }
+
+                if (name == "insights-tabs")
+                {
+                    await ReviewInsightsTabsAsync(app, services, folder, language);
                 }
 
                 if (name == "regional-settings")
@@ -1608,6 +1614,55 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-92: invoke each actual native Insights destination, retaining the body on repeated attachment and resize.
+    private static async Task ReviewInsightsTabsAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
+        var before = await StoredAsync();
+        var window = app.Windows[0]; var originalWidth = window.Width;
+        var invoked = new List<string>();
+        try
+        {
+            foreach (var route in new[] { AppShell.ReportsRoute, AppShell.ForecastRoute, AppShell.GoalsRoute, AppShell.BudgetRoute })
+            {
+                var page = Shell.Current.CurrentPage as ContentPage ?? throw new InvalidOperationException("Insights page missing.");
+                var tabs = VisualDescendants(page).OfType<Presentation.InsightsTabs>().Single();
+                var button = VisualDescendants(tabs).OfType<Button>().Single(item => (string?)item.CommandParameter == route);
+                if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                    || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
+                        is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+                { throw new InvalidOperationException("Insights destination has no native Invoke pattern."); }
+                invoke.Invoke();
+                for (var attempt = 0; attempt < 100 && Presentation.InsightsTabs.RouteOf(Shell.Current.CurrentPage) != route; attempt++)
+                { await Task.Delay(50); }
+                await Task.Delay(1500);
+                if (Shell.Current.CurrentPage is not ContentPage current || Presentation.InsightsTabs.RouteOf(current) != route)
+                { throw new InvalidOperationException("The real Insights action opened a different destination."); }
+                var host = current.Content as Grid ?? throw new InvalidOperationException("Insights body host missing.");
+                var body = host.Children.OfType<View>().Single(view => Grid.GetRow((BindableObject)view) == 1);
+                var context = body.BindingContext;
+                Presentation.InsightsTabs.Attach(current, route);
+                if (!ReferenceEquals(host, current.Content) || !ReferenceEquals(body.BindingContext, context)
+                    || VisualDescendants(current).OfType<Presentation.InsightsTabs>().Count() != 1)
+                { throw new InvalidOperationException("Repeated Insights attachment replaced the body or bindings."); }
+                invoked.Add(route);
+                await CaptureAsync(app, folder, language + "-insights-tabs-native-" + invoked.Count);
+            }
+            foreach (var width in new[] { 1280d, 360d, 412d, originalWidth })
+            {
+                window.Width = width; await Task.Delay(600);
+                await CaptureAsync(app, folder, language + "-insights-tabs-resize-" + width);
+            }
+        }
+        finally { window.Width = originalWidth; }
+        if (before != await StoredAsync()) { throw new InvalidOperationException("Insights navigation wrote stored settings/accounts/entries."); }
+        File.WriteAllText(Path.Combine(folder, language + "-insights-tabs-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        { NativeDestinations = invoked, OneHeaderAndRetainedBody = true, CompleteStoredDataUnchanged = true,
+            ActualWindowWidths = new[] { 1280d, 360d, 412d, originalWidth } }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
     }
 
     // AT-90: retain the actual Settings body/draft across nested navigation, resizing and idempotent attachment.

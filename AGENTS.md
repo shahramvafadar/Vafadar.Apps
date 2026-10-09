@@ -329,3 +329,11 @@ repository.
 * Do not reinterpret a retained estimate in a changed default currency or relabel another currency's suggestion.
   Accept a submitted baseline only after successful Save; later typing and retired-context completions stay separate.
 * Keep draft state in memory, with no autosave/schema change. Verify actual nested return and complete no-write data.
+
+## 20. Visible growing Insights navigation (D-85)
+
+* Windows root Insights destinations use an Auto row above the same retained body, attached once; native Shell
+  TitleView must not clip/hide tabs. Show two columns below 600 px and four in the readable wide column.
+* Keep four real native targets of at least 44 px, complete scaled captions, exactly one underline and a live spoken
+  selected state. Native invocation must open the existing route without financial/settings writes.
+* Centered native TextBlock caret bounds use its actual allocated layout slot; retain trim/viewport/target checks.

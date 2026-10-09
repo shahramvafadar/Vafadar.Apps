@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-83 Home/rows/action docks, Settings/reopened languages, actions/dates/amounts, growing child headers and live Back descriptions; modal/Insights/other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-85 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back and visible Insights destinations; modal/other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -399,3 +399,8 @@ raw unsaved text/period/currency stay scoped to the current profile/settings row
 submitted input; no autosave, financial rule or schema change. AT-91 adds 13 cases, and the real retained-body
 runtime route now checks drafts after nested return. See quality/settings-estimate-draft.md for final evidence/APK.
 Continue modal/Insights/custom-control and other ready work under D-69; unresolved owner/platform gates remain.
+
+D-85 continues A11Y-03 with all four visible Windows Insights destinations in a growing navigation row above
+the retained body. Narrow windows reflow into two columns; wide readable content shows four. AT-92 invokes the
+actual native routes and checks complete caption/selection/target geometry and unchanged stored data. Final
+evidence/APK and independent platform/other-control limits are in quality/insights-navigation.md.

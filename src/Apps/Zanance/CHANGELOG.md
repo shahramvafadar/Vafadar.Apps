@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Keep all Insights tabs visible (2026-10-09, D-85)
+
+- Budget, Reports, Forecast and Goals wrap into two rows in narrow Windows views.
+- Keep complete large captions, full native targets and the current-page underline.
+
 ### Fixed - Keep an unfinished Settings estimate (2026-10-09, D-84)
 
 - Returning from a child page keeps the estimate text, period and currency you have not saved yet.

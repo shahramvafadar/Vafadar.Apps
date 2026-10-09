@@ -401,3 +401,12 @@ cases verify complete stored preferences and no entries without Save. Runtime he
 Settings draft after a nested return, plus existing body/resize/native Back/data equality assertions. Keep three
 languages, both themes and 360/412/wide checks focused on this changed form. Final native/build/test/APK evidence
 and limits are in quality/settings-estimate-draft.md; no physical OS/screen-reader/device/iOS acceptance inference.
+
+## AT-92 - Visible Insights destinations and real route invocation (D-85)
+
+Runtime tests, rather than copied UI-control unit cases: all four full native caption layout slots, at least 44 px
+targets, current translated button names and exactly one selected underline/hint. Invoke each actual native target
+to its existing route, check single attachment with retained body/bindings, and resize only the app's own window.
+Compare complete stored accounts/entries/settings without Save. Focused en/fa/de, light/dark and 360/412/wide
+matrix plus 100% narrow baseline; evidence and independent OS/screen-reader/phone/iOS limits are recorded in
+quality/insights-navigation.md. Android/iOS retain their own native top tabs.

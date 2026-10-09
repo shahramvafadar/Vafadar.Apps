@@ -1435,3 +1435,8 @@ raw unsaved text/period/currency stay scoped to the current profile/settings row
 submitted input; no autosave, financial rule or schema change. AT-91 adds 13 cases; main suite 1,358 passed (App.Tests 140). The real retained-body
 runtime route now checks drafts after nested return. See quality/settings-estimate-draft.md for final evidence/APK.
 Continue modal/Insights/custom-control and other ready work under D-69; unresolved owner/platform gates remain.
+
+D-85 continues A11Y-03 with all four visible Windows Insights destinations in a growing navigation row above
+the retained body. Narrow windows reflow into two columns; wide readable content shows four. AT-92 invokes the
+actual native routes and checks complete caption/selection/target geometry and unchanged stored data. Final
+evidence/APK and independent platform/other-control limits are in quality/insights-navigation.md.

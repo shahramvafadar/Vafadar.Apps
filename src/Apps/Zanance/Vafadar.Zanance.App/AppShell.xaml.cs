@@ -133,8 +133,8 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 #if WINDOWS
-        // A page opened from another one gets a visible back button next to its title (the window's arrow is tiny); the
-        // Insights pages get their four tabs as the title, which the shell otherwise only lists in a drop-down (D-43).
+        // Growing child headers and visible Insights navigation keep their own Auto row above the retained body.
+        // Shell's Windows TitleView clips large captions; its Insights drop-down also hides destinations (D-83, D-85).
         Navigated += (_, _) =>
         {
             if (CurrentPage is not { } page || GetTitleView(page) is not null)
@@ -146,9 +146,9 @@ public partial class AppShell : Shell
             {
                 Presentation.PageHeader.Attach(contentPage, FlowDirection == FlowDirection.RightToLeft);
             }
-            else if (Presentation.InsightsTabs.RouteOf(page) is { } route)
+            else if (page is ContentPage insightsPage && Presentation.InsightsTabs.RouteOf(page) is { } route)
             {
-                SetTitleView(page, new Presentation.InsightsTabs(route));
+                Presentation.InsightsTabs.Attach(insightsPage, route);
             }
         };
 #endif

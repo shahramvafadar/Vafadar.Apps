@@ -288,3 +288,8 @@ unsaved estimate through native own-window resizing and a nested Categories retu
 RetainedDraftAfterNestedReturn alongside complete stored-data equality. This replaces D-83's restored-before-return
 fixture boundary. Preserve original development files/hashes. Emulator review may open and immediately close an
 existing modal without entering credentials or invoking Save; full signed Release and device acceptance stay separate.
+
+The `insights-tabs` Debug route (D-85 / AT-92) invokes the four actual Windows native targets, measures complete
+caption/selection geometry, checks idempotent body retention and resizes only the owned window. Compare full
+settings/accounts/entries JSON without financial Save. Centered WinUI character rectangles are checked against
+LayoutInformation.GetLayoutSlot and the actual caption viewport, alongside trim and minimum-target checks.
