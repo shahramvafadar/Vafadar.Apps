@@ -1374,6 +1374,16 @@ accounts/entries/settings/budgets/schedules remain unchanged. Final en/fa/de the
 A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
 Evidence: [quality/debt-entry-action-readable.md](../quality/debt-entry-action-readable.md).
 
+### 31.14. Single readable modal headers (D-98 / AT-103)
+
+D-98 / AT-103 removes duplicated Windows modal titles and reflows all eleven existing modal title/Cancel
+rows without changing forms or financial behavior. Actual glyph/name/target/no-overlap and native Cancel/parent
+Back pass across all Windows language/theme/width/text contexts; all nine complete stored data sources remain.
+Normal Android debt/expense/plan forms pass in three languages and both themes; original three-profile tables
+remain identical. All 1,384 tests, strict Windows/Android Debug/Release and complete signed APK checks pass.
+A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
+Evidence: [quality/modal-headers-readable.md](../quality/modal-headers-readable.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

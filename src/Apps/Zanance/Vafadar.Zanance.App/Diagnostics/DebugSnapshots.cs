@@ -390,6 +390,7 @@ internal static class DebugSnapshots
             ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
+            ("modal-headers", AppShell.AccountsRoute, null),
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("loan-detail", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
             ("loan-actions", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
@@ -611,6 +612,30 @@ internal static class DebugSnapshots
                 { await ReviewHomeLayoutActionsAsync(app, services, layoutPage, folder, language); }
                 if (name == "accounts" && Shell.Current.CurrentPage is Features.Accounts.AccountsPage accountsPage)
                 { await ReviewDebtEntryActionAsync(app, services, accountsPage, folder, language); }
+                if (name == "modal-headers" && Shell.Current.CurrentPage is Features.Accounts.AccountsPage modalParent)
+                {
+                    // Match the real budget Edit command contract; a budget editor has no meaningful month without it.
+                    var modalBudget = (await services.GetRequiredService<ZananceStore>().GetBudgetsAsync()).First();
+                    await ReviewModalHeadersAsync(app, services, modalParent,
+                    [
+                        ("account", AppShell.AccountEditorRoute, null),
+                        ("debt", AppShell.AccountEditorRoute, new() { ["debt"] = true }),
+                        ("receivable", AppShell.AccountEditorRoute, new() { ["debt"] = AccountType.Lent }),
+                        ("entry", AppShell.EntryEditorRoute, null),
+                        ("plan", AppShell.PlanEditorRoute, null),
+                        ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
+                        ("budget", AppShell.BudgetEditorRoute, new() { ["year"] = modalBudget.Year, ["month"] = modalBudget.Month,
+                            ["calendar"] = modalBudget.Calendar, ["currency"] = modalBudget.CurrencyCode, ["period"] = modalBudget.Period,
+                            ["start"] = Core.Budgets.PeriodMath.MonthRange(modalBudget.Year, modalBudget.Month, modalBudget.Calendar).First }),
+                        ("split", AppShell.SplitRoute, new() { ["id"] = splitIncomeId }),
+                        ("goal", AppShell.GoalEditorRoute, new() { ["id"] = goalId }),
+                        ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
+                        ("asset-type", AppShell.AssetTypeEditorRoute, new() { ["id"] = coinId }),
+                        ("asset-event", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "Purchase" }),
+                        ("kpi", AppShell.KpiSheetRoute, new() { ["sheet"] = new Features.Reports.KpiExplanation("K05",
+                            Core.Money.MoneyText.Format(1250, "EUR", localization.CurrentCulture), Translator.Instance["Accounts_Title"], [], null, null) }),
+                    ], folder, language);
+                }
 #endif
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
@@ -1190,7 +1215,8 @@ internal static class DebugSnapshots
 #if WINDOWS
         if ((page is Shell currentShell ? currentShell.CurrentPage : page) is ContentPage checkedPage
             && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage or Features.Accounts.AccountDetailPage
-                || DebugLayoutChecks.AppliesTo(checkedPage)))
+                || DebugLayoutChecks.AppliesTo(checkedPage)
+                || Shell.GetPresentationMode(checkedPage) is PresentationMode.Modal or PresentationMode.ModalAnimated or PresentationMode.ModalNotAnimated))
         {
             // D-78: include persistent actions and navigation in the app's own native-window rendering.
             await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-window.png"));
@@ -1933,6 +1959,7 @@ internal static class DebugSnapshots
                 && box.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.TextBox { ActualWidth: > 0, ActualHeight: > 0 });
         for (var attempt = 0; attempt < 100 && !DateArranged(); attempt++) { await Task.Delay(50); }
         if (!DateArranged()) { throw new InvalidOperationException("The debt draft date inputs did not finish native arrangement."); }
+        await CheckModalHeaderAsync(app, editor, folder, language + "-debt-modal-header");
         await CaptureAsync(app, folder, language + "-accounts-debt-draft");
         await ScrollToViewIfNeededAsync(FindScrollView(editor)
             ?? throw new InvalidOperationException("The debt draft has no native viewport."), date);
@@ -1948,6 +1975,174 @@ internal static class DebugSnapshots
             Caption = expected, target.ActualWidth, target.ActualHeight, caption.FontSize, CompleteNativeCaptionAndName = true,
             NativeOpenAndCancelInvocations = 2, SameAccountsPage = true, NewUnsavedLoanDraft = true,
             CompleteAccountsEntriesSettingsBudgetsSchedulesUnchanged = true, NoSaveOrPrincipalPosting = true,
+        }));
+    }
+
+    // AT-103: modal forms keep their own title/Cancel row; a generic child header must never wrap their retained body.
+    private static async Task ReviewModalHeadersAsync(App app, IServiceProvider services, Features.Accounts.AccountsPage parent,
+        (string Name, string Route, Dictionary<string, object>? Query)[] cases, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        var goals = services.GetRequiredService<GoalStore>();
+        var holdings = services.GetRequiredService<HoldingStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+            Budgets = await store.GetBudgetsAsync(), Schedules = await plans.GetSchedulesAsync(), Categories = await store.GetCategoriesAsync(),
+            Goals = await goals.GetGoalsAsync(), HoldingTypes = await holdings.GetTypesAsync(), HoldingEvents = await holdings.GetEventsAsync(),
+        });
+        static bool Visible(VisualElement element)
+        {
+            for (Element? ancestor = element; ancestor is not null; ancestor = ancestor.Parent)
+            { if (ancestor is VisualElement { IsVisible: false }) { return false; } }
+            return true;
+        }
+        static bool Arranged(ContentPage modal) => modal.Width > 0 && modal.Height > 0
+            && VisualDescendants(modal).OfType<Vafadar.Maui.Controls.DateField>().Where(Visible).All(field => field.Width > 0 && field.Height > 0
+                && VisualDescendants(field).OfType<Entry>().All(box => box.Width > 0 && box.Height > 0
+                    && box.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.TextBox { ActualWidth: > 0, ActualHeight: > 0 }));
+        var before = await StoredAsync();
+        var parentBody = parent.Content;
+        var parentContext = parent.BindingContext;
+        if (VisualDescendants(parent).OfType<Presentation.PageHeader>().Count() != 1)
+        { throw new InvalidOperationException("The ordinary parent must retain its one visible child header."); }
+        var reviewed = new List<string>();
+        foreach (var (name, route, query) in cases)
+        {
+            // Existing named routes load their actual seeded/new models; only the native Cancel/Close action returns.
+            await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, new Dictionary<string, object>(query)));
+            for (var attempt = 0; attempt < 100 && parent.Navigation.ModalStack.LastOrDefault() is not ContentPage; attempt++)
+            { await Task.Delay(50); }
+            if (parent.Navigation.ModalStack.LastOrDefault() is not ContentPage modal)
+            { throw new InvalidOperationException("The named modal route did not open its real page."); }
+            await Task.Delay(500);
+            for (var attempt = 0; attempt < 100 && !Arranged(modal); attempt++) { await Task.Delay(50); }
+            if (!Arranged(modal)) { throw new InvalidOperationException("The actual modal/date inputs did not finish arrangement."); }
+            await CheckModalHeaderAsync(app, modal, folder, language + "-modal-header-" + name);
+            await CaptureAsync(app, folder, language + "-modal-" + name);
+            if (await StoredAsync() != before) { throw new InvalidOperationException("Opening a modal wrote stored data."); }
+            var header = ((Grid)modal.Content).Children.OfType<Grid>().Single(grid => Grid.GetRow(grid) == 0);
+            var close = VisualDescendants(header).OfType<Button>().Single();
+            if (close.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+            { throw new InvalidOperationException("The real own modal Cancel/Close button has no native Invoke pattern."); }
+            invoke.Invoke();
+            for (var attempt = 0; attempt < 100 && parent.Navigation.ModalStack.Count != 0; attempt++) { await Task.Delay(50); }
+            await WaitForReopenedLayoutAsync(parent);
+            if (parent.Navigation.ModalStack.Count != 0 || !ReferenceEquals(Shell.Current.CurrentPage, parent)
+                || !ReferenceEquals(parent.Content, parentBody) || !ReferenceEquals(parent.BindingContext, parentContext)
+                || VisualDescendants(parent).OfType<Presentation.PageHeader>().Count() != 1 || await StoredAsync() != before)
+            { throw new InvalidOperationException("Native modal Cancel/Close replaced its parent or wrote stored data."); }
+            reviewed.Add(modal.GetType().Name);
+        }
+        await CaptureAsync(app, folder, language + "-modal-parent-restored");
+        InvokeSnapshotBack(parent);
+        for (var attempt = 0; attempt < 100 && ReferenceEquals(Shell.Current.CurrentPage, parent); attempt++) { await Task.Delay(50); }
+        if (ReferenceEquals(Shell.Current.CurrentPage, parent) || await StoredAsync() != before)
+        { throw new InvalidOperationException("The ordinary parent lost its native Back or wrote data after modal return."); }
+        File.WriteAllText(Path.Combine(folder, language + "-modal-headers-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            ActualModalTypes = reviewed.Distinct().ToArray(), ModalCases = cases.Length, NativeCancelCloseInvocations = reviewed.Count,
+            SingleOwnHeadersAndRetainedBodies = true, SameOrdinaryParentAndHeader = true, NativeParentBack = true,
+            CompleteAccountsEntriesSettingsBudgetsSchedulesCategoriesGoalsHoldingsUnchanged = true, NoInputSaveOrPosting = true,
+        }));
+    }
+
+    // The actual native peer supplies a MAUI button's spoken name; a manually constructed base peer can miss it.
+    private static async Task CheckModalHeaderAsync(App app, ContentPage page, string folder, string name)
+    {
+        var count = VisualDescendants(page).OfType<Presentation.PageHeader>().Count();
+        if (count != 0)
+        {
+            await CaptureAsync(app, folder, name + "-duplicated");
+            File.WriteAllText(Path.Combine(folder, name + "-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+            {
+                PageType = page.GetType().Name, page.Title, Mode = Shell.GetPresentationMode(page).ToString(),
+                GenericChildHeaders = count, VisibleTitles = VisualDescendants(page).OfType<Label>()
+                    .Where(label => label.Text == page.Title).Select(label => new { label.Text, label.FontSize, label.Width, label.Height }),
+            }));
+            throw new InvalidOperationException("The modal form has an additional generic child title/Back header.");
+        }
+        var body = page.Content as Grid ?? throw new InvalidOperationException("The actual modal form body is missing.");
+        var header = body.Children.OfType<Grid>().Single(grid => Grid.GetRow(grid) == 0);
+        var title = VisualDescendants(header).OfType<Label>().First(label => label.FontAttributes == FontAttributes.Bold);
+        var close = VisualDescendants(header).OfType<Button>().Single();
+        if (title.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock nativeTitle
+            || close.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeClose)
+        { throw new InvalidOperationException("The retained modal title/close row lacks its actual native controls."); }
+        var glyphs = new List<Windows.Foundation.Rect>();
+        for (var offset = 0; offset <= nativeTitle.ContentEnd.Offset - nativeTitle.ContentStart.Offset; offset++)
+        {
+            var pointer = nativeTitle.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+            if (pointer is not null) { glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+        }
+        var peer = Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(nativeClose)
+            ?? throw new InvalidOperationException("The actual modal close button has no native automation peer.");
+        static Microsoft.UI.Xaml.Controls.TextBlock? FindCaption(Microsoft.UI.Xaml.DependencyObject root, string text)
+        {
+            if (root is Microsoft.UI.Xaml.Controls.TextBlock caption && caption.Text == text) { return caption; }
+            for (var index = 0; index < Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(root); index++)
+            {
+                if (FindCaption(Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(root, index), text) is { } found) { return found; }
+            }
+            return null;
+        }
+        var closeCaption = FindCaption(nativeClose, close.Text)
+            ?? throw new InvalidOperationException("The modal close button lacks its realized complete caption.");
+        var closeGlyphs = new List<Windows.Foundation.Rect>();
+        for (var offset = 0; offset <= closeCaption.ContentEnd.Offset - closeCaption.ContentStart.Offset; offset++)
+        {
+            var pointer = closeCaption.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+            if (pointer is not null) { closeGlyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+        }
+        if (header.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement nativeHeader)
+        { throw new InvalidOperationException("The own modal header has no actual native allocation."); }
+        var titleOrigin = nativeTitle.TransformToVisual(nativeHeader).TransformPoint(new Windows.Foundation.Point());
+        var closeOrigin = nativeClose.TransformToVisual(nativeHeader).TransformPoint(new Windows.Foundation.Point());
+        var captionOrigin = closeCaption.TransformToVisual(nativeClose).TransformPoint(new Windows.Foundation.Point());
+        var titleRect = new Windows.Foundation.Rect(titleOrigin.X, titleOrigin.Y, nativeTitle.ActualWidth, nativeTitle.ActualHeight);
+        var closeRect = new Windows.Foundation.Rect(closeOrigin.X, closeOrigin.Y, nativeClose.ActualWidth, nativeClose.ActualHeight);
+        var overlapWidth = Math.Min(titleRect.Right, closeRect.Right) - Math.Max(titleRect.Left, closeRect.Left);
+        var overlapHeight = Math.Min(titleRect.Bottom, closeRect.Bottom) - Math.Max(titleRect.Top, closeRect.Top);
+        if (string.IsNullOrWhiteSpace(title.Text) || nativeTitle.Text != title.Text || nativeTitle.IsTextTrimmed
+            || !nativeTitle.IsTextScaleFactorEnabled || glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1
+            || glyphs.Max(rect => rect.Right) > title.Width + 1 || glyphs.Max(rect => rect.Bottom) > title.Height + 1
+            || nativeClose.ActualWidth < 44 || nativeClose.ActualHeight < 44 || !nativeClose.IsEnabled
+            || close.Command is null || peer.GetName() != close.Text || closeCaption.IsTextTrimmed || !closeCaption.IsTextScaleFactorEnabled
+            || closeGlyphs.Count == 0 || captionOrigin.X + closeGlyphs.Min(rect => rect.Left) < -1
+            || captionOrigin.X + closeGlyphs.Max(rect => rect.Right) > nativeClose.ActualWidth + 1
+            || captionOrigin.Y + closeGlyphs.Max(rect => rect.Bottom) > nativeClose.ActualHeight + 1
+            || titleRect.Left < -1 || titleRect.Top < -1 || titleRect.Right > nativeHeader.ActualWidth + 1
+            || titleRect.Bottom > nativeHeader.ActualHeight + 1 || closeRect.Left < -1 || closeRect.Top < -1
+            || closeRect.Right > nativeHeader.ActualWidth + 1 || closeRect.Bottom > nativeHeader.ActualHeight + 1
+            || overlapWidth > 1 && overlapHeight > 1)
+        {
+            await CaptureAsync(app, folder, name + "-own-row-failure");
+            File.WriteAllText(Path.Combine(folder, name + "-own-row-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+            {
+                title.Text, nativeText = nativeTitle.Text, nativeTitle.IsTextTrimmed, nativeTitle.IsTextScaleFactorEnabled,
+                nativeTitle.FontSize, title.Width, title.Height, nativeTitle.ActualWidth, nativeTitle.ActualHeight,
+                glyphs, closeText = close.Text, hasCommand = close.Command is not null, nativeClose.IsEnabled, closeName = peer.GetName(),
+                targetWidth = nativeClose.ActualWidth, targetHeight = nativeClose.ActualHeight,
+                closeGlyphs, captionOrigin, titleRect, closeRect, overlapWidth, overlapHeight,
+                headerWidth = nativeHeader.ActualWidth, headerHeight = nativeHeader.ActualHeight,
+            }));
+            throw new InvalidOperationException("The own modal title/close row clips, loses scaling or lacks its complete native action.");
+        }
+        // Idempotent attachment attempts must leave the same grid, live binding context and own title row in place.
+        var context = body.BindingContext;
+        Presentation.PageHeader.Attach(page, page.FlowDirection == FlowDirection.RightToLeft);
+        if (!ReferenceEquals(page.Content, body) || !ReferenceEquals(body.BindingContext, context)
+            || VisualDescendants(page).OfType<Presentation.PageHeader>().Any())
+        { throw new InvalidOperationException("Generic child attachment replaced the actual modal body or bindings."); }
+        File.WriteAllText(Path.Combine(folder, name + "-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            PageType = page.GetType().Name, page.Title, OwnTitle = title.Text, Mode = Shell.GetPresentationMode(page).ToString(),
+            GenericChildHeaders = 0, OwnHeaderCount = 1, FullNativeTitleAndCloseName = true, nativeClose.ActualWidth,
+            nativeClose.ActualHeight, RetainedBodyAndContextOnAttachment = true, NativeGlyphBoundsAndNoOverlap = true,
+            Layout = titleRect.Top >= closeRect.Bottom - 1 ? "stacked" : "inline",
         }));
     }
 

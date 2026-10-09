@@ -423,3 +423,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   scroll the reference date through native UIA. Retain full digit checks; do not treat zero-size controls as clipping.
 * Opening/cancelling the unsaved debt form must leave complete stored accounts, entries, settings, budgets and
   schedules unchanged, with no principal posting or Save. Keep remaining platform/control acceptance gates open.
+
+## 31. Single readable modal headers (D-98)
+
+* Explicit Shell modal modes retain their own title/Cancel row; underlying ordinary stack depth is not a modal
+  test. Ordinary child PageHeader/body/binding context and native Back stay intact.
+* Modal title/Close groups wrap without shrinking the real Close button or disabling native text scaling.
+  Bound the growing title by actual available width; retain subtitles, complete native peer names and commands.
+* Native modal review uses valid route queries, actual glyph/target/no-overlap checks, native cancellation and
+  complete nine-source stored-data comparison. Named-route opens are not native button-opening evidence.

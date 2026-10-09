@@ -522,3 +522,11 @@ Accounts uses Secondary WrappingAction for its complete debt/receivable caption,
 colors, spoken name and the existing new-debt command. Check realized glyphs within both MAUI label and native
 target. A newly opened animated modal needs actual arranged dimensions before checking date inputs; bring the
 reference date into view through native Scroll without focus or Save. Opening/cancelling a draft never posts principal.
+
+### Single growing modal header (D-98)
+
+Explicit Shell modal presentation owns its existing Cancel/Close/title row; do not attach an ordinary child
+PageHeader based on the underlying stack depth. Own title/Cancel groups wrap: the real Close target does not
+shrink, the complete scalable title grows within the available group width and moves below when needed.
+Keep asset-event title/subtitle together and retain existing command/footer behavior. Verify realized glyphs,
+actual native peer name and no title/button overlap; cancellation retains the ordinary parent's single header.

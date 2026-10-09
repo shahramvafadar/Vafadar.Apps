@@ -15,6 +15,10 @@ internal sealed class PageHeader : Grid
     /// <summary>Adds a growing header once, retaining the same page, body, bindings and back handling.</summary>
     internal static void Attach(ContentPage page, bool rightToLeft)
     {
+        // D-98: modal forms already retain their own growing title/Cancel row. The underlying child stack can have
+        // several pages, so its depth cannot tell a modal apart from an ordinary child page on Windows.
+        if (Shell.GetPresentationMode(page) is PresentationMode.Modal or PresentationMode.ModalAnimated or PresentationMode.ModalNotAnimated)
+        { return; }
         if (page.Content is not { } body || body is Grid grid && grid.Children.OfType<PageHeader>().Any()) { return; }
         // D-83: Shell's Windows TitleView has a fixed bar height; scalable multiline titles need their own Auto row.
         // The body is retained, and returning from a nested page does not detach it or rebuild the user's draft.

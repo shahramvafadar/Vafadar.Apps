@@ -255,3 +255,7 @@ original columns/rows of all 24 tables in three independently owned sample profi
 D-97 changes only the existing debt entry action layout; no new data, permission, SDK, export, security field
 or portable preference. The fictitious native review opens/cancels an unsaved debt draft, compares complete stored
 data including schedules and never saves or posts principal. Exact 24-table readbacks of three owned samples pass.
+
+D-98 changes only existing modal header presentation. No new data, permission, SDK, export, security field
+or portable preference. Reviews open and cancel fictitious drafts without Save/posting and compare complete stored
+data; Android app language/theme changes are restored through UI. Original three-profile 24-table readbacks pass.

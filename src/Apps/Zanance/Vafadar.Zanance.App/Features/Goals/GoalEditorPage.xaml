@@ -12,9 +12,12 @@
     Shell.PresentationMode="ModalAnimated">
 
     <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Padding="8,8" ColumnDefinitions="Auto,*" BackgroundColor="{DynamicResource CardBackground}">
-            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" />
-            <Label Grid.Column="1" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" Margin="8,0" />
+        <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
+        <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
+            <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
+                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
+            </FlexLayout>
         </Grid>
 
         <ScrollView Grid.Row="1">

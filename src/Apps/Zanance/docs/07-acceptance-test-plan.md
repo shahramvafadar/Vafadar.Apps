@@ -532,3 +532,14 @@ returns to the same page. Compare full Accounts/Entries/Settings/Budgets/Schedul
 Final local status: 573 renders, 21 proof files/42 open-cancel invocations, 1,384 tests, strict builds, signed
 Release navigation and exact 24-table readbacks pass. Baseline clipping and unarranged-modal diagnostics are negative
 evidence, excluded from final counts. No real OS/readers/phone/iOS/release acceptance. Evidence: quality/debt-entry-action-readable.md.
+
+## AT-103 - Single readable modal headers and unchanged drafts (D-98)
+
+Open thirteen named-route cases across all eleven existing modal page types with valid real query inputs.
+Verify zero generic headers, one own title, native title/close glyph geometry, complete native peer name,
+44 px target, no overlap and same body/context after repeated attachment. Native Close/Cancel returns to
+the same Accounts parent/header; native Back succeeds. Compare all nine complete stored data sources.
+Final local status: 1293 renders, 21 summaries, 273 native closes/21 parent backs/294 header checks,
+1,384 tests, strict builds and signed APK pass. Android normal-scale debt/expense/plan has 18 language/theme
+cases; original 24 tables in each of three fictitious profiles remain identical. Negative diagnostics excluded.
+Actual OS scaling/readers/phone/iOS and remaining controls remain open. Evidence: quality/modal-headers-readable.md.

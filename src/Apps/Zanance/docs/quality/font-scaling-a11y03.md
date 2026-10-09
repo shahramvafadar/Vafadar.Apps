@@ -611,3 +611,8 @@ platform/other-control gates: account-descriptions-readable.md. Older review cou
 D-97 / AT-102 adds the complete Accounts debt/receivable caption and native unsaved-draft open/cancel checks,
 including actual modal date arrangement and native scrolling. Evidence and remaining platform/control gates:
 debt-entry-action-readable.md. Earlier counts remain historical.
+
+D-98 / AT-103 completes all eleven modal header groups and excludes generic Windows child headers from
+explicit modal presentation. Actual glyph/name/no-overlap, retained body, native Cancel/ordinary parent Back
+and complete stored data checks pass. Evidence: modal-headers-readable.md. Earlier counts remain historical;
+normal Android three-form checks are separate from Windows text stress and real OS/readers/phone acceptance.

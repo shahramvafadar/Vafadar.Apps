@@ -360,3 +360,9 @@ Debt entry review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only 
 AT-102 checks the real debt command caption/target, UIA opens/cancels the existing unsaved Loan draft and compares
 full stored data including schedules. Wait for actual modal date input arrangement and native-scroll the reference
 date before capture. Keep all digit-width assertions and preserve original development files; do not Save.
+
+Modal header review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only 'accounts,modal-headers' -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-103 opens thirteen actual modal cases with their real query inputs, measures complete actual native glyphs,
+peer name and title/close geometry, invokes native Close and ordinary parent Back, and compares all nine full
+stored data sources. Preserve the original development files; use no input or Save. Named-route openings are
+distinct from AT-102 native debt-button opening. Negative fixtures never count as acceptance.

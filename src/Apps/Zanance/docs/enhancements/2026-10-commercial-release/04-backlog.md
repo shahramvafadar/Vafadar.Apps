@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; modal/other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -465,3 +465,11 @@ accounts/entries/settings/budgets/schedules remain unchanged. Final en/fa/de the
 1,384 tests, strict Windows/Android Debug/Release, signed Release navigation and exact 24-table readbacks pass.
 A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
 Evidence: [quality/debt-entry-action-readable.md](../../quality/debt-entry-action-readable.md).
+
+D-98 / AT-103 removes duplicated Windows modal titles and reflows all eleven existing modal title/Cancel
+rows without changing forms or financial behavior. Actual glyph/name/target/no-overlap and native Cancel/parent
+Back pass across all Windows language/theme/width/text contexts; all nine complete stored data sources remain.
+Normal Android debt/expense/plan forms pass in three languages and both themes; original three-profile tables
+remain identical. All 1,384 tests, strict Windows/Android Debug/Release and complete signed APK checks pass.
+A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
+Evidence: [quality/modal-headers-readable.md](../../quality/modal-headers-readable.md).

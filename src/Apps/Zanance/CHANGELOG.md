@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Readable modal headers (2026-10-10, D-98)
+
+- Forms show one title on Windows. Long titles move below Cancel when needed on narrow screens, keeping both readable at larger text sizes.
+
 ### Fixed - Complete debt entry action (2026-10-10, D-97)
 
 - The Accounts button for adding debt or money owed shows its complete caption on narrow screens at large text sizes. It opens the same debt form.

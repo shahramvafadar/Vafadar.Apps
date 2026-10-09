@@ -748,3 +748,14 @@ Cancel while comparing full stored accounts, entries, settings, budgets and sche
 arrangement before capture; retain the existing digit assertions and unchanged production date field. Final language,
 theme/width review, 1,384 tests, strict builds, signed Release navigation and exact original-table readbacks pass.
 Other A11Y-03 controls and actual OS/readers/phone/iOS gates remain open. Evidence: quality/debt-entry-action-readable.md.
+
+## D-98 - Keep one readable modal header (2026-10-10)
+
+Actual Windows debt review found a duplicate generic child header and an unnecessarily narrow own title.
+Exclude explicit Shell modal presentation modes from PageHeader attachment; retain ordinary child headers.
+All eleven existing own modal headers reflow complete scalable title and nonshrinking Cancel/Close, preserving
+commands, subtitle, forms and footer actions. AT-103 checks actual native glyphs/name/target/header overlap,
+retained bodies, native cancellation, same ordinary parent/Back and all nine complete stored data sources.
+The full Windows matrix, 1,384 tests, strict builds, normal Android debt/expense/plan language/theme navigation,
+signed APK and exact three-profile 24-table readbacks pass. Remaining A11Y/platform/release gates stay open.
+Evidence: quality/modal-headers-readable.md.
