@@ -1332,6 +1332,13 @@ All 1,384 tests pass (App.Tests 148), strict builds and complete signed Release 
 Controlled tenfold Windows warm reload median: 2,727.70 -> 1,228.28 ms. QA-06 remains partial: entry materialization,
 cold start/ANR and physical-device Q-02 are open. See [quality/performance-home-snapshots.md](../quality/performance-home-snapshots.md).
 
+### 31.9. Android Debug boundary and native performance evidence (D-93)
+
+D-93 fixes the Windows-only Home diagnostic call that broke Android Debug, with no Release/UI/financial behavior
+change. Final Windows/Android Debug/Release builds and all 1,384 tests (App.Tests 148) pass. Temporary native stage
+measurements identify entry materialization/initial account creation; QA-06 and physical/platform acceptance remain
+open. Evidence: [quality/home-debug-platform-and-native-stages.md](../quality/home-debug-platform-and-native-stages.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

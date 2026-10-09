@@ -231,3 +231,7 @@ export. Restore/return retains the unsaved wizard and does not create an account
 
 D-92 changes in-memory Home snapshot publication and goal ledger routing only. No new stored/portable data,
 permission, SDK, recipient or export; actual sample readbacks compare complete original tables without writes.
+
+D-93 changes a Debug platform guard only, with no production data/permission/SDK/export change. Temporary QA
+stage metadata is restricted to exact fictitious profiles, contains names/durations only and is removed from
+source and the owned cache before final handoff. Complete original sample tables remain unchanged.

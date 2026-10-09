@@ -696,3 +696,12 @@ goal balances through the existing index/calculator. Preserve every value, order
 AT-98 adds 15 cases and actual-bound native row/data checks. Controlled tenfold Windows reload median falls from
 2,727.70 to 1,228.28 ms. See quality/performance-home-snapshots.md for completed build/runtime/APK evidence and
 excluded temporary diagnostic failures. Cold start, physical-device Q-02 and QA-06 remain open.
+
+## D-93 - Match the Home diagnostic's platform boundary (2026-10-09)
+
+D-92's Windows-only Home review was called outside WINDOWS, breaking Android Debug with CS0103. Guard the call at
+the same boundary, retaining the existing Windows/runtime behavior. Android Release was unaffected. Final strict
+Windows and complete Android Debug/Release builds, 1,384 tests, actual Windows Home and signed Release/data proofs
+pass. Independent SQL/native Debug measurements reject an unhelpful index and select materialization/initial row
+creation as the next QA-06 paths; no temporary instrumentation, production index or schema change remains.
+Evidence and limits: quality/home-debug-platform-and-native-stages.md.

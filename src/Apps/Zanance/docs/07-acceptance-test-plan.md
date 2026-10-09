@@ -486,3 +486,8 @@ currency/transfers/refunds/dates/assets, priority and overflow. Actual bound Hom
 rebind exact fresh values and compare complete stored data. All 1,384 main tests pass; 21 final Windows Home proof
 files and normal signed Release large-profile/financial readbacks pass. Evidence/remaining QA-06 gates:
 quality/performance-home-snapshots.md.
+
+AT-98 follow-up (D-93): keep each Windows diagnostic call inside the same platform guard as its implementation.
+Android Debug must compile as well as Release. Final strict builds and 1,384 tests pass; three current Windows Home
+proofs retain rows/contexts/values, and signed Release readbacks preserve all 24 tables of all three owned samples.
+No new unit count or cold-start/physical-device acceptance: quality/home-debug-platform-and-native-stages.md.

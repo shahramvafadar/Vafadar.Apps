@@ -601,8 +601,10 @@ internal static class DebugSnapshots
                         "{\"ActualEligibleModal\":true,\"CompleteAmountPacket\":true,\"StoredEntriesUnchanged\":true}");
                 }
 
+#if WINDOWS
                 if (name == "home" && Shell.Current.CurrentPage is { BindingContext: Features.Home.HomeViewModel } homePage)
                 { await ReviewHomeSnapshotAsync(services, homePage, folder, language); }
+#endif
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
                 if (name is "plan-new" or "plan-debt-reminder" or "debt-new" or "receivable-new" or "loan-edit")

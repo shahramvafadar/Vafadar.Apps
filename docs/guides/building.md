@@ -336,3 +336,7 @@ The named Home Debug snapshot route (D-92 / AT-98) checks the current page Bindi
 row identities, fresh exact bindings, one complete Reset and full stored rows on reload. It writes a metadata-only
 Home snapshot proof. Keep the development-file guard and final language/theme/width/scale matrix. Temporary timing
 instrumentation is removed before final builds; a different transient VM is not evidence of actual UI retention.
+
+After changing Debug diagnostics, also build the complete Android Debug package with
+`./eng/scripts/Build-AndroidApk.ps1 -Configuration Debug`. A successful Release build excludes Debug source and cannot
+prove that target compiles. Windows-only helpers and their callers must share the same WINDOWS boundary (D-93).

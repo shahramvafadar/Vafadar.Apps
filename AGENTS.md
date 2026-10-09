@@ -387,3 +387,6 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   semantic theme refresh. Materialize before changing the collection; failed enumeration leaves original values.
 * Empty goal evaluation avoids ledger work; nonempty goals route the original ledger once to the unchanged balance
   calculator. Actual runtime evidence uses the bound page VM, never a newly resolved transient instance.
+
+* A Windows-only Debug helper's caller uses the same platform boundary. Changes to Debug diagnostics require a
+  complete Android Debug build as well as Release; Release excludes those files and cannot verify Debug compilation.

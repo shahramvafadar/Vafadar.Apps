@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Android development build (2026-10-09, D-93)
+
+- Android Debug builds compile again after restricting the Windows Home diagnostic to Windows. Release behavior is unchanged.
+
 ### Improved - Faster Home refresh (2026-10-09, D-92)
 
 - Refresh account values without rebuilding every account row.
