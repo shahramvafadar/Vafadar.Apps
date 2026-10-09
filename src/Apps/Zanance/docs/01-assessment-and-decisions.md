@@ -406,3 +406,25 @@ first/reload/presentation failures, retry without transient readiness, cancellat
 identity/balances and zero income/spending. Main suite: 1,335 passed, zero failed/skipped. Rendered/native and APK
 evidence is recorded in AT-83 and Q-02. This prevents premature input; it does not establish a MAUI rendering root
 cause, repair the baseline ANR or meet the two-second Home objective. QA-06 and physical/iOS acceptance remain open.
+
+## D-77 - Large-text Home actions and plan rows (2026-10-09)
+
+Proceed with the first ZCR-A11Y-03 slice under D-69. At 200% and 360 px, four equal Home columns truncate all quick
+names; date tiles clip and a trailing plan amount squeezes the title/subtitle into a nearly zero-width column.
+Wrap complete quick actions, give plan identity and amount/status separate rows, allow date/template containers to
+grow, and make section links at least 44 px high. Preserve native text scaling, action commands, semantic names,
+translated resources, money/date formatting and financial calculations. Decorative glyphs keep their explicit size:
+the current icon library measures an unscaled square even when its formatted span scales; both inner label and span
+must opt out. The plus is likewise a named action's decorative symbol.
+
+Debug review never changes a system text-scale setting. Windows substitutes its font manager only for an explicit
+fictitious snapshot run, compensates the read-only OS factor and respects text scaling opt-outs. This is layout
+stress, not real Windows OS accessibility acceptance. A temporary Android activity-context prototype recorded native 200% text for fixed English/German
+content but pinned locale; the font-only-delta trial left startup covered with no native text. Both prototypes were
+removed from source before delivery. Those failures are diagnostic findings, not production fixes or platform
+acceptance. Only owned fictitious QA data was inspected and input contents were omitted. The final normal Release
+has no font-scale override/collector and is verified separately; live native RTL/200% acceptance remains open.
+
+See quality/font-scaling-a11y03.md for verified scope, rendered/native evidence and remaining findings. A11Y-03 is
+in progress, not complete: transaction/account rows, bottom navigation, large currency tokens, fixed actions,
+custom-drawn controls, other screens/dialogs and physical/OS/screen-reader acceptance remain independent work.

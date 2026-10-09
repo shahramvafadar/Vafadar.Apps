@@ -111,3 +111,9 @@ D-76 / AT-83: verify loading feedback, disabled search/filter/Add/bulk actions u
 state, failure/retry, retained filters on return and actual matched result buttons on the physical phone. The
 publication helper tests, Windows captures and emulator observations do not close native rendering, performance,
 ANR, iOS or device acceptance gates.
+
+D-77 / A11Y-03: on the physical phone exercise 200% system text, complete quick-action names/targets, plan identity,
+amount/date/status, both themes and RTL/language changes. Review remaining financial rows, currency tokens, fixed
+actions, tabs, calendars, pickers, charts and dialogs. Process-local Windows stress and an emulator activity-only
+configuration do not close real OS scaling, screen readers, ARM64 phone or iOS acceptance. Use the complete signed
+Release APK; it has no font-scale review override or native text collector.

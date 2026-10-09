@@ -70,8 +70,8 @@
                      everyday action (blue); income and transfer carry their meaning colours. Templates fill the form in one tap. -->
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding HasAccounts}">
                     <VerticalStackLayout Spacing="12">
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
-                            <Grid Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                        <FlexLayout x:Name="QuickActions" Direction="Row" Wrap="Wrap" JustifyContent="SpaceAround" AlignItems="Start">
+                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="ArrowUpRight" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
@@ -79,7 +79,7 @@
                                 <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Expense"
                                         SemanticProperties.Description="{v:Translate Entry_NewExpense}" ToolTipProperties.Text="{v:Translate Entry_NewExpense}" />
                             </Grid>
-                            <Grid Grid.Column="1" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource IncomeBackground}" Stroke="{DynamicResource IncomeLine}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="ArrowDownLeft" FontSize="20" ForegroundColor="{DynamicResource IncomeText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
@@ -87,7 +87,7 @@
                                 <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding AddKindCommand}" CommandParameter="Income"
                                         SemanticProperties.Description="{v:Translate Entry_NewIncome}" ToolTipProperties.Text="{v:Translate Entry_NewIncome}" />
                             </Grid>
-                            <Grid Grid.Column="2" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource TransferBackground}" Stroke="{DynamicResource TransferLine}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="ArrowSwap" FontSize="20" ForegroundColor="{DynamicResource TransferText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
@@ -96,7 +96,7 @@
                                         SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
                             </Grid>
                             <!-- A receipt photo or PDF, read on the device; neutral, because it is a way to add an expense -->
-                            <Grid Grid.Column="3" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="Receipt" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
@@ -104,7 +104,7 @@
                                 <Button Grid.RowSpan="2" Style="{StaticResource OverlayButton}" Command="{Binding ReadReceiptCommand}"
                                         SemanticProperties.Description="{v:Translate Home_ReadReceipt}" ToolTipProperties.Text="{v:Translate Home_ReadReceipt}" />
                             </Grid>
-                        </Grid>
+                        </FlexLayout>
 
                         <!-- Where quick add puts an expense; "change" picks another account for one entry (ZEX-S0103) -->
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="4,0">

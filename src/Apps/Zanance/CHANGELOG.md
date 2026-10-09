@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Large text on Home and plans (2026-10-09, D-77)
+
+- Let quick-action names move to another row instead of shortening them when text is large.
+- Give plan names and amounts separate rows; grow date tiles and quick-template pills with their text.
+- Keep decorative symbols inside their tiles and enlarge the section-link touch area.
+- Add reproducible large-text layout checks; the full accessibility review remains in progress.
+
 ### Fixed - Transaction input during initial loading (2026-10-09, D-76)
 
 - Show a loading message while reading transactions; search, filters and Add become available after the snapshot is presented.

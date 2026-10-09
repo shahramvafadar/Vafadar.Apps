@@ -88,3 +88,10 @@ reads, publication-before-ready, synchronous repeats, read/presentation failures
 validation and real SQLite transfer preservation. App.Tests has 117 cases; the main filter has 1,335 passing cases.
 The helper's readiness state is not proof that a native adapter has drawn its rows. Repeat native loading/input and
 no-match/unique-result transitions with a complete signed Release APK, keeping failed observations in Q-02.
+
+D-77 large-text checks use the actual running Windows layout, not fake MAUI controls or source-text mirrors. Each
+Home capture asserts four native untrimmed quick-action names, horizontal containment and at least 44 px measured
+button targets. Native Android experiments retain system settings and screenshot protection; failed configuration
+prototypes are removed and are not platform acceptance. The final normal Release is checked separately. See the
+[A11Y-03 evidence](../../src/Apps/Zanance/docs/quality/font-scaling-a11y03.md) for matrix coverage, negative observations and limits;
+these runtime checks do not replace the main regression suite, real OS or screen-reader/device acceptance.

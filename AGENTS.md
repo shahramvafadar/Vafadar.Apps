@@ -262,3 +262,12 @@ repository.
 * Waiting for the owner: Google OAuth client ids (Android, iOS, Desktop app) and the Entra iOS platform for cloud
   backup (D-50); a Mac with Xcode and the Apple signing setup for the iOS build; tests on a physical device; a competitor
   and user-feedback review of reports and KPIs (postponed by the owner).
+
+## 13. Large-text review (D-77)
+
+* Preserve native scaling for readable text. Complete Home actions wrap; plan identity and amount/status have their
+  own rows; date/template containers grow. Only decorative glyphs opt out of text scaling.
+* Font review overrides are Debug-only, explicitly requested and local to the snapshot process. Never change
+  OS/device settings for a review. Temporary native configuration probes must be removed before a finished step;
+  an override that pins locale or leaves startup covered is not platform acceptance. Distinguish Windows layout
+  stress, native conversion observations and real OS, screen-reader and device acceptance.

@@ -252,3 +252,29 @@ d7e2c558159ed3e9c4bab2cf4b7e0f9b5c049527989768ad6dc16d1f9a7fae9b. Package pro.va
 min SDK 24/target 36; v2/v3 local signature, ZIP integrity, ARM64/x86_64 assembly stores/app AOT and Cloud permission
 guard pass. Strict final Windows and complete Android Release builds have zero warnings/errors. CI, emulator and
 local data proof do not close physical ARM64/iOS, baseline ANR follow-up, loaded Home or the two-second objective.
+
+## AT-84 - Large-text Home and plan layout review (D-77 / A11Y-03, first slice)
+
+Runtime scenario, not a new unit-test count. Main suite remains 1,335 passed, zero failed/skipped (App.Tests: 117).
+Strict Windows Debug and complete Android Release builds finish with zero warnings/errors. Review includes Home,
+plan rows, entry editor, Settings and onboarding: 220 final app-window captures in en/fa/de; 200% process-local
+Windows stress in light/dark at 360x800, 412x892 and 1280x820, plus a 100% narrow baseline. Twenty-one actual native
+Home layouts verify 84 untrimmed labels and targets at least 44x44 px. Two final English smoke walkthroughs add
+30 captures and two Home checks: no transactions at 200% and the unchanged normal font path, with no override metadata
+on the latter. The floating Add overlaps part of the large-text quick-account row and remains open. Original development data files restored with
+matching hashes; no desktop input, focus request or OS setting change. See [evidence and limits](quality/font-scaling-a11y03.md).
+
+Existing API 36 x86_64 emulator: temporary native font-context experiments exposed pinned locale and covered startup
+and were removed from source before delivery. These are failures, not native 200%/RTL acceptance. Final normal Release
+starts, displays all four Home actions, changes language and exposes Persian RTL Home/Settings and empty Plans.
+Actual Expense opens its draft and visible Cancel closes it without Save; hardware Back did not close that blank
+editor in the checked sequence. Populated native plan rows and large native RTL text remain unverified. English and
+Use device setting were restored through the UI; a normal restart confirms English Home, then the app is force-stopped.
+
+Pre-Release-navigation read-back preserves complete Accounts/Entries/Schedules in the owned three-entry QA03 fixture
+against D-76. It is not a claim of a post-navigation database checkpoint. No physical phone, owner data, PIN/verifier
+read or global text setting change. Screenshot protection remains enabled. Final Release stays installed.
+Handoff: artifacts/android/zanance-d77-release.apk, 81,107,029 bytes, SHA-256
+15f09bc889572b9fa0d1ab45138cf79d9c9055c2967e5aac063ed4d0d75871d0. Package pro.vafadar.zanance; min 24/target 36;
+v2/v3 local signature, ZIP integrity and complete ARM64/x86_64 assembly stores/AOT verified. Remaining layouts,
+screen readers, actual OS large-text settings, native RTL/200%, physical ARM64, iOS and release acceptance stay open.

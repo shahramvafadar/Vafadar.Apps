@@ -134,3 +134,11 @@ attachments of a consumed original aggregate remain available to Undo after rest
 financial data until its import is undone or all profile data/the profile is deleted, and travels inside database
 backups. It is absent from CSV exports. Same optional password protection and current plaintext-on-device boundary
 apply. No credentials/device security, new permission, SDK, telemetry, recipient or network path.
+
+## Local font-scale review (D-77)
+
+No production data field, permission, SDK, portable preference, recipient or network path is added. Debug-only
+explicit Windows snapshots record fictitious rendered text and native geometry in local artifacts.
+Temporary emulator scale probes inspected only the separate QA profile and omitted editable contents; they were
+removed from source after configuration failures. No global device setting was changed. Scale diagnostics are
+absent from Release and neither encrypt nor export the database.

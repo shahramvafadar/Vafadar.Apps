@@ -117,3 +117,8 @@ D-76 follows QA-06's early-input finding with an actual snapshot loading/publica
 translated retry action. AT-83 adds 12 cases; main suite 1,335. See Q-02 for running-app evidence and open findings.
 No commercial limits, data model, SDK or permission change; physical-device/iOS and performance objectives remain
 separate. Accessibility verification remains the next independent ready area under D-69.
+
+D-77 starts canonical ZCR-A11Y-03 with Home quick actions and plan/date/template layout repairs. Native text remains
+scalable, decorative glyphs retain their explicit size and section links have a 44 px minimum. The first verified
+slice and its process-local/native evidence do not close the full 200%/screen-reader/device work; see
+quality/font-scaling-a11y03.md for the remaining findings.

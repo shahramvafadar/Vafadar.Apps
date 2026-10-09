@@ -157,3 +157,8 @@ exposure, simultaneous loads share one read, and errors retain coverage with ret
 Record the new rendered and Release emulator results in Q-02 without erasing D-75 failures or inferring a native
 rendering root cause. Loaded Android Home, ANR follow-up and physical/iOS gates remain open. No commercial limits,
 production encryption, OS-backup policy, provider identity or other owner-gated choice is introduced.
+
+D-77 starts A11Y-03 under D-69. Deliver verified Home/plan large-text layout repairs and a bounded Debug review path
+without changing system settings or production security. Keep Windows stress, native Android conversion and real
+OS/phone/iOS acceptance distinct. Continue the remaining A11Y-03 findings in quality/font-scaling-a11y03.md; do not
+mark the section complete from the first slice or CI.

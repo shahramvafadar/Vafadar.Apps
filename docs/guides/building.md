@@ -196,3 +196,18 @@ the existing list/bulk/filter states. The read failure is fictitious, handled in
 ledger data. On Windows the actual named retry button's native Invoke pattern triggers the page handler; readiness
 must follow within the diagnostic deadline. Preserve/restore development database files with matching hashes. The fixture is absent from Release;
 Release loading checks use the separately owned reference/tenfold emulator profiles through native accessibility.
+
+## Large-text layout inspection (D-77)
+
+Run-Snapshots.ps1 -Languages 'en,fa,de' -Only home,plans -FontScale 2 -Theme dark -WindowSize 360x800 uses an explicit
+Debug process-local Windows font-manager replacement. Repeat at 412x892/1280x820 and both themes, and compare a
+-FontScale 1 baseline. font-scale.json records the requested/unchanged real OS factor; *-quick-actions.json records
+actual native text/target geometry. No global Windows setting is changed, so this is not native OS scaling acceptance.
+Preserve/restore owned development database files and verify original hashes around the walkthrough.
+
+Android review must use only the explicitly selected emulator and owned fictitious data, retain FLAG_SECURE and
+avoid global settings changes. D-77's temporary activity-context prototype recorded 200% native text conversion for
+fixed English/German content, but also pinned locale. Its font-only-delta trial left startup covered with no native
+text, so the prototypes were removed from source before delivery. They do not establish live-language/RTL/native OS
+acceptance and are not a supported app startup path. The normal complete Release must start and remain usable;
+physical 200% system-text testing and native scaled-layout completion remain separate gates.

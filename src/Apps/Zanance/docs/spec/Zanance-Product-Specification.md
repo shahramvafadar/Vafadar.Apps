@@ -1384,3 +1384,9 @@ and explicit retry replace premature empty/result claims. Repeated pending loads
 query/filter choices. AT-83 adds 12 actual application cases; main suite 1,335 passed, zero failed/skipped. No schema,
 financial formula, portable data, security setting, SDK or permission change. Q-02 retains original negative native
 observations and documents the follow-up separately; native duration/ANR and physical/iOS acceptance remain open.
+
+D-77 / ZCR-A11Y-03 first slice: wrapping Home quick actions, two-row plan identity/amount, growing date/template
+containers, 44 px section links and fixed decorative glyphs retain native readable-text scaling and all financial
+semantics. Windows layout stress is separate from native Android SP conversion and real OS/device acceptance.
+See [the large-text evidence](../quality/font-scaling-a11y03.md). Main suite remains 1,335; A11Y-03 is in progress,
+including transaction/account rows, bottom tabs, custom-drawn controls and the remaining screens/dialogs.

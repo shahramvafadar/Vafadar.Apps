@@ -364,3 +364,12 @@ before enabling input and exposing its native rows. Loading text and the activit
 resources. On failure show an explicit translated Load transactions again action; repeat taps share one read.
 Reload preserves existing query/filter choices; only completed snapshots can be searched. This interaction boundary
 is separate from bulk-write dialogs and does not imply a measured startup or native-rendering performance claim.
+
+## Large-text first slice (D-77)
+
+Readable text retains native automatic font scaling. Home quick actions wrap as whole items with unshortened names;
+plan title/subtitle and amount/status occupy separate rows, so neither side consumes the other. Date tiles and
+quick-template pills use minimum sizes and padding, not fixed text heights; section links have a 44 px minimum.
+Decorative symbol spans and the named floating plus keep explicit glyph sizes while surrounding text scales. This
+must never become a blanket font-scaling opt-out for labels or inputs. Review actual target geometry and rendered
+RTL/languages/themes, not only source styles. Full A11Y-03 and screen-reader/device acceptance remain open.

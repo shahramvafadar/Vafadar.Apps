@@ -9,28 +9,28 @@
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     x:DataType="local:PlanRow">
-    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
-        <Border Style="{StaticResource DateTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasDate}">
+    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6" BackgroundColor="Transparent">
+        <Border Grid.RowSpan="2" Style="{StaticResource DateTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasDate}">
             <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                 <Label Text="{Binding DayText}" FontSize="17" FontAttributes="Bold" TextColor="{Binding TileText}" HorizontalTextAlignment="Center" />
                 <Label Text="{Binding MonthText}" FontSize="10.5" TextColor="{Binding TileText}" HorizontalTextAlignment="Center" LineBreakMode="NoWrap" />
             </VerticalStackLayout>
         </Border>
-        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasIcon}">
+        <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding TileStroke}" IsVisible="{Binding HasIcon}">
             <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
         </Border>
         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
+            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
             <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
         </VerticalStackLayout>
-        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4">
-            <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Spacing="4">
+            <Label Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="End" />
             <Border Style="{StaticResource Badge}" BackgroundColor="{Binding BadgeBackground}" Stroke="{Binding BadgeStroke}"
                     IsVisible="{Binding Badge, Converter={StaticResource IsNotNullConverter}}">
                 <Label Text="{Binding Badge}" Style="{StaticResource BadgeText}" TextColor="{Binding BadgeText}" />
             </Border>
         </VerticalStackLayout>
-        <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+        <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                 Command="{Binding Command, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
                 CommandParameter="{Binding CommandParameter, Source={x:Reference Root}, x:DataType=local:PlanRowView}"
                 IsVisible="{Binding Command, Source={x:Reference Root}, Converter={StaticResource IsNotNullConverter}, x:DataType=local:PlanRowView}"

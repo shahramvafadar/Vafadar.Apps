@@ -67,6 +67,7 @@
          the icon font's private character otherwise. -->
     <Style TargetType="fi:SymbolIcon" ApplyToDerivedTypes="True">
         <Setter Property="AutomationProperties.IsInAccessibleTree" Value="False" />
+        <Setter Property="p:IconTextScale.IsFixed" Value="True" />
     </Style>
 
     <Style x:Key="Card" TargetType="Border">
@@ -99,8 +100,7 @@
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Padding" Value="4,0" />
-        <Setter Property="HeightRequest" Value="32" />
-        <Setter Property="MinimumHeightRequest" Value="32" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Margin" Value="0,0,0,4" />
     </Style>
@@ -174,6 +174,8 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
         <Setter Property="FontSize" Value="28" />
+        <!-- The plus is a symbol; its spoken name is supplied by each action, not by this glyph. -->
+        <Setter Property="FontAutoScalingEnabled" Value="False" />
         <Setter Property="WidthRequest" Value="56" />
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="CornerRadius" Value="18" />
@@ -238,13 +240,12 @@
         <Setter Property="MinimumHeightRequest" Value="72" />
     </Style>
 
-    <!-- 12.5: four labels fit a phone in every language (German "Umbuchung" was cut at 13). -->
+    <!-- Quick actions wrap as whole items; their names remain readable at large text sizes. -->
     <Style x:Key="QuickActionLabel" TargetType="Label">
         <Setter Property="FontSize" Value="12.5" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="MaxLines" Value="1" />
-        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
     </Style>
 
     <!-- A quick template on Home: category icon and name in a pill. -->
@@ -253,17 +254,17 @@
         <Setter Property="Stroke" Value="{DynamicResource StrokeStrong}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="RoundRectangle 20" />
-        <Setter Property="Padding" Value="12,0" />
-        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
     </Style>
 
     <!-- Day and month of a due date in a plan row. -->
     <Style x:Key="DateTile" TargetType="Border">
-        <Setter Property="WidthRequest" Value="46" />
-        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="MinimumWidthRequest" Value="46" />
+        <Setter Property="MinimumHeightRequest" Value="50" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="RoundRectangle 12" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="6,4" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 

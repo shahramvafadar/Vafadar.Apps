@@ -66,6 +66,9 @@ internal static class DebugSnapshots
         // Phone-like size so that the layout matches the primary target; VAFADAR_WINDOW_SIZE (e.g. 1280x820) checks wide windows.
         SetSize(window);
         Directory.CreateDirectory(folder);
+#if WINDOWS
+        services.GetService<DebugFontScale>()?.WriteEvidence(folder);
+#endif
 
         // A crash outside the walk-through's own code (an event handler, a binding) ends the process without a trace;
         // the exception is written next to the screenshots like the walk-through's own errors.
@@ -1008,6 +1011,12 @@ internal static class DebugSnapshots
     {
         var rootPage = app.Windows[0].Page;
         var page = rootPage?.Navigation.ModalStack.LastOrDefault() ?? rootPage;
+#if WINDOWS
+        if (name.EndsWith("-home", StringComparison.Ordinal) && page is Shell { CurrentPage: Features.Home.HomePage home })
+        {
+            DebugFontScale.CheckQuickActions(home, folder, name);
+        }
+#endif
         var visible = page is Shell shell ? (shell.CurrentPage as VisualElement) ?? shell : page as VisualElement;
         if (visible?.Parent is Shell && page is VisualElement root)
         {

@@ -178,6 +178,9 @@ public static class MauiProgram
 
 #if DEBUG
         builder.Logging.AddDebug();
+#if WINDOWS
+        Diagnostics.DebugFontScale.Register(builder.Services);
+#endif
 #endif
 
 #if WINDOWS

@@ -14,6 +14,7 @@
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -WindowSize 1280x820
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Only report,holding
+    ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -FontScale 2 -WindowSize 360x800
     ./eng/scripts/Run-Snapshots.ps1 -Languages en -Mode simple -Only budget,plan
     ./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa' -Calendar Hijri -Only home,budget,plan,transactions,entry
     ./eng/scripts/Run-Snapshots.ps1 -Languages fa -Theme dark -Calendar Gregorian -Digits latin
@@ -39,7 +40,9 @@ param(
     # The calendar of every language (dates, budget months, plans); default: the calendar follows the language.
     [ValidateSet('', 'Gregorian', 'Persian', 'Hijri')] [string]$Calendar = '',
     # Digits of the Persian interface; default: Persian digits (the app's default).
-    [ValidateSet('persian', 'latin')] [string]$Digits = 'persian')
+    [ValidateSet('persian', 'latin')] [string]$Digits = 'persian',
+    # Process-local Windows layout stress, not OS text-scale acceptance; never changes system settings.
+    [ValidateRange(1.0, 2.0)] [double]$FontScale = 1.0)
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -81,6 +84,7 @@ $env:VAFADAR_SNAPSHOT_ONLY = ($Only -join ',')
 $env:VAFADAR_SNAPSHOT_MODE = $Mode
 $env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar
 $env:VAFADAR_SNAPSHOT_DIGITS = $Digits
+$env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($PSBoundParameters.ContainsKey('FontScale')) { $FontScale.ToString([Globalization.CultureInfo]::InvariantCulture) } else { '' }
 $process = Start-Process $exe.FullName -PassThru -WindowStyle Hidden
 if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
 elseif ($process.ExitCode -ne 0) { 'the app ended with exit code 0x{0:X8}' -f $process.ExitCode }
