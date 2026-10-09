@@ -380,3 +380,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   binding. Restore/return preserves the same step and every unsaved choice, without forcing account creation.
 * The focused onboarding-action review ends before general account/financial seeding. Native disposable-profile
   checks remove only their own fictitious profile and compare the original sample's complete financial rows.
+
+## 26. Complete Home snapshot publication (D-92)
+
+* Publish a complete account snapshot once with fresh contexts, retaining native rows, every value/order/action and
+  semantic theme refresh. Materialize before changing the collection; failed enumeration leaves original values.
+* Empty goal evaluation avoids ledger work; nonempty goals route the original ledger once to the unchanged balance
+  calculator. Actual runtime evidence uses the bound page VM, never a newly resolved transient instance.

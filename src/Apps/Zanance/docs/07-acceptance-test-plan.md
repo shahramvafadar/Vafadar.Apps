@@ -477,3 +477,12 @@ check the same page/step, complete account/regional/theme/mode/currency/calendar
 Final local status: 84 native Windows invocations/42 proof files, signed Android Release en/fa/de round trips and
 disposable-profile removal, 1,369 main tests and zero-warning builds. No new unit count or physical-device claim;
 evidence and limits: quality/onboarding-restore-actions.md.
+
+## AT-98 - Complete Home snapshots and indexed goal balances (D-92)
+
+Eight collection cases prove one Reset, complete order, fresh equal contexts, self-source, empty source, notification
+order, failed enumeration and reentrancy. Seven goal cases prove no-goal short-circuit, one original ledger pass,
+currency/transfers/refunds/dates/assets, priority and overflow. Actual bound Home checks retain every native row,
+rebind exact fresh values and compare complete stored data. All 1,384 main tests pass; 21 final Windows Home proof
+files and normal signed Release large-profile/financial readbacks pass. Evidence/remaining QA-06 gates:
+quality/performance-home-snapshots.md.

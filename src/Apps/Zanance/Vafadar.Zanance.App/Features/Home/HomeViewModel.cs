@@ -89,7 +89,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     public ObservableCollection<Brush> SliceBrushes { get; } = [];
 
-    public ObservableCollection<AccountItem> Accounts { get; } = [];
+    /// <summary>Gets the complete account snapshot, rebound without rebuilding every native row.</summary>
+    public SnapshotCollection<AccountItem> Accounts { get; } = [];
 
     /// <summary>Gets the holdings line, e.g. "Holdings: 18k gold 50.000 g · Coins 3 coins" – per type, never summed (ZEX-AS05).</summary>
     [ObservableProperty]
@@ -382,13 +383,15 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
-        Accounts.Clear();
+        var accountRows = new List<AccountItem>(accounts.Count);
         foreach (var account in accounts)
         {
             var balance = LedgerCalculator.Balance(account, accountEntries.For(account.Id), today);
-            Accounts.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
+            accountRows.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown) { Type = account.Type });
         }
+        // D-92: keep the existing native rows and publish the complete, freshly formatted snapshot once.
+        Accounts.ReplaceAll(accountRows);
 
         // Quick templates (TX-04) one tap away from Home; the editor still opens for a check before saving.
         QuickTemplates.Clear();

@@ -687,3 +687,12 @@ AT-97 invokes actual Restore/Back on both steps, retains complete draft choices 
 evidence: 273 renders/84 native Windows invocations, normal signed Release en/fa/de round trips and removed disposable
 profile, 1,369 passing tests, strict Windows/canonical Android zero-warning builds and verified full APK/privacy.
 See quality/onboarding-restore-actions.md for evidence and separate physical/platform/provider/owner gates.
+
+## D-92 - Complete Home snapshots without redundant work (2026-10-09)
+
+Measured actual Home reloads rebuild every account row and empty goals rescan the ledger per account. Publish a
+complete fresh account snapshot with one Reset, retaining native rows; skip empty goal work and route nonempty
+goal balances through the existing index/calculator. Preserve every value, order, priority, action and ledger rule.
+AT-98 adds 15 cases and actual-bound native row/data checks. Controlled tenfold Windows reload median falls from
+2,727.70 to 1,228.28 ms. See quality/performance-home-snapshots.md for completed build/runtime/APK evidence and
+excluded temporary diagnostic failures. Cold start, physical-device Q-02 and QA-06 remain open.

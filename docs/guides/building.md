@@ -331,3 +331,8 @@ Restore/Back and compares the existing account draft fingerprint, selected wizar
 The focused review returns before general snapshot account creation/financial seeding. Keep the outer development
 data guard and en/fa/de theme/width/text-scale matrix; a helper's script-header failure is not final acceptance.
 Evidence: `src/Apps/Zanance/docs/quality/onboarding-restore-actions.md`.
+
+The named Home Debug snapshot route (D-92 / AT-98) checks the current page BindingContext, existing native account
+row identities, fresh exact bindings, one complete Reset and full stored rows on reload. It writes a metadata-only
+Home snapshot proof. Keep the development-file guard and final language/theme/width/scale matrix. Temporary timing
+instrumentation is removed before final builds; a different transient VM is not evidence of actual UI retention.

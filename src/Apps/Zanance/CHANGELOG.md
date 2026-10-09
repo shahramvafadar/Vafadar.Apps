@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Faster Home refresh (2026-10-09, D-92)
+
+- Refresh account values without rebuilding every account row.
+- Avoid unnecessary ledger scans when there are no active goals, and calculate goal balances from one indexed snapshot.
+
 ### Fixed - Readable first-run restore choices (2026-10-09, D-91)
 
 - Both "I already have a backup" buttons show their full captions on narrow screens with large text.

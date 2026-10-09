@@ -155,3 +155,8 @@ D-91 / AT-97 keeps both first-run restore alternatives fully readable and retain
 bindings. The final Windows matrix and signed Android Release pass; 1,369 tests (App.Tests 140), zero-warning strict
 builds and full installable APK/privacy checks. See [quality/onboarding-restore-actions.md](quality/onboarding-restore-actions.md)
 for native draft/stored-data preservation and independent platform/physical-device/provider/owner gates.
+
+D-92 / AT-98 removes measured redundant Home row/goal work while retaining complete values and financial rules.
+All 1,384 tests pass (App.Tests 148), strict builds and complete signed Release APK/privacy/native checks pass.
+Controlled tenfold Windows warm reload median: 2,727.70 -> 1,228.28 ms. QA-06 remains partial: entry materialization,
+cold start/ANR and physical-device Q-02 are open. See [quality/performance-home-snapshots.md](quality/performance-home-snapshots.md).

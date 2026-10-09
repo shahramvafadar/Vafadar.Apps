@@ -601,6 +601,9 @@ internal static class DebugSnapshots
                         "{\"ActualEligibleModal\":true,\"CompleteAmountPacket\":true,\"StoredEntriesUnchanged\":true}");
                 }
 
+                if (name == "home" && Shell.Current.CurrentPage is { BindingContext: Features.Home.HomeViewModel } homePage)
+                { await ReviewHomeSnapshotAsync(services, homePage, folder, language); }
+
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
                 if (name is "plan-new" or "plan-debt-reminder" or "debt-new" or "receivable-new" or "loan-edit")
                 {
@@ -1651,6 +1654,38 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-98: actual Home bindings retain their native account rows and rebind the full snapshot without Save.
+    private static async Task ReviewHomeSnapshotAsync(IServiceProvider services, Page page, string folder, string language)
+    {
+        var home = (Features.Home.HomeViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(), Budgets = await store.GetBudgetsAsync() });
+        await home.LoadAsync();
+        var before = await StoredAsync();
+        var accountValues = home.Accounts.ToArray();
+        var section = page.FindByName<VerticalStackLayout>("AccountsSection");
+        var rows = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();
+        var events = new List<System.Collections.Specialized.NotifyCollectionChangedAction>();
+        System.Collections.Specialized.NotifyCollectionChangedEventHandler changed = (_, e) => events.Add(e.Action);
+        home.Accounts.CollectionChanged += changed;
+        try { await home.LoadAsync(); }
+        finally { home.Accounts.CollectionChanged -= changed; }
+        var after = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();
+        if (rows.Length != home.Accounts.Count || after.Length != rows.Length
+            || !rows.Zip(after).All(pair => ReferenceEquals(pair.First, pair.Second))
+            || !after.Select((row, index) => ReferenceEquals(row.BindingContext, home.Accounts[index])).All(value => value)
+            || !home.Accounts.SequenceEqual(accountValues)
+            || events.Count != 1 || events[0] != System.Collections.Specialized.NotifyCollectionChangedAction.Reset
+            || await StoredAsync() != before)
+        { throw new InvalidOperationException("Home reload rebuilt account rows, failed to rebind values or changed stored data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-home-snapshot-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            AccountRows = after.Length, ExistingNativeRowsRetained = true, FreshBindingContextsAndExactValues = true,
+            OneCompleteReset = true, CompleteAccountsEntriesSettingsBudgetsUnchanged = true, NoFinancialSave = true,
+        }));
     }
 
     // AT-97: both restore alternatives expose the full caption and return to the same unsaved onboarding draft.

@@ -96,8 +96,12 @@ public static class GoalProgressService
     {
         ArgumentNullException.ThrowIfNull(goals);
         ArgumentNullException.ThrowIfNull(accounts);
-        var balances = accounts.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, entries, today));
         var goalList = goals.Where(g => g.State is GoalState.Active or GoalState.Paused).ToList();
+        // Home evaluates goals even when none are shown. Avoid scanning the ledger for an empty result (D-92).
+        if (goalList.Count == 0) { return []; }
+        // Route the original snapshot once; the established balance calculator retains every financial rule.
+        var accountEntries = new AccountEntryIndex(entries);
+        var balances = accounts.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, accountEntries.For(a.Id), today));
         var earmarks = GoalCalculator.Evaluate(goalList.Where(g => g.Type == GoalType.Earmark), allocations, balances, today).ToDictionary(s => s.Goal.Id);
         var planByGoal = plans.GroupBy(p => p.GoalId).ToDictionary(g => g.Key, g => g.First());
         var byId = accounts.ToDictionary(a => a.Id);

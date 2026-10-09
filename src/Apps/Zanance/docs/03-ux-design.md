@@ -485,3 +485,9 @@ initial visibility follow the existing policy; no automatic Save or data clearin
 The welcome and first-account restore choices retain full wrapping captions at native large text, a real command/
 spoken target and busy disablement. Opening restore and returning keeps the same step and every draft choice;
 it must not force account creation. Preserve the existing footer and secondary action meaning.
+
+### Complete Home account refresh (D-92)
+
+Build all account presentation values before publication. One Reset rebinds existing native rows to fresh contexts,
+even with equal record values, so semantic theme colors and translated amounts update. Keep every row, order, command
+and money packet; do not cap visible accounts or discard current values when snapshot enumeration fails.

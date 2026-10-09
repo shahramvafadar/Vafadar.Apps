@@ -1325,6 +1325,13 @@ bindings. The final Windows matrix and signed Android Release pass; 1,369 tests 
 builds and full installable APK/privacy checks. See [quality/onboarding-restore-actions.md](../quality/onboarding-restore-actions.md)
 for native draft/stored-data preservation and independent platform/physical-device/provider/owner gates.
 
+### 31.8. Measured Home reload optimization (D-92 / AT-98)
+
+D-92 / AT-98 removes measured redundant Home row/goal work while retaining complete values and financial rules.
+All 1,384 tests pass (App.Tests 148), strict builds and complete signed Release APK/privacy/native checks pass.
+Controlled tenfold Windows warm reload median: 2,727.70 -> 1,228.28 ms. QA-06 remains partial: entry materialization,
+cold start/ANR and physical-device Q-02 are open. See [quality/performance-home-snapshots.md](../quality/performance-home-snapshots.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

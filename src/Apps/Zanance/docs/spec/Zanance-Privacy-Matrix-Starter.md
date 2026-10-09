@@ -228,3 +228,6 @@ portable source, export, recipient, permission or SDK; financial persistence sti
 
 D-91 changes first-run action presentation only; no new stored/portable field, permission, SDK, recipient or
 export. Restore/return retains the unsaved wizard and does not create an account or replace financial data.
+
+D-92 changes in-memory Home snapshot publication and goal ledger routing only. No new stored/portable data,
+permission, SDK, recipient or export; actual sample readbacks compare complete original tables without writes.
