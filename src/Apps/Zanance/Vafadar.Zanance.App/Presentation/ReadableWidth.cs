@@ -22,21 +22,23 @@ internal static class ReadableWidth
 
     private static void Apply(Page page)
     {
-        if (page is not ContentPage { Content: { } content } contentPage || (bool)contentPage.GetValue(AppliedProperty))
+        if (page is not ContentPage { Content: not null } contentPage || (bool)contentPage.GetValue(AppliedProperty))
         {
             return;
         }
 
         contentPage.SetValue(AppliedProperty, true);
-        void Update()
-        {
-            // The page itself keeps the full window, so its background still fills it.
-            var wide = contentPage.Width > Max + 32;
-            content.WidthRequest = wide ? Max : -1;
-            content.HorizontalOptions = wide ? LayoutOptions.Center : LayoutOptions.Fill;
-        }
+        contentPage.SizeChanged += (_, _) => Refresh(contentPage);
+        Refresh(contentPage);
+    }
 
-        contentPage.SizeChanged += (_, _) => Update();
-        Update();
+    /// <summary>Reapplies the column to the current content, including a growing Windows header around its body.</summary>
+    internal static void Refresh(ContentPage page)
+    {
+        if (page.Content is not { } content) { return; }
+        // D-83: a header may wrap the original body after Appearing; do not keep sizing the former root alone.
+        var wide = page.Width > Max + 32;
+        content.WidthRequest = wide ? Max : -1;
+        content.HorizontalOptions = wide ? LayoutOptions.Center : LayoutOptions.Fill;
     }
 }

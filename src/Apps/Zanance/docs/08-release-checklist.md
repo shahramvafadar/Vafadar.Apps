@@ -145,3 +145,8 @@ D-82 / AT-89: install the complete signed APK from the quality report. Select De
 and select فارسی, then repeat with English. Captions, selected language and returned navigation must agree without
 a restart between choices; an open draft stays intact. Confirm cold persistence separately. Local native/Windows
 evidence does not close physical-device, real OS large text, screen-reader, provider or iOS acceptance.
+
+D-83 / AT-90: use the complete signed APK in the quality report. After real de/fa/en language choices on the open
+Settings form and after Back/reopen, verify the native arrow has the current translated spoken name. Check actual
+OS large text separately. Windows child titles must show all words above the body with a usable Back target at
+360/412/wide, both themes and RTL. Emulator/Windows evidence does not close screen-reader/device/iOS acceptance.

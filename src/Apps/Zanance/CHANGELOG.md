@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Complete page titles and current Back labels (2026-10-09, D-83)
+
+- Windows page titles wrap and grow with large text above the page content.
+- Keep the same form body while resizing and center its header and content together in wide windows.
+- Back accessibility labels follow the current language on Windows and Android; Windows tooltips update too.
+
 ### Fixed - Language changes after reopening Settings (2026-10-09, D-82)
 
 - Apply repeated language choices after returning and reopening Settings, without requiring a restart.

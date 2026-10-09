@@ -189,3 +189,11 @@ Synchronous constructor defaults no longer save notification settings. Debug-onl
 own-window proof use fictitious profiles without Save/PIN/permission actions; original development files are
 restored with matching hashes. Native review uses only the owned emulator fixture, retains FLAG_SECURE/system
 settings and excludes owner data/credentials/SecureStorage. Release excludes all review instrumentation.
+
+## Growing headers and live Back descriptions (D-83)
+
+Presentation-only: no data field, portable preference, permission, SDK, network path, export or recipient.
+Windows retains the actual page body/bindings and native Back handling; Android retains its native arrow/commands
+with a lifetime-scoped translation subscription. Debug-only own-window/native geometry checks use fictitious
+profiles without Save; original development files are restored with matching hashes. Emulator review retains
+FLAG_SECURE and system settings, excludes owner data/credentials/SecureStorage and physical devices.

@@ -532,3 +532,22 @@ AT-89 uses actual native Picker SelectionItem and header Invoke patterns, keeps 
 and checks frozen old titles, current captions, preserved open drafts and stored settings/accounts/entries. See
 quality/font-scaling-a11y03.md for final Windows, normal Release emulator, strict build/test and signed APK evidence.
 No new resource key, schema, data field, SDK, permission, portable preference or commercial restriction.
+
+## D-83 - Growing Windows page titles and live native Back descriptions (2026-10-09)
+
+Move Windows child-page headers out of Shell's fixed-height TitleView into an Auto row above the existing body.
+Wrap complete scalable titles, including long German words; retain the 44 px native Back target and existing Shell
+back handling. Bind its spoken name and tooltip to live translations. Preserve inherited body bindings during
+reparenting, attach once, and size the current header/body root as one centered readable column on resize.
+Modal editors keep their existing header/Cancel/discard handling; Insights tabs are a separate remaining finding.
+
+Android uses a scoped toolbar tracker through the existing Shell renderer factory. Keep the native arrow and
+navigation commands; update only its accessible Back description from the app's live Common_Back resource.
+Retired/disconnected toolbars are ignored and translation subscriptions are removed during disposal. Changing
+BackButtonBehavior.TextOverride would replace the arrow and is not used. No package, SDK, permission or data change.
+
+AT-90 measures actual native title glyph bounds, full text and live Button peer names; it checks real Settings
+body/bindings, unsaved drafts during resize, single attachment after nested return and native Back without writes.
+The existing Settings Appearing reload resets an unsaved estimate after a nested return; retain that independent
+negative finding for the next repair, rather than claiming this header change fixes its load policy.
+See quality/font-scaling-a11y03.md for final runtime/build/test/APK evidence. Continue ready work under D-69.

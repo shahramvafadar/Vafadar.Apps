@@ -380,3 +380,15 @@ captions and returned navigation agree, RTL switches on the replacement root, an
 checks persistence. Keep screenshot protection and device settings. Main suite remains 1,345, App.Tests 127.
 Final rendered/native/APK evidence and negative review findings are in quality/font-scaling-a11y03.md.
 Physical ARM64, real OS 200%, keyboard/screen readers, provider and iOS acceptance remain separate.
+
+## AT-90 - Growing headers, retained bodies and current Back descriptions (D-83)
+
+Runtime scenario, not additional copied-control xUnit cases. At 360/412/wide, both themes and en/fa/de, measure
+complete native title/caret bounds, scalable untrimmed text, a 44 px native target and the current translated
+Button peer name. A real Settings page retains its body/bindings and unsaved estimate while resizing; nested
+navigation returns to exactly one header and the same body. Invoke native Back and compare complete stored
+settings/accounts/entries without Save. Settings' existing nested-return draft reload remains a separate finding.
+Normal full Release Android repeats real de/fa/en picker/Back/reopen and checks the current native ImageButton
+content description immediately after each choice. Preserve FLAG_SECURE, device settings and owned fixture rows.
+Final matrix/build/test/APK evidence is in quality/font-scaling-a11y03.md. OS 200%, screen readers, physical ARM64
+and iOS acceptance remain separate.

@@ -43,6 +43,9 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+#if ANDROID
+            .ConfigureMauiHandlers(handlers => handlers.AddHandler<Shell, AccessibleShellRenderer>())
+#endif
             .UseVafadar(options =>
             {
                 options.AppId = ZananceApp.AppId;

@@ -142,9 +142,9 @@ public partial class AppShell : Shell
                 return;
             }
 
-            if (Navigation.NavigationStack.Count > 1)
+            if (Navigation.NavigationStack.Count > 1 && page is ContentPage contentPage)
             {
-                SetTitleView(page, new Presentation.PageHeader(page, FlowDirection == FlowDirection.RightToLeft));
+                Presentation.PageHeader.Attach(contentPage, FlowDirection == FlowDirection.RightToLeft);
             }
             else if (Presentation.InsightsTabs.RouteOf(page) is { } route)
             {

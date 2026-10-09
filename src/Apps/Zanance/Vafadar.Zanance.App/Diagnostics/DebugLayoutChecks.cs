@@ -8,12 +8,44 @@ internal static class DebugLayoutChecks
 {
     /// <summary>Includes actual growing actions, date inputs and large captions in the own-window review.</summary>
     internal static bool AppliesTo(ContentPage page) => Descendants(page).Any(element =>
-        element is Presentation.AmountReadout or Vafadar.Maui.Controls.DateField && IsVisibleThroughParents(element));
+        element is Presentation.PageHeader or Presentation.AmountReadout or Vafadar.Maui.Controls.DateField && IsVisibleThroughParents(element));
 
     /// <summary>Rejects action overlap or clipped realized financial identities after the native layout pass.</summary>
     internal static void Check(ContentPage page, string folder, string name)
     {
         var evidence = new List<object>();
+        foreach (var header in Descendants(page).OfType<Presentation.PageHeader>())
+        {
+            var title = header.Children.OfType<Label>().Single();
+            var back = header.Children.OfType<ImageButton>().Single();
+            if (title.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native
+                || back.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeBack)
+            { throw new InvalidOperationException("The growing page header is not realized."); }
+            var boundaries = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+            {
+                var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            var spoken = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(nativeBack).GetName();
+            if (native.IsTextTrimmed || title.Text != page.Title || title.Width <= 0 || !native.IsTextScaleFactorEnabled
+                || back.Width < 44 || back.Height < 44 || spoken != Vafadar.Localization.Translator.Instance["Common_Back"]
+                || boundaries.Count == 0 || boundaries.Min(rect => rect.Left) < -1
+                || boundaries.Max(rect => rect.Right) > native.ActualWidth + 1
+                || boundaries.Max(rect => rect.Bottom) > native.ActualHeight + 1
+                || header.Parent is not Grid host || Grid.GetRow(header) != 0
+                || host.Children.OfType<VisualElement>().Single(child => Grid.GetRow(child) == 1).Y < header.Y + header.Height - 1)
+            {
+                File.WriteAllText(Path.Combine(folder, name + "-header-layout-failure.json"),
+                    JsonSerializer.Serialize(new { page.Title, title.Width, title.Height, native.ActualWidth, native.ActualHeight,
+                        native.FontSize, native.IsTextTrimmed, spoken, backWidth = back.Width, backHeight = back.Height, boundaries },
+                        new JsonSerializerOptions { WriteIndented = true }));
+                throw new InvalidOperationException("A page header clips its title or loses its translated back target.");
+            }
+            evidence.Add(new { kind = "page header", title.Text, title.Width, title.Height, native.FontSize,
+                native.IsTextScaleFactorEnabled, native.IsTextTrimmed, spoken, backWidth = back.Width, backHeight = back.Height,
+                renderedBoundaries = boundaries.Count, rootWidth = page.Content?.Width });
+        }
         if (page.FindByName<Button>("BalanceHeadingAction") is { } heading && IsVisibleThroughParents(heading))
         {
             // D-81: the account link no longer spans the amount; its own heading still needs a full touch target.

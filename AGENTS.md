@@ -312,3 +312,12 @@ repository.
   Opening or reopening the form must not save notification defaults or touch its settings timestamp.
 * The settings-reopened Debug route uses native SelectionItem/Invoke patterns and retains old shells explicitly;
   check frozen retired titles, live choices/drafts and unchanged complete preference/account/entry JSON.
+
+## 18. Growing child headers and translated native Back (D-83)
+
+* Windows child headers use a growing Auto row above the same body, preserving inherited bindings and attaching
+  once. ReadableWidth always sizes current Content, including header/body together; modal headers remain separate.
+* Back names/tooltips follow live translations. Android changes only the native arrow's description through a
+  lifetime-scoped toolbar tracker; preserve icons/commands, ignore retired shells and unsubscribe on disposal.
+* The headers Debug route measures real glyph/target/name geometry, retained draft/body during own-window resize,
+  single attachment after nested return and native Back without stored changes. Keep negative reload findings.

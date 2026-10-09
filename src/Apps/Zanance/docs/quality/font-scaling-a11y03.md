@@ -1,4 +1,4 @@
-# Large-text review (D-77 through D-81 / ZCR-A11Y-03)
+# Large-text review (D-77 through D-83 / ZCR-A11Y-03)
 
 Engineering review on 2026-10-09. A11Y-03 is in progress. This first slice improves Home quick actions and plan
 rows; it does not establish whole-app, operating-system, screen-reader or physical-device accessibility acceptance.
@@ -501,3 +501,72 @@ publishing or physical-device acceptance. CI remains one separate delayed check 
 D-81's reopened-language failure is resolved by this slice. A11Y-03 stays in progress: growing Windows headers,
 retained native navigation descriptions, other controls/monetary rows/dialogs, keyboard/screen readers, real OS 200%,
 physical ARM64, iOS and QA-06 duration/ANR acceptance remain independent. Continue ready work under D-69.
+
+## D-83 follow-up: complete child titles and current Back descriptions
+
+Windows Shell's fixed-height TitleView clips long scalable page titles at 360/200%. Child headers now occupy an
+Auto row above the same original body, with complete WordWrap text and the existing 44 px native Back action.
+Bind Back's spoken name and tooltip to live translations; keep body bindings stable during reparenting and attach
+only once. ReadableWidth sizes current Content, so the growing header and body remain one centered 720 px column
+when wide and share the available width when narrow. Modal editors and Insights tabs keep their existing paths.
+
+Android's retained toolbar can hold the preceding per-app locale for its default Navigate up description. A scoped
+tracker retains the framework arrow, enablement, drawer/navigation and back command; it uses live Common_Back
+for the accessible description. Ignore retired/disconnected Shells and unsubscribe when disposed. No new SDK,
+permission, schema, financial calculation, portable preference or security-policy change.
+
+The normal complete Debug prototype repeats actual de/fa/en pickers with Back/reopen and no cold restart between
+choices. Immediately after each choice the unique native arrow description is respectively the German and Persian Common_Back resources and English Back. Actual picker/body/returned navigation agrees,
+RTL mirrors on the replacement root and cold English persistence passes. Owned main window remains SECURE at
+density 420/font_scale 1.0. This is normal emulator text, separate from OS 200%/screen-reader/device acceptance.
+
+Negative prototype evidence is retained separately. The initial header fixture incorrectly used a modal entry
+editor that deliberately has its own header and no PageHeader; it is corrected to the actual Settings child page.
+The actual Settings nested return then exposes its existing OnAppearing reload resetting an unsaved estimate.
+Header resize itself retains the draft; returning keeps the same body/bindings and one header. The final header
+scenario restores its draft before nested return and reports those boundaries explicitly. The independent reload
+finding stays queued for the next repair; this slice does not claim to resolve it.
+
+### Final Windows and test evidence
+
+Seven final cohorts cover en/fa/de: light/dark at 360x800, 412x892 and 1280x820 with process-local 200% text, plus
+100% light/360x800. Routes are the actual Settings header/resize scenario, entry detail, repayment schedule,
+profiles and notices, with existing first-run captures. Total: 684 own-window/content images and 237 realized native
+header checks, not unit cases or unique screens. Twenty-one proof files each verify retained unsaved estimate
+input during real own-window resizing through 360/412/1280, shared header/body widths (720 px when wide), the
+same page/body/bindings and one header after nested return, native Back and complete unchanged stored settings/
+accounts/entries. Original development database files, sidecars and marker are restored with matching hashes.
+Preliminary failed prototypes are excluded. Full real OS 200%/screen-reader/device accessibility is not inferred.
+
+Main suite: 1,345 passed, zero failed/skipped; App.Tests remains 127. Test output cleaned successfully. AT-90 adds
+actual runtime assertions, not fake native controls or copied algorithms. Final strict Windows Debug build has
+zero errors/warnings. Normal complete Release emulator and package evidence follows below.
+
+### Normal complete Release emulator and installable APK
+
+The final complete Release repeats actual de/fa/en Settings picker/Back/reopen without a cold restart between
+choices. Each unique native arrow immediately has the current Common_Back description; picker/body/navigation
+agree, replacement RTL tabs mirror and cold English persistence passes. The owned main window remains SECURE
+at density 420/font_scale 1.0. No OS setting, PIN/permission or financial Save operation.
+
+Install the known complete Debug without launch solely to copy the owned QA03 fictitious database/sidecars.
+Complete Accounts, Entries and Schedules equal the earlier baseline, including three entries. Reinstall final
+Release and verify cold English Home, three actual native Transactions row buttons, selected System/Advanced
+through their UI descriptions and the initial English Back description. Return Home and force-stop. An initial
+handoff helper's long swipe jumped over the Appearance chips; retain its negative evidence and use smaller actual
+swipes. No product change or guessed preference value is used to satisfy that helper assertion.
+No owner archive/database, private preferences, credentials or SecureStorage inspection, physical-phone action,
+real OS 200%, keyboard/screen-reader, provider or iOS acceptance.
+
+Final strict Windows Debug and complete Android Release builds have zero errors/warnings. Cloud permission boundary
+passes as static package validation, separate from real provider/network acceptance. Full phone-test APK:
+artifacts/android/zanance-d83-release.apk, 80,721,835 bytes;
+SHA-256 d70be2fa2270b3fb660513b4f6060a2b2c5354c6e7d6c6b9c660e07a95d7ec00.
+Package pro.vafadar.zanance, 0.1.0/code 1, min SDK 24/target 36; ZIP integrity and complete ARM64/x86_64 assembly
+stores/app AOT verified. v2/v3 local Debug-certificate signature verified; public certificate SHA-256 remains
+92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. Local handoff is not Store signing/publishing
+or physical-device acceptance. CI is one separate delayed check after push.
+
+A11Y-03 stays in progress: modal/Insights headers, custom controls, the independently observed Settings nested-return
+estimate reload, real OS/keyboard/screen-reader/physical ARM64/iOS and QA-06 durations/ANR remain open. Continue
+ready work under D-69; unresolved product/licence/provider/spending/release choices remain owner gates.

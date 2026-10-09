@@ -192,3 +192,10 @@ defaults no longer invoke a save. AT-89 checks actual native selection/back, str
 live captions/drafts and complete unchanged stored settings/accounts/entries. Main suite remains 1,345 (App.Tests
 127); final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Header truncation and other controls,
 real OS/keyboard/screen-reader/phone/iOS and unresolved owner gates remain independent work.
+
+D-83 continues A11Y-03 under D-69: complete Windows child-page titles grow above the same body; header/body sizing
+uses the current root and Back names/tooltips translate live. Android keeps the native arrow/commands with a scoped
+live Back description. AT-90 records native glyph/name/target geometry, actual retained bodies/drafts during resize,
+single headers after nested return and unchanged stored data. Final evidence/APK is in quality/font-scaling-a11y03.md.
+Modal/Insights/custom controls, the existing nested-return Settings draft reload, real OS/keyboard/screen readers,
+physical ARM64/iOS, QA-06 durations/ANR and unresolved owner decisions remain independent work.

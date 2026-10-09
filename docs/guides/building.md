@@ -270,3 +270,13 @@ checks frozen old titles and live new captions, and preserves fictitious unsaved
 preference field names without values. Wait for replacement rows to lay out before measuring their geometry.
 Preserve/restore original development files with matching hashes. No financial Save, PIN or permission operation.
 Full Release emulator checks and the complete signed phone-test APK remain separate from this Windows route.
+
+## Growing header review (D-83)
+
+Use -Only headers,settings-reopened,notices,loan-schedule plus other non-modal child routes with existing three-
+language/theme/width/font-scale options. The headers Debug route resizes only the app's own window, retains the
+actual Settings body/bindings/draft during resize, checks idempotent attachment after a nested return and invokes
+native Back. *-headers-proof.json compares complete stored data; *-layout-checks.json contains realized title glyph
+geometry and native Back peer names. Modal editor headers and Insights tabs retain separate review boundaries.
+Preserve/restore original development files and hashes. Android checks use normal full signed Release, the owned
+emulator, native hierarchy/real Back and no screenshot/security/system-setting override.

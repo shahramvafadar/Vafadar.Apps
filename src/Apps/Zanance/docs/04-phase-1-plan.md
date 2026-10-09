@@ -107,3 +107,7 @@ quality/performance-q02.md. No schema, commercial limit or release acceptance ch
 D-76 / AT-83 covers the transaction page until snapshot publication, with disabled input and failure/retry feedback.
 Twelve new application cases bring the main suite to 1,335. This follows the D-75 early-input finding without changing
 financial semantics or closing native duration, ANR, physical-device or iOS acceptance.
+
+D-83 / AT-90 maintains existing child-page headers and native Back descriptions without changing Phase 1 scope.
+Actual running Windows/emulator evidence and the complete signed APK are in quality/font-scaling-a11y03.md;
+main suite remains 1,345 passing. OS/screen-reader/device/iOS and remaining layout/draft findings stay open.

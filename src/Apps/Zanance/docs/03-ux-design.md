@@ -425,3 +425,11 @@ Keep the current form and unsaved estimate input during the change; replace cach
 Retired navigation titles stop receiving translations before their root is replaced. Current titles remain live.
 Opening a form publishes defaults without saving them; do not update stored settings or notification defaults.
 The settings-reopened Debug route checks real native selection/back behavior without financial Save or PIN changes.
+
+## Growing child-page headers (D-83)
+
+On Windows, child pages put their scalable complete title and real 44 px Back button in an Auto row above the same
+body. Long words can wrap; the body viewport starts below the entire header. Center header and body together in
+wide windows. Attach once and preserve inherited form bindings; modal editors retain their own Cancel/header.
+The Back tooltip and spoken name follow the current app language. Android retains its native arrow and back
+handling while translating only the accessible description, including on retained toolbars after language changes.

@@ -339,6 +339,7 @@ internal static class DebugSnapshots
             ("home", "//home", null),
             ("transactions", "//transactions", null),
             ("entry-new", AppShell.EntryEditorRoute, null),
+            ("headers", AppShell.SettingsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
@@ -500,6 +501,11 @@ internal static class DebugSnapshots
                 if (name == "settings-display" && Shell.Current.CurrentPage is Features.Settings.SettingsPage displaySettings)
                 {
                     await ReviewSettingsDisplayAsync(app, services, displaySettings, folder, language);
+                }
+
+                if (name == "headers" && Shell.Current.CurrentPage is Features.Settings.SettingsPage headerPage)
+                {
+                    await ReviewHeadersAsync(app, services, headerPage, folder, language);
                 }
 
                 if (name == "settings-reopened")
@@ -1604,16 +1610,100 @@ internal static class DebugSnapshots
         selection.Select(); expand.Collapse();
     }
 
+    // AT-90: retain the actual Settings body/draft across nested navigation, resizing and idempotent attachment.
+    private static async Task ReviewHeadersAsync(App app, IServiceProvider services,
+        Features.Settings.SettingsPage page, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var before = System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+        });
+        var editor = (Features.Settings.SettingsViewModel)page.BindingContext;
+        var original = (editor.EssentialText, editor.EssentialPeriodIndex);
+        editor.EssentialText = "17.25";
+        editor.EssentialPeriodIndex = 2;
+        var host = page.Content as Grid ?? throw new InvalidOperationException("The real growing header host is missing.");
+        var header = host.Children.OfType<Presentation.PageHeader>().Single();
+        var body = host.Children.OfType<VisualElement>().Single(child => Grid.GetRow(child) == 1);
+        var window = app.Windows[0];
+        var originalWidth = window.Width;
+        var widths = new List<object>();
+        try
+        {
+            foreach (var width in new[] { 360d, 412d, 1280d })
+            {
+                window.Width = width;
+                await Task.Delay(600);
+                Presentation.PageHeader.Attach(page, page.FlowDirection == FlowDirection.RightToLeft);
+                AssertDraft();
+                var wide = page.Width > Presentation.ReadableWidth.Max + 32;
+                if (wide && Math.Abs(host.Width - Presentation.ReadableWidth.Max) > 1
+                    || !wide && Math.Abs(host.Width - page.Width) > 1
+                    || Math.Abs(body.Width - host.Width) > 1)
+                { throw new InvalidOperationException("The current header/body root did not retain its readable column after resizing."); }
+                await CaptureAsync(app, folder, $"{language}-headers-resize-{width}");
+                widths.Add(new { windowWidth = width, page.Width, hostWidth = host.Width, bodyWidth = body.Width });
+            }
+            window.Width = originalWidth;
+            await Task.Delay(600);
+            // Settings already reloads on Appearing; keep this header test separate from that draft-policy finding.
+            (editor.EssentialText, editor.EssentialPeriodIndex) = original;
+            await Shell.Current.GoToAsync(AppShell.CategoriesRoute, animate: false);
+            await Task.Delay(500);
+            await Shell.Current.GoToAsync("..", animate: false);
+            await Task.Delay(600);
+            AssertBody();
+            await CaptureAsync(app, folder, language + "-headers-nested-return");
+        }
+        finally
+        {
+            window.Width = originalWidth;
+            (editor.EssentialText, editor.EssentialPeriodIndex) = original;
+        }
+        InvokeSnapshotBack(page);
+        for (var attempt = 0; attempt < 100 && ReferenceEquals(Shell.Current.CurrentPage, page); attempt++)
+        { await Task.Delay(50); }
+        if (ReferenceEquals(Shell.Current.CurrentPage, page))
+        { throw new InvalidOperationException("The real native header Back did not return to the previous page."); }
+        var after = System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+        });
+        if (before != after) { throw new InvalidOperationException("A header, resize or Back operation wrote stored financial/settings data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-headers-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            RetainedDraftDuringResize = true, SingleHeaderAndSameBodyAfterNestedReturn = true, NativeBack = true,
+            CompleteStoredDataUnchanged = true, ResizedColumns = widths,
+        }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
+        void AssertBody()
+        {
+            if (!ReferenceEquals(Shell.Current.CurrentPage, page) || !ReferenceEquals(page.Content, host)
+                || !ReferenceEquals(host.Children.OfType<Presentation.PageHeader>().Single(), header)
+                || !ReferenceEquals(host.Children.OfType<VisualElement>().Single(child => Grid.GetRow(child) == 1), body)
+                || !ReferenceEquals(body.BindingContext, editor))
+            { throw new InvalidOperationException("Growing headers reset the actual Settings page/body/bindings."); }
+        }
+
+        void AssertDraft()
+        {
+            AssertBody();
+            if (editor.EssentialText != "17.25" || editor.EssentialPeriodIndex != 2)
+            { throw new InvalidOperationException("Growing headers reset the unsaved Settings input during resizing."); }
+        }
+    }
+
     // Invoke the real header back action; it participates in the normal deferred shell replacement.
     private static void InvokeSnapshotBack(Page page)
     {
-        if (Shell.GetTitleView(page) is not Presentation.PageHeader header
+        if (VisualDescendants(page).OfType<Presentation.PageHeader>().SingleOrDefault() is not { } header
             || header.Children.OfType<ImageButton>().Single().Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button back)
-        { throw new InvalidOperationException("The Settings header back button is unavailable."); }
+        { throw new InvalidOperationException("The page header back button is unavailable."); }
         var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(back);
         if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
             is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
-        { throw new InvalidOperationException("The Settings header has no native back pattern."); }
+        { throw new InvalidOperationException("The page header has no native back pattern."); }
         invoke.Invoke();
     }
 

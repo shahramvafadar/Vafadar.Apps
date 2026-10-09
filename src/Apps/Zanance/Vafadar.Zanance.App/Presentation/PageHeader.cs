@@ -12,6 +12,28 @@ namespace Vafadar.Zanance.App.Presentation;
 /// </summary>
 internal sealed class PageHeader : Grid
 {
+    /// <summary>Adds a growing header once, retaining the same page, body, bindings and back handling.</summary>
+    internal static void Attach(ContentPage page, bool rightToLeft)
+    {
+        if (page.Content is not { } body || body is Grid grid && grid.Children.OfType<PageHeader>().Any()) { return; }
+        // D-83: Shell's Windows TitleView has a fixed bar height; scalable multiline titles need their own Auto row.
+        // The body is retained, and returning from a nested page does not detach it or rebuild the user's draft.
+        if (!body.IsSet(BindingContextProperty))
+        {
+            // Keep inherited form bindings stable through reparenting; later page-context changes still propagate.
+            body.SetBinding(BindingContextProperty, new Binding(nameof(Page.BindingContext), source: page));
+        }
+        page.Content = null;
+        body.WidthRequest = -1; body.HorizontalOptions = LayoutOptions.Fill;
+        var host = new Grid { RowDefinitions = [new(GridLength.Auto), new(GridLength.Star)] };
+        host.Add(new PageHeader(page, rightToLeft) { Margin = new Thickness(16, 8) }, 0, 0);
+        host.Add(body, 0, 1);
+        page.Content = host;
+        Shell.SetNavBarIsVisible(page, false);
+        ReadableWidth.Refresh(page);
+    }
+
+    /// <summary>Creates a scalable title with a real back target and live translated accessible description.</summary>
     public PageHeader(Page page, bool rightToLeft)
     {
         ArgumentNullException.ThrowIfNull(page);
@@ -33,8 +55,8 @@ internal sealed class PageHeader : Grid
         };
         back.SetDynamicResource(BackgroundProperty, "PrimarySoft");
         back.SetDynamicResource(ImageButton.BorderColorProperty, "PrimaryLine");
-        SemanticProperties.SetDescription(back, Translator.Instance["Common_Back"]);
-        ToolTipProperties.SetText(back, Translator.Instance["Common_Back"]);
+        back.SetBinding(SemanticProperties.DescriptionProperty, new Binding("[Common_Back]", source: Translator.Instance));
+        back.SetBinding(ToolTipProperties.TextProperty, new Binding("[Common_Back]", source: Translator.Instance));
         back.Clicked += (_, _) => Shell.Current?.SendBackButtonPressed();
 
         // WinUI gives a newly shown page's text box the focus and scrolls to it (Settings opened halfway down at the
@@ -50,13 +72,13 @@ internal sealed class PageHeader : Grid
 
             shown = true;
             back.Focus();
-            if (page is ContentPage { Content: ScrollView scroll })
+            if (page is ContentPage { Content: Grid host } && host.Children.OfType<ScrollView>().FirstOrDefault() is { } scroll)
             {
                 back.Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(150), () => _ = scroll.ScrollToAsync(0, 0, animated: false));
             }
         };
 
-        var title = new Label { VerticalOptions = LayoutOptions.Center, LineBreakMode = LineBreakMode.TailTruncation };
+        var title = new Label { VerticalOptions = LayoutOptions.Center, LineBreakMode = LineBreakMode.WordWrap };
         if (Application.Current?.Resources.TryGetValue("PageTitle", out var style) == true && style is Style pageTitle)
         {
             title.Style = pageTitle;
