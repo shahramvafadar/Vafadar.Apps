@@ -162,3 +162,8 @@ D-77 starts A11Y-03 under D-69. Deliver verified Home/plan large-text layout rep
 without changing system settings or production security. Keep Windows stress, native Android conversion and real
 OS/phone/iOS acceptance distinct. Continue the remaining A11Y-03 findings in quality/font-scaling-a11y03.md; do not
 mark the section complete from the first slice or CI.
+
+D-78 delivers the next A11Y-03 slice under D-69: seven persistent action docks, financial identity/amount separation
+and Undo presentation. AT-85 and the same quality report record verified scope and the complete signed APK. Continue
+ready fixed-control/currency findings, then other layouts; keep real OS/screen-reader/device acceptance and the early
+Settings-selection finding explicit. No commercial restrictions or unresolved owner decisions are introduced.

@@ -122,3 +122,7 @@ D-77 starts canonical ZCR-A11Y-03 with Home quick actions and plan/date/template
 scalable, decorative glyphs retain their explicit size and section links have a 44 px minimum. The first verified
 slice and its process-local/native evidence do not close the full 200%/screen-reader/device work; see
 quality/font-scaling-a11y03.md for the remaining findings.
+
+D-78 continues canonical A11Y-03 with reserved Add/bulk/Undo rows and financial identity/amount layout. AT-85 and
+the large-text quality report record running Windows/native evidence and the signed APK. No schema or financial
+logic change. Remaining fixed controls, currency grouping and platform/screen-reader acceptance stay in progress.

@@ -95,3 +95,11 @@ button targets. Native Android experiments retain system settings and screenshot
 prototypes are removed and are not platform acceptance. The final normal Release is checked separately. See the
 [A11Y-03 evidence](../../src/Apps/Zanance/docs/quality/font-scaling-a11y03.md) for matrix coverage, negative observations and limits;
 these runtime checks do not replace the main regression suite, real OS or screen-reader/device acceptance.
+
+D-78 / AT-85 checks the actual realized native financial title for trimming, useful identity width and separation
+from the amount; action geometry requires a positive viewport, at least 44 px action height and no viewport overlap.
+Hidden parent chains are excluded. These runtime checks and own-window captures are not new unit cases and do not
+prove every glyph, offscreen row, keyboard, screen reader or actual OS scaling. Undo preview is layout evidence only.
+Android hierarchy checks require the actual viewport rather than the outer Shell container, the expected action
+semantic name and both 44 dp dimensions at the unchanged density. Never infer the active page from a tab tap: a
+retained detail stack may still be visible. Read back only the owned fictitious data, never an owner profile.

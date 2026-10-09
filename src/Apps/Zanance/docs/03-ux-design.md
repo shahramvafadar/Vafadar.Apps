@@ -373,3 +373,13 @@ quick-template pills use minimum sizes and padding, not fixed text heights; sect
 Decorative symbol spans and the named floating plus keep explicit glyph sizes while surrounding text scales. This
 must never become a blanket font-scaling opt-out for labels or inputs. Review actual target geometry and rendered
 RTL/languages/themes, not only source styles. Full A11Y-03 and screen-reader/device acceptance remain open.
+
+## Persistent actions and financial identity (D-78)
+
+Reserve an Auto grid row below the star-sized scroll viewport for persistent Add/bulk actions. Put transient Undo
+in a further row and its button below the message. Retain touch targets, accessible names and existing visibility
+rules; scroll padding alone cannot prevent an overlay covering content before the user scrolls. Financial identity
+and amount/status have separate growing rows, with an icon spanning both and the real overlay button spanning the
+whole row. Titles/subtitles wrap. Group dates/names and totals also use separate rows. Check actual native geometry
+and own-window rendering at 100%/200%, both themes, en/fa/de and 360/412/wide widths. Remaining fixed controls and
+platform/screen-reader acceptance are tracked separately; viewport clipping at its scroll boundary is not overlap.

@@ -30,8 +30,9 @@
         </DataTemplate>
     </ContentPage.Resources>
 
-    <Grid>
-        <ScrollView>
+    <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16,0,16,16" Spacing="4">
                 <Button Text="{v:Translate Rules_Open}" Command="{Binding OpenRulesCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
                 <Label Text="{v:Translate Categories_Expense}" Style="{StaticResource SectionHeader}" />
@@ -49,11 +50,10 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Archived}" BindableLayout.ItemTemplate="{StaticResource CategoryRow}" />
                 </Border>
 
-                <BoxView HeightRequest="72" Color="Transparent" />
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+        <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Categories_Add}" />
     </Grid>
 </ContentPage>

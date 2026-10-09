@@ -211,3 +211,13 @@ fixed English/German content, but also pinned locale. Its font-only-delta trial 
 text, so the prototypes were removed from source before delivery. They do not establish live-language/RTL/native OS
 acceptance and are not a supported app startup path. The normal complete Release must start and remain usable;
 physical 200% system-text testing and native scaled-layout completion remain separate gates.
+
+## Persistent-action layout review (D-78)
+
+Use the existing snapshot route list: -Only home,transactions,accounts,plans,holdings,goals,categories with the
+D-77 font/size/theme options. *-layout-checks.json measures actual action/viewport and realized financial-row
+geometry. Visible parent chains are required: hidden Home sections can retain unmeasured native handlers. The
+own-window *-window.png includes navigation and persistent actions, supplementing the existing page rendering.
+Transactions also captures *-undo-preview without deleting a fixture entry or invoking Undo; visibility is restored
+in finally. This proves layout, not the deletion/recovery workflow. Geometry collectors and own-window rendering
+are Windows Debug only; the preview is Debug only. Preserve/restore original development data files and verify hashes.

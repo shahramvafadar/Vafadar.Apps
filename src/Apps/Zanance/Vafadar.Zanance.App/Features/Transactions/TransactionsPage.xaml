@@ -11,7 +11,8 @@
     x:DataType="local:TransactionsViewModel"
     Title="{v:Translate Tx_Title}">
 
-    <Grid RowDefinitions="Auto,*">
+    <!-- D-78: separate scrollable rows from persistent Add/bulk/Undo actions. -->
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
         <!-- Search and filters: the period and the kind stay visible, the rest opens with the filter button (D-27) -->
         <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}" IsEnabled="{Binding Loading.IsReady}">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
@@ -115,12 +116,12 @@
 
         <!-- Entries grouped by day -->
         <!-- The native grouped adapter receives the complete snapshot before becoming visible (D-76). -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None" IsVisible="{Binding Loading.IsReady}">
+        <CollectionView x:Name="ContentViewport" Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None" IsVisible="{Binding Loading.IsReady}">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="local:EntryDayGroup">
-                    <Grid ColumnDefinitions="*,Auto" Padding="16,14,16,6">
+                    <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Padding="16,14,16,6">
                         <Label Text="{Binding Header}" Style="{StaticResource Secondary}" FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="{Binding NetText}" Style="{StaticResource Secondary}" />
+                        <Label Grid.Row="1" Text="{Binding NetText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="End" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -128,29 +129,29 @@
                 <DataTemplate x:DataType="p:EntryRow">
                     <!-- Padding, not a margin on the row: Windows ignores the margin of a list item's root, and the rows ran edge to edge -->
                     <Grid Padding="16,0">
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
+                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
                             <Grid.Triggers>
                                 <DataTrigger TargetType="Grid" Binding="{Binding Selection.IsSelected}" Value="True">
                                     <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
                                 </DataTrigger>
                             </Grid.Triggers>
-                            <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                            <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
                                 <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
                                                HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
-                                <!-- A grid, not a stack: the subtitle gets the remaining width and is shortened instead of running under the amount -->
+                                <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
+                                <!-- D-78: identity wraps above its amount; the review dot retains a separate column. -->
                                 <Grid ColumnDefinitions="Auto,*">
                                     <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
                                              SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
-                                    <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="TailTruncation" MaxLines="1" />
+                                    <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
                                 </Grid>
                             </VerticalStackLayout>
-                            <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
+                            <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
                                    FontAttributes="Bold" VerticalOptions="Center" />
                             <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                            <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                     Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
                                     CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                             <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"
@@ -172,7 +173,7 @@
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
             <CollectionView.Footer>
-                <BoxView HeightRequest="96" Color="Transparent" />
+                <BoxView HeightRequest="12" Color="Transparent" />
             </CollectionView.Footer>
         </CollectionView>
 
@@ -186,12 +187,12 @@
             <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
         </VerticalStackLayout>
 
-        <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+        <Button x:Name="AddAction" Grid.Row="2" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 IsEnabled="{Binding Loading.IsReady}"
                 SemanticProperties.Description="{v:Translate Tx_Add}" IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
 
         <!-- Bulk actions (F2-TX-04) -->
-        <Border Grid.Row="1" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
+        <Border x:Name="BulkActions" Grid.Row="2" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
                 IsEnabled="{Binding Loading.IsReady}"
                 BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 16">
             <VerticalStackLayout Spacing="6">
@@ -211,11 +212,11 @@
         </Border>
 
         <!-- Undo after delete -->
-        <Border Grid.Row="1" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,16,88,20" Padding="16,4,8,4"
+        <Border x:Name="UndoNotice" Grid.Row="3" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,0,16,12" Padding="16,4,8,4"
                 BackgroundColor="{DynamicResource SnackbarBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8">
-            <Grid ColumnDefinitions="*,Auto">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
                 <Label Text="{v:Translate Tx_Deleted}" TextColor="{DynamicResource SnackbarText}" VerticalOptions="Center" />
-                <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoDeleteCommand}" BackgroundColor="Transparent"
+                <Button Grid.Row="1" HorizontalOptions="End" Text="{v:Translate Common_Undo}" Command="{Binding UndoDeleteCommand}" BackgroundColor="Transparent"
                         TextColor="{DynamicResource SnackbarAction}" FontAttributes="Bold" />
             </Grid>
         </Border>

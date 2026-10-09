@@ -142,3 +142,12 @@ explicit Windows snapshots record fictitious rendered text and native geometry i
 Temporary emulator scale probes inspected only the separate QA profile and omitted editable contents; they were
 removed from source after configuration failures. No global device setting was changed. Scale diagnostics are
 absent from Release and neither encrypt nor export the database.
+
+## Local layout review (D-78)
+
+No production data field, portable preference, permission, export or SDK is introduced. Windows Debug-only review
+writes local actual-layout JSON and renders its own application window with fictitious data. Undo preview only
+sets/restores presentation visibility: no deletion, Undo invocation or ledger write. Android review uses only the
+explicitly selected existing emulator and owned fictitious profile; screenshot protection and system settings
+remain. Diagnostic collectors and previews are absent from Release. Original Windows data files are restored with
+matching hashes. Screen-reader, OS and physical-device acceptance remain distinct from local engineering evidence.

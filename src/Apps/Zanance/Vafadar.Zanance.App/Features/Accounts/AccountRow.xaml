@@ -10,13 +10,13 @@
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     x:DataType="local:AccountItem"
     Style="{StaticResource ListRow}"
-    ColumnDefinitions="Auto,*,Auto">
+    ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
 
-    <Border Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
+    <Border Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding TileText}" HorizontalOptions="Center" VerticalOptions="Center" />
     </Border>
     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-        <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
+        <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
         <!-- Wraps instead of cutting off: type, default, not in totals and incomplete do not fit one line on a phone -->
         <FlexLayout Wrap="Wrap">
             <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" Margin="0,0,8,0" />
@@ -25,7 +25,7 @@
             <Label Text="{v:Translate Account_Incomplete}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding OpeningUnknown}" />
         </FlexLayout>
     </VerticalStackLayout>
-    <Label Grid.Column="2" Text="{Binding BalanceText}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center">
+    <Label Grid.Row="1" Grid.Column="1" Text="{Binding BalanceText}" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="End">
         <Label.Triggers>
             <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
                 <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
@@ -33,6 +33,6 @@
         </Label.Triggers>
     </Label>
     <!-- The whole row is one real button: keyboard, screen readers and touch -->
-    <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Clicked="OnTapped"
+    <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Clicked="OnTapped"
             SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding BalanceText}" />
 </Grid>

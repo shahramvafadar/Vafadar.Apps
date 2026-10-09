@@ -1390,3 +1390,9 @@ containers, 44 px section links and fixed decorative glyphs retain native readab
 semantics. Windows layout stress is separate from native Android SP conversion and real OS/device acceptance.
 See [the large-text evidence](../quality/font-scaling-a11y03.md). Main suite remains 1,335; A11Y-03 is in progress,
 including transaction/account rows, bottom tabs, custom-drawn controls and the remaining screens/dialogs.
+
+D-78 / ZCR-A11Y-03 follow-up: persistent actions reserve space below seven page viewports, financial identity wraps
+above its amount/status, and transaction Undo text/action use separate rows. AT-85 records runtime measurements,
+1,260 captures and normal-scale native emulator review; main suite remains 1,335. No financial/data/security change.
+A11Y-03 is still in progress; OS large text, fixed/custom controls, currency grouping and device/screen readers remain.
+See [the current evidence and limits](../quality/font-scaling-a11y03.md).

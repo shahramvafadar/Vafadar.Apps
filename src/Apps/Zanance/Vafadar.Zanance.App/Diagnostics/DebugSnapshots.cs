@@ -615,6 +615,16 @@ internal static class DebugSnapshots
                     await CaptureAsync(app, folder, $"{language}-{name}-select");
                     transactions.StopSelectingCommand.Execute(null);
 
+                    // D-78: render the Undo notice without deleting a fixture entry or claiming an Undo workflow test.
+                    var undoWasVisible = transactions.ShowUndo;
+                    try
+                    {
+                        transactions.ShowUndo = true;
+                        await Task.Delay(500);
+                        await CaptureAsync(app, folder, $"{language}-{name}-undo-preview");
+                    }
+                    finally { transactions.ShowUndo = undoWasVisible; }
+
                     // A saved filter applied with one tap (REP-08).
                     if (transactions.SavedFilters.FirstOrDefault() is { } saved)
                     {
@@ -1018,6 +1028,9 @@ internal static class DebugSnapshots
         }
 #endif
         var visible = page is Shell shell ? (shell.CurrentPage as VisualElement) ?? shell : page as VisualElement;
+#if WINDOWS
+        if (visible is ContentPage content) { DebugLayoutChecks.Check(content, folder, name); }
+#endif
         if (visible?.Parent is Shell && page is VisualElement root)
         {
             visible = root;
@@ -1033,6 +1046,14 @@ internal static class DebugSnapshots
         await using var source = await result.OpenReadAsync(ScreenshotFormat.Png);
         await using var target = File.Create(Path.Combine(folder, name + ".png"));
         await source.CopyToAsync(target);
+#if WINDOWS
+        if ((page is Shell currentShell ? currentShell.CurrentPage : page) is ContentPage checkedPage
+            && checkedPage.FindByName<VisualElement>("ContentViewport") is not null)
+        {
+            // D-78: include persistent actions and navigation in the app's own native-window rendering.
+            await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-window.png"));
+        }
+#endif
     }
 
 #if WINDOWS

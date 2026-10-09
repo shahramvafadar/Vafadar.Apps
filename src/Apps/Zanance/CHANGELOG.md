@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Readable lists and clear actions (2026-10-09, D-78)
+
+- Add buttons and transaction bulk/Undo actions stay outside the scrolling list on seven main pages.
+- Transaction, account and holding names have more room; amounts appear on their own line.
+- The Undo message and button stay separate when text is large.
+
 ### Improved - Large text on Home and plans (2026-10-09, D-77)
 
 - Let quick-action names move to another row instead of shortening them when text is large.

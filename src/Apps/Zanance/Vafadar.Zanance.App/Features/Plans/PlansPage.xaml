@@ -9,7 +9,8 @@
     x:DataType="local:PlansViewModel"
     Title="{v:Translate Plans_Title}">
 
-    <Grid RowDefinitions="Auto,*">
+    <!-- D-78: separate scrollable rows from persistent Add/bulk/Undo actions. -->
+    <Grid RowDefinitions="Auto,*,Auto">
         <VerticalStackLayout Padding="16,8,16,4" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding SegmentNames}" SelectedIndex="{Binding SegmentIndex}" />
 
@@ -34,7 +35,7 @@
             </Border>
         </VerticalStackLayout>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Rows}" SelectionMode="None">
+        <CollectionView x:Name="ContentViewport" Grid.Row="1" ItemsSource="{Binding Rows}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:PlanRow">
                     <Grid Padding="16,0,16,8">
@@ -56,11 +57,11 @@
                 <BoxView HeightRequest="8" Color="Transparent" />
             </CollectionView.Header>
             <CollectionView.Footer>
-                <BoxView HeightRequest="96" Color="Transparent" />
+                <BoxView HeightRequest="12" Color="Transparent" />
             </CollectionView.Footer>
         </CollectionView>
 
-        <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+        <Button x:Name="AddAction" Grid.Row="2" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Plans_Add}" />
     </Grid>
 </ContentPage>

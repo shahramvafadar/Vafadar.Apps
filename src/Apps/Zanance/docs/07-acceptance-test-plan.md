@@ -278,3 +278,33 @@ Handoff: artifacts/android/zanance-d77-release.apk, 81,107,029 bytes, SHA-256
 15f09bc889572b9fa0d1ab45138cf79d9c9055c2967e5aac063ed4d0d75871d0. Package pro.vafadar.zanance; min 24/target 36;
 v2/v3 local signature, ZIP integrity and complete ARM64/x86_64 assembly stores/AOT verified. Remaining layouts,
 screen readers, actual OS large-text settings, native RTL/200%, physical ARM64, iOS and release acceptance stay open.
+
+## AT-85 - Persistent actions and financial identity (D-78 / A11Y-03 follow-up)
+
+Runtime layout scenario, not new unit cases. Main suite remains 1,335 passing, zero failed/skipped. Strict Windows
+Debug and complete Android Release builds have zero warnings/errors. Seven page action rows sit outside scroll
+viewports; financial identity wraps above amount/status; group labels/totals and Undo message/action use separate
+rows. Existing commands, semantic names, visibility rules, formatting and ledger calculations are retained.
+
+En/fa/de, both themes, 360x800/412x892/1280x820 at process-local 200%, narrow 100% and Simple narrow-dark review:
+840 matrix captures plus 420 transaction/Undo preview captures. The 860 actual-layout records pass 412 Add, 45 bulk
+and 21 Undo dock checks; 1,576 entry, 192 account and 92 holding realized rows have useful identity width, untrimmed
+native title and separate amount geometry. Repeated observations are not unique screens/data/test cases. Undo
+preview never deletes/invokes Undo. Original Windows development files restored with matching hashes. See
+[scope, diagnostic selection failures and open findings](quality/font-scaling-a11y03.md).
+
+Existing API 36 x86_64 emulator, unchanged density/normal font: six English Add paths open/cancel their drafts;
+empty Goals uses its existing primary Add goal. German/Persian Home/Transactions/Accounts expose readable two-row
+financial content and a 147x147 px plus outside the actual viewport (44 dp minimum). No Save/delete/Undo or physical
+phone interaction; populated native plan/holding/goal rows and large native RTL are not demonstrated. An ignored
+Settings language selection and retained old-language theme/mode captions remain independent findings; a later
+fresh-visit retry restores actual English. No theme choice was changed.
+
+Post-navigation unlaunched Debug read-back copies only owned fictitious QA03 data: complete Accounts, Entries and
+Schedules equal the D-76 baseline, with three entries. Final Release is reinstalled, normal Home/Transactions checked
+and force-stopped. English restored and System theme confirmed selected through UI; screenshot protection retained and no
+SecureStorage or owner-profile inspection. APK artifacts/android/zanance-d78-release.apk, 81,123,413 bytes, SHA-256
+03892da524ac5d43eeda27561f4f6e71ae4f427dd220bb91e5c0566fe3803a22. Package pro.vafadar.zanance, 0.1.0/code 1,
+min 24/target 36; v2/v3 local signature, ZIP and full ARM64/x86_64 stores/app AOT verified. Fixed actions, currency
+grouping, other screens/controls, real OS text settings, screen readers, native large RTL, ARM64 phone/iOS and release
+acceptance remain open. A11Y-03 is in progress; CI/build success is separate from those gates.

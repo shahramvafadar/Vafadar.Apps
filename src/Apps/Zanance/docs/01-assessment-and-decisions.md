@@ -428,3 +428,22 @@ has no font-scale override/collector and is verified separately; live native RTL
 See quality/font-scaling-a11y03.md for verified scope, rendered/native evidence and remaining findings. A11Y-03 is
 in progress, not complete: transaction/account rows, bottom navigation, large currency tokens, fixed actions,
 custom-drawn controls, other screens/dialogs and physical/OS/screen-reader acceptance remain independent work.
+
+## D-78 - Persistent actions and readable financial rows (2026-10-09)
+
+Continue A11Y-03 under D-69. Reserve a separate action row below the viewport on Home, Transactions, Accounts,
+Plans, Holdings, Savings goals and Categories. Bulk actions occupy the same reserved row when selected; the Undo
+notice has its own row and places its button below its text. Empty goals and Simple holdings retain their existing
+visibility rules. Financial entry/account/holding identity wraps above amount/status; group date/name and net/totals
+also use separate rows. Existing commands, semantics, calculations, formatting and stored data remain unchanged.
+
+Windows Debug checks measure actual visible native financial rows and action geometry, and own-window renderings
+include persistent actions/navigation. Hidden Home sections still have handlers but are unmeasured; exclude hidden
+ancestors rather than misclassifying their negative dimensions as clipped production rows. Undo preview restores
+its presentation flag and never deletes an entry or invokes Undo. No new xUnit count, model, translation or permission.
+
+AT-85 and quality/font-scaling-a11y03.md record 1,260 rendered captures, 860 layout records, emulator observations,
+negative diagnostic selection findings and the final signed APK. Main suite remains 1,335 passing. A11Y-03 stays
+in progress: large currency tokens, fixed actions/bulk labels, native OS large text, custom controls and independent
+screen-reader/device acceptance remain. A Settings language selection was not applied; a later fresh-visit retry succeeded.
+Theme/mode choices also retained old-language captions while nearby labels changed. Record that finding separately without claiming its cause or a locale fix in this layout slice.

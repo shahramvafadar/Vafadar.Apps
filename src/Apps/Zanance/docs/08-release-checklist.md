@@ -117,3 +117,9 @@ amount/date/status, both themes and RTL/language changes. Review remaining finan
 actions, tabs, calendars, pickers, charts and dialogs. Process-local Windows stress and an emulator activity-only
 configuration do not close real OS scaling, screen readers, ARM64 phone or iOS acceptance. Use the complete signed
 Release APK; it has no font-scale review override or native text collector.
+
+D-78 / A11Y-03: verify persistent Add/bulk/Undo actions remain outside scroll content, financial names/subtitles
+wrap above amounts and Undo text/action remain readable. Include en/fa/de, both themes, 360/412/wide widths and
+real OS 200% text. Local normal-scale API 36 review and Windows stress do not close physical ARM64/iOS/screen-reader
+acceptance. Investigate early Settings selections that are ignored, fixed debt/bulk buttons and currency grouping.
+AT-85 records the delivered test APK; require its actual signature/package check before phone handoff.

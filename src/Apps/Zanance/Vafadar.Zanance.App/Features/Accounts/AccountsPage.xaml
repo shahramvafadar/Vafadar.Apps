@@ -9,8 +9,9 @@
     x:DataType="local:AccountsViewModel"
     Title="{v:Translate Accounts_Title}">
 
-    <Grid>
-        <ScrollView>
+    <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16" Spacing="8">
 
                 <Button Text="{v:Translate Debt_Add}" Style="{StaticResource SecondaryButton}" Command="{Binding AddDebtCommand}" />
@@ -45,9 +46,9 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:AccountListGroup">
                             <VerticalStackLayout Spacing="4">
-                                <Grid ColumnDefinitions="*,Auto" Margin="4,8,4,0">
+                                <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Margin="4,8,4,0">
                                     <Label Text="{Binding Title}" Style="{StaticResource SectionHeader}" SemanticProperties.HeadingLevel="Level2" />
-                                    <Label Grid.Column="1" Text="{Binding TotalsText}" Style="{StaticResource Secondary}" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <Label Grid.Row="1" Text="{Binding TotalsText}" Style="{StaticResource Secondary}" FontAttributes="Bold" HorizontalTextAlignment="End" />
                                 </Grid>
                                 <Border Style="{StaticResource Card}" Padding="0">
                                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">
@@ -83,11 +84,10 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <BoxView HeightRequest="72" Color="Transparent" />
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+        <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Accounts_Add}" />
     </Grid>
 </ContentPage>

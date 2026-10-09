@@ -10,8 +10,9 @@
     x:DataType="local:GoalsViewModel"
     Title="{v:Translate Goals_Title}">
 
-    <Grid>
-        <ScrollView>
+    <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16,16,16,96" Spacing="8">
                 <!-- Empty state: what a goal is and what it is not (BUD-11) -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
@@ -93,7 +94,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}" SemanticProperties.Description="{v:Translate Goals_Add}"
+        <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}" SemanticProperties.Description="{v:Translate Goals_Add}"
                 IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" />
     </Grid>
 </ContentPage>
