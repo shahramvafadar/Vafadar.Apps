@@ -5718,4 +5718,10 @@
   <data name="Tx_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ تراکنش‌ها</value>
   </data>
+  <data name="Settings_Loading" xml:space="preserve">
+    <value>در حال بارگذاری تنظیمات…</value>
+  </data>
+  <data name="Settings_RetryLoad" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
 </root>

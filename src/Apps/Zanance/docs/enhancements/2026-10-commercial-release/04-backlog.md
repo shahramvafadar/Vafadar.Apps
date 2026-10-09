@@ -360,3 +360,9 @@ financial-row preservation. D-76 covers Transactions until snapshot publication,
 retry; 12 new AT-83 cases bring the main suite to 1,335. See quality/performance-q02.md for rendered/native evidence
 and remaining findings. Native loaded Home, baseline ANR follow-up, physical ARM64 and iOS acceptance remain open;
 neither this interaction gate nor emulator observations establish the two-second objective.
+
+D-79 / Settings follow-up resolves the exposed async read/write-suppression boundary and stale live choice captions.
+Publish complete Settings before enabling input; read failure stays covered with retry. Ten AT-86 real-source cases
+bring the main suite to 1,345 (App.Tests 127). Running bindings, native retry/locale and the signed APK are recorded
+in quality/font-scaling-a11y03.md. Keep QA-06/A11Y-03 partial: fixed controls, currency layout, native OS scaling,
+screen-reader, baseline ANR/performance and physical/iOS acceptance remain independent. No commercial/security change.

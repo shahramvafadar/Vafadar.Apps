@@ -308,3 +308,27 @@ SecureStorage or owner-profile inspection. APK artifacts/android/zanance-d78-rel
 min 24/target 36; v2/v3 local signature, ZIP and full ARM64/x86_64 stores/app AOT verified. Fixed actions, currency
 grouping, other screens/controls, real OS text settings, screen readers, native large RTL, ARM64 phone/iOS and release
 acceptance remain open. A11Y-03 is in progress; CI/build success is separate from those gates.
+
+## AT-86 - Settings publication and live choice captions (D-79)
+
+Ten actual-source cases cover delayed device/notification reads and one shared pending operation, availability
+failure with covered retry, unsupported notification callbacks, saved-lock availability, six real translations
+and isolated SQLite default-account eligibility/order. Complete account/entry identities and amounts, saved
+preferences and estimate remain unchanged; a transfer creates neither income nor spending. App.Tests compiles
+the real SettingsSnapshot/SettingsChoiceLabels, not SettingsViewModel or native controls. Main suite: 1,345 passed,
+zero failed/skipped; App.Tests 127. Test output cleaned afterward.
+
+Running Windows checks separately exercise the real view-model/bindings, held read, failure, actual native retry
+button, live de/fa/en captions, unchanged choice indexes and unsaved estimate input, with stored preferences/entries
+unchanged. See quality/font-scaling-a11y03.md for the final matrix, normal Release emulator proof and signed APK.
+Keep physical-device, real OS 200%, screen-reader and iOS acceptance open; D-67's deferred Shell rebuild is retained.
+
+D-79 final runtime: 462 Windows captures across en/fa/de, both themes, 360x800/412x892/1280x820 at process-local
+200%, plus the 100% narrow baseline; 21 proof files pass. Normal final Release on emulator-5570 applies all three
+languages through real pickers, persists them on cold restart and refreshes native theme/mode chips while preserving
+System/Advanced. Complete QA03 Accounts/Entries/Schedules equal D-76 baseline after navigation (three entries).
+Final Release reinstalled, English Home/Transactions checked and app stopped. Strict Windows/Android builds have
+zero warnings/errors. Full APK artifacts/android/zanance-d79-release.apk: 80,713,643 bytes, SHA-256
+989227ed5f8bee52c96cab755a53dfc737eb409f52976adf116a58e9364db242; pro.vafadar.zanance, min 24/target 36, ARM64/x86_64 full assembly stores/AOT,
+ZIP integrity and v2/v3 local signature verified; Cloud permission boundary passes. Native toolbar Back captions,
+German narrow/large header, other fixed controls and OS/device/screen-reader acceptance remain independent findings.

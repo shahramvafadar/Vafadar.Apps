@@ -103,3 +103,12 @@ prove every glyph, offscreen row, keyboard, screen reader or actual OS scaling. 
 Android hierarchy checks require the actual viewport rather than the outer Shell container, the expected action
 semantic name and both 44 dp dimensions at the unchanged density. Never infer the active page from a tab tap: a
 retained detail stack may still be visible. Read back only the owned fictitious data, never an owner profile.
+
+## Settings reads and translated choices (D-79 / AT-86)
+
+App.Tests links actual SettingsSnapshot/SettingsChoiceLabels and reuses SnapshotLoadState. Ten cases use real
+isolated SQLite/localization, delayed availability callbacks and failures; no fake MAUI controls. They prove complete
+reads, covered retry, account eligibility/order, unchanged preferences/transfer data and six-language captions.
+Main suite: 1,345 passing, App.Tests: 127. Real SettingsViewModel, native selection callbacks and rendered bindings
+are verified through the settings-display running-app route and the complete Release emulator separately. Retain
+physical OS scaling, keyboard/screen-reader, phone/iOS and provider acceptance as independent gates.

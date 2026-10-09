@@ -221,3 +221,14 @@ own-window *-window.png includes navigation and persistent actions, supplementin
 Transactions also captures *-undo-preview without deleting a fixture entry or invoking Undo; visibility is restored
 in finally. This proves layout, not the deletion/recovery workflow. Geometry collectors and own-window rendering
 are Windows Debug only; the preview is Debug only. Preserve/restore original development data files and verify hashes.
+
+## Settings loading/display review (D-79)
+
+Use Run-Snapshots.ps1 -Languages 'en,fa,de' -Only settings-display -FontScale 2 -Theme dark -WindowSize 360x800;
+repeat at 412x892/1280x820, both themes and a -FontScale 1 baseline. This separate route avoids the existing settings
+security/PIN walkthrough. Hold the read, inject a handled failure, invoke the actual RetrySettingsButton through its
+native UI Automation pattern and exercise the actual view-model's live language choices. Assert the editable form
+is covered until publication, indices/draft input survive, and stored preference/entry JSON is unchanged. Supplemental
+*-window.png renders the own window; *-settings-display-proof.json records the checks. Preserve/restore original
+development files and verify hashes. The fixture is absent from Release; native checks use only the owned emulator,
+unchanged system settings, screenshot protection and a complete signed APK. Never substitute this for phone/OS QA.

@@ -275,3 +275,11 @@ repository.
 * Persistent Add/bulk/Undo actions reserve their own grid rows outside the scroll viewport. Financial identity and
   amount/status use separate rows; do not squeeze the title into a trailing-amount column. Debug review measures
   actual visible native rows, excluding hidden ancestors, and renders only the application's own window.
+
+## 14. Settings publication and live choices (D-79)
+
+* Keep the whole Settings form covered until all preferences, suggestions and device availability reads finish.
+  Publish synchronously before enabling input; failures keep the form covered with translated retry feedback.
+* Refresh the open form's translated choice captions without changing selection indexes, stored preferences or
+  unsaved estimate/reminder inputs. Preserve nested publication guards; do not suppress user writes across awaits.
+* The settings-display Debug route checks only fictitious display/loading states, not PIN or permission changes.

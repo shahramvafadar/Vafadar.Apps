@@ -167,3 +167,8 @@ D-78 delivers the next A11Y-03 slice under D-69: seven persistent action docks, 
 and Undo presentation. AT-85 and the same quality report record verified scope and the complete signed APK. Continue
 ready fixed-control/currency findings, then other layouts; keep real OS/screen-reader/device acceptance and the early
 Settings-selection finding explicit. No commercial restrictions or unresolved owner decisions are introduced.
+
+D-79 follows the actual Settings selection/caption findings under D-69. Complete publication, covered retry and
+translated choices preserve draft/selection values. AT-86 and the large-text report record separate unit, rendered,
+native and APK evidence. Continue ready fixed-control/currency findings; unresolved owner decisions and physical/
+OS/screen-reader/iOS acceptance remain open. No commercial restriction or production encryption is introduced.

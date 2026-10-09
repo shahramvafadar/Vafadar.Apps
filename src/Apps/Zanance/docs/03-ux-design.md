@@ -383,3 +383,12 @@ and amount/status have separate growing rows, with an icon spanning both and the
 whole row. Titles/subtitles wrap. Group dates/names and totals also use separate rows. Check actual native geometry
 and own-window rendering at 100%/200%, both themes, en/fa/de and 360/412/wide widths. Remaining fixed controls and
 platform/screen-reader acceptance are tracked separately; viewport clipping at its scroll boundary is not overlap.
+
+## Settings readiness and live choice captions (D-79)
+
+Cover and disable the entire editable Settings scroll content during initial/reload reads. Loading and error text
+are translated; retry is a real button with growing height and a 44 px minimum. Publish complete preferences,
+suggestions and availability synchronously before uncovering the form. Never expose old fields after failed reload.
+When display changes, refresh choice labels/previews in place while keeping selected values and unsaved estimate/
+reminder inputs. Native ItemsSource replacement can clear selection: restore it under the synchronous save guard.
+Keep language, culture, calendar, digits and theme independent. Shell navigation rebuild remains deferred per D-67.

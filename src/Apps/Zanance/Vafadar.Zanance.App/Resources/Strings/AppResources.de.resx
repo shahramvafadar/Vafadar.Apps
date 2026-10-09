@@ -5718,4 +5718,10 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Tx_RetryLoad" xml:space="preserve">
     <value>Buchungen erneut laden</value>
   </data>
+  <data name="Settings_Loading" xml:space="preserve">
+    <value>Einstellungen werden geladen…</value>
+  </data>
+  <data name="Settings_RetryLoad" xml:space="preserve">
+    <value>Erneut laden</value>
+  </data>
 </root>

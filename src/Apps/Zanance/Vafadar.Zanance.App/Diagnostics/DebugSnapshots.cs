@@ -404,6 +404,7 @@ internal static class DebugSnapshots
             ("report-review", AppShell.ReviewRoute, null),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
+            ("settings-display", AppShell.SettingsRoute, null),
             ("regional-settings", AppShell.SettingsRoute, null),
             ("review-reminder", AppShell.SettingsRoute, null),
             ("profiles", AppShell.ProfilesRoute, null),
@@ -484,6 +485,11 @@ internal static class DebugSnapshots
                         await CaptureAsync(app, folder, $"{language}-{name}-reminder");
                     }
                     await CaptureHelpAsync(app, folder, language, ["GoalReminder"]);
+                }
+
+                if (name == "settings-display" && Shell.Current.CurrentPage is Features.Settings.SettingsPage displaySettings)
+                {
+                    await ReviewSettingsDisplayAsync(app, services, displaySettings, folder, language);
                 }
 
                 if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
@@ -1048,7 +1054,7 @@ internal static class DebugSnapshots
         await source.CopyToAsync(target);
 #if WINDOWS
         if ((page is Shell currentShell ? currentShell.CurrentPage : page) is ContentPage checkedPage
-            && checkedPage.FindByName<VisualElement>("ContentViewport") is not null)
+            && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage))
         {
             // D-78: include persistent actions and navigation in the app's own native-window rendering.
             await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-window.png"));
@@ -1160,6 +1166,67 @@ internal static class DebugSnapshots
         // Navigation to the next fictitious screen must not trigger an unrelated unsaved-draft dialog.
         editor.AmountText = string.Empty;
         editor.Note = string.Empty;
+    }
+
+    // D-79: actual form publication, native retry and live captions, using fictitious data without PIN operations.
+    private static async Task ReviewSettingsDisplayAsync(App app, IServiceProvider services,
+        Features.Settings.SettingsPage page, string folder, string language)
+    {
+        var vm = (Features.Settings.SettingsViewModel)page.BindingContext;
+        await vm.LoadAsync();
+        var store = services.GetRequiredService<ZananceStore>();
+        var localization = services.GetRequiredService<ILocalizationService>();
+        var translator = services.GetRequiredService<Translator>();
+        var before = System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync());
+        var entries = System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync());
+        var held = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var loading = vm.Loading.RunAsync(() => held.Task, vm.RefreshDisplay);
+        var form = page.FindByName<ScrollView>("SettingsContent");
+        await Task.Delay(300);
+        if (form.IsVisible || form.IsEnabled || vm.Loading.IsReady) { throw new InvalidOperationException("Settings input is exposed during its read."); }
+        await CaptureAsync(app, folder, $"{language}-settings-display-loading");
+        held.SetResult(); await loading;
+        try { await vm.Loading.RunAsync(() => Task.FromException(new IOException("Fictitious settings read failure")), vm.RefreshDisplay); }
+        catch (IOException) { }
+        await Task.Delay(300);
+        if (form.IsVisible || form.IsEnabled || vm.Loading.IsReady) { throw new InvalidOperationException("Failed Settings input is exposed."); }
+        await CaptureAsync(app, folder, $"{language}-settings-display-failure");
+        if (page.FindByName<Button>("RetrySettingsButton")?.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button retry)
+        { throw new InvalidOperationException("The Settings retry button is unavailable."); }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(retry);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("Settings retry has no Invoke pattern."); }
+        invoke.Invoke();
+        for (var i = 0; i < 100 && !vm.Loading.IsReady; i++) { await Task.Delay(50); }
+        if (!vm.Loading.IsReady || !form.IsVisible || !form.IsEnabled) { throw new InvalidOperationException("Settings retry did not publish."); }
+        await CaptureAsync(app, folder, $"{language}-settings-display-retry");
+        var draft = vm.EssentialText; var period = vm.EssentialPeriodIndex;
+        var choices = (vm.ModeIndex, vm.ThemeIndex, vm.FreshnessIndex, vm.StartDayIndex, vm.DefaultAccount?.Id);
+        try
+        {
+            vm.EssentialText = "17.25"; vm.EssentialPeriodIndex = 2;
+            foreach (var target in new[] { "de", "fa", "en", language })
+            {
+                vm.SelectedLanguage = vm.Languages.First(l => l.CultureName == target);
+                await Task.Delay(300);
+                if (localization.CurrentLanguage.CultureName != target || vm.SelectedLanguage?.CultureName != target
+                    || vm.ModeNames[0] != translator["Mode_Simple"] || vm.ThemeNames[0] != translator["Theme_System"]
+                    || vm.EssentialPeriodNames[2] != translator["Settings_PerMonth"]
+                    || vm.EssentialText != "17.25" || vm.EssentialPeriodIndex != 2
+                    || choices != (vm.ModeIndex, vm.ThemeIndex, vm.FreshnessIndex, vm.StartDayIndex, vm.DefaultAccount?.Id))
+                { throw new InvalidOperationException("A live Settings display change lost its language, choices or unsaved draft."); }
+                await form.ScrollToAsync(page.FindByName<Border>("AppearanceCard"), ScrollToPosition.Start, animated: false);
+                await Task.Delay(200);
+                await CaptureAsync(app, folder, $"{language}-settings-display-live-{target}");
+            }
+        }
+        finally { vm.EssentialText = draft; vm.EssentialPeriodIndex = period; }
+        if (before != System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync())
+            || entries != System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync()))
+        { throw new InvalidOperationException("Settings display/retry changed preferences or ledger data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-settings-display-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { FormCoveredUntilPublication = true, NativeRetry = true,
+                LiveChoiceCaptions = true, UnsavedInputPreserved = true, StoredPreferencesAndEntriesUnchanged = true }));
     }
 
     // The real retry button must invoke the page handler; direct view-model loading alone cannot prove its wiring.

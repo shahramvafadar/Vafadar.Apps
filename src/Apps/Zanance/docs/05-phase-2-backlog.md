@@ -126,3 +126,8 @@ quality/font-scaling-a11y03.md for the remaining findings.
 D-78 continues canonical A11Y-03 with reserved Add/bulk/Undo rows and financial identity/amount layout. AT-85 and
 the large-text quality report record running Windows/native evidence and the signed APK. No schema or financial
 logic change. Remaining fixed controls, currency grouping and platform/screen-reader acceptance stay in progress.
+
+D-79 repairs the observed Settings publication/caption issues under D-69. Ten AT-86 actual-source tests bring the
+main suite to 1,345; running-app checks prove the form cover, real retry and live choice refresh separately. Existing
+selection/draft values are preserved. No financial/schema/security policy change. Continue fixed controls and
+currency layout findings; A11Y-03 and platform/device acceptance remain in progress.

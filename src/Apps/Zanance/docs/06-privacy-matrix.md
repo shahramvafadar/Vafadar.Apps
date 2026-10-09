@@ -128,3 +128,13 @@ sets/restores presentation visibility: no deletion, Undo invocation or ledger wr
 explicitly selected existing emulator and owned fictitious profile; screenshot protection and system settings
 remain. Diagnostic collectors and previews are absent from Release. Original Windows data files are restored with
 matching hashes. Screen-reader, OS and physical-device acceptance remain distinct from local engineering evidence.
+
+## Settings display/read review (D-79)
+
+No production data field, portable preference, permission, export, SDK, recipient or network path is added.
+Existing preferences and financial rows are read to publish Settings; availability checks do not authenticate or
+ask permission. The separate settings-display Debug route uses fictitious loading/failure/display states, invokes
+the actual retry, preserves unsaved input and asserts unchanged stored preferences/entries. It never sets a PIN,
+saves an estimate or changes notification permission. Own-window captures/local proof files are absent from Release.
+Original Windows development data is restored with matching hashes; native inspection uses only the known owned
+emulator fixture and retains screenshot protection. No owner database or SecureStorage content is inspected.

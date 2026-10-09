@@ -123,3 +123,8 @@ wrap above amounts and Undo text/action remain readable. Include en/fa/de, both 
 real OS 200% text. Local normal-scale API 36 review and Windows stress do not close physical ARM64/iOS/screen-reader
 acceptance. Investigate early Settings selections that are ignored, fixed debt/bulk buttons and currency grouping.
 AT-85 records the delivered test APK; require its actual signature/package check before phone handoff.
+
+D-79 / AT-86: on the phone verify that Settings is covered until ready and offers retry after failure. Change
+en/de/fa on the open form, confirm theme/mode and other choice captions update, selected values and unsaved inputs
+remain, and language persists after restart. Use the complete signed D-79 APK recorded in AT-86's evidence report.
+Windows/native emulator checks do not close real OS 200%, physical ARM64, screen-reader or iOS acceptance.

@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Settings loading and language changes (2026-10-09, D-79)
+
+- Show loading feedback until the Settings form is ready; offer Try again after a failed read.
+- Refresh theme, experience mode and other choice labels when the language changes on the open form.
+- Keep existing choices and unsaved estimate/reminder text during display refreshes.
+- Add ten regressions for complete reads, retries, translated choices and unchanged financial data.
+
 ### Improved - Readable lists and clear actions (2026-10-09, D-78)
 
 - Add buttons and transaction bulk/Undo actions stay outside the scrolling list on seven main pages.

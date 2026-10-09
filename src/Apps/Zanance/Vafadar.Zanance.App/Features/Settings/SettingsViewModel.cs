@@ -12,6 +12,7 @@ using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Settings;
 
+/// <summary>Editable preferences published after a complete read; display refreshes preserve unsaved inputs.</summary>
 public sealed partial class SettingsViewModel : ViewModelBase
 {
     private readonly ILocalizationService _localization;
@@ -23,6 +24,10 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly AppLockService _lock;
     private readonly Presentation.ThemeService _theme;
     private bool _refreshing;
+    private SettingsSnapshot? _snapshot;
+
+    /// <summary>Gets the first-frame/reload cover and retry state for the whole settings form.</summary>
+    public Presentation.SnapshotLoadState Loading { get; } = new();
 
     public SettingsViewModel(
         ILocalizationService localization,
@@ -37,7 +42,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _reminders = reminders;
         _lock = appLock;
         _theme = theme;
-        ModeNames = [translator["Mode_Simple"], translator["Mode_Advanced"]];
         _localization = localization;
         _translator = translator;
         _dates = dates;
@@ -49,7 +53,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         ReportCurrency = string.Empty;
         ReminderDaysText = "3";
         NotificationsSupported = reminders.Scheduler.IsSupported;
-        Refresh();
+        RefreshDisplay();
     }
 
     public AppLanguage[] Languages { get; }
@@ -78,7 +82,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial int EssentialPeriodIndex { get; set; }
 
-    public IReadOnlyList<string> EssentialPeriodNames => [_translator["Settings_PerDay"], _translator["Settings_PerWeek"], _translator["Settings_PerMonth"]];
+    /// <summary>Gets refreshed estimate-period captions without changing the selected period.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> EssentialPeriodNames { get; set; } = [];
 
     [ObservableProperty]
     public partial string? EssentialCurrencyText { get; set; }
@@ -117,7 +123,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     private static readonly int[] FreshnessDays = [7, 30, 90, 0];
 
-    public IReadOnlyList<string> ModeNames { get; }
+    /// <summary>Gets refreshed experience-mode captions without changing the mode.</summary>
+    [ObservableProperty]
+    public partial IReadOnlyList<string> ModeNames { get; set; } = [];
 
     [ObservableProperty]
     public partial int ModeIndex { get; set; }
@@ -224,58 +232,50 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial TimeSpan? ReminderTime { get; set; }
 
-    /// <summary>Loads the app settings.</summary>
-    public async Task LoadAsync()
+    /// <summary>Shares a complete pending read and publishes before the form becomes interactive.</summary>
+    public Task LoadAsync() => Loading.RunAsync(async () =>
+        _snapshot = await SettingsSnapshot.ReadAsync(_store, _localization, _time,
+            _lock.Authenticator.IsAvailableAsync, NotificationsSupported, _reminders.Scheduler.AreEnabledAsync), PresentSnapshot);
+
+    private void PresentSnapshot()
     {
+        var snapshot = _snapshot ?? throw new InvalidOperationException("A settings snapshot must be read before presentation.");
+        var settings = snapshot.Settings;
+        var wasRefreshing = _refreshing;
         _refreshing = true;
         try
         {
-            var settings = await _store.GetSettingsAsync();
+            // D-79: suppress writes only during synchronous publication, never across an asynchronous read.
             ReportCurrency = settings.ReportCurrencyCode;
             DefaultCurrency = settings.DefaultCurrencyCode;
             DefaultCurrencyChanged = false;
             ValuationEnabled = settings.ValuationCurrencyEnabled;
             IsAdvanced = settings.Shows(Feature.MoneySettings);
-            var dayNames = FreshnessDays.Select(d => d == 0
-                ? _translator["Settings_FreshnessNever"]
-                : Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_FreshnessDays", d.ToString(_localization.CurrentCulture)))!);
-            FreshnessNames = [.. dayNames];
             FreshnessIndex = Math.Max(0, Array.IndexOf(FreshnessDays, settings.RateFreshnessDays));
-            await LoadEssentialAsync(settings);
-            var accounts = (await _store.GetAccountsAsync(includeArchived: false)).Where(a => Core.Accounts.EntryAccountContract.IsValidDefault(a)).ToList();
-            DefaultAccounts =
-            [
-                new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]),
-                .. accounts.Select(a => new DefaultAccountOption(a.Id, $"{a.Name} ({a.CurrencyCode})")),
-            ];
+            _essentialCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
+            EssentialText = settings.EssentialEstimate is { } estimate
+                ? MoneyText.ForInput(estimate, _essentialCurrency, _localization.CurrentCulture) : string.Empty;
+            EssentialPeriodIndex = (int)settings.EssentialEstimatePeriod;
+            EssentialSavedText = null;
+            _essentialSuggestion = snapshot.EssentialSuggestion;
+            DefaultAccounts = [new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]),
+                .. snapshot.DefaultAccounts.Select(a => new DefaultAccountOption(a.Id, $"{a.Name} ({a.CurrencyCode})"))];
             DefaultAccount = DefaultAccounts.FirstOrDefault(o => o.Id == settings.DefaultAccountId) ?? DefaultAccounts[0];
             ShowDetails = settings.NotificationsShowDetails;
             ReviewReminderEnabled = settings.ReviewReminderEnabled;
             ModeIndex = (int)settings.Mode;
-            var culture = _localization.CurrentCulture;
-            StartDayNames =
-            [
-                _translator["Settings_MonthStartCalendar"],
-                .. Enumerable.Range(2, Core.Budgets.PeriodMath.MaxStartDay - 1)
-                    .Select(d => Vafadar.Localization.Formatting.NativeDigits.Apply(_translator.Format("Settings_MonthStartDay", d.ToString(culture)))!),
-            ];
             StartDayIndex = Math.Clamp(settings.MonthStartDay, 1, Core.Budgets.PeriodMath.MaxStartDay) - 1;
-            ThemeNames = [_translator["Theme_System"], _translator["Theme_Light"], _translator["Theme_Dark"]];
             ThemeIndex = (int)_theme.Choice;
             LockEnabled = settings.AppLockEnabled;
-            LockAvailable = settings.AppLockEnabled || await _lock.Authenticator.IsAvailableAsync();
+            LockAvailable = snapshot.LockAvailable;
             PinEnabled = _lock.PinEnabled;
             BlockScreenshots = ScreenProtection.BlockScreenshots;
             ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
             ReminderTime = settings.ReminderTime.ToTimeSpan();
-            NotificationsEnabled = NotificationsSupported && await _reminders.Scheduler.AreEnabledAsync();
+            NotificationsEnabled = snapshot.NotificationsEnabled;
+            RefreshDisplay();
         }
-        finally
-        {
-            _refreshing = false;
-        }
-
-        Refresh();
+        finally { _refreshing = wasRefreshing; }
     }
 
     partial void OnReportCurrencyChanged(string value)
@@ -318,24 +318,6 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
 
         Update(s => s.ValuationCurrencyEnabled = value);
-    }
-
-    // The explicit estimate of day-to-day spending (ZEX-S0606) and a suggestion: the median daily spending of the last
-    // three complete months on usable accounts, without plan payments.
-    private async Task LoadEssentialAsync(Core.Settings.ZananceSettings settings)
-    {
-        var culture = _localization.CurrentCulture;
-        _essentialCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
-        EssentialCurrencyText = _translator.Format("Settings_EssentialCurrency", _essentialCurrency);
-        EssentialText = settings.EssentialEstimate is { } estimate ? MoneyText.ForInput(estimate, _essentialCurrency, culture) : string.Empty;
-        EssentialPeriodIndex = (int)settings.EssentialEstimatePeriod;
-        EssentialSavedText = null;
-        var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
-        var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
-        _essentialSuggestion = Core.Reports.LiquidityCalculator.SuggestPerDay(await _store.GetAccountsAsync(), await _store.GetEntriesAsync(), _essentialCurrency, today, calendar, settings.MonthStartDay);
-        EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
-            ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, culture))
-            : null;
     }
 
     [RelayCommand]
@@ -484,7 +466,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
 
         _localization.SetLanguage(value);
-        Refresh();
+        RefreshDisplay();
     }
 
     partial void OnSelectedCalendarChanged(CalendarOption? value)
@@ -495,21 +477,39 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
 
         _localization.SetCalendar(value.Calendar);
-        Refresh();
+        RefreshDisplay();
     }
 
-    // Rebuilds everything that contains translated or formatted text for the current language and calendar.
+    /// <summary>Refreshes captions/previews only; selected values and unsaved estimate/reminder input are preserved.</summary>
     [MemberNotNull(nameof(Calendars), nameof(CalendarPreview))]
-    private void Refresh()
+    internal void RefreshDisplay()
     {
+        var wasRefreshing = _refreshing;
         _refreshing = true;
         try
         {
+            var labels = SettingsChoiceLabels.Create(_translator, _localization.CurrentCulture);
+            // Replacing ItemsSource can clear a native selection; restore indexes while all save callbacks are suppressed.
+            var mode = ModeIndex; var theme = ThemeIndex; var freshness = FreshnessIndex;
+            var start = StartDayIndex; var essential = EssentialPeriodIndex;
+            ModeNames = labels.Modes; ThemeNames = labels.Themes; FreshnessNames = labels.Freshness;
+            StartDayNames = labels.StartDays; EssentialPeriodNames = labels.EssentialPeriods;
+            ModeIndex = mode; ThemeIndex = theme; FreshnessIndex = freshness;
+            StartDayIndex = start; EssentialPeriodIndex = essential;
+            if (DefaultAccounts.Count > 0)
+            {
+                var selected = DefaultAccount?.Id;
+                DefaultAccounts = [new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]), .. DefaultAccounts.Skip(1)];
+                DefaultAccount = DefaultAccounts.FirstOrDefault(a => a.Id == selected) ?? DefaultAccounts[0];
+            }
+            EssentialCurrencyText = _translator.Format("Settings_EssentialCurrency", _essentialCurrency);
+            EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
+                ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, _localization.CurrentCulture)) : null;
             Calendars =
             [
                 new CalendarOption(CalendarSystem.Gregorian, _translator["Calendar_Gregorian"]),
                 new CalendarOption(CalendarSystem.Persian, _translator["Calendar_Persian"]),
-            new CalendarOption(CalendarSystem.Hijri, _translator["Calendar_Hijri"]),
+                new CalendarOption(CalendarSystem.Hijri, _translator["Calendar_Hijri"]),
             ];
             SelectedCalendar = Calendars.First(option => option.Calendar == _localization.CurrentCalendar);
             SelectedLanguage = _localization.CurrentLanguage;
@@ -519,7 +519,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         }
         finally
         {
-            _refreshing = false;
+            _refreshing = wasRefreshing;
         }
     }
 }

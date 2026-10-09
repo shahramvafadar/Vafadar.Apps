@@ -1,4 +1,4 @@
-# Large-text review (D-77 / D-78 / ZCR-A11Y-03)
+# Large-text review (D-77 / D-78 / D-79 / ZCR-A11Y-03)
 
 Engineering review on 2026-10-09. A11Y-03 is in progress. This first slice improves Home quick actions and plan
 rows; it does not establish whole-app, operating-system, screen-reader or physical-device accessibility acceptance.
@@ -185,9 +185,75 @@ or physical-device acceptance. CI is a separate single delayed check after push.
 
 - Keep large money/currency tokens readable at 412 px without changing formatting or shrinking readable text.
 - Repair fixed debt/Settings actions and transaction bulk labels at large text; review other forms/dialogs/pickers.
-- Investigate ignored Settings language selections and blank editor native Back independently of layout.
+- Settings input/caption remediation is verified in D-79 below; investigate blank editor native Back and retained navigation captions independently.
 - Review bottom navigation, custom-drawn controls, keyboard and screen readers, actual OS 200% text, native Android
   RTL/large text, physical ARM64 and iOS. Windows local stress and normal-scale emulator checks do not close them.
 
 A11Y-03 stays in progress. D-69 authorizes continuing the ready findings; unresolved owner/product/provider and
 release gates remain independent.
+
+## D-79 follow-up: complete Settings and live choice captions
+
+Settings now reads preferences, accounts/entries, the existing spending suggestion and device availability before
+publishing editable fields synchronously. SnapshotLoadState keeps the form covered through initial/reload/failure;
+retry is a translated growing button. The earlier async write-suppression boundary could ignore input on an exposed
+form. Live display refresh rebuilds all choice captions and restores indexes under the nested synchronous guard,
+without replacing unsaved estimate/reminder text. No financial formula, model, security policy, permission or SDK.
+
+### Running Windows evidence
+
+| Process-local text | Window | Theme | Languages | Captures |
+|---|---|---|---|---:|
+| 200% | 360x800 | Light/Dark | en, fa, de | 132 |
+| 200% | 412x892 | Light/Dark | en, fa, de | 132 |
+| 200% | 1280x820 | Light/Dark | en, fa, de | 132 |
+| 100% | 360x800 | Light | en, fa, de | 66 |
+| **Total** | | | | **462** |
+
+Counts include 126 existing onboarding captures and 336 Settings page/own-window captures, not distinct screens
+or unit tests. All 21 language/cohort proof files pass. The separate settings-display route holds a read, injects
+a handled read failure and invokes the actual native RetrySettingsButton/page handler. Actual SettingsViewModel
+bindings keep content hidden/disabled until publication, refresh de/fa/en choice captions, preserve selected indexes
+and the unsaved 17.25 estimate/period, and retain identical stored settings/entry JSON. No estimate Save, PIN or
+permission action is invoked. Original development database files/sidecars/marker are restored with matching hashes.
+Only the app's own window is rendered; no desktop input, focus request, global text setting or full-screen capture.
+
+Loading/retry text fits at the reviewed sizes/themes. Theme/mode choices grow at 200% and reflect the current language.
+The German page header truncates at 360 px/200%; open Shell tab/back captions can retain a prior language during
+in-place display changes. These are retained findings under the existing D-67 deferred navigation rebuild; this
+slice does not claim complete large-text or navigation-caption acceptance. Windows stress is process-local, not
+real OS 200% acceptance. The failure fixture proves the form/retry wiring, not a naturally failing native provider.
+
+### Normal Release emulator evidence
+
+Only emulator-5570, API 36 x86_64 and the owned QA03 Native fixture are used. The final full Release starts normally.
+One actual language-picker selection each applies Deutsch, فارسی and English. Cold restarts confirm each persisted
+language. On the open Settings page, native theme/mode chips show current German, Persian RTL and English captions;
+System theme and Advanced selections remain. System density 420/font_scale 1.0 and screenshot protection are unchanged.
+The native toolbar Back description retains an earlier language until reconstruction; record it separately from
+the now-current Settings choices. The loading frame can complete before hierarchy capture, so no captured native
+initial loading frame or native fault/retry result is claimed.
+
+After navigation, an unlaunched Debug installation copies only the known fictitious QA03 database/sidecars.
+Complete Accounts, Entries and Schedules remain equal to the D-76 baseline, with three entries. The final Release
+is reinstalled; cold English Home and all three Transactions rows are checked, Home restored and the app stopped.
+No financial Save/delete/Undo, owner database, private preferences or SecureStorage read, physical phone or system
+setting change. Native checks use accessibility XML, never removal of FLAG_SECURE.
+
+### Tests, builds and APK
+
+Ten AT-86 cases compile the actual snapshot/label sources with real isolated SQLite/localization and availability
+answers. They do not compile SettingsViewModel or substitute fake native controls; running-app checks above prove
+the binding/selection behavior separately. Main suite: 1,345 passed, zero failed/skipped; App.Tests 127. Test output
+cleaned. Final strict Windows Debug and complete Android Release builds have zero warnings/errors. The shipped
+Cloud permission boundary passes; this is static package validation, not provider or network-traffic acceptance.
+
+Full signed APK: artifacts/android/zanance-d79-release.apk, 80,713,643 bytes; SHA-256 989227ed5f8bee52c96cab755a53dfc737eb409f52976adf116a58e9364db242.
+Package pro.vafadar.zanance, 0.1.0/code 1, min SDK 24/target 36; ZIP integrity, embedded ARM64/x86_64 assembly stores
+and app AOT verified. v2/v3 local Debug-certificate signature verified; public certificate SHA-256 remains
+92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. This is the local phone-test package, not Store
+signing, product release or physical-device acceptance. CI remains one independent delayed check after push.
+
+A11Y-03 remains in progress: fixed actions/bulk labels, currency tokens, page headers/navigation captions, other
+forms/dialogs, custom-drawn controls, keyboard/screen readers, actual OS 200%, physical ARM64 and iOS remain.
+Continue these real findings under D-69; unresolved product/licence/provider/release decisions stay owner gates.

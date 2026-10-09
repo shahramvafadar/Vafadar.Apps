@@ -447,3 +447,23 @@ negative diagnostic selection findings and the final signed APK. Main suite rema
 in progress: large currency tokens, fixed actions/bulk labels, native OS large text, custom controls and independent
 screen-reader/device acceptance remain. A Settings language selection was not applied; a later fresh-visit retry succeeded.
 Theme/mode choices also retained old-language captions while nearby labels changed. Record that finding separately without claiming its cause or a locale fix in this layout slice.
+
+## D-79 - Complete Settings publication and live translated choices (2026-10-09)
+
+Follow the actual D-78 selection/caption findings under D-69. Settings previously kept its write-suppression flag
+set across asynchronous account/entry/device reads while exposing editable controls. An early selection could
+therefore change the picker but not apply. Read one complete SettingsSnapshot behind SnapshotLoadState and publish
+all fields synchronously before exposing the form. A failure stays covered with translated retry; repeated pending
+loads share one read. Device availability checks never authenticate or request notification permission.
+
+Rebuild mode/theme/freshness/month-start/estimate-period and default-account captions when display changes on the
+open page. Restore native selection indexes under the synchronous guard, retaining its prior nested state. Do not
+replace unsaved estimate/reminder text. Subscribe to localization only while the page appears. Keep D-67's deferred
+Shell rebuild, current theme/security choices, estimate formula and all financial data semantics.
+
+AT-86 adds ten cases compiling actual SettingsSnapshot/SettingsChoiceLabels with real isolated SQLite and
+localization, including delayed reads, failure/retry, unsupported notifications, saved lock availability and all six
+languages. No fake MAUI controls or copied view-model algorithms. Main suite: 1,345 passed, zero failed/skipped;
+App.Tests: 127. Actual view-model/binding/native retry and caption behavior are checked separately in the running app.
+See quality/font-scaling-a11y03.md and AT-86 for final rendered/native/APK evidence. No model, permission, SDK,
+backup/security policy or commercial restriction change; A11Y-03, real OS/screen-reader/phone/iOS gates remain open.

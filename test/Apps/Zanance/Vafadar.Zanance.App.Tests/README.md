@@ -19,10 +19,12 @@ changes process-wide culture. Each fixture disposes providers, clears SQLite poo
 | Theme | 6 | Saved/system fallback, availability, subscription lifetime, reentrant native events and invalid choice rejection |
 | Undo | 4 | Eight-second command boundary, clock rollback, once-only execution and offer replacement/dismissal |
 | Valued-asset consent | 37 | Cancel/create/edit/accept, scope by account/kind, six translations, pending command exclusion and failure retry, real validator and transfer invariants |
+| Settings reads/captions | 10 | Six live languages, pending availability/notification reads, shared publication, failure/retry, existing lock/unsupported notifications, valid defaults and real ledger preservation |
 | Snapshot loading | 12 | Covered initial frame, shared pending reads, publish-before-ready, synchronous reloads, read/presentation failure and cancellation retry, no transient readiness on retry, real SQLite transfer identity/totals |
 
 The original 68 cases carry `AT-80`; 37 valued-asset consent cases carry `AT-81` (D-74), and 12 snapshot-loading cases
-carry `AT-83` (D-76), for 117 total. A native port double supplies only window/dialog/authentication outcomes; it cannot prove
+carry `AT-83` (D-76), with ten settings read/caption cases carrying `AT-86` (D-79), for 127 total.
+SettingsViewModel/native bindings remain running-app evidence; only its actual snapshot/label sources are linked here. A native port double supplies only window/dialog/authentication outcomes; it cannot prove
 the native control rendering, Android Intent receiver, operating-system authenticator or device SecureStorage.
 Those remain separate running-app and device checks in the acceptance plan. UI rendering, billing, real OAuth,
 production encryption and physical-device acceptance are outside this project.

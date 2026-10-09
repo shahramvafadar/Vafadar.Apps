@@ -5687,4 +5687,10 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Tx_RetryLoad" xml:space="preserve">
     <value>Volver a cargar los movimientos</value>
   </data>
+  <data name="Settings_Loading" xml:space="preserve">
+    <value>Cargando ajustes…</value>
+  </data>
+  <data name="Settings_RetryLoad" xml:space="preserve">
+    <value>Reintentar</value>
+  </data>
 </root>

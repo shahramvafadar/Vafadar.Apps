@@ -22,6 +22,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountFormModel.cs" Link="Application/AccountFormModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/RegionalPreferencesViewModel.cs" Link="Application/RegionalPreferencesViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/RegionalOptions.cs" Link="Application/RegionalOptions.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/SettingsSnapshot.cs" Link="Application/SettingsSnapshot.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/SettingsChoiceLabels.cs" Link="Application/SettingsChoiceLabels.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/ThemeService.cs" Link="Application/ThemeService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IThemeHost.cs" Link="Application/IThemeHost.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Icons.cs" Link="Application/Icons.cs" />

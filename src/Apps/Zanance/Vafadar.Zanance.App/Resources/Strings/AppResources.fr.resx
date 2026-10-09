@@ -5695,4 +5695,10 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Tx_RetryLoad" xml:space="preserve">
     <value>Recharger les opérations</value>
   </data>
+  <data name="Settings_Loading" xml:space="preserve">
+    <value>Chargement des paramètres…</value>
+  </data>
+  <data name="Settings_RetryLoad" xml:space="preserve">
+    <value>Réessayer</value>
+  </data>
 </root>

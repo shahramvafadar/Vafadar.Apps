@@ -9,7 +9,8 @@
     x:DataType="local:SettingsViewModel"
     Title="{v:Translate Settings_Title}">
 
-    <ScrollView>
+    <Grid>
+    <ScrollView x:Name="SettingsContent" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding Loading.IsReady}">
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Language and region: how dates, numbers and weeks are shown -->
@@ -100,7 +101,7 @@
 
             <!-- Appearance (UX-08, D-22, D-27) -->
             <Label Text="{v:Translate Theme_Title}" Style="{StaticResource SectionHeader}" />
-            <Border Style="{StaticResource Card}">
+            <Border x:Name="AppearanceCard" Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <v:ChoiceChips ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" />
 
@@ -200,5 +201,15 @@
 
         </VerticalStackLayout>
     </ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
+                               WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Settings_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Button x:Name="RetrySettingsButton" Text="{v:Translate Settings_RetryLoad}" Style="{StaticResource SecondaryButton}" HeightRequest="-1" MinimumHeightRequest="44" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>
