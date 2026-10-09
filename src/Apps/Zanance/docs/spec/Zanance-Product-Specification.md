@@ -1347,6 +1347,15 @@ width above the original controls, with 44 px targets and a complete Reset actio
 owned-sample readbacks pass. A11Y-03, QA-06 and real device/platform acceptance remain partial/open.
 Evidence: [quality/home-customization-readable.md](../quality/home-customization-readable.md).
 
+### 31.11. Hidden Home account views (D-95 / AT-100)
+
+D-95 / AT-100 removes measured eager native row construction for hidden Home Accounts while retaining the
+complete snapshot and every shown account/action. Native tenfold publication median: 5,339.89 -> 10.69 ms, with no
+total cold-start/Q-02 acceptance claim. Final language/theme/width/200% native visibility/detail/list checks, 1,384
+main tests, strict Windows/Android Debug/Release builds, signed Release and complete owned-sample readbacks pass.
+QA-06 full entry materialization, visible creation, cold duration/ANR and real device/platform acceptance remain open.
+Evidence: [quality/home-hidden-account-views.md](../quality/home-hidden-account-views.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

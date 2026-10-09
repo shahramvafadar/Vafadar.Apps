@@ -240,3 +240,9 @@ D-94 changes Home customization presentation only. It retains the existing profi
 backup rules, with no new data, permission, SDK, security or export field. The Debug walk-through exercises native
 layout actions only in fictitious settings; complete financial rows/other preferences stay equal and original
 development database files restore with matching hashes. Independent read prototypes are not app dependencies.
+
+D-95 changes view lifetime only: no data/permission/SDK/security/export field is added. Complete financial
+snapshots remain; only hidden native account cards are absent. Temporary instrumentation records counts/timings for
+exact independently owned fictitious samples, is removed before final builds, and its validated cache files are
+removed. Native layout tests restore only their own fictitious HomeLayout/auditing time and compare every other
+column of all original tables; complete original rows/integrity are verified after restoration.

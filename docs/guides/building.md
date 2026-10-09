@@ -345,3 +345,8 @@ Customize Home review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -O
 AT-99 checks real full-width native names/44 px targets and invokes Down, Up, visibility Toggle and Reset against only
 the walk-through's fictitious profile. Restore original development files after review; process-local Windows text
 scaling is not evidence of real OS text scaling or Android/iOS screen readers.
+
+Home visibility review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only home -FontScale 2 -Theme dark -WindowSize 360x800`.
+AT-100 invokes real native customization switches, account detail/list and Back on fictitious data, restores the
+original layout and compares complete data. AT-98 now records visible native retention separately from a hidden
+complete snapshot with zero views. Preserve development files and wait for real arrangement before captures.

@@ -602,8 +602,11 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
-                if (name == "home" && Shell.Current.CurrentPage is { BindingContext: Features.Home.HomeViewModel } homePage)
-                { await ReviewHomeSnapshotAsync(services, homePage, folder, language); }
+                if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)
+                {
+                    await ReviewHomeSnapshotAsync(services, homePage, folder, language);
+                    await ReviewHomeAccountVisibilityAsync(app, services, homePage, folder, language);
+                }
                 if (name == "home-layout" && Shell.Current.CurrentPage is Features.Home.HomeLayoutPage layoutPage)
                 { await ReviewHomeLayoutActionsAsync(app, services, layoutPage, folder, language); }
 #endif
@@ -1631,7 +1634,7 @@ internal static class DebugSnapshots
         {
             await Task.Delay(50);
             var heading = page.FindByName<Button>("BalanceHeadingAction");
-            var rows = VisualDescendants(page).OfType<Grid>().Where(row => row.BindingContext is Presentation.EntryRow
+            var rows = VisualDescendants(page).OfType<Grid>().Where(row => row.BindingContext is (Presentation.EntryRow or Features.Accounts.AccountItem)
                 && row.Handler is not null && Visible(row));
             if (page.Width > 0 && (heading is null || heading.Width > 0 && heading.Height > 0)
                 && rows.All(row => row.Width > 0 && row.Height > 0)) { return; }
@@ -1723,7 +1726,132 @@ internal static class DebugSnapshots
                 ResetRestoresEveryDefaultSection = true, CompleteAccountsEntriesBudgetsAndOtherPreferencesUnchanged = true }));
     }
 
-    // AT-98: actual Home bindings retain their native account rows and rebind the full snapshot without Save.
+    // AT-100: exercise the real visibility switch and account navigation on the fictitious walk-through profile.
+    private static async Task ReviewHomeAccountVisibilityAsync(App app, IServiceProvider services,
+        Features.Home.HomePage page, string folder, string language)
+    {
+        var home = (Features.Home.HomeViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var original = (await store.GetSettingsAsync()).HomeLayout;
+        var financial = System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Budgets = await store.GetBudgetsAsync() });
+        static string OtherPreferences(Core.Settings.ZananceSettings settings)
+        {
+            var node = System.Text.Json.Nodes.JsonNode.Parse(System.Text.Json.JsonSerializer.Serialize(settings))!.AsObject();
+            node.Remove(nameof(settings.HomeLayout)); node.Remove(nameof(settings.UpdatedAt));
+            return node.ToJsonString();
+        }
+        var preferences = OtherPreferences(await store.GetSettingsAsync());
+        var invocations = 0;
+        void Invoke(Button button)
+        {
+            if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+            { throw new InvalidOperationException("The actual Home account action has no native Invoke pattern."); }
+            invoke.Invoke(); invocations++;
+        }
+        async Task<T> WaitPageAsync<T>() where T : Page
+        {
+            for (var attempt = 0; attempt < 100; attempt++)
+            {
+                if (Shell.Current.CurrentPage is T target) { await Task.Delay(250); return target; }
+                await Task.Delay(50);
+            }
+            throw new InvalidOperationException("Native Home account navigation did not open its target page.");
+        }
+        async Task ReturnAsync(Page target)
+        {
+            // Shell publishes CurrentPage before its animated child/header has acquired a native handler.
+            for (var attempt = 0; attempt < 100 && !VisualDescendants(target).OfType<Presentation.PageHeader>()
+                .SelectMany(header => header.Children.OfType<ImageButton>()).Any(button =>
+                    button.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.Button); attempt++)
+            { await Task.Delay(50); }
+            InvokeSnapshotBack(target); invocations++;
+            if (!ReferenceEquals(await WaitPageAsync<Features.Home.HomePage>(), page))
+            { throw new InvalidOperationException("Account navigation replaced the current Home page."); }
+            await home.LoadAsync();
+        }
+        async Task SetVisibleAsync(bool visible)
+        {
+            Invoke(VisualDescendants(page).OfType<Button>().Single(button => button.Command == home.CustomizeCommand));
+            var layout = await WaitPageAsync<Features.Home.HomeLayoutPage>();
+            var model = (Features.Home.HomeLayoutViewModel)layout.BindingContext;
+            var row = model.Rows.Single(candidate => candidate.Section == Core.Dashboard.HomeSection.Accounts);
+            var toggle = VisualDescendants(layout).OfType<Switch>().Single(candidate => ReferenceEquals(candidate.BindingContext, row));
+            if (toggle.IsToggled != visible)
+            {
+                if (toggle.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ToggleSwitch native
+                    || new Microsoft.UI.Xaml.Automation.Peers.ToggleSwitchAutomationPeer(native).GetPattern(
+                        Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Toggle) is not Microsoft.UI.Xaml.Automation.Provider.IToggleProvider provider)
+                { throw new InvalidOperationException("The actual Accounts switch has no native Toggle pattern."); }
+                provider.Toggle(); invocations++;
+                for (var attempt = 0; attempt < 100 && Core.Dashboard.HomeLayout.Parse((await store.GetSettingsAsync()).HomeLayout)
+                    .Sections.Single(state => state.Section == Core.Dashboard.HomeSection.Accounts).IsVisible != visible; attempt++)
+                { await Task.Delay(25); }
+            }
+            if (row.IsVisible != visible || Core.Dashboard.HomeLayout.Parse((await store.GetSettingsAsync()).HomeLayout)
+                .Sections.Single(state => state.Section == Core.Dashboard.HomeSection.Accounts).IsVisible != visible)
+            { throw new InvalidOperationException("The actual Accounts visibility switch did not persist its choice."); }
+            await ReturnAsync(layout);
+        }
+        var snapshot = home.Accounts.ToArray();
+        try
+        {
+            if (snapshot.Length > 0)
+            {
+                await SetVisibleAsync(false);
+                await ReviewHomeSnapshotAsync(services, page, folder, language + "-hidden");
+                await WaitForReopenedLayoutAsync(page);
+                await CaptureAsync(app, folder, language + "-home-accounts-hidden");
+                await SetVisibleAsync(true);
+                await ReviewHomeSnapshotAsync(services, page, folder, language + "-visible");
+                await WaitForReopenedLayoutAsync(page);
+                await ScrollToEndIfNeededAsync(FindScrollView(page)
+                    ?? throw new InvalidOperationException("Home has no account viewport."));
+                await Task.Delay(250);
+                await CaptureAsync(app, folder, language + "-home-accounts-visible");
+                var account = home.Accounts[0];
+                var accountRow = VisualDescendants(page.FindByName<VerticalStackLayout>("AccountsSection"))
+                    .OfType<Features.Accounts.AccountRow>().Single(row => ReferenceEquals(row.BindingContext, account));
+                Invoke(VisualDescendants(accountRow).OfType<Button>().Single());
+                var detail = await WaitPageAsync<Features.Accounts.AccountDetailPage>();
+                for (var attempt = 0; attempt < 100 && ((Features.Accounts.AccountDetailViewModel)detail.BindingContext).Name != account.Name; attempt++)
+                { await Task.Delay(50); }
+                if (((Features.Accounts.AccountDetailViewModel)detail.BindingContext).Name != account.Name)
+                { throw new InvalidOperationException("The shown account row opened different account details."); }
+                await ReturnAsync(detail);
+                await SetVisibleAsync(false);
+                await ReviewHomeSnapshotAsync(services, page, folder, language + "-hidden-again");
+                Invoke(page.FindByName<Button>("BalanceHeadingAction"));
+                var accounts = await WaitPageAsync<Features.Accounts.AccountsPage>();
+                var list = (Features.Accounts.AccountsViewModel)accounts.BindingContext;
+                await list.LoadAsync();
+                if (!list.Groups.SelectMany(group => group.Items).Select(item => item.Id).Order()
+                    .SequenceEqual(home.Accounts.Select(item => item.Id).Order()))
+                { throw new InvalidOperationException("Hiding Home accounts removed accounts from the complete account list."); }
+                await ReturnAsync(accounts);
+                await SetVisibleAsync(Core.Dashboard.HomeLayout.Parse(original).Sections
+                    .Single(state => state.Section == Core.Dashboard.HomeSection.Accounts).IsVisible);
+            }
+        }
+        finally
+        {
+            // Only the seeded walk-through profile is written; keep its exact original layout representation.
+            await store.UpdateSettingsAsync(settings => settings.HomeLayout = original);
+        }
+        if (!home.Accounts.SequenceEqual(snapshot) || preferences != OtherPreferences(await store.GetSettingsAsync())
+            || financial != System.Text.Json.JsonSerializer.Serialize(new
+            { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Budgets = await store.GetBudgetsAsync() }))
+        { throw new InvalidOperationException("Home account visibility changed financial data or unrelated preferences."); }
+        File.WriteAllText(Path.Combine(folder, language + "-home-account-visibility-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { NativeInvocations = invocations, CompleteAccountSnapshot = snapshot.Length,
+                ShowHideAndVisibleReloadChecked = snapshot.Length > 0, HiddenAccountRowsAbsent = true,
+                ActualAccountDetailsAndCompleteListChecked = snapshot.Length > 0,
+                CompleteAccountsEntriesBudgetsAndOtherPreferencesUnchanged = true, OriginalLayoutRestored = true }));
+    }
+
+    // AT-98: visible bindings retain native account rows; hidden bindings keep the full snapshot without views or Save.
     private static async Task ReviewHomeSnapshotAsync(IServiceProvider services, Page page, string folder, string language)
     {
         var home = (Features.Home.HomeViewModel)page.BindingContext;
@@ -1741,16 +1869,21 @@ internal static class DebugSnapshots
         try { await home.LoadAsync(); }
         finally { home.Accounts.CollectionChanged -= changed; }
         var after = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();
-        if (rows.Length != home.Accounts.Count || after.Length != rows.Length
+        var expectedRows = section.IsVisible ? home.Accounts.Count : 0;
+        if (rows.Length != expectedRows || after.Length != rows.Length
             || !rows.Zip(after).All(pair => ReferenceEquals(pair.First, pair.Second))
             || !after.Select((row, index) => ReferenceEquals(row.BindingContext, home.Accounts[index])).All(value => value)
             || !home.Accounts.SequenceEqual(accountValues)
             || events.Count != 1 || events[0] != System.Collections.Specialized.NotifyCollectionChangedAction.Reset
+            || (!section.IsVisible && BindableLayout.GetItemsSource(page.FindByName<VerticalStackLayout>("AccountRows")) is not null)
             || await StoredAsync() != before)
         { throw new InvalidOperationException("Home reload rebuilt account rows, failed to rebind values or changed stored data."); }
         File.WriteAllText(Path.Combine(folder, language + "-home-snapshot-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
         {
-            AccountRows = after.Length, ExistingNativeRowsRetained = true, FreshBindingContextsAndExactValues = true,
+            AccountSnapshotCount = home.Accounts.Count, AccountSectionVisible = section.IsVisible, AccountRows = after.Length,
+            ExistingNativeRowsRetained = section.IsVisible ? true : (bool?)null,
+            FreshBindingContextsAndExactValues = section.IsVisible ? true : (bool?)null,
+            NoHiddenAccountViews = !section.IsVisible ? true : (bool?)null,
             OneCompleteReset = true, CompleteAccountsEntriesSettingsBudgetsUnchanged = true, NoFinancialSave = true,
         }));
     }

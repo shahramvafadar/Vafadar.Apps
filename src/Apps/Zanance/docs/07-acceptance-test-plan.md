@@ -500,3 +500,14 @@ all default sections and unchanged complete financial rows/other preferences. Fi
 84 Windows native operations, full en/fa/de width/theme/200% matrix, 1,384 main tests, zero-warning builds and normal
 signed Android Release/readbacks pass. Original development files restore with matching hashes. No new unit count,
 real OS font-scale, screen-reader, physical-device or release acceptance: quality/home-customization-readable.md.
+
+## AT-100 - Complete accounts across Home visibility (D-95)
+
+Invoke Customize Home and the native Accounts switch: hidden -> shown -> hidden. Hidden means zero native rows and
+no source; the complete VM snapshot remains. Shown means every account in original order, with fresh contexts and
+retained native rows after warm reload. Invoke the actual row and Back, then the complete Accounts list from hidden
+Home and Back. Restore the original layout; compare complete financial rows and every other preference. Final local
+status: 21 proof files/294 native operations across en/fa/de themes/widths/200% and normal text, 1,384 main
+tests, strict builds, normal signed Android Release and exact 24-table readbacks pass. Actual native before/after
+counts/timings are separately recorded. No new unit count, real OS/screen-reader/phone/iOS/Q-02 or release acceptance.
+Evidence: quality/home-hidden-account-views.md.

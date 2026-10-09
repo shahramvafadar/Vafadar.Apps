@@ -79,5 +79,14 @@ public partial class HomePage : ContentPage
             var section = _sections[state.Section];
             section.IsVisible = state.IsVisible && section.Children.OfType<VisualElement>().Any(c => c.IsVisible);
         }
+
+        // D-95: a hidden BindableLayout still constructs every native row when its collection changes. Keep the
+        // complete VM snapshot, but attach it only when the user's Accounts section can display it. The same source
+        // stays attached during visible reloads, preserving D-92's native rows and fresh binding contexts.
+        var source = AccountsSection.IsVisible ? _viewModel.Accounts : null;
+        if (!ReferenceEquals(BindableLayout.GetItemsSource(AccountRows), source))
+        {
+            BindableLayout.SetItemsSource(AccountRows, source);
+        }
     }
 }

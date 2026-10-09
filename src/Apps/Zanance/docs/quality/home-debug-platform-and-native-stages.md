@@ -51,3 +51,7 @@ package build successfully. Final source contains only the platform guard; all s
 QA-06 remains partial. Next measure entry materialization and initial native account-row creation without dropping
 stored metadata, capping accounts, hiding ledger rows or duplicating financial formulas. Release/device duration,
 ANR, Q-02, ARM64 phone, iOS, real-provider, screen-reader and owner/Store acceptance remain independent gates.
+
+D-95 closes the measured hidden-row portion of this follow-up, with actual native view/handler counts before
+and after. It does not remove full entry materialization or requested visible rows. See home-hidden-account-views.md;
+Q-02, cold duration/ANR and device acceptance remain open.

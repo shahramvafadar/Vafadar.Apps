@@ -715,3 +715,15 @@ commands, defaults and profile preference behavior. AT-99 checks real native geo
 Reset actions on fictitious data. Final language/theme/width review, 1,384 tests, zero-warning Windows/Android Debug/
 Release builds, complete signed APK and exact owned-sample readback pass. Remaining accessibility, cold-start,
 physical-device and external gates are explicit: quality/home-customization-readable.md.
+
+## D-95 - Avoid native rows for hidden Home accounts (2026-10-09)
+
+Actual bound Android measurements found every default-hidden Account row constructed with a native handler.
+Attach the unchanged complete snapshot only while the section can display it; detach when hidden. Keep the same
+source and rows on visible reload, all values/actions/calculations and the existing layout preference. AT-100 invokes
+the actual visibility switch, account detail/list and Back on fictitious data; AT-98 distinguishes visible native
+retention from a hidden complete snapshot without views. Before/after stage evidence, final layout/native checks,
+1,384 tests, strict Windows/Android Debug/Release builds, full signed APK and complete original-table readbacks pass.
+The measured account-publication median for 200 accounts falls from 5,339.89 to 10.69 ms. This does not complete Q-02
+or claim the remaining full entry read/visible row creation, ANR, physical device or release gates.
+Evidence: quality/home-hidden-account-views.md.

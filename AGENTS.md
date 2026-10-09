@@ -398,3 +398,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * The Home layout Debug review checks real glyph geometry and native move/visibility/Reset persistence only in the
   walk-through's fictitious profile, comparing complete financial rows/other preferences. Preserve original data
   and distinguish process-local layout stress from real platform/font-scale/screen-reader acceptance.
+
+## 28. Hidden Home account view lifetime (D-95)
+
+* Keep the complete account snapshot. Attach its BindableLayout source only while the chosen Accounts section
+  can show content; detach/remove views when hidden. Visible reloads keep the same source and native rows.
+* Verify actual bound page counts/handlers, native visibility switches and account detail/list navigation, complete
+  financial rows and unrelated preferences. Distinguish isolated publication gains from total cold duration/ANR.
+  Temporary fictitious count/timing instrumentation is removed before final builds and its own cache is cleaned.

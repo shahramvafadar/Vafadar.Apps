@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Hidden Home accounts (2026-10-09, D-95)
+
+- Home no longer builds account cards when that section is hidden. Turning it on still shows every account with its current balance and opens the same account details.
+
 ### Fixed - Home customization (2026-10-09, D-94)
 
 - Full section names stay readable with larger text and narrow windows. Reorder and visibility controls have larger touch targets, and the Reset caption can wrap.

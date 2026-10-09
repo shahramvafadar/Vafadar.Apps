@@ -264,3 +264,10 @@ width above the original controls, with 44 px targets and a complete Reset actio
 200% review and 84 native operations, 1,384 main tests, strict Windows/Android Debug/Release builds and signed Release
 owned-sample readbacks pass. A11Y-03, QA-06 and real device/platform acceptance remain partial/open.
 Evidence: [quality/home-customization-readable.md](../../quality/home-customization-readable.md).
+
+D-95 / AT-100 removes measured eager native row construction for hidden Home Accounts while retaining the
+complete snapshot and every shown account/action. Native tenfold publication median: 5,339.89 -> 10.69 ms, with no
+total cold-start/Q-02 acceptance claim. Final language/theme/width/200% native visibility/detail/list checks, 1,384
+main tests, strict Windows/Android Debug/Release builds, signed Release and complete owned-sample readbacks pass.
+QA-06 full entry materialization, visible creation, cold duration/ANR and real device/platform acceptance remain open.
+Evidence: [quality/home-hidden-account-views.md](../../quality/home-hidden-account-views.md).

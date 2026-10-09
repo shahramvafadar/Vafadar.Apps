@@ -54,3 +54,7 @@ remain independent gates; this optimization does not resolve those decisions or 
 The D-92 review observed truncated Customize Home names at 200%; this negative evidence remains historical.
 D-94 closes that local caption/target follow-up separately in home-customization-readable.md. Performance and
 real platform accessibility gates above remain open.
+
+D-95 measures and removes initial native rows specifically when Accounts is hidden by the chosen layout.
+Shown Accounts still constructs every row and keeps D-92 retention on reload. Updated evidence and remaining full
+entry read/cold/ANR/device gates: home-hidden-account-views.md. D-92 timings above remain historical evidence.

@@ -524,14 +524,15 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout x:Name="AccountsSection" Spacing="0">
+                <VerticalStackLayout x:Name="AccountsSection" Spacing="0" IsVisible="False">
                     <!-- Accounts -->
                     <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasAccounts}">
                         <Label Text="{v:Translate Home_AccountsSection}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
                         <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenAccountsCommand}" />
                     </Grid>
                     <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasAccounts}">
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}">
+                        <!-- D-95: HomePage attaches the complete snapshot only while this section is visible. -->
+                        <VerticalStackLayout x:Name="AccountRows">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="accounts:AccountItem">
                                     <accounts:AccountRow />

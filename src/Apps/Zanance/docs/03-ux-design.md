@@ -499,3 +499,11 @@ row below it. Preserve native scaling/RTL and local 44 px targets. Reset uses th
 with its complete translated native name and unchanged command. Keep all eight sections and the profile's layout
 preference semantics. Verify actual glyph boundaries and native move/visibility/Reset persistence on fictitious data;
 do not treat truncated intermediate renders or process-local scaling as platform accessibility acceptance.
+
+### Hidden Home account views (D-95)
+
+Keep the complete financial/presentation snapshot regardless of section visibility. Hidden Accounts has no attached
+BindableLayout source/native rows; show attaches the current complete collection, hide detaches it. Visible reloads
+retain native rows and refresh contexts. Keep account detail and the complete Accounts list reachable with unchanged
+commands. Review real native visibility switches, navigation, warm rebinds and stored data; wait for arrangement
+before geometry checks rather than weakening checks for unarranged rows.
