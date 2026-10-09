@@ -174,3 +174,9 @@ inspection is needed, reinstall the known Debug package without launching it and
 The import fixture, preview helper and snapshot code are absent from Release. The Windows import-overlap snapshot
 route shows pending/link/keep-both and help without saving the import. Preserve development databases before it and
 verify restoration hashes afterward. These checks do not close physical ARM64/iOS or production acceptance.
+
+D-74 adds entry-asset-income and entry-asset-expense to the Debug snapshot route list. Use
+Run-Snapshots.ps1 -Languages 'en,fa,de' -Only entry-asset -Theme dark -WindowSize 360x800 to render the actual warning.
+The fixture creates only a fictitious value account, invokes the actual Save command, captures the app window/dialog,
+then cancels with the native UI Automation Invoke pattern. It asserts unchanged draft/ledger/value and never sends
+desktop clicks, keys or focus requests. Native Android checks retain FLAG_SECURE and use accessibility XML.

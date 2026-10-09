@@ -138,7 +138,7 @@ public static class MauiProgram
             .AddTransient<MorePage>().AddTransient<MoreViewModel>()
             .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>()
             .AddTransient<TransactionsPage>().AddTransient<TransactionsViewModel>()
-            .AddTransient<EntryEditorPage>().AddTransient<EntryEditorViewModel>()
+            .AddTransient<EntryEditorPage>().AddTransient<EntryEditorViewModel>().AddTransient<AssetEntryConfirmation>()
             .AddTransient<EntryDetailPage>().AddTransient<EntryDetailViewModel>()
             .AddTransient<CategoriesPage>().AddTransient<CategoriesViewModel>()
             .AddTransient<CategoryEditorPage>().AddTransient<CategoryEditorViewModel>()

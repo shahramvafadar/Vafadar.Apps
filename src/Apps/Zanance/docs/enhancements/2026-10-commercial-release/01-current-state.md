@@ -8,6 +8,12 @@ evidence; each row names the implementation, the tests and the UI path. Backlog 
 
 Maintenance update 2026-10-08 (D-62/D-63): optional backup protection and first-run restore are implemented. The app now has a device-wide four-digit PIN with 20 verifier/attempt/recovery tests and Windows UI checks, and an Android foreground screenshot choice. Android backup rules exclude only device-bound SecureStorage ciphertext; plaintext database backup and database encryption remain open. Historical rows below describe the 2026-10-07 audit and must not be used as current evidence for those changed items.
 
+Verification refresh 2026-10-09 (D-72/D-73/D-74): aggregate import/Undo, bulk operations, profiles, onboarding,
+widget routing, theme and app-access rows below now carry current local/emulator evidence (AT-79/80/81). Manual
+valued-asset consent is covered by 37 application cases and actual installed Debug/Release flows. Main suite 1,300.
+Other rows retain their dated audit scope; the canonical backlog and build-specific SDK review carry later status.
+Physical-device, iOS, provider and release acceptance remain independent gates.
+
 ## 1. Product capabilities
 
 All capabilities below are open to every user today. There is **no plan, quota, entitlement, purchase or paywall code**
@@ -20,20 +26,20 @@ instalments, rollover of 24 months, financial month start 1–28.
 |---|---|---|---|---|---|
 | Accounts (cash, checking, savings, credit card, loan, lent, asset; archive, opening balance, reconcile) | Implemented and verified | `Core/Accounts`, `Features/Accounts` | LoanTests, LoanCalculatorTests, ReconciliationTests, LedgerRulesTests, ZananceStoreTests | `accounts`, `accountdetail`, `loanschedule` | quota for Free → ZCR-ENT-04 |
 | Entries (income, expense, transfer, refund, income reversal, adjustment), splits, reimbursable, tags, search, attachments, templates, rules, saved filters | Implemented and verified | `Core/Ledger`, `Features/Entries`, `Templates`, `Rules` | GoldenDataTests, SplitTests, ReimbursementTests, EntryTagTests, EntryTemplateTests, CategoryRuleTests | `entry`, `entrydetail`, `transactions`, `templates`, `rules` | — |
-| Bulk operations | Implemented but unverified | `TransactionsViewModel` | none | `transactions` | ZCR-QA-03 |
-| Aggregated entries (ZEX-S0611) | Partial | `Ledger/AggregatedEntries.cs` | ZexPhase4DataTests, ZexPhase4ReportTests | entry editor (Advanced) | import only warns about overlaps → ZCR-LOC-04 |
+| Bulk operations | Implemented and locally/emulator verified (D-73) | `TransactionsViewModel`, `BulkTransactionsViewModel` | BulkTransactionTests, UndoTests, AT-80 | `transactions` | physical-device/iOS acceptance remains |
+| Aggregated entries (ZEX-S0611) | Implemented and locally/emulator verified (D-72) | `Ledger/AggregatedEntries.cs`, import overlap/journal | Core/Data ImportAggregateTests, AT-79 | entry editor (Advanced), import preview/history | physical-device/iOS acceptance remains |
 | Plans (frequencies, intervals, nth/last weekday, second day, weekend/holiday shift, contracts, reminders, auto-post, partial payments, settlement) | Implemented and verified | `Core/Plans`, `Data/AutoPostProcessor.cs` | RecurrenceTests, OccurrenceTests, WeekdayRuleTests, SecondDayTests, WeekendShiftTests, ContractReminderTests, AdvanceSettlementTests, PlanStoreTests | `plans`, `plan`, `occurrence`, `settlement` | discoverability (owner could not find plans) → ZCR-LOC-06 |
 | Budgets (month/week/two weeks; limits, envelopes, flex; rollover; suggestions; financial month) | Implemented and verified | `Core/Budgets` | EnvelopeCalculatorTests, FlexCalculatorTests, BudgetRolloverTests, BudgetPeriodTests, BudgetSuggestionTests, FinancialMonthTests, HijriPeriodTests | `//insights/budget`, `budgeteditor` | — |
 | Goals (balance, earmark, quantity; priority; contribution plans; trend/ETA; Home cards) | Implemented and verified (Home cards: snapshots only) | `Core/Goals`, `Data/GoalStore.cs` | GoalCalculatorTests, ZexPhase2GoalTests, ZexPhase5Tests | `//insights/goals`, `goal`, `goaldetail` | contribution reminders delivered locally/emulator (D-70, ZCR-LOC-02); physical-device gate remains |
 | Period review | Implemented and verified | `PeriodReview.cs` | ZexPhase4ReportTests | `review` | optional reminder delivered locally/emulator (D-71, ZCR-LOC-03); physical-device gate remains |
-| Holdings (mass/count, purity, locations, events, manual prices) | Implemented and verified; asset-account income/expense confirmation untested (ZEX-S0408) | `Core/Holdings`, `Data/HoldingStore.cs` | ZexPhase3HoldingTests, ZexPhase3DataTests, ZexPhase3CsvTests | `holdings`, `holdingdetail`, `assetevent` | ZCR-QA-04; "not a tax calculation" help text (ZEX-S0404) → ZCR-LOC-05 |
+| Holdings (mass/count, purity, locations, events, manual prices) | Implemented and locally/emulator verified; manual asset-account consent covered (D-74 / AT-81) | `Core/Holdings`, `Data/HoldingStore.cs` | ZexPhase3HoldingTests, ZexPhase3DataTests, ZexPhase3CsvTests, AssetEntryConfirmationTests (AT-81) | `holdings`, `holdingdetail`, `assetevent` | phone/iOS asset-consent acceptance open; "not a tax calculation" help text (ZEX-S0404) → ZCR-LOC-05 |
 | Reports (KPIs, wealth history, commitments, liquidity), PDF | Implemented and verified | `Core/Reports`, `Reports/PdfReport.cs` | ZexPhase4KpiTests, ZexPhase4ReportTests, ReportCalculatorTests, PdfReportTests | `//insights/reports`, `kpi` | — |
 | Forecast, scenarios, saved snapshots | Implemented and verified | `Core/Forecasts` | ForecastTests, ZexPhase5Tests, ZexPhase5DataTests | `//insights/forecast`, `snapshot` | — |
 | Multi-currency (52 currencies), manual rates, display units, report/valuation currency | Implemented and verified; no online rates | `Core/Money`, `Core/Rates` | RateTableTests, DisplayUnitTests, MoneyAmountTests | `rates`, `displayunits` | more currencies → ZCR-LOC-07 |
 | Receipt and PDF reading on device | Implemented and verified (parser); device quality unverified | `Vafadar.Documents.Maui`, `Core/Receipts` | ReceiptParserTests, Spanish/French/Italian receipt tests | Home "Receipt" | ZCR-QA-05 |
 | CSV import/export (generic mapping) | Implemented and verified; no presets for other apps or bank files | `Core/DataFiles` | CsvTests, ZexPhase3CsvTests | `importexport` | ZCR-IMP-01..02 |
-| Profiles (one database each) | Implemented but unverified | `App/Profiles/ProfileService.cs` | LocalDatabaseLocationTests only | `profiles` | ZCR-QA-03 |
-| Home customization, Android quick-add widget, onboarding, themes | Implemented but unverified (no automated tests; snapshots) | `Dashboard/HomeLayout.cs` (tested), `QuickAddWidget.cs`, `Features/Onboarding`, `ThemeService.cs` | HomeLayoutTests only | Home, widget, first run, settings | ZCR-QA-03 |
+| Profiles (one database each) | Implemented and locally/emulator verified (D-73) | `App/Profiles/ProfileService.cs` | ProfileTests, LocalDatabaseLocationTests, AT-80 | `profiles` | physical-device/iOS acceptance remains |
+| Home customization, Android quick-add widget, onboarding, themes | Implemented and locally/emulator verified (D-73) | `Dashboard/HomeLayout.cs`, `QuickAddWidget.cs`, `AppLinkRouter`, `Features/Onboarding`, `ThemeService.cs` | HomeLayoutTests, AppLinkTests, OnboardingTests, ThemeTests, AT-80 | Home, widget, first run, settings | physical-device/iOS acceptance remains |
 | Reminders (due dates, contracts, snooze) | Implemented and verified at unit level; device check pending | `Core/Reminders`, `App/Reminders` | ReminderPlannerTests, ReminderSnoozeTests | — | ZCR-QA-01 |
 | Localization (6 languages), 3 calendars, date input (D-59) | Implemented and verified | `Vafadar.Localization`, `DateField` | resource tests, DateFormatterTests, CalendarDatesTests | settings | 20+ languages → ZCR-LANG (wave 9) |
 | Public holidays | Partial: Germany (nationwide) and Iran (lunar dates approximate) only | `PublicHolidays.cs` | PublicHolidayTests | plan editor | more regions with source and validity → ZCR-LOC-08 |
@@ -45,14 +51,14 @@ instalments, rollover of 24 months, financial month start 1–28.
 |---|---|---|---|
 | Database encryption at rest | **Missing** | `Vafadar.Data/LocalDatabaseLocation.cs:76` (plain `DataSource`), no SQLCipher package; attachments are `byte[]` in the database (`EntryAttachment.cs`); `AppLockService.cs:9` says so (SEC-03) | ZCR-SEC-01..06 |
 | OS device/cloud backup of the plaintext database | **Missing protection** | `AndroidManifest.xml:3` `allowBackup="true"` without `dataExtractionRules`; iOS default iCloud backup; disclosed in decision log §1 | ZCR-SEC-07 (owner decision OD-10) |
-| App lock | Implemented but unverified | `Vafadar.Maui/Security/DeviceAuthenticator*` (device credential/biometrics, Class 2 accepted), `App/Security/AppLockService.cs` (fixed 30 s), `LockPage.cs:73` unlocks when no device lock exists (recovery path) | no app password, no tests → ZCR-SEC-04, ZCR-QA-03 |
+| App lock | Implemented and locally/emulator verified (D-63, D-73) | Device authenticator, AppLockService/native cover, optional four-digit PIN and durable attempt delays in SecureStorage | PinLockTests, AppLockTests, AT-69/80; PIN never accepts NotAvailable. Device authentication/physical phone/iOS remain open; encrypted-database password/key flow remains SEC-04 |
 | Backup encryption | Implemented and verified | `Vafadar.Backup/Security/BackupEncryption.cs`: AES-256-GCM, PBKDF2-SHA256 600 000, salt, versioned header | BackupEncryptionTests, BackupServiceTests, ZexBackupRoundTripTests, ZexUpgradeTests |
 | Safety copy before restore | Partial | `BackupService.CreateSafetyCopyAsync` passes no password → plaintext in `AppData/backups-safety` | ZCR-SEC-08 |
 | Automatic backup | Missing | `BackupOptions.AutomaticBackupInterval` exists, nothing calls it | ZCR-LOC-09 |
 | Cloud backup (Google Drive appdata, OneDrive app folder) | Implemented but unverified | `Vafadar.Backup.GoogleDrive`, `.OneDrive`, `Vafadar.Authentication*`; only in builds with client ids (`MauiProgram.cs:87-111`) | storage and sign-in tests exist; real OAuth clients and devices missing → ZCR-QA-02 (Blocked on owner's client ids) |
-| Key storage | Partial (OAuth tokens only) | `Vafadar.Authentication.Maui/ProtectedValueStores.cs` | needed for a database key → ZCR-SEC-03 |
+| Key storage | Partial (OAuth tokens and device-local PIN verifier/delays; no database key) | ProtectedValueStores, SecurePinStorage | database-key wrapping remains ZCR-SEC-03 |
 | Network and telemetry | Partial | INTERNET removed only in Android Release without client ids; no analytics SDK; ML Kit's own logging in online builds not verified | ZCR-SEC-09 |
-| Screen protection | Implemented (Android FLAG_SECURE, iOS cover); Windows none | `MainActivity.cs:22`, `MauiProgram.cs:76-82` | — |
+| Screen protection | Implemented: Android screenshots blocked by default, optional Settings choice; recents remain hidden. iOS cover; Windows screenshots allowed | MainActivity, ScreenProtection, D-63 | physical-device/iOS acceptance remains |
 | Temporary files | Implemented (best-effort deletion) | `SqliteDatabaseBackupSource.cs:110-127`, `AttachmentFiles.cs:62-83` | covered by ZCR-SEC-01 threat model |
 
 ## 3. Release, devices and platforms

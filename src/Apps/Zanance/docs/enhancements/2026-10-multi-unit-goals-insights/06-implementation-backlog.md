@@ -82,7 +82,7 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0405 | Location transfer, gifts, outflows, corrections | 3 | Implemented – verified |
 | ZEX-S0406 | Valuations and valued totals | 3 | Implemented – verified |
 | ZEX-S0407 | Holdings screens and aggregation rules | 3 | Implemented – verified (snapshots en/fa) |
-| ZEX-S0408 | Legacy asset accounts kept; optional conversion assistant | 3 | Implemented – unverified (assistant tested; the confirmation of income or expense on an asset account has no test yet) |
+| ZEX-S0408 | Legacy asset accounts kept; optional conversion assistant | 3 | Implemented - locally/emulator verified (assistant tests; D-74 / AT-81 consent tests/native evidence; phone/iOS acceptance open) |
 | ZEX-S0409 | Holdings in backup, CSV export and import | 3 | Implemented – verified (CSV round trip; restore preview lists goals and holding types) |
 | ZEX-S0501 | Feature policy model and audit | 1 (rules with every phase) | Implemented – verified (policy table complete; no page reads the mode; onboarding sets Simple) |
 | ZEX-S0502 | Summaries for hidden active data | 1 (rules with every phase) | Implemented – verified (existing weekly budgets, second reminder, contract and budget method visible in Simple) |
@@ -523,7 +523,7 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 * **Code / data:** assistant, validator.
 * **Migration / backup:** none automatic.
 * **Acceptance:** Given an Asset account "Car 8,000 EUR", when the app is updated, then it is unchanged; converting creates nothing until confirmed.
-* **Tests:** assistant integration test.
+* **Tests:** assistant integration test; D-74 / AT-81 adds 37 actual application consent cases and native Debug/Release editor evidence. Physical phone/iOS acceptance remains open.
 * **L10n / a11y:** –.
 * **Risk / recovery:** archived old account stays restorable.
 * **Size:** S.

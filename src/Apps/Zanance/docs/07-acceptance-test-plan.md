@@ -161,3 +161,36 @@ Runtime evidence: 522 application-window captures: en/fa/de, light/dark, 360x800
 Physical phone, native OS credential UI, real-provider restore, iOS and production acceptance remain separate gates.
 The app access gate does not encrypt financial data. No existing owner profile, stored verifier or physical phone is
 used in application tests; the complete signed Release APK remains the required phone-test handoff.
+
+## AT-81 - Legacy valued-asset income/expense consent (D-74 / QA-04)
+
+37 application cases compile the actual AssetEntryConfirmation used by the editor, with real SQLite continuations
+and actual translations. Cancelled new/edit saves do not invoke draft mutation or change a persisted record; accepted
+writes keep identity/kind/minor units. Pending/failed dialogs cannot write or overlap another save; retry requires
+fresh consent. Non-asset accounts and non-Income/Expense kinds keep their existing paths. Accepted invalid entries
+are rejected by the financial validator. A real transfer stays one entry with zero income/spending and unchanged
+combined balances. All six UI languages request their existing explicit dialog labels. Main suite: 1,300 passed.
+
+Runtime evidence: Strict Windows and complete Android Debug/Release builds finish with zero errors/warnings; final main suite
+1,300 passed, zero skipped. Windows actual Save/native cancel via UI Automation: en/fa/de, light/dark, 360x800,
+412x892 and 1280x820; 288 app-window captures, including 36 actual consent/cancel checks. Ledger identities, asset
+opening value, amount/note draft and idle state remain unchanged after cancellation. Original development database
+files restored with matching hashes; no desktop clicks/keys/focus requests.
+
+Existing isolated API 36 x86_64 emulator: actual fictitious Asset account at 800,000 minor units; Debug native
+expense Cancel preserves the complete account/ledger rows and the 12.34/account draft. Installed trimmed/AOT Release
+asks for both Expense and Income; Cancel retains 12.34/20.00 and selected asset. A fresh Record anyway saves each
+once and returns Home. Native account list shows 8,007.66 EUR. SQLite independently confirms only the original entry
+plus one Expense 1,234 and one Income 2,000; original row and complete account rows unchanged, no cancelled/duplicate
+entries, final asset balance 800,766. Final Release reinstalled after copying only the owned fictitious database via
+an unlaunched Debug package. No PIN, stored verifier, owner profile or attached physical phone is inspected.
+
+Phone handoff: artifacts/android/zanance-d74-release.apk, 80,639,915 bytes, SHA-256
+82f2afa9cc4060d419bac64e082ccf74ca10429c645cffabc0bc4a50afcb7262. Package pro.vafadar.zanance; min SDK 24,
+target 36; signature v2/v3, ZIP integrity, ARM64/x86_64 assembly stores and AOT libraries verified. Cloud permission
+guard passes. FLAG_SECURE stays unchanged; emulator checks use accessibility XML. This is local/emulator engineering
+evidence, separate from physical ARM64, real OS credential UI, iOS and release acceptance.
+
+This is manual editor consent, not a persisted authorization flag or a new import/restore rule. Native consent,
+physical ARM64, iOS and product acceptance remain separate; fictitious emulator data does not establish owner-device
+acceptance. The device access gate and this warning do not encrypt the database.

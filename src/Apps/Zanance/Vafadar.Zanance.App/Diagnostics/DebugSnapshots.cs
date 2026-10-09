@@ -319,6 +319,10 @@ internal static class DebugSnapshots
         var accountId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Checking).Id;
         var weekdayPlanId = (await services.GetRequiredService<PlanStore>().GetSchedulesAsync()).First(s => s.Rule.DayRule == MonthDayRule.LastWeekday).Id;
         var loanId = (await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).First(a => a.Type == AccountType.Loan).Id;
+        // Fictitious legacy value account for the actual editor confirmation route (D-74 / AT-81).
+        var confirmationAsset = new Account { Name = "Fictitious car", Type = AccountType.Asset, CurrencyCode = "EUR",
+            OpeningBalance = 800000, OpeningDate = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime).AddDays(-30) };
+        await services.GetRequiredService<ZananceStore>().SaveAccountAsync(confirmationAsset);
         var holdingTypes = await services.GetRequiredService<HoldingStore>().GetTypesAsync();
         var goldId = holdingTypes.First(t => t.Dimension == Core.Holdings.AssetDimension.Mass).Id;
         var coinId = holdingTypes.First(t => t.Dimension == Core.Holdings.AssetDimension.Count).Id;
@@ -329,6 +333,8 @@ internal static class DebugSnapshots
             ("home", "//home", null),
             ("transactions", "//transactions", null),
             ("entry-new", AppShell.EntryEditorRoute, null),
+            ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
+            ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
             ("receipt-found", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
@@ -446,6 +452,12 @@ internal static class DebugSnapshots
                     await CaptureCloudStatesAsync(app, backupVm, folder, language);
                 }
 #if WINDOWS
+                if (name.StartsWith("entry-asset-", StringComparison.Ordinal)
+                    && Shell.Current.CurrentPage?.BindingContext is Features.Entries.EntryEditorViewModel assetEditor)
+                {
+                    await CaptureAssetConfirmationAsync(app, services, assetEditor, folder, $"{language}-{name}", confirmationAsset.Id);
+                }
+
                 if (name == "regional-settings")
                 {
                     await CaptureHelpAsync(app, folder, language, ["RegionalFormat"]);
@@ -1045,6 +1057,58 @@ internal static class DebugSnapshots
             await shown;
             await Task.Delay(200);
         }
+    }
+
+    // D-74: drive the actual native dialog through its UI Automation Invoke pattern, never desktop input/focus.
+    private static async Task CaptureAssetConfirmationAsync(App app, IServiceProvider services,
+        Features.Entries.EntryEditorViewModel editor, string folder, string file, Guid assetId)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var before = await store.GetEntriesAsync();
+        var accountBefore = (await store.GetAccountsAsync()).Single(a => a.Id == assetId);
+        editor.AmountText = 12.34m.ToString("0.00", services.GetRequiredService<ILocalizationService>().CurrentCulture);
+        editor.Note = "Fictitious QA04 draft";
+        var text = editor.AmountText;
+        var shown = editor.SaveCommand.ExecuteAsync(null);
+        await Task.Delay(700);
+        await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, file + "-consent.png"));
+        if (app.Windows[0].Handler?.PlatformView is not Microsoft.UI.Xaml.Window { Content.XamlRoot: { } root })
+        {
+            throw new InvalidOperationException("The native confirmation window is unavailable.");
+        }
+
+        var dialog = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetOpenPopupsForXamlRoot(root)
+            .Select(p => p.Child).OfType<Microsoft.UI.Xaml.Controls.ContentDialog>().Single();
+        var cancel = services.GetRequiredService<Translator>()["Common_Cancel"];
+        var button = FindNativeButton(dialog, cancel) ?? throw new InvalidOperationException("The confirmation cancel button is unavailable.");
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(button);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        {
+            throw new InvalidOperationException("The confirmation button has no Invoke pattern.");
+        }
+        invoke.Invoke();
+        await shown;
+        var after = await store.GetEntriesAsync();
+        var accountAfter = (await store.GetAccountsAsync()).Single(a => a.Id == assetId);
+        if (after.Count != before.Count || !after.Select(e => e.Id).Order().SequenceEqual(before.Select(e => e.Id).Order())
+            || accountAfter.OpeningBalance != accountBefore.OpeningBalance || editor.AmountText != text
+            || editor.Note != "Fictitious QA04 draft" || editor.IsBusy || editor.SaveError is not null)
+        {
+            throw new InvalidOperationException("Cancelling valued-asset consent changed the ledger, value or draft.");
+        }
+        // Navigation to the next fictitious screen must not trigger an unrelated unsaved-draft dialog.
+        editor.AmountText = string.Empty;
+        editor.Note = string.Empty;
+    }
+
+    private static Microsoft.UI.Xaml.Controls.Button? FindNativeButton(Microsoft.UI.Xaml.DependencyObject root, string text)
+    {
+        if (root is Microsoft.UI.Xaml.Controls.Button button && button.Content is string content && content == text) { return button; }
+        for (var i = 0; i < Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(root); i++)
+        {
+            if (FindNativeButton(Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(root, i), text) is { } found) { return found; }
+        }
+        return null;
     }
 
     // D-63: exclusively fictitious credentials; refuse to touch a PIN already present on the development device.

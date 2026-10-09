@@ -72,13 +72,19 @@ internal sealed class FlowPlatform : IAppInteraction, IAppFlowHost
     internal readonly List<Exception> Failures = [];
     internal readonly List<(string Title, string Message)> Alerts = [];
     internal readonly Queue<bool> Confirmations = [];
+    internal readonly List<(string Title, string Message, string Accept, string Cancel)> ConfirmationDialogs = [];
+    internal Func<Task<bool>>? PendingConfirmation;
     internal readonly Queue<string?> Inputs = [];
     internal readonly Queue<string?> Choices = [];
     internal readonly List<(string Route, IDictionary<string, object>? Parameters)> Routes = [];
     internal readonly List<string[]> OfferedActions = [];
     internal Func<Task<string?>>? PendingInput;
     public Task AlertAsync(string title, string message, string cancel) { Alerts.Add((title, message)); return Task.CompletedTask; }
-    public Task<bool> ConfirmAsync(string title, string message, string accept, string cancel) => Task.FromResult(Confirmations.Count > 0 && Confirmations.Dequeue());
+    public Task<bool> ConfirmAsync(string title, string message, string accept, string cancel)
+    {
+        ConfirmationDialogs.Add((title, message, accept, cancel));
+        return PendingConfirmation?.Invoke() ?? Task.FromResult(Confirmations.Count > 0 && Confirmations.Dequeue());
+    }
     public Task<string?> PromptAsync(string title, string message, string accept, string cancel, string? initialValue = null, int maxLength = -1) => PendingInput?.Invoke() ?? Task.FromResult(Inputs.Count > 0 ? Inputs.Dequeue() : null);
     public Task<string?> ChooseAsync(string title, string cancel, params string[] actions) { OfferedActions.Add(actions); return Task.FromResult(Choices.Count > 0 ? Choices.Dequeue() : null); }
     public Task NavigateAsync(string route, IDictionary<string, object>? parameters = null) { Routes.Add((route, parameters)); return Task.CompletedTask; }

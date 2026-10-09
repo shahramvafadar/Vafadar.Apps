@@ -94,3 +94,7 @@ ledger invariant change. AT-79 local/emulator evidence and the phone/iOS gates l
 D-73 / QA-03 adds regression coverage around implemented Phase 1 onboarding, profile switching, application access,
 widget/reminder navigation and theme policy. Explicit native ports keep actual flow sources testable without a MAUI
 UI dependency. AT-80 is local engineering/runtime evidence; owner phone, real OAuth and iOS acceptance stay open.
+
+D-74 / QA-04 adds 37 AT-81 cases for the existing entry-editor valued-asset consent, including cancellation before
+mutation, busy command exclusion, translated native requests and real SQLite validation. No Phase 1 scope or data
+model change. Main suite 1,300; native/phone acceptance remains separate.

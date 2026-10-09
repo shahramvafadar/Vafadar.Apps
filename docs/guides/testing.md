@@ -60,3 +60,7 @@ Tests isolate fictitious profiles/verifiers/preferences and injected time; assem
 process-wide culture/digits. Native adapters, rendering, Intent delivery, OS credentials and SecureStorage remain
 running-app/device checks. Preserve the linked-source approach when extending existing flows; never duplicate an
 algorithm merely to test a copy. Run the CI-policy test filter and clean outputs after verification.
+
+D-74 / QA-04 adds 37 AT-81 cases to App.Tests (105 total), using the actual asset confirmation gate and real SQLite
+save continuations. Native editor invocation remains a running-app check, with no duplicate editor algorithm.
+Run the main test filter with CI warning policy; it now has 1,300 cases. Do not run cleanup concurrently with builds.

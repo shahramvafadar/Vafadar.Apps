@@ -335,3 +335,11 @@ Supported widget entry links open drafts only; reminder identity and original da
 Neither a repeated tap nor a malformed link posts money or completes a review. Native theme callbacks must not recurse
 into palette rebuilding; changing theme keeps an open editor and its values. Existing translated labels and controls
 are unchanged; explicit native ports allow the actual flow to be tested separately from rendered/platform behavior.
+
+## Valued-asset consent (D-74 / QA-04)
+
+A legacy valued asset represents an estimate, rather than cash. Keep the existing explicit Record anyway/Cancel
+explanation for manual Income/Expense, in both Simple and Advanced. Save is busy while consent is pending; a second
+save cannot open another dialog or overlap a write. Cancel keeps account, kind, amount and note in the editor and
+leaves the asset value/ledger unchanged. Each retry asks again. Consent does not bypass validation. No new copy or
+layout; transfers and balance adjustments do not acquire the income/expense warning.

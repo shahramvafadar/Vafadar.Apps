@@ -43,7 +43,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | Blocked (owner runs) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
-| ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Proposed | QA-03 |
+| ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | Proposed | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
@@ -348,3 +348,9 @@ D-73 / QA-03: actual application flow sources are compiled in the new non-MAUI a
 explicit native ports. AT-80 adds 68 cases; main suite 1,263 passed. Strict Windows/Android builds, 522 Windows
 captures and isolated native onboarding/PIN/widget/bulk/Undo checks are recorded in AT-80. Complete signed Release
 APK verified. Native OS authentication, physical ARM64, real OAuth, iOS and product acceptance remain open.
+
+D-74 / QA-04: 37 AT-81 cases exercise the actual manual valued-asset consent and save continuation, including
+cancel/edit/accept, pending command exclusion, translated requests, validator and transfer invariants. Main suite
+1,300 passed. Strict builds, 288 rendered Windows captures, native Debug/Release cancel and Release accepted
+Income/Expense SQL identity/balance proof recorded in AT-81. Complete signed Release APK verified. Phone/iOS gates
+remain separate; QA-06 performance is the next independent ready section under D-69.

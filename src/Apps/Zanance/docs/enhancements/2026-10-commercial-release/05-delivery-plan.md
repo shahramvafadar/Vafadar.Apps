@@ -138,3 +138,8 @@ D-73 / QA-03 completes the application flow project under D-69: actual linked so
 runtime evidence and owner phone/iOS/provider acceptance remain distinct. The next independent ready section is
 QA-04, asset-account income/expense confirmation tests. ADR/library, OD-10, OD-12 and commercial decisions remain
 owner gates; no production encryption, OS-backup policy or test-build limits are introduced.
+
+D-74 / QA-04 completes the application/native coverage of existing valued-asset editor consent under D-69. AT-81
+adds 37 cases; main suite 1,300. No data model, import restriction or commercial behavior change. The next independent
+ready section is QA-06, startup/search/migration measurements with the reference and 10x data set. Product/licence,
+provider/OS-backup decisions and physical-device/iOS release gates remain open.

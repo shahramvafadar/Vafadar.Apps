@@ -86,9 +86,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private string? _receiptAppliedCurrency;
     private long _receiptDisplayFactor = 1;
     private readonly Presentation.UndoService _undo;
+    private readonly AssetEntryConfirmation _assetConfirmation;
 
-    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo)
+    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation)
     {
+        _assetConfirmation = assetConfirmation;
         _undo = undo;
         _store = store;
         _translator = translator;
@@ -1124,14 +1126,19 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
 
-        // A valued asset account holds a value, not spending or income: such an entry is saved only when confirmed (ZEX-S0408).
-        if (Kind is EntryKind.Income or EntryKind.Expense
-            && _accounts.TryGetValue(Account.Id, out var target) && target.Type == Core.Accounts.AccountType.Asset
-            && !await Shell.Current.DisplayAlertAsync(_translator["Entry_AssetAccountTitle"], _translator["Entry_AssetAccountMessage"], _translator["Entry_AssetAccountYes"], _translator["Common_Cancel"]))
+        // Keep the draft untouched while the valued-asset confirmation is pending (D-74 / ZEX-S0408).
+        IsBusy = true;
+        try
         {
-            return;
+            await _assetConfirmation.RunAsync(Kind, _accounts.GetValueOrDefault(Account.Id), SaveConfirmedAsync);
         }
+        finally { IsBusy = false; }
+    }
 
+    /// <summary>Validates and saves the editor draft only after any required valued-asset consent.</summary>
+    private async Task SaveConfirmedAsync()
+    {
+        if (Account is null) { SaveError = _translator["Entry_ChooseAccount"]; return; }
         var culture = _localization.CurrentCulture;
         var currency = Currencies.TryGet(Account.CurrencyCode, out var known) ? known : Currencies.Euro;
         var parsed = MoneyText.TryParse(AmountText, currency, culture, out var amount);
@@ -1203,7 +1210,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
         var saved = false;
         var attachmentFailed = false;
-        IsBusy = true;
         try
         {
             var kind = Kind;
@@ -1316,10 +1322,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             // The input stays in the form (TX-06, AT-04).
             SaveError = _translator["Common_SaveFailed"];
-        }
-        finally
-        {
-            IsBusy = false;
         }
 
         // Leaving the page is not part of saving: a navigation problem after a successful save must not say "not saved".

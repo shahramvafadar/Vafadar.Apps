@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Save while confirming a valued asset (2026-10-09, D-74)
+
+- Save waits for the existing valued-asset warning and its write; another tap cannot overlap either operation.
+- Cancel keeps the amount, account, type and note in the form. A retry asks for consent again.
+- Add 37 regressions for cancellation, acceptance, editing, translations, validation and transfer meanings.
+
 ### Fixed - Secure startup and command boundaries (2026-10-09, D-73)
 
 - A widget tap from a stopped app opens its transaction draft after unlocking, once the main page is ready.

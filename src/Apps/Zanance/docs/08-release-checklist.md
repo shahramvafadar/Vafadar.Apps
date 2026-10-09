@@ -97,3 +97,7 @@ D-73 / QA-03: AT-80 application tests cover actual non-UI flows, not native plat
 verify secure startup, widget drafts after unlocking, PIN/device confirmations, short/long background returns,
 profiles, bulk validation/delete/Undo and theme changes with unsaved input using the complete signed APK. No result
 from isolated SQLite, a native port double, the emulator or CI substitutes for those physical-device release checks.
+
+D-74 / QA-04: repeat manual Income/Expense on a valued asset on the physical phone. Cancel must keep the draft and
+asset value; Record anyway must save only once after validation. Transfers/adjustments must keep their meanings.
+AT-81 local/emulator results and the complete signed APK do not close physical-device, iOS or product acceptance.

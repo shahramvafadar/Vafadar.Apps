@@ -18,8 +18,9 @@ changes process-wide culture. Each fixture disposes providers, clears SQLite poo
 | Widget/reminder links | 21 | Supported routes with typed identity/date, unlock and first-page ordering, rejected malformed input, repeated draft opening without ledger writes |
 | Theme | 6 | Saved/system fallback, availability, subscription lifetime, reentrant native events and invalid choice rejection |
 | Undo | 4 | Eight-second command boundary, clock rollback, once-only execution and offer replacement/dismissal |
+| Valued-asset consent | 37 | Cancel/create/edit/accept, scope by account/kind, six translations, pending command exclusion and failure retry, real validator and transfer invariants |
 
-All 68 cases carry `AT-80`. A native port double supplies only window/dialog/authentication outcomes; it cannot prove
+The original 68 cases carry `AT-80`; 37 valued-asset consent cases carry `AT-81` (D-74), for 105 total. A native port double supplies only window/dialog/authentication outcomes; it cannot prove
 the native control rendering, Android Intent receiver, operating-system authenticator or device SecureStorage.
 Those remain separate running-app and device checks in the acceptance plan. UI rendering, billing, real OAuth,
 production encryption and physical-device acceptance are outside this project.

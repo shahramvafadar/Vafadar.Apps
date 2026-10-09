@@ -344,3 +344,22 @@ All 1,263 main tests pass with no skips; strict Windows/Android builds and runti
 No schema, portable preference allowlist, credential persistence, SDK, permission, commercial enforcement or
 production encryption changes. Fictitious native/runtime evidence is separate from physical ARM64, real provider,
 iOS, store and product acceptance. The next independent ready section is QA-04, asset-account confirmation tests.
+
+## D-74 - Valued-asset entry consent coverage (2026-10-09)
+
+Complete QA-04 / ZEX-S0408 under D-69, after the QA-03 native ports. Preserve the existing editor policy: only
+Income/Expense on a legacy Asset account requires explicit consent; transfers, balance adjustments, refunds and
+holding capital events retain their paths. This is an application confirmation, not a new persisted ledger flag or
+an import/restore restriction. The financial validator remains mandatory after consent.
+
+Move the actual confirmation and save-continuation boundary into AssetEntryConfirmation through IAppInteraction.
+The real entry editor calls it before its draft mutation/write. Hold IsBusy across native consent and the continuation;
+reject another save while either is pending, release on cancellation/failure, and require fresh consent on retry.
+The accepted continuation contains the existing validation/write/attachment/navigation behavior; no duplicate editor
+algorithm, schema, translation, encryption, commercial quota, permission or SDK change.
+
+AT-81 adds 37 application cases with real isolated SQLite: cancel/create/edit/accept, all six other account types,
+all six non-Income/Expense kinds, the six actual translations, pending/repeated commands, dialog/save failure retry,
+validator rejection and a real one-entry transfer preserving balances and zero income/spending. Main suite: 1,300
+passed, zero skipped. Native/strict-build/signed-APK evidence is recorded in AT-81. Physical phone and iOS acceptance
+remain open. Next independent ready section: QA-06, measured startup/search/migration performance.

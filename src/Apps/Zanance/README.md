@@ -75,3 +75,7 @@ later changes or dependent imports require review. No automatic merging. See AT-
 Application flow coverage (D-73 / QA-03): 68 AT-80 cases compile actual non-UI onboarding, profiles, bulk commands,
 access, widget/reminder routing and theme sources with explicit native ports and real isolated SQLite. The full
 main suite has 1,263 passing tests. Native runtime/physical-device evidence remains separate; no commercial limits.
+
+D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests has 105 and the main suite 1,300.
+The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
+signed Release handoff remain separate from physical phone/iOS acceptance. Next ready section: QA-06 performance.

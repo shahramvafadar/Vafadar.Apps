@@ -7,6 +7,7 @@
     <PackageReference Include="FluentIcons.Common" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/AssetEntryConfirmation.cs" Link="Application/AssetEntryConfirmation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppLinkRouter.cs" Link="Application/AppLinkRouter.cs" />
     <Compile Include="../../../../src/Libraries/Vafadar.Maui/Security/DeviceAuthenticator.cs" Link="Application/DeviceAuthenticator.cs" />
