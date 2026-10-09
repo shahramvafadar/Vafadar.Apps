@@ -86,3 +86,7 @@ contextual permission and app-lock navigation stay the same; there is no new led
 
 D-71 / LOC-03 adds a profile-level optional financial-period review reminder using the existing notification
 permission, privacy and scheduling infrastructure. No Phase 1 ledger invariants or cloud/network capabilities change.
+
+D-72 / LOC-04 completes the remaining aggregate-import overlap choices above the Phase 1 CSV pipeline. Explicit
+choices, atomic stale-preview checks and durable Undo use an additive ImportLinks table; no automatic merge or
+ledger invariant change. AT-79 local/emulator evidence and the phone/iOS gates live in the acceptance plan.

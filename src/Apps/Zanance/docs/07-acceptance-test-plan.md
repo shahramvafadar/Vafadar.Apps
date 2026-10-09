@@ -130,3 +130,20 @@ light/dark, at 360/412/wide. Android API 36 x86_64 checks native future 09:00 re
 tap to review and UI opt-out persisted across process restart on fictitious data. One notification is expedited by a
 Debug-only fixture; no system time/settings change. Complete signed Release APK is separately inspected and installed.
 Physical ARM64 phone, exact-time/Doze/reboot and iOS acceptance remain open; no production-release claim.
+
+## AT-79 - Aggregate import choices and durable Undo (D-72 / LOC-04)
+
+Eight Core cases and nineteen real SQLite cases verify matching account/kind/category/inclusive dates, partial files,
+known/repeated IDs, repeated batches without resubtraction, incoming and fully consumed aggregates, complete metadata
+clones, attachment retention, durable restart/backup Undo and DeleteAll journal cleanup. Missing/stale choices, shared
+details, previous links, later edits, dependent imports and external refunds leave every row unchanged. Balance and
+expense invariants remain intact. Main suite: 1,195 passed; final localization/resources: 242 passed.
+
+Windows en/fa/de light/dark pending/link/keep-both/help is reviewed at 360/412/wide; original development database
+hashes match after fixture restoration. Android API 36 x86_64 UI import of six details totaling 395 EUR leaves a
+17 EUR aggregate and total 412 EUR; restart preserves the history and skips those IDs. The trimmed/AOT Release APK
+installs/cold-starts, displays the durable history and performs confirmed Undo. Native ledger shows one original
+412 EUR row; subsequent unlaunched Debug data inspection confirms original identity, ledger count 1 and journal 0.
+Signed complete APK package/signature/ZIP/ABIs/assembly stores/AOT/Cloud permission guard pass; all five Debug
+diagnostic types are absent from Release. ARM64 phone and iOS acceptance remain open. No real profile or financial
+data, screenshot policy, system settings or physical phone was touched.

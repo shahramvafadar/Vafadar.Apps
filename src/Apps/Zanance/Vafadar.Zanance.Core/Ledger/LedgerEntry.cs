@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Vafadar.Core.Domain;
 
 namespace Vafadar.Zanance.Core.Ledger;
@@ -78,6 +79,7 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
     }
 
     /// <summary>Creates an entry with an existing id, e.g. when importing the app's own export (IO-10).</summary>
+    [JsonConstructor]
     public LedgerEntry(Guid id)
         : base(id)
     {
@@ -187,6 +189,14 @@ public sealed class LedgerEntry : Entity, IAuditableEntity
 
     /// <inheritdoc />
     public DateTimeOffset UpdatedAt { get; set; }
+
+    /// <summary>Returns an independent copy with the same identity and metadata, including an independent tag list.</summary>
+    public LedgerEntry Copy()
+    {
+        var copy = (LedgerEntry)MemberwiseClone();
+        copy.Tags = [.. Tags];
+        return copy;
+    }
 
     /// <summary>Returns the signed effect of this entry on the balance of <paramref name="accountId"/>, in its currency.</summary>
     public long EffectOn(Guid accountId)

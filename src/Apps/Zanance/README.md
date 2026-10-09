@@ -67,3 +67,7 @@ Owner-written source is proprietary and all rights reserved; bundled third-party
 
 Period review reminders (D-71): optionally enable a reminder in Settings for 09:00 after your financial month
 closes, following the selected calendar and month start day. Off by default; no automatic review or money movements.
+
+Aggregate CSV import (D-72): review each overlapping aggregate and choose linking or keeping both. Preview dates,
+amounts and the remaining total before saving. Linked imports retain safe Undo across restart and database backup;
+later changes or dependent imports require review. No automatic merging. See AT-79 for evidence and device gates.

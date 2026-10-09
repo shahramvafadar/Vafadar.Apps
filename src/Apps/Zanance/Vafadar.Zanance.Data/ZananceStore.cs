@@ -11,10 +11,14 @@ namespace Vafadar.Zanance.Data;
 
 /// <summary>The result of an import.</summary>
 /// <param name="BatchId">The batch that can be undone; <see langword="null"/> when nothing was imported.</param>
-/// <param name="Imported">Entries saved.</param>
+/// <param name="Imported">Accepted new rows, including an aggregate fully replaced by details.</param>
 /// <param name="Skipped">Entries skipped because they exist already.</param>
 /// <param name="Errors">Invalid entries by id; when not empty, nothing was saved.</param>
-public sealed record ImportResult(Guid? BatchId, int Imported, int Skipped, IReadOnlyDictionary<Guid, IReadOnlyList<LedgerError>> Errors);
+public sealed record ImportResult(Guid? BatchId, int Imported, int Skipped, IReadOnlyDictionary<Guid, IReadOnlyList<LedgerError>> Errors)
+{
+    /// <summary>Gets a conflicting overlap choice; when present, nothing was saved.</summary>
+    public ImportOverlapConflict? Conflict { get; init; }
+}
 
 /// <summary>A past import that can be undone.</summary>
 public sealed record ImportBatchInfo(Guid BatchId, int Count, DateTimeOffset ImportedAt);
@@ -33,7 +37,7 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 /// <summary>
 /// Data access for the Zanance app. Every operation uses a short-lived context from the factory.
 /// </summary>
-public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory)
+public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory, TimeProvider time)
 {
     // Refund id → purchase id of refunds unlinked by a purchase deletion, until that deletion is undone (this session).
     private readonly Dictionary<Guid, Guid> _refundLinks = [];
@@ -460,91 +464,6 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
         }
     }
 
-    /// <summary>
-    /// Imports entries as one batch in a single transaction (IO-11, AT-54): either all valid entries are saved or none.
-    /// Entries whose id exists already are skipped (IO-10). Invalid entries are reported and nothing is saved.
-    /// </summary>
-    public async Task<ImportResult> ImportAsync(IReadOnlyList<LedgerEntry> entries, CancellationToken cancellationToken = default)
-    {
-        ArgumentNullException.ThrowIfNull(entries);
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
-        var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
-        var ids = entries.Select(e => e.Id).ToList();
-        var existing = (await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
-
-        var batchId = Guid.CreateVersion7();
-        var errors = new Dictionary<Guid, IReadOnlyList<LedgerError>>();
-        var toAdd = new List<LedgerEntry>();
-        var seen = new HashSet<Guid>();
-
-        // A refund needs its purchase, from the file or already in the app, and may not exceed it (REF-04).
-        var batch = entries.GroupBy(e => e.Id).ToDictionary(g => g.Key, g => g.First());
-        var purchaseIds = entries.Where(e => e.RefundOfId is not null).Select(e => e.RefundOfId!.Value).Distinct().ToList();
-        var storedPurchases = await db.Entries.AsNoTracking().Where(e => purchaseIds.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
-        var refunded = (await db.Entries.AsNoTracking().Where(e => e.RefundOfId != null && purchaseIds.Contains(e.RefundOfId.Value))
-            .Select(e => new { Purchase = e.RefundOfId!.Value, e.Amount }).ToListAsync(cancellationToken))
-            .GroupBy(r => r.Purchase).ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
-
-        // A repeated id in the file (e.g. two overlapping exports pasted together) counts once.
-        foreach (var entry in entries.Where(e => !existing.Contains(e.Id) && seen.Add(e.Id)))
-        {
-            LedgerEntry? original = null;
-            if (entry.RefundOfId is { } purchaseId && !storedPurchases.TryGetValue(purchaseId, out original) && !batch.TryGetValue(purchaseId, out original))
-            {
-                errors[entry.Id] = [LedgerError.RefundOriginalMissing];
-                continue;
-            }
-
-            var otherRefunds = entry.RefundOfId is { } purchase ? refunded.GetValueOrDefault(purchase) : 0;
-            var problems = LedgerValidator.Validate(entry, accounts, categories, original, otherRefunds);
-            if (problems.Count == 0 && entry.RefundOfId is { } counted)
-            {
-                refunded[counted] = otherRefunds + entry.Amount;
-            }
-
-            if (problems.Count > 0)
-            {
-                errors[entry.Id] = problems;
-                continue;
-            }
-
-            entry.ImportBatchId = batchId;
-            entry.Source = EntrySource.Import;
-            toAdd.Add(entry);
-        }
-
-        if (errors.Count > 0 || toAdd.Count == 0)
-        {
-            return new ImportResult(null, 0, entries.Count - toAdd.Count - errors.Count, errors);
-        }
-
-        db.Entries.AddRange(toAdd);
-        await db.SaveChangesAsync(cancellationToken);
-        OnChanged();
-        return new ImportResult(batchId, toAdd.Count, entries.Count - toAdd.Count, errors);
-    }
-
-    /// <summary>Returns the import batches, newest first.</summary>
-    public async Task<List<ImportBatchInfo>> GetImportBatchesAsync(CancellationToken cancellationToken = default)
-    {
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var rows = await db.Entries.AsNoTracking().Where(e => e.ImportBatchId != null)
-            .Select(e => new { e.ImportBatchId, e.CreatedAt }).ToListAsync(cancellationToken);
-        return [.. rows.GroupBy(r => r.ImportBatchId!.Value)
-            .Select(g => new ImportBatchInfo(g.Key, g.Count(), g.Min(r => r.CreatedAt)))
-            .OrderByDescending(b => b.ImportedAt)];
-    }
-
-    /// <summary>Removes the entries of one import batch only; data that existed before is untouched (IO-11).</summary>
-    public async Task<int> UndoImportAsync(Guid batchId, CancellationToken cancellationToken = default)
-    {
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var removed = await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
-        OnChanged();
-        return removed;
-    }
-
     /// <summary>Returns all manual exchange rates, newest first.</summary>
     public async Task<List<ExchangeRate>> GetRatesAsync(CancellationToken cancellationToken = default)
     {
@@ -594,7 +513,11 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     public async Task<int> PurgeOrphanAttachmentsAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        return await db.Attachments.Where(a => !db.Entries.Any(e => e.Id == a.EntryId)).ExecuteDeleteAsync(cancellationToken);
+        // A consumed aggregate's attachments must survive a restart until its durable import Undo restores it.
+        var protectedIds = (await ReadImportLinksAsync(db, cancellationToken)).SelectMany(b => b.State.Adjustments)
+            .Where(a => a.Before is not null && a.After is null).Select(a => a.Before!.Id).ToList();
+        return await db.Attachments.Where(a => !db.Entries.Any(e => e.Id == a.EntryId) && !protectedIds.Contains(a.EntryId))
+            .ExecuteDeleteAsync(cancellationToken);
     }
 
     /// <summary>Returns one attachment with its content.</summary>
@@ -885,6 +808,7 @@ public sealed class ZananceStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.ImportLinks.ExecuteDeleteAsync(cancellationToken);
         await db.AssetEvents.ExecuteDeleteAsync(cancellationToken);
         await db.AssetValuations.ExecuteDeleteAsync(cancellationToken);
         await db.ForecastSnapshots.ExecuteDeleteAsync(cancellationToken);

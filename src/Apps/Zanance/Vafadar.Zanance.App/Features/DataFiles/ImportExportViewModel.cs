@@ -12,6 +12,7 @@ using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.DataFiles;
+using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
@@ -44,6 +45,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private IReadOnlyList<IReadOnlyList<string>> _rows = [];
     private IReadOnlyList<ImportRow> _preview = [];
     private bool _ownFormat;
+    private bool _previewStale;
+    private IReadOnlyList<LedgerEntry> _existingEntries = [];
+    private IReadOnlyDictionary<Guid, Core.Accounts.Account> _previewAccounts = new Dictionary<Guid, Core.Accounts.Account>();
+    private CategoryLookup? _previewCategories;
 
     public ImportExportViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, AppLockService appLock, HoldingStore holdings)
     {
@@ -76,6 +81,18 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     public ObservableCollection<string> InvalidLines { get; } = [];
 
     public ObservableCollection<BatchRow> Batches { get; } = [];
+
+    /// <summary>Gets the explicit choices for every aggregate affected by the accepted rows.</summary>
+    public ObservableCollection<ImportOverlapRow> Overlaps { get; } = [];
+
+    /// <summary>Gets or sets the reason the overlap decisions are incomplete or conflict.</summary>
+    [ObservableProperty]
+    public partial string? OverlapError { get; set; }
+
+    /// <summary>Gets or sets whether the current preview is ready for an explicit import.</summary>
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ImportCommand))]
+    public partial bool CanImport { get; set; }
 
     [ObservableProperty]
     public partial DateOnly ExportFrom { get; set; }
@@ -157,6 +174,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial string? ImportError { get; set; }
+
+    /// <summary>Gets or sets the inline conflict next to the import history.</summary>
+    [ObservableProperty]
+    public partial string? UndoError { get; set; }
 
     /// <summary>Gets a value indicating whether holdings can be exported (Advanced, with holdings; ZEX-S0409).</summary>
     [ObservableProperty]
@@ -304,9 +325,13 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private Task RefreshPreviewAsync() => _holdingsContent is not null ? PreviewHoldingsAsync() : PreviewAsync();
+
+    [RelayCommand]
     private async Task PreviewAsync()
     {
         ImportError = null;
+        _previewStale = false;
         var accounts = await _store.GetAccountsAsync();
         var categories = await _store.GetCategoriesAsync();
         var existing = await _store.GetEntriesAsync();
@@ -314,7 +339,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
         if (_ownFormat)
         {
-            _preview = CsvImport.PreviewOwn(_rows, accounts, categories, Name, existing);
+            _preview = CsvImport.PreviewOwn(_rows, accounts, categories, Name, existing, await _store.GetConsumedImportIdsAsync());
         }
         else
         {
@@ -329,15 +354,15 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             _preview = CsvImport.PreviewGeneric(_rows, mapping, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
         }
 
+        _existingEntries = existing;
+        _previewAccounts = accounts.ToDictionary(a => a.Id);
+        _previewCategories = new CategoryLookup(categories, _translator);
+
         var valid = _preview.Count(r => r.Entry is not null && !r.AlreadyImported);
         var known = _preview.Count(r => r.AlreadyImported);
         var invalid = _preview.Where(r => r.Error is not null).ToList();
         var duplicates = _preview.Count(r => r.PossibleDuplicate);
         var beforeOpening = _preview.Count(r => r.BeforeOpening && !r.AlreadyImported);
-
-        // Rows inside the range of a summed-up entry would count that money twice (ZEX-S0611); named, never changed silently.
-        var newEntries = _preview.Where(r => r.Entry is not null && !r.AlreadyImported).Select(r => r.Entry!).ToList();
-        var overlapping = Core.Ledger.AggregatedEntries.Find(newEntries, existing).SelectMany(o => o.Detailed).Select(e => e.Id).Distinct().Count(id => newEntries.Any(n => n.Id == id));
 
         PreviewText = _translator.Format("Import_Preview", valid, known, invalid.Count);
         InvalidLines.Clear();
@@ -351,7 +376,6 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         {
             duplicates > 0 ? _translator.Format("Import_Duplicates", duplicates) : null,
             beforeOpening > 0 ? _translator.Format("Import_BeforeOpening", beforeOpening) : null,
-            overlapping > 0 ? _translator.Format("Import_AggregateOverlap", overlapping) : null,
         }.Where(t => t is not null));
         if (WarningText.Length == 0)
         {
@@ -367,6 +391,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         var content = HoldingsCsv.Read(_rows, await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync());
         _holdingsContent = content;
         _preview = [];
+        Overlaps.Clear();
+        OverlapError = null;
         PreviewText = _translator.Format("Import_HoldingsPreview", content.Types.Count, content.Events.Count, content.Valuations.Count, content.Errors.Count);
         InvalidLines.Clear();
         foreach (var error in content.Errors.Take(8))
@@ -378,6 +404,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         WarningText = content.Errors.Count > 0 ? _translator["Import_HoldingsInvalid"] : null;
         ImportCount = content.Errors.Count > 0 ? 0 : content.Types.Count + content.Locations.Count + content.Events.Count + content.Valuations.Count;
         ImportButtonText = _translator.Format("Import_Button", ImportCount);
+        CanImport = ImportCount > 0;
         HasPreview = true;
     }
 
@@ -390,11 +417,34 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             return;
         }
 
-        ImportCount = _preview.Count(r => r.Entry is not null && !r.AlreadyImported && !(SkipDuplicates && r.PossibleDuplicate));
+        var entries = AcceptedEntries();
+        ImportCount = entries.Count;
         ImportButtonText = _translator.Format("Import_Button", ImportCount);
+        // A duplicate switch changes the exact affected rows. Reset choices rather than reuse an outdated decision.
+        Overlaps.Clear();
+        foreach (var overlap in AggregatedEntries.FindForImport(entries, _existingEntries))
+        {
+            var account = _previewAccounts[overlap.Aggregate.AccountId];
+            var refunds = _existingEntries.Concat(entries).Any(e => e.RefundOfId == overlap.Aggregate.Id);
+            Overlaps.Add(new ImportOverlapRow(overlap, account.Name, _previewCategories!.Name(overlap.Aggregate.CategoryId), account.CurrencyCode,
+                _translator, _dates, _localization, refunds, UpdateOverlapChoices));
+        }
+        UpdateOverlapChoices();
     }
 
-    [RelayCommand]
+    private List<LedgerEntry> AcceptedEntries() => _preview.Where(r => r.Entry is not null && !r.AlreadyImported
+        && !(SkipDuplicates && r.PossibleDuplicate)).Select(r => r.Entry!).DistinctBy(e => e.Id).ToList();
+
+    private void UpdateOverlapChoices()
+    {
+        var pending = Overlaps.Any(o => !o.HasChoice);
+        var shared = Overlaps.Where(o => o.HasChoice && o.Decision.Link).SelectMany(o => o.Preview.Detailed)
+            .GroupBy(e => e.Id).Any(g => g.Count() > 1);
+        OverlapError = shared ? _translator["Import_Overlap_SharedDetail"] : null;
+        CanImport = ImportCount > 0 && !pending && !shared && !_previewStale;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanImport))]
     private async Task ImportAsync()
     {
         if (_holdingsContent is { } holdings)
@@ -403,7 +453,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             return;
         }
 
-        var entries = _preview.Where(r => r.Entry is not null && !r.AlreadyImported && !(SkipDuplicates && r.PossibleDuplicate)).Select(r => r.Entry!).ToList();
+        var entries = AcceptedEntries();
         if (entries.Count == 0)
         {
             return;
@@ -412,7 +462,16 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            var result = await _store.ImportAsync(entries);
+            ImportError = null;
+            ImportResult = null;
+            var result = await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList());
+            if (result.Conflict is { } conflict)
+            {
+                ImportError = _translator[$"Import_Overlap_{conflict}"];
+                _previewStale = conflict is not ImportOverlapConflict.SharedDetail;
+                UpdateOverlapChoices();
+                return;
+            }
             if (result.Errors.Count > 0)
             {
                 ImportError = _translator.Format("Import_Rejected", result.Errors.Count,
@@ -468,6 +527,21 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         }
     }
 
+#if DEBUG
+    /// <summary>Loads fictitious rows for the development walk-through without a file picker or import side effects.</summary>
+    internal async Task PreviewFixtureAsync(IReadOnlyList<LedgerEntry> entries)
+    {
+        await LoadAsync();
+        var accounts = (await _store.GetAccountsAsync()).ToDictionary(a => a.Id);
+        var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+        _rows = Csv.Read(CsvExport.Write(entries, accounts, id => categories.Name(id), includeNotes: true), ',');
+        _ownFormat = true;
+        _holdingsContent = null;
+        FileName = "fictitious-import.csv";
+        await PreviewAsync();
+    }
+#endif
+
     [RelayCommand]
     private async Task UndoAsync(BatchRow batch)
     {
@@ -476,7 +550,22 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             return;
         }
 
-        await _store.UndoImportAsync(batch.BatchId);
-        await LoadBatchesAsync();
+        IsBusy = true;
+        try
+        {
+            UndoError = null;
+            ImportResult = null;
+            var result = await _store.TryUndoImportAsync(batch.BatchId);
+            if (result.Conflict) { UndoError = _translator["Import_UndoConflict"]; }
+            else
+            {
+                ImportResult = _translator["Import_UndoDone"];
+                // Preview choices may refer to the old remainder; obtain fresh evidence before another import.
+                HasPreview = false;
+                await LoadBatchesAsync();
+            }
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { await Failures.ShowAsync(ex); }
+        finally { IsBusy = false; }
     }
 }

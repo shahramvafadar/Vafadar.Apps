@@ -87,3 +87,8 @@ APK. Android emulator fixture delivery does not close ARM64 phone, Doze/timezone
 D-71 / LOC-03 device gate: verify review-reminder opt-in/refusal, selected-calendar/pay-cycle boundaries and local
 09:00 delivery, generic/details text, tap through app lock, finishing/opt-out cancellation, profile switch/restore,
 Doze and reboot. Local tests and isolated API 36 x86_64 native delivery/tap do not close ARM64 phone or iOS acceptance.
+
+D-72 / LOC-04 device gate: use the complete signed APK to preview/link/keep overlapping aggregates, confirm totals,
+restart and Undo; exercise partial files, stale previews and dependent edits/imports with disposable data. Native
+API 36 x86_64 import and Release Undo are verified; ARM64 phone and iOS runtime remain open. Historical metadata in
+ImportLinks travels with database backups and is retained until its import is undone or profile/data deletion.

@@ -160,3 +160,17 @@ review/ledger state, then displays one immediately for a tap check without chang
 Read only files/review-reminder-proof.json with adb run-as for that fixture. UI opt-out and process restart must leave
 zero pending review requests. Subsequent starts preserve the UI choice. The diagnostic is absent from Release;
 remove the fixture environment import before building and inspecting the complete signed handoff APK.
+
+## Android aggregate import fixture (D-72 / AT-79)
+
+VAFADAR_IMPORT_LINK_PROOF=1 in an AndroidEnvironment item on a complete Debug APK enables DebugImportLinks. Use only
+the isolated marked reminder/import installation. It rejects other account/ledger/goal/holding/plan data, seeds its
+own category catalogue if onboarding was bypassed, and prepares an unsaved six-row CSV preview against a 412 EUR
+September aggregate. Subsequent starts reuse stable IDs and the saved aggregate; they never recreate it. Read only
+files/import-link-proof.json for this fixture. Use uiautomator and native taps for the real choice/import actions;
+FLAG_SECURE remains intact. Restart must skip the six imported IDs and show durable history. Build the complete
+Release APK without the fixture environment item, install over the fixture and confirm Undo via UI. If database
+inspection is needed, reinstall the known Debug package without launching it and read only the fictitious database.
+The import fixture, preview helper and snapshot code are absent from Release. The Windows import-overlap snapshot
+route shows pending/link/keep-both and help without saving the import. Preserve development databases before it and
+verify restoration hashes afterward. These checks do not close physical ARM64/iOS or production acceptance.

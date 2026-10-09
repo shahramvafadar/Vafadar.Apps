@@ -30,6 +30,9 @@ public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options)
     /// <summary>Gets the ledger entries.</summary>
     public DbSet<LedgerEntry> Entries => Set<LedgerEntry>();
 
+    /// <summary>Gets durable Undo records for imports that explicitly replace aggregate amounts.</summary>
+    public DbSet<Importing.ImportLinkBatch> ImportLinks => Set<Importing.ImportLinkBatch>();
+
     /// <summary>Gets the plans.</summary>
     public DbSet<Schedule> Schedules => Set<Schedule>();
 

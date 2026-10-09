@@ -1412,7 +1412,7 @@
     <value>واگرد ورود داده‌ها</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>تراکنش‌های واردشده در این مرحله حذف شوند؟ تراکنش‌هایی که پیش از آن وجود داشتند، حفظ می‌شوند.</value>
+    <value>تراکنش‌های این واردکردن حذف و مبالغ تجمیعی کاهش‌یافته بازیابی شوند؟ تراکنش‌های قبلی باقی می‌مانند. تغییرهای بعدی یا واردکردن‌های وابسته ابتدا باید بررسی شوند.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>حالت نمایش</value>
@@ -5644,5 +5644,72 @@
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>اگر ماه مالی در تقویم میلادی از روز ۲۵ شروع شود، دورهٔ سپتامبر از ۲۵ سپتامبر تا ۲۴ اکتبر است. یادآوری ساعت ۹ صبح ۲۵ اکتبر خواهد بود، نه اول اکتبر. پیش‌فرض‌های یادآوری پلن در پایین این بخش، این ساعت را تغییر نمی‌دهند.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>مبالغ تجمیعی هم‌پوشان</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>نتیجه را انتخاب کنید</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>حساب «{0}» · دسته «{1}»</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>بازه: از «{0}» تا «{1}»</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>مبلغ تجمیعی: «{0}». مبلغ {1} جزئیات: «{2}».</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>مبلغ تجمیعی پس از مرتبط‌کردن: «{0}».</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>پس از مرتبط‌کردن، مبلغ تجمیعی حذف می‌شود و فقط جزئیات محاسبه می‌شوند.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>مبلغ تجمیعی و جزئیات هر دو در جمع‌ها محاسبه می‌شوند؛ ممکن است یک مبلغ دوبار حساب شود.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>پیش از واردکردن، برای هر مبلغ تجمیعی یک گزینه انتخاب کنید.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>این مبلغ تجمیعی مبلغ ارزی، بازپرداخت یا ارتباط با پلن یا گروه دارد. هر دو را نگه دارید، یا پیش از مرتبط‌کردن این ارتباط‌ها را بررسی کنید.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>هم‌پوشانی‌ها تغییر کرده‌اند یا بعضی انتخاب‌ها انجام نشده‌اند. پیش‌نمایش را تازه کنید و برای هر مبلغ تجمیعی یک گزینه انتخاب کنید.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>پس از این پیش‌نمایش، داده‌ها تغییر کرده‌اند. چیزی وارد نشد. پیش‌نمایش را تازه کنید و مبالغ را دوباره بررسی کنید.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>هر جزء فقط می‌تواند یک مبلغ تجمیعی را کاهش دهد. برای هم‌پوشانی‌های دیگر «نگه‌داشتن هر دو» را انتخاب کنید؛ جزئیات قبلاً مرتبط‌شده را نمی‌توان دوباره مرتبط کرد.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>بازپرداخت مرتبط یا ارتباط مالی دیگری مانع مرتبط‌کردن است. چیزی وارد نشد. هر دو را نگه دارید یا ابتدا تراکنش‌های مرتبط را بررسی کنید.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>تازه‌کردن پیش‌نمایش</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>این واردکردن یا داده‌های مرتبط تغییر کرده‌اند، یا واردکردن یا بازپرداخت بعدی به آن وابسته است. چیزی تغییر نکرد. ابتدا واردکردن‌های بعدی را برگردانید یا تراکنش‌های مرتبط را بررسی کنید.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>واردکردن برگشت داده شد. مبالغ تجمیعی مرتبط بازیابی شدند.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>واردکردن جزئیات مبلغ تجمیعی</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>مبلغ تجمیعی نمایندهٔ چند تراکنش در یک بازه است. یکسان‌بودن حساب، نوع، دسته و تاریخ‌های تحت پوشش، هم‌پوشانی احتمالی را مشخص می‌کند. پیش از واردکردن، همهٔ مبالغ تجمیعی مرتبط را بررسی کنید.
+
+«مرتبط‌کردن و جایگزینی» جزئیات را از مبلغ تجمیعی کم می‌کند؛ اگر باقیمانده صفر باشد، مبلغ تجمیعی حذف می‌شود. از مبلغ تجمیعی موجود فقط ردیف‌های جدید و پذیرفته‌شدهٔ همین فایل کم می‌شوند. مبلغ تجمیعی داخل فایل می‌تواند جزئیات موجود را هم پوشش دهد. «نگه‌داشتن هر دو» هر دو مبلغ را در جمع‌ها حساب می‌کند و ممکن است یک مبلغ دوبار محاسبه شود. هر جزء نمی‌تواند دو مبلغ تجمیعی را کاهش دهد.
+
+با تغییر گزینهٔ ردکردن موارد احتمالاً تکراری، پیش‌نمایش دوباره ساخته و این انتخاب‌ها پاک می‌شوند. بازپرداخت، مبلغ ارزی یا ارتباط با پلن یا گروه نیاز به بررسی جداگانه دارد. برگشت واردکردن، تراکنش‌های همین واردکردن را حذف و مبلغ تجمیعی قبلی را بازیابی می‌کند، حتی پس از اجرای دوباره یا بازیابی بکاپ. تغییرهای بعدی یا واردکردن‌های وابسته مانع برگشت ناامن می‌شوند.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>هزینهٔ تجمیعی خواربار سپتامبر «۴۱۲ یورو» است. مجموع شش جزء مرتبط «۳۹۵ یورو» است. با مرتبط‌کردن و جایگزینی، «۱۷ یورو» از مبلغ تجمیعی باقی می‌ماند و جمع همان «۴۱۲ یورو» می‌ماند. برگشت واردکردن، شش جزء واردشده را حذف و مبلغ تجمیعی «۴۱۲ یورو» را بازیابی می‌کند.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>نگه‌داشتن هر دو</value>
   </data>
 </root>

@@ -1417,7 +1417,7 @@
     <value>Undo import</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>Remove the transactions from this import? Transactions that existed before the import are not affected.</value>
+    <value>Remove this import’s entries and restore any aggregate amounts it reduced? Earlier entries stay. Later edits or dependent imports need review first.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>Display mode</value>
@@ -5670,5 +5670,72 @@ First due date: {1}</value>
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>If your Gregorian financial month starts on the 25th, September runs from 25 September to 24 October. The reminder is on 25 October at 09:00, not on 1 October. The plan reminder defaults below do not change this time.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>Overlapping aggregate amounts</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>Choose what happens</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>Account: {0} · Category: {1}</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>Covered dates: {0} to {1}</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>Aggregate: {0}. {1} details: {2}.</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>Aggregate after linking: {0}.</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>After linking, the aggregate is removed. Only the details count.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>Both the aggregate and the details count in totals. This may count the same money twice.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>Choose an action for every aggregate before importing.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>This aggregate has a foreign amount, reimbursement, refund or plan/group relationship. Keep both, or review those relationships before linking.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>The overlaps have changed or some choices are missing. Refresh the preview and choose an action for every aggregate.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>The data changed after this preview. Nothing was imported. Refresh the preview and review the amounts again.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>A detail can reduce only one aggregate. Choose Keep both for the other overlaps; previously linked details cannot be linked again.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>A related refund or other financial relationship prevents linking. Nothing was imported. Keep both or review the related entries first.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>Refresh preview</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>This import or related data changed, or a later import or refund depends on it. Nothing was changed. Undo later imports first or review the related entries.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>Import undone. Linked aggregate amounts were restored.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>Importing details of an aggregate</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>An aggregate represents several transactions in a date range. Matching account, kind, category and covered dates identify possible overlap. Review every affected aggregate before importing.
+
+Link and replace subtracts these details from the aggregate; a zero remainder removes it. An existing aggregate is reduced only by this file’s new accepted rows. An aggregate arriving in the file can also cover existing details. Keep both includes both amounts in totals and can count the same money twice. One detail cannot reduce two aggregates.
+
+Skipping possible duplicates rebuilds the preview and clears these choices. Related refunds, foreign amounts, reimbursements or plan/group relationships need a separate review. Undo removes this import and restores the previous aggregate amounts, including after restarting or restoring a backup. Later edits or dependent imports prevent unsafe Undo.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>September groceries total 412 EUR. Six matching details total 395 EUR. Link and replace keeps a 17 EUR aggregate remainder, so the total stays 412 EUR. Undo removes the six imported details and restores the 412 EUR aggregate.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>Keep both</value>
   </data>
 </root>

@@ -97,7 +97,7 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | ZEX-S0608 | Data quality (R6, K14): reconciliation date, backup status | 4 | Implemented – verified (K14 tests; reconcile date stored; backup item on Home) |
 | ZEX-S0609 | KPI explanations | 4 | Implemented – unverified (sheets for K01–K14 and capacity from every card; texts checked in three languages by the resource test) |
 | ZEX-S0610 | Period-end review | 4 | Implemented – verified (optional reminder completed under ZCR-LOC-03 / D-71; physical-device gate remains) |
-| ZEX-S0611 | Aggregated entries and overlap handling | 4 | Implemented – unverified (editor, overlap choice and Undo; an import only warns about overlaps) |
+| ZEX-S0611 | Aggregated entries and overlap handling | 4 | Editor baseline implemented; import linking and durable Undo verified locally/on isolated emulator (D-72 / AT-79); physical-device acceptance open |
 | ZEX-S0612 | Essential expense coverage (K07) | 4 | Implemented – verified (K07 tests, essential defaults) |
 | ZEX-S0701 | Holding-quantity goal | 5 | Implemented – verified (G14 tested; a money goal never follows a holding, so no "includes price effect" note is needed) |
 | ZEX-S0702 | Observed-trend ETA for all goal types | 5 | Implemented – verified (median, one-off and history rules tested; periods are financial months) |
@@ -745,7 +745,8 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 #### ZEX-S0611 – Aggregated entries and overlap handling
 * **Value:** summary entries never double count (AT33).
 * **Sources:** ZEX-P21; AT33.
-* **Now:** no aggregated flag.
+* **Now:** aggregate flag/range and editor overlap choices exist. D-72 implements explicit import linking with
+  durable Undo and atomic stale-preview/dependency checks; manual editor behaviour is a separate existing baseline.
 * **In scope:** aggregated flag and range in the editor (Advanced), overlap detection on save and import, *Replace* / *Keep both* with preview and Undo, KPI awareness of unknown timing. **Out:** automatic merging.
 * **Screens / mode:** editor, overlap sheet; marker in both modes.
 * **Depends on:** S0104.

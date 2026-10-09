@@ -11,6 +11,15 @@ using Vafadar.Zanance.Core.Settings;
 
 namespace Vafadar.Zanance.Data.Configurations;
 
+internal sealed class ImportLinkBatchConfiguration : IEntityTypeConfiguration<Importing.ImportLinkBatch>
+{
+    public void Configure(EntityTypeBuilder<Importing.ImportLinkBatch> builder)
+    {
+        builder.ToTable("ImportLinks");
+        builder.Property(b => b.StateJson).IsRequired();
+    }
+}
+
 internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)

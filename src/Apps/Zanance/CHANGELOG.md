@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Aggregate choices during import (2026-10-09, D-72)
+
+- Review each overlapping aggregate before importing: link the details and reduce the aggregate, or keep both.
+- See the covered dates, matching amounts and remaining aggregate before saving; no option is selected for you.
+- Undo restores the original aggregate even after restarting or restoring a backup. Later edits and dependent imports
+  prevent an unsafe Undo and show a message beside the import history.
+- Refresh a preview when its data changes. Already imported or fully replaced transaction IDs remain skipped.
+
 ### Added - Period review reminders (2026-10-09, D-71)
 
 - Choose an optional period-end review reminder in Settings; it is off by default.

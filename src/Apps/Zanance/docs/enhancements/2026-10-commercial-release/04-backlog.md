@@ -28,7 +28,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; physical-device gate remains) | – |
-| ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Proposed | – |
+| ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Proposed | owner translations |
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Proposed | OD-12 |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
@@ -166,8 +166,14 @@ Running-app en/fa/de light/dark 360/412/wide settings/help and API 36 x86_64 nat
 opt-out are checked. Complete signed Release APK inspected/installed; phone/Doze/reboot/iOS gates remain open.
 
 ### ZCR-LOC-04 – Aggregated entries and import (from ZEX-S0611)
-Scope: when an import overlaps an aggregated entry, offer linking details to reduce the aggregate (same account,
-kind, category, period) instead of only warning. Done: data tests for overlap, partial overlap, undo.
+Delivered in D-72: explicit per-aggregate link/keep-both choices with dates, amounts and remaining totals; unset by
+default. Match account/kind/category and inclusive covered dates. Existing aggregates subtract only new accepted
+details; a detail cannot reduce two aggregates. Recheck the preview atomically and require refresh when stale.
+Durable profile-local metadata journals preserve original identity, attachment ownership and Undo across restart or
+database backup. Later edits, dependent imports/refunds and missing identities reject unsafe Undo without writes.
+AT-79 adds eight Core and nineteen SQLite cases; 1,195 main tests pass. Running en/fa/de light/dark 360/412/wide
+screens are reviewed. Isolated API 36 x86_64 UI import keeps the 412 EUR sample total at 395 + 17 and restart skips
+the same six IDs. Phone/iOS acceptance remains open. No SDK, permission or commercial limits added.
 
 ### ZCR-LOC-05 – Sale results help (from ZEX-S0404)
 Scope: one help topic on holding sale results stating it is not a tax calculation. Texts: owner. Done: help shown.

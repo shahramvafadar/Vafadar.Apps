@@ -102,3 +102,12 @@ profile/database setting and travels in existing portable backups. Pending reque
 stable id and generic review deep link; period labels are included only with the existing notification-details opt-in.
 No amounts/accounts in these requests, no financial/automatic-review writes, new permission, SDK or network path.
 Notification permission and scheduling stay on the device. The independent Debug fixture is not present in Release.
+
+## Aggregate import linking (D-72)
+
+DF-07 additionally retains a profile-local ImportLinks journal for explicitly linked imports: imported entry ids and
+financial metadata, before/after aggregate amounts and the matched details. No attachment bytes are duplicated;
+attachments of a consumed original aggregate remain available to Undo after restart. The journal contains historical
+financial data until its import is undone or all profile data/the profile is deleted, and travels inside database
+backups. It is absent from CSV exports. Same optional password protection and current plaintext-on-device boundary
+apply. No credentials/device security, new permission, SDK, telemetry, recipient or network path.

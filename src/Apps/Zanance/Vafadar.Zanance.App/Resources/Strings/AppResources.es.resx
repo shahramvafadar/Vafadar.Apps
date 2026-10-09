@@ -1369,7 +1369,7 @@
     <value>Deshacer importación</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>¿Eliminar las transacciones de esta importación? Las transacciones anteriores no se modificarán.</value>
+    <value>¿Eliminar las transacciones de esta importación y restaurar los importes agrupados que redujo? Las transacciones anteriores se conservan. Los cambios posteriores o las importaciones dependientes deben revisarse primero.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>Modo de visualización</value>
@@ -5613,5 +5613,72 @@ Primer vencimiento: {1}</value>
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>Si tu mes financiero gregoriano empieza el día 25, septiembre abarca del 25 de septiembre al 24 de octubre. El recordatorio llega el 25 de octubre a las 09:00, no el 1 de octubre. Los valores predeterminados de los recordatorios de planes que aparecen debajo no cambian esta hora.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>Importes agrupados solapados</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>Elige qué hacer</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>Cuenta: {0} · Categoría: {1}</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>Periodo: del {0} al {1}</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>Importe agrupado: {0}. {1} detalles: {2}.</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>Importe agrupado tras vincular: {0}.</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>Al vincular, se elimina el importe agrupado. Solo cuentan los detalles.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>El importe agrupado y los detalles cuentan en los totales. El mismo dinero podría contarse dos veces.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>Elige una acción para cada importe agrupado antes de importar.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>Este importe agrupado tiene un importe en otra divisa, un reembolso o una relación con un plan o grupo. Conserva ambos o revisa esas relaciones antes de vincular.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>Los solapamientos han cambiado o faltan decisiones. Actualiza la vista previa y elige una acción para cada importe agrupado.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>Los datos cambiaron después de esta vista previa. No se importó nada. Actualiza la vista previa y revisa los importes de nuevo.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>Un detalle solo puede reducir un importe agrupado. Elige «Conservar ambos» para los demás solapamientos; los detalles ya vinculados no pueden volver a vincularse.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>Un reembolso u otra relación financiera impide vincular. No se importó nada. Conserva ambos o revisa primero las transacciones relacionadas.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>Actualizar vista previa</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>Esta importación o sus datos relacionados cambiaron, o una importación posterior o un reembolso depende de ella. No se cambió nada. Deshaz primero las importaciones posteriores o revisa las transacciones relacionadas.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>Importación deshecha. Se restauraron los importes agrupados vinculados.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>Importar detalles de un importe agrupado</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>Un importe agrupado representa varias transacciones de un periodo. La misma cuenta, tipo, categoría y fechas cubiertas indican un posible solapamiento. Revisa cada importe agrupado afectado antes de importar.
+
+«Vincular y sustituir» resta los detalles del importe agrupado; si el resto es cero, lo elimina. Un importe agrupado existente solo se reduce con las filas nuevas aceptadas de este archivo. Un importe agrupado del archivo también puede cubrir detalles existentes. «Conservar ambos» incluye ambos importes y puede contar el mismo dinero dos veces. Un detalle no puede reducir dos importes agrupados.
+
+Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones. Los reembolsos, importes en otra divisa y relaciones con planes o grupos requieren una revisión aparte. Deshacer elimina esta importación y restaura los importes agrupados anteriores, incluso tras reiniciar o restaurar una copia de seguridad. Los cambios posteriores o las importaciones dependientes impiden una anulación insegura.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>La compra de septiembre suma 412 EUR. Seis detalles coincidentes suman 395 EUR. Vincular y sustituir deja un resto agrupado de 17 EUR, así que el total sigue siendo 412 EUR. Deshacer elimina los seis detalles importados y restaura el importe agrupado de 412 EUR.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>Conservar ambos</value>
   </data>
 </root>

@@ -226,3 +226,26 @@ and restore migration defaults old packages to off. Notification permission is d
 Scheduling uses the review's display calendar, MonthStartDay and earliest account date; current ReviewProgress
 suppresses completed periods. No ledger entry or review step is changed. Finishing uses UpdateSettingsAsync so
 concurrent preference changes cannot be lost. Native requests share the bounded queue with other reminder types.
+
+## Aggregate import linking (D-72)
+
+Import overlaps require an explicit decision per aggregate, matched by account, kind, category and inclusive dates.
+For an existing remainder only this import's accepted new details are subtracted; an incoming aggregate can cover
+existing and new details. Repeated/present/consumed own-CSV ids count once. A detail cannot reduce two aggregates or
+be assigned again by a later linked import. Foreign amounts, reimbursements, refund dependencies and plan/group
+relationships require separate review; there is no guessed redistribution or automatic merge.
+
+ImportAggregateLinks adds only ImportLinks (Id = batch id, versioned StateJson, audit times); regenerate the compiled
+model after this additive migration. A linked import stores imported-row metadata, original/applied aggregates and
+the exact covered details in a source-generated JSON journal. Explicit constructor binding preserves ledger ids in
+trimmed builds. Journal writes, reductions/removals and accepted entries commit in one SQLite transaction. No new
+file, credential, device-security preference or attachment-byte copy is created.
+
+Undo is durable across restart and database backup/restore. Recheck applied aggregates and relevant details before
+restoring originals and deleting batch entries. Later edits/dependent imports/refunds or missing identities reject
+Undo without changes; dependent imports must be undone newest first. Ignore audit times in semantic comparison,
+since a later successful Undo updates them. Full original creation times, identity, tags and other metadata survive.
+Consumed aggregates keep their own-CSV ids and original import history through the journal. Orphan attachment cleanup
+protects a consumed original aggregate while its Undo journal exists. Journals remain until that import is undone or
+all profile data/the profile is deleted, and are included in database backups, not CSV exports. Ordinary imports
+without aggregate changes use the existing batch mechanism. No production database-encryption policy changes.

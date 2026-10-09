@@ -39,7 +39,7 @@
 
                 <!-- Import (IO-07..13) -->
                 <Label Text="{v:Translate Import_Title}" Style="{StaticResource SectionHeader}" />
-                <Border Style="{StaticResource Card}">
+                <Border x:Name="ImportCard" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Import_Intro}" Style="{StaticResource Secondary}" />
                         <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Import_Pick}" Command="{Binding PickCommand}" IsEnabled="{Binding IsNotBusy}" />
@@ -92,6 +92,34 @@
                                 <Label Text="{v:Translate Import_SkipDuplicates}" VerticalOptions="Center" />
                                 <Switch Grid.Column="1" IsToggled="{Binding SkipDuplicates}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Import_SkipDuplicates}" />
                             </Grid>
+                            <VerticalStackLayout x:Name="OverlapSection" Spacing="8" IsVisible="{Binding Overlaps.Count, Converter={StaticResource IsPositiveConverter}}">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{v:Translate Import_Aggregates}" Style="{StaticResource SectionHeader}" VerticalOptions="Center" />
+                                    <v:HelpButton Grid.Column="1" Topic="ImportAggregates" />
+                                </Grid>
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Overlaps}" Spacing="8">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="local:ImportOverlapRow">
+                                            <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12">
+                                                <VerticalStackLayout Spacing="6">
+                                                    <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Context}" />
+                                                    <Label Text="{Binding Period}" Style="{StaticResource Secondary}" />
+                                                    <Label Text="{Binding Amounts}" />
+                                                    <Picker ItemsSource="{Binding Choices}" SelectedIndex="{Binding SelectedIndex}"
+                                                            Title="{v:Translate Import_AggregateChoice}" MinimumHeightRequest="44"
+                                                            SemanticProperties.Description="{v:Translate Import_AggregateChoice}" />
+                                                    <Label Text="{Binding Outcome}" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                                <Label Text="{Binding OverlapError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding OverlapError, Converter={StaticResource IsNotNullConverter}}" />
+                            </VerticalStackLayout>
+                            <Button Text="{v:Translate Import_RefreshPreview}" Style="{StaticResource SecondaryButton}"
+                                    Command="{Binding RefreshPreviewCommand}" IsEnabled="{Binding IsNotBusy}" />
                             <Button Style="{StaticResource PrimaryButton}" Command="{Binding ImportCommand}" IsEnabled="{Binding IsNotBusy}"
                                     Text="{Binding ImportButtonText}" />
                         </VerticalStackLayout>
@@ -101,6 +129,8 @@
                 </Border>
 
                 <!-- Past imports can be undone as a whole (IO-11) -->
+                <Label Text="{Binding UndoError}" Style="{StaticResource ErrorText}"
+                       IsVisible="{Binding UndoError, Converter={StaticResource IsNotNullConverter}}" />
                 <Label Text="{v:Translate Import_History}" Style="{StaticResource SectionHeader}" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}">
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Batches}">

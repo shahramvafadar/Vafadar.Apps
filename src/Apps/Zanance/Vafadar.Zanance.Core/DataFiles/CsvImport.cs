@@ -65,10 +65,11 @@ public static class CsvImport
         IReadOnlyCollection<Account> accounts,
         IReadOnlyCollection<Category> categories,
         Func<Category, string> categoryName,
-        IReadOnlyCollection<LedgerEntry> existing)
+        IReadOnlyCollection<LedgerEntry> existing,
+        IReadOnlySet<Guid>? consumedAggregateIds = null)
     {
         ArgumentNullException.ThrowIfNull(rows);
-        var ids = existing.Select(e => e.Id).ToHashSet();
+        var ids = existing.Select(e => e.Id).Concat(consumedAggregateIds ?? new HashSet<Guid>()).ToHashSet();
         var categoryByName = CategoryIndex(categories, categoryName);
         var byName = accounts.GroupBy(a => a.Name, StringComparer.OrdinalIgnoreCase).ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
         var result = new List<ImportRow>();

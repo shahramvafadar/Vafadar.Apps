@@ -308,3 +308,17 @@ Follow the selected display calendar and financial month start day. Keep the exi
 feedback visible. No account before a closed period means no reminder; finished periods and missed times are skipped.
 Generic notifications reveal no period label unless details are allowed. A tap opens the currently due review via
 app lock; finishing and step completion remain explicit actions. Changing the choice never records money.
+
+## Aggregate import linking (D-72)
+
+Every affected aggregate gets its own preview card with title/category, account, inclusive date range, original
+amount, detail count/total and visible resulting remainder. Decisions start unset: Link and replace or Keep both.
+Use short picker labels; explain double counting in the adjacent outcome rather than a clipped option. A zero
+remainder explicitly states the aggregate will be removed. Financial relationships that need separate review only
+offer Keep both with an explanation. The help topic includes the 412/395/17 example and durable Undo behavior.
+
+Disable import until every card is decided; do not show a red error for an untouched choice. A detail assigned to
+two selected aggregates shows a real conflict. The duplicate switch recomputes the accepted rows and resets choices.
+Refresh preview is available for own and mapped CSV files. Stale data requires a fresh preview; no reduction happens
+silently. Inline Undo conflicts belong next to import history and preserve later edits; successful Undo restores
+previous aggregates and discards the now-stale preview. Nothing is saved while opening or previewing a file.

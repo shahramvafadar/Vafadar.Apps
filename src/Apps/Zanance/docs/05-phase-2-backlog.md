@@ -95,3 +95,7 @@ evidence live in the canonical backlog and acceptance plan; no ledger/schema or 
 D-71 / ZCR-LOC-03 completes the optional ZEX-S0610 period review reminder locally/on the isolated emulator.
 The off-by-default choice is portable; financial boundary/calendar scheduling and cancellation are tested (AT-78).
 Physical-device/Doze/reboot and iOS acceptance remain separate from implementation and build proof.
+
+D-72 / ZCR-LOC-04 completes the ZEX-S0611 import follow-up locally/on the isolated emulator: explicit link/keep-both,
+new-detail-only reductions, persistent original identity/attachments and conflict-safe Undo across restart/backup.
+Main tests: 1,195. AT-79 and the canonical backlog retain physical-device/iOS acceptance separately.

@@ -285,3 +285,37 @@ v2/v3 signatures, Cloud permission guard, ZIP integrity and embedded arm64/x86_6
 All three Debug diagnostic types are absent from Release metadata. Actual Release installation and cold start pass.
 Single emulator cold activity readings: 4.864 s before and 5.338 s after; not a repeated performance benchmark or
 physical-device result. Test output is cleaned, and original Windows development DB files retain matching hashes.
+
+## D-72 - Explicit aggregate linking during import with durable Undo (2026-10-09)
+
+LOC-04 proceeds under D-69. Every aggregate overlap starts with no decision; show account, category, inclusive dates,
+aggregate/detail totals and the selected remainder or double-counting consequence. Linking reduces an existing
+aggregate only by this file's new accepted details; a new aggregate may cover existing details. One detail cannot
+reduce two aggregates or be relinked while its earlier journal is active. Foreign amounts, reimbursements, refunds,
+plan settlements and groups require separate review rather than guessed redistribution. Keep-both remains available.
+
+Recheck every reviewed semantic row inside the write transaction. Missing/stale choices produce no writes and a
+refresh action. Add ImportLinks with versioned source-generated financial snapshots and regenerate the compiled
+model. Preserve all original metadata and attachment ownership when a remainder is zero; no attachment-byte copy.
+Logical import history/known IDs include consumed aggregates. Undo survives restart/database backup, rejects later
+edits, dependent imports/refunds or missing account/category identity, and restores the original aggregate atomically.
+The journal is retained until Undo or profile/data deletion, travels with database backup and is excluded from CSV.
+This introduces no SDK, permission, network access, password persistence or database encryption.
+
+AT-79 adds eight Core and nineteen real SQLite cases: matching boundaries, partial/full coverage, repeated batches,
+zero-remainder identities, complete clone metadata, attachment retention, backup round-trip, stale decisions,
+double-link prevention, refund dependencies and safe Undo. All 1,195 main tests pass; 242 resource/localization tests
+pass after final translated labels/help. Strict Windows and Android complete Debug/Release builds have zero warnings
+or errors. Running Windows en/fa/de light/dark at 360x800, 412x892 and 1280x820 is reviewed; restored development DB
+hashes match. The fictitious snapshot route never saves its preview or changes real data.
+
+Isolated Android API 36 x86_64 native UI imports six 395 EUR details against 412 EUR: seven rows total 412 EUR,
+aggregate 17 EUR, one journal. Process restart skips all six stable IDs. Install the complete Release APK over that
+fixture, cold-start and confirm Undo in the native UI: one 412 EUR aggregate with its original ID remains, details
+and journal are removed. Data inspection follows a Debug reinstall without launching the fixture. Release exercises
+trimmed/AOT journal deserialization and semantic serialization; no fixture code exists in Release metadata.
+Complete signed Release artifact: 81,037,397 bytes; SHA-256
+f808c28b887482b7ccec307f263c10a9ce380101eacd483605286512369a78ea; package pro.vafadar.zanance,
+0.1.0/code 1, min 24/target 36, arm64-v8a/x86_64, embedded assembly stores/app AOT, v2/v3 signatures, ZIP integrity
+and Cloud permission guard pass. Native cold activity reading is 4.945 s, a single observation rather than a benchmark.
+ARM64 phone, iOS runtime and production acceptance remain open; manual editor behaviour remains its separate baseline.

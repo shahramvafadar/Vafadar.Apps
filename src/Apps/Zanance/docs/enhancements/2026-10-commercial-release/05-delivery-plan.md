@@ -127,3 +127,8 @@ D-71 / LOC-03 completes the optional period review reminder under the D-69 conti
 translated running Settings/help and isolated native notification checks are distinct from physical-device acceptance.
 The next independent ready section is LOC-04, aggregated-entry/import linking; pending ADR/library and OD-10 choices
 continue to gate database encryption and OS-backup policy.
+
+D-72 / LOC-04 completes explicit import overlap linking and persistent Undo under D-69. The 412 EUR sample and
+native Release Undo are verified separately from phone/iOS acceptance. ADR/library, OD-10, OD-12, target-market,
+provider and commercial decisions remain owner gates. The next independent ready section is QA-03: app-level tests
+for existing lock/profile/bulk/onboarding/widget/theme behaviour, without enabling commercial limits.

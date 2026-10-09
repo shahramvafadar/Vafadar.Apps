@@ -27,6 +27,7 @@ internal static class DebugSnapshots
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
+        if (DebugImportLinks.StartIfRequested(app, services)) { return; }
         if (DebugReviewReminders.StartIfRequested(app, services)) { return; }
         if (DebugGoalReminders.StartIfRequested(app, services)) { return; }
 #endif
@@ -96,6 +97,53 @@ internal static class DebugSnapshots
                 app.Quit();
             }
         });
+    }
+
+    private static async Task CaptureImportChoicesAsync(App app, IServiceProvider services, Features.DataFiles.ImportExportPage page,
+        Features.DataFiles.ImportExportViewModel vm, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var account = (await store.GetAccountsAsync()).FirstOrDefault(a => a.Name == "Import fixture EUR");
+        if (account is null)
+        {
+            account = new Account { Name = "Import fixture EUR", CurrencyCode = "EUR", OpeningDate = new DateOnly(2026, 8, 1) };
+            await store.SaveAccountAsync(account);
+        }
+        var aggregate = (await store.GetEntriesAsync()).SingleOrDefault(e => e.AccountId == account.Id && e.IsAggregated);
+        if (aggregate is null)
+        {
+            var category = (await store.GetCategoriesAsync()).First(c => c.Kind == CategoryKind.Expense && c.SystemKey == "Food");
+            aggregate = new LedgerEntry { AccountId = account.Id, CategoryId = category.Id, Kind = EntryKind.Expense, Amount = 41200,
+                IsAggregated = true, Date = new DateOnly(2026, 9, 30), AggregatedFrom = new DateOnly(2026, 9, 1), AggregatedTo = new DateOnly(2026, 9, 30) };
+            await store.SaveEntryAsync(aggregate);
+        }
+        await vm.PreviewFixtureAsync(DebugImportFixture.Details(aggregate));
+        // New bindable rows need a layout pass before their position is usable for a rendered check.
+        await Task.Delay(300);
+        if (FindScrollView(page) is { } scroll)
+        {
+            double offset = 0;
+            for (Element? element = page.FindByName<VerticalStackLayout>("OverlapSection"); element is not null && element != scroll.Content; element = element.Parent)
+            {
+                if (element is VisualElement visual) { offset += visual.Y; }
+            }
+            await scroll.ScrollToAsync(0, offset, animated: false);
+            await Task.Delay(300);
+        }
+        await CaptureAsync(app, folder, $"{language}-import-overlap-pending");
+        var row = vm.Overlaps.Single();
+        if (vm.CanImport) { throw new InvalidOperationException("An unset aggregate decision must not permit import."); }
+        row.SelectedIndex = 0;
+        if (!vm.CanImport) { throw new InvalidOperationException("The explicit link decision should permit this fictitious import."); }
+        await Task.Delay(300);
+        await CaptureAsync(app, folder, $"{language}-import-overlap-link");
+        row.SelectedIndex = 1;
+        await Task.Delay(300);
+        await CaptureAsync(app, folder, $"{language}-import-overlap-keep");
+#if WINDOWS
+        await CaptureHelpAsync(app, folder, language, ["ImportAggregates"]);
+#endif
+        row.SelectedIndex = -1;
     }
 
     // Fictitious destination feedback only; no account sign-in or cloud upload is performed by this fixture.
@@ -336,6 +384,7 @@ internal static class DebugSnapshots
             ("asset-purchase", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "Purchase" }),
             ("asset-move", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "LocationTransfer" }),
             ("importexport", AppShell.ImportExportRoute, null),
+            ("import-overlap", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-commitments", AppShell.ReportsRoute, new() { ["report"] = 1 }),
             ("report-goals", AppShell.ReportsRoute, new() { ["report"] = 2 }),
@@ -383,6 +432,12 @@ internal static class DebugSnapshots
                         is Features.Entries.EntryEditorViewModel receiptEditor)
                 {
                     await VerifyReceiptEditorAsync(services, name, receiptEditor, expenseId);
+                }
+
+                if (name == "import-overlap" && Shell.Current.CurrentPage is Features.DataFiles.ImportExportPage importPage
+                    && importPage.BindingContext is Features.DataFiles.ImportExportViewModel importVm)
+                {
+                    await CaptureImportChoicesAsync(app, services, importPage, importVm, folder, language);
                 }
 
                 await CaptureAsync(app, folder, $"{language}-{name}");

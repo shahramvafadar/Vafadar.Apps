@@ -1373,7 +1373,7 @@
     <value>Annulla importazione</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>Rimuovere i movimenti di questa importazione? Quelli già presenti prima dell’importazione non verranno modificati.</value>
+    <value>Rimuovere le transazioni di questa importazione e ripristinare gli importi aggregati che ha ridotto? Le transazioni precedenti rimangono. Prima occorre verificare le modifiche successive o le importazioni dipendenti.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>Modalità di visualizzazione</value>
@@ -5633,5 +5633,72 @@ Prima scadenza: {1}</value>
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>Se il tuo mese finanziario gregoriano inizia il 25, settembre va dal 25 settembre al 24 ottobre. Il promemoria arriva il 25 ottobre alle 09:00, non il 1° ottobre. Le impostazioni predefinite dei promemoria dei piani qui sotto non cambiano questo orario.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>Importi aggregati sovrapposti</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>Scegli cosa fare</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>Conto: {0} · Categoria: {1}</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>Periodo: dal {0} al {1}</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>Importo aggregato: {0}. {1} dettagli: {2}.</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>Importo aggregato dopo il collegamento: {0}.</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>Dopo il collegamento, l’importo aggregato viene rimosso. Contano solo i dettagli.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>L’importo aggregato e i dettagli contano entrambi nei totali. Lo stesso denaro potrebbe essere contato due volte.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>Scegli un’azione per ogni importo aggregato prima di importare.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>Questo importo aggregato ha un importo in valuta estera, un rimborso o un collegamento a un piano o gruppo. Mantieni entrambi o verifica questi collegamenti prima di procedere.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>Le sovrapposizioni sono cambiate o mancano alcune scelte. Aggiorna l’anteprima e scegli un’azione per ogni importo aggregato.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>I dati sono cambiati dopo questa anteprima. Non è stato importato nulla. Aggiorna l’anteprima e ricontrolla gli importi.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>Un dettaglio può ridurre un solo importo aggregato. Scegli «Mantieni entrambi» per le altre sovrapposizioni; i dettagli già collegati non possono essere collegati di nuovo.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>Un rimborso o un altro collegamento finanziario impedisce il collegamento. Non è stato importato nulla. Mantieni entrambi o verifica prima le transazioni collegate.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>Aggiorna anteprima</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>Questa importazione o i dati collegati sono cambiati, oppure un’importazione successiva o un rimborso ne dipende. Non è stato modificato nulla. Annulla prima le importazioni successive o verifica le transazioni collegate.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>Importazione annullata. Gli importi aggregati collegati sono stati ripristinati.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>Importare i dettagli di un importo aggregato</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>Un importo aggregato rappresenta più transazioni in un periodo. Lo stesso conto, tipo, categoria e le date coperte indicano una possibile sovrapposizione. Verifica ogni importo aggregato interessato prima di importare.
+
+«Collega e sostituisci» sottrae i dettagli dall’importo aggregato; se il resto è zero, lo rimuove. Un importo aggregato esistente viene ridotto solo dalle nuove righe accettate di questo file. Un importo aggregato nel file può coprire anche dettagli esistenti. «Mantieni entrambi» include entrambi gli importi e può contare lo stesso denaro due volte. Un dettaglio non può ridurre due importi aggregati.
+
+Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rimborsi, importi in valuta estera e collegamenti a piani o gruppi richiedono una verifica separata. Annulla rimuove questa importazione e ripristina gli importi aggregati precedenti, anche dopo un riavvio o il ripristino di un backup. Modifiche successive o importazioni dipendenti impediscono un annullamento rischioso.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>La spesa di settembre ammonta a 412 EUR. Sei dettagli corrispondenti totalizzano 395 EUR. Collega e sostituisci lascia un resto aggregato di 17 EUR, quindi il totale rimane 412 EUR. Annulla rimuove i sei dettagli importati e ripristina l’importo aggregato di 412 EUR.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>Mantieni entrambi</value>
   </data>
 </root>

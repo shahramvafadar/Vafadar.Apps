@@ -1412,7 +1412,7 @@
     <value>Import rückgängig machen</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>Buchungen dieses Imports entfernen? Vorher vorhandene Buchungen bleiben unberührt.</value>
+    <value>Buchungen dieses Imports entfernen und dabei geminderte Sammelbeträge wiederherstellen? Frühere Buchungen bleiben. Spätere Änderungen oder abhängige Importe müssen zuerst geprüft werden.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>Ansicht</value>
@@ -5644,5 +5644,72 @@ Erster Termin: {1}</value>
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>Beginnt Ihr gregorianischer Finanzmonat am 25., läuft September vom 25. September bis zum 24. Oktober. Die Erinnerung kommt am 25. Oktober um 09:00 Uhr, nicht am 1. Oktober. Die darunterstehenden Vorgaben für Planerinnerungen ändern diese Uhrzeit nicht.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>Überlappende Sammelbeträge</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>Vorgehen auswählen</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>Konto: {0} · Kategorie: {1}</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>Zeitraum: {0} bis {1}</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>Sammelbetrag: {0}. {1} Einzelposten: {2}.</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>Sammelbetrag nach dem Verknüpfen: {0}.</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>Nach dem Verknüpfen entfällt der Sammelbetrag. Nur die Einzelposten zählen.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>Sammelbetrag und Einzelposten fließen beide in die Summen ein. Derselbe Betrag kann doppelt zählen.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>Vor dem Import für jeden Sammelbetrag eine Aktion auswählen.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>Dieser Sammelbetrag hat einen Fremdwährungsbetrag, eine Erstattung oder eine Plan-/Gruppenverknüpfung. Beide behalten oder die Verknüpfungen vor dem Verknüpfen prüfen.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>Die Überschneidungen haben sich geändert oder Entscheidungen fehlen. Vorschau aktualisieren und für jeden Sammelbetrag eine Aktion wählen.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>Die Daten haben sich nach der Vorschau geändert. Nichts wurde importiert. Vorschau aktualisieren und Beträge erneut prüfen.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>Ein Einzelposten kann nur einen Sammelbetrag mindern. Für andere Überschneidungen „Beide behalten“ wählen; bereits verknüpfte Einzelposten können nicht erneut verknüpft werden.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>Eine Erstattung oder andere finanzielle Verknüpfung verhindert das Verknüpfen. Nichts wurde importiert. Beide behalten oder zuerst die verbundenen Buchungen prüfen.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>Vorschau aktualisieren</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>Dieser Import oder verbundene Daten wurden geändert, oder ein späterer Import bzw. eine Erstattung hängt davon ab. Nichts wurde geändert. Spätere Importe zuerst rückgängig machen oder verbundene Buchungen prüfen.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>Import rückgängig gemacht. Verknüpfte Sammelbeträge wurden wiederhergestellt.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>Einzelposten eines Sammelbetrags importieren</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>Ein Sammelbetrag steht für mehrere Buchungen in einem Zeitraum. Gleiches Konto, gleiche Art, Kategorie und abgedeckte Daten kennzeichnen mögliche Überschneidungen. Jeden betroffenen Sammelbetrag vor dem Import prüfen.
+
+„Verknüpfen und ersetzen“ zieht die Einzelposten vom Sammelbetrag ab; bei null Rest entfällt er. Ein vorhandener Sammelbetrag wird nur um neue akzeptierte Zeilen dieser Datei gemindert. Ein Sammelbetrag aus der Datei kann auch vorhandene Einzelposten abdecken. „Beide behalten“ zählt beide Beträge und kann denselben Betrag doppelt zählen. Ein Einzelposten kann nicht zwei Sammelbeträge mindern.
+
+Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht diese Entscheidungen. Erstattungen, Fremdwährungsbeträge und Plan-/Gruppenverknüpfungen müssen gesondert geprüft werden. Rückgängig entfernt diesen Import und stellt die früheren Sammelbeträge wieder her, auch nach Neustart oder Backup-Wiederherstellung. Spätere Änderungen oder abhängige Importe verhindern unsicheres Rückgängigmachen.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>Lebensmittel im September: insgesamt 412 EUR. Sechs passende Einzelposten: 395 EUR. Verknüpfen und ersetzen lässt 17 EUR als Sammelrest; die Summe bleibt 412 EUR. Rückgängig entfernt die sechs importierten Einzelposten und stellt den Sammelbetrag von 412 EUR wieder her.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>Beide behalten</value>
   </data>
 </root>

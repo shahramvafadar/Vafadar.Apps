@@ -1374,7 +1374,7 @@
     <value>Annuler l’importation</value>
   </data>
   <data name="Import_UndoMessage" xml:space="preserve">
-    <value>Supprimer les opérations issues de cette importation ? Les opérations qui existaient avant l’importation ne seront pas modifiées.</value>
+    <value>Supprimer les opérations de cette importation et rétablir les montants regroupés qu’elle a réduits ? Les opérations antérieures sont conservées. Les modifications ultérieures ou les importations dépendantes doivent être vérifiées d’abord.</value>
   </data>
   <data name="Settings_Experience" xml:space="preserve">
     <value>Mode d’affichage</value>
@@ -5621,5 +5621,72 @@ Première échéance : {1}</value>
   </data>
   <data name="Help_ReviewReminder_Example" xml:space="preserve">
     <value>Si votre mois financier grégorien commence le 25, septembre va du 25 septembre au 24 octobre. Le rappel arrive le 25 octobre à 09 h 00, et non le 1er octobre. Les valeurs par défaut des rappels de plans ci-dessous ne modifient pas cette heure.</value>
+  </data>
+  <data name="Import_Aggregates" xml:space="preserve">
+    <value>Montants regroupés qui se chevauchent</value>
+  </data>
+  <data name="Import_AggregateChoice" xml:space="preserve">
+    <value>Choisissez une action</value>
+  </data>
+  <data name="Import_AggregateContext" xml:space="preserve">
+    <value>Compte : {0} · Catégorie : {1}</value>
+  </data>
+  <data name="Import_AggregatePeriod" xml:space="preserve">
+    <value>Période : du {0} au {1}</value>
+  </data>
+  <data name="Import_AggregateAmounts" xml:space="preserve">
+    <value>Montant regroupé : {0}. {1} détails : {2}.</value>
+  </data>
+  <data name="Import_AggregateRemaining" xml:space="preserve">
+    <value>Montant regroupé après association : {0}.</value>
+  </data>
+  <data name="Import_AggregateRemoved" xml:space="preserve">
+    <value>Après association, le montant regroupé est supprimé. Seuls les détails sont comptés.</value>
+  </data>
+  <data name="Import_AggregateKept" xml:space="preserve">
+    <value>Le montant regroupé et les détails sont tous comptés dans les totaux. Le même montant risque d’être compté deux fois.</value>
+  </data>
+  <data name="Import_AggregateChoose" xml:space="preserve">
+    <value>Choisissez une action pour chaque montant regroupé avant l’importation.</value>
+  </data>
+  <data name="Import_AggregateLinked" xml:space="preserve">
+    <value>Ce montant regroupé comporte un montant en devise étrangère, un remboursement ou un lien avec un plan ou un groupe. Conservez les deux ou vérifiez ces liens avant l’association.</value>
+  </data>
+  <data name="Import_Overlap_MissingChoice" xml:space="preserve">
+    <value>Les chevauchements ont changé ou certains choix manquent. Actualisez l’aperçu et choisissez une action pour chaque montant regroupé.</value>
+  </data>
+  <data name="Import_Overlap_ChangedPreview" xml:space="preserve">
+    <value>Les données ont changé après cet aperçu. Rien n’a été importé. Actualisez l’aperçu et vérifiez à nouveau les montants.</value>
+  </data>
+  <data name="Import_Overlap_SharedDetail" xml:space="preserve">
+    <value>Un détail ne peut réduire qu’un seul montant regroupé. Choisissez « Conserver les deux » pour les autres chevauchements ; les détails déjà associés ne peuvent pas l’être à nouveau.</value>
+  </data>
+  <data name="Import_Overlap_LinkedAggregate" xml:space="preserve">
+    <value>Un remboursement ou un autre lien financier empêche l’association. Rien n’a été importé. Conservez les deux ou vérifiez d’abord les opérations liées.</value>
+  </data>
+  <data name="Import_RefreshPreview" xml:space="preserve">
+    <value>Actualiser l’aperçu</value>
+  </data>
+  <data name="Import_UndoConflict" xml:space="preserve">
+    <value>Cette importation ou les données liées ont changé, ou une importation ultérieure ou un remboursement en dépend. Rien n’a été modifié. Annulez d’abord les importations ultérieures ou vérifiez les opérations liées.</value>
+  </data>
+  <data name="Import_UndoDone" xml:space="preserve">
+    <value>Importation annulée. Les montants regroupés associés ont été rétablis.</value>
+  </data>
+  <data name="Help_ImportAggregates_Title" xml:space="preserve">
+    <value>Importer les détails d’un montant regroupé</value>
+  </data>
+  <data name="Help_ImportAggregates_Text" xml:space="preserve">
+    <value>Un montant regroupé représente plusieurs opérations sur une période. Un même compte, type, catégorie et des dates couvertes identiques indiquent un chevauchement possible. Vérifiez chaque montant regroupé concerné avant l’importation.
+
+« Associer et remplacer » soustrait les détails du montant regroupé ; un reste nul le supprime. Un montant regroupé existant n’est réduit que par les nouvelles lignes acceptées de ce fichier. Un montant regroupé du fichier peut aussi couvrir des détails existants. « Conserver les deux » inclut les deux montants et peut compter le même montant deux fois. Un détail ne peut pas réduire deux montants regroupés.
+
+Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les remboursements, montants en devise étrangère et liens avec des plans ou groupes nécessitent une vérification distincte. Annuler supprime cette importation et rétablit les montants regroupés antérieurs, même après un redémarrage ou la restauration d’une sauvegarde. Les modifications ultérieures ou les importations dépendantes empêchent une annulation risquée.</value>
+  </data>
+  <data name="Help_ImportAggregates_Example" xml:space="preserve">
+    <value>Les courses de septembre totalisent 412 EUR. Six détails correspondants totalisent 395 EUR. Associer et remplacer laisse un reste regroupé de 17 EUR ; le total reste donc 412 EUR. Annuler supprime les six détails importés et rétablit le montant regroupé de 412 EUR.</value>
+  </data>
+  <data name="Import_KeepBothShort" xml:space="preserve">
+    <value>Conserver les deux</value>
   </data>
 </root>
