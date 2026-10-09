@@ -351,3 +351,10 @@ repository.
 Requested Windows snapshot runs hide their own native AppWindow and render its root directly: PowerShell
 WindowStyle.Hidden alone does not hide WinUI. Never activate the review window or send desktop input.
 Retired pages fail explicitly; do not wait on their stale native scroll controls or count interrupted captures.
+
+## 22. Visible budget period choices (D-87)
+
+* The three budget period decisions use wrapping ChoiceChips rather than a compact scrolling filter strip. Keep
+  all original choices, two-way selection, translated selected names, native font scaling and at least 44 px targets.
+* Check each actual caption/target within the growing group and invoke the real native buttons. Period navigation
+  reloads the existing views without Save; compare complete stored data and restore the original in-memory choice.

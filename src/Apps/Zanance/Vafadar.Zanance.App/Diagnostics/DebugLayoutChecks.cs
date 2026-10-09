@@ -156,6 +156,47 @@ internal static class DebugLayoutChecks
                 identityWidth = identity.Width, identityBottom = identity.Y + identity.Height, amountTop = amount.Y });
         }
 
+        // AT-94: these three period choices are a form decision; every real native target must stay visible without sideways scrolling.
+        if (page.FindByName<Vafadar.Maui.Controls.ChoiceChips>("BudgetPeriods") is { } periods && IsVisibleThroughParents(periods))
+        {
+            var chips = Descendants(periods).OfType<Grid>().Where(chip => chip.Children.OfType<Button>().Any()).ToArray();
+            if (chips.Length != periods.ItemsSource?.Count) { throw new InvalidOperationException("Budget period targets are incomplete."); }
+            for (var index = 0; index < chips.Length; index++)
+            {
+                var chip = chips[index]; var button = chip.Children.OfType<Button>().Single();
+                var caption = chip.Children.OfType<Border>().Single().Content as Label
+                    ?? throw new InvalidOperationException("Budget period caption is unavailable.");
+                if (caption.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native
+                    || button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeButton)
+                { throw new InvalidOperationException("Budget period target is not realized."); }
+                var boundaries = new List<Windows.Foundation.Rect>();
+                for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+                {
+                    var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                    if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+                }
+                var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(native);
+                var selected = index == periods.SelectedIndex;
+                var expectedName = selected ? Vafadar.Localization.Translator.Instance.Format("Common_ChipSelected", caption.Text) : caption.Text;
+                var spoken = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(nativeButton).GetName();
+                if (native.IsTextTrimmed || !native.IsTextScaleFactorEnabled || button.Width < 44 || button.Height < 44
+                    || spoken != expectedName || chip.Children.Last() != button || caption.FontAttributes.HasFlag(FontAttributes.Bold) != selected
+                    || chip.X < -1 || chip.X + chip.Width > periods.Width + 1 || chip.Y < -1 || chip.Y + chip.Height > periods.Height + 1
+                    || boundaries.Count == 0 || boundaries.Min(rect => rect.Left) < -1
+                    || slot.Width > caption.Width + 1 || slot.Height > caption.Height + 1
+                    || boundaries.Max(rect => rect.Right) > slot.Width + 1 || boundaries.Max(rect => rect.Bottom) > slot.Height + 1)
+                {
+                    File.WriteAllText(Path.Combine(folder, name + "-period-choice-failure.json"), JsonSerializer.Serialize(new
+                    { caption.Text, spoken, expectedName, selected, chip.X, chip.Y, chip.Width, chip.Height,
+                        availableWidth = periods.Width, availableHeight = periods.Height, buttonWidth = button.Width,
+                        buttonHeight = button.Height, native.FontSize, native.IsTextTrimmed, slot, boundaries }, new JsonSerializerOptions { WriteIndented = true }));
+                    throw new InvalidOperationException("A budget period choice is hidden, clips text or loses its full selected native target.");
+                }
+                evidence.Add(new { kind = "budget period choice", caption.Text, selected, spoken, chip.X, chip.Y,
+                    chip.Width, chip.Height, buttonWidth = button.Width, buttonHeight = button.Height, native.FontSize,
+                    native.IsTextScaleFactorEnabled, renderedBoundaries = boundaries.Count });
+            }
+        }
         // An icon template also inherits BudgetLine; select actual figure rows and independently require every visible model row.
         var budgetRows = Descendants(page).OfType<Grid>().Where(row => row.BindingContext is Features.Budget.BudgetLine
             && row.Children.OfType<Presentation.AmountReadout>().Any() && IsVisibleThroughParents(row)).ToArray();

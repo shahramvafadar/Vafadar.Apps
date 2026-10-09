@@ -583,3 +583,7 @@ D-86 follows the independently observed budget spending/limit clipping with comp
 compact monetary viewports. A real signed-boundary formatter crash is also reproduced and corrected independently.
 See [budget-readouts.md](budget-readouts.md) for AT-93, actual native matrix/fixture-restoration and signed APK evidence.
 Historical counts above remain historical; modal/currency/custom-control and platform acceptance are still open.
+
+D-87 follows the independently observed hidden third budget period option. All three choices now use the
+existing growing wrapping form group. Actual native invocation/geometry/data equality and signed APK evidence
+are in [budget-periods.md](budget-periods.md). Compact filters elsewhere and platform acceptance stay separate.

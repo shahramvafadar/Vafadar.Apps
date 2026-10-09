@@ -213,3 +213,9 @@ network or device-security change. Runtime presentation fixtures are in memory w
 stored accounts/entries/settings/budgets/plans before and after. Android verification uses only the independently
 owned fictitious database and restores its original complete financial rows; no private profile/security reads.
 The owner archive and real financial data are outside these checks. Evidence: quality/budget-readouts.md.
+
+D-87 changes the budget period choice layout only. No SDK, permission, stored data model, export, network or
+security change. Actual native choice invocation is view navigation without Save; compare complete accounts/
+entries/settings/budgets/plans and restore the original in-memory choice. Android checks use only the known
+independently owned sample database with complete fixture restoration, never other profiles/private security
+storage or the owner archive. Evidence: quality/budget-periods.md.

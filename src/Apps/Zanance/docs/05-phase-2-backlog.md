@@ -175,3 +175,9 @@ envelope readouts, retaining compact native typography. A separately reproduced 
 is repaired by taking the magnitude after decimal conversion; input range and financial calculations stay unchanged.
 AT-93 adds 11 independent Core cases and actual native scroll/geometry/data-equality checks. Final evidence and
 remaining physical OS/screen-reader/device/iOS gates are in quality/budget-readouts.md. No schema or new strings.
+
+D-87 continues A11Y-03 by keeping all three budget period decisions visible in the existing wrapping choice group.
+An actual pre-change native check fails for the hidden third option. AT-94 measures full native captions/targets,
+invokes the existing three choices, restores selection and compares complete stored data without Save. No shared
+control, financial calculation, schema or new string change. Final evidence and independent OS/screen-reader/
+physical-device/iOS gates are in quality/budget-periods.md.

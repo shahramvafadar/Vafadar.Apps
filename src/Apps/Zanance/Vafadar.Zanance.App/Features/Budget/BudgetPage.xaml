@@ -52,7 +52,8 @@
 
             <!-- Period length (§10.3): month, week or two weeks; in Simple only when such a budget exists (ZEX-S0502) -->
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding ShowsPeriods}">
-                <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
+                <!-- D-87: show all three period decisions in growing rows rather than hiding later choices in a filter strip. -->
+                <v:ChoiceChips x:Name="BudgetPeriods" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
                 <v:HelpButton Grid.Column="1" Topic="BudgetPeriod" />
             </Grid>
             <!-- The date boxes need the full width at 360 px, so the date sits below its label -->

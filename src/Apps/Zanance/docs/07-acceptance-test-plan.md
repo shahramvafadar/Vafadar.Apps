@@ -422,3 +422,13 @@ accounts/entries/settings/budgets/plans. Cover en/fa/de, light/dark, 360/412/wid
 narrow baseline. Normal Android Release checks use an independently owned fictitious budget fixture and prove
 its full restoration. Final counts/build/APK evidence and separate OS/screen-reader/phone/iOS limits are in
 quality/budget-readouts.md. Interrupted route captures never count as acceptance.
+
+## AT-94 - Every budget period choice is visible and selectable (D-87)
+
+Retain the pre-change 360 px/200% hidden third-choice geometry/render failure. Check all three actual native
+caption layout slots, target bounds (at least 44 px), complete translated selected names and bold state inside
+the growing group. Use native Invoke for all three existing decisions, join the actual serialized reload and
+verify selection, period text and TwoWeeks state. Restore original selection; compare complete accounts/entries/
+settings/budgets/plans without Save. Focus en/fa/de, both themes and 360/412/wide process-local 200% with a 100%
+narrow baseline. Signed Android Release checks and independent platform limits are in quality/budget-periods.md.
+These runtime checks supplement the suite; do not invent unit-test counts or change shared ChoiceChips behavior.

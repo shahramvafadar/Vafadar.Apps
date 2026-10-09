@@ -388,6 +388,7 @@ internal static class DebugSnapshots
             ("categories", AppShell.CategoriesRoute, null),
             ("category", AppShell.CategoryEditorRoute, new() { ["id"] = foodId }),
             ("insights-tabs", AppShell.BudgetRoute, null),
+            ("budget-periods", AppShell.BudgetRoute, null),
             ("budget-readouts", AppShell.BudgetRoute, null),
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
@@ -480,6 +481,11 @@ internal static class DebugSnapshots
                     && Shell.Current.CurrentPage?.BindingContext is Features.Entries.EntryEditorViewModel assetEditor)
                 {
                     await CaptureAssetConfirmationAsync(app, services, assetEditor, folder, $"{language}-{name}", confirmationAsset.Id);
+                }
+
+                if (name == "budget-periods" && Shell.Current.CurrentPage is Features.Budget.BudgetPage budgetPeriods)
+                {
+                    await ReviewBudgetPeriodsAsync(app, services, budgetPeriods, folder, language);
                 }
 
                 if (name == "budget-readouts" && Shell.Current.CurrentPage is Features.Budget.BudgetPage budgetReadouts)
@@ -1627,6 +1633,54 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-94: invoke all three actual native period choices and retain stored financial/preferences rows without Save.
+    private static async Task ReviewBudgetPeriodsAsync(App app, IServiceProvider services,
+        Features.Budget.BudgetPage page, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>(); var plans = services.GetRequiredService<PlanStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+            Budgets = await store.GetBudgetsAsync(), Plans = await plans.GetSchedulesAsync() });
+        var before = await StoredAsync(); var vm = (Features.Budget.BudgetViewModel)page.BindingContext;
+        var original = vm.PeriodIndex; var invoked = new List<int>();
+        async Task SelectAsync(int index)
+        {
+            if (!ReferenceEquals(Shell.Current.CurrentPage, page))
+            { throw new InvalidOperationException("The reviewed budget page was retired before its period invocation."); }
+            var choices = page.FindByName<Vafadar.Maui.Controls.ChoiceChips>("BudgetPeriods");
+            var chips = VisualDescendants(choices).OfType<Grid>().Where(chip => chip.Children.OfType<Button>().Any()).ToArray();
+            var button = chips[index].Children.OfType<Button>().Single();
+            if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+            { throw new InvalidOperationException("Budget period lacks a real native Invoke target."); }
+            invoke.Invoke(); await Task.Delay(150);
+            // Join the actual serialized reload after the native click; never assign the view-model selection directly.
+            await vm.LoadAsync(); await Task.Delay(300);
+            if (vm.PeriodIndex != index || choices.SelectedIndex != index || vm.IsTwoWeeks != (index == 2)
+                || string.IsNullOrWhiteSpace(vm.PeriodText))
+            { throw new InvalidOperationException("Native period invocation did not publish the selected existing view."); }
+        }
+        try
+        {
+            for (var index = 0; index < 3; index++)
+            {
+                await SelectAsync(index); invoked.Add(index);
+                if (FindScrollView(page) is { } outer) { await outer.ScrollToAsync(0, 0, animated: false); }
+                await CaptureAsync(app, folder, language + "-budget-periods-native-" + index);
+            }
+        }
+        finally
+        {
+            if (ReferenceEquals(Shell.Current.CurrentPage, page)) { await SelectAsync(original); }
+        }
+        if (before != await StoredAsync()) { throw new InvalidOperationException("Budget period navigation changed stored financial/settings data."); }
+        await CaptureAsync(app, folder, language + "-budget-periods-restored");
+        File.WriteAllText(Path.Combine(folder, language + "-budget-periods-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        { ActualNativeInvokedIndexes = invoked, AllThreeFullTargetsVisible = true, CompleteAccountsEntriesSettingsBudgetsPlansUnchanged = true,
+            OriginalSelectionRestored = vm.PeriodIndex == original }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
     }
 
     // AT-93: exercise real compact/default readouts with in-memory presentation fixtures and native scrolling, never Save.

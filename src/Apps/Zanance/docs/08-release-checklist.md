@@ -163,3 +163,7 @@ control findings remain independent release gates; the growing navigation does n
 D-86 / AT-93: verify complete budget figures and signed-boundary formatting using quality/budget-readouts.md.
 Keep native runtime data-equality/fixture-restoration checks, strict suites/builds and complete signed APK separate
 from physical OS scaling, screen readers, ARM64/iOS, OAuth, Store signing and owner product acceptance.
+
+D-87 / AT-94: quality/budget-periods.md records the hidden-choice failure, actual visible caption/target geometry,
+real selection/data-retention checks and signed Release handoff. Keep OS 200%, keyboard/screen readers, physical
+ARM64/iOS, real OAuth and Store/product acceptance separate.

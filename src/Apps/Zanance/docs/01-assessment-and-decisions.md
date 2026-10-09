@@ -603,3 +603,18 @@ Unsigned input at that magnitude remains invalid; this does not expand the ledge
 AT-93 uses actual native caption geometry and Scroll patterns, restored in-memory presentation fixtures and full
 stored accounts/entries/settings/budgets/plans equality. Running-app evidence, negative captures, suite/builds,
 normal signed Android Release checks and package limits are recorded in quality/budget-readouts.md.
+
+## D-87 - Keep every budget period decision visible (2026-10-09)
+
+After D-86, the actual 360 px/process-local 200% budget render leaves Every 2 weeks almost completely outside the
+compact ChoiceChips viewport (x 260, width 196, viewport 261.33). The native caption itself is complete but the
+choice is hidden. Keep the negative geometry/render evidence. These three decisions belong to the form: use the
+existing wrapping, full-size ChoiceChips mode instead of the horizontal compact filter mode. Keep all original
+items, two-way selection, translated selected names, semantic palette and native scaling. The existing full-size
+mode supplies growing labels and 44 px minimum targets; no shared control, calculation, schema or policy change.
+
+AT-94 measures each realized caption/layout slot and native target inside the growing group, full translated
+selected names and bold state. Invoke each actual native button to Month/Week/TwoWeeks, join its existing
+serialized reload and verify the selected view/period text. Restore the original choice and compare complete
+accounts/entries/settings/budgets/plans without Save. Actual matrix, builds/suites and signed normal Android
+Release evidence are recorded in quality/budget-periods.md. External platform/owner acceptance remains separate.

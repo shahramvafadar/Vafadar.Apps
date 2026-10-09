@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Show all budget periods (2026-10-09, D-87)
+
+- Monthly, Weekly and Every 2 weeks are all visible. Their buttons wrap onto more rows when text is large or the
+  screen is narrow, keeping the complete captions and selected state. Period calculations and saved data stay the same.
+
 ### Fixed - Complete budget amounts (2026-10-09, D-86)
 
 - Budget names wrap; spending, limits and envelope amounts have their own rows. Long amounts can be read in full

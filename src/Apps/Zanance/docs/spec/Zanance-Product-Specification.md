@@ -1449,3 +1449,12 @@ remaining physical OS/screen-reader/device/iOS gates are in quality/budget-reado
 
 D-86 current strict main suite: 1,369 passed, zero failed/skipped; App.Tests remains 140. Historical slice counts
 above remain historical; local matrix/build/package evidence and external acceptance are kept separate.
+
+D-87 continues A11Y-03 by keeping all three budget period decisions visible in the existing wrapping choice group.
+An actual pre-change native check fails for the hidden third option. AT-94 measures full native captions/targets,
+invokes the existing three choices, restores selection and compares complete stored data without Save. No shared
+control, financial calculation, schema or new string change. Final evidence and independent OS/screen-reader/
+physical-device/iOS gates are in quality/budget-periods.md.
+
+D-87 current strict main suite remains 1,369 passing (App.Tests 140). AT-94 adds actual native runtime checks;
+physical OS/screen-reader/device/iOS acceptance remains independent.

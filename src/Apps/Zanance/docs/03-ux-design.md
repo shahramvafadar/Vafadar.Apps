@@ -457,3 +457,11 @@ sizes scalable; AmountReadout.CaptionStyle selects the existing typography while
 Preserve the original sign, decimals, approximation, native digits and currency/unit as one packet. An oversized
 packet scrolls horizontally with the existing translated hint and complete spoken name. Do not shrink digits or
 truncate units to fit. See quality/budget-readouts.md for actual realized glyph and native scroll checks.
+
+### Visible budget period decisions (D-87)
+
+Month, Week and Every 2 weeks are three stable form choices. Show all of them using the existing growing wrapping
+ChoiceChips mode, with full scaled captions, selected native spoken state and at least 44 px targets. Rows grow
+when space is narrow; the group can share a row in a wide readable column. Keep the adjacent period help action.
+Do not require horizontal discovery of the last choice. Period selection changes the existing view only, with no
+financial Save. Compact horizontal filter strips elsewhere remain independent. Evidence: quality/budget-periods.md.

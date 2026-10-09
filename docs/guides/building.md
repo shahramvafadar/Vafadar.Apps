@@ -304,3 +304,9 @@ See `src/Apps/Zanance/docs/quality/budget-readouts.md` for the independent forma
 Requested Windows snapshot runs hide their own native AppWindow and render its root directly: PowerShell
 WindowStyle.Hidden alone does not hide WinUI. Never activate the review window or send desktop input.
 Retired pages fail explicitly; do not wait on their stale native scroll controls or count interrupted captures.
+
+The `budget-periods` Debug route (D-87 / AT-94) invokes all three actual native budget choices and joins their
+existing serialized reloads. Check every full caption/target/selected name inside the growing group, restore
+the original selection and compare complete stored accounts/entries/settings/budgets/plans without Save.
+Use the same three-language/light-dark/360-412-wide process-local font review; keep negative failures and
+original development files. Evidence: `src/Apps/Zanance/docs/quality/budget-periods.md`.
