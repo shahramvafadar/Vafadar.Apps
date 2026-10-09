@@ -469,3 +469,11 @@ quality/entry-details-disclosure.md.
 AT-96 local status: final Windows matrix and normal signed Android Release pass; 48 actual native Invoke
 operations, 24 complete draft/stored-row restorations, 1,369 main tests and zero-warning strict builds. Signed
 D-90 APK and canonical privacy checks pass. No new unit count; platform/physical-device acceptance stays separate.
+
+## AT-97 - Full restore alternatives and retained onboarding (D-91)
+
+Measure both actual full-caption native targets on steps 1 and 3, Invoke Restore and the restore page's native Back,
+check the same page/step, complete account/regional/theme/mode/currency/calendar drafts and complete stored rows.
+Final local status: 84 native Windows invocations/42 proof files, signed Android Release en/fa/de round trips and
+disposable-profile removal, 1,369 main tests and zero-warning builds. No new unit count or physical-device claim;
+evidence and limits: quality/onboarding-restore-actions.md.

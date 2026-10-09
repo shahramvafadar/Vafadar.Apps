@@ -479,3 +479,9 @@ Name the action by the current panel: "Hide details" while expanded, established
 Exactly one real growing native action is visible; full translated captions/spoken names and 44 px targets follow
 native text scale inside the form width. Hiding preserves all unsaved fields. Simple/Advanced and receipt/edit
 initial visibility follow the existing policy; no automatic Save or data clearing.
+
+### Onboarding restore alternatives (D-91)
+
+The welcome and first-account restore choices retain full wrapping captions at native large text, a real command/
+spoken target and busy disablement. Opening restore and returning keeps the same step and every draft choice;
+it must not force account creation. Preserve the existing footer and secondary action meaning.

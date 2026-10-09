@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Readable first-run restore choices (2026-10-09, D-91)
+
+- Both "I already have a backup" buttons show their full captions on narrow screens with large text.
+- Restore and return keep the current setup step and inputs without creating an account.
+
 ### Fixed - Clear transaction details action (2026-10-09, D-90)
 
 - The transaction form says "Hide details" when its extra fields are open and "More details" when they are closed.

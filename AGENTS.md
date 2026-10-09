@@ -373,3 +373,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   the established Simple/Advanced/receipt/edit visibility policy and every unsaved field; saving stays explicit.
 * Native review reads the current hierarchy before acting. An Advanced form can start expanded; do not treat an
   intended close as a failed open. Restore the complete draft and compare complete stored rows without Save.
+
+## 25. Readable first-run restore alternatives (D-91)
+
+* Both onboarding restore choices retain complete growing captions, native targets/names and the existing busy
+  binding. Restore/return preserves the same step and every unsaved choice, without forcing account creation.
+* The focused onboarding-action review ends before general account/financial seeding. Native disposable-profile
+  checks remove only their own fictitious profile and compare the original sample's complete financial rows.

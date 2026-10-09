@@ -208,3 +208,6 @@ review modifies only an unsaved fictitious draft and compares stored rows; diagn
 State-matched captions and growing targets add no stored data, portable field, export, permission, SDK or network
 behavior. Hiding retains existing in-memory drafts; only explicit Save persists them. Native review uses fictitious
 inputs and restores complete stored data; diagnostic routes remain absent from Release.
+
+D-91 changes first-run action presentation only; no new stored/portable field, permission, SDK, recipient or
+export. Restore/return retains the unsaved wizard and does not create an account or replace financial data.

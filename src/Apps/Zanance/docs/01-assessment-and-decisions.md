@@ -677,3 +677,13 @@ remains 1,369 (App.Tests 140); strict Windows and canonical Android Release have
 Release passes retained payee/tag/note drafts, Keep editing/Discard in all three languages, unchanged complete
 fictitious financial rows and the final secure-state handoff. Canonical APK/privacy scripts completed; full
 package/signature evidence and independent gates are in quality/entry-details-disclosure.md.
+
+## D-91 - Complete restore alternatives in onboarding (2026-10-09)
+
+The actual German 360 px/200% first-account screen clips its existing restore caption. Use the existing growing
+Secondary action in both places, retaining full existing translations, native scaling/command/name, busy binding
+and minimum targets. Keep the wizard footer, editor actions, account/restore rules and data model unchanged.
+AT-97 invokes actual Restore/Back on both steps, retains complete draft choices and compares stored rows. Final
+evidence: 273 renders/84 native Windows invocations, normal signed Release en/fa/de round trips and removed disposable
+profile, 1,369 passing tests, strict Windows/canonical Android zero-warning builds and verified full APK/privacy.
+See quality/onboarding-restore-actions.md for evidence and separate physical/platform/provider/owner gates.

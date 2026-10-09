@@ -1318,6 +1318,13 @@ complete fictitious financial rows remain unchanged. Canonical APK/privacy scrip
 Evidence and independent OS/screen-reader/phone/iOS/provider/owner gates:
 [quality/entry-details-disclosure.md](../quality/entry-details-disclosure.md).
 
+### 31.7. Onboarding restore actions (D-91 / AT-97)
+
+D-91 / AT-97 keeps both first-run restore alternatives fully readable and retains their existing navigation/busy
+bindings. The final Windows matrix and signed Android Release pass; 1,369 tests (App.Tests 140), zero-warning strict
+builds and full installable APK/privacy checks. See [quality/onboarding-restore-actions.md](../quality/onboarding-restore-actions.md)
+for native draft/stored-data preservation and independent platform/physical-device/provider/owner gates.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

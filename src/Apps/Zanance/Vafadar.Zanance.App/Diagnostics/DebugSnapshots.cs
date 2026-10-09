@@ -259,6 +259,9 @@ internal static class DebugSnapshots
                 await CaptureAsync(app, folder, $"{language}-onboarding-1");
 
                 // D-62: restore is available before any account exists, and Back preserves the wizard draft.
+#if WINDOWS
+                await ReviewOnboardingRestoreAsync(app, services, onboarding, vm, folder, language);
+#else
                 await vm.RestoreBackupCommand.ExecuteAsync(null);
                 await Task.Delay(500);
                 await CaptureAsync(app, folder, $"{language}-onboarding-restore");
@@ -266,6 +269,7 @@ internal static class DebugSnapshots
                 {
                     await restore.BackToOnboardingCommand.ExecuteAsync(null);
                 }
+#endif
 
                 for (var step = 2; step <= OnboardingViewModel.StepCount; step++)
                 {
@@ -281,8 +285,14 @@ internal static class DebugSnapshots
                         await CaptureAsync(app, folder, $"{language}-onboarding-{step}-end");
                         await scroll.ScrollToAsync(0, 0, animated: false);
                     }
+#if WINDOWS
+                    if (step == OnboardingViewModel.StepCount)
+                    { await ReviewOnboardingRestoreAsync(app, services, onboarding, vm, folder, language); }
+#endif
                 }
             }
+            // The focused restore-action review ends before the fixture account is created or other routes are seeded.
+            if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "onboarding-actions") { return; }
             vm.Account.OpeningText = Core.Money.MoneyText.ForInput(125050, "EUR", localization.CurrentCulture);
             await vm.NextCommand.ExecuteAsync(null);
             await Task.Delay(1500);
@@ -1641,6 +1651,71 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-97: both restore alternatives expose the full caption and return to the same unsaved onboarding draft.
+    private static async Task ReviewOnboardingRestoreAsync(App app, IServiceProvider services,
+        OnboardingPage page, OnboardingViewModel vm, string folder, string language)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
+        string Draft() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Account = vm.Account.Snapshot(), vm.ReportCurrency, vm.ThemeIndex, vm.ModeIndex, vm.SelectedCalendar,
+            vm.Regional.SelectedFormat, vm.Regional.DigitIndex, vm.Regional.SelectedHolidayRegion, vm.Regional.SelectedWeekStart,
+        });
+        var step = vm.Step; var draft = Draft(); var before = await StoredAsync();
+        var action = page.FindByName<Presentation.WrappingAction>(step == 1 ? "WelcomeRestoreAction" : "AccountRestoreAction");
+        var scroll = FindScrollView(page) ?? throw new InvalidOperationException("Onboarding has no actual viewport.");
+        await scroll.ScrollToAsync(action, ScrollToPosition.Center, animated: false);
+        await Task.Delay(350);
+        await CaptureAsync(app, folder, $"{language}-onboarding-restore-action-{step}");
+        await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, $"{language}-onboarding-restore-action-{step}-window.png"));
+        if (action.Content is not Grid face || face.Children.OfType<Button>().Single().Handler?.PlatformView
+            is not Microsoft.UI.Xaml.Controls.Button native || face.Children.OfType<Border>().Single().Content
+            is not Label { Handler.PlatformView: Microsoft.UI.Xaml.Controls.TextBlock caption })
+        { throw new InvalidOperationException("The actual restore caption/command target is unavailable."); }
+        var button = face.Children.OfType<Button>().Single();
+        var expected = services.GetRequiredService<Translator>()["Onb_RestoreButton"];
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native);
+        var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(caption);
+        if (action.Text != expected || peer.GetName() != expected || button.Command != vm.RestoreBackupCommand
+            || !native.IsEnabled || !caption.IsTextScaleFactorEnabled || caption.IsTextTrimmed
+            || action.Width < 44 || action.Height < 44 || slot.Width > action.Width + 1
+            || caption.DesiredSize.Height > caption.ActualHeight + 1)
+        { throw new InvalidOperationException("The restore alternative clips its caption or loses its native target/name/command."); }
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
+            is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("The restore alternative has no native Invoke pattern."); }
+        invoke.Invoke();
+        for (var attempt = 0; attempt < 100 && page.Navigation.ModalStack.LastOrDefault()?.BindingContext
+            is not Features.Backup.BackupViewModel; attempt++) { await Task.Delay(50); }
+        if (page.Navigation.ModalStack.LastOrDefault() is not Features.Backup.BackupPage restorePage
+            || restorePage.BindingContext is not Features.Backup.BackupViewModel restore || !restore.IsRestoreOnly)
+        { throw new InvalidOperationException("The native restore alternative did not open first-run restoration."); }
+        for (var attempt = 0; attempt < 100 && restore.IsBusy; attempt++) { await Task.Delay(50); }
+        if (restore.IsBusy) { throw new InvalidOperationException("The restore page did not finish loading."); }
+        await Task.Delay(350);
+        await CaptureAsync(app, folder, $"{language}-onboarding-restore-{step}");
+        var backButton = VisualDescendants(restorePage).OfType<Button>().Single(candidate => candidate.Command == restore.BackToOnboardingCommand);
+        if (backButton.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button back
+            || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(back).GetPattern(
+                Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider returnInvoke)
+        { throw new InvalidOperationException("The actual restore return target is unavailable."); }
+        returnInvoke.Invoke();
+        for (var attempt = 0; attempt < 100 && page.Navigation.ModalStack.Count > 0; attempt++) { await Task.Delay(50); }
+        await Task.Delay(250);
+        if (page.Navigation.ModalStack.Count != 0 || !ReferenceEquals(app.Windows[0].Page, page) || vm.Step != step
+            || Draft() != draft || await StoredAsync() != before)
+        { throw new InvalidOperationException("Restore navigation changed the onboarding draft, stored data or current step."); }
+        File.WriteAllText(Path.Combine(folder, $"{language}-onboarding-restore-proof-{step}.json"),
+            System.Text.Json.JsonSerializer.Serialize(new
+            {
+                Step = step, Caption = expected, action.Width, action.Height, caption.FontSize, caption.IsTextTrimmed,
+                NativeRestoreAndReturnInvocations = 2, SameOnboardingPageAndDraft = true,
+                CompleteAccountsEntriesSettingsUnchanged = true, NoRestoreOrAccountCreation = true,
+            }));
     }
 
     // AT-96: disclosure names match the actual panel; native toggles retain every unsaved field without Save.

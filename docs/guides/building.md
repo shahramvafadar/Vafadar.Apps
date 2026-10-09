@@ -325,3 +325,9 @@ captions/spoken names, one visible action and bounded >=44 px targets. Restore e
 suggestions and visibility and compare complete stored rows without Save. Include narrow baseline/Simple cohorts.
 Canonical scripts completed with the existing installed PowerShell engine for this slice; no system/security setting
 change was necessary. Evidence and independent platform gates: `src/Apps/Zanance/docs/quality/entry-details-disclosure.md`.
+
+`Run-Snapshots.ps1 -Only onboarding-actions` (D-91 / AT-97) measures both actual restore alternatives, invokes native
+Restore/Back and compares the existing account draft fingerprint, selected wizard choices and full stored rows.
+The focused review returns before general snapshot account creation/financial seeding. Keep the outer development
+data guard and en/fa/de theme/width/text-scale matrix; a helper's script-header failure is not final acceptance.
+Evidence: `src/Apps/Zanance/docs/quality/onboarding-restore-actions.md`.

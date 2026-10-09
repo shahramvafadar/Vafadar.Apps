@@ -225,3 +225,6 @@ with no new stored field, export, permission, SDK or recipient. Explicit Save an
 
 D-90 names the current transaction detail action and keeps in-memory values when hidden. No new stored field,
 portable source, export, recipient, permission or SDK; financial persistence still requires explicit Save.
+
+D-91 changes first-run action presentation only; no new stored/portable field, permission, SDK, recipient or
+export. Restore/return retains the unsaved wizard and does not create an account or replace financial data.

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:loc="clr-namespace:Vafadar.Localization;assembly=Vafadar.Localization"
     xmlns:accounts="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
@@ -78,8 +79,9 @@
                         <Label Text="{v:Translate Onb_WelcomeText}" Style="{StaticResource Secondary}" FontSize="15"
                                HorizontalTextAlignment="Center" Margin="8,12,8,0" />
 
-                        <Button Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
-                                Style="{StaticResource SecondaryButton}" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
+                        <!-- D-91: keep the full restore alternative readable at native large-text sizes. -->
+                        <p:WrappingAction x:Name="WelcomeRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
+                                          Appearance="Secondary" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
 
                         <Label Text="{v:Translate Settings_Language}" Style="{StaticResource SectionHeader}" Margin="4,28,4,6" />
                         <Border Style="{StaticResource Card}" Padding="6">
@@ -159,8 +161,8 @@
                         <Border Style="{StaticResource Card}" Margin="0,16,0,0">
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{v:Translate Onb_RestoreText}" Style="{StaticResource Secondary}" />
-                                <Button Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
-                                        Style="{StaticResource SecondaryButton}" IsEnabled="{Binding IsNotBusy}" />
+                                <p:WrappingAction x:Name="AccountRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
+                                                  Appearance="Secondary" IsEnabled="{Binding IsNotBusy}" />
                             </VerticalStackLayout>
                         </Border>
                         <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">
