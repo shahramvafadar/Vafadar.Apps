@@ -491,3 +491,12 @@ AT-98 follow-up (D-93): keep each Windows diagnostic call inside the same platfo
 Android Debug must compile as well as Release. Final strict builds and 1,384 tests pass; three current Windows Home
 proofs retain rows/contexts/values, and signed Release readbacks preserve all 24 tables of all three owned samples.
 No new unit count or cold-start/physical-device acceptance: quality/home-debug-platform-and-native-stages.md.
+
+## AT-99 - Complete Home customization and persisted native actions (D-94)
+
+Measure all eight actual section captions at full native scale, separate controls, 44 px targets and complete Reset
+caption/name. Invoke native Down/Up, Toggle visibility and Invoke Reset; prove exact persisted order/visibility,
+all default sections and unchanged complete financial rows/other preferences. Final local status: 21 proof files,
+84 Windows native operations, full en/fa/de width/theme/200% matrix, 1,384 main tests, zero-warning builds and normal
+signed Android Release/readbacks pass. Original development files restore with matching hashes. No new unit count,
+real OS font-scale, screen-reader, physical-device or release acceptance: quality/home-customization-readable.md.

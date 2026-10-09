@@ -14,6 +14,48 @@ internal static class DebugLayoutChecks
     internal static void Check(ContentPage page, string folder, string name)
     {
         var evidence = new List<object>();
+        // AT-99: section identities remain complete beside their original reorder/visibility controls (D-94).
+        var homeRows = Descendants(page).OfType<Grid>()
+            .Where(row => row.BindingContext is Features.Home.HomeSectionRow && row.Children.OfType<Switch>().Any()).ToArray();
+        if (page.BindingContext is Features.Home.HomeLayoutViewModel homeLayout && homeRows.Length != homeLayout.Rows.Count)
+        { throw new InvalidOperationException("A Home customization section lacks its actual native row."); }
+        foreach (var row in homeRows)
+        {
+            var model = (Features.Home.HomeSectionRow)row.BindingContext;
+            var label = row.Children.OfType<Label>().Single();
+            var toggle = row.Children.OfType<Switch>().Single();
+            if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native)
+            { throw new InvalidOperationException("The Home customization caption is not realized."); }
+            var slot = Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(native);
+            var boundaries = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+            {
+                var pointer = native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward);
+                if (pointer is not null) { boundaries.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            if (label.Text != model.Name || native.IsTextTrimmed || !native.IsTextScaleFactorEnabled
+                || boundaries.Count == 0 || boundaries.Min(rect => rect.Left) < -1
+                || boundaries.Max(rect => rect.Right) > slot.Width + 1 || boundaries.Max(rect => rect.Bottom) > slot.Height + 1
+                || toggle.Width < 44 || toggle.Height < 44 || toggle.IsToggled != model.IsVisible
+                || label.Width < row.Width - row.Padding.HorizontalThickness - 1
+                || toggle.Y < label.Y + label.Height - 1
+                || SemanticProperties.GetDescription(toggle) != model.Name
+                || row.Children.OfType<Button>().Where(button => button.IsVisible)
+                    .Any(button => button.Width < 44 || button.Height < 44 || button.Command is null || button.CommandParameter != model))
+            {
+                File.WriteAllText(Path.Combine(folder, name + "-home-customization-failure.json"),
+                    JsonSerializer.Serialize(new { model.Name, label.Width, label.Height, native.IsTextTrimmed,
+                        native.FontSize, slot, boundaries, toggleWidth = toggle.Width, toggleHeight = toggle.Height,
+                        Buttons = row.Children.OfType<Button>().Select(button => new { button.Width, button.Height, button.IsVisible,
+                            HasCommand = button.Command is not null, SameParameter = button.CommandParameter == model }),
+                        toggle.IsToggled, model.IsVisible, SpokenName = SemanticProperties.GetDescription(toggle) },
+                        new JsonSerializerOptions { WriteIndented = true }));
+                throw new InvalidOperationException("A Home customization section clips its name or loses its complete native controls.");
+            }
+            evidence.Add(new { kind = "Home customization section", model.Section, model.Name, row.Width, row.Height,
+                native.FontSize, native.IsTextScaleFactorEnabled, native.IsTextTrimmed, renderedBoundaries = boundaries.Count,
+                toggleWidth = toggle.Width, toggleHeight = toggle.Height, model.CanMoveUp, model.CanMoveDown });
+        }
         foreach (var header in Descendants(page).OfType<Presentation.PageHeader>())
         {
             var title = header.Children.OfType<Label>().Single();

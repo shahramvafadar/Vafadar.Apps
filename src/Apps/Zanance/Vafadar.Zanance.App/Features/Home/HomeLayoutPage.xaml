@@ -6,6 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Home"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     x:DataType="local:HomeLayoutViewModel"
     Title="{v:Translate HomeLayout_Title}">
 
@@ -16,30 +17,32 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:HomeSectionRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,44,44,Auto" ColumnSpacing="6">
-                                <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" VerticalOptions="Center" />
-                                <Button Grid.Column="1" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveUp}"
+                            <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto" RowSpacing="4" ColumnDefinitions="*,44,44,Auto" ColumnSpacing="6">
+                                <!-- D-94: give the complete section identity its own width above the existing controls. -->
+                                <Label Grid.ColumnSpan="4" Text="{Binding Name}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center" />
+                                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveUp}" MinimumWidthRequest="44" MinimumHeightRequest="44"
                                         Command="{Binding MoveUpCommand, Source={RelativeSource AncestorType={x:Type local:HomeLayoutViewModel}}, x:DataType=local:HomeLayoutViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{v:Translate HomeLayout_Up}">
                                     <Button.ImageSource>
                                         <fi:SymbolImageSource Symbol="ArrowUp" Size="18" Color="{DynamicResource Primary}" />
                                     </Button.ImageSource>
                                 </Button>
-                                <Button Grid.Column="2" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveDown}"
+                                <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource MoveButton}" IsVisible="{Binding CanMoveDown}" MinimumWidthRequest="44" MinimumHeightRequest="44"
                                         Command="{Binding MoveDownCommand, Source={RelativeSource AncestorType={x:Type local:HomeLayoutViewModel}}, x:DataType=local:HomeLayoutViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{v:Translate HomeLayout_Down}">
                                     <Button.ImageSource>
                                         <fi:SymbolImageSource Symbol="ArrowDown" Size="18" Color="{DynamicResource Primary}" />
                                     </Button.ImageSource>
                                 </Button>
-                                <Switch Grid.Column="3" IsToggled="{Binding IsVisible}" OnColor="{DynamicResource Primary}" VerticalOptions="Center"
+                                <Switch Grid.Row="1" Grid.Column="3" IsToggled="{Binding IsVisible}" OnColor="{DynamicResource Primary}" VerticalOptions="Center"
+                                        MinimumWidthRequest="44" MinimumHeightRequest="44"
                                         SemanticProperties.Description="{Binding Name}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
             </Border>
-            <Button Text="{v:Translate HomeLayout_Reset}" Command="{Binding ResetCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
+            <p:WrappingAction Text="{v:Translate HomeLayout_Reset}" Command="{Binding ResetCommand}" Appearance="Text" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

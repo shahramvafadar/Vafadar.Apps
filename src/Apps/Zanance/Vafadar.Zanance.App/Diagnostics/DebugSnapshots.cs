@@ -604,6 +604,8 @@ internal static class DebugSnapshots
 #if WINDOWS
                 if (name == "home" && Shell.Current.CurrentPage is { BindingContext: Features.Home.HomeViewModel } homePage)
                 { await ReviewHomeSnapshotAsync(services, homePage, folder, language); }
+                if (name == "home-layout" && Shell.Current.CurrentPage is Features.Home.HomeLayoutPage layoutPage)
+                { await ReviewHomeLayoutActionsAsync(app, services, layoutPage, folder, language); }
 #endif
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
@@ -1656,6 +1658,69 @@ internal static class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();
+    }
+
+    // AT-99: invoke the actual customization controls using only the walk-through's fictitious profile.
+    private static async Task ReviewHomeLayoutActionsAsync(App app, IServiceProvider services,
+        Features.Home.HomeLayoutPage page, string folder, string language)
+    {
+        var vm = (Features.Home.HomeLayoutViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> FinancialAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Budgets = await store.GetBudgetsAsync() });
+        static string OtherPreferences(Core.Settings.ZananceSettings settings)
+        {
+            var node = System.Text.Json.Nodes.JsonNode.Parse(System.Text.Json.JsonSerializer.Serialize(settings))!.AsObject();
+            node.Remove(nameof(settings.HomeLayout)); node.Remove(nameof(settings.UpdatedAt));
+            return node.ToJsonString();
+        }
+        var before = await FinancialAsync(); var preferences = OtherPreferences(await store.GetSettingsAsync());
+        var expected = Core.Dashboard.HomeLayout.Parse((await store.GetSettingsAsync()).HomeLayout);
+        var first = vm.Rows[0].Section;
+        var scroll = FindScrollView(page) ?? throw new InvalidOperationException("Home customization has no viewport.");
+        Grid Row(Core.Dashboard.HomeSection section) => VisualDescendants(page).OfType<Grid>().Single(row =>
+            row.BindingContext is Features.Home.HomeSectionRow model && model.Section == section && row.Children.OfType<Switch>().Any());
+        async Task SavedAsync()
+        {
+            for (var attempt = 0; attempt < 100; attempt++)
+            {
+                if ((await store.GetSettingsAsync()).HomeLayout == expected.ToString()) { return; }
+                await Task.Delay(25);
+            }
+            throw new InvalidOperationException("The native customization action did not persist its exact layout.");
+        }
+        async Task MoveAsync(int delta)
+        {
+            var row = Row(first); await scroll.ScrollToAsync(row, ScrollToPosition.Center, animated: false); await Task.Delay(200);
+            var button = row.Children.OfType<Button>().Single(candidate => candidate.Command == (delta < 0 ? vm.MoveUpCommand : vm.MoveDownCommand));
+            if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+            { throw new InvalidOperationException("The actual section reorder target has no native Invoke pattern."); }
+            invoke.Invoke(); expected.Move(first, delta); await SavedAsync();
+            if (!vm.Rows.Select(candidate => candidate.Section).SequenceEqual(expected.Sections.Select(state => state.Section)))
+            { throw new InvalidOperationException("Section order differs after the native move."); }
+        }
+        await MoveAsync(1); await MoveAsync(-1);
+        var toggle = Row(first).Children.OfType<Switch>().Single();
+        if (toggle.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ToggleSwitch nativeToggle
+            || new Microsoft.UI.Xaml.Automation.Peers.ToggleSwitchAutomationPeer(nativeToggle).GetPattern(
+                Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Toggle) is not Microsoft.UI.Xaml.Automation.Provider.IToggleProvider toggleProvider)
+        { throw new InvalidOperationException("The actual section switch has no native Toggle pattern."); }
+        expected.SetVisible(first, !toggle.IsToggled); toggleProvider.Toggle(); await SavedAsync();
+        if (vm.Rows.Single(row => row.Section == first).IsVisible != expected.Sections.Single(state => state.Section == first).IsVisible)
+        { throw new InvalidOperationException("The native switch failed to update its section."); }
+        var reset = WrappingActions(page).Single(action => action.Command == vm.ResetCommand);
+        await scroll.ScrollToAsync(reset, ScrollToPosition.Center, animated: false); await Task.Delay(200);
+        InvokeWrappingAction(page, vm.ResetCommand); expected = Core.Dashboard.HomeLayout.Default; await SavedAsync();
+        await Task.Delay(200);
+        if (!vm.Rows.Select(row => (row.Section, row.IsVisible)).SequenceEqual(expected.Sections.Select(state => (state.Section, state.IsVisible)))
+            || await FinancialAsync() != before || OtherPreferences(await store.GetSettingsAsync()) != preferences)
+        { throw new InvalidOperationException("Customization reset lost its default rows or changed unrelated stored data."); }
+        await CaptureAsync(app, folder, language + "-home-layout-reset");
+        File.WriteAllText(Path.Combine(folder, language + "-home-layout-actions-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { NativeInvocations = 4, ExactMovedOrderAndVisibilityPersisted = true,
+                ResetRestoresEveryDefaultSection = true, CompleteAccountsEntriesBudgetsAndOtherPreferencesUnchanged = true }));
     }
 
     // AT-98: actual Home bindings retain their native account rows and rebind the full snapshot without Save.

@@ -235,3 +235,8 @@ permission, SDK, recipient or export; actual sample readbacks compare complete o
 D-93 changes a Debug platform guard only, with no production data/permission/SDK/export change. Temporary QA
 stage metadata is restricted to exact fictitious profiles, contains names/durations only and is removed from
 source and the owned cache before final handoff. Complete original sample tables remain unchanged.
+
+D-94 changes Home customization presentation only. It retains the existing profile HomeLayout setting and its
+backup rules, with no new data, permission, SDK, security or export field. The Debug walk-through exercises native
+layout actions only in fictitious settings; complete financial rows/other preferences stay equal and original
+development database files restore with matching hashes. Independent read prototypes are not app dependencies.

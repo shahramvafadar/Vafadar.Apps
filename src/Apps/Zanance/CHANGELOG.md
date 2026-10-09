@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Home customization (2026-10-09, D-94)
+
+- Full section names stay readable with larger text and narrow windows. Reorder and visibility controls have larger touch targets, and the Reset caption can wrap.
+
 ### Fixed - Android development build (2026-10-09, D-93)
 
 - Android Debug builds compile again after restricting the Windows Home diagnostic to Windows. Release behavior is unchanged.

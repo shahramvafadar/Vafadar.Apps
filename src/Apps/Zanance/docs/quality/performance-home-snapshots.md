@@ -51,5 +51,6 @@ the Accounts page remain separate work; this slice does not claim their scans we
 Large entry materialization, first creation of 200 native rows, cold-start duration/ANR and the physical-device Q-02
 objective remain open. QA-06 is partial. ARM64 phone, iOS, screen-reader, real provider, owner and Store acceptance
 remain independent gates; this optimization does not resolve those decisions or encrypt the database.
-The current Customize Home page still truncates some existing section captions at 200% (observed narrow en/fa/de
-renders); it is outside this performance change and remains an A11Y-03 follow-up, not a claimed layout pass.
+The D-92 review observed truncated Customize Home names at 200%; this negative evidence remains historical.
+D-94 closes that local caption/target follow-up separately in home-customization-readable.md. Performance and
+real platform accessibility gates above remain open.

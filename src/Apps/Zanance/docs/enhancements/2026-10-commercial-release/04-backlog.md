@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; modal/other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; modal/other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -438,3 +438,9 @@ D-93 fixes the Windows-only Home diagnostic call that broke Android Debug, with 
 change. Final Windows/Android Debug/Release builds and all 1,384 tests (App.Tests 148) pass. Temporary native stage
 measurements identify entry materialization/initial account creation; QA-06 and physical/platform acceptance remain
 open. Evidence: [quality/home-debug-platform-and-native-stages.md](../../quality/home-debug-platform-and-native-stages.md).
+
+D-94 completes the local Customize Home caption/target follow-up: all eight section identities grow at full
+width above the original controls, with 44 px targets and a complete Reset action. AT-99 final en/fa/de theme/width/
+200% review and 84 native operations, 1,384 main tests, strict Windows/Android Debug/Release builds and signed Release
+owned-sample readbacks pass. A11Y-03, QA-06 and real device/platform acceptance remain partial/open.
+Evidence: [quality/home-customization-readable.md](../../quality/home-customization-readable.md).

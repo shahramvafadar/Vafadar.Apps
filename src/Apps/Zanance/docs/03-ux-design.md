@@ -491,3 +491,11 @@ it must not force account creation. Preserve the existing footer and secondary a
 Build all account presentation values before publication. One Reset rebinds existing native rows to fresh contexts,
 even with equal record values, so semantic theme colors and translated amounts update. Keep every row, order, command
 and money packet; do not cap visible accounts or discard current values when snapshot enumeration fails.
+
+### Complete Home customization (D-94)
+
+Section identity occupies a full-width wrapping Auto row; reorder buttons and the visibility switch use a separate
+row below it. Preserve native scaling/RTL and local 44 px targets. Reset uses the existing growing semantic action
+with its complete translated native name and unchanged command. Keep all eight sections and the profile's layout
+preference semantics. Verify actual glyph boundaries and native move/visibility/Reset persistence on fictitious data;
+do not treat truncated intermediate renders or process-local scaling as platform accessibility acceptance.

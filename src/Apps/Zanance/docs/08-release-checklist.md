@@ -198,3 +198,9 @@ D-93 fixes the Windows-only Home diagnostic call that broke Android Debug, with 
 change. Final Windows/Android Debug/Release builds and all 1,384 tests (App.Tests 148) pass. Temporary native stage
 measurements identify entry materialization/initial account creation; QA-06 and physical/platform acceptance remain
 open. Evidence: [quality/home-debug-platform-and-native-stages.md](quality/home-debug-platform-and-native-stages.md).
+
+D-94 completes the local Customize Home caption/target follow-up: all eight section identities grow at full
+width above the original controls, with 44 px targets and a complete Reset action. AT-99 final en/fa/de theme/width/
+200% review and 84 native operations, 1,384 main tests, strict Windows/Android Debug/Release builds and signed Release
+owned-sample readbacks pass. A11Y-03, QA-06 and real device/platform acceptance remain partial/open.
+Evidence: [quality/home-customization-readable.md](quality/home-customization-readable.md).

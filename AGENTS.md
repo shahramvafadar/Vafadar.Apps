@@ -390,3 +390,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 
 * A Windows-only Debug helper's caller uses the same platform boundary. Changes to Debug diagnostics require a
   complete Android Debug build as well as Release; Release excludes those files and cannot verify Debug compilation.
+
+## 27. Complete Home customization (D-94)
+
+* Section identities use a full-width growing row above their original reorder/visibility controls, native text
+  scaling/RTL and local 44 px targets. Reset keeps its complete growing semantic name and original command.
+* The Home layout Debug review checks real glyph geometry and native move/visibility/Reset persistence only in the
+  walk-through's fictitious profile, comparing complete financial rows/other preferences. Preserve original data
+  and distinguish process-local layout stress from real platform/font-scale/screen-reader acceptance.

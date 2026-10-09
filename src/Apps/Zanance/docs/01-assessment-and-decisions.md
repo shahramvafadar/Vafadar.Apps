@@ -705,3 +705,13 @@ Windows and complete Android Debug/Release builds, 1,384 tests, actual Windows H
 pass. Independent SQL/native Debug measurements reject an unhelpful index and select materialization/initial row
 creation as the next QA-06 paths; no temporary instrumentation, production index or schema change remains.
 Evidence and limits: quality/home-debug-platform-and-native-stages.md.
+
+## D-94 - Complete Home customization names and controls (2026-10-09)
+
+Give section identity a full-width growing row above its existing controls, keep native text scaling/RTL,
+set local 44 px arrow/switch minimums and use the existing growing Reset action. Narrow D-92 names were truncated;
+one-column wrapping still broke words, and actual geometry found 40 px arrow targets. Preserve all eight sections,
+commands, defaults and profile preference behavior. AT-99 checks real native geometry and persisted move/visibility/
+Reset actions on fictitious data. Final language/theme/width review, 1,384 tests, zero-warning Windows/Android Debug/
+Release builds, complete signed APK and exact owned-sample readback pass. Remaining accessibility, cold-start,
+physical-device and external gates are explicit: quality/home-customization-readable.md.

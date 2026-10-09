@@ -340,3 +340,8 @@ instrumentation is removed before final builds; a different transient VM is not 
 After changing Debug diagnostics, also build the complete Android Debug package with
 `./eng/scripts/Build-AndroidApk.ps1 -Configuration Debug`. A successful Release build excludes Debug source and cannot
 prove that target compiles. Windows-only helpers and their callers must share the same WINDOWS boundary (D-93).
+
+Customize Home review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only home-layout -FontScale 2 -Theme dark -WindowSize 360x800`.
+AT-99 checks real full-width native names/44 px targets and invokes Down, Up, visibility Toggle and Reset against only
+the walk-through's fictitious profile. Restore original development files after review; process-local Windows text
+scaling is not evidence of real OS text scaling or Android/iOS screen readers.
