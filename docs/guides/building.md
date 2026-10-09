@@ -180,3 +180,12 @@ Run-Snapshots.ps1 -Languages 'en,fa,de' -Only entry-asset -Theme dark -WindowSiz
 The fixture creates only a fictitious value account, invokes the actual Save command, captures the app window/dialog,
 then cancels with the native UI Automation Invoke pattern. It asserts unchanged draft/ledger/value and never sends
 desktop clicks, keys or focus requests. Native Android checks retain FLAG_SECURE and use accessibility XML.
+
+## Performance inspection (D-75)
+
+eng/benchmarks/Zanance.Performance is an independent .NET executable using actual Core/Data projects. It is not a
+MAUI dependency or production diagnostic. Build it with the CI warning policy in Release and supply a new output
+directory under artifacts. See its README for generation, migration and operation timer boundaries. Native checks
+use separately created fictitious profiles, preserve Windows development files with matching hashes, explicitly
+select only the emulator serial, retain screenshot protection and report failed observations/ANR honestly.
+The complete signed APK requirement remains in force before physical phone testing.

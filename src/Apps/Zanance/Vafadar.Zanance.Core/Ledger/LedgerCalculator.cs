@@ -86,9 +86,10 @@ public static class LedgerCalculator
         bool confirmedOnly = false)
     {
         var totals = new SortedDictionary<string, long>(StringComparer.Ordinal);
+        var indexed = new AccountEntryIndex(entries);
         foreach (var account in InScope(accounts, accountIds).Where(a => accountIds is not null || !a.IsArchived))
         {
-            totals[account.CurrencyCode] = checked(totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, entries, at, confirmedOnly));
+            totals[account.CurrencyCode] = checked(totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, indexed.For(account.Id), at, confirmedOnly));
         }
 
         return totals;

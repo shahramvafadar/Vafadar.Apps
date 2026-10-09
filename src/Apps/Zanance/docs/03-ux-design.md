@@ -343,3 +343,15 @@ explanation for manual Income/Expense, in both Simple and Advanced. Save is busy
 save cannot open another dialog or overlap a write. Cancel keeps account, kind, amount and note in the editor and
 leaves the asset value/ledger unchanged. Each retry asks again. Consent does not bypass validation. No new copy or
 layout; transfers and balance adjustments do not acquire the income/expense warning.
+
+## Large-ledger responsiveness (D-75)
+
+Large transaction snapshot reads must not monopolize the UI thread. Capture the requesting profile before queuing
+work; resume presentation changes on the UI thread. Totals and forecast opening balances use unchanged original
+account slices and the shared ledger formula. Search counts alone are not proof that result rows are rendered or
+accessible. Performance observations distinguish system first frame from loaded financial content and include
+measurement overhead; native ANR/row-observation failures remain explicit acceptance findings.
+
+Q-02 uses the named reference and tenfold shapes in quality/performance-q02.md. Preserve dates, transfer identities,
+refund meanings, review scope, currency and checked sums through every optimization; never replace a financial
+result with an estimate to meet a timing objective.

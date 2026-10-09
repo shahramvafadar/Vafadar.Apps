@@ -839,18 +839,24 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     public async Task<List<LedgerEntry>> GetEntriesAsync(DateOnly? from = null, DateOnly? to = null, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var query = db.Entries.AsNoTracking();
-        if (from is { } f)
+        // Microsoft.Data.Sqlite's async I/O executes synchronously. Materialize large snapshots off the UI thread
+        // (D-75; https://learn.microsoft.com/dotnet/standard/data/sqlite/async). Capture the context first, so a queued
+        // read stays in the profile that requested it. One worker owns the query; disposal follows its completion.
+        return await Task.Run(async () =>
         {
-            query = query.Where(e => e.Date >= f);
-        }
+            var query = db.Entries.AsNoTracking();
+            if (from is { } f)
+            {
+                query = query.Where(e => e.Date >= f);
+            }
 
-        if (to is { } t)
-        {
-            query = query.Where(e => e.Date <= t);
-        }
+            if (to is { } t)
+            {
+                query = query.Where(e => e.Date <= t);
+            }
 
-        return await query.OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt).ToListAsync(cancellationToken);
+            return await query.OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt).ToListAsync(cancellationToken);
+        }, cancellationToken);
     }
 
     /// <summary>Returns one entry.</summary>

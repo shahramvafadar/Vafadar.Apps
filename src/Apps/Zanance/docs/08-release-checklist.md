@@ -101,3 +101,8 @@ from isolated SQLite, a native port double, the emulator or CI substitutes for t
 D-74 / QA-04: repeat manual Income/Expense on a valued asset on the physical phone. Cancel must keep the draft and
 asset value; Record anyway must save only once after validation. Transfers/adjustments must keep their meanings.
 AT-81 local/emulator results and the complete signed APK do not close physical-device, iOS or product acceptance.
+
+D-75 / Q-02: select an actual physical reference device and record process-cold Home, search and save with the
+10,000/20/100 workload and explicit tenfold stress shape. Include native rendering and input response, not only
+calculation/store timing or system first frame. Verify there is no ANR and that every matched result row is visible
+and accessible after empty/nonempty filtering. Desktop/emulator timing and AT-82 do not close these device gates.

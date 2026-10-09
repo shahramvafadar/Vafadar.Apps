@@ -107,3 +107,8 @@ owner product/licence/provider/release gates and physical-device/iOS acceptance 
 D-74 / QA-04 verifies the remaining ZEX-S0408 manual asset-account consent through actual production code, native
 runtime and isolated SQLite. Existing conversion-assistant tests remain valid and distinct. No automatic conversion,
 new import rule or quota; main suite 1,300. Continuous ready-section delivery proceeds to QA-06 under D-69.
+
+D-75 / QA-06: reference/tenfold measurements and large-ledger read/account-index hardening are tracked in the
+canonical commercial-release backlog and quality/performance-q02.md. Main suite 1,323; 23 new AT-82 cases.
+Native accessibility/ANR findings must be retained in follow-up; no emulator timing implies physical-device or
+publication acceptance. Accessibility work remains the next independent verification area under D-69.

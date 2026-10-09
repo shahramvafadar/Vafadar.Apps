@@ -98,3 +98,8 @@ UI dependency. AT-80 is local engineering/runtime evidence; owner phone, real OA
 D-74 / QA-04 adds 37 AT-81 cases for the existing entry-editor valued-asset consent, including cancellation before
 mutation, busy command exclusion, translated native requests and real SQLite validation. No Phase 1 scope or data
 model change. Main suite 1,300; native/phone acceptance remains separate.
+
+D-75 / Q-02 hardening records explicit reference and tenfold performance workloads and keeps large entry reads
+outside the UI thread. Account indexes call the original balance formula. AT-82 adds 23 cases (main suite 1,323);
+actual native timing/ANR/search-row observations and remaining physical-device objectives are in
+quality/performance-q02.md. No schema, commercial limit or release acceptance change.

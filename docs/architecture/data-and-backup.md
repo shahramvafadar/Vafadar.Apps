@@ -249,3 +249,16 @@ Consumed aggregates keep their own-CSV ids and original import history through t
 protects a consumed original aggregate while its Undo journal exists. Journals remain until that import is undone or
 all profile data/the profile is deleted, and are included in database backups, not CSV exports. Ordinary imports
 without aggregate changes use the existing batch mechanism. No production database-encryption policy changes.
+
+## Large read snapshots (D-75)
+
+GetEntriesAsync captures a short-lived DbContext for the current LocalDatabaseLocation before queuing one worker.
+Microsoft.Data.Sqlite async I/O is synchronous (see the [provider documentation](https://learn.microsoft.com/dotnet/standard/data/sqlite/async)); the worker performs materialization so the caller's UI thread can continue.
+The context is never queried concurrently and is disposed only after completion or cancellation. Capturing before
+queueing prevents a later profile switch from redirecting the queued read. Writes, migrations, auditing and the
+startup placement in App.CreateWindow remain unchanged. No model change or compiled-model regeneration is needed.
+
+AccountEntryIndex is an in-memory routing index over an unchanged read snapshot, not persisted data or a copied
+balance algorithm. Each endpoint receives the original transfer object once, in original order; LedgerCalculator
+still applies opening-date, review, currency and overflow rules. Home, total balances and forecast starts use
+those slices. Rebuild the index for a new ledger snapshot.

@@ -64,3 +64,19 @@ algorithm merely to test a copy. Run the CI-policy test filter and clean outputs
 D-74 / QA-04 adds 37 AT-81 cases to App.Tests (105 total), using the actual asset confirmation gate and real SQLite
 save continuations. Native editor invocation remains a running-app check, with no duplicate editor algorithm.
 Run the main test filter with CI warning policy; it now has 1,300 cases. Do not run cleanup concurrently with builds.
+
+## Performance workload and thread/profile regression checks (D-75 / AT-82)
+
+The normal test filter has 1,323 cases. AT-82 adds 12 account-index cases and 11 Data cases covering fixture ownership,
+legacy-field preservation, literal paths, deterministic legacy rows, manual plans, cancellation and queued profile
+capture. The Data tests link the actual fictitious fixture source; financial calculations remain in production Core.
+Run the independent Release workload after builds/tests finish to avoid deliberate measurement contention:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.Performance -c Release -- artifacts/performance-new-run
+```
+
+Use a fresh output leaf, record raw samples and separate store/calculation measurements from native loading,
+debounce/rendering, ANR, system first-frame and loaded-content observations. See its README and the Q-02 report.
+Do not run cleanup while a build or Windows app uses the same output. Device acceptance is separate from timing
+regression tests and the isolated emulator.

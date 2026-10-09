@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Large-ledger responsiveness (2026-10-09, D-75)
+
+- Read large transaction snapshots outside the UI thread while retaining the profile that requested them.
+- Home totals, account balances and forecast opening balances reuse account slices rather than scanning every transaction for every account.
+- Keep transfer identity, opening dates, review state, currency and checked sums unchanged.
+- Add reproducible reference/tenfold workload measurements and 23 regression cases; physical-device performance remains a separate check.
+
 ### Fixed - Save while confirming a valued asset (2026-10-09, D-74)
 
 - Save waits for the existing valued-asset warning and its write; another tap cannot overlap either operation.

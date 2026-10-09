@@ -363,3 +363,26 @@ all six non-Income/Expense kinds, the six actual translations, pending/repeated 
 validator rejection and a real one-entry transfer preserving balances and zero income/spending. Main suite: 1,300
 passed, zero skipped. Native/strict-build/signed-APK evidence is recorded in AT-81. Physical phone and iOS acceptance
 remain open. Next independent ready section: QA-06, measured startup/search/migration performance.
+
+## D-75 - Measured large-ledger loading and account calculations (2026-10-09)
+
+QA-06 proceeds under D-69 with an independent, non-shipped executable referencing actual Core/Data services.
+Use only newly created fictitious directories and separately created emulator profiles: reference 10,000 entries,
+20 accounts and 100 manual plans; tenfold scales all three counts. Populate the actual first schema, upgrade through
+the production migration path and fingerprint all retained legacy account, entry and settings fields. Reject an
+existing target or redirected ancestor. Validated save measurements include read-back and fixture restoration
+outside the timer. Native first frame, loaded Home, operation calculations and physical-device acceptance are
+different evidence; retain failed observations and never turn these samples into a two-second product claim.
+
+Baseline native Android loading exposed unavailable accessibility hierarchies and a later not-responding dialog;
+a filtered result counter/date group alone did not prove its row was exposed. Microsoft.Data.Sqlite's async I/O
+is synchronous. Capture the short-lived context/profile before queuing entry materialization on one worker and
+dispose only after completion or cancellation. AccountEntryIndex preserves original record identity and ordering,
+routes a transfer to its two account slices and delegates every financial effect to the existing Balance method.
+Home cards, totals and forecast starts avoid repeated full-ledger scans. No schema, security setting, backup format,
+SDK, permission, production encryption or commercial policy changes.
+
+AT-82 adds 12 Core and 11 real SQLite cases, including transfer identity, dates, confirmation and account scope,
+legacy self-transfers, checked arithmetic, preserved migration data, queued profile reads and cancellation.
+Measurement boundaries, native findings, rendered checks and signed APK evidence are recorded in
+[Q-02](quality/performance-q02.md) and AT-82. Physical ARM64 and iOS acceptance remain open independently of CI.

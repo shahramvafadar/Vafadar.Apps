@@ -232,11 +232,12 @@ public static class ForecastCalculator
             }
         }
 
+        var accountEntries = new AccountEntryIndex(entries);
         var currencies = scope.Values.Select(a => a.CurrencyCode).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(c => c, StringComparer.Ordinal);
         var result = new List<CurrencyForecast>();
         foreach (var currency in currencies)
         {
-            var start = scope.Values.Where(a => Same(a.CurrencyCode, currency)).Sum(a => LedgerCalculator.Balance(a, entries, baseDate));
+            var start = scope.Values.Where(a => Same(a.CurrencyCode, currency)).Sum(a => LedgerCalculator.Balance(a, accountEntries.For(a.Id), baseDate));
             var currencyItems = items.Where(i => Same(i.CurrencyCode, currency)).OrderBy(i => i.Date).ToList();
             var byDay = currencyItems.Where(i => i.Effect is not null && !i.IsExcluded).GroupBy(i => i.Date).ToDictionary(g => g.Key, g => g.Sum(i => i.Effect!.Value));
 

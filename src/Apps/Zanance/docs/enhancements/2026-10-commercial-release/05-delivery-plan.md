@@ -143,3 +143,11 @@ D-74 / QA-04 completes the application/native coverage of existing valued-asset 
 adds 37 cases; main suite 1,300. No data model, import restriction or commercial behavior change. The next independent
 ready section is QA-06, startup/search/migration measurements with the reference and 10x data set. Product/licence,
 provider/OS-backup decisions and physical-device/iOS release gates remain open.
+
+D-75 / QA-06 proceeds under D-69: independent reference/tenfold fixture/migration/operation measurements expose
+native input/loading risks; worker materialization and account-index reuse preserve financial semantics. Main suite
+1,323; no new SDK, permission, schema, commercial restriction or production encryption. Report negative native
+results and measurement limits in quality/performance-q02.md before claiming section or device acceptance.
+The signed candidate installs and saves with full original-row preservation; controlled native searches pass both
+shapes. Early-input result-row observation, the baseline ANR follow-up and loaded Android durations remain QA-06
+work; Q-02 and physical/iOS acceptance are not closed by this verified optimization step.

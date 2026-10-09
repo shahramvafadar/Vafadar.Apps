@@ -194,3 +194,26 @@ evidence, separate from physical ARM64, real OS credential UI, iOS and release a
 This is manual editor consent, not a persisted authorization flag or a new import/restore rule. Native consent,
 physical ARM64, iOS and product acceptance remain separate; fictitious emulator data does not establish owner-device
 acceptance. The device access gate and this warning do not encrypt the database.
+
+## AT-82 - Large-ledger measurement safety and account indexing (D-75 / QA-06)
+
+23 new cases: 12 Core cases compare the index with the existing financial balance formula across kinds, dates,
+currency, confirmation and account scope; keep transfer identity/order, legacy self-transfers and checked arithmetic.
+11 actual SQLite cases verify reference/tenfold shapes, exclusive fictitious paths, literal semicolons, deterministic
+legacy rows, retained-field migration fingerprints, manual plans, queued profile capture and cancelled reads.
+Main suite: 1,323 passed, zero failed/skipped. No schema, compiled-model, permission, SDK or portable-data change.
+
+Strict Windows and complete Android Release builds: zero errors/warnings. 544 application-window captures cover
+Home, Transactions, Forecast and Reports in en/fa/de, light/dark at 360/412/wide; original development database files
+restored with matching hashes. Isolated API 36 x86_64 Release process-cold Home, actual search buttons and Save are
+measured for both shapes. Complete database read-back preserves every original account/ledger row and proves
+exactly one new Expense of 1,234 minor units per shape; previous three-entry fixture unchanged. Final Release
+reinstalled. Package, v2/v3 signature, ZIP integrity, ARM64/x86_64 assembly stores/AOT and Cloud permission guard pass.
+Handoff: artifacts/android/zanance-d75-release.apk; 80,644,011 bytes; SHA-256
+d683c4f0e6c350ce7be0a290492a64fe5c8f9711d3784f23775712757487d7dd.
+
+See [Q-02 evidence](quality/performance-q02.md) for exact raw samples, timer boundaries and failed observations.
+Controlled no-match/unique-result searches pass after initial list loading; entering a query during the initial
+tenfold load still exposed a counter/date without a native result row. The baseline ANR is retained for follow-up,
+and Android loaded Home shows no demonstrated duration improvement. QA-06 findings and Q-02 remain open; these are
+engineering observations, not a two-second device claim or physical ARM64/iOS/provider/store acceptance.

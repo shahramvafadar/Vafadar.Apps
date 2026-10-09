@@ -302,6 +302,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             : _translator.Format("Home_QuickAddTarget", defaultAccount!.Name, MoneyText.UnitName(defaultAccount.CurrencyCode));
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = await _store.GetEntriesAsync();
+        var accountEntries = new AccountEntryIndex(entries);
         var categoryList = await _store.GetCategoriesAsync();
         var categories = new CategoryLookup(categoryList, _translator);
 
@@ -384,7 +385,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         Accounts.Clear();
         foreach (var account in accounts)
         {
-            var balance = LedgerCalculator.Balance(account, entries, today);
+            var balance = LedgerCalculator.Balance(account, accountEntries.For(account.Id), today);
             Accounts.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown) { Type = account.Type });
         }
