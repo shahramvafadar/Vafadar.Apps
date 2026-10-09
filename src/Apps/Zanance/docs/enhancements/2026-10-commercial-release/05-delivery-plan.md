@@ -151,3 +151,9 @@ results and measurement limits in quality/performance-q02.md before claiming sec
 The signed candidate installs and saves with full original-row preservation; controlled native searches pass both
 shapes. Early-input result-row observation, the baseline ANR follow-up and loaded Android durations remain QA-06
 work; Q-02 and physical/iOS acceptance are not closed by this verified optimization step.
+
+D-76 follows the QA-06 early-input observation under D-69. Actual snapshot publication precedes input/native-row
+exposure, simultaneous loads share one read, and errors retain coverage with retry. AT-83 adds 12 cases (main 1,335).
+Record the new rendered and Release emulator results in Q-02 without erasing D-75 failures or inferring a native
+rendering root cause. Loaded Android Home, ANR follow-up and physical/iOS gates remain open. No commercial limits,
+production encryption, OS-backup policy, provider identity or other owner-gated choice is introduced.

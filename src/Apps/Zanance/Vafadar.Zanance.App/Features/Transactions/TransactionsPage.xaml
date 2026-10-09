@@ -13,7 +13,7 @@
 
     <Grid RowDefinitions="Auto,*">
         <!-- Search and filters: the period and the kind stay visible, the rest opens with the filter button (D-27) -->
-        <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}">
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}" IsEnabled="{Binding Loading.IsReady}">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 14" Padding="4,0">
                     <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" SemanticProperties.Description="{v:Translate Common_Search}" />
@@ -114,7 +114,8 @@
         </VerticalStackLayout>
 
         <!-- Entries grouped by day -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None">
+        <!-- The native grouped adapter receives the complete snapshot before becoming visible (D-76). -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None" IsVisible="{Binding Loading.IsReady}">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="local:EntryDayGroup">
                     <Grid ColumnDefinitions="*,Auto" Padding="16,14,16,6">
@@ -175,11 +176,23 @@
             </CollectionView.Footer>
         </CollectionView>
 
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
+                               WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Tx_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" SemanticProperties.Description="{v:Translate Tx_Loading}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
+
         <Button Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
+                IsEnabled="{Binding Loading.IsReady}"
                 SemanticProperties.Description="{v:Translate Tx_Add}" IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
 
         <!-- Bulk actions (F2-TX-04) -->
         <Border Grid.Row="1" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
+                IsEnabled="{Binding Loading.IsReady}"
                 BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 16">
             <VerticalStackLayout Spacing="6">
                 <Grid ColumnDefinitions="*,Auto,Auto">

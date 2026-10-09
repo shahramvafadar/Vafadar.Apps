@@ -217,3 +217,38 @@ Controlled no-match/unique-result searches pass after initial list loading; ente
 tenfold load still exposed a counter/date without a native result row. The baseline ANR is retained for follow-up,
 and Android loaded Home shows no demonstrated duration improvement. QA-06 findings and Q-02 remain open; these are
 engineering observations, not a two-second device claim or physical ARM64/iOS/provider/store acceptance.
+
+## AT-83 - Transaction snapshot loading, publication and retry (D-76 / QA-06)
+
+Twelve new actual application cases: covered initial frame, shared pending reads, publication before ready,
+synchronous repeat reads, failed first/reload/presentation paths, retry without transient readiness, cancellation/retry, two missing-callback cases
+and real SQLite transfer identity/balance preservation with zero income/spending. App.Tests: 117; main suite:
+1,335 passed, zero failed/skipped. No financial formula, search algorithm, schema, security, SDK or permission change.
+
+Strict Windows build: zero warnings/errors. 216 final app-window captures review Transactions/list/loading/read
+failure/reload plus existing filter/bulk states in en/fa/de, light/dark, 360x800/412x892/1280x820. Loading text, covered
+rows, disabled controls, readable failure/retry and restored results are visible; the animated Windows indicator
+glyph is not demonstrated by the still captures. Original development database files restored with matching hashes.
+The failure is an explicit fictitious Debug read. An additional 36 captures at 360x800 dark verify the actual native
+retry button through its UI Automation Invoke pattern in all three languages, followed by complete real snapshot
+publication. Two earlier diagnostic runs could not locate the button through the window's dialog-oriented lookup;
+the successful diagnostic uses the current page's real named control/handler, never desktop input or focus.
+Every preservation guard restored original development files with matching hashes. Release result rows and physical/
+device/iOS acceptance remain separate from this fixture and the helper tests.
+
+Complete final Release on the existing isolated API 36 x86_64 emulator: tenfold loading XML exposes the loading text
+and native progress indicator, with Search/More filters/period/kind/Add disabled, no result rows or false empty claim.
+A native tap/text attempt on disabled Search is ignored; loaded Search retains its placeholder and the keyboard is
+not opened. Actual rows appear after publication. One preceding loading hierarchy was unavailable and retained;
+reference loading completed before the first hierarchy, so it does not separately demonstrate its loading frame.
+Both 10,001/100,001-row fixtures pass no-match/three unique-transfer result-button transitions over All and returning
+Home/Transactions retains the last query and exact row. No ANR dialog observed in these checked sequences.
+
+Unlaunched Debug inspection reads only the three owned fictitious databases: complete Accounts/Entries/Schedules
+equal D-75 read-back, counts 10,001/100,001/3, no new or changed financial row. Final Release reinstalled and the prior
+native profile restored. Screenshot protection stays intact; no physical phone, owner database or SecureStorage read.
+Handoff: artifacts/android/zanance-d76-release.apk, 80,664,491 bytes, SHA-256
+d7e2c558159ed3e9c4bab2cf4b7e0f9b5c049527989768ad6dc16d1f9a7fae9b. Package pro.vafadar.zanance, 0.1.0/code 1,
+min SDK 24/target 36; v2/v3 local signature, ZIP integrity, ARM64/x86_64 assembly stores/app AOT and Cloud permission
+guard pass. Strict final Windows and complete Android Release builds have zero warnings/errors. CI, emulator and
+local data proof do not close physical ARM64/iOS, baseline ANR follow-up, loaded Home or the two-second objective.

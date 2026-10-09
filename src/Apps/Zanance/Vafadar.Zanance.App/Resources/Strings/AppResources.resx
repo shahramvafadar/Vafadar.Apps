@@ -5738,4 +5738,10 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   <data name="Import_KeepBothShort" xml:space="preserve">
     <value>Keep both</value>
   </data>
+  <data name="Tx_Loading" xml:space="preserve">
+    <value>Loading transactions…</value>
+  </data>
+  <data name="Tx_RetryLoad" xml:space="preserve">
+    <value>Load transactions again</value>
+  </data>
 </root>

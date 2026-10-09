@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Transaction input during initial loading (2026-10-09, D-76)
+
+- Show a loading message while reading transactions; search, filters and Add become available after the snapshot is presented.
+- Keep partial or stale result rows covered during loading and after an error; offer an explicit retry.
+- Share simultaneous reload requests and keep the existing query and filter choices.
+- Add 12 regressions for publication order, repeated loads, failures, cancellation and unchanged transfer data.
+
 ### Improved - Large-ledger responsiveness (2026-10-09, D-75)
 
 - Read large transaction snapshots outside the UI thread while retaining the profile that requested them.

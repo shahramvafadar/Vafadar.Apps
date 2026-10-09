@@ -5701,4 +5701,10 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Import_KeepBothShort" xml:space="preserve">
     <value>Mantieni entrambi</value>
   </data>
+  <data name="Tx_Loading" xml:space="preserve">
+    <value>Caricamento dei movimenti…</value>
+  </data>
+  <data name="Tx_RetryLoad" xml:space="preserve">
+    <value>Ricarica i movimenti</value>
+  </data>
 </root>

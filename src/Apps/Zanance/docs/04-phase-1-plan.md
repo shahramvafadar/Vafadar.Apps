@@ -103,3 +103,7 @@ D-75 / Q-02 hardening records explicit reference and tenfold performance workloa
 outside the UI thread. Account indexes call the original balance formula. AT-82 adds 23 cases (main suite 1,323);
 actual native timing/ANR/search-row observations and remaining physical-device objectives are in
 quality/performance-q02.md. No schema, commercial limit or release acceptance change.
+
+D-76 / AT-83 covers the transaction page until snapshot publication, with disabled input and failure/retry feedback.
+Twelve new application cases bring the main suite to 1,335. This follows the D-75 early-input finding without changing
+financial semantics or closing native duration, ANR, physical-device or iOS acceptance.

@@ -5681,4 +5681,10 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Import_KeepBothShort" xml:space="preserve">
     <value>Conservar ambos</value>
   </data>
+  <data name="Tx_Loading" xml:space="preserve">
+    <value>Cargando movimientos…</value>
+  </data>
+  <data name="Tx_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar los movimientos</value>
+  </data>
 </root>

@@ -80,3 +80,11 @@ Use a fresh output leaf, record raw samples and separate store/calculation measu
 debounce/rendering, ANR, system first-frame and loaded-content observations. See its README and the Q-02 report.
 Do not run cleanup while a build or Windows app uses the same output. Device acceptance is separate from timing
 regression tests and the isolated emulator.
+
+## Snapshot publication boundary (D-76 / AT-83)
+
+App.Tests explicitly links the production SnapshotLoadState. Twelve cases cover initial coverage, shared pending
+reads, publication-before-ready, synchronous repeats, read/presentation failures, retry without transient readiness, cancelled reads and retry, argument
+validation and real SQLite transfer preservation. App.Tests has 117 cases; the main filter has 1,335 passing cases.
+The helper's readiness state is not proof that a native adapter has drawn its rows. Repeat native loading/input and
+no-match/unique-result transitions with a complete signed Release APK, keeping failed observations in Q-02.

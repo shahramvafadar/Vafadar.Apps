@@ -33,6 +33,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileRuntime.cs" Link="Application/IProfileRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/BulkTransactionsViewModel.cs" Link="Application/BulkTransactionsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/UndoService.cs" Link="Application/UndoService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotLoadState.cs" Link="Application/SnapshotLoadState.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Profiles/ProfilesViewModel.cs" Link="Application/ProfilesViewModel.cs" />
     <EmbeddedResource Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources*.resx" Link="Resources/%(Filename)%(Extension)" />
   </ItemGroup>

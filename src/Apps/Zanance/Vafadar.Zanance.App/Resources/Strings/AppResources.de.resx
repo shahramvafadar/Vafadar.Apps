@@ -5712,4 +5712,10 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Import_KeepBothShort" xml:space="preserve">
     <value>Beide behalten</value>
   </data>
+  <data name="Tx_Loading" xml:space="preserve">
+    <value>Buchungen werden geladen…</value>
+  </data>
+  <data name="Tx_RetryLoad" xml:space="preserve">
+    <value>Buchungen erneut laden</value>
+  </data>
 </root>

@@ -112,3 +112,8 @@ D-75 / QA-06: reference/tenfold measurements and large-ledger read/account-index
 canonical commercial-release backlog and quality/performance-q02.md. Main suite 1,323; 23 new AT-82 cases.
 Native accessibility/ANR findings must be retained in follow-up; no emulator timing implies physical-device or
 publication acceptance. Accessibility work remains the next independent verification area under D-69.
+
+D-76 follows QA-06's early-input finding with an actual snapshot loading/publication gate, retained filters and
+translated retry action. AT-83 adds 12 cases; main suite 1,335. See Q-02 for running-app evidence and open findings.
+No commercial limits, data model, SDK or permission change; physical-device/iOS and performance objectives remain
+separate. Accessibility verification remains the next independent ready area under D-69.

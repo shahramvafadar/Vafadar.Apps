@@ -27,4 +27,7 @@ public partial class TransactionsPage : ContentPage
     private void OnUndoChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(_viewModel.UpdateUndo);
 
     private void OnUnreviewedClicked(object? sender, EventArgs e) => _viewModel.UnreviewedOnly = !_viewModel.UnreviewedOnly;
+
+    // The gate coalesces repeated taps; the normal failure dialog and the inline retry remain available.
+    private async void OnReloadClicked(object? sender, EventArgs e) => await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
 }

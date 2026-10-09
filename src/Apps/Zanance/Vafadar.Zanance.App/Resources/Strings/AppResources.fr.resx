@@ -5689,4 +5689,10 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Import_KeepBothShort" xml:space="preserve">
     <value>Conserver les deux</value>
   </data>
+  <data name="Tx_Loading" xml:space="preserve">
+    <value>Chargement des opérations…</value>
+  </data>
+  <data name="Tx_RetryLoad" xml:space="preserve">
+    <value>Recharger les opérations</value>
+  </data>
 </root>

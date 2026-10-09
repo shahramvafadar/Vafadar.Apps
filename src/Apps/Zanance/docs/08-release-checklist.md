@@ -106,3 +106,8 @@ D-75 / Q-02: select an actual physical reference device and record process-cold 
 10,000/20/100 workload and explicit tenfold stress shape. Include native rendering and input response, not only
 calculation/store timing or system first frame. Verify there is no ANR and that every matched result row is visible
 and accessible after empty/nonempty filtering. Desktop/emulator timing and AT-82 do not close these device gates.
+
+D-76 / AT-83: verify loading feedback, disabled search/filter/Add/bulk actions until publication, no false empty
+state, failure/retry, retained filters on return and actual matched result buttons on the physical phone. The
+publication helper tests, Windows captures and emulator observations do not close native rendering, performance,
+ANR, iOS or device acceptance gates.

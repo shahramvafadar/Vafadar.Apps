@@ -386,3 +386,23 @@ AT-82 adds 12 Core and 11 real SQLite cases, including transfer identity, dates,
 legacy self-transfers, checked arithmetic, preserved migration data, queued profile reads and cancellation.
 Measurement boundaries, native findings, rendered checks and signed APK evidence are recorded in
 [Q-02](quality/performance-q02.md) and AT-82. Physical ARM64 and iOS acceptance remain open independently of CI.
+
+## D-76 - Transaction snapshot publication before interaction (2026-10-09)
+
+Follow up the D-75 input-during-initial-load observation under D-69. Cover the grouped native list until the whole
+snapshot has been read and presented, disable search/filter/Add and bulk actions while covered, and show translated
+loading text. A failed read or presentation stays covered with a retry action. Concurrent load requests share one
+task; successful reloads retain the query/filter choices. The existing synchronous filter-batch guard remains
+separate from the asynchronous read state and bulk-write state.
+
+SnapshotLoadState is actual application source, also compiled by App.Tests; publication completes before IsReady
+can become true. Register the shared task before starting the read so a synchronously completed read cannot prevent
+later reloads. Cover a failed reload before clearing its error so the retained previous snapshot never briefly becomes
+ready. Exceptions/cancellation reach the caller, release the pending operation and allow retry. No financial
+formula, search algorithm, profile storage, schema, security setting, backup format, SDK or permission change.
+
+AT-83 adds 12 application cases for initial coverage, shared reads, publication ordering, synchronous repeat loads,
+first/reload/presentation failures, retry without transient readiness, cancellation, argument validation and a real SQLite transfer preserving original
+identity/balances and zero income/spending. Main suite: 1,335 passed, zero failed/skipped. Rendered/native and APK
+evidence is recorded in AT-83 and Q-02. This prevents premature input; it does not establish a MAUI rendering root
+cause, repair the baseline ANR or meet the two-second Home objective. QA-06 and physical/iOS acceptance remain open.

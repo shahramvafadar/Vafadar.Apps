@@ -45,6 +45,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private Dictionary<Guid, Account> _accounts = [];
     private CategoryLookup? _categories;
     private CancellationTokenSource? _searchDelay;
+    // Existing filter batches suppress intermediate refreshes independently of the asynchronous snapshot cover.
     private bool _loading;
     private Guid? _pendingAccount;
     private IReadOnlyCollection<Guid>? _categoryIds;
@@ -220,49 +221,45 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
     Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
-    public async Task LoadAsync()
+    /// <summary>Gets the initial/reload cover and retry state, separate from a bulk-write dialog.</summary>
+    public SnapshotLoadState Loading { get; } = new();
+
+    /// <summary>Reads one snapshot and presents it before enabling filters or exposing result rows.</summary>
+    public Task LoadAsync() => Loading.RunAsync(ReadSnapshotAsync, PresentSnapshot);
+
+    private async Task ReadSnapshotAsync()
     {
-        _loading = true;
-        try
-        {
-            _startDay = (await _store.GetSettingsAsync()).MonthStartDay;
-            var accounts = await _store.GetAccountsAsync();
-            _accounts = accounts.ToDictionary(a => a.Id);
-            _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-            _entries = await _store.GetEntriesAsync();
-            _bulk.Load(_entries, [.. _categories.All], _categories.Name);
+        _startDay = (await _store.GetSettingsAsync()).MonthStartDay;
+        var accounts = await _store.GetAccountsAsync();
+        _accounts = accounts.ToDictionary(a => a.Id);
+        _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+        _entries = await _store.GetEntriesAsync();
+        _bulk.Load(_entries, [.. _categories.All], _categories.Name);
 
-            var selected = _pendingAccount ?? (_drillDown ? null : SelectedAccount?.Id);
-            _pendingAccount = null;
-            AccountOptions = [new AccountFilterOption(null, _translator["Accounts_AllAccounts"]), .. accounts.Select(a => new AccountFilterOption(a.Id, a.Name))];
-            SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == selected) ?? AccountOptions[0];
-            ShowAccountFilter = accounts.Count > 1;
+        var selected = _pendingAccount ?? (_drillDown ? null : SelectedAccount?.Id);
+        _pendingAccount = null;
+        AccountOptions = [new AccountFilterOption(null, _translator["Accounts_AllAccounts"]), .. accounts.Select(a => new AccountFilterOption(a.Id, a.Name))];
+        SelectedAccount = AccountOptions.FirstOrDefault(o => o.Id == selected) ?? AccountOptions[0];
+        ShowAccountFilter = accounts.Count > 1;
 
-            // Category filter (TX-05); a main category includes its sub-categories.
-            var selectedCategory = _drillDown ? null : SelectedCategory?.Id;
-            _drillDown = false;
-            CategoryOptions = [new AccountFilterOption(null, _translator["Tx_AllCategories"]), .. _categories.All
-                .Where(c => !c.IsArchived && c.ParentId is null)
-                .OrderBy(c => c.Kind).ThenBy(c => c.SortOrder)
-                .Select(c => new AccountFilterOption(c.Id, CategoryLookup.NameOf(c, _translator)))];
-            SelectedCategory = CategoryOptions.FirstOrDefault(o => o.Id == selectedCategory) ?? CategoryOptions[0];
-            HasNoAccounts = accounts.Count == 0;
-            HasNoEntriesAtAll = _entries.Count == 0;
-            UnreviewedCount = _entries.Count(e => e.Review == ReviewState.Unreviewed);
-            await LoadSavedFiltersAsync();
-        }
-        finally
-        {
-            _loading = false;
-        }
-
-        Refresh();
+        // Category filter (TX-05); a main category includes its sub-categories.
+        var selectedCategory = _drillDown ? null : SelectedCategory?.Id;
+        _drillDown = false;
+        CategoryOptions = [new AccountFilterOption(null, _translator["Tx_AllCategories"]), .. _categories.All
+            .Where(c => !c.IsArchived && c.ParentId is null)
+            .OrderBy(c => c.Kind).ThenBy(c => c.SortOrder)
+            .Select(c => new AccountFilterOption(c.Id, CategoryLookup.NameOf(c, _translator)))];
+        SelectedCategory = CategoryOptions.FirstOrDefault(o => o.Id == selectedCategory) ?? CategoryOptions[0];
+        HasNoAccounts = accounts.Count == 0;
+        HasNoEntriesAtAll = _entries.Count == 0;
+        UnreviewedCount = _entries.Count(e => e.Review == ReviewState.Unreviewed);
+        await LoadSavedFiltersAsync();
     }
 
     partial void OnPeriodIndexChanged(int value)
     {
         // Choosing a period chip replaces a range that came from a report.
-        if (value >= 0 && !_loading)
+        if (value >= 0 && !_loading && !Loading.IsLoading)
         {
             _customPeriod = null;
             CustomPeriodText = null;
@@ -277,7 +274,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     partial void OnSelectedCategoryChanged(AccountFilterOption? value)
     {
-        if (_loading || _categories is null)
+        if (_loading || Loading.IsLoading || _categories is null)
         {
             return;
         }
@@ -300,16 +297,23 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     private void Refresh()
     {
-        if (_loading || _categories is null)
+        if (_loading || !Loading.IsReady || _categories is null)
         {
             return;
         }
 
+        PresentSnapshot();
+    }
+
+    // Publishing runs while the page remains covered; property changes cannot start a partial filter refresh.
+    private void PresentSnapshot()
+    {
+        var categories = _categories ?? throw new InvalidOperationException("The category snapshot must be read before presenting transactions.");
         var (from, to) = PeriodRange();
         var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly, _currency, _scopeAccounts, _confirmedOnly);
         var culture = _localization.CurrentCulture;
-        var presenter = new EntryPresenter(_accounts, _categories, _translator, culture);
-        var matching = EntrySearch.Apply(_entries, filter, id => _categories.Name(id), _accounts).ToList();
+        var presenter = new EntryPresenter(_accounts, categories, _translator, culture);
+        var matching = EntrySearch.Apply(_entries, filter, id => categories.Name(id), _accounts).ToList();
         var filtered = _categoryIds is not null || _customPeriod is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
         SummaryText = filtered && matching.Count > 0
             ? _translator.Format("Tx_FilterTotal", matching.Count, string.Join("  ", EntrySearch.NetByCurrency(matching, _accounts).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true))))

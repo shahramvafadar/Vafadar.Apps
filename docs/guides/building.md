@@ -189,3 +189,10 @@ directory under artifacts. See its README for generation, migration and operatio
 use separately created fictitious profiles, preserve Windows development files with matching hashes, explicitly
 select only the emulator serial, retain screenshot protection and report failed observations/ANR honestly.
 The complete signed APK requirement remains in force before physical phone testing.
+
+D-76 extends the existing transactions Debug snapshot route with loading, read failure and successful reload states.
+Run-Snapshots.ps1 -Languages 'en,fa,de' -Only transactions -Theme dark -WindowSize 360x800 captures these along with
+the existing list/bulk/filter states. The read failure is fictitious, handled in the walkthrough and never writes
+ledger data. On Windows the actual named retry button's native Invoke pattern triggers the page handler; readiness
+must follow within the diagnostic deadline. Preserve/restore development database files with matching hashes. The fixture is absent from Release;
+Release loading checks use the separately owned reference/tenfold emulator profiles through native accessibility.

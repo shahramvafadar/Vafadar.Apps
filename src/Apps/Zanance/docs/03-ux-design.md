@@ -355,3 +355,12 @@ measurement overhead; native ANR/row-observation failures remain explicit accept
 Q-02 uses the named reference and tenfold shapes in quality/performance-q02.md. Preserve dates, transfer identities,
 refund meanings, review scope, currency and checked sums through every optimization; never replace a financial
 result with an estimate to meet a timing objective.
+
+## Transaction loading and retry (D-76)
+
+The first transaction frame shows loading, rather than an empty-ledger or no-match claim. Keep search, period/kind,
+extended filters, Add and bulk actions disabled while reading or after failure. Publish the complete grouped snapshot
+before enabling input and exposing its native rows. Loading text and the activity indicator use semantic palette
+resources. On failure show an explicit translated Load transactions again action; repeat taps share one read.
+Reload preserves existing query/filter choices; only completed snapshots can be searched. This interaction boundary
+is separate from bulk-write dialogs and does not imply a measured startup or native-rendering performance claim.

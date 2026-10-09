@@ -1,4 +1,4 @@
-# Q-02 performance evidence (D-75 / ZCR-QA-06)
+# Q-02 performance evidence (D-75, D-76 / ZCR-QA-06)
 
 Engineering measurements on 2026-10-09; physical reference-device selection and acceptance remain open. A two-second
 Home objective is not an achieved or published claim. This report records failures as well as durations.
@@ -132,3 +132,43 @@ calculation-budget tests, same-host timings, CI, system first frame nor emulator
 device objective, production readiness, native provider acceptance or product publication.
 Q-02 remains unaccepted. QA-06 retains the early-input native-row finding, the baseline ANR follow-up and loaded
 Android duration work; completed measurement/optimization delivery does not close those acceptance gates.
+
+## Initial-loading interaction follow-up (D-76)
+
+Prevent input before the initial transaction snapshot is presented, without attributing the D-75 result-row finding
+to an unproved native adapter cause. SnapshotLoadState starts covered, shares pending reads, publishes before ready,
+propagates failures/cancellation and permits retry. Search/filter/Add/bulk controls and grouped results remain
+disabled/hidden during loading or failure. The translated loading message replaces premature empty-ledger/no-match
+claims; failure offers explicit retry. The prior query/filter choices and existing financial/search algorithms remain.
+
+AT-83 adds 12 actual application cases, including a real SQLite transfer; main suite 1,335 passed, zero failed/skipped.
+Strict Windows build has zero warnings/errors. Final 216 app-window captures cover en/fa/de light/dark 360/412/wide
+loading, read failure, reload and existing list/filter/bulk states; original development data restored with matching
+hashes. The Windows still images demonstrate loading text, not the animated indicator glyph. The Debug failure is
+fictitious; it does not establish Release I/O failure. An additional 36 captures verify real native retry invocation
+in en/fa/de at 360x800 dark through UI Automation, followed by the actual read/publication path. The initial two
+diagnostic runs could not find the MAUI button with the dialog-oriented window lookup; the successful run uses the
+current page's actual named control/handler. All original data restores match their hashes. No schema, native package,
+permission, security setting or financial formula change. D-75 negative observations remain historical evidence;
+the baseline ANR, Android loaded Home and physical/iOS objectives remain open independently of this input gate.
+
+Final complete Release emulator repeat: the tenfold loading hierarchy shows six disabled controls (Search, More
+filters, selected period, All, selected kind, Add), loading text and a native progress indicator, no prematurely
+exposed result rows and no false empty/no-match message. A tap/text attempt on disabled Search is ignored; its initial
+text remains and no keyboard appears. One earlier hierarchy is unavailable and retained. Loaded native rows are
+observed by 8,535.76 ms after navigation, including hierarchy/input overhead; this is not a precise rendering budget.
+The reference list is already ready at the first 3,244.07 ms observation, so its loading frame is not demonstrated.
+
+Both fixtures verify no-match, then exactly one real button for each of QA06 item 000012/000022/000032 over All.
+Reference search upper observations: 3,930.04/2,629.26/2,500.70 ms; tenfold: 2,690.65/2,833.76/2,923.98 ms. Include
+input/dump overhead; do not interpret them as two-second search claims or a causal before/after improvement.
+Returning Home/Transactions preserves the last query and actual result button. No ANR dialog is observed in these
+checked sequences; the historical baseline ANR remains a follow-up, not a proven repaired defect.
+
+An unlaunched Debug reinstall copies only the three owned fictitious databases. Complete Accounts/Entries/Schedules
+equal the D-75 read-back: 10,001/100,001/3 entries, no financial change. Final Release reinstalled; prior test profile
+restored. No owner data, SecureStorage, physical phone or screenshot-protection change. Final signed handoff:
+artifacts/android/zanance-d76-release.apk, 80,664,491 bytes; SHA-256
+d7e2c558159ed3e9c4bab2cf4b7e0f9b5c049527989768ad6dc16d1f9a7fae9b. Package/version/SDK, v2/v3 signature, ZIP,
+ARM64/x86_64 embedded stores/app AOT and Cloud permission boundary verified. Strict Windows/Android: zero warnings/
+errors. This delivers the input boundary; Q-02 and QA-06's native duration/ANR/device objectives remain open.

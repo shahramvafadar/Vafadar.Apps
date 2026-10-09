@@ -575,6 +575,37 @@ internal static class DebugSnapshots
                 // The bulk selection of the transactions list (F2-TX-04).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
                 {
+                    // D-76: the real page bindings show covered/loading, failure/retry and restored snapshots.
+                    // All data belongs to this fictitious walk-through; these states never write a ledger entry.
+                    await transactions.LoadAsync();
+                    var delayedRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+                    var covered = transactions.Loading.RunAsync(() => delayedRead.Task, () => { });
+                    try
+                    {
+                        await Task.Delay(500);
+                        await CaptureAsync(app, folder, $"{language}-{name}-loading");
+                    }
+                    finally
+                    {
+                        delayedRead.TrySetResult();
+                        await covered;
+                    }
+
+                    try
+                    {
+                        await transactions.Loading.RunAsync(() => Task.FromException(new IOException("Fictitious snapshot read failure")), () => { });
+                    }
+                    catch (IOException) { /* The explicit fictitious failure is the state being reviewed. */ }
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-load-failed");
+#if WINDOWS
+                    await InvokeSnapshotRetryAsync(transactions);
+#else
+                    await transactions.LoadAsync();
+#endif
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-reloaded");
+
                     transactions.StartSelectingCommand.Execute(null);
                     transactions.SelectAllCommand.Execute(null);
                     await Task.Delay(500);
@@ -1099,6 +1130,25 @@ internal static class DebugSnapshots
         // Navigation to the next fictitious screen must not trigger an unrelated unsaved-draft dialog.
         editor.AmountText = string.Empty;
         editor.Note = string.Empty;
+    }
+
+    // The real retry button must invoke the page handler; direct view-model loading alone cannot prove its wiring.
+    private static async Task InvokeSnapshotRetryAsync(Features.Transactions.TransactionsViewModel transactions)
+    {
+        if (!transactions.Loading.HasFailed || Shell.Current.CurrentPage is not Features.Transactions.TransactionsPage page
+            || !ReferenceEquals(page.BindingContext, transactions)
+            || page.FindByName<Button>("RetryLoadButton")?.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button button)
+        {
+            throw new InvalidOperationException("The failed snapshot's native retry button is unavailable.");
+        }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(button);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        {
+            throw new InvalidOperationException("The snapshot retry button has no Invoke pattern.");
+        }
+        invoke.Invoke();
+        for (var attempt = 0; attempt < 100 && !transactions.Loading.IsReady; attempt++) { await Task.Delay(50); }
+        if (!transactions.Loading.IsReady) { throw new InvalidOperationException("The native retry did not publish a complete snapshot."); }
     }
 
     private static Microsoft.UI.Xaml.Controls.Button? FindNativeButton(Microsoft.UI.Xaml.DependencyObject root, string text)
