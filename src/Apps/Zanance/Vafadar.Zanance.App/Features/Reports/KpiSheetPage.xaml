@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Reports.KpiSheetPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Reports"
     x:DataType="local:KpiSheetViewModel"
@@ -20,7 +21,7 @@
                 <!-- The number and the scope it was computed with -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding Value}" Style="{StaticResource AmountLarge}" IsVisible="{Binding Value, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:AmountReadout AmountText="{Binding Value}" IsVisible="{Binding Value, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding Scope}" Style="{StaticResource Secondary}" />
                         <Label Text="{Binding Question}" FontAttributes="Bold" Margin="0,8,0,0" />
                         <Label Text="{Binding Definition}" />

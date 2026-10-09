@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+
+### Improved - Complete dates and large balances (2026-10-09, D-81)
+
+- Date boxes grow with text and move to another row so the full year remains readable.
+- Large balances keep their sign, decimal digits and currency; scroll sideways when the complete value needs more room.
+- Show a translated scrolling hint only when needed and retain the full value for accessibility.
+- Separate account balance/movement values from their labels and keep Home account navigation on its heading.
+
 ### Improved - Readable Settings and debt actions (2026-10-09, D-80)
 
 - Long Settings/account/debt button labels wrap and grow with large text.

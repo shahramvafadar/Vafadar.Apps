@@ -5724,4 +5724,7 @@
   <data name="Settings_RetryLoad" xml:space="preserve">
     <value>تلاش دوباره</value>
   </data>
+  <data name="Amount_ScrollHint" xml:space="preserve">
+    <value>برای دیدن مقدار کامل، به چپ یا راست پیمایش کنید.</value>
+  </data>
 </root>

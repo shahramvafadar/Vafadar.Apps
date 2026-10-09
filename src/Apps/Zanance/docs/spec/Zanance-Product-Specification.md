@@ -1407,3 +1407,10 @@ D-80 / A11Y-03: long Settings/account/debt captions wrap around a real unchanged
 full width and bulk actions two rows. Existing compact bulk font size retains native scaling. AT-87 records native
 geometry/selection/no-write evidence separately from the unchanged 1,345-case suite. See the large-text report for
 the final matrix and signed APK. No finance/model/security/permission/SDK change; full platform acceptance stays open.
+
+D-81 continues A11Y-03 under D-69: date parts reserve all digits at native text scale and reflow; large amount
+readouts retain the existing signed decimal/currency packet and expose horizontal overflow with translated feedback.
+Account balances/movements get separate rows and Home navigation stays on its heading. AT-88 records actual native
+date/amount geometry, both scroll ends and unchanged fictitious entries; main suite remains 1,345 (App.Tests 127).
+Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers, other controls, real OS,
+keyboard/screen-reader/phone/iOS and unresolved owner gates open. No model, financial or security policy change.

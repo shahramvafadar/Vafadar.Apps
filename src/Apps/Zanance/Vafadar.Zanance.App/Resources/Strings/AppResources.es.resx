@@ -5693,4 +5693,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Settings_RetryLoad" xml:space="preserve">
     <value>Reintentar</value>
   </data>
+  <data name="Amount_ScrollHint" xml:space="preserve">
+    <value>Desplázate hacia los lados para leer el valor completo.</value>
+  </data>
 </root>

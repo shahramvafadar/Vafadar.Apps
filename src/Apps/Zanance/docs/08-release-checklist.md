@@ -133,3 +133,9 @@ D-80 / AT-87: verify large Settings/account/debt captions and bulk actions with 
 themes and en/fa/de. Confirm full spoken names, keyboard/touch targets, disabled selection state and real Select
 all/Cancel. Account/debt Save and security/destructive actions retain their existing confirmation boundaries.
 Use the full signed APK in the quality report; Windows stress and normal emulator runs do not close phone/iOS QA.
+
+D-81 / AT-88: use the full signed APK in the quality report to check complete years/day/month inputs, valid and
+partial date drafts, calendar redraw and the original monetary sign/decimal/currency. At physical system 200%,
+reach both ends of any oversized value with a real swipe and verify the full spoken packet. Account movement rows
+and Home's account heading remain usable. No Save is needed for draft review. Windows stress/normal emulator
+checks do not close actual OS, screen-reader, ARM64 phone or iOS acceptance; preserve existing security settings.

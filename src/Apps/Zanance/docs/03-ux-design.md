@@ -403,3 +403,16 @@ two rows with selection count separate from Select all/Cancel. Preserve the exis
 with native scaling and useful side padding; do not shrink readable text or squeeze it into four narrow columns.
 Review actual caption and target geometry, disabled/selected states and real native Invoke behavior, without Save/
 delete/Undo or security changes. Persistent action rows stay outside the viewport per D-78.
+
+## Growing dates and complete large amounts (D-81)
+
+Reserve the full digit count and native entry chrome for each date part; let whole parts move to another row on
+narrow large-text forms. Keep Latin editable digits, existing localized order/calendar preview, validation and
+partial input. The calendar target stays 44 px. Do not replace real native inputs with a painted date.
+
+Large monetary readouts keep the original signed/direction-marked amount and unit, existing scalable display font
+and complete spoken packet. Oversized values use a real horizontal viewport with a visible translated scrolling
+hint; never split a decimal number or silently remove its sign/unit. Give account balances and monthly movements
+their own rows. Home's account navigation is on the visible heading, leaving the value viewport interactive.
+Runtime review must reach both ends through the actual native Scroll pattern and inspect realized glyph bounds;
+a detached text probe can resolve a bundled font differently. Financial calculations and persistence are unchanged.

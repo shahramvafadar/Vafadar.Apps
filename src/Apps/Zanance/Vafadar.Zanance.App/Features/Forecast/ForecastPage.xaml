@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Forecast.ForecastPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
@@ -33,7 +34,7 @@
                             <Border Style="{StaticResource Card}">
                                 <VerticalStackLayout Spacing="6">
                                     <Label Text="{v:Translate Forecast_EndBalance}" Style="{StaticResource Secondary}" />
-                                    <Label Text="{Binding EndText}" Style="{StaticResource AmountLarge}" />
+                                    <p:AmountReadout AmountText="{Binding EndText}" />
                                     <Label Text="{Binding MinimumText}" TextColor="{Binding MinimumColor}" />
                                     <Border BackgroundColor="{DynamicResource ExpenseBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                             IsVisible="{Binding Warning, Converter={StaticResource IsNotNullConverter}}">

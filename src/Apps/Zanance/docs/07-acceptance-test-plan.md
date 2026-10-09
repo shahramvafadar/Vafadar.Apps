@@ -350,3 +350,18 @@ account Edit/transaction drafts cancelled without Save, and translated PIN/delet
 owned fixture Accounts/Entries/Schedules remain unchanged (three entries). Full signed D-80 APK and final cold
 Release checks are recorded in the quality report. Loan action runtime evidence is Windows-only; native QA03 has
 no loan. No physical/OS 200% or screen-reader acceptance claim.
+
+## AT-88 - Complete date parts and scrollable large amounts (D-81)
+
+Runtime scenario, not extra xUnit cases. Main suite remains 1,345 passing, zero failed/skipped (App.Tests 127).
+Check the actual native date Entries against all four/two digits at the real scale, useful 44 px targets, existing
+calendar/culture order and complete preview. A valid draft updates DateOnly; a partial year retains the last valid
+date. Inspect Gregorian/Persian/Hijri parts and verify complete entry JSON without Save. Programmatic draft tests
+and actual external UI Automation ValuePattern input are separate evidence.
+
+Large captions preserve the original MoneyText packet, sign, decimals/unit and full spoken description. Verify
+realized single-line native glyph/caret boundaries inside the actual content and use the real native Scroll pattern
+to reach both ends and return to the sign. Use the actual eligible split modal as well as Home/account/plan/asset/
+budget/report readouts; the ordinary refunded expense fixture deliberately rejects splitting. Local geometry/CI
+is separate from keyboard/screen-reader, actual OS 200%, physical ARM64 and iOS acceptance. Final rendered/native/
+APK evidence and negative review findings are recorded in quality/font-scaling-a11y03.md.

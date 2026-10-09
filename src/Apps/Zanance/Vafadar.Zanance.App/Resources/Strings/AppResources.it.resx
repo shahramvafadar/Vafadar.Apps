@@ -5713,4 +5713,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Settings_RetryLoad" xml:space="preserve">
     <value>Riprova</value>
   </data>
+  <data name="Amount_ScrollHint" xml:space="preserve">
+    <value>Scorri lateralmente per leggere il valore completo.</value>
+  </data>
 </root>

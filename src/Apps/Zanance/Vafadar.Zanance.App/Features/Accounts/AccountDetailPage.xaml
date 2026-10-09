@@ -16,12 +16,11 @@
 
             <!-- Balance (FIN-12) -->
             <Border Style="{StaticResource Card}">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="12" RowSpacing="6">
                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="32" ForegroundColor="{DynamicResource SecondaryText}" VerticalOptions="Center" />
                     <VerticalStackLayout Grid.Column="1" Spacing="2">
                         <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
                         <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
-                        <Label Text="{Binding BalanceText}" Style="{StaticResource AmountLarge}" TextColor="{Binding BalanceColor}" Margin="0,6,0,0" />
                         <Label Text="{Binding ConfirmedText}" Style="{StaticResource Secondary}" IsVisible="{Binding ConfirmedText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Accounts_Archived}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding IsArchived}" />
                         <Label Text="{Binding CounterpartyText}" Style="{StaticResource Secondary}"
@@ -31,6 +30,7 @@
                         <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontSize="13"
                                IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
+                    <p:AmountReadout Grid.Row="1" Grid.ColumnSpan="2" AmountText="{Binding BalanceText}" TextColor="{Binding BalanceColor}" />
                 </Grid>
             </Border>
 
@@ -72,9 +72,9 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Movement}" Spacing="6">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="reports:AmountLine">
-                            <Grid ColumnDefinitions="*,Auto">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="2">
                                 <Label Text="{Binding Label}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
-                                <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
+                                <Label Grid.Row="1" Text="{Binding Amount}" VerticalOptions="Center">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
                                             <Setter Property="FontAttributes" Value="Bold" />

@@ -1,6 +1,7 @@
 using FluentIcons.Common;
 using FluentIcons.Maui;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Layouts;
 using Syncfusion.Maui.Calendar;
 using Vafadar.Core.Text;
 using Vafadar.Localization.Formatting;
@@ -26,7 +27,9 @@ namespace Vafadar.Maui.Controls;
 /// A complete, existing date is taken over at once. While the boxes hold a date that does not exist (day 31 of a
 /// 30-day month, month 13, a year being typed), the box shows red and the date stays as it was; when the field loses
 /// the focus, a day beyond the end of the month becomes the last day, and anything else returns to the stored date.
-/// The order of the boxes follows <see cref="CalendarDates.InputOrder"/>.
+/// The order of the boxes follows <see cref="CalendarDates.InputOrder"/>. Each complete date part reserves its full
+/// digit width at the native font scale and moves to the next row when needed (D-81); the year is never forced into
+/// a fixed-width box.
 /// </para>
 /// </remarks>
 public sealed class DateField : ContentView
@@ -49,7 +52,9 @@ public sealed class DateField : ContentView
         });
 
     private readonly Dictionary<DatePart, Entry> _boxes = [];
-    private readonly Label[] _separators;
+    private readonly Dictionary<DatePart, Label> _separators = [];
+    private readonly Dictionary<DatePart, Grid> _partGroups = [];
+    private readonly FlexLayout _row;
     private readonly Label _preview;
     private readonly SfCalendar _calendar;
     private readonly SymbolIcon _calendarIcon;
@@ -67,7 +72,8 @@ public sealed class DateField : ContentView
                 Keyboard = Keyboard.Numeric,
                 HorizontalTextAlignment = TextAlignment.Center,
                 MaxLength = part == DatePart.Year ? 4 : 2,
-                WidthRequest = part == DatePart.Year ? 84 : 60,
+                MinimumWidthRequest = part == DatePart.Year ? 84 : 60,
+                MinimumHeightRequest = 44,
                 FontSize = 17,
                 // Digits read left to right in every language; the row itself follows the page direction.
                 FlowDirection = FlowDirection.LeftToRight,
@@ -77,9 +83,30 @@ public sealed class DateField : ContentView
             box.Unfocused += (_, _) => Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(150), OnFocusLeft);
             box.Completed += (_, _) => FocusNext(part);
             _boxes[part] = box;
+            // D-81: reserve the full digit count at the actual native font scale, even during partial typing.
+            // Native entries include horizontal chrome; the invisible label reserves digits plus that space.
+            var reserve = new Label
+            {
+                Text = part == DatePart.Year ? "8888" : "88",
+                Margin = new Thickness(16, 0),
+                Opacity = 0,
+                InputTransparent = true,
+                LineBreakMode = LineBreakMode.NoWrap,
+            };
+            reserve.SetBinding(Label.FontSizeProperty, new Binding(nameof(Entry.FontSize), source: box));
+            reserve.SetBinding(Label.FontFamilyProperty, new Binding(nameof(Entry.FontFamily), source: box));
+            reserve.SetBinding(Label.FontAttributesProperty, new Binding(nameof(Entry.FontAttributes), source: box));
+            reserve.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(Entry.FontAutoScalingEnabled), source: box));
+            AutomationProperties.SetIsInAccessibleTree(reserve, false);
+            var input = new Grid { MinimumWidthRequest = part == DatePart.Year ? 84 : 60, Children = { reserve, box } };
+            var separator = Separator();
+            _separators[part] = separator;
+            var group = new Grid { ColumnDefinitions = [new(GridLength.Auto), new(GridLength.Auto)], ColumnSpacing = 2,
+                Margin = new Thickness(0, 0, 2, 4), Children = { input, separator } };
+            Grid.SetColumn(separator, 1);
+            FlexLayout.SetShrink(group, 0);
+            _partGroups[part] = group;
         }
-
-        _separators = [Separator(), Separator()];
         _preview = new Label { FontSize = 13, Margin = new Thickness(2, 4, 0, 0), TextColor = ThemeColors.SecondaryText };
 
         _calendar = new SfCalendar
@@ -129,22 +156,14 @@ public sealed class DateField : ContentView
             VerticalOptions = LayoutOptions.Center,
             Children = { _calendar, _calendarIcon, _calendarButton },
         };
-        Grid.SetColumn(calendarArea, 5);
+        FlexLayout.SetOrder(calendarArea, 3);
+        FlexLayout.SetShrink(calendarArea, 0);
 
-        var row = new Grid
-        {
-            ColumnDefinitions = [new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto), new(GridLength.Auto)],
-            ColumnSpacing = 2,
-            HorizontalOptions = LayoutOptions.Start,
-        };
-        foreach (var view in _boxes.Values.Cast<View>().Concat(_separators))
-        {
-            row.Children.Add(view);
-        }
-
-        row.Children.Add(calendarArea);
-
-        Content = new VerticalStackLayout { Spacing = 0, Children = { row, _preview } };
+        // Whole date parts wrap together; fixed widths must not clip the year or overflow a narrow form.
+        _row = new FlexLayout { Direction = FlexDirection.Row, Wrap = FlexWrap.Wrap, AlignItems = FlexAlignItems.Center };
+        foreach (var group in _partGroups.Values) { _row.Children.Add(group); }
+        _row.Children.Add(calendarArea);
+        Content = new VerticalStackLayout { Spacing = 0, Children = { _row, _preview } };
         Arrange();
         Write();
 
@@ -217,7 +236,7 @@ public sealed class DateField : ContentView
     {
         _preview.TextColor = ThemeColors.SecondaryText;
         _calendarIcon.ForegroundColor = ThemeColors.Primary;
-        foreach (var separatorLabel in _separators)
+        foreach (var separatorLabel in _separators.Values)
         {
             separatorLabel.TextColor = ThemeColors.SecondaryText;
         }
@@ -244,19 +263,18 @@ public sealed class DateField : ContentView
     {
         var culture = Localization?.CurrentCulture ?? Translator.Instance.Culture;
         var order = CalendarDates.InputOrder(culture, Calendar, Localization?.FormattingCultureName is not null);
-        foreach (var separatorLabel in _separators)
+        foreach (var separatorLabel in _separators.Values)
         {
             separatorLabel.Text = Localization?.FormattingCultureName is not null ? culture.DateTimeFormat.DateSeparator : "/";
         }
         for (var i = 0; i < order.Count; i++)
         {
-            Grid.SetColumn(_boxes[order[i]], i * 2);
+            FlexLayout.SetOrder(_partGroups[order[i]], i);
+            _separators[order[i]].IsVisible = i < order.Count - 1;
         }
 
-        Grid.SetColumn(_separators[0], 1);
-        Grid.SetColumn(_separators[1], 3);
         var separator = Calendar == CalendarSystem.Gregorian && !culture.TextInfo.IsRightToLeft ? culture.DateTimeFormat.DateSeparator.Trim() : "/";
-        foreach (var label in _separators)
+        foreach (var label in _separators.Values)
         {
             label.Text = string.IsNullOrEmpty(separator) ? "/" : separator;
         }

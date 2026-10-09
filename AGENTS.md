@@ -23,6 +23,8 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
 * **Everything in the repository is English**: code, comments, documentation, commit messages, file names.
 * Ask only when a decision is really the owner's (money, publishing, identities, third-party downloads, product
   direction, changes to an approved design). Otherwise choose sensibly, do the work and report what was decided.
+* During approved continuous delivery, prioritize ready code changes and actual observed defects. Repeat or broaden
+  verification only after a change, failure or unresolved concern; do not replace delivery with more planning.
 * Report honestly: what was verified and how, what was not, and what failed. Never call something fixed before it was
   checked in the running app.
 
@@ -290,3 +292,13 @@ repository.
   button is the last child and owns the unchanged command, enablement, keyboard focus and complete spoken name.
 * Keep existing compact bulk font size scalable; provide space through two rows/padding instead of clipping labels.
   Measure actual native captions and command/name/target geometry. Selection/layout review never writes money.
+
+## 16. Growing dates and complete monetary packets (D-81)
+
+* Reserve complete date-part digits at native scale, including entry chrome; reflow whole groups. Preserve real
+  inputs, calendar/culture order, valid DateOnly and partial drafts. Calendar targets remain at least 44 px.
+* Large readouts retain their original MoneyText packet, scalable display font and complete spoken description.
+  Oversized amounts scroll horizontally with a translated hint; do not split decimals or discard a sign/currency.
+  Keep navigation buttons off value viewports. Check both real native scroll ends and realized glyph boundaries.
+* Debug reviews use fictitious drafts without Save and native Scroll patterns at clamped boundaries. Detached
+  text measurement is not proof of the bundled font's realized geometry. Keep negative evidence and original data.

@@ -246,3 +246,15 @@ The fixture/collector is Debug only. Keep system settings and FLAG_SECURE; use t
 Use -Only loan-actions,settings-actions for intermediate command captures: each currently visible growing action
 is scrolled into view and rendered without executing its command. This is separate from transaction All/Cancel
 and the Settings retry fixture. Both routes use only existing fictitious snapshot profiles.
+
+## Date/amount layout review (D-81)
+
+The date-inputs Debug route opens the existing fictitious account reconciliation draft. It checks full digit
+geometry, a valid date, a partial year, Gregorian/Persian/Hijri redraw and unchanged entry JSON without Save.
+Programmatic draft input is recorded separately from actual external UI Automation ValuePattern input.
+The other affected account/Home/plan/report/asset routes exercise AmountReadout. *-amount-scroll-proof.json records
+actual native Scroll-pattern offsets at both ends; *-layout-checks.json records actual native glyph boundaries and
+viewport geometry. Failed layout checks retain an own-window image and failure JSON, then still fail the run.
+Use the existing three-language, both-theme, 360/412/wide and process-local 200%/100% options. Preserve original
+development files first and verify their hashes after restoration. No system settings, FLAG_SECURE or stored money
+are changed; Release excludes these collectors. Complete signed APK and physical-device acceptance stay separate.

@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Holdings.HoldingDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Holdings"
@@ -19,7 +20,7 @@
                         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="32" VerticalOptions="Start" ForegroundColor="{DynamicResource SecondaryText}" />
                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                             <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
-                            <Label Text="{Binding QuantityText}" Style="{StaticResource AmountLarge}" />
+                            <p:AmountReadout AmountText="{Binding QuantityText}" />
                             <Label Text="{Binding DerivedText}" Style="{StaticResource Secondary}" IsVisible="{Binding DerivedText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding PurityText}" Style="{StaticResource Secondary}" IsVisible="{Binding PurityText, Converter={StaticResource IsNotNullConverter}}" />
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding PerLocation}">

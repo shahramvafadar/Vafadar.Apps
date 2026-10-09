@@ -5701,4 +5701,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Settings_RetryLoad" xml:space="preserve">
     <value>Réessayer</value>
   </data>
+  <data name="Amount_ScrollHint" xml:space="preserve">
+    <value>Faites défiler horizontalement pour lire la valeur complète.</value>
+  </data>
 </root>

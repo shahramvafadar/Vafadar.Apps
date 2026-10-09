@@ -1,4 +1,4 @@
-# Large-text review (D-77 / D-78 / D-79 / ZCR-A11Y-03)
+# Large-text review (D-77 through D-81 / ZCR-A11Y-03)
 
 Engineering review on 2026-10-09. A11Y-03 is in progress. This first slice improves Home quick actions and plan
 rows; it does not establish whole-app, operating-system, screen-reader or physical-device accessibility acceptance.
@@ -332,3 +332,106 @@ integrity verified. v2/v3 local Debug-certificate signature verified; public cer
 92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. This is a local phone-test package, not Store
 signing, publishing or physical-device acceptance. CI remains a separate single delayed check after push.
 Continue the retained A11Y-03 findings under D-69; unresolved owner decisions remain independent.
+
+## D-81 follow-up: growing date inputs and complete large amounts
+
+DateField retains real inputs and their validation, focus progression, calendar/culture order and DateOnly binding.
+Invisible digit reserves include native entry chrome; complete input/separator groups reflow rather than clipping a
+fixed year box. AmountReadout keeps the original scalable AmountLarge style, full MoneyText packet and spoken name.
+An actual horizontal viewport exposes oversized sign, decimal digits and currency, with a six-language overflow hint.
+Empty values hide their viewport and hint. Account balance and movement values have their own rows. Home's account
+navigation target is on its visible heading, leaving the amount viewport interactive. No financial/schema/security change.
+
+### Final running Windows evidence
+
+| Process-local text | Window | Theme | Languages | Main captures | Supplemental captures |
+|---|---|---|---|---:|---:|
+| 200% | 360x800 | Light | en, fa, de | 560 | 82 |
+| 200% | 360x800 | Dark | en, fa, de | 560 | 82 |
+| 200% | 412x892 | Light | en, fa, de | 522 | 78 |
+| 200% | 412x892 | Dark | en, fa, de | 522 | 78 |
+| 200% | 1280x820 | Light | en, fa, de | 384 | 54 |
+| 200% | 1280x820 | Dark | en, fa, de | 384 | 54 |
+| 100% | 360x800 | Light | en, fa, de | 365 | 48 |
+| **Total** | | | | **3,297** | **476** |
+
+The 3,773 images are rendered own-window captures, not distinct screens or tests. The 6,062 actual native geometry
+records include 2,811 date inputs, 1,138 large amounts and 31 empty readouts, plus 1,296 existing growing actions,
+196 action docks and 590 financial rows. Native date TextBox chrome plus full digit width and calendar target geometry
+pass. Complete amount TextBlock packets/spoken names are untrimmed and occupy one line. Realized character/caret
+boundaries fit inside actual content. The 170 native horizontal-scroll proof files reach both ends and return to the
+sign; no await depends on a new event at an already clamped scroll boundary.
+
+Twenty-one draft proofs cover Gregorian/Persian/Hijri actual parts, a valid year/month/day update and a partial year
+that preserves the last valid date; complete stored entry JSON is unchanged. These programmatic Entry inputs are
+separate from a preliminary real external native ValuePattern English 360 px/dark/200% date check. No keyboard or
+screen-reader acceptance is inferred. Twenty-one supplemental split proofs use the actual eligible income modal,
+check the full total and parts, and preserve complete entry JSON. The ordinary refunded expense fixture deliberately
+rejects splitting; the modal review follows the actual top modal, not the covered Shell page. Supplemental rejected
+split and report Headroom captures also verify empty readouts without a blank viewport or stale hint.
+
+Both formal runs restore original development files, sidecars and marker with matching hashes. A discarded unit-gap
+caption prototype allowed a decimal number itself to split and is not shipped. A detached measurement with the bundled
+Persian font reported a different width from actual rendering; the first failed matrix is retained as negative evidence
+and excluded from the totals. Final assertions measure realized native boundaries. Earlier review scroll awaits and
+the background-page modal lookup were corrected before the final review. No temporary native font/configuration or
+security override enters the product.
+
+A final focused Home review repeats all seven language/theme/width/scale cohorts after enlarging the account
+heading target and removing its negative vertical margin. It adds 331 captures and 66 measured heading records;
+every actual heading is at least 44 px, retains the command/spoken name and ends before the amount viewport. Other
+Home native readout/action checks still pass. Together with the main/supplemental reviews there are 4104 captures.
+An attempted focused run failed before launching the app because a simultaneous Android restore changed shared
+Windows assets (NETSDK1047); its original data was restored with matching hashes. After the Android build finished,
+the single sequential retry passed and restored original files/sidecars/marker with matching hashes. Earlier
+heading-only prototype captures and that failed build are excluded from the final focused count.
+
+### Normal full Release emulator evidence
+
+Only emulator-5570, API 36 x86_64 and the known owned QA03 fictitious profile are used. Actual numeric-keyboard input
+updates 2027/02/28, while a focused partial year retains that valid preview; the original 2026/10/09 draft is restored
+without Save. An initial review helper tapped stale coordinates behind the open keyboard and typed into the unsaved
+reconciliation amount; it failed its assertion. The draft was discarded by real navigation, not saved. The corrected
+helper hides the existing keyboard before finding the next input and verifies actual native focus before typing.
+
+Fresh real Settings pickers select Deutsch, فارسی and English; cold Home/Accounts/account detail show complete
+signed EUR packets with matching spoken descriptions for large values. Date parts retain 2026/10/09 for English/
+German and 1405/07/17 for Persian's automatic calendar, representing the same date. Native editable digits remain
+Latin. A preliminary helper incorrectly expected Gregorian parts after the automatic Persian-calendar selection;
+its assertion was corrected against the actual calendar without changing application behavior.
+
+Repeated Settings navigation exposed an independent remaining failure: after a language change and Shell rebuild,
+the reopened native picker can change its displayed choice while application captions remain in the previous
+language. A cold restart followed by a fresh Settings page applies the choice. This behavior is recorded as a real
+follow-up, not claimed fixed by D-81. A bounded hierarchy read also failed during review; its failed case is retained,
+and the remaining English fresh-page check completed independently. No polling or duplicated active UI operation.
+
+The final actual Home heading target is 907x116 native pixels at density 420, ends exactly where the full amount
+starts, and opens Accounts through the existing command; real Navigate up restores Home. The extra negative vertical
+margin was removed so the target does not cover the value viewport. Density 420/font_scale 1.0 and FLAG_SECURE
+remain. Native checks are normal text, not OS 200%, screen-reader, physical ARM64 or iOS acceptance.
+
+After the draft/navigation review, the known Debug package is installed without launch to copy only the owned
+fictitious QA03 database/sidecars. Complete Accounts, Entries and Schedules match the earlier baseline, including
+three entries. The final full Release is reinstalled; cold English Home/Transactions show all three rows, the
+heading command is checked, Home restored and the app force-stopped. No owner database/archive, private preferences,
+credentials or SecureStorage read, physical-phone action or system-setting change.
+
+### Tests, strict builds and complete APK
+
+Main suite: 1,345 passed, zero failed/skipped (App.Tests 127); test output cleaned. AT-88 adds native runtime assertions,
+not copied-control unit cases or a new unit count. Final strict Windows Debug and complete Android Release builds
+have zero warnings/errors. The Cloud permission boundary passes as static package validation; real provider and
+network-traffic acceptance remain separate. Installed full Release starts successfully on the existing emulator.
+
+APK: artifacts/android/zanance-d81-release.apk, 80,709,547 bytes;
+SHA-256 74e3fef28976855adfb9123fce0bf3abe32273ca50d664d4d4c881245aa8480f.
+Package pro.vafadar.zanance, 0.1.0/code 1, min SDK 24/target 36; ZIP integrity and full ARM64/x86_64 assembly stores
+and app AOT verified. v2/v3 local Debug-certificate signature verified; public certificate SHA-256 remains
+92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. This is a local phone-test package, not Store
+signing, publishing or physical-device acceptance. CI remains a separate single delayed check after push.
+
+A11Y-03 remains in progress. The reopened native Settings language failure is the next ready finding; German narrow/large page-header
+truncation and retained navigation captions remain queued. Other forms/dialogs, smaller monetary rows/custom controls, keyboard/screen readers,
+real OS 200%, physical ARM64, iOS and QA-06 performance/ANR acceptance remain independent. Continue ready work under
+D-69; unresolved product, licence, provider, spending and release decisions remain owner gates.

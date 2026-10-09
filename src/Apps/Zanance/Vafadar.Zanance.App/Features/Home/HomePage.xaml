@@ -31,24 +31,28 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Recorded balance (FIN-13); the card is a button to the accounts, the combined total one to the rates -->
+                <!-- Recorded balance (FIN-13): the heading opens accounts; large values keep their own scroll surface (D-81). -->
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAccounts}">
-                    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="{v:Translate Home_Balance}" Style="{StaticResource Secondary}" />
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Balances}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="accounts:CurrencyTotal">
-                                        <Label Text="{Binding Text}" Style="{StaticResource AmountLarge}" />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" MinimumHeightRequest="44">
+                            <Label Text="{v:Translate Home_Balance}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                            <fi:SymbolIcon Grid.Column="1" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}"
+                                           VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" InputTransparent="True" />
+                        </Grid>
+                        <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{Binding Balances}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="accounts:CurrencyTotal">
+                                    <p:AmountReadout AmountText="{Binding Text}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="2" Spacing="6">
                             <Label Text="{Binding ConfirmedBalanceText}" TextColor="{DynamicResource WarningText}" FontSize="12.5"
                                    IsVisible="{Binding ConfirmedBalanceText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontSize="12.5"
                                    IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
-                        <Label Grid.Row="1" Text="{Binding CombinedText}" FontSize="13" Margin="0,6,0,0" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
+                        <Label Grid.Row="3" Text="{Binding CombinedText}" FontSize="13" Margin="0,6,0,0" IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label" Binding="{Binding CombinedIncomplete}" Value="True">
                                     <Setter Property="TextColor" Value="{DynamicResource WarningText}" />
@@ -56,13 +60,13 @@
                             </Label.Triggers>
                         </Label>
                         <!-- Holdings per type, never added to the money above (ZEX-AS05); a button to the holdings -->
-                        <Label Grid.Row="2" Text="{Binding HoldingsText}" FontSize="13" Margin="0,6,0,0" IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Label Grid.Row="3" Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,6,0,0" />
-                        <Button Grid.RowSpan="4" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenAccountsCommand}"
+                        <Label Grid.Row="4" Text="{Binding HoldingsText}" FontSize="13" Margin="0,6,0,0" IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Grid.Row="5" Text="{v:Translate Home_BalanceHint}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,6,0,0" />
+                        <Button x:Name="BalanceHeadingAction" Grid.Row="0" Margin="-6,0" Style="{StaticResource OverlayButton}" CornerRadius="18" MinimumHeightRequest="44" Command="{Binding OpenAccountsCommand}"
                                 SemanticProperties.Description="{v:Translate Home_Balance}" SemanticProperties.Hint="{v:Translate Home_AccountsSection}" />
-                        <Button Grid.Row="1" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenRatesCommand}"
+                        <Button Grid.Row="3" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenRatesCommand}"
                                 IsVisible="{Binding CombinedText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{Binding CombinedText}" />
-                        <Button Grid.Row="2" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenHoldingsCommand}"
+                        <Button Grid.Row="4" Margin="-6,2,-6,-4" Style="{StaticResource OverlayButton}" CornerRadius="8" Command="{Binding OpenHoldingsCommand}"
                                 IsVisible="{Binding HoldingsText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{Binding HoldingsText}" />
                     </Grid>
                 </Border>

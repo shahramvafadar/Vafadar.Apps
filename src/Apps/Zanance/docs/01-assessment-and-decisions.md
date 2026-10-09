@@ -488,3 +488,25 @@ bindings are checked; inherited disabled selection state is recorded. Main suite
 large-text quality report for final matrix, native and full signed APK evidence. No data model, finance formula,
 security policy, new resource key, permission, SDK or commercial rule change. Headers/navigation, currency layout,
 other controls and physical OS/screen-reader/phone/iOS acceptance remain independent work.
+
+## D-81 - Complete date parts and large amount packets (2026-10-09)
+
+Continue the actual A11Y-03 fixed-date/currency findings under D-69. DateField reserves all four year digits and
+both day/month digits at the actual native scale, including entry chrome. Whole input/separator groups reflow;
+retain real Entries, calendar/culture order, validation, partial drafts and the Gregorian DateOnly binding. A
+partially typed year must never replace the last valid date. No Save is required for presentation review.
+
+AmountReadout retains the existing AmountLarge style, original MoneyText packet and full semantic description.
+A real horizontal ScrollView exposes oversized sign, digits, decimal and currency without shrinking the native
+font or inserting breaks inside the number. A translated hint appears only on overflow, in all six languages.
+Account detail gives its amount the full row and separates movement labels/values. Home's account-link button
+covers only its visible heading, leaving amount scrolling available; its existing command/name is unchanged.
+
+AT-88 is actual runtime evidence, not extra copied/fake-control unit cases. Main suite remains 1,345 passing
+(App.Tests 127). Check complete actual native date digit geometry, valid/partial/calendar drafts and unchanged
+entries; use native Scroll patterns for both amount ends and measure realized glyph boundaries. A detached
+TextBlock gave a different width for the bundled Persian font; it is not reliable proof of realized clipping.
+Review awaits also use the native Scroll pattern rather than waiting for an event at an already clamped boundary.
+See quality/font-scaling-a11y03.md for final captures, native checks, negative review findings and the signed APK.
+No data model, financial formula, security/backup policy, permission, SDK or commercial restriction change.
+Headers, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates remain independent work.

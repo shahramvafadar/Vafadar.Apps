@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Plans.PlanDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:entries="clr-namespace:Vafadar.Zanance.App.Features.Entries"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
@@ -33,7 +34,7 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" />
-                        <Label Text="{Binding AmountText}" Style="{StaticResource AmountLarge}" />
+                        <p:AmountReadout AmountText="{Binding AmountText}" />
                         <Label Text="{Binding RuleText}" Style="{StaticResource Secondary}" />
                         <Label Text="{v:Translate Plan_Paused}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding IsPaused}" />
                         <Label Text="{v:Translate Plan_Ended}" Style="{StaticResource Secondary}" IsVisible="{Binding IsEnded}" />

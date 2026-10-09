@@ -22,7 +22,7 @@
             <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="2">
                     <Label Text="{v:Translate Reimbursements_Total}" Style="{StaticResource Secondary}" />
-                    <Label Text="{Binding TotalText}" Style="{StaticResource AmountLarge}" TextColor="{DynamicResource RefundText}" />
+                    <p:AmountReadout AmountText="{Binding TotalText}" TextColor="{DynamicResource RefundText}" />
                 </VerticalStackLayout>
             </Border>
             <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">

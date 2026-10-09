@@ -117,3 +117,10 @@ D-80 / AT-87 is actual running-app coverage of WrappingAction, not copied/fake M
 Native caption/target/name and command/argument checks run in the snapshot matrix. Real Select all/Cancel Invoke
 proves the binding reaches the existing selection logic; full entry JSON is unchanged. Check disabled/no-selection
 and enabled/selected states. Main suite remains 1,345; real OS, screen-reader, keyboard and device checks stay open.
+
+D-81 / AT-88 adds running-app checks for actual DateField/AmountReadout, not fake controls or a new unit count.
+Main suite remains 1,345 passing (App.Tests 127). Check every realized date input's full digit count against actual
+native width, valid/partial date binding and three calendars without Save. Check the original monetary packet and
+spoken name, single-line realized glyph bounds, and both native Scroll-pattern ends. A detached bundled-font probe
+can differ from the realized caption, so retain negative evidence and use actual rendered boundaries. Keep actual
+external ValuePattern typing distinct from programmatic draft checks and Windows stress distinct from device QA.

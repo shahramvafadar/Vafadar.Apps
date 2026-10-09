@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Holdings.HoldingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Holdings"
@@ -29,7 +30,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Holdings_KnownValue}" Style="{StaticResource Secondary}" />
-                        <Label Text="{Binding KnownValueText, TargetNullValue='–'}" Style="{StaticResource AmountLarge}" />
+                        <p:AmountReadout AmountText="{Binding KnownValueText, TargetNullValue='–'}" />
                         <Label Text="{Binding IncompleteText}" TextColor="{DynamicResource WarningText}" FontAttributes="Bold"
                                IsVisible="{Binding IncompleteText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding FineMetals}">

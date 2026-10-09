@@ -18,7 +18,7 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" />
                         <Label Text="{Binding DueText}" Style="{StaticResource Secondary}" />
-                        <Label Text="{Binding PlannedAmountText}" Style="{StaticResource AmountLarge}" />
+                        <p:AmountReadout AmountText="{Binding PlannedAmountText}" />
                         <Label Text="{Binding StatusText}" Style="{StaticResource Secondary}" />
                         <Label Text="{Binding PaidText}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding PaidText, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Payments}" IsVisible="{Binding HasPayments}" Margin="0,4,0,0">

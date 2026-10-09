@@ -170,3 +170,12 @@ data and invokes only Select all/Cancel, never Save/delete/Undo, PIN or permissi
 unchanged. Original Windows development databases are preserved/restored with matching hashes. Native checks use
 only the owned emulator fixture, keep screenshot protection/system settings, and do not inspect owner data/secrets.
 Collectors are absent from Release. UI geometry/CI is separate from physical OS and screen-reader acceptance.
+
+## Date/amount presentation review (D-81)
+
+No production data field, portable preference, permission, SDK, export, recipient or network path is added.
+Date/amount controls preserve existing values and financial/security boundaries. Debug-only draft, native geometry
+and own-window review uses fictitious profiles without Save; valid/partial dates and complete entry JSON are
+checked separately. Original development files are restored with matching hashes. Native review uses only the
+known owned emulator fixture, preserves screenshot protection/system settings and excludes owner data/secrets.
+Collectors are absent from Release; presentation evidence is separate from OS/screen-reader/device acceptance.

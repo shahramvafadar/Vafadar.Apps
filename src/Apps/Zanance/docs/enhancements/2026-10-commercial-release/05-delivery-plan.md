@@ -177,3 +177,10 @@ D-80 continues A11Y-03 under D-69 with growing Settings/account/debt action capt
 two-row bulk actions. AT-87 records actual native selection command invocation and geometry without writing money;
 main suite remains 1,345. Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers,
 currency layout, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates open.
+
+D-81 continues A11Y-03 under D-69: date parts reserve all digits at native text scale and reflow; large amount
+readouts retain the existing signed decimal/currency packet and expose horizontal overflow with translated feedback.
+Account balances/movements get separate rows and Home navigation stays on its heading. AT-88 records actual native
+date/amount geometry, both scroll ends and unchanged fictitious entries; main suite remains 1,345 (App.Tests 127).
+Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers, other controls, real OS,
+keyboard/screen-reader/phone/iOS and unresolved owner gates open. No model, financial or security policy change.

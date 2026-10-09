@@ -313,6 +313,9 @@ internal static class DebugSnapshots
         }
 
         var (expenseId, foodId) = await SeedAsync(services);
+        // The ordinary expense fixture has a payback and deliberately cannot split. Review a real eligible income too.
+        var splitIncomeId = (await services.GetRequiredService<ZananceStore>().GetEntriesAsync())
+            .First(entry => entry.Kind == EntryKind.Income && EntryActions.CanSplit([entry])).Id;
         await Presentation.DisplayUnitPreferences.SaveAsync(services.GetRequiredService<ZananceStore>(), [new Core.Money.DisplayUnit("IRR", "Toman", 1)]);
         var (planId, planDate) = await SeedPlansAsync(services);
         await SeedBudgetAsync(services, foodId);
@@ -353,6 +356,7 @@ internal static class DebugSnapshots
             ("receipt-reread-missing", AppShell.EntryEditorRoute, new() { ["id"] = expenseId,
                 ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\n28.09.2026\nWater 1,20\nBread 2,50") }),
             ("split", AppShell.SplitRoute, new() { ["id"] = expenseId }),
+            ("split-readable", AppShell.SplitRoute, new() { ["id"] = splitIncomeId }),
             ("reimbursements", AppShell.ReimbursementsRoute, null),
             ("rules", AppShell.RulesRoute, null),
             ("plans", "//plans", null),
@@ -369,6 +373,7 @@ internal static class DebugSnapshots
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("loan-detail", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
             ("loan-actions", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
+            ("date-inputs", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("loan-schedule", AppShell.LoanScheduleRoute, new() { ["id"] = loanId }),
             ("loan-edit", AppShell.AccountEditorRoute, new() { ["id"] = loanId }),
             ("account", AppShell.AccountEditorRoute, null),
@@ -437,6 +442,8 @@ internal static class DebugSnapshots
 
             foreach (var (name, route, query) in screens.Where(s => only is null || only.Any(o => s.Name.StartsWith(o, StringComparison.Ordinal))))
             {
+                var splitEntries = name == "split-readable" ? System.Text.Json.JsonSerializer.Serialize(
+                    await services.GetRequiredService<ZananceStore>().GetEntriesAsync()) : null;
                 await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
                 await Task.Delay(1500);
                 if (name.StartsWith("receipt-", StringComparison.Ordinal)
@@ -495,6 +502,16 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if ((app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage) is ContentPage readoutPage)
+                {
+                    await ReviewAmountReadoutsAsync(app, readoutPage, folder, language + "-" + name);
+                }
+
+                if (name == "date-inputs" && Shell.Current.CurrentPage is ContentPage datePage)
+                {
+                    await ReviewDateInputsAsync(app, services, datePage, folder, language);
+                }
+
                 if (name is "loan-actions" or "settings-actions" && Shell.Current.CurrentPage is ContentPage actionPage)
                 {
                     await CaptureWrappingActionsAsync(app, actionPage, folder, language + "-" + name);
@@ -508,9 +525,25 @@ internal static class DebugSnapshots
 #endif
                 if (FindScrollView(app.Windows[0].Page) is { } scroll && scroll.ContentSize.Height > scroll.Height + 40)
                 {
+#if WINDOWS
+                    await ScrollToEndIfNeededAsync(scroll);
+#else
                     await scroll.ScrollToAsync(0, scroll.ContentSize.Height, animated: false);
+#endif
                     await Task.Delay(500);
                     await CaptureAsync(app, folder, $"{language}-{name}-end");
+                }
+
+                if (splitEntries is not null)
+                {
+                    var splitPage = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Entries.SplitEditorPage;
+                    if (splitPage?.BindingContext is not Features.Entries.SplitEditorViewModel { Error: null } splitVm
+                        || string.IsNullOrEmpty(splitVm.TotalText) || splitVm.Parts.Count < 2
+                        || splitEntries != System.Text.Json.JsonSerializer.Serialize(
+                            await services.GetRequiredService<ZananceStore>().GetEntriesAsync()))
+                    { throw new InvalidOperationException("The eligible split review lacks its real value or wrote ledger entries."); }
+                    await File.WriteAllTextAsync(Path.Combine(folder, language + "-split-readable-proof.json"),
+                        "{\"ActualEligibleModal\":true,\"CompleteAmountPacket\":true,\"StoredEntriesUnchanged\":true}");
                 }
 
                 // The PDF of the reports screen (REP-07), written next to the screenshots.
@@ -1061,7 +1094,16 @@ internal static class DebugSnapshots
 #endif
         var visible = page is Shell shell ? (shell.CurrentPage as VisualElement) ?? shell : page as VisualElement;
 #if WINDOWS
-        if (visible is ContentPage content) { DebugLayoutChecks.Check(content, folder, name); }
+        if (visible is ContentPage content)
+        {
+            try { DebugLayoutChecks.Check(content, folder, name); }
+            catch
+            {
+                // Keep the actual own-window negative evidence alongside geometry; do not turn a failed check into a pass.
+                await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-layout-failure-window.png"));
+                throw;
+            }
+        }
 #endif
         if (visible?.Parent is Shell && page is VisualElement root)
         {
@@ -1080,7 +1122,8 @@ internal static class DebugSnapshots
         await source.CopyToAsync(target);
 #if WINDOWS
         if ((page is Shell currentShell ? currentShell.CurrentPage : page) is ContentPage checkedPage
-            && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage or Features.Accounts.AccountDetailPage))
+            && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage or Features.Accounts.AccountDetailPage
+                || DebugLayoutChecks.AppliesTo(checkedPage)))
         {
             // D-78: include persistent actions and navigation in the app's own native-window rendering.
             await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-window.png"));
@@ -1192,6 +1235,128 @@ internal static class DebugSnapshots
         // Navigation to the next fictitious screen must not trigger an unrelated unsaved-draft dialog.
         editor.AmountText = string.Empty;
         editor.Note = string.Empty;
+    }
+
+    // D-81: WinUI emits no ViewChanged event for an already reached/clamped position; a redundant MAUI await can hang.
+    // Compare actual native offsets first. The helpers only move the fictitious review's own scroll view.
+    private static async Task ScrollToEndIfNeededAsync(ScrollView scroll)
+    {
+        if (scroll.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer native)
+        { throw new InvalidOperationException("The real native review viewport is missing."); }
+        if (native.ScrollableHeight <= 1 || native.VerticalOffset >= native.ScrollableHeight - 1) { return; }
+        NativeScrollProvider(native).SetScrollPercent(-1, 100);
+        await Task.Delay(300);
+    }
+
+    private static async Task ScrollToViewIfNeededAsync(ScrollView scroll, VisualElement target)
+    {
+        if (scroll.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer native
+            || target.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement element)
+        { throw new InvalidOperationException("The actual native review target/viewport is missing."); }
+        if (native.ScrollableHeight <= 1) { return; }
+        var point = element.TransformToVisual(native).TransformPoint(new Windows.Foundation.Point(0, 0));
+        var wanted = Math.Clamp(native.VerticalOffset + point.Y, 0, native.ScrollableHeight);
+        if (Math.Abs(wanted - native.VerticalOffset) <= 1) { return; }
+        NativeScrollProvider(native).SetScrollPercent(-1, wanted / native.ScrollableHeight * 100);
+        await Task.Delay(300);
+    }
+
+    private static Microsoft.UI.Xaml.Automation.Provider.IScrollProvider NativeScrollProvider(Microsoft.UI.Xaml.Controls.ScrollViewer native)
+    {
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ScrollViewerAutomationPeer(native);
+        return peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Scroll) as Microsoft.UI.Xaml.Automation.Provider.IScrollProvider
+            ?? throw new InvalidOperationException("The actual native viewport has no Scroll pattern.");
+    }
+
+    // D-81: scroll the real native value to both ends through its Scroll pattern; no mouse/keyboard/focus input.
+    private static async Task ReviewAmountReadoutsAsync(App app, ContentPage page, string folder, string name)
+    {
+        var evidence = new List<object>();
+        var index = 0;
+        foreach (var readout in VisualDescendants(page).OfType<Presentation.AmountReadout>())
+        {
+            var visible = true;
+            for (Element? parent = readout; parent is not null; parent = parent.Parent)
+            { if (parent is VisualElement { IsVisible: false }) { visible = false; break; } }
+            if (!visible) { continue; }
+            var scroll = VisualDescendants(readout).OfType<ScrollView>().Single();
+            if (scroll.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer native) { continue; }
+            if (native.ScrollableWidth <= 1) { continue; }
+            if (FindScrollView(page) is { } outer && !ReferenceEquals(outer, scroll))
+            { await ScrollToViewIfNeededAsync(outer, readout); }
+            var peer = new Microsoft.UI.Xaml.Automation.Peers.ScrollViewerAutomationPeer(native);
+            if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Scroll) is not Microsoft.UI.Xaml.Automation.Provider.IScrollProvider provider)
+            { throw new InvalidOperationException("An oversized value has no real native Scroll pattern."); }
+            provider.SetScrollPercent(100, -1);
+            await Task.Delay(400);
+            var end = native.HorizontalOffset;
+            if (end < native.ScrollableWidth - 1) { throw new InvalidOperationException("Native amount scrolling did not reach the full unit/end."); }
+            await CaptureAsync(app, folder, name + "-amount-end-" + ++index);
+            provider.SetScrollPercent(0, -1);
+            await Task.Delay(400);
+            if (native.HorizontalOffset > 1) { throw new InvalidOperationException("Native amount scrolling did not restore the sign/start."); }
+            await CaptureAsync(app, folder, name + "-amount-start-" + index);
+            evidence.Add(new { readout.AmountText, native.ViewportWidth, native.ExtentWidth, native.ScrollableWidth,
+                offsetAtEnd = end, offsetAtStart = native.HorizontalOffset, nativeScrollPattern = true });
+        }
+        if (evidence.Count > 0)
+        { await File.WriteAllTextAsync(Path.Combine(folder, name + "-amount-scroll-proof.json"), System.Text.Json.JsonSerializer.Serialize(evidence)); }
+    }
+
+    // D-81: measure the actual date boxes with a programmatic draft, without focus, Save or ledger writes; inspect all supported calendars.
+    private static async Task ReviewDateInputsAsync(App app, IServiceProvider services, ContentPage page, string folder, string language)
+    {
+        var field = VisualDescendants(page).OfType<Vafadar.Maui.Controls.DateField>().Single();
+        var originalDate = field.Date;
+        var originalCalendar = field.CalendarOverride;
+        var unchanged = System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync());
+        try
+        {
+            field.CalendarOverride = CalendarSystem.Gregorian;
+            var boxes = VisualDescendants(field).OfType<Entry>().ToArray();
+            Entry Box(string part) => boxes.Single(box => SemanticProperties.GetDescription(box) == Translator.Instance["DateField_" + part]);
+            void Set(Entry box, string value) => box.Text = value;
+            Set(Box("Year"), "2027");
+            Set(Box("Month"), "02");
+            Set(Box("Day"), "28");
+            await Task.Delay(100);
+            if (field.Date != new DateOnly(2027, 2, 28)) { throw new InvalidOperationException("Programmatic date input did not reach its real binding."); }
+            Set(Box("Year"), "2");
+            await Task.Delay(100);
+            if (field.Date != new DateOnly(2027, 2, 28) || Box("Year").Text != "2")
+            { throw new InvalidOperationException("Partial year input rewrote the stored date or the draft."); }
+            if (FindScrollView(page) is not { } scroll) { throw new InvalidOperationException("Date review needs its real scroll viewport."); }
+            await ScrollToViewIfNeededAsync(scroll, field);
+            await Task.Delay(300);
+            await CaptureAsync(app, folder, language + "-date-inputs-partial-year");
+            Set(Box("Year"), "2027");
+            foreach (var calendar in new[] { CalendarSystem.Gregorian, CalendarSystem.Persian, CalendarSystem.Hijri })
+            {
+                field.CalendarOverride = calendar;
+                await Task.Delay(200);
+                var (year, month, day) = CalendarDates.Parts(field.Date, calendar);
+                if (Box("Year").Text != year.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                    || Box("Month").Text != month.ToString("00", System.Globalization.CultureInfo.InvariantCulture)
+                    || Box("Day").Text != day.ToString("00", System.Globalization.CultureInfo.InvariantCulture)
+                    || field.Date != new DateOnly(2027, 2, 28))
+                { throw new InvalidOperationException("A calendar redraw changed the bound date or its displayed parts."); }
+                await CaptureAsync(app, folder, language + "-date-inputs-" + calendar);
+            }
+        }
+        finally { field.CalendarOverride = originalCalendar; field.Date = originalDate; }
+        if (unchanged != System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync()))
+        { throw new InvalidOperationException("Native date review wrote ledger entries."); }
+        await File.WriteAllTextAsync(Path.Combine(folder, language + "-date-inputs-proof.json"),
+            "{\"ProgrammaticDraftInput\":true,\"PartialYearPreserved\":true,\"ThreeCalendarParts\":true,\"StoredEntriesUnchanged\":true}");
+    }
+
+    private static IEnumerable<VisualElement> VisualDescendants(IVisualTreeElement root)
+    {
+        foreach (var child in root.GetVisualChildren())
+        {
+            if (child is VisualElement visual) { yield return visual; }
+            foreach (var descendant in VisualDescendants(child)) { yield return descendant; }
+        }
     }
 
     // D-80: scroll every currently visible growing action into the real viewport; never invoke its command.

@@ -5724,4 +5724,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Settings_RetryLoad" xml:space="preserve">
     <value>Erneut laden</value>
   </data>
+  <data name="Amount_ScrollHint" xml:space="preserve">
+    <value>Seitlich scrollen, um den vollständigen Wert zu lesen.</value>
+  </data>
 </root>

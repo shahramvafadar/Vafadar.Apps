@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Reports.ReportsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
@@ -115,7 +116,7 @@
                             <Label Text="{v:Translate Report_Surplus}" Style="{StaticResource CardTitle}" />
                             <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainSurplusCommand}" />
                         </Grid>
-                        <Label Text="{Binding SurplusText}" Style="{StaticResource AmountLarge}" TextColor="{Binding SurplusColor}" />
+                        <p:AmountReadout AmountText="{Binding SurplusText}" TextColor="{Binding SurplusColor}" />
                         <Label Text="{Binding SurplusDetail}" Style="{StaticResource Secondary}" />
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsAdvanced}">
                             <Label Text="{Binding RateText}" VerticalOptions="Center" />
@@ -328,7 +329,7 @@
                             <Label Text="{v:Translate Report_Headroom}" Style="{StaticResource CardTitle}" />
                             <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainHeadroomCommand}" />
                         </Grid>
-                        <Label Text="{Binding HeadroomText}" Style="{StaticResource AmountLarge}" TextColor="{Binding HeadroomColor}" IsVisible="{Binding HeadroomText, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:AmountReadout AmountText="{Binding HeadroomText}" TextColor="{Binding HeadroomColor}" IsVisible="{Binding HeadroomText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding HeadroomSentence}" />
                         <Label Text="{Binding HeadroomNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HeadroomNote, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
@@ -522,7 +523,7 @@
                             <Label Text="{v:Translate Report_NetWorth}" Style="{StaticResource CardTitle}" />
                             <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainNetWorthCommand}" />
                         </Grid>
-                        <Label Text="{Binding NetWorthText}" Style="{StaticResource AmountLarge}" />
+                        <p:AmountReadout AmountText="{Binding NetWorthText}" />
                         <Label Text="{Binding NetWorthConverted}" Style="{StaticResource Secondary}" IsVisible="{Binding NetWorthConverted, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding WealthLines}" Spacing="6">
                             <BindableLayout.ItemTemplate>
