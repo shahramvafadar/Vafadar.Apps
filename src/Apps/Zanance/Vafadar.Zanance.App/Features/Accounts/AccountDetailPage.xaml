@@ -6,6 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:reports="clr-namespace:Vafadar.Zanance.App.Features.Reports"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     x:DataType="local:AccountDetailViewModel"
     Title="{Binding Name}">
@@ -33,12 +34,12 @@
                 </Grid>
             </Border>
 
-            <Button Style="{StaticResource PrimaryButton}" Text="{Binding DebtActionText}" Command="{Binding DebtActionCommand}"
+            <p:WrappingAction Appearance="Primary" Text="{Binding DebtActionText}" Command="{Binding DebtActionCommand}"
                     IsVisible="{Binding ShowDebtAction}" />
             <!-- Repayment estimate (F2-DEBT-02) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding IsDebt}">
                 <VerticalStackLayout Spacing="6">
-                    <Button Text="{v:Translate Debt_SetReminder}" Style="{StaticResource SecondaryButton}" Command="{Binding RepaymentReminderCommand}"
+                    <p:WrappingAction Text="{v:Translate Debt_SetReminder}" Appearance="Secondary" Command="{Binding RepaymentReminderCommand}"
                             IsVisible="{Binding IsArchived, Converter={StaticResource InvertedBoolConverter}}" />
                     <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />
                     <Label Text="{v:Translate Loan_Title}" FontAttributes="Bold" />
@@ -46,24 +47,24 @@
                         <Label Text="{Binding LoanNextText}" />
                         <Label Text="{Binding LoanPayoffText}" Style="{StaticResource Secondary}" />
                         <Label Text="{v:Translate Loan_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" />
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Loan_RecordInstallment}" Command="{Binding RecordInstallmentCommand}" />
-                            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Loan_ShowSchedule}" Command="{Binding ShowScheduleCommand}" />
-                        </Grid>
-                        <Button Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
+                        <VerticalStackLayout Spacing="8">
+                            <p:WrappingAction Appearance="Primary" Text="{v:Translate Loan_RecordInstallment}" Command="{Binding RecordInstallmentCommand}" />
+                            <p:WrappingAction Appearance="Secondary" Text="{v:Translate Loan_ShowSchedule}" Command="{Binding ShowScheduleCommand}" />
+                        </VerticalStackLayout>
+                        <p:WrappingAction Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" Appearance="Text" />
                     </VerticalStackLayout>
                     <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding HasLoanTerms, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Account_AddEntryHere}" Command="{Binding AddEntryHereCommand}"
+            <p:WrappingAction Appearance="Primary" Text="{v:Translate Account_AddEntryHere}" Command="{Binding AddEntryHereCommand}"
                     IsVisible="{Binding IsArchived, Converter={StaticResource InvertedBoolConverter}}" />
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
-                <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
-            </Grid>
+            <VerticalStackLayout Spacing="8">
+                <p:WrappingAction Appearance="Secondary" Text="{v:Translate Account_ShowEntries}" Command="{Binding ShowEntriesCommand}" />
+                <p:WrappingAction Appearance="Secondary" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
+            </VerticalStackLayout>
             <!-- Advanced: a valued asset account can become a holding; nothing changes before the preview is confirmed (ZEX-S0408) -->
-            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ConvertToHolding}" Command="{Binding ConvertToHoldingCommand}" IsVisible="{Binding CanConvert}" />
+            <p:WrappingAction Appearance="Secondary" Text="{v:Translate Account_ConvertToHolding}" Command="{Binding ConvertToHoldingCommand}" IsVisible="{Binding CanConvert}" />
 
             <!-- This month -->
             <Label Text="{Binding MonthText}" Style="{StaticResource SectionHeader}" />
@@ -100,7 +101,7 @@
                     <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
                     <v:DateField Date="{Binding ReconcileDate}" />
-                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Reconcile_Compare}" Command="{Binding CompareCommand}" Margin="0,12,0,0" />
+                    <p:WrappingAction Appearance="Secondary" Text="{v:Translate Reconcile_Compare}" Command="{Binding CompareCommand}" Margin="0,12,0,0" />
                     <Label Text="{Binding ResultText}" FontAttributes="Bold" Margin="0,12,0,0" IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" />
                     <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" Margin="0,8,0,0"
                             IsVisible="{Binding HintText, Converter={StaticResource IsNotNullConverter}}">
@@ -109,7 +110,7 @@
                     <VerticalStackLayout IsVisible="{Binding CanAdjust}" Spacing="0">
                         <Label Text="{v:Translate Reconcile_Reason}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding Reason}" MaxLength="200" SemanticProperties.Description="{v:Translate Reconcile_Reason}" />
-                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Reconcile_Adjust}" Command="{Binding AdjustCommand}" Margin="0,12,0,0" />
+                        <p:WrappingAction Appearance="Primary" Text="{v:Translate Reconcile_Adjust}" Command="{Binding AdjustCommand}" Margin="0,12,0,0" />
                     </VerticalStackLayout>
                     <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>

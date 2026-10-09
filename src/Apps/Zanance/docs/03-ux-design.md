@@ -392,3 +392,14 @@ suggestions and availability synchronously before uncovering the form. Never exp
 When display changes, refresh choice labels/previews in place while keeping selected values and unsaved estimate/
 reminder inputs. Native ItemsSource replacement can clear selection: restore it under the synchronous save guard.
 Keep language, culture, calendar, digits and theme independent. Shell navigation rebuild remains deferred per D-67.
+
+## Growing action captions (D-80)
+
+Use WrappingAction where a native button's long caption clips at large text. Its semantic surface grows around a
+WordWrap Label; only the last transparent Button owns the command, CanExecute, focus and full spoken name. The face
+is excluded from the accessibility tree. Follow dynamic palette colors and dim the face with native enablement.
+Account/debt actions get full width. Settings suggestion/permission actions follow their message. Bulk actions use
+two rows with selection count separate from Select all/Cancel. Preserve the existing compact 12-point bulk captions
+with native scaling and useful side padding; do not shrink readable text or squeeze it into four narrow columns.
+Review actual caption and target geometry, disabled/selected states and real native Invoke behavior, without Save/
+delete/Undo or security changes. Persistent action rows stay outside the viewport per D-78.

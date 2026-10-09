@@ -368,6 +368,7 @@ internal static class DebugSnapshots
             ("accounts", AppShell.AccountsRoute, null),
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("loan-detail", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
+            ("loan-actions", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
             ("loan-schedule", AppShell.LoanScheduleRoute, new() { ["id"] = loanId }),
             ("loan-edit", AppShell.AccountEditorRoute, new() { ["id"] = loanId }),
             ("account", AppShell.AccountEditorRoute, null),
@@ -405,6 +406,7 @@ internal static class DebugSnapshots
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("settings-display", AppShell.SettingsRoute, null),
+            ("settings-actions", AppShell.SettingsRoute, null),
             ("regional-settings", AppShell.SettingsRoute, null),
             ("review-reminder", AppShell.SettingsRoute, null),
             ("profiles", AppShell.ProfilesRoute, null),
@@ -491,6 +493,13 @@ internal static class DebugSnapshots
                 {
                     await ReviewSettingsDisplayAsync(app, services, displaySettings, folder, language);
                 }
+
+#if WINDOWS
+                if (name is "loan-actions" or "settings-actions" && Shell.Current.CurrentPage is ContentPage actionPage)
+                {
+                    await CaptureWrappingActionsAsync(app, actionPage, folder, language + "-" + name);
+                }
+#endif
 
                 if (name == "settings" && Shell.Current.CurrentPage is Features.Settings.SettingsPage settingsPage)
                 {
@@ -584,6 +593,7 @@ internal static class DebugSnapshots
                 // The bulk selection of the transactions list (F2-TX-04).
                 if (Shell.Current.CurrentPage?.BindingContext is Features.Transactions.TransactionsViewModel transactions)
                 {
+                    var unchangedEntries = System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync());
                     // D-76: the real page bindings show covered/loading, failure/retry and restored snapshots.
                     // All data belongs to this fictitious walk-through; these states never write a ledger entry.
                     await transactions.LoadAsync();
@@ -616,10 +626,24 @@ internal static class DebugSnapshots
                     await CaptureAsync(app, folder, $"{language}-{name}-reloaded");
 
                     transactions.StartSelectingCommand.Execute(null);
+#if WINDOWS
+                    await Task.Delay(500);
+                    await CaptureAsync(app, folder, $"{language}-{name}-select-empty");
+                    InvokeWrappingAction(Shell.Current.CurrentPage, transactions.SelectAllCommand);
+                    await Task.Delay(100);
+                    if (!transactions.HasSelection) { throw new InvalidOperationException("Native Select all did not reach the existing command."); }
+#else
                     transactions.SelectAllCommand.Execute(null);
+#endif
                     await Task.Delay(500);
                     await CaptureAsync(app, folder, $"{language}-{name}-select");
+#if WINDOWS
+                    InvokeWrappingAction(Shell.Current.CurrentPage, transactions.StopSelectingCommand);
+                    await Task.Delay(100);
+                    if (transactions.IsSelecting) { throw new InvalidOperationException("Native Cancel did not close selection."); }
+#else
                     transactions.StopSelectingCommand.Execute(null);
+#endif
 
                     // D-78: render the Undo notice without deleting a fixture entry or claiming an Undo workflow test.
                     var undoWasVisible = transactions.ShowUndo;
@@ -638,6 +662,8 @@ internal static class DebugSnapshots
                         await Task.Delay(800);
                         await CaptureAsync(app, folder, $"{language}-{name}-filter");
                     }
+                    if (unchangedEntries != System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync()))
+                    { throw new InvalidOperationException("Selection/layout inspection wrote financial entries."); }
                 }
 
                 if (!route.StartsWith("//", StringComparison.Ordinal))
@@ -1054,7 +1080,7 @@ internal static class DebugSnapshots
         await source.CopyToAsync(target);
 #if WINDOWS
         if ((page is Shell currentShell ? currentShell.CurrentPage : page) is ContentPage checkedPage
-            && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage))
+            && (checkedPage.FindByName<VisualElement>("ContentViewport") is not null || checkedPage is Features.Settings.SettingsPage or Features.Accounts.AccountDetailPage))
         {
             // D-78: include persistent actions and navigation in the app's own native-window rendering.
             await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, name + "-window.png"));
@@ -1166,6 +1192,49 @@ internal static class DebugSnapshots
         // Navigation to the next fictitious screen must not trigger an unrelated unsaved-draft dialog.
         editor.AmountText = string.Empty;
         editor.Note = string.Empty;
+    }
+
+    // D-80: scroll every currently visible growing action into the real viewport; never invoke its command.
+    private static async Task CaptureWrappingActionsAsync(App app, ContentPage page, string folder, string name)
+    {
+        if (page.BindingContext is Features.Settings.SettingsViewModel settings) { await settings.LoadAsync(); }
+        if (FindScrollView(page) is not { } scroll) { throw new InvalidOperationException("Action review needs its real scroll viewport."); }
+        var index = 0;
+        foreach (var action in WrappingActions(page))
+        {
+            var visible = true;
+            for (Element? parent = action; parent is not null; parent = parent.Parent)
+            {
+                if (parent is VisualElement { IsVisible: false }) { visible = false; break; }
+            }
+            if (!visible) { continue; }
+            await scroll.ScrollToAsync(action, ScrollToPosition.Start, animated: false);
+            await Task.Delay(300);
+            await CaptureAsync(app, folder, $"{name}-action-{++index}");
+        }
+        if (index == 0) { throw new InvalidOperationException("No visible growing action was reviewed."); }
+    }
+
+    private static IEnumerable<Presentation.WrappingAction> WrappingActions(IVisualTreeElement root)
+    {
+        foreach (var child in root.GetVisualChildren())
+        {
+            if (child is Presentation.WrappingAction action) { yield return action; }
+            foreach (var descendant in WrappingActions(child)) { yield return descendant; }
+        }
+    }
+
+    // D-80: select/cancel are non-writing real commands; invoke their actual transparent native button.
+    private static void InvokeWrappingAction(Page page, System.Windows.Input.ICommand command)
+    {
+        var action = WrappingActions(page).Single(a => ReferenceEquals(a.Command, command));
+        if (action.Content is not Grid grid || grid.Children.LastOrDefault() is not Button button
+            || button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native)
+        { throw new InvalidOperationException("The real growing action button is unavailable."); }
+        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native);
+        if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("The growing action has no native Invoke pattern."); }
+        invoke.Invoke();
     }
 
     // D-79: actual form publication, native retry and live captions, using fictitious data without PIN operations.

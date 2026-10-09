@@ -138,3 +138,12 @@ the actual retry, preserves unsaved input and asserts unchanged stored preferenc
 saves an estimate or changes notification permission. Own-window captures/local proof files are absent from Release.
 Original Windows development data is restored with matching hashes; native inspection uses only the known owned
 emulator fixture and retains screenshot protection. No owner database or SecureStorage content is inspected.
+
+## Growing-action layout review (D-80)
+
+No production data, permission, SDK, export, recipient or portable preference is added. The actual command and
+security/financial confirmation boundaries remain. Debug-only own-window/native geometry review uses fictitious
+data and invokes only Select all/Cancel, never Save/delete/Undo, PIN or permission changes. Full entry JSON remains
+unchanged. Original Windows development databases are preserved/restored with matching hashes. Native checks use
+only the owned emulator fixture, keep screenshot protection/system settings, and do not inspect owner data/secrets.
+Collectors are absent from Release. UI geometry/CI is separate from physical OS and screen-reader acceptance.

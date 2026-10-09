@@ -112,3 +112,8 @@ reads, covered retry, account eligibility/order, unchanged preferences/transfer 
 Main suite: 1,345 passing, App.Tests: 127. Real SettingsViewModel, native selection callbacks and rendered bindings
 are verified through the settings-display running-app route and the complete Release emulator separately. Retain
 physical OS scaling, keyboard/screen-reader, phone/iOS and provider acceptance as independent gates.
+
+D-80 / AT-87 is actual running-app coverage of WrappingAction, not copied/fake MAUI controls or new xUnit cases.
+Native caption/target/name and command/argument checks run in the snapshot matrix. Real Select all/Cancel Invoke
+proves the binding reaches the existing selection logic; full entry JSON is unchanged. Check disabled/no-selection
+and enabled/selected states. Main suite remains 1,345; real OS, screen-reader, keyboard and device checks stay open.

@@ -172,3 +172,8 @@ D-79 follows the actual Settings selection/caption findings under D-69. Complete
 translated choices preserve draft/selection values. AT-86 and the large-text report record separate unit, rendered,
 native and APK evidence. Continue ready fixed-control/currency findings; unresolved owner decisions and physical/
 OS/screen-reader/iOS acceptance remain open. No commercial restriction or production encryption is introduced.
+
+D-80 continues A11Y-03 under D-69 with growing Settings/account/debt action captions, full-width debt actions and
+two-row bulk actions. AT-87 records actual native selection command invocation and geometry without writing money;
+main suite remains 1,345. Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers,
+currency layout, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates open.

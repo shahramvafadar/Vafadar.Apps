@@ -467,3 +467,24 @@ languages. No fake MAUI controls or copied view-model algorithms. Main suite: 1,
 App.Tests: 127. Actual view-model/binding/native retry and caption behavior are checked separately in the running app.
 See quality/font-scaling-a11y03.md and AT-86 for final rendered/native/APK evidence. No model, permission, SDK,
 backup/security policy or commercial restriction change; A11Y-03, real OS/screen-reader/phone/iOS gates remain open.
+
+## D-80 - Growing captions for Settings, account/debt and bulk actions (2026-10-09)
+
+Continue the actual A11Y-03 clipping findings under D-69. At narrow 200% text the Settings delete caption is cut off;
+half-width debt actions and four narrow bulk columns likewise constrain complete words. WrappingAction paints a
+growing semantic Border/Label and places a real transparent Button last, following the existing D-42 chip pattern.
+The label retains native scaling; the button owns the existing command/argument, CanExecute, keyboard and spoken
+name. Theme colors remain dynamic semantic resources. Do not invoke destructive or financial commands to review it.
+
+Account/debt detail actions use the whole width; Settings suggestion/permission actions have their own row. Bulk
+selection count has its own line, Select all/Cancel another, and four actions use two rows. Retain the existing
+12-point bulk text with native scaling and compact side padding; initial 15-point wrappers split short English words
+at 360/200%, so do not turn that diagnostic prototype into the delivered baseline. Remove fixed 34/40 heights from
+transaction review/selection actions without changing handlers or filters.
+
+AT-87 is runtime evidence, not a new xUnit count. The actual native Select all/Cancel Invoke pattern reaches the
+existing commands without writing entries. Actual caption geometry, complete spoken names and command/argument
+bindings are checked; inherited disabled selection state is recorded. Main suite remains 1,345 passing. See the
+large-text quality report for final matrix, native and full signed APK evidence. No data model, finance formula,
+security policy, new resource key, permission, SDK or commercial rule change. Headers/navigation, currency layout,
+other controls and physical OS/screen-reader/phone/iOS acceptance remain independent work.

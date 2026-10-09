@@ -19,6 +19,9 @@ internal static class DebugLayoutChecks
                 if (viewport.Width <= 0 || viewport.Height <= 0 || action.Height < 44
                     || action.Y < viewport.Y + viewport.Height - 1)
                 {
+                    File.WriteAllText(Path.Combine(folder, name + "-action-layout-failure.json"),
+                        JsonSerializer.Serialize(new { actionName, viewport.Width, viewport.Height, viewport.Y,
+                            actionTop = action.Y, actionHeight = action.Height }, new JsonSerializerOptions { WriteIndented = true }));
                     throw new InvalidOperationException("A persistent action covers its viewport or has no usable target.");
                 }
                 evidence.Add(new { kind = "action dock", actionName, viewport.Width, viewport.Height,
@@ -49,6 +52,24 @@ internal static class DebugLayoutChecks
             evidence.Add(new { kind = "financial row", type = row.BindingContext.GetType().Name, title.Text,
                 text.FontSize, text.IsTextScaleFactorEnabled, text.IsTextTrimmed, row.Width,
                 identityWidth = identity.Width, identityBottom = identity.Y + identity.Height, amountTop = amount.Y });
+        }
+
+        // D-80: check the actual caption and last native command button, never a source-text mirror.
+        foreach (var action in Descendants(page).OfType<Presentation.WrappingAction>())
+        {
+            if (!IsVisibleThroughParents(action)) { continue; }
+            if (action.Content is not Grid grid || grid.Children.FirstOrDefault() is not Border { Content: Label caption }
+                || grid.Children.LastOrDefault() is not Button button
+                || caption.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock text)
+            { throw new InvalidOperationException("A growing action lacks its actual caption/native button."); }
+            if (text.IsTextTrimmed || caption.Width <= 0 || action.Width < 44 || action.Height < 44
+                || text.ActualHeight + 1 < text.DesiredSize.Height
+                || button.Command != action.Command || button.CommandParameter != action.CommandParameter
+                || SemanticProperties.GetDescription(button) != action.Text)
+            { throw new InvalidOperationException("A growing action clips its caption or loses its command/name."); }
+            evidence.Add(new { kind = "wrapping action", action.Text, action.Appearance, action.Width, action.Height,
+                captionWidth = caption.Width, captionHeight = caption.Height, text.IsTextTrimmed,
+                text.FontSize, nativeButtonEnabled = button.IsEnabled, spokenName = SemanticProperties.GetDescription(button) });
         }
         File.WriteAllText(Path.Combine(folder, name + "-layout-checks.json"),
             JsonSerializer.Serialize(evidence, new JsonSerializerOptions { WriteIndented = true }));

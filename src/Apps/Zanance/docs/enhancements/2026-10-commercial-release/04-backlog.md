@@ -366,3 +366,8 @@ Publish complete Settings before enabling input; read failure stays covered with
 bring the main suite to 1,345 (App.Tests 127). Running bindings, native retry/locale and the signed APK are recorded
 in quality/font-scaling-a11y03.md. Keep QA-06/A11Y-03 partial: fixed controls, currency layout, native OS scaling,
 screen-reader, baseline ANR/performance and physical/iOS acceptance remain independent. No commercial/security change.
+
+D-80 continues A11Y-03 under D-69 with growing Settings/account/debt action captions, full-width debt actions and
+two-row bulk actions. AT-87 records actual native selection command invocation and geometry without writing money;
+main suite remains 1,345. Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers,
+currency layout, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates open.

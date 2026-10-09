@@ -131,3 +131,8 @@ D-79 repairs the observed Settings publication/caption issues under D-69. Ten AT
 main suite to 1,345; running-app checks prove the form cover, real retry and live choice refresh separately. Existing
 selection/draft values are preserved. No financial/schema/security policy change. Continue fixed controls and
 currency layout findings; A11Y-03 and platform/device acceptance remain in progress.
+
+D-80 continues A11Y-03 under D-69 with growing Settings/account/debt action captions, full-width debt actions and
+two-row bulk actions. AT-87 records actual native selection command invocation and geometry without writing money;
+main suite remains 1,345. Final rendered/native/APK evidence is in quality/font-scaling-a11y03.md. Keep headers,
+currency layout, other controls, real OS/screen-reader/phone/iOS and unresolved owner gates open.

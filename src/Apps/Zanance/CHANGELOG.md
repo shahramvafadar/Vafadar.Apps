@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Readable Settings and debt actions (2026-10-09, D-80)
+
+- Long Settings/account/debt button labels wrap and grow with large text.
+- Give debt and account actions the whole row; separate suggestion/permission messages from their actions.
+- Give selection count and bulk action labels more space while retaining the existing commands and text scaling.
+- Keep actual command buttons available to touch, keyboard and accessibility; verify selection without writing money.
+
 ### Fixed - Settings loading and language changes (2026-10-09, D-79)
 
 - Show loading feedback until the Settings form is ready; offer Try again after a failed read.

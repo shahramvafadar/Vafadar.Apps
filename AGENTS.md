@@ -283,3 +283,10 @@ repository.
 * Refresh the open form's translated choice captions without changing selection indexes, stored preferences or
   unsaved estimate/reminder inputs. Preserve nested publication guards; do not suppress user writes across awaits.
 * The settings-display Debug route checks only fictitious display/loading states, not PIN or permission changes.
+
+## 15. Growing action captions (D-80)
+
+* Long action captions retain native text scaling and wrap inside a growing semantic surface. A real transparent
+  button is the last child and owns the unchanged command, enablement, keyboard focus and complete spoken name.
+* Keep existing compact bulk font size scalable; provide space through two rows/padding instead of clipping labels.
+  Measure actual native captions and command/name/target geometry. Selection/layout review never writes money.

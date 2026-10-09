@@ -1402,3 +1402,8 @@ failure offers retry. Refresh translated choices in place without resetting sele
 ten real-source cases (main suite 1,345; App.Tests 127), with actual binding/native review separate from unit cases.
 The large-text report records rendered/native/APK evidence. No new data, schema, permission, SDK, financial formula,
 commercial restriction or security policy. Full A11Y-03 and physical-device/iOS/provider acceptance remain open.
+
+D-80 / A11Y-03: long Settings/account/debt captions wrap around a real unchanged command button; debt actions get
+full width and bulk actions two rows. Existing compact bulk font size retains native scaling. AT-87 records native
+geometry/selection/no-write evidence separately from the unchanged 1,345-case suite. See the large-text report for
+the final matrix and signed APK. No finance/model/security/permission/SDK change; full platform acceptance stays open.

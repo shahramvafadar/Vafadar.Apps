@@ -232,3 +232,17 @@ is covered until publication, indices/draft input survive, and stored preference
 *-window.png renders the own window; *-settings-display-proof.json records the checks. Preserve/restore original
 development files and verify hashes. The fixture is absent from Release; native checks use only the owned emulator,
 unchanged system settings, screenshot protection and a complete signed APK. Never substitute this for phone/OS QA.
+
+## Growing-action layout review (D-80)
+
+Use -Only settings-display,loan-detail,account-detail,transactions with the existing D-77 font/theme/window options.
+settings-display avoids the PIN walkthrough. *-layout-checks.json records actual growing captions, native sizes,
+spoken names and unchanged command/argument bindings. Transactions captures no-selection/selected states and
+invokes the real native Select all/Cancel without writing entries. Account detail adds own-window rendering.
+Preserve original development files before starting and verify matching-hash restoration in finally. Wait for a
+native layout pass after changing selection; capturing immediately can misclassify stale dock geometry as overlap.
+The fixture/collector is Debug only. Keep system settings and FLAG_SECURE; use the full signed Release for native QA.
+
+Use -Only loan-actions,settings-actions for intermediate command captures: each currently visible growing action
+is scrolled into view and rendered without executing its command. This is separate from transaction All/Cancel
+and the Settings retry fixture. Both routes use only existing fictitious snapshot profiles.

@@ -128,3 +128,8 @@ D-79 / AT-86: on the phone verify that Settings is covered until ready and offer
 en/de/fa on the open form, confirm theme/mode and other choice captions update, selected values and unsaved inputs
 remain, and language persists after restart. Use the complete signed D-79 APK recorded in AT-86's evidence report.
 Windows/native emulator checks do not close real OS 200%, physical ARM64, screen-reader or iOS acceptance.
+
+D-80 / AT-87: verify large Settings/account/debt captions and bulk actions with physical system 200% text, both
+themes and en/fa/de. Confirm full spoken names, keyboard/touch targets, disabled selection state and real Select
+all/Cancel. Account/debt Save and security/destructive actions retain their existing confirmation boundaries.
+Use the full signed APK in the quality report; Windows stress and normal emulator runs do not close phone/iOS QA.

@@ -33,9 +33,9 @@
                 </Grid>
             </Grid>
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="6">
                 <v:ChoiceChips IsCompact="True" ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
-                <Button Grid.Column="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="17" MinimumHeightRequest="34" HeightRequest="34"
+                <Button Grid.Row="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="17" MinimumHeightRequest="44"
                         Padding="12,0" FontSize="13" BackgroundColor="{DynamicResource RefundBackground}" TextColor="{DynamicResource RefundText}"
                         BorderColor="{DynamicResource RefundLine}" BorderWidth="1"
                         IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
@@ -82,7 +82,7 @@
                     </HorizontalStackLayout>
                 </ScrollView>
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Select}" Command="{Binding StartSelectingCommand}" HorizontalOptions="Start"
-                        MinimumHeightRequest="40" HeightRequest="40" Padding="16,0" FontSize="14"
+                        MinimumHeightRequest="44" Padding="16,8" FontSize="14"
                         IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
             </VerticalStackLayout>
             <!-- Drill-down from a number: the filter and the total it adds up to (AT-50) -->
@@ -196,17 +196,16 @@
                 IsEnabled="{Binding Loading.IsReady}"
                 BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 16">
             <VerticalStackLayout Spacing="6">
-                <Grid ColumnDefinitions="*,Auto,Auto">
-                    <Label Text="{Binding SelectionText}" FontAttributes="Bold" VerticalOptions="Center" />
-                    <Button Grid.Column="1" Text="{v:Translate Bulk_SelectAll}" Command="{Binding SelectAllCommand}" Style="{StaticResource TextButton}" />
-                    <Button Grid.Column="2" Text="{v:Translate Common_Cancel}" Command="{Binding StopSelectingCommand}" Style="{StaticResource TextButton}" />
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" ColumnSpacing="8" RowSpacing="6">
+                    <Label Grid.ColumnSpan="2" Text="{Binding SelectionText}" FontAttributes="Bold" VerticalOptions="Center" />
+                    <p:WrappingAction Grid.Row="1" Text="{v:Translate Bulk_SelectAll}" Command="{Binding SelectAllCommand}" Appearance="Text" />
+                    <p:WrappingAction Grid.Row="1" Grid.Column="1" Text="{v:Translate Common_Cancel}" Command="{Binding StopSelectingCommand}" Appearance="Text" />
                 </Grid>
-                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6" IsEnabled="{Binding HasSelection}">
-                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Reviewed}" Command="{Binding BulkReviewedCommand}" FontSize="12" Padding="4,0" />
-                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Entry_Category}" Command="{Binding BulkCategoryCommand}" FontSize="12" Padding="4,0" />
-                    <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Tag}" Command="{Binding BulkTagCommand}" FontSize="12" Padding="4,0" />
-                    <Button Grid.Column="3" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Delete}" Command="{Binding BulkDeleteCommand}" FontSize="12" Padding="4,0"
-                            TextColor="{DynamicResource ExpenseText}" BorderColor="{DynamicResource ExpenseText}" />
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" ColumnSpacing="8" RowSpacing="8" IsEnabled="{Binding HasSelection}">
+                    <p:WrappingAction IsCompact="True" Appearance="Secondary" Text="{v:Translate Bulk_Reviewed}" Command="{Binding BulkReviewedCommand}" />
+                    <p:WrappingAction IsCompact="True" Grid.Column="1" Appearance="Secondary" Text="{v:Translate Entry_Category}" Command="{Binding BulkCategoryCommand}" />
+                    <p:WrappingAction IsCompact="True" Grid.Row="1" Appearance="Secondary" Text="{v:Translate Bulk_Tag}" Command="{Binding BulkTagCommand}" />
+                    <p:WrappingAction IsCompact="True" Grid.Row="1" Grid.Column="1" Appearance="Destructive" Text="{v:Translate Common_Delete}" Command="{Binding BulkDeleteCommand}" />
                 </Grid>
             </VerticalStackLayout>
         </Border>

@@ -257,3 +257,78 @@ signing, product release or physical-device acceptance. CI remains one independe
 A11Y-03 remains in progress: fixed actions/bulk labels, currency tokens, page headers/navigation captions, other
 forms/dialogs, custom-drawn controls, keyboard/screen readers, actual OS 200%, physical ARM64 and iOS remain.
 Continue these real findings under D-69; unresolved product/licence/provider/release decisions stay owner gates.
+
+## D-80 follow-up: complete action captions and selection targets
+
+Settings/account/debt commands use a wrapping, natively scaled caption above a real last-child transparent native
+Button. Existing commands/arguments, CanExecute and full translated spoken names remain. Long related actions stack
+vertically; transaction selection count, All/Cancel and two rows of bulk actions no longer compete for one strip.
+Compact bulk captions retain their original 12-point font with smaller side padding; the preliminary 15-point
+prototype split words at 200% and was replaced before the formal review. No financial formula/model or security change.
+
+### Running Windows evidence
+
+| Process-local text | Window | Themes | Languages | Main captures | Intermediate-action captures |
+|---|---|---|---|---:|---:|
+| 200% | 360x800 | Light/Dark | en, fa, de | 276 | 216 |
+| 200% | 412x892 | Light/Dark | en, fa, de | 276 | 216 |
+| 200% | 1280x820 | Light/Dark | en, fa, de | 276 | 216 |
+| 100% | 360x800 | Light | en, fa, de | 138 | 108 |
+| **Total** | | | | **966** | **756** |
+
+The 1,722 images are captures, not distinct screens or tests; they include existing onboarding and supplemental
+own-window renders. Actual native geometry yields 4,223 layout records, including 3,129 growing-action records.
+Every checked caption is untrimmed, has a complete spoken name, an unchanged command/argument and a target at least
+44 px. All 21 no-selection states have four disabled bulk commands and enabled All/Cancel; actual native UI Automation
+invokes All/Cancel and checks selection changes. Complete entry JSON remains unchanged. The 21 D-79 Settings proof
+files still pass. Separate loan-actions/settings-actions scroll each currently visible command into view without
+invoking repayment, estimate Save, PIN, permissions, conversion, reconciliation or deletion. Eight visible loan
+commands and three visible Settings commands are captured per language/cohort. Original development files/sidecars
+and marker are restored with matching hashes after both formal runs.
+
+An initial local review helper put the first snapshot inside its stop routine before preservation; it failed on
+stale selection geometry. The original files moved by that snapshot were verified against the prior D-79 preservation
+hashes and restored before work continued. The helper was corrected and the capture now waits for the actual native
+layout pass. Preliminary failed/prototype captures are excluded from the formal counts above. This was a review
+helper correction, not application data recovery or a financial behavior change.
+
+The reviewed action captions fit in Persian RTL, English and German, both themes and all three widths. Remaining
+findings are retained: large balance/currency tokens split at narrow 200%, movement labels compete with amounts,
+the fixed year box clips four digits at 200%, and the German 360 px header truncates. These are separate work, as are
+retained Shell captions, other forms/dialogs, keyboard/screen readers, actual OS 200%, physical ARM64 and iOS.
+Windows stress is process-local. A11Y-03 remains in progress.
+
+### Normal Release emulator and financial evidence
+
+Only the existing emulator-5570, API 36 x86_64 and known owned QA03 fixture are used. Normal Release Transactions
+opens selection with four disabled native bulk Buttons; the actual lower All button selects all three rows and enables
+them, then Cancel closes selection. No Reviewed/Category/Tag/Delete command is invoked. Account detail's actual Edit
+and Add transaction here buttons open the expected drafts; visible Cancel closes each without Save. Native toolbar
+Navigate up restores the actual More page after retained tab-stack navigation; tapping a tab alone does not prove its
+root page. The first Settings lookup on that retained Accounts stack failed and was corrected by visible Navigate up.
+
+Actual language-picker selections apply Deutsch, فارسی and English. PIN/manage and delete-profile actions are real
+native Buttons with complete current translated descriptions and usable bounds in all three languages; neither is
+invoked. Original System theme and Advanced mode remain selected. The QA03 profile has no loan account, so the
+intermediate repayment actions have Windows runtime evidence only. Density 420/font_scale 1.0 and FLAG_SECURE remain;
+no native 200%/screen-reader or physical-device result is claimed. Hierarchy reads sometimes take longer to finish;
+wait for the same bounded request rather than launching parallel UI operations.
+
+After navigation, install the known Debug package without launching it to copy only the fictitious QA03 database
+and sidecars. Full Accounts, Entries and Schedules still match the D-76 baseline, including three entries. Reinstall
+the final full Release, check cold English Home/Transactions, return Home and force-stop. No owner database/ZIP,
+private preferences, credentials or SecureStorage read, physical-phone action or system-setting change.
+
+### Tests, builds and full APK
+
+Main suite: 1,345 passed, zero failed/skipped (App.Tests 127); test output cleaned. AT-87 adds runtime assertions,
+not a new unit count. Final strict Windows Debug and full signed Android Release builds have zero warnings/errors.
+Cloud permission boundary passes as static package validation; no provider/network acceptance claim.
+
+APK: artifacts/android/zanance-d80-release.apk, 81,152,085 bytes;
+SHA-256 a0df14c3b11d95a62d24ac089c96994d8f122930caf58302edf7f02607856338.
+Package pro.vafadar.zanance, 0.1.0/code 1, min SDK 24/target 36, ARM64/x86_64 full assembly stores/app AOT and ZIP
+integrity verified. v2/v3 local Debug-certificate signature verified; public certificate SHA-256 remains
+92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. This is a local phone-test package, not Store
+signing, publishing or physical-device acceptance. CI remains a separate single delayed check after push.
+Continue the retained A11Y-03 findings under D-69; unresolved owner decisions remain independent.

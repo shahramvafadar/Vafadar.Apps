@@ -332,3 +332,21 @@ zero warnings/errors. Full APK artifacts/android/zanance-d79-release.apk: 80,713
 989227ed5f8bee52c96cab755a53dfc737eb409f52976adf116a58e9364db242; pro.vafadar.zanance, min 24/target 36, ARM64/x86_64 full assembly stores/AOT,
 ZIP integrity and v2/v3 local signature verified; Cloud permission boundary passes. Native toolbar Back captions,
 German narrow/large header, other fixed controls and OS/device/screen-reader acceptance remain independent findings.
+
+## AT-87 - Growing action captions and native selection commands (D-80)
+
+Runtime scenario, not extra xUnit cases. Main suite remains 1,345 passed, zero failed/skipped (App.Tests 127).
+Actual Settings, account/debt detail and Transactions bindings are reviewed with growing semantic action surfaces.
+Check native untrimmed captions, positive caption width, at least 44 px target size, full spoken name and unchanged
+command/argument binding. Record native disabled states with no selection and enabled states after selection.
+Invoke the actual Select all and Cancel buttons through UI Automation; verify existing selection behavior and
+unchanged full entry JSON. D-79's actual retry/live-caption/unsaved-input proof remains valid in this route.
+See quality/font-scaling-a11y03.md for final cohorts, native checks and the complete signed APK. Real OS 200%, keyboard/
+screen readers, physical ARM64 and iOS acceptance remain separate. No financial or destructive command is invoked.
+
+AT-87 result: 1,722 rendered captures and 3,129 actual growing-action geometry records pass across en/fa/de, both
+themes, 360/412/wide at process-local 200% plus a 100% baseline. Normal Release emulator checks actual All/Cancel,
+account Edit/transaction drafts cancelled without Save, and translated PIN/delete native Button captions. Complete
+owned fixture Accounts/Entries/Schedules remain unchanged (three entries). Full signed D-80 APK and final cold
+Release checks are recorded in the quality report. Loan action runtime evidence is Windows-only; native QA03 has
+no loan. No physical/OS 200% or screen-reader acceptance claim.
