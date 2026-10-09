@@ -76,7 +76,7 @@ internal sealed class LockPage : ContentPage
                 _prompting = true;
                 try
                 {
-                    if (await _lock.RecoverPinAsync(this)) { await CompleteAsync(true); }
+                    if (await _lock.RecoverPinAsync()) { await CompleteAsync(true); }
                     else { _message.Text = translator["Pin_NoRecovery"]; }
                 }
                 catch (Exception ex) when (ex is not OutOfMemoryException) { _message.Text = translator["Pin_Unavailable"]; }

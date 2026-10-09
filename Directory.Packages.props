@@ -13,6 +13,7 @@
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="FluentIcons.Maui" Version="2.1.341" />
+    <PackageVersion Include="FluentIcons.Common" Version="2.1.341" />
   </ItemGroup>
 
   <ItemGroup Label="Android">

@@ -132,3 +132,9 @@ D-72 / LOC-04 completes explicit import overlap linking and persistent Undo unde
 native Release Undo are verified separately from phone/iOS acceptance. ADR/library, OD-10, OD-12, target-market,
 provider and commercial decisions remain owner gates. The next independent ready section is QA-03: app-level tests
 for existing lock/profile/bulk/onboarding/widget/theme behaviour, without enabling commercial limits.
+
+D-73 / QA-03 completes the application flow project under D-69: actual linked sources, explicit native ports and
+68 new AT-80 cases, including validation-safe bulk snapshots and secure startup/command time boundaries. Native
+runtime evidence and owner phone/iOS/provider acceptance remain distinct. The next independent ready section is
+QA-04, asset-account income/expense confirmation tests. ADR/library, OD-10, OD-12 and commercial decisions remain
+owner gates; no production encryption, OS-backup policy or test-build limits are introduced.

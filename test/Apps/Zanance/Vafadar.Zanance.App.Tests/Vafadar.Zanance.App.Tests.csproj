@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <ProjectReference Include="../../../../src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <ProjectReference Include="../../../Shared/Vafadar.Testing/Vafadar.Testing.csproj" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="FluentIcons.Common" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppLinkRouter.cs" Link="Application/AppLinkRouter.cs" />
+    <Compile Include="../../../../src/Libraries/Vafadar.Maui/Security/DeviceAuthenticator.cs" Link="Application/DeviceAuthenticator.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/AppLockService.cs" Link="Application/AppLockService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/IAppLockHost.cs" Link="Application/IAppLockHost.cs" />
+  </ItemGroup>
+  <!-- Compile the actual platform-independent application flows, with explicit fake platform ports and real SQLite. -->
+  <ItemGroup>
+    <Compile Include="../../../../src/Libraries/Vafadar.Maui/Mvvm/ViewModelBase.cs" Link="Application/ViewModelBase.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Interaction/IAppInteraction.cs" Link="Application/IAppInteraction.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Onboarding/OnboardingViewModel.cs" Link="Application/OnboardingViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountFormModel.cs" Link="Application/AccountFormModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/RegionalPreferencesViewModel.cs" Link="Application/RegionalPreferencesViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/RegionalOptions.cs" Link="Application/RegionalOptions.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/ThemeService.cs" Link="Application/ThemeService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IThemeHost.cs" Link="Application/IThemeHost.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Icons.cs" Link="Application/Icons.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Calendars.cs" Link="Application/Calendars.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DraftFingerprint.cs" Link="Application/DraftFingerprint.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DigitFormatting.cs" Link="Application/DigitFormatting.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitNote.cs" Link="Application/DisplayUnitNote.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.cs" Link="Application/ProfileService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileRuntime.cs" Link="Application/IProfileRuntime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/BulkTransactionsViewModel.cs" Link="Application/BulkTransactionsViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/UndoService.cs" Link="Application/UndoService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Profiles/ProfilesViewModel.cs" Link="Application/ProfilesViewModel.cs" />
+    <EmbeddedResource Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources*.resx" Link="Resources/%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

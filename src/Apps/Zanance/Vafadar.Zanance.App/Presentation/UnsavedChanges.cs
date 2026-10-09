@@ -21,7 +21,7 @@ internal static class UnsavedChanges
     /// so opening the expense editor reported an unexpected error.
     /// </summary>
     public static string Fingerprint(params object?[] values) =>
-        string.Join('|', values.Select(value => Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture)));
+        DraftFingerprint.Create(values);
 
     /// <summary>Asks whether unsaved changes may be discarded.</summary>
     public static Task<bool> ConfirmDiscardAsync()

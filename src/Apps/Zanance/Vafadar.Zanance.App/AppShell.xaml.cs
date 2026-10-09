@@ -13,121 +13,121 @@ namespace Vafadar.Zanance.App;
 public partial class AppShell : Shell
 {
     /// <summary>Route of the account list.</summary>
-    public const string AccountsRoute = "accounts";
+    public const string AccountsRoute = AppRoutes.AccountsRoute;
 
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
-    public const string AccountEditorRoute = "account";
+    public const string AccountEditorRoute = AppRoutes.AccountEditorRoute;
 
     /// <summary>Route of the account details and reconciliation (query: <c>id</c>).</summary>
-    public const string AccountDetailRoute = "accountdetail";
+    public const string AccountDetailRoute = AppRoutes.AccountDetailRoute;
 
     /// <summary>Route of the settings page.</summary>
-    public const string SettingsRoute = "settings";
+    public const string SettingsRoute = AppRoutes.SettingsRoute;
 
     /// <summary>Route of the entry editor (query: <c>id</c>, <c>duplicate</c>, <c>refundOf</c> or <c>kind</c>).</summary>
-    public const string EntryEditorRoute = "entry";
+    public const string EntryEditorRoute = AppRoutes.EntryEditorRoute;
 
     /// <summary>Route of the entry details (query: <c>id</c>).</summary>
-    public const string EntryDetailRoute = "entrydetail";
+    public const string EntryDetailRoute = AppRoutes.EntryDetailRoute;
 
     /// <summary>Route of the category list.</summary>
-    public const string CategoriesRoute = "categories";
+    public const string CategoriesRoute = AppRoutes.CategoriesRoute;
 
     /// <summary>Route of the category editor (query: <c>id</c> for an existing category).</summary>
-    public const string CategoryEditorRoute = "category";
+    public const string CategoryEditorRoute = AppRoutes.CategoryEditorRoute;
 
     /// <summary>Route of the plan editor (query: <c>id</c> for an existing plan).</summary>
-    public const string PlanEditorRoute = "plan";
+    public const string PlanEditorRoute = AppRoutes.PlanEditorRoute;
 
     /// <summary>Route of the plan details (query: <c>id</c>).</summary>
-    public const string PlanDetailRoute = "plandetail";
+    public const string PlanDetailRoute = AppRoutes.PlanDetailRoute;
 
     /// <summary>Route of an occurrence (query: <c>plan</c> and <c>date</c>, the original date).</summary>
-    public const string OccurrenceRoute = "occurrence";
+    public const string OccurrenceRoute = AppRoutes.OccurrenceRoute;
 
     /// <summary>Route of backup and restore.</summary>
-    public const string BackupRoute = "backup";
+    public const string BackupRoute = AppRoutes.BackupRoute;
 
     /// <summary>Route of the monthly budget (a top tab of Insights).</summary>
-    public const string BudgetRoute = "//insights/budget";
+    public const string BudgetRoute = AppRoutes.BudgetRoute;
 
     /// <summary>Route of the budget editor (query: <c>year</c>, <c>month</c>, <c>calendar</c>, <c>currency</c>).</summary>
-    public const string BudgetEditorRoute = "budgeteditor";
+    public const string BudgetEditorRoute = AppRoutes.BudgetEditorRoute;
 
     /// <summary>Route of the reports (a top tab of Insights).</summary>
-    public const string ReportsRoute = "//insights/reports";
+    public const string ReportsRoute = AppRoutes.ReportsRoute;
 
     /// <summary>Route of the forecast (a top tab of Insights).</summary>
-    public const string ForecastRoute = "//insights/forecast";
+    public const string ForecastRoute = AppRoutes.ForecastRoute;
 
     /// <summary>Route of the manual exchange rates.</summary>
-    public const string RatesRoute = "rates";
+    public const string RatesRoute = AppRoutes.RatesRoute;
 
     /// <summary>Route of the Home customisation (§21.5).</summary>
-    public const string HomeLayoutRoute = "homelayout";
+    public const string HomeLayoutRoute = AppRoutes.HomeLayoutRoute;
 
     /// <summary>Route of the display units such as the toman (FX-07).</summary>
-    public const string DisplayUnitsRoute = "displayunits";
+    public const string DisplayUnitsRoute = AppRoutes.DisplayUnitsRoute;
 
     /// <summary>Route of the local profiles (§3).</summary>
-    public const string ProfilesRoute = "profiles";
+    public const string ProfilesRoute = AppRoutes.ProfilesRoute;
 
     /// <summary>Route of About Zanance (D-39).</summary>
-    public const string AboutRoute = "about";
+    public const string AboutRoute = AppRoutes.AboutRoute;
 
     /// <summary>Route of the full third-party notices.</summary>
-    public const string NoticesRoute = "notices";
+    public const string NoticesRoute = AppRoutes.NoticesRoute;
 
     /// <summary>Route of CSV import and export.</summary>
-    public const string ImportExportRoute = "importexport";
+    public const string ImportExportRoute = AppRoutes.ImportExportRoute;
 
     /// <summary>Route of the quick templates (TX-04).</summary>
-    public const string TemplatesRoute = "templates";
+    public const string TemplatesRoute = AppRoutes.TemplatesRoute;
 
     /// <summary>Route of the savings goals (F2-GOAL; a top tab of Insights).</summary>
-    public const string GoalsRoute = "//insights/goals";
+    public const string GoalsRoute = AppRoutes.GoalsRoute;
 
     /// <summary>Route of the goal editor.</summary>
-    public const string GoalEditorRoute = "goal";
+    public const string GoalEditorRoute = AppRoutes.GoalEditorRoute;
 
     /// <summary>Route of one goal.</summary>
-    public const string GoalDetailRoute = "goaldetail";
+    public const string GoalDetailRoute = AppRoutes.GoalDetailRoute;
 
     /// <summary>Route of the quantity holdings (ZEX phase 3; More &gt; Money).</summary>
-    public const string HoldingsRoute = "holdings";
+    public const string HoldingsRoute = AppRoutes.HoldingsRoute;
 
     /// <summary>Route of one asset type.</summary>
-    public const string HoldingDetailRoute = "holdingdetail";
+    public const string HoldingDetailRoute = AppRoutes.HoldingDetailRoute;
 
     /// <summary>Route of the asset type editor.</summary>
-    public const string AssetTypeEditorRoute = "assettype";
+    public const string AssetTypeEditorRoute = AppRoutes.AssetTypeEditorRoute;
 
     /// <summary>Route of the editor of one holding event (purchase, sale, move, correction ...).</summary>
-    public const string AssetEventEditorRoute = "assetevent";
+    public const string AssetEventEditorRoute = AppRoutes.AssetEventEditorRoute;
 
     /// <summary>Route of the explanation sheet of a KPI (ZEX-UI14).</summary>
-    public const string KpiSheetRoute = "kpi";
+    public const string KpiSheetRoute = AppRoutes.KpiSheetRoute;
 
     /// <summary>Route of the period-end review (ZEX-S0610).</summary>
-    public const string ReviewRoute = "review";
+    public const string ReviewRoute = AppRoutes.ReviewRoute;
 
     /// <summary>Route of a saved forecast compared with reality (ZEX-S0804).</summary>
-    public const string SnapshotRoute = "snapshot";
+    public const string SnapshotRoute = AppRoutes.SnapshotRoute;
 
     /// <summary>Route of the split editor (F2-TX-01).</summary>
-    public const string SplitRoute = "split";
+    public const string SplitRoute = AppRoutes.SplitRoute;
 
     /// <summary>Route of the estimated repayment schedule of a loan (F2-DEBT-02).</summary>
-    public const string LoanScheduleRoute = "loanschedule";
+    public const string LoanScheduleRoute = AppRoutes.LoanScheduleRoute;
 
     /// <summary>Route of the open reimbursements (F2-TX-03).</summary>
-    public const string ReimbursementsRoute = "reimbursements";
+    public const string ReimbursementsRoute = AppRoutes.ReimbursementsRoute;
 
     /// <summary>Route of the categorization rules (F2-TX-04).</summary>
-    public const string RulesRoute = "rules";
+    public const string RulesRoute = AppRoutes.RulesRoute;
 
     /// <summary>Route of the final settlement of advance payments (F2-CON-04).</summary>
-    public const string SettlementRoute = "settlement";
+    public const string SettlementRoute = AppRoutes.SettlementRoute;
 
     public AppShell()
     {

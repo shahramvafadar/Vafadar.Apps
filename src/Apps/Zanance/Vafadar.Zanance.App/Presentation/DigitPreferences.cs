@@ -7,7 +7,7 @@ namespace Vafadar.Zanance.App.Presentation;
 /// Applies portable digit-shape choices (D-67), retaining the legacy Persian-interface preference (D-27).
 /// Stored values, exports and input are not affected.
 /// </summary>
-internal static class DigitPreferences
+internal static partial class DigitPreferences
 {
     private const string Key = "ui.persian_digits";
 
@@ -37,20 +37,4 @@ internal static class DigitPreferences
         Changed?.Invoke(null, EventArgs.Empty);
     }
 
-    /// <summary>Applies the choice to the current language.</summary>
-    public static void Apply(ILocalizationService localization)
-    {
-        ArgumentNullException.ThrowIfNull(localization);
-        NativeDigits.PreserveSeparators = localization.FormattingCultureName is not null || localization.CurrentDigits != DigitStyle.LanguageDefault;
-        NativeDigits.IsEnabled = localization.CurrentDigits switch
-        {
-            DigitStyle.Persian => true,
-            DigitStyle.Latin => false,
-            _ => IsPersian(localization),
-        };
-    }
-
-    /// <summary>Returns whether the interface language is Persian.</summary>
-    public static bool IsPersian(ILocalizationService localization) =>
-        localization.CurrentCulture.TwoLetterISOLanguageName == "fa";
 }

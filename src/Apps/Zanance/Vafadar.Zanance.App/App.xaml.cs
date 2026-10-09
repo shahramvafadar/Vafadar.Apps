@@ -83,6 +83,11 @@ public partial class App : Application
         {
             window.Page = CreateShell();
             OfferNotificationsSoon();
+            if (_pendingLink is { } link)
+            {
+                _pendingLink = null;
+                Dispatcher.Dispatch(() => _ = Presentation.Failures.GuardAsync(() => OpenLinkAsync(link)));
+            }
         }
     }
 
@@ -183,27 +188,24 @@ public partial class App : Application
         Dispatcher.Dispatch(async () =>
         {
             await _services.GetRequiredService<AppLockService>().StartAsync();
-            await _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() =>
+            await _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
             {
                 if (_startupPage is { } page && Windows.FirstOrDefault() is { } window)
                 {
                     _startupPage = null;
                     window.Page = page;
                 }
-                return Task.CompletedTask;
+
+                // The startup PIN cover precedes the Shell: consume the link only after the real page is visible (D-73).
+                string? link = null;
+                if (Windows.FirstOrDefault()?.Page is AppShell)
+                {
+                    link = _pendingLink;
+                    _pendingLink = null;
+                    OfferNotificationsSoon();
+                }
+                return Task.FromResult(link);
             });
-
-            // A widget tap that started the app (D-30) opens its screen now that the shell exists.
-            if (_pendingLink is { } link)
-            {
-                _pendingLink = null;
-                OpenLink(link);
-            }
-
-            if (Windows.FirstOrDefault()?.Page is AppShell)
-            {
-                OfferNotificationsSoon();
-            }
         });
         RunForegroundWork(starting: true);
     }
@@ -270,7 +272,7 @@ public partial class App : Application
     {
         if (Current is App app && Shell.Current is not null)
         {
-            app.Dispatcher.Dispatch(() => app._services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => app.OpenLinkAsync(link)));
+            app.Dispatcher.Dispatch(() => app.OpenLinkAsync(link));
         }
         else
         {
@@ -279,53 +281,9 @@ public partial class App : Application
     }
 
     // A tapped reminder opens its occurrence; several taps or an old notification never record anything (REM-04, REM-06).
-    private void OnReminderTapped(object? sender, string link) => Dispatcher.Dispatch(() =>
-        _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => OpenLinkAsync(link)));
+    private void OnReminderTapped(object? sender, string link) => OpenLink(link);
 
-    private async Task OpenLinkAsync(string link)
-    {
-        var parts = link.Split('|');
-        if (Shell.Current is null)
-        {
-            return;
-        }
-
-        if (parts is ["occurrence", var plan, var date] && Guid.TryParse(plan, out var planId)
-            && DateOnly.TryParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var original))
-        {
-            await Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = planId, ["date"] = original });
-        }
-        else if (parts is ["plan", var id] && Guid.TryParse(id, out var scheduleId))
-        {
-            await Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = scheduleId });
-        }
-        else if (parts is ["plans"])
-        {
-            await Shell.Current.GoToAsync("//plans");
-        }
-        else if (parts is ["goal", var goal] && Guid.TryParse(goal, out var goalId))
-        {
-            await Shell.Current.GoToAsync(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = goalId });
-        }
-        else if (parts is ["goals"])
-        {
-            await Shell.Current.GoToAsync(AppShell.GoalsRoute);
-        }
-        else if (parts is ["budget"])
-        {
-            await Shell.Current.GoToAsync(AppShell.BudgetRoute);
-        }
-        else if (parts is ["review"])
-        {
-            // A delayed tap opens the currently due review; it never finishes an older period automatically.
-            await Shell.Current.GoToAsync(AppShell.ReviewRoute);
-        }
-        else if (parts is ["entry", var kind] && Enum.TryParse<Core.Ledger.EntryKind>(kind, out var entryKind)
-                 && entryKind is Core.Ledger.EntryKind.Expense or Core.Ledger.EntryKind.Income or Core.Ledger.EntryKind.Transfer)
-        {
-            await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = entryKind.ToString() });
-        }
-    }
+    private Task OpenLinkAsync(string link) => _services.GetRequiredService<AppLinkRouter>().OpenAsync(link);
 
     // Set while a theme change waits for the user to leave the open pages.
     private bool _rebuildWhenBackOnTab;

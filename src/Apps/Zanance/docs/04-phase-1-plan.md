@@ -90,3 +90,7 @@ permission, privacy and scheduling infrastructure. No Phase 1 ledger invariants 
 D-72 / LOC-04 completes the remaining aggregate-import overlap choices above the Phase 1 CSV pipeline. Explicit
 choices, atomic stale-preview checks and durable Undo use an additive ImportLinks table; no automatic merge or
 ledger invariant change. AT-79 local/emulator evidence and the phone/iOS gates live in the acceptance plan.
+
+D-73 / QA-03 adds regression coverage around implemented Phase 1 onboarding, profile switching, application access,
+widget/reminder navigation and theme policy. Explicit native ports keep actual flow sources testable without a MAUI
+UI dependency. AT-80 is local engineering/runtime evidence; owner phone, real OAuth and iOS acceptance stay open.

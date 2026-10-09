@@ -147,3 +147,17 @@ installs/cold-starts, displays the durable history and performs confirmed Undo. 
 Signed complete APK package/signature/ZIP/ABIs/assembly stores/AOT/Cloud permission guard pass; all five Debug
 diagnostic types are absent from Release. ARM64 phone and iOS acceptance remain open. No real profile or financial
 data, screenshot policy, system settings or physical phone was touched.
+
+## AT-80 - Application flows and command boundaries (D-73 / QA-03)
+
+The new application test project links actual non-UI sources and native-effect interfaces, with real SQLite and
+translations. Its 68 cases cover onboarding restore/retry/regional choices, exclusive profile isolation/rollback and
+owned deletion, bulk selection/copies/validation/transfer scope/dialog exclusion, startup/PIN/device recovery and
+missing/lost covers, strict widget/reminder routing, native-theme event policy and timed Undo. No MAUI control mocks
+or duplicate application algorithms. Main suite: 1,263 passed, zero skipped; see App.Tests/README.md for the case map.
+
+Runtime evidence: 522 application-window captures: en/fa/de, light/dark, 360x800, 412x892 and 1280x820 for the affected onboarding, settings/PIN, profiles and transaction screens; additional 412px startup/editor/theme checks after the final lifecycle change. Original development databases were restored with matching hashes. Existing API 36 x86_64 emulator: actual new-profile onboarding, wrong/correct fictitious PIN, cold widget drafts after unlocking in complete Debug and Release, native bulk tag/delete/Undo. The native startup test exposed pending widget navigation before the first real page; the fix passes new ordering tests and both installed variants. Opening a widget draft leaves the ledger unchanged. SQLite after Release Undo preserves the original expense identity, 1,234 minor units and QA03 tag, with no extra income. One initial Debug accessibility dump lacked the restored row although the database/day total were correct; immediate row restoration passed in Release and in a controlled Debug repeat. Its cause is unconfirmed; retain it in physical-device follow-up rather than claiming a separate fix. The fictitious emulator PIN was removed through Settings and the final Release reinstalled. Strict Windows and complete Android Debug/Release builds finish with zero warnings/errors; 1,263 tests pass, zero skipped. Signed Release handoff: artifacts/android/zanance-d73-release.apk, 81,074,261 bytes, SHA-256 75df49d16284bb6604cce740fd3b500ebd77789cfede0bfc0df850aa63fd10c3. Package pro.vafadar.zanance, min SDK 24/target 36, v2/v3 signature, ZIP integrity, ARM64/x86_64 assembly stores and AOT libraries verified; Cloud permission guard passes. FLAG_SECURE was unchanged; native checks use accessibility XML and only the isolated emulator, never attached physical phones.
+
+Physical phone, native OS credential UI, real-provider restore, iOS and production acceptance remain separate gates.
+The app access gate does not encrypt financial data. No existing owner profile, stored verifier or physical phone is
+used in application tests; the complete signed Release APK remains the required phone-test handoff.

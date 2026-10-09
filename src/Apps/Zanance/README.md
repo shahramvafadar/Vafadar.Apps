@@ -71,3 +71,7 @@ closes, following the selected calendar and month start day. Off by default; no 
 Aggregate CSV import (D-72): review each overlapping aggregate and choose linking or keeping both. Preview dates,
 amounts and the remaining total before saving. Linked imports retain safe Undo across restart and database backup;
 later changes or dependent imports require review. No automatic merging. See AT-79 for evidence and device gates.
+
+Application flow coverage (D-73 / QA-03): 68 AT-80 cases compile actual non-UI onboarding, profiles, bulk commands,
+access, widget/reminder routing and theme sources with explicit native ports and real isolated SQLite. The full
+main suite has 1,263 passing tests. Native runtime/physical-device evidence remains separate; no commercial limits.

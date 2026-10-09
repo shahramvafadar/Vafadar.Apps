@@ -99,3 +99,7 @@ Physical-device/Doze/reboot and iOS acceptance remain separate from implementati
 D-72 / ZCR-LOC-04 completes the ZEX-S0611 import follow-up locally/on the isolated emulator: explicit link/keep-both,
 new-detail-only reductions, persistent original identity/attachments and conflict-safe Undo across restart/backup.
 Main tests: 1,195. AT-79 and the canonical backlog retain physical-device/iOS acceptance separately.
+
+D-73 / ZCR-QA-03 adds actual application flow tests, including Phase 2 bulk commands, validation-safe snapshots and
+timed Undo. AT-80: 68 new cases; main suite 1,263. Ready-section delivery continues under D-69 with QA-04 next;
+owner product/licence/provider/release gates and physical-device/iOS acceptance remain separate.

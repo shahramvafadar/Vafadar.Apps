@@ -45,6 +45,7 @@
   <Folder Name="/test/" />
   <Folder Name="/test/Apps/" />
   <Folder Name="/test/Apps/Zanance/">
+    <Project Path="test/Apps/Zanance/Vafadar.Zanance.App.Tests/Vafadar.Zanance.App.Tests.csproj" />
     <Project Path="test/Apps/Zanance/Vafadar.Zanance.Core.Tests/Vafadar.Zanance.Core.Tests.csproj" />
     <Project Path="test/Apps/Zanance/Vafadar.Zanance.Data.Tests/Vafadar.Zanance.Data.Tests.csproj" />
     <Project Path="test/Apps/Zanance/Vafadar.Zanance.Reports.Tests/Vafadar.Zanance.Reports.Tests.csproj" />

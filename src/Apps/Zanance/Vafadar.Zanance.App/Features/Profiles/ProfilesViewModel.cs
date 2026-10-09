@@ -1,3 +1,4 @@
+using Vafadar.Zanance.App.Interaction;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,7 +15,7 @@ public sealed record ProfileRow(LocalProfile Profile, string Name, bool IsCurren
 /// Local profiles (§3): each one keeps its own data, settings, app lock and backups on this device. Opening a profile
 /// with the app lock asks for the device owner first.
 /// </summary>
-public sealed partial class ProfilesViewModel(ProfileService profiles, Translator translator) : ViewModelBase
+public sealed partial class ProfilesViewModel(ProfileService profiles, Translator translator, IAppInteraction interaction, IAppFlowHost host) : ViewModelBase
 {
     public ObservableCollection<ProfileRow> Profiles { get; } = [];
 
@@ -38,7 +39,7 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
     [RelayCommand]
     private async Task AddAsync()
     {
-        var name = await Shell.Current.DisplayPromptAsync(translator["Profile_Add"], translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], maxLength: ProfileService.MaxNameLength);
+        var name = await interaction.PromptAsync(translator["Profile_Add"], translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], maxLength: ProfileService.MaxNameLength);
         if (string.IsNullOrWhiteSpace(name))
         {
             return;
@@ -52,7 +53,7 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
 
         var profile = profiles.Create(name);
         await LoadAsync();
-        if (await Shell.Current.DisplayAlertAsync(translator["Profile_Add"], translator.Format("Profile_OpenNew", profiles.NameOf(profile)), translator["Profile_OpenAction"], translator["Common_Cancel"]))
+        if (await interaction.ConfirmAsync(translator["Profile_Add"], translator.Format("Profile_OpenNew", profiles.NameOf(profile)), translator["Profile_OpenAction"], translator["Common_Cancel"]))
         {
             await OpenProfileAsync(profile);
         }
@@ -65,14 +66,14 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
         var rename = translator["Profile_Rename"];
         var delete = translator["Common_Delete"];
         string[] actions = row.IsCurrent ? [rename] : row.Profile.IsMain ? [open, rename] : [open, rename, delete];
-        var choice = await Shell.Current.DisplayActionSheetAsync(row.Name, translator["Common_Cancel"], null, actions);
+        var choice = await interaction.ChooseAsync(row.Name, translator["Common_Cancel"], actions);
         if (choice == open)
         {
             await OpenProfileAsync(row.Profile);
         }
         else if (choice == rename)
         {
-            var name = await Shell.Current.DisplayPromptAsync(rename, translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], initialValue: row.Name, maxLength: ProfileService.MaxNameLength);
+            var name = await interaction.PromptAsync(rename, translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], initialValue: row.Name, maxLength: ProfileService.MaxNameLength);
             if (!string.IsNullOrWhiteSpace(name))
             {
                 if (IsTaken(name, row.Profile.Id))
@@ -88,8 +89,8 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
         else if (choice == delete)
         {
             // Two confirmations: the profile's data cannot be restored without a backup of it.
-            if (await Shell.Current.DisplayAlertAsync(translator["Profile_Delete"], translator.Format("Profile_DeleteMessage", row.Name), delete, translator["Common_Cancel"])
-                && await Shell.Current.DisplayAlertAsync(translator["Profile_Delete"], translator["Profile_DeleteFinal"], delete, translator["Common_Cancel"]))
+            if (await interaction.ConfirmAsync(translator["Profile_Delete"], translator.Format("Profile_DeleteMessage", row.Name), delete, translator["Common_Cancel"])
+                && await interaction.ConfirmAsync(translator["Profile_Delete"], translator["Profile_DeleteFinal"], delete, translator["Common_Cancel"]))
             {
                 profiles.Delete(row.Profile);
                 await LoadAsync();
@@ -114,6 +115,6 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
             return;
         }
 
-        (Application.Current as App)?.ShowCurrentProfile();
+        host.ShowCurrentProfile();
     }
 }

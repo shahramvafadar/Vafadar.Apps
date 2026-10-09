@@ -92,3 +92,8 @@ D-72 / LOC-04 device gate: use the complete signed APK to preview/link/keep over
 restart and Undo; exercise partial files, stale previews and dependent edits/imports with disposable data. Native
 API 36 x86_64 import and Release Undo are verified; ARM64 phone and iOS runtime remain open. Historical metadata in
 ImportLinks travels with database backups and is retained until its import is undone or profile/data deletion.
+
+D-73 / QA-03: AT-80 application tests cover actual non-UI flows, not native platform acceptance. On the owner's phone
+verify secure startup, widget drafts after unlocking, PIN/device confirmations, short/long background returns,
+profiles, bulk validation/delete/Undo and theme changes with unsaved input using the complete signed APK. No result
+from isolated SQLite, a native port double, the emulator or CI substitutes for those physical-device release checks.

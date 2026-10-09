@@ -2,6 +2,7 @@
   "solution": {
     "path": "Vafadar.Apps.slnx",
     "projects": [
+      "test\\Apps\\Zanance\\Vafadar.Zanance.App.Tests\\Vafadar.Zanance.App.Tests.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Core\\Vafadar.Zanance.Core.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Data\\Vafadar.Zanance.Data.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Reports\\Vafadar.Zanance.Reports.csproj",

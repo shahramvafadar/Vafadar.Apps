@@ -11,14 +11,15 @@ namespace Vafadar.Zanance.App.Security;
 /// notification is handled after unlocking (REM-06); export and backup ask again. The lock hides the app – it does not
 /// encrypt the database (SEC-03).
 /// </summary>
-public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceStore store, Translator translator, TimeProvider time, PinLock pin)
+public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceStore store, Translator translator, TimeProvider time, PinLock pin, IAppLockHost host)
 {
     // A short switch to another app (e.g. to copy an IBAN) does not ask again.
     private static readonly TimeSpan Grace = TimeSpan.FromSeconds(30);
 
     private readonly List<Func<Task>> _pending = [];
     private DateTimeOffset? _sleptAt;
-    private LockPage? _page;
+    private ILockCover? _page;
+    private bool _coverRequested;
     private bool _started;
 
     /// <summary>Gets a value indicating whether the lock is enabled.</summary>
@@ -37,12 +38,11 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     public PinLock Pin => pin;
 
     /// <summary>Resets a forgotten PIN after successful device authentication and an explicit removal confirmation.</summary>
-    internal async Task<bool> RecoverPinAsync(Page page)
+    internal async Task<bool> RecoverPinAsync()
     {
         var recovered = await pin.RecoverAsync(async () =>
             await authenticator.AuthenticateAsync(translator["Pin_ResetReason"]) == AuthenticationOutcome.Success
-            && await page.DisplayAlertAsync(translator["Pin_Setting"], translator["Pin_ResetConfirm"],
-                translator["Pin_Remove"], translator["Common_Cancel"]));
+            && await host.ConfirmRecoveryAsync());
         if (recovered) { PinUnavailable = false; }
         return recovered;
     }
@@ -51,7 +51,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     /// Gets a value indicating whether the app is covered – or has not read the lock setting yet, so that a link from a
     /// notification or the widget never opens a screen before the lock could cover it (REM-06).
     /// </summary>
-    public bool IsLocked => _page is not null || !_started;
+    public bool IsLocked => _coverRequested || _page is not null || !_started;
 
     /// <summary>Gets the authenticator.</summary>
     public IDeviceAuthenticator Authenticator => authenticator;
@@ -66,7 +66,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             PinUnavailable = true;
             // Do not log secure-storage exception payloads, which can contain protected values.
         }
-        ScreenProtection.Apply();
+        host.ApplyProtection();
         _started = true;
         if (IsEnabled)
         {
@@ -97,21 +97,23 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     /// <summary>Asks for authentication after a longer absence; a short one uncovers the app directly.</summary>
     public async Task ResumeAsync()
     {
-        ScreenProtection.Apply();
-        if (!IsEnabled || _page is null)
+        host.ApplyProtection();
+        if (!IsEnabled) { return; }
+        if (_page is null)
         {
+            if (_coverRequested) { await ShowAsync(prompt: true); }
             return;
         }
 
         // The cover may have been lost with a rebuilt window; put it back before asking.
-        if (!IsOnScreen(_page))
+        if (!_page.IsOnScreen)
         {
             _page = null;
             await ShowAsync(prompt: true);
             return;
         }
 
-        if (_sleptAt is { } slept && time.GetUtcNow() - slept < Grace && !_page.WasLockedBeforeSleep)
+        if (_sleptAt is { } slept && time.GetUtcNow() - slept is var elapsed && elapsed >= TimeSpan.Zero && elapsed < Grace && !_page.WasLockedBeforeSleep)
         {
             await UnlockedAsync();
         }
@@ -127,11 +129,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         if (PinUnavailable) { return false; }
         if (!IsEnabled) { return true; }
         if (!PinEnabled) { return await authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success; }
-        if (Application.Current?.Windows.FirstOrDefault()?.Page is not { } root) { return false; }
-        var completion = new TaskCompletionSource<bool>();
-        var page = new LockPage(this, translator, promptOnAppearing: false, completion, reason);
-        await root.Navigation.PushModalAsync(page, animated: false);
-        return await completion.Task;
+        return await host.ConfirmPinAsync(this, reason);
     }
 
     /// <summary>Runs <paramref name="action"/> now, or after unlocking when the app is covered (REM-06).</summary>
@@ -164,7 +162,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         settings.AppLockEnabled = enabled;
         await store.SaveSettingsAsync(settings);
         DeviceLockEnabled = enabled;
-        ScreenProtection.Apply();
+        host.ApplyProtection();
         return DeviceLockEnabled;
     }
 
@@ -173,10 +171,11 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         if (_page is { } page)
         {
+            await page.CloseAsync();
             _page = null;
-            await page.Navigation.PopModalAsync(animated: false);
         }
 
+        _coverRequested = false;
         _sleptAt = null;
         await RunPendingAsync();
     }
@@ -206,17 +205,11 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
     }
 
-    private static bool IsOnScreen(Page page) =>
-        Application.Current?.Windows.FirstOrDefault()?.Page?.Navigation.ModalStack.Contains(page) == true;
-
     private async Task ShowAsync(bool prompt)
     {
-        if (Application.Current?.Windows.FirstOrDefault()?.Page is not { } root)
-        {
-            return;
-        }
-
-        if (_page is not null && !IsOnScreen(_page))
+        // A missing/rebuilt window must not turn a requested lock into an unlocked application.
+        _coverRequested = true;
+        if (_page is not null && !_page.IsOnScreen)
         {
             _page = null;
         }
@@ -232,8 +225,8 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             return;
         }
 
-        _page = new LockPage(this, translator, promptOnAppearing: prompt);
-        await root.Navigation.PushModalAsync(_page, animated: false);
+        _page = host.CreateCover(this, prompt);
+        if (_page is { } cover) { await cover.ShowAsync(); }
     }
 
 }

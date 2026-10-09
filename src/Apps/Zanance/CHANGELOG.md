@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Secure startup and command boundaries (2026-10-09, D-73)
+
+- A widget tap from a stopped app opens its transaction draft after unlocking, once the main page is ready.
+- Cancelled or rejected bulk edits keep the loaded rows and selection; other bulk actions wait for the dialog.
+- A delayed Undo tap cannot write after its eight-second window. Turning the clock back does not extend Undo or lock grace.
+- Invalid profile identities and unsupported links are rejected before opening a file or page.
+- Add 68 regression cases for the actual onboarding, profiles, bulk, app lock, links, theme and Undo flows.
+
 ### Added - Aggregate choices during import (2026-10-09, D-72)
 
 - Review each overlapping aggregate before importing: link the details and reduce the aggregate, or keep both.

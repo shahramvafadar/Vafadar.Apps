@@ -69,11 +69,18 @@ public static class MauiProgram
                 services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(), "display-settings.json", Vafadar.Localization.LocalizationService.PortableKeys))
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
+            .AddSingleton<Interaction.MauiAppInteraction>()
+            .AddSingleton<Interaction.IAppInteraction>(s => s.GetRequiredService<Interaction.MauiAppInteraction>())
+            .AddSingleton<Interaction.IAppFlowHost>(s => s.GetRequiredService<Interaction.MauiAppInteraction>())
+            .AddSingleton<Presentation.IThemeHost, Presentation.MauiThemeHost>()
             .AddSingleton<Presentation.ThemeService>()
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
+            .AddSingleton<IAppLockHost, MauiAppLockHost>()
             .AddSingleton<AppLockService>()
+            .AddSingleton<AppLinkRouter>()
             .AddSingleton<Vafadar.Zanance.Core.Security.IPinStorage, SecurePinStorage>()
             .AddSingleton<Vafadar.Zanance.Core.Security.PinLock>()
+            .AddSingleton<Profiles.IProfileRuntime, Profiles.MauiProfileRuntime>()
             .AddSingleton<Profiles.ProfileService>();
 
 #if IOS

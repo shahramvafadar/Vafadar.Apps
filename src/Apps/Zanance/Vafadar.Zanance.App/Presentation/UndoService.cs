@@ -17,7 +17,8 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     public event EventHandler? Changed;
 
     /// <summary>Gets a value indicating whether an undo is currently offered.</summary>
-    public bool CanUndo => (_deleted.Count > 0 || _action is not null) && time.GetUtcNow() - _deletedAt < Window;
+    public bool CanUndo => (_deleted.Count > 0 || _action is not null)
+        && time.GetUtcNow() - _deletedAt is var elapsed && elapsed >= TimeSpan.Zero && elapsed < Window;
 
     /// <summary>Gets how long the offer is still valid.</summary>
     public TimeSpan Remaining => CanUndo ? Window - (time.GetUtcNow() - _deletedAt) : TimeSpan.Zero;
@@ -54,6 +55,9 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     /// <summary>Restores the deleted entries.</summary>
     public async Task UndoAsync()
     {
+        // The command can arrive after the visible offer expired; enforce the window at the write boundary.
+        if (!CanUndo) { Dismiss(); return; }
+
         var entries = _deleted;
         var action = _action;
         _deleted = [];

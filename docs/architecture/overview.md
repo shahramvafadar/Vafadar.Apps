@@ -223,3 +223,16 @@ by Dependabot.
 
 Mac Catalyst is deliberately not targeted; it can be added to `VafadarMauiTargetFrameworks` in
 `Directory.Build.props` if ever needed.
+
+## Testable application flows (D-73 / QA-03)
+
+Zanance keeps native UI effects behind application ports: IAppInteraction/IAppFlowHost for dialogs/navigation and
+root changes, IAppLockHost/ILockCover for native covers, IThemeHost for platform/palette updates and IProfileRuntime
+for exclusive migration/authentication/lock reload. MAUI adapters remain in the app and are composed by MauiProgram.
+No Core dependency on UI or infrastructure is introduced, and apps still never reference other apps.
+
+Vafadar.Zanance.App.Tests explicitly compiles actual non-UI source links, the pure ViewModelBase and managed icon
+names, with real isolated data/localization and fake native-effect ports. It never references the MAUI app project or
+reimplements its algorithms. BulkTransactionsViewModel owns selection and write decisions; the existing transaction
+view model forwards its bindings and commands. Shell aliases AppRoutes so routing constants have one source of truth.
+Native adapters and rendering still require running-app/device evidence, separate from this executable test project.

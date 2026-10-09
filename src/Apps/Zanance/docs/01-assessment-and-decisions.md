@@ -319,3 +319,28 @@ f808c28b887482b7ccec307f263c10a9ce380101eacd483605286512369a78ea; package pro.va
 0.1.0/code 1, min 24/target 36, arm64-v8a/x86_64, embedded assembly stores/app AOT, v2/v3 signatures, ZIP integrity
 and Cloud permission guard pass. Native cold activity reading is 4.945 s, a single observation rather than a benchmark.
 ARM64 phone, iOS runtime and production acceptance remain open; manual editor behaviour remains its separate baseline.
+
+## D-73 - Application flow tests through explicit native ports (2026-10-09)
+
+Complete ZCR-QA-03 under D-69. Add Vafadar.Zanance.App.Tests to the solution and non-MAUI test filter. Compile the
+actual platform-independent application sources through explicit links; no substitute MAUI types, duplicate
+algorithms or new application layer. Keep native modal pages/navigation, theme application, profile migration and
+OS authentication in adapters registered by the existing MAUI composition root. Tests use real SQLite, migrations,
+resource translations, localization, command implementations and the Core PIN verifier with isolated native ports.
+FluentIcons.Common is a managed enum dependency already shipped transitively; centralize the same 2.1.341 version.
+
+Extract bulk selection/writes so the actual transaction screen delegates to the tested flow. Clone selected records
+before edits: rejected saves preserve loaded snapshots. Freeze selection and cross-command actions during a dialog.
+Enforce the eight-second Undo window at the command write boundary, including a delayed tap or backwards clock.
+Require catalogue GUID identities before forming a profile path; retain migration/authentication rollback and owned
+file deletion. Keep the access gate closed when no native window exists or removing its cover fails. A backwards
+clock cannot grant the 30-second short-absence grace. Keep existing device-only recovery behavior distinct from the
+PIN gate, which never accepts NotAvailable. Route widgets/reminders through typed, supported destinations after
+secure startup/unlock and only after the first real page is visible; reject malformed, empty-identity and numeric-kind links without navigation or ledger writes.
+Theme policy subscribes once, rejects invalid choices and suppresses native-event reentrancy; open forms stay intact.
+
+AT-80 adds 68 cases: onboarding 6, profiles 7, bulk 11, app access 13, widget/reminder links 21, theme 6, Undo 4.
+All 1,263 main tests pass with no skips; strict Windows/Android builds and runtime evidence are recorded in AT-80.
+No schema, portable preference allowlist, credential persistence, SDK, permission, commercial enforcement or
+production encryption changes. Fictitious native/runtime evidence is separate from physical ARM64, real provider,
+iOS, store and product acceptance. The next independent ready section is QA-04, asset-account confirmation tests.

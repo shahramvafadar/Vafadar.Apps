@@ -322,3 +322,16 @@ two selected aggregates shows a real conflict. The duplicate switch recomputes t
 Refresh preview is available for own and mapped CSV files. Stale data requires a fresh preview; no reduction happens
 silently. Inline Undo conflicts belong next to import history and preserve later edits; successful Undo restores
 previous aggregates and discards the now-stale preview. Nothing is saved while opening or previewing a file.
+
+## Application flow safety (D-73 / QA-03)
+
+Dialog cancellation preserves the current draft and selected rows. Bulk writes use independent snapshots; a rejected
+save must not optimistically change the visible review, tags or category. Keep selection stable while a bulk dialog
+is pending and refuse other bulk commands until it finishes. Undo accepts a tap only during its displayed eight-second
+window; a delayed tap cannot restore deleted money. A backwards clock never extends Undo or grants lock grace.
+
+Startup links wait until secure state is read. A missing/rebuilt window or failed cover removal keeps them gated.
+Supported widget entry links open drafts only; reminder identity and original date remain typed navigation arguments.
+Neither a repeated tap nor a malformed link posts money or completes a review. Native theme callbacks must not recurse
+into palette rebuilding; changing theme keeps an open editor and its values. Existing translated labels and controls
+are unchanged; explicit native ports allow the actual flow to be tested separately from rendered/platform behavior.

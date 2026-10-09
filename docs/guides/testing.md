@@ -48,3 +48,15 @@ Some tests protect the repository as a whole:
 
 MAUI pages and platform code. Keep logic out of code-behind and view models thin, so that almost everything worth
 testing lives in `Core`, `Data` or a library. UI automation can be added later if needed.
+
+## Application flow project (D-73 / QA-03)
+
+Vafadar.Zanance.App.Tests is in Vafadar.Tests.slnf. It links actual platform-independent application source files and
+resource files, with explicit dialog/window/theme/profile ports and real SQLite, commands and PIN verification.
+It has no MAUI project reference and never creates fake Shell/Application/Page classes. FluentIcons.Common supplies
+the same managed icon enum as the app. See test/Apps/Zanance/Vafadar.Zanance.App.Tests/README.md for the 68-case map.
+
+Tests isolate fictitious profiles/verifiers/preferences and injected time; assembly parallelization is disabled for
+process-wide culture/digits. Native adapters, rendering, Intent delivery, OS credentials and SecureStorage remain
+running-app/device checks. Preserve the linked-source approach when extending existing flows; never duplicate an
+algorithm merely to test a copy. Run the CI-policy test filter and clean outputs after verification.

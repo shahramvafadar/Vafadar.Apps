@@ -1,3 +1,4 @@
+using Vafadar.Zanance.App.Interaction;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
@@ -23,16 +24,20 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly Translator _translator;
     private readonly Presentation.ThemeService _theme;
+    private readonly IAppInteraction _interaction;
+    private readonly IAppFlowHost _host;
     private bool _refreshing;
     private Account? _firstAccount;
 
     public OnboardingViewModel(ZananceStore store, ILocalizationService localization, Translator translator, TimeProvider time,
-        Presentation.ThemeService theme)
+        Presentation.ThemeService theme, IAppInteraction interaction, IAppFlowHost host)
     {
         _store = store;
         _localization = localization;
         _translator = translator;
         _theme = theme;
+        _interaction = interaction;
+        _host = host;
         Regional = new(localization, translator, time);
         ThemeIndex = (int)theme.Choice;
         Account = new AccountFormModel(translator, time);
@@ -99,7 +104,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
     /// <summary>Opens restore without creating an account or saving the draft profile preferences.</summary>
     [RelayCommand]
-    private Task RestoreBackupAsync() => Application.Current is App app ? app.ShowOnboardingRestoreAsync() : Task.CompletedTask;
+    private Task RestoreBackupAsync() => _host.RestoreOnboardingAsync();
 
     public bool IsStep1 => Step == 1;
 
@@ -201,18 +206,14 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             // The input stays; Finish can be tapped again.
-            await Presentation.Failures.ShowAsync(ex);
+            await _interaction.ShowFailureAsync(ex);
         }
         finally
         {
             IsBusy = false;
         }
 
-        if (completed && Application.Current is App app)
-        {
-            // Finish the form's layout updates before Windows disconnects its visual tree (D-62).
-            app.Dispatcher.Dispatch(app.ShowMainShell);
-        }
+        if (completed) { _host.CompleteOnboarding(); }
     }
 
     private void Refresh()
