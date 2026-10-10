@@ -41,6 +41,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileRuntime.cs" Link="Application/IProfileRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/BulkTransactionsViewModel.cs" Link="Application/BulkTransactionsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/UndoService.cs" Link="Application/UndoService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/TransactionUndoViewModel.cs" Link="Application/TransactionUndoViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotLoadState.cs" Link="Application/SnapshotLoadState.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotCollection.cs" Link="Application/SnapshotCollection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotProjectionCache.cs" Link="Application/SnapshotProjectionCache.cs" />

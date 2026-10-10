@@ -292,3 +292,11 @@ complete rows on failure and emit Changed only after actual commit. Independent 
 reads. App retry keeps its original deadline/version; replacement/dismissal and concurrent taps remain safe.
 Registration inactive; selected read-only data, automation and other paths remain open:
 [evidence](../../quality/ledger-undo-write-policy.md).
+
+## 18. Actual transaction Undo command feedback (D-128)
+
+TransactionUndoViewModel owns the existing notice's real AsyncRelayCommand, UndoService and refresh callback.
+The existing IAppInteraction port supplies native failure feedback; no fake MAUI control or duplicated application
+algorithm is compiled in tests. One execution includes action, refresh and dialog. Non-fatal exceptions remain in
+that boundary; a failed action does not refresh and a committed action is never reoffered after refresh failure.
+No commercial grant/activation, schema, SDK or permission change. [Evidence](../../quality/transaction-undo-feedback.md).

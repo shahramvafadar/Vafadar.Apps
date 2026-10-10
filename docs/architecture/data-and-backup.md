@@ -340,3 +340,10 @@ refund links, occurrence states and paid totals commit together after cached rec
 Receipts retain the existing orphan/startup-purge policy. This short offer is not a durable journal or portable
 format change. Plain row enumerables restore rows without implicit refund links. No schema, SDK or permission
 change: [evidence](../../src/Apps/Zanance/docs/quality/ledger-undo-write-policy.md).
+
+D-128 binds the actual transaction notice to a guarded command. Failed Undo reports through existing native
+feedback, retains the original deadline and makes no list refresh. Successful Undo followed by a failed refresh
+does not reoffer the committed operation. Real application-command SQLite tests compare all 24 tables through
+failure and retry; installed Release verifies the failure dialog with unchanged committed deletion and receipts.
+No schema, migration, compiled model, SDK, permission or portable-format change:
+[evidence](../../src/Apps/Zanance/docs/quality/transaction-undo-feedback.md).

@@ -706,3 +706,15 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * The app permits one Undo at a time. Failure keeps the original eight-second deadline; success clears only its
   own offer. Completion never dismisses a replacement or revives a dismissed offer. No schema/portable paid facts
   or activation changes. Selected read-only data, automation and other ENT-02/03/04 paths remain unfinished.
+
+## 60. Guarded native transaction Undo (D-128)
+
+* The existing transaction notice binds the actual TransactionUndoViewModel command. Keep action, refresh and
+  native failure feedback inside one execution guard, with no second invocation while a dialog is pending.
+* Non-fatal Undo or list-refresh failures use IAppInteraction and the existing translated generic message. Refresh
+  only after Undo returns successfully; a failed action retains its original offer/deadline. A refresh failure after
+  commit never recreates the consumed offer. OutOfMemoryException propagates; execution guards always release.
+* Compile the actual bound command in application tests with explicit native-effect ports and isolated SQLite.
+  Review installed Release failure dialogs using a trigger only in the exact owned fictitious sample database;
+  retain complete row/receipt comparisons and restore original bytes/display choices. No production fault switch.
+* Later refund edits during Undo, visible ledger Save feedback and remaining commercial paths stay unfinished.

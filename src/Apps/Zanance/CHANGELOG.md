@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Undo failure feedback (2026-10-10, D-128)
+
+- Show the normal translated error message when Undo fails and keep retry within its original deadline.
+- Prevent another Undo while its error message or list refresh is still pending.
+- Keep a committed Undo completed even if the following list reload fails. Test-build limits remain inactive.
+
 ### Fixed - Retry-safe deletion and Undo (2026-10-10, D-127)
 
 - Keep purchase/refund relationships after an Undo fails so a retry restores them correctly.

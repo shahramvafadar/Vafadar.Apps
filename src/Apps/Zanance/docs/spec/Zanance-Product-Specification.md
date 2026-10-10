@@ -1810,3 +1810,13 @@ policy. App offers keep the original eight-second deadline, prevent duplicate ta
 38 added cases/main 1,945 pass; App.Tests 308. No schema, SDK, permission, caption/layout, paid portable facts or
 activation changes. Selected read-only data, automation and remaining ENT-02/03/04 stay unfinished:
 [evidence](../quality/ledger-undo-write-policy.md).
+
+### 31.41. Native transaction Undo failure feedback (D-128 / AT-130)
+
+The unchanged notice binds the actual command through IAppInteraction. Non-fatal Undo/refresh exceptions are
+reported by the existing translated dialog instead of escaping native command dispatch. The command includes
+feedback in its execution lifetime. Failed Undo keeps the original deadline without refreshing; successful write
+followed by failed refresh never revives the consumed offer. Nine added cases/main 1,954 pass, App.Tests 317.
+Strict builds/full signed APK and six installed Release language/theme failure flows:
+[evidence](../quality/transaction-undo-feedback.md). No schema, SDK, permission, caption/layout or activation changes.
+Later refund edits during Undo, visible ledger Save feedback and remaining commercial/external gates remain open.

@@ -36,6 +36,7 @@ public sealed record AccountFilterOption(Guid? Id, string Name)
 public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private readonly ZananceStore _store;
+    private readonly TransactionUndoViewModel _undoAction;
     private int _startDay = 1;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
@@ -80,6 +81,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _dates = dates;
         _time = time;
         Undo = undo;
+        _undoAction = new TransactionUndoViewModel(undo, interaction, LoadAsync);
         _bulk = new BulkTransactionsViewModel(store, translator, interaction, undo, async () => { await LoadAsync(); UpdateUndo(); });
         _bulk.Changed += (_, _) => SynchronizeSelection();
         SearchText = string.Empty;
@@ -605,10 +607,6 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         ScopeNote = null;
     }
 
-    [RelayCommand]
-    private async Task UndoDeleteAsync()
-    {
-        await Undo.UndoAsync();
-        await LoadAsync();
-    }
+    /// <summary>Gets the guarded Undo command bound by the existing transaction notice.</summary>
+    public IAsyncRelayCommand UndoDeleteCommand => _undoAction.UndoDeleteCommand;
 }

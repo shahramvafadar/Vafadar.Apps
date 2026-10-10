@@ -334,3 +334,9 @@ D-127 continues ENT-02 with actual-file ledger Delete/Undo, explicit file-bound 
 retry-safe application offers. 38 added cases/main 1,945 pass; App.Tests 308. Receipt orphan/purge behavior stays
 unchanged, without extra byte copies. Registration inactive; selected read-only data, automation, commercial
 feedback and remaining ENT-02/03/04 paths remain open: [quality evidence](quality/ledger-undo-write-policy.md).
+
+D-128 reports actual transaction Undo/refresh failures through the existing translated dialog, preserving the
+original retry deadline and blocking repeated invocation through pending feedback. Nine added actual-command cases;
+main 1,954 / App.Tests 317 pass. Six normal installed Release failure flows retain committed financial data and
+receipt bytes. No activation changes. Later refund edits during Undo and visible ledger Save feedback remain open:
+[quality evidence](quality/transaction-undo-feedback.md).

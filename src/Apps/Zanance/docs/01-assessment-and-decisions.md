@@ -1174,3 +1174,21 @@ leave the service in progress. 38 added AT-129 cases (29 Data, 9 actual app flow
 No schema, SDK, permission, visible caption/layout, portable entitlement or activation change. Strict platforms,
 full signed APK and normal Release deletion/Undo evidence: [ledger-undo-write-policy.md](quality/ledger-undo-write-policy.md).
 Selected read-only data, automation, native commercial feedback and remaining ENT-02/03/04 stay unfinished.
+
+## D-128 - Report native Undo failure without losing its offer (2026-10-10)
+
+Actual TransactionsViewModel.UndoDeleteAsync awaited Undo and Load without a failure guard. Extract that exact
+bound command into TransactionUndoViewModel through the existing IAppInteraction port; a regression demonstrates
+the exception escaping command dispatch. Non-fatal failures now reach the existing translated error dialog.
+Serialize action, refresh and failure feedback together; explicit duplicate invocation during a dialog does nothing.
+Refresh follows successful Undo only. Preserve the original UndoService offer/deadline after failure, without
+renewing it or reviving an offer already consumed by a successful write whose refresh later fails. Fatal memory
+failures propagate and all execution guards release.
+
+Nine added AT-130 actual-command cases pass; main 1,954 / App.Tests 317. Real SQLite failure keeps all 24 tables
+unchanged; retry restores financial metadata, refund links and retained receipts, with expected auditing normalized.
+Signed installed Release dialogs are checked in en/fa/de, light/dark on the owned emulator with a fictitious SQLite
+trigger; actual dismissal and navigation remain responsive. Restore exact original database bytes and original
+English/theme choices. No production fault switch, schema, permission, SDK, caption/layout or activation change.
+[Evidence](quality/transaction-undo-feedback.md). Later refund edits during an outstanding Undo and D-126
+bottom-of-form SaveError remain separate follow-ups.

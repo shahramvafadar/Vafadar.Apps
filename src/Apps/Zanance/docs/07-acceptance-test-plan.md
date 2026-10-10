@@ -818,3 +818,12 @@ four derived occurrence failures. Nine actual app-source cases cover failed-acti
 failure with replacement or dismissal, double taps, expired failure, observer failure and actual SQLite refund Undo
 failure/retry. Main 1,945 pass, App.Tests 308. Strict platforms/full signed APK and actual Release flow:
 [evidence](quality/ledger-undo-write-policy.md). Other ENT-02/03/04 and external acceptance remain open.
+
+## AT-130 - Actual bound Undo command failure and native feedback (D-128)
+
+Nine added application cases: original failure/offer/no refresh; success; duplicate invocation during action and
+refresh; pending failure dialog with replacement; post-commit refresh failure; expiry; fatal memory propagation/
+guard recovery; real SQLite failed Undo and complete refund/receipt retry with all 24 tables compared. Main 1,954,
+App.Tests 317 pass. Strict Windows/Android, full signed APK and actual installed en/fa/de light/dark failure dialog,
+dismissal/navigation and unchanged committed deletion: [evidence](quality/transaction-undo-feedback.md).
+Native retry within the short deadline, phone/iOS and other commercial paths are not inferred from these checks.

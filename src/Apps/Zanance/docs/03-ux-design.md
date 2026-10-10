@@ -715,3 +715,10 @@ within the original remaining time. Never extend the deadline, restore a dismiss
 when an older action completes. Returned deletion data belongs to the original profile. Existing receipt rows
 remain available through Undo. No test-build commercial limit is activated. D-126's bottom-of-form SaveError
 visibility remains a separate observed UX follow-up, not resolved by this slice.
+
+## Native Undo failure feedback (D-128)
+
+An unsuccessful Undo shows the existing translated generic error dialog and preserves its original short offer.
+Keep the actual command disabled through native feedback and list refresh; repeated invocation cannot execute a
+replacement offer while a dialog is open. Refresh only after successful Undo. A failed list reload after the
+write never reoffers an already committed Undo. D-126's visible ledger Save feedback remains open.
