@@ -432,3 +432,7 @@ route, reviews native scope/date/category glyphs and Clear targets using native 
 and native Clear, then restores the complete query and stored/result values (D-108 / AT-113). Preserve original
 development files and distinguish process-local stress from real OS/device acceptance. Final evidence is recorded
 in src/Apps/Zanance/docs/quality/transaction-scope-readable.md.
+
+The Windows Debug transactions-saved-scope route compares real native named-filter invocation before and after
+independent fictitious report scopes, retaining complete stored data. It prepares only its own missing unreviewed
+fixture before the comparison; reviewed actions do not save money. Normal device acceptance remains separate.

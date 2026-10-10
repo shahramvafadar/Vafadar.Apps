@@ -650,3 +650,13 @@ Final 21 contexts/1615 own-window renders, 63 complete scope captions/Clear targ
 result-scroll/Clear/query-restoration checks pass. Main suite 1,512 (App.Tests 276), strict builds, actual normal
 Release Reports/Transactions/Clear, exact 24-table comparisons in three fictitious profiles and signed APK pass:
 [quality/transaction-scope-readable.md](quality/transaction-scope-readable.md).
+
+## AT-114 - Independent saved filters after report scopes (D-109)
+
+Invoke the same real named filter before and after independent currency, account-set and confirmed-only report
+restrictions. Each report must change its fictitious result; the native saved action must restore identical complete
+rows and remove the old scope note. Compare complete Settings/Accounts/Entries/SavedFilters after every action.
+The unreviewed fixture belongs only to the explicit Debug route, prepared before the checkpoint. Original developer
+files are restored with matching hashes. Six native contexts/18 independent report restrictions, main 1,512
+tests (App.Tests 276), strict builds, actual Release named-filter/report application, exact original-data readbacks
+and signed APK pass: [saved-filter-report-scope.md](quality/saved-filter-report-scope.md).

@@ -534,6 +534,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _loading = true;
         try
         {
+            // D-109: a named filter replaces the combination; unrelated report-only scope must not restrict it.
+            ClearReportScopeCore();
             if (filter.HasCustomRange)
             {
                 _customPeriod = (filter.From!.Value, filter.To!.Value);
@@ -584,11 +586,17 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _loading = loading;
         _categoryIds = null;
         _inTotalsOnly = false;
+        ClearReportScopeCore();
+        CategoryFilterName = null;
+    }
+
+    /// <summary>Removes transient report restrictions without changing the current named/category/date filters.</summary>
+    private void ClearReportScopeCore()
+    {
         _currency = null;
         _scopeAccounts = null;
         _confirmedOnly = false;
         ScopeNote = null;
-        CategoryFilterName = null;
     }
 
     [RelayCommand]

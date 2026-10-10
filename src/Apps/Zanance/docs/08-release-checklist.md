@@ -298,3 +298,8 @@ D-108 / AT-113 addresses actual clipped report-scope captions/off-page Clear act
 result at large text. Final 21 Windows native contexts, main 1,512 tests (App.Tests 276), strict builds, actual
 normal Release report/navigation/Clear, exact original-data readbacks and complete signed D-108 APK pass: [transaction-scope-readable.md](quality/transaction-scope-readable.md). A11Y-03 and independent
 platform/OS/readers/device/owner/release gates remain open; continue ready work under D-69.
+
+D-109 / AT-114 fixes observed inheritance of unrelated report scope when applying a named transaction filter.
+Preserve the saved combination and complete financial data. Final six native contexts/18 independent report
+restrictions, main 1,512 tests, strict builds, normal Release, exact original-data readbacks and signed APK pass:
+[quality/saved-filter-report-scope.md](quality/saved-filter-report-scope.md). Provider/device/iOS and owner gates remain open.

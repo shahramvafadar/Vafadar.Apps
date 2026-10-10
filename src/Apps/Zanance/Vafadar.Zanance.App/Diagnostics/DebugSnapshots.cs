@@ -357,6 +357,7 @@ internal static partial class DebugSnapshots
             ("home", "//home", null),
             ("transactions", "//transactions", null),
             ("transactions-filters", "//transactions", null),
+            ("transactions-saved-scope", "//transactions", null),
             ("transactions-scope", "//transactions", new()
             {
                 ["from"] = filterReviewDate.AddDays(-30), ["to"] = filterReviewDate, ["kind"] = Core.Ledger.KindFilter.Expenses,
@@ -505,6 +506,10 @@ internal static partial class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "transactions-saved-scope" && Shell.Current.CurrentPage is Features.Transactions.TransactionsPage savedScopePage)
+                {
+                    await ReviewSavedFilterScopeAsync(app, services, savedScopePage, folder, language);
+                }
                 if (name == "transactions-scope" && Shell.Current.CurrentPage is Features.Transactions.TransactionsPage scopePage)
                 {
                     await ReviewTransactionScopeAsync(app, services, scopePage, folder, language, scopeReviewQuery!);

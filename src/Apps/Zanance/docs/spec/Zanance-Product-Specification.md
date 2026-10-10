@@ -1482,6 +1482,14 @@ report navigation/Clear, exact original-data readbacks and signed D-108 APK pass
 [quality/transaction-scope-readable.md](../quality/transaction-scope-readable.md).
 A11Y-03 and independent platform/OS/readers/device/owner/release gates remain open.
 
+### 31.25. Independent saved transaction filters (D-109 / AT-114, locally verified)
+
+Applying a named filter after report navigation clears unrelated transient report currency, account-set,
+confirmed-only and scope-note restrictions. Preserve every existing saved choice and ledger value; no schema or
+portable model change. Final six native contexts/18 independent restrictions, main 1,512 tests (App.Tests 276),
+strict builds, actual Release named-filter/report application, exact original-data readbacks and signed D-109 APK pass:
+[quality/saved-filter-report-scope.md](../quality/saved-filter-report-scope.md). Platform/owner gates remain open.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

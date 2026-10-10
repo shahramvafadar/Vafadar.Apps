@@ -602,3 +602,9 @@ Scope, category and custom-period captions wrap inside the available width with 
 The original complete filter form scrolls vertically when it exceeds its actual available space. Its height accounts
 for current Add/bulk/Undo docks and reserves up to 144 logical units for results; native typography is never shrunk.
 Keep the existing horizontal filter choices and complete result/order/totals. Clearing changes the current view only.
+
+### Independent named filters (D-109)
+
+Applying a saved filter replaces the persisted combination independently of the report opened before it. Remove
+the old report's scope caption and transient currency/account-set/confirmed-only restrictions; preserve all named
+filter choices. Never show an old report label over a new filter's result. Applying a view does not save money.

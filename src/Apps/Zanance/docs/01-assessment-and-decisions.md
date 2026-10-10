@@ -886,3 +886,21 @@ files return with exact hashes. Normal signed Release follows the actual Reports
 the owned emulator without preference, security or financial writes; all 24 tables in each of three fictitious
 profiles are exactly unchanged. Complete signed D-108 APK verified.
 Evidence: [quality/transaction-scope-readable.md](quality/transaction-scope-readable.md).
+
+## D-109 - Independent named filters after report navigation (2026-10-10)
+
+Native reproduction shows the same nonempty saved Food filter becomes empty after a USD/confirmed report query;
+the old scope caption also remains. Applying a saved filter must restore its persisted combination independently
+of a previous report. Share the existing transient report reset with Clear, preserving every saved field and
+without adding report-only fields to the schema or backups. AT-114 compares actual native actions/results before
+and after independent report restrictions, complete stored data and original-file restoration.
+Final six native Windows contexts (en/fa/de, light/dark, normal text/360) pass all 18 independent report
+restrictions, with 234 own-window renders, identical complete saved-filter results, removed old scope
+notes and unchanged complete stored rows. Every original developer database/WAL/SHM file returns with matching
+hashes. Main suite: 1,512 passed, zero failed/skipped (App.Tests 276); strict Windows and canonical complete Android
+Debug/Release builds pass without errors/warnings. Normal signed Release on the owned emulator creates a named
+filter through the actual menu, follows Reports -> Transactions, applies that native filter and removes only its
+fictitious saved-filter record. Original three transaction rows return and all 24 tables in each of three fictitious
+profiles match the baseline exactly, including saved filters and Settings audit fields. No financial Save.
+Evidence:
+[quality/saved-filter-report-scope.md](quality/saved-filter-report-scope.md).

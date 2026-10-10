@@ -35,6 +35,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
+| ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Proposed | owner translations |
@@ -150,6 +151,16 @@ privacy matrix and store declarations per build. Done: matrix updated, no "nothi
 ### ZCR-LOC-01 – Release bug list
 Scope: bugs found on the owner's phone; each bug its own fix with a test. Done when the owner's list is empty or
 deferred by the owner.
+
+### ZCR-LOC-15 - Independent saved filters after report navigation
+
+Value: the same named filter returns the same complete results regardless of the previously opened report.
+Scope: remove only transient report currency/account-set/confirmed-only/scope-note restrictions during native saved-
+filter application, preserving every persisted filter field and existing Clear behavior. No schema, new strings,
+cost, provider, security, quota or financial-write change. AT-114 compares the actual saved action/results before
+and after three independent fictitious report scopes, complete stored rows and exact original-file restoration.
+Final runtime/build/test/APK checks: [saved-filter-report-scope.md](../../quality/saved-filter-report-scope.md).
+Physical-device/iOS and product acceptance remain separate.
 
 ### ZCR-LOC-02 – Goal contribution reminders (from ZEX-S0306)
 Scope delivered in D-70: opt-in on goal contribution dates at 09:00 device-local time using the saved rule/calendar,

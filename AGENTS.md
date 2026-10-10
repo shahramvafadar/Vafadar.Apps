@@ -526,3 +526,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   logical units for results. Preserve native typography, horizontal choices and complete result values/order.
 * Native review copies fictitious route queries before delivery, checks actual scrolled glyph/target geometry,
   invokes Clear and restores the same complete query/result plus stored rows. Restore failed review data as well.
+
+## 42. Independent saved-filter application (D-109)
+
+* A saved filter replaces its persisted combination; remove unrelated transient report currency, account-set,
+  confirmed-only and scope-note restrictions. Preserve the saved dates, kind, categories, account, search, review
+  and InTotalsOnly choices. Do not claim unsaved report-only fields are included in the portable saved-filter model.
+* Compare the same native saved-filter action before and after independent report scopes. Fictitious review-state
+  preparation belongs only to the explicit Debug snapshot route; the reviewed actions never write ledger entries.

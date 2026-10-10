@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Independent saved transaction filters (2026-10-10, D-109)
+
+- Applying a saved filter after opening transactions from a report clears that report's temporary currency,
+  account-set and confirmed-only restrictions. The named filter shows its own complete results and scope.
+
 ### Improved - Complete report-scope controls (2026-10-10, D-108)
 
 - Report scope, category names and custom dates wrap with a reachable Clear button. Long filters can scroll while
