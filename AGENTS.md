@@ -680,3 +680,16 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   and recheck after SQL before commit. Failed replacements/deletes restore complete rows with no Changed.
 * Rule deletion keeps owned-data rights and never reclassifies stored entries. Registration stays inactive;
   rule suggestion delivery/selected read-only classification and other ENT-02/03/04 paths remain unfinished.
+
+## 58. Complete ledger Save groups and refund totals (D-126)
+
+* Classify and validate Save under the actual SQLite writer before reads, including inactive test builds.
+  New split groups/parts require SplitTransactions; retained part corrections and joining keep Corrections.
+  Complete groups include untouched stored siblings. Holding payment/fee groups use their holding right;
+  transfer fees remain part of retained transfer corrections. Ordinary new work requires Transactions.
+* Validate refunds against the final batch, excluding edited/deleted old rows and including new peers/originals.
+  Recheck edited purchases with retained refunds; missing originals keep translated validation errors.
+  Widen exact minor-unit totals before addition/comparison so positive Int64 totals cannot wrap.
+* Entries, derived paid totals and attachment moves commit together after cached access recheck, or roll back
+  with no Changed. Deployment stays inactive. Ledger delete/Undo, selected resources, automation and other
+  ENT-02/03/04 paths remain unfinished; this is not commercial activation or device/release acceptance.

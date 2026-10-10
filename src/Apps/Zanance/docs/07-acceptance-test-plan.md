@@ -797,3 +797,14 @@ two independent same-pattern writer races; bound initial file after provider mov
 Main 1,862 pass. Full stored-column checks keep unrelated financial/preferences data unchanged. Strict platforms,
 complete signed APK and actual Release rule form evidence:
 [evidence](quality/category-rule-write-policy.md). Other ENT-02/03/04 paths and suggestion delivery remain open.
+
+## AT-128 - Exact-file ledger Save, complete groups and final refunds (D-126)
+
+45 added real SQLite cases cover split rejection before draft mutation; inactive split/join metadata; paid/shared
+creation; retained corrections/join after expiry; additional/relocated/incremental parts; transfer/holding group
+classification; four missing-membership overloads; corrective movements versus new work; wrong-file and bound-file
+checks; SQL/access retirement and attachment rollback/retry; invalid batches; independent same-id and refund
+writers; four reproduced refund defects; valid original/refund batch order, edits/replacement, missing targets,
+Int64 boundaries and occurrence paid-total rollback/retry. Compare complete columns of all 24 tables.
+Main 1,907 pass, App.Tests 299 unchanged. Platforms, APK and actual normal Release flow:
+[evidence](quality/ledger-write-policy.md). Commercial deployment and remaining ENT-02/03/04 stay open.

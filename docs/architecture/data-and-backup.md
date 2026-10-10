@@ -325,3 +325,10 @@ replacement even with deployment inactive; preserve existing-id CreatedAt and re
 Failures restore the complete previous rule without Changed or ledger writes. No schema/migration/compiled model,
 format, permission or SDK changes. Suggestion delivery and selected read-only classification remain open:
 [evidence](../../src/Apps/Zanance/docs/quality/category-rule-write-policy.md).
+
+D-126 acquires the actual ledger Save writer before reads, even with commercial deployment inactive.
+Complete group classification includes untouched stored siblings and distinct holding/transfer groups. Validate
+refunds against final batch state and edited purchases, widening exact minor units before totals. Entry, occurrence
+paid-total and attachment ownership changes share commit/recheck/rollback with Changed only after commit.
+No schema/migration/compiled model, portable format, permission or SDK changes. Delete/Undo and other commercial
+paths remain unfinished: [evidence](../../src/Apps/Zanance/docs/quality/ledger-write-policy.md).

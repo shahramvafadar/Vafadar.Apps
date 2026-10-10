@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete refund totals and atomic transaction saves (2026-10-10, D-126)
+
+- Check refunds together, including edits, replacements and new purchases saved in the same operation.
+- Prevent reducing a purchase below its retained refunds, changing its type, or overflowing large refund totals.
+- Keep transaction parts, receipt ownership and plan paid amounts together when a save fails.
+- Prepare new-split access checks while preserving corrections and combining; test builds stay unrestricted.
+
 ### Fixed - Consistent categorization rule replacement (2026-10-10, D-125)
 
 - Saving the same category pattern concurrently now leaves one rule rather than duplicate suggestions.

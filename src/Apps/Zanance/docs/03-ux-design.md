@@ -700,3 +700,10 @@ New text/kind configures new automation; correcting the category of an existing 
 Same-pattern new-id replacement remains one rule. No stored transaction is reclassified, no draft is trimmed on
 commercial rejection, and no limit UI is activated in test builds. Suggestion-delivery policy and translated
 commercial feedback remain unfinished.
+
+## Ledger corrections and final refund validation (D-126)
+
+Retain explicit Save, split editing and combining. Corrections of existing parts remain available after downgrade;
+new parts configure new split work. Refund Save feedback describes the final batch: an edited purchase cannot
+become smaller than its retained refunds or change away from Expense. Missing targets and exceeded totals use
+existing translated validation errors. Test deployment remains unrestricted; commercial feedback stays ENT-04.

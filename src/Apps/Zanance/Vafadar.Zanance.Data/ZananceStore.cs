@@ -1032,26 +1032,48 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         ArgumentNullException.ThrowIfNull(entries);
         ArgumentNullException.ThrowIfNull(deleteIds);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-126: classify/validate against the same actual writer snapshot that commits the complete batch.
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
 
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
         var ids = entries.Select(e => e.Id).ToList();
         var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
 
+        await DemandLedgerSaveAsync(db, write, entries, deleteIds, existing, cancellationToken);
+
+        // D-126: validation sees the final batch, not old refunds that will be edited/deleted or missing peers.
+        var purchaseIds = entries.Where(e => e.RefundOfId is not null).Select(e => e.RefundOfId!.Value).Concat(ids).Distinct().ToList();
+        var storedRefunds = await db.Entries.AsNoTracking().Where(e => e.Kind == EntryKind.Refund && e.RefundOfId != null
+            && purchaseIds.Contains(e.RefundOfId.Value) && !ids.Contains(e.Id) && !deleteIds.Contains(e.Id)).ToListAsync(cancellationToken);
+        var finalRefunds = storedRefunds.Concat(entries.Where(e => e.Kind == EntryKind.Refund)).ToList();
         foreach (var entry in entries)
         {
             LedgerEntry? original = null;
             long otherRefunds = 0;
             if (entry.Kind == EntryKind.Refund && entry.RefundOfId is { } originalId)
             {
-                original = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == originalId, cancellationToken);
-                otherRefunds = await db.Entries.Where(e => e.RefundOfId == originalId && e.Id != entry.Id).SumAsync(e => e.Amount, cancellationToken);
+                original = entries.FirstOrDefault(e => e.Id == originalId);
+                if (original is null && !deleteIds.Contains(originalId))
+                    original = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == originalId, cancellationToken);
+                if (original is null) return new SaveResult([LedgerError.RefundOriginalMissing]);
+                var otherTotal = finalRefunds.Where(e => e.RefundOfId == originalId && e.Id != entry.Id).Sum(e => (decimal)e.Amount);
+                if (otherTotal > long.MaxValue) return new SaveResult([LedgerError.RefundExceedsPurchase]);
+                otherRefunds = (long)otherTotal;
             }
 
             var errors = LedgerValidator.Validate(entry, accounts, categories, original, otherRefunds, isNew: !existing.ContainsKey(entry.Id));
             if (errors.Count > 0)
             {
                 return new SaveResult(errors);
+            }
+
+            var linked = finalRefunds.Where(e => e.RefundOfId == entry.Id).ToList();
+            if (linked.Count > 0)
+            {
+                if (entry.Kind != EntryKind.Expense) return new SaveResult([LedgerError.RefundOriginalNotExpense]);
+                if (linked.Sum(e => (decimal)e.Amount) > entry.Amount) return new SaveResult([LedgerError.RefundExceedsPurchase]);
             }
         }
 
@@ -1080,7 +1102,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         db.Entries.RemoveRange(removed);
 
         // Entries and the paid amounts of their occurrences change together or not at all.
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, entries.Concat(existing.Values).Concat(removed), cancellationToken);
         if (moveAttachmentsTo is { } target && deleteIds.Count > 0)
@@ -1088,10 +1110,51 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             await db.Attachments.Where(a => deleteIds.Contains(a.EntryId)).ExecuteUpdateAsync(a => a.SetProperty(x => x.EntryId, target), cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
         return SaveResult.Success;
+    }
+
+    /// <summary>Checks new financial work and complete resulting groups under the caller's actual-file writer.</summary>
+    private static async Task DemandLedgerSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
+        IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds,
+        IReadOnlyDictionary<Guid, LedgerEntry> existing, CancellationToken cancellationToken)
+    {
+        if (!write.Enforced) return;
+        var groups = entries.Where(e => e.GroupId is not null).Select(e => e.GroupId!.Value).Distinct().ToList();
+        var savedIds = entries.Select(e => e.Id).ToHashSet();
+        var stored = groups.Count == 0 ? []
+            : await db.Entries.AsNoTracking().Where(e => e.GroupId != null && groups.Contains(e.GroupId.Value)).ToListAsync(cancellationToken);
+        var holdingGroups = groups.Count == 0 ? []
+            : await db.AssetEvents.Where(e => e.GroupId != null && groups.Contains(e.GroupId.Value)).Select(e => e.GroupId!.Value).Distinct().ToListAsync(cancellationToken);
+        var retainedFees = new HashSet<Guid>();
+        foreach (var group in groups)
+        {
+            var before = stored.Where(e => e.GroupId == group).ToList();
+            var incoming = entries.Where(e => e.GroupId == group).ToList();
+            var after = before.Where(e => !savedIds.Contains(e.Id) && !deleteIds.Contains(e.Id)).Concat(incoming).ToList();
+            var beforeIds = before.Select(e => e.Id).ToHashSet();
+            if (holdingGroups.Contains(group))
+            {
+                // Holding payment/fee groups are not category splits. New work still needs their holding right.
+                if (incoming.Any(e => !existing.ContainsKey(e.Id))) write.DemandFeature(CommercialFeature.ManageHoldings);
+                continue;
+            }
+
+            if (EntryActions.IsSplit(after) && (!EntryActions.IsSplit(before) || after.Any(e => !beforeIds.Contains(e.Id))))
+                write.DemandFeature(CommercialFeature.SplitTransactions);
+            foreach (var transfer in after.Where(e => e.Kind == EntryKind.Transfer && before.Any(old => old.Id == e.Id && old.Kind == EntryKind.Transfer)))
+            {
+                // Adding/correcting fees belongs to the retained transfer, rather than a new split or money event.
+                foreach (var fee in incoming.Where(e => e.Kind == EntryKind.Expense
+                    && (e.AccountId == transfer.AccountId || e.AccountId == transfer.ToAccountId))) retainedFees.Add(fee.Id);
+            }
+        }
+
+        if (entries.Any(e => !existing.ContainsKey(e.Id) && !retainedFees.Contains(e.Id)
+            && e.Kind is not (EntryKind.Adjustment or EntryKind.Refund or EntryKind.IncomeReversal)))
+            write.DemandFeature(CommercialFeature.Transactions);
     }
 
     /// <summary>

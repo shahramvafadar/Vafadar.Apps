@@ -271,3 +271,13 @@ replacement share that writer even while deployment stays inactive. Check before
 stored CreatedAt on updates and recheck after SQL before commit. Complete rollback and Changed-after-commit
 apply to enabled operations. No ledger reclassification or portable paid facts. Suggestion delivery and other
 ENT-02/03/04 operations remain unfinished: [evidence](../../quality/category-rule-write-policy.md).
+
+## 16. Ledger Save with complete groups (D-126)
+
+All SaveEntriesAsync/SaveEntryAsync overloads reach one actual-file writer before existing rows, groups and refund
+validation. New split/part requires SplitTransactions, retained correction/join uses Corrections; distinguish
+holding groups and transfer fees. New ordinary money work uses Transactions, with exact membership required.
+Final-batch refunds and edited purchases validate before cleanup/audit. SQL, derived paid totals and attachment
+moves commit only after cached recheck; failure restores complete rows and emits no Changed. Deployment stays
+inactive; delete/Undo, selected read-only resources, automation and other paths stay open:
+[evidence](../../quality/ledger-write-policy.md).

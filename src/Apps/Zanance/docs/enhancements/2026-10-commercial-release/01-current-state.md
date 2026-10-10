@@ -134,3 +134,8 @@ D-125 continues ENT-02 with actual-file category rule creation/correction/deleti
 same-pattern replacement, including current unrestricted builds. 28 added SQLite cases/main 1,862 pass.
 No stored transaction is reclassified. Registration stays inactive; suggestion delivery, selected read-only data,
 profiles, automation and remaining ENT-02/03/04 paths stay open: [quality evidence](../../quality/category-rule-write-policy.md).
+
+D-126 continues ENT-02 with actual-file ledger Save rights, complete split/holding/transfer groups and
+final-batch refund validation. 45 added SQLite cases/main 1,907 pass. Four reproduced refund defects corrected;
+entry/attachment/paid-total rollback retained. Registration inactive; ledger delete/Undo, selected read-only data,
+automation and remaining ENT-02/03/04 paths stay open: [quality evidence](../../quality/ledger-write-policy.md).

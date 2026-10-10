@@ -120,7 +120,8 @@ public static class LedgerValidator
             {
                 errors.Add(LedgerError.RefundOriginalNotExpense);
             }
-            else if (otherRefundsOfOriginal + entry.Amount > refundOriginal.Amount)
+            // Compare exact minor units after widening so positive Int64 totals cannot wrap.
+            else if ((decimal)otherRefundsOfOriginal + entry.Amount > refundOriginal.Amount)
             {
                 errors.Add(LedgerError.RefundExceedsPurchase);
             }

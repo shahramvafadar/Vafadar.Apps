@@ -1133,3 +1133,22 @@ details share this service; no UI-only gate. Rules never reclassify existing ent
 permission, visible layout/string or portable paid-fact changes. Suggestion delivery, selected read-only data,
 profiles, automation and other ENT-02/03/04 paths remain unfinished. Strict platform/APK and actual Release rule
 creation/replacement/deletion evidence: [category-rule-write-policy.md](quality/category-rule-write-policy.md).
+
+## D-126 - Guard complete ledger Save and validate final refund batches (2026-10-10)
+
+The actual Save service initially accepts a new category split in an enabled Free context. Classify under its
+actual-file writer, before reading stored groups or validating/cleaning drafts. New splits/additional parts use
+SplitTransactions; retained part correction/join uses Corrections. Include untouched siblings, distinguish
+holding groups (new fees use ManageHoldings) and transfer fees. Ordinary new work uses Transactions; corrective
+adjustment/refund/income reversal remains available after host expiry with exact membership.
+
+Four reproduced amount defects require final-batch validation: two refunds individually fit but jointly exceed
+the purchase; a purchase is reduced below retained refunds; its kind changes away from Expense; and Int64 addition
+wraps. Validate against incoming originals/refunds plus untouched stored refunds, excluding edited/deleted old
+rows. Recheck edited purchases; use exact widened minor-unit totals. Preserve valid batch orders, replacements
+and Int64 boundaries. No money storage, currency rounding, schema, SDK, permission or visible control changes.
+
+45 added AT-128 cases/main 1,907 pass; App.Tests 299 unchanged. Entries, occurrence paid totals and attachment
+ownership roll back together after SQL failure or retired cached access; Changed follows commit. Inactive builds
+keep unrestricted deployment. Ledger delete/Undo, read-only selections, automation and remaining ENT-02/03/04
+work remain open. Strict platform/full signed APK/native evidence: [ledger-write-policy.md](quality/ledger-write-policy.md).

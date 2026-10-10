@@ -1788,3 +1788,14 @@ Failures/retired facts roll back complete stored rules; existing-id updates reta
 portable paid-fact changes. Deployment remains inactive. Suggestion delivery, selected read-only classification,
 profiles, automation and other ENT-02/03/04 paths remain unfinished:
 [evidence](../quality/category-rule-write-policy.md).
+
+### 31.39. Complete ledger Save rights and final refund amounts (D-126 / AT-128 / ENT-02 in progress)
+
+Actual-file writer precedes group classification and validation, including unrestricted test builds. New category
+splits/parts require their feature; retained corrections/join preserve data rights. Holding groups and transfer
+fees keep distinct semantics. Ordinary new work checks Transactions. Final refund batches include new originals
+and peers, omit replaced/deleted old rows and protect edited purchases; widened exact minor units avoid overflow.
+Entry, attachment and derived occurrence changes commit together after cached recheck; failures emit no Changed.
+45 added cases/main 1,907 pass; App.Tests 299 unchanged. No schema, SDK, permission, visible layout/string or paid
+portable facts change. Deployment inactive; ledger delete/Undo, selected read-only data, automation and remaining
+ENT-02/03/04 paths stay open: [evidence](../quality/ledger-write-policy.md).
