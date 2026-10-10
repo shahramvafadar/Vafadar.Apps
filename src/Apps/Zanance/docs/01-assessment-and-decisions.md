@@ -868,3 +868,21 @@ fonts/targets, native reselection and retained complete drafts/stored rows; the 
 picker pages to be checked. Final verification passes: [quality/native-picker-captions.md](quality/native-picker-captions.md).
 
 D-107 final checks: main 1,512 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/2083 own renders, 189 native existing-choice reselections, 84 language choices/returns, full developer-file restoration, normal Release navigation and exact 24-table readbacks across three fictitious profiles pass. Complete signed D-107 APK supplied; OS/readers/device/iOS/other-control and owner acceptance remain open.
+
+## D-108 - Complete report-scope captions and reachable transaction results (2026-10-10)
+
+The actual German 360/normal-text report drill-down clips scope/category text and places its native Clear targets
+outside the page (right edges 376.67 and 411.33 against a 345.33-unit native root); all three Clear buttons are
+only 36 units wide. Bound complete wrapping captions in a star column with an independent 44-unit Clear column.
+The first 200% candidate then leaves a zero-height result viewport. Keep the complete filter form in a vertical
+viewport bounded by the actual page and current action docks, reserving up to 144 logical units for results.
+Native text scaling, horizontal period/kind choices, result order/totals and the existing shared Clear command remain.
+No schema, money, SDK, permission, security or saved-filter behavior changes. AT-113 reviews real native caption/
+Clear geometry, header/result scrolling, Clear and exact query restoration without Save.
+Final checks pass: 1,512 main tests (App.Tests 276), strict Windows and canonical complete Android Debug/Release;
+21 Windows contexts/1615 own-window renders, 63 complete native scope captions/Clear targets, 21 native
+result-scroll/Clear/query-restoration checks and 84 existing expanded-filter targets. Original developer
+files return with exact hashes. Normal signed Release follows the actual Reports -> Transactions -> Clear route on
+the owned emulator without preference, security or financial writes; all 24 tables in each of three fictitious
+profiles are exactly unchanged. Complete signed D-108 APK verified.
+Evidence: [quality/transaction-scope-readable.md](quality/transaction-scope-readable.md).

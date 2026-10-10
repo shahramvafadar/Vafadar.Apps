@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Complete report-scope controls (2026-10-10, D-108)
+
+- Report scope, category names and custom dates wrap with a reachable Clear button. Long filters can scroll while
+  leaving room for transactions and the existing Add, selection and Undo actions.
+
 ### Improved - Complete Windows picker names (2026-10-10, D-107)
 
 - Selected calendar, region and other picker names can grow onto multiple lines at large text sizes. The same native choices remain; popup rows have at least a 44-unit touch target.

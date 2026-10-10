@@ -347,3 +347,8 @@ D-107 / AT-112 continues A11Y-03 with complete growing Windows selected/popup pi
 typography and 44-unit popup targets. Native reviews retain choices/drafts/full stored values without Save;
 main suite remains 1,512 passed (App.Tests 276). Final native matrix, strict Windows/complete Android Debug+Release, exact original-data readbacks and signed APK pass: [../../quality/native-picker-captions.md](../../quality/native-picker-captions.md).
 Other controls and actual OS/readers/device/iOS/release acceptance remain open. Continue ready work under D-69.
+
+D-108 / AT-113 addresses actual clipped report-scope captions/off-page Clear actions and a zero-height transaction
+result at large text. Final 21 Windows native contexts, main 1,512 tests (App.Tests 276), strict builds, actual
+normal Release report/navigation/Clear, exact original-data readbacks and complete signed D-108 APK pass: [transaction-scope-readable.md](../../quality/transaction-scope-readable.md). A11Y-03 and independent
+platform/OS/readers/device/owner/release gates remain open; continue ready work under D-69.

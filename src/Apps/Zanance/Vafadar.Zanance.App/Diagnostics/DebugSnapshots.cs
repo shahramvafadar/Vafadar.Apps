@@ -351,10 +351,18 @@ internal static partial class DebugSnapshots
         var coinId = holdingTypes.First(t => t.Dimension == Core.Holdings.AssetDimension.Count).Id;
         await services.GetRequiredService<Vafadar.Backup.IBackupService>().CreateBackupAsync(
             new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups")), "snapshot-password");
+        var filterReviewDate = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
         {
             ("home", "//home", null),
             ("transactions", "//transactions", null),
+            ("transactions-filters", "//transactions", null),
+            ("transactions-scope", "//transactions", new()
+            {
+                ["from"] = filterReviewDate.AddDays(-30), ["to"] = filterReviewDate, ["kind"] = Core.Ledger.KindFilter.Expenses,
+                ["categories"] = new[] { foodId }, ["categoryName"] = "Household groceries and recurring household supplies",
+                ["currency"] = "EUR", ["scope"] = Translator.Instance["Report_ScopeInTotals"] + " · EUR",
+            }),
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
@@ -477,7 +485,10 @@ internal static partial class DebugSnapshots
                 var splitEntries = name == "split-readable" ? System.Text.Json.JsonSerializer.Serialize(
                     await services.GetRequiredService<ZananceStore>().GetEntriesAsync()) : null;
                 // AT-106 prepares only the walk-through's fictitious transfer; ordinary editor launches never seed fees.
-                var actualQuery = name == "entry-fee-retention" ? await PrepareDestinationFeeReviewAsync(services) : query;
+                var scopeReviewQuery = name == "transactions-scope" ? new Dictionary<string, object>(query!)
+                { ["scope"] = Translator.Instance["Report_ScopeInTotals"] + " · EUR" } : null;
+                var actualQuery = name == "entry-fee-retention" ? await PrepareDestinationFeeReviewAsync(services)
+                    : scopeReviewQuery is not null ? new Dictionary<string, object>(scopeReviewQuery) : query;
                 await (actualQuery is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, actualQuery));
                 await Task.Delay(1500);
                 if (name.StartsWith("receipt-", StringComparison.Ordinal)
@@ -493,12 +504,23 @@ internal static partial class DebugSnapshots
                     await CaptureImportChoicesAsync(app, services, importPage, importVm, folder, language);
                 }
 
+#if WINDOWS
+                if (name == "transactions-scope" && Shell.Current.CurrentPage is Features.Transactions.TransactionsPage scopePage)
+                {
+                    await ReviewTransactionScopeAsync(app, services, scopePage, folder, language, scopeReviewQuery!);
+                }
+#endif
                 await CaptureAsync(app, folder, $"{language}-{name}");
                 if (name == "backup" && Shell.Current!.CurrentPage?.BindingContext is Features.Backup.BackupViewModel backupVm)
                 {
                     await CaptureCloudStatesAsync(app, backupVm, folder, language);
                 }
 #if WINDOWS
+                if (name == "transactions-filters" && Shell.Current.CurrentPage is Features.Transactions.TransactionsPage filtersPage)
+                {
+                    await ReviewTransactionFiltersAsync(app, services, filtersPage, folder, language);
+                }
+
                 if (name.StartsWith("entry-asset-", StringComparison.Ordinal)
                     && Shell.Current.CurrentPage?.BindingContext is Features.Entries.EntryEditorViewModel assetEditor)
                 {

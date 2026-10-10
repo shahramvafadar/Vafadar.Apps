@@ -646,3 +646,8 @@ D-107 / AT-112 follows the observed clipped selected calendar/region names and s
 Windows native choices wrap with inherited typography and 44-unit targets, retaining selection/drafts/full stored
 values. Shared picker-page evidence and final builds/signed APK: [native-picker-captions.md](native-picker-captions.md).
 Earlier counts remain historical; other controls and actual OS/readers/device/iOS acceptance stay open.
+
+D-108 / AT-113 repairs observed off-page report-scope Clear controls and a zero-height result viewport. Complete
+native captions/targets, actual header/result scrolling, Clear and original query/results/stored-data restoration
+pass in 21 Windows contexts. Normal Release Android report/Clear and signed APK remain separate from process-local
+200% stress and actual OS/readers/device/iOS acceptance. Evidence: [transaction-scope-readable.md](transaction-scope-readable.md).

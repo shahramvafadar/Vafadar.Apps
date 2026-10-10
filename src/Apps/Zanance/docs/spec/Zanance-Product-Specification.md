@@ -1472,6 +1472,16 @@ evidence and platform limits are recorded in
 [quality/native-picker-captions.md](../quality/native-picker-captions.md). A11Y-03 and OS/readers/device/iOS acceptance
 remain open; no saved preference, money, schema or security-policy changes.
 
+### 31.24. Complete transaction report scope (D-108 / AT-113, locally verified)
+
+Repair reproduced clipped scope/category text, off-page 36-unit Clear targets and a zero-height result viewport at
+large text. Growing captions retain independent 44-unit Clear controls; the complete filter form can scroll within
+actual page/action-dock space. Keep existing queries, financial results and Clear behavior. Main suite 1,512
+(App.Tests 276), final 21 native Windows contexts, strict Windows/complete Android Debug+Release, normal Release
+report navigation/Clear, exact original-data readbacks and signed D-108 APK pass;
+[quality/transaction-scope-readable.md](../quality/transaction-scope-readable.md).
+A11Y-03 and independent platform/OS/readers/device/owner/release gates remain open.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

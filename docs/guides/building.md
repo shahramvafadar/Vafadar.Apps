@@ -425,3 +425,10 @@ The snapshot script fails explicitly when its app times out, exits unsuccessfull
 captures are retained for diagnosis and never count as a successful review, even when some proofs were written.
 Native Back review uses the real control's associated automation peer and retains actual timeout state without
 extending the bound or substituting programmatic navigation (D-107).
+
+The Windows Debug `transactions-filters` route natively expands the existing optional controls and verifies targets,
+result identity and stored rows without Save. `transactions-scope` passes a fictitious report query through the real
+route, reviews native scope/date/category glyphs and Clear targets using native Scroll, exercises result scrolling
+and native Clear, then restores the complete query and stored/result values (D-108 / AT-113). Preserve original
+development files and distinguish process-local stress from real OS/device acceptance. Final evidence is recorded
+in src/Apps/Zanance/docs/quality/transaction-scope-readable.md.

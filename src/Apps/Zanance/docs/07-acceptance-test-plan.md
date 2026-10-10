@@ -639,3 +639,14 @@ and preserves retired navigation/form behavior. Other picker pages require share
 1,512 passed, App.Tests 276. Final 21 contexts/2083 own renders, 189 native existing choices,
 84 language choices/returns, strict builds, original-data readbacks and complete signed APK pass:
 [quality/native-picker-captions.md](quality/native-picker-captions.md).
+
+## AT-113 - Complete report-scope controls and transaction results (D-108)
+
+Use a fictitious query through the real transaction route. Check every complete scope/category/date caption's native
+glyph bounds and the real Clear target/name inside its scrolled native viewport. Scroll the original result through
+native UIA, invoke actual Clear, restore the exact query and compare complete result captions and stored Settings,
+Accounts, Entries and SavedFilters without Save. Check ordinary/expanded filters and Add/bulk/Undo docks independently.
+Final 21 contexts/1615 own-window renders, 63 complete scope captions/Clear targets and 21 native
+result-scroll/Clear/query-restoration checks pass. Main suite 1,512 (App.Tests 276), strict builds, actual normal
+Release Reports/Transactions/Clear, exact 24-table comparisons in three fictitious profiles and signed APK pass:
+[quality/transaction-scope-readable.md](quality/transaction-scope-readable.md).

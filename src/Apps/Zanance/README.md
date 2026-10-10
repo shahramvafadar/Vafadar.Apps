@@ -80,7 +80,7 @@ D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests
 The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
 signed Release handoff remain separate from physical phone/iOS acceptance. That slice was followed by QA-06 performance; see the canonical backlog for the current remaining work.
 
-Current local quality baseline (D-107): main suite 1,512 passing, App.Tests 276. Date parts grow/reflow and large
+Current local quality baseline (D-108): main suite 1,512 passing, App.Tests 276. Date parts grow/reflow and large
 balances retain their complete signed decimal/currency packet with a real horizontal viewport when needed.
 Repeated Settings language choices preserve the form and stored data; retired navigation titles are detached.
 Windows child titles grow above the retained body; Windows/Android Back descriptions follow live language choices.
@@ -141,3 +141,5 @@ Settings reads the exact complete-month history needed for its unchanged spendin
 
 Windows selected/popup picker captions grow with inherited native typography and retain complete names/44-unit targets.
 Actual matrix, choice/draft/data preservation and complete signed APK evidence: [native-picker-captions.md](docs/quality/native-picker-captions.md).
+
+Complete report-scope captions, reachable Clear targets and transaction results: [runtime evidence](docs/quality/transaction-scope-readable.md).

@@ -595,3 +595,10 @@ Preserve raw unsaved estimates on reload. Using a suggestion changes only the dr
 Windows selected choice names and popup items wrap within the existing native picker rather than losing calendar,
 region or other descriptive text. Keep the native selection/keyboard/semantic behavior and inherited fonts, direction
 and colors. Popup rows grow from a minimum 44-unit target. A long selected name grows its control, not an extra label.
+
+### Complete transaction report scope (D-108)
+
+Scope, category and custom-period captions wrap inside the available width with independent 44-unit Clear targets.
+The original complete filter form scrolls vertically when it exceeds its actual available space. Its height accounts
+for current Add/bulk/Undo docks and reserves up to 144 logical units for results; native typography is never shrunk.
+Keep the existing horizontal filter choices and complete result/order/totals. Clearing changes the current view only.

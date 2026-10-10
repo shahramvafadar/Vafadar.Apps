@@ -517,3 +517,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   The shared presentation requires checks on other picker pages too. Process-local scaling is not OS/device acceptance.
 * Native Back reviews use the peer associated with the actual control. Preserve timeout/root/page/navigation evidence;
   never extend the bound or substitute a programmatic return to make a failed native check pass.
+
+## 41. Complete transaction scope and reachable results (D-108)
+
+* Bound complete scope/category/date captions before wrapping; retain independent 44-unit native Clear targets and
+  the existing shared command. Do not change the financial scope or hide an active filter to regain space.
+* The complete filter form can scroll inside actual page space minus visible action docks, reserving up to 144
+  logical units for results. Preserve native typography, horizontal choices and complete result values/order.
+* Native review copies fictitious route queries before delivery, checks actual scrolled glyph/target geometry,
+  invokes Clear and restores the same complete query/result plus stored rows. Restore failed review data as well.
