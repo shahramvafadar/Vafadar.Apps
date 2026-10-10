@@ -1560,6 +1560,15 @@ providers cannot consume the same final slot twice. 24 new real SQLite cases pas
 299 unchanged. Current test builds remain unrestricted. No schema, permission, SDK or visible change; remaining
 ENT-02/03 resources/import/restore/native paths and activation stay open: [evidence](../quality/template-filter-write-policy.md).
 
+### 31.33. Goal and plan batch/continuation write boundaries (D-120 / AT-122 / ENT-02 in progress)
+
+Actual-file writer transactions guard counted Goal creation/reopening and net whole Plan batch capacity.
+Split/resume uses stored predecessor state, retains one slot and moves actual history links atomically. New paid
+kinds/tools are checked independently of presentation; retained/history corrections remain available after expiry.
+45 new real SQLite cases pass; main suite 1,695, App.Tests 299 unchanged. Current deployment stays inactive with no
+schema, SDK, permission or visible change. Other ENT-02/03 operations/resources/import/restore/read-only/native paths
+and activation remain open: [evidence](../quality/goal-plan-write-policy.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Internal - Goal and plan write policy boundaries (2026-10-10, D-120)
+
+- Prepare final quota checks for goal reopening and whole plan batches. Pausing keeps a slot; splitting or
+  resuming a plan transfers its existing slot and preserves history atomically.
+- Preserve corrections to retained data after expiry. Current test builds stay unrestricted.
+
 ### Internal - Template/filter write policy boundaries (2026-10-10, D-119)
 
 - Prepare final quota checks for quick templates and saved filters. Editing and confirmed name replacement

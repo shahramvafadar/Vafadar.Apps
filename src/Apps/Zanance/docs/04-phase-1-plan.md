@@ -294,3 +294,8 @@ D-119 continues ENT-02 with actual-file template/filter write transactions, slot
 and atomic failure recovery. Current enforcement stays inactive. 24 added SQLite cases/main 1,650 pass; the
 remaining resources/import/restore/read-only/native paths and release gates stay open:
 [quality evidence](quality/template-filter-write-policy.md).
+
+D-120 continues ENT-02 with Goal Save and whole Plan batch/split transactions, counted pauses and slot-neutral
+continuations. 45 added SQLite cases/main 1,695 pass. Current deployment stays inactive; contribution/allocation/
+occurrence work, other resources/import/restore/read-only/native paths and activation remain open:
+[quality evidence](quality/goal-plan-write-policy.md).

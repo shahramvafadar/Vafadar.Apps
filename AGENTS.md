@@ -610,3 +610,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Test independent providers competing for the last slot; do not substitute a store semaphore or fake counts.
 * Current registration remains inactive. Retain complete template/query metadata and ledger data; no paywall,
   read-only selection, schema or portable entitlement is introduced. The rest of ENT-02/03 remains open.
+
+## 52. Goal and whole-plan write capacity (D-120)
+
+* Active and paused goals/plans retain slots. Reopening history checks capacity before goal protection/pin changes.
+  Whole plan batches use net slots inside the actual-file writer; reject the whole batch before any stored edits.
+* Split/resume compares the stored predecessor, verifies the distinct linked continuation and transfers one slot.
+  Retain earlier history and move only existing later links atomically; rollback failures without Changed.
+* New advanced kinds/tools require the confirmed commercial capability. Retained/history corrections remain Free;
+  regional calendars/basic reminders are independent. Current deployment stays inactive. Contributions/allocations,
+  occurrence automation, import/restore/read-only and other ENT-02/03 boundaries remain unfinished.

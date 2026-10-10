@@ -207,3 +207,13 @@ reads. New rows consume capacity; existing ids and confirmed same-name replaceme
 assignment/removal, preserve full metadata and roll back failures before Changed. Unlimited contexts skip count
 queries. Current registration is inactive. There is no schema, purchase data in backups or visible UI change.
 The rest of ENT-02/03 and deployment activation remain open. [Evidence](../../quality/template-filter-write-policy.md).
+
+## 10. Goal and plan batch/continuation boundaries (D-120 / ENT-02 in progress)
+
+GoalStore and PlanStore capture the exact opened file's cached commercial facts. Goal reopening checks active/paused
+capacity before normalization/pin writes. Plan batches compare actual stored affected states and requested states
+inside the same writer, rejecting net growth before any partial edits. SaveSplitAsync retains its owned history
+transaction and verifies a distinct linked continuation against the stored predecessor, never the UI's already
+ended object. Check membership/new-tool capabilities, roll back failures and raise Changed only after commit.
+Retained historical/tool corrections and slot-neutral continuations remain available after expiry. Current
+registration stays inactive; other ENT-02/03 operations and activation remain open. [Evidence](../../quality/goal-plan-write-policy.md).

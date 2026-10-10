@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
@@ -8,7 +10,8 @@ namespace Vafadar.Zanance.Data;
 /// Data access for plans and their occurrences (docs/02-domain-design.md §5–§7). Settling, linking and undoing keep the
 /// entry and the occurrence state consistent in one transaction.
 /// </summary>
-public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store)
+public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store,
+    ICommercialWriteAccessSource commercialAccess)
 {
     /// <summary>Raised after plans or occurrence states were written.</summary>
     public event EventHandler? Changed;
@@ -45,7 +48,10 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(schedules);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        foreach (var schedule in schedules)
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var batch = schedules.ToList();
+        await CheckCommercialSaveAsync(db, write, batch, null, cancellationToken);
+        foreach (var schedule in batch)
         {
             if (await db.Schedules.AnyAsync(s => s.Id == schedule.Id, cancellationToken))
             {
@@ -57,7 +63,9 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             }
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
     }
@@ -84,6 +92,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         var recorded = (await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from).Select(s => s.OriginalDate).ToListAsync(cancellationToken))
             .Concat(await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from).Select(e => e.OccurrenceDate!.Value).ToListAsync(cancellationToken))
             .Distinct().ToList();
@@ -96,17 +105,75 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             }
         }
 
+        await CheckCommercialSaveAsync(db, write, [previous, next], previous.Id, cancellationToken);
         db.Schedules.Update(previous);
         db.Schedules.Add(next);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from)
             .ExecuteUpdateAsync(s => s.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from)
             .ExecuteUpdateAsync(e => e.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
+        write.EnsureCurrent();
         await transaction.CommitAsync(cancellationToken);
         OnChanged();
         return true;
+    }
+
+    /// <summary>Checks a whole save against transaction-local identities, states and net capacity before writes.</summary>
+    private static async Task CheckCommercialSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
+        IReadOnlyList<Schedule> batch, Guid? continuationOf, CancellationToken cancellationToken)
+    {
+        if (!write.Enforced) return;
+        if (batch.Any(s => s is null || !Enum.IsDefined(s.State)) || batch.Select(s => s.Id).Distinct().Count() != batch.Count)
+            throw new ArgumentException("A plan batch requires distinct ids and known states.", nameof(batch));
+        var ids = batch.Select(s => s.Id).ToArray();
+        var existing = await db.Schedules.AsNoTracking().Where(s => ids.Contains(s.Id)).ToDictionaryAsync(s => s.Id, cancellationToken);
+        Schedule? continued = null;
+        if (continuationOf is { } prior)
+        {
+            if (batch.Count != 2 || !existing.TryGetValue(prior, out continued)
+                || batch[0].Id != prior || batch[0].State != ScheduleState.Ended
+                || existing.ContainsKey(batch[1].Id) || batch[1].PreviousScheduleId != prior)
+                throw new ArgumentException("A split requires an existing ended slice and a distinct linked continuation.", nameof(batch));
+        }
+        foreach (var schedule in batch)
+        {
+            existing.TryGetValue(schedule.Id, out var original);
+            // D-120: a verified split/resume transfers the old slot, not a second plan. Compare its advanced tools
+            // with the stored predecessor, never the already-mutated Ended object supplied by the UI.
+            if (original is null && continued?.State is ScheduleState.Active or ScheduleState.Paused
+                && schedule.PreviousScheduleId == continued.Id) original = continued;
+            var counted = schedule.State is ScheduleState.Active or ScheduleState.Paused;
+            var newUse = original is null || (counted && original.State == ScheduleState.Ended);
+            var addsAdvanced = (newUse || counted) && AddsAdvancedTools(schedule, newUse ? null : original);
+            write.DemandFeature(addsAdvanced ? CommercialFeature.AdvancedPlans
+                : newUse ? CommercialFeature.BasicPlans : CommercialFeature.Corrections);
+        }
+        if (batch.Count == 0) { write.DemandFeature(CommercialFeature.Corrections); return; }
+        var oldSlots = existing.Values.Count(s => s.State is ScheduleState.Active or ScheduleState.Paused);
+        var newSlots = batch.Count(s => s.State is ScheduleState.Active or ScheduleState.Paused);
+        // Ending an old slice and creating its continuation is one slot, regardless of input order. Corrections
+        // above quota remain possible; a batch that grows capacity must fit in its entirety or save nothing.
+        if (newSlots <= oldSlots) return;
+        if (write.DemandCapacity(CommercialFeature.BasicPlans, QuotaKind.RecurringPlans) is not { } maximum) return;
+        var current = await db.Schedules.CountAsync(s => s.State == ScheduleState.Active || s.State == ScheduleState.Paused, cancellationToken);
+        write.DemandCount(CommercialFeature.BasicPlans, QuotaKind.RecurringPlans, maximum, current, newSlots - oldSlots);
+    }
+
+    /// <summary>Detects newly enabled paid tools while retained tool corrections remain available after expiry.</summary>
+    private static bool AddsAdvancedTools(Schedule target, Schedule? original)
+    {
+        static bool Weekday(Schedule s) => s.Rule.Frequency is Frequency.Monthly or Frequency.Yearly && s.Rule.DayRule.IsWeekday();
+        static bool SecondDay(Schedule s) => s.Rule.Frequency == Frequency.Monthly && s.Rule.SecondDay is not null;
+        static bool Shift(Schedule s) => s.Rule.WeekendShift != WeekendShift.None;
+        static bool Contract(Schedule s) => s.HasContract || s.ContractReference is not null || s.ContractRenews;
+        return (target.AutoPost && original?.AutoPost != true)
+            || (Weekday(target) && (original is null || !Weekday(original)))
+            || (SecondDay(target) && (original is null || !SecondDay(original)))
+            || (Shift(target) && (original is null || !Shift(original)))
+            || (Contract(target) && (original is null || !Contract(original)));
     }
 
     /// <summary>Returns whether any occurrence of the plan was settled or skipped.</summary>

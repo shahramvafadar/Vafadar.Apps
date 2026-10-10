@@ -285,3 +285,9 @@ D-119 extends the same actual-file write boundary to templates and saved filters
 new-row sort changes and confirmed duplicate removal; edits/replacements reuse existing slots. Failed replacement
 rolls back the complete original query, and Changed follows commit. No schema, migration, backup content,
 permission or SDK changes. Current test builds remain unrestricted; other ENT-02/03 boundaries are unfinished.
+
+D-120 extends actual-file cached-access transactions to Goal Save, whole Plan batches and existing history splits.
+Active/paused resources count; net slot growth and new paid tools are checked before write effects. Split/resume
+uses the stored predecessor, preserves earlier rows and moves later links atomically. Failed relocation restores
+all original metadata. No schema/migration, backup content, startup work, permission or SDK changes. Current
+deployment remains unrestricted; contribution/allocation/occurrence and other ENT-02/03 paths remain unfinished.

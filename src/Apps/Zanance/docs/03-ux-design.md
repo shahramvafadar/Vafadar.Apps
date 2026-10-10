@@ -654,3 +654,10 @@ Retain the existing entry-detail Save as template and Transactions saved-filter 
 filter replacement reuses its existing slot; failed replacement preserves the complete old query. Existing-id
 edits remain possible above quota. Structured rejection is prepared before writes; translated limit UI remains
 ENT-04. Current test builds stay unrestricted without a new visible control or message.
+
+## Goal/plan write boundaries (D-120 / ENT-02 in progress)
+
+Keep the existing Goal and Plan forms, detached drafts and explicit Save. Pause retains capacity; history edits do
+not enable paid new work. Split/resume continues one plan rather than consuming an extra slot. Rejection precedes
+Home pin/protection changes or partial batch storage; failed later history moves roll back completely. Current
+test builds remain unrestricted. Final translated quota feedback and retained-form purchase navigation are ENT-04.

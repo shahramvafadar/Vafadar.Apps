@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Goals;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
@@ -7,7 +9,7 @@ namespace Vafadar.Zanance.Data;
 /// Data access for savings goals and their allocations (F2-GOAL-01..05). Allocations are earmarks only: nothing here
 /// writes a ledger entry or changes an account balance (F2-GOAL-03).
 /// </summary>
-public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory)
+public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory, ICommercialWriteAccessSource commercialAccess)
 {
     /// <summary>Raised after goals or allocations were written.</summary>
     public event EventHandler? Changed;
@@ -50,7 +52,27 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(goal);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var existing = await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goal.Id, cancellationToken);
         var others = await db.Goals.AsNoTracking().Where(g => g.Id != goal.Id).ToListAsync(cancellationToken);
+        if (write.Enforced)
+        {
+            if (!Enum.IsDefined(goal.State) || !Enum.IsDefined(goal.Type))
+                throw new ArgumentException("A goal requires a known type and state.", nameof(goal));
+            var counted = goal.State is GoalState.Active or GoalState.Paused;
+            var wasCounted = existing?.State is GoalState.Active or GoalState.Paused;
+            var newUse = existing is null || (counted && !wasCounted);
+            var addsAdvancedKind = goal.Type != GoalType.AccountBalance && (newUse || (counted && existing!.Type != goal.Type));
+            write.DemandFeature(addsAdvancedKind ? CommercialFeature.AdvancedGoals
+                : newUse ? CommercialFeature.BasicGoals : CommercialFeature.Corrections);
+            // D-120: pause retains its slot. Reopening completed/archived goals consumes capacity before pin or
+            // protection normalization can mutate the supplied draft or another goal's stored metadata.
+            if (counted && !wasCounted && write.DemandCapacity(CommercialFeature.BasicGoals, QuotaKind.Goals) is { } maximum)
+            {
+                var current = others.Count(g => g.State is GoalState.Active or GoalState.Paused);
+                write.DemandCount(CommercialFeature.BasicGoals, QuotaKind.Goals, maximum, current);
+            }
+        }
         if (goal.Type == GoalType.AccountBalance && goal.State is GoalState.Active or GoalState.Paused
             && (goal.AccountId is not { } accountId || GoalProgressService.HasOtherBalanceGoal(others, accountId, goal.Id)))
         {
@@ -74,7 +96,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             }
         }
 
-        if (await db.Goals.AnyAsync(g => g.Id == goal.Id, cancellationToken))
+        if (existing is not null)
         {
             db.Goals.Update(goal);
         }
@@ -83,7 +105,9 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             db.Goals.Add(goal);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }
 

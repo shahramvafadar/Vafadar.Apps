@@ -728,3 +728,15 @@ full original-row rollback/retry; expired-host corrections and missing-membershi
 final-slot contention with correct sort order and one Changed. Main suite 1,650 passes. Final strict platform/APK
 and actual unrestricted Release save paths: [quality evidence](quality/template-filter-write-policy.md).
 Other ENT-02 resources/import/restore/read-only/native routes and release activation are not accepted by these cases.
+
+## AT-122 - Goal/plan slots, whole batches and continuation history (D-120)
+
+45 new real SQLite cases cover inactive above-Free creation; paused capacity; retained over-quota edits/end;
+completed/archived goal reopening before pin/protection changes; ended-plan history and reactivation/freed slots;
+Plus/Pro/exact accepted shared unlimited capacity; whole-batch rejection and net-slot input order; split/resume
+at and above quota with complete early/late ledger metadata; required-column failure/retry; missing membership;
+independent-provider final-slot contention; new advanced goal kinds and eight advanced plan tools; retained-tool
+correction/split; expired-host corrections; new automation rejection; rollback after occurrence relocation;
+conflicting split false/no writes; historical paid metadata corrections without enabling work. Main suite 1,695
+passes. Final platform/APK and actual unrestricted Release editor checks: [evidence](quality/goal-plan-write-policy.md).
+This does not accept contribution/allocation/occurrence automation, other ENT-02/03 paths or release activation.

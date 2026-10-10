@@ -1014,3 +1014,22 @@ one final slot; a database trigger proves original filter recovery when replacem
 registration stays inactive with no fabricated paid grant. No UI, schema, SDK, permission or backup format changes.
 ENT-02 remains in progress for other resources/import/restore/native paths; activation and translated limit UX
 remain separate. Final platform/APK/runtime evidence: [template-filter-write-policy.md](quality/template-filter-write-policy.md).
+
+## D-120 - Guard goal, plan batch and continuation writes (2026-10-10)
+
+Continue ENT-02 with SaveGoalAsync, SaveSchedulesAsync and SaveSplitAsync under the actual-file cached-access writer.
+Active/paused resources count; completed/archived goals and ended plan history do not. Reopening consumes capacity
+before goal protection or Home pin changes. Whole plan batches compare stored affected states with requested states
+and check net additions before any write. A verified split/resume compares the stored predecessor and transfers its
+slot; existing earlier history stays, later recorded links move atomically. Failures roll back before Changed.
+
+New earmark/quantity kinds and newly used nth/last weekday, second monthly day, weekend/holiday shift, contract or
+auto-post tools require the confirmed Advanced capability. Retained tool and historical metadata corrections stay
+available without enabling paid new work. Exact membership remains required; expired-host corrections do not run
+a new-capacity check. No Simple/Advanced, UI language or regional calendar is used as a commercial right.
+
+45 added real SQLite cases pass; main suite 1,695, App.Tests 299 unchanged. Tests preserve complete stored rows,
+actual split ledger metadata and rollback after an occurrence move; independent providers compete for one slot.
+Current test-build registration remains inactive. No schema, SDK, permission, portable entitlement or visible change.
+ENT-02/03 contributions/allocations, occurrence work, other resources/import/restore/read-only/native routes and
+activation remain open. Final platform/APK/runtime evidence: [goal-plan-write-policy.md](quality/goal-plan-write-policy.md).
