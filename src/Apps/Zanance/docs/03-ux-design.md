@@ -722,3 +722,11 @@ An unsuccessful Undo shows the existing translated generic error dialog and pres
 Keep the actual command disabled through native feedback and list refresh; repeated invocation cannot execute a
 replacement offer while a dialog is open. Refresh only after successful Undo. A failed list reload after the
 write never reoffers an already committed Undo. D-126's visible ledger Save feedback remains open.
+
+## Undo after later financial changes (D-129)
+
+The short Undo offer restores its committed deletion, not caller-mutated objects. If retained refunds, partially
+restored siblings or account currencies changed, report failure through the existing guarded native command and
+preserve every newer edit. Keep the original deadline; do not silently move relationships or relabel money.
+Renaming/archiving an account still permits unchanged-currency recovery. A completed Undo remains completed.
+The native editor timing inside the short window is separate from installed conflict/error-delivery checks.

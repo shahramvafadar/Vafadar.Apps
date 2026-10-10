@@ -347,3 +347,10 @@ does not reoffer the committed operation. Real application-command SQLite tests 
 failure and retry; installed Release verifies the failure dialog with unchanged committed deletion and receipts.
 No schema, migration, compiled model, SDK, permission or portable-format change:
 [evidence](../../src/Apps/Zanance/docs/quality/transaction-undo-feedback.md).
+
+D-129 makes the short committed deletion container independent of callers and EF retry mutations. Keep original
+currencies and complete expected unlinked refund state only in that in-memory batch. Before restoring missing rows,
+compare semantic/creation identities and account currencies under the existing writer; stale dependencies reject
+the entire operation, preserving newer rows. Existing source-generated ledger metadata supports trimmed Release.
+This is not a new durable journal or portable format. Receipt rows/bytes and the established purge policy remain.
+No schema/migration/compiled-model/SDK/permission change: [evidence](../../src/Apps/Zanance/docs/quality/ledger-undo-conflicts.md).

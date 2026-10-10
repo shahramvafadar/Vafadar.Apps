@@ -1820,3 +1820,13 @@ followed by failed refresh never revives the consumed offer. Nine added cases/ma
 Strict builds/full signed APK and six installed Release language/theme failure flows:
 [evidence](../quality/transaction-undo-feedback.md). No schema, SDK, permission, caption/layout or activation changes.
 Later refund edits during Undo, visible ledger Save feedback and remaining commercial/external gates remain open.
+
+### 31.42. Immutable ledger Undo and changed financial dependencies (D-129 / AT-131)
+
+The original-file deletion batch owns independent row/tag copies and explicit expected refund metadata, creation
+identity and account currencies. Restore checks under the actual writer before row/occurrence writes; later edits,
+deletion/recreation, relinking, changed partial siblings or missing/changed-currency accounts reject the whole old
+operation with no Changed. Naming/archival retains recovery; complete restoration stays a no-op after later edits.
+18 added cases/main 1,972 pass; App.Tests 318. No schema, SDK, permission, portable entitlement or activation change.
+Strict builds/full signed APK and normal/conflicted installed flows: [evidence](../quality/ledger-undo-conflicts.md).
+Native edit timing inside the offer, visible ledger Save feedback and remaining commercial/external gates stay open.

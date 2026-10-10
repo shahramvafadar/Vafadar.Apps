@@ -300,3 +300,12 @@ The existing IAppInteraction port supplies native failure feedback; no fake MAUI
 algorithm is compiled in tests. One execution includes action, refresh and dialog. Non-fatal exceptions remain in
 that boundary; a failed action does not refresh and a committed action is never reoffered after refresh failure.
 No commercial grant/activation, schema, SDK or permission change. [Evidence](../../quality/transaction-undo-feedback.md).
+
+## 19. Original short Undo dependencies (D-129)
+
+Deletion captures original currencies and complete expected unlinked refund metadata under its actual writer.
+The in-memory container owns row/tag copies and returns copies; neither caller mutation nor failed auditing alters
+it. Restore validates existing siblings, refund semantic/creation identities and currency dependencies before inserts.
+Reject stale relationships as one whole operation, without writes/Changed. Reuse existing source-generated ledger
+comparison; no reflection serializer is introduced in trimmed builds. Account naming/archival retain corrections;
+complete batches remain no-ops. No activation/schema/SDK/permission change. [Evidence](../../quality/ledger-undo-conflicts.md).

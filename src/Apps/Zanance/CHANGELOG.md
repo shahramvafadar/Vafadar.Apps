@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Safe Undo after financial changes (2026-10-10, D-129)
+
+- Refuse an outdated Undo after a refund or related split row changes, preserving the newer edits.
+- Prevent old amounts from being restored in a changed account currency.
+- Keep the original deleted rows independent of caller changes; account naming/archival still permits recovery.
+
 ### Fixed - Undo failure feedback (2026-10-10, D-128)
 
 - Show the normal translated error message when Undo fails and keep retry within its original deadline.

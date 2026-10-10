@@ -455,3 +455,9 @@ original retry deadline and blocking repeated invocation through pending feedbac
 main 1,954 / App.Tests 317 pass. Six normal installed Release failure flows retain committed financial data and
 receipt bytes. No activation changes. Later refund edits during Undo and visible ledger Save feedback remain open:
 [quality evidence](../../quality/transaction-undo-feedback.md).
+
+D-129 makes short ledger Undo snapshots independent of returned mutable rows and rejects obsolete refund,
+partial-group and account-currency dependencies before writes. 18 added cases/main 1,972 pass; App.Tests 318.
+Normal/conflicted installed Release checks preserve complete data/receipts; current enforcement stays inactive.
+Native editor timing, visible ledger Save feedback and remaining ENT-02/03/04/external gates remain open:
+[quality evidence](../../quality/ledger-undo-conflicts.md).

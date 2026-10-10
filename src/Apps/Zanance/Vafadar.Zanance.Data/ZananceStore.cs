@@ -1194,8 +1194,18 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
         // D-127: return exact refund links with the file-bound deletion; receipts retain their existing orphan policy.
         var deletedIds = deleted.Select(e => e.Id).ToList();
-        var refundLinks = await db.Entries.Where(e => e.RefundOfId != null && deletedIds.Contains(e.RefundOfId.Value) && !deletedIds.Contains(e.Id))
-            .Select(e => new DeletedRefundLink(e.Id, e.RefundOfId!.Value)).ToListAsync(cancellationToken);
+        var refunds = await db.Entries.AsNoTracking().Where(e => e.RefundOfId != null && deletedIds.Contains(e.RefundOfId.Value)
+            && !deletedIds.Contains(e.Id)).ToListAsync(cancellationToken);
+        var refundLinks = refunds.Select(refund =>
+        {
+            var expected = refund.Copy();
+            expected.RefundOfId = null; // SQLite's delete action unlinks the retained row; all its other metadata must remain.
+            return new DeletedRefundLink(refund.Id, refund.RefundOfId!.Value, expected);
+        }).ToList();
+        var accountIds = deleted.Concat(refunds).SelectMany(e => e.ToAccountId is { } destination
+            ? new[] { e.AccountId, destination } : new[] { e.AccountId }).Distinct().ToList();
+        var currencies = await db.Accounts.AsNoTracking().Where(a => accountIds.Contains(a.Id))
+            .ToDictionaryAsync(a => a.Id, a => a.CurrencyCode, cancellationToken);
         db.Entries.RemoveRange(deleted);
 
         // A deleted settlement reopens its occurrence; automatic posting must not bring it back (REC-18, AT-31). A deleted
@@ -1219,7 +1229,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await write.CommitAsync(cancellationToken);
 
         OnChanged();
-        return new DeletedLedgerEntries(file, deleted, refundLinks);
+        return new DeletedLedgerEntries(file, deleted, refundLinks, currencies);
     }
 
     /// <summary>Re-inserts deleted entries unchanged (undo of <see cref="DeleteEntryAsync"/>).</summary>
@@ -1234,16 +1244,15 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
         var list = entries.DistinctBy(e => e.Id).ToList();
-        var restoredIds = new HashSet<Guid>();
-        foreach (var entry in list)
+        var ids = list.Select(e => e.Id).ToList();
+        var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
+        var missing = list.Where(e => !existing.ContainsKey(e.Id)).ToList();
+        if (missing.Count == 0) return;
+        if (deleted is not null) await ValidateDeletionSnapshotAsync(db, deleted, list, existing, cancellationToken);
+        var restoredIds = missing.Select(e => e.Id).ToHashSet();
+        foreach (var entry in missing)
         {
-            if (await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
-            {
-                continue;
-            }
-
             db.Entries.Add(entry);
-            restoredIds.Add(entry.Id);
             if (!entry.IsPartialPayment && entry.ScheduleId is { } scheduleId && entry.OccurrenceDate is { } original)
             {
                 var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == scheduleId && s.OriginalDate == original, cancellationToken);
@@ -1259,7 +1268,6 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         // Refunds that lost their purchase with the deletion are linked again.
-        if (restoredIds.Count == 0) return;
         var relink = deleted?.RefundLinks.Where(l => restoredIds.Contains(l.PurchaseId)).ToList() ?? [];
         foreach (var link in relink)
         {
@@ -1276,15 +1284,49 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         OnChanged();
     }
 
+    /// <summary>Rejects an obsolete short Undo before inserting rows or reapplying its explicit refund relationships.</summary>
+    private static async Task ValidateDeletionSnapshotAsync(ZananceDbContext db, DeletedLedgerEntries deleted,
+        IReadOnlyList<LedgerEntry> entries, IReadOnlyDictionary<Guid, LedgerEntry> existing, CancellationToken cancellationToken)
+    {
+        // D-129: partial recovery must not combine old missing rows with a newly edited sibling.
+        if (entries.Any(e => existing.TryGetValue(e.Id, out var current) && !SameDeletedEntry(current, e)))
+            throw new InvalidOperationException("The deleted group changed after deletion; Undo requires review.");
+
+        var accountIds = deleted.Currencies.Keys.ToList();
+        var currencies = await db.Accounts.AsNoTracking().Where(a => accountIds.Contains(a.Id))
+            .ToDictionaryAsync(a => a.Id, a => a.CurrencyCode, cancellationToken);
+        if (deleted.Currencies.Any(pair => !currencies.TryGetValue(pair.Key, out var currency)
+            || !string.Equals(currency, pair.Value, StringComparison.OrdinalIgnoreCase)))
+            throw new InvalidOperationException("An account currency changed after deletion; Undo requires review.");
+
+        var refundIds = deleted.RefundLinks.Where(link => !existing.ContainsKey(link.PurchaseId)).Select(link => link.RefundId).ToList();
+        var refunds = await db.Entries.AsNoTracking().Where(e => refundIds.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
+        foreach (var link in deleted.RefundLinks.Where(link => !existing.ContainsKey(link.PurchaseId)))
+        {
+            if (!refunds.TryGetValue(link.RefundId, out var current) || !SameDeletedEntry(current, link.Expected))
+                throw new InvalidOperationException("A retained refund changed after deletion; Undo requires review.");
+        }
+    }
+
+    /// <summary>Compares complete semantic metadata and creation identity, allowing only subsequent audit updates.</summary>
+    private static bool SameDeletedEntry(LedgerEntry current, LedgerEntry expected) =>
+        current.CreatedAt == expected.CreatedAt && SameEntry(current, expected);
+
     /// <summary>An explicit stored refund relationship captured by a committed deletion, never guessed from amounts.</summary>
     /// <param name="RefundId">The retained refund entry.</param>
     /// <param name="PurchaseId">The deleted purchase it referenced.</param>
-    private sealed record DeletedRefundLink(Guid RefundId, Guid PurchaseId);
+    /// <param name="Expected">Complete expected unlinked refund metadata for rejecting later edits.</param>
+    private sealed record DeletedRefundLink(Guid RefundId, Guid PurchaseId, LedgerEntry Expected);
 
     /// <summary>Retains the original file, entries and explicit refund links for the application's short Undo offer.</summary>
     private sealed class DeletedLedgerEntries(string file, IReadOnlyList<LedgerEntry> entries,
-        IReadOnlyList<DeletedRefundLink> refundLinks) : IReadOnlyList<LedgerEntry>
+        IReadOnlyList<DeletedRefundLink> refundLinks, IReadOnlyDictionary<Guid, string> currencies) : IReadOnlyList<LedgerEntry>
     {
+        private readonly IReadOnlyList<LedgerEntry> _entries = entries.Select(entry => entry.Copy()).ToArray();
+
+        /// <summary>Gets the original currencies; an empty account cannot relabel old minor units during Undo.</summary>
+        public IReadOnlyDictionary<Guid, string> Currencies { get; } = currencies;
+
         /// <summary>Gets the actual database file that committed the deletion.</summary>
         public string File { get; } = file;
 
@@ -1292,13 +1334,13 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         public IReadOnlyList<DeletedRefundLink> RefundLinks { get; } = refundLinks;
 
         /// <summary>Gets the number of deleted entries.</summary>
-        public int Count => entries.Count;
+        public int Count => _entries.Count;
 
         /// <summary>Gets a deleted entry in its original order.</summary>
-        public LedgerEntry this[int index] => entries[index];
+        public LedgerEntry this[int index] => _entries[index].Copy();
 
         /// <summary>Enumerates the unchanged deleted entries.</summary>
-        public IEnumerator<LedgerEntry> GetEnumerator() => entries.GetEnumerator();
+        public IEnumerator<LedgerEntry> GetEnumerator() => _entries.Select(entry => entry.Copy()).GetEnumerator();
 
         /// <summary>Enumerates the unchanged deleted entries.</summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();

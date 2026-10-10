@@ -1192,3 +1192,21 @@ trigger; actual dismissal and navigation remain responsive. Restore exact origin
 English/theme choices. No production fault switch, schema, permission, SDK, caption/layout or activation change.
 [Evidence](quality/transaction-undo-feedback.md). Later refund edits during an outstanding Undo and D-126
 bottom-of-form SaveError remain separate follow-ups.
+
+## D-129 - Immutable ledger Undo and stale financial relationship checks (2026-10-10)
+
+Five real SQLite regressions show old Undo relinking a refund after amount/kind/account changes, relabeling minor
+units after the now-empty account changes currency, and accepting caller mutation of the returned deleted rows.
+The file-bound committed batch now owns independent row/tag copies and retains expected complete unlinked refund
+metadata, creation identity and original source/destination account currencies. Indexes/enumeration return copies.
+Under the same actual writer, before inserts or occurrence changes, reject a changed/missing/recreated retained
+refund or changed partially restored sibling, and missing/changed-currency accounts. Reject the entire operation
+without writing or Changed. Ignore only subsequent UpdatedAt auditing, with CreatedAt checked independently.
+Account naming/archival does not block recovery; fully restored batches remain no-ops after later edits. Existing
+plain row enumerables retain row-only recovery, without this committed-batch conflict provenance.
+
+17 Data cases and one actual application-command case are added; main 1,972 / App.Tests 318 pass. Strict builds,
+full signed Release, normal installed Delete/Undo preserving receipts/refund links and installed stale-refund
+guard/error feedback are verified. The native stale fixture uses an exact after-delete row update, not a claimed
+native edit completed during the eight-second offer. No schema, SDK, permission, portable data or activation change.
+[Evidence](quality/ledger-undo-conflicts.md). D-126 visible ledger Save feedback and remaining ENT-02/03/04 stay open.

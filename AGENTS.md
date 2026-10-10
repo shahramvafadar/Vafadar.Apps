@@ -718,3 +718,16 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Review installed Release failure dialogs using a trigger only in the exact owned fictitious sample database;
   retain complete row/receipt comparisons and restore original bytes/display choices. No production fault switch.
 * Later refund edits during Undo, visible ledger Save feedback and remaining commercial paths stay unfinished.
+
+## 61. Immutable short ledger Undo and later financial edits (D-129)
+
+* The committed deletion batch owns independent entry/tag copies; indexes and enumeration return fresh copies.
+  Caller mutation or failed EF auditing cannot alter the original snapshot. Retain explicit refund expectations,
+  creation identity and account currencies in this short in-memory batch, never receipt bytes or a portable journal.
+* Before any restore write, compare current retained refunds and partially restored siblings under the same writer.
+  Reject the entire obsolete Undo after edits, deletion/recreation or explicit relinking; preserve every later row.
+  Compare complete semantic metadata plus CreatedAt, allowing only UpdatedAt auditing. Do not guess a relationship.
+* Account currency changes or missing accounts require review; naming/archival alone still permit owned recovery.
+  Fully restored batches remain no-ops after later edits. Plain row enumeration keeps its established row-only path.
+* Native conflict fixtures edit only exact fictitious refund rows from an after-delete trigger. They prove the
+  installed guard and error delivery, not native editor timing inside the eight-second window. Restore original data.

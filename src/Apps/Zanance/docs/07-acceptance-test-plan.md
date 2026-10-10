@@ -827,3 +827,13 @@ guard recovery; real SQLite failed Undo and complete refund/receipt retry with a
 App.Tests 317 pass. Strict Windows/Android, full signed APK and actual installed en/fa/de light/dark failure dialog,
 dismissal/navigation and unchanged committed deletion: [evidence](quality/transaction-undo-feedback.md).
 Native retry within the short deadline, phone/iOS and other commercial paths are not inferred from these checks.
+
+## AT-131 - Immutable short Undo and later financial state (D-129)
+
+17 Data cases cover three retained refund financial edits, account currency, returned row/tag mutation, four
+metadata edits, deleted/recreated refund identity, explicit relinking, transfer destination currency, unchanged/
+changed partial group recovery, post-completion no-op and renamed/archived-account recovery. One actual command
+case verifies stale-refund feedback, no financial write/refresh, original deadline and subsequent expiry.
+Main 1,972 / App.Tests 318 pass. Strict platforms/full signed APK, normal installed Delete/Undo and installed
+stale-refund guard with unchanged committed rows/receipts: [evidence](quality/ledger-undo-conflicts.md).
+Native editor timing, physical device/iOS and remaining commercial paths are not inferred from the fixture.
