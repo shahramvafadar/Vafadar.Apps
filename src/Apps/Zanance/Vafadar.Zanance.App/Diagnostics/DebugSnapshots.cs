@@ -387,6 +387,7 @@ internal static partial class DebugSnapshots
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
+            ("entry-save-feedback", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),
             ("entry-detail", AppShell.EntryDetailRoute, new() { ["id"] = expenseId }),
             ("receipt-found", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = accountId,
                 ["receipt"] = Core.Receipts.ReceiptParser.Parse("Market Example\n28.09.2026\nSUMME 4,10 EUR (inkl. MwSt. 0,27)") }),
@@ -685,6 +686,8 @@ internal static partial class DebugSnapshots
                 { await ReviewDestinationFeeRetentionAsync(app, services, folder, language); }
                 if (name == "entry-validation")
                 { await ReviewEntryValidationAsync(app, services, folder, language); }
+                if (name == "entry-save-feedback")
+                { await ReviewEntrySaveFeedbackAsync(app, services, folder, language, expenseId); }
                 if (name == "plan-validation")
                 { await ReviewPlanValidationAsync(app, services, folder, language); }
                 if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)

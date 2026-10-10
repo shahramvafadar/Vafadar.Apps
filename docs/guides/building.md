@@ -452,3 +452,13 @@ checks actual native wrapping/glyph/viewport geometry and invokes original selec
 It restores full drafts/choice state/rule hints and compares complete stored rows; snapshots never activate the
 own native AppWindow. Native stored-name fixture review may prepare/restore only its exact independently owned
 sample database, never profile or security storage. See [evidence](../../src/Apps/Zanance/docs/quality/entry-category-captions.md).
+
+## Entry Save-feedback review (D-130)
+
+The Debug-only entry-save-feedback snapshot route edits the walk-through's fictitious purchase below its refund,
+invokes the actual native Save/retry and an exact sample update trigger, and verifies every stored table/receipt
+value and the reviewed draft fields. The trigger is removed in finally. It measures full realized error glyphs/names
+and the existing enabled Save target at both native scroll ends, then checks stale-feedback clearing. Use
+Run-Snapshots.ps1 -Only entry-save-feedback with the existing language/theme/size/process-local font options.
+Capture only the hidden application's own rendered root; no device/OS setting or desktop-input change.
+[evidence](../../src/Apps/Zanance/docs/quality/entry-save-feedback-visible.md).

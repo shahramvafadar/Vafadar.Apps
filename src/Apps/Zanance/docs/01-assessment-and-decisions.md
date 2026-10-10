@@ -1210,3 +1210,14 @@ full signed Release, normal installed Delete/Undo preserving receipts/refund lin
 guard/error feedback are verified. The native stale fixture uses an exact after-delete row update, not a claimed
 native edit completed during the eight-second offer. No schema, SDK, permission, portable data or activation change.
 [Evidence](quality/ledger-undo-conflicts.md). D-126 visible ledger Save feedback and remaining ENT-02/03/04 stay open.
+
+## D-130 - Visible transaction Save failures beside the fixed action (2026-10-10)
+
+D-126's installed purchase correction correctly rejects an amount below retained refunds, but its SaveError is
+at the bottom of the long Advanced scroll body. Move that existing label into the fixed growing footer before
+the existing effect/Save action, retaining full wrapping text, native scaling and an explicit complete spoken name.
+No Save continuation, draft, validation rule, receipt-unit guard or financial algorithm changes. Existing input
+errors still appear at their fields and reveal the first affected input; a later Save clears stale general feedback.
+The review uses actual native Save for ledger rejection/retry and exact sample SQLite failure, comparing every
+persisted table column/receipt and the reviewed editor fields. See [evidence](quality/entry-save-feedback-visible.md).
+No schema, SDK, permission, portable preference or commercial activation changes; remaining delivery stays open.

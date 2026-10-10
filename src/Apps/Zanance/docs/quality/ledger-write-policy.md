@@ -88,3 +88,10 @@ ZIP integrity, full ARM64/x86_64 assembly stores/app AOT, non-debuggable pro.vaf
 unchanged cloud permissions and v2/v3 signature pass. Local test signing is not production signing.
 Evidence: artifacts/ledger-policy-apk-proof.json. Emulator/build evidence is not physical-phone, iOS, OAuth,
 store or product-release acceptance. Remaining ENT-02/03/04, billing, encryption and external gates remain open.
+
+## Subsequent immediate Save feedback (D-130)
+
+The installed manual-scroll UX limitation recorded above is addressed by the existing SaveError moving into the
+fixed growing footer. Actual native error geometry/draft/complete-data evidence is recorded separately in
+[entry-save-feedback-visible.md](entry-save-feedback-visible.md); D-126's earlier data-only result alone did not
+prove immediate feedback. Financial calculations and Save validation remain unchanged.

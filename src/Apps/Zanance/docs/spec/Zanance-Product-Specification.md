@@ -1830,3 +1830,12 @@ operation with no Changed. Naming/archival retains recovery; complete restoratio
 18 added cases/main 1,972 pass; App.Tests 318. No schema, SDK, permission, portable entitlement or activation change.
 Strict builds/full signed APK and normal/conflicted installed flows: [evidence](../quality/ledger-undo-conflicts.md).
 Native edit timing inside the offer, visible ledger Save feedback and remaining commercial/external gates stay open.
+
+### 31.43. Immediate transaction Save feedback (D-130 / AT-132)
+
+Existing general entry Save failures now occupy the fixed growing footer beside the original Save action,
+with complete scalable wrapping text and a spoken description. D-126's manual-scroll feedback limitation is
+resolved by native geometry/draft/data checks, independently of its earlier ledger-policy evidence. No financial
+algorithm, schema, SDK, permission, export or commercial activation changes. Main suite remains 1,972 passing
+cases (App.Tests 318); native acceptance is separate: [evidence](../quality/entry-save-feedback-visible.md).
+Remaining ENT-02/03/04 and owner/provider/security/device/release gates remain open.

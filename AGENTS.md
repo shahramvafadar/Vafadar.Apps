@@ -731,3 +731,14 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Fully restored batches remain no-ops after later edits. Plain row enumeration keeps its established row-only path.
 * Native conflict fixtures edit only exact fictitious refund rows from an after-delete trigger. They prove the
   installed guard and error delivery, not native editor timing inside the eight-second window. Restore original data.
+
+## 62. Visible transaction Save failures (D-130)
+
+* Keep Entry SaveError in the growing fixed footer beside the original Save action, outside the body viewport.
+  Retain complete wrapping/scalable text and spoken description. Ledger rejection, storage failure and receipt-unit
+  review use the existing error value; field-adjacent input errors keep their established reveal behavior.
+* A rejected Save preserves the complete draft and stored rows. Retrying still requires explicit Save; the next
+  input-validation attempt clears obsolete general feedback. No alert, focus replacement or new write is introduced.
+* The entry-save-feedback Debug route invokes actual native Save on fictitious rows, reads complete table/receipt
+  values, and checks error glyphs/names plus the enabled 44 px Save at both native scroll ends. The exact sample
+  trigger is Debug review only and is removed in finally. Full Release review uses only the owned sample database.

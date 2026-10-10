@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Visible transaction Save feedback (2026-10-10, D-130)
+
+- Show rejected transaction saves beside the Save button, without requiring a search at the bottom of the form.
+- Keep the complete message readable and preserve unsaved inputs for correction or explicit retry.
+
 ### Fixed - Safe Undo after financial changes (2026-10-10, D-129)
 
 - Refuse an outdated Undo after a refund or related split row changes, preserving the newer edits.

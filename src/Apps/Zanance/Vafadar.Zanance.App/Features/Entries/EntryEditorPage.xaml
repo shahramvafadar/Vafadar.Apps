@@ -327,14 +327,16 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
-                       IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
             </VerticalStackLayout>
         </ScrollView>
 
         <!-- What saving does, said before Save (ZEX-S0103, S0204); Save waits for an account -->
         <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="6"
                              IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
+            <!-- D-130: a rejected Save stays visible beside its action at every form scroll position. -->
+            <Label x:Name="SaveErrorLabel" Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
+                   LineBreakMode="WordWrap" SemanticProperties.Description="{Binding SaveError}"
+                   IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
             <Label Text="{Binding EffectText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center"
                    IsVisible="{Binding EffectText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{Binding EffectText}" />
             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"

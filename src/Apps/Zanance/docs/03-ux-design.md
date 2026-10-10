@@ -730,3 +730,10 @@ restored siblings or account currencies changed, report failure through the exis
 preserve every newer edit. Keep the original deadline; do not silently move relationships or relabel money.
 Renaming/archiving an account still permits unchanged-currency recovery. A completed Undo remains completed.
 The native editor timing inside the short window is separate from installed conflict/error-delivery checks.
+
+## Transaction Save feedback remains with Save (D-130)
+
+General entry Save failures belong to the fixed growing footer, before the effect and original Save action.
+A rejected purchase correction, a storage failure or receipt-unit review must be visible at either body scroll
+position, with complete wrapping/scalable text and a complete accessible name. Keep field errors beside inputs
+and their existing reveal behavior. Preserve every unsaved value and allow only explicit retry or discard.

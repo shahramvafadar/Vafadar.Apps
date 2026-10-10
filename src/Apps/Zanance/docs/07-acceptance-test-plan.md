@@ -837,3 +837,12 @@ case verifies stale-refund feedback, no financial write/refresh, original deadli
 Main 1,972 / App.Tests 318 pass. Strict platforms/full signed APK, normal installed Delete/Undo and installed
 stale-refund guard with unchanged committed rows/receipts: [evidence](quality/ledger-undo-conflicts.md).
 Native editor timing, physical device/iOS and remaining commercial paths are not inferred from the fixture.
+
+## AT-132 - Transaction Save failures visible without searching (D-130)
+
+The actual Windows modal/native Invoke checks a purchase correction below its retained refund, explicit retry,
+exact sample SQLite update failure, and subsequent input validation clearing the obsolete SaveError. At both
+native body scroll ends, check full realized glyphs/spoken name and the enabled original Save target of at least
+44 px; compare reviewed draft fields and all persisted rows/receipt bytes. The installed full Release repeats these
+paths, cancellation/discard and exact owned-data restoration. [Evidence](quality/entry-save-feedback-visible.md).
+No duplicated editor algorithm or control fake is introduced. Device/iOS/screen-reader acceptance remains open.

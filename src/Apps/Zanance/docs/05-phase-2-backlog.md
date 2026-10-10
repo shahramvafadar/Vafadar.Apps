@@ -393,3 +393,9 @@ partial-group and account-currency dependencies before writes. 18 added cases/ma
 Normal/conflicted installed Release checks preserve complete data/receipts; current enforcement stays inactive.
 Native editor timing, visible ledger Save feedback and remaining ENT-02/03/04/external gates remain open:
 [quality evidence](quality/ledger-undo-conflicts.md).
+
+D-130 delivers the observed D-126 Save-feedback follow-up: existing general transaction errors stay beside
+fixed Save, with native scalable wrapping text and complete spoken names. Explicit rejected Save/retry/storage
+failure retain reviewed draft fields and stored rows; field validation clears obsolete general feedback. No data,
+permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 and external gates stay open:
+[evidence](quality/entry-save-feedback-visible.md).
