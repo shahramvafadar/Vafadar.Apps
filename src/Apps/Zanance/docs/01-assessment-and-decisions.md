@@ -925,3 +925,12 @@ Recheck account availability/currency and share the receipt-unit guard. The reco
 Fourteen new cases pass (main 1,535/App.Tests 299); initial native expense/income/transfer and invalid-input checks
 pass. Final Windows/native presentation, strict builds, normal signed Release explicit Plan Save/cleanup and
 exact original-data readbacks pass: [quality/entry-repeat-draft.md](quality/entry-repeat-draft.md).
+
+## D-112 - Retain full entry reads after a bounded enumeration comparison (2026-10-10)
+
+QA-06 compared the current async EF query with synchronous enumeration inside the same worker/context boundary.
+Full ordered packets, date-bound results and fictitious stored rows match. The tenfold candidate is slower in
+four of seven pairs, with effectively unchanged allocation despite a lower median. Retain production behavior;
+do not infer Android or cold-start improvement or repeat without a new measured cause. Documentation only;
+D-111 tests/build/native/APK evidence remains the app baseline. See
+[quality/entry-read-enumeration-comparison.md](quality/entry-read-enumeration-comparison.md).

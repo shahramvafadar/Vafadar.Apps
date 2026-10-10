@@ -1508,6 +1508,12 @@ pass; final financial/presentation matrices, strict builds, normal signed Releas
 exact original-data readbacks and signed APK pass: [quality/entry-repeat-draft.md](../quality/entry-repeat-draft.md).
 Phone/iOS/OS-reader/provider and release acceptance remains separate.
 
+QA-06 follow-up D-112 (2026-10-10): a bounded full-entry enumeration comparison preserves complete ordered
+packets and stored fictitious data, but the synchronous candidate is slower in four of seven tenfold pairs and
+does not reduce allocation. No production change is adopted. D-111's 1,535-test/App.Tests 299, native, strict-build
+and signed APK evidence remains the app baseline. See
+[quality/entry-read-enumeration-comparison.md](../quality/entry-read-enumeration-comparison.md); QA-06 remains partial.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

@@ -369,3 +369,9 @@ Plan without saving a transaction, with complete original draft retention and no
 cases, final financial/presentation matrices, strict builds, normal signed Release Plan Save/cleanup, exact
 original-data readbacks and complete signed APK pass:
 [entry-repeat-draft.md](../../quality/entry-repeat-draft.md). Continue ready work under D-69 after verified delivery.
+
+D-112 closes a bounded QA-06 enumeration experiment without adopting an unreliable candidate. Complete values
+and stored rows match; paired timing/allocation do not establish a dependable gain. Retain D-111's verified app
+baseline and avoid repeated optimization trials without a new cause. SEC-07 still requires the explicit OD-10
+OS-backup policy decision; the remaining library/recovery/provider/market/commercial/platform gates remain open.
+Evidence: [entry-read-enumeration-comparison.md](../../quality/entry-read-enumeration-comparison.md).

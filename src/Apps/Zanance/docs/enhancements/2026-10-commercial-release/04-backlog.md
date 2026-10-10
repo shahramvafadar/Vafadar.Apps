@@ -538,3 +538,9 @@ source; changed results and fresh snapshots still publish. Actual tenfold warm p
 Nine new behavior cases pass (main 1,521/App.Tests 285); six native Windows contexts/186 renders, strict builds,
 normal Release, exact original-data readbacks and complete signed APK pass:
 [unchanged-transaction-source.md](../../quality/unchanged-transaction-source.md). QA-06 stays partial.
+
+D-112 tests one remaining entry-materialization hypothesis without changing production code: synchronous EF
+enumeration inside the existing worker retains complete ordered packets/date bounds, but is slower in four of
+seven tenfold pairs and does not reduce allocation. The candidate is not adopted and is not repeated without a
+new measured cause. D-111 remains the app/test/native/APK baseline; QA-06 stays partial:
+[entry-read-enumeration-comparison.md](../../quality/entry-read-enumeration-comparison.md).
