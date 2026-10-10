@@ -170,6 +170,7 @@
                         <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
                         <v:DateField Date="{Binding Date}" />
 
+
                         <VerticalStackLayout IsVisible="{Binding IsTransfer}">
                             <Label Text="{v:Translate Entry_ToAccount}" Style="{StaticResource FieldLabel}" />
                             <Picker x:Name="ToAccountInput" ItemsSource="{Binding ToAccounts}" SelectedItem="{Binding ToAccount}" SemanticProperties.Description="{v:Translate Entry_ToAccount}" />
@@ -209,6 +210,14 @@
                 </Border>
 
                 <!-- More details -->
+                <VerticalStackLayout x:Name="RepeatDraftPanel" IsVisible="{Binding ShowRepeat}" Spacing="6" Margin="0,12,0,0">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <p:WrappingAction Text="{v:Translate Entry_Repeat}" Command="{Binding RepeatCommand}" IsEnabled="{Binding CanSave}" />
+                        <v:HelpButton Grid.Column="1" Topic="EntryRepeat" />
+                    </Grid>
+                    <Label Text="{v:Translate Entry_RepeatHint}" Style="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+
                 <VerticalStackLayout x:Name="EntryDetailsActionGroup" Spacing="0">
                     <!-- D-90: name the current action; hiding details retains every value in the open draft. -->
                     <p:WrappingAction Text="{v:Translate Entry_HideDetails}" Appearance="Text" HorizontalOptions="Start"

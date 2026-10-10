@@ -1498,6 +1498,16 @@ main 1,521/App.Tests 285. Six native Windows contexts/186 own renders, strict bu
 exact original-data readbacks and complete signed APK pass:
 [quality/unchanged-transaction-source.md](../quality/unchanged-transaction-source.md). No cold/device/ANR acceptance.
 
+### 31.27. Repeat from a new transaction draft (D-111 / OD-12 / AT-116)
+
+The owner approved an in-memory prefilled Plan from a new transaction, without posting it. Monthly anchors to the
+selected first date/calendar; disabled posting/reminders, explicit Save and complete original draft retention remain.
+Currency/account changes require explicit re-entry. Unsupported transaction details are disclosed and retained.
+Fourteen new cases pass: main 1,535/App.Tests 299. Initial native expense/income/transfer and invalid amount checks
+pass; final financial/presentation matrices, strict builds, normal signed Release explicit Plan Save/cleanup,
+exact original-data readbacks and signed APK pass: [quality/entry-repeat-draft.md](../quality/entry-repeat-draft.md).
+Phone/iOS/OS-reader/provider and release acceptance remains separate.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

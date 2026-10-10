@@ -5722,4 +5722,22 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Settlement_NoAdvances" xml:space="preserve">
     <value>Aucun acompte n’a été enregistré pour ce plan pendant cette période. Choisissez une période comprenant ses paiements.</value>
   </data>
+  <data name="Entry_Repeat" xml:space="preserve">
+    <value>Répéter…</value>
+  </data>
+  <data name="Entry_RepeatHint" xml:space="preserve">
+    <value>Ouvrez un plan avec ces valeurs. Aucune transaction n’est enregistrée.</value>
+  </data>
+  <data name="Help_EntryRepeat_Title" xml:space="preserve">
+    <value>Répéter une transaction</value>
+  </data>
+  <data name="Help_EntryRepeat_Text" xml:space="preserve">
+    <value>Répéter ouvre un nouveau plan avec le montant, les comptes, la date choisie, le titre, la catégorie et la note de ce formulaire. La fréquence mensuelle est sélectionnée au départ ; vérifiez la fréquence, le calendrier et les dates réelles avant d’enregistrer. La date choisie est la première échéance, pas une transaction déjà payée. Ouvrir le plan n’enregistre aucun mouvement d’argent et l’enregistrement automatique est désactivé par défaut. Votre brouillon d’origine reste disponible à votre retour. Les frais, les fichiers de reçus, les étiquettes et les autres détails propres à la transaction restent dans ce brouillon et ne sont pas copiés dans le plan.</value>
+  </data>
+  <data name="Help_EntryRepeat_Example" xml:space="preserve">
+    <value>Avec le calendrier grégorien, saisissez un loyer de 900 EUR dû le 15 octobre, puis choisissez Répéter. Vérifiez les dates mensuelles, notamment le 15 novembre, avant d’enregistrer le plan. Son ouverture n’enregistre ni paiement ni transaction.</value>
+  </data>
+  <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
+    <value>Un compte ou sa devise a changé. Choisissez les comptes et saisissez de nouveau le montant ; votre brouillon d’origine reste disponible à votre retour.</value>
+  </data>
 </root>

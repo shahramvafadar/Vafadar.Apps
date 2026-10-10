@@ -914,3 +914,14 @@ sources; mutable selection and all financial behavior remain. Actual 100,000-ent
 verification passes: six native Windows contexts/186 own renders, strict builds, normal signed Release, exact
 original 24-table readbacks across three fictitious profiles and complete signed APK. Evidence:
 [quality/unchanged-transaction-source.md](quality/unchanged-transaction-source.md).
+
+## D-111 - Repeat from a new transaction without posting it (2026-10-10)
+
+OD-12 was explicitly approved by the owner: open a prefilled Plan from a new transaction draft, without recording
+money. Use a real growing action after the complete basic fields. Validate existing base monetary inputs, carry
+positive minor units/currency identity in memory, anchor Monthly to the selected first date/calendar and leave
+automatic posting/reminders off. Keep original unsaved details on return and disclose fields not copied to plans.
+Recheck account availability/currency and share the receipt-unit guard. The recorded-entry path is unchanged.
+Fourteen new cases pass (main 1,535/App.Tests 299); initial native expense/income/transfer and invalid-input checks
+pass. Final Windows/native presentation, strict builds, normal signed Release explicit Plan Save/cleanup and
+exact original-data readbacks pass: [quality/entry-repeat-draft.md](quality/entry-repeat-draft.md).

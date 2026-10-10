@@ -344,6 +344,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     /// <summary>Gets a value indicating whether Save can be used now.</summary>
     public bool CanSave => !IsBusy && Account is not null;
 
+    /// <summary>Gets whether this new supported transaction can open a detached repeating-plan draft.</summary>
+    public bool ShowRepeat => _isNew && Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Transfer;
+
     /// <summary>Gets the effect of saving, e.g. "−25.00 EUR from Main" (ZEX-S0103, S0204); nothing changes before Save.</summary>
     [ObservableProperty]
     public partial string? EffectText { get; set; }
@@ -904,6 +907,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     private void UpdateKindState()
     {
+        OnPropertyChanged(nameof(ShowRepeat));
         IsTransfer = Kind == EntryKind.Transfer;
         IsExpense = Kind == EntryKind.Expense;
         ShowCategories = Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Refund or EntryKind.IncomeReversal;
@@ -1138,6 +1142,61 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         return originals;
     }
 
+    /// <summary>Opens the plan editor with detached supported values; neither navigation nor validation saves money.</summary>
+    [RelayCommand]
+    private async Task RepeatAsync()
+    {
+        if (!ShowRepeat || !CanSave || Account is null) { return; }
+        SaveError = null;
+        if (!CheckReceiptDisplayUnit()) { return; }
+        var validation = EntryDraftValidation.Validate(new EntryValidationInput
+        {
+            Kind = Kind, AccountId = Account.Id, CurrencyCode = CurrencyCode, AmountText = AmountText,
+            DestinationId = ToAccount?.Id, DestinationCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode,
+            DestinationAmountRequired = ShowToAmount, DestinationAmountText = ToAmountText,
+        }, _localization.CurrentCulture);
+        string? Text(string? key) => key is null ? null : _translator[key];
+        AccountError = Text(validation.AccountErrorKey);
+        AmountError = Text(validation.AmountErrorKey);
+        ToAccountError = Text(validation.DestinationErrorKey);
+        ToAmountError = Text(validation.DestinationAmountErrorKey);
+        if (validation.HasErrors || validation.Amount is null)
+        {
+            ValidationFailed?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        var draft = new EntryPlanDraft
+        {
+            Kind = Kind, AccountId = Account.Id, CurrencyCode = Account.CurrencyCode, Amount = validation.Amount.Value,
+            Date = Date, Name = string.IsNullOrWhiteSpace(EntryTitle)
+                ? Kind == EntryKind.Transfer ? _translator["EntryKind_Transfer"]
+                    : _categories.Name(Categories.FirstOrDefault(category => category.IsSelected)?.Id) : EntryTitle.Trim(),
+            CategoryId = Categories.FirstOrDefault(category => category.IsSelected)?.Id, Note = Note,
+            ToAccountId = ToAccount?.Id, ToCurrencyCode = ToAccount?.CurrencyCode, ToAmount = validation.DestinationAmount,
+        };
+        IsBusy = true;
+        try
+        {
+            // The original editor stays on the navigation stack with its complete unsaved draft and attachments.
+            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute,
+                new Dictionary<string, object> { ["entryDraft"] = draft }));
+        }
+        finally { IsBusy = false; }
+    }
+
+    /// <summary>Prevents a receipt amount from being reinterpreted after a display-unit change in another form.</summary>
+    private bool CheckReceiptDisplayUnit()
+    {
+        if (Account is null) { return true; }
+        var displayFactor = DisplayUnits.TryGet(Account.CurrencyCode, out var receiptUnit) ? receiptUnit.Factor : 1;
+        if (_receiptAppliedText != AmountText || _receiptAppliedCurrency != Account.CurrencyCode || displayFactor == _receiptDisplayFactor)
+        { return true; }
+        ReceiptUnitNotice = _translator["Receipt_UnitChanged"];
+        SaveError = ReceiptUnitNotice;
+        return false;
+    }
+
     [RelayCommand]
     private async Task SaveAsync()
     {
@@ -1156,14 +1215,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
 
-        var displayFactor = DisplayUnits.TryGet(Account.CurrencyCode, out var receiptUnit) ? receiptUnit.Factor : 1;
-        if (_receiptAppliedText == AmountText && _receiptAppliedCurrency == Account.CurrencyCode && displayFactor != _receiptDisplayFactor)
-        {
-            // A display preference changed elsewhere while the form was open: never reinterpret the receipt digits.
-            ReceiptUnitNotice = _translator["Receipt_UnitChanged"];
-            SaveError = ReceiptUnitNotice;
-            return;
-        }
+        if (!CheckReceiptDisplayUnit()) { return; }
 
         // Keep the draft untouched while the valued-asset confirmation is pending (D-74 / ZEX-S0408).
         IsBusy = true;

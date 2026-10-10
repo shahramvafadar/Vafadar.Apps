@@ -16,7 +16,11 @@ as design values, languages last) are not asked again.
 | OD-09 | End-to-end encryption for shared spaces | Transport + storage encryption in the first Pro release; E2EE as a separate decision after the first release, with no E2EE claims before | ZCR-SHR-04 |
 | OD-10 | Android/iOS OS backup of app data | Exclude the database, safety copies and caches from OS backups until the database is encrypted (users rely on Zanance backups); revisit after SEC-02 | ZCR-SEC-07 |
 | OD-11 | Current status of Mac/Xcode, Apple account and OAuth client ids | Owner confirms; documents updated accordingly | ZCR-GOV-02 |
-| OD-12 | Recurring payments entry point | A "Repeat" switch in the new entry form that opens the plan editor pre-filled | ZCR-LOC-06 |
 | OD-13 | AI: credit packages, unit, minimum top-up, failed-request policy | Decide after a provider cost review; refund reserved credit on provider failure | ZCR-AI-01 |
 | OD-14 | Bank connection and online rates: markets and providers | Evaluate after the first release; never part of Lifetime | ZCR-BANK-01, ZCR-FX-01 |
 | OD-15 | Cloud storage per shared space | Set from the cost model (ZCR-ID-01); never "unlimited" | ZCR-SHR-01 |
+
+## Settled on 2026-10-10
+
+OD-12: the owner approved Repeat in the new transaction form, opening a prefilled Plan with the entered amount,
+account and selected date, without posting a transaction. This is an in-memory draft until explicit Save.

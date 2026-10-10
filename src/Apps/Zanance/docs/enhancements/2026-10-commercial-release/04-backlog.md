@@ -30,7 +30,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Proposed | owner translations |
-| ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Proposed | OD-12 |
+| ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
@@ -193,9 +193,11 @@ the same six IDs. Phone/iOS acceptance remains open. No SDK, permission or comme
 Scope: one help topic on holding sale results stating it is not a tax calculation. Texts: owner. Done: help shown.
 
 ### ZCR-LOC-06 – Recurring payments easier to find
-Value: the owner could not find recurring payments. Scope per OD-12 (proposal: a "Repeat" switch in the new entry
-form that opens the plan editor pre-filled, plus "Plans" mentioned in the + menu). Texts: owner. Done: snapshots in
-six languages; no change to plan logic.
+Value: the owner could not find recurring payments. OD-12 was approved on 2026-10-10: Repeat in a new transaction
+opens a prefilled Plan without recording a transaction. D-111 keeps the existing Home Add plan target, supplies
+six translated action/hint/help/error sets and preserves unchanged plan rules. Final native financial/presentation
+matrices, strict builds, normal signed Release Plan Save/cleanup, original-data readbacks and complete signed APK
+pass: [entry-repeat-draft.md](../../quality/entry-repeat-draft.md). Phone/iOS and other external gates remain open.
 
 ### ZCR-LOC-07/08 – Currencies and holidays
 Scope: currencies and holiday regions of the confirmed target markets, each holiday set with source and validity

@@ -5734,4 +5734,22 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Settlement_NoAdvances" xml:space="preserve">
     <value>Non ci sono acconti registrati per questo piano nel periodo scelto. Scegli un periodo che comprenda i suoi pagamenti.</value>
   </data>
+  <data name="Entry_Repeat" xml:space="preserve">
+    <value>Ripeti…</value>
+  </data>
+  <data name="Entry_RepeatHint" xml:space="preserve">
+    <value>Apri un piano con questi valori. Non viene salvata alcuna transazione.</value>
+  </data>
+  <data name="Help_EntryRepeat_Title" xml:space="preserve">
+    <value>Ripetere una transazione</value>
+  </data>
+  <data name="Help_EntryRepeat_Text" xml:space="preserve">
+    <value>Ripeti apre un nuovo piano con importo, conti, data scelta, titolo, categoria e nota di questo modulo. All’inizio è selezionata la ripetizione mensile: controlla frequenza, calendario e date effettive prima di salvare. La data scelta è la prima scadenza, non una transazione già pagata. Aprire il piano non registra denaro e la registrazione automatica è disattivata per impostazione predefinita. Il tuo modulo originale rimane disponibile quando torni. Commissioni, file delle ricevute, etichette e altri dettagli propri della transazione rimangono nel modulo e non vengono copiati nel piano.</value>
+  </data>
+  <data name="Help_EntryRepeat_Example" xml:space="preserve">
+    <value>Con il calendario gregoriano, inserisci un affitto di 900 EUR con scadenza il 15 ottobre, poi scegli Ripeti. Controlla le date mensili, compreso il 15 novembre, prima di salvare il piano. La sua apertura non registra pagamenti né transazioni.</value>
+  </data>
+  <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
+    <value>Un conto o la sua valuta è cambiato. Scegli i conti e inserisci nuovamente l’importo; il modulo originale rimane disponibile quando torni.</value>
+  </data>
 </root>

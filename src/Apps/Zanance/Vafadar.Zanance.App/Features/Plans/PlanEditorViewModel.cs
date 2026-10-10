@@ -470,6 +470,29 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                     Account = null;
                 }
             }
+            else if (query.TryGetValue("entryDraft", out var draftValue) && draftValue is EntryPlanDraft draft)
+            {
+                // D-111: a new unpaid transaction draft starts on its selected date, not one month after it.
+                var source = _accounts.GetValueOrDefault(draft.AccountId);
+                var destination = draft.ToAccountId is { } destinationId ? _accounts.GetValueOrDefault(destinationId) : null;
+                if (source is null || source.IsArchived || source.CurrencyCode != draft.CurrencyCode
+                    || (draft.Kind == EntryKind.Transfer && (destination is null || destination.IsArchived
+                        || destination.CurrencyCode != draft.ToCurrencyCode)))
+                {
+                    Account = null;
+                    ToAccount = null;
+                    AmountText = ToAmountText = string.Empty;
+                    Name = draft.Name;
+                    Start = draft.Date;
+                    SaveError = _translator["Plan_EntryDraftUnavailable"];
+                }
+                else
+                {
+                    Load(draft.CreateSchedule(Calendars.ToPeriod(_localization.CurrentCalendar)));
+                    ReminderDaysText = settings.ReminderDaysBefore.ToString(CultureInfo.InvariantCulture);
+                    ReminderTime = settings.ReminderTime.ToTimeSpan();
+                }
+            }
             else if (query.TryGetValue("fromEntry", out var entryValue) && entryValue is Guid entryId && await _store.GetEntryAsync(entryId) is { } entry)
             {
                 // A plan from an existing entry (TX-04): same values, first due date one month later.

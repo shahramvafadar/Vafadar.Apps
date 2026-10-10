@@ -541,3 +541,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   object. Equal ids or financial values do not authorize reuse across fresh data/display snapshots.
 * Observable selection stays on the same rows. Changed results still publish; never cap or omit rows for timing.
   Remove temporary probes before final builds; synchronous publication timings exclude later rendering/device/ANR.
+
+## 44. Repeat from a new transaction draft (D-111 / approved OD-12)
+
+* Repeat validates applicable base amounts/accounts and opens a detached Plan without ledger or plan Save.
+  Monthly starts on the selected date in the named rule calendar; automatic posting/reminders start off.
+* Preserve the complete original entry draft on return, disclose unsupported plan fields and share the receipt-unit
+  guard. Recheck accounts/original currencies before prefilling; never guess a conversion or move an unpaid draft
+  one month forward. The existing recorded-entry Make recurring path remains separate.

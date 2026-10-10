@@ -269,3 +269,8 @@ The three-complete-financial-month suggestion reads its exact inclusive date win
 The existing entry-date index and captured off-UI SQLite context are retained. All entries within the window reach
 the unchanged calculator; account/currency/plan/refund rules remain there. This is a read optimization only, with no
 model/migration, archive/export/backup content or security change.
+
+Repeat navigation (D-111) uses a detached in-memory EntryPlanDraft containing parsed minor units and original ISO
+currencies. It never writes the ledger or a schedule; current accounts/currencies are rechecked before filling
+Plan. Only explicit Plan Save stores its existing Schedule. The original transaction-only details remain on the
+navigation stack; no new schema, migration or portable draft/backup data is introduced.

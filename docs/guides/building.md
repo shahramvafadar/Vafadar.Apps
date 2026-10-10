@@ -440,3 +440,9 @@ fixture before the comparison; reviewed actions do not save money. Normal device
 The Windows Debug transactions-source route uses the actual bound transaction source to review equivalent-search
 reuse, changed results and fresh data/display publication (D-110 / AT-115). It never saves money. Temporary timing
 probes remain outside final app builds; preserve and restore the original development files.
+
+The Windows Debug entry-repeat route invokes actual Repeat/Cancel for fictitious new expense/income/transfer drafts,
+rejects invalid base input and compares complete original drafts/stored rows without Save (D-111 / AT-116).
+The separate entry-repeat-presentation route checks the actual target inside its native Scroll viewport without
+repeating financial handoffs. It uses bounded real fictitious onboarding; neither route saves its entry or plan.
+Capture all translations/help, modes and layout contexts; preserve/restore original developer files on failure too.

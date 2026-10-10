@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Repeat from a new transaction (2026-10-10, D-111)
+
+- Repeat opens an editable monthly plan with your entered amount, accounts and first date without saving a
+  transaction. Returning keeps your original draft. Help explains which details are copied and which stay in it.
+
 ### Improved - Unchanged transaction results (2026-10-10, D-110)
 
 - Equivalent searches keep the already displayed complete transaction list, avoiding unnecessary native rebuilds.

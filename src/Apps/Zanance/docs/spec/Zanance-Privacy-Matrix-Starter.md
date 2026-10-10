@@ -269,3 +269,8 @@ D-100 changes existing transaction validation/display only: no new data, permiss
 security field or portable preference. Native reviews use independently invalid blocking input, compare complete
 stored data and restore presentation-only foreign-account choices. No financial posting; original development
 files and three fictitious Android profiles remain. App language/theme are restored through native UI.
+
+D-111 / Repeat: detached existing transaction fields pass only through in-memory navigation into an unsaved
+Plan. Unsupported transaction-only details remain in the original form. No new permission/SDK/security field,
+portable preference/schema or backup format. Explicit Plan Save uses the existing Schedule storage/export policy;
+opening/returning never writes money. Original ISO currencies prevent silent account-change reinterpretation.

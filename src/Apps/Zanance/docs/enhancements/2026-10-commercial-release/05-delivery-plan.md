@@ -363,3 +363,9 @@ publication after data/display changes. Six native Windows contexts/186 own rend
 builds, normal Release, exact original-data readbacks and signed APK pass:
 [unchanged-transaction-source.md](../../quality/unchanged-transaction-source.md). Continue approved ready work;
 OD-12 was separately approved by the owner on 2026-10-10 for a prefilled Plan draft without transaction posting.
+
+D-111 implements explicitly approved OD-12 / LOC-06 after D-110 delivery. Repeat opens a detached editable monthly
+Plan without saving a transaction, with complete original draft retention and no change to plan rules. Fourteen
+cases, final financial/presentation matrices, strict builds, normal signed Release Plan Save/cleanup, exact
+original-data readbacks and complete signed APK pass:
+[entry-repeat-draft.md](../../quality/entry-repeat-draft.md). Continue ready work under D-69 after verified delivery.

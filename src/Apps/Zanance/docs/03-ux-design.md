@@ -613,3 +613,11 @@ filter choices. Never show an old report label over a new filter's result. Apply
 
 An equivalent filter retains the complete bound source only when captions, boundaries, order and row objects all
 match. Fresh reads or display contexts publish new sources. Selection remains observable; no result is capped.
+
+## Repeat from a new transaction (D-111 / OD-12)
+
+Repeat is a growing real action after complete basic fields in both modes, with a visible no-save hint and full
+translated help. Validate applicable base amounts/accounts beside their fields; never record money to navigate.
+Prefill Monthly anchored to the selected first date/calendar, keep posting/reminders off and show actual dates.
+Returning preserves the original unsaved transaction, including details not supported by a recurring plan.
+Do not reinterpret parsed minor units if an account/currency has changed. Existing-entry recurrence stays separate.

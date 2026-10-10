@@ -251,7 +251,17 @@ internal static partial class DebugSnapshots
         {
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
-            foreach (var language in languages)
+            // D-111: focused presentation uses the real fictitious setup but does not repeat unrelated restore reviews.
+            var repeatPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "entry-repeat-presentation";
+            if (repeatPresentation)
+            {
+                for (var step = 1; step < OnboardingViewModel.StepCount; step++)
+                {
+                    await vm.NextCommand.ExecuteAsync(null);
+                    if (vm.Step != step + 1) { throw new InvalidOperationException("Focused fictitious onboarding did not advance."); }
+                }
+            }
+            foreach (var language in repeatPresentation ? Array.Empty<string>() : languages)
             {
                 vm.Step = 1;
                 vm.SelectedLanguage = localization.SupportedLanguages.First(l => l.CultureName == language);
@@ -366,6 +376,8 @@ internal static partial class DebugSnapshots
                 ["currency"] = "EUR", ["scope"] = Translator.Instance["Report_ScopeInTotals"] + " · EUR",
             }),
             ("entry-new", AppShell.EntryEditorRoute, null),
+            ("entry-repeat", AppShell.EntryEditorRoute, null),
+            ("entry-repeat-presentation", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
             ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
@@ -599,6 +611,12 @@ internal static partial class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-repeat" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage repeatPage)
+                { await ReviewEntryRepeatAsync(app, services, repeatPage, folder, language); }
+                if (name == "entry-repeat-presentation" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage repeatPresentationPage)
+                { await ReviewEntryRepeatPresentationAsync(app, services, repeatPresentationPage, folder, language); }
                 if (name == "entry-details" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
                     is Features.Entries.EntryEditorPage detailsPage)
                 { await ReviewEntryDetailsAsync(app, services, detailsPage, folder, language); }

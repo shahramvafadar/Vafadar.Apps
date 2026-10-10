@@ -5745,4 +5745,22 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Settlement_NoAdvances" xml:space="preserve">
     <value>Für diesen Plan sind in diesem Zeitraum keine Vorauszahlungen erfasst. Wähle einen Zeitraum mit seinen Zahlungen.</value>
   </data>
+  <data name="Entry_Repeat" xml:space="preserve">
+    <value>Wiederholen…</value>
+  </data>
+  <data name="Entry_RepeatHint" xml:space="preserve">
+    <value>Mit diesen Werten einen Plan öffnen. Es wird keine Buchung gespeichert.</value>
+  </data>
+  <data name="Help_EntryRepeat_Title" xml:space="preserve">
+    <value>Eine Buchung wiederholen</value>
+  </data>
+  <data name="Help_EntryRepeat_Text" xml:space="preserve">
+    <value>Wiederholen öffnet einen neuen Plan mit Betrag, Konten, ausgewähltem Datum, Titel, Kategorie und Notiz aus diesem Formular. Zunächst ist monatlich ausgewählt. Prüfe Häufigkeit, Kalender und tatsächliche Termine vor dem Speichern. Das gewählte Datum ist der erste Fälligkeitstermin, keine bereits bezahlte Buchung. Beim Öffnen wird kein Geld gebucht; automatische Buchungen sind standardmäßig ausgeschaltet. Dein ursprünglicher Buchungsentwurf bleibt bei der Rückkehr erhalten. Gebühren, Belegdateien, Tags und andere reine Buchungsdetails bleiben im Entwurf und werden nicht in den Plan übernommen.</value>
+  </data>
+  <data name="Help_EntryRepeat_Example" xml:space="preserve">
+    <value>Wähle den gregorianischen Kalender. Gib 900 EUR Miete mit Fälligkeit am 15. Oktober ein und wähle Wiederholen. Prüfe die monatlichen Termine, darunter den 15. November, bevor du den Plan speicherst. Beim Öffnen wird weder eine Zahlung noch eine Buchung erfasst.</value>
+  </data>
+  <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
+    <value>Ein Konto oder seine Währung hat sich geändert. Wähle die Konten und gib den Betrag erneut ein. Dein ursprünglicher Buchungsentwurf ist bei der Rückkehr weiterhin verfügbar.</value>
+  </data>
 </root>

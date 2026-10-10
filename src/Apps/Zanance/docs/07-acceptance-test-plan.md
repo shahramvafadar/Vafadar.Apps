@@ -668,3 +668,14 @@ Reject changed captions, ordering, counts and fresh equal-id rows. On the actual
 retain MAUI/native sources; changed results and data/display snapshots publish fresh sources. Compare complete
 result ids/order and stored rows; restore original developer files. Nine new cases pass (main 1,521/App.Tests 285).
 Final runtime/platform/package checks: [quality/unchanged-transaction-source.md](quality/unchanged-transaction-source.md).
+
+## AT-116 - Repeat from a new transaction draft (D-111)
+
+Fourteen behavior cases pass, covering supported kinds, rule calendars, first date/minor units, detached values,
+safe defaults and invalid handoffs. Native review invokes real Repeat/Cancel on expense, income and transfer;
+checks selected dates/monthly preview, copied accounts/amounts/note, complete original draft fingerprints and
+unchanged stored data without Save. Invalid amount must remain beside its field without navigation. Check action/
+spoken name/44-unit target, all six translations/help and both modes; restore developer files after failures too.
+Main 1,535/App.Tests 299; 33 financial contexts/99 handoffs, separate 33 focused presentation contexts/99 targets,
+strict builds, normal signed Release explicit Plan Save/cleanup and exact original 24-table readbacks pass:
+[quality/entry-repeat-draft.md](quality/entry-repeat-draft.md). Phone/iOS/OS-reader acceptance remains open.

@@ -5714,4 +5714,22 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Settlement_NoAdvances" xml:space="preserve">
     <value>No hay anticipos registrados para este plan en este período. Elige un período que incluya sus pagos.</value>
   </data>
+  <data name="Entry_Repeat" xml:space="preserve">
+    <value>Repetir…</value>
+  </data>
+  <data name="Entry_RepeatHint" xml:space="preserve">
+    <value>Abre un plan con estos valores. No se guarda ninguna transacción.</value>
+  </data>
+  <data name="Help_EntryRepeat_Title" xml:space="preserve">
+    <value>Repetir una transacción</value>
+  </data>
+  <data name="Help_EntryRepeat_Text" xml:space="preserve">
+    <value>Repetir abre un nuevo plan con el importe, las cuentas, la fecha elegida, el título, la categoría y la nota de este formulario. Se selecciona inicialmente la repetición mensual; revisa la frecuencia, el calendario y las fechas reales antes de guardar. La fecha elegida es el primer vencimiento, no una transacción ya pagada. Abrir el plan no registra dinero y el registro automático está desactivado por defecto. Tu borrador original sigue disponible al volver. Las comisiones, los archivos de recibos, las etiquetas y los demás detalles exclusivos de la transacción permanecen en el borrador y no se copian al plan.</value>
+  </data>
+  <data name="Help_EntryRepeat_Example" xml:space="preserve">
+    <value>Con el calendario gregoriano, introduce un alquiler de 900 EUR con vencimiento el 15 de octubre y elige Repetir. Revisa las fechas mensuales, incluido el 15 de noviembre, antes de guardar el plan. Al abrirlo no se registra ningún pago ni transacción.</value>
+  </data>
+  <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
+    <value>Ha cambiado una cuenta o su moneda. Elige las cuentas y vuelve a introducir el importe; tu borrador original sigue disponible al volver.</value>
+  </data>
 </root>

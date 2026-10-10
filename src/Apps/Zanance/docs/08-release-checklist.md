@@ -309,3 +309,9 @@ ordered row, caption and boundary. Fresh data/display snapshots still publish. M
 six native Windows contexts, strict builds, normal Release, original-data readbacks and signed APK pass:
 [quality/unchanged-transaction-source.md](quality/unchanged-transaction-source.md).
 Cold/ANR/physical-device/iOS/provider and owner/release gates remain open.
+
+D-111 / approved OD-12 implements Repeat from a new transaction into an unsaved monthly Plan without posting
+money. Preserve original complete drafts, named calendar dates, currency identities and safe defaults. Main 1,535/
+App.Tests 299, final financial/presentation matrices, strict builds, normal signed Release Plan Save/cleanup,
+exact original-data readbacks and complete signed APK pass:
+[quality/entry-repeat-draft.md](quality/entry-repeat-draft.md). Provider/physical/iOS/owner/release gates remain open.
