@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Internal - Current budget write policy boundary (2026-10-10, D-121)
+
+- Prepare current-period budget quota checks. Copies across months and calendars share their definition;
+  editing retained limits and confirmed replacement preserve data, including failed replacement writes.
+- Current test builds stay unrestricted. Active/read-only selection and future activation remain unfinished.
+
 ### Internal - Goal and plan write policy boundaries (2026-10-10, D-120)
 
 - Prepare final quota checks for goal reopening and whole plan batches. Pausing keeps a slot; splitting or

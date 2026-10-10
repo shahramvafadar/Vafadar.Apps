@@ -620,3 +620,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * New advanced kinds/tools require the confirmed commercial capability. Retained/history corrections remain Free;
   regional calendars/basic reminders are independent. Current deployment stays inactive. Contributions/allocations,
   occurrence automation, import/restore/read-only and other ENT-02/03 boundaries remain unfinished.
+
+## 53. Current budget definitions under the writer (D-121)
+
+* Budget Save/confirmed Replace checks actual current financial-period definitions before limits or deletion.
+  Canonical scope/currency/period/account-set keys ignore row ids, calendars and copied months. Read local time and
+  the existing month-start preference without creating Settings. Existing updates retain stored period/currency.
+* Retained edits and net-neutral replacements work above quota; new methods/rollover/weekly periods check their
+  capability. Failed replacement restores the full previous budget/limits; Changed follows commit.
+* Current registration stays inactive. Explicit active/read-only selection and future-period activation remain
+  ENT-02/03 work; this boundary is not complete budget enforcement or permission to activate test-build limits.

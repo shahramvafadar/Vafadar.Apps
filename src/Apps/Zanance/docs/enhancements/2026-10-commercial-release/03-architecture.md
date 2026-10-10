@@ -217,3 +217,13 @@ transaction and verifies a distinct linked continuation against the stored prede
 ended object. Check membership/new-tool capabilities, roll back failures and raise Changed only after commit.
 Retained historical/tool corrections and slot-neutral continuations remain available after expiry. Current
 registration stays inactive; other ENT-02/03 operations and activation remain open. [Evidence](../../quality/goal-plan-write-policy.md).
+
+## 11. Current-period budget definitions (D-121 / ENT-02 in progress)
+
+Save/confirmed Replace uses the exact opened file's cached-access writer. Bind canonical definitions to the actual
+financial scope; count only rows covering injected device-local today using their calendar and stored month start.
+Existing Save retains stored period/currency identity. Separate new advanced tools from retained corrections,
+check before limits/removal, recheck access and notify after commit; replacement failure restores all old rows.
+Inactive deployment adds no budget counting transaction or paid grant. No model/schema/backup changes. Explicit
+active/read-only selection/future activation and remaining ENT-02/03 entry points are unfinished:
+[evidence](../../quality/budget-write-policy.md).

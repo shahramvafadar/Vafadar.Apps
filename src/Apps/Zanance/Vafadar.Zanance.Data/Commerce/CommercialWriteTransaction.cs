@@ -27,6 +27,11 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Gets whether a write requires commercial checks.</summary>
     public bool Enforced => _access.Enforced;
 
+    /// <summary>Gets the exact financial counting scope from this write's already-bound access snapshot.</summary>
+    public QuotaScope FinancialScope => _access.Context is { } context
+        ? new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id)
+        : throw new InvalidOperationException("Inactive writes have no commercial counting scope.");
+
     /// <summary>Captures the actual file and acquires its write transaction before any quota-sensitive reads.</summary>
     public static async Task<CommercialWriteTransaction> OpenAsync(ZananceDbContext db,
         ICommercialWriteAccessSource source, CancellationToken cancellationToken)
@@ -61,6 +66,13 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         DemandFeature(feature);
         if (!Enforced) return null;
         return QuotaPolicy.Get(kind, _access.Context!).Maximum;
+    }
+
+    /// <summary>Gets capacity after the caller checks its specific operation, so retained corrections keep their rights.</summary>
+    public int? GetMaximum(QuotaKind kind)
+    {
+        EnsureCurrent();
+        return Enforced ? QuotaPolicy.Get(kind, _access.Context!).Maximum : null;
     }
 
     /// <summary>Checks the operation even when it adds no quota item; a paid right never substitutes for membership.</summary>

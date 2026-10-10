@@ -424,7 +424,20 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(budget);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         var existing = await db.Budgets.FirstOrDefaultAsync(b => b.Id == budget.Id, cancellationToken);
+        // D-121: updates retain stored period/currency identity. Never count a caller's ignored changed date/code
+        // while the actual saved row still belongs to the current financial period.
+        if (write.Enforced)
+        {
+            var effective = existing is null ? budget : new Budget
+            {
+                Period = existing.Period, PeriodStart = existing.PeriodStart, Year = existing.Year, Month = existing.Month,
+                Calendar = existing.Calendar, CurrencyCode = existing.CurrencyCode, AccountIds = [.. budget.AccountIds],
+                Method = budget.Method, Rollover = budget.Rollover,
+            };
+            await CheckCommercialBudgetSaveAsync(db, write, effective, existing, cancellationToken);
+        }
         if (existing is null)
         {
             db.Budgets.Add(budget);
@@ -441,7 +454,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             existing.CategoryLimits.AddRange(budget.CategoryLimits.Select(l => new BudgetCategoryLimit { CategoryId = l.CategoryId, Limit = l.Limit }));
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
     }
@@ -455,7 +470,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         ArgumentNullException.ThrowIfNull(budget);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == replacedId, cancellationToken) is { } replaced)
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var replaced = await db.Budgets.FirstOrDefaultAsync(b => b.Id == replacedId, cancellationToken);
+        await CheckCommercialBudgetSaveAsync(db, write, budget, replaced, cancellationToken);
+        if (replaced is not null)
         {
             // Removed first in its own step, so the new budget of the same period never meets the old one.
             db.Budgets.Remove(replaced);
@@ -463,10 +481,51 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         db.Budgets.Add(budget);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        write.EnsureCurrent();
         await transaction.CommitAsync(cancellationToken);
 
         OnChanged();
+    }
+
+    /// <summary>Checks actual current-period definitions and newly used methods before any budget/limit mutation.</summary>
+    private async Task CheckCommercialBudgetSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
+        Budget target, Budget? original, CancellationToken cancellationToken)
+    {
+        if (!write.Enforced) return;
+        if (!Enum.IsDefined(target.Period) || !Enum.IsDefined(target.Calendar)
+            || !Enum.IsDefined(target.Method) || !Enum.IsDefined(target.Rollover))
+            throw new ArgumentException("A budget requires known period, calendar, method and rollover values.", nameof(target));
+        // Read the existing preference row without creating/updating Settings inside a financial write.
+        var startDay = await db.Settings.Select(s => (int?)s.MonthStartDay).FirstOrDefaultAsync(cancellationToken) ?? 1;
+        var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+        bool Current(Budget b)
+        {
+            var (first, last) = BudgetPeriods.Range(b, startDay);
+            return today >= first && today <= last;
+        }
+        var targetCurrent = Current(target);
+        var scope = write.FinancialScope;
+        var key = BudgetDefinitionKey.From(scope, target);
+        var sameDefinition = original is not null && BudgetDefinitionKey.From(scope, original) == key;
+        var newUse = original is null || !sameDefinition || (targetCurrent && !Current(original));
+        var addsAdvanced = (newUse || targetCurrent) &&
+            ((target.Method != BudgetMethod.Limits && (newUse || original!.Method == BudgetMethod.Limits))
+                || (target.Rollover != BudgetRollover.None && (newUse || original!.Rollover == BudgetRollover.None))
+                || (target.Period != BudgetPeriod.Month && (newUse || original!.Period == BudgetPeriod.Month)));
+        write.DemandFeature(addsAdvanced ? CommercialFeature.AdvancedBudgets
+            : newUse ? CommercialFeature.BasicBudgets : CommercialFeature.Corrections);
+        if (!targetCurrent || write.GetMaximum(QuotaKind.BudgetDefinitions) is not { } maximum) return;
+        var all = await db.Budgets.AsNoTracking().ToListAsync(cancellationToken);
+        var current = all.Where(Current).Select(b => BudgetDefinitionKey.From(scope, b)).ToHashSet();
+        var after = all.Where(b => b.Id != original?.Id).Where(Current).Select(b => BudgetDefinitionKey.From(scope, b)).ToHashSet();
+        after.Add(key);
+        // D-121: period row ids/calendars and copied months are not new definitions. Existing corrections and
+        // slot-neutral replacement remain available above quota; historical/future rows do not count as current.
+        // Explicit active/read-only selection and activation as a future period arrives are later ENT-02/03 work.
+        if (after.Count <= current.Count) return;
+        write.DemandCount(CommercialFeature.BasicBudgets, QuotaKind.BudgetDefinitions, maximum, current.Count, after.Count - current.Count);
     }
 
     /// <summary>Deletes a budget; entries are not affected.</summary>

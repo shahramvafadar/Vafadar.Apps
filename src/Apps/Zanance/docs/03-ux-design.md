@@ -661,3 +661,10 @@ Keep the existing Goal and Plan forms, detached drafts and explicit Save. Pause 
 not enable paid new work. Split/resume continues one plan rather than consuming an extra slot. Rejection precedes
 Home pin/protection changes or partial batch storage; failed later history moves roll back completely. Current
 test builds remain unrestricted. Final translated quota feedback and retained-form purchase navigation are ENT-04.
+
+## Current-period budget write boundary (D-121 / ENT-02 in progress)
+
+Keep the existing budget form, financial dates, copy actions and confirmed replacement. Retained limits remain
+editable above quota; a rejected replacement must preserve the complete original budget. Current test builds
+remain unrestricted. Final translated limit feedback, explicit active/read-only selection and future-period
+activation remain unfinished ENT-02/03/04 work; no automatic selection or new UI is introduced here.

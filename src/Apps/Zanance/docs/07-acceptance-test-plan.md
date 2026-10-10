@@ -740,3 +740,14 @@ correction/split; expired-host corrections; new automation rejection; rollback a
 conflicting split false/no writes; historical paid metadata corrections without enabling work. Main suite 1,695
 passes. Final platform/APK and actual unrestricted Release editor checks: [evidence](quality/goal-plan-write-policy.md).
 This does not accept contribution/allocation/occurrence automation, other ENT-02/03 paths or release activation.
+
+## AT-123 - Current budget definitions and atomic limits replacement (D-121)
+
+26 real SQLite cases cover inactive unrestricted saves; second current-definition rejection with complete no-write
+comparison; canonical account order/currency case and three calendars; financial month start; historical/future
+copies; stored identity against ignored incoming changes; retained over-quota corrections/replacement; unlimited
+paid/exact shared scope; six new advanced tools; retained paid/history corrections; replacement rejection before
+deletion; triggered new-limit failure with full rollback/retry; missing membership and expired-host rights; no
+Settings creation/ledger writes; independent-provider final-slot contention. Main suite 1,721 passes. Final
+strict platform/APK and actual unrestricted Release budget Save: [evidence](quality/budget-write-policy.md).
+This does not accept explicit read-only selection, future activation, import/restore or release activation.

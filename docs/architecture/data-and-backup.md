@@ -291,3 +291,9 @@ Active/paused resources count; net slot growth and new paid tools are checked be
 uses the stored predecessor, preserves earlier rows and moves later links atomically. Failed relocation restores
 all original metadata. No schema/migration, backup content, startup work, permission or SDK changes. Current
 deployment remains unrestricted; contribution/allocation/occurrence and other ENT-02/03 paths remain unfinished.
+
+D-121 extends actual-file cached-access transactions to current-period budget Save/confirmed Replace. Canonical
+definitions ignore copied dates/calendars; existing updates count stored identity. Failed new limits restore the
+complete prior budget/limits. No schema, migration, compiled model, backup format, permissions or paid portable data
+change. Current registration is inactive. Explicit read-only selection/future activation remain unfinished:
+[evidence](../../src/Apps/Zanance/docs/quality/budget-write-policy.md).

@@ -299,3 +299,8 @@ D-120 continues ENT-02 with Goal Save and whole Plan batch/split transactions, c
 continuations. 45 added SQLite cases/main 1,695 pass. Current deployment stays inactive; contribution/allocation/
 occurrence work, other resources/import/restore/read-only/native paths and activation remain open:
 [quality evidence](quality/goal-plan-write-policy.md).
+
+D-121 continues ENT-02 with current-period budget Save/confirmed Replace, canonical financial definitions and
+complete replacement rollback. 26 added SQLite cases/main 1,721 pass. Current deployment stays inactive; explicit
+active/read-only selection, future-period activation and other ENT-02/03 paths remain unfinished:
+[quality evidence](quality/budget-write-policy.md).

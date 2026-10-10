@@ -102,3 +102,14 @@ alignment with existing owner decisions and current source, not new product poli
 The unchanged D-87 test/build/package logs support the retained engineering baseline; no new test count, app build
 or device claim is introduced by this documentation-only slice. The focused assertion audit checks these edited
 requirements, links and actual source/manifest anchors. Owner archive/data/secrets are untouched.
+
+## 6. Commercial delivery update (2026-10-10, D-117..121)
+
+The original 2026-10-07 missing-commerce assertions above are historical. ENT-01 is now implemented with approved
+OD-03 Core policy, scope/capabilities/quotas and 76 cases. ENT-02 is in progress: actual-file account, template,
+filter, Goal and whole Plan batch/split writes plus current-period budget Save/confirmed Replace have real SQLite
+checks. Main suite 1,721/App.Tests 299 passes. Current registration remains inactive with no paid grant/paywall;
+test builds are unrestricted. Explicit selected active/read-only definitions, future-period activation,
+contribution/allocation/occurrence work, other resources/import/restore/native paths and activation remain open.
+Catalog/purchase verification/backend/server roles/release acceptance are not delivered by these boundaries.
+See [canonical backlog](04-backlog.md) and [budget evidence](../../quality/budget-write-policy.md).

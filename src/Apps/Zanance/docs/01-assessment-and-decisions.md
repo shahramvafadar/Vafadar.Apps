@@ -1033,3 +1033,21 @@ actual split ledger metadata and rollback after an occurrence move; independent 
 Current test-build registration remains inactive. No schema, SDK, permission, portable entitlement or visible change.
 ENT-02/03 contributions/allocations, occurrence work, other resources/import/restore/read-only/native routes and
 activation remain open. Final platform/APK/runtime evidence: [goal-plan-write-policy.md](quality/goal-plan-write-policy.md).
+
+## D-121 - Guard current-period budget saves and replacements (2026-10-10)
+
+Continue ENT-02 through SaveBudgetAsync and confirmed ReplaceBudgetAsync. Acquire the actual-file SQLite writer
+before reading existing rows/current canonical definitions. Count scope, normalized currency, period and account
+set; calendar/date/row identities and copies of other months do not multiply a current definition. Device-local
+injected time, each rule calendar and the existing financial-month start determine current rows without writing
+Settings. Updates count their actual stored period/currency identity, not ignored incoming changes.
+
+Check newly used advanced methods, rollover and weekly periods separately. Retained corrections and net-neutral
+replacements remain possible above quota, including expired-host corrections. Check before deleting the replaced
+budget; failed new limits restore every original row. Recheck cached access and notify only after commit.
+
+26 real SQLite cases/main 1,721 pass, App.Tests 299 unchanged. Current registration remains inactive without a paid
+grant. No schema, SDK, permission, backup or visible control change. Explicit selected active/read-only definitions,
+future-period activation, import/restore and other resources/native paths remain ENT-02/03 work. This is a partial
+write boundary, not a new automatic selection policy. Final platform/APK/runtime evidence:
+[budget-write-policy.md](quality/budget-write-policy.md).

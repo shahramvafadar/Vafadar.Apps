@@ -1738,3 +1738,12 @@ D-114 owner delivery decision (2026-10-10): no interim OS-backup exclusions or t
 The app will not be used before all planned sections/phases are complete. Keep existing runtime policy until
 permanent encrypted-data/key/recovery handling is decided; SEC-02..08 and release acceptance remain open.
 
+### 31.34. Current-period budget write boundaries (D-121 / AT-123 / ENT-02 in progress)
+
+Budget Save and confirmed Replace check canonical current-period definitions under the actual-file writer before
+any limits/removal. Financial month start and each rule calendar determine current rows; ignored incoming identity
+changes cannot bypass the actual stored period/currency. Retained corrections/net-neutral replacement remain
+possible above quota; triggered replacement failure restores original limits atomically. 26 new real SQLite cases
+pass; main suite 1,721, App.Tests 299 unchanged. Current registration remains inactive. No schema/SDK/permission/UI
+change. Explicit active/read-only selection, future-period activation and other ENT-02/03 paths remain unfinished:
+[evidence](../quality/budget-write-policy.md).
