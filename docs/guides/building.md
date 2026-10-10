@@ -396,3 +396,9 @@ personal data. Simple uses the same fields and can be reviewed with `-Mode simpl
 For an isolated follow-up review of unchanged continuations, set VAFADAR_SNAPSHOT_OCCURRENCE_MESSAGES_ONLY=1:
 the route invokes four invalid native Saves and independent corrections, compares complete original stored values,
 writes a distinct message-only proof and performs no valid Save. Clear the process-local setting after review.
+
+The Debug `transactions` snapshot route checks AT-109 complete row identity across filters, fresh reload and
+process-local display-unit invalidation against actual EntryPresenter fields without Save. Run the existing snapshot
+script with `-Only transactions`; restore original development data and plain preferences after owned reviews.
+Temporary QA-06 timing probes are removed before final builds. Evidence:
+`src/Apps/Zanance/docs/quality/transaction-row-reuse.md`.

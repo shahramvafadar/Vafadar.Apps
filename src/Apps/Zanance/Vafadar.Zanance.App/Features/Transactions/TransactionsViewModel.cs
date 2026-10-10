@@ -44,6 +44,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private List<LedgerEntry> _entries = [];
     private Dictionary<Guid, Account> _accounts = [];
     private CategoryLookup? _categories;
+    // One data/display snapshot owns its row identities; filters do not repeatedly format the same money and captions.
+    private SnapshotProjectionCache<LedgerEntry, Guid, EntryRow>? _rows;
+    private System.Globalization.CultureInfo? _rowCulture;
+    private System.Globalization.CultureInfo? _rowLanguage;
+    private bool _rowDark;
+    private IReadOnlyCollection<DisplayUnit> _rowUnits = [];
+
     private CancellationTokenSource? _searchDelay;
     // Existing filter batches suppress intermediate refreshes independently of the asynchronous snapshot cover.
     private bool _loading;
@@ -234,6 +241,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _accounts = accounts.ToDictionary(a => a.Id);
         _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
         _entries = await _store.GetEntriesAsync();
+        _rows = null; // Even unchanged ids must reflect fresh amounts, categories, review states and account names.
         _bulk.Load(_entries, [.. _categories.All], _categories.Name);
 
         var selected = _pendingAccount ?? (_drillDown ? null : SelectedAccount?.Id);
@@ -312,7 +320,18 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         var (from, to) = PeriodRange();
         var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly, _currency, _scopeAccounts, _confirmedOnly);
         var culture = _localization.CurrentCulture;
-        var presenter = new EntryPresenter(_accounts, categories, _translator, culture);
+        var units = DisplayUnits.All;
+        if (_rows is null || !ReferenceEquals(_rowCulture, culture) || !ReferenceEquals(_rowLanguage, _translator.Culture)
+            || _rowDark != Palette.IsDark || !_rowUnits.SequenceEqual(units))
+        {
+            var presenter = new EntryPresenter(_accounts, categories, _translator, culture);
+            _rows = new(entry => entry.Id, presenter.Row);
+            _rowCulture = culture;
+            _rowLanguage = _translator.Culture;
+            _rowDark = Palette.IsDark;
+            _rowUnits = units;
+        }
+
         var matching = EntrySearch.Apply(_entries, filter, id => categories.Name(id), _accounts).ToList();
         var filtered = _categoryIds is not null || _customPeriod is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
         SummaryText = filtered && matching.Count > 0
@@ -327,7 +346,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             var net = string.Join("  ", day.Net.Where(n => n.Value != 0).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true)));
             days.Add(new EntryDayGroup(_dates.Format(day.Date, DateFormatStyle.Long), net, day.Entries.Select(e =>
             {
-                var row = presenter.Row(e);
+                var row = _rows.Get(e);
                 row.Selection.IsSelected = _bulk.IsSelected(e.Id);
                 return row;
             })));

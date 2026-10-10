@@ -288,3 +288,7 @@ six contexts/18 invalid Saves. Actual metadata changes never post entries; parti
 the intended entries and unique settlement. Original financial rows/states are preserved/restored; strict builds
 and the complete signed phone-test APK pass. Phone/iOS/readers, valid Android occurrence acceptance and other
 owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback.md](quality/occurrence-feedback.md).
+
+D-104 / AT-109 delivers complete transaction row reuse for repeated filters, scoped to one data/display snapshot.
+Four new tests pass (main 1,488). Final running-app/build/APK checks and measured performance limits are recorded in
+[quality/transaction-row-reuse.md](quality/transaction-row-reuse.md). QA-06 and real device/platform/release gates remain open.

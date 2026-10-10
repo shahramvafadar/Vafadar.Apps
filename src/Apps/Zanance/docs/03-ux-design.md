@@ -570,3 +570,10 @@ skip, undo and plan navigation. Keep payment and optional override errors beside
 during corrections. Invalid action reveals its own field without moving desktop focus or resetting the draft.
 An omitted override retains the plan amount; only a positive payment may continue. Initialize DateFields before
 binding and keep the existing explicit metadata/partial/completion continuations.
+
+### Complete transaction rows during repeated filters (D-104)
+
+Keep the complete ordered result and all filter/drill-down scopes. Reuse presentation objects only within the same
+source/display snapshot; fresh reads and formatting/translation/theme/unit changes must invalidate them. Refresh
+selection from the bulk flow. Do not hide rows or change totals to improve a performance counter. Retain the existing
+loading/failure/retry cover, actual row button commands, growing captions and persistent bulk/Undo actions.

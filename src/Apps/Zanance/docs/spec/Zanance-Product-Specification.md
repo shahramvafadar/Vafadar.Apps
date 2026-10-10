@@ -1435,6 +1435,15 @@ the intended entries and unique settlement. Original financial rows/states are p
 and the complete signed phone-test APK pass. Phone/iOS/readers, valid Android occurrence acceptance and other
 owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback.md](../quality/occurrence-feedback.md).
 
+### 31.20. Complete transaction presentation reuse (D-104 / AT-109)
+
+Repeated filters retain the complete ordered source while reusing formatted rows within the same data/display
+snapshot. Fresh data, culture/language, theme and unit changes invalidate the cache; bulk selection is reapplied.
+Four cases bring the main suite to 1,488 (App.Tests 252). Actual bound tenfold Windows warm refresh median:
+583.14 -> 358.90 ms; native source publication remains a bottleneck and first materialization is unchanged.
+Final running-app/build/APK evidence and QA-06/device/platform limits are recorded in
+[quality/transaction-row-reuse.md](../quality/transaction-row-reuse.md). No data/schema/permission change.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

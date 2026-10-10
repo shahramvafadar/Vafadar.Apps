@@ -480,3 +480,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Metadata Save never posts entries; partial payment and completion retain the original unique-settlement behavior.
 * AT-108 native valid-Save fixtures touch only the walk-through's fictitious database. Compare original financial
   fields/ids/states and remove only the exact identified new scenario rows/state before the next case.
+
+## 37. Complete transaction presentation reuse (D-104)
+
+* Reuse formatted rows only within one source/display snapshot. Every fresh data read and culture/translation/theme/
+  display-unit change invalidates the cache; reapply selection from the bulk flow. Keep complete rows/order/filter
+  scope and totals. Do not cap results to meet a performance counter.
+* Measure the actual bound page and native source separately. Temporary probes are removed before final builds;
+  warm Windows improvements do not close cold-start, historical ANR or real device/platform gates.

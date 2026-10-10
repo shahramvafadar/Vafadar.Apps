@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Repeated transaction filters (2026-10-10, D-104)
+
+- Repeated filters reuse already prepared transaction rows while keeping every matching transaction and total.
+- Fresh data, language/formatting, theme and display-unit changes renew the presentation; selection stays independent.
+
 ### Fixed - Clear due-item actions and amount feedback (2026-10-10, D-103)
 
 - Due-item buttons keep their full labels with large text. Invalid payment and this-occurrence amounts show their errors beside the correct field and bring that input into view. Corrections keep the rest of your draft; an empty override still keeps the plan amount. Partial payment, completion and occurrence changes keep their existing financial behavior.

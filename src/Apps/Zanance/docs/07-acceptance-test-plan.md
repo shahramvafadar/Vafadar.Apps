@@ -607,3 +607,11 @@ main 1,484/App.Tests 248, 24 Windows contexts/96 invalid and 96 valid native Sav
 final contextual-message review, six normal-scale Release emulator
 contexts/18 invalid Saves, strict builds, signed APK and original-data readbacks pass. Real phone/iOS/readers and
 valid Android occurrence acceptance remain open. Evidence: quality/occurrence-feedback.md.
+
+## AT-109 - Complete transaction presentation reuse (D-104)
+
+Four application cases verify 100,000 complete ordered sources across filters, fresh same-id rows, independent
+selection and retry after presentation failure. Main suite: 1,488 passed, App.Tests 252. Real Windows review compares
+actual cached row fields against EntryPresenter, proves unit invalidation/fresh reload and no fictitious financial
+writes; existing native selection/cancel/retry remains. Final matrix/Release emulator/APK evidence and open QA-06
+limits: [quality/transaction-row-reuse.md](quality/transaction-row-reuse.md).

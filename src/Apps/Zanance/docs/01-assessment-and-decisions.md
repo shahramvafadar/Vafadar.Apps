@@ -824,3 +824,14 @@ plus a separate 24-context/96-invalid final contextual-message review after corr
 six normal-scale Release emulator cases/18 invalid Saves, strict builds, complete signed APK and original-data
 checks pass. Real device/iOS/readers and valid Android occurrence acceptance remain open.
 Evidence: quality/occurrence-feedback.md.
+
+## D-104 - Reuse transaction rows within a complete source/display snapshot (2026-10-10)
+
+Actual bound-page measurements identified repeated presentation construction: tenfold warm group/row median
+219.33 ms. Reuse row identity within a snapshot, invalidate on every data read or display-context change, and reapply
+existing bulk selection. All rows/order/filter scopes/amounts and day nets remain; there is no capped result list.
+Measured tenfold group/row construction is 38.31 ms and complete warm refresh 583.14 -> 358.90 ms. Native publication
+is slower in this cohort and remains open. AT-109 adds four tests: main 1,488/App.Tests 252. See
+[quality/transaction-row-reuse.md](quality/transaction-row-reuse.md) for final checks and explicit performance limits.
+
+D-104 final checks: main 1,488 tests, strict Windows/complete Debug+Release Android, 21 Windows contexts/609 own renders, seven Release emulator search/filter contexts, original data and a complete signed D-104 APK pass. Physical-device/cold/Release-timing and native-publication gates remain open.

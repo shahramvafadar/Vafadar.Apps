@@ -739,6 +739,9 @@ internal static partial class DebugSnapshots
                     // D-76: the real page bindings show covered/loading, failure/retry and restored snapshots.
                     // All data belongs to this fictitious walk-through; these states never write a ledger entry.
                     await transactions.LoadAsync();
+#if WINDOWS
+                    await ReviewTransactionRowsAsync(services, transactions, folder, language);
+#endif
                     var delayedRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
                     var covered = transactions.Loading.RunAsync(() => delayedRead.Task, () => { });
                     try
