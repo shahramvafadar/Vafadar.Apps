@@ -693,3 +693,16 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Entries, derived paid totals and attachment moves commit together after cached access recheck, or roll back
   with no Changed. Deployment stays inactive. Ledger delete/Undo, selected resources, automation and other
   ENT-02/03/04 paths remain unfinished; this is not commercial activation or device/release acceptance.
+
+## 59. File-bound deletion and retry-safe Undo (D-127)
+
+* Delete and Restore hold the actual SQLite writer before reading groups, existing ids or occurrence state,
+  including inactive builds. DeleteData and Corrections retain owned-data rights; exact membership still applies.
+* Return committed deletions with their original file and explicit retained refund links. Never keep session-global
+  refund-id relationships or guess a link; reject a returned batch targeting another profile. Restore only missing
+  identities and relink only newly restored purchases. SQL/access failures preserve the batch for retry with no Changed.
+* Keep receipts' established orphan/startup-purge policy; no attachment bytes are copied into the Undo offer.
+  Occurrences, paid totals and refund links share the transaction. No-op/repeated Undo makes no write or Changed.
+* The app permits one Undo at a time. Failure keeps the original eight-second deadline; success clears only its
+  own offer. Completion never dismisses a replacement or revives a dismissed offer. No schema/portable paid facts
+  or activation changes. Selected read-only data, automation and other ENT-02/03/04 paths remain unfinished.

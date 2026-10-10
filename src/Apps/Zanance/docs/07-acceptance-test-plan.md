@@ -808,3 +808,13 @@ writers; four reproduced refund defects; valid original/refund batch order, edit
 Int64 boundaries and occurrence paid-total rollback/retry. Compare complete columns of all 24 tables.
 Main 1,907 pass, App.Tests 299 unchanged. Platforms, APK and actual normal Release flow:
 [evidence](quality/ledger-write-policy.md). Commercial deployment and remaining ENT-02/03/04 stay open.
+
+## AT-129 - Original-file deletion and retry-safe short Undo (D-127)
+
+29 added Data cases cover three reproduced refund defects; retained receipt bytes/metadata/ownership; five owned
+data contexts; four membership paths; two wrong cached files; returned-batch wrong profile; two initial-file moves;
+four SQL/post-SQL retirement rollbacks/retries; two independent writer races; whole split deletion/recovery; and
+four derived occurrence failures. Nine actual app-source cases cover failed-action deadline/retry, old completion/
+failure with replacement or dismissal, double taps, expired failure, observer failure and actual SQLite refund Undo
+failure/retry. Main 1,945 pass, App.Tests 308. Strict platforms/full signed APK and actual Release flow:
+[evidence](quality/ledger-undo-write-policy.md). Other ENT-02/03/04 and external acceptance remain open.

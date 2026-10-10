@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Retry-safe deletion and Undo (2026-10-10, D-127)
+
+- Keep purchase/refund relationships after an Undo fails so a retry restores them correctly.
+- Prevent stale refund links after failed deletion or between copied profiles with matching ids.
+- Keep an Undo offer after failure within its original eight seconds; never clear a newer offer or execute twice.
+- Preserve receipt rows, financial metadata and plan paid amounts together. Test builds stay unrestricted.
+
 ### Fixed - Complete refund totals and atomic transaction saves (2026-10-10, D-126)
 
 - Check refunds together, including edits, replacements and new purchases saved in the same operation.

@@ -281,3 +281,14 @@ Final-batch refunds and edited purchases validate before cleanup/audit. SQL, der
 moves commit only after cached recheck; failure restores complete rows and emits no Changed. Deployment stays
 inactive; delete/Undo, selected read-only resources, automation and other paths stay open:
 [evidence](../../quality/ledger-write-policy.md).
+
+## 17. File-bound owned deletion and Undo (D-127)
+
+DeleteEntriesAsync and RestoreEntriesAsync acquire the actual-file writer before reads, with DeleteData and
+Corrections respectively. Preserve exact membership and owned-data rights after host expiry. Return explicit
+stored refund relationships with committed deleted rows and their original file, without global session links.
+Wrong-profile batches reject; missing ids only are restored/relinked. Recheck after SQL before commit, rollback
+complete rows on failure and emit Changed only after actual commit. Independent providers serialize existence
+reads. App retry keeps its original deadline/version; replacement/dismissal and concurrent taps remain safe.
+Registration inactive; selected read-only data, automation and other paths remain open:
+[evidence](../../quality/ledger-undo-write-policy.md).

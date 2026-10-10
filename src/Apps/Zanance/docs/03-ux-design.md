@@ -707,3 +707,11 @@ Retain explicit Save, split editing and combining. Corrections of existing parts
 new parts configure new split work. Refund Save feedback describes the final batch: an edited purchase cannot
 become smaller than its retained refunds or change away from Expense. Missing targets and exceeded totals use
 existing translated validation errors. Test deployment remains unrestricted; commercial feedback stays ENT-04.
+
+## Retained short Undo after failed saves (D-127)
+
+Keep the existing eight-second offer and caption. One Undo runs at a time; a failed action may be retried only
+within the original remaining time. Never extend the deadline, restore a dismissed offer or clear a newer offer
+when an older action completes. Returned deletion data belongs to the original profile. Existing receipt rows
+remain available through Undo. No test-build commercial limit is activated. D-126's bottom-of-form SaveError
+visibility remains a separate observed UX follow-up, not resolved by this slice.

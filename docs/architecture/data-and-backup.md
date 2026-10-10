@@ -332,3 +332,11 @@ refunds against final batch state and edited purchases, widening exact minor uni
 paid-total and attachment ownership changes share commit/recheck/rollback with Changed only after commit.
 No schema/migration/compiled model, portable format, permission or SDK changes. Delete/Undo and other commercial
 paths remain unfinished: [evidence](../../src/Apps/Zanance/docs/quality/ledger-write-policy.md).
+
+D-127 guards ledger Delete/Restore before reads under the actual writer, including inactive builds. The returned
+in-memory deletion batch binds its original file and explicit stored refund relationships; no global mutable
+refund map, guessed link or receipt-byte copy remains. Wrong-profile Undo refuses before writes. Missing entries,
+refund links, occurrence states and paid totals commit together after cached recheck; failure retains retry data.
+Receipts retain the existing orphan/startup-purge policy. This short offer is not a durable journal or portable
+format change. Plain row enumerables restore rows without implicit refund links. No schema, SDK or permission
+change: [evidence](../../src/Apps/Zanance/docs/quality/ledger-undo-write-policy.md).

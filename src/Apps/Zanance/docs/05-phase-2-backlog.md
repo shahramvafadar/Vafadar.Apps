@@ -376,3 +376,8 @@ D-126 continues ENT-02 with actual-file ledger Save rights, complete split/holdi
 final-batch refund validation. 45 added SQLite cases/main 1,907 pass. Four reproduced refund defects corrected;
 entry/attachment/paid-total rollback retained. Registration inactive; ledger delete/Undo, selected read-only data,
 automation and remaining ENT-02/03/04 paths stay open: [quality evidence](quality/ledger-write-policy.md).
+
+D-127 continues ENT-02 with actual-file ledger Delete/Undo, explicit file-bound refund snapshots and
+retry-safe application offers. 38 added cases/main 1,945 pass; App.Tests 308. Receipt orphan/purge behavior stays
+unchanged, without extra byte copies. Registration inactive; selected read-only data, automation, commercial
+feedback and remaining ENT-02/03/04 paths remain open: [quality evidence](quality/ledger-undo-write-policy.md).

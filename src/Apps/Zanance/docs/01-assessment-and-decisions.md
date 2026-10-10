@@ -1152,3 +1152,25 @@ and Int64 boundaries. No money storage, currency rounding, schema, SDK, permissi
 ownership roll back together after SQL failure or retired cached access; Changed follows commit. Inactive builds
 keep unrestricted deployment. Ledger delete/Undo, read-only selections, automation and remaining ENT-02/03/04
 work remain open. Strict platform/full signed APK/native evidence: [ledger-write-policy.md](quality/ledger-write-policy.md).
+
+## D-127 - File-bound ledger deletion and retry-safe Undo (2026-10-10)
+
+Three real SQLite regressions expose consumed refund links on failed Undo, phantom links after a failed deletion
+and cross-profile relinking when copied profiles share ids. One actual application-source regression exposes a
+failed Undo losing its offer. Replace session-global relationships with explicit refund links in the committed,
+original-file deletion batch. Reject the batch in another profile; preserve it unchanged for retry. Restore missing
+ids only, with refund relinking limited to newly restored purchases; repeated Undo is a no-op. Plain row enumerables
+retain row-only recovery without guessed refund relationships.
+
+DeleteData/Corrections are checked under the actual SQLite writer before reads, including unrestricted builds.
+Entries, occurrence state and paid totals commit together after cached recheck; SQL/access failure rolls back
+complete stored rows with no Changed. Receipts already remain in the database for Undo and are purged as orphans
+at startup; preserve this policy without loading their bytes into an offer. A failing receipt fixture initially
+assumed deletion removes the receipt; corrected evidence disproves that assumption, not a product defect.
+
+UndoService keeps its original eight-second deadline after failure, blocks concurrent taps and clears only the
+successful offer's version. Replaced/dismissed offers survive old completions correctly; observer failure cannot
+leave the service in progress. 38 added AT-129 cases (29 Data, 9 actual app flow); main 1,945 and App.Tests 308 pass.
+No schema, SDK, permission, visible caption/layout, portable entitlement or activation change. Strict platforms,
+full signed APK and normal Release deletion/Undo evidence: [ledger-undo-write-policy.md](quality/ledger-undo-write-policy.md).
+Selected read-only data, automation, native commercial feedback and remaining ENT-02/03/04 stay unfinished.

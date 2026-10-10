@@ -42,8 +42,6 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory, TimeProvider time,
     ICommercialWriteAccessSource commercialAccess)
 {
-    // Refund id → purchase id of refunds unlinked by a purchase deletion, until that deletion is undone (this session).
-    private readonly Dictionary<Guid, Guid> _refundLinks = [];
     private readonly SemaphoreSlim _settingsGate = new(1, 1);
 
     // One settings change at a time: every change reads the row, changes it and writes the whole row back.
@@ -1175,6 +1173,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(ids);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.DeleteData);
         var wanted = ids.Distinct().ToList();
         var entries = await db.Entries.Where(e => wanted.Contains(e.Id)).ToListAsync(cancellationToken);
         var groups = entries.Where(e => e.GroupId is not null).Select(e => e.GroupId!.Value).Distinct().ToList();
@@ -1191,18 +1192,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             return [];
         }
 
-        // Refunds of a deleted purchase stay, and the database unlinks them; remember the links so undo restores them.
+        // D-127: return exact refund links with the file-bound deletion; receipts retain their existing orphan policy.
         var deletedIds = deleted.Select(e => e.Id).ToList();
         var refundLinks = await db.Entries.Where(e => e.RefundOfId != null && deletedIds.Contains(e.RefundOfId.Value) && !deletedIds.Contains(e.Id))
-            .Select(e => new { e.Id, Purchase = e.RefundOfId!.Value }).ToListAsync(cancellationToken);
-        lock (_refundLinks)
-        {
-            foreach (var link in refundLinks)
-            {
-                _refundLinks[link.Id] = link.Purchase;
-            }
-        }
-
+            .Select(e => new DeletedRefundLink(e.Id, e.RefundOfId!.Value)).ToListAsync(cancellationToken);
         db.Entries.RemoveRange(deleted);
 
         // A deleted settlement reopens its occurrence; automatic posting must not bring it back (REC-18, AT-31). A deleted
@@ -1220,21 +1213,28 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         // The deletion, the reopened occurrences and the paid amounts change together or not at all.
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, deleted, cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
-        return deleted;
+        return new DeletedLedgerEntries(file, deleted, refundLinks);
     }
 
     /// <summary>Re-inserts deleted entries unchanged (undo of <see cref="DeleteEntryAsync"/>).</summary>
     public async Task RestoreEntriesAsync(IEnumerable<LedgerEntry> entries, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entries);
-        var list = entries.ToList();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var deleted = entries as DeletedLedgerEntries;
+        if (deleted is not null && !string.Equals(deleted.File, file, StringComparison.Ordinal))
+            throw new InvalidOperationException("The deleted entries belong to another database.");
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
+        var list = entries.DistinctBy(e => e.Id).ToList();
+        var restoredIds = new HashSet<Guid>();
         foreach (var entry in list)
         {
             if (await db.Entries.AnyAsync(e => e.Id == entry.Id, cancellationToken))
@@ -1243,6 +1243,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             }
 
             db.Entries.Add(entry);
+            restoredIds.Add(entry.Id);
             if (!entry.IsPartialPayment && entry.ScheduleId is { } scheduleId && entry.OccurrenceDate is { } original)
             {
                 var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == scheduleId && s.OriginalDate == original, cancellationToken);
@@ -1258,47 +1259,59 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         // Refunds that lost their purchase with the deletion are linked again.
-        var restoredIds = list.Select(e => e.Id).ToHashSet();
-        List<KeyValuePair<Guid, Guid>> relink;
-        lock (_refundLinks)
+        if (restoredIds.Count == 0) return;
+        var relink = deleted?.RefundLinks.Where(l => restoredIds.Contains(l.PurchaseId)).ToList() ?? [];
+        foreach (var link in relink)
         {
-            relink = [.. _refundLinks.Where(l => restoredIds.Contains(l.Value))];
-            foreach (var link in relink)
-            {
-                _refundLinks.Remove(link.Key);
-            }
+            if (await db.Entries.FirstOrDefaultAsync(e => e.Id == link.RefundId, cancellationToken) is { RefundOfId: null } refund)
+                refund.RefundOfId = link.PurchaseId;
         }
 
-        foreach (var (refundId, purchaseId) in relink)
-        {
-            if (await db.Entries.FirstOrDefaultAsync(e => e.Id == refundId, cancellationToken) is { RefundOfId: null } refund)
-            {
-                refund.RefundOfId = purchaseId;
-            }
-        }
-
-        // The entries, their occurrences, the refund links and the paid amounts come back together.
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        // Entries, occurrences, explicit refund links and paid amounts come back together; receipt rows stay intact.
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, list, cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
+    }
+
+    /// <summary>An explicit stored refund relationship captured by a committed deletion, never guessed from amounts.</summary>
+    /// <param name="RefundId">The retained refund entry.</param>
+    /// <param name="PurchaseId">The deleted purchase it referenced.</param>
+    private sealed record DeletedRefundLink(Guid RefundId, Guid PurchaseId);
+
+    /// <summary>Retains the original file, entries and explicit refund links for the application's short Undo offer.</summary>
+    private sealed class DeletedLedgerEntries(string file, IReadOnlyList<LedgerEntry> entries,
+        IReadOnlyList<DeletedRefundLink> refundLinks) : IReadOnlyList<LedgerEntry>
+    {
+        /// <summary>Gets the actual database file that committed the deletion.</summary>
+        public string File { get; } = file;
+
+        /// <summary>Gets explicit retained refund links for retry without session-global mutable state.</summary>
+        public IReadOnlyList<DeletedRefundLink> RefundLinks { get; } = refundLinks;
+
+        /// <summary>Gets the number of deleted entries.</summary>
+        public int Count => entries.Count;
+
+        /// <summary>Gets a deleted entry in its original order.</summary>
+        public LedgerEntry this[int index] => entries[index];
+
+        /// <summary>Enumerates the unchanged deleted entries.</summary>
+        public IEnumerator<LedgerEntry> GetEnumerator() => entries.GetEnumerator();
+
+        /// <summary>Enumerates the unchanged deleted entries.</summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);
 
     /// <summary>
-    /// Forgets what the store keeps in memory for the current session (refunds to relink on undo), e.g. when another
-    /// local profile is opened, and tells listeners that all data changed.
+    /// Tells listeners that the selected local profile changed. The application dismisses its short Undo offers;
+    /// any retained deletion snapshot remains bound to its original database rather than session-global state.
     /// </summary>
     public void ResetSession()
     {
-        lock (_refundLinks)
-        {
-            _refundLinks.Clear();
-        }
-
         OnChanged();
     }
 

@@ -1799,3 +1799,14 @@ Entry, attachment and derived occurrence changes commit together after cached re
 45 added cases/main 1,907 pass; App.Tests 299 unchanged. No schema, SDK, permission, visible layout/string or paid
 portable facts change. Deployment inactive; ledger delete/Undo, selected read-only data, automation and remaining
 ENT-02/03/04 paths stay open: [evidence](../quality/ledger-write-policy.md).
+
+### 31.40. File-bound deletion and retry-safe ledger Undo (D-127 / AT-129 / ENT-02 in progress)
+
+Delete/Restore bind the actual writer before group, existing-id and occurrence reads. Owned DeleteData/Corrections
+keep Free/expired-host rights with exact membership. Committed deletion batches retain their original file and
+explicit refund relationships, without global mutable links; failed Undo preserves retry data and cannot target
+another profile. Restore only missing ids; repeated Undo is a no-op. Receipts retain their established orphan
+policy. App offers keep the original eight-second deadline, prevent duplicate taps and respect replacement/dismissal.
+38 added cases/main 1,945 pass; App.Tests 308. No schema, SDK, permission, caption/layout, paid portable facts or
+activation changes. Selected read-only data, automation and remaining ENT-02/03/04 stay unfinished:
+[evidence](../quality/ledger-undo-write-policy.md).

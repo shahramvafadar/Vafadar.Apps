@@ -12,12 +12,14 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     private IReadOnlyList<LedgerEntry> _deleted = [];
     private Func<Task>? _action;
     private DateTimeOffset _deletedAt;
+    private long _offerVersion;
+    private bool _undoing;
 
     /// <summary>Raised when the undo offer appears or disappears.</summary>
     public event EventHandler? Changed;
 
     /// <summary>Gets a value indicating whether an undo is currently offered.</summary>
-    public bool CanUndo => (_deleted.Count > 0 || _action is not null)
+    public bool CanUndo => !_undoing && (_deleted.Count > 0 || _action is not null)
         && time.GetUtcNow() - _deletedAt is var elapsed && elapsed >= TimeSpan.Zero && elapsed < Window;
 
     /// <summary>Gets how long the offer is still valid.</summary>
@@ -29,6 +31,7 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
         _deleted = deleted;
         _action = null;
         _deletedAt = time.GetUtcNow();
+        _offerVersion++;
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
@@ -38,12 +41,14 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
         _deleted = [];
         _action = undo;
         _deletedAt = time.GetUtcNow();
+        _offerVersion++;
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Withdraws the offer.</summary>
     public void Dismiss()
     {
+        _offerVersion++;
         if (_deleted.Count > 0 || _action is not null)
         {
             _deleted = [];
@@ -55,22 +60,32 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     /// <summary>Restores the deleted entries.</summary>
     public async Task UndoAsync()
     {
-        // The command can arrive after the visible offer expired; enforce the window at the write boundary.
+        // D-127: one Undo at a time; failure preserves the original deadline, never a renewed offer.
+        if (_undoing) return;
         if (!CanUndo) { Dismiss(); return; }
 
         var entries = _deleted;
         var action = _action;
-        _deleted = [];
-        _action = null;
-        Changed?.Invoke(this, EventArgs.Empty);
-        if (entries.Count > 0)
+        var version = _offerVersion;
+        _undoing = true;
+        try
         {
-            await store.RestoreEntriesAsync(entries);
-        }
+            Changed?.Invoke(this, EventArgs.Empty);
+            if (entries.Count > 0) await store.RestoreEntriesAsync(entries);
+            if (action is not null) await action();
 
-        if (action is not null)
+            // Completion of an older operation must not dismiss a replacement offer or revive a dismissed one.
+            if (version == _offerVersion)
+            {
+                _deleted = [];
+                _action = null;
+                _offerVersion++;
+            }
+        }
+        finally
         {
-            await action();
+            _undoing = false;
+            Changed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
