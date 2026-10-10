@@ -467,3 +467,7 @@ fixed Save, with native scalable wrapping text and complete spoken names. Explic
 failure retain reviewed draft fields and stored rows; field validation clears obsolete general feedback. No data,
 permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 and external gates stay open:
 [evidence](../../quality/entry-save-feedback-visible.md).
+
+D-132 continues ENT-02/03 with actual retained manual Loan/Lent closure and separate new-work rights for
+counterpart borrowing. 51 added cases/main 2,102 pass, App.Tests 318. Current app registration stays inactive;
+choice UI/persistence, other selected bindings and occurrence-state/automation remain open: [evidence](../../quality/retained-debt-closing.md).

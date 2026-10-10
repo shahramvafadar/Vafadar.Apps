@@ -756,3 +756,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Final advance bills recompute from stored rows under the same writer; compare reviewed plan/advance metadata and net
   paid total before creating only the difference. Stale review/storage/access failures preserve the explicit-Save draft.
   No automatic merge or arbitrary correction grant. Other resource bindings, choice UI/persistence and automation remain open.
+
+## 64. Actual retained manual debt closure (D-132)
+
+* Recognize manual reviewed Loan/Lent closure from the stored known principal and complete resulting batch inside
+  the existing writer. Multiple payments and actual Fees expenses must exactly close it; never trust draft markers,
+  estimates, guessed FX or changes to old rows that manufacture a baseline. Widen totals before negation/addition.
+* Cash/checking/savings may fund closure; new card debt or other borrowed/lent counterpart work still requires its
+  own feature/selection. Explicit net-off may close both original principals. Exact membership remains required.
+* Keep ledger validation, atomic rollback and Changed after commit; no automatic archival or inferred relationship.
+  Current registration remains inactive. Selection UI/persistence, other bindings and occurrence automation remain open.

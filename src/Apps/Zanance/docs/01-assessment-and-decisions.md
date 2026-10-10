@@ -1241,3 +1241,18 @@ difference. The normal native command retains its form and generic translated fa
 79 added cases; main 2,051 pass, App.Tests 318. Native/strict build/APK evidence:
 [selected-account write policy](quality/selected-account-write-policy.md). No schema, SDK, permission, portable
 preference, paid fact or commercial activation change. Selection UI/persistence, other bindings and automation remain open.
+
+## D-132 - Retained manual closure of actual loan principal (2026-10-11)
+
+The approved downgrade matrix retains closing an existing loan. Recognize that operation from the actual known
+Loan/Lent balance and the complete submitted/final ledger under the existing SQLite writer, rather than rejecting
+every new transfer or trusting a repayment flag. Multiple payments, explicit foreign amounts and actual source/
+destination Fees expenses may close principal. A backdated or uncertain baseline, partial/overpayment, imported/
+automatic marker or unrelated group remains new work. Changing old rows/adding adjustments/new borrowing cannot
+manufacture closure. Widen exact totals before negating Int64.MinValue.
+
+Cash funds may settle retained debt; new card debt, asset or other borrowed/lent funds still need their own right.
+Explicit net-off may close both actual principals without inferred relationships. Keep original validation,
+membership, writer rollback and Changed boundary; never archive automatically. 51 added cases; main 2,102 pass,
+App.Tests 318. [Evidence](quality/retained-debt-closing.md). Current deployment stays inactive, with remaining
+selection UI/persistence, resource bindings and occurrence automation unfinished.

@@ -404,3 +404,7 @@ D-131 continues ENT-02/03 with the explicit Core resource-choice projection and 
 verified retained overdue payments and serialized reviewed advance bills. 79 added cases/main 2,051 pass;
 App.Tests 318. Current test builds remain unrestricted. Selection UI/persistence, other bindings/automation and
 external gates remain open: [quality evidence](quality/selected-account-write-policy.md).
+
+D-132 continues ENT-02/03 with actual retained manual Loan/Lent closure and separate new-work rights for
+counterpart borrowing. 51 added cases/main 2,102 pass, App.Tests 318. Current app registration stays inactive;
+choice UI/persistence, other selected bindings and occurrence-state/automation remain open: [evidence](quality/retained-debt-closing.md).

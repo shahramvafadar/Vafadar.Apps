@@ -746,3 +746,10 @@ choice/persistence screen and remaining bindings are unfinished, and current tes
 Bill settlement keeps its actual period/amount preview and explicit Save. If reviewed plan/advances change or the
 writer fails, retain every unsaved field and show the existing translated generic error; never silently post a
 different reviewed basis. Native successful extra/refund/zero-bill navigation is checked independently of unit tests.
+
+## Retained debt closing stays explicit (D-132)
+
+The existing Record repayment/Record return action opens the ordinary unsaved transfer form. Only explicit Save
+records actual money. Closing an existing principal remains available after downgrade; estimates and partial
+payments are not silently converted into closure. Keep the transfer and actual fee rows, account identity and
+draft/error behavior. Do not archive a zero-balance account automatically or infer relationships.

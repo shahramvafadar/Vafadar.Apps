@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Retained debt closing after downgrade (2026-10-11, D-132)
+
+- Keep complete repayment of existing loan or lent principal available outside the chosen account allowance.
+- Check actual balances, payments and fees together; preserve new-borrowing rules and explicit Save.
+- Test builds remain unrestricted.
+
 ### Changed - Safe downgrade choices and retained bill settlement (2026-10-11, D-131)
 
 - Add the approved explicit resource-choice model; test builds continue without commercial limits.

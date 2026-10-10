@@ -72,6 +72,7 @@ Native flows therefore prove retained bill delivery in the actual unrestricted a
 real SQLite service tests. Selection UI/persistence, other resource bindings, budget-definition choice, automation,
 limit messages and ENT-02/03/04 completion remain open. No schema/migration/compiled-model, new SDK, permission,
 portable preference or backup format change. Physical-phone, iOS, OAuth, billing, encryption, CI and product release
-acceptance remain separate. Native fixture data is fictitious and independently owned; preserve original files. Manual debt-closing classification
-and remaining occurrence-state/automation write boundaries are still unfinished; inactive registration prevents a
-current test-build restriction. These ready retained-data paths are the next service follow-up.
+acceptance remain separate. Native fixture data is fictitious and independently owned; preserve original files.
+Manual debt-closing classification is delivered separately by D-132
+([evidence](retained-debt-closing.md)); remaining occurrence-state/automation boundaries stay unfinished.
+Inactive registration prevents a current test-build restriction.

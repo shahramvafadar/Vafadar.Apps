@@ -857,3 +857,11 @@ cached selection retirement after SQL. Main 2,051 / App.Tests 318 pass with no f
 Actual native Save failure/retry/stale-review and successful bill flows, strict builds and complete signed APK:
 [evidence](quality/selected-account-write-policy.md). Limits remain inactive; no complete downgrade UI, other resource
 bindings, automation, physical-device/iOS or release acceptance is inferred.
+
+## AT-134 - Actual retained manual debt closure (D-132)
+
+51 actual SQLite cases/main 2,102 pass, App.Tests 318. Verify known Loan/Lent baselines, exact multiple payments/
+foreign amounts/fees, selected counterpart new-work rights, no manufactured closure, complete 24-table rollback,
+retired cached access, explicit retry and independent competing writers. Installed normal repayment flows prove
+actual app delivery independently from enabled commercial service tests. Current registration stays inactive;
+remaining commercial/native/external gates are open. [Evidence](quality/retained-debt-closing.md).

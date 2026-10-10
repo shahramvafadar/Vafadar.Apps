@@ -363,3 +363,11 @@ no preference/schema or backup field stores commercial selection or paid rights.
 rereads the stored recurrence/slice/effective state and paid ledger. Advance settlement recomputes stored advances
 and refunds and compares the reviewed plan/advance metadata and net paid total before the existing complete-batch
 validator/writer commits. SQL or cached-access change rolls back with no Changed. Current registration stays inactive.
+
+## Retained manual debt closure (D-132)
+
+Selected-account enforcement classifies explicit Loan/Lent closure from the known current stored balance and
+complete final batch under the actual SQLite writer. Exact payment/Fees effects extinguish the original principal;
+edits/deletes/adjustments cannot manufacture it. New borrowing counterpart rights remain separate. Widen temporary
+effect sums; keep stored money and the existing ledger calculator unchanged. No schema, backup or paid-data change;
+current commercial registration remains inactive. See the app's quality/retained-debt-closing.md evidence.

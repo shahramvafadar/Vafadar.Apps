@@ -1075,7 +1075,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         var ids = entries.Select(e => e.Id).ToList();
         var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
 
-        await DemandLedgerSaveAsync(db, write, entries, deleteIds, existing, accounts, retainedCorrections, cancellationToken);
+        await DemandLedgerSaveAsync(db, write, entries, deleteIds, existing, accounts, categories, retainedCorrections, cancellationToken);
 
         // D-126: validation sees the final batch, not old refunds that will be edited/deleted or missing peers.
         var purchaseIds = entries.Where(e => e.RefundOfId is not null).Select(e => e.RefundOfId!.Value).Concat(ids).Distinct().ToList();
@@ -1154,7 +1154,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     private async Task DemandLedgerSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds,
         IReadOnlyDictionary<Guid, LedgerEntry> existing, IReadOnlyDictionary<Guid, Account> accounts,
-        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken)
+        IReadOnlyDictionary<Guid, Category> categories, IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken)
     {
         if (!write.Enforced) return;
         var groups = entries.Where(e => e.GroupId is not null).Select(e => e.GroupId!.Value).Distinct().ToList();
@@ -1187,17 +1187,21 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             }
         }
 
-        var newWork = new List<LedgerEntry>();
+        var newWork = new List<Guid>();
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+        var closing = await RetainedDebtClosingAsync(db, entries, deleteIds, existing, accounts, categories,
+            stored, holdingGroups, today, cancellationToken);
         foreach (var entry in entries.Where(e => !existing.ContainsKey(e.Id) && !retainedFees.Contains(e.Id)
             && !retainedCorrections.Contains(e.Id) && e.Kind is not (EntryKind.Adjustment or EntryKind.Refund or EntryKind.IncomeReversal)))
         {
-            if (!await IsRetainedOverduePaymentAsync(db, entry, today, cancellationToken)) newWork.Add(entry);
+            if (await IsRetainedOverduePaymentAsync(db, entry, today, cancellationToken)) continue;
+            var requested = entry.Kind == EntryKind.Transfer && entry.ToAccountId is { } destination
+                ? new[] { entry.AccountId, destination } : new[] { entry.AccountId };
+            newWork.AddRange(requested.Where(id => !closing.TryGetValue(entry.Id, out var allowed) || !allowed.Contains(id)));
         }
         if (newWork.Count > 0)
             write.DemandSelectedAccounts(CommercialFeature.Transactions, accounts,
-                newWork.Select(e => e.AccountId).Concat(newWork.Where(e => e.Kind == EntryKind.Transfer && e.ToAccountId is not null)
-                    .Select(e => e.ToAccountId!.Value)));
+                newWork);
     }
 
     /// <summary>Checks original rules, state and paid rows rather than trusting a draft's schedule markers.</summary>

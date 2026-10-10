@@ -1850,3 +1850,11 @@ failure keeps the native form. 79 new cases/main 2,051 pass, App.Tests 318. No s
 preference or activation change. Native platforms/full signed APK: [evidence](../quality/selected-account-write-policy.md).
 ENT-02/03 remain in progress: choice UI/persistence, other resource bindings, budgets, automation, commercial messages
 and existing owner/security/provider/device/release gates are unfinished.
+
+### 31.45. Retained manual debt closing (D-132 / AT-134)
+
+The actual-file writer permits closing known existing Loan/Lent principal after downgrade/host expiry. Actual
+payments and Fees expenses must exactly close the stored baseline and complete resulting ledger; new card debt
+or other new counterpart work still needs its separate right. No automatic archive/guessed relationship/FX or
+estimate posting. 51 new cases/main 2,102 pass, App.Tests 318. Current test limits remain inactive. Native/package
+evidence and remaining boundaries: [retained debt closing](../quality/retained-debt-closing.md).
