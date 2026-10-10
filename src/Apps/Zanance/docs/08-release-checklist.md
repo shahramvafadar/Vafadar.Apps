@@ -324,3 +324,8 @@ Release selection/discard and exact 24-table original-sample readbacks pass. Com
 D-131 engineering evidence adds explicit Core resource choice and actual-file selected-account new money with
 retained overdue/advance settlements. This is partial ENT-02/03, not activation or physical-device/iOS/provider/
 security/billing/release acceptance. Current test builds remain unrestricted; see [evidence](quality/selected-account-write-policy.md).
+
+D-133 proves atomic explicit Link and actual-file retained occurrence corrections with 39 added SQLite cases,
+main 2,141 passing tests, strict platforms and six normal signed Release native confirmations. Current test limits
+stay inactive. Other commercial writer/automation/feedback paths and all provider/device/iOS/security/billing/
+publication gates remain open: [evidence](quality/occurrence-correction-writer.md).

@@ -865,3 +865,13 @@ foreign amounts/fees, selected counterpart new-work rights, no manufactured clos
 retired cached access, explicit retry and independent competing writers. Installed normal repayment flows prove
 actual app delivery independently from enabled commercial service tests. Current registration stays inactive;
 remaining commercial/native/external gates are open. [Evidence](quality/retained-debt-closing.md).
+
+## AT-135 - Atomic explicit linking and retained occurrence corrections (D-133)
+
+39 actual SQLite cases/main 2,141 pass, App.Tests 318. Six missing-membership writes reject with all 24 complete
+tables unchanged; twelve Free/expired-host operations retain rights without account selection. Verify state insert/
+update failure rollback, complete metadata preservation/idempotent links, nine changed relationships, transfer
+destination, five actual post-SQL access retirements/retries, no-op repair/history deletion, wrong-file facts and
+independent writers assigning one payment only once. Normal installed en/fa/de light/dark explicit confirmations
+retain actual 950 minor units, complete tags/notes/payee/receipts and one settled state without a second entry.
+[Evidence](quality/occurrence-correction-writer.md). Strict builds/full signed APK do not complete all commercial/native/external gates.

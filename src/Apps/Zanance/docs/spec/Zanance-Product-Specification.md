@@ -1858,3 +1858,12 @@ payments and Fees expenses must exactly close the stored baseline and complete r
 or other new counterpart work still needs its separate right. No automatic archive/guessed relationship/FX or
 estimate posting. 51 new cases/main 2,102 pass, App.Tests 318. Current test limits remain inactive. Native/package
 evidence and remaining boundaries: [retained debt closing](../quality/retained-debt-closing.md).
+
+### 31.46. Retained occurrence corrections and atomic linking (D-133 / AT-135)
+
+Bind retained Skip/Unskip/change, repair and history-free deletion to exact-file membership and the same writer.
+Explicit existing-entry Link rereads actual rule/slice/payment relationships and commits markers/state together,
+preserving actual money and metadata without a second ledger entry. SQL/access failure rolls back all rows before
+Changed; concurrent writers cannot steal a payment. 39 new cases/main 2,141 pass, App.Tests 318. Current commercial
+registration remains inactive. [Native/package evidence](../quality/occurrence-correction-writer.md). Other settlement/reopening, selected-plan
+generation, automation, choice persistence/UI, command feedback and existing external release gates remain open.

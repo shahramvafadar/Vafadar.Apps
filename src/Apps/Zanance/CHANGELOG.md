@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Safe linking of an existing payment (2026-10-11, D-133)
+
+- Link the payment and its planned occurrence together; a failed save leaves neither half committed.
+- Recheck changed payment relationships and prevent the same payment being assigned to two occurrences.
+- Preserve actual money, notes, tags and receipts; never record a second payment when linking.
+- Keep retained occurrence corrections available after downgrade. Test builds remain unrestricted.
+
 ### Changed - Retained debt closing after downgrade (2026-10-11, D-132)
 
 - Keep complete repayment of existing loan or lent principal available outside the chosen account allowance.

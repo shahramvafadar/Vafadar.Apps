@@ -1256,3 +1256,22 @@ Explicit net-off may close both actual principals without inferred relationships
 membership, writer rollback and Changed boundary; never archive automatically. 51 added cases; main 2,102 pass,
 App.Tests 318. [Evidence](quality/retained-debt-closing.md). Current deployment stays inactive, with remaining
 selection UI/persistence, resource bindings and occurrence automation unfinished.
+
+## D-133 - Atomic explicit payment links and retained occurrence correction rights (2026-10-11)
+
+The owner authorizes unattended necessary implementation, tests, builds, safe reviews and finished commits/pushes
+under D-69, without waiting for routine permission. Preserve genuine new cost/identity/licence/product/release gates
+and the D-114 prohibition on temporary policies. Record this standing authority in AGENTS.md section 65.
+
+Seven baseline SQLite cases reproduce missing-membership occurrence writes and an entry link committed before a
+failed state insert. Skip/Unskip/change, settlement repair and history-free deletion now bind the same actual-file
+writer and cached correction/delete right. Check history under that writer. Complete rollback includes access
+retirement after SQL, with Changed only after commit. Retained corrections need no selected account or paid host.
+
+Link the reviewed existing payment and occurrence state in one transaction. Recheck the actual stored rule/slice,
+entry kind/source/destination accounts, partial flag and existing link; never overwrite another occurrence's payment.
+Preserve complete actual financial metadata and receipts, without posting a second entry or changing paid totals.
+39 added cases; main 2,141 pass, App.Tests 318. Native/strict platforms/full signed APK: [evidence](quality/occurrence-correction-writer.md).
+No schema, SDK, permission, portable paid fact, caption/layout or activation change. New settlement/partial/final
+posting, generated-entry reopening, selected-plan generation and automation remain unfinished, as does existing
+occurrence command failure feedback. This is partial ENT-02/03 engineering evidence, not release acceptance.

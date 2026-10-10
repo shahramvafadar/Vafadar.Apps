@@ -471,3 +471,9 @@ permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 a
 D-132 continues ENT-02/03 with actual retained manual Loan/Lent closure and separate new-work rights for
 counterpart borrowing. 51 added cases/main 2,102 pass, App.Tests 318. Current app registration stays inactive;
 choice UI/persistence, other selected bindings and occurrence-state/automation remain open: [evidence](../../quality/retained-debt-closing.md).
+
+D-133 continues ENT-02/03 with retained occurrence correction/delete/repair rights and atomic explicit payment
+linking under the actual-file writer. 39 added cases/main 2,141 pass, App.Tests 318; native en/fa/de light/dark
+normal confirmations preserve actual money/metadata and create no second entry. Registration stays inactive.
+New settlements/partial/final posting, generated-entry reopening, selected-plan generation, automation, choice UI/
+persistence and occurrence command failure feedback remain unfinished: [evidence](../../quality/occurrence-correction-writer.md).

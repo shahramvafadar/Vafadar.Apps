@@ -371,3 +371,12 @@ complete final batch under the actual SQLite writer. Exact payment/Fees effects 
 edits/deletes/adjustments cannot manufacture it. New borrowing counterpart rights remain separate. Widen temporary
 effect sums; keep stored money and the existing ledger calculator unchanged. No schema, backup or paid-data change;
 current commercial registration remains inactive. See the app's quality/retained-debt-closing.md evidence.
+
+## Atomic explicit occurrence links and correction writes (D-133)
+
+PlanStore binds retained state corrections, repair and history-free deletion to CommercialWriteTransaction with
+requireTransaction, exact-file cached membership, post-SQL freshness and Changed after commit. Explicit Link rereads
+the stored rule/slice and entry relationships before updating markers and state within that writer. Complete SQL
+or cached-access failure rolls back both. No extra ledger entry, changed actual monetary metadata or schema change.
+New Settle/PayPart and generated-entry Unsettle still have separate boundaries; their atomic/automation follow-up
+is not inferred from this slice. Current commercial registration remains inactive.

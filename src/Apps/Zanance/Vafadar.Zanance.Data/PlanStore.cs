@@ -7,8 +7,8 @@ using Vafadar.Zanance.Data.Commerce;
 namespace Vafadar.Zanance.Data;
 
 /// <summary>
-/// Data access for plans and their occurrences (docs/02-domain-design.md §5–§7). Settling, linking and undoing keep the
-/// entry and the occurrence state consistent in one transaction.
+/// Data access for plans and their occurrences (docs/02-domain-design.md §5–§7). Explicit links and occurrence
+/// corrections commit atomically. New settlements retain their entry-first recovery through RepairSettlementsAsync.
 /// </summary>
 public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store,
     ICommercialWriteAccessSource commercialAccess)
@@ -188,15 +188,11 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// <returns><see langword="false"/> when the plan has history.</returns>
     public async Task<bool> DeleteScheduleAsync(Guid scheduleId, CancellationToken cancellationToken = default)
     {
-        if (await HasHistoryAsync(scheduleId, cancellationToken))
-        {
-            return false;
-        }
-
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.DeleteData);
 
-        // Checked again inside the transaction: an entry settled meanwhile keeps the plan.
+        // The actual writer owns the history check through deletion; another service cannot settle meanwhile.
         if (await db.Entries.AnyAsync(e => e.ScheduleId == scheduleId, cancellationToken)
             || await db.OccurrenceStates.AnyAsync(s => s.ScheduleId == scheduleId && s.Status != OccurrenceStatus.Open, cancellationToken))
         {
@@ -205,7 +201,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == scheduleId).ExecuteDeleteAsync(cancellationToken);
         await db.Schedules.Where(s => s.Id == scheduleId).ExecuteDeleteAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
         return true;
     }
@@ -244,6 +240,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<int> RepairSettlementsAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
         var settling = await db.Entries.AsNoTracking()
             .Where(e => e.ScheduleId != null && e.OccurrenceDate != null && !e.IsPartialPayment)
             .Select(e => new { e.Id, ScheduleId = e.ScheduleId!.Value, Date = e.OccurrenceDate!.Value })
@@ -274,7 +272,9 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
 
         if (repaired > 0)
         {
+            write.EnsureCurrent();
             await db.SaveChangesAsync(cancellationToken);
+            await write.CommitAsync(cancellationToken);
             OnChanged();
         }
 
@@ -323,18 +323,28 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task LinkAsync(Occurrence occurrence, Guid entryId, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
-        await using (var db = await contextFactory.CreateDbContextAsync(cancellationToken))
-        {
-            await db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
-                e => e.SetProperty(x => x.ScheduleId, occurrence.Schedule.Id).SetProperty(x => x.OccurrenceDate, occurrence.OriginalDate),
-                cancellationToken);
-        }
-
         await UpdateStateAsync(occurrence, state =>
         {
             state.Status = OccurrenceStatus.Settled;
             state.EntryId = entryId;
-        }, cancellationToken);
+        }, cancellationToken, async db =>
+        {
+            // D-133: the reviewed suggestion may have changed or been linked while the form was open.
+            // Recheck original relationships under the same writer; never move another occurrence's payment.
+            var plan = await db.Schedules.AsNoTracking().FirstOrDefaultAsync(s => s.Id == occurrence.Schedule.Id, cancellationToken);
+            var entry = await db.Entries.AsNoTracking().FirstOrDefaultAsync(e => e.Id == entryId, cancellationToken);
+            if (plan is null || !plan.Owns(occurrence.OriginalDate)
+                || !Recurrence.Between(plan.Rule, occurrence.OriginalDate, occurrence.OriginalDate).Any()
+                || entry is null || entry.Kind != plan.Kind || entry.AccountId != plan.AccountId
+                || (entry.Kind == EntryKind.Transfer && entry.ToAccountId != plan.ToAccountId)
+                || entry.IsPartialPayment || (entry.ScheduleId is not null
+                    && (entry.ScheduleId != plan.Id || entry.OccurrenceDate != occurrence.OriginalDate)))
+                throw new InvalidOperationException("The retained payment or occurrence changed; review it again.");
+
+            await db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
+                e => e.SetProperty(x => x.ScheduleId, plan.Id).SetProperty(x => x.OccurrenceDate, occurrence.OriginalDate),
+                cancellationToken);
+        });
     }
 
     /// <summary>
@@ -392,7 +402,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken, Func<ZananceDbContext, Task>? alsoInTransaction = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
         if (alsoInTransaction is not null)
         {
             await alsoInTransaction(db);
@@ -407,8 +418,9 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
 
         change(state);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 

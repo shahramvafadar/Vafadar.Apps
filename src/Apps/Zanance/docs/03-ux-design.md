@@ -753,3 +753,11 @@ The existing Record repayment/Record return action opens the ordinary unsaved tr
 records actual money. Closing an existing principal remains available after downgrade; estimates and partial
 payments are not silently converted into closure. Keep the transfer and actual fee rows, account identity and
 draft/error behavior. Do not archive a zero-balance account automatically or infer relationships.
+
+## Retained occurrence corrections and explicit payment links (D-133)
+
+Linking is the existing explicit confirmation of a named actual transaction and amount. It never records a second
+payment, silently moves another occurrence's payment or changes actual money/metadata. Retained Skip/Unskip/change
+and repair do not need a selected account or paid host. Normal installed confirmations are verified independently
+of enabled commercial SQLite tests; the current app remains unrestricted. No caption/layout change is introduced.
+Existing occurrence-command failure feedback and other settlement/reopening paths remain separate follow-ups.

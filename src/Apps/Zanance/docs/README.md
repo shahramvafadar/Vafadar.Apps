@@ -27,3 +27,5 @@ Status words used everywhere: **Implemented – verified** (behaviour tested), *
 **Planned**, **Not included**, **Unknown – needs verification**. Nothing is reported as done without evidence.
 
 Complete growing transaction category choices: [runtime evidence](quality/entry-category-captions.md).
+
+Retained occurrence correction and atomic payment linking: [engineering evidence](quality/occurrence-correction-writer.md) (D-133 / AT-135).

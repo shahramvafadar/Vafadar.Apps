@@ -766,3 +766,22 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   own feature/selection. Explicit net-off may close both original principals. Exact membership remains required.
 * Keep ledger validation, atomic rollback and Changed after commit; no automatic archival or inferred relationship.
   Current registration remains inactive. Selection UI/persistence, other bindings and occurrence automation remain open.
+
+## 65. Owner-authorized unattended delivery (2026-10-11)
+
+* The owner authorizes independently performing all necessary approved implementation and verification actions
+  while away. Do not wait for repeated routine permission; continue concrete planned work, tests, builds, safe
+  native reviews, complete APK delivery and finished commits/pushes under the existing repository rules.
+* This continues D-69, without temporary product policies or test-build commercial activation. New spending,
+  identities, licensing, unresolved product direction and publication remain genuine owner decisions.
+
+## 66. Retained occurrence corrections and explicit links (D-133)
+
+* Bind Skip/Unskip/change, settlement repair and history-free deletion to the actual file's cached membership
+  and the same SQLite writer. Corrections need no selected account or paid host. Reject retired facts after SQL
+  with complete rollback; Changed follows commit. History check and deletion share the writer.
+* Explicit linking rechecks the stored rule/slice and actual entry kind/accounts/destination/partial/link markers.
+  Never steal another occurrence's payment. Entry markers and state commit together without posting another entry
+  or changing financial metadata. Preserve normal idempotent links and actual paid totals.
+* Current registration stays inactive. New/full/partial settlement, reopening generated money, selected-plan
+  generation and automation remain separate unfinished boundaries; do not describe this slice as full enforcement.
