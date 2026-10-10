@@ -261,3 +261,13 @@ Owned data above quota/after host expiry remains recoverable/importable with exa
 outside portable data. Import/Undo retain their existing writer and explicit aggregate decisions, with post-SQL
 access recheck and complete rollback. Current registration is inactive; selected read-only data and other resources/
 automation remain open: [evidence](../../quality/recovery-write-policy.md).
+
+## 15. Categorization patterns under the actual writer (D-125)
+
+SaveCategoryRuleAsync and DeleteCategoryRuleAsync use actual-file cached facts. New pattern/kind demands
+CategorizationRules; correcting the category of an existing same-text/kind pattern uses Corrections, retaining
+the existing new-id replacement contract. Deletion uses DeleteData. Capture before writer wait; matching and
+replacement share that writer even while deployment stays inactive. Check before draft trim/removal, retain
+stored CreatedAt on updates and recheck after SQL before commit. Complete rollback and Changed-after-commit
+apply to enabled operations. No ledger reclassification or portable paid facts. Suggestion delivery and other
+ENT-02/03/04 operations remain unfinished: [evidence](../../quality/category-rule-write-policy.md).

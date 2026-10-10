@@ -1115,3 +1115,21 @@ profile creation, automation and remaining ENT-02/03 boundaries remain unfinishe
 by a failed migration still follows established safety-copy recovery; the whole multi-source portable package is
 not made atomic here. Platform/APK and actual linked import/Undo evidence:
 [recovery-write-policy.md](quality/recovery-write-policy.md).
+
+## D-125 - Guard new categorization patterns and serialize replacements (2026-10-10)
+
+The first real SQLite policy regression proves the unguarded rule service accepts new automation in an enabled
+Free context. New pattern/kind uses CategorizationRules; retained same-text/kind category edits and new-id
+same-pattern replacement preserve Corrections rights, including expired-host data with exact membership.
+Deletion uses DeleteData. Personal Pro cannot replace membership. Preserve existing trim/case matching and
+new-id replacement semantics; an existing-id update retains its stored CreatedAt.
+
+Hold the actual-file SQLite writer before matching and replacement, even in current unrestricted builds, so
+independent providers cannot both insert an absent pattern. Check before draft mutation, recheck after SQL,
+rollback the whole replacement/deletion on failure and raise Changed only after commit. The rule form and entry
+details share this service; no UI-only gate. Rules never reclassify existing entries.
+
+28 added AT-127 cases/main 1,862 pass; App.Tests 299 unchanged. Registration stays inactive. No schema, SDK,
+permission, visible layout/string or portable paid-fact changes. Suggestion delivery, selected read-only data,
+profiles, automation and other ENT-02/03/04 paths remain unfinished. Strict platform/APK and actual Release rule
+creation/replacement/deletion evidence: [category-rule-write-policy.md](quality/category-rule-write-policy.md).

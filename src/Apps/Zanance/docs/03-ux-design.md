@@ -692,3 +692,11 @@ is the one selected when its source starts reading input; a later profile select
 migration. Import and Undo preserve complete aggregate/detail data and metadata with no partial writes. Owned data
 above quota is retained, without granting paid rights. Current test builds remain unrestricted; explicit selected
 read-only resources and commercial feedback remain ENT-03/04 work.
+
+## Retained categorization rule patterns (D-125)
+
+Keep the rule form's existing explicit Add and confirmed Delete, and the transaction detail's save-rule action.
+New text/kind configures new automation; correcting the category of an existing pattern preserves data rights.
+Same-pattern new-id replacement remains one rule. No stored transaction is reclassified, no draft is trimmed on
+commercial rejection, and no limit UI is activated in test builds. Suggestion-delivery policy and translated
+commercial feedback remain unfinished.

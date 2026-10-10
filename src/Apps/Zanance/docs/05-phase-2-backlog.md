@@ -366,3 +366,8 @@ D-124 continues ENT-02 with exact-file database backup/recovery and retained imp
 the destination before input and migrates the same file, correcting an actual reproduced redirection defect.
 28 added SQLite cases/main 1,834 pass. Current registration stays inactive; selected read-only import/restore data,
 profiles, automation and remaining ENT-02/03 paths stay open: [quality evidence](quality/recovery-write-policy.md).
+
+D-125 continues ENT-02 with actual-file category rule creation/correction/deletion rights and serialized
+same-pattern replacement, including current unrestricted builds. 28 added SQLite cases/main 1,862 pass.
+No stored transaction is reclassified. Registration stays inactive; suggestion delivery, selected read-only data,
+profiles, automation and remaining ENT-02/03/04 paths stay open: [quality evidence](quality/category-rule-write-policy.md).

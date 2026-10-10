@@ -670,3 +670,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Registration stays inactive. Read-only import/restore classification, selected resources, profile creation,
   automation and other ENT-02/03 paths remain open. Native replacement plus a later failed migration still requires
   the established safety-copy recovery; this does not make the whole portable package an atomic transaction.
+
+## 57. Serialized retained category patterns (D-125)
+
+* Category rule matching/replacement holds the actual SQLite writer, including unrestricted test builds. New text
+  or kind requires CategorizationRules; changing the category of a stored same-text/kind pattern is a correction,
+  including the existing new-id replacement UI path. Retain current trim/case matching and replacement identity.
+* Check cached exact-file rights before draft trim/deletion/audit, preserve CreatedAt on an existing-id update,
+  and recheck after SQL before commit. Failed replacements/deletes restore complete rows with no Changed.
+* Rule deletion keeps owned-data rights and never reclassifies stored entries. Registration stays inactive;
+  rule suggestion delivery/selected read-only classification and other ENT-02/03/04 paths remain unfinished.

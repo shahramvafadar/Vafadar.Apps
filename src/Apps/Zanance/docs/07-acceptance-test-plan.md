@@ -786,3 +786,14 @@ two independent duplicate-import contests; wrong-file snapshots; corrupted/cance
 access rechecks; preservation of other registered sources; and first-schema restore/migration into the initial
 file after a profile move. Main suite 1,834 passes. Strict platforms, full signed APK and actual linked import/Undo:
 [evidence](quality/recovery-write-policy.md). Multi-source atomicity and selected read-only classification remain open.
+
+## AT-127 - Exact-file category rule writes and serialized replacement (D-125)
+
+28 added real SQLite cases cover reproduced/corrected Free new-rule acceptance; unrestricted inactive writes;
+three paid/exact shared creation contexts; retained correction/delete and same-pattern new-id replacement in
+Free/expired-host contexts; new text/kind refusal and distinct kind identity; four missing-membership paths;
+two wrong-file paths; four trigger-driven access retirement rollbacks; two replacement SQL failures/retries;
+two independent same-pattern writer races; bound initial file after provider movement; and short draft validation.
+Main 1,862 pass. Full stored-column checks keep unrelated financial/preferences data unchanged. Strict platforms,
+complete signed APK and actual Release rule form evidence:
+[evidence](quality/category-rule-write-policy.md). Other ENT-02/03/04 paths and suggestion delivery remain open.

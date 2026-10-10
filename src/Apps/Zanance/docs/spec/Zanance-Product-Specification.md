@@ -1777,3 +1777,14 @@ and expired-host data rights, never portable paid facts. SQL failures/retirement
 28 new SQLite cases/main 1,834 pass; App.Tests 299 unchanged. Current registration stays inactive without schema,
 SDK, permission, layout or backup-format changes. Selected read-only classification, profiles, automation and
 other ENT-02/03 paths remain unfinished: [evidence](../quality/recovery-write-policy.md).
+
+### 31.38. Categorization rule service rights and replacement (D-125 / AT-127 / ENT-02 in progress)
+
+New categorization text/kind checks the approved automation right. Stored pattern-category corrections and deletion
+retain owned-data rights with exact membership, including the same-pattern new-id replacement path. Matching and
+replacement share the actual SQLite writer, including inactive builds; independent writers retain one pattern.
+Failures/retired facts roll back complete stored rules; existing-id updates retain CreatedAt; Changed follows commit.
+28 added cases/main 1,862 pass; App.Tests 299 unchanged. No schema, permission, SDK, visible-layout/string or
+portable paid-fact changes. Deployment remains inactive. Suggestion delivery, selected read-only classification,
+profiles, automation and other ENT-02/03/04 paths remain unfinished:
+[evidence](../quality/category-rule-write-policy.md).

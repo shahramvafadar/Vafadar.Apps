@@ -659,18 +659,28 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     public async Task SaveCategoryRuleAsync(CategoryRule rule, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(rule);
-        rule.Match = rule.Match.Trim();
-        if (rule.Match.Length < Core.Categories.CategoryRules.MinLength)
+        var match = rule.Match.Trim();
+        if (match.Length < Core.Categories.CategoryRules.MinLength)
         {
             throw new ArgumentException("The text of a rule is too short.", nameof(rule));
         }
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-125: matching and replacement share the actual writer even in unrestricted test builds. Separate
+        // providers cannot both read an absent pattern and insert duplicates before the implicit Save transaction.
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        var existing = await db.CategoryRules.AsNoTracking().FirstOrDefaultAsync(r => r.Id == rule.Id, cancellationToken);
         var same = (await db.CategoryRules.Where(r => r.Kind == rule.Kind && r.Id != rule.Id).ToListAsync(cancellationToken))
-            .Where(r => string.Equals(r.Match, rule.Match, StringComparison.CurrentCultureIgnoreCase));
+            .Where(r => string.Equals(r.Match, match, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        var retained = same.Count > 0 || existing is not null && existing.Kind == rule.Kind
+            && string.Equals(existing.Match, match, StringComparison.CurrentCultureIgnoreCase);
+        // Changing the category of a retained pattern is a correction; a new pattern/kind configures new automation.
+        write.DemandFeature(retained ? CommercialFeature.Corrections : CommercialFeature.CategorizationRules);
+        rule.Match = match;
         db.CategoryRules.RemoveRange(same);
-        if (await db.CategoryRules.AnyAsync(r => r.Id == rule.Id, cancellationToken))
+        if (existing is not null)
         {
+            rule.CreatedAt = existing.CreatedAt;
             db.CategoryRules.Update(rule);
         }
         else
@@ -678,7 +688,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.CategoryRules.Add(rule);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 
@@ -686,7 +698,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     public async Task DeleteCategoryRuleAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        write.DemandFeature(CommercialFeature.DeleteData);
         await db.CategoryRules.Where(r => r.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 

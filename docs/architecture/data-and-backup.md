@@ -318,3 +318,10 @@ preserving other registered sources. Import/Undo guard their existing actual-fil
 SQL/access failure. No schema/migration/compiled-model, format, permission or SDK changes. Migration after native
 replacement can still fail; preserve established safety-copy recovery and distinguish it from whole-package atomicity.
 [Evidence](../../src/Apps/Zanance/docs/quality/recovery-write-policy.md).
+
+D-125 brings category rules under cached exact-file rights and the actual writer before pattern matching.
+New text/kind is automation; same-text/kind replacement and deletion preserve owned-data rights. Serialize
+replacement even with deployment inactive; preserve existing-id CreatedAt and recheck after SQL before commit.
+Failures restore the complete previous rule without Changed or ledger writes. No schema/migration/compiled model,
+format, permission or SDK changes. Suggestion delivery and selected read-only classification remain open:
+[evidence](../../src/Apps/Zanance/docs/quality/category-rule-write-policy.md).

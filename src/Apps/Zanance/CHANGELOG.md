@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Consistent categorization rule replacement (2026-10-10, D-125)
+
+- Saving the same category pattern concurrently now leaves one rule rather than duplicate suggestions.
+- Prepare new-rule access checks while retaining same-pattern category corrections and deletion.
+  Test builds stay unrestricted; existing transactions keep their categories.
+
 ### Fixed - Stable backup restore destination (2026-10-10, D-124)
 
 - Restore keeps its original database destination while reading the file, including upgrades of older backups.
