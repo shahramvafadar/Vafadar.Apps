@@ -292,3 +292,5 @@ owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback
 D-104 / AT-109 delivers complete transaction row reuse for repeated filters, scoped to one data/display snapshot.
 Four new tests pass (main 1,488). Final running-app/build/APK checks and measured performance limits are recorded in
 [quality/transaction-row-reuse.md](quality/transaction-row-reuse.md). QA-06 and real device/platform/release gates remain open.
+
+D-105 / AT-110 removes repeated full-ledger membership scans from complete bulk-selection reload. Final tests/runtime/build/APK evidence: [quality/bulk-selection-reload.md](quality/bulk-selection-reload.md). Cold/device/ANR/native-publication and owner acceptance gates remain open.

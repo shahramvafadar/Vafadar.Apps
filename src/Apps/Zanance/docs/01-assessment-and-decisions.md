@@ -835,3 +835,13 @@ is slower in this cohort and remains open. AT-109 adds four tests: main 1,488/Ap
 [quality/transaction-row-reuse.md](quality/transaction-row-reuse.md) for final checks and explicit performance limits.
 
 D-104 final checks: main 1,488 tests, strict Windows/complete Debug+Release Android, 21 Windows contexts/609 own renders, seven Release emulator search/filter contexts, original data and a complete signed D-104 APK pass. Physical-device/cold/Release-timing and native-publication gates remain open.
+
+## D-105 - Complete indexed bulk-selection reload (2026-10-10)
+
+Replace repeated full-ledger membership searches with one complete id index per fresh bulk snapshot. Retain known
+selection, prune only removed ids, refuse unknown ids, and preserve current financial copies/validation/Undo and busy
+dialog guards. Actual bound full-selection Windows reload median: 100,000 entries 25.30 -> 1.42 seconds; this ends at
+LoadAsync and is not completed-frame/cold/device/ANR acceptance. Three new behavior cases bring main tests to 1,491,
+App.Tests 255. Final running-app/build/APK evidence and open limits: quality/bulk-selection-reload.md.
+
+D-105 final checks: main 1,491 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/609 own renders, seven native Release bulk-selection contexts, original-data readbacks and a complete signed D-105 APK pass. Cold/ANR/native-publication/device/platform and owner acceptance gates remain open.

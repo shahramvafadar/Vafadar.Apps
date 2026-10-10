@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Faster bulk-selection reload (2026-10-10, D-105)
+
+- Reloading a large selected transaction list checks remaining selections once instead of repeatedly searching every row. Existing selections survive a refresh; removed rows lose selection. Selecting filtered rows still keeps previously selected rows from other filters.
+
 ### Improved - Repeated transaction filters (2026-10-10, D-104)
 
 - Repeated filters reuse already prepared transaction rows while keeping every matching transaction and total.

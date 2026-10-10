@@ -741,6 +741,7 @@ internal static partial class DebugSnapshots
                     await transactions.LoadAsync();
 #if WINDOWS
                     await ReviewTransactionRowsAsync(services, transactions, folder, language);
+                    await ReviewBulkSelectionReloadAsync(services, transactions, folder, language);
 #endif
                     var delayedRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
                     var covered = transactions.Loading.RunAsync(() => delayedRead.Task, () => { });

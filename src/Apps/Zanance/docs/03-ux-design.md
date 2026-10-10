@@ -577,3 +577,9 @@ Keep the complete ordered result and all filter/drill-down scopes. Reuse present
 source/display snapshot; fresh reads and formatting/translation/theme/unit changes must invalidate them. Refresh
 selection from the bulk flow. Do not hide rows or change totals to improve a performance counter. Retain the existing
 loading/failure/retry cover, actual row button commands, growing captions and persistent bulk/Undo actions.
+
+### Complete selection during transaction reload (D-105)
+
+Refresh retains every selected id still present in the complete source; removed rows lose selection and new rows are
+not implicitly selected. Select all applies to visible known rows and preserves hidden selection. Cancel clears the
+whole selection. Busy dialog guards and explicit financial confirmation/validation/Undo remain unchanged.

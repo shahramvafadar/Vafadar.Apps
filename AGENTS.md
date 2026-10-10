@@ -488,3 +488,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   scope and totals. Do not cap results to meet a performance counter.
 * Measure the actual bound page and native source separately. Temporary probes are removed before final builds;
   warm Windows improvements do not close cold-start, historical ANR or real device/platform gates.
+
+## 38. Complete indexed bulk selection (D-105)
+
+* Build membership from the entire fresh source snapshot once; keep known selection and prune only removed ids.
+  Filtered Select all adds visible known rows without losing hidden selections; unknown ids remain excluded.
+* Financial commands keep current snapshot copies, validation, cancellation, Undo and pending-dialog guards. Never
+  trade complete selection/results for a timing target. LoadAsync timings exclude later native arrangement/painting;
+  keep cold/ANR/platform/device gates open and remove temporary probes before final builds.

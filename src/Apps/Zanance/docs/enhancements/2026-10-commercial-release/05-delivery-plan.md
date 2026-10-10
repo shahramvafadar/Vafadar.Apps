@@ -338,3 +338,5 @@ owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback
 D-104 delivers the ready QA-06 repeated-transaction-filter optimization, preserving complete results and fresh
 data/display semantics. Evidence and final checks: [transaction-row-reuse.md](../../quality/transaction-row-reuse.md).
 Continue ready work under D-69; native publication, cold/device performance and unresolved owner gates remain open.
+
+D-105 delivers ready QA-06 complete bulk-selection reload, retaining current financial semantics. Actual evidence and final checks: [bulk-selection-reload.md](../../quality/bulk-selection-reload.md). Continue ready work under D-69; native publication, cold/device/ANR and unresolved owner gates remain open.

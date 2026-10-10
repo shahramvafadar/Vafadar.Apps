@@ -615,3 +615,10 @@ selection and retry after presentation failure. Main suite: 1,488 passed, App.Te
 actual cached row fields against EntryPresenter, proves unit invalidation/fresh reload and no fictitious financial
 writes; existing native selection/cancel/retry remains. Final matrix/Release emulator/APK evidence and open QA-06
 limits: [quality/transaction-row-reuse.md](quality/transaction-row-reuse.md).
+
+## AT-110 - Complete bulk-selection reload (D-105)
+
+Three new cases exercise the actual bulk flow with 10,000/100,000 complete sources, fresh reversed objects,
+removed/new/unknown ids, no write or Undo, and retained selection operating on fresh money/tags. Existing financial
+and busy-dialog scenarios remain. Main suite: 1,491 passed, App.Tests 255. Actual native Select all/reload/Cancel
+review and final matrix/APK/open limits: [quality/bulk-selection-reload.md](quality/bulk-selection-reload.md).

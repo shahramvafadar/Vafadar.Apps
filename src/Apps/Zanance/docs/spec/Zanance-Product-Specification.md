@@ -1444,6 +1444,15 @@ Four cases bring the main suite to 1,488 (App.Tests 252). Actual bound tenfold W
 Final running-app/build/APK evidence and QA-06/device/platform limits are recorded in
 [quality/transaction-row-reuse.md](../quality/transaction-row-reuse.md). No data/schema/permission change.
 
+### 31.21. Complete bulk-selection reload (D-105 / AT-110)
+
+One complete fresh-snapshot id index replaces repeated full-ledger membership scans. Known selection survives fresh
+objects/reordering; removed ids are pruned, new rows are not implicitly selected, and filtered Select all retains
+hidden selected rows. Financial validation/copies/Undo and dialog guards remain. Three new cases bring the main
+suite to 1,491 (App.Tests 255). Actual tenfold bound Windows LoadAsync median: 25,304.83 -> 1,421.56 ms, excluding
+later native arrangement/painting. No data/schema/permission change. Final runtime/build/APK evidence and open
+cold/ANR/platform/device gates: [quality/bulk-selection-reload.md](../quality/bulk-selection-reload.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

@@ -132,7 +132,7 @@ public sealed class BulkTransactionTests
         using var f = new FlowFixture(); var setup = await SetupAsync(f); var vm = setup.Vm;
         var answer = new TaskCompletionSource<string?>(); f.Platform.PendingInput = () => answer.Task;
         vm.Start(); vm.Toggle(setup.Rows[0].Id); var pending = vm.TagCommand.ExecuteAsync(null);
-        Assert.True(vm.IsBusy); vm.Toggle(setup.Rows[1].Id); vm.Stop(); await vm.ReviewedCommand.ExecuteAsync(null);
+        Assert.True(vm.IsBusy); vm.Toggle(setup.Rows[1].Id); vm.SelectAll(setup.Rows.Select(row => row.Id)); vm.Stop(); await vm.ReviewedCommand.ExecuteAsync(null);
         Assert.True(vm.IsSelected(setup.Rows[0].Id)); Assert.False(vm.IsSelected(setup.Rows[1].Id)); Assert.True(vm.IsSelecting);
         Assert.All(await f.Store.GetEntriesAsync(cancellationToken: Ct), e => Assert.Equal(ReviewState.Unreviewed, e.Review));
         answer.SetResult("Fictitious pending"); await pending; Assert.False(vm.IsBusy);
@@ -149,6 +149,52 @@ public sealed class BulkTransactionTests
         f.Time.Now = f.Time.Now.AddSeconds(8); await setup.Undo.UndoAsync();
         Assert.Null(await f.Store.GetEntryAsync(setup.Rows[0].Id, Ct));
         Assert.Equal(2000, Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct)).Amount);
+    }
+
+    [Theory, InlineData(10000), InlineData(100000), Trait("AT", "AT-110")]
+    public async Task Complete_selection_survives_fresh_reordered_snapshots_and_prunes_only_removed_ids(int count)
+    {
+        using var f = new FlowFixture(); var setup = await SetupAsync(f); var vm = setup.Vm;
+        var unchanged = System.Text.Json.JsonSerializer.Serialize(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        // Large source snapshots stay fictitious and in memory; no financial command writes these rows.
+        var rows = Enumerable.Range(0, count).Select(_ => new LedgerEntry
+            { AccountId = setup.Account.Id, Kind = EntryKind.Expense, Amount = 1000, Date = new(2026, 10, 9) }).ToArray();
+        vm.Load(rows, setup.Categories, _ => string.Empty); vm.Start();
+        vm.SelectAll(rows.Select(row => row.Id).Append(Guid.NewGuid()));
+        Assert.All(rows, row => Assert.True(vm.IsSelected(row.Id)));
+        Assert.Equal(f.Translator.Format("Bulk_Selected", count), vm.SelectionText);
+
+        var added = new LedgerEntry { AccountId = setup.Account.Id, Kind = EntryKind.Expense, Amount = 1000, Date = new(2026, 10, 9) };
+        var fresh = rows.Skip(1).Take(count - 2).Reverse().Select(row => row.Copy()).Append(added).ToArray();
+        vm.Load(fresh, setup.Categories, _ => string.Empty);
+        Assert.All(fresh.Where(row => row.Id != added.Id), row => Assert.True(vm.IsSelected(row.Id)));
+        Assert.False(vm.IsSelected(rows[0].Id)); Assert.False(vm.IsSelected(rows[^1].Id)); Assert.False(vm.IsSelected(added.Id));
+        vm.Toggle(rows[0].Id); Assert.False(vm.IsSelected(rows[0].Id));
+        vm.Toggle(added.Id); Assert.True(vm.IsSelected(added.Id));
+        vm.SelectAll([rows[0].Id, rows[^1].Id, added.Id]);
+        Assert.Equal(f.Translator.Format("Bulk_Selected", count - 1), vm.SelectionText);
+        vm.Stop(); Assert.False(vm.HasSelection); Assert.False(vm.IsSelecting);
+        Assert.Equal(unchanged, System.Text.Json.JsonSerializer.Serialize(await f.Store.GetEntriesAsync(cancellationToken: Ct)));
+        Assert.False(setup.Undo.CanUndo);
+    }
+
+    [Fact, Trait("AT", "AT-110")]
+    public async Task Retained_selection_reviews_the_fresh_snapshot_and_preserves_its_current_money_and_tags()
+    {
+        using var f = new FlowFixture(); var setup = await SetupAsync(f); var vm = setup.Vm;
+        vm.Start(); vm.Toggle(setup.Rows[0].Id);
+        var changed = setup.Rows[0].Copy(); changed.Amount = 4321; changed.Tags = ["Fictitious fresh"];
+        Assert.True((await f.Store.SaveEntryAsync(changed, Ct)).Succeeded);
+        var fresh = await f.Store.GetEntriesAsync(cancellationToken: Ct);
+        vm.Load(fresh, setup.Categories, _ => string.Empty);
+        await vm.ReviewedCommand.ExecuteAsync(null);
+        var current = await f.Store.GetEntriesAsync(cancellationToken: Ct);
+        var reviewed = current.Single(row => row.Id == changed.Id);
+        Assert.Equal(4321, reviewed.Amount); Assert.Equal(changed.Tags, reviewed.Tags); Assert.Equal(ReviewState.Confirmed, reviewed.Review);
+        Assert.Equal(ReviewState.Unreviewed, fresh.Single(row => row.Id == changed.Id).Review);
+        Assert.Equal(2000, current.Single(row => row.Id != changed.Id).Amount);
+        Assert.Equal(ReviewState.Unreviewed, current.Single(row => row.Id != changed.Id).Review);
+        Assert.False(vm.HasSelection); Assert.False(setup.Undo.CanUndo);
     }
 
     private sealed record Setup(BulkTransactionsViewModel Vm, UndoService Undo, Account Account, List<Category> Categories, List<LedgerEntry> Rows);

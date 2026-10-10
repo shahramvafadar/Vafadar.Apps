@@ -402,3 +402,8 @@ process-local display-unit invalidation against actual EntryPresenter fields wit
 script with `-Only transactions`; restore original development data and plain preferences after owned reviews.
 Temporary QA-06 timing probes are removed before final builds. Evidence:
 `src/Apps/Zanance/docs/quality/transaction-row-reuse.md`.
+
+The transactions Debug review also invokes actual native Select all, reloads the complete bound snapshot, checks
+every retained selection, then invokes Cancel without financial writes (D-105 / AT-110). Preserve development files.
+Temporary full-workload timings end at LoadAsync and exclude subsequent native painting; remove probes before final
+Windows and complete Android Debug/Release builds. Evidence: src/Apps/Zanance/docs/quality/bulk-selection-reload.md.

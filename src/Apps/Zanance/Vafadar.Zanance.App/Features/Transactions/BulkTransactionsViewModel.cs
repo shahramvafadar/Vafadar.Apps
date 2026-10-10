@@ -15,6 +15,7 @@ public sealed partial class BulkTransactionsViewModel(ZananceStore store, Transl
     UndoService undo, Func<Task> refresh) : ViewModelBase
 {
     private readonly HashSet<Guid> _selected = [];
+    private HashSet<Guid> _known = [];
     private IReadOnlyList<LedgerEntry> _entries = [];
     private IReadOnlyList<Category> _categories = [];
     private Func<Guid?, string> _name = _ => string.Empty;
@@ -35,8 +36,10 @@ public sealed partial class BulkTransactionsViewModel(ZananceStore store, Transl
     /// <summary>Refreshes source snapshots without mutating them; removed rows lose their selection.</summary>
     public void Load(IReadOnlyList<LedgerEntry> entries, IReadOnlyList<Category> categories, Func<Guid?, string> name)
     {
-        _entries = entries; _categories = categories; _name = name;
-        _selected.RemoveWhere(id => !entries.Any(e => e.Id == id));
+        // D-105: index the fresh complete snapshot once, avoiding one ledger scan per selected row.
+        var known = entries.Select(entry => entry.Id).ToHashSet();
+        _entries = entries; _categories = categories; _name = name; _known = known;
+        _selected.IntersectWith(known);
         Publish();
     }
 
@@ -53,15 +56,14 @@ public sealed partial class BulkTransactionsViewModel(ZananceStore store, Transl
     public void SelectAll(IEnumerable<Guid> visibleIds)
     {
         if (IsBusy) { return; }
-        var known = _entries.Select(e => e.Id).ToHashSet();
-        foreach (var id in visibleIds.Where(known.Contains)) { _selected.Add(id); }
+        foreach (var id in visibleIds.Where(_known.Contains)) { _selected.Add(id); }
         Publish();
     }
 
     /// <summary>Toggles one known row without rebuilding its presentation.</summary>
     public void Toggle(Guid id)
     {
-        if (IsBusy || !_entries.Any(e => e.Id == id)) { return; }
+        if (IsBusy || !_known.Contains(id)) { return; }
         if (!_selected.Add(id)) { _selected.Remove(id); }
         Publish();
     }
