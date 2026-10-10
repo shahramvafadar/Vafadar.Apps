@@ -61,3 +61,29 @@ cat's missing-file text through stdout. Retain that failed copy; only the remain
 recopied with explicit missing-sidecar recognition. Both complete 24-table comparisons pass. The successful
 reference comparison is retained from the first run; no financial flow is repeated.
 Remaining readbacks: artifacts/entry-category-remaining-financial-proof/unchanged-proof.json.
+
+## Empty-form gesture investigation (D-115)
+
+The earlier origin-dependent observation does not establish a category-gap or blank-amount defect. On the
+owned emulator, the current native IME window still accepts touches in [0,1633][1080,2400], including the
+gesture origin (540,1684). The helper's mInputShown=true substring check misses this state; mInputShown=false
+can coexist with mIsInputViewShown=true. The compressed application hierarchy alone also omits the keyboard.
+
+A bounded normal D-113 Release comparison retains the same blank draft and the same 500 ms gesture from
+(540,1684) to (540,600). With the IME present, Title remains [87,2128][994,2148]. After native Back dismisses
+the IME, the current input-window list contains no IME and the identical gesture exposes Title completely at
+[87,693][994,809], with date fields visible. No amount typing, category selection or Save occurs. Inspect the
+current Input Dispatcher State separately from its retained last-ANR history.
+Evidence: artifacts/entry-scroll-ime-final-retry/proof.json and its original native XML/input-window captures.
+
+Retain negative evidence: the first fresh hierarchy capture is unavailable. The bounded retry completes all
+captures, then its assertion incorrectly requires a hidden NOT_VISIBLE IME row; Android has removed the row.
+The corrected proof is derived from those existing captures, without repeating the flow. Earlier fixed-origin
+helper JSON overwrites its post-scroll empty-form state with a returned-to-top state; the original XML remains
+authoritative. A standard InputTransparent candidate does not resolve the keyboard-covered gesture and is fully
+reverted. Java breakpoints observe dispatch but induce a diagnostic ANR; they are not runtime acceptance.
+
+No production source, preference, permission or data-policy change is adopted. The debugger and its exact owned
+forward are removed; the unchanged complete signed D-113 Release is restored. This closes the specific empty-form
+gesture hypothesis only, not last-position fixture, physical-device, iOS or screen-reader acceptance. Existing
+1,535-test/build/APK evidence is retained rather than rerun for this documentation-only correction.

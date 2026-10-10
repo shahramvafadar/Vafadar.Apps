@@ -1522,6 +1522,12 @@ selections pass with full private draft/stored-row/developer-byte restoration. M
 Windows/complete Android builds, normal Release selection/discard, exact original-data readbacks and signed APK pass. A11Y-03 and physical/iOS/OS-reader/owner/release
 gates remain open: [quality evidence](../quality/entry-category-captions.md).
 
+D-115 resolves the specific empty-form native gesture hypothesis without production changes: the actual IME
+window covers the failed origin; after Back removes it, the identical gesture exposes complete Title/date in the
+same blank draft without typing or Save. D-113's 1,535-test/build/signed APK baseline is retained, not rerun.
+Last-position fixture and physical-device/iOS/screen-reader acceptance remain open. See
+[quality/entry-category-captions.md](../quality/entry-category-captions.md#empty-form-gesture-investigation-d-115).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.
@@ -1690,3 +1696,4 @@ policy are independently verified. Evidence and remaining tooling/OS/screen-read
 D-114 owner delivery decision (2026-10-10): no interim OS-backup exclusions or temporary product substitutes.
 The app will not be used before all planned sections/phases are complete. Keep existing runtime policy until
 permanent encrypted-data/key/recovery handling is decided; SEC-02..08 and release acceptance remain open.
+

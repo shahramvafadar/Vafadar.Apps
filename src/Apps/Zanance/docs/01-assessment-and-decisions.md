@@ -951,3 +951,13 @@ temporary OD-10 proposal to exclude plaintext financial files from OS backup/dev
 Do not implement interim product policies or temporary substitutes for final planned behavior. No runtime
 manifest/resource/iOS/backup change is made. Determine permanent backup/key/recovery handling alongside completed
 SEC-02..08; this does not approve a final policy or mark those sections accepted. Ready permanent delivery continues.
+
+## D-115 - Resolve the keyboard-covered native gesture hypothesis (2026-10-10)
+
+The empty-entry gesture observation is caused by an IME-covered origin in the native review, not evidence for a
+category-gap or blank-amount correction. Normal D-113 Release, the same blank draft and identical gesture expose
+the complete Title/date after native Back removes the actual IME window. No typing or Save occurs. Read current
+input-window state rather than one input-method flag, a compressed hierarchy or retained ANR history. Revert the
+failed InputTransparent candidate and remove the diagnostic debugger/owned forward. No production workaround is
+adopted; completed D-113 tests/build/APK evidence stays the baseline. Last-position and broader platform acceptance
+remain open. See [quality evidence](quality/entry-category-captions.md#empty-form-gesture-investigation-d-115).

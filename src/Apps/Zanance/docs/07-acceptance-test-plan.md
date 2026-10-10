@@ -686,3 +686,7 @@ Review short, long translated and 98-character single-word fictitious choices in
 Check complete native glyph/slot/group/viewport geometry, 44 px targets, scalable text, full names and unchanged
 raw-object command. Invoke real native buttons, retain only draft selection, restore complete private state and
 compare complete stored rows without Save. Windows 33 contexts/99 selections pass. Normal signed Android Release selection/discard and exact 24-table original-data readbacks pass; physical-device/iOS/OS-reader acceptance remains open: [evidence](quality/entry-category-captions.md).
+
+D-115 clarifies the separate empty-form scroll limitation: a current IME window covers the failed gesture origin.
+The same blank draft and gesture scroll to complete Title/date after native Back removes the keyboard; no typing
+or Save. No production correction is needed for this hypothesis. This is not last-position category acceptance.

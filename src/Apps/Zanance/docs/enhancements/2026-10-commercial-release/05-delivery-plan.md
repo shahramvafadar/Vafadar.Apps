@@ -382,7 +382,9 @@ Main 1,535/App.Tests 299, strict Windows/complete Android builds, normal Release
 data readbacks and complete signed APK pass.
 See [entry-category-captions.md](../../quality/entry-category-captions.md). Other A11Y-03 and owner/external gates stay open.
 
-Continue with the concrete empty-entry native scroll observation shared by D-111/D-113; isolate focused amount,
-gesture/native state and body geometry before changing production code. Keep completed category/financial
-checks retained. The owner declined interim OD-10 exclusions (D-114): deliver permanent planned behavior,
+D-115 closes the specific empty-entry gesture hypothesis using the actual IME window and an identical native
+gesture after Back, with no typing or Save. No production candidate is adopted. Keep completed category/financial
+checks retained; last-position and broader platform acceptance stay open. Permanent ENT-01 policy still depends
+on the owner's OD-03 decision; test-build limits remain disabled. The owner declined interim OD-10 exclusions
+(D-114): deliver permanent planned behavior,
 keep existing runtime policy and determine final backup/key/recovery handling with completed encryption.

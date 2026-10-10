@@ -565,3 +565,11 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   product workarounds in place of the planned final behavior. The interim OD-10 exclusion of financial databases,
   safety copies and caches from OS backups was explicitly declined; determine final backup/key handling with
   completed encryption and recovery. Existing runtime policy stays in place until that permanent decision.
+
+## 47. Current native gesture ownership (D-115)
+
+* Before interpreting Android gesture failures, verify the current input-window owner and touchable IME region.
+  One input-method flag or a compressed app hierarchy does not prove that the keyboard is hidden. Keep retained
+  last-ANR history separate from current windows; debugger-induced ANRs are negative diagnostic evidence.
+* Reuse completed captures when correcting a proof assertion. A hidden IME may be absent rather than marked
+  NOT_VISIBLE. Remove failed candidates and exact owned debugger forwards; do not ship speculative workarounds.

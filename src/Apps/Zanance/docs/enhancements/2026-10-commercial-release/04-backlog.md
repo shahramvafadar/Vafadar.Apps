@@ -551,8 +551,11 @@ Main 1,535/App.Tests 299, strict Windows/complete Android builds, normal Release
 data readbacks and complete signed APK pass.
 See [entry-category-captions.md](../../quality/entry-category-captions.md). Other A11Y-03 and owner/external gates stay open.
 
-Next concrete native finding: bounded empty-entry drags leave the Account coordinates unchanged in both D-111
-and D-113. The first-position category check is accepted; last-position scrolling is not. Diagnose the actual
-focused-amount/body path with a fresh native state and no Save; do not repeat the completed category matrix.
+D-115 resolves the specific empty-entry gesture hypothesis: the native IME covers the gesture origin despite
+the helper's false input-method flag. After native Back removes the actual IME window, the identical gesture
+exposes complete Title/date in the same blank draft without typing or Save. No production correction is adopted;
+failed candidates and diagnostic ANR evidence remain negative. The first-position category check is accepted;
+last-position fixture and broader platform acceptance remain open. Do not repeat completed category/financial
+checks or the resolved hypothesis without a new observed cause; see the D-115 section of the same evidence file.
 OD-10 interim exclusion was declined by the owner (D-114). Keep current runtime policy and determine final
 encrypted-data/key/recovery handling with completed security; no temporary product measures.
