@@ -1221,3 +1221,23 @@ errors still appear at their fields and reveal the first affected input; a later
 The review uses actual native Save for ledger rejection/retry and exact sample SQLite failure, comparing every
 persisted table column/receipt and the reviewed editor fields. See [evidence](quality/entry-save-feedback-visible.md).
 No schema, SDK, permission, portable preference or commercial activation changes; remaining delivery stays open.
+
+## D-131 - Explicit resource availability and retained ledger settlements (2026-10-11)
+
+Implement the approved OD-03 downgrade model as a projection of original scoped resource identities. The six
+selection kinds include account, goal, recurring plan, quick template, saved filter and device-local profile;
+budget definitions and hosted membership keep separate policies. Never guess which resources the owner retains.
+Preserve counted pauses and historical state, reject stale/oversized choices, and restore availability on unlimited
+upgrades without rewriting stored entities. Explicit choice alone grants no feature, membership or host access.
+
+Bind account choice to immutable exact-file commercial facts and evaluate new ledger money inside its existing
+SQLite writer, including both transfer accounts. Retained edits, reconciliation, refunds, fees and Delete/Undo stay
+available. Actual reviewed open overdue payments are classified from the stored rule/slice/state and ledger rather
+than trusting draft markers; future, moved-future, unreviewed, skipped or completed occurrences remain new work.
+
+Advance-bill Save now uses a specialized actual writer: reread the owned expense plan and advances/refund totals,
+reject changed reviewed plan/advance metadata or net paid amount, then generate only the existing algorithm's
+difference. The normal native command retains its form and generic translated failure on a rejected Save.
+79 added cases; main 2,051 pass, App.Tests 318. Native/strict build/APK evidence:
+[selected-account write policy](quality/selected-account-write-policy.md). No schema, SDK, permission, portable
+preference, paid fact or commercial activation change. Selection UI/persistence, other bindings and automation remain open.

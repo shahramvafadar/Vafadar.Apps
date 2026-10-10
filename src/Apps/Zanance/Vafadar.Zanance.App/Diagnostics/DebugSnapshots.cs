@@ -415,6 +415,7 @@ internal static partial class DebugSnapshots
             ("plan-weekday", AppShell.PlanDetailRoute, new() { ["id"] = weekdayPlanId }),
             ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("settlement-feedback", AppShell.SettlementRoute, new() { ["id"] = planId }),
+            ("settlement-writer", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("occurrence-feedback", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
@@ -680,7 +681,9 @@ internal static partial class DebugSnapshots
 #if WINDOWS
                 if (name == "occurrence-feedback")
                 { await ReviewOccurrenceFeedbackAsync(app, services, folder, language); }
-                if (name == "settlement-feedback")
+                if (name == "settlement-writer")
+                { await ReviewSettlementWriterFailuresAsync(app, services, folder, language); }
+                if (name is "settlement-feedback" or "settlement-writer")
                 { await ReviewSettlementFeedbackAsync(app, services, folder, language); }
                 if (name == "entry-fee-retention")
                 { await ReviewDestinationFeeRetentionAsync(app, services, folder, language); }

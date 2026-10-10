@@ -742,3 +742,17 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * The entry-save-feedback Debug route invokes actual native Save on fictitious rows, reads complete table/receipt
   values, and checks error glyphs/names plus the enabled 44 px Save at both native scroll ends. The exact sample
   trigger is Debug review only and is removed in finally. Full Release review uses only the owned sample database.
+
+## 63. Explicit selected resources and retained financial settlement (D-131)
+
+* Availability projects original scoped identities; never choose the first items automatically or mutate stored
+  pause/archive/end state. Paused goals/plans consume slots. Missing/stale/oversized limited choices require review;
+  unlimited upgrades ignore earlier limited choices. A selection never grants a feature, membership or host right.
+* New ledger money checks selected source/destination accounts under the same actual SQLite writer. Owned corrections,
+  reconciliation, linked refunds, transfer fees and Delete/Undo retain their existing rights. Current registration stays
+  inactive; cached selection is immutable/value-equal, exact-file scoped and never portable paid data.
+* Retained overdue payments require actual stored rule/slice, effective past due date, open state, matching account/kind
+  and explicit review. Caller markers, future/moved-future/unreviewed/skipped/completed occurrences cannot bypass limits.
+* Final advance bills recompute from stored rows under the same writer; compare reviewed plan/advance metadata and net
+  paid total before creating only the difference. Stale review/storage/access failures preserve the explicit-Save draft.
+  No automatic merge or arbitrary correction grant. Other resource bindings, choice UI/persistence and automation remain open.

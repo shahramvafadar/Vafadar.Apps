@@ -846,3 +846,14 @@ native body scroll ends, check full realized glyphs/spoken name and the enabled 
 44 px; compare reviewed draft fields and all persisted rows/receipt bytes. The installed full Release repeats these
 paths, cancellation/discard and exact owned-data restoration. [Evidence](quality/entry-save-feedback-visible.md).
 No duplicated editor algorithm or control fake is introduced. Device/iOS/screen-reader acceptance remains open.
+
+## AT-133 - Explicit resource choice and retained actual-file settlements (D-131)
+
+24 Core cases cover counted pauses, scoped identities, no guessed selection, empty/smaller/stale/oversized choices,
+upgrade restoration, immutable canonical snapshots and feature/membership separation. 55 actual SQLite cases cover
+source/destination selection, complete-batch rollback, retained corrections/fees/Undo, verified open overdue full/
+partial payments, invalid schedule-marker rejection, reviewed advance differences, stale reviews, SQL failure and
+cached selection retirement after SQL. Main 2,051 / App.Tests 318 pass with no failures/skips.
+Actual native Save failure/retry/stale-review and successful bill flows, strict builds and complete signed APK:
+[evidence](quality/selected-account-write-policy.md). Limits remain inactive; no complete downgrade UI, other resource
+bindings, automation, physical-device/iOS or release acceptance is inferred.

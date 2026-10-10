@@ -1839,3 +1839,14 @@ resolved by native geometry/draft/data checks, independently of its earlier ledg
 algorithm, schema, SDK, permission, export or commercial activation changes. Main suite remains 1,972 passing
 cases (App.Tests 318); native acceptance is separate: [evidence](../quality/entry-save-feedback-visible.md).
 Remaining ENT-02/03/04 and owner/provider/security/device/release gates remain open.
+
+### 31.44. Explicit scoped resources and retained settlements (D-131 / AT-133)
+
+Core models explicit downgrade choices for six resource kinds, retaining original pause/archive/end state and
+exact scope; no automatic first-N selection or membership/paid grant. The actual ledger writer checks new money's
+source/destination accounts and preserves retained correction, verified overdue-payment and advance-bill rights.
+Bill Save rechecks reviewed metadata/net paid basis against current stored rows before recording only the difference;
+failure keeps the native form. 79 new cases/main 2,051 pass, App.Tests 318. No schema, SDK, permission, portable
+preference or activation change. Native platforms/full signed APK: [evidence](../quality/selected-account-write-policy.md).
+ENT-02/03 remain in progress: choice UI/persistence, other resource bindings, budgets, automation, commercial messages
+and existing owner/security/provider/device/release gates are unfinished.

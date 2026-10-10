@@ -274,3 +274,8 @@ D-111 / Repeat: detached existing transaction fields pass only through in-memory
 Plan. Unsupported transaction-only details remain in the original form. No new permission/SDK/security field,
 portable preference/schema or backup format. Explicit Plan Save uses the existing Schedule storage/export policy;
 opening/returning never writes money. Original ISO currencies prevent silent account-change reinterpretation.
+
+D-131 / explicit resource choice: immutable in-memory scoped identity lists in the final commercial policy model,
+with no persisted selection, portable preference, entitlement, credential, SDK, permission or network addition.
+Actual writer rereads existing financial rows for retained payments and reviewed bill settlement. Existing money,
+receipt, backup and erasure policies apply unchanged. The test-build source remains inactive; no paid facts enter backups.

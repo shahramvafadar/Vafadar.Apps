@@ -462,3 +462,11 @@ and the existing enabled Save target at both native scroll ends, then checks sta
 Run-Snapshots.ps1 -Only entry-save-feedback with the existing language/theme/size/process-local font options.
 Capture only the hidden application's own rendered root; no device/OS setting or desktop-input change.
 [evidence](../../src/Apps/Zanance/docs/quality/entry-save-feedback-visible.md).
+
+## Retained bill writer review (D-131)
+
+Use Run-Snapshots.ps1 -Only settlement-writer with the existing language/theme/size/process-local font options.
+The Debug route invokes actual native Save for an owned sample insert failure/retry and changed advance, restores
+all complete sample rows, then runs successful extra/refund/zero-bill navigation. Temporary SQL objects are removed
+in finally; only fictitious walk-through data is touched. Render the hidden app's own root; never change OS settings
+or send desktop input. [Evidence](../../src/Apps/Zanance/docs/quality/selected-account-write-policy.md).

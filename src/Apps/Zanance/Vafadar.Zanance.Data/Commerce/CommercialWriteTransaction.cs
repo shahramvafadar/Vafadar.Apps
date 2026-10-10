@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.Core.Accounts;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
@@ -81,6 +82,22 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         EnsureCurrent();
         if (!new Quota(maximum).CanAdd(current, requested))
             throw new CommercialWriteRejectedException(feature, kind, maximum, current, requested);
+    }
+
+    /// <summary>Checks new money against original account states and the same writer's explicit scoped choice.</summary>
+    public void DemandSelectedAccounts(CommercialFeature feature, IReadOnlyDictionary<Guid, Account> accounts, IEnumerable<Guid> requestedIds)
+    {
+        DemandFeature(feature);
+        if (!Enforced) return;
+        var scope = FinancialScope;
+        var availability = ResourceSelectionPolicy.Resolve(QuotaKind.FinancialAccounts, scope, _access.Context!,
+            accounts.Values.Select(account => QuotaItem.From(scope, account)), _access.AccountSelection);
+        foreach (var id in requestedIds.Distinct())
+        {
+            // Missing/archived accounts retain their established ledger validation, instead of a misleading tier error.
+            if (accounts.TryGetValue(id, out var account) && !account.IsArchived && !availability.IsSelected(id))
+                throw new CommercialWriteRejectedException(feature, QuotaKind.FinancialAccounts, id, availability.RequiresSelection);
+        }
     }
 
     /// <summary>Rejects a changed entitlement/scope snapshot before saving rather than using retired profile rights.</summary>

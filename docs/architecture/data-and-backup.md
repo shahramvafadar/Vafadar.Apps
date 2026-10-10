@@ -354,3 +354,12 @@ compare semantic/creation identities and account currencies under the existing w
 the entire operation, preserving newer rows. Existing source-generated ledger metadata supports trimmed Release.
 This is not a new durable journal or portable format. Receipt rows/bytes and the established purge policy remain.
 No schema/migration/compiled-model/SDK/permission change: [evidence](../../src/Apps/Zanance/docs/quality/ledger-undo-conflicts.md).
+
+## Scoped resource selection and retained bills (D-131)
+
+CommercialWriteAccess holds an optional immutable value-equal account selection for its exact financial file/scope.
+The actual SQLite writer evaluates original account states for new ledger work, including transfer destinations;
+no preference/schema or backup field stores commercial selection or paid rights. Overdue correction classification
+rereads the stored recurrence/slice/effective state and paid ledger. Advance settlement recomputes stored advances
+and refunds and compares the reviewed plan/advance metadata and net paid total before the existing complete-batch
+validator/writer commits. SQL or cached-access change rolls back with no Changed. Current registration stays inactive.

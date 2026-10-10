@@ -320,3 +320,7 @@ D-113 / AT-117 delivers complete growing transaction category choices, retaining
 without Save. Main 1,535/App.Tests 299, Windows 33-context/99-selection review, strict builds, normal signed
 Release selection/discard and exact 24-table original-sample readbacks pass. Complete signed D-113 APK is ready:
 [quality evidence](quality/entry-category-captions.md). Other A11Y-03/device/iOS/OS-reader/provider/owner gates stay open.
+
+D-131 engineering evidence adds explicit Core resource choice and actual-file selected-account new money with
+retained overdue/advance settlements. This is partial ENT-02/03, not activation or physical-device/iOS/provider/
+security/billing/release acceptance. Current test builds remain unrestricted; see [evidence](quality/selected-account-write-policy.md).

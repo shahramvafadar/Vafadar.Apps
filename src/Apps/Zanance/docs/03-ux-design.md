@@ -737,3 +737,12 @@ General entry Save failures belong to the fixed growing footer, before the effec
 A rejected purchase correction, a storage failure or receipt-unit review must be visible at either body scroll
 position, with complete wrapping/scalable text and a complete accessible name. Keep field errors beside inputs
 and their existing reveal behavior. Preserve every unsaved value and allow only explicit retry or discard.
+
+## Explicit downgrade choice and retained bills (D-131)
+
+No resources are silently selected, archived or removed after a downgrade. Selection is independent from original
+paused/ended state and from feature/membership rights. The model and ledger boundary are implemented; the user
+choice/persistence screen and remaining bindings are unfinished, and current test builds remain unrestricted.
+Bill settlement keeps its actual period/amount preview and explicit Save. If reviewed plan/advances change or the
+writer fails, retain every unsaved field and show the existing translated generic error; never silently post a
+different reviewed basis. Native successful extra/refund/zero-bill navigation is checked independently of unit tests.

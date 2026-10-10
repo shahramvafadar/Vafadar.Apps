@@ -53,8 +53,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
-| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..127: actual-file resource/rule/ledger Save/Delete/Undo writes plus database recovery and retained import/Undo boundaries; selected read-only/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
-| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | Proposed | ENT-02 |
+| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..131: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
+| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131: explicit scoped Core projection; choice UI/persistence, remaining bindings and automation open) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | Proposed | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
@@ -640,3 +640,12 @@ fixed Save, with native scalable wrapping text and complete spoken names. Explic
 failure retain reviewed draft fields and stored rows; field validation clears obsolete general feedback. No data,
 permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 and external gates stay open:
 [evidence](../../quality/entry-save-feedback-visible.md).
+
+D-131 starts the approved ENT-03 Core choice projection and continues ENT-02 with actual-file selected-account
+new ledger work, verified retained overdue payments and reviewed advance bills. 79 added cases/main 2,051 pass;
+App.Tests 318. No activation, schema or portable paid facts. Other bindings, budget definitions, choice UI/persistence,
+automation and all existing owner/external gates remain open: [evidence](../../quality/selected-account-write-policy.md).
+
+D-131 follow-up: manual debt-closing retained classification and occurrence-state/automation boundaries remain
+open before enforcement activation. Current test builds are unrestricted; do not infer full retained-operation
+completion from the selected-account and advance/overdue-payment slice.

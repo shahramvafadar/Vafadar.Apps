@@ -25,6 +25,22 @@ public sealed class CommercialWriteRejectedException : InvalidOperationException
         Requested = requested;
     }
 
+    /// <summary>Creates an explicit resource-selection rejection, independent of payment and count failures.</summary>
+    public CommercialWriteRejectedException(CommercialFeature feature, QuotaKind quota, Guid resourceId, bool requiresSelection)
+        : base("The retained resource is not selected for new work.")
+    {
+        Feature = feature;
+        Permission = FeaturePermission.Allowed;
+        Quota = quota;
+        ResourceId = resourceId;
+        RequiresSelection = requiresSelection;
+    }
+
+    /// <summary>Gets the rejected retained identity, absent for feature/count failures.</summary>
+    public Guid? ResourceId { get; }
+    /// <summary>Gets whether the current scoped choice needs explicit review before any new work.</summary>
+    public bool RequiresSelection { get; }
+
     /// <summary>Gets the operation requested.</summary>
     public CommercialFeature Feature { get; }
     /// <summary>Gets the missing commercial right, or Allowed for a count rejection.</summary>

@@ -25,6 +25,9 @@ internal sealed class CommercialFileAccess
     /// <summary>Gets this actual file's immutable capability context; inactive operations have none.</summary>
     public CapabilityContext? Context => _snapshot.Context;
 
+    /// <summary>Gets the immutable explicit account choice captured for this exact file and financial scope.</summary>
+    public ResourceSelection? AccountSelection => _snapshot.AccountSelection;
+
     /// <summary>Rejects retired facts without consulting a subsequently selected profile or a network provider.</summary>
     public void EnsureCurrent()
     {

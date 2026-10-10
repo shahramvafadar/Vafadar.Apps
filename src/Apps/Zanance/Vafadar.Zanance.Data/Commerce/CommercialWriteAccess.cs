@@ -19,12 +19,20 @@ public sealed record CommercialWriteAccess
     private CommercialWriteAccess() { }
 
     /// <summary>Creates enabled facts for one actual database; it is the provider's responsibility to verify them.</summary>
-    public CommercialWriteAccess(string databasePath, CapabilityContext context)
+    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(databasePath);
         ArgumentNullException.ThrowIfNull(context);
         DatabasePath = Path.GetFullPath(databasePath);
         Context = context;
+        if (accountSelection is not null)
+        {
+            var scope = new QuotaScope(context.Scope.Kind == EntitlementScopeKind.PersonalProfile
+                ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id);
+            if (accountSelection.Kind != QuotaKind.FinancialAccounts || accountSelection.Scope != scope)
+                throw new ArgumentException("The account choice belongs to another financial boundary.", nameof(accountSelection));
+        }
+        AccountSelection = accountSelection;
     }
 
     /// <summary>Gets the separately gated inactive policy; this grants no permanent customer entitlement.</summary>
@@ -35,6 +43,8 @@ public sealed record CommercialWriteAccess
     public string? DatabasePath { get; }
     /// <summary>Gets the verified-input context, absent for inactive enforcement.</summary>
     public CapabilityContext? Context { get; }
+    /// <summary>Gets the explicit scoped account choice; absence never invents a choice above capacity.</summary>
+    public ResourceSelection? AccountSelection { get; }
 }
 
 /// <summary>

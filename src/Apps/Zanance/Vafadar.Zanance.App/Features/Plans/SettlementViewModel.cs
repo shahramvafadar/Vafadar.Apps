@@ -160,8 +160,18 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
         try
         {
             var title = translator.Format(_result.Difference > 0 ? "Settlement_ExtraTitle" : "Settlement_BackTitle", _plan.Name);
-            var created = AdvanceSettlement.CreateEntries(_plan, _result, _entries, Today, title);
-            var saved = await store.SaveEntriesAsync(created, []);
+            // Recompute against current stored advances inside the actual ledger writer before posting the difference.
+            SaveResult saved;
+            try
+            {
+                saved = await store.SaveAdvanceSettlementAsync(_plan, From, To, _result, title);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                // Only a rejected writer is a failed Save; navigation happens after the committed result below.
+                Error = translator["Common_SaveFailed"];
+                return;
+            }
             if (!saved.Succeeded)
             {
                 Error = string.Join(Environment.NewLine, saved.Errors.Distinct().Select(e => translator[$"LedgerError_{e}"]));

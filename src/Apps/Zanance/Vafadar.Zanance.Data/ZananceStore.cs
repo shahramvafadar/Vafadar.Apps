@@ -1034,12 +1034,48 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
 
+        return await SaveEntriesUnderWriterAsync(db, write, entries, deleteIds, moveAttachmentsTo, new HashSet<Guid>(), cancellationToken);
+    }
+
+    /// <summary>Recomputes an owned advance bill under the same writer that saves its correction entries.</summary>
+    public async Task<SaveResult> SaveAdvanceSettlementAsync(Schedule reviewedPlan, DateOnly from, DateOnly to,
+        SettlementResult reviewed, string title, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(reviewedPlan);
+        ArgumentNullException.ThrowIfNull(reviewed);
+        if (from > to || reviewed.Actual < 0) throw new ArgumentException("The settlement requires an ordered period and non-negative actual bill.");
+        ArgumentNullException.ThrowIfNull(title);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
+        var plan = await db.Schedules.AsNoTracking().SingleAsync(p => p.Id == reviewedPlan.Id, cancellationToken);
+        if (plan.Kind != EntryKind.Expense) throw new InvalidOperationException("Only an expense plan has advance bills.");
+        var history = await db.Entries.AsNoTracking().ToListAsync(cancellationToken);
+        var result = AdvanceSettlement.Compute(plan, history, from, to, reviewed.Actual);
+        // A reviewed bill must not silently acquire changed amounts, refund links or a different account.
+        if (System.Text.Json.JsonSerializer.Serialize(plan) != System.Text.Json.JsonSerializer.Serialize(reviewedPlan)
+            || result.Paid != reviewed.Paid
+            || System.Text.Json.JsonSerializer.Serialize(result.Advances.OrderBy(e => e.Id))
+                != System.Text.Json.JsonSerializer.Serialize(reviewed.Advances.OrderBy(e => e.Id)))
+            throw new InvalidOperationException("The reviewed advances or plan changed; review the bill again.");
+        if (result.Advances.Count == 0) throw new InvalidOperationException("There are no retained advances in this period.");
+        // Caller-supplied entry flags cannot grant correction rights; these entries come from reviewed stored advances.
+        var created = AdvanceSettlement.CreateEntries(plan, result, history, DateOnly.FromDateTime(time.GetLocalNow().DateTime), title);
+        if (created.Count == 0) return SaveResult.Success;
+        return await SaveEntriesUnderWriterAsync(db, write, created, [], null, created.Select(e => e.Id).ToHashSet(), cancellationToken);
+    }
+
+    /// <summary>Validates the complete ledger batch within its caller's writer; correction grants are private identities.</summary>
+    private async Task<SaveResult> SaveEntriesUnderWriterAsync(ZananceDbContext db, CommercialWriteTransaction write,
+        IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds, Guid? moveAttachmentsTo,
+        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken)
+    {
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
         var ids = entries.Select(e => e.Id).ToList();
         var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
 
-        await DemandLedgerSaveAsync(db, write, entries, deleteIds, existing, cancellationToken);
+        await DemandLedgerSaveAsync(db, write, entries, deleteIds, existing, accounts, retainedCorrections, cancellationToken);
 
         // D-126: validation sees the final batch, not old refunds that will be edited/deleted or missing peers.
         var purchaseIds = entries.Where(e => e.RefundOfId is not null).Select(e => e.RefundOfId!.Value).Concat(ids).Distinct().ToList();
@@ -1115,9 +1151,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Checks new financial work and complete resulting groups under the caller's actual-file writer.</summary>
-    private static async Task DemandLedgerSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
+    private async Task DemandLedgerSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds,
-        IReadOnlyDictionary<Guid, LedgerEntry> existing, CancellationToken cancellationToken)
+        IReadOnlyDictionary<Guid, LedgerEntry> existing, IReadOnlyDictionary<Guid, Account> accounts,
+        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken)
     {
         if (!write.Enforced) return;
         var groups = entries.Where(e => e.GroupId is not null).Select(e => e.GroupId!.Value).Distinct().ToList();
@@ -1150,9 +1187,36 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             }
         }
 
-        if (entries.Any(e => !existing.ContainsKey(e.Id) && !retainedFees.Contains(e.Id)
-            && e.Kind is not (EntryKind.Adjustment or EntryKind.Refund or EntryKind.IncomeReversal)))
-            write.DemandFeature(CommercialFeature.Transactions);
+        var newWork = new List<LedgerEntry>();
+        var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+        foreach (var entry in entries.Where(e => !existing.ContainsKey(e.Id) && !retainedFees.Contains(e.Id)
+            && !retainedCorrections.Contains(e.Id) && e.Kind is not (EntryKind.Adjustment or EntryKind.Refund or EntryKind.IncomeReversal)))
+        {
+            if (!await IsRetainedOverduePaymentAsync(db, entry, today, cancellationToken)) newWork.Add(entry);
+        }
+        if (newWork.Count > 0)
+            write.DemandSelectedAccounts(CommercialFeature.Transactions, accounts,
+                newWork.Select(e => e.AccountId).Concat(newWork.Where(e => e.Kind == EntryKind.Transfer && e.ToAccountId is not null)
+                    .Select(e => e.ToAccountId!.Value)));
+    }
+
+    /// <summary>Checks original rules, state and paid rows rather than trusting a draft's schedule markers.</summary>
+    private static async Task<bool> IsRetainedOverduePaymentAsync(ZananceDbContext db, LedgerEntry entry,
+        DateOnly today, CancellationToken cancellationToken)
+    {
+        if (entry.Source != EntrySource.Schedule || entry.Review != ReviewState.Confirmed
+            || entry.ScheduleId is not { } scheduleId || entry.OccurrenceDate is not { } originalDate) return false;
+        var plan = await db.Schedules.AsNoTracking().FirstOrDefaultAsync(p => p.Id == scheduleId, cancellationToken);
+        if (plan is null || !plan.Owns(originalDate) || plan.Kind != entry.Kind || plan.AccountId != entry.AccountId
+            || (entry.Kind == EntryKind.Transfer && plan.ToAccountId != entry.ToAccountId)
+            || !Recurrence.Between(plan.Rule, originalDate, originalDate).Any()) return false;
+        var state = await db.OccurrenceStates.AsNoTracking().FirstOrDefaultAsync(s => s.ScheduleId == scheduleId
+            && s.OriginalDate == originalDate, cancellationToken);
+        if ((state is not null && state.Status != OccurrenceStatus.Open)
+            || (state?.DueDate ?? plan.Rule.ApplyWeekend(originalDate)) >= today) return false;
+        // A missing/obsolete state must not turn a completed settlement into another retained payment.
+        return !await db.Entries.AnyAsync(e => e.ScheduleId == scheduleId && e.OccurrenceDate == originalDate
+            && !e.IsPartialPayment, cancellationToken);
     }
 
     /// <summary>

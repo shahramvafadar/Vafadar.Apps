@@ -399,3 +399,8 @@ fixed Save, with native scalable wrapping text and complete spoken names. Explic
 failure retain reviewed draft fields and stored rows; field validation clears obsolete general feedback. No data,
 permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 and external gates stay open:
 [evidence](quality/entry-save-feedback-visible.md).
+
+D-131 continues ENT-02/03 with the explicit Core resource-choice projection and actual ledger account selection,
+verified retained overdue payments and serialized reviewed advance bills. 79 added cases/main 2,051 pass;
+App.Tests 318. Current test builds remain unrestricted. Selection UI/persistence, other bindings/automation and
+external gates remain open: [quality evidence](quality/selected-account-write-policy.md).

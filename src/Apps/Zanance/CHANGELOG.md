@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Safe downgrade choices and retained bill settlement (2026-10-11, D-131)
+
+- Add the approved explicit resource-choice model; test builds continue without commercial limits.
+- Preserve corrections and overdue payments when an account is outside the chosen allowance.
+- Recheck the reviewed advances before saving a final bill; retain the draft after changed data or storage failure.
+
 ### Fixed - Visible transaction Save feedback (2026-10-10, D-130)
 
 - Show rejected transaction saves beside the Save button, without requiring a search at the bottom of the form.
