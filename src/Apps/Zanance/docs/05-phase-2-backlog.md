@@ -296,3 +296,8 @@ Four new tests pass (main 1,488). Final running-app/build/APK checks and measure
 D-105 / AT-110 removes repeated full-ledger membership scans from complete bulk-selection reload. Final tests/runtime/build/APK evidence: [quality/bulk-selection-reload.md](quality/bulk-selection-reload.md). Cold/device/ANR/native-publication and owner acceptance gates remain open.
 
 D-106 / AT-111 removes unrelated ledger materialization from the unchanged Settings suggestion. Main suite: 1,512 passed, App.Tests 276. Final runtime/build/APK evidence: [quality/settings-suggestion-history.md](quality/settings-suggestion-history.md). Cold/device/ANR/platform and owner acceptance remain independent.
+
+D-107 / AT-112 continues A11Y-03 with complete growing Windows selected/popup picker captions, inherited native
+typography and 44-unit popup targets. Native reviews retain choices/drafts/full stored values without Save;
+main suite remains 1,512 passed (App.Tests 276). Final native matrix, strict Windows/complete Android Debug+Release, exact original-data readbacks and signed APK pass: [quality/native-picker-captions.md](quality/native-picker-captions.md).
+Other controls and actual OS/readers/device/iOS/release acceptance remain open. Continue ready work under D-69.

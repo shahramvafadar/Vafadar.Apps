@@ -641,3 +641,8 @@ D-103 / AT-108 retains seven complete native-scaled occurrence actions and corre
 errors at 200%, 360/412/wide, en/fa/de and both themes. Actual metadata/partial/completion Saves preserve original
 financial rows and restore only identified fictitious scenario rows. Normal Release Android invalid-input evidence
 stays separate from OS/phone/iOS/readers or valid Android occurrence acceptance. Evidence: occurrence-feedback.md.
+
+D-107 / AT-112 follows the observed clipped selected calendar/region names and short normal-text popup rows.
+Windows native choices wrap with inherited typography and 44-unit targets, retaining selection/drafts/full stored
+values. Shared picker-page evidence and final builds/signed APK: [native-picker-captions.md](native-picker-captions.md).
+Earlier counts remain historical; other controls and actual OS/readers/device/iOS acceptance stay open.

@@ -1462,6 +1462,16 @@ to 1,512 (App.Tests 276). Actual tenfold bound Windows warm LoadAsync median: 88
 arrangement/painting. Final runtime/build/APK evidence and open cold/ANR/platform/device gates:
 [quality/settings-suggestion-history.md](../quality/settings-suggestion-history.md).
 
+### 31.23. Growing native picker captions (D-107 / AT-112)
+
+Windows selections and popup rows wrap inside the existing native Picker, retaining complete choice identity,
+inherited typography/scaling/direction/colors and native selection. Popup targets have a 44-unit minimum height.
+The main suite remains 1,512 (App.Tests 276); actual glyph/target/choice/draft/data review spans Settings and other
+picker pages. Final 21-context native matrix, strict builds, exact original-data readbacks and signed APK pass;
+evidence and platform limits are recorded in
+[quality/native-picker-captions.md](../quality/native-picker-captions.md). A11Y-03 and OS/readers/device/iOS acceptance
+remain open; no saved preference, money, schema or security-policy changes.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

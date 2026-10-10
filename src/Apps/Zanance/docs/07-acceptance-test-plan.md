@@ -629,3 +629,13 @@ Twenty-one actual snapshot/SQLite cases compare complete and required history ac
 boundaries/refunds/negative net, account/currency/history rules and fresh contexts, with complete stored rows retained.
 Main: 1,512 passing/App.Tests 276. Bound Settings captions, loading/retry, live choices and unsaved estimate review,
 full builds/APK and independent performance/platform limits: [quality/settings-suggestion-history.md](quality/settings-suggestion-history.md).
+
+## AT-112 - Growing native selected and popup picker text (D-107)
+
+Check actual selected/popup glyph bounds, matching inherited native fonts/scaling, complete semantic names and
+44-unit targets. Settings reselects existing choices through real native SelectionItem, retaining raw estimate/period
+drafts and complete stored Settings/Accounts/Entries without Save. Reopened language review separately changes choices
+and preserves retired navigation/form behavior. Other picker pages require shared-template coverage. Main suite:
+1,512 passed, App.Tests 276. Final 21 contexts/2083 own renders, 189 native existing choices,
+84 language choices/returns, strict builds, original-data readbacks and complete signed APK pass:
+[quality/native-picker-captions.md](quality/native-picker-captions.md).

@@ -440,6 +440,7 @@ internal static partial class DebugSnapshots
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
             ("settings-suggestion", AppShell.SettingsRoute, null),
+            ("settings-pickers", AppShell.SettingsRoute, null),
             ("settings-display", AppShell.SettingsRoute, null),
             ("settings-reopened", AppShell.SettingsRoute, null),
             ("settings-actions", AppShell.SettingsRoute, null),
@@ -547,6 +548,11 @@ internal static partial class DebugSnapshots
                 if (name == "settings-suggestion" && Shell.Current.CurrentPage is Features.Settings.SettingsPage suggestionPage)
                 {
                     await ReviewSettingsSuggestionAsync(services, suggestionPage, folder, language);
+                }
+
+                if (name == "settings-pickers" && Shell.Current.CurrentPage is Features.Settings.SettingsPage pickerPage)
+                {
+                    await ReviewPickerTextAsync(services, pickerPage, folder, language);
                 }
 
                 if (name == "settings-display" && Shell.Current.CurrentPage is Features.Settings.SettingsPage displaySettings)
@@ -1645,6 +1651,29 @@ internal static partial class DebugSnapshots
                 InvokeSnapshotBack(page);
                 if (changed) { await rebuilt.Task.WaitAsync(TimeSpan.FromSeconds(10)); }
                 else { await Task.Delay(300); }
+            }
+            catch (TimeoutException)
+            {
+                // D-107: retain actual navigation/control state when a native return does not report completion.
+                // A timeout is negative evidence; do not extend it or substitute programmatic navigation.
+                var nativeBack = VisualDescendants(page).OfType<Presentation.PageHeader>().SingleOrDefault()
+                    ?.Children.OfType<ImageButton>().SingleOrDefault()?.Handler?.PlatformView as Microsoft.UI.Xaml.Controls.Button;
+                File.WriteAllText(Path.Combine(folder, language + "-settings-reopened-return-failure.json"),
+                    System.Text.Json.JsonSerializer.Serialize(new
+                    {
+                        Target = target, ActualLanguage = localization.CurrentLanguage.CultureName,
+                        SameRoot = ReferenceEquals(app.Windows[0].Page, oldShell),
+                        SamePage = ReferenceEquals(Shell.Current.CurrentPage, page),
+                        CurrentPage = Shell.Current.CurrentPage?.GetType().Name,
+                        Location = Shell.Current.CurrentState?.Location?.OriginalString,
+                        NavigationStack = Shell.Current.Navigation.NavigationStack.Select(p => p.GetType().Name),
+                        LockCovered = services.GetRequiredService<Security.AppLockService>().IsLocked,
+                        BackLoaded = nativeBack?.IsLoaded, BackEnabled = nativeBack?.IsEnabled,
+                        BackWidth = nativeBack?.ActualWidth, BackHeight = nativeBack?.ActualHeight,
+                        OpenPickers = VisualDescendants(page).OfType<Picker>().Count(p =>
+                            p.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.ComboBox { IsDropDownOpen: true }),
+                    }));
+                throw;
             }
             finally { app.ShellRebuilt -= OnRebuilt; }
             if (changed)
@@ -3311,7 +3340,10 @@ internal static partial class DebugSnapshots
         if (VisualDescendants(page).OfType<Presentation.PageHeader>().SingleOrDefault() is not { } header
             || header.Children.OfType<ImageButton>().Single().Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button back)
         { throw new InvalidOperationException("The page header back button is unavailable."); }
-        var peer = new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(back);
+        // D-107: use the peer associated with the real native control, retaining WinUI's automation lifetime.
+        var peer = Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(back)
+            as Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer
+            ?? throw new InvalidOperationException("The page header has no associated native back peer.");
         if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke)
             is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
         { throw new InvalidOperationException("The page header has no native back pattern."); }

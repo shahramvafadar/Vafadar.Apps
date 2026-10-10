@@ -589,3 +589,9 @@ whole selection. Busy dialog guards and explicit financial confirmation/validati
 The optional spending suggestion uses three complete financial months in the selected calendar/pay cycle. Read that
 complete date window; keep the form covered until preferences/accounts/suggestion/device availability all finish.
 Preserve raw unsaved estimates on reload. Using a suggestion changes only the draft; saving remains explicit.
+
+### Growing native picker choices (D-107)
+
+Windows selected choice names and popup items wrap within the existing native picker rather than losing calendar,
+region or other descriptive text. Keep the native selection/keyboard/semantic behavior and inherited fonts, direction
+and colors. Popup rows grow from a minimum 44-unit target. A long selected name grows its control, not an extra label.

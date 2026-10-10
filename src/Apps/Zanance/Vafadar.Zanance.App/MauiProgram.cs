@@ -187,6 +187,7 @@ public static class MauiProgram
 #endif
 
 #if WINDOWS
+        Presentation.WindowsPickerText.Register();
         // The keyboard focus ring in the action blue of the palette instead of black and white (D-40, D-42). WinUI 3 reads
         // the ring colours from the focused element itself, not from overridable app resources, so each element gets them
         // the moment it receives focus – also the parts MAUI does not create, such as the tabs of the shell – in the

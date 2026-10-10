@@ -8,12 +8,15 @@ internal static class DebugLayoutChecks
 {
     /// <summary>Includes actual growing navigation, actions, date inputs and large captions in the own-window review.</summary>
     internal static bool AppliesTo(ContentPage page) => Descendants(page).Any(element =>
-        element is Presentation.InsightsTabs or Presentation.PageHeader or Presentation.AmountReadout or Vafadar.Maui.Controls.DateField && IsVisibleThroughParents(element));
+        element is Presentation.InsightsTabs or Presentation.PageHeader or Presentation.AmountReadout or Vafadar.Maui.Controls.DateField or Picker && IsVisibleThroughParents(element));
 
     /// <summary>Rejects action overlap or clipped realized financial identities after the native layout pass.</summary>
     internal static void Check(ContentPage page, string folder, string name)
     {
         var evidence = new List<object>();
+        foreach (var picker in Descendants(page).OfType<Picker>()
+            .Where(picker => IsVisibleThroughParents(picker) && picker.SelectedIndex >= 0))
+        { evidence.Add(DebugPickerText.Check(picker, folder, name)); }
         // AT-99: section identities remain complete beside their original reorder/visibility controls (D-94).
         var homeRows = Descendants(page).OfType<Grid>()
             .Where(row => row.BindingContext is Features.Home.HomeSectionRow && row.Children.OfType<Switch>().Any()).ToArray();

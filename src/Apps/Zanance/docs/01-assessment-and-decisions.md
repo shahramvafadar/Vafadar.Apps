@@ -856,3 +856,15 @@ AT-111 adds 21 cases: main 1,512/App.Tests 276. Final runtime/build/APK evidence
 gates: [quality/settings-suggestion-history.md](quality/settings-suggestion-history.md).
 
 D-106 final checks: 1,512 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/1029 own renders and 63 native/bound proofs, seven positive Release suggestion/reopen contexts, original-data readbacks and a complete signed D-106 APK pass. Selected-picker caption geometry and cold/ANR/device/platform/owner gates remain open.
+
+## D-107 - Growing native picker selections and popup rows (2026-10-10)
+
+Actual Persian 360/200% Settings captures clipped complete calendar and region names in WinUI's single-line picker
+presentation. Use a wrapping native item template while retaining the same MAUI/native picker, source, selection,
+names, inherited typography/direction/colors and native selection. Normal-text popup review found a 42.6667-unit
+row; extend its existing style with a 44-unit minimum without replacing the native theme template. No financial,
+data, schema, SDK, permission, security or portable preference change. AT-112 checks actual selected/popup glyphs,
+fonts/targets, native reselection and retained complete drafts/stored rows; the shared template also requires other
+picker pages to be checked. Final verification passes: [quality/native-picker-captions.md](quality/native-picker-captions.md).
+
+D-107 final checks: main 1,512 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/2083 own renders, 189 native existing-choice reselections, 84 language choices/returns, full developer-file restoration, normal Release navigation and exact 24-table readbacks across three fictitious profiles pass. Complete signed D-107 APK supplied; OS/readers/device/iOS/other-control and owner acceptance remain open.

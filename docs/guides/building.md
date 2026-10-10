@@ -413,3 +413,15 @@ fictitious history and reloads an unsaved estimate without Save (D-106 / AT-111)
 retain native retry/choice/return checks; their deliberately covered failure captures are expected fixture states,
 not failed review files. Preserve development files and remove temporary timers before final platform builds.
 Evidence: src/Apps/Zanance/docs/quality/settings-suggestion-history.md.
+
+The Windows Debug `settings-pickers` route reviews selected text and actual expanded popup rows through native
+UIA ExpandCollapse/SelectionItem patterns (D-107 / AT-112). It reselects existing choices, retains the raw estimate
+draft and compares complete Settings/Accounts/Entries without Save. General layout checks also measure selected
+picker glyphs on the other captured pages. Use the snapshot script with `-Only settings-pickers` for the focused
+route; preserve original development files and distinguish process-local text stress from OS/device acceptance.
+Evidence: src/Apps/Zanance/docs/quality/native-picker-captions.md.
+
+The snapshot script fails explicitly when its app times out, exits unsuccessfully or writes error.txt. Partial/failed
+captures are retained for diagnosis and never count as a successful review, even when some proofs were written.
+Native Back review uses the real control's associated automation peer and retains actual timeout state without
+extending the bound or substituting programmatic navigation (D-107).

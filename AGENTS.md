@@ -506,3 +506,14 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Warm LoadAsync measurements exclude later native arrangement/painting and do not close cold/device/ANR gates.
 * Native language review uses the associated WinUI data peer after bounded popup arrangement. Reject retired
   pages/handlers explicitly; never swallow selection errors or replace native selection with property assignment.
+
+## 40. Growing native picker captions (D-107)
+
+* Windows picker selections and popup items wrap inside the existing native control. Keep source items, selection,
+  semantic names, inherited fonts/scaling/direction/colors and native expand/selection patterns. Popup rows are at
+  least 44 logical units high; extend the existing item style without replacing the native theme template.
+* Review actual selected/popup character bounds, fonts and targets. Reselect existing choices through native UIA
+  without saving estimates or money; retain complete drafts/stored rows and independently check real language changes.
+  The shared presentation requires checks on other picker pages too. Process-local scaling is not OS/device acceptance.
+* Native Back reviews use the peer associated with the actual control. Preserve timeout/root/page/navigation evidence;
+  never extend the bound or substitute a programmatic return to make a failed native check pass.

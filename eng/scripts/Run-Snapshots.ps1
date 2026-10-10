@@ -86,9 +86,16 @@ $env:VAFADAR_SNAPSHOT_CALENDAR = $Calendar
 $env:VAFADAR_SNAPSHOT_DIGITS = $Digits
 $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($PSBoundParameters.ContainsKey('FontScale')) { $FontScale.ToString([Globalization.CultureInfo]::InvariantCulture) } else { '' }
 $process = Start-Process $exe.FullName -PassThru -WindowStyle Hidden
-if (-not $process.WaitForExit($TimeoutSeconds * 1000)) { Stop-Process -Id $process.Id -Force; 'timed out (the shots taken so far are kept)' }
-elseif ($process.ExitCode -ne 0) { 'the app ended with exit code 0x{0:X8}' -f $process.ExitCode }
+if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
+    Stop-Process -Id $process.Id -Force
+    throw 'The snapshot app timed out; partial captures are retained, not accepted.'
+}
+if ($process.ExitCode -ne 0) {
+    throw ('The snapshot app ended with exit code 0x{0:X8}; captures are retained, not accepted.' -f $process.ExitCode)
+}
+if (Test-Path (Join-Path $Output 'error.txt')) {
+    throw 'The snapshot app reported a failure; retained error.txt and captures are not acceptance.'
+}
 # Marks the database as sample data, so the next run removes it instead of moving it aside (only if it stays unchanged).
 if (Test-Path $data) { Set-Content -Path $marker -Value (Get-Date -Format o) -Encoding utf8 }
-if (Test-Path (Join-Path $Output 'error.txt')) { Get-Content (Join-Path $Output 'error.txt') -TotalCount 5 }
 "$((Get-ChildItem $Output -Filter *.png).Count) screenshots in $Output"

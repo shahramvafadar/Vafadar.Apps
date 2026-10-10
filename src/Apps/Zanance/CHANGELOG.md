@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Complete Windows picker names (2026-10-10, D-107)
+
+- Selected calendar, region and other picker names can grow onto multiple lines at large text sizes. The same native choices remain; popup rows have at least a 44-unit touch target.
+
 ### Improved - Faster Settings history read (2026-10-10, D-106)
 
 - Opening Settings reads only the three complete financial months needed for the daily spending suggestion. The same suggestion, your unsaved estimate and the loading/retry behavior remain; no suggested amount is saved automatically.

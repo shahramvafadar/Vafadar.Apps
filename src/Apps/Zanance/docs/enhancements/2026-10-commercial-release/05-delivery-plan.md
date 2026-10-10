@@ -342,3 +342,8 @@ Continue ready work under D-69; native publication, cold/device performance and 
 D-105 delivers ready QA-06 complete bulk-selection reload, retaining current financial semantics. Actual evidence and final checks: [bulk-selection-reload.md](../../quality/bulk-selection-reload.md). Continue ready work under D-69; native publication, cold/device/ANR and unresolved owner gates remain open.
 
 D-106 delivers ready QA-06 exact Settings suggestion history with unchanged financial and publication rules. Actual evidence/final checks: [settings-suggestion-history.md](../../quality/settings-suggestion-history.md). Continue ready work under D-69; cold/ANR/native-publication/device/platform and unresolved owner decisions remain open.
+
+D-107 / AT-112 continues A11Y-03 with complete growing Windows selected/popup picker captions, inherited native
+typography and 44-unit popup targets. Native reviews retain choices/drafts/full stored values without Save;
+main suite remains 1,512 passed (App.Tests 276). Final native matrix, strict Windows/complete Android Debug+Release, exact original-data readbacks and signed APK pass: [../../quality/native-picker-captions.md](../../quality/native-picker-captions.md).
+Other controls and actual OS/readers/device/iOS/release acceptance remain open. Continue ready work under D-69.
