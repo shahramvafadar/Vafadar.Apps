@@ -5710,4 +5710,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Plan_AmountMustBePositive" xml:space="preserve">
     <value>Saisissez un montant supérieur à zéro.</value>
   </data>
+  <data name="Entry_AmountMustBePositive" xml:space="preserve">
+    <value>Saisissez un montant supérieur à zéro.</value>
+  </data>
 </root>

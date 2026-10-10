@@ -208,3 +208,11 @@ Twenty-four new behaviour cases bring the main suite to 1,408 (App.Tests 172). F
 review, strict Windows/Android Debug/Release, normal Android invalid Save/cancel, signed APK and original 24-table
 readbacks pass. Other A11Y-03 controls and OS/readers/phone/iOS/owner/release gates remain open.
 Evidence: [quality/plan-validation-visible.md](quality/plan-validation-visible.md).
+
+D-100 / AT-105 collects independent transaction monetary problems before mutation, shows each beside its
+input, reveals the next affected field and reopens invalid collapsed details without replacing entered values.
+Existing parsers, consent/receipt protections and successful ledger/fee/overlap/attachment ordering remain.
+Forty-eight new cases bring the main suite to 1,456 (App.Tests 220). Complete Windows matrix, strict builds,
+normal Android invalid Save/cancel, signed APK and original 24-table readbacks pass. Simple destination-fee
+retention is a separate pending runtime concern; other controls/platform/owner/release gates remain open.
+Evidence: [quality/entry-validation-visible.md](quality/entry-validation-visible.md).

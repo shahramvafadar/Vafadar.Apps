@@ -205,6 +205,41 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string? AmountError { get; set; }
 
+    /// <summary>Gets or sets the source account problem beside its picker.</summary>
+    [ObservableProperty]
+    public partial string? AccountError { get; set; }
+
+    /// <summary>Gets or sets the destination account problem beside its picker.</summary>
+    [ObservableProperty]
+    public partial string? ToAccountError { get; set; }
+
+    /// <summary>Gets or sets the destination amount problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? ToAmountError { get; set; }
+
+    /// <summary>Gets or sets the source fee problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? FeeError { get; set; }
+
+    /// <summary>Gets or sets the destination fee problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? DestinationFeeError { get; set; }
+
+    /// <summary>Gets or sets the original currency problem beside its selector.</summary>
+    [ObservableProperty]
+    public partial string? ForeignCurrencyError { get; set; }
+
+    /// <summary>Gets or sets the original amount problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? ForeignAmountError { get; set; }
+
+    /// <summary>Gets or sets the reimbursable amount problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? ReimbursableError { get; set; }
+
+    /// <summary>Requests that the visible form reveal the first problem after publishing all field feedback.</summary>
+    public event EventHandler? ValidationFailed;
+
     [ObservableProperty]
     public partial string? SaveError { get; set; }
 
@@ -1111,10 +1146,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         SaveError = null;
-        AmountError = null;
+        AmountError = AccountError = ToAccountError = ToAmountError = FeeError = DestinationFeeError
+            = ForeignCurrencyError = ForeignAmountError = ReimbursableError = null;
         if (Account is null)
         {
-            SaveError = _translator[HasNoAccounts ? "Entry_NoAccounts" : "Entry_ChooseAccount"];
+            AccountError = _translator[HasNoAccounts ? "Entry_NoAccounts" : "Entry_ChooseAccount"];
+            ValidationFailed?.Invoke(this, EventArgs.Empty);
             return;
         }
 
@@ -1139,75 +1176,41 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     /// <summary>Validates and saves the editor draft only after any required valued-asset consent.</summary>
     private async Task SaveConfirmedAsync()
     {
-        if (Account is null) { SaveError = _translator["Entry_ChooseAccount"]; return; }
-        var culture = _localization.CurrentCulture;
-        var currency = Currencies.TryGet(Account.CurrencyCode, out var known) ? known : Currencies.Euro;
-        var parsed = MoneyText.TryParse(AmountText, currency, culture, out var amount);
-        if (!parsed || amount <= 0)
+        // D-100: publish all independent monetary problems before mutating the entry or synchronizing its fees.
+        var validation = EntryDraftValidation.Validate(new EntryValidationInput
         {
-            AmountError = parsed || string.IsNullOrWhiteSpace(AmountText) ? _translator["LedgerError_AmountMustBePositive"] : _translator["Amount_Invalid"];
+            Kind = Kind, AccountId = Account?.Id, HasNoAccounts = HasNoAccounts, CurrencyCode = CurrencyCode,
+            AmountText = AmountText, DestinationId = ToAccount?.Id,
+            DestinationCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode,
+            DestinationAmountRequired = ShowToAmount, DestinationAmountText = ToAmountText,
+            FeeText = FeeText, DestinationFeeApplicable = ShowDestinationFee, DestinationFeeText = DestinationFeeText,
+            ForeignEnabled = ForeignEnabled, ForeignCurrency = ForeignCurrency, ForeignAmountText = ForeignAmountText,
+            ReimbursableEnabled = ReimbursableEnabled, ReimbursableText = ReimbursableText,
+        }, _localization.CurrentCulture);
+        string? Text(string? key) => key is null ? null : _translator[key];
+        AccountError = Text(validation.AccountErrorKey);
+        AmountError = Text(validation.AmountErrorKey);
+        ToAccountError = Text(validation.DestinationErrorKey);
+        ToAmountError = Text(validation.DestinationAmountErrorKey);
+        FeeError = Text(validation.FeeErrorKey);
+        DestinationFeeError = Text(validation.DestinationFeeErrorKey);
+        ForeignCurrencyError = Text(validation.ForeignCurrencyErrorKey);
+        ForeignAmountError = Text(validation.ForeignAmountErrorKey);
+        ReimbursableError = Text(validation.ReimbursableErrorKey);
+        if (validation.HasErrors || Account is null || validation.Amount is null)
+        {
+            // Details can be collapsed without clearing values (D-90); expose any invalid retained detail input.
+            if (ForeignCurrencyError is not null || ForeignAmountError is not null || ReimbursableError is not null)
+            { ShowDetails = true; }
+            ValidationFailed?.Invoke(this, EventArgs.Empty);
             return;
         }
-
-        long fee = 0;
-        if (IsTransfer && !string.IsNullOrWhiteSpace(FeeText) && !MoneyText.TryParse(FeeText, currency, culture, out fee))
-        {
-            SaveError = _translator["Amount_Invalid"];
-            return;
-        }
-
-        long? toAmount = null;
-        if (ShowToAmount && ToAccount is not null)
-        {
-            if (!MoneyText.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
-            {
-                SaveError = _translator["LedgerError_DestinationAmountRequired"];
-                return;
-            }
-
-            toAmount = parsedTo;
-        }
-
-        long? foreignAmount = null;
-        if (ForeignEnabled && !IsTransfer)
-        {
-            if (!Currencies.TryGet(ForeignCurrency, out var foreign) || !MoneyAmount.TryParse(ForeignAmountText, foreign, culture, out var parsedForeign))
-            {
-                SaveError = _translator["LedgerError_InvalidOriginalCurrency"];
-                return;
-            }
-
-            foreignAmount = parsedForeign;
-        }
-
-        // The destination fee is checked with the other input, before the entry is changed: a refused save must leave the
-        // entry and its fees as they were.
-        long destinationFee = 0;
-        if (IsTransfer && ShowDestinationFee && !string.IsNullOrWhiteSpace(DestinationFeeText)
-            && (ToAccount is null || !MoneyText.TryParse(DestinationFeeText, ToAccount.CurrencyCode, culture, out destinationFee) || destinationFee < 0))
-        {
-            SaveError = _translator["Amount_Invalid"];
-            return;
-        }
-
-        long? reimbursableAmount = null;
-        if (ReimbursableEnabled && Kind == EntryKind.Expense)
-        {
-            // Empty means the whole amount is paid back.
-            if (string.IsNullOrWhiteSpace(ReimbursableText))
-            {
-                reimbursableAmount = amount;
-            }
-            else if (!MoneyText.TryParse(ReimbursableText, Currencies.Get(Account.CurrencyCode), culture, out var parsedReimbursable) || parsedReimbursable <= 0 || parsedReimbursable > amount)
-            {
-                SaveError = _translator["Entry_ReimbursableInvalid"];
-                return;
-            }
-            else
-            {
-                reimbursableAmount = parsedReimbursable;
-            }
-        }
+        var amount = validation.Amount.Value;
+        var fee = validation.Fee;
+        var toAmount = validation.DestinationAmount;
+        var foreignAmount = validation.ForeignAmount;
+        var destinationFee = validation.DestinationFee;
+        var reimbursableAmount = validation.ReimbursableAmount;
 
         var saved = false;
         var attachmentFailed = false;

@@ -32,7 +32,7 @@
             </VerticalStackLayout>
         </Border>
 
-        <ScrollView Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView x:Name="ValidationViewport" Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
 
                 <!-- Values read from a receipt, waiting for review (D-31) -->
@@ -106,8 +106,10 @@
                         <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}"
                                IsVisible="{Binding IsTransfer, Converter={StaticResource InvertedBoolConverter}}" />
                         <Label Text="{v:Translate Entry_FromAccount}" Style="{StaticResource FieldLabel}" IsVisible="{Binding IsTransfer}" />
-                        <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}"
+                        <Picker x:Name="AccountInput" ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}"
                                 SemanticProperties.Description="{v:Translate Entry_Account}" />
+                        <Label Text="{Binding AccountError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding AccountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Entry_ChooseAccount}" TextColor="{DynamicResource WarningText}" FontAttributes="Bold"
                                IsVisible="{Binding NeedsAccount}" SemanticProperties.Description="{v:Translate Entry_ChooseAccount}" />
                         <Label Text="{Binding AccountNotice}" TextColor="{DynamicResource WarningText}"
@@ -170,29 +172,37 @@
 
                         <VerticalStackLayout IsVisible="{Binding IsTransfer}">
                             <Label Text="{v:Translate Entry_ToAccount}" Style="{StaticResource FieldLabel}" />
-                            <Picker ItemsSource="{Binding ToAccounts}" SelectedItem="{Binding ToAccount}" SemanticProperties.Description="{v:Translate Entry_ToAccount}" />
+                            <Picker x:Name="ToAccountInput" ItemsSource="{Binding ToAccounts}" SelectedItem="{Binding ToAccount}" SemanticProperties.Description="{v:Translate Entry_ToAccount}" />
+                            <Label Text="{Binding ToAccountError}" Style="{StaticResource ErrorText}"
+                                   IsVisible="{Binding ToAccountError, Converter={StaticResource IsNotNullConverter}}" />
 
                             <VerticalStackLayout IsVisible="{Binding ShowToAmount}">
                                 <Label Text="{Binding ToAmountLabel}" Style="{StaticResource FieldLabel}" />
-                                <Entry Text="{Binding ToAmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding ToAmountLabel}" />
+                                <Entry x:Name="ToAmountInput" Text="{Binding ToAmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding ToAmountLabel}" />
+                                <Label Text="{Binding ToAmountError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding ToAmountError, Converter={StaticResource IsNotNullConverter}}" />
                                 <Label Text="{Binding ImpliedRateText}" Style="{StaticResource Secondary}"
                                        IsVisible="{Binding ImpliedRateText, Converter={StaticResource IsNotNullConverter}}" />
                             </VerticalStackLayout>
 
                             <Label Text="{v:Translate Entry_Fee}" Style="{StaticResource FieldLabel}" />
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                <Entry Text="{Binding FeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Entry_Fee}" />
+                                <Entry x:Name="FeeInput" Text="{Binding FeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Entry_Fee}" />
                                 <Label Grid.Column="1" Text="{Binding CurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                             </Grid>
+                            <Label Text="{Binding FeeError}" Style="{StaticResource ErrorText}"
+                                   IsVisible="{Binding FeeError, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{v:Translate Entry_FeeHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
 
                             <!-- A fee charged at the destination, in its currency (Advanced, ZEX-S0204) -->
                             <VerticalStackLayout IsVisible="{Binding ShowDestinationFee}">
                                 <Label Text="{v:Translate Entry_DestinationFee}" Style="{StaticResource FieldLabel}" />
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                    <Entry Text="{Binding DestinationFeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Entry_DestinationFee}" />
+                                    <Entry x:Name="DestinationFeeInput" Text="{Binding DestinationFeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Entry_DestinationFee}" />
                                     <Label Grid.Column="1" Text="{Binding ToCurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                                 </Grid>
+                                <Label Text="{Binding DestinationFeeError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding DestinationFeeError, Converter={StaticResource IsNotNullConverter}}" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -238,8 +248,10 @@
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ReimbursableEnabled}" Spacing="0">
                                 <Label Text="{v:Translate Entry_ReimbursableAmount}" Style="{StaticResource FieldLabel}" />
-                                <Entry Text="{Binding ReimbursableText}" Keyboard="Numeric" Placeholder="{v:Translate Entry_ReimbursableAll}"
+                                <Entry x:Name="ReimbursableInput" Text="{Binding ReimbursableText}" Keyboard="Numeric" Placeholder="{v:Translate Entry_ReimbursableAll}"
                                        SemanticProperties.Description="{v:Translate Entry_ReimbursableAmount}" />
+                                <Label Text="{Binding ReimbursableError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding ReimbursableError, Converter={StaticResource IsNotNullConverter}}" />
                                 <Label Text="{v:Translate Entry_ReimbursedBy}" Style="{StaticResource FieldLabel}" />
                                 <Entry Text="{Binding ReimbursedBy}" MaxLength="120" Placeholder="{v:Translate Entry_ReimbursedByPlaceholder}"
                                        SemanticProperties.Description="{v:Translate Entry_ReimbursedBy}" />
@@ -286,7 +298,7 @@
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ForeignEnabled}">
                                 <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" />
-                                <Grid ColumnDefinitions="*,110" ColumnSpacing="8">
+                                <Grid x:Name="ForeignInput" ColumnDefinitions="*,110" ColumnSpacing="8">
                                     <Entry Text="{Binding ForeignAmountText}" Keyboard="Numeric" Placeholder="0"
                                            SemanticProperties.Description="{v:Translate Entry_ForeignAmount}" />
                                     <Border Style="{StaticResource FieldBox}" Grid.Column="1">
@@ -294,6 +306,10 @@
                                             SemanticProperties.Description="{v:Translate Account_Currency}" />
                                     </Border>
                                 </Grid>
+                                <Label Text="{Binding ForeignCurrencyError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding ForeignCurrencyError, Converter={StaticResource IsNotNullConverter}}" />
+                                <Label Text="{Binding ForeignAmountError}" Style="{StaticResource ErrorText}"
+                                       IsVisible="{Binding ForeignAmountError, Converter={StaticResource IsNotNullConverter}}" />
                                 <Label Text="{v:Translate Entry_ForeignHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>

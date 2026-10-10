@@ -358,6 +358,7 @@ internal static class DebugSnapshots
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
+            ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
             ("headers", AppShell.SettingsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
@@ -604,6 +605,8 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-validation")
+                { await ReviewEntryValidationAsync(app, services, folder, language); }
                 if (name == "plan-validation")
                 { await ReviewPlanValidationAsync(app, services, folder, language); }
                 if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)
@@ -1978,6 +1981,128 @@ internal static class DebugSnapshots
             Caption = expected, target.ActualWidth, target.ActualHeight, caption.FontSize, CompleteNativeCaptionAndName = true,
             NativeOpenAndCancelInvocations = 2, SameAccountsPage = true, NewUnsavedLoanDraft = true,
             CompleteAccountsEntriesSettingsBudgetsSchedulesUnchanged = true, NoSaveOrPrincipalPosting = true,
+        }));
+    }
+
+    // AT-105: independent monetary errors, corrected input visibility and collapsed detail feedback use real native Save.
+    private static async Task ReviewEntryValidationAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        var page = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Entries.EntryEditorPage
+            ?? Shell.Current.CurrentPage as Features.Entries.EntryEditorPage
+            ?? throw new InvalidOperationException("The real new entry modal is missing.");
+        var vm = (Features.Entries.EntryEditorViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
+        string Draft() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            vm.KindIndex, vm.AmountText, vm.Account, vm.ToAccount, vm.ToAmountText, vm.FeeText, vm.DestinationFeeText,
+            vm.EntryTitle, vm.Date, vm.Note, vm.Payee, vm.TagsText, vm.ReimbursableEnabled, vm.ReimbursableText,
+            vm.ReimbursedBy, vm.ReimbursementDue, vm.HasReimbursementDue, vm.ForeignEnabled, vm.ForeignCurrency,
+            vm.ForeignAmountText, vm.IsAggregated, vm.AggregatedFrom, vm.AggregatedTo,
+        });
+        var before = await StoredAsync();
+        var original = (vm.KindIndex, vm.AmountText, vm.ToAccount, vm.ToAmountText, vm.FeeText, vm.DestinationFeeText,
+            vm.Note, vm.ShowDetails, vm.ToAccounts, vm.ForeignEnabled, vm.ForeignCurrency, vm.ForeignAmountText,
+            vm.ReimbursableEnabled, vm.ReimbursableText);
+        var viewport = page.FindByName<ScrollView>("ValidationViewport")
+            ?? throw new InvalidOperationException("Missing entry validation viewport.");
+        var footer = ((Grid)page.Content).Children.OfType<VerticalStackLayout>().Single(view => Grid.GetRow(view) == 2);
+        var save = footer.Children.OfType<Button>().Single();
+        if (save.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+            || Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(
+                Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke
+            || viewport.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer nativeViewport)
+        { throw new InvalidOperationException("The entry Save/viewport lacks its actual native control."); }
+        var invocations = 0;
+        async Task SaveCaseAsync(string name, VisualElement target, params string[] expectedKeys)
+        {
+            await ScrollToEndIfNeededAsync(viewport);
+            var draft = Draft();
+            invoke.Invoke();
+            if (vm.SaveCommand.ExecutionTask is { } saving) { await saving; }
+            await Task.Delay(400);
+            invocations++;
+            if (draft != Draft() || await StoredAsync() != before || vm.SaveError is not null)
+            { throw new InvalidOperationException("Invalid entry feedback changed the draft/stored rows or remained in the general footer."); }
+            if (target.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement actualTarget)
+            { throw new InvalidOperationException("The invalid entry field lacks its actual native control."); }
+            var position = actualTarget.TransformToVisual(nativeViewport).TransformPoint(new Windows.Foundation.Point());
+            if (position.Y < -1 || position.Y + actualTarget.ActualHeight > nativeViewport.ActualHeight + 1)
+            {
+                await CaptureAsync(app, folder, language + "-entry-validation-" + name + "-failed");
+                File.WriteAllText(Path.Combine(folder, language + "-entry-validation-" + name + "-failed.json"),
+                    System.Text.Json.JsonSerializer.Serialize(new { position, actualTarget.ActualHeight,
+                        ViewportHeight = nativeViewport.ActualHeight,
+                        vm.AmountError, vm.ToAccountError, vm.FeeError,
+                        vm.ToAmountError, vm.DestinationFeeError, vm.ForeignCurrencyError, vm.ForeignAmountError, vm.ReimbursableError }));
+                throw new InvalidOperationException("Invalid Save did not reveal the actual next entry input.");
+            }
+            await CaptureAsync(app, folder, language + "-entry-validation-" + name);
+            for (var index = 0; index < expectedKeys.Length; index++)
+            {
+                var caption = Translator.Instance[expectedKeys[index]];
+                var label = VisualDescendants(page).OfType<Label>().Single(item => item.Text == caption && item.IsVisible);
+                await ScrollToViewIfNeededAsync(viewport, label); await Task.Delay(100);
+                if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock actual || actual.IsTextTrimmed
+                    || !actual.IsTextScaleFactorEnabled || actual.ActualWidth < 1 || actual.ActualHeight < 1)
+                { throw new InvalidOperationException("An entry input lacks its complete scaled native error caption."); }
+                var glyphs = new List<Windows.Foundation.Rect>();
+                for (var offset = 0; offset <= actual.ContentEnd.Offset - actual.ContentStart.Offset; offset++)
+                {
+                    if (actual.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward) is { } pointer)
+                    { glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+                }
+                if (glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1 || glyphs.Max(rect => rect.Right) > label.Width + 1
+                    || glyphs.Max(rect => rect.Bottom) > label.Height + 1)
+                { throw new InvalidOperationException("An entry field's realized error glyphs exceed the actual MAUI allocation."); }
+                await CaptureAsync(app, folder, language + "-entry-validation-" + name + "-field-" + index);
+            }
+        }
+        vm.KindIndex = 2; vm.AmountText = "0"; vm.ToAccount = null; vm.FeeText = "not money";
+        vm.Note = "Fictitious retained validation note"; vm.ShowDetails = false;
+        await SaveCaseAsync("independent", page.FindByName<Entry>("AmountEntry"),
+            "Entry_AmountMustBePositive", "LedgerError_DestinationRequired", "Amount_Invalid");
+        vm.AmountText = Core.Money.MoneyText.ForInput(1234, vm.CurrencyCode, services.GetRequiredService<ILocalizationService>().CurrentCulture);
+        await SaveCaseAsync("missing-destination", page.FindByName<Picker>("ToAccountInput"), "LedgerError_DestinationRequired", "Amount_Invalid");
+        if (vm.AmountError is not null) { throw new InvalidOperationException("A corrected entry amount kept its old error."); }
+        vm.ToAccount = vm.Account; vm.FeeText = string.Empty;
+        await SaveCaseAsync("same-account", page.FindByName<Picker>("ToAccountInput"), "LedgerError_SameAccountTransfer");
+        if (vm.FeeError is not null) { throw new InvalidOperationException("A corrected entry fee kept its old error."); }
+        // Presentation-only unknown ID plus an invalid amount/fee keeps this probe outside the valid save continuation.
+        var foreign = new Features.Entries.AccountChoice(Guid.NewGuid(), "Fictitious cross-currency destination", "JPY");
+        vm.ToAccounts = [.. original.ToAccounts, foreign]; vm.ToAccount = foreign; vm.ToAmountText = "0";
+        vm.DestinationFeeText = "not money";
+        if (!vm.ShowToAmount || !vm.ShowDestinationFee) { throw new InvalidOperationException("The Advanced transfer fixture lacks its dependent fields."); }
+        await SaveCaseAsync("destination-amount", page.FindByName<Entry>("ToAmountInput"), "LedgerError_DestinationAmountRequired", "Amount_Invalid");
+        vm.ToAmountText = "1200";
+        await SaveCaseAsync("destination-fee", page.FindByName<Entry>("DestinationFeeInput"), "Amount_Invalid");
+        if (vm.ToAmountError is not null || vm.ToAccountError is not null)
+        { throw new InvalidOperationException("Corrected transfer fields kept old errors."); }
+        vm.KindIndex = 0; vm.ForeignEnabled = true; vm.ForeignCurrency = vm.CurrencyCode; vm.ForeignAmountText = "0";
+        vm.ReimbursableEnabled = true; vm.ReimbursableText = "not money"; vm.ShowDetails = false;
+        await SaveCaseAsync("collapsed-details", page.FindByName<Entry>("ReimbursableInput"),
+            "Entry_ReimbursableInvalid", "LedgerError_InvalidOriginalCurrency", "Entry_AmountMustBePositive");
+        if (!vm.ShowDetails) { throw new InvalidOperationException("Invalid retained detail values remained hidden."); }
+        vm.ReimbursableText = string.Empty; vm.ForeignCurrency = "USD"; vm.ShowDetails = false;
+        await SaveCaseAsync("original-amount", page.FindByName<Grid>("ForeignInput"), "Entry_AmountMustBePositive");
+        if (vm.ReimbursableError is not null || vm.ForeignCurrencyError is not null)
+        { throw new InvalidOperationException("Corrected detail values kept old errors."); }
+        vm.ForeignAmountText = "100"; vm.ForeignCurrency = vm.CurrencyCode; vm.ShowDetails = false;
+        await SaveCaseAsync("original-currency", page.FindByName<Grid>("ForeignInput"), "LedgerError_InvalidOriginalCurrency");
+        if (vm.ForeignAmountError is not null) { throw new InvalidOperationException("Corrected original amount kept its old error."); }
+
+        vm.KindIndex = original.KindIndex; vm.AmountText = original.AmountText; vm.ToAccounts = original.ToAccounts;
+        vm.ToAccount = original.ToAccount; vm.ToAmountText = original.ToAmountText; vm.FeeText = original.FeeText;
+        vm.DestinationFeeText = original.DestinationFeeText; vm.Note = original.Note; vm.ShowDetails = original.ShowDetails;
+        vm.ForeignEnabled = original.ForeignEnabled; vm.ForeignCurrency = original.ForeignCurrency; vm.ForeignAmountText = original.ForeignAmountText;
+        vm.ReimbursableEnabled = original.ReimbursableEnabled; vm.ReimbursableText = original.ReimbursableText;
+        if (await StoredAsync() != before) { throw new InvalidOperationException("Invalid entry validation wrote stored data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-entry-validation-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            NativeInvalidSaveInvocations = invocations, AllIndependentFieldErrors = true, FirstInputAutomaticallyRevealed = true,
+            CorrectionsClearOldErrors = true, CollapsedInvalidDetailsRevealed = true, NativeFullErrorGlyphsAndScale = true,
+            DraftAndCompleteStoredDataRetained = true, NoValidFinancialSave = true,
         }));
     }
 

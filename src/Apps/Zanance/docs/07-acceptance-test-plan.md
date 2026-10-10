@@ -555,3 +555,20 @@ Final local status: 651 renders, 21 proofs/84 invalid-Save invocations, 24 new b
 strict builds and signed APK pass. Six normal-scale Android language/theme invalid-Save/cancel checks and exact
 three-profile 24-table readbacks pass. Negative cohorts excluded; other OS/readers/phone/iOS acceptance remains.
 Evidence: quality/plan-validation-visible.md.
+
+## AT-105 - Complete visible transaction-field problems and corrected details (D-100)
+
+Invoke actual native invalid Save from the footer, verify simultaneous amount/destination/fee errors, then correct
+earlier fields and retry missing/same/cross-currency destinations and destination fees. Reopen invalid collapsed
+original-currency/reimbursement fields and clear corrected errors. Check all realized scaled error glyphs and the
+actual next-input viewport. Retain complete draft and Accounts/Entries/Settings; restore presentation choices.
+Final local status: 1281 renders, 21 proofs/168 invalid Saves, 48 new cases/1,456 main tests, strict builds,
+signed APK, six normal Android language/theme invalid-Save/cancel cases and three-profile 24-table readbacks pass.
+Negative cohorts excluded; valid Simple destination-fee retention and other platform/control acceptance remain.
+Evidence: quality/entry-validation-visible.md.
+
+D-100 final callback review: native Windows callback failures rejoin the awaited action guard; timed-out queued
+requests expire. Eight final German invalid Saves/61 renders, strict rebuilt Windows/Android Debug/Release,
+one final-APK English Android invalid Save, repeated original 24-table readbacks and final native handoff pass.
+The main validation tests are unchanged. Original full-matrix counts and the pre-guard Android candidate remain
+distinct from these final checks; evidence: quality/entry-validation-visible.md.

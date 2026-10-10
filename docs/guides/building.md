@@ -371,3 +371,8 @@ Plan validation review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -
 AT-104 invokes native Save four times only with invalid blocking input, verifies initial full error glyphs and
 automatic current input visibility after corrections, restores the original unsaved choices, and compares complete
 stored accounts/entries/settings/schedules. Keep negative cohorts distinct and preserve original development files.
+
+Transaction validation review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only entry-validation -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-105 invokes actual native Save eight times only with invalid blocking input, checks all error glyphs/current
+input visibility and corrected/collapsed details, retains full drafts/stored rows and restores original presentation
+choices. Preserve original development files and separate failed candidate cohorts from final native evidence.

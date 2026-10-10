@@ -5702,4 +5702,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Plan_AmountMustBePositive" xml:space="preserve">
     <value>Introduce un importe mayor que cero.</value>
   </data>
+  <data name="Entry_AmountMustBePositive" xml:space="preserve">
+    <value>Introduce un importe mayor que cero.</value>
+  </data>
 </root>

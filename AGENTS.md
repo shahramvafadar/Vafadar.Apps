@@ -441,3 +441,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   layout; resolve fresh geometry, scope requests to visible/latest attempts and remove bounded Android observers.
 * Native reviews use invalid blocking input only, verify corrected errors/positions and retain full drafts/stored
   rows. Presentation-only foreign-currency choices never reach persistence and are restored before leaving.
+
+## 33. Complete transaction-field validation (D-100)
+
+* Collect all independent applicable monetary problems before entry/fee mutation. Keep original regional/display-
+  unit/ISO parsing and consent/receipt protections; show captions beside their inputs and reopen invalid details.
+* Reveal the next affected input without focus or text replacement. Windows caret/layout ordering needs a deferred
+  native target request; preserve ordinary keyboard policy and latest/visible guards. Route deferred native exceptions through the awaited action
+  guard and expire timed-out callbacks. Android observers stay bounded.
+* Native invalid-Save checks retain drafts/full stored rows and restore presentation-only choices. Distinguish
+  invalid-Save evidence from valid-edit fee retention and other OS/device/release acceptance.

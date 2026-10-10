@@ -5761,4 +5761,8 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Enter an amount greater than zero.</value>
     <comment>Plan validation also applies to transfers; do not direct the user to choose expense or income.</comment>
   </data>
+  <data name="Entry_AmountMustBePositive" xml:space="preserve">
+    <value>Enter an amount greater than zero.</value>
+    <comment>Entry amount validation also applies to transfers and fixed refund kinds.</comment>
+  </data>
 </root>

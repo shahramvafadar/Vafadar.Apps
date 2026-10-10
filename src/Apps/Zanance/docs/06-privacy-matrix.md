@@ -247,3 +247,8 @@ D-99 changes existing plan validation/display only. No new data, permission, SDK
 security field or portable preference. Review invokes Save only with independently invalid blocking input, never
 posts money and compares complete stored data. Fictitious cross-currency choices are presentation-only and restored.
 Android app language/theme are restored through UI; original three-profile 24-table readbacks pass.
+
+D-100 changes existing transaction validation/display only: no new data, permission, SDK, export, credential,
+security field or portable preference. Native reviews use independently invalid blocking input, compare complete
+stored data and restore presentation-only foreign-account choices. No financial posting; original development
+files and three fictitious Android profiles remain. App language/theme are restored through native UI.

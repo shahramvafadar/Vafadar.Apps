@@ -621,3 +621,8 @@ D-99 / AT-104 completes plan-field validation feedback and automatic first-input
 retry after clearing earlier errors. Actual initial error glyphs, corrected input positions and complete retained
 draft/stored data pass. Evidence: plan-validation-visible.md. Earlier counts remain historical; Android normal
 native names/bounds are separate from Windows stress and real OS/readers/phone acceptance.
+
+D-100 / AT-105 checks complete transaction error glyphs, automatic next-input visibility and retained collapsed
+details in the full Windows stress matrix. Existing normal-scale Android native Save/cancel/name/bounds are
+separate from OS large text/readers/phone/iOS acceptance. Evidence: entry-validation-visible.md. Earlier counts
+remain historical; other controls and the separate Simple destination-fee concern remain pending.

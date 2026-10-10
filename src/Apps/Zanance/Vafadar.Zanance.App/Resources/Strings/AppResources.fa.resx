@@ -5733,4 +5733,7 @@
   <data name="Plan_AmountMustBePositive" xml:space="preserve">
     <value>مبلغی بزرگ‌تر از صفر وارد کنید.</value>
   </data>
+  <data name="Entry_AmountMustBePositive" xml:space="preserve">
+    <value>مبلغی بزرگ‌تر از صفر وارد کنید.</value>
+  </data>
 </root>

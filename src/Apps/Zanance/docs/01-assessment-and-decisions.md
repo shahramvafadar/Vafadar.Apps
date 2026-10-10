@@ -770,3 +770,21 @@ layout before scrolling, scope requests to visible/latest validation, remove And
 redundant/clamped MAUI scroll awaits. The full language/theme/width matrix, 24 new behaviour cases/1,408 tests,
 strict builds, normal Android invalid Save/cancel and exact original-table readbacks pass. Other platform/control
 and owner/release gates remain. Evidence: quality/plan-validation-visible.md.
+
+## D-100 - Collect transaction-field errors before mutation and reveal the next input (2026-10-10)
+
+Actual invalid transfer Save postpones destination/fee feedback behind the amount; original-currency and
+reimbursement problems also use general footer messages. Collect all independent applicable monetary problems
+before entry/fee mutation, reuse existing parsers/domain restrictions, show each beside its input and reveal
+collapsed invalid details without losing values. Use six-language transfer-safe positive-amount wording.
+Native retries expose Windows caret/layout request ordering; request the actual target through deferred native
+StartBringIntoView without focus or persistent keyboard policy changes. Keep latest/visible guards and bounded
+removed Android observers. Forty-eight new cases/1,456 main tests, the full Windows matrix, strict builds,
+normal Android invalid Save/cancel, signed APK and original 24-table readbacks pass. Simple existing destination
+fee retention remains a separate pending runtime concern. Evidence: quality/entry-validation-visible.md.
+
+D-100 final callback review: native Windows callback failures rejoin the awaited action guard; timed-out queued
+requests expire. Eight final German invalid Saves/61 renders, strict rebuilt Windows/Android Debug/Release,
+one final-APK English Android invalid Save, repeated original 24-table readbacks and final native handoff pass.
+The main validation tests are unchanged. Original full-matrix counts and the pre-guard Android candidate remain
+distinct from these final checks; evidence: quality/entry-validation-visible.md.

@@ -538,3 +538,11 @@ errors. Place each caption beside its source/destination input and keep transfer
 reveal the first affected input without keyboard focus or text replacement. Clearing prior captions changes layout;
 use current native positions, scoped latest/visible requests and bounded removed Android layout observers.
 Unknown/hidden amounts and unchanged recurrence/money rules remain. Corrections clear old errors on the next Save.
+
+### Complete transaction-field feedback (D-100)
+
+Show all independent applicable amount/account/fee/original-currency/reimbursement problems together beside
+their fields before entity mutation. Reopen collapsed invalid detail fields, keep draft text and reveal the first
+affected input without changing focus. Resolve native request ordering after dynamic layout changes; preserve
+ordinary keyboard/scroll policy, latest/visible request guards and bounded removed Android observers. Transfer
+positivity wording does not suggest expense/income. Clear corrected captions on the next Save.

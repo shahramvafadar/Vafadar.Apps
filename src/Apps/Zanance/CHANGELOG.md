@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear transaction validation (2026-10-10, D-100)
+
+- Transactions show all applicable account, amount, fee, original-currency and reimbursement errors after one Save attempt, beside the affected fields. The form reveals the next required input and reopens invalid collapsed details while keeping your draft.
+- A transfer amount message asks for a positive amount without suggesting a switch to expense or income.
+
 ### Fixed - Clear plan validation (2026-10-10, D-99)
 
 - Plans show all applicable field errors after one Save attempt, including transfer account and amount problems. The form brings the first affected input into view and keeps your draft when you correct it.

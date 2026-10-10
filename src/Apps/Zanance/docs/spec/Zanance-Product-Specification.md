@@ -1394,6 +1394,16 @@ review, strict Windows/Android Debug/Release, normal Android invalid Save/cancel
 readbacks pass. Other A11Y-03 controls and OS/readers/phone/iOS/owner/release gates remain open.
 Evidence: [quality/plan-validation-visible.md](../quality/plan-validation-visible.md).
 
+### 31.16. Complete transaction monetary feedback (D-100 / AT-105)
+
+D-100 / AT-105 collects independent transaction monetary problems before mutation, shows each beside its
+input, reveals the next affected field and reopens invalid collapsed details without replacing entered values.
+Existing parsers, consent/receipt protections and successful ledger/fee/overlap/attachment ordering remain.
+Forty-eight new cases bring the main suite to 1,456 (App.Tests 220). Complete Windows matrix, strict builds,
+normal Android invalid Save/cancel, signed APK and original 24-table readbacks pass. Simple destination-fee
+retention is a separate pending runtime concern; other controls/platform/owner/release gates remain open.
+Evidence: [quality/entry-validation-visible.md](../quality/entry-validation-visible.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

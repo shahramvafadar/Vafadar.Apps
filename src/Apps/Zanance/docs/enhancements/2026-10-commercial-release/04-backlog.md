@@ -49,7 +49,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Proposed | OD-03 |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Proposed | ENT-01 |
@@ -481,3 +481,11 @@ Twenty-four new behaviour cases bring the main suite to 1,408 (App.Tests 172). F
 review, strict Windows/Android Debug/Release, normal Android invalid Save/cancel, signed APK and original 24-table
 readbacks pass. Other A11Y-03 controls and OS/readers/phone/iOS/owner/release gates remain open.
 Evidence: [quality/plan-validation-visible.md](../../quality/plan-validation-visible.md).
+
+D-100 / AT-105 collects independent transaction monetary problems before mutation, shows each beside its
+input, reveals the next affected field and reopens invalid collapsed details without replacing entered values.
+Existing parsers, consent/receipt protections and successful ledger/fee/overlap/attachment ordering remain.
+Forty-eight new cases bring the main suite to 1,456 (App.Tests 220). Complete Windows matrix, strict builds,
+normal Android invalid Save/cancel, signed APK and original 24-table readbacks pass. Simple destination-fee
+retention is a separate pending runtime concern; other controls/platform/owner/release gates remain open.
+Evidence: [quality/entry-validation-visible.md](../../quality/entry-validation-visible.md).

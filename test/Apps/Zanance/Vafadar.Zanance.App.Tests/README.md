@@ -37,3 +37,9 @@ PlanDraftValidationTests compiles the real pre-save plan helper (D-99 / AT-104):
 field feedback, existing money parsing/minor digits and recurrence rules, unknown/hidden inputs, missing/same
 accounts, cross-currency amounts, unchanged drafts and corrected results. Main count is 1,408; App.Tests is 172.
 Runtime layout/native validation remains separate in docs/quality/plan-validation-visible.md.
+
+EntryDraftValidationTests compiles the actual transaction helper (D-100 / AT-105): 48 cases for independent
+monetary problems, regional/digit/display-unit and ISO amounts, optional fees, original-currency/reimbursement
+rules, hidden inapplicable values, immutable drafts and fresh corrections. Real EntryActions/LedgerValidator keep
+one transfer and separate fee expenses. Current main count is 1,456; App.Tests is 220. Native rendering and valid
+Simple destination-fee retention remain separate in docs/quality/entry-validation-visible.md.
