@@ -227,3 +227,15 @@ check before limits/removal, recheck access and notify after commit; replacement
 Inactive deployment adds no budget counting transaction or paid grant. No model/schema/backup changes. Explicit
 active/read-only selection/future activation and remaining ENT-02/03 entry points are unfinished:
 [evidence](../../quality/budget-write-policy.md).
+
+## 12. Holding operation rights and atomic purchase prices (D-122 / ENT-02 in progress)
+
+HoldingStore captures cached access before acquiring its actual-file writer. Direct new work uses ManageHoldings;
+existing corrections/delete/Undo preserve data rights, including expired hosts, without substituting personal Pro
+for membership. Imports preserve owned history; explicit read-only classification remains unfinished. An explicit
+requireTransaction retains existing operation transactions when enforcement is inactive, without a quota transaction.
+Full history/id reads occur inside the writer. The purchase editor's optional derived-price operation saves the
+event/payment/fee and latest same-type/date price together; old non-editor callers retain the no-price overload.
+Recheck cached access after SQL before commit; roll back full group/old-fee mutations on failure and notify once.
+No schema, SDK, permission or portable paid facts change. Current registration remains inactive:
+[evidence](../../quality/holding-write-policy.md).

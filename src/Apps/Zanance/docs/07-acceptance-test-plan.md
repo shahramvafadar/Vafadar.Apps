@@ -751,3 +751,15 @@ deletion; triggered new-limit failure with full rollback/retry; missing membersh
 Settings creation/ledger writes; independent-provider final-slot contention. Main suite 1,721 passes. Final
 strict platform/APK and actual unrestricted Release budget Save: [evidence](quality/budget-write-policy.md).
 This does not accept explicit read-only selection, future activation, import/restore or release activation.
+
+## AT-124 - Holding rights and complete atomic purchase Save (D-122)
+
+46 real SQLite cases verify ten new-work rejections with complete no-write comparison, paid/exact shared and inactive
+purchase Save, atomic payment/fee/derived price and correct money classification; latest same-date price metadata;
+standalone Purchase-source price rejection; retained Free/expired-host corrections; reasoned no-money quantity
+correction and six disguised-work rejections; ten missing-membership write paths; default-location scaffolding;
+Free idempotent import and no revived paid right; complete delete/Undo; price insert/update failure; access retired
+by a real SQL trigger before commit; independent-provider enabled/inactive sale contention; simultaneous duplicate
+imports; conversion failure/rollback/retry without losing the legacy account. Main suite 1,767 passes. Final
+strict platform/APK and actual Release purchase editor path: [evidence](quality/holding-write-policy.md).
+This does not accept explicit selected read-only classification, other ENT-02/03 paths or release activation.

@@ -1051,3 +1051,25 @@ grant. No schema, SDK, permission, backup or visible control change. Explicit se
 future-period activation, import/restore and other resources/native paths remain ENT-02/03 work. This is a partial
 write boundary, not a new automatic selection policy. Final platform/APK/runtime evidence:
 [budget-write-policy.md](quality/budget-write-policy.md).
+
+## D-122 - Guard holding writes and save purchase prices atomically (2026-10-10)
+
+Continue ENT-02 at the actual HoldingStore boundary: direct new types/locations/events/prices and account-to-holding
+conversion require ManageHoldings when checks are enabled. Existing corrections, delete and Undo retain their
+approved data rights with exact membership checks. A new reasoned quantity correction has no money/group/basis or
+proceeds and references an existing type. Default-location scaffolding supports retained corrections without
+granting holding management. Imports preserve owned history; explicit read-only classification remains ENT-03.
+
+Capture cached facts before acquiring the SQLite writer. Move the existing event/delete/import/conversion/Undo
+transaction before full-history/id reads; do not add a separate quota transaction to inactive operations. Concurrent
+sales cannot both validate the same quantity, and concurrent duplicate imports recheck actual stored ids.
+
+The editor previously committed event/payment/fee before separately saving the purchase price. Replace that
+follow-up with one atomic store call, deriving from the actual stored type currency and preserving the latest
+same-type/date price identity/metadata. Keep the old overload's no-derived-price behavior for existing non-editor
+callers. A failed price or retired access after SQL restores every group/old fee row; Changed fires after commit once.
+
+46 new real SQLite cases/main 1,767 pass, App.Tests 299 unchanged. Current deployment remains inactive without a paid
+grant. No schema, SDK, permission, string/layout or portable entitlement changes. ENT-02/03 selection, future
+activation, contributions/occurrence/other resources/native paths and commercial activation remain open.
+Final platforms/APK/normal Release evidence: [holding-write-policy.md](quality/holding-write-policy.md).

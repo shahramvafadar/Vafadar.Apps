@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Categories;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.DataFiles;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
@@ -26,7 +28,7 @@ public sealed record HoldingGroup(IReadOnlyList<AssetEvent> Events, IReadOnlyLis
 /// saved in one database transaction together with its money entry and fee (shared <c>GroupId</c>); every change is
 /// checked against the full history of the holding, so no quantity is ever negative on any date (ZEX-AS15, AT16).
 /// </summary>
-public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFactory)
+public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFactory, ICommercialWriteAccessSource commercialAccess)
 {
     /// <summary>Raised after holdings were written.</summary>
     public event EventHandler? Changed;
@@ -78,6 +80,10 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     public async Task<AssetLocation> EnsureDefaultLocationAsync(string name, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        // D-122: default-location scaffolding also supports retained quantity corrections. It grants no new
+        // holding/event/price capability; those writes check their own operation in this same store.
+        write.DemandFeature(CommercialFeature.Corrections);
         var first = await db.AssetLocations.AsNoTracking().Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).ThenBy(l => l.Name).FirstOrDefaultAsync(cancellationToken);
         if (first is not null)
         {
@@ -86,7 +92,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
 
         var location = new AssetLocation { Name = name };
         db.AssetLocations.Add(location);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return location;
     }
@@ -99,7 +107,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(type);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         var existing = await db.AssetTypes.AsNoTracking().FirstOrDefaultAsync(t => t.Id == type.Id, cancellationToken);
+        write.DemandFeature(existing is null ? CommercialFeature.ManageHoldings : CommercialFeature.Corrections);
         if (existing is null)
         {
             db.AssetTypes.Add(type);
@@ -114,7 +124,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             db.AssetTypes.Update(type);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return true;
     }
@@ -124,7 +136,10 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(location);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.AssetLocations.AnyAsync(l => l.Id == location.Id, cancellationToken))
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var existing = await db.AssetLocations.AnyAsync(l => l.Id == location.Id, cancellationToken);
+        write.DemandFeature(existing ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
+        if (existing)
         {
             db.AssetLocations.Update(location);
         }
@@ -133,7 +148,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             db.AssetLocations.Add(location);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
@@ -143,11 +160,31 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     /// group before and are not passed again are removed. Nothing is saved when the history of the holding would become
     /// negative on any date or a money entry is invalid.
     /// </summary>
-    public async Task<HoldingSaveResult> SaveEventAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries, CancellationToken cancellationToken = default)
+    public Task<HoldingSaveResult> SaveEventAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries, CancellationToken cancellationToken = default) =>
+        SaveEventAsync(assetEvent, entries, recordPurchasePrice: false, cancellationToken);
+
+    /// <summary>
+    /// Saves the event/group and, when requested by the purchase editor, its derived price in the same transaction.
+    /// The price uses the actual stored type currency, never a caller-supplied manual-price entitlement bypass.
+    /// </summary>
+    public async Task<HoldingSaveResult> SaveEventAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries,
+        bool recordPurchasePrice, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(assetEvent);
         ArgumentNullException.ThrowIfNull(entries);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-122: acquire the existing operation's writer before full-history validation as well as permissions.
+        // Independent sales/corrections must not both validate the same quantity then commit a negative history.
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        var existing = await db.AssetEvents.AnyAsync(e => e.Id == assetEvent.Id, cancellationToken);
+        if (write.Enforced)
+        {
+            var quantityCorrection = assetEvent.Kind == AssetEventKind.Correction && entries.Count == 0
+                && assetEvent.GroupId is null && assetEvent.BasisAmount is null && assetEvent.ProceedsAmount is null
+                && !string.IsNullOrWhiteSpace(assetEvent.Reason)
+                && await db.AssetTypes.AnyAsync(t => t.Id == assetEvent.AssetTypeId, cancellationToken);
+            write.DemandFeature(existing || quantityCorrection ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
+        }
 
         // The history as it would be after the change, for this type only.
         var others = await db.AssetEvents.AsNoTracking().Where(e => e.AssetTypeId == assetEvent.AssetTypeId && e.Id != assetEvent.Id).ToListAsync(cancellationToken);
@@ -175,8 +212,7 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             }
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        if (await db.AssetEvents.AnyAsync(e => e.Id == assetEvent.Id, cancellationToken))
+        if (existing)
         {
             db.AssetEvents.Update(assetEvent);
         }
@@ -203,8 +239,26 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             }
         }
 
+        if (recordPurchasePrice && assetEvent.Kind == AssetEventKind.Purchase && assetEvent.BasisAmount is { } cost)
+        {
+            // D-122: an existing purchase correction may derive its corrected price even after expiry. Manual
+            // price creation remains a separate paid operation. Retain the editor's existing per-type/date rule.
+            var type = await db.AssetTypes.AsNoTracking().SingleAsync(t => t.Id == assetEvent.AssetTypeId, cancellationToken);
+            var valuation = await db.AssetValuations.OrderByDescending(v => v.CreatedAt).FirstOrDefaultAsync(v => v.AssetTypeId == type.Id
+                && v.Source == ValuationSource.Purchase && v.Date == assetEvent.Date, cancellationToken);
+            if (valuation is null)
+            {
+                valuation = new AssetValuation { AssetTypeId = type.Id, CurrencyCode = type.PriceCurrencyCode,
+                    Source = ValuationSource.Purchase, Date = assetEvent.Date };
+                db.AssetValuations.Add(valuation);
+            }
+            valuation.PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(cost, assetEvent.Quantity);
+        }
+
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        write.EnsureCurrent();
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return HoldingSaveResult.Success;
     }
@@ -216,6 +270,8 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     public async Task<(HoldingGroup? Removed, HoldingConflict? Conflict)> DeleteEventAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.DeleteData);
         var assetEvent = await db.AssetEvents.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (assetEvent is null)
         {
@@ -231,7 +287,6 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         var entries = assetEvent.GroupId is { } group
             ? await db.Entries.AsNoTracking().Where(e => e.GroupId == group).ToListAsync(cancellationToken)
             : [];
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         if (entries.Count > 0)
         {
             var entryIds = entries.Select(e => e.Id).ToList();
@@ -239,7 +294,8 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         }
 
         await db.AssetEvents.Where(e => e.Id == id).ExecuteDeleteAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        write.EnsureCurrent();
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return (new HoldingGroup([assetEvent], entries), null);
     }
@@ -253,6 +309,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(content);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        // Import preserves owned data even after downgrade; selected read-only new-work classification is ENT-03.
+        write.DemandFeature(CommercialFeature.BackupRestore);
         var typeIds = (await db.AssetTypes.Select(t => t.Id).ToListAsync(cancellationToken)).ToHashSet();
         var locationIds = (await db.AssetLocations.Select(l => l.Id).ToListAsync(cancellationToken)).ToHashSet();
         var eventIds = (await db.AssetEvents.Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
@@ -271,13 +330,14 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             return (0, skipped, conflict);
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         db.AssetTypes.AddRange(types);
         db.AssetLocations.AddRange(locations);
         db.AssetEvents.AddRange(events);
         db.AssetValuations.AddRange(valuations);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        write.EnsureCurrent();
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return (types.Count + locations.Count + events.Count + valuations.Count, skipped, null);
     }
@@ -291,13 +351,14 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     public async Task<AssetType?> ConvertAccountAsync(Guid accountId, long balance, DateOnly date, string location, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         var account = await db.Accounts.FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
         if (account is null || account.Type != Core.Accounts.AccountType.Asset || account.IsArchived)
         {
             return null;
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        write.DemandFeature(CommercialFeature.ManageHoldings);
         var place = await db.AssetLocations.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).FirstOrDefaultAsync(cancellationToken);
         if (place is null)
         {
@@ -336,8 +397,10 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         }
 
         account.IsArchived = true;
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        write.EnsureCurrent();
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
         return type;
     }
@@ -354,11 +417,14 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(group);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
         db.AssetEvents.AddRange(group.Events);
         db.Entries.AddRange(group.Entries);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        write.EnsureCurrent();
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
@@ -367,7 +433,10 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     {
         ArgumentNullException.ThrowIfNull(valuation);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.AssetValuations.AnyAsync(v => v.Id == valuation.Id, cancellationToken))
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var existing = await db.AssetValuations.AnyAsync(v => v.Id == valuation.Id, cancellationToken);
+        write.DemandFeature(existing ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
+        if (existing)
         {
             db.AssetValuations.Update(valuation);
         }
@@ -376,7 +445,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             db.AssetValuations.Add(valuation);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
@@ -384,7 +455,10 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     public async Task DeleteValuationAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        write.DemandFeature(CommercialFeature.DeleteData);
         await db.AssetValuations.Where(v => v.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }
 

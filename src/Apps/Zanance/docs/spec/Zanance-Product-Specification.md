@@ -1747,3 +1747,13 @@ possible above quota; triggered replacement failure restores original limits ato
 pass; main suite 1,721, App.Tests 299 unchanged. Current registration remains inactive. No schema/SDK/permission/UI
 change. Explicit active/read-only selection, future-period activation and other ENT-02/03 paths remain unfinished:
 [evidence](../quality/budget-write-policy.md).
+
+### 31.35. Holding write rights and atomic purchase price (D-122 / AT-124 / ENT-02 in progress)
+
+Holding direct new work and retained corrections/delete/Undo use exact-file cached-access checks. Existing atomic
+operations validate quantity history/import ids inside the SQLite writer. The purchase editor saves its derived
+price in the same transaction as event/payment/fee; failures and retired access preserve complete stored data.
+Concurrent sales stay nonnegative and identical concurrent imports create rows once. 46 new real SQLite cases
+pass; main suite 1,767, App.Tests 299 unchanged. Current registration stays inactive. No schema/SDK/permission or
+visible layout change. Explicit selected read-only/new-work classification and remaining ENT-02/03 boundaries
+stay unfinished: [evidence](../quality/holding-write-policy.md).

@@ -668,3 +668,11 @@ Keep the existing budget form, financial dates, copy actions and confirmed repla
 editable above quota; a rejected replacement must preserve the complete original budget. Current test builds
 remain unrestricted. Final translated limit feedback, explicit active/read-only selection and future-period
 activation remain unfinished ENT-02/03/04 work; no automatic selection or new UI is introduced here.
+
+## Atomic holding editor Save (D-122 / ENT-02 in progress)
+
+Keep the same purchase form, amounts, quantity/date/location, account and fee fields. Its explicit Save commits
+quantity, payment, fee and marked purchase-derived price together; failure preserves the previous complete group.
+Retained quantity/metadata corrections and delete/Undo stay available after expiry. Reasoned quantity corrections
+do not create money or prices. New standalone prices remain a separate management operation. Current test builds
+remain unrestricted; translated limit feedback and explicit read-only selection remain ENT-03/04 work.

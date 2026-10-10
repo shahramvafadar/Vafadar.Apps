@@ -113,3 +113,9 @@ test builds are unrestricted. Explicit selected active/read-only definitions, fu
 contribution/allocation/occurrence work, other resources/import/restore/native paths and activation remain open.
 Catalog/purchase verification/backend/server roles/release acceptance are not delivered by these boundaries.
 See [canonical backlog](04-backlog.md) and [budget evidence](../../quality/budget-write-policy.md).
+
+D-122 extends current ENT-02 progress to holding direct writes and retained corrections/delete/Undo/import rights,
+with atomic purchase/payment/fee/derived-price Save. Actual SQLite writer validation protects concurrent sales and
+duplicate imports. Main 1,767/App.Tests 299 passes. No current quota activation or paid grant; selected read-only
+classification and the remaining resource/operation/native paths are open:
+[evidence](../../quality/holding-write-policy.md).

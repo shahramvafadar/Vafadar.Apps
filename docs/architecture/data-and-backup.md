@@ -297,3 +297,9 @@ definitions ignore copied dates/calendars; existing updates count stored identit
 complete prior budget/limits. No schema, migration, compiled model, backup format, permissions or paid portable data
 change. Current registration is inactive. Explicit read-only selection/future activation remain unfinished:
 [evidence](../../src/Apps/Zanance/docs/quality/budget-write-policy.md).
+
+D-122 extends actual-file cached-access checks to holding writes. Existing transactions now cover full-history/id
+validation, event/group/derived-price writes and access rechecks. Imports preserve owned data and Undo preserves
+the complete group; neither revives paid facts. Explicit read-only classification remains ENT-03 work. No schema,
+migration/compiled model, backup format, permission or SDK changes. Current registration is inactive:
+[evidence](../../src/Apps/Zanance/docs/quality/holding-write-policy.md).

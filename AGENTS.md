@@ -630,3 +630,16 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   capability. Failed replacement restores the full previous budget/limits; Changed follows commit.
 * Current registration stays inactive. Explicit active/read-only selection and future-period activation remain
   ENT-02/03 work; this boundary is not complete budget enforcement or permission to activate test-build limits.
+
+## 54. Holding permissions and atomic purchase prices (D-122)
+
+* Holding direct creation/conversion/new prices use ManageHoldings; stored corrections/delete/Undo retain Free
+  rights with exact-scope membership checks. New reasoned quantity corrections contain no money/group/basis/price.
+  Default-location scaffolding supports retained corrections and never grants new holding/event/price rights.
+* Capture access before acquiring the existing operation's writer. Validate full quantity history and import ids
+  inside it; concurrent sales cannot both consume the same quantity and duplicate imports remain idempotent.
+* The purchase editor saves its marked derived price with the event/payment/fee in one transaction. Preserve the
+  latest same-type/date price identity/metadata and old non-price overload. Recheck access after SQL before commit;
+  failures restore the whole group and Changed follows commit once.
+* Current registration remains inactive. Import/Undo keep owned data; explicit read-only new-work classification,
+  other ENT-02/03 paths and release activation remain unfinished. No fabricated paid grant or new schema.

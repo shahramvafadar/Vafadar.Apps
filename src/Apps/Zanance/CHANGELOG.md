@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete holding purchase saves (2026-10-10, D-122)
+
+- A purchase saves its quantity, payment, fee and derived price together. If the price cannot be saved, the
+  purchase is not left partially recorded. Simultaneous sales cannot consume the same holding twice.
+- Simultaneous imports of the same holdings file keep only one copy of each row.
+- Prepare final holding management checks while preserving corrections and Undo. Test builds stay unrestricted.
+
 ### Internal - Current budget write policy boundary (2026-10-10, D-121)
 
 - Prepare current-period budget quota checks. Copies across months and calendars share their definition;

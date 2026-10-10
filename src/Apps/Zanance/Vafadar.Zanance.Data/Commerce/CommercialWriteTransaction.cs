@@ -6,7 +6,8 @@ namespace Vafadar.Zanance.Data.Commerce;
 
 /// <summary>
 /// Holds the SQLite write transaction across read/count/check/save. Independent services must compete for the same
-/// database writer rather than each using an unrelated in-memory semaphore. Inactive builds add no transaction.
+/// database writer rather than each using an unrelated in-memory semaphore. Inactive checks add no quota
+/// transaction; callers may retain their existing atomic operation by explicitly requesting its transaction.
 /// </summary>
 internal sealed class CommercialWriteTransaction : IAsyncDisposable
 {
@@ -34,14 +35,14 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
 
     /// <summary>Captures the actual file and acquires its write transaction before any quota-sensitive reads.</summary>
     public static async Task<CommercialWriteTransaction> OpenAsync(ZananceDbContext db,
-        ICommercialWriteAccessSource source, CancellationToken cancellationToken)
+        ICommercialWriteAccessSource source, CancellationToken cancellationToken, bool requireTransaction = false)
     {
         ArgumentNullException.ThrowIfNull(db);
         ArgumentNullException.ThrowIfNull(source);
         var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
         var access = source.Capture(path) ?? throw new InvalidOperationException("A commercial access source returned no snapshot.");
-        if (!access.Enforced) return new(source, path, access, null);
-        if (!string.Equals(path, access.DatabasePath, StringComparison.Ordinal))
+        if (!access.Enforced && !requireTransaction) return new(source, path, access, null);
+        if (access.Enforced && !string.Equals(path, access.DatabasePath, StringComparison.Ordinal))
             throw new InvalidOperationException("The commercial snapshot belongs to another database.");
         // Microsoft.Data.Sqlite's serializable writer transaction protects count and save across factories/processes.
         // The independent-provider contention test verifies this boundary with the actual SQLite implementation.

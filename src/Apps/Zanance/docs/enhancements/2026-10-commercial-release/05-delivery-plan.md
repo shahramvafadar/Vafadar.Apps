@@ -419,3 +419,8 @@ D-121 continues ENT-02 with current-period budget Save/confirmed Replace, canoni
 complete replacement rollback. 26 added SQLite cases/main 1,721 pass. Current deployment stays inactive; explicit
 active/read-only selection, future-period activation and other ENT-02/03 paths remain unfinished:
 [quality evidence](../../quality/budget-write-policy.md).
+
+D-122 continues ENT-02 with actual-file holding write rights, retained corrections/delete/Undo and atomic
+purchase/payment/fee/derived-price Save. 46 added SQLite cases/main 1,767 pass. Current deployment stays inactive;
+explicit read-only/import selection, other resources/operations/native paths and activation remain unfinished:
+[quality evidence](../../quality/holding-write-policy.md).

@@ -513,7 +513,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         IsBusy = true;
         try
         {
-            var result = await _holdings.SaveEventAsync(assetEvent, entries);
+            // D-122: the marked purchase price belongs to the same atomic Save as quantity/payment/fee.
+            var result = await _holdings.SaveEventAsync(assetEvent, entries, recordPurchasePrice: true);
             if (result.Conflict is { } conflict)
             {
                 var place = Locations.FirstOrDefault(l => l.Id == conflict.LocationId)?.Name ?? "?";
@@ -525,17 +526,6 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             {
                 Error = string.Join(Environment.NewLine, result.Errors.Select(e => _translator[$"LedgerError_{e}"]));
                 return;
-            }
-
-            // The price of a purchase becomes a marked valuation of that day; it never rewrites earlier values.
-            if (Kind == AssetEventKind.Purchase && assetEvent.BasisAmount is { } cost)
-            {
-                var valuations = await _holdings.GetValuationsAsync(type.Id);
-                var valuation = valuations.FirstOrDefault(v => v.Source == ValuationSource.Purchase && v.Date == Date)
-                    ?? new AssetValuation { AssetTypeId = type.Id, CurrencyCode = type.PriceCurrencyCode, Source = ValuationSource.Purchase };
-                valuation.Date = Date;
-                valuation.PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(cost, quantity);
-                await _holdings.SaveValuationAsync(valuation);
             }
 
             await Shell.Current.GoToAsync("..");
