@@ -718,3 +718,13 @@ required-column write failure/rollback followed by a successful final-slot write
 with both contenders captured before either acquires the writer; and unchanged currency locking/ledger data.
 Main suite 1,626 passes. Other ENT-02 creation/import/restore/native paths are not accepted by these account cases.
 Final platform/APK and actual inactive Release form evidence: [quality evidence](quality/account-write-policy.md).
+
+## AT-121 - Template/filter capacity and atomic replacement (D-119)
+
+24 real SQLite cases cover inactive unlimited behavior; Free creation rejection before sort/audit/Changed;
+complete other metadata preserved during over-quota edits; freed slots; Plus/Pro/exact active shared capacity;
+confirmed case-insensitive trimmed-name replacement and same-id/name collision; database-trigger failure with
+full original-row rollback/retry; expired-host corrections and missing-membership rejection; independent-provider
+final-slot contention with correct sort order and one Changed. Main suite 1,650 passes. Final strict platform/APK
+and actual unrestricted Release save paths: [quality evidence](quality/template-filter-write-policy.md).
+Other ENT-02 resources/import/restore/read-only/native routes and release activation are not accepted by these cases.

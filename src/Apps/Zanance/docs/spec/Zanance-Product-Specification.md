@@ -1552,6 +1552,14 @@ failed writes roll back and current deployment remains explicitly inactive witho
 cases pass; main suite 1,626, App.Tests 299 unchanged. No schema, SDK or visible change. Other resource, import/restore,
 read-only/native operation and activation paths remain open: [evidence](../quality/account-write-policy.md).
 
+### 31.32. Template/filter service quota boundaries (D-119 / AT-121 / ENT-02 in progress)
+
+Actual-file writer transactions guard enabled new-template/filter capacity before changes. Existing ids and
+confirmed same-name replacement reuse slots; failed replacement restores complete query data. Two independent
+providers cannot consume the same final slot twice. 24 new real SQLite cases pass; main suite 1,650, App.Tests
+299 unchanged. Current test builds remain unrestricted. No schema, permission, SDK or visible change; remaining
+ENT-02/03 resources/import/restore/native paths and activation stay open: [evidence](../quality/template-filter-write-policy.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

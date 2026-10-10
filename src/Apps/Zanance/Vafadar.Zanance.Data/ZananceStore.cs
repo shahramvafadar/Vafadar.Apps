@@ -643,17 +643,29 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(template);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.Templates.AnyAsync(t => t.Id == template.Id, cancellationToken))
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        var existing = await db.Templates.AnyAsync(t => t.Id == template.Id, cancellationToken);
+        write.DemandFeature(existing ? CommercialFeature.Corrections : CommercialFeature.QuickTemplates);
+        if (existing)
         {
             db.Templates.Update(template);
         }
         else
         {
+            // D-119: every template-producing caller uses this count under the same SQLite writer. Edits reuse a
+            // slot; reject a new template before changing its sort order or any stored/audited fields.
+            if (write.Enforced && write.DemandCapacity(CommercialFeature.QuickTemplates, QuotaKind.QuickTemplates) is { } maximum)
+            {
+                var current = await db.Templates.CountAsync(cancellationToken);
+                write.DemandCount(CommercialFeature.QuickTemplates, QuotaKind.QuickTemplates, maximum, current);
+            }
             template.SortOrder = await db.Templates.Select(t => (int?)t.SortOrder).MaxAsync(cancellationToken) + 1 ?? 0;
             db.Templates.Add(template);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 
@@ -678,12 +690,21 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         ArgumentNullException.ThrowIfNull(filter);
         filter.Name = filter.Name.Trim();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         var all = await db.SavedFilters.ToListAsync(cancellationToken);
         var sameId = all.FirstOrDefault(f => f.Id == filter.Id);
 
         // Another filter with the same name is replaced (the user confirmed it); the filter itself is updated in place.
         // One SaveChanges, so nothing is removed unless the whole change is saved.
         var sameName = all.Where(f => f.Id != filter.Id && string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        var addsSlot = sameId is null && sameName.Count == 0;
+        write.DemandFeature(addsSlot ? CommercialFeature.SavedFilters : CommercialFeature.Corrections);
+        // D-119: an explicitly confirmed same-name replacement consumes the original slot, even with a new row id.
+        // Quota rejection precedes removal/sort assignment so every original query and its metadata remain intact.
+        if (addsSlot && write.Enforced && write.DemandCapacity(CommercialFeature.SavedFilters, QuotaKind.SavedFilters) is { } maximum)
+        {
+            write.DemandCount(CommercialFeature.SavedFilters, QuotaKind.SavedFilters, maximum, all.Count);
+        }
         filter.SortOrder = sameId?.SortOrder ?? sameName.FirstOrDefault()?.SortOrder ?? (all.Count == 0 ? 0 : all.Max(f => f.SortOrder) + 1);
         db.SavedFilters.RemoveRange(sameName);
         if (sameId is not null)
@@ -697,7 +718,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.SavedFilters.Add(filter);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 

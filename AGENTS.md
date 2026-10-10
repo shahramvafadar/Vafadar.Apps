@@ -601,3 +601,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Reject stale/mismatched access, roll back failures and raise Changed only after commit. Test independent providers.
 * Current registration remains inactive without a permanent paid grant or extra quota transaction. ENT-02's other
   resources, import/restore/read-only/native paths remain open; this account boundary is not complete enforcement.
+
+## 51. Template and filter slots under the SQLite writer (D-119)
+
+* Enabled template/filter creation counts actual stored rows inside the same actual-file writer transaction.
+  Existing ids and explicitly confirmed same-name filter replacements reuse slots, even above the Free quota.
+* Check before sort assignment/removal/audit, commit before Changed and roll back failed replacements completely.
+  Test independent providers competing for the last slot; do not substitute a store semaphore or fake counts.
+* Current registration remains inactive. Retain complete template/query metadata and ledger data; no paywall,
+  read-only selection, schema or portable entitlement is introduced. The rest of ENT-02/03 remains open.

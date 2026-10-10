@@ -336,3 +336,8 @@ D-117 / ENT-01 implements the owner-approved final Core commercial model (OD-03)
 D-118 continues ENT-02 with the actual-file account write transaction boundary; test-build limits stay inactive.
 15 added SQLite cases/main 1,626 pass. The rest of ENT-02 and runtime/release acceptance remain open:
 [quality evidence](quality/account-write-policy.md).
+
+D-119 continues ENT-02 with actual-file template/filter write transactions, slot-preserving edits/replacements
+and atomic failure recovery. Current enforcement stays inactive. 24 added SQLite cases/main 1,650 pass; the
+remaining resources/import/restore/read-only/native paths and release gates stay open:
+[quality evidence](quality/template-filter-write-policy.md).

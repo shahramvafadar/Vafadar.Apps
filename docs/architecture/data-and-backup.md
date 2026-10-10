@@ -280,3 +280,8 @@ approval, the owned writer transaction covers existing state, permission/count, 
 or wrong-file snapshots and roll back failures before Changed. Provider capture uses cached state, with no network
 or startup database work. Current registration is inactive; backup content/schema and all stored data are unchanged.
 Read-only selection after imports/restores and the remaining ENT-02/03 boundaries are separate unfinished work.
+
+D-119 extends the same actual-file write boundary to templates and saved filters. Quota/permission reads precede
+new-row sort changes and confirmed duplicate removal; edits/replacements reuse existing slots. Failed replacement
+rolls back the complete original query, and Changed follows commit. No schema, migration, backup content,
+permission or SDK changes. Current test builds remain unrestricted; other ENT-02/03 boundaries are unfinished.

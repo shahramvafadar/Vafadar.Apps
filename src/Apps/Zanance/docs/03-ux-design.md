@@ -647,3 +647,10 @@ The Data store prepares structured permission/quota failures before writes; fina
 belongs to ENT-04. Current test-build enforcement is inactive, so this step adds no visible restriction/message.
 When enabled after approval, account creation and unarchive use the same active quota; correction/archive retain
 existing data above quota. No automatic archive, deletion or active-account selection is introduced.
+
+## Template/filter write policy boundary (D-119 / ENT-02 in progress)
+
+Retain the existing entry-detail Save as template and Transactions saved-filter flows. A confirmed same-name
+filter replacement reuses its existing slot; failed replacement preserves the complete old query. Existing-id
+edits remain possible above quota. Structured rejection is prepared before writes; translated limit UI remains
+ENT-04. Current test builds stay unrestricted without a new visible control or message.

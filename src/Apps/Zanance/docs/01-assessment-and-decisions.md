@@ -1000,3 +1000,17 @@ inactive, grants no paid right and adds no quota transaction; test-build activat
 15 real SQLite cases pass; main suite 1,626. No schema, SDK, portable paid facts or visible UI change. ENT-02 remains
 in progress for other resources, imports/restores/read-only classification and native service entry points.
 Final build/APK/runtime evidence: [account-write-policy.md](quality/account-write-policy.md).
+
+## D-119 - Guard template and filter capacity in the actual-file transaction (2026-10-10)
+
+Continue ENT-02 through SaveTemplateAsync and SaveSavedFilterAsync. Enabled snapshots acquire the actual opened
+SQLite file's writer before reading existing identities/counts. New templates and new uniquely named filters check
+capacity before sort assignment, removals or audit. Existing-id edits and explicitly confirmed same-name filter
+replacement reuse a slot; retained over-quota edits and duplicate-name consolidation remain possible. Membership
+checks still apply. Recheck cached access, commit before Changed and roll back failed replacement atomically.
+
+24 new real SQLite cases pass; full main suite 1,650, App.Tests 299 unchanged. Independent providers compete for
+one final slot; a database trigger proves original filter recovery when replacement INSERT fails. Current
+registration stays inactive with no fabricated paid grant. No UI, schema, SDK, permission or backup format changes.
+ENT-02 remains in progress for other resources/import/restore/native paths; activation and translated limit UX
+remain separate. Final platform/APK/runtime evidence: [template-filter-write-policy.md](quality/template-filter-write-policy.md).

@@ -404,3 +404,8 @@ D-118 continues ENT-02 with reusable actual-file commercial write transactions a
 correction checks. Current enforcement stays inactive. 15 added SQLite cases/main 1,626; independent-provider
 last-slot contention and failed-write rollback pass. Continue directly with the remaining ENT-02 resource/store
 paths; do not mark the section complete or activate test-build limits. [Evidence](../../quality/account-write-policy.md).
+
+D-119 continues ENT-02 with actual-file template/filter write transactions, slot-preserving edits/replacements
+and atomic failure recovery. Current enforcement stays inactive. 24 added SQLite cases/main 1,650 pass; the
+remaining resources/import/restore/read-only/native paths and release gates stay open:
+[quality evidence](../../quality/template-filter-write-policy.md).

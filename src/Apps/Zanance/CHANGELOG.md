@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Internal - Template/filter write policy boundaries (2026-10-10, D-119)
+
+- Prepare final quota checks for quick templates and saved filters. Editing and confirmed name replacement
+  reuse an existing slot; failed filter replacement preserves the previous query.
+- Current test builds stay unrestricted.
+
 ### Internal - Account write policy boundary (2026-10-10, D-118)
 
 - Prepare account quota checks in the write transaction, including unarchive and simultaneous creation.

@@ -199,3 +199,11 @@ unarchive check the same active count; correction/archive do not add capacity bu
 Structured failures carry feature, permission or count details for later translated ENT-04 presentation.
 No app activation, model/schema change or automatic read-only/active selection is introduced. Further resources,
 restored/imported over-quota selection and native operation gates remain ENT-02/03 work, not accepted by this step.
+
+## 9. Template/filter write boundaries implemented (D-119 / ENT-02 in progress)
+
+SaveTemplateAsync and SaveSavedFilterAsync use the same actual-file cached-access writer gate before identity/count
+reads. New rows consume capacity; existing ids and confirmed same-name replacements reuse it. Count before sort
+assignment/removal, preserve full metadata and roll back failures before Changed. Unlimited contexts skip count
+queries. Current registration is inactive. There is no schema, purchase data in backups or visible UI change.
+The rest of ENT-02/03 and deployment activation remain open. [Evidence](../../quality/template-filter-write-policy.md).
