@@ -43,6 +43,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotLoadState.cs" Link="Application/SnapshotLoadState.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotCollection.cs" Link="Application/SnapshotCollection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotProjectionCache.cs" Link="Application/SnapshotProjectionCache.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotGroupIdentity.cs" Link="Application/SnapshotGroupIdentity.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Profiles/ProfilesViewModel.cs" Link="Application/ProfilesViewModel.cs" />
     <EmbeddedResource Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources*.resx" Link="Resources/%(Filename)%(Extension)" />
   </ItemGroup>

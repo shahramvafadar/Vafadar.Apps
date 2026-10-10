@@ -534,3 +534,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   and InTotalsOnly choices. Do not claim unsaved report-only fields are included in the portable saved-filter model.
 * Compare the same native saved-filter action before and after independent report scopes. Fictitious review-state
   preparation belongs only to the explicit Debug snapshot route; the reviewed actions never write ledger entries.
+
+## 43. Complete unchanged native transaction sources (D-110)
+
+* Retain a bound grouped source only after comparing complete group captions/boundaries and every ordered row
+  object. Equal ids or financial values do not authorize reuse across fresh data/display snapshots.
+* Observable selection stays on the same rows. Changed results still publish; never cap or omit rows for timing.
+  Remove temporary probes before final builds; synchronous publication timings exclude later rendering/device/ANR.

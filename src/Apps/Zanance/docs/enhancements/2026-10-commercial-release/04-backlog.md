@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-75 measurements, D-76 loading gate, D-92 Home reload optimization, D-95 hidden native account view removal and D-104 repeated-filter row reuse and D-105 complete bulk-selection reload and D-106 exact Settings suggestion history delivered; cold duration/ANR, native publication and device gates open) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-75 measurements, D-76 loading gate, D-92 Home reload optimization, D-95 hidden native account view removal and D-104 repeated-filter row reuse and D-105 complete bulk-selection reload and D-106 exact Settings suggestion history and D-110 unchanged native-source reuse delivered; cold duration/ANR, native publication and device gates open) | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -530,3 +530,9 @@ D-104 / AT-109: complete transaction row reuse across repeated filters, with fre
 existing bulk selection, is implemented (four cases; main 1,488/App.Tests 252). Actual bound tenfold Windows warm
 refresh median 583.14 -> 358.90 ms; native publication remains open. Final verification and limits:
 [transaction-row-reuse.md](../../quality/transaction-row-reuse.md). QA-06 remains partial; no capped result list.
+
+D-110 advances ready QA-06 native publication: complete unchanged transaction results retain their actual native
+source; changed results and fresh snapshots still publish. Actual tenfold warm publication median 407.51 -> 1.61 ms.
+Nine new behavior cases pass (main 1,521/App.Tests 285); six native Windows contexts/186 renders, strict builds,
+normal Release, exact original-data readbacks and complete signed APK pass:
+[unchanged-transaction-source.md](../../quality/unchanged-transaction-source.md). QA-06 stays partial.

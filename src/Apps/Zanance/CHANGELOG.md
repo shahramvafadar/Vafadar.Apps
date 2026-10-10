@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Unchanged transaction results (2026-10-10, D-110)
+
+- Equivalent searches keep the already displayed complete transaction list, avoiding unnecessary native rebuilds.
+  Different results and freshly loaded or reformatted data still refresh normally.
+
 ### Fixed - Independent saved transaction filters (2026-10-10, D-109)
 
 - Applying a saved filter after opening transactions from a report clears that report's temporary currency,

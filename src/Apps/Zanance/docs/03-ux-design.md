@@ -608,3 +608,8 @@ Keep the existing horizontal filter choices and complete result/order/totals. Cl
 Applying a saved filter replaces the persisted combination independently of the report opened before it. Remove
 the old report's scope caption and transient currency/account-set/confirmed-only restrictions; preserve all named
 filter choices. Never show an old report label over a new filter's result. Applying a view does not save money.
+
+## Complete unchanged transaction sources (D-110)
+
+An equivalent filter retains the complete bound source only when captions, boundaries, order and row objects all
+match. Fresh reads or display contexts publish new sources. Selection remains observable; no result is capped.

@@ -357,3 +357,9 @@ D-109 / AT-114 fixes observed inheritance of unrelated report scope when applyin
 Preserve the saved combination and complete financial data. Final six native contexts/18 independent report
 restrictions, main 1,512 tests, strict builds, normal Release, exact original-data readbacks and signed APK pass:
 [quality/saved-filter-report-scope.md](../../quality/saved-filter-report-scope.md). Provider/device/iOS and owner gates remain open.
+
+D-110 delivers ready QA-06 unchanged native-source reuse under D-69. Preserve every result/group and require fresh
+publication after data/display changes. Six native Windows contexts/186 own renders, main 1,521 tests, strict
+builds, normal Release, exact original-data readbacks and signed APK pass:
+[unchanged-transaction-source.md](../../quality/unchanged-transaction-source.md). Continue approved ready work;
+OD-12 was separately approved by the owner on 2026-10-10 for a prefilled Plan draft without transaction posting.

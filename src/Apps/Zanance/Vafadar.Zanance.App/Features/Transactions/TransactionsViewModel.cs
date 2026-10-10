@@ -352,7 +352,13 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             })));
         }
 
-        Days = days;
+        // D-110: keep the actual native source only when every caption, boundary and ordered row object matches.
+        // Selection remains observable on these same rows; fresh data/display contexts must publish new objects.
+        if (!SnapshotGroupIdentity.Matches<EntryDayGroup, EntryRow>(Days, days,
+            static group => group.Header, static group => group.NetText, static group => group))
+        {
+            Days = days;
+        }
         IsEmpty = days.Count == 0;
     }
 

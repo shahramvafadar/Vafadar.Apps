@@ -356,6 +356,7 @@ internal static partial class DebugSnapshots
         {
             ("home", "//home", null),
             ("transactions", "//transactions", null),
+            ("transactions-source", "//transactions", null),
             ("transactions-filters", "//transactions", null),
             ("transactions-saved-scope", "//transactions", null),
             ("transactions-scope", "//transactions", new()

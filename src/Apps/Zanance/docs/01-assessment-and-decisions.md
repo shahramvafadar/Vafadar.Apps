@@ -904,3 +904,13 @@ fictitious saved-filter record. Original three transaction rows return and all 2
 profiles match the baseline exactly, including saved filters and Settings audit fields. No financial Save.
 Evidence:
 [quality/saved-filter-report-scope.md](quality/saved-filter-report-scope.md).
+
+## D-110 - Retain complete unchanged native transaction sources (2026-10-10)
+
+Equivalent searches republish the same full grouped result to the native control. Compare complete ordered group
+captions/boundaries and row object identity before replacing Days. Fresh data/display snapshots still publish new
+sources; mutable selection and all financial behavior remain. Actual 100,000-entry warm publication median:
+407.51 -> 1.61 ms; no result cap. AT-115 adds nine cases, main 1,521/App.Tests 285. Final native/build/package
+verification passes: six native Windows contexts/186 own renders, strict builds, normal signed Release, exact
+original 24-table readbacks across three fictitious profiles and complete signed APK. Evidence:
+[quality/unchanged-transaction-source.md](quality/unchanged-transaction-source.md).

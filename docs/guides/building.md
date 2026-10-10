@@ -436,3 +436,7 @@ in src/Apps/Zanance/docs/quality/transaction-scope-readable.md.
 The Windows Debug transactions-saved-scope route compares real native named-filter invocation before and after
 independent fictitious report scopes, retaining complete stored data. It prepares only its own missing unreviewed
 fixture before the comparison; reviewed actions do not save money. Normal device acceptance remains separate.
+
+The Windows Debug transactions-source route uses the actual bound transaction source to review equivalent-search
+reuse, changed results and fresh data/display publication (D-110 / AT-115). It never saves money. Temporary timing
+probes remain outside final app builds; preserve and restore the original development files.

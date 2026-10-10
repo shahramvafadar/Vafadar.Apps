@@ -1490,6 +1490,14 @@ portable model change. Final six native contexts/18 independent restrictions, ma
 strict builds, actual Release named-filter/report application, exact original-data readbacks and signed D-109 APK pass:
 [quality/saved-filter-report-scope.md](../quality/saved-filter-report-scope.md). Platform/owner gates remain open.
 
+### 31.26. Complete unchanged transaction source reuse (D-110 / AT-115)
+
+Equivalent searches retain the already bound native source only when all captions, boundaries, order and row
+objects match. Fresh data/display reads still publish; complete results and financial rules remain. Nine new cases:
+main 1,521/App.Tests 285. Six native Windows contexts/186 own renders, strict builds, normal Release,
+exact original-data readbacks and complete signed APK pass:
+[quality/unchanged-transaction-source.md](../quality/unchanged-transaction-source.md). No cold/device/ANR acceptance.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

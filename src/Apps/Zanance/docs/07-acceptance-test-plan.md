@@ -660,3 +660,11 @@ The unreviewed fixture belongs only to the explicit Debug route, prepared before
 files are restored with matching hashes. Six native contexts/18 independent report restrictions, main 1,512
 tests (App.Tests 276), strict builds, actual Release named-filter/report application, exact original-data readbacks
 and signed APK pass: [saved-filter-report-scope.md](quality/saved-filter-report-scope.md).
+
+## AT-115 - Complete unchanged native transaction sources (D-110)
+
+Compare all group captions/boundaries and ordered row identities, including 100,000 rows and mutable selection.
+Reject changed captions, ordering, counts and fresh equal-id rows. On the actual bound page, equivalent searches
+retain MAUI/native sources; changed results and data/display snapshots publish fresh sources. Compare complete
+result ids/order and stored rows; restore original developer files. Nine new cases pass (main 1,521/App.Tests 285).
+Final runtime/platform/package checks: [quality/unchanged-transaction-source.md](quality/unchanged-transaction-source.md).
