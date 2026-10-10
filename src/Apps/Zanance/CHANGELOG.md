@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Internal - Confirmed plan policy (2026-10-10, D-117)
+
+- Define the approved Free/Plus/Pro capabilities and quota rules for later integration. Pausing a goal or plan
+  keeps its slot; budget copies across months share one definition. Plus Lifetime remains after Pro ends.
+- Current test builds keep their existing unrestricted behavior.
+
 ### Fixed - Repeated savings-goal warnings (2026-10-10, D-116)
 
 - A goal card shows its complete warning once. Funding shortfalls and overdue amounts remain visible together,

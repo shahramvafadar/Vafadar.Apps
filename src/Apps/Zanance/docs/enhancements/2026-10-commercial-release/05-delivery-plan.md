@@ -394,3 +394,8 @@ presentation and unchanged card action. AT-118 checks both native templates with
 [goal-warning-packets.md](../../quality/goal-warning-packets.md). The owner approved OD-03 on 2026-10-10;
 after completing this verified step, ENT-01 is the next ready permanent section. Test-build enforcement remains
 separately gated, with no limits activated by the Core policy section.
+
+D-117 completes the approved ENT-01 model with 76 policy cases and 1,611 passing main tests (App.Tests 299
+unchanged). No visible or enforced commercial restriction is introduced. The next ready section is ENT-02:
+service-side checks for all creation paths with atomic quota decisions, disabled pending activation. Do not replace
+permanent delivery with interim product policies. Scope, validation and APK: [evidence](../../quality/entitlement-policy.md).

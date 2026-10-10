@@ -633,3 +633,10 @@ icons/semantic colors, real selection commands and full spoken names. Selection 
 Display the complete existing warning packet once per goal card, after progress and contribution suggestions.
 Keep every distinct funding/date/account warning, scalable 13 pt text, semantic amber and the existing full-card
 button/name. Never repeat the same packet above and below progress or discard a warning to shorten a card.
+
+## Commercial policy remains independent of presentation (D-117)
+
+The owner-approved final Core policy never reads Simple/Advanced. Free retains history, corrections, essential
+warnings, protection, backup/restore, own basic export and regional/accessibility choices. Financial month start
+and the basic forecast through month end are Free. Guest Plus belongs only to the exact authorized shared space,
+not personal profiles. Core policy delivery adds no paywall or quota message; test builds remain unrestricted.

@@ -970,3 +970,17 @@ original typography/color/visibility and unchanged full-card command/name. No fi
 AT-118 checks both actual native templates with fictitious combined warnings, complete glyphs/viewport, native digit
 shaping and original presentation/stored-row restoration. Windows 27 contexts/54 packets pass; full delivery
 verification is recorded in [quality evidence](quality/goal-warning-packets.md). Broader platform gates remain open.
+
+## D-117 - Approve final commercial policy and implement ENT-01 (owner, 2026-10-10)
+
+The owner approves OD-03 and the Section 2 plan/tool matrix: paused goals/plans count, Free has one monthly limits
+budget definition, three quick templates and one saved filter; financial month start and basic forecast to the
+financial month end are Free. Other tools follow the confirmed matrix. This approves final Core types/policy/tests
+only; test-build limit activation remains a separate decision. No temporary entitlement or production backdoor.
+
+Implement immutable verified-input grants with explicit validity, Plus Lifetime fallback, exact personal/shared
+contexts, exhaustive capability decisions and scoped quotas/counts. Membership/roles/payment verification/readiness
+stay separate; an expired host's Pro cannot commercially hide retained data. Counting uses actual entity states,
+canonical budget definitions and explicit pending-seat expiry without financial writes or guessed data selection.
+76 new policy cases pass; full suite 1,611, App.Tests 299 unchanged. Strict platform builds and signed APK are
+recorded in [quality evidence](quality/entitlement-policy.md). No app behavior, schema, permission or SDK change.

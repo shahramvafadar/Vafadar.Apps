@@ -699,3 +699,12 @@ Scroll through the actual viewport and check realized glyph/slot bounds, includi
 Restore original presentation collections/flags and compare complete financial/settings/goal/plan rows without Save.
 Windows 27 contexts/54 packets pass; full delivery and separate platform boundaries:
 [quality/goal-warning-packets.md](quality/goal-warning-packets.md).
+
+## AT-119 - Final commercial model without enforcement (D-117 / approved OD-03)
+
+76 Core cases cover the full valid product/duration x Simple/Advanced x personal/shared matrix and every feature;
+unknown/impossible products, inclusive start/exclusive expiry/revocation and enduring Lifetime fallback; guest grants
+limited to the exact accepted space; existing-data rights after host expiry; Free and paid quota boundaries/batch
+overflow; actual paused/archived/completed/ended states; stable budget definitions across months/account ordering;
+separate profile/device/identity/space counts; six owner/member/pending seats and expiry/withdrawal. Main suite 1,611
+passes. No UI/store/enforcement claim; no purchase data enters backups. [Evidence](quality/entitlement-policy.md).

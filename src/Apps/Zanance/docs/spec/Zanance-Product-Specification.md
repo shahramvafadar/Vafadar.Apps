@@ -1535,6 +1535,15 @@ semantic color, visibility, raw row/command and full spoken name. Both actual na
 Windows review with 54 packets and original presentation/store/developer-byte restoration. Full delivery evidence:
 [quality/goal-warning-packets.md](../quality/goal-warning-packets.md). A11Y-03 and broader platform gates stay open.
 
+### 31.30. Final Core commercial policy (D-117 / AT-119 / ENT-01)
+
+OD-03 and the Section 2 tool/capability matrix are owner-approved. Pure Core policy models tiers and purchases
+separately, exact scopes and membership, permissions, quotas and counting; Simple/Advanced does not change a right.
+Plus Lifetime survives Pro expiry. Free history/corrections/security/backup/restore/basic export remain available;
+paused plans/goals count and budget history does not consume another definition. All 76 new policy cases pass:
+main suite 1,611, App.Tests 299 unchanged. Platform builds/APK: [evidence](../quality/entitlement-policy.md).
+No app enforcement, UI, store, schema or SDK change. Test-build activation and billing/server/owner gates stay open.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

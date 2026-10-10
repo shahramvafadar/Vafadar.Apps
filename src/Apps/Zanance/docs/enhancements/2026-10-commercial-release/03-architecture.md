@@ -1,6 +1,6 @@
 # 03 – Architecture for entitlements, billing, local security, sync and sharing
 
-Status: **design, not implemented.** It builds on the existing layers (`docs/architecture/overview.md`): Core without
+Status: **ENT-01 Core policy implemented (D-117); remaining integrations are design, not implemented.** It builds on the existing layers (`docs/architecture/overview.md`): Core without
 infrastructure, Data with EF Core/SQLite, MAUI app and shared `Vafadar.*` libraries. Names below are concepts; the
 concrete types are chosen when a section is built, inside the existing projects, without parallel copies.
 
@@ -166,3 +166,22 @@ are set only after their own cost review and owner approval.
 * **Online rates and prices:** source and redistribution rights, timestamp, caching, offline fallback to manual rates;
   a fetched rate never rewrites history without consent; markets with several rates (Iran) keep manual choice. Paid
   live data is never part of Lifetime.
+
+## 7. Implemented Core policy boundary (D-117 / ENT-01)
+
+Core/Commerce contains ProductPlan, purchase/cadence/source/validity facts, exact personal/shared capability contexts,
+commercial operations/permission reasons, scoped quotas and immutable counting projections. The policy is pure and
+receives an explicit instant; no clock reads, grace extension, payment verification, purchase cache or backup-derived
+right exists. Plus Lifetime survives an overlapping Pro expiry. Active accepted membership in the exact space and
+an active Pro host supply guest Plus only there; personal purchases cannot authorize another space. Host expiry
+preserves existing-data commercial rights independently of server roles/retention (OD-05 is still open).
+
+Quota scope is profile, device, online identity or space. Paused goals/plans count; archive/completion/ended revisions
+and explicitly selected read-only items do not consume new-work slots. A budget definition uses canonical account
+scope, currency and period kind; copied dates/row ids never create extra definitions. The future service supplies
+active-definition/read-only selection; this model never invents a database migration or chooses/deletes data.
+Shared seats include the owner and pending invitations until explicit expiry, never devices or declined invitations.
+
+The application does not reference or enforce this policy. FeaturePolicy remains the independent Simple/Advanced
+presentation policy. No new network SDK, permission, schema, financial write or portable purchase data is introduced.
+See [policy evidence](../../quality/entitlement-policy.md).

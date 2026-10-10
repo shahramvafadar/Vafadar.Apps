@@ -281,3 +281,7 @@ D-113 / AT-117 delivers complete growing transaction category choices, retaining
 without Save. Main 1,535/App.Tests 299, Windows 33-context/99-selection review, strict builds, normal signed
 Release selection/discard and exact 24-table original-sample readbacks pass. Complete signed D-113 APK is ready:
 [quality evidence](quality/entry-category-captions.md). Other A11Y-03/device/iOS/OS-reader/provider/owner gates stay open.
+
+D-117 / ENT-01 implements the owner-approved final Core commercial model (OD-03), with no app enforcement.
+76 new policy cases; main suite 1,611, App.Tests 299 unchanged. Phase/runtime/release acceptance stays separate:
+[quality evidence](quality/entitlement-policy.md). ENT-02 service checks follow with activation still gated.

@@ -7,7 +7,6 @@ as design values, languages last) are not asked again.
 |---|---|---|---|
 | OD-01 | Tax: first country, tax year, user type, scope level | Germany, the current tax year, employees and freelancers (income-surplus calculation); level 1 (accountant export) in Plus first, level 2 after review by a German tax expert; no filing (level 3) in the first scope | ZCR-TAX-01 |
 | OD-02 | Hosting and backend for identity/sync/sharing; monthly budget | One modular ASP.NET Core service in an EU region with managed PostgreSQL and object storage; cost estimate for low/typical/high use before choosing a provider | ZCR-ID-01 |
-| OD-03 | Quota details: pause counts as active; Free budget = one limits definition; templates 3, saved filters 1; financial month start free; basic forecast to month end free | As proposed in [02 §2](02-plans-and-pricing.md#2-capability-matrix) | ZCR-ENT-01 |
 | OD-04 | Forgotten app password / lost device | Recovery key shown once at set-up + password-protected backups; never "we recover your password" | ZCR-SEC-04 |
 | OD-05 | After a Pro owner's subscription ends: grace period, read-only, server retention | 30 days read-only for all members with export, then 90 days retention before deletion, announced before sale | ZCR-SHR-03 |
 | OD-06 | Trial flow | Store introductory free trial of 14 days on Pro (auto-renews, store-enforced eligibility) | ZCR-BIL-04 |
@@ -28,3 +27,8 @@ account and selected date, without posting a transaction. This is an in-memory d
 OD-10 interim proposal: explicitly declined. The owner will not use the app before all sections/phases are
 complete and requests permanent planned behavior without temporary product measures (D-114). No interim OS
 backup exclusion is authorized or scheduled. The final encrypted-data/key/recovery policy still needs a decision.
+
+OD-03: approved. Paused goals/plans count; Free has one limits-budget definition, three quick templates and one
+saved filter. Financial month start and basic forecast through the financial month end are Free. The owner also
+confirmed the Section 2 capability/tool matrix. ENT-01 builds the final Core model and tests only (D-117).
+No commercial restriction in test builds is approved, and no billing, server, store or release decision follows.

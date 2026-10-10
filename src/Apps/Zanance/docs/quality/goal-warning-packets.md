@@ -32,5 +32,18 @@ The corrected Windows matrix passes in 27 contexts: English/Persian/German, both
 and 216 own-window/root captures verify the criteria above. Original developer database files are restored
 with matching SHA-256 hashes. Evidence: artifacts/goal-warning-verified-*/ and goal-warning-matrix-proof.json.
 
-Final builds, main tests, signed APK and normal Android Release verification are pending. A11Y-03 and
-physical-device/iOS/OS text-scale/screen-reader acceptance remain independent.
+## Delivery verification
+
+Strict Windows and complete Android Debug/Release builds finish without warnings or errors. All 1,535 main tests
+pass; the 299 established application-flow tests are unchanged. Test output is cleaned afterwards.
+The normal signed Android Release shows one complete combined warning, opens the actual native card and returns.
+All 24 complete stored tables, including the fictitious goal/allocation, remain unchanged without Save. The exact
+original owned database and sidecar bytes are restored, and the full Release is restored on Home and stopped.
+Evidence: artifacts/goal-warning-release-native-verified/proof.json. Earlier native helpers failed on the Goals
+caption and an incorrectly assumed scrollable flag; retain those captures as negative review evidence. The body
+fits its viewport and need not report scrollable=true. No production workaround was added for either helper.
+
+Phone-test artifact: artifacts/android/zanance-d116-release.apk (81,397,845 bytes), SHA-256
+`dc49c754655ec20f972f1c824d01feeeb1978afd81cb6af0680174e30616d8bf`. ZIP, complete assemblies, non-debuggable
+package pro.vafadar.zanance and v2/v3 signature are checked. This uses the existing local test certificate, not a
+production signing claim. A11Y-03 and physical-device/iOS/OS text-scale/screen-reader acceptance remain independent.

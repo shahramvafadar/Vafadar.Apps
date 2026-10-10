@@ -580,3 +580,14 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   warnings and the original text scaling, semantic color, visibility, raw command and spoken description.
 * Native review keeps bound packets separate from Persian digit shaping; exercise actual warning glyph/viewport
   geometry and restore exact presentation collections/flags plus complete stored rows without Save.
+
+## 49. Final commercial model without test-build activation (D-117 / approved OD-03)
+
+* The owner confirms Section 2 capabilities/tools: paused goals/plans count; Free has one monthly limits-budget
+  definition, three templates and one saved filter; financial month start and basic forecast to month end are Free.
+* Core commerce policy is independent of Simple/Advanced, purchase verification, membership roles and readiness.
+  Match guest grants to exactly one accepted shared space; never spread Plus or shared sync to private profiles.
+  Keep retained-data rights after host expiry and Plus Lifetime after Pro expiry; do not invent offline grace.
+* Count scope-bound resources, canonical budget definitions and identity seats; never delete/select/modify financial
+  data in the pure model. Service enforcement and test-build/release activation remain separate; no limits are
+  activated by ENT-01. Paid facts never come from portable financial preferences or backups.

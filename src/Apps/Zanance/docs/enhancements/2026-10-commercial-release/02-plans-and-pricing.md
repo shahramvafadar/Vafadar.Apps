@@ -1,7 +1,9 @@
 # 02 – Plans, pricing and the rules around them
 
 Status: **owner decision (D-61, 2026-10-07) for the plan model; prices and offers are design and sandbox values, not
-yet store prices.** Nothing here is implemented; work items are in [04-backlog.md](04-backlog.md).
+yet store prices.** The owner approved OD-03 and Section 2 on 2026-10-10 (D-117). ENT-01 implements only the
+pure Core policy and counts; store integration, enforcement and release activation remain separate work in
+[04-backlog.md](04-backlog.md). Test builds remain unrestricted.
 
 ## 1. Plan model
 
@@ -27,8 +29,8 @@ yet store prices.** Nothing here is implemented; work items are in [04-backlog.m
 ## 2. Capability matrix
 
 "Active" means usable for new work (new entries, new automation). Archived, paused-by-limit or read-only items are
-always visible, counted in history and exportable. Proposals that complete the owner's table are marked *(proposal)*
-and listed in [06-open-decisions.md](06-open-decisions.md) until confirmed.
+always visible, counted in history and exportable. The owner confirmed the rules and tool table below on
+2026-10-10 (OD-03 / D-117); this approves the final model, not enforcement in test builds.
 
 | Area | Free | Plus (incl. Lifetime) | Pro |
 |---|---|---|---|
@@ -43,8 +45,8 @@ and listed in [06-open-decisions.md](06-open-decisions.md) until confirmed.
 | Basic report: income, expenses, balance | full | full | full |
 | Explanations of errors/incomplete data, essential financial warnings | full | full | full |
 | Wealth analysis, advanced reports (KPIs, commitments, history), advanced PDF | — | full | full |
-| Detailed forecast, scenarios, saved forecasts and comparison | basic forecast to month end *(proposal)* | full | full |
-| Envelopes, flex, rollover, weekly/two-week budgets, financial month start | — (financial month start: free *(proposal)*) | full | full |
+| Detailed forecast, scenarios, saved forecasts and comparison | basic forecast to month end | full | full |
+| Envelopes, flex, rollover, weekly/two-week budgets, financial month start | — (financial month start: free) | full | full |
 | Holdings (weight/count, purity, prices, purchases/sales) | view existing data | create and manage | as Plus |
 | Loan analysis (rate, schedule), split transactions, rules, receipt reading (on device) | — | full | full |
 | Local profiles | 1 | several | several |
@@ -57,9 +59,9 @@ and listed in [06-open-decisions.md](06-open-decisions.md) until confirmed.
 | Tax | separate add-on per country/year, after launch | add-on; basic export for an accountant included | as Plus |
 | Bank connection | add-on decision after cost/market review | same | not assumed in Pro |
 
-### Proposals for tools without an earlier decision *(proposal, to confirm)*
+### Confirmed tool allocation (OD-03)
 
-| Tool | Proposal | Reason |
+| Tool | Approved allocation | Reason |
 |---|---|---|
 | Quick templates | Free: up to 3; Plus: unlimited | Everyday speed is Free; many templates are power use. |
 | Tags, manual attachments, notes, search | Free | Recording and documenting is core. |
@@ -84,13 +86,12 @@ and listed in [06-open-decisions.md](06-open-decisions.md) until confirmed.
 * **Budget:** one budget = one budget definition (scope, currency, period kind) that is used for the current period.
   Past periods and copied months of the same definition are history, not extra budgets. Free = one definition with
   the limits method.
-* **Pause** is not a way around a quota: a paused goal or plan still counts as active *(proposal; avoids pausing
-  everything and creating new ones)*.
+* **Pause** is not a way around a quota: a paused goal or plan still counts as active; pausing cannot bypass the quota.
 * **Created from template, import, restore, duplicate:** every creation path checks the same quota in the service
   layer, not in the button. Restore and import are never refused: data above the quota arrives read-only for new
   work (see §5).
 * **Shared space members:** six identities including the owner. A pending invitation holds a seat until it expires
-  (7 days, *proposal*) or is withdrawn; a member who leaves frees the seat at once. Devices per identity and server
+  (7 days) or is withdrawn; a member who leaves frees the seat at once. Devices per identity and server
   storage are separate, cost-based decisions; no new limits are announced without one.
 
 ## 3. Prices (design and sandbox; euro market, consumer prices incl. VAT)
@@ -172,5 +173,5 @@ running advanced automation follow the plan.
 | Restore or import above the quota | Always succeeds; data above the quota is read-only for new work. A backup never revives a paid entitlement or a revoked membership. |
 | Pro owner's subscription ends | The shared space is not deleted at once: read-only grace period, export for members, then a retention rule announced before sale (OD-05). Local history on each device stays. |
 
-The exact rules are confirmed before any quota is enforced (OD-03); **no commercial limit is applied to test builds
+The final counting rules are confirmed (OD-03 / D-117), but activation remains separate; **no commercial limit is applied to test builds
 before the owner's approval**, and test access is never a permanent customer entitlement.
