@@ -549,3 +549,19 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Preserve the complete original entry draft on return, disclose unsupported plan fields and share the receipt-unit
   guard. Recheck accounts/original currencies before prefilling; never guess a conversion or move an unpaid draft
   one month forward. The existing recorded-entry Make recurring path remains separate.
+
+## 45. Complete growing transaction category choices (D-113)
+
+* Bound the whole chip before measuring text; reserve spacing inside it and retain native text scaling.
+  Each row keeps its own height so short choices remain compact beside wrapped names.
+* Preserve original category objects/ids/icons/colors and the real last-child selection button. Check actual
+  native glyph/slot/group/viewport bounds, complete names and NoSave; restore complete drafts including rule
+  hints and explicit-selection state, and compare complete stored rows. Fixture preparation/restoration may
+  touch only its exact independently owned fictitious sample database, never profile/security storage.
+
+## 46. Permanent delivery without interim product policies (D-114)
+
+* The owner will not use the app until the planned sections and phases are complete. Do not implement temporary
+  product workarounds in place of the planned final behavior. The interim OD-10 exclusion of financial databases,
+  safety copies and caches from OS backups was explicitly declined; determine final backup/key handling with
+  completed encryption and recovery. Existing runtime policy stays in place until that permanent decision.

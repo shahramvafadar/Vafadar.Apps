@@ -1514,6 +1514,14 @@ does not reduce allocation. No production change is adopted. D-111's 1,535-test/
 and signed APK evidence remains the app baseline. See
 [quality/entry-read-enumeration-comparison.md](../quality/entry-read-enumeration-comparison.md); QA-06 remains partial.
 
+### 31.28. Complete transaction category choices (D-113 / AT-117)
+
+Actual clipped category captions now wrap inside finite independently growing rows, preserving native scaling,
+raw choice identity, colors/icons, names and real selection buttons without Save. Windows 33 contexts/99 native
+selections pass with full private draft/stored-row/developer-byte restoration. Main 1,535/App.Tests 299 and strict
+Windows/complete Android builds, normal Release selection/discard, exact original-data readbacks and signed APK pass. A11Y-03 and physical/iOS/OS-reader/owner/release
+gates remain open: [quality evidence](../quality/entry-category-captions.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.
@@ -1678,3 +1686,7 @@ Main suite remains 1,369 (App.Tests 140); strict Windows and equivalent-command 
 PowerShell startup blocks the canonical APK/privacy scripts locally; the complete signed package and matching binary
 policy are independently verified. Evidence and remaining tooling/OS/screen-reader/phone/iOS/owner gates:
 [quality/tag-suggestions.md](../quality/tag-suggestions.md).
+
+D-114 owner delivery decision (2026-10-10): no interim OS-backup exclusions or temporary product substitutes.
+The app will not be used before all planned sections/phases are complete. Keep existing runtime policy until
+permanent encrypted-data/key/recovery handling is decided; SEC-02..08 and release acceptance remain open.

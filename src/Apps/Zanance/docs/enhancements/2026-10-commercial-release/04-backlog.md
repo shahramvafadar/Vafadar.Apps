@@ -21,7 +21,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | Proposed | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
-| ZCR-SEC-07 | OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Proposed | OD-10 |
+| ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Final policy open; interim exclusion declined (D-114) | OD-10 |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
@@ -544,3 +544,15 @@ enumeration inside the existing worker retains complete ordered packets/date bou
 seven tenfold pairs and does not reduce allocation. The candidate is not adopted and is not repeated without a
 new measured cause. D-111 remains the app/test/native/APK baseline; QA-06 stays partial:
 [entry-read-enumeration-comparison.md](../../quality/entry-read-enumeration-comparison.md).
+
+D-113 / AT-117 continues ready A11Y-03 work with complete growing transaction category choices. Actual native
+glyph/viewport/command checks pass in 33 contexts/99 selections, with full draft/store/developer-byte restoration.
+Main 1,535/App.Tests 299, strict Windows/complete Android builds, normal Release selection/discard, exact original
+data readbacks and complete signed APK pass.
+See [entry-category-captions.md](../../quality/entry-category-captions.md). Other A11Y-03 and owner/external gates stay open.
+
+Next concrete native finding: bounded empty-entry drags leave the Account coordinates unchanged in both D-111
+and D-113. The first-position category check is accepted; last-position scrolling is not. Diagnose the actual
+focused-amount/body path with a fresh native state and no Save; do not repeat the completed category matrix.
+OD-10 interim exclusion was declined by the owner (D-114). Keep current runtime policy and determine final
+encrypted-data/key/recovery handling with completed security; no temporary product measures.

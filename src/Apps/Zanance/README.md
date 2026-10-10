@@ -146,3 +146,5 @@ Actual matrix, choice/draft/data preservation and complete signed APK evidence: 
 Complete report-scope captions, reachable Clear targets and transaction results: [runtime evidence](docs/quality/transaction-scope-readable.md).
 
 Independent saved-filter results after report navigation: [runtime evidence](docs/quality/saved-filter-report-scope.md).
+
+Complete growing transaction category choices: [runtime evidence](docs/quality/entry-category-captions.md).

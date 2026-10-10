@@ -446,3 +446,9 @@ rejects invalid base input and compares complete original drafts/stored rows wit
 The separate entry-repeat-presentation route checks the actual target inside its native Scroll viewport without
 repeating financial handoffs. It uses bounded real fictitious onboarding; neither route saves its entry or plan.
 Capture all translations/help, modes and layout contexts; preserve/restore original developer files on failure too.
+
+The Windows Debug entry-categories route (D-113 / AT-117) substitutes only fictitious presentation choices,
+checks actual native wrapping/glyph/viewport geometry and invokes original selection commands without Save.
+It restores full drafts/choice state/rule hints and compares complete stored rows; snapshots never activate the
+own native AppWindow. Native stored-name fixture review may prepare/restore only its exact independently owned
+sample database, never profile or security storage. See [evidence](../../src/Apps/Zanance/docs/quality/entry-category-captions.md).

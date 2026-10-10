@@ -621,3 +621,9 @@ translated help. Validate applicable base amounts/accounts beside their fields; 
 Prefill Monthly anchored to the selected first date/calendar, keep posting/reminders off and show actual dates.
 Returning preserves the original unsaved transaction, including details not supported by a recurring plan.
 Do not reinterpret parsed minor units if an account/currency has changed. Existing-entry recurrence stays separate.
+
+## Complete transaction category choices (D-113)
+
+Category chips wrap complete scalable names within their current group. Reserve outer spacing inside the finite
+row and use independent heights: a long neighbor must not inflate short choices. Retain original choice identity,
+icons/semantic colors, real selection commands and full spoken names. Selection does not save the transaction.

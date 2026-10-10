@@ -679,3 +679,10 @@ spoken name/44-unit target, all six translations/help and both modes; restore de
 Main 1,535/App.Tests 299; 33 financial contexts/99 handoffs, separate 33 focused presentation contexts/99 targets,
 strict builds, normal signed Release explicit Plan Save/cleanup and exact original 24-table readbacks pass:
 [quality/entry-repeat-draft.md](quality/entry-repeat-draft.md). Phone/iOS/OS-reader acceptance remains open.
+
+## AT-117 - Complete native transaction category choices (D-113)
+
+Review short, long translated and 98-character single-word fictitious choices in the actual entry form.
+Check complete native glyph/slot/group/viewport geometry, 44 px targets, scalable text, full names and unchanged
+raw-object command. Invoke real native buttons, retain only draft selection, restore complete private state and
+compare complete stored rows without Save. Windows 33 contexts/99 selections pass. Normal signed Android Release selection/discard and exact 24-table original-data readbacks pass; physical-device/iOS/OS-reader acceptance remains open: [evidence](quality/entry-category-captions.md).

@@ -934,3 +934,20 @@ four of seven pairs, with effectively unchanged allocation despite a lower media
 do not infer Android or cold-start improvement or repeat without a new measured cause. Documentation only;
 D-111 tests/build/native/APK evidence remains the app baseline. See
 [quality/entry-read-enumeration-comparison.md](quality/entry-read-enumeration-comparison.md).
+
+## D-113 - Complete growing transaction category choices (2026-10-10)
+
+An observed native 360 px/200 % entry-form caption defect continues approved A11Y-03 work under D-69.
+Bound each complete chip, wrap its scalable text column and let rows retain independent heights. Keep original
+raw choice objects, semantic colors/icons, command and real last-child button; selection stays an unsaved draft.
+33 contexts/99 native selections, full glyph/viewport/name checks and complete draft/store/developer-byte
+restoration pass. Main 1,535/App.Tests 299, strict Windows/complete Android builds, signed APK, normal Release selection/discard
+and exact original-data readbacks pass. Keep negative prototype evidence and broader platform gates: [quality evidence](quality/entry-category-captions.md).
+
+## D-114 - Decline interim OS-backup exclusions (owner, 2026-10-10)
+
+The owner will not use Zanance until all planned sections/phases are complete and explicitly declines the
+temporary OD-10 proposal to exclude plaintext financial files from OS backup/device transfer until encryption.
+Do not implement interim product policies or temporary substitutes for final planned behavior. No runtime
+manifest/resource/iOS/backup change is made. Determine permanent backup/key/recovery handling alongside completed
+SEC-02..08; this does not approve a final policy or mark those sections accepted. Ready permanent delivery continues.

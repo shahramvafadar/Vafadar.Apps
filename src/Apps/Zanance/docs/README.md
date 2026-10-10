@@ -25,3 +25,5 @@ review dates remain historical. Current remaining work lives in the canonical
 
 Status words used everywhere: **Implemented – verified** (behaviour tested), **Implemented – unverified**,
 **Planned**, **Not included**, **Unknown – needs verification**. Nothing is reported as done without evidence.
+
+Complete growing transaction category choices: [runtime evidence](quality/entry-category-captions.md).

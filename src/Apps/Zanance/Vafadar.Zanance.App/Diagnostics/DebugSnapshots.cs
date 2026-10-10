@@ -251,9 +251,9 @@ internal static partial class DebugSnapshots
         {
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
-            // D-111: focused presentation uses the real fictitious setup but does not repeat unrelated restore reviews.
-            var repeatPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "entry-repeat-presentation";
-            if (repeatPresentation)
+            // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories";
+            if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
                 {
@@ -261,7 +261,7 @@ internal static partial class DebugSnapshots
                     if (vm.Step != step + 1) { throw new InvalidOperationException("Focused fictitious onboarding did not advance."); }
                 }
             }
-            foreach (var language in repeatPresentation ? Array.Empty<string>() : languages)
+            foreach (var language in focusedDraftPresentation ? Array.Empty<string>() : languages)
             {
                 vm.Step = 1;
                 vm.SelectedLanguage = localization.SupportedLanguages.First(l => l.CultureName == language);
@@ -378,6 +378,7 @@ internal static partial class DebugSnapshots
             ("entry-new", AppShell.EntryEditorRoute, null),
             ("entry-repeat", AppShell.EntryEditorRoute, null),
             ("entry-repeat-presentation", AppShell.EntryEditorRoute, null),
+            ("entry-categories", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
             ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
@@ -611,6 +612,9 @@ internal static partial class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-categories" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage categoryPage)
+                { await ReviewEntryCategoriesAsync(app, services, categoryPage, folder, language); }
                 if (name == "entry-repeat" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
                     is Features.Entries.EntryEditorPage repeatPage)
                 { await ReviewEntryRepeatAsync(app, services, repeatPage, folder, language); }

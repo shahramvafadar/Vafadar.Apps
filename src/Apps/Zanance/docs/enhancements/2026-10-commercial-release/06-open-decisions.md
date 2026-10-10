@@ -14,7 +14,7 @@ as design values, languages last) are not asked again.
 | OD-07 | Lifetime owners' 25 % on Pro: duration and stores | First year of Pro yearly at 25 % off via a store offer for verified Lifetime owners; renewal at the standard price; not combinable | ZCR-BIL-04 |
 | OD-08 | Purchases across devices and stores | A subscription belongs to its store account; Pro services are linked to the Zanance identity, so Pro bought on Android works on iOS through sign-in; Plus/Lifetime stay per store | ZCR-BIL-01 |
 | OD-09 | End-to-end encryption for shared spaces | Transport + storage encryption in the first Pro release; E2EE as a separate decision after the first release, with no E2EE claims before | ZCR-SHR-04 |
-| OD-10 | Android/iOS OS backup of app data | Exclude the database, safety copies and caches from OS backups until the database is encrypted (users rely on Zanance backups); revisit after SEC-02 | ZCR-SEC-07 |
+| OD-10 | Final Android/iOS OS backup of app data | Interim exclusion explicitly declined (D-114); determine permanent backup/key/recovery behavior with completed encryption | ZCR-SEC-07 |
 | OD-11 | Current status of Mac/Xcode, Apple account and OAuth client ids | Owner confirms; documents updated accordingly | ZCR-GOV-02 |
 | OD-13 | AI: credit packages, unit, minimum top-up, failed-request policy | Decide after a provider cost review; refund reserved credit on provider failure | ZCR-AI-01 |
 | OD-14 | Bank connection and online rates: markets and providers | Evaluate after the first release; never part of Lifetime | ZCR-BANK-01, ZCR-FX-01 |
@@ -24,3 +24,7 @@ as design values, languages last) are not asked again.
 
 OD-12: the owner approved Repeat in the new transaction form, opening a prefilled Plan with the entered amount,
 account and selected date, without posting a transaction. This is an in-memory draft until explicit Save.
+
+OD-10 interim proposal: explicitly declined. The owner will not use the app before all sections/phases are
+complete and requests permanent planned behavior without temporary product measures (D-114). No interim OS
+backup exclusion is authorized or scheduled. The final encrypted-data/key/recovery policy still needs a decision.

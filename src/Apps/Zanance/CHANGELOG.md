@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete transaction category names (2026-10-10, D-113)
+
+- Long category names wrap within the transaction form instead of being cut off. Short choices stay compact;
+  selecting a category keeps the transaction as a draft until you save.
+
 ### Added - Repeat from a new transaction (2026-10-10, D-111)
 
 - Repeat opens an editable monthly plan with your entered amount, accounts and first date without saving a

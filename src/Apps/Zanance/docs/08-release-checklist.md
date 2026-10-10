@@ -315,3 +315,8 @@ money. Preserve original complete drafts, named calendar dates, currency identit
 App.Tests 299, final financial/presentation matrices, strict builds, normal signed Release Plan Save/cleanup,
 exact original-data readbacks and complete signed APK pass:
 [quality/entry-repeat-draft.md](quality/entry-repeat-draft.md). Provider/physical/iOS/owner/release gates remain open.
+
+D-113 / AT-117 delivers complete growing transaction category choices, retaining original raw selection identity
+without Save. Main 1,535/App.Tests 299, Windows 33-context/99-selection review, strict builds, normal signed
+Release selection/discard and exact 24-table original-sample readbacks pass. Complete signed D-113 APK is ready:
+[quality evidence](quality/entry-category-captions.md). Other A11Y-03/device/iOS/OS-reader/provider/owner gates stay open.

@@ -375,3 +375,14 @@ and stored rows match; paired timing/allocation do not establish a dependable ga
 baseline and avoid repeated optimization trials without a new cause. SEC-07 still requires the explicit OD-10
 OS-backup policy decision; the remaining library/recovery/provider/market/commercial/platform gates remain open.
 Evidence: [entry-read-enumeration-comparison.md](../../quality/entry-read-enumeration-comparison.md).
+
+D-113 / AT-117 continues ready A11Y-03 work with complete growing transaction category choices. Actual native
+glyph/viewport/command checks pass in 33 contexts/99 selections, with full draft/store/developer-byte restoration.
+Main 1,535/App.Tests 299, strict Windows/complete Android builds, normal Release selection/discard, exact original
+data readbacks and complete signed APK pass.
+See [entry-category-captions.md](../../quality/entry-category-captions.md). Other A11Y-03 and owner/external gates stay open.
+
+Continue with the concrete empty-entry native scroll observation shared by D-111/D-113; isolate focused amount,
+gesture/native state and body geometry before changing production code. Keep completed category/financial
+checks retained. The owner declined interim OD-10 exclusions (D-114): deliver permanent planned behavior,
+keep existing runtime policy and determine final backup/key/recovery handling with completed encryption.
