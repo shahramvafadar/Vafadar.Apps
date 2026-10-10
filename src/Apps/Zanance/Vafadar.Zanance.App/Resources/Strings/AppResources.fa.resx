@@ -5730,4 +5730,7 @@
   <data name="Entry_HideDetails" xml:space="preserve">
     <value>پنهان کردن جزئیات</value>
   </data>
+  <data name="Plan_AmountMustBePositive" xml:space="preserve">
+    <value>مبلغی بزرگ‌تر از صفر وارد کنید.</value>
+  </data>
 </root>

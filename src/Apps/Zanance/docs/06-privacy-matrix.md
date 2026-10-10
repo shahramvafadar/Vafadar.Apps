@@ -242,3 +242,8 @@ data including schedules and never saves or posts principal. Exact 24-table read
 D-98 changes only existing modal header presentation. No new data, permission, SDK, export, security field
 or portable preference. Reviews open and cancel fictitious drafts without Save/posting and compare complete stored
 data; Android app language/theme changes are restored through UI. Original three-profile 24-table readbacks pass.
+
+D-99 changes existing plan validation/display only. No new data, permission, SDK, export, credential,
+security field or portable preference. Review invokes Save only with independently invalid blocking input, never
+posts money and compares complete stored data. Fictitious cross-currency choices are presentation-only and restored.
+Android app language/theme are restored through UI; original three-profile 24-table readbacks pass.

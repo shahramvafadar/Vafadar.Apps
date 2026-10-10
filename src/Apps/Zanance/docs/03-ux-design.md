@@ -530,3 +530,11 @@ PageHeader based on the underlying stack depth. Own title/Cancel groups wrap: th
 shrink, the complete scalable title grows within the available group width and moves below when needed.
 Keep asset-event title/subtitle together and retain existing command/footer behavior. Verify realized glyphs,
 actual native peer name and no title/button overlap; cancellation retains the ordinary parent's single header.
+
+### Complete plan-field feedback (D-99)
+
+Collect independent applicable problems before a write; do not postpone destination feedback behind name/amount
+errors. Place each caption beside its source/destination input and keep transfer-safe wording. After invalid Save,
+reveal the first affected input without keyboard focus or text replacement. Clearing prior captions changes layout;
+use current native positions, scoped latest/visible requests and bounded removed Android layout observers.
+Unknown/hidden amounts and unchanged recurrence/money rules remain. Corrections clear old errors on the next Save.

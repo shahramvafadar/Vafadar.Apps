@@ -215,6 +215,21 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     [ObservableProperty]
     public partial string? AmountError { get; set; }
 
+    /// <summary>Gets or sets the source account problem beside its picker.</summary>
+    [ObservableProperty]
+    public partial string? AccountError { get; set; }
+
+    /// <summary>Gets or sets the destination account problem beside its picker.</summary>
+    [ObservableProperty]
+    public partial string? ToAccountError { get; set; }
+
+    /// <summary>Gets or sets the cross-currency destination amount problem beside its input.</summary>
+    [ObservableProperty]
+    public partial string? ToAmountError { get; set; }
+
+    /// <summary>Requests that the visible form reveal its first invalid field after publishing all problems.</summary>
+    public event EventHandler? ValidationFailed;
+
     [ObservableProperty]
     public partial int AmountModeIndex { get; set; }
 
@@ -792,55 +807,30 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         SaveError = null;
         var culture = _localization.CurrentCulture;
 
-        // Every field problem at once, next to its field, so one pass fixes the form.
-        NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Plan_NameRequired"] : null;
-        AmountError = null;
-        long? amount = null;
-        if (ShowAmount && Account is not null)
-        {
-            if (MoneyText.TryParse(AmountText, Currencies.Get(Account.CurrencyCode), culture, out var parsed) && parsed > 0)
-            {
-                amount = parsed;
-            }
-            else
-            {
-                AmountError = _translator["LedgerError_AmountMustBePositive"];
-            }
-        }
-
-        if (NameError is not null || AmountError is not null || Account is null)
-        {
-            SaveError ??= Account is null ? _translator["Entry_NoAccounts"] : null;
-            return;
-        }
-
-        long? toAmount = null;
-        if (IsTransfer)
-        {
-            if (ToAccount is null || ToAccount.Id == Account.Id)
-            {
-                SaveError = _translator[ToAccount is null ? "LedgerError_DestinationRequired" : "LedgerError_SameAccountTransfer"];
-                return;
-            }
-
-            if (ShowToAmount)
-            {
-                if (!MoneyText.TryParse(ToAmountText, Currencies.Get(ToAccount.CurrencyCode), culture, out var parsedTo) || parsedTo <= 0)
-                {
-                    SaveError = _translator["LedgerError_DestinationAmountRequired"];
-                    return;
-                }
-
-                toAmount = parsedTo;
-            }
-        }
-
+        // D-99: a missing name/amount must not postpone destination feedback until a second Save attempt.
         var rule = BuildRule();
-        if (Recurrence.Validate(rule) is { } problem)
+        var validation = PlanDraftValidation.Validate(new PlanValidationInput
         {
-            SaveError = _translator[$"Plan_{problem}"];
+            Name = Name, AmountText = AmountText, AmountRequired = ShowAmount,
+            AccountId = Account?.Id, CurrencyCode = CurrencyCode,
+            IsTransfer = IsTransfer, DestinationId = ToAccount?.Id,
+            DestinationCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode,
+            DestinationAmountText = ToAmountText, DestinationAmountRequired = ShowToAmount, Rule = rule,
+        }, culture);
+        string? Text(string? key) => key is null ? null : _translator[key];
+        NameError = Text(validation.NameErrorKey);
+        AmountError = Text(validation.AmountErrorKey);
+        AccountError = Text(validation.AccountErrorKey);
+        ToAccountError = Text(validation.DestinationErrorKey);
+        ToAmountError = Text(validation.DestinationAmountErrorKey);
+        RuleError = Text(validation.RuleErrorKey);
+        if (validation.HasErrors || Account is null)
+        {
+            ValidationFailed?.Invoke(this, EventArgs.Empty);
             return;
         }
+        var amount = validation.Amount;
+        var toAmount = validation.DestinationAmount;
 
         var saved = false;
         IsBusy = true;

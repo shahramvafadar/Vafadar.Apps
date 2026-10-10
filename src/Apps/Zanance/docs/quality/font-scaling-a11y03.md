@@ -616,3 +616,8 @@ D-98 / AT-103 completes all eleven modal header groups and excludes generic Wind
 explicit modal presentation. Actual glyph/name/no-overlap, retained body, native Cancel/ordinary parent Back
 and complete stored data checks pass. Evidence: modal-headers-readable.md. Earlier counts remain historical;
 normal Android three-form checks are separate from Windows text stress and real OS/readers/phone acceptance.
+
+D-99 / AT-104 completes plan-field validation feedback and automatic first-input visibility, including native
+retry after clearing earlier errors. Actual initial error glyphs, corrected input positions and complete retained
+draft/stored data pass. Evidence: plan-validation-visible.md. Earlier counts remain historical; Android normal
+native names/bounds are separate from Windows stress and real OS/readers/phone acceptance.

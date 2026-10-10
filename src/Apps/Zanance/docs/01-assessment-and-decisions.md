@@ -759,3 +759,14 @@ retained bodies, native cancellation, same ordinary parent/Back and all nine com
 The full Windows matrix, 1,384 tests, strict builds, normal Android debt/expense/plan language/theme navigation,
 signed APK and exact three-profile 24-table readbacks pass. Remaining A11Y/platform/release gates stay open.
 Evidence: quality/modal-headers-readable.md.
+
+## D-99 - Show all plan-field problems and reveal the first input (2026-10-10)
+
+Actual invalid native transfer Save postpones destination feedback and leaves prior field errors offscreen at the
+footer. Collect all applicable field problems before entity mutation; keep existing money/recurrence rules and
+show each next to its input. Use a transfer-safe positive-amount caption in all six languages. Reveal the first
+problem without focus/typing. A retry exposed stale layout after clearing earlier errors; resolve current native
+layout before scrolling, scope requests to visible/latest validation, remove Android observers and avoid WinUI
+redundant/clamped MAUI scroll awaits. The full language/theme/width matrix, 24 new behaviour cases/1,408 tests,
+strict builds, normal Android invalid Save/cancel and exact original-table readbacks pass. Other platform/control
+and owner/release gates remain. Evidence: quality/plan-validation-visible.md.

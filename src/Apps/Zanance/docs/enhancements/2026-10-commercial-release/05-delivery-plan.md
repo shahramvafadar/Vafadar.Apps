@@ -293,3 +293,11 @@ Normal Android debt/expense/plan forms pass in three languages and both themes; 
 remain identical. All 1,384 tests, strict Windows/Android Debug/Release and complete signed APK checks pass.
 A11Y-03 other controls and actual OS/readers/phone/iOS/release acceptance remain open.
 Evidence: [quality/modal-headers-readable.md](../../quality/modal-headers-readable.md).
+
+D-99 / AT-104 collects all applicable plan-field problems in one invalid Save attempt, displays destination
+feedback beside its input and reveals the first problem using fresh native layout. Drafts and complete stored
+Accounts/Entries/Settings/Schedules remain; existing money/recurrence/unknown-amount rules are unchanged.
+Twenty-four new behaviour cases bring the main suite to 1,408 (App.Tests 172). Full Windows language/theme/width
+review, strict Windows/Android Debug/Release, normal Android invalid Save/cancel, signed APK and original 24-table
+readbacks pass. Other A11Y-03 controls and OS/readers/phone/iOS/owner/release gates remain open.
+Evidence: [quality/plan-validation-visible.md](../../quality/plan-validation-visible.md).

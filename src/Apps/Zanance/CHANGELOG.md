@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear plan validation (2026-10-10, D-99)
+
+- Plans show all applicable field errors after one Save attempt, including transfer account and amount problems. The form brings the first affected input into view and keeps your draft when you correct it.
+- A transfer plan's amount message asks for a positive amount without suggesting a switch to expense or income.
+
 ### Fixed - Readable modal headers (2026-10-10, D-98)
 
 - Forms show one title on Windows. Long titles move below Cancel when needed on narrow screens, keeping both readable at larger text sizes.

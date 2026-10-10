@@ -543,3 +543,15 @@ Final local status: 1293 renders, 21 summaries, 273 native closes/21 parent back
 1,384 tests, strict builds and signed APK pass. Android normal-scale debt/expense/plan has 18 language/theme
 cases; original 24 tables in each of three fictitious profiles remain identical. Negative diagnostics excluded.
 Actual OS scaling/readers/phone/iOS and remaining controls remain open. Evidence: quality/modal-headers-readable.md.
+
+## AT-104 - Complete visible plan-field problems and retained corrections (D-99)
+
+Invoke real native invalid Save from the footer: blank name, zero amount and missing destination must all appear.
+Automatically reveal the first input; measure full scaled name/amount/destination glyphs. Correct earlier values
+then retry with missing destination, same-account destination and zero required cross-currency amount. The next
+input must be in the actual viewport; stale captions clear, typed values/notes/reminder drafts and full stored
+Accounts/Entries/Settings/Schedules remain. No valid Save or financial posting; restore original presentation choices.
+Final local status: 651 renders, 21 proofs/84 invalid-Save invocations, 24 new behaviour cases/1,408 tests,
+strict builds and signed APK pass. Six normal-scale Android language/theme invalid-Save/cancel checks and exact
+three-profile 24-table readbacks pass. Negative cohorts excluded; other OS/readers/phone/iOS acceptance remains.
+Evidence: quality/plan-validation-visible.md.

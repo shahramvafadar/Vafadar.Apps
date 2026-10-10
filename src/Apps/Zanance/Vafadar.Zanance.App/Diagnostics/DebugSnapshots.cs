@@ -391,6 +391,7 @@ internal static class DebugSnapshots
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("modal-headers", AppShell.AccountsRoute, null),
+            ("plan-validation", AppShell.PlanEditorRoute, null),
             ("account-detail", AppShell.AccountDetailRoute, new() { ["id"] = accountId }),
             ("loan-detail", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
             ("loan-actions", AppShell.AccountDetailRoute, new() { ["id"] = loanId }),
@@ -603,6 +604,8 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "plan-validation")
+                { await ReviewPlanValidationAsync(app, services, folder, language); }
                 if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)
                 {
                     await ReviewHomeSnapshotAsync(services, homePage, folder, language);
@@ -1976,6 +1979,128 @@ internal static class DebugSnapshots
             NativeOpenAndCancelInvocations = 2, SameAccountsPage = true, NewUnsavedLoanDraft = true,
             CompleteAccountsEntriesSettingsBudgetsSchedulesUnchanged = true, NoSaveOrPrincipalPosting = true,
         }));
+    }
+
+    // AT-104: invalid unsaved plan input must expose every affected field in one native Save attempt.
+    private static async Task ReviewPlanValidationAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        var page = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Plans.PlanEditorPage
+            ?? Shell.Current.CurrentPage as Features.Plans.PlanEditorPage
+            ?? throw new InvalidOperationException("The real new plan modal is missing.");
+        var vm = (Features.Plans.PlanEditorViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(),
+            Settings = await store.GetSettingsAsync(), Schedules = await plans.GetSchedulesAsync(),
+        });
+        var before = await StoredAsync();
+        var original = (vm.KindIndex, vm.Name, vm.AmountText, vm.ToAccount, vm.ToAmountText, vm.Accounts);
+        vm.KindIndex = 2;
+        vm.Name = string.Empty;
+        vm.AmountText = "0";
+        vm.ToAccount = null;
+        var draft = (vm.KindIndex, vm.Name, vm.AmountText, vm.ToAccount);
+        var root = (Grid)page.Content;
+        var save = root.Children.OfType<Button>().Single(button => Grid.GetRow(button) == 2);
+        if (save.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+            || Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(
+                Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("The plan Save action lacks its actual native Invoke pattern."); }
+        invoke.Invoke();
+        if (vm.SaveCommand.ExecutionTask is { } saving) { await saving; }
+        await Task.Delay(400);
+        var desired = Translator.Instance["LedgerError_DestinationRequired"];
+        var destination = VisualDescendants(page).OfType<Label>().FirstOrDefault(label => label.Text == desired && label.IsVisible);
+        if (string.IsNullOrEmpty(vm.NameError) || string.IsNullOrEmpty(vm.AmountError) || destination is null
+            || draft != (vm.KindIndex, vm.Name, vm.AmountText, vm.ToAccount) || await StoredAsync() != before)
+        {
+            await CaptureAsync(app, folder, language + "-plan-validation-missing-field");
+            File.WriteAllText(Path.Combine(folder, language + "-plan-validation-failure.json"), System.Text.Json.JsonSerializer.Serialize(new
+            {
+                vm.NameError, vm.AmountError, vm.SaveError, DestinationErrorVisible = destination is not null,
+                DraftRetained = draft == (vm.KindIndex, vm.Name, vm.AmountText, vm.ToAccount),
+                CompleteStoredDataUnchanged = await StoredAsync() == before, NoValidSaveInput = true,
+            }));
+            throw new InvalidOperationException("One invalid native plan Save did not expose every affected field.");
+        }
+        var viewport = page.FindByName<ScrollView>("ValidationViewport")
+            ?? throw new InvalidOperationException("Missing plan validation viewport.");
+        var first = page.FindByName<Entry>("NameInput")
+            ?? throw new InvalidOperationException("Missing plan name input.");
+        if (first.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox nativeFirst
+            || viewport.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer nativeViewport)
+        { throw new InvalidOperationException("The invalid plan lacks its actual input/viewport controls."); }
+        var firstPosition = nativeFirst.TransformToVisual(nativeViewport).TransformPoint(new Windows.Foundation.Point());
+        if (firstPosition.Y < -1 || firstPosition.Y + nativeFirst.ActualHeight > nativeViewport.ActualHeight + 1)
+        { throw new InvalidOperationException("Invalid Save left the first affected field outside the actual viewport."); }
+        await CaptureAsync(app, folder, language + "-plan-validation-first-field");
+        var errors = new[] { vm.NameError, vm.AmountError, vm.ToAccountError };
+        foreach (var text in errors)
+        {
+            var label = VisualDescendants(page).OfType<Label>().Single(item => item.Text == text && item.IsVisible);
+            await ScrollToViewIfNeededAsync(viewport, label);
+            await Task.Delay(100);
+            if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock actual || actual.IsTextTrimmed
+                || !actual.IsTextScaleFactorEnabled || actual.ActualWidth < 1 || actual.ActualHeight < 1)
+            { throw new InvalidOperationException("An affected field lacks its complete scaled native error caption."); }
+            var glyphs = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= actual.ContentEnd.Offset - actual.ContentStart.Offset; offset++)
+            {
+                if (actual.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward) is { } pointer)
+                { glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            if (glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1 || glyphs.Max(rect => rect.Right) > label.Width + 1
+                || glyphs.Max(rect => rect.Bottom) > label.Height + 1)
+            { throw new InvalidOperationException("An affected plan field's realized error glyphs exceed the MAUI allocation."); }
+            await CaptureAsync(app, folder, language + "-plan-validation-field-" + Array.IndexOf(errors, text));
+        }
+        async Task RetryAsync(string name, string error, VisualElement target)
+        {
+            await ScrollToEndIfNeededAsync(viewport);
+            var retained = (vm.Name, vm.AmountText, vm.ToAccount, vm.ToAmountText, vm.Note, vm.ReminderDaysText, vm.ReminderTime);
+            invoke.Invoke();
+            if (vm.SaveCommand.ExecutionTask is { } attempt) { await attempt; }
+            await Task.Delay(400);
+            if (vm.NameError is not null || vm.AmountError is not null || vm.SaveError is not null
+                || retained != (vm.Name, vm.AmountText, vm.ToAccount, vm.ToAmountText, vm.Note, vm.ReminderDaysText, vm.ReminderTime)
+                || await StoredAsync() != before || target.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement nativeTarget)
+            { throw new InvalidOperationException("Correcting earlier plan fields reset the draft or retained stale problems."); }
+            var position = nativeTarget.TransformToVisual(nativeViewport).TransformPoint(new Windows.Foundation.Point());
+            if (position.Y < -1 || position.Y + nativeTarget.ActualHeight > nativeViewport.ActualHeight + 1
+                || !VisualDescendants(page).OfType<Label>().Any(label => label.IsVisible && label.Text == error))
+            {
+                await CaptureAsync(app, folder, language + "-plan-validation-" + name + "-failed");
+                File.WriteAllText(Path.Combine(folder, language + "-plan-validation-" + name + "-failed.json"),
+                    System.Text.Json.JsonSerializer.Serialize(new { position, nativeTarget.ActualHeight,
+                        ViewportHeight = nativeViewport.ActualHeight, vm.NameError, vm.AmountError, vm.AccountError,
+                        vm.ToAccountError, vm.ToAmountError, vm.SaveError, ExpectedCaption = error }));
+                throw new InvalidOperationException("The next affected plan input and its own error were not revealed.");
+            }
+            await CaptureAsync(app, folder, language + "-plan-validation-" + name);
+        }
+        vm.Name = "Fictitious validation draft";
+        vm.AmountText = Core.Money.MoneyText.ForInput(1234, vm.CurrencyCode, services.GetRequiredService<ILocalizationService>().CurrentCulture);
+        var toInput = page.FindByName<Picker>("ToAccountInput");
+        await RetryAsync("missing-destination", desired, toInput);
+        if (vm.ToAccountError != desired) { throw new InvalidOperationException("Missing destination lost its field error."); }
+        vm.ToAccount = vm.Account;
+        await RetryAsync("same-account", Translator.Instance["LedgerError_SameAccountTransfer"], toInput);
+        if (vm.ToAccountError != Translator.Instance["LedgerError_SameAccountTransfer"])
+        { throw new InvalidOperationException("A plan transfer to its source lost the existing rejection."); }
+        // Only the presentation choices grow; the missing amount prevents persistence of this fictitious destination ID.
+        var foreign = new Features.Entries.AccountChoice(Guid.NewGuid(), "Fictitious cross-currency destination", "JPY");
+        vm.Accounts = [.. original.Accounts, foreign];
+        vm.ToAccount = foreign; vm.ToAmountText = "0";
+        await RetryAsync("destination-amount", Translator.Instance["LedgerError_DestinationAmountRequired"], page.FindByName<Entry>("ToAmountInput"));
+        if (vm.ToAmountError != Translator.Instance["LedgerError_DestinationAmountRequired"] || vm.ToAccountError is not null)
+        { throw new InvalidOperationException("The cross-currency amount did not replace the corrected destination error."); }
+
+        vm.KindIndex = original.KindIndex; vm.Name = original.Name; vm.AmountText = original.AmountText;
+        vm.Accounts = original.Accounts; vm.ToAccount = original.ToAccount; vm.ToAmountText = original.ToAmountText;
+        if (await StoredAsync() != before) { throw new InvalidOperationException("Invalid plan validation wrote stored data."); }
+        File.WriteAllText(Path.Combine(folder, language + "-plan-validation-proof.json"), "{\"OneNativeSave\":true,\"NativeInvalidSaveInvocations\":4,\"AllAffectedFieldsVisible\":true,\"FirstFieldAutomaticallyRevealed\":true,\"CorrectedFieldsClearTheirErrors\":true,\"MissingSameAccountAndCrossCurrencyDestinationFeedback\":true,\"NativeErrorGlyphsAndScaling\":true,\"DraftAndStoredDataRetained\":true}");
     }
 
     // AT-103: modal forms keep their own title/Cancel row; a generic child header must never wrap their retained body.

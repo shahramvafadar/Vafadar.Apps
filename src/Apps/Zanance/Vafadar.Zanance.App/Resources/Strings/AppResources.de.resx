@@ -5730,4 +5730,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Entry_HideDetails" xml:space="preserve">
     <value>Details ausblenden</value>
   </data>
+  <data name="Plan_AmountMustBePositive" xml:space="preserve">
+    <value>Geben Sie einen Betrag über null ein.</value>
+  </data>
 </root>

@@ -432,3 +432,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Bound the growing title by actual available width; retain subtitles, complete native peer names and commands.
 * Native modal review uses valid route queries, actual glyph/target/no-overlap checks, native cancellation and
   complete nine-source stored-data comparison. Named-route opens are not native button-opening evidence.
+
+## 32. Complete visible plan-field validation (D-99)
+
+* Collect independent applicable field problems before entity mutation/writes. Destination feedback belongs beside
+  its input, not behind name/amount early returns. Preserve money/recurrence rules and hidden unknown amounts.
+* Invalid Save reveals the first affected input without focus or text replacement. Clearing captions changes native
+  layout; resolve fresh geometry, scope requests to visible/latest attempts and remove bounded Android observers.
+* Native reviews use invalid blocking input only, verify corrected errors/positions and retain full drafts/stored
+  rows. Presentation-only foreign-currency choices never reach persistence and are restored before leaving.

@@ -5757,4 +5757,8 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Hide details</value>
     <comment>Action label when the transaction detail fields are already expanded.</comment>
   </data>
+  <data name="Plan_AmountMustBePositive" xml:space="preserve">
+    <value>Enter an amount greater than zero.</value>
+    <comment>Plan validation also applies to transfers; do not direct the user to choose expense or income.</comment>
+  </data>
 </root>

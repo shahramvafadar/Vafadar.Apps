@@ -5719,4 +5719,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Entry_HideDetails" xml:space="preserve">
     <value>Nascondi dettagli</value>
   </data>
+  <data name="Plan_AmountMustBePositive" xml:space="preserve">
+    <value>Inserisci un importo maggiore di zero.</value>
+  </data>
 </root>

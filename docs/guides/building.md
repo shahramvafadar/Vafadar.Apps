@@ -366,3 +366,8 @@ AT-103 opens thirteen actual modal cases with their real query inputs, measures 
 peer name and title/close geometry, invokes native Close and ordinary parent Back, and compares all nine full
 stored data sources. Preserve the original development files; use no input or Save. Named-route openings are
 distinct from AT-102 native debt-button opening. Negative fixtures never count as acceptance.
+
+Plan validation review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only plan-validation -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-104 invokes native Save four times only with invalid blocking input, verifies initial full error glyphs and
+automatic current input visibility after corrections, restores the original unsaved choices, and compares complete
+stored accounts/entries/settings/schedules. Keep negative cohorts distinct and preserve original development files.

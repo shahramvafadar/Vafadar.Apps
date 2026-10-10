@@ -32,3 +32,8 @@ production encryption and physical-device acceptance are outside this project.
 When extending a flow, add its actual source to the explicit compile list and keep native effects behind a documented
 port. Keep resource links and central package versions aligned with the application. Never add a test-only copy of a
 financial or security algorithm, connect to an owner account, or read an existing profile or verifier.
+
+PlanDraftValidationTests compiles the real pre-save plan helper (D-99 / AT-104): 24 behaviour cases for one-pass
+field feedback, existing money parsing/minor digits and recurrence rules, unknown/hidden inputs, missing/same
+accounts, cross-currency amounts, unchanged drafts and corrected results. Main count is 1,408; App.Tests is 172.
+Runtime layout/native validation remains separate in docs/quality/plan-validation-visible.md.
