@@ -399,3 +399,8 @@ D-117 completes the approved ENT-01 model with 76 policy cases and 1,611 passing
 unchanged). No visible or enforced commercial restriction is introduced. The next ready section is ENT-02:
 service-side checks for all creation paths with atomic quota decisions, disabled pending activation. Do not replace
 permanent delivery with interim product policies. Scope, validation and APK: [evidence](../../quality/entitlement-policy.md).
+
+D-118 continues ENT-02 with reusable actual-file commercial write transactions and account create/unarchive/
+correction checks. Current enforcement stays inactive. 15 added SQLite cases/main 1,626; independent-provider
+last-slot contention and failed-write rollback pass. Continue directly with the remaining ENT-02 resource/store
+paths; do not mark the section complete or activate test-build limits. [Evidence](../../quality/account-write-policy.md).

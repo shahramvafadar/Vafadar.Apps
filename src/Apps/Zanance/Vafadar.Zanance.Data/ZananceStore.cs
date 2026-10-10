@@ -2,10 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Rates;
 using Vafadar.Zanance.Core.Settings;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
@@ -37,7 +39,8 @@ public sealed record SaveResult(IReadOnlyList<LedgerError> Errors)
 /// <summary>
 /// Data access for the Zanance app. Every operation uses a short-lived context from the factory.
 /// </summary>
-public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory, TimeProvider time)
+public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> contextFactory, TimeProvider time,
+    ICommercialWriteAccessSource commercialAccess)
 {
     // Refund id → purchase id of refunds unlinked by a purchase deletion, until that deletion is undone (this session).
     private readonly Dictionary<Guid, Guid> _refundLinks = [];
@@ -193,8 +196,20 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(account);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
 
         var existing = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == account.Id, cancellationToken);
+        write.DemandFeature(existing is null ? CommercialFeature.FinancialAccounts : CommercialFeature.Corrections);
+        if (write.Enforced && !account.IsArchived && (existing is null || existing.IsArchived))
+        {
+            // D-118: creation and unarchive consume the same slot. Existing corrections and archival stay possible
+            // above quota; no chosen account, money, visibility or historical status is changed automatically.
+            if (write.DemandCapacity(CommercialFeature.FinancialAccounts, QuotaKind.FinancialAccounts) is { } maximum)
+            {
+                var current = await db.Accounts.CountAsync(a => !a.IsArchived, cancellationToken);
+                write.DemandCount(CommercialFeature.FinancialAccounts, QuotaKind.FinancialAccounts, maximum, current);
+            }
+        }
         if (existing is null)
         {
             db.Accounts.Add(account);
@@ -210,7 +225,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.Accounts.Update(account);
         }
 
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
 
         OnChanged();
         return true;

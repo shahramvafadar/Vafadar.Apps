@@ -274,3 +274,9 @@ Repeat navigation (D-111) uses a detached in-memory EntryPlanDraft containing pa
 currencies. It never writes the ledger or a schedule; current accounts/currencies are rechecked before filling
 Plan. Only explicit Plan Save stores its existing Schedule. The original transaction-only details remain on the
 navigation stack; no new schema, migration or portable draft/backup data is introduced.
+
+D-118 account writes capture commercial facts for the actual opened SQLite connection's file. When enabled after
+approval, the owned writer transaction covers existing state, permission/count, SaveChanges and commit. Reject stale
+or wrong-file snapshots and roll back failures before Changed. Provider capture uses cached state, with no network
+or startup database work. Current registration is inactive; backup content/schema and all stored data are unchanged.
+Read-only selection after imports/restores and the remaining ENT-02/03 boundaries are separate unfinished work.

@@ -708,3 +708,13 @@ limited to the exact accepted space; existing-data rights after host expiry; Fre
 overflow; actual paused/archived/completed/ended states; stable budget definitions across months/account ordering;
 separate profile/device/identity/space counts; six owner/member/pending seats and expiry/withdrawal. Main suite 1,611
 passes. No UI/store/enforcement claim; no purchase data enters backups. [Evidence](quality/entitlement-policy.md).
+
+## AT-120 - Account writes inside the quota transaction (D-118)
+
+15 real SQLite cases verify unrestricted inactive registration; Free's fourth active account rejection with complete
+original metadata/no Changed; retained over-quota corrections/archive; unarchive and freed capacity; unlimited
+Plus/Pro and exact shared access; expired host/missing membership; wrong-file/case-variant and changed snapshots;
+required-column write failure/rollback followed by a successful final-slot write; independent-provider contention
+with both contenders captured before either acquires the writer; and unchanged currency locking/ledger data.
+Main suite 1,626 passes. Other ENT-02 creation/import/restore/native paths are not accepted by these account cases.
+Final platform/APK and actual inactive Release form evidence: [quality evidence](quality/account-write-policy.md).

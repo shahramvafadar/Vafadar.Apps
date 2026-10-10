@@ -1544,6 +1544,14 @@ paused plans/goals count and budget history does not consume another definition.
 main suite 1,611, App.Tests 299 unchanged. Platform builds/APK: [evidence](../quality/entitlement-policy.md).
 No app enforcement, UI, store, schema or SDK change. Test-build activation and billing/server/owner gates stay open.
 
+### 31.31. Account service quota boundary (D-118 / AT-120 / ENT-02 in progress)
+
+The account store checks enabled permission/capacity under the actual opened file's SQLite writer, including
+unarchive; independent providers cannot consume the final slot twice. Corrections/archive preserve over-quota data,
+failed writes roll back and current deployment remains explicitly inactive without a paid grant. 15 new real SQLite
+cases pass; main suite 1,626, App.Tests 299 unchanged. No schema, SDK or visible change. Other resource, import/restore,
+read-only/native operation and activation paths remain open: [evidence](../quality/account-write-policy.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

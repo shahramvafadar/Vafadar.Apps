@@ -332,3 +332,7 @@ Release selection/discard and exact 24-table original-sample readbacks pass. Com
 D-117 / ENT-01 implements the owner-approved final Core commercial model (OD-03), with no app enforcement.
 76 new policy cases; main suite 1,611, App.Tests 299 unchanged. Phase/runtime/release acceptance stays separate:
 [quality evidence](quality/entitlement-policy.md). ENT-02 service checks follow with activation still gated.
+
+D-118 continues ENT-02 with the actual-file account write transaction boundary; test-build limits stay inactive.
+15 added SQLite cases/main 1,626 pass. The rest of ENT-02 and runtime/release acceptance remain open:
+[quality evidence](quality/account-write-policy.md).

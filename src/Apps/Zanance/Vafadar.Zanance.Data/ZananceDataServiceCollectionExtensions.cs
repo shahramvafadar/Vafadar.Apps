@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vafadar.Backup;
 using Vafadar.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
@@ -19,6 +21,9 @@ public static class ZananceDataServiceCollectionExtensions
         // constructor; under Mono (Android, iOS) that thread waits for the same static constructor and the app hangs at
         // startup. The model is small, so it is built on the calling thread.
         AppContext.SetSwitch("Microsoft.EntityFrameworkCore.Issue31751", true);
+
+        // D-118: no commercial limits in current test builds; this is not a customer entitlement.
+        services.TryAddSingleton<ICommercialWriteAccessSource, InactiveCommercialWriteAccessSource>();
 
         return services.AddLocalDatabase<ZananceDbContext>(databasePath)
             .AddSingleton<ZananceStore>()

@@ -640,3 +640,10 @@ The owner-approved final Core policy never reads Simple/Advanced. Free retains h
 warnings, protection, backup/restore, own basic export and regional/accessibility choices. Financial month start
 and the basic forecast through month end are Free. Guest Plus belongs only to the exact authorized shared space,
 not personal profiles. Core policy delivery adds no paywall or quota message; test builds remain unrestricted.
+
+## Account write policy boundary (D-118 / ENT-02 in progress)
+
+The Data store prepares structured permission/quota failures before writes; final translated limit presentation
+belongs to ENT-04. Current test-build enforcement is inactive, so this step adds no visible restriction/message.
+When enabled after approval, account creation and unarchive use the same active quota; correction/archive retain
+existing data above quota. No automatic archive, deletion or active-account selection is introduced.

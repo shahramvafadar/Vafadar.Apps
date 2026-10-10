@@ -984,3 +984,19 @@ stay separate; an expired host's Pro cannot commercially hide retained data. Cou
 canonical budget definitions and explicit pending-seat expiry without financial writes or guessed data selection.
 76 new policy cases pass; full suite 1,611, App.Tests 299 unchanged. Strict platform builds and signed APK are
 recorded in [quality evidence](quality/entitlement-policy.md). No app behavior, schema, permission or SDK change.
+
+## D-118 - Enforce account capacity at the actual SQLite write boundary (2026-10-10)
+
+Continue approved ENT-02 with a reusable write transaction and the account store boundary. An enabled, already
+verified-input access snapshot is bound to the exact opened database path, not a later current-profile preference.
+Acquire the SQLite writer before existing-state/count reads, check permission and capacity, save and commit before
+Changed. Independent providers compete for the same database writer. Reject changed or mismatched snapshots;
+provider capture is synchronous cached state, never purchase/network work inside the transaction.
+
+Creation and unarchive consume active account slots; existing corrections and archival remain possible above quota.
+Membership is checked even on corrections or newly archived accounts; personal Pro never substitutes for it. Failed
+writes roll back without consuming a slot or notifying changes. The current registered provider is explicitly
+inactive, grants no paid right and adds no quota transaction; test-build activation remains separately gated.
+15 real SQLite cases pass; main suite 1,626. No schema, SDK, portable paid facts or visible UI change. ENT-02 remains
+in progress for other resources, imports/restores/read-only classification and native service entry points.
+Final build/APK/runtime evidence: [account-write-policy.md](quality/account-write-policy.md).

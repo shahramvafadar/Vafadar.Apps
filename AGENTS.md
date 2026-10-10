@@ -591,3 +591,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Count scope-bound resources, canonical budget definitions and identity seats; never delete/select/modify financial
   data in the pure model. Service enforcement and test-build/release activation remain separate; no limits are
   activated by ENT-01. Paid facts never come from portable financial preferences or backups.
+
+## 50. Actual-file account write transactions (D-118 / ENT-02 in progress)
+
+* Commercial write snapshots bind the exact opened SQLite file, never a subsequently changed profile preference.
+  Capture only synchronous cached facts; no network or purchase verification inside a database transaction.
+* When enabled after approval, acquire the database writer before quota reads and retain it through Save/commit.
+  Creation and unarchive share active capacity; corrections/archive remain possible above quota with scope checks.
+  Reject stale/mismatched access, roll back failures and raise Changed only after commit. Test independent providers.
+* Current registration remains inactive without a permanent paid grant or extra quota transaction. ENT-02's other
+  resources, import/restore/read-only/native paths remain open; this account boundary is not complete enforcement.

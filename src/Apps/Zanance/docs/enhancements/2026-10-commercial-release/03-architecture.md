@@ -185,3 +185,17 @@ Shared seats include the owner and pending invitations until explicit expiry, ne
 The application does not reference or enforce this policy. FeaturePolicy remains the independent Simple/Advanced
 presentation policy. No new network SDK, permission, schema, financial write or portable purchase data is introduced.
 See [policy evidence](../../quality/entitlement-policy.md).
+
+## 8. Account write boundary implemented (D-118 / ENT-02 in progress)
+
+Data/Commerce exposes ICommercialWriteAccessSource for synchronous already-resolved cached facts tied to the exact
+opened SQLite file. The current DI provider is inactive; no paid/customer grant, secret, portable flag or UI switch
+exists. CommercialWriteTransaction captures access, checks the exact normalized path spelling, obtains the database
+writer before count reads, rechecks unchanged facts and commits before Changed. Its owned transaction rolls back
+on rejection/failure; an outer transaction stays owned by its caller. No network/provider verification runs here.
+
+SaveAccountAsync uses this boundary for every caller, including onboarding and account/debt forms. Creation and
+unarchive check the same active count; correction/archive do not add capacity but still require scope permission.
+Structured failures carry feature, permission or count details for later translated ENT-04 presentation.
+No app activation, model/schema change or automatic read-only/active selection is introduced. Further resources,
+restored/imported over-quota selection and native operation gates remain ENT-02/03 work, not accepted by this step.

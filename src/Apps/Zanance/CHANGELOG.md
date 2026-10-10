@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Internal - Account write policy boundary (2026-10-10, D-118)
+
+- Prepare account quota checks in the write transaction, including unarchive and simultaneous creation.
+  Existing corrections and archival preserve data; current test builds remain unrestricted.
+
 ### Internal - Confirmed plan policy (2026-10-10, D-117)
 
 - Define the approved Free/Plus/Pro capabilities and quota rules for later integration. Pausing a goal or plan
