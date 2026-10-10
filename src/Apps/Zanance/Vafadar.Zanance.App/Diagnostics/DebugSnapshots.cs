@@ -359,6 +359,7 @@ internal static class DebugSnapshots
             ("entry-tags", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
             ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
+            ("entry-fee-retention", AppShell.EntryEditorRoute, null),
             ("headers", AppShell.SettingsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
@@ -471,7 +472,9 @@ internal static class DebugSnapshots
             {
                 var splitEntries = name == "split-readable" ? System.Text.Json.JsonSerializer.Serialize(
                     await services.GetRequiredService<ZananceStore>().GetEntriesAsync()) : null;
-                await (query is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, query));
+                // AT-106 prepares only the walk-through's fictitious transfer; ordinary editor launches never seed fees.
+                var actualQuery = name == "entry-fee-retention" ? await PrepareDestinationFeeReviewAsync(services) : query;
+                await (actualQuery is null ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, actualQuery));
                 await Task.Delay(1500);
                 if (name.StartsWith("receipt-", StringComparison.Ordinal)
                     && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)?.BindingContext
@@ -605,6 +608,8 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "entry-fee-retention")
+                { await ReviewDestinationFeeRetentionAsync(app, services, folder, language); }
                 if (name == "entry-validation")
                 { await ReviewEntryValidationAsync(app, services, folder, language); }
                 if (name == "plan-validation")
@@ -920,6 +925,19 @@ internal static class DebugSnapshots
         }
 
         await Task.Delay(1000);
+    }
+
+    /// <summary>Prepares a destination fee exclusively in the fictitious snapshot database for AT-106.</summary>
+    private static async Task<Dictionary<string, object>> PrepareDestinationFeeReviewAsync(IServiceProvider services)
+    {
+        var store = services.GetRequiredService<ZananceStore>();
+        var entries = await store.GetEntriesAsync();
+        var transfer = entries.Single(entry => entry.Kind == EntryKind.Transfer);
+        var category = (await store.GetCategoriesAsync()).Single(item => item.SystemKey == DefaultCategories.Fees).Id;
+        var fee = EntryActions.SyncDestinationFee(transfer, EntryActions.FindDestinationFee(transfer, entries), 75, category)!;
+        var result = await store.SaveEntriesAsync([transfer, fee], []);
+        if (!result.Succeeded) { throw new InvalidOperationException("The fictitious destination fee could not be prepared."); }
+        return new() { ["id"] = transfer.Id };
     }
 
     // Sample data so that lists and details are not empty: a second account, income, expenses, a transfer with a
@@ -1982,6 +2000,177 @@ internal static class DebugSnapshots
             NativeOpenAndCancelInvocations = 2, SameAccountsPage = true, NewUnsavedLoanDraft = true,
             CompleteAccountsEntriesSettingsBudgetsSchedulesUnchanged = true, NoSaveOrPrincipalPosting = true,
         }));
+    }
+
+    // AT-106 covers retention, an explicit edit/removal and the reopened/new Simple forms using real native actions.
+    private static async Task ReviewDestinationFeeRetentionAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        await ReviewDestinationFeeSaveAsync(app, services, folder, language, "retain", null, 75);
+        var store = services.GetRequiredService<ZananceStore>();
+        var transfer = (await store.GetEntriesAsync()).Single(entry => entry.Kind == EntryKind.Transfer);
+        var culture = services.GetRequiredService<ILocalizationService>().CurrentCulture;
+        async Task OpenAsync(Guid? id)
+        {
+            await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, id is { } entryId
+                ? new Dictionary<string, object> { ["id"] = entryId }
+                : new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Transfer) });
+            await Task.Delay(500);
+        }
+        await OpenAsync(transfer.Id);
+        await ReviewDestinationFeeSaveAsync(app, services, folder, language, "edit", 1.25m.ToString("0.00", culture), 125);
+        await OpenAsync(transfer.Id);
+        await ReviewDestinationFeeSaveAsync(app, services, folder, language, "remove", language == "fa" ? "0" : "", 0);
+        var stored = System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync());
+        var advanced = (await store.GetSettingsAsync()).Mode == Core.Settings.ExperienceMode.Advanced;
+        foreach (var id in new Guid?[] { transfer.Id, null })
+        {
+            await OpenAsync(id);
+            var page = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Entries.EntryEditorPage
+                ?? Shell.Current.CurrentPage as Features.Entries.EntryEditorPage
+                ?? throw new InvalidOperationException("The reopened/new transfer form is missing.");
+            var vm = (Features.Entries.EntryEditorViewModel)page.BindingContext;
+            // A new transfer needs an actual destination before its Advanced fee input becomes applicable.
+            vm.ToAccount = vm.ToAccounts.Single(account => account.Id == transfer.ToAccountId);
+            if (vm.ShowDestinationFee != advanced || !string.IsNullOrEmpty(vm.DestinationFeeText))
+            { throw new InvalidOperationException("A transfer without a fee exposes an unintended new Simple control or retains a removed value."); }
+            await CaptureAsync(app, folder, language + "-entry-fee-retention-" + (id is null ? "new" : "reopened"));
+            vm.ToAccount = id is null ? null : vm.ToAccount; // Remove only the fictitious new draft's presentation choice.
+            var cancel = VisualDescendants(page).OfType<Button>().Single(button => button.Command == vm.CancelCommand);
+            if (cancel.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+                || new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(native).GetPattern(
+                    Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+            { throw new InvalidOperationException("Transfer Cancel lacks its actual native Invoke pattern."); }
+            invoke.Invoke(); await Task.Delay(200);
+            if (vm.CancelCommand.ExecutionTask is { IsCompleted: false }
+                && app.Windows[0].Handler?.PlatformView is Microsoft.UI.Xaml.Window { Content.XamlRoot: { } root })
+            {
+                // The ordinary new-transfer draft may ask for discard even after restoring its empty destination.
+                var dialog = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetOpenPopupsForXamlRoot(root)
+                    .Select(popup => popup.Child).OfType<Microsoft.UI.Xaml.Controls.ContentDialog>().Single();
+                var discard = FindNativeButton(dialog, Translator.Instance["Common_Discard"])
+                    ?? throw new InvalidOperationException("The fictitious draft's actual discard action is missing.");
+                if (new Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer(discard).GetPattern(
+                        Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider confirm)
+                { throw new InvalidOperationException("Discard lacks its actual native Invoke pattern."); }
+                confirm.Invoke();
+            }
+            if (vm.CancelCommand.ExecutionTask is { } canceling) { await canceling.WaitAsync(TimeSpan.FromSeconds(5)); }
+            await Task.Delay(150);
+            if (stored != System.Text.Json.JsonSerializer.Serialize(await store.GetEntriesAsync()))
+            { throw new InvalidOperationException("Opening/canceling a fee-free transfer wrote financial rows."); }
+        }
+        File.WriteAllText(Path.Combine(folder, language + "-entry-fee-retention-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { NativeValidSaves = 3, ExistingFeeVisibleAndRetained = true,
+                ExistingFeeEditedWithSameId = true, OnlyExplicitBlankOrZeroRemovesFee = true, ReopenedAndNewFeeFreePolicy = true,
+                SourceFeeTransferFinancialFieldsAndUnrelatedRowsPreserved = true, NativeCancelWithoutWrites = true, Mode = advanced ? "Advanced" : "Simple" }));
+    }
+
+    // An actual successful Save compares every financial field and unrelated row, allowing only the chosen note/fee and audit time.
+    private static async Task ReviewDestinationFeeSaveAsync(App app, IServiceProvider services, string folder, string language,
+        string scenario, string? changedFee, long expectedFee)
+    {
+        var page = app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Entries.EntryEditorPage
+            ?? Shell.Current.CurrentPage as Features.Entries.EntryEditorPage
+            ?? throw new InvalidOperationException("The existing transfer editor is missing.");
+        var vm = (Features.Entries.EntryEditorViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var before = await store.GetEntriesAsync();
+        var transfer = before.Single(entry => entry.Kind == EntryKind.Transfer);
+        var source = EntryActions.FindTransferFee(transfer, before)!;
+        var destination = EntryActions.FindDestinationFee(transfer, before)!;
+        var accounts = System.Text.Json.JsonSerializer.Serialize(await store.GetAccountsAsync());
+        var settings = System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync());
+        var loadedText = vm.DestinationFeeText;
+        var initiallyVisible = vm.ShowDestinationFee;
+        if (!vm.IsTransfer || destination is null || source.Amount != 150 || string.IsNullOrEmpty(loadedText))
+        { throw new InvalidOperationException("The fictitious existing two-fee transfer did not load."); }
+        if (!initiallyVisible) { throw new InvalidOperationException("The stored destination fee is hidden in the edit form."); }
+        var accountRows = (await store.GetAccountsAsync()).ToDictionary(account => account.Id);
+        var from = accountRows[transfer.AccountId]; var to = accountRows[transfer.ToAccountId!.Value];
+        var culture = services.GetRequiredService<ILocalizationService>().CurrentCulture;
+        void CheckEffect(long fee)
+        {
+            var expected = Translator.Instance.Format("Entry_EffectFrom",
+                Core.Money.MoneyText.Format(-transfer.Amount - source.Amount, from.CurrencyCode, culture), from.Name)
+                + " · " + Translator.Instance.Format("Entry_EffectTo",
+                    Core.Money.MoneyText.Format((transfer.ToAmount ?? transfer.Amount) - fee, to.CurrencyCode, culture, showPlus: true), to.Name);
+            if (vm.EffectText != expected)
+            { throw new InvalidOperationException("The actual transfer summary does not include both fee effects in their account currencies."); }
+        }
+        CheckEffect(destination.Amount);
+        {
+            var viewport = page.FindByName<ScrollView>("ValidationViewport");
+            var input = page.FindByName<Entry>("DestinationFeeInput");
+            await ScrollToViewIfNeededAsync(viewport, input); await Task.Delay(150);
+            if (input.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox actual || actual.Text != loadedText
+                || actual.Visibility != Microsoft.UI.Xaml.Visibility.Visible || actual.ActualWidth < 44 || actual.ActualHeight < 44)
+            { throw new InvalidOperationException("The existing destination fee lacks its real visible input/value/target."); }
+            if (viewport.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer actualViewport)
+            { throw new InvalidOperationException("The transfer's native viewport is missing."); }
+            var position = actual.TransformToVisual(actualViewport).TransformPoint(new Windows.Foundation.Point());
+            if (position.Y < -1 || position.Y + actual.ActualHeight > actualViewport.ActualHeight + 1)
+            { throw new InvalidOperationException("The existing fee input cannot be fully reached in its viewport."); }
+            await CaptureAsync(app, folder, language + "-entry-fee-retention-" + scenario + "-existing-fee");
+            var caption = Translator.Instance["Entry_DestinationFee"];
+            var label = VisualDescendants(page).OfType<Label>().Single(item => item.Text == caption);
+            await ScrollToViewIfNeededAsync(viewport, label); await Task.Delay(100);
+            if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock text || text.IsTextTrimmed
+                || !text.IsTextScaleFactorEnabled || text.ActualWidth < 1 || text.ActualHeight < 1)
+            { throw new InvalidOperationException("The existing fee caption is clipped or lacks native scaling."); }
+            var glyphs = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= text.ContentEnd.Offset - text.ContentStart.Offset; offset++)
+            {
+                if (text.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward) is { } pointer)
+                { glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            if (glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1 || glyphs.Max(rect => rect.Right) > label.Width + 1
+                || glyphs.Max(rect => rect.Bottom) > label.Height + 1)
+            { throw new InvalidOperationException("The existing fee's full glyphs exceed its actual MAUI allocation."); }
+            await CaptureAsync(app, folder, language + "-entry-fee-retention-" + scenario + "-caption");
+        }
+        if (changedFee is not null) { vm.DestinationFeeText = changedFee; }
+        CheckEffect(expectedFee);
+        var note = "Fictitious AT-106 " + scenario + " edit " + language;
+        vm.Note = note;
+        var footer = ((Grid)page.Content).Children.OfType<VerticalStackLayout>().Single(view => Grid.GetRow(view) == 2);
+        var save = footer.Children.OfType<Button>().Single();
+        if (save.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native
+            || Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(
+                Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
+        { throw new InvalidOperationException("The existing transfer Save lacks its real native Invoke pattern."); }
+        invoke.Invoke();
+        if (vm.SaveCommand.ExecutionTask is { } saving) { await saving; }
+        await Task.Delay(250);
+        var after = await store.GetEntriesAsync();
+        var saved = after.Single(entry => entry.Id == transfer.Id);
+        var savedDestination = EntryActions.FindDestinationFee(saved, after);
+        var savedSource = EntryActions.FindTransferFee(saved, after);
+        var proof = new
+        {
+            Mode = (await store.GetSettingsAsync()).Mode.ToString(), ActualNativeValidSave = true,
+            ExistingDestinationFeeInitiallyVisible = initiallyVisible, LoadedDestinationText = loadedText,
+            DestinationFeeBefore = destination.Amount, DestinationFeeAfter = savedDestination?.Amount,
+            SameDestinationFeeId = savedDestination?.Id == destination.Id, SameSourceFeeId = savedSource?.Id == source.Id,
+            SourceFeeBefore = source.Amount, SourceFeeAfter = savedSource?.Amount,
+            SingleTransfer = after.Count(entry => entry.Kind == EntryKind.Transfer) == 1,
+            NoteSaved = saved.Note == note, TotalRowsBefore = before.Count, TotalRowsAfter = after.Count,
+        };
+        File.WriteAllText(Path.Combine(folder, language + "-entry-fee-retention-" + scenario + "-proof.json"), System.Text.Json.JsonSerializer.Serialize(proof));
+        if (!proof.NoteSaved || !proof.SingleTransfer
+            || (expectedFee > 0 ? savedDestination?.Amount != expectedFee || !proof.SameDestinationFeeId : savedDestination is not null)
+            || !proof.SameSourceFeeId || savedSource?.Amount != source.Amount
+            || before.Count - (expectedFee == 0 ? 1 : 0) != after.Count || vm.SaveError is not null)
+        { throw new InvalidOperationException("A valid unrelated transfer edit lost an existing destination fee or changed its identity/value."); }
+        // Audit timestamps may advance on a legitimate save; all financial fields and unrelated rows must remain exact.
+        saved.Note = transfer.Note; saved.UpdatedAt = transfer.UpdatedAt;
+        savedSource!.UpdatedAt = source.UpdatedAt;
+        if (savedDestination is not null) { savedDestination.UpdatedAt = destination.UpdatedAt; savedDestination.Amount = destination.Amount; }
+        var expected = expectedFee == 0 ? before.Where(entry => entry.Id != destination.Id) : before;
+        if (System.Text.Json.JsonSerializer.Serialize(expected.OrderBy(entry => entry.Id))
+                != System.Text.Json.JsonSerializer.Serialize(after.OrderBy(entry => entry.Id))
+            || accounts != System.Text.Json.JsonSerializer.Serialize(await store.GetAccountsAsync())
+            || settings != System.Text.Json.JsonSerializer.Serialize(await store.GetSettingsAsync()))
+        { throw new InvalidOperationException("The unrelated transfer edit changed financial fields, accounts or settings."); }
     }
 
     // AT-105: independent monetary errors, corrected input visibility and collapsed detail feedback use real native Save.

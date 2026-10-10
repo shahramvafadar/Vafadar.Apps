@@ -788,3 +788,14 @@ requests expire. Eight final German invalid Saves/61 renders, strict rebuilt Win
 one final-APK English Android invalid Save, repeated original 24-table readbacks and final native handoff pass.
 The main validation tests are unchanged. Original full-matrix counts and the pre-guard Android candidate remain
 distinct from these final checks; evidence: quality/entry-validation-visible.md.
+
+## D-101 - Preserve existing destination fees when editing in Simple (2026-10-10)
+
+Native successful Save reproduces silent destination-fee removal during an unrelated note edit in Simple.
+Expose an existing fee in Simple as well as Advanced so validation/effect/save consume the loaded value; refresh
+the localized net-effect summary when visibility changes.
+Keep fee creation Advanced-only and explicit blank/zero removal. AT-106 proves retention/edit/removal with
+unchanged financial fields, ids and unrelated rows, then reopened/new forms and native Cancel/Discard.
+The 24-context Windows matrix/72 valid Saves, 1,456 tests, strict builds, signed APK, normal Android creation
+policy checks and original financial/preference values and expected settings audit pass. Android successful stored-fee editing/physical/iOS acceptance
+remain separate. Evidence: quality/destination-fee-retention.md.

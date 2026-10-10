@@ -364,7 +364,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(NeedsAccount)));
         }
 
-        if (e.PropertyName is nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(KindIndex))
+        if (e.PropertyName is nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(ShowDestinationFee) or nameof(KindIndex))
         {
             UpdateEffect();
         }
@@ -946,7 +946,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         CurrencyCode = Account?.CurrencyCode ?? Currencies.Euro.Code;
         ToCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode;
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
-        ShowDestinationFee = IsTransfer && _showsFee && ToAccount is not null;
+        // D-101: Simple must expose an existing fee so an unrelated edit never silently removes it.
+        ShowDestinationFee = IsTransfer && (_showsFee || _destinationFee is not null) && ToAccount is not null;
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
     }
 
@@ -1256,7 +1257,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
                 _fee = synced;
 
-                // A fee at the destination (Advanced) is an expense there, in its currency (ZEX-S0204).
+                // A destination fee is an expense there; existing fees remain editable in Simple (D-101 / ZEX-S0204).
                 var destination = EntryActions.SyncDestinationFee(_entry, _destinationFee, destinationFee, _categories.Fees());
                 if (destination is null && _destinationFee is not null)
                 {

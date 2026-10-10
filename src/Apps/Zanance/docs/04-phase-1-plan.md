@@ -216,3 +216,11 @@ Forty-eight new cases bring the main suite to 1,456 (App.Tests 220). Complete Wi
 normal Android invalid Save/cancel, signed APK and original 24-table readbacks pass. Simple destination-fee
 retention is a separate pending runtime concern; other controls/platform/owner/release gates remain open.
 Evidence: [quality/entry-validation-visible.md](quality/entry-validation-visible.md).
+
+D-101 / AT-106 closes the reproduced destination-fee loss in successful Simple edits. Existing fees stay
+visible/editable in both modes; new destination-fee creation remains Advanced-only. Native retention, explicit
+edit/removal and reopened/new Cancel/Discard preserve financial fields/ids and unrelated rows. The final
+Windows matrix has 24 contexts/72 valid Saves; main tests remain 1,456 (App.Tests 220), strict builds and signed
+APK pass. Normal Android creation-policy checks and original financial/preference values and expected settings audit pass; successful stored-fee
+editing on Android/physical/iOS and other owner/platform/release gates remain open.
+Evidence: [quality/destination-fee-retention.md](quality/destination-fee-retention.md).

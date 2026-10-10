@@ -82,3 +82,9 @@ Separate source concern: Simple hides an existing positive destination fee, whil
 only visible destination fees. This slice preserves that policy; native valid-edit reproduction and a dedicated
 retention correction remain pending. Do not infer that this separate possible loss is fixed from invalid-Save tests.
 Other A11Y-03 controls/OS/readers/phone/iOS and owner/provider/encryption/licence/release gates remain open.
+
+## Subsequent successful-edit correction (D-101)
+
+The separate Simple destination-fee concern above was reproduced by actual valid Save and corrected in D-101.
+See destination-fee-retention.md for retention/edit/explicit-removal evidence. D-100 invalid-Save evidence alone
+does not prove it; its earlier counts remain historical.

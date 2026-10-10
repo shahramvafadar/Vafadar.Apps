@@ -572,3 +572,13 @@ requests expire. Eight final German invalid Saves/61 renders, strict rebuilt Win
 one final-APK English Android invalid Save, repeated original 24-table readbacks and final native handoff pass.
 The main validation tests are unchanged. Original full-matrix counts and the pre-guard Android candidate remain
 distinct from these final checks; evidence: quality/entry-validation-visible.md.
+
+## AT-106 - Successful Simple transfer edits retain existing destination fees (D-101)
+
+Prepare a fictitious two-fee transfer. Invoke actual native Save after an unrelated note change: retain both
+expense ids/amounts and the single transfer. Check exact localized source/destination net effects. Reopen/change the destination fee with the same id, then explicitly
+clear/zero it. Reopen fee-free and new forms; verify Simple/Advanced creation policy and Cancel/Discard without
+writes. Compare all financial fields and unrelated rows, allowing only intended changes and audit updates.
+Final local status: 24 Windows contexts/72 valid Saves, native input/glyph checks, 1,456 tests, strict builds,
+signed APK, 12 normal Android new-form checks and original three-profile financial/preference values and expected settings audit pass.
+Successful stored-fee edits on Android/physical/iOS remain unaccepted. Evidence: quality/destination-fee-retention.md.

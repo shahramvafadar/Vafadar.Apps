@@ -1404,6 +1404,16 @@ normal Android invalid Save/cancel, signed APK and original 24-table readbacks p
 retention is a separate pending runtime concern; other controls/platform/owner/release gates remain open.
 Evidence: [quality/entry-validation-visible.md](../quality/entry-validation-visible.md).
 
+### 31.17. Existing destination fee retention in Simple (D-101 / AT-106)
+
+D-101 / AT-106 closes the reproduced destination-fee loss in successful Simple edits. Existing fees stay
+visible/editable in both modes; new destination-fee creation remains Advanced-only. Native retention, explicit
+edit/removal and reopened/new Cancel/Discard preserve financial fields/ids and unrelated rows. The final
+Windows matrix has 24 contexts/72 valid Saves; main tests remain 1,456 (App.Tests 220), strict builds and signed
+APK pass. Normal Android creation-policy checks and original financial/preference values and expected settings audit pass; successful stored-fee
+editing on Android/physical/iOS and other owner/platform/release gates remain open.
+Evidence: [quality/destination-fee-retention.md](../quality/destination-fee-retention.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

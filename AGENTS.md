@@ -451,3 +451,14 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   guard and expire timed-out callbacks. Android observers stay bounded.
 * Native invalid-Save checks retain drafts/full stored rows and restore presentation-only choices. Distinguish
   invalid-Save evidence from valid-edit fee retention and other OS/device/release acceptance.
+
+## 34. Existing transfer fees in Simple (D-101)
+
+* Show an existing destination fee in both presentation modes, preserving its value through unrelated edits.
+  Creation remains Advanced-only when no fee exists; explicit blank/zero removal retains the transfer/source fee.
+* Prove successful retention/edit/removal with actual native Save over fictitious data and compare financial
+  fields/ids plus unrelated rows. Keep this separate from invalid-Save evidence and physical/platform acceptance.
+* Native mode choices may advance Settings.UpdatedAt normally. Require exact restored preference values and
+  financial rows; record that audit-only difference explicitly rather than claiming every table row is byte-identical.
+* AT-106 snapshot fixtures perform valid financial Saves only in their fictitious database. Preserve and restore
+  original development files and never apply these fixtures to personal data.

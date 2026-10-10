@@ -626,3 +626,8 @@ D-100 / AT-105 checks complete transaction error glyphs, automatic next-input vi
 details in the full Windows stress matrix. Existing normal-scale Android native Save/cancel/name/bounds are
 separate from OS large text/readers/phone/iOS acceptance. Evidence: entry-validation-visible.md. Earlier counts
 remain historical; other controls and the separate Simple destination-fee concern remain pending.
+
+D-101 / AT-106 checks full existing destination-fee caption glyphs, actual input targets/values and viewport
+reachability in Simple at 200% (en/fa/de, light/dark, 360/412/wide). Actual valid edits also prove retention,
+explicit update/removal and untouched financial fields/ids. Advanced normal-scale regression remains separate.
+Evidence: destination-fee-retention.md. Other controls and OS/device/reader acceptance remain open.

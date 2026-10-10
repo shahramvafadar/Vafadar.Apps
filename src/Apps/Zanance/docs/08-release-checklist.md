@@ -255,3 +255,11 @@ requests expire. Eight final German invalid Saves/61 renders, strict rebuilt Win
 one final-APK English Android invalid Save, repeated original 24-table readbacks and final native handoff pass.
 The main validation tests are unchanged. Original full-matrix counts and the pre-guard Android candidate remain
 distinct from these final checks; evidence: quality/entry-validation-visible.md.
+
+D-101 / AT-106 closes the reproduced destination-fee loss in successful Simple edits. Existing fees stay
+visible/editable in both modes; new destination-fee creation remains Advanced-only. Native retention, explicit
+edit/removal and reopened/new Cancel/Discard preserve financial fields/ids and unrelated rows. The final
+Windows matrix has 24 contexts/72 valid Saves; main tests remain 1,456 (App.Tests 220), strict builds and signed
+APK pass. Normal Android creation-policy checks and original financial/preference values and expected settings audit pass; successful stored-fee
+editing on Android/physical/iOS and other owner/platform/release gates remain open.
+Evidence: [quality/destination-fee-retention.md](quality/destination-fee-retention.md).

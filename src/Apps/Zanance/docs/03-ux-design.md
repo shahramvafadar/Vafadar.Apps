@@ -546,3 +546,11 @@ their fields before entity mutation. Reopen collapsed invalid detail fields, kee
 affected input without changing focus. Resolve native request ordering after dynamic layout changes; preserve
 ordinary keyboard/scroll policy, latest/visible request guards and bounded removed Android observers. Transfer
 positivity wording does not suggest expense/income. Clear corrected captions on the next Save.
+
+### Existing destination fees in Simple (D-101)
+
+Simple is a presentation level over the same ledger. An existing destination fee must remain visible/editable
+so an unrelated transfer edit cannot silently delete it. Keep creation Advanced-only when no fee exists;
+explicit blank/zero means removal. Retain the fee id, group, currency and transfer/source-fee financial fields.
+Refresh the net-effect summary when fee visibility changes; opening, editing and clearing must show the actual
+amount received after fees. Check successful edits with real native Save, independently from invalid-Save evidence.

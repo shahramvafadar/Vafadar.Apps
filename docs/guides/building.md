@@ -376,3 +376,8 @@ Transaction validation review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,f
 AT-105 invokes actual native Save eight times only with invalid blocking input, checks all error glyphs/current
 input visibility and corrected/collapsed details, retains full drafts/stored rows and restores original presentation
 choices. Preserve original development files and separate failed candidate cohorts from final native evidence.
+
+Existing transfer-fee review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only entry-fee-retention -Mode simple -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-106 prepares fees only in the fictitious snapshot database and invokes three actual valid Saves: retain,
+edit and explicit removal, then reopened/new Cancel/Discard. Preserve and restore original development files;
+never run successful-save fixtures over personal data. The Advanced regression uses `-Mode advanced`.

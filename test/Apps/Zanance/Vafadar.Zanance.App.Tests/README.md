@@ -43,3 +43,7 @@ monetary problems, regional/digit/display-unit and ISO amounts, optional fees, o
 rules, hidden inapplicable values, immutable drafts and fresh corrections. Real EntryActions/LedgerValidator keep
 one transfer and separate fee expenses. Current main count is 1,456; App.Tests is 220. Native rendering and valid
 Simple destination-fee retention remain separate in docs/quality/entry-validation-visible.md.
+
+D-101 fee retention uses AT-106's actual native editor/store regression in docs/quality/destination-fee-retention.md,
+including valid Save, update/removal and reopened/new Cancel/Discard. Main count remains 1,456; App.Tests 220.
+The scenario supplements monetary helper/domain tests rather than repeating the visibility predicate in a unit test.

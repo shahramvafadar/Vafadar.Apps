@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Keep existing transfer fees in Simple (2026-10-10, D-101)
+
+- Editing a transfer in Simple no longer silently deletes its destination fee. The existing fee stays visible and editable; clear it or enter zero to remove it. The transfer summary includes the destination fee in the amount received.
+
 ### Fixed - Clear transaction validation (2026-10-10, D-100)
 
 - Transactions show all applicable account, amount, fee, original-currency and reimbursement errors after one Save attempt, beside the affected fields. The form reveals the next required input and reopens invalid collapsed details while keeping your draft.

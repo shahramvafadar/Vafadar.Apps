@@ -194,7 +194,7 @@
                                    IsVisible="{Binding FeeError, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{v:Translate Entry_FeeHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
 
-                            <!-- A fee charged at the destination, in its currency (Advanced, ZEX-S0204) -->
+                            <!-- Destination currency fee: new in Advanced; existing fees also stay editable in Simple (D-101). -->
                             <VerticalStackLayout IsVisible="{Binding ShowDestinationFee}">
                                 <Label Text="{v:Translate Entry_DestinationFee}" Style="{StaticResource FieldLabel}" />
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">

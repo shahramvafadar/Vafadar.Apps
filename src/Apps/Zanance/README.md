@@ -80,7 +80,7 @@ D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests
 The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
 signed Release handoff remain separate from physical phone/iOS acceptance. That slice was followed by QA-06 performance; see the canonical backlog for the current remaining work.
 
-Current local quality baseline (D-100): main suite 1,456 passing, App.Tests 220. Date parts grow/reflow and large
+Current local quality baseline (D-101): main suite 1,456 passing, App.Tests 220. Date parts grow/reflow and large
 balances retain their complete signed decimal/currency packet with a real horizontal viewport when needed.
 Repeated Settings language choices preserve the form and stored data; retired navigation titles are detached.
 Windows child titles grow above the retained body; Windows/Android Back descriptions follow live language choices.
@@ -125,3 +125,5 @@ Single readable modal header evidence: docs/quality/modal-headers-readable.md; e
 Complete visible plan validation evidence: docs/quality/plan-validation-visible.md; drafts and existing financial rules remain.
 
 Complete transaction-field validation evidence: docs/quality/entry-validation-visible.md; drafts and existing financial rules remain.
+
+Existing destination-fee retention in Simple: docs/quality/destination-fee-retention.md; successful native edits preserve financial fields and row identities.
