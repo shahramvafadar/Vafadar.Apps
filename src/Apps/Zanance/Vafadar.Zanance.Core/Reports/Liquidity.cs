@@ -149,6 +149,20 @@ public static class LiquidityCalculator
         return KpiCatalog.Median(daily);
     }
 
+    /// <summary>
+    /// Returns the inclusive entry-date range needed by <see cref="SuggestPerDay"/>: the last three complete
+    /// financial months in the chosen calendar. Earlier history and the current partial month cannot affect it.
+    /// </summary>
+    public static (DateOnly From, DateOnly To) SuggestionRange(DateOnly today, PeriodCalendar calendar, int startDay = 1)
+    {
+        var current = PeriodMath.MonthOf(today, calendar, startDay);
+        var latest = PeriodMath.Previous(current.Year, current.Month);
+        var middle = PeriodMath.Previous(latest.Year, latest.Month);
+        var oldest = PeriodMath.Previous(middle.Year, middle.Month);
+        return (PeriodMath.MonthRange(oldest.Year, oldest.Month, calendar, startDay).First,
+            PeriodMath.MonthRange(latest.Year, latest.Month, calendar, startDay).Last);
+    }
+
     /// <summary>Returns an estimate per day: a week is 7 days, a month 365 / 12 days.</summary>
     public static decimal PerDay(long amount, EstimatePeriod period) => period switch
     {

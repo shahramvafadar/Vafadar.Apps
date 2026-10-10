@@ -80,7 +80,7 @@ D-74 / QA-04: valued-asset consent now has 37 AT-81 application cases; App.Tests
 The actual editor gate excludes repeated pending saves and preserves cancelled drafts. Local/emulator evidence and
 signed Release handoff remain separate from physical phone/iOS acceptance. That slice was followed by QA-06 performance; see the canonical backlog for the current remaining work.
 
-Current local quality baseline (D-105): main suite 1,491 passing, App.Tests 255. Date parts grow/reflow and large
+Current local quality baseline (D-106): main suite 1,512 passing, App.Tests 276. Date parts grow/reflow and large
 balances retain their complete signed decimal/currency packet with a real horizontal viewport when needed.
 Repeated Settings language choices preserve the form and stored data; retired navigation titles are detached.
 Windows child titles grow above the retained body; Windows/Android Back descriptions follow live language choices.
@@ -136,3 +136,5 @@ Complete final-bill field feedback and action: docs/quality/settlement-feedback.
 Due-item actions, input feedback and safe native continuations: docs/quality/occurrence-feedback.md.
 
 Complete bulk selection now uses one fresh-snapshot membership index. Actual bound full-selection reload evidence and timing limits: [bulk-selection-reload.md](docs/quality/bulk-selection-reload.md).
+
+Settings reads the exact complete-month history needed for its unchanged spending suggestion. Actual bound measurements and runtime/acceptance limits: [settings-suggestion-history.md](docs/quality/settings-suggestion-history.md).

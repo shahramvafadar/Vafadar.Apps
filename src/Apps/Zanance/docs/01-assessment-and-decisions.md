@@ -845,3 +845,14 @@ LoadAsync and is not completed-frame/cold/device/ANR acceptance. Three new behav
 App.Tests 255. Final running-app/build/APK evidence and open limits: quality/bulk-selection-reload.md.
 
 D-105 final checks: main 1,491 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/609 own renders, seven native Release bulk-selection contexts, original-data readbacks and a complete signed D-105 APK pass. Cold/ANR/native-publication/device/platform and owner acceptance gates remain open.
+
+## D-106 - Read exact complete-month history for Settings suggestions (2026-10-10)
+
+Measured Settings loading materialized all ledger history for a calculation that uses only three complete financial
+months. Read every entry in that inclusive calendar/pay-cycle window, preserving the existing calculator, currency/
+account/refund/plan rules and covered complete publication. No cap, schema, security, portable data or permission
+change. Actual bound tenfold Windows warm LoadAsync median: 883.78 -> 157.74 ms, excluding later arrangement/painting.
+AT-111 adds 21 cases: main 1,512/App.Tests 276. Final runtime/build/APK evidence and independent performance/platform
+gates: [quality/settings-suggestion-history.md](quality/settings-suggestion-history.md).
+
+D-106 final checks: 1,512 tests, strict Windows/complete Android Debug+Release, 21 Windows contexts/1029 own renders and 63 native/bound proofs, seven positive Release suggestion/reopen contexts, original-data readbacks and a complete signed D-106 APK pass. Selected-picker caption geometry and cold/ANR/device/platform/owner gates remain open.

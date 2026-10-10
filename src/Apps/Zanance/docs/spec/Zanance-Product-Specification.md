@@ -1453,6 +1453,15 @@ suite to 1,491 (App.Tests 255). Actual tenfold bound Windows LoadAsync median: 2
 later native arrangement/painting. No data/schema/permission change. Final runtime/build/APK evidence and open
 cold/ANR/platform/device gates: [quality/bulk-selection-reload.md](../quality/bulk-selection-reload.md).
 
+### 31.22. Exact Settings suggestion history (D-106 / AT-111)
+
+Read every entry in the last three complete financial months rather than unrelated complete-ledger history. The
+existing suggestion calculator, calendar/pay-cycle/currency/account/refund/plan rules and covered complete Settings
+publication remain; no auto-save, money, schema or security-policy change. Twenty-one new cases bring the main suite
+to 1,512 (App.Tests 276). Actual tenfold bound Windows warm LoadAsync median: 883.78 -> 157.74 ms, excluding later
+arrangement/painting. Final runtime/build/APK evidence and open cold/ANR/platform/device gates:
+[quality/settings-suggestion-history.md](../quality/settings-suggestion-history.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

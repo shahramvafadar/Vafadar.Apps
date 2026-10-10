@@ -622,3 +622,10 @@ Three new cases exercise the actual bulk flow with 10,000/100,000 complete sourc
 removed/new/unknown ids, no write or Undo, and retained selection operating on fresh money/tags. Existing financial
 and busy-dialog scenarios remain. Main suite: 1,491 passed, App.Tests 255. Actual native Select all/reload/Cancel
 review and final matrix/APK/open limits: [quality/bulk-selection-reload.md](quality/bulk-selection-reload.md).
+
+## AT-111 - Exact Settings suggestion history (D-106)
+
+Twenty-one actual snapshot/SQLite cases compare complete and required history across calendars/pay-cycle starts,
+boundaries/refunds/negative net, account/currency/history rules and fresh contexts, with complete stored rows retained.
+Main: 1,512 passing/App.Tests 276. Bound Settings captions, loading/retry, live choices and unsaved estimate review,
+full builds/APK and independent performance/platform limits: [quality/settings-suggestion-history.md](quality/settings-suggestion-history.md).

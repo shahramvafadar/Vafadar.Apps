@@ -407,3 +407,9 @@ The transactions Debug review also invokes actual native Select all, reloads the
 every retained selection, then invokes Cancel without financial writes (D-105 / AT-110). Preserve development files.
 Temporary full-workload timings end at LoadAsync and exclude subsequent native painting; remove probes before final
 Windows and complete Android Debug/Release builds. Evidence: src/Apps/Zanance/docs/quality/bulk-selection-reload.md.
+
+The settings-suggestion Debug route compares the actual bound caption with the unchanged calculator over complete
+fictitious history and reloads an unsaved estimate without Save (D-106 / AT-111). Settings display/reopened routes
+retain native retry/choice/return checks; their deliberately covered failure captures are expected fixture states,
+not failed review files. Preserve development files and remove temporary timers before final platform builds.
+Evidence: src/Apps/Zanance/docs/quality/settings-suggestion-history.md.

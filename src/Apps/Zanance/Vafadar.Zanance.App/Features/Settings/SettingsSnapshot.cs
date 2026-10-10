@@ -21,11 +21,14 @@ internal sealed record SettingsSnapshot(ZananceSettings Settings, IReadOnlyList<
     {
         var settings = await store.GetSettingsAsync(cancellationToken);
         var accounts = await store.GetAccountsAsync(cancellationToken: cancellationToken);
-        var entries = await store.GetEntriesAsync(cancellationToken: cancellationToken);
         var currency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
+        // Read every entry that can affect the unchanged three-month suggestion, without materializing other history.
+        var range = Core.Reports.LiquidityCalculator.SuggestionRange(today, calendar, settings.MonthStartDay);
+        var entries = await store.GetEntriesAsync(range.From, range.To, cancellationToken);
         var suggestion = Core.Reports.LiquidityCalculator.SuggestPerDay(accounts, entries, currency, today,
-            Presentation.Calendars.ToPeriod(localization.CurrentCalendar), settings.MonthStartDay);
+            calendar, settings.MonthStartDay);
         var available = settings.AppLockEnabled || await lockAvailable();
         var enabled = notificationsSupported && await notificationsEnabled();
         cancellationToken.ThrowIfCancellationRequested();

@@ -583,3 +583,9 @@ loading/failure/retry cover, actual row button commands, growing captions and pe
 Refresh retains every selected id still present in the complete source; removed rows lose selection and new rows are
 not implicitly selected. Select all applies to visible known rows and preserves hidden selection. Cancel clears the
 whole selection. Busy dialog guards and explicit financial confirmation/validation/Undo remain unchanged.
+
+### Exact history with complete Settings publication (D-106)
+
+The optional spending suggestion uses three complete financial months in the selected calendar/pay cycle. Read that
+complete date window; keep the form covered until preferences/accounts/suggestion/device availability all finish.
+Preserve raw unsaved estimates on reload. Using a suggestion changes only the draft; saving remains explicit.

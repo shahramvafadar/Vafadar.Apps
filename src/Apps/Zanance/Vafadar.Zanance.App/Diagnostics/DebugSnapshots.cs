@@ -439,6 +439,7 @@ internal static partial class DebugSnapshots
             ("report-review", AppShell.ReviewRoute, null),
             ("backup", AppShell.BackupRoute, null),
             ("settings", AppShell.SettingsRoute, null),
+            ("settings-suggestion", AppShell.SettingsRoute, null),
             ("settings-display", AppShell.SettingsRoute, null),
             ("settings-reopened", AppShell.SettingsRoute, null),
             ("settings-actions", AppShell.SettingsRoute, null),
@@ -541,6 +542,11 @@ internal static partial class DebugSnapshots
                         await CaptureAsync(app, folder, $"{language}-{name}-reminder");
                     }
                     await CaptureHelpAsync(app, folder, language, ["GoalReminder"]);
+                }
+
+                if (name == "settings-suggestion" && Shell.Current.CurrentPage is Features.Settings.SettingsPage suggestionPage)
+                {
+                    await ReviewSettingsSuggestionAsync(services, suggestionPage, folder, language);
                 }
 
                 if (name == "settings-display" && Shell.Current.CurrentPage is Features.Settings.SettingsPage displaySettings)
@@ -1704,22 +1710,62 @@ internal static partial class DebugSnapshots
         throw new InvalidOperationException("The replacement page did not finish its native arrangement.");
     }
 
-    // Select through the native data peer; this also covers choices virtualized inside the popup.
+    // D-106: WinUI data peers can reject Select with UIA_E_ELEMENTNOTAVAILABLE before popup containers are realized.
+    // Wait for the current real item after Expand, without reusing a retired page or swallowing selection failures.
     private static async Task SelectSnapshotLanguageAsync(Picker picker, int index)
     {
         if (picker.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox combo)
         { throw new InvalidOperationException("The native language picker is unavailable."); }
-        var peer = new Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer(combo);
+        var page = Shell.Current.CurrentPage;
+        if (!VisualDescendants(page).Contains(picker))
+        { throw new InvalidOperationException("The reviewed language picker belongs to a retired page."); }
+        var peer = Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(combo)
+            as Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer
+            ?? throw new InvalidOperationException("The native language picker has no associated automation peer.");
         if (peer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.ExpandCollapse)
             is not Microsoft.UI.Xaml.Automation.Provider.IExpandCollapseProvider expand)
         { throw new InvalidOperationException("The language picker has no native expand pattern."); }
         expand.Expand();
-        await Task.Delay(200);
         if (index < 0 || index >= combo.Items.Count)
         { throw new InvalidOperationException("The native language choice is unavailable."); }
-        // WinUI owns selection on the data peer; a valid choice need not have a realized popup container yet.
-        var itemPeer = new Microsoft.UI.Xaml.Automation.Peers.ComboBoxItemDataAutomationPeer(combo.Items[index], peer);
-        if (itemPeer.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.SelectionItem)
+        // Expand schedules popup layout. Scrolling before its item host exists can be a no-op, especially when
+        // English is above the selected Persian item. Observe a real popup slot before asking it to scroll.
+        var popupReady = false;
+        for (var attempt = 0; attempt < 40; attempt++)
+        {
+            await Task.Delay(50);
+            if (!ReferenceEquals(Shell.Current.CurrentPage, page) || !ReferenceEquals(picker.Handler?.PlatformView, combo))
+            { throw new InvalidOperationException("The reviewed language picker was retired while opening its popup."); }
+            if (combo.IsDropDownOpen && Enumerable.Range(0, combo.Items.Count).Any(itemIndex =>
+                combo.ContainerFromIndex(itemIndex) is Microsoft.UI.Xaml.Controls.ComboBoxItem
+                    { IsLoaded: true, ActualWidth: > 0, ActualHeight: > 0 }))
+            { popupReady = true; break; }
+        }
+        if (!popupReady) { throw new InvalidOperationException("The native language popup did not finish opening."); }
+        var targetPeer = peer.GetChildren()?.OfType<Microsoft.UI.Xaml.Automation.Peers.ComboBoxItemDataAutomationPeer>()
+            .SingleOrDefault(child => Equals(child.Item, combo.Items[index]))
+            ?? peer.CreateItemAutomationPeer(combo.Items[index]) as Microsoft.UI.Xaml.Automation.Peers.ComboBoxItemDataAutomationPeer;
+        // A popup can start at the selected language, leaving an earlier target virtualized outside its viewport.
+        // WinUI's data peer implements ScrollItem/VirtualizedItem through ScrollIntoView; use that native pattern.
+        if (targetPeer?.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.ScrollItem)
+            is not Microsoft.UI.Xaml.Automation.Provider.IScrollItemProvider scrollItem)
+        { throw new InvalidOperationException("The native language item has no scroll-into-view pattern."); }
+        scrollItem.ScrollIntoView();
+        Microsoft.UI.Xaml.Controls.ComboBoxItem? item = null;
+        for (var attempt = 0; attempt < 40; attempt++)
+        {
+            await Task.Delay(50);
+            if (!ReferenceEquals(Shell.Current.CurrentPage, page) || !ReferenceEquals(picker.Handler?.PlatformView, combo))
+            { throw new InvalidOperationException("The reviewed language picker was retired during popup arrangement."); }
+            if (combo.ContainerFromIndex(index) is Microsoft.UI.Xaml.Controls.ComboBoxItem candidate
+                && candidate.IsLoaded && candidate.ActualWidth > 0 && candidate.ActualHeight > 0)
+            { item = candidate; break; }
+        }
+        if (item is null) { throw new InvalidOperationException("The native language item did not finish popup arrangement."); }
+        // Selection belongs to WinUI's associated data peer, not the visual container peer.
+        var itemPeer = peer.GetChildren()?.OfType<Microsoft.UI.Xaml.Automation.Peers.ComboBoxItemDataAutomationPeer>()
+            .SingleOrDefault(child => Equals(child.Item, combo.Items[index]));
+        if (itemPeer?.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.SelectionItem)
             is not Microsoft.UI.Xaml.Automation.Provider.ISelectionItemProvider selection)
         { throw new InvalidOperationException("The language choice has no native select pattern."); }
         selection.Select(); expand.Collapse();

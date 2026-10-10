@@ -262,3 +262,10 @@ AccountEntryIndex is an in-memory routing index over an unchanged read snapshot,
 balance algorithm. Each endpoint receives the original transfer object once, in original order; LedgerCalculator
 still applies opening-date, review, currency and overflow rules. Home, total balances and forecast starts use
 those slices. Rebuild the index for a new ledger snapshot.
+
+### Settings suggestion reads (D-106)
+
+The three-complete-financial-month suggestion reads its exact inclusive date window through ZananceStore.GetEntriesAsync.
+The existing entry-date index and captured off-UI SQLite context are retained. All entries within the window reach
+the unchanged calculator; account/currency/plan/refund rules remain there. This is a read optimization only, with no
+model/migration, archive/export/backup content or security change.

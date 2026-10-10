@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Faster Settings history read (2026-10-10, D-106)
+
+- Opening Settings reads only the three complete financial months needed for the daily spending suggestion. The same suggestion, your unsaved estimate and the loading/retry behavior remain; no suggested amount is saved automatically.
+
 ### Improved - Faster bulk-selection reload (2026-10-10, D-105)
 
 - Reloading a large selected transaction list checks remaining selections once instead of repeatedly searching every row. Existing selections survive a refresh; removed rows lose selection. Selecting filtered rows still keeps previously selected rows from other filters.

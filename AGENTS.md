@@ -496,3 +496,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Financial commands keep current snapshot copies, validation, cancellation, Undo and pending-dialog guards. Never
   trade complete selection/results for a timing target. LoadAsync timings exclude later native arrangement/painting;
   keep cold/ANR/platform/device gates open and remove temporary probes before final builds.
+
+## 39. Exact Settings suggestion history (D-106)
+
+* Read every entry in the last three complete financial months in the current calendar/MonthStartDay, using the
+  existing inclusive indexed date query. Keep the suggestion calculator, currency/account/history rules and refunds.
+* Retain covered complete Settings publication, device reads and explicit-Save drafts; reload never writes an
+  estimate or money. Compare bounded and complete history, real bound captions/drafts and unchanged stored data.
+  Warm LoadAsync measurements exclude later native arrangement/painting and do not close cold/device/ANR gates.
+* Native language review uses the associated WinUI data peer after bounded popup arrangement. Reject retired
+  pages/handlers explicitly; never swallow selection errors or replace native selection with property assignment.

@@ -340,3 +340,5 @@ data/display semantics. Evidence and final checks: [transaction-row-reuse.md](..
 Continue ready work under D-69; native publication, cold/device performance and unresolved owner gates remain open.
 
 D-105 delivers ready QA-06 complete bulk-selection reload, retaining current financial semantics. Actual evidence and final checks: [bulk-selection-reload.md](../../quality/bulk-selection-reload.md). Continue ready work under D-69; native publication, cold/device/ANR and unresolved owner gates remain open.
+
+D-106 delivers ready QA-06 exact Settings suggestion history with unchanged financial and publication rules. Actual evidence/final checks: [settings-suggestion-history.md](../../quality/settings-suggestion-history.md). Continue ready work under D-69; cold/ANR/native-publication/device/platform and unresolved owner decisions remain open.
