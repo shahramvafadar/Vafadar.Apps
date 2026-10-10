@@ -1528,6 +1528,13 @@ same blank draft without typing or Save. D-113's 1,535-test/build/signed APK bas
 Last-position fixture and physical-device/iOS/screen-reader acceptance remain open. See
 [quality/entry-category-captions.md](../quality/entry-category-captions.md#empty-form-gesture-investigation-d-115).
 
+### 31.29. Single complete savings-goal warning packet (D-116 / AT-118)
+
+Goal cards show the complete existing funding/date warning packet once, with unchanged amounts, scalable text,
+semantic color, visibility, raw row/command and full spoken name. Both actual native templates pass the 27-context
+Windows review with 54 packets and original presentation/store/developer-byte restoration. Full delivery evidence:
+[quality/goal-warning-packets.md](../quality/goal-warning-packets.md). A11Y-03 and broader platform gates stay open.
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

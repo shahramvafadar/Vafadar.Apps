@@ -627,3 +627,9 @@ Do not reinterpret parsed minor units if an account/currency has changed. Existi
 Category chips wrap complete scalable names within their current group. Reserve outer spacing inside the finite
 row and use independent heights: a long neighbor must not inflate short choices. Retain original choice identity,
 icons/semantic colors, real selection commands and full spoken names. Selection does not save the transaction.
+
+## Single savings-goal warning packet (D-116)
+
+Display the complete existing warning packet once per goal card, after progress and contribution suggestions.
+Keep every distinct funding/date/account warning, scalable 13 pt text, semantic amber and the existing full-card
+button/name. Never repeat the same packet above and below progress or discard a warning to shorten a card.

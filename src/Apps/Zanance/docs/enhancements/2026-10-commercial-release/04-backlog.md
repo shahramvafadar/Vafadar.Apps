@@ -559,3 +559,8 @@ last-position fixture and broader platform acceptance remain open. Do not repeat
 checks or the resolved hypothesis without a new observed cause; see the D-115 section of the same evidence file.
 OD-10 interim exclusion was declined by the owner (D-114). Keep current runtime policy and determine final
 encrypted-data/key/recovery handling with completed security; no temporary product measures.
+
+D-116 / AT-118 continues ready A11Y-03 work with one complete warning packet per savings-goal card. Native
+before evidence shows the duplicated packet; 27 Windows contexts/54 packets check both templates, full text/glyphs,
+display digits, original command/name and complete presentation/stored-row restoration. Delivery evidence:
+[goal-warning-packets.md](../../quality/goal-warning-packets.md). This does not close broader accessibility gates.

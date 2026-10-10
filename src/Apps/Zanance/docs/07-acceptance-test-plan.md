@@ -690,3 +690,12 @@ compare complete stored rows without Save. Windows 33 contexts/99 selections pas
 D-115 clarifies the separate empty-form scroll limitation: a current IME window covers the failed gesture origin.
 The same blank draft and gesture scroll to complete Title/date after native Back removes the keyboard; no typing
 or Save. No production correction is needed for this hypothesis. This is not last-position category acceptance.
+
+## AT-118 - Single complete savings-goal warning packet (D-116)
+
+Before: the actual native 360 px/200 % card renders its combined funding/overdue packet twice. After: one complete
+packet in each list template, unchanged native scaling, semantic color, raw command/row and full spoken name.
+Scroll through the actual viewport and check realized glyph/slot bounds, including Persian display digits.
+Restore original presentation collections/flags and compare complete financial/settings/goal/plan rows without Save.
+Windows 27 contexts/54 packets pass; full delivery and separate platform boundaries:
+[quality/goal-warning-packets.md](quality/goal-warning-packets.md).

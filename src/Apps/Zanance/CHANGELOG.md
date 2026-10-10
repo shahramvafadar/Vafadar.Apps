@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Repeated savings-goal warnings (2026-10-10, D-116)
+
+- A goal card shows its complete warning once. Funding shortfalls and overdue amounts remain visible together,
+  with the same text size, color and card action.
+
 ### Fixed - Complete transaction category names (2026-10-10, D-113)
 
 - Long category names wrap within the transaction form instead of being cut off. Short choices stay compact;

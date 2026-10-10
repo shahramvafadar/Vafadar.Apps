@@ -961,3 +961,12 @@ input-window state rather than one input-method flag, a compressed hierarchy or 
 failed InputTransparent candidate and remove the diagnostic debugger/owned forward. No production workaround is
 adopted; completed D-113 tests/build/APK evidence stays the baseline. Last-position and broader platform acceptance
 remain open. See [quality evidence](quality/entry-category-captions.md#empty-form-gesture-investigation-d-115).
+
+## D-116 - Show complete savings-goal warnings once (2026-10-10)
+
+Actual native goal cards repeat the same full WarningText packet above and below progress. Remove the earlier
+duplicate from both list templates, keeping all distinct warnings together after progress/date/suggestion, their
+original typography/color/visibility and unchanged full-card command/name. No financial algorithm or schema change.
+AT-118 checks both actual native templates with fictitious combined warnings, complete glyphs/viewport, native digit
+shaping and original presentation/stored-row restoration. Windows 27 contexts/54 packets pass; full delivery
+verification is recorded in [quality evidence](quality/goal-warning-packets.md). Broader platform gates remain open.

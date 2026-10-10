@@ -252,7 +252,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -438,6 +438,7 @@ internal static partial class DebugSnapshots
             ("home-layout", AppShell.HomeLayoutRoute, null),
             ("templates", AppShell.TemplatesRoute, null),
             ("goals", AppShell.GoalsRoute, null),
+            ("goals-warnings", AppShell.GoalsRoute, null),
             ("goal-detail", AppShell.GoalDetailRoute, new() { ["id"] = goalId }),
             ("goal-edit", AppShell.GoalEditorRoute, new() { ["id"] = goalId }),
             ("goal-quantity", AppShell.GoalDetailRoute, new() { ["id"] = quantityGoalId }),
@@ -520,6 +521,10 @@ internal static partial class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "goals-warnings" && Shell.Current.CurrentPage is Features.Goals.GoalsPage warningsPage)
+                {
+                    await ReviewGoalWarningsAsync(app, services, warningsPage, folder, language);
+                }
                 if (name == "transactions-saved-scope" && Shell.Current.CurrentPage is Features.Transactions.TransactionsPage savedScopePage)
                 {
                     await ReviewSavedFilterScopeAsync(app, services, savedScopePage, folder, language);

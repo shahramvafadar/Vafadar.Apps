@@ -573,3 +573,10 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   last-ANR history separate from current windows; debugger-induced ANRs are negative diagnostic evidence.
 * Reuse completed captures when correcting a proof assertion. A hidden IME may be absent rather than marked
   NOT_VISIBLE. Remove failed candidates and exact owned debugger forwards; do not ship speculative workarounds.
+
+## 48. Single complete goal warnings (D-116)
+
+* Each goal card shows its complete existing warning packet once, retaining all distinct funding/date/account
+  warnings and the original text scaling, semantic color, visibility, raw command and spoken description.
+* Native review keeps bound packets separate from Persian digit shaping; exercise actual warning glyph/viewport
+  geometry and restore exact presentation collections/flags plus complete stored rows without Save.

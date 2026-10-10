@@ -43,10 +43,10 @@
                                             <Label Text="{Binding FundedText}" />
                                             <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <!-- D-116: display the complete warning packet once, after the progress and suggestion. -->
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
@@ -72,10 +72,10 @@
                                             <Label Text="{Binding FundedText}" />
                                             <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" IsVisible="{Binding DateText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding SuggestionText}" TextColor="{DynamicResource SavingText}" IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <!-- D-116: keep the same single warning surface in both card templates. -->
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>

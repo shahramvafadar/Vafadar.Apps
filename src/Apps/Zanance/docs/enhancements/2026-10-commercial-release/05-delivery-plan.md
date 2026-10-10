@@ -388,3 +388,9 @@ checks retained; last-position and broader platform acceptance stay open. Perman
 on the owner's OD-03 decision; test-build limits remain disabled. The owner declined interim OD-10 exclusions
 (D-114): deliver permanent planned behavior,
 keep existing runtime policy and determine final backup/key/recovery handling with completed encryption.
+
+D-116 removes observed duplicate goal warning surfaces, preserving the complete warning packet, its scalable
+presentation and unchanged card action. AT-118 checks both native templates without Save; full delivery evidence:
+[goal-warning-packets.md](../../quality/goal-warning-packets.md). The owner approved OD-03 on 2026-10-10;
+after completing this verified step, ENT-01 is the next ready permanent section. Test-build enforcement remains
+separately gated, with no limits activated by the Core policy section.
