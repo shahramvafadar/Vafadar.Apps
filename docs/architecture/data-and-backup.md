@@ -310,3 +310,11 @@ inactive deployment. Preserve stored plan identity and complete rule/category me
 roll back all rows, with Changed only after commit. Contributions/earmarks never post money. No model/schema,
 migration/compiled model, portable backup, permission or SDK changes. Explicit selected read-only/automation and
 remaining ENT-02/03 paths stay open: [evidence](../../src/Apps/Zanance/docs/quality/goal-contribution-write-policy.md).
+
+D-124 binds restore's actual context before asynchronous input and reuses it for native replacement/migration.
+Cached optional callbacks check before native snapshot/replacement/output; no writer transaction wraps the SQLite
+backup API. Zanance's specialized database source checks retained BackupRestore rights without quotas/paid facts,
+preserving other registered sources. Import/Undo guard their existing actual-file writer and roll back journals on
+SQL/access failure. No schema/migration/compiled-model, format, permission or SDK changes. Migration after native
+replacement can still fail; preserve established safety-copy recovery and distinguish it from whole-package atomicity.
+[Evidence](../../src/Apps/Zanance/docs/quality/recovery-write-policy.md).

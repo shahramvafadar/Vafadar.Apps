@@ -1767,3 +1767,13 @@ and retired access preserve complete data; independent enabled writers recheck t
 39 new actual SQLite cases/main 1,806 pass; App.Tests 299 unchanged. Current registration stays inactive without
 schema/SDK/permission/visible-layout changes. Explicit selected read-only resources, automatic contribution
 delivery and the remaining ENT-02/03/04 paths are unfinished: [evidence](../quality/goal-contribution-write-policy.md).
+
+### 31.37. Bound recovery and retained import operations (D-124 / AT-126 / ENT-02 in progress)
+
+Database restore captures its actual context before input and uses the same destination for native copy and
+migrations; a reproduced profile-redirection regression is corrected, including first-schema migration. Cached
+actual-file rights protect database backup/recovery and owned CSV imports/Undo while preserving over-quota data
+and expired-host data rights, never portable paid facts. SQL failures/retirement roll back complete import journals.
+28 new SQLite cases/main 1,834 pass; App.Tests 299 unchanged. Current registration stays inactive without schema,
+SDK, permission, layout or backup-format changes. Selected read-only classification, profiles, automation and
+other ENT-02/03 paths remain unfinished: [evidence](../quality/recovery-write-policy.md).

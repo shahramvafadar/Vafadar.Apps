@@ -1094,3 +1094,24 @@ SQL failures and retired access restore all stored rows; Changed fires once afte
 schema, SDK, permission, string/layout or portable paid-fact change. Explicit selected read-only resources and
 automated contribution delivery plus remaining ENT-02/03/04 paths are unfinished. Build/APK and normal Release
 evidence: [goal-contribution-write-policy.md](quality/goal-contribution-write-policy.md).
+
+## D-124 - Bind recovery to its initial file and guard retained imports (2026-10-10)
+
+An actual SQLite regression reproduced restore input changing the selected profile: the previous source created
+its destination context after reading input and overwrote the second profile. Create the context first and reuse
+it for native replacement and migrations. Old-schema restore also upgrades the same initial file. Optional cached
+authorization callbacks run before consuming input and before native copying/output; the shared library remains
+independent of commercial policy. Do not hold an external writer transaction around SQLite's online backup API.
+
+Zanance registers a specialized database source for BackupRestore rights, replacing only its own generic source.
+Preserve other backup sources. CommercialFileAccess centralizes exact-file snapshot validation for existing writer
+transactions and the database source. Owned backup/restore/import preserve all data above quota and after host
+expiry, with exact membership checks and no portable paid facts. Import/Undo use their existing writer before
+data/journal reads, recheck after SQL and roll back complete aggregate/detail/journal changes on failure.
+
+28 new real SQLite cases/main 1,834 pass; App.Tests 299 unchanged. No model/schema, SDK, permission, string/layout
+or backup format changes; current deployment stays inactive. Explicit selected read-only import/restore data,
+profile creation, automation and remaining ENT-02/03 boundaries remain unfinished. Database replacement followed
+by a failed migration still follows established safety-copy recovery; the whole multi-source portable package is
+not made atomic here. Platform/APK and actual linked import/Undo evidence:
+[recovery-write-policy.md](quality/recovery-write-policy.md).

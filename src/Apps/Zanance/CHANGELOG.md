@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Stable backup restore destination (2026-10-10, D-124)
+
+- Restore keeps its original database destination while reading the file, including upgrades of older backups.
+- Prepare recovery/import access checks while keeping owned data above quotas and preserving complete Undo.
+  Test builds stay unrestricted.
+
 ### Fixed - Complete savings goal saves (2026-10-10, D-123)
 
 - Save a goal, its Home placement and contribution plan together. A failed contribution save no longer leaves

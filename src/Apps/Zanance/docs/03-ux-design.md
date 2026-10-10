@@ -684,3 +684,11 @@ Home pin changes and contribution draft together. A failed contribution Save can
 unrelated pin removed. Contribution estimates and earmarks never become ledger entries. Retained correction,
 release and deletion rights remain available; empty dates support a basic goal. Test builds remain unrestricted.
 Selected read-only choices and translated commercial-limit feedback are still ENT-03/04 work.
+
+## Stable recovery destination and explicit import Undo (D-124)
+
+Keep the current file picker, preview, explicit link/keep-both choice and Undo confirmation. The restore database
+is the one selected when its source starts reading input; a later profile selection cannot redirect replacement or
+migration. Import and Undo preserve complete aggregate/detail data and metadata with no partial writes. Owned data
+above quota is retained, without granting paid rights. Current test builds remain unrestricted; explicit selected
+read-only resources and commercial feedback remain ENT-03/04 work.

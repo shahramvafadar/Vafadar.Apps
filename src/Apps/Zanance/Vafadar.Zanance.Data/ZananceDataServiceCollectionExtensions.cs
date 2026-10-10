@@ -25,7 +25,13 @@ public static class ZananceDataServiceCollectionExtensions
         // D-118: no commercial limits in current test builds; this is not a customer entitlement.
         services.TryAddSingleton<ICommercialWriteAccessSource, InactiveCommercialWriteAccessSource>();
 
-        return services.AddLocalDatabase<ZananceDbContext>(databasePath)
+        services.AddLocalDatabase<ZananceDbContext>(databasePath);
+        // D-124: replace only this database source; preserve display/settings and every other registered source.
+        var databaseSource = services.Single(d => d.ServiceType == typeof(IBackupSource)
+            && d.ImplementationType == typeof(SqliteDatabaseBackupSource<ZananceDbContext>));
+        services.Remove(databaseSource);
+
+        return services.AddSingleton<IBackupSource, ZananceDatabaseBackupSource>()
             .AddSingleton<ZananceStore>()
             .AddSingleton<PlanStore>()
             .AddSingleton<GoalStore>()

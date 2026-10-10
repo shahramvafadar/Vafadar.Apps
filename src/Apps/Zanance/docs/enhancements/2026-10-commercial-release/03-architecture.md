@@ -250,3 +250,14 @@ SQL and access recheck precede commit and one Changed. Reuse existing goal prepa
 metadata with its original identity. Current registration remains inactive, without portable paid facts or
 schema changes. Selection/automation/native/other resource paths remain unfinished:
 [evidence](../../quality/goal-contribution-write-policy.md).
+
+## 14. Database recovery source and retained import operations (D-124)
+
+CommercialFileAccess centralizes cached actual-file rights for writer guards and the specialized database backup
+source. Replace only the exact generic Zanance database source registration. The generic library accepts optional
+cached authorization callbacks and binds one context before restore input, reusing it for copy/migration. No external
+writer surrounds SQLite BackupDatabase. Keep other sources, integrity checking, temp cleanup and safety-copy flow.
+Owned data above quota/after host expiry remains recoverable/importable with exact membership; paid facts stay
+outside portable data. Import/Undo retain their existing writer and explicit aggregate decisions, with post-SQL
+access recheck and complete rollback. Current registration is inactive; selected read-only data and other resources/
+automation remain open: [evidence](../../quality/recovery-write-policy.md).

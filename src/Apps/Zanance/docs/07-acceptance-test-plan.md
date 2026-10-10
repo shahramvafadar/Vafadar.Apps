@@ -775,3 +775,14 @@ contribution insert/update failure and retry; actual SQL-trigger access retireme
 independent last-slot contention; existing/new contribution row contention; historical correction without
 activation. Main 1,806 pass. Strict platforms, full APK and actual Release form/allocation evidence:
 [evidence](quality/goal-contribution-write-policy.md). Selected read-only/new automation/limit UI remain open.
+
+## AT-126 - Actual-file recovery and retained import rights (D-124)
+
+28 new real SQLite cases verify reproduced/corrected profile redirection; inactive/Free/expired-host over-quota
+imports and restarted Undo; four missing-membership boundaries with no input/output/row changes; four over-quota
+backup/restore contexts preserving all columns and unchanged paid facts; two access changes during input;
+bound-file rights after a profile move; two SQL-trigger retirement rollbacks; two journal failure rollbacks;
+two independent duplicate-import contests; wrong-file snapshots; corrupted/cancelled input; native-copy/output
+access rechecks; preservation of other registered sources; and first-schema restore/migration into the initial
+file after a profile move. Main suite 1,834 passes. Strict platforms, full signed APK and actual linked import/Undo:
+[evidence](quality/recovery-write-policy.md). Multi-source atomicity and selected read-only classification remain open.

@@ -26,3 +26,12 @@ await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
 ```
 
 Store money as `long` minor units: SQLite cannot sum or compare `decimal` values in SQL.
+
+## Actual destination and cached backup checks (D-124)
+
+SqliteDatabaseBackupSource captures the actual context before restore stream input, then copies and migrates that
+same file even if LocalDatabaseLocation moves. Existing IBackupSource calls keep their signatures. Optional overloads
+accept Action<TContext> cached authorization callbacks before input and native copying/output; callbacks must not
+move the database, do network work or start an external SQLite writer transaction. The library has no commercial
+policy dependency. Integrity checking and temporary snapshot cleanup remain intact. A later migration failure may
+follow a completed native replacement; callers still provide a safety copy before restore.

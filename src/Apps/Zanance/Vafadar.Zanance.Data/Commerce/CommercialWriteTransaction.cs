@@ -11,16 +11,11 @@ namespace Vafadar.Zanance.Data.Commerce;
 /// </summary>
 internal sealed class CommercialWriteTransaction : IAsyncDisposable
 {
-    private readonly ICommercialWriteAccessSource _source;
-    private readonly string _databasePath;
-    private readonly CommercialWriteAccess _access;
+    private readonly CommercialFileAccess _access;
     private readonly IDbContextTransaction? _ownedTransaction;
 
-    private CommercialWriteTransaction(ICommercialWriteAccessSource source, string databasePath,
-        CommercialWriteAccess access, IDbContextTransaction? transaction)
+    private CommercialWriteTransaction(CommercialFileAccess access, IDbContextTransaction? transaction)
     {
-        _source = source;
-        _databasePath = databasePath;
         _access = access;
         _ownedTransaction = transaction;
     }
@@ -40,15 +35,13 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         ArgumentNullException.ThrowIfNull(db);
         ArgumentNullException.ThrowIfNull(source);
         var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
-        var access = source.Capture(path) ?? throw new InvalidOperationException("A commercial access source returned no snapshot.");
-        if (!access.Enforced && !requireTransaction) return new(source, path, access, null);
-        if (access.Enforced && !string.Equals(path, access.DatabasePath, StringComparison.Ordinal))
-            throw new InvalidOperationException("The commercial snapshot belongs to another database.");
+        var access = new CommercialFileAccess(source, path);
+        if (!access.Enforced && !requireTransaction) return new(access, null);
         // Microsoft.Data.Sqlite's serializable writer transaction protects count and save across factories/processes.
         // The independent-provider contention test verifies this boundary with the actual SQLite implementation.
         var transaction = db.Database.CurrentTransaction is null
             ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
-        var result = new CommercialWriteTransaction(source, path, access, transaction);
+        var result = new CommercialWriteTransaction(access, transaction);
         try
         {
             result.EnsureCurrent();
@@ -79,10 +72,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Checks the operation even when it adds no quota item; a paid right never substitutes for membership.</summary>
     public void DemandFeature(CommercialFeature feature)
     {
-        EnsureCurrent();
-        if (!Enforced) return;
-        var permission = PlanPolicy.Check(feature, _access.Context!);
-        if (permission != FeaturePermission.Allowed) throw new CommercialWriteRejectedException(feature, permission);
+        _access.DemandFeature(feature);
     }
 
     /// <summary>Rejects an addition against the actual transaction-local count.</summary>
@@ -96,8 +86,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Rejects a changed entitlement/scope snapshot before saving rather than using retired profile rights.</summary>
     public void EnsureCurrent()
     {
-        if (_access.Enforced && _source.Capture(_databasePath) != _access)
-            throw new InvalidOperationException("Commercial access changed during the write; retry with current rights.");
+        _access.EnsureCurrent();
     }
 
     /// <summary>Commits only the transaction this guard owns; existing callers keep their outer atomic operation.</summary>

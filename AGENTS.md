@@ -656,3 +656,17 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Changed fires once after commit. Independent enabled writers recheck capacity and the stored parent plan.
 * Current registration stays inactive. Explicit selected read-only items, contribution reminder delivery,
   other ENT-02/03 paths and translated limit feedback remain unfinished; no schema or paid grant is introduced.
+
+## 56. Bound recovery destination and retained import rights (D-124)
+
+* Bind the actual database context before reading restore input; use that same context for native replacement and
+  migration. A profile change during input cannot select another destination. Verify cached access before native
+  copying/output, without network work or a writer transaction around SQLite's backup API.
+* Database backup/restore and owned import preserve data above quotas and after host expiry; exact accepted
+  membership remains required. Portable data never changes paid facts. Replace only Zanance's registered database
+  source, preserving other sources. CommercialFileAccess is shared by writers and the database recovery source.
+* Import and durable Undo check under their existing actual-file writer before rows/journal reads. SQL failures or
+  retired facts roll back aggregate/detail/journal changes with no Changed. Preserve explicit overlap decisions.
+* Registration stays inactive. Read-only import/restore classification, selected resources, profile creation,
+  automation and other ENT-02/03 paths remain open. Native replacement plus a later failed migration still requires
+  the established safety-copy recovery; this does not make the whole portable package an atomic transaction.

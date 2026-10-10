@@ -124,3 +124,8 @@ D-123 continues ENT-02 with retained earmark/release rights and contribution ope
 goal/pin/contribution editor Save. 39 added SQLite cases/main 1,806 pass. Current registration remains inactive;
 selected read-only items, contribution delivery and remaining ENT-02/03/04 paths stay open:
 [quality evidence](../../quality/goal-contribution-write-policy.md).
+
+D-124 continues ENT-02 with exact-file database backup/recovery and retained import/Undo checks. Restore binds
+the destination before input and migrates the same file, correcting an actual reproduced redirection defect.
+28 added SQLite cases/main 1,834 pass. Current registration stays inactive; selected read-only import/restore data,
+profiles, automation and remaining ENT-02/03 paths stay open: [quality evidence](../../quality/recovery-write-policy.md).

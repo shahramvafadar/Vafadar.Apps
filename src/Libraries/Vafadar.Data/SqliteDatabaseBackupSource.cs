@@ -27,22 +27,29 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
     public string Name => EntryName;
 
     /// <inheritdoc />
-    public async Task WriteAsync(Stream destination, CancellationToken cancellationToken)
+    public Task WriteAsync(Stream destination, CancellationToken cancellationToken) => WriteAsync(destination, null, cancellationToken);
+
+    /// <summary>Writes a snapshot with an optional actual-context check before native copying and output.</summary>
+    /// <remarks>The callback reads only cached authorization; it never moves the database or performs network work.</remarks>
+    public async Task WriteAsync(Stream destination, Action<TContext>? verifyAccess, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(destination);
         var snapshotPath = CreateTemporaryPath();
 
         try
         {
-            await using (var context = await contextFactory.CreateDbContextAsync(cancellationToken))
+            await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
+            verifyAccess?.Invoke(context);
             await using (var snapshot = OpenUnpooled(snapshotPath))
             {
                 await context.Database.OpenConnectionAsync(cancellationToken);
                 await snapshot.OpenAsync(cancellationToken);
+                verifyAccess?.Invoke(context);
                 ((SqliteConnection)context.Database.GetDbConnection()).BackupDatabase(snapshot);
             }
 
             await using var file = new FileStream(snapshotPath, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, useAsync: true);
+            verifyAccess?.Invoke(context);
             await file.CopyToAsync(destination, cancellationToken);
         }
         finally
@@ -52,13 +59,20 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
     }
 
     /// <inheritdoc />
-    public async Task RestoreAsync(Stream source, CancellationToken cancellationToken)
+    public Task RestoreAsync(Stream source, CancellationToken cancellationToken) => RestoreAsync(source, null, cancellationToken);
+
+    /// <summary>Restores into the initial actual context, checking optional cached access before consuming/copying.</summary>
+    /// <remarks>The same context migrates the destination; a profile change during input cannot redirect recovery.</remarks>
+    public async Task RestoreAsync(Stream source, Action<TContext>? verifyAccess, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(source);
         var snapshotPath = CreateTemporaryPath();
 
         try
         {
+            // D-124: bind the destination before reading the package. The current profile may move during that await.
+            await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
+            verifyAccess?.Invoke(context);
             await using (var file = new FileStream(snapshotPath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 81920, useAsync: true))
             {
                 await source.CopyToAsync(file, cancellationToken);
@@ -69,15 +83,15 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
                 await snapshot.OpenAsync(cancellationToken);
                 await EnsureIntegrityAsync(snapshot, cancellationToken);
 
-                await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
                 await context.Database.OpenConnectionAsync(cancellationToken);
+                verifyAccess?.Invoke(context);
                 snapshot.BackupDatabase((SqliteConnection)context.Database.GetDbConnection());
             }
 
+            await context.Database.CloseConnectionAsync();
             SqliteConnection.ClearAllPools();
 
-            await using var migrationContext = await contextFactory.CreateDbContextAsync(cancellationToken);
-            await migrationContext.Database.MigrateAsync(cancellationToken);
+            await context.Database.MigrateAsync(cancellationToken);
         }
         finally
         {

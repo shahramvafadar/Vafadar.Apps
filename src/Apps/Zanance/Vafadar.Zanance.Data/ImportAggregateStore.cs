@@ -1,6 +1,8 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
+using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Zanance.Data.Importing;
 
 namespace Vafadar.Zanance.Data;
@@ -43,7 +45,8 @@ public sealed partial class ZananceStore
         ArgumentNullException.ThrowIfNull(entries);
         ArgumentNullException.ThrowIfNull(choices);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.BackupRestore);
         var stored = await db.Entries.AsNoTracking().ToListAsync(cancellationToken);
         var journals = await ReadImportLinksAsync(db, cancellationToken);
         var known = stored.Select(e => e.Id).Concat(ConsumedIds(journals)).ToHashSet();
@@ -119,6 +122,7 @@ public sealed partial class ZananceStore
         }
 
         db.Entries.AddRange(toAdd);
+        write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         if (adjustments.Count > 0)
         {
@@ -128,7 +132,7 @@ public sealed partial class ZananceStore
             await db.SaveChangesAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
         return new ImportResult(batchId, imported.Count, skipped, errors);
     }
@@ -167,7 +171,8 @@ public sealed partial class ZananceStore
     public async Task<ImportUndoResult> TryUndoImportAsync(Guid batchId, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.Corrections);
         var stored = await db.Entries.AsNoTracking().ToDictionaryAsync(e => e.Id, cancellationToken);
         var journals = await ReadImportLinksAsync(db, cancellationToken);
         var own = journals.FirstOrDefault(j => j.Batch.Id == batchId);
@@ -220,9 +225,10 @@ public sealed partial class ZananceStore
         }
 
         var count = importedIds.Count;
+        write.EnsureCurrent();
         await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
         return new ImportUndoResult(count, false);
     }
