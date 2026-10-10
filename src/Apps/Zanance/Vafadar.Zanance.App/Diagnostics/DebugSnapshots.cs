@@ -15,7 +15,7 @@ namespace Vafadar.Zanance.App.Diagnostics;
 /// <c>VAFADAR_SNAPSHOTS</c> points to a folder, the app walks through its main screens in English and Persian and
 /// renders each page to a PNG file, then closes. Used to review layout and right-to-left rendering without a device.
 /// </summary>
-internal static class DebugSnapshots
+internal static partial class DebugSnapshots
 {
     private static void SetSize(Window window)
     {
@@ -392,6 +392,7 @@ internal static class DebugSnapshots
             ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("settlement-feedback", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
+            ("occurrence-feedback", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("modal-headers", AppShell.AccountsRoute, null),
             ("plan-validation", AppShell.PlanEditorRoute, null),
@@ -609,6 +610,8 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "occurrence-feedback")
+                { await ReviewOccurrenceFeedbackAsync(app, services, folder, language); }
                 if (name == "settlement-feedback")
                 { await ReviewSettlementFeedbackAsync(app, services, folder, language); }
                 if (name == "entry-fee-retention")

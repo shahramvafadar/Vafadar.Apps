@@ -271,3 +271,12 @@ The final Windows matrix has 24 contexts/144 invalid and 72 valid native Saves; 
 contexts/18 invalid Saves, strict builds, signed APK and original financial/preference-value checks pass.
 Normal Settings audit updates are separate; physical/iOS/readers, valid Android settlement acceptance and other
 owner/platform/release gates remain open. Evidence: [quality/settlement-feedback.md](quality/settlement-feedback.md).
+
+D-103 / AT-108 completes due-item action captions and correctly placed payment/override feedback, with independent
+corrections and native revelation of the actual affected field. Fourteen new cases bring the main suite to 1,484
+(App.Tests 248). Windows: 24 contexts/96 invalid and 96 valid native Saves, plus a separate 24-context/96-invalid
+final contextual-message review with no additional financial Saves; normal-scale Release Android:
+six contexts/18 invalid Saves. Actual metadata changes never post entries; partial payment and completion retain
+the intended entries and unique settlement. Original financial rows/states are preserved/restored; strict builds
+and the complete signed phone-test APK pass. Phone/iOS/readers, valid Android occurrence acceptance and other
+owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback.md](quality/occurrence-feedback.md).

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear due-item actions and amount feedback (2026-10-10, D-103)
+
+- Due-item buttons keep their full labels with large text. Invalid payment and this-occurrence amounts show their errors beside the correct field and bring that input into view. Corrections keep the rest of your draft; an empty override still keeps the plan amount. Partial payment, completion and occurrence changes keep their existing financial behavior.
+
 ### Fixed - Clear final-bill feedback (2026-10-10, D-102)
 
 - Final-bill forms explain invalid amounts, reversed dates and periods without advance payments beside the affected fields. Record the difference reveals the first problem and keeps your input. Its full label remains readable with large text. A zero bill can refund the remaining advances; an exactly matching bill records nothing.

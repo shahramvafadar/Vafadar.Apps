@@ -636,3 +636,8 @@ D-102 / AT-107 covers complete native settlement error/action glyphs at 200%, 36
 themes. Native invalid Save reveals the affected input; actual extra/refund/zero Saves preserve original financial
 fields/ids. Normal Release Android invalid-Save/correction evidence stays separate from OS/phone/iOS/reader or
 valid Android settlement acceptance. Evidence: settlement-feedback.md. Other A11Y-03 controls remain open.
+
+D-103 / AT-108 retains seven complete native-scaled occurrence actions and correctly placed payment/override
+errors at 200%, 360/412/wide, en/fa/de and both themes. Actual metadata/partial/completion Saves preserve original
+financial rows and restore only identified fictitious scenario rows. Normal Release Android invalid-input evidence
+stays separate from OS/phone/iOS/readers or valid Android occurrence acceptance. Evidence: occurrence-feedback.md.

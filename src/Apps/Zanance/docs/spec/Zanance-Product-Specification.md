@@ -1424,6 +1424,17 @@ contexts/18 invalid Saves, strict builds, signed APK and original financial/pref
 Normal Settings audit updates are separate; physical/iOS/readers, valid Android settlement acceptance and other
 owner/platform/release gates remain open. Evidence: [quality/settlement-feedback.md](../quality/settlement-feedback.md).
 
+### 31.19. Complete occurrence actions and input feedback (D-103 / AT-108)
+
+D-103 / AT-108 completes due-item action captions and correctly placed payment/override feedback, with independent
+corrections and native revelation of the actual affected field. Fourteen new cases bring the main suite to 1,484
+(App.Tests 248). Windows: 24 contexts/96 invalid and 96 valid native Saves, plus a separate 24-context/96-invalid
+final contextual-message review with no additional financial Saves; normal-scale Release Android:
+six contexts/18 invalid Saves. Actual metadata changes never post entries; partial payment and completion retain
+the intended entries and unique settlement. Original financial rows/states are preserved/restored; strict builds
+and the complete signed phone-test APK pass. Phone/iOS/readers, valid Android occurrence acceptance and other
+owner/platform/release gates remain open. Evidence: [quality/occurrence-feedback.md](../quality/occurrence-feedback.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

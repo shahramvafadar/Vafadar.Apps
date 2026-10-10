@@ -594,3 +594,16 @@ Final local status: 14 application cases, main 1,470/App.Tests 234; 24 Windows c
 Saves; six normal-scale complete-Release emulator contexts/18 invalid Saves; strict builds, signed APK and three
 profile financial/preference-value checks pass. Real OS/phone/iOS/readers and valid Android settlement acceptance
 remain open. Evidence: quality/settlement-feedback.md.
+
+## AT-108 - Complete due-item actions and safe correctly placed feedback (D-103)
+
+Invoke invalid completion/partial/change actions in a fictitious occurrence. Check full native action captions,
+names/targets, inline errors next to the attempted input and first-input visibility. Correct each independently;
+retain the other draft/error and complete stored data. Invoke valid positive/omitted override saves: only the
+intended new occurrence state changes, never ledger entries. Invoke a partial payment followed by completion:
+exactly intended entries and the unique settled state, with every original financial field/id preserved. Restore
+only identified fictitious scenario rows and verify the exact pre-state. Local final status: 14 application cases,
+main 1,484/App.Tests 248, 24 Windows contexts/96 invalid and 96 valid native Saves, a separate 24-context/96-invalid
+final contextual-message review, six normal-scale Release emulator
+contexts/18 invalid Saves, strict builds, signed APK and original-data readbacks pass. Real phone/iOS/readers and
+valid Android occurrence acceptance remain open. Evidence: quality/occurrence-feedback.md.

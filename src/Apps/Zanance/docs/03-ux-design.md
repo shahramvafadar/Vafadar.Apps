@@ -562,3 +562,11 @@ periods with no advances, and clear corrected field problems without resetting t
 difference remains available for field explanations; reveal the first affected field without taking desktop
 focus. Keep the full scalable caption/spoken name and minimum target in its persistent dock. Initialize DateFields
 before binding. A zero bill is explicit input, not a placeholder value to post; matching bills require no entry.
+
+### Due-item actions and amount feedback (D-103)
+
+Use full growing native action captions/names/targets for completion, partial payment, this-occurrence change,
+skip, undo and plan navigation. Keep payment and optional override errors beside their own inputs and independent
+during corrections. Invalid action reveals its own field without moving desktop focus or resetting the draft.
+An omitted override retains the plan amount; only a positive payment may continue. Initialize DateFields before
+binding and keep the existing explicit metadata/partial/completion continuations.

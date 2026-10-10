@@ -387,3 +387,12 @@ AT-107 invokes six invalid/no-change and three valid actual native Saves in the 
 Extra payment, refund and zero-bill rows are compared with the original financial state, then only those identified
 scenario rows are removed between cases. Preserve/restore original development files; never run valid-Save fixtures
 over personal data. Simple uses the same settlement fields and can be reviewed with `-Mode simple`.
+
+Occurrence feedback review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only occurrence-feedback -Mode advanced -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-108 uses four invalid native actions and four valid metadata/partial/completion Saves per context, only in the
+walk-through's fictitious database. Original fields/ids/states are compared; remove only the exact identified new
+scenario rows/state between cases. Preserve/restore original development files. Never use valid-Save fixtures over
+personal data. Simple uses the same fields and can be reviewed with `-Mode simple`.
+For an isolated follow-up review of unchanged continuations, set VAFADAR_SNAPSHOT_OCCURRENCE_MESSAGES_ONLY=1:
+the route invokes four invalid native Saves and independent corrections, compares complete original stored values,
+writes a distinct message-only proof and performs no valid Save. Clear the process-local setting after review.

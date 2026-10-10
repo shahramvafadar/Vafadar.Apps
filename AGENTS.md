@@ -471,3 +471,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   full scaled native caption/name/target. No financial Save proceeds until the existing settlement guard accepts it.
 * Zero bills may refund remaining advances; equal bills write nothing. AT-107's valid native Save fixtures touch only
   their fictitious database and verify original financial fields/ids before removing their identified scenario rows.
+
+## 36. Complete occurrence actions and correctly placed errors (D-103)
+
+* Due-item actions keep full native-scaled captions/names/targets. Keep payment and optional override errors beside
+  their own inputs, with independent corrections; reveal the actual attempted input without changing desktop focus.
+* Initialize occurrence DateFields before binding. Empty override retains the plan amount; payment stays positive.
+  Metadata Save never posts entries; partial payment and completion retain the original unique-settlement behavior.
+* AT-108 native valid-Save fixtures touch only the walk-through's fictitious database. Compare original financial
+  fields/ids/states and remove only the exact identified new scenario rows/state before the next case.

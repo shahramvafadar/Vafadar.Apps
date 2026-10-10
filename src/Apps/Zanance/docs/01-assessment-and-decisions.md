@@ -811,3 +811,16 @@ AT-107 adds 14 cases (main 1,470/App.Tests 234). The 24-context Windows matrix/1
 Saves, six Release emulator contexts/18 invalid Saves, strict builds and complete signed APK pass. Original
 financial rows/preference values remain exact; normal display-choice audit timestamps are separate.
 Physical/iOS/readers and valid Android financial settlement acceptance remain open. Evidence: quality/settlement-feedback.md.
+
+## D-103 - Complete occurrence actions and correctly placed amount feedback (2026-10-10)
+
+Real execution reproduces clipped due-item actions; the override explanation belongs beside its own field rather
+than in payment. Keep full growing native action captions/names/targets and separate payment/override errors,
+independent corrections and revelation of the actually attempted input. Initialize DateFields before binding.
+An empty override retains the plan amount, positive payment rules and the original partial/unique-completion
+continuation remain; metadata never posts ledger entries. Change Save uses the existing busy convention.
+AT-108 adds 14 cases, main 1,484/App.Tests 248. The 24-context Windows matrix/96 invalid and 96 valid Saves,
+plus a separate 24-context/96-invalid final contextual-message review after correcting the payment wording,
+six normal-scale Release emulator cases/18 invalid Saves, strict builds, complete signed APK and original-data
+checks pass. Real device/iOS/readers and valid Android occurrence acceptance remain open.
+Evidence: quality/occurrence-feedback.md.

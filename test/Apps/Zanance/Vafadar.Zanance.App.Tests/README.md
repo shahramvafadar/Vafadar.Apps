@@ -51,3 +51,7 @@ The scenario supplements monetary helper/domain tests rather than repeating the 
 D-102 adds SettlementDraftValidationTests: 14 AT-107 cases using the actual linked input validator, regional money
 parser and advance/refund engine. Current main count is 1,470; App.Tests 234. Native invalid/valid Save, error/action
 geometry and financial row preservation are separately recorded in docs/quality/settlement-feedback.md.
+
+D-103 adds OccurrenceAmountValidationTests: 14 AT-108 cases over the actual linked required/optional regional
+validator. Main suite 1,484; App.Tests 248. Actual native metadata/partial/completion, correct field feedback and
+original financial row/state preservation are separate runtime evidence in docs/quality/occurrence-feedback.md.

@@ -12,7 +12,7 @@
     <Grid>
         <Label Text="{v:Translate Entry_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
 
-        <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView x:Name="ValidationViewport" IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
@@ -35,7 +35,7 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Button Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0" />
+                        <p:WrappingAction x:Name="PlanAction" Text="{v:Translate Plan_Details}" Command="{Binding OpenPlanCommand}" Appearance="Text" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -44,17 +44,19 @@
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Occurrence_ActualAmount}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                            <Entry Text="{Binding ActualAmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" FontAttributes="Bold"
+                            <Entry x:Name="PaymentInput" Text="{Binding ActualAmountText}" Keyboard="Numeric" Placeholder="0" FontSize="22" FontAttributes="Bold"
                                    SemanticProperties.Description="{v:Translate Occurrence_ActualAmount}" />
                             <Label Grid.Column="1" Text="{Binding CurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                         </Grid>
+                        <Label x:Name="PaymentErrorLabel" Text="{Binding PaymentAmountError}" Style="{StaticResource ErrorText}" Margin="0,4,0,0"
+                               IsVisible="{Binding PaymentAmountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Occurrence_ActualDate}" Style="{StaticResource FieldLabel}" />
                         <v:DateField Date="{Binding ActualDate}" />
                         <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" Margin="0,8,0,0"
                                IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
-                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Occurrence_Confirm}" Command="{Binding ConfirmCommand}"
+                        <p:WrappingAction x:Name="ConfirmAction" Appearance="Primary" Text="{v:Translate Occurrence_Confirm}" Command="{Binding ConfirmCommand}"
                                 IsEnabled="{Binding IsNotBusy}" Margin="0,16,0,0" />
-                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Occurrence_PayPart}" Command="{Binding PayPartCommand}"
+                        <p:WrappingAction x:Name="PayPartAction" Text="{v:Translate Occurrence_PayPart}" Command="{Binding PayPartCommand}"
                                 IsEnabled="{Binding IsNotBusy}" />
                         <Label Text="{v:Translate Occurrence_PayPartHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
@@ -82,22 +84,24 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Change this occurrence only; two buttons in a row use less side padding so that longer labels fit at 360 px -->
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsOpen}">
-                    <Button Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Occurrence_Change}" SemanticProperties.Hint="{v:Translate Occurrence_Change_A11yHint}" Command="{Binding ToggleChangeCommand}" />
-                    <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="8,10" Text="{v:Translate Occurrence_Skip}" Command="{Binding SkipCommand}" />
-                </Grid>
+                <!-- D-103: complete translated actions grow at native scale, including the narrowest window. -->
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsOpen}">
+                    <p:WrappingAction x:Name="ChangeAction" Text="{v:Translate Occurrence_Change}" SemanticProperties.Hint="{v:Translate Occurrence_Change_A11yHint}" Command="{Binding ToggleChangeCommand}" />
+                    <p:WrappingAction x:Name="SkipAction" Text="{v:Translate Occurrence_Skip}" Command="{Binding SkipCommand}" IsEnabled="{Binding IsNotBusy}" />
+                </VerticalStackLayout>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowChange}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Occurrence_MoveDue}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
                         <v:DateField Date="{Binding DueDate}" />
                         <Label Text="{v:Translate Occurrence_AmountThisTime}" Style="{StaticResource FieldLabel}" />
-                        <Entry Text="{Binding OverrideAmountText}" Keyboard="Numeric" Placeholder="{Binding PlannedAmountText}"
+                        <Entry x:Name="OverrideInput" Text="{Binding OverrideAmountText}" Keyboard="Numeric" Placeholder="{Binding PlannedAmountText}"
                                SemanticProperties.Description="{v:Translate Occurrence_AmountThisTime}" />
+                        <Label x:Name="OverrideErrorLabel" Text="{Binding OverrideAmountError}" Style="{StaticResource ErrorText}" Margin="0,4,0,0"
+                               IsVisible="{Binding OverrideAmountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Entry_Note}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding OccurrenceNote}" MaxLength="500" SemanticProperties.Description="{v:Translate Entry_Note}" />
                         <Label Text="{v:Translate Occurrence_ChangeHint}" Style="{StaticResource Secondary}" Margin="0,8,0,0" />
-                        <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveChangeCommand}" Margin="0,12,0,0" />
+                        <p:WrappingAction x:Name="SaveChangeAction" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveChangeCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,12,0,0" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -105,7 +109,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsOpen, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{Binding SettledText}" IsVisible="{Binding SettledText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Occurrence_Undo}" Command="{Binding UndoCommand}" />
+                        <p:WrappingAction x:Name="UndoAction" Text="{v:Translate Occurrence_Undo}" Command="{Binding UndoCommand}" IsEnabled="{Binding IsNotBusy}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

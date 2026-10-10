@@ -28,6 +28,19 @@ public sealed partial class OccurrenceViewModel(
     private DateOnly _originalDate;
     private Occurrence? _occurrence;
     private string _currency = Currencies.Euro.Code;
+    private bool _paymentValidationRequested;
+    private bool _overrideValidationRequested;
+
+    /// <summary>Requests visibility of the input belonging to the attempted action without changing focus.</summary>
+    public event Action<OccurrenceInput>? ValidationFailed;
+
+    /// <summary>Gets or sets the explanation beside the actual payment input.</summary>
+    [ObservableProperty]
+    public partial string? PaymentAmountError { get; set; }
+
+    /// <summary>Gets or sets the explanation beside the optional occurrence override.</summary>
+    [ObservableProperty]
+    public partial string? OverrideAmountError { get; set; }
 
     public ObservableCollection<EntryRow> Candidates { get; } = [];
 
@@ -56,13 +69,13 @@ public sealed partial class OccurrenceViewModel(
     public partial string ActualAmountText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial DateOnly ActualDate { get; set; }
+    public partial DateOnly ActualDate { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     [ObservableProperty]
     public partial string? CurrencyCode { get; set; }
 
     [ObservableProperty]
-    public partial DateOnly DueDate { get; set; }
+    public partial DateOnly DueDate { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     [ObservableProperty]
     public partial string OverrideAmountText { get; set; } = string.Empty;
@@ -95,6 +108,36 @@ public sealed partial class OccurrenceViewModel(
     public partial bool NotFound { get; set; }
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+
+    partial void OnActualAmountTextChanged(string value)
+    {
+        if (_paymentValidationRequested) { ValidateAmount(OccurrenceInput.Payment); }
+    }
+
+    partial void OnOverrideAmountTextChanged(string value)
+    {
+        if (_overrideValidationRequested) { ValidateAmount(OccurrenceInput.Override); }
+    }
+
+    // Keep each correction attached to its original input; changing an override must not replace payment feedback.
+    private OccurrenceAmountResult ValidateAmount(OccurrenceInput field)
+    {
+        var payment = field == OccurrenceInput.Payment;
+        var result = OccurrenceAmountValidation.Validate(payment ? ActualAmountText : OverrideAmountText,
+            _currency, localization.CurrentCulture, payment);
+        var explanation = result.ErrorKey is { } key ? translator[key] : null;
+        if (payment) { PaymentAmountError = explanation; }
+        else { OverrideAmountError = explanation; }
+        return result;
+    }
+
+    private long? ValidatePayment()
+    {
+        _paymentValidationRequested = true;
+        var result = ValidateAmount(OccurrenceInput.Payment);
+        if (result.ErrorKey is not null) { ValidationFailed?.Invoke(OccurrenceInput.Payment); }
+        return result.Amount;
+    }
 
     /// <summary>Query: <c>plan</c> (id) and <c>date</c> (original date).</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -198,9 +241,8 @@ public sealed partial class OccurrenceViewModel(
         }
 
         Error = null;
-        if (!MoneyText.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
+        if (ValidatePayment() is not { } amount)
         {
-            Error = translator["LedgerError_AmountMustBePositive"];
             return;
         }
 
@@ -235,9 +277,8 @@ public sealed partial class OccurrenceViewModel(
         }
 
         Error = null;
-        if (!MoneyText.TryParse(ActualAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var amount) || amount <= 0)
+        if (ValidatePayment() is not { } amount)
         {
-            Error = translator["LedgerError_AmountMustBePositive"];
             return;
         }
 
@@ -291,27 +332,28 @@ public sealed partial class OccurrenceViewModel(
     [RelayCommand]
     private async Task SaveChangeAsync()
     {
-        if (_occurrence is null)
+        if (_occurrence is null || IsBusy)
         {
             return;
         }
 
         Error = null;
-        long? amount = null;
-        if (!string.IsNullOrWhiteSpace(OverrideAmountText))
+        _overrideValidationRequested = true;
+        var validation = ValidateAmount(OccurrenceInput.Override);
+        if (validation.ErrorKey is not null)
         {
-            if (!MoneyText.TryParse(OverrideAmountText, Currencies.Get(_currency), localization.CurrentCulture, out var parsed) || parsed <= 0)
-            {
-                Error = translator["Amount_Invalid"];
-                return;
-            }
-
-            amount = parsed;
+            ValidationFailed?.Invoke(OccurrenceInput.Override);
+            return;
         }
 
-        await plans.ChangeOccurrenceAsync(_occurrence, DueDate, amount, OccurrenceNote);
-        ShowChange = false;
-        await LoadAsync();
+        IsBusy = true;
+        try
+        {
+            await plans.ChangeOccurrenceAsync(_occurrence, DueDate, validation.Amount, OccurrenceNote);
+            ShowChange = false;
+            await LoadAsync();
+        }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]
