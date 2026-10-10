@@ -47,3 +47,7 @@ Simple destination-fee retention remain separate in docs/quality/entry-validatio
 D-101 fee retention uses AT-106's actual native editor/store regression in docs/quality/destination-fee-retention.md,
 including valid Save, update/removal and reopened/new Cancel/Discard. Main count remains 1,456; App.Tests 220.
 The scenario supplements monetary helper/domain tests rather than repeating the visibility predicate in a unit test.
+
+D-102 adds SettlementDraftValidationTests: 14 AT-107 cases using the actual linked input validator, regional money
+parser and advance/refund engine. Current main count is 1,470; App.Tests 234. Native invalid/valid Save, error/action
+geometry and financial row preservation are separately recorded in docs/quality/settlement-feedback.md.

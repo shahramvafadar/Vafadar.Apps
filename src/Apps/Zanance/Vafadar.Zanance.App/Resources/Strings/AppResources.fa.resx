@@ -5736,4 +5736,13 @@
   <data name="Entry_AmountMustBePositive" xml:space="preserve">
     <value>مبلغی بزرگ‌تر از صفر وارد کنید.</value>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>تاریخ پایان باید برابر با تاریخ شروع یا پس از آن باشد.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>مبلغ معتبر صورتحساب را وارد کنید؛ مبلغ می‌تواند صفر یا بیشتر باشد.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>در این بازه هیچ پیش‌پرداختی برای این پلن ثبت نشده است. بازه‌ای را انتخاب کنید که شامل پرداخت‌های آن باشد.</value>
+  </data>
 </root>

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     x:DataType="local:SettlementViewModel"
     Title="{v:Translate Settlement_Title}"
     Shell.PresentationMode="ModalAnimated">
@@ -18,18 +19,20 @@
             </FlexLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView x:Name="ValidationViewport" Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Label Text="{v:Translate Settlement_Intro}" Style="{StaticResource Secondary}" />
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Settlement_From}" Style="{StaticResource FieldLabel}" Margin="0" />
-                        <v:DateField Date="{Binding From}" />
+                        <v:DateField x:Name="FromInput" Date="{Binding From}" />
                         <Label Text="{v:Translate Settlement_To}" Style="{StaticResource FieldLabel}" />
-                        <v:DateField Date="{Binding To}" />
+                        <v:DateField x:Name="ToInput" Date="{Binding To}" />
+                        <Label Text="{Binding PeriodError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PeriodError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding AdvancesText}" FontAttributes="Bold" Margin="0,8,0,0" />
                         <Label Text="{v:Translate Settlement_Actual}" Style="{StaticResource FieldLabel}" />
-                        <Entry Text="{Binding ActualText}" Keyboard="Numeric" Placeholder="0" FontSize="20" SemanticProperties.Description="{v:Translate Settlement_Actual}" />
+                        <Entry x:Name="ActualInput" Text="{Binding ActualText}" Keyboard="Numeric" Placeholder="0" FontSize="20" SemanticProperties.Description="{v:Translate Settlement_Actual}" />
+                        <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding ResultText}" TextColor="{DynamicResource WarningText}" FontSize="16" FontAttributes="Bold"
                                IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" />
@@ -39,7 +42,8 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Settlement_Save}"
-                Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        <!-- D-102: keep the full scaled action caption and let an invalid attempt explain its fields. -->
+        <p:WrappingAction x:Name="SaveAction" Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Settlement_Save}"
+                          Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
     </Grid>
 </ContentPage>

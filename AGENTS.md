@@ -462,3 +462,12 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   financial rows; record that audit-only difference explicitly rather than claiming every table row is byte-identical.
 * AT-106 snapshot fixtures perform valid financial Saves only in their fictitious database. Preserve and restore
   original development files and never apply these fixtures to personal data.
+
+## 35. Visible advance-settlement feedback (D-102)
+
+* Initialize settlement DateFields before binding. Explain reversed periods and invalid/missing bills independently
+  beside their fields; distinguish a real no-advance period from reversed input. Keep drafts and correction feedback.
+* An idle settlement action can explain invalid fields; reveal the first without moving desktop focus and keep its
+  full scaled native caption/name/target. No financial Save proceeds until the existing settlement guard accepts it.
+* Zero bills may refund remaining advances; equal bills write nothing. AT-107's valid native Save fixtures touch only
+  their fictitious database and verify original financial fields/ids before removing their identified scenario rows.

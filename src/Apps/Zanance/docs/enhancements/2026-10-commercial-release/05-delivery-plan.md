@@ -317,3 +317,11 @@ Windows matrix has 24 contexts/72 valid Saves; main tests remain 1,456 (App.Test
 APK pass. Normal Android creation-policy checks and original financial/preference values and expected settings audit pass; successful stored-fee
 editing on Android/physical/iOS and other owner/platform/release gates remain open.
 Evidence: [quality/destination-fee-retention.md](../../quality/destination-fee-retention.md).
+
+D-102 / AT-107 delivers complete settlement period/bill feedback and a growing Record the difference
+action. Invalid Save reveals the first affected input without changing the draft; original advance/refund logic
+retains zero bills and no-op exact bills. Fourteen new cases bring the main suite to 1,470 (App.Tests 234).
+The final Windows matrix has 24 contexts/144 invalid and 72 valid native Saves; six normal-scale Release Android
+contexts/18 invalid Saves, strict builds, signed APK and original financial/preference-value checks pass.
+Normal Settings audit updates are separate; physical/iOS/readers, valid Android settlement acceptance and other
+owner/platform/release gates remain open. Evidence: [quality/settlement-feedback.md](../../quality/settlement-feedback.md).

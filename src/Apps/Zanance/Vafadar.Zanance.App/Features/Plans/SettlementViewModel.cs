@@ -21,15 +21,19 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
     private List<LedgerEntry> _entries = [];
     private string _currency = Currencies.Euro.Code;
     private SettlementResult? _result;
+    private bool _validationRequested;
+
+    /// <summary>Requests visibility of the first affected field after an invalid Save attempt.</summary>
+    public event EventHandler? ValidationFailed;
 
     [ObservableProperty]
     public partial string? PlanName { get; set; }
 
     [ObservableProperty]
-    public partial DateOnly From { get; set; }
+    public partial DateOnly From { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime).AddYears(-1).AddDays(1);
 
     [ObservableProperty]
-    public partial DateOnly To { get; set; }
+    public partial DateOnly To { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     [ObservableProperty]
     public partial string ActualText { get; set; } = string.Empty;
@@ -46,6 +50,14 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
 
     [ObservableProperty]
     public partial string? Error { get; set; }
+
+    /// <summary>Gets or sets the explanation next to the inclusive period fields.</summary>
+    [ObservableProperty]
+    public partial string? PeriodError { get; set; }
+
+    /// <summary>Gets or sets the explanation next to the actual bill input.</summary>
+    [ObservableProperty]
+    public partial string? AmountError { get; set; }
 
     [ObservableProperty]
     public partial bool CanSave { get; set; }
@@ -94,11 +106,24 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
         }
 
         var culture = localization.CurrentCulture;
-        var currency = Currencies.Get(_currency);
-        var actual = MoneyText.TryParse(ActualText, currency, culture, out var parsed) && parsed >= 0 ? parsed : (long?)null;
-        _result = AdvanceSettlement.Compute(_plan, _entries, From, To, actual ?? 0);
+        var validation = SettlementDraftValidation.Validate(From, To, ActualText, _currency, culture);
+        Error = null;
+        AmountError = validation.AmountErrorKey is { } amountKey && (_validationRequested || !string.IsNullOrWhiteSpace(ActualText))
+            ? translator[amountKey] : null;
+        PeriodError = validation.PeriodErrorKey is { } periodKey ? translator[periodKey] : null;
+        // D-102: an inverted period must not look like a legitimate period with no payments.
+        _result = validation.PeriodErrorKey is null ? AdvanceSettlement.Compute(_plan, _entries, From, To, validation.Actual ?? 0) : null;
+        if (_result is null)
+        {
+            AdvancesText = null;
+            ResultText = null;
+            CanSave = false;
+            return;
+        }
+
         AdvancesText = translator.Format("Settlement_Advances", _result.Advances.Count, MoneyText.Format(_result.Paid, _currency, culture));
-        if (actual is null)
+        if (_result.Advances.Count == 0) { PeriodError = translator["Settlement_NoAdvances"]; }
+        if (validation.Actual is null || PeriodError is not null)
         {
             ResultText = null;
             CanSave = false;
@@ -117,8 +142,17 @@ public sealed partial class SettlementViewModel(ZananceStore store, PlanStore pl
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (_plan is null || _result is null || !CanSave || IsBusy)
+        if (_plan is null || IsBusy)
         {
+            return;
+        }
+
+        // An available action explains every independent invalid field instead of silently doing nothing.
+        _validationRequested = true;
+        Update();
+        if (_result is null || !CanSave)
+        {
+            ValidationFailed?.Invoke(this, EventArgs.Empty);
             return;
         }
 

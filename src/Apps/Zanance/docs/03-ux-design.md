@@ -554,3 +554,11 @@ so an unrelated transfer edit cannot silently delete it. Keep creation Advanced-
 explicit blank/zero means removal. Retain the fee id, group, currency and transfer/source-fee financial fields.
 Refresh the net-effect summary when fee visibility changes; opening, editing and clearing must show the actual
 amount received after fees. Check successful edits with real native Save, independently from invalid-Save evidence.
+
+### Advance-settlement validation and action (D-102)
+
+Show reversed period and invalid/missing/nonnegative bill requirements independently beside their fields. Explain
+periods with no advances, and clear corrected field problems without resetting typed input. An idle Record the
+difference remains available for field explanations; reveal the first affected field without taking desktop
+focus. Keep the full scalable caption/spoken name and minimum target in its persistent dock. Initialize DateFields
+before binding. A zero bill is explicit input, not a placeholder value to post; matching bills require no entry.

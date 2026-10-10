@@ -5705,4 +5705,13 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Entry_AmountMustBePositive" xml:space="preserve">
     <value>Introduce un importe mayor que cero.</value>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>La fecha final debe ser igual o posterior a la fecha inicial.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>Introduce un importe válido para la factura, igual o mayor que cero.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>No hay anticipos registrados para este plan en este período. Elige un período que incluya sus pagos.</value>
+  </data>
 </root>

@@ -381,3 +381,9 @@ Existing transfer-fee review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa
 AT-106 prepares fees only in the fictitious snapshot database and invokes three actual valid Saves: retain,
 edit and explicit removal, then reopened/new Cancel/Discard. Preserve and restore original development files;
 never run successful-save fixtures over personal data. The Advanced regression uses `-Mode advanced`.
+
+Settlement feedback review: `./eng/scripts/Run-Snapshots.ps1 -Languages 'en,fa,de' -Only settlement-feedback -Mode advanced -FontScale 2 -Theme light -WindowSize 360x800`.
+AT-107 invokes six invalid/no-change and three valid actual native Saves in the fictitious snapshot database.
+Extra payment, refund and zero-bill rows are compared with the original financial state, then only those identified
+scenario rows are removed between cases. Preserve/restore original development files; never run valid-Save fixtures
+over personal data. Simple uses the same settlement fields and can be reviewed with `-Mode simple`.

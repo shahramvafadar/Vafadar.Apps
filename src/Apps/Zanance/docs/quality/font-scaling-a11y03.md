@@ -631,3 +631,8 @@ D-101 / AT-106 checks full existing destination-fee caption glyphs, actual input
 reachability in Simple at 200% (en/fa/de, light/dark, 360/412/wide). Actual valid edits also prove retention,
 explicit update/removal and untouched financial fields/ids. Advanced normal-scale regression remains separate.
 Evidence: destination-fee-retention.md. Other controls and OS/device/reader acceptance remain open.
+
+D-102 / AT-107 covers complete native settlement error/action glyphs at 200%, 360/412/wide, en/fa/de and both
+themes. Native invalid Save reveals the affected input; actual extra/refund/zero Saves preserve original financial
+fields/ids. Normal Release Android invalid-Save/correction evidence stays separate from OS/phone/iOS/reader or
+valid Android settlement acceptance. Evidence: settlement-feedback.md. Other A11Y-03 controls remain open.

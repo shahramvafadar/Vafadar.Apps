@@ -582,3 +582,15 @@ writes. Compare all financial fields and unrelated rows, allowing only intended 
 Final local status: 24 Windows contexts/72 valid Saves, native input/glyph checks, 1,456 tests, strict builds,
 signed APK, 12 normal Android new-form checks and original three-profile financial/preference values and expected settings audit pass.
 Successful stored-fee edits on Android/physical/iOS remain unaccepted. Evidence: quality/destination-fee-retention.md.
+
+## AT-107 - Visible advance-settlement fields and safe actual differences (D-102)
+
+Use a fictitious plan/advance. Invoke native Save with reversed dates and an invalid bill; see both errors and
+the first affected input. Correct each, check empty/negative bills and no-advance periods; retain typed dates/text
+and complete stored values. An exact bill writes nothing. Invoke real Save for extra payment, partial refund and
+zero bill; check only intended entries, linked refunds, original fields/ids and unrelated rows. Restore the
+fictitious scenario between Saves and preserve/restore original development files.
+Final local status: 14 application cases, main 1,470/App.Tests 234; 24 Windows contexts/144 invalid and 72 valid
+Saves; six normal-scale complete-Release emulator contexts/18 invalid Saves; strict builds, signed APK and three
+profile financial/preference-value checks pass. Real OS/phone/iOS/readers and valid Android settlement acceptance
+remain open. Evidence: quality/settlement-feedback.md.

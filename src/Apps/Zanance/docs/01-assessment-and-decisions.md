@@ -799,3 +799,15 @@ unchanged financial fields, ids and unrelated rows, then reopened/new forms and 
 The 24-context Windows matrix/72 valid Saves, 1,456 tests, strict builds, signed APK, normal Android creation
 policy checks and original financial/preference values and expected settings audit pass. Android successful stored-fee editing/physical/iOS acceptance
 remain separate. Evidence: quality/destination-fee-retention.md.
+
+## D-102 - Explain settlement fields and retain the complete action (2026-10-10)
+
+Native execution reproduces unexplained disabled Save for reversed dates/invalid bills and a clipped scaled
+action. Collect all independent errors next to their fields, initialize DateFields before binding, explain an
+empty payment period and reveal the first affected input on invalid Save. Keep the action available while idle
+and its full scaled caption/native spoken name. Preserve drafts and the original advance/refund continuation:
+zero may refund remaining advances, equal bills write nothing, and only a difference becomes a new entry.
+AT-107 adds 14 cases (main 1,470/App.Tests 234). The 24-context Windows matrix/144 invalid and 72 valid native
+Saves, six Release emulator contexts/18 invalid Saves, strict builds and complete signed APK pass. Original
+financial rows/preference values remain exact; normal display-choice audit timestamps are separate.
+Physical/iOS/readers and valid Android financial settlement acceptance remain open. Evidence: quality/settlement-feedback.md.

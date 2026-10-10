@@ -5725,4 +5725,13 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Entry_AmountMustBePositive" xml:space="preserve">
     <value>Inserisci un importo maggiore di zero.</value>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>La data finale deve coincidere con la data iniziale o essere successiva.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>Inserisci un importo valido della fattura, pari o superiore a zero.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>Non ci sono acconti registrati per questo piano nel periodo scelto. Scegli un periodo che comprenda i suoi pagamenti.</value>
+  </data>
 </root>

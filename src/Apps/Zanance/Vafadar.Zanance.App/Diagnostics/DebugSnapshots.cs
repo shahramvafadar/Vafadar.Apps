@@ -390,6 +390,7 @@ internal static class DebugSnapshots
             ("plan-detail", AppShell.PlanDetailRoute, new() { ["id"] = planId }),
             ("plan-weekday", AppShell.PlanDetailRoute, new() { ["id"] = weekdayPlanId }),
             ("settlement", AppShell.SettlementRoute, new() { ["id"] = planId }),
+            ("settlement-feedback", AppShell.SettlementRoute, new() { ["id"] = planId }),
             ("occurrence", AppShell.OccurrenceRoute, new() { ["plan"] = planId, ["date"] = planDate }),
             ("accounts", AppShell.AccountsRoute, null),
             ("modal-headers", AppShell.AccountsRoute, null),
@@ -608,6 +609,8 @@ internal static class DebugSnapshots
                 }
 
 #if WINDOWS
+                if (name == "settlement-feedback")
+                { await ReviewSettlementFeedbackAsync(app, services, folder, language); }
                 if (name == "entry-fee-retention")
                 { await ReviewDestinationFeeRetentionAsync(app, services, folder, language); }
                 if (name == "entry-validation")
@@ -2292,6 +2295,146 @@ internal static class DebugSnapshots
             NativeInvalidSaveInvocations = invocations, AllIndependentFieldErrors = true, FirstInputAutomaticallyRevealed = true,
             CorrectionsClearOldErrors = true, CollapsedInvalidDetailsRevealed = true, NativeFullErrorGlyphsAndScale = true,
             DraftAndCompleteStoredDataRetained = true, NoValidFinancialSave = true,
+        }));
+    }
+
+    // AT-107: use the real modal, native Save and fictitious SQLite rows for invalid and valid settlements.
+    private static async Task ReviewSettlementFeedbackAsync(App app, IServiceProvider services, string folder, string language)
+    {
+        Features.Plans.SettlementPage Page() => app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() as Features.Plans.SettlementPage
+            ?? Shell.Current.CurrentPage as Features.Plans.SettlementPage
+            ?? throw new InvalidOperationException("The real settlement modal is missing.");
+        var page = Page();
+        var vm = (Features.Plans.SettlementViewModel)page.BindingContext;
+        var store = services.GetRequiredService<ZananceStore>();
+        var plans = services.GetRequiredService<PlanStore>();
+        var culture = services.GetRequiredService<ILocalizationService>().CurrentCulture;
+        var plan = (await plans.GetSchedulesAsync()).Single(schedule => schedule.Name == vm.PlanName);
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            Entries = await store.GetEntriesAsync(), Accounts = await store.GetAccountsAsync(),
+            Settings = await store.GetSettingsAsync(), Schedules = await plans.GetSchedulesAsync(),
+        });
+        var before = await StoredAsync();
+        var original = (vm.From, vm.To, vm.ActualText);
+        var invalidSaves = 0;
+        static void CheckGlyphs(Label label)
+        {
+            if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || native.IsTextTrimmed
+                || !native.IsTextScaleFactorEnabled || native.ActualHeight < 1 || native.ActualWidth < 1)
+            { throw new InvalidOperationException("A settlement caption lacks complete native scaled text."); }
+            var glyphs = new List<Windows.Foundation.Rect>();
+            for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
+            {
+                if (native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward) is { } pointer)
+                { glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward)); }
+            }
+            if (glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1 || glyphs.Max(rect => rect.Right) > label.Width + 1
+                || glyphs.Max(rect => rect.Bottom) > label.Height + 1)
+            { throw new InvalidOperationException("Settlement caption glyphs exceed the actual MAUI allocation."); }
+        }
+        async Task SaveInvalidAsync(string name, string? periodKey, string? amountKey)
+        {
+            var viewport = page.FindByName<ScrollView>("ValidationViewport");
+            await ScrollToEndIfNeededAsync(viewport);
+            var retained = (vm.From, vm.To, vm.ActualText);
+            InvokeWrappingAction(page, vm.SaveCommand);
+            if (vm.SaveCommand.ExecutionTask is { } saving) { await saving; }
+            invalidSaves++;
+            await Task.Delay(400);
+            if (retained != (vm.From, vm.To, vm.ActualText) || await StoredAsync() != before || vm.CanSave || vm.Error is not null
+                || vm.PeriodError != (periodKey is null ? null : Translator.Instance[periodKey])
+                || vm.AmountError != (amountKey is null ? null : Translator.Instance[amountKey]))
+            { throw new InvalidOperationException("An invalid settlement did not explain every field or changed its draft/stored data."); }
+            if (viewport.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer nativeViewport)
+            { throw new InvalidOperationException("Missing native settlement scroll viewport."); }
+            var target = periodKey is not null ? (VisualElement)page.FindByName<Vafadar.Maui.Controls.DateField>("ToInput")
+                : page.FindByName<Entry>("ActualInput");
+            if (periodKey is not null || amountKey is not null)
+            {
+                if (target.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement nativeTarget)
+                { throw new InvalidOperationException("Missing actual settlement field."); }
+                var position = nativeTarget.TransformToVisual(nativeViewport).TransformPoint(new Windows.Foundation.Point());
+                if (position.Y < -1 || position.Y + nativeTarget.ActualHeight > nativeViewport.ActualHeight + 1)
+                { throw new InvalidOperationException("Invalid settlement Save left its first affected input outside the viewport."); }
+            }
+            await CaptureAsync(app, folder, language + "-settlement-feedback-" + name + "-first");
+            foreach (var text in new[] { vm.PeriodError, vm.AmountError, vm.ResultText }.Where(text => text is not null))
+            {
+                var label = VisualDescendants(page).OfType<Label>().Single(label => label.IsVisible && label.Text == text);
+                await ScrollToViewIfNeededAsync(viewport, label); await Task.Delay(100);
+                CheckGlyphs(label);
+                await CaptureAsync(app, folder, language + "-settlement-feedback-" + name + "-caption-" + Array.IndexOf(new[] { vm.PeriodError, vm.AmountError, vm.ResultText }, text));
+            }
+        }
+        vm.From = original.To.AddDays(1); vm.ActualText = "not money";
+        await SaveInvalidAsync("independent", "Settlement_PeriodInvalid", "Settlement_AmountInvalid");
+        vm.From = original.From;
+        await SaveInvalidAsync("corrected-period", null, "Settlement_AmountInvalid");
+        vm.ActualText = string.Empty;
+        await SaveInvalidAsync("empty-bill", null, "Settlement_AmountInvalid");
+        vm.ActualText = "-1";
+        await SaveInvalidAsync("negative-bill", null, "Settlement_AmountInvalid");
+        vm.ActualText = "100"; vm.From = original.To; vm.To = original.To;
+        await SaveInvalidAsync("no-advances", "Settlement_NoAdvances", null);
+        vm.From = original.From; vm.To = original.To;
+        var entries = await store.GetEntriesAsync();
+        var paid = Core.Plans.AdvanceSettlement.Compute(plan, entries, vm.From, vm.To, 0).Paid;
+        vm.ActualText = Core.Money.MoneyText.ForInput(paid, "EUR", culture);
+        await SaveInvalidAsync("even", null, null);
+        if (vm.ResultText != Translator.Instance["Settlement_Even"])
+        { throw new InvalidOperationException("A matching bill lacks the explanation that nothing is recorded."); }
+        var validSaves = new List<object>();
+        foreach (var (name, actual) in new[] { ("extra", paid + 5000), ("refund", paid - 5000), ("zero-bill", 0L) })
+        {
+            vm.ActualText = Core.Money.MoneyText.ForInput(actual, "EUR", culture);
+            if (!vm.CanSave || vm.PeriodError is not null || vm.AmountError is not null)
+            { throw new InvalidOperationException("A valid settlement kept an earlier field problem."); }
+            var viewport = page.FindByName<ScrollView>("ValidationViewport");
+            var input = page.FindByName<Entry>("ActualInput");
+            await ScrollToViewIfNeededAsync(viewport, input); await Task.Delay(100);
+            if (input.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox nativeInput || nativeInput.Text != vm.ActualText
+                || nativeInput.ActualHeight < 44)
+            { throw new InvalidOperationException("The settlement bill is not retained in its actual native input."); }
+            var action = page.FindByName<Presentation.WrappingAction>("SaveAction");
+            var caption = VisualDescendants(action).OfType<Label>().Single();
+            CheckGlyphs(caption);
+            var button = VisualDescendants(action).OfType<Button>().Single();
+            if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeButton || nativeButton.ActualHeight < 44
+                || nativeButton.ActualWidth < 44 || !nativeButton.IsEnabled
+                || Microsoft.UI.Xaml.Automation.AutomationProperties.GetName(nativeButton) != Translator.Instance["Settlement_Save"])
+            { throw new InvalidOperationException("The settlement Save lacks its full native spoken name or accessible target."); }
+            await CaptureAsync(app, folder, language + "-settlement-feedback-" + name + "-ready");
+            InvokeWrappingAction(page, vm.SaveCommand);
+            if (vm.SaveCommand.ExecutionTask is { } saving) { await saving; }
+            await Task.Delay(300);
+            if (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() is Features.Plans.SettlementPage)
+            { throw new InvalidOperationException("A valid native settlement Save did not complete navigation."); }
+            var after = await store.GetEntriesAsync();
+            var originalIds = entries.Select(entry => entry.Id).ToHashSet();
+            var created = after.Where(entry => !originalIds.Contains(entry.Id)).ToList();
+            if (created.Count != 1 || created[0].Kind != (actual > paid ? EntryKind.Expense : EntryKind.Refund)
+                || created[0].Amount != Math.Abs(actual - paid) || created[0].AccountId != plan.AccountId
+                || created[0].ScheduleId is not null || (actual < paid && !entries.Any(entry => entry.Id == created[0].RefundOfId))
+                || System.Text.Json.JsonSerializer.Serialize(after.Where(entry => originalIds.Contains(entry.Id))) != System.Text.Json.JsonSerializer.Serialize(entries))
+            { throw new InvalidOperationException("A settlement Save changed original financial rows or recorded the wrong difference/refund."); }
+            validSaves.Add(new { Scenario = name, Actual = actual, Paid = paid, RecordedAmount = created[0].Amount,
+                Kind = created[0].Kind.ToString(), created[0].RefundOfId, OriginalFinancialFieldsAndIdsRetained = true });
+            // Remove only this scenario's identified new rows from the walk-through's fictitious database.
+            var removed = await store.SaveEntriesAsync([], created.Select(entry => entry.Id).ToList());
+            if (!removed.Succeeded || await StoredAsync() != before)
+            { throw new InvalidOperationException("The isolated settlement fixture did not return to its exact pre-save state."); }
+            await Shell.Current.GoToAsync(AppShell.SettlementRoute, new Dictionary<string, object> { ["id"] = plan.Id });
+            await Task.Delay(500); page = Page(); vm = (Features.Plans.SettlementViewModel)page.BindingContext;
+        }
+        vm.From = original.From; vm.To = original.To; vm.ActualText = original.ActualText;
+        if (await StoredAsync() != before) { throw new InvalidOperationException("Settlement review left stored data changes."); }
+        File.WriteAllText(Path.Combine(folder, language + "-settlement-feedback-proof.json"), System.Text.Json.JsonSerializer.Serialize(new
+        {
+            NativeInvalidSaveInvocations = invalidSaves, NativeValidSaveInvocations = validSaves.Count,
+            IndependentFieldErrorsAndCorrections = true, FirstAffectedInputRevealed = true,
+            FullNativeScaledErrorAndActionGlyphs = true, OriginalDraftAndCompleteStoredValuesRetained = true,
+            MatchingBillCreatesNothing = true, ValidSaves = validSaves, FictitiousDatabaseRestoredBetweenScenarios = true,
         }));
     }
 

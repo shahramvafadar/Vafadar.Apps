@@ -1414,6 +1414,16 @@ APK pass. Normal Android creation-policy checks and original financial/preferenc
 editing on Android/physical/iOS and other owner/platform/release gates remain open.
 Evidence: [quality/destination-fee-retention.md](../quality/destination-fee-retention.md).
 
+### 31.18. Visible advance-settlement feedback (D-102 / AT-107)
+
+D-102 / AT-107 delivers complete settlement period/bill feedback and a growing Record the difference
+action. Invalid Save reveals the first affected input without changing the draft; original advance/refund logic
+retains zero bills and no-op exact bills. Fourteen new cases bring the main suite to 1,470 (App.Tests 234).
+The final Windows matrix has 24 contexts/144 invalid and 72 valid native Saves; six normal-scale Release Android
+contexts/18 invalid Saves, strict builds, signed APK and original financial/preference-value checks pass.
+Normal Settings audit updates are separate; physical/iOS/readers, valid Android settlement acceptance and other
+owner/platform/release gates remain open. Evidence: [quality/settlement-feedback.md](../quality/settlement-feedback.md).
+
 ## Product Outcome
 
 Phase 1 must be a genuinely usable personal finance manager, not merely a collection of charts: a correct ledger, precise due dates, explainable budgets, conditional forecasts, and recoverable data. Phase 2 adds depth and services; it must not be needed to repair fundamental mistakes in Phase 1.

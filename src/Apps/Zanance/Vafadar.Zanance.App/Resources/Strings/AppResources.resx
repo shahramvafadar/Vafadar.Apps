@@ -5765,4 +5765,13 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Enter an amount greater than zero.</value>
     <comment>Entry amount validation also applies to transfers and fixed refund kinds.</comment>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>The end date must be on or after the start date.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>Enter a valid bill amount of zero or more.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>No advance payments were recorded for this plan in this period. Choose a period containing its payments.</value>
+  </data>
 </root>

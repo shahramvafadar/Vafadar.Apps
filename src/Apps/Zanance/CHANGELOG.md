@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear final-bill feedback (2026-10-10, D-102)
+
+- Final-bill forms explain invalid amounts, reversed dates and periods without advance payments beside the affected fields. Record the difference reveals the first problem and keeps your input. Its full label remains readable with large text. A zero bill can refund the remaining advances; an exactly matching bill records nothing.
+
 ### Fixed - Keep existing transfer fees in Simple (2026-10-10, D-101)
 
 - Editing a transfer in Simple no longer silently deletes its destination fee. The existing fee stays visible and editable; clear it or enter zero to remove it. The transfer summary includes the destination fee in the amount received.

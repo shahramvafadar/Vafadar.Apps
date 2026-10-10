@@ -5713,4 +5713,13 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Entry_AmountMustBePositive" xml:space="preserve">
     <value>Saisissez un montant supérieur à zéro.</value>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>La date de fin doit être égale ou postérieure à la date de début.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>Saisissez un montant de facture valide, égal ou supérieur à zéro.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>Aucun acompte n’a été enregistré pour ce plan pendant cette période. Choisissez une période comprenant ses paiements.</value>
+  </data>
 </root>

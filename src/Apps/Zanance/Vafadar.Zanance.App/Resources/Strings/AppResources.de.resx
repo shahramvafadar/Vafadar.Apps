@@ -5736,4 +5736,13 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Entry_AmountMustBePositive" xml:space="preserve">
     <value>Geben Sie einen Betrag über null ein.</value>
   </data>
+  <data name="Settlement_PeriodInvalid" xml:space="preserve">
+    <value>Das Enddatum muss am oder nach dem Startdatum liegen.</value>
+  </data>
+  <data name="Settlement_AmountInvalid" xml:space="preserve">
+    <value>Gib einen gültigen Rechnungsbetrag ab null ein.</value>
+  </data>
+  <data name="Settlement_NoAdvances" xml:space="preserve">
+    <value>Für diesen Plan sind in diesem Zeitraum keine Vorauszahlungen erfasst. Wähle einen Zeitraum mit seinen Zahlungen.</value>
+  </data>
 </root>
