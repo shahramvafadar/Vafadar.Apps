@@ -1757,3 +1757,13 @@ Concurrent sales stay nonnegative and identical concurrent imports create rows o
 pass; main suite 1,767, App.Tests 299 unchanged. Current registration stays inactive. No schema/SDK/permission or
 visible layout change. Explicit selected read-only/new-work classification and remaining ENT-02/03 boundaries
 stay unfinished: [evidence](../quality/holding-write-policy.md).
+
+### 31.36. Earmark/contribution rights and complete goal Save (D-123 / AT-125 / ENT-02 in progress)
+
+Actual-file goal allocation/contribution writes now check new advanced work separately from retained releases,
+corrections and deletion. Reopening history checks stored paid work/reminders; empty weekly/monthly dates retain
+basic goal behavior. The editor commits goal/pins/contribution in one actual SQLite writer transaction. Failures
+and retired access preserve complete data; independent enabled writers recheck the last slot and existing plan.
+39 new actual SQLite cases/main 1,806 pass; App.Tests 299 unchanged. Current registration stays inactive without
+schema/SDK/permission/visible-layout changes. Explicit selected read-only resources, automatic contribution
+delivery and the remaining ENT-02/03/04 paths are unfinished: [evidence](../quality/goal-contribution-write-policy.md).

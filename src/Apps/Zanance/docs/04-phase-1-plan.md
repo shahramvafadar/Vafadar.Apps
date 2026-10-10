@@ -309,3 +309,8 @@ D-122 continues ENT-02 with actual-file holding write rights, retained correctio
 purchase/payment/fee/derived-price Save. 46 added SQLite cases/main 1,767 pass. Current deployment stays inactive;
 explicit read-only/import selection, other resources/operations/native paths and activation remain unfinished:
 [quality evidence](quality/holding-write-policy.md).
+
+D-123 continues ENT-02 with retained earmark/release rights and contribution operations, plus one atomic
+goal/pin/contribution editor Save. 39 added SQLite cases/main 1,806 pass. Current registration remains inactive;
+selected read-only items, contribution delivery and remaining ENT-02/03/04 paths stay open:
+[quality evidence](quality/goal-contribution-write-policy.md).

@@ -303,3 +303,10 @@ validation, event/group/derived-price writes and access rechecks. Imports preser
 the complete group; neither revives paid facts. Explicit read-only classification remains ENT-03 work. No schema,
 migration/compiled model, backup format, permission or SDK changes. Current registration is inactive:
 [evidence](../../src/Apps/Zanance/docs/quality/holding-write-policy.md).
+
+D-123 extends actual-file cached-access checks to earmarks, releases, contribution writes and goal deletion.
+The whole editor saves goal, normalized Home pins and contribution draft in one writer transaction, including
+inactive deployment. Preserve stored plan identity and complete rule/category metadata. Failures/access retirement
+roll back all rows, with Changed only after commit. Contributions/earmarks never post money. No model/schema,
+migration/compiled model, portable backup, permission or SDK changes. Explicit selected read-only/automation and
+remaining ENT-02/03 paths stay open: [evidence](../../src/Apps/Zanance/docs/quality/goal-contribution-write-policy.md).

@@ -692,11 +692,9 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IQueryAttributa
 
             // Pinned goals keep their place; a newly pinned goal goes after the others (ZEX-GO06).
             goal.HomePin = ShowOnHome ? goal.HomePin ?? ((await _goals.GetGoalsAsync()).Max(g => g.HomePin) ?? 0) + 1 : null;
-            await _goals.SaveGoalAsync(goal);
-
-            // From now on the page edits the saved goal: if the plan below fails, saving again must not add a second goal.
+            // D-123: goal, Home pins and the complete contribution draft share one atomic Save.
+            await _goals.SaveGoalWithContributionPlanAsync(goal, BuildPlan(culture));
             _existing = goal;
-            await _goals.SaveContributionPlanAsync(goal.Id, BuildPlan(culture));
             saved = true;
         }
         catch (InvalidOperationException)

@@ -643,3 +643,16 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   failures restore the whole group and Changed follows commit once.
 * Current registration remains inactive. Import/Undo keep owned data; explicit read-only new-work classification,
   other ENT-02/03 paths and release activation remain unfinished. No fabricated paid grant or new schema.
+
+## 55. Retained earmarks and complete goal editor Save (D-123)
+
+* Positive earmarks and new configured contribution work require AdvancedGoals; negative releases, stored
+  corrections and deletion retain Free rights with exact membership checks. Empty weekly/monthly contribution
+  dates remain basic goal scaffolding, independent of regional calendar. New reminders use their separate right.
+* Reopening history cannot silently reactivate retained paid contribution work/reminders. Never release old
+  earmarks automatically or post a contribution estimate as money. Keep complete plan id/creation metadata.
+* Save the goal, Home pin normalization and contribution draft in one actual-file writer transaction, even with
+  current enforcement inactive. Reject before pin/protection changes; SQL/access failures roll back all rows.
+  Changed fires once after commit. Independent enabled writers recheck capacity and the stored parent plan.
+* Current registration stays inactive. Explicit selected read-only items, contribution reminder delivery,
+  other ENT-02/03 paths and translated limit feedback remain unfinished; no schema or paid grant is introduced.

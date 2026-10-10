@@ -239,3 +239,14 @@ event/payment/fee and latest same-type/date price together; old non-editor calle
 Recheck cached access after SQL before commit; roll back full group/old-fee mutations on failure and notify once.
 No schema, SDK, permission or portable paid facts change. Current registration remains inactive:
 [evidence](../../quality/holding-write-policy.md).
+
+## 13. Complete goal draft and retained contribution rights (D-123)
+
+GoalStore applies exact-file cached facts to allocations/contribution Save and deletion. Positive earmarks/new
+configured work use AdvancedGoals; negative releases, retained edits and deletion use retained data rights.
+New reminders are separate. Empty basic dates never grant paid work; reopening checks retained work/reminders.
+The whole editor Save owns one actual writer even with inactive enforcement. Checks precede pin/protection work;
+SQL and access recheck precede commit and one Changed. Reuse existing goal preparation and copy complete plan
+metadata with its original identity. Current registration remains inactive, without portable paid facts or
+schema changes. Selection/automation/native/other resource paths remain unfinished:
+[evidence](../../quality/goal-contribution-write-policy.md).

@@ -676,3 +676,11 @@ quantity, payment, fee and marked purchase-derived price together; failure prese
 Retained quantity/metadata corrections and delete/Undo stay available after expiry. Reasoned quantity corrections
 do not create money or prices. New standalone prices remain a separate management operation. Current test builds
 remain unrestricted; translated limit feedback and explicit read-only selection remain ENT-03/04 work.
+
+## Complete explicit goal editor Save (D-123 / ENT-02 in progress)
+
+Keep the existing goal form and unsaved name/target/date/method/reminder choices. Explicit Save commits the goal,
+Home pin changes and contribution draft together. A failed contribution Save cannot leave a partial goal or an
+unrelated pin removed. Contribution estimates and earmarks never become ledger entries. Retained correction,
+release and deletion rights remain available; empty dates support a basic goal. Test builds remain unrestricted.
+Selected read-only choices and translated commercial-limit feedback are still ENT-03/04 work.

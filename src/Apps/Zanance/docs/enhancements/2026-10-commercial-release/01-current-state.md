@@ -119,3 +119,8 @@ with atomic purchase/payment/fee/derived-price Save. Actual SQLite writer valida
 duplicate imports. Main 1,767/App.Tests 299 passes. No current quota activation or paid grant; selected read-only
 classification and the remaining resource/operation/native paths are open:
 [evidence](../../quality/holding-write-policy.md).
+
+D-123 continues ENT-02 with retained earmark/release rights and contribution operations, plus one atomic
+goal/pin/contribution editor Save. 39 added SQLite cases/main 1,806 pass. Current registration remains inactive;
+selected read-only items, contribution delivery and remaining ENT-02/03/04 paths stay open:
+[quality evidence](../../quality/goal-contribution-write-policy.md).

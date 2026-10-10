@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete savings goal saves (2026-10-10, D-123)
+
+- Save a goal, its Home placement and contribution plan together. A failed contribution save no longer leaves
+  a partial goal or changes another goal's Home placement.
+- Prepare final contribution/earmark checks while preserving releases and corrections. Test builds stay unrestricted.
+
 ### Fixed - Complete holding purchase saves (2026-10-10, D-122)
 
 - A purchase saves its quantity, payment, fee and derived price together. If the price cannot be saved, the

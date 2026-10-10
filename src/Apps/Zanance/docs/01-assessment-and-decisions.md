@@ -1073,3 +1073,24 @@ callers. A failed price or retired access after SQL restores every group/old fee
 grant. No schema, SDK, permission, string/layout or portable entitlement changes. ENT-02/03 selection, future
 activation, contributions/occurrence/other resources/native paths and commercial activation remain open.
 Final platforms/APK/normal Release evidence: [holding-write-policy.md](quality/holding-write-policy.md).
+
+## D-123 - Guard earmarks and save the whole goal editor atomically (2026-10-10)
+
+Continue approved ENT-02 at actual GoalStore allocation/contribution operations. Positive earmarks require
+AdvancedGoals; releases, retained corrections, deletion and expired-host data rights stay available with exact
+membership checks. An empty weekly/monthly date scaffold is part of the basic balance goal. Newly configured
+amount/share/cut/categories/assumed-price/custom-date work uses AdvancedGoals; new contribution reminders use
+ContributionReviewReminders. Historical reopening checks retained work/reminders before normalizing pins or
+protection. Do not release earmarks, change balances or post contribution estimates automatically.
+
+The editor previously committed Goal Save and ContributionPlan Save separately. One explicit store operation now
+holds the actual SQLite writer across the complete draft, capacity and pin checks, goal/plan SQL and access
+recheck. It retains atomicity when enforcement is inactive, without introducing a quota transaction for other
+inactive individual writes. Reuse the established goal preparation rather than duplicating its financial rules.
+Keep the existing contribution identity, creation metadata, cloned rule/categories and actual parent id on edits.
+SQL failures and retired access restore all stored rows; Changed fires once after the complete commit.
+
+39 new actual SQLite cases/main 1,806 pass; App.Tests 299 unchanged. Current deployment stays inactive. No model,
+schema, SDK, permission, string/layout or portable paid-fact change. Explicit selected read-only resources and
+automated contribution delivery plus remaining ENT-02/03/04 paths are unfinished. Build/APK and normal Release
+evidence: [goal-contribution-write-policy.md](quality/goal-contribution-write-policy.md).

@@ -763,3 +763,15 @@ by a real SQL trigger before commit; independent-provider enabled/inactive sale 
 imports; conversion failure/rollback/retry without losing the legacy account. Main suite 1,767 passes. Final
 strict platform/APK and actual Release purchase editor path: [evidence](quality/holding-write-policy.md).
 This does not accept explicit selected read-only classification, other ENT-02/03 paths or release activation.
+
+## AT-125 - Retained earmarks and atomic complete goal editor (D-123)
+
+39 real SQLite cases cover inactive complete Save/earmark without ledger posting; positive Free rejection with
+complete stored equality; Free/expired-host releases, removal and deletion; eight missing-membership paths;
+basic Persian-calendar empty date scaffolding; seven new contribution/reminder rejections before draft mutation;
+retained metadata/identity and reminder corrections; two new-method/date-tool rejections; three paid/exact shared
+paths; retained-work/reminder reopening rejection and paid reopen; basic empty-date reopen; complete goal quota;
+contribution insert/update failure and retry; actual SQL-trigger access retirement; whole delete rollback;
+independent last-slot contention; existing/new contribution row contention; historical correction without
+activation. Main 1,806 pass. Strict platforms, full APK and actual Release form/allocation evidence:
+[evidence](quality/goal-contribution-write-policy.md). Selected read-only/new automation/limit UI remain open.
