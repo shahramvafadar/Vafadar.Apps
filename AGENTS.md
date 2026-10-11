@@ -924,3 +924,18 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   clear retired queues and failed preparation. No schema, portable security or financial movement. Registration stays
   inactive; goal-view affordances and other bindings follow separately. Native stored requests/Intent observations
   do not prove future alarm firing, physical devices or iOS.
+
+## 79. Original goal views and reviewed actions (D-146)
+
+* Keep every original goal/progress/history and Home pin separate from new-work availability. Only new suggestions
+  and explicit new actions use work rights. Long Home goal identities wrap; financial tone and complete packets stay.
+* Retained earmarks can be released from historical/unavailable goals and original archived funding accounts. A new
+  release-only form starts with Release/original funding; reload keeps explicit direction/account/amount. Never move ledger money.
+* Recheck the captured actual file/rights/choice, complete goal/rule/allocation metadata and account/holding units
+  under the same detail writer. Use stable factory-bound connection settings across auto-closed reads/open native
+  SQLite writers; another actual file must still be rejected. Equal audit times never authorize stale note/pin replacement.
+  One busy guard spans consent/write/publication.
+* Retain dirty culture/currency drafts; changed currency requires explicit reentry. Rejected writes keep local state;
+  committed reload failure disables writes and exposes growing feedback/retry outside the body. Retry never reposts.
+* Native semantic colors/query interfaces remain real MAUI partials; application tests compile actual non-UI sources.
+  Review uses independent fictitious data, restores all original rows/bytes/display and never activates commercial limits.

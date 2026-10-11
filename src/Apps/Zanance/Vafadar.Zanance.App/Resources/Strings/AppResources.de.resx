@@ -1817,7 +1817,7 @@
     <value>Kein aktives Konto in {0}. Legen Sie eines an, um Geld zurückzulegen.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Der Betrag wird in Zanance für das Ziel reserviert und bleibt auf dem Konto. Eine tatsächliche Übertragung auf ein anderes Konto erfassen Sie separat als Umbuchung.</value>
+    <value>Geld zurückzulegen oder freizugeben ändert nur den für dieses Ziel vorgemerkten Betrag. Der Kontostand bleibt gleich. Tatsächliche Überweisungen oder Ausgaben separat erfassen.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Verlauf</value>
@@ -5849,5 +5849,8 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Wenn ein Ziel verfügbar sein darf und du zwei hast, wähle eines und speichere. Beide behalten Fortschritt und Verlauf. Ein ausgewähltes pausiertes Ziel bleibt pausiert; die Auswahl eines erweiterten Ziels schaltet dessen kostenpflichtige Werkzeuge nicht frei.</value>
+  </data>
+  <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
+    <value>Die gespeicherte Währung wurde von {0} auf {1} geändert. Ihr Entwurf bleibt erhalten. Geben Sie den Betrag vor dem Speichern erneut in {1} ein.</value>
   </data>
 </root>

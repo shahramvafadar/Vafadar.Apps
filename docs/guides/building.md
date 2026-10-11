@@ -505,3 +505,9 @@ and exact original data/display restoration. [Current matrix/APK evidence](../..
 Use the canonical complete signed Release APK for Android actions. Read actual owned native pending requests and deliver their unchanged single/group returning data through the real native Intent adapter; do not claim future 09:00 firing. Existing Debug goal-reminder preparation now validates the scoped original member/file identity. Keep independent fictitious files, original bytes/sidecars and display restoration. No desktop input, clock/system settings, physical device or runtime entitlement replacement.
 
 [Source/native/APK evidence](../../src/Apps/Zanance/docs/quality/goal-work-reminders.md).
+
+## Focused goal-view review (D-146)
+
+Use VAFADAR_SNAPSHOT_ONLY=goal-work-views for actual list/detail/Home and goal-work-release-hint for the focused neutral explanation. Fixtures use independent artifact databases and page-local fictitious Free input; release registration stays inactive. The hidden own AppWindow, native glyph/target/Invoke checks and exact original data/display restoration remain required. Android acceptance uses the complete signed Release. An unlaunched complete Debug package reads/prepares/restores the exact owned sample file; a separate complete Debug run may diagnose an already failed owned action, without being counted as Release acceptance. Preserve failed helper attempts and never infer physical/OS/Store/startup acceptance.
+
+[Evidence](../../src/Apps/Zanance/docs/quality/goal-work-views.md).

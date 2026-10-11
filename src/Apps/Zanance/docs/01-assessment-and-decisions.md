@@ -1552,3 +1552,42 @@ Complete signed installable APK verified. No layout/copy change; D-144 geometry 
 Physical-phone, iOS, provider, OS accessibility, Store signing/publication and commercial activation remain unaccepted.
 
 [Evidence](quality/goal-work-reminders.md).
+
+## D-146 - Original goal views and reviewed detail actions (2026-10-11)
+
+Keep all original goals, saved contribution rules, financial progress, funding/protection, history and original
+Home pins. Show availability for new work separately from lifecycle state and financial tone; only new contribution
+suggestions require current work rights. Current commercial registration remains inactive and unrestricted.
+
+Historical and unavailable earmarks retain negative releases on their original funding account, including an archived
+account. Newly opened release-only forms start with Release and an account holding the original earmark; display/choice
+reloads retain explicit direction/account/amount. New positive earmarks remain independently gated. Reopening checks
+free chosen capacity and the complete retained paid contribution/reminder; paused goals consume capacity without resuming.
+
+Every detail write validates the loaded actual file, cached rights, stored choice revision, complete original goal/rule/
+allocation metadata and account/holding units/availability inside the same SQLite writer. Use the actual factory-bound
+connection setting for stable file identity across auto-closed reads and open native SQLite writers. Do not depend on audit time
+alone: concurrent note or Home pin edits with identical timestamps must survive. One busy guard spans consent, write,
+feedback and publication. Rejected writes retain drafts/lifecycle; committed writes with failed reload disable further
+writes and expose growing translated feedback/retry outside the body viewport. Retry never resubmits the action.
+
+Keep dirty explicit price/amount drafts with their original numeric culture and currency. Currency changes preserve
+the draft but require explicit reentry before Save. Retained assumed-price corrections preserve the original contribution
+rule and never write a holding valuation or ledger entry. Native colors/query effects remain in actual MAUI partials;
+tests compile the actual non-UI presenter, view models and Home projection, never replacement UI controls or algorithms.
+
+36 new AT-148 actual-source/real SQLite cases pass; final normal parallel main 2,520 / App.Tests 497 pass,
+zero failures/skips, test output cleaned. Strict Windows and Android builds have zero warnings/errors. Actual list,
+detail and Home pass 18 English/Persian/German, light/dark, 360/412/wide cases with process-local 1.5 font stress;
+18 additional focused cases check the corrected neutral earmark/release explanation. Native glyphs, original tones,
+44-pixel action targets, original historical Release/account, dirty price/currency feedback and actual retry/Back are
+checked. All 25 complete fixture tables remain equal; original development files/sidecars and display are restored.
+
+Six normal signed Release owned-emulator cases verify original Home/list/detail, completed goal and archived funding,
+initially selected Release, enabled Save and native Back. One explicit negative earmark release is saved; complete
+original goals, accounts, ledger and other rows remain equal. Only the pre-existing D-141 migration and that one
+expected owned allocation differ. Original owned bytes/sidecars plus Main/English/System are restored; the final
+normal signed Release is installed/stopped. No physical-device, iOS, OS accessibility, provider, startup performance,
+Store signing/publication or commercial-activation acceptance is implied.
+
+[Evidence](quality/goal-work-views.md). ENT-02/03 remain in progress; the next ready slice is the reviewed goal editor/contribution draft.

@@ -24,6 +24,12 @@ internal static partial class DebugSnapshots
         window.Height = size is [_, var h] && double.TryParse(h, System.Globalization.CultureInfo.InvariantCulture, out var height) ? height : 892;
     }
 
+    // Keep fictitious mode setup in the established diagnostic writer; product pages always ask FeaturePolicy.
+    private static async Task PrepareGoalViewSettingsAsync(ZananceStore store)
+    {
+        var settings = await store.GetSettingsAsync(); settings.Mode = Core.Settings.ExperienceMode.Advanced; await store.SaveSettingsAsync(settings);
+    }
+
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
@@ -252,7 +258,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -309,6 +315,11 @@ internal static partial class DebugSnapshots
         }
 
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "goal-work-views" or "goal-work-release-hint")
+        {
+            await ReviewGoalWorkViewsAsync(app, services, folder, languages);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-items-entry")
         {
             foreach (var language in languages)

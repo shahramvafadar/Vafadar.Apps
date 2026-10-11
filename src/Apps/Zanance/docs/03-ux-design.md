@@ -867,3 +867,9 @@ capacity with a concrete translated example and keep paid-tool rights separate. 
 Keep original progress/history separate from selected new work; selection does not resume a pause or unlock a paid tool. Reminder taps open the original detail or existing Goals root through app lock, with actual-file validation and no silent profile switch or financial Save. Preserve generic/detail privacy, opt-in and 09:00 local rule dates. Goal-view contribution affordances follow separately. No layout/copy change; current inactive test builds stay unrestricted.
 
 [Native delivery evidence](quality/goal-work-reminders.md).
+
+## Complete original goal views and retained releases (D-146)
+
+Keep lifecycle, financial tone/progress and new-work availability separate. Preserve original Home pins and let long goal identities wrap. Newly opened release-only goals show Release and an original earmarked account; reload retains explicit input. The neutral hint explains both earmarking and releasing without moving money. Keep price/currency feedback beside its input and failed-publication feedback/retry outside the disabled body viewport. One native busy guard spans consent/write/publication.
+
+[Running-app evidence](quality/goal-work-views.md).

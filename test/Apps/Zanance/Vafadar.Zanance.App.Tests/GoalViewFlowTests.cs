@@ -1,0 +1,324 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Localization.Formatting;
+using Vafadar.Zanance.App.Features.Goals;
+using Vafadar.Zanance.App.Features.Holdings;
+using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.Core.Goals;
+using Vafadar.Zanance.Core.Holdings;
+using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Settings;
+using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+
+namespace Vafadar.Zanance.App.Tests;
+
+/// <summary>AT-148: actual list/Home/detail sources, complete financial inputs and explicitly reviewed SQLite writes.</summary>
+[Trait("AT", "AT-148")]
+public sealed class GoalViewFlowTests
+{
+    private static CancellationToken Ct => TestContext.Current.CancellationToken;
+    private static readonly Guid Scope = Guid.Parse("41414141-5252-6363-7474-858585858585");
+    private sealed class AccessSource : ICommercialWriteAccessSource
+    {
+        internal CommercialWriteAccess Current = CommercialWriteAccess.Inactive;
+        internal bool Fail;
+        public CommercialWriteAccess Capture(string databasePath) => Fail
+            ? throw new InvalidOperationException("Fictitious failed read.") : Current;
+    }
+    private sealed record Seed(Goal[] Items, Account Account, Account Retained, AssetType Type, AccessSource Access,
+        GoalStore Goals, ResourceChoiceStore Choices, GoalPresenter Presenter, GoalDetailViewModel Detail);
+
+    private static async Task<Seed> SeedAsync(FlowFixture f)
+    {
+        var day = DateOnly.FromDateTime(f.Time.Now.DateTime);
+        var account = new Account { Name = "Owned funding", CurrencyCode = "EUR", OpeningDate = day.AddDays(-90), OpeningBalance = 10000 };
+        var retained = new Account { Name = "Owned archived funding", CurrencyCode = "EUR", OpeningDate = day.AddDays(-90), OpeningBalance = 5000, IsArchived = true };
+        await f.Store.SaveAccountAsync(account, Ct); await f.Store.SaveAccountAsync(retained, Ct);
+        var holdings = f.Services.GetRequiredService<HoldingStore>();
+        var type = new AssetType { Name = "Owned counted item", Dimension = AssetDimension.Count, PriceCurrencyCode = "EUR", Divisible = true };
+        Assert.True(await holdings.SaveTypeAsync(type, Ct));
+        var writer = f.Services.GetRequiredService<GoalStore>();
+        var items = Enumerable.Range(0, 6).Select(i => new Goal
+        {
+            Name = "Owned goal " + i, CurrencyCode = "EUR", TargetAmount = 50000, TargetDate = day.AddDays(30),
+            Type = i == 0 ? GoalType.AccountBalance : i == 5 ? GoalType.HoldingQuantity : GoalType.Earmark,
+            AccountId = i == 0 ? account.Id : null, AssetTypeId = i == 5 ? type.Id : null,
+            Priority = i == 1 ? GoalPriority.High : GoalPriority.Low,
+            HomePin = i is 0 or 1 ? i + 1 : null,
+            State = i == 3 ? GoalState.Completed : i == 4 ? GoalState.Paused : GoalState.Active,
+        }).ToArray();
+        foreach (var goal in items) await writer.SaveGoalWithContributionPlanAsync(goal, new ContributionPlan
+        { GoalId = goal.Id, Amount = 1000, AssumedPricePerUnitMilli = goal.Type == GoalType.HoldingQuantity ? 1000000 : null,
+            Rule = new() { Start = day, Frequency = Frequency.Monthly } }, Ct);
+        foreach (var goal in items.Skip(1).Take(2)) await writer.AddAllocationAsync(new()
+        { GoalId = goal.Id, AccountId = account.Id, Amount = 8000, Date = day }, Ct);
+        await writer.AddAllocationAsync(new() { GoalId = items[3].Id, AccountId = retained.Id, Amount = 2400, Date = day }, Ct);
+        var settings = await f.Store.GetSettingsAsync(Ct); settings.Mode = ExperienceMode.Advanced; await f.Store.SaveSettingsAsync(settings, Ct);
+        var access = new AccessSource(); var factory = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        var goals = new GoalStore(factory, access); var dates = new DateFormatter(f.Localization);
+        var presenter = new GoalPresenter(f.Translator, dates, f.Localization, holdings, new HoldingText(f.Translator, f.Localization, dates));
+        return new(items, account, retained, type, access, goals, new(factory, access), presenter,
+            new(f.Store, goals, f.Services.GetRequiredService<PlanStore>(), holdings, presenter, f.Translator, dates, f.Localization, f.Time, f.Platform));
+    }
+    private static void Enable(FlowFixture f, Seed s, ProductPlan plan = ProductPlan.Free) =>
+        s.Access.Current = new(f.Directory.Combine("zanance.db"), new(plan, new(EntitlementScopeKind.PersonalProfile, Scope)));
+    private static async Task ChooseAsync(Seed s, params Guid[] ids) =>
+        await s.Choices.SaveAsync(await s.Choices.ReadAsync(QuotaKind.Goals, Ct), ids, Ct);
+    private static Task<string> RowsAsync(FlowFixture f) => GoalChooserFlowTests.SnapshotAsync(f);
+    private static async Task OpenAsync(Seed s, int index)
+    {
+        s.Detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[index].Id }); await s.Detail.LoadAsync();
+        Assert.False(s.Detail.NotFound); Assert.True(s.Detail.CanInteract);
+    }
+
+    [Theory]
+    [InlineData("en"), InlineData("fa"), InlineData("de")]
+    public async Task Complete_list_and_original_Home_pins_keep_financial_packets_when_new_work_changes(string language)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(l => l.CultureName == language));
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var original = vm.Active.ToDictionary(row => row.Id); var earmarks = vm.Earmarks.ToArray();
+        Enable(f, s); await ChooseAsync(s, s.Items[0].Id); var before = await RowsAsync(f);
+        await vm.LoadAsync(); Assert.Equal(5, vm.Active.Count); Assert.Single(vm.Finished);
+        Assert.Equal(earmarks, vm.Earmarks);
+        foreach (var row in vm.Active)
+        {
+            var prior = original[row.Id];
+            Assert.Equal((prior.FundedText, prior.Progress, prior.RemainingText, prior.PlanText, prior.WarningText, prior.Tone, prior.StateText),
+                (row.FundedText, row.Progress, row.RemainingText, row.PlanText, row.WarningText, row.Tone, row.StateText));
+            Assert.Null(row.SuggestionText);
+            Assert.Equal(row.Id == s.Items[0].Id ? null : f.Translator["ActiveItems_ReadOnly"], row.WorkText);
+            if (row.WorkText is { } work) Assert.Contains(work, row.Description);
+        }
+        var accounts = await f.Store.GetAccountsAsync(cancellationToken: Ct); var entries = await f.Store.GetEntriesAsync(cancellationToken: Ct);
+        var home = await GoalHomeProjection.ReadAsync(s.Goals, s.Presenter, f.Translator, accounts, entries, DateOnly.FromDateTime(f.Time.Now.DateTime));
+        Assert.Equal(s.Items.Take(2).Select(goal => goal.Id), home.Pinned.Select(row => row.Id));
+        Assert.Equal(f.Translator["ActiveItems_ReadOnly"], home.Pinned[1].WorkText); Assert.Null(home.Attention);
+        Assert.Equal(before, await RowsAsync(f));
+        await vm.OpenCommand.ExecuteAsync(vm.Active[0]);
+        Assert.Equal(vm.Active[0].Id, f.Platform.Routes.Single().Parameters!["id"]);
+    }
+
+    [Theory]
+    [InlineData(GoalState.Completed), InlineData(GoalState.Archived), InlineData(GoalState.Paused)]
+    public async Task Retained_release_on_original_archived_account_is_available_without_new_paid_work(GoalState state)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        s.Items[3].State = state; await s.Goals.SaveGoalAsync(s.Items[3], Ct);
+        Enable(f, s); await ChooseAsync(s, s.Items[0].Id); await OpenAsync(s, 3); var vm = s.Detail;
+        Assert.True(vm.CanSetAside); Assert.False(vm.CanContribute);
+        Assert.Equal(1, vm.DirectionIndex); Assert.Equal(s.Retained.Id, vm.SelectedAccount!.Id);
+        vm.SelectedAccount = vm.Accounts.Single(account => account.Id == s.Retained.Id);
+        Assert.False(vm.SelectedAccount.CanFund); vm.AmountText = "1.23"; vm.DirectionIndex = 0;
+        Assert.False(vm.CanAllocate); var before = await RowsAsync(f); await vm.AllocateCommand.ExecuteAsync(null);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Equal("1.23", vm.AmountText);
+        vm.DirectionIndex = 1; Assert.True(vm.CanAllocate); await vm.AllocateCommand.ExecuteAsync(null);
+        var allocations = await s.Goals.GetAllocationsAsync(s.Items[3].Id, Ct);
+        Assert.Equal(2277, allocations.Sum(allocation => allocation.Amount)); Assert.Single(allocations, allocation => allocation.Amount == -123);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); Assert.Equal(string.Empty, vm.AmountText);
+        Assert.Empty(f.Platform.Failures); Assert.Equal(state, (await s.Goals.GetGoalAsync(s.Items[3].Id, Ct))!.State);
+    }
+
+    [Fact]
+    public async Task Excess_release_keeps_direction_account_and_exact_amount_draft_without_writing()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 3); var vm = s.Detail;
+        vm.SelectedAccount = vm.Accounts.Single(account => account.Id == s.Retained.Id); vm.DirectionIndex = 1; vm.AmountText = "25.00";
+        var before = await RowsAsync(f); await vm.AllocateCommand.ExecuteAsync(null);
+        Assert.Equal(before, await RowsAsync(f)); Assert.NotNull(vm.AmountError);
+        Assert.Equal("25.00", vm.AmountText); Assert.Equal(1, vm.DirectionIndex); Assert.Equal(s.Retained.Id, vm.SelectedAccount.Id);
+    }
+
+    [Theory]
+    [InlineData(false), InlineData(true)]
+    public async Task One_busy_guard_spans_native_confirmation_and_preserves_unsaved_input(bool confirm)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1); var vm = s.Detail;
+        vm.AmountText = "7.25"; vm.DirectionIndex = 1; var before = await RowsAsync(f);
+        var answer = new TaskCompletionSource<bool>(); f.Platform.PendingConfirmation = () => answer.Task;
+        var command = vm.ToggleCompleteCommand.ExecuteAsync(null);
+        Assert.True(vm.IsBusy); Assert.False(vm.CanInteract); Assert.False(vm.CanAllocate); Assert.False(vm.CanTogglePause);
+        await vm.TogglePauseCommand.ExecuteAsync(null); await vm.AllocateCommand.ExecuteAsync(null); await vm.DeleteCommand.ExecuteAsync(null);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Single(f.Platform.ConfirmationDialogs);
+        answer.SetResult(confirm); await command;
+        Assert.False(vm.IsBusy); Assert.Equal("7.25", vm.AmountText); Assert.Equal(1, vm.DirectionIndex);
+        Assert.Equal(confirm ? GoalState.Completed : GoalState.Active, (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!.State);
+        Assert.Empty(f.Platform.Failures); if (!confirm) Assert.Equal(before, await RowsAsync(f));
+    }
+
+    [Theory]
+    [InlineData("choice"), InlineData("rights"), InlineData("goal"), InlineData("note"), InlineData("pin"), InlineData("account"), InlineData("price-currency")]
+    public async Task Intervening_context_change_rejects_explicit_completion_and_keeps_original_local_draft(string changed)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s, ProductPlan.Plus); await OpenAsync(s, 1);
+        var vm = s.Detail; vm.AmountText = "7.25"; vm.DirectionIndex = 1;
+        f.Platform.PendingConfirmation = async () =>
+        {
+            if (changed == "choice") await ChooseAsync(s);
+            else if (changed == "rights") Enable(f, s);
+            else if (changed == "goal") { var goal = (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!; goal.TargetAmount++; await s.Goals.SaveGoalAsync(goal, Ct); }
+            else if (changed is "note" or "pin")
+            {
+                var goal = (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!; var stamp = goal.UpdatedAt;
+                if (changed == "note") goal.Note = "Concurrent original retained note"; else goal.HomePin = null;
+                await s.Goals.SaveGoalAsync(goal, Ct);
+                Assert.Equal(stamp, (await s.Goals.GetGoalAsync(goal.Id, Ct))!.UpdatedAt);
+            }
+            else if (changed == "account")
+            {
+                s.Account.IsArchived = true; await f.Store.SaveAccountAsync(s.Account, Ct);
+                Assert.True((await f.Store.GetAccountsAsync(cancellationToken: Ct)).Single(account => account.Id == s.Account.Id).IsArchived);
+            }
+            else { s.Type.PriceCurrencyCode = "USD"; Assert.True(await f.Services.GetRequiredService<HoldingStore>().SaveTypeAsync(s.Type, Ct)); }
+            return true;
+        };
+        await vm.ToggleCompleteCommand.ExecuteAsync(null);
+        Assert.Single(f.Platform.Failures); Assert.Null(vm.SaveError); Assert.Equal("7.25", vm.AmountText); Assert.Equal(1, vm.DirectionIndex);
+        Assert.True(vm.IsActive); Assert.Equal(f.Translator["Goal_Complete"], vm.CompleteText);
+        Assert.Equal(GoalState.Active, (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!.State);
+        if (changed == "note") Assert.Equal("Concurrent original retained note", (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!.Note);
+        if (changed == "pin") Assert.Null((await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!.HomePin);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    public async Task Failed_reload_disables_writes_until_success_and_retains_explicit_money_input()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1); var vm = s.Detail;
+        vm.AmountText = "7.25"; vm.DirectionIndex = 1; var before = await RowsAsync(f); s.Access.Fail = true;
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync);
+        Assert.False(vm.CanInteract); await vm.AllocateCommand.ExecuteAsync(null); Assert.Equal(before, await RowsAsync(f));
+        Assert.Equal("7.25", vm.AmountText); s.Access.Fail = false; await vm.ReloadCommand.ExecuteAsync(null); Assert.True(vm.CanInteract);
+        Assert.Equal("7.25", vm.AmountText); Assert.Equal(1, vm.DirectionIndex);
+    }
+
+    [Fact]
+    public async Task Committed_release_followed_by_reload_failure_reports_saved_without_repeating_the_write()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1); var vm = s.Detail;
+        vm.AmountText = "1.23"; vm.DirectionIndex = 1; s.Goals.Changed += (_, _) => s.Access.Fail = true;
+        await vm.AllocateCommand.ExecuteAsync(null);
+        Assert.Equal(f.Translator["Occurrence_SavedRefreshFailed"], vm.SaveError); Assert.False(vm.CanInteract);
+        Assert.Empty(f.Platform.Failures); Assert.Equal(string.Empty, vm.AmountText);
+        var before = await RowsAsync(f); await vm.AllocateCommand.ExecuteAsync(null); Assert.Equal(before, await RowsAsync(f));
+        s.Access.Fail = false; await vm.ReloadCommand.ExecuteAsync(null); Assert.True(vm.CanInteract); Assert.Null(vm.SaveError);
+        Assert.Single(await s.Goals.GetAllocationsAsync(s.Items[1].Id, Ct), item => item.Amount == -123);
+    }
+
+    [Fact]
+    public async Task Retained_price_correction_preserves_saved_rule_and_never_changes_valuation_or_ledger()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s); await ChooseAsync(s, s.Items[0].Id); await OpenAsync(s, 5);
+        var vm = s.Detail; Assert.True(vm.CanUseAssumedPrice); Assert.True(vm.CanEditAssumedPrice);
+        var original = (await s.Goals.GetContributionPlansAsync(Ct)).Single(plan => plan.GoalId == s.Items[5].Id);
+        vm.AssumedPriceText = "12.34"; await vm.SaveAssumedPriceCommand.ExecuteAsync(null);
+        var saved = (await s.Goals.GetContributionPlansAsync(Ct)).Single(plan => plan.GoalId == s.Items[5].Id);
+        Assert.Equal(original.Id, saved.Id); Assert.Equal(1234000, saved.AssumedPricePerUnitMilli);
+        Assert.Equal(original.Amount, saved.Amount); Assert.Equal(original.Rule.Start, saved.Rule.Start); Assert.Equal(original.Rule.Frequency, saved.Rule.Frequency);
+        Assert.Empty(await f.Services.GetRequiredService<HoldingStore>().GetValuationsAsync(cancellationToken: Ct));
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); Assert.Empty(f.Platform.Failures);
+    }
+
+    [Fact]
+    public async Task Readonly_quantity_without_recorded_price_cannot_start_a_new_price()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        var plan = (await s.Goals.GetContributionPlansAsync(Ct)).Single(plan => plan.GoalId == s.Items[5].Id);
+        plan.AssumedPricePerUnitMilli = null; await s.Goals.SaveContributionPlanAsync(s.Items[5].Id, plan, Ct);
+        Enable(f, s); await ChooseAsync(s, s.Items[0].Id); await OpenAsync(s, 5); var vm = s.Detail;
+        Assert.True(vm.CanUseAssumedPrice); Assert.False(vm.CanEditAssumedPrice); Assert.False(vm.CanSaveAssumedPrice);
+        vm.AssumedPriceText = "12.34"; var before = await RowsAsync(f); await vm.SaveAssumedPriceCommand.ExecuteAsync(null);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Equal("12.34", vm.AssumedPriceText);
+    }
+
+    [Fact]
+    public async Task Formatting_reload_keeps_dirty_price_and_amount_in_their_original_parse_culture()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); f.Localization.SetFormattingCulture("de-DE"); await OpenAsync(s, 5);
+        s.Detail.AssumedPriceText = "1,23"; f.Localization.SetFormattingCulture("en-US"); await s.Detail.LoadAsync();
+        Assert.Equal("1,23", s.Detail.AssumedPriceText); await s.Detail.SaveAssumedPriceCommand.ExecuteAsync(null);
+        Assert.Equal(123000, (await s.Goals.GetContributionPlansAsync(Ct)).Single(plan => plan.GoalId == s.Items[5].Id).AssumedPricePerUnitMilli);
+        await OpenAsync(s, 1); f.Localization.SetFormattingCulture("de-DE"); s.Detail.AmountText = "1,23"; s.Detail.DirectionIndex = 1;
+        f.Localization.SetFormattingCulture("en-US"); await s.Detail.LoadAsync(); Assert.Equal("1,23", s.Detail.AmountText);
+        await s.Detail.AllocateCommand.ExecuteAsync(null); Assert.Single(await s.Goals.GetAllocationsAsync(s.Items[1].Id, Ct), item => item.Amount == -123);
+        Assert.Empty(f.Platform.Failures);
+    }
+
+    [Theory]
+    [InlineData(false), InlineData(true)]
+    public async Task Changed_currency_preserves_original_draft_but_requires_explicit_reentry_before_save(bool price)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, price ? 5 : 1); var vm = s.Detail;
+        if (price) { vm.AssumedPriceText = "1.23"; s.Type.PriceCurrencyCode = "USD"; Assert.True(await f.Services.GetRequiredService<HoldingStore>().SaveTypeAsync(s.Type, Ct)); }
+        else { vm.AmountText = "1.23"; vm.DirectionIndex = 1; var goal = (await s.Goals.GetGoalAsync(s.Items[1].Id, Ct))!; goal.CurrencyCode = "USD"; await s.Goals.SaveGoalAsync(goal, Ct); }
+        await vm.LoadAsync(); Assert.Equal("1.23", price ? vm.AssumedPriceText : vm.AmountText);
+        Assert.False(price ? vm.CanSaveAssumedPrice : vm.CanAllocate); Assert.Contains("USD", (price ? vm.PriceError : vm.AmountError)!);
+        var before = await RowsAsync(f); if (price) await vm.SaveAssumedPriceCommand.ExecuteAsync(null); else await vm.AllocateCommand.ExecuteAsync(null);
+        Assert.Equal(before, await RowsAsync(f)); if (price) vm.AssumedPriceText = "2.34"; else vm.AmountText = "2.34";
+        Assert.True(price ? vm.CanSaveAssumedPrice : vm.CanAllocate);
+    }
+
+    [Theory]
+    [InlineData("save"), InlineData("allocation"), InlineData("delete-allocation"), InlineData("plan"), InlineData("delete")]
+    public async Task Every_detail_writer_rejects_a_review_from_another_actual_file_before_mutation(string action)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var review = await s.Goals.GetWorkSnapshotAsync(Ct);
+        using var other = new FlowFixture(); var restored = await SeedAsync(other); var before = await RowsAsync(other);
+        Task Write() => action switch
+        {
+            "save" => restored.Goals.SaveGoalAsync(s.Items[1], Ct, review),
+            "allocation" => restored.Goals.AddAllocationAsync(new() { GoalId = restored.Items[1].Id, AccountId = restored.Account.Id, Amount = -1, Date = new(2026, 10, 9) }, Ct, review),
+            "delete-allocation" => restored.Goals.DeleteAllocationAsync((review.Allocations[0]).Id, Ct, review),
+            "plan" => restored.Goals.SaveContributionPlanAsync(restored.Items[5].Id, review.ContributionPlans[0], Ct, review),
+            _ => restored.Goals.DeleteGoalAsync(restored.Items[1].Id, Ct, review),
+        };
+        await Assert.ThrowsAsync<InvalidOperationException>(Write); Assert.Equal(before, await RowsAsync(other));
+    }
+
+    [Theory]
+    [InlineData(false), InlineData(true)]
+    public async Task Paused_basic_goal_resumes_only_when_it_is_the_actual_chosen_identity(bool selected)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        s.Items[4].Type = GoalType.AccountBalance; s.Items[4].AccountId = s.Retained.Id;
+        await s.Goals.SaveGoalAsync(s.Items[4], Ct); Enable(f, s); await ChooseAsync(s, s.Items[selected ? 4 : 0].Id);
+        await OpenAsync(s, 4); var vm = s.Detail; Assert.Equal(selected, vm.CanTogglePause);
+        Assert.Equal(f.Translator["Goal_Resume"], vm.PauseText); var before = await RowsAsync(f);
+        await vm.TogglePauseCommand.ExecuteAsync(null);
+        Assert.Equal(selected ? GoalState.Active : GoalState.Paused, (await s.Goals.GetGoalAsync(s.Items[4].Id, Ct))!.State);
+        Assert.Empty(f.Platform.Failures); if (!selected) Assert.Equal(before, await RowsAsync(f));
+    }
+
+    [Theory]
+    [InlineData("free-slot"), InlineData("full"), InlineData("paid-rule"), InlineData("reminder"), InlineData("advanced-type")]
+    public async Task Historical_reopening_reflects_free_capacity_and_the_complete_saved_contribution(string condition)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        s.Items[3].Type = condition == "advanced-type" ? GoalType.Earmark : GoalType.AccountBalance;
+        s.Items[3].AccountId = condition == "advanced-type" ? null : s.Retained.Id;
+        await s.Goals.SaveGoalAsync(s.Items[3], Ct);
+        var plan = (await s.Goals.GetContributionPlansAsync(Ct)).Single(plan => plan.GoalId == s.Items[3].Id);
+        plan.Amount = condition == "paid-rule" ? 1000 : null; plan.ReminderEnabled = condition == "reminder";
+        await s.Goals.SaveContributionPlanAsync(s.Items[3].Id, plan, Ct);
+        Enable(f, s); await ChooseAsync(s, condition == "full" ? [s.Items[0].Id] : []); await OpenAsync(s, 3);
+        var allowed = condition == "free-slot"; Assert.Equal(allowed, s.Detail.CanToggleComplete); var before = await RowsAsync(f);
+        await s.Detail.ToggleCompleteCommand.ExecuteAsync(null);
+        Assert.Equal(allowed ? GoalState.Active : GoalState.Completed, (await s.Goals.GetGoalAsync(s.Items[3].Id, Ct))!.State);
+        Assert.Empty(f.Platform.Failures); if (!allowed) Assert.Equal(before, await RowsAsync(f));
+        else Assert.Contains(s.Items[3].Id, (await s.Choices.ReadAsync(QuotaKind.Goals, Ct)).SelectedIds);
+    }
+
+    [Fact]
+    public async Task Original_overdue_Home_attention_remains_visible_when_the_goal_is_unavailable_for_new_work()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f);
+        foreach (var goal in s.Items) { goal.HomePin = null; goal.TargetDate = new(2026, 10, 8); await s.Goals.SaveGoalAsync(goal, Ct); }
+        Enable(f, s); await ChooseAsync(s); var before = await RowsAsync(f);
+        var view = await GoalHomeProjection.ReadAsync(s.Goals, s.Presenter, f.Translator, await f.Store.GetAccountsAsync(cancellationToken: Ct),
+            await f.Store.GetEntriesAsync(cancellationToken: Ct), new(2026, 10, 9));
+        Assert.Empty(view.Pinned); Assert.NotNull(view.Attention); Assert.Equal(before, await RowsAsync(f));
+    }
+}

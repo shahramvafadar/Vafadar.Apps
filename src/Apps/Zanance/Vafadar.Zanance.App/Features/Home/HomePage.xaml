@@ -409,13 +409,14 @@
                                             <!-- The amount under the name, as on the goals page: next to it, a long amount squeezed the name letter by letter -->
                                             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
                                                 <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SavingText}" VerticalOptions="Center" />
-                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
                                                 <Label Grid.Row="1" Grid.Column="1" Text="{Binding FundedText}" />
                                             </Grid>
                                             <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
                                             <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                         <!-- The card is one button named with its whole text (ZEX-S0304) -->
                                         <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"

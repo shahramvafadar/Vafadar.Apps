@@ -5,6 +5,7 @@ using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App.Features.Goals;
 
@@ -20,7 +21,8 @@ public sealed partial class GoalsViewModel(
     GoalStore goals,
     GoalPresenter presenter,
     Translator translator,
-    TimeProvider time) : ViewModelBase, Presentation.IThemeAware
+    TimeProvider time,
+    IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware
 {
     public ObservableCollection<GoalRow> Active { get; } = [];
 
@@ -46,16 +48,18 @@ public sealed partial class GoalsViewModel(
         var accounts = await store.GetAccountsAsync();
         var entries = await store.GetEntriesAsync();
         var balances = GoalPresenter.Balances(accounts, entries, today);
-        var all = await goals.GetGoalsAsync();
-        var allocations = await goals.GetAllocationsAsync();
-        var progress = (await presenter.EvaluateAsync(goals, accounts, entries, today, all)).ToDictionary(p => p.Goal.Id);
+        var snapshot = await goals.GetWorkSnapshotAsync();
+        var all = snapshot.Goals;
+        var allocations = snapshot.Allocations;
+        var progress = (await presenter.EvaluateAsync(snapshot, accounts, entries, today)).ToDictionary(p => p.Goal.Id);
+        await goals.ValidateWorkSnapshotAsync(snapshot);
 
         // Active and paused goals above, completed and archived ones below (ZEX-S0303).
         Active.Clear();
         Finished.Clear();
         foreach (var goal in all)
         {
-            var row = presenter.Row(goal, progress.GetValueOrDefault(goal.Id));
+            var row = presenter.Row(goal, progress.GetValueOrDefault(goal.Id), snapshot.Work);
             (goal.State is GoalState.Active or GoalState.Paused ? Active : Finished).Add(row);
         }
 
@@ -75,8 +79,8 @@ public sealed partial class GoalsViewModel(
     }
 
     [RelayCommand]
-    private Task AddAsync() => Shell.Current.GoToAsync(AppShell.GoalEditorRoute);
+    private Task AddAsync() => interaction.NavigateAsync(AppRoutes.GoalEditorRoute);
 
     [RelayCommand]
-    private Task OpenAsync(GoalRow row) => Shell.Current.GoToAsync(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    private Task OpenAsync(GoalRow row) => interaction.NavigateAsync(AppRoutes.GoalDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
 }

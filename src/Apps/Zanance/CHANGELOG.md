@@ -6,6 +6,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Clear goal actions and retained drafts (2026-10-11, D-146)
+
+- Keep original goal progress, history and Home pins visible; long Home goal names wrap completely.
+- Release previously assigned money from completed, archived or unavailable goals and the original funding account.
+- Open release-only forms with Release selected, and explain that earmarking/releasing never moves account money.
+- Preserve entered amounts/prices and require explicit reentry if their saved currency changes.
+- Reject outdated detail actions without losing the draft; show retry when a saved action cannot reload.
+- Current test builds remain unrestricted; remaining commercial bindings and activation stay separate.
+
 ### Improved - Goal contribution reminders (2026-10-11, D-145)
 
 - Open the original goal from a reminder and reject a reminder belonging to another profile.

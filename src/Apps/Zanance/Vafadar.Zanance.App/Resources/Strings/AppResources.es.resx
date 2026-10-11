@@ -1775,7 +1775,7 @@
     <value>No hay cuentas activas en {0}. Añade una para reservar dinero.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Solo asigna dinero de la cuenta a un objetivo. Si mueves dinero a una cuenta de ahorro, registra esa transferencia por separado.</value>
+    <value>Apartar o liberar dinero solo cambia el importe asignado a este objetivo. El saldo de tu cuenta no cambia; registra las transferencias reales o los gastos por separado.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Historial</value>
@@ -5818,5 +5818,8 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Si tu capacidad es de una meta y tienes dos, selecciona una y guarda. Ambas conservan su progreso e historial. Una meta seleccionada en pausa sigue en pausa; seleccionar una meta avanzada no habilita sus herramientas de pago.</value>
+  </data>
+  <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
+    <value>La moneda guardada ha cambiado de {0} a {1}. Se conserva tu borrador. Introduce de nuevo el importe en {1} antes de guardar.</value>
   </data>
 </root>

@@ -1780,7 +1780,7 @@
     <value>Aucun compte actif en {0}. Ajoutez-en un pour mettre de l’argent de côté.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Cette action affecte uniquement l’argent du compte à un objectif. Si vous transférez de l’argent vers un compte d’épargne, enregistrez ce virement séparément.</value>
+    <value>Mettre de l’argent de côté ou le libérer change uniquement le montant affecté à cet objectif. Le solde du compte reste identique ; enregistrez les virements réels ou les dépenses séparément.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Historique</value>
@@ -5826,5 +5826,8 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Si votre capacité est d’un objectif et que vous en avez deux, sélectionnez-en un et enregistrez. Les deux conservent leur progression et leur historique. Un objectif sélectionné en pause reste en pause ; sélectionner un objectif avancé ne débloque pas ses outils payants.</value>
+  </data>
+  <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
+    <value>La devise enregistrée est passée de {0} à {1}. Votre brouillon est conservé. Saisissez à nouveau le montant en {1} avant de l’enregistrer.</value>
   </data>
 </root>

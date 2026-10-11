@@ -561,3 +561,21 @@ Physical-phone, iOS, provider, OS accessibility, Store signing/publication and c
 [Evidence](../../quality/goal-work-reminders.md).
 
 Continue goal/Home/detail contribution affordances under D-69, with complete original progress/history and retained corrections; commercial activation and external gates remain separate.
+
+## D-146 continuous-delivery result
+
+36 new AT-148 actual-source/real SQLite cases pass; final normal parallel main 2,520 / App.Tests 497 pass,
+zero failures/skips, test output cleaned. Strict Windows and Android builds have zero warnings/errors. Actual list,
+detail and Home pass 18 English/Persian/German, light/dark, 360/412/wide cases with process-local 1.5 font stress;
+18 additional focused cases check the corrected neutral earmark/release explanation. Native glyphs, original tones,
+44-pixel action targets, original historical Release/account, dirty price/currency feedback and actual retry/Back are
+checked. All 25 complete fixture tables remain equal; original development files/sidecars and display are restored.
+
+Six normal signed Release owned-emulator cases verify original Home/list/detail, completed goal and archived funding,
+initially selected Release, enabled Save and native Back. One explicit negative earmark release is saved; complete
+original goals, accounts, ledger and other rows remain equal. Only the pre-existing D-141 migration and that one
+expected owned allocation differ. Original owned bytes/sidecars plus Main/English/System are restored; the final
+normal signed Release is installed/stopped. No physical-device, iOS, OS accessibility, provider, startup performance,
+Store signing/publication or commercial-activation acceptance is implied.
+
+[Evidence](../../quality/goal-work-views.md). Continue the actual goal editor/contribution draft under D-69; commercial activation and owner/external gates remain separate.

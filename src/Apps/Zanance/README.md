@@ -212,3 +212,9 @@ Physical-phone, iOS, provider, OS accessibility, Store signing/publication and c
 New-work choices/paid tools remain separate from complete original progress. Reminder destinations resolve the original actual file through app lock; retired publications are cleared. Current enforcement stays inactive. Goal-view contribution affordances and remaining ENT-02/03 bindings follow next.
 
 [Evidence](docs/quality/goal-work-reminders.md).
+
+## Current goal-view evidence (D-146)
+
+Complete original goal progress/history/Home pins remain separate from new-work availability. Historical releases, reviewed writes, dirty currency/culture drafts and growing feedback are verified in actual sources and running Windows/Android apps. Main 2,520 / App.Tests 497 pass; complete signed APK: artifacts/android/zanance-d146-release.apk. Current builds stay unrestricted. Remaining goal-editor and other ENT-02/03 bindings plus external gates remain open.
+
+[Evidence](docs/quality/goal-work-views.md).

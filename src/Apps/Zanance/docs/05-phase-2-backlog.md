@@ -544,3 +544,9 @@ Complete signed installable APK verified. No layout/copy change; D-144 geometry 
 Physical-phone, iOS, provider, OS accessibility, Store signing/publication and commercial activation remain unaccepted.
 
 [Evidence](quality/goal-work-reminders.md).
+
+## D-146 goal-view delivery
+
+Original goal views, reviewed detail writes and historical negative releases are delivered under continuous authorization. Main 2,520 / App.Tests 497 pass; strict builds, Windows native matrices, six normal Release owned-emulator cases and complete signed APK verified. Phase 1 history remains implemented; commercial ENT-02/03 and external release gates remain open.
+
+[Evidence](quality/goal-work-views.md).

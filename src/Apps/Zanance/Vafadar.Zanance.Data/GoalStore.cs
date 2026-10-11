@@ -19,23 +19,26 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<GoalWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var access = new CommercialFileAccess(commercialAccess, db.Database.GetDbConnection().DataSource);
+        var access = new CommercialFileAccess(commercialAccess, ProfileFilePath(db));
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken);
         var originals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
         var plans = await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
         var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);
+        var references = GoalWorkSnapshot.CaptureReferences(await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
+            await db.AssetTypes.AsNoTracking().ToListAsync(cancellationToken));
         var context = access.Context;
         var work = context is null ? GoalWorkPolicy.Inactive : GoalWorkPolicy.Resolve(context,
             StoredResourceSelection.Scope(context), originals, stored?.ForNewWork() ?? access.GoalSelection);
         if ((await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken))?.Revision != stored?.Revision)
             throw new InvalidOperationException("The goal choice changed during notification preparation.");
         access.EnsureSnapshotCurrent();
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
-        return new(originals, plans, allocations, work)
+        var path = ProfileFilePath(db);
+        return new(Ordered(originals), plans, allocations, work)
         {
             DatabasePath = path, Access = access, SelectionRevision = stored?.Revision,
             InputStamp = GoalWorkSnapshot.CaptureInputs(originals, plans, allocations),
+            ReferenceStamp = references,
             ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
         };
     }
@@ -45,8 +48,14 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateWorkSnapshotAsync(snapshot, db, cancellationToken);
+    }
+
+    /// <summary>Rechecks a reviewed form under the same SQLite writer that will commit its explicit action.</summary>
+    private static async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
+    {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
-            Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
+            ProfileFilePath(db), StringComparison.Ordinal))
             throw new InvalidOperationException("The goal work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
         snapshot.Access.EnsureSnapshotCurrent();
@@ -57,7 +66,20 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);
         if (GoalWorkSnapshot.CaptureInputs(originals, plans, allocations) != snapshot.InputStamp)
             throw new InvalidOperationException("Goal notification inputs changed during preparation.");
+        if (GoalWorkSnapshot.CaptureReferences(await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
+            await db.AssetTypes.AsNoTracking().ToListAsync(cancellationToken)) != snapshot.ReferenceStamp)
+            throw new InvalidOperationException("Goal account or holding units changed after the form was reviewed.");
         snapshot.Access.EnsureSnapshotCurrent();
+    }
+
+    /// <summary>Gets the actual factory-bound file without SQLite's connection-state-dependent alias resolution.</summary>
+    private static string ProfileFilePath(ZananceDbContext db)
+    {
+        // Android's SQLite DataSource can resolve an app-private path differently while a transaction is open.
+        // D-146 uses the same immutable connection setting for open writers and auto-closed reads;
+        // another factory/profile still produces a different path and is rejected.
+        return Path.GetFullPath(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder(
+            db.Database.GetDbConnection().ConnectionString).DataSource);
     }
 
     /// <summary>Returns all goals: active first, then by priority and target date.</summary>
@@ -65,8 +87,12 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var goals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
-        return [.. goals.OrderBy(g => StateOrder(g.State)).ThenBy(g => g.Priority).ThenBy(g => g.TargetDate ?? DateOnly.MaxValue).ThenBy(g => g.Name)];
+        return Ordered(goals);
     }
+
+    /// <summary>Keeps the established original state/priority/date/name ordering for every complete read.</summary>
+    private static List<Goal> Ordered(IEnumerable<Goal> goals) =>
+        [.. goals.OrderBy(g => StateOrder(g.State)).ThenBy(g => g.Priority).ThenBy(g => g.TargetDate ?? DateOnly.MaxValue).ThenBy(g => g.Name)];
 
     /// <summary>Returns one goal.</summary>
     public async Task<Goal?> GetGoalAsync(Guid id, CancellationToken cancellationToken = default)
@@ -94,11 +120,12 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// goal (ZEX-P12); at most two goals are pinned to Home – pinning a third takes the pin of the oldest (ZEX-GO06).
     /// </summary>
     /// <exception cref="InvalidOperationException">The account already has a balance goal.</exception>
-    public async Task SaveGoalAsync(Goal goal, CancellationToken cancellationToken = default)
+    public async Task SaveGoalAsync(Goal goal, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         ArgumentNullException.ThrowIfNull(goal);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         var activity = await CheckRetainedContributionActivationAsync(db, write, goal, cancellationToken);
         await PrepareGoalAsync(db, write, goal, cancellationToken, activity);
 
@@ -203,7 +230,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Records an allocation (positive) or a release (negative).</summary>
-    public async Task AddAllocationAsync(GoalAllocation allocation, CancellationToken cancellationToken = default)
+    public async Task AddAllocationAsync(GoalAllocation allocation, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         ArgumentNullException.ThrowIfNull(allocation);
         if (allocation.Amount == 0)
@@ -212,7 +239,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         write.DemandFeature(allocation.Amount > 0 ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
         if (allocation.Amount > 0 && write.Enforced)
         {
@@ -229,10 +257,11 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Deletes one allocation (e.g. a mistake); balances are not affected.</summary>
-    public async Task DeleteAllocationAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteAllocationAsync(Guid id, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData);
         await db.GoalAllocations.Where(a => a.Id == id).ExecuteDeleteAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
@@ -247,10 +276,11 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Saves the contribution plan of a goal, replacing an earlier one; <see langword="null"/> removes it.</summary>
-    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default)
+    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goalId, cancellationToken);
         var goal = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goalId, cancellationToken) : null;
         var activity = CheckContributionSave(write, plan, existing, goal, goal);
@@ -274,15 +304,11 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             return null;
         }
         if (!Enum.IsDefined(plan.Method)) throw new ArgumentException("A contribution requires a known method.", nameof(plan));
-        static bool AdvancedDates(ContributionPlan p) => p.Rule.Frequency is not (Frequency.Weekly or Frequency.Monthly)
-            || p.Rule.DayRule.IsWeekday() || p.Rule.SecondDay is not null || p.Rule.WeekendShift != WeekendShift.None;
-        static bool Work(ContributionPlan? p) => p is not null && (p.Method != ContributionMethod.FixedAmount
-            || p.Amount is not null || p.Percent is not null || p.CategoryIds.Count > 0
-            || p.AssumedPricePerUnitMilli is not null || AdvancedDates(p));
         var counted = target?.State is GoalState.Active or GoalState.Paused;
         var reopening = counted && original is not null && original.State is not (GoalState.Active or GoalState.Paused);
-        var newWork = Work(plan) && (!Work(existing) || reopening
-            || (counted && existing is not null && (plan.Method != existing.Method || (AdvancedDates(plan) && !AdvancedDates(existing)))));
+        var newWork = GoalContributionPolicy.HasWork(plan) && (!GoalContributionPolicy.HasWork(existing) || reopening
+            || (counted && existing is not null && (plan.Method != existing.Method
+                || (GoalContributionPolicy.HasAdvancedDates(plan) && !GoalContributionPolicy.HasAdvancedDates(existing)))));
         write.DemandFeature(newWork ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
         // D-123: empty date rows support the basic goal without an amount. Reminders are a separate paid tool;
         // turning one off/removing history never consumes a new right or creates an earmark/ledger movement.
@@ -329,10 +355,11 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     };
 
     /// <summary>Deletes a goal and its allocations; ledger entries are never touched.</summary>
-    public async Task DeleteGoalAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteGoalAsync(Guid id, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData);
         await db.GoalAllocations.Where(a => a.GoalId == id).ExecuteDeleteAsync(cancellationToken);
         await db.ContributionPlans.Where(p => p.GoalId == id).ExecuteDeleteAsync(cancellationToken);

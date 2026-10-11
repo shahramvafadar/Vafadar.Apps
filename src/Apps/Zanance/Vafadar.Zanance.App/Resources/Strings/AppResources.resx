@@ -1822,7 +1822,7 @@
     <value>No active account in {0}. Add one to set money aside.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>This only assigns money in the account to a goal. If you move money to a savings account, record that transfer separately.</value>
+    <value>Setting money aside or releasing it changes only how much is assigned to this goal. Your account balance stays the same; record real transfers or spending separately.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>History</value>
@@ -5878,5 +5878,8 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>If your allowance is one goal and you have two, select one and save. Both keep their progress and history. A selected paused goal stays paused; selecting an advanced goal does not unlock its paid tools.</value>
+  </data>
+  <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
+    <value>The saved currency changed from {0} to {1}. Your draft is kept. Enter the amount again in {1} before saving.</value>
   </data>
 </root>

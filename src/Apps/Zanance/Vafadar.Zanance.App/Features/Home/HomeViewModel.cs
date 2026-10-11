@@ -556,17 +556,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     // Pinned goals with progress and the estimate of the plan, only when valid (ZEX-GO06, GO07). Paused goals leave Home.
     private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
     {
-        var goals = await _goals.GetGoalsAsync();
-        var progress = await _goalPresenter.EvaluateAsync(_goals, accounts, entries, today, goals);
+        var view = await Goals.GoalHomeProjection.ReadAsync(_goals, _goalPresenter, _translator, accounts, entries, today);
         PinnedGoals.Clear();
-        foreach (var item in progress.Where(p => p.Goal.State == GoalState.Active && p.Goal.HomePin is not null).OrderBy(p => p.Goal.HomePin).Take(2))
-        {
-            PinnedGoals.Add(_goalPresenter.Row(item.Goal, item));
-        }
-
+        foreach (var row in view.Pinned) PinnedGoals.Add(row);
         HasPinnedGoals = PinnedGoals.Count > 0;
-        var overdue = progress.FirstOrDefault(p => p.Goal.State == GoalState.Active && p.IsOverdue);
-        GoalAttentionText = !HasPinnedGoals && overdue is not null ? _translator.Format("Home_GoalOverdue", overdue.Goal.Name) : null;
+        GoalAttentionText = view.Attention;
     }
 
     [RelayCommand]

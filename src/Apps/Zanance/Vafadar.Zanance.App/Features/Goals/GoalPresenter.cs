@@ -3,6 +3,7 @@ using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
@@ -15,18 +16,18 @@ namespace Vafadar.Zanance.App.Features.Goals;
 /// <param name="Icon">Its icon.</param>
 /// <param name="FundedText">"2,000 of 5,000 EUR".</param>
 /// <param name="Progress">The bar, 0 to 1.</param>
-/// <param name="ProgressColor">Teal while saving, amber when money is missing, green when reached.</param>
+/// <param name="Tone">Teal while saving, amber when money is missing, green when reached.</param>
 /// <param name="DateText">"Needed by …", when there is a date.</param>
 /// <param name="SuggestionText">The contribution needed per date, or "Target reached".</param>
 /// <param name="WarningText">Overdue, unfunded, archived account or negative balance.</param>
 /// <param name="StateText">A state chip with text (paused, completed, archived), never colour only.</param>
-public sealed record GoalRow(
+public sealed partial record GoalRow(
     Guid Id,
     string Name,
     Symbol Icon,
     string FundedText,
     double Progress,
-    Color ProgressColor,
+    GoalTone Tone,
     string? DateText,
     string? SuggestionText,
     string? WarningText,
@@ -38,8 +39,11 @@ public sealed record GoalRow(
     /// <summary>Gets the estimate of the user's plan, e.g. "~ 25 Sep 2027 with 250 EUR per date"; only when valid.</summary>
     public string? PlanText { get; init; }
 
+    /// <summary>Gets availability for new work separately from the original lifecycle state.</summary>
+    public string? WorkText { get; init; }
+
     /// <summary>Gets the whole card as one sentence for screen readers (ZEX-S0304).</summary>
-    public string Description => string.Join(". ", new[] { Name, FundedText, RemainingText, PlanText, WarningText, StateText }.Where(s => !string.IsNullOrEmpty(s)));
+    public string Description => string.Join(". ", new[] { Name, FundedText, RemainingText, PlanText, SuggestionText, WarningText, StateText, WorkText }.Where(s => !string.IsNullOrEmpty(s)));
 }
 
 /// <summary>Formats goals for lists, details and Home (F2-GOAL-02, F2-GOAL-04, F2-GOAL-05, ZEX-S0302..S0304).</summary>
@@ -59,6 +63,17 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         return GoalProgressService.Evaluate(all ?? await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts, entries, await goals.GetContributionPlansAsync(), today, events, _types);
     }
 
+    /// <summary>Evaluates complete captured original financial inputs; availability never filters this calculation.</summary>
+    public async Task<IReadOnlyList<GoalProgress>> EvaluateAsync(Data.GoalWorkSnapshot snapshot,
+        IReadOnlyCollection<Account> accounts, IReadOnlyCollection<LedgerEntry> entries, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        _types = await holdings.GetTypesAsync();
+        var events = await holdings.GetEventsAsync();
+        return GoalProgressService.Evaluate(snapshot.Goals, snapshot.Allocations, accounts, entries,
+            snapshot.ContributionPlans, today, events, _types);
+    }
+
     /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
     public string Amount(Goal goal, long value)
     {
@@ -74,17 +89,18 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
     public static Dictionary<Guid, long> Balances(IEnumerable<Account> accounts, IReadOnlyCollection<LedgerEntry> entries, DateOnly today) =>
         accounts.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, entries, today));
 
+    /// <summary>Formats money in the current independent numeric culture.</summary>
     public string Money(long amount, string currency) => MoneyText.Format(amount, currency, localization.CurrentCulture);
 
     /// <summary>Returns the row of a goal; <paramref name="progress"/> is <see langword="null"/> for completed and archived goals.</summary>
-    public GoalRow Row(Goal goal, GoalProgress? progress)
+    public GoalRow Row(Goal goal, GoalProgress? progress, GoalWorkPolicy? work = null)
     {
         ArgumentNullException.ThrowIfNull(goal);
         var icon = Icons.Parse(goal.Icon, goal.Type switch { GoalType.AccountBalance => Symbol.BuildingBank, GoalType.HoldingQuantity => Symbol.Diamond, _ => Symbol.Savings });
         if (progress is null)
         {
             // Completed or archived: no funding, only the history.
-            return new GoalRow(goal.Id, goal.Name, icon, Amount(goal, goal.TargetAmount), 1, Palette.Muted,
+            return new GoalRow(goal.Id, goal.Name, icon, Amount(goal, goal.TargetAmount), 1, GoalTone.Historical,
                 null, null, null, translator[$"GoalState_{goal.State}"]);
         }
 
@@ -101,7 +117,7 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         {
             suggestion = translator["Goal_Reached"];
         }
-        else if (progress.Required is { } next && next > 0)
+        else if ((work ?? GoalWorkPolicy.Inactive).CanContribute(goal.Id) && progress.Required is { } next && next > 0)
         {
             suggestion = progress.Opportunities <= 0
                 ? translator.Format("Goal_SuggestNow", Amount(goal, next))
@@ -137,13 +153,14 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         }
 
         // Savings are teal; amber while money is missing, green once the goal is reached (D-27).
-        var color = progress.IsReached ? Palette.IncomeText : progress.Unfunded > 0 || warnings.Count > 0 ? Palette.NearLimit : Palette.SavingText;
+        var color = progress.IsReached ? GoalTone.Reached : progress.Unfunded > 0 || warnings.Count > 0 ? GoalTone.Warning : GoalTone.Saving;
         return new GoalRow(goal.Id, goal.Name, icon, funded, progress.Progress, color, date, suggestion,
             warnings.Count > 0 ? string.Join(Environment.NewLine, warnings) : null,
             goal.State == GoalState.Paused ? translator["GoalState_Paused"] : null)
         {
             RemainingText = remaining,
             PlanText = plan,
+            WorkText = !(work ?? GoalWorkPolicy.Inactive).IsAvailableGoal(goal.Id) ? translator["ActiveItems_ReadOnly"] : null,
         };
     }
 }

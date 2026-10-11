@@ -1069,3 +1069,23 @@ Physical-phone, iOS, provider, OS accessibility, Store signing/publication and c
 Exact choices and paid rights stay separate; all original financial inputs remain. Parameterized concurrent state/rule/allocation writes actually change rows, then retire native publication. Locked taps resolve original single/group members after unlocking and reject another file even with a restored identical Guid. Retained corrections/disabling and paired new-goal joining are exercised under actual writers.
 
 [Evidence](quality/goal-work-reminders.md). ENT-02/03 and external gates remain in progress.
+
+## AT-148 - Original goal views and reviewed detail actions
+
+36 new AT-148 actual-source/real SQLite cases pass; final normal parallel main 2,520 / App.Tests 497 pass,
+zero failures/skips, test output cleaned. Strict Windows and Android builds have zero warnings/errors. Actual list,
+detail and Home pass 18 English/Persian/German, light/dark, 360/412/wide cases with process-local 1.5 font stress;
+18 additional focused cases check the corrected neutral earmark/release explanation. Native glyphs, original tones,
+44-pixel action targets, original historical Release/account, dirty price/currency feedback and actual retry/Back are
+checked. All 25 complete fixture tables remain equal; original development files/sidecars and display are restored.
+
+Six normal signed Release owned-emulator cases verify original Home/list/detail, completed goal and archived funding,
+initially selected Release, enabled Save and native Back. One explicit negative earmark release is saved; complete
+original goals, accounts, ledger and other rows remain equal. Only the pre-existing D-141 migration and that one
+expected owned allocation differ. Original owned bytes/sidecars plus Main/English/System are restored; the final
+normal signed Release is installed/stopped. No physical-device, iOS, OS accessibility, provider, startup performance,
+Store signing/publication or commercial-activation acceptance is implied.
+
+Actual-source cases cover complete original financial packets/pins, unavailable positive work, historical releases, over-release rejection, consent cancellation/busy serialization, changed file/rights/choice/metadata/units, committed reload failure, price correction, numeric culture/currency drafts, paused choice and historical reopening.
+
+[Evidence](quality/goal-work-views.md).

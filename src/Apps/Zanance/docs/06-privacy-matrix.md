@@ -329,3 +329,13 @@ memory; no schema, portable preference, credential, security, SDK, network or te
 current actual file after unlock and never switch profiles or post money. Current enforcement remains inactive.
 
 [Evidence](quality/goal-work-reminders.md).
+
+## D-146 goal-view and draft boundary
+
+Existing goal/history/correction data remain profile-local. Complete goal/rule/allocation metadata and account/holding
+unit/availability stamps are transient in-memory guards; no schema or portable/security preference is added. Dirty drafts
+retain their original numeric culture/currency only in memory. Native-effect test boundaries introduce no SDK, permission,
+telemetry, credential or network flow. An explicit earmark release writes one negative allocation, never ledger money or
+an account/holding value. Current commercial registration stays inactive.
+
+[Evidence](quality/goal-work-views.md).

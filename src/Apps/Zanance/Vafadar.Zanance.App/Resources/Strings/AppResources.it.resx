@@ -1779,7 +1779,7 @@
     <value>Nessun conto attivo in {0}. Aggiungine uno per accantonare denaro.</value>
   </data>
   <data name="Goal_SetAsideHint" xml:space="preserve">
-    <value>Assegna solo una parte del denaro del conto a un obiettivo. Se sposti denaro su un conto di risparmio, registra il trasferimento separatamente.</value>
+    <value>Mettere da parte o liberare denaro cambia solo l’importo assegnato a questo obiettivo. Il saldo del conto non cambia; registra separatamente i trasferimenti reali o le spese.</value>
   </data>
   <data name="Goal_History" xml:space="preserve">
     <value>Storico</value>
@@ -5838,5 +5838,8 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Se puoi avere un obiettivo disponibile e ne hai due, scegline uno e salva. Entrambi conservano i progressi e lo storico. Un obiettivo selezionato in pausa resta in pausa; scegliere un obiettivo avanzato non abilita i suoi strumenti a pagamento.</value>
+  </data>
+  <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
+    <value>La valuta salvata è cambiata da {0} a {1}. La tua bozza viene conservata. Inserisci di nuovo l’importo in {1} prima di salvare.</value>
   </data>
 </root>

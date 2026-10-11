@@ -49,6 +49,7 @@
                                             <!-- D-116: display the complete warning packet once, after the progress and suggestion. -->
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                         <!-- The whole card is one real button: keyboard, screen readers and touch -->
                                         <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
@@ -78,6 +79,7 @@
                                             <!-- D-116: keep the same single warning surface in both card templates. -->
                                             <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
                                             <Label Text="{Binding StateText}" Style="{StaticResource Secondary}" IsVisible="{Binding StateText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
                                         </VerticalStackLayout>
                                         <!-- The whole card is one real button: keyboard, screen readers and touch -->
                                         <Button Grid.ColumnSpan="2" Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"

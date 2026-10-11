@@ -37,7 +37,7 @@ internal static partial class DebugSnapshots
             + translator.Format("Goal_OverdueNeeded", presenter.Money(30_000, "EUR"));
         var row = new GoalRow(Guid.NewGuid(), translator["Goals_Title"], FluentIcons.Common.Symbol.Savings,
             translator.Format("Goal_Funded", presenter.Money(20_000, "EUR"), presenter.Money(100_000, "EUR")),
-            .2, Palette.NearLimit, null, null, warning, null);
+            .2, GoalTone.Warning, null, null, warning, null);
         var checks = new List<object>(); var failed = false;
         try
         {

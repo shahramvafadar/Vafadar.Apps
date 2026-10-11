@@ -502,3 +502,9 @@ remains inactive and unrestricted. Goal-view contribution affordances and other 
 No EF model/schema change; no migration or compiled-model regeneration is required.
 
 [Evidence](../../src/Apps/Zanance/docs/quality/goal-work-reminders.md).
+
+## Reviewed goal-view writes (D-146)
+
+Each actual detail command passes its captured GoalWorkSnapshot to the original store. The same SQLite writer rechecks file/rights/choice, all original goal/rule/allocation metadata (including equal-time note/pin changes) and account/holding units/availability before mutation. Stable identity comes from the actual factory-bound connection setting, since native SQLite DataSource resolution can differ between auto-closed reads and open writers. Another configured profile file is still rejected. Legacy callers keep their existing boundary; no model/schema change occurs. Native color/query partials are excluded from actual-source application tests. Complete original calculation inputs are never filtered by the new-work projection.
+
+[Evidence](../../src/Apps/Zanance/docs/quality/goal-work-views.md).
