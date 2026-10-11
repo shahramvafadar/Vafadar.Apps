@@ -120,6 +120,8 @@ public enum FeaturePermission
     RequiresAddOn,
     /// <summary>The requested service belongs to a different scope.</summary>
     OutsideScope,
+    /// <summary>Requires choosing this original personal profile for new local financial work.</summary>
+    RequiresProfileSelection,
 }
 
 /// <summary>Pure owner-approved capability policy (D-117), separate from presentation and future enforcement.</summary>
@@ -132,6 +134,8 @@ public static class PlanPolicy
         if (!Enum.IsDefined(feature)) throw new ArgumentOutOfRangeException(nameof(feature));
         var shared = context.Scope.Kind == EntitlementScopeKind.SharedSpace;
         if (shared && !context.HasSharedMembership) return FeaturePermission.RequiresMembership;
+        if (!shared && context.ProfileWork is { CanStartNewWork: false } && StartsPersonalProfileWork(feature))
+            return FeaturePermission.RequiresProfileSelection;
         // Payment expiry never blocks retained history, corrections or export. Server roles/retention remain
         // independent; this does not invent the still-open OD-05 grace period or authorize a network request.
         if (shared && !context.HasSharedAccess && !PreservesExistingData(feature)) return FeaturePermission.RequiresPro;
@@ -163,6 +167,21 @@ public static class PlanPolicy
                 or CommercialFeature.CsvImport or CommercialFeature.QuickAddWidget => FeaturePermission.Allowed,
             _ => throw new ArgumentOutOfRangeException(nameof(feature)),
         };
+    }
+
+    /// <summary>Identifies new local money, resource definitions and automation independently of retained data and display.</summary>
+    public static bool StartsPersonalProfileWork(CommercialFeature feature)
+    {
+        if (!Enum.IsDefined(feature)) throw new ArgumentOutOfRangeException(nameof(feature));
+        return feature is CommercialFeature.Transactions or CommercialFeature.FinancialAccounts
+            or CommercialFeature.BasicBudgets or CommercialFeature.BasicGoals or CommercialFeature.BasicPlans
+            or CommercialFeature.PlanReminders or CommercialFeature.QuickTemplates or CommercialFeature.SavedFilters
+            or CommercialFeature.TransfersRefundsReimbursements or CommercialFeature.AggregatedEntries
+            or CommercialFeature.CsvImport or CommercialFeature.QuickAddWidget
+            or CommercialFeature.AdvancedBudgets or CommercialFeature.AdvancedGoals or CommercialFeature.AdvancedPlans
+            or CommercialFeature.ManageHoldings or CommercialFeature.SplitTransactions
+            or CommercialFeature.CategorizationRules or CommercialFeature.ReceiptReading
+            or CommercialFeature.ContributionReviewReminders;
     }
 
     /// <summary>Identifies rights retained when the shared host's paid services expire.</summary>

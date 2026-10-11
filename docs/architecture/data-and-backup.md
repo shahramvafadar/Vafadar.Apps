@@ -604,3 +604,21 @@ packet. Malformed choice data requires explicit repair without erasing original 
 Separate choice revision prevents rename from repairing an invalid choice implicitly. Authentication success
 alone is not a committed switch: recheck complete facts, commit current id, otherwise restore previous path.
 No EF/schema/compiled model or portable backup change. Actual per-file financial policy binding remains open.
+
+## Actual-file original profile work composition (D-157)
+
+`DecorateZananceCommercialAccess` retains the existing unkeyed singleton source behind a private DI key and
+preserves externally owned instance versus container-owned factory/type lifetime. `ProfileCommercialAccessSource`
+depends on that original port, existing device preferences, cached device facts and the stable main path; it never
+depends on ProfileService or opens a database. Current inactive capture returns before any catalogue/device read.
+An enabled personal capture requires matching independent verified tiers and actual paths. Shared membership is
+unchanged. The exact original catalogue file mapping, not the current preference, supplies activity eligibility.
+
+`PersonalProfileWork` stores nullable original identity (null unknown, empty actual main), independent new-work
+eligibility/review need and a complete length-prefixed nullable-field SHA-256 review stamp in CapabilityContext.
+Existing CommercialFileAccess equality and paired-writer/snapshot guards retire that context on catalogue,
+legacy metadata, choice revision/value or device-provider changes. Financial scope and all resource choices
+remain the verified original values. New work uses PlanPolicy; complete financial history and calculations never
+filter by profile availability. Separately verified backup/restore/correction rights survive malformed catalogue
+metadata without repairing it or guessing an identity. No EF/schema/compiled-model or portable-format change.
+Remaining operation/import/native acceptance and production activation are separate.

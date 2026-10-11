@@ -761,3 +761,32 @@ Next ready slice: bind the reviewed original device profile choice to actual-fil
 retaining historical correction/backup/export and complete calculations. Continue remaining operations,
 import/restore/native paths and commercial messages under D-69; activation and owner/external gates stay separate.
 See [evidence](../../quality/local-profile-work.md).
+
+## D-157 - Actual-file original profile work
+
+The original device profile choice now composes with the existing verified actual-file commercial source.
+The legacy empty main id remains separate from the independently verified financial scope; changing the current
+profile preference cannot transfer rights to another file. The immutable context retains the original plan,
+resource choices and scope, plus complete catalogue/legacy/provider review facts. Original writer/snapshot
+validation therefore rejects retired choices, including change-and-return revisions and changes while waiting
+for SQLite ownership. Device choices grant neither paid tools nor shared-space membership.
+
+New money, definitions, selected Plan/Goal/Budget work, template activity and future Plan/Goal reminders consult the same
+profile condition. Complete original financial inputs, history, query viewing, corrections, refunds, overdue
+settlements, deletion, backup/restore and owned export remain independent. A malformed/unlisted catalogue never
+guesses main: new work stops while separately verified historical rights remain. Both current registrations
+stay inactive; this slice does not activate limits or complete every operation/import/native binding.
+No EF model, schema, migration, SDK, permission, network request, credential or portable grant is added.
+
+31 new AT-159 actual-source/real isolated SQLite cases pass. The ordinary main suite passes all 2,821
+behaviours (App.Tests 764), without failures/skips; test output is cleaned. Strict Windows and canonical strict
+Android Release builds have zero warnings/errors. Focused original-page Windows and normal Release owned-emulator
+results, exact data restoration, retained negative evidence and the complete signed APK are recorded in
+[the evidence document](../../quality/profile-file-work.md). Commercial activation, physical-device, iOS, OAuth,
+Store signing/publication and the remaining original-operation bindings remain open.
+
+Next ready slice: bind original catalogue changes to reminder refresh and enforce separately authorized period-
+review reminders in the same actual-file publication. Then finish remaining operation/import/restore/native
+bindings and clear rejection messages that retain each form/draft. Continue ENT-02/03 then ENT-04 under D-69.
+ENT-05 activation and
+owner/external gates stay separate; this is not completion of the commercial release.

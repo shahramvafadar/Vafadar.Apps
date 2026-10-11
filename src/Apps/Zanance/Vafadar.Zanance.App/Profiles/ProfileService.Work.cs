@@ -22,20 +22,8 @@ public sealed partial class ProfileService
         lock (CatalogueGate)
         {
             var path = Path.GetFullPath(MainPath()); var access = CaptureWork(path); var state = ReadCatalogue(preferences);
-            var originals = CatalogueProfiles(state); var valid = true; string[]? selected = null;
-            if (state.Scope != "-")
-            {
-                try
-                {
-                    valid = access.Enforced && DecodeField(state.Path) == path && Guid.ParseExact(state.Scope, "N") == access.DeviceScope!.Id
-                        && Guid.TryParseExact(state.ChoiceRevision, "N", out var revision) && revision != Guid.Empty;
-                    selected = (DecodeField(state.Choice) ?? throw new FormatException("Missing profile choice.")).Split(';', StringSplitOptions.RemoveEmptyEntries).Select(id => id == "~" ? "" : id).ToArray();
-                    foreach (var id in selected) LocalProfileWorkPolicy.ValidateId(id);
-                }
-                catch (Exception ex) when (ex is FormatException or ArgumentException) { valid = false; selected = null; }
-            }
-            else if (state.Path != "-" || state.Choice != "-") valid = false;
-            var availability = access.Enforced ? LocalProfileWorkPolicy.Resolve(access.DeviceScope!, access.Context!, originals.Select(p => p.Id), selected) : null;
+            var originals = CatalogueProfiles(state);
+            var (availability, valid) = ResolveCatalogueWork(state, originals, access, path);
             var result = new ProfileCatalogueReview(path, Path.GetFullPath(location.Path), CurrentId(preferences), preferences.Get(CatalogueKey),
                 preferences.Get(ListKey), preferences.Get(MainNameKey), originals, access, availability, valid);
             ValidateWorkCore(result, checkCurrentPath: true); return result;
@@ -119,11 +107,75 @@ public sealed partial class ProfileService
         if (!review.Profiles.Contains(profile)) throw new ArgumentException("The original profile is not in this review.", nameof(profile));
     }
 
-    private sealed record CatalogueState(string? MainName, string? List, string Path = "-", string Scope = "-", string Choice = "-", string ChoiceRevision = "-");
-    private static CatalogueState ReadCatalogue(ISettingsStore source)
+    private static (LocalProfileAvailability? Availability, bool Valid) ResolveCatalogueWork(CatalogueState state,
+        IReadOnlyList<LocalProfile> originals, ProfileWorkAccess access, string path)
     {
-        var raw = source.Get(CatalogueKey);
-        if (raw is null) return new(source.Get(MainNameKey), source.Get(ListKey));
+        var valid = true; string[]? selected = null;
+        if (state.Scope != "-")
+        {
+            try
+            {
+                valid = access.Enforced && DecodeField(state.Path) == path && Guid.ParseExact(state.Scope, "N") == access.DeviceScope!.Id
+                    && Guid.TryParseExact(state.ChoiceRevision, "N", out var revision) && revision != Guid.Empty;
+                selected = (DecodeField(state.Choice) ?? throw new FormatException("Missing profile choice.")).Split(';', StringSplitOptions.RemoveEmptyEntries).Select(id => id == "~" ? "" : id).ToArray();
+                foreach (var id in selected) LocalProfileWorkPolicy.ValidateId(id);
+            }
+            catch (Exception ex) when (ex is FormatException or ArgumentException) { valid = false; selected = null; }
+        }
+        else if (state.Path != "-" || state.Choice != "-") valid = false;
+        return (access.Enforced ? LocalProfileWorkPolicy.Resolve(access.DeviceScope!, access.Context!, originals.Select(p => p.Id), selected) : null, valid);
+    }
+
+    /// <summary>Captures exact original file activity without consulting the newly current profile or opening any database.</summary>
+    internal static PersonalProfileWork CaptureFileWork(ISettingsStore preferences, string mainPath, string databasePath,
+        ProfileWorkAccess access)
+    {
+        mainPath = Path.GetFullPath(mainPath); databasePath = Path.GetFullPath(databasePath);
+        if (!access.Enforced || access.CataloguePath != mainPath)
+            throw new InvalidOperationException("The verified device facts belong to another catalogue.");
+        lock (CatalogueGates.GetOrAdd(mainPath, _ => new()))
+        {
+            var packet = preferences.Get(CatalogueKey); var legacyList = preferences.Get(ListKey); var legacyName = preferences.Get(MainNameKey);
+            LocalProfile? original = null; var needsChoice = true; var canStart = false;
+            try
+            {
+                var state = ReadCatalogue(packet, legacyName, legacyList); var originals = CatalogueProfiles(state);
+                original = originals.SingleOrDefault(profile => PathOf(mainPath, profile.Id) == databasePath);
+                var (availability, valid) = ResolveCatalogueWork(state, originals, access, mainPath);
+                needsChoice = original is null || availability!.Maximum is not null && (!valid || availability.RequiresSelection);
+                canStart = original is not null && !needsChoice && availability!.IsSelected(original.Id);
+            }
+            catch (Exception ex) when (ex is FormatException or ArgumentException or InvalidOperationException)
+            {
+                // Corrupt or missing catalogue metadata cannot invent an original identity or new activity.
+                // The independently verified actual-file context still permits owned history, backup and repair.
+                original = null; needsChoice = true; canStart = false;
+            }
+            if (packet != preferences.Get(CatalogueKey) || legacyList != preferences.Get(ListKey) || legacyName != preferences.Get(MainNameKey))
+                throw new InvalidOperationException("The original catalogue changed during file activity capture.");
+            // Length-prefixed nullable inputs prevent delimiter collisions without serializing provider objects.
+            // The stamp is process/device-local: it is not a purchase, authorization token or portable setting.
+            using var hash = System.Security.Cryptography.IncrementalHash.CreateHash(System.Security.Cryptography.HashAlgorithmName.SHA256);
+            Span<byte> length = stackalloc byte[4];
+            foreach (var value in new[] { mainPath, databasePath, original?.Id, packet, legacyList, legacyName,
+                access.DeviceScope!.Kind.ToString(), access.DeviceScope.Id.ToString("N"), access.Context!.PersonalPlan.ToString(),
+                access.Context.Scope.Kind.ToString(), access.Context.Scope.Id.ToString("N"), access.Context.SharedAccess?.ToString(),
+                access.Context.ProfileWork?.ToString() })
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(length, value is null ? -1 : Encoding.UTF8.GetByteCount(value));
+                hash.AppendData(length); if (value is not null) hash.AppendData(Encoding.UTF8.GetBytes(value));
+            }
+            return new(original?.Id, canStart, needsChoice,
+                Convert.ToHexStringLower(hash.GetHashAndReset()));
+        }
+    }
+
+    private sealed record CatalogueState(string? MainName, string? List, string Path = "-", string Scope = "-", string Choice = "-", string ChoiceRevision = "-");
+    private static CatalogueState ReadCatalogue(ISettingsStore source) =>
+        ReadCatalogue(source.Get(CatalogueKey), source.Get(MainNameKey), source.Get(ListKey));
+    private static CatalogueState ReadCatalogue(string? raw, string? mainName, string? list)
+    {
+        if (raw is null) return new(mainName, list);
         var fields = raw.Split('|');
         if (fields.Length != 8 || fields[0] != "1")
             throw new InvalidOperationException("Invalid original profile catalogue packet.");

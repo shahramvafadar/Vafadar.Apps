@@ -87,7 +87,11 @@ public static class MauiProgram
             .AddSingleton<Vafadar.Zanance.Core.Security.PinLock>()
             .AddSingleton<Profiles.IProfileRuntime, Profiles.MauiProfileRuntime>()
             .AddSingleton<Profiles.IProfileWorkAccessSource, Profiles.InactiveProfileWorkAccessSource>()
-            .AddSingleton<Profiles.ProfileService>();
+            .AddSingleton<Profiles.ProfileService>()
+            // Device activity composes with the existing verified actual-file source, never a guessed paid tier.
+            .DecorateZananceCommercialAccess((services, source) => new Profiles.ProfileCommercialAccessSource(source,
+                services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(),
+                services.GetRequiredService<Profiles.IProfileWorkAccessSource>(), DatabasePath()));
 
 #if IOS
         // The app switcher snapshot is covered (SEC-02, D-23); Android uses FLAG_SECURE in MainActivity.

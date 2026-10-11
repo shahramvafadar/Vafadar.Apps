@@ -11,6 +11,29 @@ namespace Vafadar.Zanance.Data;
 /// </summary>
 public static class ZananceDataServiceCollectionExtensions
 {
+    /// <summary>Composes a device adapter with the existing singleton verified source; no source is replaced with guessed paid facts.</summary>
+    public static IServiceCollection DecorateZananceCommercialAccess(this IServiceCollection services,
+        Func<IServiceProvider, ICommercialWriteAccessSource, ICommercialWriteAccessSource> decorator)
+    {
+        ArgumentNullException.ThrowIfNull(services); ArgumentNullException.ThrowIfNull(decorator);
+        var original = services.LastOrDefault(item => item.ServiceType == typeof(ICommercialWriteAccessSource))
+            ?? throw new InvalidOperationException("Register the verified commercial source before its adapter.");
+        if (original.Lifetime != ServiceLifetime.Singleton || original.IsKeyedService)
+            throw new InvalidOperationException("The commercial adapter requires the existing unkeyed singleton source.");
+        services.Remove(original);
+        // A private DI key retains the original ownership/disposal semantics without resolving the adapter
+        // recursively or making an externally supplied instance container-owned.
+        var key = new object();
+        if (original.ImplementationInstance is ICommercialWriteAccessSource instance)
+            services.AddKeyedSingleton<ICommercialWriteAccessSource>(key, instance);
+        else if (original.ImplementationFactory is { } factory)
+            services.AddKeyedSingleton<ICommercialWriteAccessSource>(key, (provider, _) => (ICommercialWriteAccessSource)factory(provider));
+        else services.Add(ServiceDescriptor.KeyedSingleton(typeof(ICommercialWriteAccessSource), key, original.ImplementationType!));
+        services.AddSingleton<ICommercialWriteAccessSource>(provider => decorator(provider,
+            provider.GetRequiredKeyedService<ICommercialWriteAccessSource>(key)));
+        return services;
+    }
+
     /// <summary>
     /// Adds the Zanance database at <paramref name="databasePath"/> (also registered as a backup source), the stores
     /// and the automatic posting processor.

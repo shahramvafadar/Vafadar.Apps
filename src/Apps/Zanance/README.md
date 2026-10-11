@@ -291,3 +291,10 @@ D-155: Home shortcuts use reviewed original template handoffs and separate work 
 The Profiles form now reviews original identities and keeps explicit device activity choice separate from
 opening, renaming or deleting retained profiles. Test builds remain unrestricted. Per-file financial bindings
 and commercial activation are still open. [Verification and signed APK](docs/quality/local-profile-work.md).
+
+## Original profile activity in actual files (D-157)
+
+Original device choices now compose with the verified actual-file financial source without changing original
+identity, paid rights or complete financial calculations. Retained history, correction, backup/restore and export
+stay independent from new work. Current test builds remain unrestricted; remaining operation/native/commercial
+messages and activation are open. [Verification and signed APK](docs/quality/profile-file-work.md).

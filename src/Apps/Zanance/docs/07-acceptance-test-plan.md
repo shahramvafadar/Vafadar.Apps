@@ -1244,3 +1244,15 @@ duplicate-name feedback; busy/discard/reload; committed refresh failure with rea
 captions preserving original rows. 33 new behaviours, main 2,790/App.Tests 733 pass. Strict builds, actual native
 Windows and normal signed Release emulator evidence: [local profile work](quality/local-profile-work.md).
 Per-file financial bindings, commercial activation, physical-device, iOS, OAuth and publication remain open.
+
+## AT-159 - Actual-file original profile work (D-157)
+
+31 implemented actual-source/real SQLite cases cover default zero-read/acyclic DI, exact original main/file
+identities and verified financial/resource facts, current-preference independence, missing/empty/foreign/malformed
+choices, unknown-file history, actual new-money/account/Plan/Goal/Budget/template rejection, complete retained
+financial projections, same-id corrections, refund and overdue settlement, real backup restore, saved-query
+history/correction versus new definition, catalogue/provider change-and-return retirement, SQLite writer wait,
+shared membership isolation, verified unlimited plans, paid/foreign-fact rejection and original DI lifetime.
+Ordinary main 2,821 / App.Tests 764 pass; strict builds, original native pages, normal Release emulator and APK
+proof are in [evidence](quality/profile-file-work.md). Native bindings, commercial activation and external
+platform/provider/device/publication acceptance remain separate.

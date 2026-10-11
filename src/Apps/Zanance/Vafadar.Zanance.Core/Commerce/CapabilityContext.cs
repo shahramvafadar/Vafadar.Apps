@@ -52,13 +52,17 @@ public sealed record SharedSpaceAccess
 public sealed record CapabilityContext
 {
     /// <summary>Creates a policy context; mismatched, inactive or missing memberships never unlock a space.</summary>
-    public CapabilityContext(ProductPlan personalPlan, EntitlementScope scope, SharedSpaceAccess? sharedAccess = null)
+    public CapabilityContext(ProductPlan personalPlan, EntitlementScope scope, SharedSpaceAccess? sharedAccess = null,
+        PersonalProfileWork? profileWork = null)
     {
         if (!Enum.IsDefined(personalPlan)) throw new ArgumentOutOfRangeException(nameof(personalPlan));
         ArgumentNullException.ThrowIfNull(scope);
         PersonalPlan = personalPlan;
         Scope = scope;
         SharedAccess = sharedAccess;
+        if (profileWork is not null && scope.Kind != EntitlementScopeKind.PersonalProfile)
+            throw new ArgumentException("A personal profile choice cannot govern shared membership.", nameof(profileWork));
+        ProfileWork = profileWork;
     }
     /// <summary>Gets the independently resolved personal tier.</summary>
     public ProductPlan PersonalPlan { get; }
@@ -66,6 +70,8 @@ public sealed record CapabilityContext
     public EntitlementScope Scope { get; }
     /// <summary>Gets the separately supplied membership facts.</summary>
     public SharedSpaceAccess? SharedAccess { get; }
+    /// <summary>Gets separately verified original device activity; absent until that binding is enabled.</summary>
+    public PersonalProfileWork? ProfileWork { get; }
     /// <summary>Returns whether accepted membership matches this exact target, independently of the host's purchase.</summary>
     public bool HasSharedMembership => Scope.Kind == EntitlementScopeKind.SharedSpace
         && SharedAccess is { MembershipActive: true } access && access.SpaceId == Scope.Id;

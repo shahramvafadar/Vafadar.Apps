@@ -1058,4 +1058,19 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Original navigation/correction remains distinct from unsaved activity toggles. Keep covered publication,
   growing native names, pinned Save/Add/Reload and busy/discard Back. Failed committed refresh retries reads only.
 * Device choices never enter portable preferences or grant paid rights. Registration remains inactive;
-  per-file financial/new-money/automation bindings are still open. Independent fixtures restore exact owned data.
+  actual-file work composition follows D-157; remaining operation coverage stays open. Independent fixtures restore exact owned data.
+
+## 90. Actual-file original profile work (D-157)
+
+* Compose the original device choice with existing independently verified financial facts for the actual file.
+  Keep the legacy empty main id separate from its financial scope; never manufacture a scope or paid grant.
+* Retain complete catalogue/legacy/provider revision/value facts in immutable reviewed access. Existing writer
+  and snapshot guards recheck them across SQLite waits and change-and-return activity; current-profile navigation
+  never transfers access to another file. Shared membership does not inherit personal device choices.
+* Gate new work independently of complete original calculations, history/query viewing, correction/refund/overdue
+  settlement, deletion, backup/restore and owned export. Malformed/unlisted catalogues never guess main.
+* Default inactive construction/capture performs no preference or device-source read. Preserve original singleton
+  source ownership and disposal in DI; never substitute production facts with native fixture providers.
+* Native file-work fixtures use the actual decorated DI and original pages over independent fictitious rows;
+  compare complete data, retain raw drafts and restore catalogue/owned bytes/display. No financial Save or paid
+  activation. Remaining operation/import/restore/native and commercial-message coverage follows separately.

@@ -596,3 +596,14 @@ its own WinRT caption/Invoke read objects for the short review process; require 
 completed proof. Keep interrupted/finalizer-failed captures as negative evidence. The ordinary `profiles` screen
 already belongs to the snapshot route list. No production provider replacement or OS/device setting change.
 See the repository evidence at `src/Apps/Zanance/docs/quality/local-profile-work.md`.
+
+## Actual file-work native review (D-157)
+
+The Windows Debug `profile-file-work` route constructs the actual decorated DI over an independent fictitious
+SQLite/catalogue. It renders the original goal list/detail: chosen basic balance-goal work, unchosen complete
+financial history, native positive/release direction targets, retained release draft and rechosen original basic
+work. A Free selection does not grant the retained paid earmark type. No native Save or authentication is invoked.
+Complete 25-table data and original catalogue are compared/restored. Only the app's hidden own root is captured;
+retained WinRT read objects survive through normal review-process exit. The original independent-profile review
+remains `profile-work`. Failed prototype assertions are negative evidence. See
+`src/Apps/Zanance/docs/quality/profile-file-work.md`.

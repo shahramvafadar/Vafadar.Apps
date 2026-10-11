@@ -400,3 +400,12 @@ no credential, PIN verifier, financial value or provider identity. Device policy
 port; production registration is inactive. No network, SDK, permission, EF schema or interim OS backup policy
 change. Original backup-set resolution follows exact original ids. Native fixtures use independently owned
 fictitious catalogues and restore their complete financial data and owned files.
+
+## D-157 - Original file activity review
+
+Existing device-only catalogue and verified access facts compose into an in-memory review stamp. Length-prefixed
+nullable original fields are hashed; this stamp is not an authorization token, provider request, portable
+preference, purchase or identity migration. It does not enter backups. Complete financial input/history remains
+unchanged; backup restore and owned export retain their independently verified rights. Inactive production
+capture performs no device-source/preference read. No data schema, permission, SDK, network, credential or interim
+OS-backup policy change. Native fixtures remain independent and restore complete original rows/files/display.

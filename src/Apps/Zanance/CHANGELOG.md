@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Keep original profile history independent from new work (2026-10-11, D-157)
+
+- Keep complete progress, history, saved-query viewing, corrections and backup/restore available in retained profiles.
+- Bind future work to the chosen original profile file; changing the open profile cannot transfer its rights.
+- Preserve drafts and paid-feature rules when profile activity changes. Test builds remain unrestricted.
+
 ### Improved - Review original device profiles (2026-10-11, D-156)
 
 - Keep original profile names and history accessible, with complete growing action captions.

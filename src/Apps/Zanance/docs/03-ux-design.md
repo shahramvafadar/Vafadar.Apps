@@ -981,3 +981,13 @@ bounded policy applies. Unchosen history remains reachable; current/main profile
 and failed-read covers publish all originals before input. Save/Add/Reload reserve their own rows outside the
 scroll viewport, while long names wrap. Busy prompts and Back share the same discard guard; live captions retain
 raw names and unsaved identities. Test-build registration remains inactive. See [evidence](quality/local-profile-work.md).
+
+## Original profile work across retained forms (D-157)
+
+The same existing read-only work caption applies to a retained resource in an unchosen original profile.
+Keep all original identities and financial progress visible. An explicit profile choice never clears raw drafts,
+changes currency, creates money or grants a paid goal type. Retained query viewing and financial correction have
+separate eligibility from creating a definition or starting positive work. Return to a chosen original file
+restores its separately authorized basic work. Current test builds remain unrestricted; translated dedicated
+profile-limit messages and remaining operation forms are a later ENT-04 slice.
+See [evidence](quality/profile-file-work.md).
