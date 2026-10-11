@@ -12,7 +12,7 @@ public enum SnoozeChoice
     Tomorrow,
 }
 
-/// <summary>A reminder the user snoozed; it repeats the original text and link at <see cref="NotifyAt"/>.</summary>
+/// <summary>A device-local snooze cache; delivery rebuilds its text and validates the original identities at <see cref="NotifyAt"/>.</summary>
 /// <param name="Id">Notification id, derived from the original reminder.</param>
 /// <param name="Link">Where a tap leads, as for the original reminder.</param>
 /// <param name="Title">Title of the original reminder (already generic unless details are allowed).</param>

@@ -1,11 +1,13 @@
 using System.Globalization;
 using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.App.Security;
+using Vafadar.Zanance.Core.Reminders;
+using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App;
 
 /// <summary>Opens only supported widget/reminder destinations after secure startup and unlocking, never posting money.</summary>
-public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction)
+public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans)
 {
     /// <summary>Prepares the first visible page after unlocking, then opens the startup link that waited for that page.</summary>
     public Task StartAsync(Func<Task<string?>> preparePage)
@@ -22,6 +24,23 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
     /// <summary>Validates an external link before queuing its navigation behind the application access gate.</summary>
     public Task OpenAsync(string link)
     {
+        if (PlanReminderLink.Parse(link) is { } reminder)
+            return appLock.RunWhenUnlockedAsync(async () =>
+            {
+                // Resolve the active file after unlocking; a restored Guid is not proof of the same profile.
+                var snapshot = await plans.GetWorkSnapshotAsync();
+                if (snapshot.ReminderScope != reminder.Scope) return;
+                var existing = reminder.Targets.Where(t => snapshot.Schedules.Any(s => s.Id == t.PlanId)).ToList();
+                if (existing.Count == 0) return;
+                await plans.ValidateWorkSnapshotAsync(snapshot);
+                if (reminder.IsContract)
+                    await interaction.NavigateAsync(AppRoutes.PlanDetailRoute, new Dictionary<string, object> { ["id"] = existing[0].PlanId });
+                else if (reminder.Targets.Count == 1)
+                    await interaction.NavigateAsync(AppRoutes.OccurrenceRoute,
+                        new Dictionary<string, object> { ["plan"] = existing[0].PlanId, ["date"] = existing[0].OriginalDate!.Value });
+                else await interaction.NavigateAsync("//plans");
+            });
+
         var parts = link.Split('|');
         string? route = null;
         Dictionary<string, object>? parameters = null;

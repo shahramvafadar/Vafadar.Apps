@@ -1400,3 +1400,26 @@ performance and publication acceptance remain open. Old generic full/partial ent
 Initial invalid enum/runner attempts and six account-feedback ordering failures remain negative evidence; final
 implementation retains established rejection order and the complete canonical suite passes.
 [Evidence](quality/selected-plan-occurrences.md).
+
+## D-140 - Actual scoped Plan reminder delivery (2026-10-11)
+
+D-140 binds actual Plan/contract notification delivery and snooze rebuilding to the opened file and current
+explicit plan choice. Original group members, recurrence identities and effective dates survive snooze; current
+privacy/language/text is rebuilt from stored rows. Unprovable legacy snooze caches are discarded while normal
+reminders are rebuilt; legacy navigation remains readable. Notification taps resolve the current file after
+unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
+keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
+external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).
+
+D-140 native Persian review also finds English action captions after live language changes. Keep the existing
+Android category instance instead of appending a replacement that the library never selects; initialize current
+translated actions for background receiver startup without database reads. Final main/App counts are 2,330/380,
+with 48 new AT-142 cases. Preserve the failed native caption/action/cache inspection evidence.
+
+The own-emulator inexact wakeup also arrives outside the native library one-minute acceptance default and produces
+no visible notification. Configure a bounded one-hour native acceptance window matching ordinary Android inexact
+delivery; retain current permissions and record this missed delivery as negative evidence.
+
+A further actual application regression reproduces a retained earlier queue when choice facts change before native
+publication. Reuse one retirement guard before/after publication, cancelling old pending work without financial
+writes. Final 48 added cases / main 2,330 / App.Tests 380 pass; preserve the failed one-case proof.

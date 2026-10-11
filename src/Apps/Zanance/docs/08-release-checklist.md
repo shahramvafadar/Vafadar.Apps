@@ -354,3 +354,11 @@ payment writers; history/overdue rights and original calculation inputs remain c
 parallel main 2,282 / App.Tests 348 pass. Strict builds, six normal Release native flows with all 24 complete rows
 unchanged/restored and the complete signed APK are verified. Registration remains inactive. Actual reminder/snooze
 delivery, choice persistence/UI, other bindings and external gates remain open. [Evidence](quality/selected-plan-occurrences.md).
+
+D-140 binds actual Plan/contract notification delivery and snooze rebuilding to the opened file and current
+explicit plan choice. Original group members, recurrence identities and effective dates survive snooze; current
+privacy/language/text is rebuilt from stored rows. Unprovable legacy snooze caches are discarded while normal
+reminders are rebuilt; legacy navigation remains readable. Notification taps resolve the current file after
+unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
+keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
+external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).

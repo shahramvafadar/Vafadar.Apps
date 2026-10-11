@@ -5,8 +5,10 @@ using Vafadar.Localization;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Reminders;
 
@@ -48,30 +50,29 @@ public sealed class ReminderService(
     /// Handles snooze actions. Registered at app start, so it also works when Android starts the process only to deliver
     /// the action (the app is not opened).
     /// </summary>
-    public void WatchSnoozes() => scheduler.SnoozeRequested += (_, request) => _ = SnoozeAsync(request);
-
-    // REM-04: a snooze repeats the reminder; the occurrence and its due date stay unchanged.
-    private async Task SnoozeAsync(SnoozeRequest request)
+    public void WatchSnoozes()
     {
-        // The same lock as a refresh, which reads and writes the snoozes too.
+        // A scheduled Android receiver can initialize the process without opening a page. No database startup work.
+        scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
+        scheduler.SnoozeRequested += (_, request) => _ = SnoozeAsync(request);
+    }
+
+    /// <summary>Rebuilds a snoozed occurrence from current file, rule, rights and privacy; never changes its due date.</summary>
+    public async Task SnoozeAsync(SnoozeRequest request)
+    {
+        if (!scheduler.IsSupported) return;
         await _gate.WaitAsync();
         try
         {
-            var original = request.Notification;
-            var snooze = new SnoozedReminder(
-                ReminderSnoozes.IdFor(original.Id), original.Link, original.Title, original.Body,
-                ReminderSnoozes.NotifyAt(request.Choice, time.GetLocalNow().DateTime));
-            preferences.Set(SnoozeKey, ReminderSnoozes.Serialize(ReminderSnoozes.Add(ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)), snooze)));
-            await scheduler.ShowAsync(new ReminderNotification(snooze.Id, snooze.Title, snooze.Body, snooze.NotifyAt, snooze.Link, CanSnooze: true));
+            if (!await scheduler.AreEnabledAsync()) return;
+            await RefreshUnderGateAsync(request);
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
+            if (ex is CommercialWriteRejectedException) await scheduler.ReplaceAllAsync([]);
             System.Diagnostics.Debug.WriteLine($"Snooze failed: {ex}");
         }
-        finally
-        {
-            _gate.Release();
-        }
+        finally { _gate.Release(); }
     }
 
     /// <summary>Schedules a refresh after a short delay; later calls within the delay replace earlier ones.</summary>
@@ -106,137 +107,156 @@ public sealed class ReminderService(
                 return;
             }
 
-            var settings = await store.GetSettingsAsync();
-            var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
-            var culture = localization.CurrentCulture;
-            scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
-            var schedules = await plans.GetSchedulesAsync();
-            var states = await plans.GetStatesAsync();
-            var now = time.GetLocalNow().DateTime;
-            var planned = ReminderPlanner.Plan(schedules, states, now);
-
-            var notifications = ReminderPlanner.GroupByTime(planned).Select(group =>
-            {
-                if (group.Count > 1)
-                {
-                    // One summary for items due at the same time (REM-10); names only when details are allowed.
-                    var body = settings.NotificationsShowDetails
-                        ? string.Join(translator["Reminder_ListSeparator"], group.Select(r => r.Occurrence.Schedule.Name))
-                        : translator["Reminder_Generic"];
-                    return new ReminderNotification(group[0].Id, translator.Format("Reminder_Summary", group.Count), body, group[0].NotifyAt, "plans", CanSnooze: true);
-                }
-
-                var reminder = group[0];
-                var occurrence = reminder.Occurrence;
-                var link = string.Create(CultureInfo.InvariantCulture, $"occurrence|{occurrence.Schedule.Id}|{occurrence.OriginalDate:yyyy-MM-dd}");
-                if (!settings.NotificationsShowDetails)
-                {
-                    // Nothing about amounts, accounts or names on the lock screen unless the user chose it (REM-05, AT-38).
-                    return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_Generic"], reminder.NotifyAt, link, CanSnooze: true);
-                }
-
-                var currency = accounts.TryGetValue(occurrence.Schedule.AccountId, out var account) ? account.CurrencyCode : settings.ReportCurrencyCode;
-                var amount = occurrence.Amount is { } value ? MoneyText.Format(value, currency, culture, approximate: occurrence.AmountMode == Core.Plans.AmountMode.Estimated) : translator["Plan_AmountUnknown"];
-                return new ReminderNotification(
-                    reminder.Id,
-                    occurrence.Schedule.Name,
-                    translator.Format("Reminder_Details", amount, dates.Format(occurrence.DueDate, DateFormatStyle.Long)),
-                    reminder.NotifyAt,
-                    link,
-                    CanSnooze: true);
-            }).ToList();
-
-            // Contract dates (F2-CON-01): cancellation deadlines and review dates; names only when details are allowed.
-            notifications.AddRange(ContractReminderPlanner.Plan(schedules, now).Select(reminder =>
-            {
-                var link = string.Create(CultureInfo.InvariantCulture, $"plan|{reminder.Schedule.Id}");
-                if (!settings.NotificationsShowDetails)
-                {
-                    return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_ContractGeneric"], reminder.NotifyAt, link);
-                }
-
-                var key = reminder.Kind == ContractDateKind.Cancellation ? "Reminder_CancelBy" : "Reminder_ReviewOn";
-                return new ReminderNotification(reminder.Id, reminder.Schedule.Name, translator.Format(key, dates.Format(reminder.Date, DateFormatStyle.Long)), reminder.NotifyAt, link);
-            }));
-
-            // Contributions only remind the user. Progress includes funded earmarks and held quantities, not prices.
-            var contributionPlans = await goals.GetContributionPlansAsync();
-            if (contributionPlans.Any(p => p.ReminderEnabled))
-            {
-                var progress = GoalProgressService.Evaluate(
-                    await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts.Values.ToList(),
-                    await store.GetEntriesAsync(), contributionPlans, DateOnly.FromDateTime(now),
-                    await holdings.GetEventsAsync(), await holdings.GetTypesAsync());
-                notifications.AddRange(GoalReminderPlanner.Plan(progress, contributionPlans, now)
-                    .GroupBy(r => r.NotifyAt).Select(group =>
-                    {
-                        var first = group.First();
-                        var items = group.ToList();
-                        var single = items.Count == 1;
-                        var link = single ? string.Create(CultureInfo.InvariantCulture, $"goal|{first.Goal.Id}") : "goals";
-                        var title = settings.NotificationsShowDetails
-                            ? single ? first.Goal.Name : translator.Format("Reminder_GoalSummary", items.Count)
-                            : translator["App_Name"];
-                        var body = settings.NotificationsShowDetails
-                            ? single ? translator.Format("Reminder_GoalDetails", dates.Format(first.Date, DateFormatStyle.Long))
-                                : string.Join(translator["Reminder_ListSeparator"], items.Select(r => r.Goal.Name))
-                            : translator["Reminder_GoalGeneric"];
-                        return new ReminderNotification(first.Id, title, body, first.NotifyAt, link);
-                    }));
-            }
-
-            // Match Home and the review page's display calendar, independently of the language or new-budget defaults.
-            var reviewCalendar = localization.CurrentCalendar switch
-            {
-                CalendarSystem.Persian => PeriodCalendar.Persian,
-                CalendarSystem.Hijri => PeriodCalendar.Hijri,
-                _ => PeriodCalendar.Gregorian,
-            };
-            var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Values.Min(a => a.OpeningDate);
-            notifications.AddRange(ReviewReminderPlanner.Plan(settings.ReviewReminderEnabled, settings.ReviewProgress,
-                now, reviewCalendar, settings.MonthStartDay, firstData).Select(reminder =>
-                new ReminderNotification(reminder.Id, translator["App_Name"],
-                    settings.NotificationsShowDetails
-                        ? translator.Format("Reminder_ReviewDetails", dates.Format(reminder.PeriodFirst, DateFormatStyle.MonthYear))
-                        : translator["Reminder_ReviewGeneric"], reminder.NotifyAt, "review")));
-
-            // Snoozed reminders survive the rebuild while their occurrence is still open (REM-04, AT-36).
-            bool IsOpen(string link)
-            {
-                if (link == "plans")
-                {
-                    return true;
-                }
-
-                if (link.Split('|') is not ["occurrence", var plan, var date] || !Guid.TryParse(plan, out var planId)
-                    || !DateOnly.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var original))
-                {
-                    return false;
-                }
-
-                var state = states.FirstOrDefault(s => s.ScheduleId == planId && s.OriginalDate == original);
-                return schedules.Any(s => s.Id == planId && s.State == Core.Plans.ScheduleState.Active)
-                    && state?.Status is not (Core.Plans.OccurrenceStatus.Settled or Core.Plans.OccurrenceStatus.Skipped);
-            }
-
-            var snoozes = ReminderSnoozes.Keep(ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)), now, IsOpen);
-            preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
-            notifications.AddRange(snoozes
-                .Where(s => notifications.All(n => n.Id != s.Id))
-                .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
-
-            // One device queue across plan, contract, goal, review and snooze reminders, within the iOS pending limit.
-            await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
-                .Take(ReminderPlanner.MaxPending).ToList());
-            await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
+            await RefreshUnderGateAsync();
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
+            if (ex is CommercialWriteRejectedException) await scheduler.ReplaceAllAsync([]);
             System.Diagnostics.Debug.WriteLine($"Reminders could not be updated: {ex}");
         }
-        finally
+        finally { _gate.Release(); }
+    }
+
+    // Refresh and action share the gate and queue cap. Do not persist an action before its actual-file read succeeds.
+    private async Task RefreshUnderGateAsync(SnoozeRequest? request = null)
+    {
+        var snapshot = await plans.GetWorkSnapshotAsync();
+        var settings = await store.GetSettingsAsync();
+        var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
+        var culture = localization.CurrentCulture;
+        scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
+        var schedules = snapshot.Schedules;
+        var states = snapshot.States;
+        var now = time.GetLocalNow().DateTime;
+        var today = DateOnly.FromDateTime(now);
+        // Filter before the planner's cap: unavailable plans must not displace selected reminders.
+        var planned = ReminderPlanner.Plan(schedules.Where(s => snapshot.Work.CanRemind(s.Id)), states, now);
+        var notifications = ReminderPlanner.GroupByTime(planned).Select(group =>
+            Describe(group[0].Id, group[0].NotifyAt, group.Select(r => r.Occurrence).ToList())).ToList();
+
+        // Contract dates (F2-CON-01): cancellation deadlines and review dates; names only when details are allowed.
+        notifications.AddRange(ContractReminderPlanner.Plan(schedules.Where(s => snapshot.Work.CanRemind(s.Id, contract: true)), now).Select(reminder =>
         {
-            _gate.Release();
+            var link = PlanReminderLink.Format(snapshot.ReminderScope, [new(reminder.Schedule.Id, null)]);
+            if (!settings.NotificationsShowDetails)
+            {
+                return new ReminderNotification(reminder.Id, translator["App_Name"], translator["Reminder_ContractGeneric"], reminder.NotifyAt, link);
+            }
+
+            var key = reminder.Kind == ContractDateKind.Cancellation ? "Reminder_CancelBy" : "Reminder_ReviewOn";
+            return new ReminderNotification(reminder.Id, reminder.Schedule.Name, translator.Format(key, dates.Format(reminder.Date, DateFormatStyle.Long)), reminder.NotifyAt, link);
+        }));
+
+        // Contributions only remind the user. Progress includes funded earmarks and held quantities, not prices.
+        var contributionPlans = await goals.GetContributionPlansAsync();
+        if (contributionPlans.Any(p => p.ReminderEnabled))
+        {
+            var progress = GoalProgressService.Evaluate(
+                await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts.Values.ToList(),
+                await store.GetEntriesAsync(), contributionPlans, DateOnly.FromDateTime(now),
+                await holdings.GetEventsAsync(), await holdings.GetTypesAsync());
+            notifications.AddRange(GoalReminderPlanner.Plan(progress, contributionPlans, now)
+                .GroupBy(r => r.NotifyAt).Select(group =>
+                {
+                    var first = group.First();
+                    var items = group.ToList();
+                    var single = items.Count == 1;
+                    var link = single ? string.Create(CultureInfo.InvariantCulture, $"goal|{first.Goal.Id}") : "goals";
+                    var title = settings.NotificationsShowDetails
+                        ? single ? first.Goal.Name : translator.Format("Reminder_GoalSummary", items.Count)
+                        : translator["App_Name"];
+                    var body = settings.NotificationsShowDetails
+                        ? single ? translator.Format("Reminder_GoalDetails", dates.Format(first.Date, DateFormatStyle.Long))
+                            : string.Join(translator["Reminder_ListSeparator"], items.Select(r => r.Goal.Name))
+                        : translator["Reminder_GoalGeneric"];
+                    return new ReminderNotification(first.Id, title, body, first.NotifyAt, link);
+                }));
+        }
+
+        // Match Home and the review page's display calendar, independently of the language or new-budget defaults.
+        var reviewCalendar = localization.CurrentCalendar switch
+        {
+            CalendarSystem.Persian => PeriodCalendar.Persian,
+            CalendarSystem.Hijri => PeriodCalendar.Hijri,
+            _ => PeriodCalendar.Gregorian,
+        };
+        var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Values.Min(a => a.OpeningDate);
+        notifications.AddRange(ReviewReminderPlanner.Plan(settings.ReviewReminderEnabled, settings.ReviewProgress,
+            now, reviewCalendar, settings.MonthStartDay, firstData).Select(reminder =>
+            new ReminderNotification(reminder.Id, translator["App_Name"],
+                settings.NotificationsShowDetails
+                    ? translator.Format("Reminder_ReviewDetails", dates.Format(reminder.PeriodFirst, DateFormatStyle.MonthYear))
+                    : translator["Reminder_ReviewGeneric"], reminder.NotifyAt, "review")));
+
+        var snoozes = new List<SnoozedReminder>();
+        foreach (var saved in ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)).Take(ReminderSnoozes.MaxSnoozes))
+        {
+            if (saved.NotifyAt <= now || Rebuild(saved.Id, saved.NotifyAt, saved.Link) is not { } current) continue;
+            snoozes.Add(new(current.Id, current.Link, current.Title, current.Body, saved.NotifyAt));
+        }
+        if (request is not null)
+        {
+            var id = ReminderSnoozes.IdFor(request.Notification.Id);
+            var at = ReminderSnoozes.NotifyAt(request.Choice, now);
+            if (Rebuild(id, at, request.Notification.Link) is { } current)
+                snoozes = ReminderSnoozes.Add(snoozes, new(id, current.Link, current.Title, current.Body, at)).ToList();
+        }
+
+        // Legacy unscoped groups cannot prove their profile or members. Drop that cache, rebuilding normal reminders.
+        // The original routing format remains supported for retained historical taps, not for new snoozes.
+        await ValidatePublicationAsync(snapshot);
+        preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
+        notifications.AddRange(snoozes.Where(s => notifications.All(n => n.Id != s.Id))
+            .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
+        await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
+            .Take(ReminderPlanner.MaxPending).ToList());
+        await ValidatePublicationAsync(snapshot);
+        await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
+
+        ReminderNotification? Rebuild(int id, DateTime at, string link)
+        {
+            if (PlanReminderLink.Parse(link) is not { IsContract: false } target || target.Scope != snapshot.ReminderScope)
+                return null;
+            var items = new List<Occurrence>();
+            foreach (var member in target.Targets)
+            {
+                var schedule = schedules.FirstOrDefault(s => s.Id == member.PlanId);
+                if (schedule is not { State: ScheduleState.Active, ReminderEnabled: true }
+                    || !snapshot.Work.CanRemind(schedule.Id)) continue;
+                if (Occurrences.Find(schedule, states, member.OriginalDate!.Value, today) is { IsOpen: true } occurrence)
+                    items.Add(occurrence);
+            }
+            return items.Count == 0 ? null : Describe(id, at, items);
+        }
+
+        ReminderNotification Describe(int id, DateTime at, IReadOnlyList<Occurrence> items)
+        {
+            var link = PlanReminderLink.Format(snapshot.ReminderScope, items.Select(o => new PlanReminderTarget(o.Schedule.Id, o.OriginalDate)));
+            if (!settings.NotificationsShowDetails)
+                return new(id, translator["App_Name"], translator["Reminder_Generic"], at, link, CanSnooze: true);
+            if (items.Count > 1)
+                return new(id, translator.Format("Reminder_Summary", items.Count),
+                    string.Join(translator["Reminder_ListSeparator"], items.Select(o => o.Schedule.Name)), at, link, CanSnooze: true);
+            var occurrence = items[0];
+            var currency = accounts.TryGetValue(occurrence.Schedule.AccountId, out var account)
+                ? account.CurrencyCode : settings.ReportCurrencyCode;
+            var amount = occurrence.Amount is { } value
+                ? MoneyText.Format(value, currency, culture, approximate: occurrence.AmountMode == AmountMode.Estimated)
+                : translator["Plan_AmountUnknown"];
+            return new(id, occurrence.Schedule.Name,
+                translator.Format("Reminder_Details", amount, dates.Format(occurrence.DueDate, DateFormatStyle.Long)), at, link, CanSnooze: true);
+        }
+    }
+
+    // Retire both a previously pending queue and a newly published one when this read loses its file/rights.
+    // Otherwise a failure before native publication leaves earlier unavailable work scheduled (D-140).
+    private async Task ValidatePublicationAsync(PlanWorkSnapshot snapshot)
+    {
+        try { await plans.ValidateWorkSnapshotAsync(snapshot); }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            await scheduler.ReplaceAllAsync([]);
+            throw;
         }
     }
 

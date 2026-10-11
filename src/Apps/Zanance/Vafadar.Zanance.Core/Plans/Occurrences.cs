@@ -95,6 +95,17 @@ public static class Occurrences
         return [.. result.OrderBy(o => o.DueDate).ThenBy(o => o.Number)];
     }
 
+    /// <summary>Resolves one original rule/slice identity, including an effective date moved beyond the range window.</summary>
+    public static Occurrence? Find(Schedule schedule, IEnumerable<OccurrenceState> states, DateOnly original, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(schedule);
+        ArgumentNullException.ThrowIfNull(states);
+        if (!schedule.Owns(original)) return null;
+        var scheduled = Recurrence.Between(schedule.Rule, original, original).FirstOrDefault();
+        return scheduled.Number == 0 ? null : Create(schedule, scheduled,
+            states.FirstOrDefault(s => s.ScheduleId == schedule.Id && s.OriginalDate == original), today);
+    }
+
     /// <summary>Returns the open occurrences due on or before <paramref name="today"/>, oldest first.</summary>
     public static IReadOnlyList<Occurrence> OpenUpTo(Schedule schedule, IEnumerable<OccurrenceState> states, DateOnly today, DateOnly since) =>
         [.. Between(schedule, states, since, today, today).Where(o => o.IsOpen)];

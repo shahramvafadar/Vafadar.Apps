@@ -426,3 +426,13 @@ and choice persistence/UI remain open. [Evidence](../../src/Apps/Zanance/docs/qu
 
 D-139 also applies D-82 navigation retirement to profile/onboarding root replacement, before old native handlers
 are detached. Keep current forms, deferred display rebuilds and the startup lock cover unchanged.
+
+## Scoped Plan notification work (D-140)
+
+PlanWorkSnapshot retains the actual captured file and cached-rights guard inside Data, exposing only a local SHA256
+notification identity. Validate before native effects and after native await; a retired publication cancels its
+pending queue. Missing membership cancels pending delivery. Filter before planner/group caps; calculations continue
+using complete originals. Versioned bounded links carry exact original members through native ReturningData.
+Rebuild snoozes from fresh rows/rights/privacy, resolving an original date directly even after a move beyond the
+range window. Legacy unscoped caches do not establish group or profile ownership. No database migration or portable
+preference addition; selection persistence/activation and remaining resource bindings are still separate work.

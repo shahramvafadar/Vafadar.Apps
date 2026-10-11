@@ -1988,3 +1988,17 @@ performance and publication acceptance remain open. Old generic full/partial ent
 Initial invalid enum/runner attempts and six account-feedback ordering failures remain negative evidence; final
 implementation retains established rejection order and the complete canonical suite passes.
 [Evidence](../quality/selected-plan-occurrences.md).
+
+### 31.53. Actual scoped Plan reminder delivery (D-140 / AT-142)
+
+D-140 binds actual Plan/contract notification delivery and snooze rebuilding to the opened file and current
+explicit plan choice. Original group members, recurrence identities and effective dates survive snooze; current
+privacy/language/text is rebuilt from stored rows. Unprovable legacy snooze caches are discarded while normal
+reminders are rebuilt; legacy navigation remains readable. Notification taps resolve the current file after
+unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
+keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
+external acceptance remain open. [Evidence](../quality/selected-plan-reminders.md).
+
+D-140 final adapter includes the observed stale Android action-caption correction and database-free receiver
+caption initialization. Final baseline: 48 new AT-142 cases, normal parallel main 2,330 / App.Tests 380 pass,
+zero failures/skips; strict Windows/Android zero warnings/errors. See the same quality record for final native/APK proof.

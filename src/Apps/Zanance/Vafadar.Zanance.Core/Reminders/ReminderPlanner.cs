@@ -90,6 +90,7 @@ public static class ReminderPlanner
     {
         Span<byte> hash = stackalloc byte[32];
         SHA256.HashData(Encoding.UTF8.GetBytes($"{scheduleId:N}:{originalDate.DayNumber}"), hash);
-        return (BitConverter.ToInt32(hash) & int.MaxValue) | 1;
+        // Reserve the snooze marker: otherwise half of hashed ids already contain it and repeat at the old deadline.
+        return (BitConverter.ToInt32(hash) & 0x6FFF_FFFF) | 1;
     }
 }

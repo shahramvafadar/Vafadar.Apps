@@ -818,3 +818,12 @@ reminder/snooze delivery remain separate unfinished ENT-03 work. [Evidence](qual
 
 D-139 also applies D-82 navigation retirement to profile/onboarding root replacement, before old native handlers
 are detached. Keep current forms, deferred display rebuilds and the startup lock cover unchanged.
+
+## Scoped reminders and fresh snoozes (D-140)
+
+Summary notifications retain their original members and the active profile file's opaque local identity. Snoozing
+rechecks current open rule/slice/reminder state and selected work; it never adds a new guessed member, posts money
+or moves a due date. Rebuild text from current privacy and display choices; generic summaries reveal no names or
+item count. Keep one shared pending queue and stable repeat id. Taps wait for the app lock and resolve the current
+file, without silently switching profiles. Unscoped legacy caches cannot prove membership and are retired when
+normal notifications are rebuilt. This is the final routing format, not a temporary commercial policy.

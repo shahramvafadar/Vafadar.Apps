@@ -16,6 +16,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanDraft.cs" Link="Application/EntryPlanDraft.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppLinkRouter.cs" Link="Application/AppLinkRouter.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderService.cs" Link="Application/ReminderService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/IReminderScheduler.cs" Link="Application/IReminderScheduler.cs" />
     <Compile Include="../../../../src/Libraries/Vafadar.Maui/Security/DeviceAuthenticator.cs" Link="Application/DeviceAuthenticator.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/AppLockService.cs" Link="Application/AppLockService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/IAppLockHost.cs" Link="Application/IAppLockHost.cs" />

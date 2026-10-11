@@ -993,3 +993,11 @@ performance and publication acceptance remain open. Old generic full/partial ent
 Initial invalid enum/runner attempts and six account-feedback ordering failures remain negative evidence; final
 implementation retains established rejection order and the complete canonical suite passes.
 [Evidence](quality/selected-plan-occurrences.md).
+
+## AT-142 - Actual scoped Plan notification delivery
+
+48 added cases: 16 Core routing/identity regressions and 32 real SQLite application flows. Cover delivery/contract
+rights, explicit choice/no choice, fresh privacy/language/amount/moved date, original group narrowing, closed/paused/
+removed/changed/disabled members, legacy cache retirement, wrong-file actions, stable repeat deadlines, permission,
+retirement cancellation before and after native publication, membership loss and post-unlock tap routing. Main parallel suite 2,330 /
+App.Tests 380 pass, zero failures/skips. Running native evidence and external limits: [quality evidence](quality/selected-plan-reminders.md).

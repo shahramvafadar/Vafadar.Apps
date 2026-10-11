@@ -282,3 +282,9 @@ D-138 adds immutable exact-scope cached plan choices in memory only and reuses e
 D-139 projects original plan/state data through private in-memory selected-work identities. No new stored data,
 portable preference, credential, SDK, network or permission. Forecasts/history retain complete original input;
 rejected new occurrence writes preserve complete rows. Commercial registration remains inactive.
+
+D-140 extends the existing device-local notification link/snooze cache with a SHA256 identifier of the actual
+full database path and at most 30 original plan/date members. The identifier grants no right and contains no raw
+path. No new schema, SDK, permission, network, security credential or portable backup setting. Existing snooze
+text is refreshed from current privacy/display/state; unscoped legacy caches are retired without guessing a profile
+or group. Shared pending/snooze caps stay 30/20. No ledger, due-date or profile write from delivery/taps/actions.

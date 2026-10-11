@@ -19,6 +19,10 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
     private readonly INotificationService _service = LocalNotificationCenter.Current;
     private string _oneHour = "+1 h";
     private string _tomorrow = "+1 d";
+    private readonly NotificationCategory _snoozeCategory = new(NotificationCategoryType.Reminder);
+#if ANDROID
+    private bool _categoryRegistered;
+#endif
 
     public LocalNotificationScheduler()
     {
@@ -39,17 +43,16 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 
         _oneHour = oneHour;
         _tomorrow = tomorrow;
-        _service.RegisterCategoryList(
-        [
-            new NotificationCategory(NotificationCategoryType.Reminder)
-            {
-                ActionList =
-                [
-                    Action(SnoozeHourAction, oneHour),
-                    Action(SnoozeTomorrowAction, tomorrow),
-                ],
-            },
-        ]);
+        // Plugin.LocalNotification 14.1.2 on Android appends categories and reads the first matching instance (D-140). Retain that instance;
+        // replace its complete action list so live translations never select an earlier registered caption.
+        _snoozeCategory.ActionList = [Action(SnoozeHourAction, oneHour), Action(SnoozeTomorrowAction, tomorrow)];
+#if ANDROID
+        if (_categoryRegistered) return;
+#endif
+        _service.RegisterCategoryList([_snoozeCategory]);
+#if ANDROID
+        _categoryRegistered = true;
+#endif
     }
 
     private static NotificationAction Action(int id, string title) => new(id)
@@ -107,7 +110,13 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
             request.Schedule = new NotificationRequestSchedule
             {
                 NotifyTime = at,
-                Android = { ScheduleMode = AndroidScheduleMode.InexactAllowWhileIdle },
+                // Android can deliver an inexact alarm more than a minute late (D-140). The plugin's default
+                // one-minute rejection window must not discard normal OS delivery; keep a bounded one-hour window.
+                Android =
+                {
+                    ScheduleMode = AndroidScheduleMode.InexactAllowWhileIdle,
+                    AllowedDelay = TimeSpan.FromHours(1),
+                },
             };
         }
 

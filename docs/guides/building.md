@@ -470,3 +470,8 @@ The Debug route invokes actual native Save for an owned sample insert failure/re
 all complete sample rows, then runs successful extra/refund/zero-bill navigation. Temporary SQL objects are removed
 in finally; only fictitious walk-through data is touched. Render the hidden app's own root; never change OS settings
 or send desktop input. [Evidence](../../src/Apps/Zanance/docs/quality/selected-account-write-policy.md).
+
+D-140 reminder verification compiles the actual ReminderService, IReminderScheduler and AppLinkRouter sources in
+App.Tests, with isolated real SQLite/localization and explicit native-effect ports. No fake MAUI controls or
+duplicated reminder algorithm. Normal signed Release native evidence and the complete APK are recorded in
+src/Apps/Zanance/docs/quality/selected-plan-reminders.md. Builds/tests are separate from physical-phone/iOS acceptance.

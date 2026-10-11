@@ -357,3 +357,11 @@ D-131 continues ENT-02/03 with the explicit Core resource-choice projection and 
 verified retained overdue payments and serialized reviewed advance bills. 79 added cases/main 2,051 pass;
 App.Tests 318. Current test builds remain unrestricted. Selection UI/persistence, other bindings/automation and
 external gates remain open: [quality evidence](quality/selected-account-write-policy.md).
+
+D-140 binds actual Plan/contract notification delivery and snooze rebuilding to the opened file and current
+explicit plan choice. Original group members, recurrence identities and effective dates survive snooze; current
+privacy/language/text is rebuilt from stored rows. Unprovable legacy snooze caches are discarded while normal
+reminders are rebuilt; legacy navigation remains readable. Notification taps resolve the current file after
+unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
+keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
+external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).

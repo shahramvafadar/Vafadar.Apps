@@ -36,7 +36,25 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace,
                 context.Scope.Id), schedules, access.PlanSelection);
         access.EnsureCurrent();
-        return new(schedules, states, work);
+        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        return new(schedules, states, work)
+        {
+            DatabasePath = path,
+            Access = access,
+            ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
+        };
+    }
+
+    /// <summary>Rejects a switched file or retired cached rights before a non-financial notification effect.</summary>
+    public async Task ValidateWorkSnapshotAsync(PlanWorkSnapshot snapshot, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
+            Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
+            throw new InvalidOperationException("The plan work snapshot belongs to another opened file.");
+        snapshot.Access.DemandFeature(CommercialFeature.History);
+        snapshot.Access.EnsureSnapshotCurrent();
     }
 
     /// <summary>Returns one plan.</summary>

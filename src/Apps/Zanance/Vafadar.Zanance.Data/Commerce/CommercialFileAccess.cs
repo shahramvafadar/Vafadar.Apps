@@ -38,6 +38,13 @@ internal sealed class CommercialFileAccess
             throw new InvalidOperationException("Commercial access changed during the operation; retry with current rights.");
     }
 
+    /// <summary>Checks even an inactive read before publishing native work across a possible future activation.</summary>
+    public void EnsureSnapshotCurrent()
+    {
+        if (_source.Capture(_path) != _snapshot)
+            throw new InvalidOperationException("Commercial access changed during notification preparation.");
+    }
+
     /// <summary>Checks a concrete operation; personal payment never substitutes for exact shared membership.</summary>
     public void DemandFeature(CommercialFeature feature)
     {

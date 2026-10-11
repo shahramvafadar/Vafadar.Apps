@@ -6,6 +6,17 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Current Plan reminder and snooze identity (2026-10-11, D-140)
+
+- Android reminders accept ordinary inexact delivery delays instead of silently dropping an alert after one minute.
+- Keep reminder action captions in the current language after a language change.
+
+- Keep grouped reminders and snoozes attached to the original plans and profile.
+- Update snoozed text when notification privacy, language, amount or due date changes.
+- Stop repeating closed, unavailable or disabled reminders; keep the actual due date unchanged.
+- Correct reminder identities that could prevent a snooze from using its new time.
+- Keep test builds unrestricted; selection screens and persistence remain in progress.
+
 ### Changed - Selected future planned payments (2026-10-11, D-139)
 
 - Prepare future Plan work for explicit downgrade choices while preserving every plan, past payment and calculation.
