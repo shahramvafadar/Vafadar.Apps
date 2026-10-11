@@ -312,3 +312,10 @@ scope. No entitlement, membership, credential or device-security value is stored
 columns; no schema/entity, SDK, permission, network or telemetry change. Choice/lifecycle writes never write ledger
 money; retained history remains. Registration stays inactive. Native checks use the exact owned fictitious QA03
 file and restore every original byte/sidecar. [Evidence](quality/goal-resource-choices.md).
+
+## D-144 goal-form privacy boundary
+
+The existing Settings form reads original local goal identity/measurement/currency/state and explicitly saves only
+the D-143 scoped choice row. Unsaved choices stay in memory. No schema, credential, device-security, SDK, permission,
+network or telemetry change. No financial write from selection, reload, language, Help or Back. Registration remains
+inactive. Limited-layout input stays only in an independent Debug fixture/page, never Release DI. [Evidence](quality/goal-chooser.md).

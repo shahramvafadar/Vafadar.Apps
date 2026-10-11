@@ -5739,7 +5739,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Reabrir</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Cuentas y planes disponibles</value>
+    <value>Cuentas, planes y metas disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
     <value>Revisa los elementos disponibles para nuevas operaciones. Tu historial sigue visible y puedes corregirlo.</value>
@@ -5778,7 +5778,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>No necesitas elegir un subconjunto. Todos los elementos aptos siguen disponibles; los pausados e históricos conservan su estado.</value>
   </data>
   <data name="ActiveItems_ChooseHint" xml:space="preserve">
-    <value>Toca los elementos para cambiar tu selección y guárdala. Los planes pausados también cuentan; seleccionarlos no los reanuda ni activa herramientas de pago.</value>
+    <value>Toca los elementos para cambiar tu selección y luego guarda. Los planes y las metas en pausa también cuentan. Seleccionar un elemento no lo reanuda ni habilita herramientas de pago.</value>
   </data>
   <data name="ActiveItems_Limit" xml:space="preserve">
     <value>Elige como máximo {0} elementos. Quita una selección antes de guardar.</value>
@@ -5805,7 +5805,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Tu selección se ha guardado, pero no se pudo cerrar esta página. Vuelve atrás o recarga antes de hacer otra selección.</value>
   </data>
   <data name="ActiveItems_DiscardMessage" xml:space="preserve">
-    <value>¿Descartar tu selección sin guardar? Solo se restablece este borrador; no se elimina ninguna cuenta, plan ni transacción.</value>
+    <value>¿Descartar tus selecciones sin guardar? Solo se restablece este borrador; no se elimina ninguna cuenta, plan, meta ni transacción.</value>
   </data>
   <data name="ActiveItems_Discard" xml:space="preserve">
     <value>Descartar selección</value>
@@ -5814,9 +5814,9 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Elementos disponibles e historial</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Si tu límite es restringido, elige las cuentas para nuevos movimientos de dinero y los planes para nuevas operaciones previstas. Guardar una selección no archiva, termina, pausa ni elimina nada. El historial y las correcciones siguen disponibles. Los planes pausados cuentan, pero mantienen su pausa. Seleccionar un plan no desbloquea funciones de pago independientes. Si todo está disponible, no necesitas elegir un subconjunto.</value>
+    <value>Si tu capacidad está limitada, selecciona las cuentas para nuevos movimientos, los planes para nuevas actividades programadas y las metas de ahorro para nuevas actividades de la meta. Guardar la selección no archiva, finaliza, pausa ni elimina nada. El historial y las correcciones siguen disponibles. Los planes y las metas en pausa cuentan, pero siguen en pausa. La selección no habilita funciones de pago independientes. Si todos los elementos ya están disponibles, no necesitas elegir un subconjunto.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Si tu límite es de tres cuentas y tienes cuatro, elige tres y guarda. La cuarta conserva su saldo e historial, pero no queda seleccionada para nuevos movimientos de dinero.</value>
+    <value>Si tu capacidad es de una meta y tienes dos, selecciona una y guarda. Ambas conservan su progreso e historial. Una meta seleccionada en pausa sigue en pausa; seleccionar una meta avanzada no habilita sus herramientas de pago.</value>
   </data>
 </root>

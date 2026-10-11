@@ -900,4 +900,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   and explicit deletion release only that identity. Keep original history, corrections and negative earmark releases.
 * Positive earmarks independently require the actual paid feature and usable goal/account choices. Never post ledger
   money here. Roll back complete goal/contribution/pin/choice writes on failure; Changed follows committed writes.
-* Registration remains inactive. Goal chooser UI and effective contribution/reminder projection remain open.
+* Registration remains inactive. D-144 delivers goal chooser UI; effective contribution/reminder projection remains open.
+
+## 77. Reviewed goal choices (D-144)
+
+* Goals are the third growing choice in the existing reviewed form. Keep original measurement, currency and state
+  separate from selection; quantity goals display their measurement rather than a money currency. Use Completed
+  for completed goals. Pause counts without resuming; historical identities stay readable and unselectable.
+* Retain covered publication, explicit actual-file Save, pinned failure feedback, exact drafts/live index, shared
+  discard/busy guard and committed-review retirement. No selection/navigation/display action posts financial data.
+* Current registration stays unrestricted. Selection never unlocks paid goal tools. Effective contribution/reminder
+  projection and other remaining resource bindings are separate unfinished work, not proof of activation.

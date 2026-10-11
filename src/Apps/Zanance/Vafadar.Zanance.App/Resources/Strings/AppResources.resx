@@ -5799,7 +5799,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Reopen</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Available accounts and plans</value>
+    <value>Available accounts, plans and goals</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
     <value>Review items available for new activity. Your history stays visible and can be corrected.</value>
@@ -5838,7 +5838,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>No subset needs to be chosen. All eligible items remain available; paused and historical items keep their current state.</value>
   </data>
   <data name="ActiveItems_ChooseHint" xml:space="preserve">
-    <value>Tap items to change your choice, then save. Paused plans also count; choosing a plan does not resume it or enable paid tools.</value>
+    <value>Tap items to change your choice, then save. Paused plans and goals also count. Choosing an item does not resume it or enable paid tools.</value>
   </data>
   <data name="ActiveItems_Limit" xml:space="preserve">
     <value>Choose no more than {0} items. Deselect an item before saving.</value>
@@ -5865,7 +5865,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Your choices were saved, but this page could not close. Go back, or reload before making another choice.</value>
   </data>
   <data name="ActiveItems_DiscardMessage" xml:space="preserve">
-    <value>Discard your unsaved choices? This only resets this draft; it does not delete any account, plan or transaction.</value>
+    <value>Discard your unsaved choices? This only resets this draft; it does not delete any account, plan, goal or transaction.</value>
   </data>
   <data name="ActiveItems_Discard" xml:space="preserve">
     <value>Discard choices</value>
@@ -5874,9 +5874,9 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Available items and history</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>When your allowance is bounded, choose the accounts used for new money and the plans used for new planned activity. Saving a choice does not archive, end, pause or delete anything. History and corrections stay available. Paused plans count, but keep their pause. Choosing a plan does not unlock separately paid features. If every item is already available, no subset needs choosing.</value>
+    <value>When your allowance is bounded, choose the accounts used for new money, the plans used for new planned activity and the savings goals used for new goal activity. Saving a choice does not archive, end, pause or delete anything. History and corrections stay available. Paused plans and goals count, but keep their pause. Choosing an item does not unlock separately paid features. If every item is already available, no subset needs choosing.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>If your allowance is three accounts and you have four, select any three and save. The fourth keeps its balance and history, but is not selected for new money.</value>
+    <value>If your allowance is one goal and you have two, select one and save. Both keep their progress and history. A selected paused goal stays paused; selecting an advanced goal does not unlock its paid tools.</value>
   </data>
 </root>

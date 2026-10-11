@@ -486,3 +486,27 @@ slices. Other selected resources, activation and owner/provider/device/iOS/publi
 Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
 exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
 verified. [Evidence](quality/goal-resource-choices.md).
+
+## D-144 delivered goal chooser
+
+The existing Settings availability form now has Accounts, Plans and Savings goals as three growing native choices.
+Read the original goal name, measurement kind and state from the actual D-143 scoped snapshot; money goals also show
+their original currency, while holding-quantity goals do not display a currency as their unit. Completed goals say
+Completed rather than the Plan-specific Ended. Paused goals count toward Free's one-goal allowance without resuming.
+Completed/archived identities remain readable and unselectable. No goal, allocation, contribution or ledger write
+occurs while selecting, navigating, refreshing captions or discarding a draft.
+
+Explicit Save uses the reviewed actual-file writer, including empty choices and malformed-choice repair. Preserve
+the exact goal draft/index/identity on stale name/kind/currency/rights or storage failure and on live language change.
+Keep existing consent/busy guard, covered publication/retry, pinned Save/error and committed-review retirement.
+Current unrestricted registration requires no subset or Save and grants no fake paid rights. Choosing an advanced
+goal never grants its paid tools; translated explanation/example make this explicit in all six existing languages.
+
+Goal chooser UI is delivered. Effective goal/contribution projection and native reminder filtering/routing remain
+the next ENT-02/03 binding slice; other resources/operations, activation and owner/external gates remain open.
+
+18 new AT-146 actual application cases; normal parallel main 2,448 / App.Tests 425 pass (71.008 s), no failures/skips.
+Strict Windows/Android zero warnings/errors. Actual form and registered Settings/Help/Goals/Back each pass the
+18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
+Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
+[Evidence](quality/goal-chooser.md).

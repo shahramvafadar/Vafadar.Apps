@@ -853,3 +853,11 @@ Retain original goal state and measurement separately from future availability. 
 selection. Explicit Save uses reviewed choice; no guessed subset, financial posting or historical rewrite. Goal
 chooser UI and effective contribution/reminder presentation remain open. Current Accounts/Plans form and
 unrestricted release behavior are unchanged. [Writer evidence](quality/goal-resource-choices.md).
+
+## Goal choice in the growing availability form (D-144)
+
+Use three wrapping native choices with complete translated names and 44-pixel targets. Display original goal
+identity, measurement and state separately from choice. Currency belongs to money-goal metadata, not quantity units.
+Completed is a goal state; do not call it an ended Plan. Pause counts without resuming. Keep the same covered loading,
+explicit scoped Save, growing pinned error/action, exact live draft and dirty-transition consent. Explain one-goal
+capacity with a concrete translated example and keep paid-tool rights separate. [Native evidence](quality/goal-chooser.md).

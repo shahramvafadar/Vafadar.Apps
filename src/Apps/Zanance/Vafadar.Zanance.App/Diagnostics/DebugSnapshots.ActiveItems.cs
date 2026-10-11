@@ -9,6 +9,7 @@ using Vafadar.Zanance.App.Features.Commerce;
 using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
@@ -48,6 +49,13 @@ internal static partial class DebugSnapshots
             State = index == 6 ? ScheduleState.Paused : index == 7 ? ScheduleState.Ended : ScheduleState.Active,
             PausedFrom = index == 6 ? new DateOnly(2026, 10, 12) : null,
         }));
+        for (var index = 0; index < 5; index++) await fixture.GetRequiredService<GoalStore>().SaveGoalAsync(new Goal
+        {
+            Name = "Fictitious household savings goal with a complete long identity " + index,
+            CurrencyCode = "EUR", TargetAmount = 5000, AccountId = accounts[index].Id,
+            Type = index == 1 ? GoalType.Earmark : index == 2 ? GoalType.HoldingQuantity : GoalType.AccountBalance,
+            State = index == 2 ? GoalState.Paused : index == 3 ? GoalState.Completed : index == 4 ? GoalState.Archived : GoalState.Active,
+        });
         async Task<string> StoredAsync()
         {
             await using var db = await factory.CreateDbContextAsync();
@@ -141,7 +149,7 @@ internal static partial class DebugSnapshots
             }
             await viewport.ScrollToAsync(0, 0, false); await Task.Delay(150);
             var chips = VisualDescendants(page).OfType<ChoiceChips>().Single();
-            InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().Last()); await vm.PendingKindChange; await Task.Delay(300);
+            InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().ElementAt(1)); await vm.PendingKindChange; await Task.Delay(300);
             if (vm.KindIndex != 1 || vm.Items.Count != 8 || vm.IsDirty) throw new InvalidOperationException("Native Plan choice did not publish its original states.");
             await CheckAsync("plans");
             var paused = vm.Items.Single(row => row.StateText == translator["Plan_Paused"]);
@@ -149,10 +157,31 @@ internal static partial class DebugSnapshots
             await ScrollToViewIfNeededAsync(viewport, pausedButton); InvokeChoiceReview(pausedButton); await Task.Delay(200);
             if (!paused.IsSelected || !vm.IsDirty || paused.StateText != translator["Plan_Paused"]) throw new InvalidOperationException("A paused choice incorrectly resumed the plan.");
             await CheckAsync("paused"); InvokeChoiceReview(pausedButton); await Task.Delay(100);
+            await viewport.ScrollToAsync(0, 0, false); await Task.Delay(150);
+            InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().Last()); await vm.PendingKindChange; await Task.Delay(300);
+            if (vm.KindIndex != 2 || vm.Items.Count != 5 || vm.IsDirty) throw new InvalidOperationException("Native goal choices did not publish.");
+            await CheckAsync("goals");
+            var pausedGoal = vm.Items.Single(row => row.StateText == translator["GoalState_Paused"]);
+            var completedGoal = vm.Items.Single(row => row.StateText == translator["GoalState_Completed"]);
+            if (!pausedGoal.IsEligible || completedGoal.CanToggle || completedGoal.IsEligible
+                || pausedGoal.DetailText != translator["GoalType_HoldingQuantity"])
+                throw new InvalidOperationException("Original goal state/measurement was replaced by choice or currency.");
+            var goalButton = VisualDescendants(page).OfType<Button>().Single(button => ReferenceEquals(button.CommandParameter, pausedGoal));
+            await ScrollToViewIfNeededAsync(viewport, goalButton); InvokeChoiceReview(goalButton); await Task.Delay(150);
+            if (!pausedGoal.IsSelected || !vm.CanSave || pausedGoal.StateText != translator["GoalState_Paused"])
+                throw new InvalidOperationException("Choosing the paused goal resumed it or lost its one slot.");
+            await CheckAsync("paused-goal");
+            var secondGoal = vm.Items.First(row => row.IsEligible && row != pausedGoal);
+            var secondGoalButton = VisualDescendants(page).OfType<Button>().Single(button => ReferenceEquals(button.CommandParameter, secondGoal));
+            await ScrollToViewIfNeededAsync(viewport, secondGoalButton); InvokeChoiceReview(secondGoalButton); await Task.Delay(150);
+            if (!vm.OverCapacity || vm.CanSave || vm.CapacityError is null) throw new InvalidOperationException("Goal allowance feedback was not visible.");
+            await viewport.ScrollToAsync(0, 0, false); await Task.Delay(150); await CheckAsync("goal-capacity");
+            await ScrollToViewIfNeededAsync(viewport, secondGoalButton); InvokeChoiceReview(secondGoalButton);
+            await ScrollToViewIfNeededAsync(viewport, goalButton); InvokeChoiceReview(goalButton); await Task.Delay(150);
             access.Current = CommercialWriteAccess.Inactive;
             InvokeReload(); if (vm.ReloadCommand.ExecutionTask is { } reload) await reload;
             await viewport.ScrollToAsync(0, 0, false); await Task.Delay(250);
-            if (vm.CanChoose || vm.CanSave || vm.Items.Count(row => row.IsSelected) != 7) throw new InvalidOperationException("Inactive release unexpectedly required a subset.");
+            if (vm.CanChoose || vm.CanSave || vm.Items.Count(row => row.IsSelected) != 3) throw new InvalidOperationException("Inactive release unexpectedly required a subset.");
             await CheckAsync("unlimited");
             access.Fail = true; InvokeReload(); if (vm.ReloadCommand.ExecutionTask is { } failed) await failed;
             await Task.Delay(250); if (!vm.Loading.HasFailed || vm.CanInteract) throw new InvalidOperationException("Failed publication uncovered the form.");
@@ -166,7 +195,7 @@ internal static partial class DebugSnapshots
             if (ReferenceEquals(Shell.Current.CurrentPage, page)) throw new InvalidOperationException("Native Back did not leave the choice page.");
             File.WriteAllText(Path.Combine(folder, language + "-active-items-proof.json"), JsonSerializer.Serialize(new
             { CompleteStoredTables = 25, CompleteRowsUnchanged = await StoredAsync() == before, ActualNativeRowsAndKindInvoked = true,
-                PausedStatePreserved = true, InactiveReleaseDoesNotLimit = true, CoveredFailureAndNativeRetry = true,
+                PausedStatePreserved = true, ActualNativeGoalsAndOneSlotCapacity = true, CompletedGoalsUnselectable = true, QuantityGoalDoesNotDisplayMoneyCurrency = true, InactiveReleaseDoesNotLimit = true, CoveredFailureAndNativeRetry = true,
                 NativeBack = true, NoSaveInvoked = true, FictitiousFreeOnly = true, observations }));
         }
     }
@@ -322,13 +351,19 @@ internal static partial class DebugSnapshots
             is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider dismiss)
             throw new InvalidOperationException("Missing native choice help dismissal pattern.");
         dismiss.Invoke(); await Task.Delay(250);
+        var kinds = VisualDescendants(page).OfType<ChoiceChips>().Single();
+        await ScrollToViewIfNeededAsync(FindScrollView(page) ?? throw new InvalidOperationException("Missing registered form viewport."), kinds);
+        InvokeChoiceReview(VisualDescendants(kinds).OfType<Button>().Last()); await vm.PendingKindChange; await Task.Delay(250);
+        if (vm.KindIndex != 2 || vm.CanChoose || vm.CanSave) throw new InvalidOperationException("Registered Goals activated a required subset.");
+        foreach (var label in VisualDescendants(page).OfType<Label>().Where(Visible)) CheckCaption(label);
+        await CaptureAsync(app, folder, language + "-active-items-registered-goals");
         InvokeSnapshotBack(page); await Task.Delay(300);
         if (!ReferenceEquals(Shell.Current.CurrentPage, settings)) throw new InvalidOperationException("Registered Back replaced the retained Settings page.");
         InvokeSnapshotBack(settings); await Task.Delay(300);
         if (await StoredAsync() != before) throw new InvalidOperationException("Registered choice navigation wrote complete financial/settings rows.");
         File.WriteAllText(Path.Combine(folder, language + "-active-items-entry-proof.json"), JsonSerializer.Serialize(new
         { ActualRegisteredSettingsAction = true, CompleteNativeEntryCaptionNameAndTarget = true, NativeHelpAndBack = true,
-            InactiveCommercialSource = true, Complete25TablesUnchanged = true, RetainedSettingsPage = true }));
+            ActualRegisteredGoalKind = true, InactiveCommercialSource = true, Complete25TablesUnchanged = true, RetainedSettingsPage = true }));
     }
 
     private static async Task<T> AwaitActiveItemsReviewPageAsync<T>() where T : ContentPage

@@ -5747,7 +5747,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Rouvrir</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Comptes et plans disponibles</value>
+    <value>Comptes, plans et objectifs disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
     <value>Vérifiez les éléments disponibles pour de nouvelles opérations. Votre historique reste visible et modifiable.</value>
@@ -5786,7 +5786,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Vous n’avez pas besoin de sélectionner un sous-ensemble. Tous les éléments admissibles restent disponibles ; les éléments en pause et historiques conservent leur état.</value>
   </data>
   <data name="ActiveItems_ChooseHint" xml:space="preserve">
-    <value>Touchez les éléments pour modifier votre sélection, puis enregistrez. Les plans en pause comptent aussi ; les sélectionner ne les reprend pas et n’active pas les outils payants.</value>
+    <value>Touchez les éléments pour modifier votre sélection, puis enregistrez. Les plans et objectifs en pause comptent aussi. Une sélection ne les reprend pas et ne débloque pas les outils payants.</value>
   </data>
   <data name="ActiveItems_Limit" xml:space="preserve">
     <value>Sélectionnez au maximum {0} éléments. Désélectionnez un élément avant d’enregistrer.</value>
@@ -5813,7 +5813,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Votre sélection a été enregistrée, mais cette page n’a pas pu se fermer. Revenez en arrière ou rechargez avant de faire une autre sélection.</value>
   </data>
   <data name="ActiveItems_DiscardMessage" xml:space="preserve">
-    <value>Abandonner votre sélection non enregistrée ? Seul ce brouillon est réinitialisé ; aucun compte, plan ou transaction n’est supprimé.</value>
+    <value>Abandonner vos sélections non enregistrées ? Seul ce brouillon sera réinitialisé ; aucun compte, plan, objectif ou transaction ne sera supprimé.</value>
   </data>
   <data name="ActiveItems_Discard" xml:space="preserve">
     <value>Abandonner la sélection</value>
@@ -5822,9 +5822,9 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Éléments disponibles et historique</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Lorsque votre quota est limité, choisissez les comptes pour les nouveaux mouvements d’argent et les plans pour les nouvelles opérations prévues. L’enregistrement d’une sélection n’archive, ne termine, ne suspend et ne supprime rien. L’historique et les corrections restent disponibles. Les plans en pause comptent, mais restent en pause. La sélection n’active pas les fonctions payantes distinctes. Si tout est disponible, aucun sous-ensemble n’est nécessaire.</value>
+    <value>Si votre capacité est limitée, choisissez les comptes pour les nouveaux mouvements, les plans pour les nouvelles activités prévues et les objectifs d’épargne pour les nouvelles activités liées aux objectifs. Enregistrer une sélection n’archive, ne termine, ne met en pause et ne supprime rien. L’historique et les corrections restent disponibles. Les plans et objectifs en pause comptent, mais restent en pause. Une sélection ne débloque pas les fonctions payantes distinctes. Si tous les éléments sont déjà disponibles, aucune sélection n’est nécessaire.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Si votre quota permet trois comptes et que vous en avez quatre, sélectionnez trois comptes et enregistrez. Le quatrième conserve son solde et son historique, mais n’est pas sélectionné pour de nouveaux mouvements d’argent.</value>
+    <value>Si votre capacité est d’un objectif et que vous en avez deux, sélectionnez-en un et enregistrez. Les deux conservent leur progression et leur historique. Un objectif sélectionné en pause reste en pause ; sélectionner un objectif avancé ne débloque pas ses outils payants.</value>
   </data>
 </root>

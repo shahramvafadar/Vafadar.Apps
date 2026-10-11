@@ -18,7 +18,7 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
     public Guid Id => item.Id;
     /// <summary>Gets the complete original user-written name.</summary>
     public string Name => item.Name;
-    /// <summary>Gets whether the original state can occupy a slot; pauses count without resuming the plan.</summary>
+    /// <summary>Gets whether the original state can occupy a slot; pauses count without resuming a plan or goal.</summary>
     public bool IsEligible => item.State is QuotaItemState.Active or QuotaItemState.Paused;
     /// <summary>Gets the in-memory choice; only the explicit Save command persists it.</summary>
     public bool IsSelected => owner.IsSelected(Id);
@@ -27,15 +27,19 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
     /// <summary>Gets the translated original state, independent of selection.</summary>
     public string StateText => translator[item.State switch
     {
-        QuotaItemState.Paused => "Plan_Paused",
+        QuotaItemState.Paused => item.GoalType is null ? "Plan_Paused" : "GoalState_Paused",
         QuotaItemState.Archived => "ActiveItems_Archived",
-        QuotaItemState.Ended => "Plan_Ended",
+        QuotaItemState.Ended => item.GoalType is null ? "Plan_Ended" : "GoalState_Completed",
         _ => "ActiveItems_Active",
     }];
     /// <summary>Gets identity details without displaying or changing money.</summary>
     public string? DetailText => item.AccountType is { } type
         ? translator.Format("ActiveItems_AccountDetail", translator[$"AccountType_{type}"], item.CurrencyCode)
-        : item.EntryKind is { } kind ? translator[$"EntryKind_{kind}"] : null;
+        : item.EntryKind is { } kind ? translator[$"EntryKind_{kind}"]
+        : item.GoalType is { } goalType ? goalType == Core.Goals.GoalType.HoldingQuantity
+            ? translator[$"GoalType_{goalType}"]
+            : translator.Format("ActiveItems_AccountDetail", translator[$"GoalType_{goalType}"], item.CurrencyCode)
+        : null;
     /// <summary>Gets the separate availability caption; a historical state never becomes an active choice.</summary>
     public string ChoiceText => translator[!IsEligible ? "ActiveItems_History" : IsSelected ? "ActiveItems_Selected" : "ActiveItems_ReadOnly"];
     /// <summary>Gets a complete live spoken name for the real native target.</summary>
@@ -50,7 +54,7 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
     }
 }
 
-/// <summary>Reviewed scoped account/Plan choices with covered reads, explicit Save and no commercial activation.</summary>
+/// <summary>Reviewed scoped account/Plan/goal choices with covered reads, explicit Save and no commercial activation.</summary>
 public sealed partial class ActiveItemsViewModel : ViewModelBase
 {
     private readonly ResourceChoiceStore _store;
@@ -151,7 +155,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     partial void OnKindIndexChanged(int value)
     {
         if (_publishing) return;
-        if (!CanInteract || value is not (0 or 1)) { RestoreIndex(); return; }
+        if (!CanInteract || value is not (0 or 1 or 2)) { RestoreIndex(); return; }
         PendingKindChange = SwitchAsync(value);
     }
 
@@ -248,7 +252,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     public void RefreshDisplay()
     {
         _publishing = true;
-        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"]]; }
+        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"]]; }
         finally { _publishing = false; }
         SetFeedback(_feedbackKey); RefreshCapabilities();
     }
@@ -263,5 +267,11 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
         SaveCommand.NotifyCanExecuteChanged();
     }
 
-    private static QuotaKind Kind(int index) => index == 1 ? QuotaKind.RecurringPlans : QuotaKind.FinancialAccounts;
+    private static QuotaKind Kind(int index) => index switch
+    {
+        0 => QuotaKind.FinancialAccounts,
+        1 => QuotaKind.RecurringPlans,
+        2 => QuotaKind.Goals,
+        _ => throw new ArgumentOutOfRangeException(nameof(index)),
+    };
 }

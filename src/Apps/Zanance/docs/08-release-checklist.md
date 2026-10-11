@@ -389,3 +389,15 @@ remains inactive. Goal UI/projection/reminders and physical/iOS/provider/publica
 Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
 exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
 verified. [Evidence](quality/goal-resource-choices.md).
+
+## D-144 revision-specific local evidence
+
+Canonical installable signed APK: artifacts/android/zanance-d144-release.apk. Current commercial registration
+remains inactive. Effective goal/contribution/reminder projection and physical/iOS/provider/publication gates remain open.
+
+
+18 new AT-146 actual application cases; normal parallel main 2,448 / App.Tests 425 pass (71.008 s), no failures/skips.
+Strict Windows/Android zero warnings/errors. Actual form and registered Settings/Help/Goals/Back each pass the
+18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
+Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
+[Evidence](quality/goal-chooser.md).

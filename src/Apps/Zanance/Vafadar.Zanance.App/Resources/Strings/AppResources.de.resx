@@ -5770,7 +5770,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Wieder öffnen</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Verfügbare Konten und Pläne</value>
+    <value>Verfügbare Konten, Pläne und Ziele</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
     <value>Prüfe die verfügbaren Einträge für neue Vorgänge. Dein Verlauf bleibt sichtbar und korrigierbar.</value>
@@ -5809,7 +5809,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Du musst keine Teilmenge auswählen. Alle geeigneten Einträge bleiben verfügbar; pausierte und historische Einträge behalten ihren Status.</value>
   </data>
   <data name="ActiveItems_ChooseHint" xml:space="preserve">
-    <value>Tippe auf Einträge und speichere deine Auswahl. Pausierte Pläne zählen mit; die Auswahl setzt sie nicht fort und schaltet keine kostenpflichtigen Funktionen frei.</value>
+    <value>Tippe auf Einträge, um deine Auswahl zu ändern, und speichere sie. Pausierte Pläne und Ziele zählen ebenfalls. Eine Auswahl setzt sie nicht fort und schaltet keine kostenpflichtigen Werkzeuge frei.</value>
   </data>
   <data name="ActiveItems_Limit" xml:space="preserve">
     <value>Wähle höchstens {0} Einträge. Hebe vor dem Speichern eine Auswahl auf.</value>
@@ -5836,7 +5836,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Deine Auswahl wurde gespeichert, aber diese Seite konnte nicht geschlossen werden. Gehe zurück oder lade sie vor einer weiteren Auswahl neu.</value>
   </data>
   <data name="ActiveItems_DiscardMessage" xml:space="preserve">
-    <value>Deine ungespeicherte Auswahl verwerfen? Nur dieser Entwurf wird zurückgesetzt; kein Konto, Plan oder Vorgang wird gelöscht.</value>
+    <value>Nicht gespeicherte Auswahl verwerfen? Nur dieser Entwurf wird zurückgesetzt; kein Konto, Plan, Ziel und keine Buchung wird gelöscht.</value>
   </data>
   <data name="ActiveItems_Discard" xml:space="preserve">
     <value>Auswahl verwerfen</value>
@@ -5845,9 +5845,9 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Verfügbare Einträge und Verlauf</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Bei einem begrenzten Kontingent wählst du Konten für neue Geldvorgänge und Pläne für neue geplante Vorgänge. Die Auswahl archiviert, beendet, pausiert oder löscht nichts. Verlauf und Korrekturen bleiben verfügbar. Pausierte Pläne zählen, bleiben aber pausiert. Die Auswahl schaltet keine separat kostenpflichtigen Funktionen frei. Sind alle Einträge verfügbar, ist keine Teilmenge nötig.</value>
+    <value>Bei einer begrenzten Anzahl wählst du die Konten für neue Geldbuchungen, die Pläne für neue geplante Vorgänge und die Sparziele für neue Zielaktivitäten. Das Speichern archiviert, beendet, pausiert oder löscht nichts. Verlauf und Korrekturen bleiben zugänglich. Pausierte Pläne und Ziele zählen, bleiben aber pausiert. Eine Auswahl schaltet keine gesondert kostenpflichtigen Funktionen frei. Sind bereits alle Einträge verfügbar, ist keine Auswahl nötig.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Wenn dein Kontingent drei Konten umfasst und du vier hast, wähle beliebige drei und speichere. Das vierte behält seinen Saldo und Verlauf, ist aber nicht für neue Geldvorgänge ausgewählt.</value>
+    <value>Wenn ein Ziel verfügbar sein darf und du zwei hast, wähle eines und speichere. Beide behalten Fortschritt und Verlauf. Ein ausgewähltes pausiertes Ziel bleibt pausiert; die Auswahl eines erweiterten Ziels schaltet dessen kostenpflichtige Werkzeuge nicht frei.</value>
   </data>
 </root>

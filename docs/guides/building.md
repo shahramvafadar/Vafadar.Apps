@@ -492,3 +492,10 @@ compare all 25 complete application-profile tables. Both support existing langua
 arguments. Preserve/restore development databases/sidecars before the canonical fictitious walk-through; hidden
 own-root rendering and native UI Automation remain mandatory. Debug restores the original ui.theme preference too.
 No OS setting, fake release tier, device security or desktop input change. [Evidence](../../src/Apps/Zanance/docs/quality/active-item-chooser.md).
+
+## Goal choice review (D-144)
+
+The existing active-items Debug route now checks three real choice groups, original goal measurement/state and
+one-goal capacity. active-items-entry includes the normal registered Goals choice plus actual updated Help/Back.
+Keep the same independent fixture/page-only bounded input, hidden own AppWindow, native Invoke/glyph/target checks
+and exact original data/display restoration. [Current matrix/APK evidence](../../src/Apps/Zanance/docs/quality/goal-chooser.md).

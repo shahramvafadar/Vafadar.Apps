@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Clear savings-goal availability (2026-10-11, D-144)
+
+- Review savings goals alongside accounts and plans from Settings.
+- Keep goal measurement and original state clear; completed goals remain historical and paused goals stay paused.
+- Prepare explicit choices without changing goal progress, earmarks or transactions; retain drafts after errors.
+- Current test builds remain unrestricted. Choosing a goal does not unlock paid tools.
+
+
 ### Improved - Retained savings goals (2026-10-11, D-143)
 
 - Prepare durable goal choices for future approved activation without deleting saved goals or history.

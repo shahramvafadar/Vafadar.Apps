@@ -535,3 +535,13 @@ exact owned-file restoration are verified on the owned emulator. No visible layo
 verified. [Evidence](../../quality/goal-resource-choices.md).
 
 Continue goal chooser/effective contribution/reminder bindings under D-69; keep activation and external gates separate.
+
+## D-144 continuous-delivery result
+
+18 new AT-146 actual application cases; normal parallel main 2,448 / App.Tests 425 pass (71.008 s), no failures/skips.
+Strict Windows/Android zero warnings/errors. Actual form and registered Settings/Help/Goals/Back each pass the
+18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
+Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
+[Evidence](../../quality/goal-chooser.md).
+
+Continue effective goal/contribution/reminder bindings under D-69; keep commercial activation and external gates separate.

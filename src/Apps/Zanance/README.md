@@ -149,7 +149,7 @@ Independent saved-filter results after report navigation: [runtime evidence](doc
 
 Complete growing transaction category choices: [runtime evidence](docs/quality/entry-category-captions.md).
 
-Current local quality baseline (D-143): normal parallel main suite 2,430 / App.Tests 407 pass; strict Windows/Android builds have zero warnings/errors. Settings opens the reviewed account/Plan chooser, while test builds remain unrestricted. Actual native matrix and complete signed APK: [evidence](docs/quality/active-item-chooser.md). Other resource bindings and owner/provider/device/iOS/release gates remain open.
+Current local quality baseline (D-144): normal parallel main suite 2,448 / App.Tests 425 pass; strict Windows/Android builds have zero warnings/errors. Settings opens the reviewed account/Plan/goal chooser, while test builds remain unrestricted. Actual native matrix and complete signed APK: [evidence](docs/quality/goal-chooser.md). Other resource bindings and owner/provider/device/iOS/release gates remain open.
 
 ## Durable local resource choices (D-141)
 
@@ -178,11 +178,21 @@ Unselected paused goals cannot resume. Retained notes/state corrections, negativ
 remain available. Positive earmarks independently require AdvancedGoals and usable goal/account choices; no ledger
 or balance is written. Full editor/contribution failures roll back goal, pins, plan and choice together.
 
-Current release registration remains inactive and unrestricted. Settings still exposes Accounts/Plans. Goal
-chooser UI, effective goal/contribution projection and native reminder delivery follow in subsequent ENT-02/03
-slices. Other selected resources, activation and owner/provider/device/iOS/publication gates remain open.
+Current release registration remains inactive and unrestricted. D-144 adds the reviewed goal chooser to Settings;
+effective goal/contribution projection and native reminder delivery follow in subsequent ENT-02/03 slices. Other
+selected resources, activation and owner/provider/device/iOS/publication gates remain open.
 
 31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
 Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
 exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
 verified. [Evidence](docs/quality/goal-resource-choices.md).
+
+## Reviewed goal availability (D-144)
+
+18 new AT-146 actual application cases; normal parallel main 2,448 / App.Tests 425 pass (71.008 s), no failures/skips.
+Strict Windows/Android zero warnings/errors. Actual form and registered Settings/Help/Goals/Back each pass the
+18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
+Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
+[Evidence](docs/quality/goal-chooser.md).
+
+Goal selection preserves original state/history and does not grant paid tools. Effective delivery bindings follow next.

@@ -5759,7 +5759,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Riapri</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Conti e piani disponibili</value>
+    <value>Conti, piani e obiettivi disponibili</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
     <value>Controlla gli elementi disponibili per nuove operazioni. La cronologia resta visibile e modificabile.</value>
@@ -5798,7 +5798,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Non devi scegliere un sottoinsieme. Tutti gli elementi idonei restano disponibili; quelli in pausa e storici mantengono il proprio stato.</value>
   </data>
   <data name="ActiveItems_ChooseHint" xml:space="preserve">
-    <value>Tocca gli elementi per cambiare la selezione, poi salva. Anche i piani in pausa contano; selezionarli non li riprende e non attiva strumenti a pagamento.</value>
+    <value>Tocca gli elementi per cambiare la scelta, poi salva. Anche i piani e gli obiettivi in pausa vengono conteggiati. La scelta non li riattiva e non abilita strumenti a pagamento.</value>
   </data>
   <data name="ActiveItems_Limit" xml:space="preserve">
     <value>Scegli al massimo {0} elementi. Deseleziona un elemento prima di salvare.</value>
@@ -5825,7 +5825,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>La selezione è stata salvata, ma non è stato possibile chiudere questa pagina. Torna indietro o ricarica prima di una nuova selezione.</value>
   </data>
   <data name="ActiveItems_DiscardMessage" xml:space="preserve">
-    <value>Vuoi scartare la selezione non salvata? Si ripristina solo questa bozza; nessun conto, piano o movimento viene eliminato.</value>
+    <value>Scartare le scelte non salvate? Verrà reimpostata solo questa bozza; nessun conto, piano, obiettivo o movimento verrà eliminato.</value>
   </data>
   <data name="ActiveItems_Discard" xml:space="preserve">
     <value>Scarta la selezione</value>
@@ -5834,9 +5834,9 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Elementi disponibili e cronologia</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Se il tuo limite è ristretto, scegli i conti per nuovi movimenti di denaro e i piani per nuove operazioni previste. Salvare una selezione non archivia, termina, mette in pausa o elimina nulla. La cronologia e le correzioni restano disponibili. I piani in pausa contano, ma restano in pausa. La selezione non sblocca funzioni a pagamento separate. Se tutto è disponibile, non devi scegliere un sottoinsieme.</value>
+    <value>Se la disponibilità è limitata, scegli i conti per i nuovi movimenti, i piani per le nuove attività pianificate e gli obiettivi di risparmio per le nuove attività dell’obiettivo. Salvare la scelta non archivia, termina, mette in pausa o elimina nulla. Lo storico e le correzioni restano disponibili. I piani e gli obiettivi in pausa vengono conteggiati, ma restano in pausa. La scelta non abilita funzioni a pagamento separate. Se tutti gli elementi sono già disponibili, non serve scegliere un sottoinsieme.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Se il tuo limite è di tre conti e ne hai quattro, scegli tre conti e salva. Il quarto mantiene il saldo e la cronologia, ma non è selezionato per nuovi movimenti di denaro.</value>
+    <value>Se puoi avere un obiettivo disponibile e ne hai due, scegline uno e salva. Entrambi conservano i progressi e lo storico. Un obiettivo selezionato in pausa resta in pausa; scegliere un obiettivo avanzato non abilita i suoi strumenti a pagamento.</value>
   </data>
 </root>
