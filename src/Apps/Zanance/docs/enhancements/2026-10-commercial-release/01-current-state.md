@@ -166,3 +166,9 @@ permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 a
 D-137 completes exact-file pool retirement for profiles/restore and 39 fixture cleanup sites. Normal parallel full suite 2,210 passes without the D-136 output workaround; App.Tests 348. Native Release profile/restore/deletion and complete signed APK verified. Continue ready ENT-02/03 resource/automation bindings; choice UI/persistence, activation and external gates stay open. [Evidence](../../quality/local-sqlite-pools.md).
 
 D-138 continues ENT-02/03 with fresh automatic payment eligibility/values and explicit cached plan choice under the actual ledger writer. 31 new cases; normal parallel main 2,241 / App.Tests 348 pass. Strict builds, six normal Release native flows and complete signed APK verified. Enforcement remains inactive; generation/reminders, choice persistence/UI and other selected bindings/external gates remain open. [Evidence](../../quality/automatic-occurrence-writer.md).
+
+D-139 continues ENT-02/03 with selected future occurrences in Home/Plans/detail and actual generic/full/partial
+payment writers; history/overdue rights and original calculation inputs remain complete. 41 new cases; normal
+parallel main 2,282 / App.Tests 348 pass. Strict builds, six normal Release native flows with all 24 complete rows
+unchanged/restored and the complete signed APK are verified. Registration remains inactive. Actual reminder/snooze
+delivery, choice persistence/UI, other bindings and external gates remain open. [Evidence](../../quality/selected-plan-occurrences.md).

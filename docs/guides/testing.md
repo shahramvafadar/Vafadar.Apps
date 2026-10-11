@@ -168,3 +168,13 @@ negative evidence; output-only serialization was removed. Clean Vafadar.Tests.sl
 ## Automatic candidates and actual writers (D-138 / AT-140)
 
 AutomaticOccurrenceWriteTests delays the fifth actual context after repair/accounts/plans/states, before the money writer. Independent real providers commit manual partial/full money, overrides, stopped plans and account changes. Compare all 24 complete tables; SQL failure and retirement after actual insert must roll back money/state and publish no Changed. Test stale file/scope, missing membership, Free/Plus/Pro/host and immutable choices. Main 2,241 pass with normal parallel execution; clean the test filter afterwards. Native review selects the exact fictitious QA03 profile through UI before inspecting its database, then restores the original Main profile, display and exact owned sample bytes. No device settings or secure-flag removal. [Evidence](../../src/Apps/Zanance/docs/quality/automatic-occurrence-writer.md).
+
+## Actual selected plan work (D-139 / AT-141)
+
+PlanWorkPolicyTests exercise original paused slots, explicit/stale/oversized choices, paid recurrence, shared
+membership/host and real dated continuation families without changing complete calculations/history. Actual SQLite
+PlanWorkSnapshotTests compare all 24 complete tables for reads, rejected generic/full/partial payments and retained
+overdue rights; retired read facts never publish. Run the canonical normal parallel suite, then clean the test
+filter. Direct xUnit DLL filters use -class/-method, not MTP --filter-class. Native review uses the exact owned QA03
+profile selected through UI in the normal signed Release; inactive registration remains unrestricted. No native
+enabled-commercial, Windows-rendering, physical-device or publication claim. [Evidence](../../src/Apps/Zanance/docs/quality/selected-plan-occurrences.md).

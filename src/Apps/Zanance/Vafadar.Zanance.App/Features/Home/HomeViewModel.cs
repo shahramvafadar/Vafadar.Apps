@@ -308,8 +308,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var categories = new CategoryLookup(categoryList, _translator);
 
         // Plans are read once for the due items, the forecast and getting started.
-        var schedules = await _plans.GetSchedulesAsync();
-        var states = await _plans.GetStatesAsync();
+        var planSnapshot = await _plans.GetWorkSnapshotAsync();
+        var schedules = planSnapshot.Schedules;
+        var states = planSnapshot.States;
 
         HasAccounts = accounts.Count > 0;
 
@@ -378,7 +379,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
-        LoadPlans(byId, categories, schedules, states, today);
+        LoadPlans(byId, categories, schedules, states, today, planSnapshot.Work);
         await LoadGettingStartedAsync(entries.Count, schedules.Count);
         LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
@@ -577,12 +578,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand]
     private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);
 
-    private void LoadPlans(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states, DateOnly today)
+    private void LoadPlans(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
+        DateOnly today, Core.Commerce.PlanWorkPolicy work)
     {
         var schedules = PlanActions.InForce(allSchedules);
         var text = new PlanText(_translator, _dates, _localization);
 
-        var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start)).ToList();
+        var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
+            .Where(o => work.AllowsOccurrence(o, today)).ToList();
         DueCount = due.Count;
         DueText = DueCount > 0 ? _translator.Format("Home_Due", DueCount) : null;
         var dueLook = due.Any(o => o.Status == OccurrenceView.Overdue) ? PlanLook.Danger : PlanLook.Future;
@@ -598,7 +601,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         Upcoming.Clear();
         foreach (var occurrence in schedules
                      .SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(14), today))
-                     .Where(o => o.IsOpen)
+                     .Where(o => o.IsOpen && work.AllowsOccurrence(o, today))
                      .OrderBy(o => o.DueDate)
                      .Take(3))
         {

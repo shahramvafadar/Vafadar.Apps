@@ -1195,6 +1195,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         var newWork = new List<Guid>();
+        var planPayments = new List<LedgerEntry>();
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var closing = await RetainedDebtClosingAsync(db, entries, deleteIds, existing, accounts, categories,
             stored, holdingGroups, today, cancellationToken);
@@ -1202,6 +1203,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             && !retainedCorrections.Contains(e.Id) && e.Kind is not (EntryKind.Adjustment or EntryKind.Refund or EntryKind.IncomeReversal)))
         {
             if (await IsRetainedOverduePaymentAsync(db, entry, today, cancellationToken)) continue;
+            if (entry.ScheduleId is not null) planPayments.Add(entry);
             var requested = entry.Kind == EntryKind.Transfer && entry.ToAccountId is { } destination
                 ? new[] { entry.AccountId, destination } : new[] { entry.AccountId };
             newWork.AddRange(requested.Where(id => !closing.TryGetValue(entry.Id, out var allowed) || !allowed.Contains(id)));
@@ -1209,6 +1211,23 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         if (newWork.Count > 0)
             write.DemandSelectedAccounts(CommercialFeature.Transactions, accounts,
                 newWork);
+        // Preserve existing account rejection feedback before validating additional new-plan work.
+        if (planPayments.Count > 0)
+        {
+            var workPlans = await db.Schedules.AsNoTracking().ToListAsync(cancellationToken);
+            foreach (var entry in planPayments)
+            {
+                var scheduleId = entry.ScheduleId!.Value;
+                // D-139: native forms and generic entry writers use the same actual new-occurrence boundary.
+                // Retained reviewed past payments keep their correction rights above; caller markers grant nothing.
+                var plan = workPlans.FirstOrDefault(item => item.Id == scheduleId);
+                if (entry.OccurrenceDate is not { } original || plan is null || !plan.Owns(original)
+                    || !Recurrence.Between(plan.Rule, original, original).Any() || entry.Kind != plan.Kind
+                    || entry.AccountId != plan.AccountId || (entry.Kind == EntryKind.Transfer && entry.ToAccountId != plan.ToAccountId))
+                    throw new InvalidOperationException("The payment does not match its actual plan occurrence.");
+                write.DemandPlanOccurrence(workPlans, scheduleId);
+            }
+        }
     }
 
     /// <summary>Checks original rules, state and paid rows rather than trusting a draft's schedule markers.</summary>

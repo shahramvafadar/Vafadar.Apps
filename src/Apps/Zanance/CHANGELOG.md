@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Selected future planned payments (2026-10-11, D-139)
+
+- Prepare future Plan work for explicit downgrade choices while preserving every plan, past payment and calculation.
+- Recheck new planned payments in the ledger writer, including full and partial payments from other entry paths.
+- Keep language updates working after profile switching by retiring old navigation title bindings.
+- Test builds continue without commercial limits. Selection screens and reminder delivery are still in progress.
+
 ### Fixed - Current automatic planned payments (2026-10-11, D-138)
 
 - Avoid another full automatic payment after a manual partial payment or an independently completed settlement.

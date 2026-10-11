@@ -81,7 +81,7 @@ public partial class App : Application
     {
         if (Windows.FirstOrDefault() is { } window)
         {
-            window.Page = CreateShell();
+            ReplaceRoot(window, CreateShell());
             OfferNotificationsSoon();
             if (_pendingLink is { } link)
             {
@@ -131,7 +131,7 @@ public partial class App : Application
     {
         if (Windows.FirstOrDefault() is { } window)
         {
-            window.Page = _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+            ReplaceRoot(window, _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>()));
         }
     }
 
@@ -392,9 +392,7 @@ public partial class App : Application
         // come back empty and save a copy).
         var tab = TabRoute(shell);
         var replacement = CreateShell();
-        shell.RetireNavigationBindings();
-        shell.Navigated -= OnShellNavigated;
-        window.Page = replacement;
+        ReplaceRoot(window, replacement);
         if (tab is not null && Shell.Current is { } current)
         {
             try
@@ -406,6 +404,19 @@ public partial class App : Application
                 // The route no longer resolves; staying on the first tab is fine.
             }
         }
+    }
+
+    /// <summary>Retires the old native navigation graph before replacing an already published root.</summary>
+    private void ReplaceRoot(Window window, Page replacement)
+    {
+        // D-82/D-139: profile/onboarding replacement also disconnects Android Shell renderers. Retained title
+        // bindings must not abort later translation notifications by accessing a missing native MauiContext.
+        if (window.Page is AppShell retired)
+        {
+            retired.RetireNavigationBindings();
+            retired.Navigated -= OnShellNavigated;
+        }
+        window.Page = replacement;
     }
 
     private static string? TabRoute(Shell shell)

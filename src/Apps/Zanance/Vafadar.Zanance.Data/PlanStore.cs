@@ -23,6 +23,22 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         return await db.Schedules.AsNoTracking().OrderBy(s => s.State).ThenBy(s => s.Name).ToListAsync(cancellationToken);
     }
 
+    /// <summary>Reads original plan/state data and exact-file cached rights without mutating financial or selection rows.</summary>
+    public async Task<PlanWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var access = new CommercialFileAccess(commercialAccess, db.Database.GetDbConnection().DataSource);
+        access.DemandFeature(CommercialFeature.History);
+        var schedules = await db.Schedules.AsNoTracking().OrderBy(s => s.State).ThenBy(s => s.Name).ToListAsync(cancellationToken);
+        var states = await db.OccurrenceStates.AsNoTracking().ToListAsync(cancellationToken);
+        var context = access.Context;
+        var work = context is null ? PlanWorkPolicy.Inactive : PlanWorkPolicy.Resolve(context,
+            new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace,
+                context.Scope.Id), schedules, access.PlanSelection);
+        access.EnsureCurrent();
+        return new(schedules, states, work);
+    }
+
     /// <summary>Returns one plan.</summary>
     public async Task<Schedule?> GetScheduleAsync(Guid id, CancellationToken cancellationToken = default)
     {

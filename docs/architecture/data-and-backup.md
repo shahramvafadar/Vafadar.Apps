@@ -412,3 +412,17 @@ snapshot handling and online backup remain unchanged. No schema or portable secu
 ## Actual automatic occurrence writes (D-138)
 
 PlanStore.TryPostAutomaticallyAsync uses ZananceStore.PostAutomaticOccurrenceAsync under CommercialWriteTransaction, rebuilding actual stored rule/state/accounts before SaveEntriesUnderWriterAsync. Actual linked partial/full entries override discovery assumptions; no new writer or post-commit state write. Posted/NeedsReview/NoLongerDue distinguish committed money, retained review and retired candidates. Enabled snapshots demand exact membership, selected original plan and AdvancedPlans; original states consume slots and choice never grants a capability. PlanSelection is immutable exact-scope cached input, never portable or persistent here. Current registration stays inactive. Generation/reminders, other selected bindings and selection persistence/UI remain unfinished. No model/migration change.
+
+## Selected future plan work (D-139)
+
+PlanStore.GetWorkSnapshotAsync captures the actual SQLite file's cached access, demands retained History, reads
+complete original schedules/states and checks retirement before publishing PlanWorkSnapshot. PlanWorkPolicy owns
+only private identity sets; it never changes financial objects or filters calculation inputs. Dated ended slices
+follow only unique non-overlapping continuations. A selected resource grants no feature/membership/host right.
+New generic/full/partial occurrence money checks original markers and selected/advanced plan work under the same
+writer as account checks and ledger validation. Effective past-due reviewed payments keep D-131 rights. No schema,
+compiled-model, portable preference, SDK, permission or commercial activation change. Actual reminder/snooze delivery
+and choice persistence/UI remain open. [Evidence](../../src/Apps/Zanance/docs/quality/selected-plan-occurrences.md).
+
+D-139 also applies D-82 navigation retirement to profile/onboarding root replacement, before old native handlers
+are detached. Keep current forms, deferred display rebuilds and the startup lock cover unchanged.

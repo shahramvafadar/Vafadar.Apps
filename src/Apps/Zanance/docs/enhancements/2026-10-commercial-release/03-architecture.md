@@ -313,3 +313,12 @@ complete batches remain no-ops. No activation/schema/SDK/permission change. [Evi
 ## 20. Actual automatic plan money (D-138)
 
 Cached discovery supplies only plan/date identity. Rebuild actual rule/state/accounts and linked partial/full money under the same SQLite ledger writer, then check exact cached membership, selected original plan and AdvancedPlans before recording unreviewed money. PlanSelection is immutable exact-scope input; inactive registration does not query quota lists. No paid facts or choices enter portable preferences; no choice persistence/UI is activated. Generation/reminders and other bindings remain open. [Evidence](../../quality/automatic-occurrence-writer.md).
+
+## 21. Original calculations and selected future work (D-139)
+
+Publish original schedules/states plus a separate immutable scoped identity projection. Only actionable Home/Plans
+future occurrences use it; forecasts, budgets and KPIs retain complete input. Real dated ended slices inherit only
+one non-overlapping selected continuation. New generic/full/partial money validates actual occurrence markers and
+plan selection under the same writer; original account feedback and retained past payments remain. No activation,
+persistence/UI, schema or portable paid data. Reminder eligibility projection is Core only; actual reminder/snooze
+delivery remains open. [Evidence](../../quality/selected-plan-occurrences.md).

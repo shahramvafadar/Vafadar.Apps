@@ -1375,3 +1375,28 @@ prevents it. One expanded test initially expected a result instead of the existi
 the corrected test retains the rejection. No Windows native, physical-phone, iOS, provider, performance or release
 acceptance claim. Other resource bindings, generation/reminders, choice UI/persistence and external gates remain open.
 [Evidence](quality/automatic-occurrence-writer.md).
+
+## D-139 - Selected future plan occurrences (2026-10-11)
+
+Project actionable future occurrences through exact-file scoped plan choices while keeping complete original
+schedules/states for history and every forecast/budget/KPI calculation. Preserve open effective past-due payments;
+today/future new money checks actual rule/slice/kind/accounts and selected/paid recurrence rights inside the same
+ledger writer. Dated ended slices inherit only their actual unique non-overlapping continuation. No invented choices
+or stored pause/end changes. Preserve account rejection feedback. Registration remains inactive; no layout or new resource key,
+schema, backup, permission or SDK change. Core reminder eligibility is available; actual reminder/snooze delivery,
+choice persistence/UI, remaining selected bindings and external acceptance gates remain open.
+
+Profile/onboarding root replacement also reuses D-82 navigation retirement before detaching old Shell handlers;
+initial native hot/cold language failures are negative evidence. Final Main/QA03 switching and hot language changes
+are checked in the normal signed Release, without a locale override.
+
+41 added AT-141 cases (19 Core / 22 real SQLite); normal parallel main suite 2,282 / App.Tests 348 pass, no failures
+or skips (59.741 s). Strict Windows and Android builds: zero warnings/errors. Complete signed Release APK verified.
+Six actual normal Release emulator flows cover en/fa/de and light/dark: Home due count 11, six plans in Due/Upcoming/All
+and detail future dates/settled history. Current inactive build remains unrestricted above Free's five-plan allowance.
+No financial Save during review; all 24 complete prepared tables match. Exact original sample files/sidecars and
+English/System plus the original Main profile are restored. Physical-phone, iOS, Windows native, provider,
+performance and publication acceptance remain open. Old generic full/partial entry bypass reproduces two failures.
+Initial invalid enum/runner attempts and six account-feedback ordering failures remain negative evidence; final
+implementation retains established rejection order and the complete canonical suite passes.
+[Evidence](quality/selected-plan-occurrences.md).

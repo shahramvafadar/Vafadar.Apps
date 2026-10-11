@@ -75,6 +75,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
     private readonly ReminderService _reminders;
     private List<Schedule> _schedules = [];
     private List<OccurrenceState> _states = [];
+    private Core.Commerce.PlanWorkPolicy _work = Core.Commerce.PlanWorkPolicy.Inactive;
     private Dictionary<Guid, Account> _accounts = [];
     private CategoryLookup? _categories;
 
@@ -121,8 +122,10 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
 
     public async Task LoadAsync()
     {
-        _schedules = await _plans.GetSchedulesAsync();
-        _states = await _plans.GetStatesAsync();
+        var snapshot = await _plans.GetWorkSnapshotAsync();
+        _schedules = snapshot.Schedules;
+        _states = snapshot.States;
+        _work = snapshot.Work;
         _accounts = (await _store.GetAccountsAsync()).ToDictionary(a => a.Id);
         _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
         UnreviewedCount = await _store.CountUnreviewedAsync();
@@ -153,6 +156,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             case 0:
                 foreach (var occurrence in PlanActions.InForce(_schedules)
                              .SelectMany(s => Occurrences.OpenUpTo(s, _states, today, s.ActiveFrom ?? s.Rule.Start))
+                             .Where(o => _work.AllowsOccurrence(o, today))
                              .OrderBy(o => o.DueDate))
                 {
                     rows.Add(OccurrenceRow(occurrence, text, today));
@@ -164,7 +168,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             case 1:
                 foreach (var occurrence in PlanActions.InForce(_schedules)
                              .SelectMany(s => Occurrences.Between(s, _states, today.AddDays(1), today.AddDays(UpcomingDays), today))
-                             .Where(o => o.IsOpen)
+                             .Where(o => o.IsOpen && _work.AllowsOccurrence(o, today))
                              .OrderBy(o => o.DueDate))
                 {
                     rows.Add(OccurrenceRow(occurrence, text, today));
@@ -221,6 +225,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
     {
         var (icon, color) = Look(schedule);
         var next = schedule.State == ScheduleState.Active ? Occurrences.NextOpen(schedule, _states, today, today) : null;
+        if (next is not null && !_work.AllowsOccurrence(next, today)) next = null;
         var subtitle = text.Rule(schedule.Rule);
         if (next is not null)
         {

@@ -807,3 +807,14 @@ Profile switching, inactive deletion and first-run restore retain the existing a
 ## Current automatic payment values (D-138)
 
 Automatic posting rechecks the actual plan and occurrence at Save, without asking for a second confirmation or creating a new form. Partial manual money and suppressed/blocked candidates remain for explicit review; settled or no-longer-due candidates are not reported as pending payments. Current overrides and accounts supply the recorded money/date. Existing layout and inactive commercial registration remain. [Evidence](quality/automatic-occurrence-writer.md).
+
+## Selected future plan occurrences (D-139)
+
+Home action counts/rows, Plans Due/Upcoming and detail Upcoming use the actual scoped future-work projection.
+The All list retains every original plan identity; completed/skipped history and open effective past-due payments
+remain accessible. Forecast, budget and KPI calculations keep complete original schedules/states. No automatic
+choice, hidden pause/end mutation or current test-build restriction. Choice UI/read-only feedback and actual
+reminder/snooze delivery remain separate unfinished ENT-03 work. [Evidence](quality/selected-plan-occurrences.md).
+
+D-139 also applies D-82 navigation retirement to profile/onboarding root replacement, before old native handlers
+are detached. Keep current forms, deferred display rebuilds and the startup lock cover unchanged.

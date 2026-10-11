@@ -113,6 +113,25 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
             throw new CommercialWriteRejectedException(feature, QuotaKind.RecurringPlans, requestedId, availability.RequiresSelection);
     }
 
+    /// <summary>Checks new occurrence work, resolving original slices through their actual unique selected continuation.</summary>
+    public void DemandPlanOccurrence(IReadOnlyList<Schedule> plans, Guid requestedId)
+    {
+        DemandFeature(CommercialFeature.BasicPlans);
+        if (!Enforced) return;
+        var plan = plans.FirstOrDefault(item => item.Id == requestedId)
+            ?? throw new InvalidOperationException("The plan no longer exists; review the payment again.");
+        if (PlanWorkPolicy.RequiresAdvancedRule(plan)) DemandFeature(CommercialFeature.AdvancedPlans);
+        var scope = FinancialScope;
+        var work = PlanWorkPolicy.Resolve(_access.Context!, scope, plans, _access.PlanSelection);
+        if (!work.CanGenerate(requestedId))
+        {
+            var availability = ResourceSelectionPolicy.Resolve(QuotaKind.RecurringPlans, scope, _access.Context!,
+                plans.Select(item => QuotaItem.From(scope, item)), _access.PlanSelection);
+            throw new CommercialWriteRejectedException(CommercialFeature.BasicPlans, QuotaKind.RecurringPlans,
+                requestedId, availability.RequiresSelection);
+        }
+    }
+
     /// <summary>Rejects a changed entitlement/scope snapshot before saving rather than using retired profile rights.</summary>
     public void EnsureCurrent()
     {

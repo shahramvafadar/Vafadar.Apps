@@ -784,7 +784,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Never steal another occurrence's payment. Entry markers and state commit together without posting another entry
   or changing financial metadata. Preserve normal idempotent links and actual paid totals.
 * Current registration stays inactive. D-134 completes the new/full/partial settlement writer boundary.
-  D-135 completes reviewed reopening; D-138 completes automatic posting. Selected-plan generation/reminders remain unfinished. No full enforcement claim.
+  D-135 completes reviewed reopening; D-138 completes automatic posting. D-139 completes selected future occurrences; actual reminder delivery remains unfinished. No full enforcement claim.
 
 ## 67. Atomic new occurrence payments (D-134)
 
@@ -793,7 +793,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Classify partial/final payment from actual linked partial money and Core effective amount/date rules, preserving
   explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
   all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
-* Current registration remains inactive. D-135 completes generated-entry reopening. Selected-plan generation/reminders,
+* Current registration remains inactive. D-135 completes generated-entry reopening. D-139 completes selected future occurrences; reminder delivery and
   choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 68. Reopening the exact reviewed settlement (D-135)
@@ -805,8 +805,8 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   refund links, receipt ownership and file-bound Undo journal. It already reopens states; no second post-commit write.
   Keep actual manual/imported money and metadata, releasing only its checked link atomically with the opened state.
 * SQL/access failure rolls back all complete rows before notifications. Earlier partial payments and occurrence
-  overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; selected-plan
-  generation/reminders and choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
+  overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; D-139 completes selected future occurrences; actual reminder delivery
+  and choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 69. Occurrence action failure and publication feedback (D-136)
 
@@ -833,3 +833,17 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Discovery never authorizes money or supplies final values. Recheck stored rule/slice, active state, current due/amount, accounts and actual partial/full money under the ledger writer. Partial manual money, suppression and blocked rights require review; settled/removed/paused/future candidates post nothing.
 * Keep original transfer/unreviewed semantics, atomic state/money, rollback and Changed after commit. Enabled cached facts require exact membership, explicit selected plan and AdvancedPlans; choices never grant rights. Test registration stays inactive. Generation/reminders, choice UI/persistence and other bindings remain open.
 * Native fixtures must select their exact independently owned profile through real UI before claiming its financial results. Preserve failed setup evidence, restore original active profile and exact owned data/display state.
+
+## 72. Selected future plan work and retained calculations (D-139)
+
+* Project only new actionable occurrences through exact-file cached plan choices. Keep original schedules/states
+  for history, forecasts, budgets and KPIs; never invent choices, end/pause plans or erase money after downgrade.
+* A dated ended slice can use only its unique non-overlapping selected continuation; ambiguous branches/cycles
+  grant nothing. Paid recurrence needs its own feature; paused plans still consume slots. Effective past due dates
+  retain explicit payment rights. Today's/future payments require actual plan work rights under the ledger writer.
+* Generic new payment markers obey the same stored rule/slice/kind/accounts check as plan actions. Preserve existing
+  account rejection feedback before additional plan checks. Registration stays inactive; choice persistence/UI,
+  actual reminder/snooze delivery and other selected bindings remain open. Core reminder projection is not delivery.
+
+D-139 also applies D-82 navigation retirement to profile/onboarding root replacement, before old native handlers
+are detached. Keep current forms, deferred display rebuilds and the startup lock cover unchanged.

@@ -278,3 +278,7 @@ and receipt bytes/ownership; no commercial facts are stored in backups. Current 
 D-136 reuses existing local draft fields, writers and translated native dialogs. No schema, portable preference, credential, permission, SDK or network addition. User-facing errors contain no raw exception details. Commercial registration remains inactive.
 
 D-138 adds immutable exact-scope cached plan choices in memory only and reuses existing plan/occurrence/ledger fields. No schema, portable preference, credential, SDK, network or permission addition. No paid fact or selection is exported; current commercial registration stays inactive.
+
+D-139 projects original plan/state data through private in-memory selected-work identities. No new stored data,
+portable preference, credential, SDK, network or permission. Forecasts/history retain complete original input;
+rejected new occurrence writes preserve complete rows. Commercial registration remains inactive.

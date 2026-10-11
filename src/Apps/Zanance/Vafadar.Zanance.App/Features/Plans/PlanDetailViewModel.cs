@@ -78,7 +78,8 @@ public sealed partial class PlanDetailViewModel(
 
     public async Task LoadAsync()
     {
-        _schedule = await plans.GetScheduleAsync(_id);
+        var snapshot = await plans.GetWorkSnapshotAsync();
+        _schedule = snapshot.Schedules.FirstOrDefault(plan => plan.Id == _id);
         NotFound = _schedule is null;
         if (_schedule is null)
         {
@@ -88,7 +89,7 @@ public sealed partial class PlanDetailViewModel(
         var schedule = _schedule;
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
-        var states = await plans.GetStatesAsync(schedule.Id);
+        var states = snapshot.States;
         var text = new PlanText(translator, dates, localization);
         var currency = accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : "EUR";
         var today = Today;
@@ -156,7 +157,8 @@ public sealed partial class PlanDetailViewModel(
         Upcoming.Clear();
         if (schedule.State == ScheduleState.Active)
         {
-            foreach (var occurrence in Occurrences.Between(schedule, states, today.AddDays(-400), today.AddYears(2), today).Where(o => o.IsOpen).Take(6))
+            foreach (var occurrence in Occurrences.Between(schedule, states, today.AddDays(-400), today.AddYears(2), today)
+                         .Where(o => o.IsOpen && snapshot.Work.AllowsOccurrence(o, today)).Take(6))
             {
                 Upcoming.Add(Row(occurrence, text, currency));
             }

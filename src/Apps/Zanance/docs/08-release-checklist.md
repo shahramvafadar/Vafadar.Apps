@@ -348,3 +348,9 @@ D-136 completes exception feedback and shared consent/writer/publication gates f
 D-137 closes the D-136 global SQLite cleanup follow-up: nine actual session/service cases; normal parallel full suite 2,210 passes, App.Tests 348. Strict Windows/Android, complete signed APK and normal Release native profile/restore/deletion verified. No commercial activation or external acceptance. [Evidence](quality/local-sqlite-pools.md).
 
 D-138 continues ENT-02/03 with fresh automatic payment eligibility/values and explicit cached plan choice under the actual ledger writer. 31 new cases; normal parallel main 2,241 / App.Tests 348 pass. Strict builds, six normal Release native flows and complete signed APK verified. Enforcement remains inactive; generation/reminders, choice persistence/UI and other selected bindings/external gates remain open. [Evidence](quality/automatic-occurrence-writer.md).
+
+D-139 continues ENT-02/03 with selected future occurrences in Home/Plans/detail and actual generic/full/partial
+payment writers; history/overdue rights and original calculation inputs remain complete. 41 new cases; normal
+parallel main 2,282 / App.Tests 348 pass. Strict builds, six normal Release native flows with all 24 complete rows
+unchanged/restored and the complete signed APK are verified. Registration remains inactive. Actual reminder/snooze
+delivery, choice persistence/UI, other bindings and external gates remain open. [Evidence](quality/selected-plan-occurrences.md).
