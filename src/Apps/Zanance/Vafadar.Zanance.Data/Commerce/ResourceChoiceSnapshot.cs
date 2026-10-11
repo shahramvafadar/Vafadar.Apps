@@ -3,7 +3,15 @@ using Vafadar.Zanance.Core.Commerce;
 namespace Vafadar.Zanance.Data.Commerce;
 
 /// <summary>One original retained identity shown for explicit choice; financial history stays in its original stores.</summary>
-public sealed record ResourceChoiceItem(Guid Id, string Name, QuotaItemState State);
+public sealed record ResourceChoiceItem(Guid Id, string Name, QuotaItemState State)
+{
+    /// <summary>Gets the original account type, when choosing accounts.</summary>
+    public Core.Accounts.AccountType? AccountType { get; init; }
+    /// <summary>Gets the original account currency; it never changes or converts money.</summary>
+    public string? CurrencyCode { get; init; }
+    /// <summary>Gets the original planned movement kind, when choosing plans.</summary>
+    public Core.Ledger.EntryKind? EntryKind { get; init; }
+}
 
 /// <summary>Immutable reviewed choice bound to the opened file, original items, current rights and stored revision.</summary>
 public sealed class ResourceChoiceSnapshot

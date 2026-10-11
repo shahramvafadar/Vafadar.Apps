@@ -199,7 +199,7 @@ internal static partial class DebugSnapshots
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
         var settings = services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>();
-        var saved = LocalizationService.PortableKeys.ToDictionary(key => key, settings.Get);
+        var saved = LocalizationService.PortableKeys.Append("ui.theme").ToDictionary(key => key, settings.Get);
         var passwordChoice = Preferences.Default.Get("backup.usePassword", true);
         try
         {
@@ -252,7 +252,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -307,6 +307,23 @@ internal static partial class DebugSnapshots
             await vm.NextCommand.ExecuteAsync(null);
             await Task.Delay(1500);
         }
+
+#if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-items-entry")
+        {
+            foreach (var language in languages)
+            {
+                await SetLanguageAsync(app, localization, language);
+                await ReviewActiveItemsEntryAsync(app, services, folder, language);
+            }
+            return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "active-items" or "active-items-discard" or "active-items-save-feedback")
+        {
+            await ReviewActiveItemsAsync(app, services, folder, languages);
+            return;
+        }
+#endif
 
         // VAFADAR_SNAPSHOT_EMPTY=1: the first days of a new user – one account, nothing recorded yet – to check every
         // empty state (UX-05).
@@ -384,6 +401,7 @@ internal static partial class DebugSnapshots
             ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
             ("entry-fee-retention", AppShell.EntryEditorRoute, null),
             ("headers", AppShell.SettingsRoute, null),
+            ("active-items", AppRoutes.ActiveItemsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),

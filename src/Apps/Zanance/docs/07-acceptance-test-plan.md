@@ -1016,3 +1016,12 @@ D-141 final strict Windows/Android builds have zero warnings/errors. Normal inst
 migration with all 23 complete preexisting non-migration tables unchanged, an empty choice table and six original
 plans still available above Free capacity. Complete signed local-test APK/package verified; enabled chooser UI,
 physical-device, iOS, provider and publication acceptance remain open. See the D-141 quality record.
+
+## AT-144 - Reviewed account and Plan form
+
+25 actual application-flow cases with real isolated SQLite/localization: construction/covered publication and a
+pending read, inactive/unlimited availability, over-capacity draft feedback, history eligibility, explicit empty
+and nonempty Save, exact no-money row equality, stale name/currency/type/Plan-kind/rights or SQL failure, six live
+languages, accepted/rejected kind and reload discard, consent/navigation busy guard, committed navigation failure
+retirement and covered read failure/retry. Main 2,399 / App.Tests 407 pass with no failures/skips. Actual native
+form and registered Settings/Help/Back matrix plus six normal Release emulator cases: [evidence](quality/active-item-chooser.md).

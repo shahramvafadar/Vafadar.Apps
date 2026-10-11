@@ -455,3 +455,11 @@ ENT-02/03 account/Plan choice persistence and actual writer/reminder binding are
 activation. Additive schema, explicit scoped Save and retained history/correction behavior: 44 new AT-143 cases,
 main 2,374 / App.Tests 382 pass. Chooser UI, other resources/operations and owner/external gates remain open.
 [Evidence](quality/durable-resource-choices.md).
+
+## D-142 delivered account/Plan chooser
+
+The reviewed Settings account/Plan form is delivered with covered loading, explicit scoped Save, preserved draft
+feedback, separate original states and current unrestricted-build explanation. 25 new AT-144 flows; main 2,399 /
+App.Tests 407 pass. Strict builds, actual native layout/navigation and complete signed APK are recorded in
+[the quality record](quality/active-item-chooser.md). ENT-02/03 remain in progress for other resource choices,
+operations/bindings and future activation; owner/external gates remain open.

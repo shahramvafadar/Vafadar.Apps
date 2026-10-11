@@ -5769,4 +5769,85 @@
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>بازکردن دوباره</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>حساب‌ها و پلن‌های قابل استفاده</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>موارد قابل استفاده برای فعالیت‌های جدید را بررسی کنید. تاریخچه همچنان قابل مشاهده و اصلاح است.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>بایگانی‌شده</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>نوع: {0}؛ ارز: «{1}»</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>قابل استفاده در ظرفیت فعلی</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>فقط برای تاریخچه و اصلاحات</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>مورد تاریخی؛ در ظرفیت حساب نمی‌شود</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>مورد «{0}». {1}. وضعیت: {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>انتخاب‌شده: {0} از {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>موارد قابل استفاده: {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>فعالیت جدید در این پروفایل فعلاً در دسترس نیست. تاریخچه همچنان قابل مشاهده و اصلاح است.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>نیازی به انتخاب زیرمجموعه نیست. همهٔ موارد واجد شرایط در دسترس‌اند؛ موارد متوقف‌شده و تاریخی وضعیت فعلی خود را حفظ می‌کنند.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>برای تغییر انتخاب، روی موارد بزنید و سپس ذخیره کنید. پلن‌های متوقف‌شده هم در ظرفیت حساب می‌شوند؛ انتخاب پلن آن را از توقف خارج نمی‌کند و ابزارهای پولی را فعال نمی‌کند.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>حداکثر {0} مورد انتخاب کنید. پیش از ذخیره، انتخاب یک مورد را بردارید.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>هنوز موردی در این فهرست وجود ندارد.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>ذخیرهٔ این انتخاب‌ها</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ موارد قابل استفاده</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>در حال بارگذاری موارد قابل استفاده…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>این فهرست بارگذاری نشد. برای تلاش دوباره، آن را دوباره بارگذاری کنید؛ انتخابی ذخیره نشده است.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>این انتخاب‌ها ذخیره نشدند. انتخاب‌های واردشده همچنان باقی‌اند. فهرست را برای بررسی تغییرات دوباره بارگذاری کنید و سپس دوباره تلاش کنید.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>انتخاب‌ها ذخیره شدند، اما این صفحه بسته نشد. به عقب برگردید یا پیش از انتخاب دوباره، فهرست را دوباره بارگذاری کنید.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>انتخاب‌های ذخیره‌نشده کنار گذاشته شوند؟ فقط انتخاب‌های این فرم بازنشانی می‌شوند؛ هیچ حساب، پلن یا تراکنشی حذف نمی‌شود.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>کنار گذاشتن انتخاب‌ها</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>موارد قابل استفاده و تاریخچه</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>اگر ظرفیت محدود باشد، حساب‌های مورد استفاده برای ثبت پول جدید و پلن‌های فعالیت جدید را انتخاب کنید. ذخیرهٔ انتخاب، چیزی را بایگانی، تمام، متوقف یا حذف نمی‌کند. تاریخچه و اصلاحات همچنان در دسترس‌اند. پلن‌های متوقف‌شده در ظرفیت حساب می‌شوند، اما متوقف می‌مانند. انتخاب پلن، امکانات پولی جداگانه را باز نمی‌کند. اگر همهٔ موارد در دسترس باشند، نیازی به انتخاب زیرمجموعه نیست.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>مثلاً اگر ظرفیت سه حساب باشد و چهار حساب داشته باشید، هر سه حساب دلخواه را انتخاب و ذخیره کنید. حساب چهارم مانده و تاریخچهٔ خود را حفظ می‌کند، اما برای ثبت پول جدید انتخاب نشده است.</value>
+  </data>
 </root>

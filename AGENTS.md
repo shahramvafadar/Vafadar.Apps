@@ -877,4 +877,17 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   archive/end releases its own identity and a checked split transfers only its selected predecessor slot.
   Pause consumes capacity. Malformed choice blocks bounded new work, not history correction; repair is explicit.
 * Capture the stored Plan revision in native preparation and validate before/after publication; refresh on choice
-  changes. No choice Save posts money or rewrites original states/calculation input. Chooser UI remains open.
+  changes. No choice Save posts money or rewrites original states/calculation input. The reviewed UI follows section 75.
+
+## 75. Reviewed growing active-item form (D-142)
+
+* Keep original identity/details/state separate from selection. Pause counts without resuming; historical rows stay
+  visible and unselectable. Current inactive release explains unrestricted availability without a required subset.
+* Cover complete loading/failure, translate retry, preserve exact unsaved choices/index on errors and live display
+  refresh, and Save only explicitly through the actual-file reviewed writer. Retire a committed review before return.
+* One busy guard spans discard, reload/switch, write and navigation. Save/reload grow outside the scroll viewport;
+  complete row captions have one real native button/name and at least 44-pixel targets. Save failure feedback stays
+  beside the pinned action, outside the scroll viewport. Never post money here.
+* Debug review uses an independently owned artifact database and page-local fictitious Free input, never a runtime
+  entitlement replacement. Registered Settings/Help/Back review uses the unchanged inactive production registration.
+  Compare all 25 complete tables; preserve original development data/sidecars and restore display theme as well.

@@ -5738,4 +5738,85 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>Reabrir</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>Cuentas y planes disponibles</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>Revisa los elementos disponibles para nuevas operaciones. Tu historial sigue visible y puedes corregirlo.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>Archivado</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>Tipo: {0} · Moneda: {1}</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>Disponible dentro de tu límite</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>Solo historial y correcciones</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>Elemento histórico; no cuenta</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>Elemento «{0}». {1}. Estado: {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>Seleccionados: {0} de {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>Elementos disponibles: {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>Las nuevas operaciones no están disponibles actualmente en este perfil. Tu historial sigue visible y puedes corregirlo.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>No necesitas elegir un subconjunto. Todos los elementos aptos siguen disponibles; los pausados e históricos conservan su estado.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>Toca los elementos para cambiar tu selección y guárdala. Los planes pausados también cuentan; seleccionarlos no los reanuda ni activa herramientas de pago.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>Elige como máximo {0} elementos. Quita una selección antes de guardar.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>Todavía no hay elementos en esta lista.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>Guardar esta selección</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>Volver a cargar los elementos disponibles</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>Cargando los elementos disponibles…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>No se pudo cargar esta lista. Vuelve a cargarla para intentarlo de nuevo; no se ha guardado ninguna selección.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>No se pudo guardar esta selección. Tu borrador sigue aquí. Recarga la lista para revisar los cambios y vuelve a intentarlo.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>Tu selección se ha guardado, pero no se pudo cerrar esta página. Vuelve atrás o recarga antes de hacer otra selección.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>¿Descartar tu selección sin guardar? Solo se restablece este borrador; no se elimina ninguna cuenta, plan ni transacción.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>Descartar selección</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>Elementos disponibles e historial</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>Si tu límite es restringido, elige las cuentas para nuevos movimientos de dinero y los planes para nuevas operaciones previstas. Guardar una selección no archiva, termina, pausa ni elimina nada. El historial y las correcciones siguen disponibles. Los planes pausados cuentan, pero mantienen su pausa. Seleccionar un plan no desbloquea funciones de pago independientes. Si todo está disponible, no necesitas elegir un subconjunto.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>Si tu límite es de tres cuentas y tienes cuatro, elige tres y guarda. La cuarta conserva su saldo e historial, pero no queda seleccionada para nuevos movimientos de dinero.</value>
+  </data>
 </root>

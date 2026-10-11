@@ -2030,3 +2030,24 @@ D-141 final strict Windows/Android builds have zero warnings/errors. Normal inst
 migration with all 23 complete preexisting non-migration tables unchanged, an empty choice table and six original
 plans still available above Free capacity. Complete signed local-test APK/package verified; enabled chooser UI,
 physical-device, iOS, provider and publication acceptance remain open. See the D-141 quality record.
+
+### 31.55. Reviewed account and Plan chooser (D-142 / AT-144)
+
+Settings now opens a covered account/Plan availability form. One growing real target per complete original
+identity keeps type/currency or entry kind, original state and unsaved choice separate. Paused plans remain paused
+and count; archived/ended items remain visible but cannot occupy a slot. Counters and inline capacity feedback
+follow current display digits. Save and reload reserve their own growing rows outside the scroll viewport. Rejected Save feedback stays
+visible beside those actions, including when the original list is scrolled to its end.
+
+Loading/failure hides the complete form; translated retry publishes only a complete current snapshot. Explicit
+Save uses the D-141 actual-file/scoped writer and preserves the exact draft after storage, rights or stale-review
+failure. Retire a committed review before navigating, so a failed return cannot submit again. Dirty reload, kind
+switch and Back require one native discard decision with one shared busy guard. Live captions and help returns
+retain the original unsaved identities/index; no autosave, financial posting or state rewriting.
+
+Current commercial registration remains inactive: all eligible items are available, no subset or Save is required,
+and the form explains this. There is no fake paid entitlement or new test-build limit. The snapshot review's
+fictitious Free context belongs only to its separate artifact SQLite database/page; it never replaces release DI.
+The account/Plan chooser is delivered; other resource choices/bindings, activation and owner/external gates stay open.
+
+25 new actual application cases; normal parallel main 2,399 / App.Tests 407 pass, zero failures/skips (97.432 s). Strict builds, 18 form/18 registered-entry Windows combinations, six normal Release own-emulator cases and complete signed APK are recorded in [evidence](../quality/active-item-chooser.md). Physical-phone, native OS accessibility, iOS, provider, performance and publication acceptance remain open.

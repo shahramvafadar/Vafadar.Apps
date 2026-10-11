@@ -25,6 +25,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly AppLockService _lock;
     private readonly Presentation.ThemeService _theme;
     private readonly ProfileService _profiles;
+    private readonly Interaction.IAppInteraction _interaction;
     private readonly EstimateDraftState _estimateDraft = new();
     private bool _refreshing;
     private SettingsSnapshot? _snapshot;
@@ -41,7 +42,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
         ReminderService reminders,
         AppLockService appLock,
         Presentation.ThemeService theme,
-        ProfileService profiles)
+        ProfileService profiles,
+        Interaction.IAppInteraction interaction)
     {
         // D-82: initial reminder text uses the same setter as user input; construction must not save defaults.
         _refreshing = true;
@@ -49,6 +51,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _lock = appLock;
         _theme = theme;
         _profiles = profiles;
+        _interaction = interaction;
         _localization = localization;
         _translator = translator;
         _dates = dates;
@@ -333,6 +336,10 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
         Update(s => s.ValuationCurrencyEnabled = value);
     }
+
+    /// <summary>Opens reviewed resource choices without changing preferences or creating financial data.</summary>
+    [RelayCommand]
+    private Task OpenActiveItemsAsync() => _interaction.NavigateAsync(AppRoutes.ActiveItemsRoute);
 
     [RelayCommand]
     private void UseEssentialSuggestion()

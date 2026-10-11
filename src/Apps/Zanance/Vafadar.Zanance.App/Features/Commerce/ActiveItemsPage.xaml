@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Commerce.ActiveItemsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Commerce"
+    x:DataType="local:ActiveItemsViewModel"
+    Title="{v:Translate ActiveItems_Title}">
+    <Grid>
+        <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{v:Translate ActiveItems_Intro}" Style="{StaticResource Secondary}" />
+                        <v:HelpButton Grid.Column="1" Topic="ActiveItems" VerticalOptions="Start" />
+                    </Grid>
+                    <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex, Mode=TwoWay}"
+                                   IsEnabled="{Binding CanInteract}" />
+                    <Label Text="{Binding AllowanceText}" Style="{StaticResource Secondary}" />
+                    <Label Text="{Binding Counter}" FontAttributes="Bold" />
+                    <Label Text="{Binding CapacityError}" Style="{StaticResource ErrorText}"
+                           IsVisible="{Binding CapacityError, Converter={StaticResource IsNotNullConverter}}" />
+                    <Label Text="{v:Translate ActiveItems_Empty}" Style="{StaticResource Secondary}" IsVisible="{Binding IsEmpty}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:ActiveItemRow">
+                                <Border Style="{StaticResource Card}" Padding="0">
+                                    <Grid Padding="16,12" RowDefinitions="Auto,Auto,Auto,Auto" MinimumHeightRequest="44" RowSpacing="4">
+                                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                        <Label Grid.Row="1" Text="{Binding DetailText}" Style="{StaticResource Secondary}"
+                                               IsVisible="{Binding DetailText, Converter={StaticResource IsNotNullConverter}}" />
+                                        <Label Grid.Row="2" Text="{Binding StateText}" Style="{StaticResource Secondary}" />
+                                        <Grid Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                            <Border WidthRequest="28" HeightRequest="28" Stroke="{DynamicResource DividerColor}" StrokeThickness="1" VerticalOptions="Center"
+                                                    InputTransparent="True">
+                                                <fi:SymbolIcon Symbol="Checkmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" IsVisible="{Binding IsSelected}" />
+                                            </Border>
+                                            <Label Grid.Column="1" Text="{Binding ChoiceText}" VerticalOptions="Center" />
+                                        </Grid>
+                                        <!-- The original full name and live choice belong to one growing real native target. -->
+                                        <Button Grid.RowSpan="4" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                IsEnabled="{Binding CanToggle}" CommandParameter="{Binding .}"
+                                                Command="{Binding ToggleCommand, Source={RelativeSource AncestorType={x:Type local:ActiveItemsViewModel}}, x:DataType=local:ActiveItemsViewModel}"
+                                                SemanticProperties.Description="{Binding AccessibilityText}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+            <!-- Explicit Save and reload keep their own growing row outside the scroll viewport. -->
+            <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+                <!-- A rejected pinned Save must explain itself even while the original list is scrolled to its end. -->
+                <Label Text="{Binding Feedback}" Style="{StaticResource ErrorText}"
+                       IsVisible="{Binding Feedback, Converter={StaticResource IsNotNullConverter}}" />
+                <p:WrappingAction Text="{v:Translate ActiveItems_Save}" Command="{Binding SaveCommand}"
+                                  Appearance="Primary" IsVisible="{Binding CanChoose}" />
+                <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}"
+                                  IsEnabled="{Binding CanInteract}" />
+            </VerticalStackLayout>
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
+                               WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate ActiveItems_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate ActiveItems_LoadFailed}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

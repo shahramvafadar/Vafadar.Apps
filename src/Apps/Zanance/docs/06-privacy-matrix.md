@@ -296,3 +296,11 @@ a random change revision inside each profile database. It contains no paid facts
 PIN or device security. The normal database backup includes these local financial choices; imported/restored scopes
 are never guessed or reassigned. Current inactive registration creates no choice rows. No new SDK, network,
 permission or security-storage use. Selection does not alter original financial data or grant service access.
+
+## D-142 choice-form privacy boundary
+
+The new Settings form reads original local resource identity/details/state and explicitly saves only the existing
+D-141 scoped choice row. Unsaved drafts remain in memory. No new data entity, schema, credential, permission, SDK,
+telemetry or network operation; no money/state write on selection, reload, language/help/navigation. Commercial
+registration remains inactive. Fictitious limited-layout inputs exist only in an independently owned Debug review
+database/page and are absent from Release. [Evidence](quality/active-item-chooser.md).

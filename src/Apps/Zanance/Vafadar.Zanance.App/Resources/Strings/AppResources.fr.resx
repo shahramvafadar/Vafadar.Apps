@@ -5746,4 +5746,85 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>Rouvrir</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>Comptes et plans disponibles</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>Vérifiez les éléments disponibles pour de nouvelles opérations. Votre historique reste visible et modifiable.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>Actif</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>Archivé</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>Type : {0} · Devise : {1}</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>Disponible dans votre quota</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>Historique et corrections uniquement</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>Élément historique ; non comptabilisé</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>Élément «{0}». {1}. État : {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>Sélectionnés : {0} sur {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>Éléments disponibles : {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>Les nouvelles opérations ne sont actuellement pas disponibles dans ce profil. Votre historique reste visible et modifiable.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>Vous n’avez pas besoin de sélectionner un sous-ensemble. Tous les éléments admissibles restent disponibles ; les éléments en pause et historiques conservent leur état.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>Touchez les éléments pour modifier votre sélection, puis enregistrez. Les plans en pause comptent aussi ; les sélectionner ne les reprend pas et n’active pas les outils payants.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>Sélectionnez au maximum {0} éléments. Désélectionnez un élément avant d’enregistrer.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>Cette liste ne contient encore aucun élément.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>Enregistrer cette sélection</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>Recharger les éléments disponibles</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>Chargement des éléments disponibles…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>Cette liste n’a pas pu être chargée. Rechargez-la pour réessayer ; aucune sélection n’a été enregistrée.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>Cette sélection n’a pas pu être enregistrée. Votre brouillon est conservé. Rechargez la liste pour vérifier les changements, puis réessayez.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>Votre sélection a été enregistrée, mais cette page n’a pas pu se fermer. Revenez en arrière ou rechargez avant de faire une autre sélection.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>Abandonner votre sélection non enregistrée ? Seul ce brouillon est réinitialisé ; aucun compte, plan ou transaction n’est supprimé.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>Abandonner la sélection</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>Éléments disponibles et historique</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>Lorsque votre quota est limité, choisissez les comptes pour les nouveaux mouvements d’argent et les plans pour les nouvelles opérations prévues. L’enregistrement d’une sélection n’archive, ne termine, ne suspend et ne supprime rien. L’historique et les corrections restent disponibles. Les plans en pause comptent, mais restent en pause. La sélection n’active pas les fonctions payantes distinctes. Si tout est disponible, aucun sous-ensemble n’est nécessaire.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>Si votre quota permet trois comptes et que vous en avez quatre, sélectionnez trois comptes et enregistrez. Le quatrième conserve son solde et son historique, mais n’est pas sélectionné pour de nouveaux mouvements d’argent.</value>
+  </data>
 </root>

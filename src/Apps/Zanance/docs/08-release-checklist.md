@@ -368,3 +368,13 @@ external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).
 Durable account/Plan selections and their actual writer/reminder bindings do not activate commercial limits.
 Chooser UI and other resource bindings remain required before ENT-03 acceptance. Verify [current evidence](quality/durable-resource-choices.md)
 and retain provider, physical-device, iOS and publication gates; a signed local APK or CI is not those approvals.
+
+## D-142 revision-specific local evidence
+
+Reviewed account/Plan form and registered Settings/Help/Back each have actual English/Persian/German, light/dark,
+360/412/wide Windows evidence with process-local 1.5 layout stress. Six normal signed Release own-emulator cases
+retain unrestricted access and complete financial rows; original owned files/sidecars and Main English/System are
+restored. Canonical signed installable APK: artifacts/android/zanance-d142-release.apk. Main 2,399 / App.Tests 407
+pass; strict Windows/Android zero warnings/errors. [Proof and APK digest](quality/active-item-chooser.md). This does
+not activate commercial limits or satisfy physical-phone, iOS, provider, store-signing/publication or native OS
+accessibility acceptance.

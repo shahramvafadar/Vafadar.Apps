@@ -2,6 +2,7 @@ using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Backup;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Categories;
+using Vafadar.Zanance.App.Features.Commerce;
 using Vafadar.Zanance.App.Features.DataFiles;
 using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Features.Plans;
@@ -156,6 +157,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(AccountEditorRoute, typeof(AccountEditorPage));
         Routing.RegisterRoute(AccountDetailRoute, typeof(AccountDetailPage));
         Routing.RegisterRoute(SettingsRoute, typeof(SettingsPage));
+        Routing.RegisterRoute(AppRoutes.ActiveItemsRoute, typeof(ActiveItemsPage));
         Routing.RegisterRoute(EntryEditorRoute, typeof(EntryEditorPage));
         Routing.RegisterRoute(EntryDetailRoute, typeof(EntryDetailPage));
         Routing.RegisterRoute(CategoriesRoute, typeof(CategoriesPage));

@@ -11,6 +11,7 @@ using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Backup;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Categories;
+using Vafadar.Zanance.App.Features.Commerce;
 using Vafadar.Zanance.App.Features.DataFiles;
 using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Features.Forecast;
@@ -140,6 +141,7 @@ public static class MauiProgram
             .AddTransient<AccountDetailPage>().AddTransient<AccountDetailViewModel>()
             .AddTransient<MorePage>().AddTransient<MoreViewModel>()
             .AddTransient<SettingsPage>().AddTransient<SettingsViewModel>()
+            .AddTransient<ActiveItemsPage>().AddTransient<ActiveItemsViewModel>()
             .AddTransient<TransactionsPage>().AddTransient<TransactionsViewModel>()
             .AddTransient<EntryEditorPage>().AddTransient<EntryEditorViewModel>().AddTransient<AssetEntryConfirmation>()
             .AddTransient<EntryDetailPage>().AddTransient<EntryDetailViewModel>()

@@ -121,6 +121,9 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Explicit resource choices are separate from archive/pause and keep history intact. -->
+            <p:WrappingAction Text="{v:Translate ActiveItems_Title}" Command="{Binding OpenActiveItemsCommand}" />
+
             <!-- Privacy and security (SEC-01..03) -->
             <Label Text="{v:Translate Settings_Security}" Style="{StaticResource SectionHeader}" />
             <Border x:Name="SecurityCard" Style="{StaticResource Card}">

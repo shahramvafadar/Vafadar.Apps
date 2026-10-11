@@ -5758,4 +5758,85 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>Riapri</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>Conti e piani disponibili</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>Controlla gli elementi disponibili per nuove operazioni. La cronologia resta visibile e modificabile.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>Attivo</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>Archiviato</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>Tipo: {0} · Valuta: {1}</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>Disponibile entro il tuo limite</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>Solo cronologia e correzioni</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>Elemento storico; non conteggiato</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>Elemento «{0}». {1}. Stato: {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>Selezionati: {0} su {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>Elementi disponibili: {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>Al momento le nuove operazioni non sono disponibili in questo profilo. La cronologia resta visibile e modificabile.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>Non devi scegliere un sottoinsieme. Tutti gli elementi idonei restano disponibili; quelli in pausa e storici mantengono il proprio stato.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>Tocca gli elementi per cambiare la selezione, poi salva. Anche i piani in pausa contano; selezionarli non li riprende e non attiva strumenti a pagamento.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>Scegli al massimo {0} elementi. Deseleziona un elemento prima di salvare.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>Non ci sono ancora elementi in questo elenco.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>Salva questa selezione</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>Ricarica gli elementi disponibili</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>Caricamento degli elementi disponibili…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>Impossibile caricare questo elenco. Ricaricalo per riprovare; nessuna selezione è stata salvata.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>Impossibile salvare questa selezione. La bozza è ancora qui. Ricarica l’elenco per controllare le modifiche, poi riprova.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>La selezione è stata salvata, ma non è stato possibile chiudere questa pagina. Torna indietro o ricarica prima di una nuova selezione.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>Vuoi scartare la selezione non salvata? Si ripristina solo questa bozza; nessun conto, piano o movimento viene eliminato.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>Scarta la selezione</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>Elementi disponibili e cronologia</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>Se il tuo limite è ristretto, scegli i conti per nuovi movimenti di denaro e i piani per nuove operazioni previste. Salvare una selezione non archivia, termina, mette in pausa o elimina nulla. La cronologia e le correzioni restano disponibili. I piani in pausa contano, ma restano in pausa. La selezione non sblocca funzioni a pagamento separate. Se tutto è disponibile, non devi scegliere un sottoinsieme.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>Se il tuo limite è di tre conti e ne hai quattro, scegli tre conti e salva. Il quarto mantiene il saldo e la cronologia, ma non è selezionato per nuovi movimenti di denaro.</value>
+  </data>
 </root>

@@ -14,6 +14,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/OccurrenceCommands.cs" Link="Application/OccurrenceCommands.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryDraftValidation.cs" Link="Application/EntryDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanDraft.cs" Link="Application/EntryPlanDraft.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ActiveItemsViewModel.cs" Link="Application/ActiveItemsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppLinkRouter.cs" Link="Application/AppLinkRouter.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderService.cs" Link="Application/ReminderService.cs" />

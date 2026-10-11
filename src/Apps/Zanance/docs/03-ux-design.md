@@ -835,3 +835,14 @@ above capacity. An explicit empty choice differs from no choice. Saving a review
 changed profile, revision, original list or rights; retain the form for review instead of overwriting a newer choice.
 All financial history remains visible/correctable. Unlimited and inactive test builds need no choice. This slice
 provides the store and actual writer/reminder bindings; the visible chooser is the next delivery step.
+
+## Reviewed active items (D-142)
+
+Show Accounts/Plans as two wrapping native choice chips. Give identity, details and original state their own growing
+rows above the separate selection caption. Do not confuse a paused plan with an unselected plan or resume it on tap.
+One real row button owns the complete live description; historical states remain readable but cannot be selected.
+Keep counters/capacity errors beside the choices and scalable Save/reload outside the scroll viewport. Cover all
+loading/failure publication and offer translated retry. Resolve dirty switch/reload/Back explicitly, preserve live
+translation/help drafts and retire a saved review before navigation. Unrestricted test builds explain that no subset
+is needed. Keep rejected Save feedback beside the pinned action, outside the scrolling list; do not make a
+user scroll back to discover a failure. [Native matrix and actual registered navigation](quality/active-item-chooser.md).

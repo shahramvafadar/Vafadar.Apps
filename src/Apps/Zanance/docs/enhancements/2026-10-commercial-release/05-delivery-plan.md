@@ -519,3 +519,10 @@ atomic explicit new-slot changes. 44 new cases / main 2,374 / App.Tests 382 pass
 Next: the reviewed account/Plan chooser UI, covered loading, explicit Save and preserved draft/error feedback;
 then remaining selected resources/operations. Continuous delivery remains authorized; owner/external gates stay open.
 [Evidence](../../quality/durable-resource-choices.md).
+
+## D-142 completed boundary and next ready work
+
+The next D-141 slice, actual reviewed account/Plan chooser UI, is delivered and verified. 25 new AT-144 flows;
+main 2,399 / App.Tests 407 pass, strict builds and complete signed APK/native evidence recorded. Current registration
+remains inactive. Continue ready planned selected-resource choices and their actual service/UI bindings; activation,
+purchases and existing owner/external gates remain separate. [Evidence](../../quality/active-item-chooser.md).

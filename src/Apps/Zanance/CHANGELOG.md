@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Clear account and Plan availability (2026-10-11, D-142)
+
+- Open available accounts and plans from Settings, with complete names, separate states and an explanation.
+- Prepare explicit choices with a visible capacity counter; keep paused plans paused and financial history intact.
+- Keep unsaved choices after errors or language changes, and ask before discarding them.
+- Current test builds remain unrestricted and do not require choosing a subset.
+
+
 ### Added - Durable active-item choices (2026-10-11, D-141)
 
 - Prepare account and Plan choices to survive reopening without changing financial history or calculations.

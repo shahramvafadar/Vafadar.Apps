@@ -5798,4 +5798,85 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>Reopen</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>Available accounts and plans</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>Review items available for new activity. Your history stays visible and can be corrected.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>Type: {0} · Currency: {1}</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>Available within your allowance</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>History and corrections only</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>Historical item; not counted</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>Item «{0}». {1}. State: {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>Selected: {0} of {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>Available items: {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>New activity is currently unavailable in this profile. Your history remains visible and correctable.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>No subset needs to be chosen. All eligible items remain available; paused and historical items keep their current state.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>Tap items to change your choice, then save. Paused plans also count; choosing a plan does not resume it or enable paid tools.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>Choose no more than {0} items. Deselect an item before saving.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>There are no items in this list yet.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>Save these choices</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>Reload available items</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>Loading available items…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>Could not load this list. Reload to try again; no choices have been saved.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>Could not save these choices. Your draft is still here. Reload to review any changes, then try again.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>Your choices were saved, but this page could not close. Go back, or reload before making another choice.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>Discard your unsaved choices? This only resets this draft; it does not delete any account, plan or transaction.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>Discard choices</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>Available items and history</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>When your allowance is bounded, choose the accounts used for new money and the plans used for new planned activity. Saving a choice does not archive, end, pause or delete anything. History and corrections stay available. Paused plans count, but keep their pause. Choosing a plan does not unlock separately paid features. If every item is already available, no subset needs choosing.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>If your allowance is three accounts and you have four, select any three and save. The fourth keeps its balance and history, but is not selected for new money.</value>
+  </data>
 </root>

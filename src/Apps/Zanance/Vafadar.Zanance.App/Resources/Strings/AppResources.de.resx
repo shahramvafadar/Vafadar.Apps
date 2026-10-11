@@ -5769,4 +5769,85 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Occurrence_ReopenConfirm" xml:space="preserve">
     <value>Wieder öffnen</value>
   </data>
+  <data name="ActiveItems_Title" xml:space="preserve">
+    <value>Verfügbare Konten und Pläne</value>
+  </data>
+  <data name="ActiveItems_Intro" xml:space="preserve">
+    <value>Prüfe die verfügbaren Einträge für neue Vorgänge. Dein Verlauf bleibt sichtbar und korrigierbar.</value>
+  </data>
+  <data name="ActiveItems_Active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="ActiveItems_Archived" xml:space="preserve">
+    <value>Archiviert</value>
+  </data>
+  <data name="ActiveItems_AccountDetail" xml:space="preserve">
+    <value>Typ: {0} · Währung: {1}</value>
+  </data>
+  <data name="ActiveItems_Selected" xml:space="preserve">
+    <value>Innerhalb deines Kontingents verfügbar</value>
+  </data>
+  <data name="ActiveItems_ReadOnly" xml:space="preserve">
+    <value>Nur Verlauf und Korrekturen</value>
+  </data>
+  <data name="ActiveItems_History" xml:space="preserve">
+    <value>Historischer Eintrag; zählt nicht</value>
+  </data>
+  <data name="ActiveItems_RowDescription" xml:space="preserve">
+    <value>Eintrag «{0}». {1}. Status: {2}. {3}.</value>
+  </data>
+  <data name="ActiveItems_Count" xml:space="preserve">
+    <value>Ausgewählt: {0} von {1}</value>
+  </data>
+  <data name="ActiveItems_AllCount" xml:space="preserve">
+    <value>Verfügbare Einträge: {0}</value>
+  </data>
+  <data name="ActiveItems_Unavailable" xml:space="preserve">
+    <value>Neue Vorgänge sind in diesem Profil derzeit nicht verfügbar. Dein Verlauf bleibt sichtbar und korrigierbar.</value>
+  </data>
+  <data name="ActiveItems_Unlimited" xml:space="preserve">
+    <value>Du musst keine Teilmenge auswählen. Alle geeigneten Einträge bleiben verfügbar; pausierte und historische Einträge behalten ihren Status.</value>
+  </data>
+  <data name="ActiveItems_ChooseHint" xml:space="preserve">
+    <value>Tippe auf Einträge und speichere deine Auswahl. Pausierte Pläne zählen mit; die Auswahl setzt sie nicht fort und schaltet keine kostenpflichtigen Funktionen frei.</value>
+  </data>
+  <data name="ActiveItems_Limit" xml:space="preserve">
+    <value>Wähle höchstens {0} Einträge. Hebe vor dem Speichern eine Auswahl auf.</value>
+  </data>
+  <data name="ActiveItems_Empty" xml:space="preserve">
+    <value>Diese Liste enthält noch keine Einträge.</value>
+  </data>
+  <data name="ActiveItems_Save" xml:space="preserve">
+    <value>Diese Auswahl speichern</value>
+  </data>
+  <data name="ActiveItems_Reload" xml:space="preserve">
+    <value>Verfügbare Einträge neu laden</value>
+  </data>
+  <data name="ActiveItems_Loading" xml:space="preserve">
+    <value>Verfügbare Einträge werden geladen…</value>
+  </data>
+  <data name="ActiveItems_LoadFailed" xml:space="preserve">
+    <value>Diese Liste konnte nicht geladen werden. Versuche es erneut; es wurde keine Auswahl gespeichert.</value>
+  </data>
+  <data name="ActiveItems_SaveFailed" xml:space="preserve">
+    <value>Diese Auswahl konnte nicht gespeichert werden. Dein Entwurf bleibt erhalten. Lade die Liste neu, prüfe Änderungen und versuche es erneut.</value>
+  </data>
+  <data name="ActiveItems_SavedReturnFailed" xml:space="preserve">
+    <value>Deine Auswahl wurde gespeichert, aber diese Seite konnte nicht geschlossen werden. Gehe zurück oder lade sie vor einer weiteren Auswahl neu.</value>
+  </data>
+  <data name="ActiveItems_DiscardMessage" xml:space="preserve">
+    <value>Deine ungespeicherte Auswahl verwerfen? Nur dieser Entwurf wird zurückgesetzt; kein Konto, Plan oder Vorgang wird gelöscht.</value>
+  </data>
+  <data name="ActiveItems_Discard" xml:space="preserve">
+    <value>Auswahl verwerfen</value>
+  </data>
+  <data name="Help_ActiveItems_Title" xml:space="preserve">
+    <value>Verfügbare Einträge und Verlauf</value>
+  </data>
+  <data name="Help_ActiveItems_Text" xml:space="preserve">
+    <value>Bei einem begrenzten Kontingent wählst du Konten für neue Geldvorgänge und Pläne für neue geplante Vorgänge. Die Auswahl archiviert, beendet, pausiert oder löscht nichts. Verlauf und Korrekturen bleiben verfügbar. Pausierte Pläne zählen, bleiben aber pausiert. Die Auswahl schaltet keine separat kostenpflichtigen Funktionen frei. Sind alle Einträge verfügbar, ist keine Teilmenge nötig.</value>
+  </data>
+  <data name="Help_ActiveItems_Example" xml:space="preserve">
+    <value>Wenn dein Kontingent drei Konten umfasst und du vier hast, wähle beliebige drei und speichere. Das vierte behält seinen Saldo und Verlauf, ist aber nicht für neue Geldvorgänge ausgewählt.</value>
+  </data>
 </root>

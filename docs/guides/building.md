@@ -482,3 +482,13 @@ D-141 changes the database model: run AddResourceSelections and regenerate the c
 commands above. The full suite checks first-schema upgrade and current model; compare all 25 complete tables.
 Current normal Release keeps commercial registration inactive. No enabled native commercial acceptance is implied.
 See [the revision-specific evidence](../../src/Apps/Zanance/docs/quality/durable-resource-choices.md).
+
+## Reviewed choice-form native checks (D-142)
+
+Run-Snapshots.ps1 -Only active-items checks actual account/Plan row/kind buttons, native glyph allocations/targets/names,
+capacity, paused state, unrestricted mode and covered retry against its independent artifact database, without Save.
+-Only active-items-entry checks the normal registered Settings action, native help and Back with current inactive DI;
+compare all 25 complete application-profile tables. Both support existing language/theme/width/process-local font
+arguments. Preserve/restore development databases/sidecars before the canonical fictitious walk-through; hidden
+own-root rendering and native UI Automation remain mandatory. Debug restores the original ui.theme preference too.
+No OS setting, fake release tier, device security or desktop input change. [Evidence](../../src/Apps/Zanance/docs/quality/active-item-chooser.md).

@@ -459,3 +459,11 @@ a foreign financial scope. The chooser UI, remaining resource bindings and exter
 The additive AddResourceSelections migration creates only its composite-key choice table; all first-schema rows
 and old history remain. Regenerate the compiled model after every model change. Whole-row comparison now covers
 25 tables, including ResourceSelections. Historical D-140 24-table evidence remains revision-specific.
+
+## Choice-form review metadata (D-142)
+
+ResourceChoiceItem additionally retains account type/currency and Plan entry kind for the actual displayed identity.
+Reviewed Save rechecks these original display facts under the same writer; changing one retires the old review.
+These are projected existing columns, not new entities/columns or portable entitlement facts. No migration or compiled
+model regeneration is needed here. The form writes only the D-141 choice row explicitly and never posts financial
+entries or rewrites original states. Current registration remains inactive. [Evidence](../../src/Apps/Zanance/docs/quality/active-item-chooser.md).

@@ -85,7 +85,8 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     {
         var items = kind == QuotaKind.FinancialAccounts
             ? (await db.Accounts.AsNoTracking().ToListAsync(cancellationToken)).Select(account =>
-                new ResourceChoiceItem(account.Id, account.Name, account.IsArchived ? QuotaItemState.Archived : QuotaItemState.Active))
+                new ResourceChoiceItem(account.Id, account.Name, account.IsArchived ? QuotaItemState.Archived : QuotaItemState.Active)
+                { AccountType = account.Type, CurrencyCode = account.CurrencyCode })
             : (await db.Schedules.AsNoTracking().ToListAsync(cancellationToken)).Select(plan =>
                 new ResourceChoiceItem(plan.Id, plan.Name, plan.State switch
                 {
@@ -93,7 +94,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
                     ScheduleState.Paused => QuotaItemState.Paused,
                     ScheduleState.Ended => QuotaItemState.Ended,
                     _ => throw new InvalidOperationException("The original plan state is invalid."),
-                }));
+                }) { EntryKind = plan.Kind });
         return items.OrderBy(item => item.Id).ToList();
     }
 
