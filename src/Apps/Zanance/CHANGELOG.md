@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Reliable current budget alerts (2026-10-11, D-150)
+
+- Check all current saved budget periods in their own calendar and currency, including overlapping periods.
+- Retry after failed notification delivery and avoid retaining an alert prepared from changed data or privacy choices.
+- Keep previous-period balances within the same budget account definition.
+
 ### Improved - Clear budget definition choices (2026-10-11, D-149)
 
 - Show copied budget periods as one choice with their original accounts, method and saved-period count.

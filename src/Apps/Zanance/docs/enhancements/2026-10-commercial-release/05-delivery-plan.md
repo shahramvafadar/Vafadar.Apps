@@ -627,3 +627,13 @@ when display digits change. 13 new AT-151 cases; main 2,607 / App.Tests 550 pass
 chooser cases plus 18 registered Settings/help cases, six normal Release emulator cases, exact data/display restoration and complete signed
 APK verified. Registration remains inactive. Effective budget/view/alert bindings and other ENT-02/03 paths
 remain open. See [evidence](../../quality/budget-definition-chooser.md).
+
+## D-150 - Actual current budget alerts
+
+Actual alert orchestration checks every eligible original current budget across calendars/currencies/scopes,
+with separate chosen-work rights and complete original net spending/carry. Read-only actual-file financial/privacy
+reviews guard native publication; failed/retired batches retract attempted alerts and retain retryable device levels.
+Carry no longer mixes another account definition. 25 new AT-152 cases; main 2,632 / App.Tests 575, strict builds,
+six hidden Windows budget renders, six normal Release Android delivery cases (five with individual taps), a final rebuilt SDK-acceptance case and complete signed APK pass;
+owned data/display restored. Enforcement remains inactive. Budget view/editor/scoped returning-data and other
+ENT-02/03 paths remain open. See [evidence](../../quality/budget-alert-work.md).

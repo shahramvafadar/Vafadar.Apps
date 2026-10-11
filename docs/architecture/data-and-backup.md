@@ -559,3 +559,11 @@ The native row relays one real original period id to a captured definition, neve
 caption. CanonicalIdentity supplies scope-independent grouping only; persistence requires the captured verified
 scope/file. Original reference account metadata joins the immutable read/publication/writer-time comparison,
 including equal-time changes. No schema/model or backup-format change; production registration remains inactive.
+
+## Guarded original budget alert batches (D-150)
+
+The actual ZananceStore access source supplies a full BudgetChoiceSnapshot and separate current work rights.
+Immutable alert candidates retain original monetary calculations; bounded complete original account/category/
+ledger inputs and privacy are rechecked before/after native effects. Shared original carry follows canonical
+account definition as well as period/currency/calendar. Device levels commit only after final batch validation;
+failed batches remove exact attempted native ids. No schema/model or backup-format changes.

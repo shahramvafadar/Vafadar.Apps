@@ -254,3 +254,7 @@ periods/limits and unrestricted test builds. D-149 supplies the chooser; effecti
 Budget choices: the D-149 native chooser groups copied periods, retains original scope/method/history and
 preserves explicit drafts on failure. Effective budget/view/alert integration stays open; test builds unrestricted.
 [Evidence](docs/quality/budget-definition-chooser.md).
+
+Budget alerts: D-150 checks every eligible original current period with guarded spending/carry and privacy,
+and retains retryable thresholds after failed or retired publication. Test builds unrestricted. Budget views,
+editor and scoped returning-data integration remain open. [Evidence](docs/quality/budget-alert-work.md).

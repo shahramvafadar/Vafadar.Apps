@@ -35,6 +35,7 @@ public sealed class GoalWorkFlowTests
         public void SetSnoozeActions(string oneHour, string tomorrow) { }
         public event EventHandler<string>? Tapped { add { } remove { } }
         public event EventHandler<SnoozeRequest>? SnoozeRequested { add { } remove { } }
+        public Task RemoveAsync(int notificationId) => Task.CompletedTask;
         public Task ShowAsync(ReminderNotification notification) => throw new InvalidOperationException("No immediate alert expected.");
         public async Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> notifications)
         {

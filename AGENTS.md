@@ -977,3 +977,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   Shared covered reads, explicit discard/Save/Reload and pinned failure feedback retain exact drafts.
 * Registration remains inactive. Native fixture Save changes only its choice and restores complete original data;
   normal Release shows all current definitions without requiring Save. View/alert work bindings follow separately.
+
+## 83. Guarded current budget alerts (D-150)
+
+* Inspect every original current period/calendar/currency with separate chosen new-work rights. Default new-budget
+  settings never filter saved alerts; choosing activity never filters financial spending/carry inputs.
+* Match carry to the canonical account definition and retain original consecutive period calculations. Reject
+  ambiguous periods rather than guessing a row. Bound ledger reads to current/carry ranges off the UI thread.
+* Recheck actual file/access/choice revision/value, complete periods/references, date/month-start, financial inputs
+  and privacy before/after native effects. Commit device levels only after successful complete batch validation.
+* Consume the native SDK request result explicitly; a false result must not consume a budget level.
+* On partial/retired publication, remove only attempted exact notification ids and leave levels retryable.
+  Preserve generic/details opt-in, refund resets and unrelated notifications. Registration stays inactive;
+  scoped Budget returning-data and view/editor affordances remain separate unfinished slices.

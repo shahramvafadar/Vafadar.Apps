@@ -363,3 +363,10 @@ See [evidence](quality/budget-definition-choice.md).
 Original reference captions are captured in memory to reject stale reviews; no account balance or new financial
 data is written. Explicit definition choices use the existing local scoped row/revision. No SDK, permission,
 external transmission, schema or security/purchase grant changes. See [evidence](quality/budget-definition-chooser.md).
+
+## Guarded budget alerts (D-150)
+
+Existing financial/privacy inputs are captured temporarily in memory and rechecked locally before native work.
+Threshold caches remain device-local, without passwords or paid authority. Generic/details choice remains
+explicit. No new SDK, permission, external transmission, schema/model or portable grants. Existing notification
+links remain unscoped for Budget and require a later file-bound routing slice. See [evidence](quality/budget-alert-work.md).

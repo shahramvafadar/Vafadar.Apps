@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Commerce;
 
@@ -15,7 +16,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     public async Task<BudgetChoiceSnapshot> ReadAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var path = FilePath(db);
         var access = new CommercialFileAccess(commercialAccess, path);
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.BudgetDefinitions, cancellationToken);
@@ -43,8 +44,31 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
             throw new InvalidOperationException("Budget inputs changed during loading; reload them.");
         access.EnsureSnapshotCurrent();
         return new(items, path, access, stored, today, startDay, availability, work, accounts,
-            budgets.Where(budget => BudgetSelectionPolicy.IsCurrent(budget, today, startDay)).Select(budget => budget.Id).ToHashSet());
+            budgets.Where(budget => BudgetSelectionPolicy.IsCurrent(budget, today, startDay)).Select(budget => budget.Id).ToHashSet(), budgets);
     }
+
+    /// <summary>Rejects a retired read, including same-revision edits, date changes and inactive-to-active transitions, without writes.</summary>
+    public async Task ValidateAsync(BudgetChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(reviewed);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (FilePath(db) != reviewed.DatabasePath) throw new InvalidOperationException("The reviewed budgets belong to another file.");
+        reviewed.Access.DemandFeature(CommercialFeature.History);
+        reviewed.Access.EnsureSnapshotCurrent();
+        var stored = await StoredResourceSelection.ReadAsync(db, reviewed.Access, QuotaKind.BudgetDefinitions, cancellationToken);
+        var budgets = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
+        if (stored?.Revision != reviewed.Revision || stored?.IdentitySet != reviewed.StoredValue
+            || !reviewed.Items.SequenceEqual(budgets.Select(BudgetChoiceItem.From))
+            || !reviewed.Items.SequenceEqual(reviewed.Budgets.Select(BudgetChoiceItem.From))
+            || !reviewed.Accounts.SequenceEqual(await ReadAccountsAsync(db, cancellationToken))
+            || reviewed.MonthStartDay != await ReadStartDayAsync(db, cancellationToken) || reviewed.Today != Today())
+            throw new InvalidOperationException("Budget inputs changed during preparation; reload them.");
+        reviewed.Access.EnsureSnapshotCurrent();
+    }
+
+    // D-146: an opened Android SQLite connection can report an alias rather than its configured absolute file.
+    private static string FilePath(ZananceDbContext db) => Path.GetFullPath(
+        new SqliteConnectionStringBuilder(db.Database.GetDbConnection().ConnectionString).DataSource);
 
     /// <summary>Saves only the reviewed current definitions; no financial row or paid capability is rewritten.</summary>
     public async Task<bool> SaveAsync(BudgetChoiceSnapshot reviewed, IEnumerable<BudgetDefinitionKey> selected,
@@ -55,7 +79,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         var scope = StoredResourceSelection.Scope(reviewed.Access.Context!);
         var choice = new BudgetSelection(scope, selected);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (Path.GetFullPath(db.Database.GetDbConnection().DataSource) != reviewed.DatabasePath)
+        if (FilePath(db) != reviewed.DatabasePath)
             throw new InvalidOperationException("The reviewed budgets belong to another file.");
         reviewed.Access.DemandFeature(CommercialFeature.Corrections);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);

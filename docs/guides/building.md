@@ -554,3 +554,11 @@ restoring all 25 tables. Evidence covers 18 Windows chooser and 18 registered Se
 normal inactive Release emulator cases.
 Artifacts: budget-chooser build/test/clean logs, verified-size/theme proof folders, native/final-proof.json and
 APK proof. Complete phone artifact: artifacts/android/zanance-d149-release.apk. Physical/iOS gates remain separate.
+
+## Budget alert verification (D-150)
+
+Main 2,632 / App.Tests 575 pass, followed by ordinary cleanup. Strict builds and canonical Release pass. Six
+hidden own-window Windows budget renders and six normal signed Release emulator cases retain full original rows
+and restore exact owned bytes/display. Retired native preparation is covered by explicit application ports;
+commercial production registration remains inactive. Complete APK: artifacts/android/zanance-d150-release.apk.
+See Zanance docs/quality/budget-alert-work.md for logs, proof paths and remaining acceptance boundaries.

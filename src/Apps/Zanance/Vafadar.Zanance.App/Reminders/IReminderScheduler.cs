@@ -38,6 +38,9 @@ public interface IReminderScheduler
 
     /// <summary>Shows one notification now (e.g. a budget alert).</summary>
     Task ShowAsync(ReminderNotification notification);
+
+    /// <summary>Removes this app's exact delivered/pending notification when its preparation becomes invalid.</summary>
+    Task RemoveAsync(int notificationId);
 }
 
 /// <summary>Platforms without local notifications in phase 1 (Windows): reminders live in the app's due centre.</summary>
@@ -68,4 +71,7 @@ internal sealed class NoReminderScheduler : IReminderScheduler
     public Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders) => Task.CompletedTask;
 
     public Task ShowAsync(ReminderNotification notification) => Task.CompletedTask;
+
+    /// <inheritdoc />
+    public Task RemoveAsync(int notificationId) => Task.CompletedTask;
 }

@@ -1128,3 +1128,11 @@ verify complete captions/targets/names, capacity, rejected and canonical success
 25-table restoration. Another 18 registered Settings/help/Back cases retain complete stored data. Six normal Release emulator cases show inactive original groups and no financial Save;
 restore original owned bytes/display. Physical-device/iOS and remaining view/alert work acceptance stay open.
 See [evidence](quality/budget-definition-chooser.md).
+
+## AT-152 - Actual budget alert work (D-150)
+
+24 new actual application/SQLite cases pass; main 2,632 / App.Tests 575 and strict builds pass. Six hidden
+Windows budget renders and six normal signed Release emulator delivery/tap cases retain complete financial rows;
+owned bytes/display restore. Native inflight rights/retraction uses explicit effect ports; actual production
+commercial activation, physical/iOS and scoped budget returning-data/view/editor acceptance remain open.
+See [evidence](quality/budget-alert-work.md).

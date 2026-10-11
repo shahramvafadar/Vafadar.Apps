@@ -353,7 +353,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
     /// <summary>
     /// Returns what the previous consecutive periods pass on to <paramref name="budget"/> (§10.3). Only budgets of the same
-    /// period length, calendar and currency count; a period without a budget ends the chain. Spending includes unreviewed
+    /// canonical account definition, period length, calendar and currency count; a missing period ends the chain. Spending includes unreviewed
     /// entries.
     /// </summary>
     public async Task<BudgetCarry> GetBudgetCarryAsync(Budget budget, CancellationToken cancellationToken = default)
@@ -364,58 +364,14 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             return BudgetCarry.None;
         }
 
-        var sameKind = (await GetBudgetsAsync(cancellationToken))
-            .Where(b => b.Period == budget.Period && string.Equals(b.CurrencyCode, budget.CurrencyCode, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-        var chain = new List<Budget>();
-        if (budget.Period == BudgetPeriod.Month)
-        {
-            var budgets = sameKind.Where(b => b.Calendar == budget.Calendar).ToDictionary(b => (b.Year, b.Month));
-            var (year, month) = PeriodMath.Previous(budget.Year, budget.Month);
-            while (chain.Count < BudgetRolloverCalculator.MaxMonths && budgets.TryGetValue((year, month), out var previous))
-            {
-                chain.Insert(0, previous);
-                (year, month) = PeriodMath.Previous(year, month);
-            }
-        }
-        else
-        {
-            // Weeks follow each other without a gap: the previous period ends the day before this one starts.
-            var byStart = sameKind.GroupBy(b => b.PeriodStart).ToDictionary(g => g.Key, g => g.First());
-            var start = BudgetPeriods.Step(budget.Period, budget.PeriodStart, -1);
-            while (chain.Count < BudgetRolloverCalculator.MaxMonths && byStart.TryGetValue(start, out var previous))
-            {
-                chain.Insert(0, previous);
-                start = BudgetPeriods.Step(budget.Period, start, -1);
-            }
-        }
-
-        if (chain.Count == 0)
-        {
-            return BudgetCarry.None;
-        }
-
-        // Months are financial months: the same start day as the budget page (§10.3).
+        var chain = BudgetCarryChain(budget, await GetBudgetsAsync(cancellationToken));
+        if (chain.Count == 0) return BudgetCarry.None;
         var startDay = (await GetSettingsAsync(cancellationToken)).MonthStartDay;
         var from = BudgetPeriods.Range(chain[0], startDay).First;
         var to = BudgetPeriods.Range(chain[^1], startDay).Last;
-        var accounts = await GetAccountsAsync(cancellationToken: cancellationToken);
-        var entries = await GetEntriesAsync(from, to, cancellationToken);
-        var categories = await GetCategoriesAsync(cancellationToken);
-        var months = chain.Select(b =>
-        {
-            var (start, end) = BudgetPeriods.Range(b, startDay);
-            var scope = b.AccountIds.Count > 0 ? b.AccountIds : null;
-            return new BudgetMonth(
-                b.Rollover,
-                b.TotalLimit,
-                b.Method == BudgetMethod.Flex
-                    ? FlexCalculator.FlexibleSpent(accounts, entries, categories, start, end, b.CurrencyCode, scope)
-                    : BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope),
-                b.CategoryLimits.ToDictionary(l => l.CategoryId, l => l.Limit),
-                b.CategoryLimits.ToDictionary(l => l.CategoryId, l => BudgetCalculator.NetExpense(accounts, entries, start, end, b.CurrencyCode, scope, [l.CategoryId], categories)));
-        }).ToList();
-        return BudgetRolloverCalculator.CarryInto(months, budget.Rollover);
+        return CalculateBudgetCarry(budget, chain, startDay,
+            await GetAccountsAsync(cancellationToken: cancellationToken),
+            await GetEntriesAsync(from, to, cancellationToken), await GetCategoriesAsync(cancellationToken));
     }
 
     /// <summary>Inserts or updates a budget including its category limits.</summary>

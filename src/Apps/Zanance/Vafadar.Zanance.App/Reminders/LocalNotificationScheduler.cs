@@ -88,7 +88,16 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
         }
     }
 
-    public Task ShowAsync(ReminderNotification notification) => _service.Show(Request(notification));
+    // The SDK returns false for rejected requests without throwing; never consume a budget level after that result.
+    public Task ShowAsync(ReminderNotification notification) => ReminderPublication.RequireAcceptedAsync(_service.Show(Request(notification)));
+
+    /// <inheritdoc />
+    public Task RemoveAsync(int notificationId)
+    {
+        _service.Cancel(notificationId);
+        _service.Clear(notificationId);
+        return Task.CompletedTask;
+    }
 
     private static NotificationRequest Request(ReminderNotification reminder)
     {

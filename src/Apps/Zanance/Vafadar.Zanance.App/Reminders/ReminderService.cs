@@ -28,7 +28,8 @@ public sealed class ReminderService(
     IDateFormatter dates,
     ILocalizationService localization,
     TimeProvider time,
-    ResourceChoiceStore? choices = null)
+    ResourceChoiceStore? choices = null,
+    BudgetChoiceStore? budgetChoices = null)
 {
     private const string BudgetAlertKey = "budget.alert.";
     private const string SnoozeKey = "reminders.snoozed";
@@ -44,6 +45,7 @@ public sealed class ReminderService(
         store.Changed += (_, _) => RefreshSoon();
         plans.Changed += (_, _) => RefreshSoon();
         if (choices is not null) choices.Changed += (_, _) => RefreshSoon();
+        if (budgetChoices is not null) budgetChoices.Changed += (_, _) => RefreshSoon();
         goals.Changed += (_, _) => RefreshSoon();
         holdings.Changed += (_, _) => RefreshSoon();
     }
@@ -222,7 +224,7 @@ public sealed class ReminderService(
         await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
             .Take(ReminderPlanner.MaxPending).ToList());
         await ValidatePublicationAsync(snapshot, goalSnapshot);
-        await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
+        await CheckBudgetAsync(culture);
 
         ReminderNotification? Rebuild(int id, DateTime at, string link)
         {
@@ -282,57 +284,46 @@ public sealed class ReminderService(
         return await scheduler.AreEnabledAsync() || await scheduler.RequestPermissionAsync();
     }
 
-    // One alert per level and period: opening the app again or editing an entry never repeats it (BUD-06). The budget
-    // of this month and, when there are any, the weekly and two-week budgets of today are checked – in every currency
-    // that has a budget, not only the one shown on Home (ZEX-P02).
-    private async Task CheckBudgetAsync(Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, CultureInfo culture)
+    // Each original current period has its own threshold cache. New-work rights affect delivery, never financial inputs.
+    private async Task CheckBudgetAsync(CultureInfo culture)
     {
-        var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
-        var (year, month) = PeriodMath.MonthOf(today, settings.BudgetCalendar, settings.MonthStartDay);
-        var categories = await store.GetCategoriesAsync();
-        var budgets = new List<Budget?>();
-        foreach (var currency in (await store.GetBudgetsAsync()).Select(b => b.CurrencyCode).Distinct(StringComparer.OrdinalIgnoreCase))
+        var snapshot = await store.GetBudgetAlertSnapshotAsync();
+        var updates = new List<(string Key, string Value)>();
+        var published = new List<int>();
+        try
         {
-            budgets.Add(await store.GetBudgetAsync(year, month, settings.BudgetCalendar, currency));
-            budgets.Add(await store.GetBudgetAsync(BudgetPeriod.Week, today, currency));
-            budgets.Add(await store.GetBudgetAsync(BudgetPeriod.TwoWeeks, today, currency));
-        }
-
-        foreach (var budget in budgets)
-        {
-            if (budget is { AlertsEnabled: true, TotalLimit: not null })
+            foreach (var candidate in snapshot.Candidates)
             {
-                await CheckBudgetAsync(budget, settings, accounts, categories, culture, today);
+                var status = candidate.Status;
+                var key = BudgetAlertKey + candidate.BudgetId.ToString("N");
+                var previous = int.TryParse(preferences.Get(key), NumberStyles.None, CultureInfo.InvariantCulture, out var level) ? level : 0;
+                var current = (int)status.Alert;
+                if (current == previous) continue;
+                if (current > previous)
+                {
+                    await store.ValidateBudgetAlertSnapshotAsync(snapshot);
+                    var body = !snapshot.ShowDetails
+                        ? translator["Reminder_BudgetGeneric"]
+                        : status.IsOver
+                            ? translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, candidate.CurrencyCode, culture))
+                            : translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, candidate.CurrencyCode, culture),
+                                MoneyText.Format(status.Limit, candidate.CurrencyCode, culture));
+                    var id = ReminderPlanner.StableId(candidate.BudgetId, snapshot.Today) ^ 0x4000_0000;
+                    // Track before Show: a native failure can occur after a platform partially publishes the notification.
+                    published.Add(id);
+                    await scheduler.ShowAsync(new(id, translator["Budget_Title"], body, null, "budget"));
+                    await store.ValidateBudgetAlertSnapshotAsync(snapshot);
+                }
+                // A refund can lower the level. Commit all device caches only after the entire batch remains valid.
+                updates.Add((key, current.ToString(CultureInfo.InvariantCulture)));
             }
+            await store.ValidateBudgetAlertSnapshotAsync(snapshot);
+            foreach (var update in updates) preferences.Set(update.Key, update.Value);
         }
-    }
-
-    private async Task CheckBudgetAsync(Budget budget, Core.Settings.ZananceSettings settings, List<Core.Accounts.Account> accounts, IReadOnlyList<Core.Categories.Category> categories, CultureInfo culture, DateOnly today)
-    {
-        var limit = budget.TotalLimit!.Value + (await store.GetBudgetCarryAsync(budget)).Total;
-        var (from, to) = BudgetPeriods.Range(budget, settings.MonthStartDay);
-        var entries = await store.GetEntriesAsync(from, to);
-        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
-        var key = BudgetAlertKey + budget.Id.ToString("N");
-        var previous = int.TryParse(preferences.Get(key), NumberStyles.None, CultureInfo.InvariantCulture, out var level) ? level : 0;
-        var current = (int)status.Alert;
-        if (current <= previous)
+        catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            if (current < previous)
-            {
-                // Spending went down again (e.g. a refund): allow the alert to fire again later.
-                preferences.Set(key, current.ToString(CultureInfo.InvariantCulture));
-            }
-
-            return;
+            foreach (var id in published) await scheduler.RemoveAsync(id);
+            throw;
         }
-
-        preferences.Set(key, current.ToString(CultureInfo.InvariantCulture));
-        var body = !settings.NotificationsShowDetails
-            ? translator["Reminder_BudgetGeneric"]
-            : status.IsOver
-                ? translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, budget.CurrencyCode, culture))
-                : translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, budget.CurrencyCode, culture), MoneyText.Format(limit, budget.CurrencyCode, culture));
-        await scheduler.ShowAsync(new ReminderNotification(ReminderPlanner.StableId(budget.Id, today) ^ 0x4000_0000, translator["Budget_Title"], body, null, "budget"));
     }
 }

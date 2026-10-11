@@ -153,6 +153,7 @@ public sealed class ReviewReminderDeliveryTests : IDisposable
         public Task<bool> AreEnabledAsync() => Task.FromResult(Enabled);
         public Task<bool> RequestPermissionAsync() { PermissionRequests++; return Task.FromResult(Enabled); }
         public Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders) { Pending = reminders; return Task.CompletedTask; }
+        public Task RemoveAsync(int notificationId) => Task.CompletedTask;
         public Task ShowAsync(ReminderNotification notification) => Task.CompletedTask;
     }
 }

@@ -332,6 +332,7 @@ public sealed class ReminderFlowTests
         {
             Replacements++; Pending = reminders.ToArray(); if (OnReplace is not null) await OnReplace();
         }
+        public Task RemoveAsync(int notificationId) => Task.CompletedTask;
         public Task ShowAsync(ReminderNotification reminder) { Shown.Add(reminder); return Task.CompletedTask; }
     }
 }

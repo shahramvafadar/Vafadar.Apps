@@ -937,3 +937,10 @@ currency/period, explicit account names or the all-included meaning, current sav
 Retain history but disable historical-only choice. Format count digits without rewriting user account names.
 Explain that choosing a definition grants no paid tool and changes no financial limit. Shared covered publication,
 discard guards and pinned explicit Save/retry feedback apply. Inactive release remains unrestricted/read-only here.
+
+## Current budget alert publication (D-150)
+
+Default new-budget calendar never filters saved current alerts. Retain original method/currency/account scope
+and generic text unless details were explicitly allowed. A failed or retired native batch must not consume
+threshold levels. Refunds permit later re-alerting. Existing current-budget destination stays behind app lock;
+scoped returning-data and view/editor work affordances remain open.

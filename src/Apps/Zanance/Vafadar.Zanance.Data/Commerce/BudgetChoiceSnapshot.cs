@@ -25,13 +25,14 @@ public sealed class BudgetChoiceSnapshot
     /// <summary>Retains the reviewed actual-file inputs independently of later entity/caller mutations.</summary>
     internal BudgetChoiceSnapshot(IReadOnlyList<BudgetChoiceItem> items, string path, CommercialFileAccess access,
         StoredResourceSelection? stored, DateOnly today, int monthStartDay, BudgetAvailability? availability, BudgetWorkPolicy work,
-        IReadOnlyList<BudgetChoiceAccount> accounts, IReadOnlySet<Guid> currentIds)
+        IReadOnlyList<BudgetChoiceAccount> accounts, IReadOnlySet<Guid> currentIds, IReadOnlyList<Budget> budgets)
     {
         Items = Array.AsReadOnly(items.ToArray()); DatabasePath = path; Access = access; Revision = stored?.Revision; StoredValue = stored?.IdentitySet;
         Today = today; MonthStartDay = monthStartDay; Maximum = availability?.Maximum;
         SelectedDefinitions = availability?.SelectedDefinitions ?? Array.AsReadOnly(Array.Empty<BudgetDefinitionKey>());
         RequiresSelection = availability?.RequiresSelection == true || Maximum is > 0 && stored is not null && !StoredBudgetSelection.IsValid(stored);
         Work = work;
+        Budgets = Array.AsReadOnly(budgets.ToArray());
         Accounts = Array.AsReadOnly(accounts.ToArray());
         Groups = Array.AsReadOnly(items.GroupBy(item => BudgetDefinitionKey.CanonicalIdentity(item.CurrencyCode, item.Period,
             item.Accounts.Length == 0 ? [] : item.Accounts.Split(';').Select(Guid.Parse)))
@@ -57,6 +58,8 @@ public sealed class BudgetChoiceSnapshot
     public IReadOnlyList<BudgetDefinitionKey> SelectedDefinitions { get; }
     /// <summary>Gets separate current new-work rights; original calculations continue using every original budget.</summary>
     public BudgetWorkPolicy Work { get; }
+    /// <summary>Retains detached original entities inside the data boundary for calculations, guarded by immutable Items.</summary>
+    internal IReadOnlyList<Budget> Budgets { get; }
     /// <summary>Gets the exact captured file, private to the data boundary.</summary>
     internal string DatabasePath { get; }
     /// <summary>Gets the immutable synchronous rights guard, without exposing credentials or portable grants.</summary>

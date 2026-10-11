@@ -465,3 +465,10 @@ Main 2,607 / App.Tests 550, strict builds, 36 actual Windows native cases, six n
 cases and complete APK verified; exact owned data/display restored. Enforcement remains inactive and budget
 view/alert integration remains unfinished. Emulator checks do not prove physical-device/iOS/Store acceptance.
 See [evidence](quality/budget-definition-chooser.md).
+
+## D-150 - Actual budget alert delivery
+
+Main 2,632 / App.Tests 575, strict builds, six hidden Windows budget renders, six signed Release emulator cases
+and complete installable APK verified; exact owned data/display restored. Registration remains inactive; scoped
+budget returning-data and view/editor integration are unfinished. No physical/iOS/Store acceptance implied.
+See [evidence](quality/budget-alert-work.md).
