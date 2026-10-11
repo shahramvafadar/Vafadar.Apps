@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using FluentIcons.Common;
 using Vafadar.Localization;
 using Vafadar.Zanance.Core.Categories;
@@ -6,9 +5,8 @@ using Vafadar.Zanance.Core.Categories;
 namespace Vafadar.Zanance.App.Presentation;
 
 /// <summary>Display names, icons and colours of categories for one screen load.</summary>
-internal sealed class CategoryLookup
+internal sealed partial class CategoryLookup
 {
-    private static readonly ConcurrentDictionary<(string Value, bool Dark), Color> DisplayColors = new();
     private readonly Dictionary<Guid, Category> _byId;
     private readonly Translator _translator;
 
@@ -32,7 +30,6 @@ internal sealed class CategoryLookup
 
     public Symbol Icon(Guid? id) => Icons.Parse(Get(id)?.Icon, Symbol.QuestionCircle);
 
-    public Color Color(Guid? id) => DisplayColor(Get(id)?.Color);
 
     /// <summary>The "Uncategorized" fallback of a kind (TX-01).</summary>
     public Guid? Uncategorized(CategoryKind kind) =>
@@ -42,20 +39,4 @@ internal sealed class CategoryLookup
     public Guid? Fees() =>
         _byId.Values.FirstOrDefault(c => c.Kind == CategoryKind.Expense && c.SystemKey == DefaultCategories.Fees)?.Id;
 
-    /// <summary>The colour to show: in the dark theme dark category colours are lightened so icons stay readable.</summary>
-    public static Color DisplayColor(string? value)
-    {
-        // Every row of a long list asks for its category colour; there are only a few distinct colours, so each is parsed
-        // (and lightened) once per theme instead of once per row.
-        var dark = Palette.IsDark;
-        return DisplayColors.GetOrAdd((value ?? string.Empty, dark), key =>
-        {
-            var color = ParseColor(key.Value.Length == 0 ? null : key.Value);
-            return key.Dark && color.GetLuminosity() < 0.62f ? color.WithLuminosity(0.68f) : color;
-        });
-    }
-
-    /// <summary>The stored colour of a category.</summary>
-    public static Color ParseColor(string? value) =>
-        value is not null && Microsoft.Maui.Graphics.Color.TryParse(value, out var color) ? color : Microsoft.Maui.Graphics.Color.FromArgb("#78909C");
 }

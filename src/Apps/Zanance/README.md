@@ -218,3 +218,31 @@ New-work choices/paid tools remain separate from complete original progress. Rem
 Complete original goal progress/history/Home pins remain separate from new-work availability. Historical releases, reviewed writes, dirty currency/culture drafts and growing feedback are verified in actual sources and running Windows/Android apps. Main 2,520 / App.Tests 497 pass; complete signed APK: artifacts/android/zanance-d146-release.apk. Current builds stay unrestricted. Remaining goal-editor and other ENT-02/03 bindings plus external gates remain open.
 
 [Evidence](docs/quality/goal-work-views.md).
+
+## D-147 goal-editor delivery
+
+40 new AT-149 actual-source/real SQLite cases pass. Final normal parallel main 2,560 / App.Tests 537 pass,
+zero failures/skips; test output cleaned. Strict Windows and Android builds and canonical Release APK build have zero
+warnings/errors. Eighteen English/Persian/German, light/dark, 360/412/wide contexts check the actual Advanced and Simple
+modal at process-local 1.5 font stress: complete changed glyphs, real 44-pixel Invoke targets, stale Save rejection,
+retained reviewed reload/current saved summary and native Close. All 25 complete fixture tables and original development
+data/sidecar bytes are restored. The review uses independent fictitious data and explicit native-effect answers, not
+replacement MAUI controls or a production entitlement replacement.
+
+Six normal signed Release owned-emulator cases check the original archived account, uncommon rule, multiple-category
+warning, pinned Save and native Close/Back. One actual note-only Save succeeds; complete original rule/categories,
+accounts, ledger, allocations and other metadata stay equal. Only that goal note/audit and the previously delivered
+D-141 migration differ. Exact owned original bytes/sidecars and Main/English/System are restored; the normal Release
+remains installed/stopped. No physical-device, iOS, OS accessibility, provider, performance, Store signing/publication
+or commercial-activation acceptance is implied.
+
+Canonical Build-AndroidApk.ps1 produces artifacts/android/zanance-d147-release.apk, package pro.vafadar.zanance,
+nondebuggable Release, intact ZIP, full ARM64/x64 assembly stores and application AOT, verified v2/v3 signature with
+the existing local test certificate. Bytes: 81491883. SHA-256: `d3aa44afc6f55aae1ea3b4a0fe82700c5120ad196343afcd7cdcfbdf0d6879aa`.
+No schema/model/migration, portable preference, security policy, credential, SDK, paid grant or permission change.
+
+ENT-02/03 remain in progress. Continue remaining actual budget/new-work bindings, then other resources/operations,
+import/restore/native paths and commercial messages under D-69. Commercial activation and owner/external gates stay
+separate; this editor slice is not completion of the commercial release.
+
+Evidence: `docs/quality/goal-editor-work.md`.

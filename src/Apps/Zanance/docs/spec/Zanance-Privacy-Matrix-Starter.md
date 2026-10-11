@@ -356,3 +356,14 @@ telemetry, credential or network flow. An explicit earmark release writes one ne
 an account/holding value. Current commercial registration stays inactive.
 
 [Evidence](../quality/goal-work-views.md).
+
+## D-147 goal-editor data boundary
+
+Transient exact-file review and in-memory drafts only; no new portable/device preferences, schema, SDK, permission or credential.
+An explicit budget cut changes only the confirmed category limit after current-period/full-input validation. No implicit
+goal, allocation, account, valuation or ledger write. Opening never requests permission; paused reminder configuration
+never resumes delivery. Original data/sidecars/display are restored after independently owned native reviews.
+
+ENT-02/03 remain in progress. Continue remaining actual budget/new-work bindings, then other resources/operations,
+import/restore/native paths and commercial messages under D-69. Commercial activation and owner/external gates stay
+separate; this editor slice is not completion of the commercial release.

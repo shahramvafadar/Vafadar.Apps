@@ -5853,4 +5853,43 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>Die gespeicherte Währung wurde von {0} auf {1} geändert. Ihr Entwurf bleibt erhalten. Geben Sie den Betrag vor dem Speichern erneut in {1} ein.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>Gespeicherte Zielangaben bleiben bearbeitbar. Neue Beitragspläne und Erinnerungen sind für dieses Ziel derzeit nicht verfügbar.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>Gespeicherte Wiederholung behalten</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>Der gespeicherte Plan verwendet {0} Kategorien. Sie bleiben erhalten, bis Sie ausdrücklich eine Ersatzkategorie auswählen.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>Die gespeicherte Erinnerung bleibt erhalten. Für dieses Ziel werden derzeit keine Erinnerungen zugestellt.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>Währung oder Maßeinheit geändert. Löschen Sie den Wert und geben Sie ihn vor dem Speichern in der angezeigten Einheit neu ein.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>Geben Sie einen Prozentsatz größer als 0 und höchstens 100 ein.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>Wenn Sie den Vermögenswert oder seine Preiswährung ändern, wird die gespeicherte Preisannahme gelöscht. Änderungen speichern?</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>Änderungen konnten nicht gespeichert werden. Ihre Eingaben bleiben erhalten. Laden Sie vor einem neuen Versuch die aktuellen gespeicherten Werte.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>Das Ziel wurde gespeichert, aber das Formular konnte nicht geschlossen werden. Schließen Sie es zur Rückkehr; die Änderungen werden nicht erneut gespeichert.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>Aktuell gespeichertes Ziel: {0}
+Zielwert: {1}
+Wiederholung: {2}
+Notiz: {3}</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>Die gespeicherten Angaben wurden geändert. Ihre bearbeiteten Felder bleiben erhalten; andere Felder zeigen die aktuellen Werte. Prüfen Sie diese, bevor Sie Ihre Eingaben behalten.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>Meine geprüften Eingaben behalten</value>
+  </data>
 </root>

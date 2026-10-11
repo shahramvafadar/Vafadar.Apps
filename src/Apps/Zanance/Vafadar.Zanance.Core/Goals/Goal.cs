@@ -66,6 +66,9 @@ public enum GoalType
 /// </summary>
 public sealed class Goal : Entity, IAuditableEntity
 {
+    /// <summary>Copies the complete scalar goal draft, retaining identity without mutating the loaded original.</summary>
+    public Goal Clone() => (Goal)MemberwiseClone();
+
     /// <summary>Gets or sets the name.</summary>
     public required string Name { get; set; }
 

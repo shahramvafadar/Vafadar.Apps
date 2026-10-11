@@ -16,12 +16,6 @@ using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Entries;
 
-/// <summary>An account in a picker.</summary>
-public sealed record AccountChoice(Guid Id, string Name, string CurrencyCode)
-{
-    public override string ToString() => $"{Name} ({CurrencyCode})";
-}
-
 /// <summary>A quick template above a new entry, with the icon and colour of its category (TX-04).</summary>
 public sealed record TemplateChip(EntryTemplate Template, Symbol Icon, Color IconColor);
 

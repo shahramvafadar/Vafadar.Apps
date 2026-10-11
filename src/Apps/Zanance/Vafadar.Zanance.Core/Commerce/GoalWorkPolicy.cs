@@ -13,17 +13,23 @@ public sealed class GoalWorkPolicy
     private readonly bool _canReopenBasic;
     private readonly bool _canReopenAdvanced;
     private readonly bool _canReopenReminders;
+    private readonly bool _canCorrect;
+    private readonly bool _canConfigureContribution;
+    private readonly bool _canConfigureReminders;
 
     private GoalWorkPolicy(HashSet<Guid>? available, HashSet<Guid>? usable, HashSet<Guid>? contributing,
-        HashSet<Guid>? reminding, bool canReopenBasic, bool canReopenAdvanced, bool canReopenReminders)
+        HashSet<Guid>? reminding, bool canReopenBasic, bool canReopenAdvanced, bool canReopenReminders, bool canCorrect,
+        bool canConfigureContribution, bool canConfigureReminders)
     {
         _available = available; _usable = usable; _contributing = contributing; _reminding = reminding;
         _canReopenBasic = canReopenBasic; _canReopenAdvanced = canReopenAdvanced;
         _canReopenReminders = canReopenReminders;
+        _canCorrect = canCorrect;
+        _canConfigureContribution = canConfigureContribution; _canConfigureReminders = canConfigureReminders;
     }
 
     /// <summary>The separately gated inactive registration, never a customer entitlement.</summary>
-    public static GoalWorkPolicy Inactive { get; } = new(null, null, null, null, true, true, true);
+    public static GoalWorkPolicy Inactive { get; } = new(null, null, null, null, true, true, true, true, true, true);
 
     /// <summary>Resolves original goal states and the exact explicit choice; selection grants no paid tool.</summary>
     public static GoalWorkPolicy Resolve(CapabilityContext context, QuotaScope scope,
@@ -52,11 +58,27 @@ public sealed class GoalWorkPolicy
         // A historical goal joins a free chosen slot only through its writer; this is a view affordance, not a grant.
         var room = !availability.RequiresSelection && (availability.Maximum is null
             || originals.Count(goal => availability.IsSelected(goal.Id)) < availability.Maximum);
-        return new(available, usable, contributing, reminding, basic && room, basic && advanced && room, basic && reminders && room);
+        return new(available, usable, contributing, reminding, basic && room, basic && advanced && room, basic && reminders && room,
+            PlanPolicy.Check(CommercialFeature.Corrections, context) == FeaturePermission.Allowed, basic && advanced, basic && advanced && reminders);
     }
 
     /// <summary>Checks original selected availability without resuming a pause or replacing its state caption.</summary>
     public bool IsAvailableGoal(Guid id) => _available is null || _available.Contains(id);
+
+    /// <summary>Checks retained metadata/contribution corrections independently of selected new activity.</summary>
+    public bool CanCorrect => _canCorrect;
+
+    /// <summary>Checks a new goal's paired paid contribution before its eventual atomic joining of a free slot.</summary>
+    public bool CanCreateContribution(GoalType type) => CanReopenGoal(type) && _canReopenAdvanced;
+
+    /// <summary>Checks the independent paid reminder for a new paired goal draft, never a native permission grant.</summary>
+    public bool CanCreateReminder(GoalType type) => CanCreateContribution(type) && _canReopenReminders;
+
+    /// <summary>Allows configuration of a selected active/paused goal without resuming or delivering its work.</summary>
+    public bool CanConfigureContribution(Guid id) => IsAvailableGoal(id) && _canConfigureContribution;
+
+    /// <summary>Checks a selected configuration's paid reminder separately from native permission and delivery.</summary>
+    public bool CanConfigureReminder(Guid id) => IsAvailableGoal(id) && _canConfigureReminders;
 
     /// <summary>Checks a historical goal's explicit reopening affordance; the actual writer rechecks type and slots.</summary>
     public bool CanReopenGoal(GoalType type, ContributionPlan? plan = null) => Enum.IsDefined(type)

@@ -5830,4 +5830,43 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La devise enregistrée est passée de {0} à {1}. Votre brouillon est conservé. Saisissez à nouveau le montant en {1} avant de l’enregistrer.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>Vous pouvez modifier les informations enregistrées de cet objectif. Les nouveaux plans de contribution et rappels sont actuellement indisponibles.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>Conserver la répétition enregistrée</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>Le plan enregistré utilise {0} catégories. Elles sont conservées tant que vous ne choisissez pas une catégorie de remplacement.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>Votre choix de rappel est conservé. Cet objectif ne remplit pas actuellement les conditions pour recevoir des rappels.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>La devise ou l’unité a changé. Effacez cette valeur et saisissez-la à nouveau dans l’unité affichée avant d’enregistrer.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>Saisissez un pourcentage supérieur à 0 et inférieur ou égal à 100.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>Changer l’actif ou la devise de son prix effacera l’hypothèse de prix enregistrée. Enregistrer ces modifications ?</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>Les modifications n’ont pas pu être enregistrées. Vos saisies sont conservées. Rechargez les valeurs enregistrées avant de réessayer.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>L’objectif a été enregistré, mais le formulaire n’a pas pu se fermer. Fermez-le pour revenir ; les modifications ne seront pas enregistrées deux fois.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>Objectif actuellement enregistré : {0}
+Valeur cible : {1}
+Répétition : {2}
+Note : {3}</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>Les informations enregistrées ont changé. Vos champs modifiés sont conservés ; les autres affichent les valeurs actuelles. Vérifiez-les avant de conserver vos modifications.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>Conserver mes modifications vérifiées</value>
+  </data>
 </root>

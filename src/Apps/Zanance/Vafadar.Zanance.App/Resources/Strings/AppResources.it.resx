@@ -5842,4 +5842,43 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La valuta salvata è cambiata da {0} a {1}. La tua bozza viene conservata. Inserisci di nuovo l’importo in {1} prima di salvare.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>Puoi modificare i dati salvati dell’obiettivo. Al momento non sono disponibili nuovi piani di contributo o promemoria per questo obiettivo.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>Mantieni la ripetizione salvata</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>Il piano salvato usa {0} categorie. Vengono mantenute finché non scegli una categoria sostitutiva.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>La scelta del promemoria viene mantenuta. Questo obiettivo al momento non può ricevere promemoria.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>La valuta o l’unità è cambiata. Cancella il valore e reinseriscilo nell’unità visualizzata prima di salvare.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>Inserisci una percentuale maggiore di 0 e non superiore a 100.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>Cambiare il bene o la valuta del suo prezzo cancellerà l’ipotesi di prezzo salvata. Vuoi salvare queste modifiche?</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>Non è stato possibile salvare le modifiche. I tuoi dati restano nel modulo. Ricarica i valori salvati prima di riprovare.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>L’obiettivo è stato salvato, ma il modulo non si è chiuso. Chiudilo per tornare indietro; le modifiche non verranno salvate due volte.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>Obiettivo attualmente salvato: {0}
+Valore previsto: {1}
+Ripetizione: {2}
+Nota: {3}</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>I dati salvati sono cambiati. I campi modificati vengono mantenuti; gli altri mostrano i valori attuali. Controllali prima di mantenere le modifiche.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>Mantieni le modifiche controllate</value>
+  </data>
 </root>

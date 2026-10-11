@@ -5882,4 +5882,43 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>The saved currency changed from {0} to {1}. Your draft is kept. Enter the amount again in {1} before saving.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>Saved goal information remains editable. New contribution plans and reminders are currently unavailable for this goal.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>Keep saved repeat rule</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>The saved plan uses {0} categories. They are kept unless you explicitly choose a replacement category.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>The saved reminder choice is retained. This goal is not currently eligible for reminder delivery.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>The currency or measurement unit changed. Clear and reenter this value in the displayed unit before saving.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>Enter a percentage greater than 0 and no greater than 100.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>Changing the holding or its price currency will clear the saved price assumption. Save these changes?</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>The changes could not be saved. Your input is retained. Reload the current saved values before trying again.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>The goal was saved, but this form could not close. Close it to return; the changes will not be saved twice.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>Current saved goal: {0}
+Target: {1}
+Repeat rule: {2}
+Note: {3}</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>The saved information changed while this form was open. Your edited fields are retained; unchanged fields use the current saved values. Review them before keeping your edits.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>Keep my reviewed edits</value>
+  </data>
 </root>

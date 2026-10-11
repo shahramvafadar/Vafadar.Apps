@@ -2,13 +2,6 @@ using Vafadar.Localization;
 
 namespace Vafadar.Zanance.App.Presentation;
 
-/// <summary>An editor that knows whether the user changed something since it was opened or saved.</summary>
-internal interface IUnsavedChanges
-{
-    /// <summary>Gets a value indicating whether leaving now would lose input.</summary>
-    bool IsDirty { get; }
-}
-
 /// <summary>
 /// The same question in every editor before input is lost (CR12): Cancel and the Android back button leave at once when
 /// nothing changed, and ask "Discard changes?" otherwise.

@@ -14,4 +14,20 @@ public static class GoalContributionPolicy
     public static bool HasWork(ContributionPlan? plan) => plan is not null && (plan.Method != ContributionMethod.FixedAmount
         || plan.Amount is not null || plan.Percent is not null || plan.CategoryIds.Count > 0
         || plan.AssumedPricePerUnitMilli is not null || HasAdvancedDates(plan));
+
+    /// <summary>Classifies paid work consistently before an editor preview and under the actual paired writer.</summary>
+    public static bool StartsWork(ContributionPlan? plan, ContributionPlan? existing, Goal? target, Goal? original)
+    {
+        var counted = target?.State is GoalState.Active or GoalState.Paused;
+        var reopening = counted && original is not null && original.State is not (GoalState.Active or GoalState.Paused);
+        return plan is not null && HasWork(plan) && (!HasWork(existing) || reopening
+            || (counted && existing is not null && (plan.Method != existing.Method
+                || (HasAdvancedDates(plan) && !HasAdvancedDates(existing)))));
+    }
+
+    /// <summary>Checks an independently paid newly enabled reminder; retained opt-in/disabling are corrections.</summary>
+    public static bool StartsReminder(ContributionPlan? plan, ContributionPlan? existing, Goal? target, Goal? original) =>
+        plan?.ReminderEnabled == true && (existing?.ReminderEnabled != true
+            || (target?.State is GoalState.Active or GoalState.Paused && original is not null
+                && original.State is not (GoalState.Active or GoalState.Paused)));
 }

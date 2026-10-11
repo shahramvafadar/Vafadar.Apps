@@ -24,13 +24,21 @@ public sealed record GoalWorkSnapshot(List<Goal> Goals, List<ContributionPlan> C
     /// <summary>Gets the immutable cached-rights guard captured by the actual read.</summary>
     internal Commerce.CommercialFileAccess? Access { get; init; }
 
+    /// <summary>Compares original actual-file inputs/revision when an editor explicitly reloads retained drafts.</summary>
+    public bool HasSameOriginalInputs(GoalWorkSnapshot other)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+        return DatabasePath == other.DatabasePath && SelectionRevision == other.SelectionRevision
+            && InputStamp == other.InputStamp && ReferenceStamp == other.ReferenceStamp;
+    }
+
     /// <summary>Captures original account/holding units and availability on which the goal form relies.</summary>
     internal static string CaptureReferences(IEnumerable<Core.Accounts.Account> accounts, IEnumerable<Core.Holdings.AssetType> types)
     {
         var values = accounts.OrderBy(account => account.Id).Select(account => FormattableString.Invariant(
             $"account|{account.Id:N}|{account.Type}|{account.IsArchived}|{account.CurrencyCode}"))
             .Concat(types.OrderBy(type => type.Id).Select(type => FormattableString.Invariant(
-                $"type|{type.Id:N}|{type.Dimension}|{type.PriceCurrencyCode}|{type.IsArchived}")));
+                $"type|{type.Id:N}|{type.Dimension}|{type.PriceCurrencyCode}|{type.IsArchived}|{type.Divisible}|{Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(type.CountUnitName ?? string.Empty))}")));
         return Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(
             System.Text.Encoding.UTF8.GetBytes(string.Join('\n', values))));
     }

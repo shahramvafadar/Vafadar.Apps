@@ -6,6 +6,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Preserve goal plans while editing (2026-10-11, D-147)
+
+- Keep saved repeat rules, end dates/counts, categories and contribution methods when editing a goal, including Simple mode.
+- Show the actual contribution rule and next dates, and keep original archived funding/holding choices readable.
+- Retain unfinished input after a failed save; review current saved values before overwriting concurrent changes.
+- Keep entered numeric formats and require reentry after currency or measurement-unit changes.
+- Confirm budget reductions separately and protect them from concurrent edits or duplicate submission.
+- Prevent a successful goal save from being submitted again after a failed return.
+
 ### Improved - Clear goal actions and retained drafts (2026-10-11, D-146)
 
 - Keep original goal progress, history and Home pins visible; long Home goal names wrap completely.

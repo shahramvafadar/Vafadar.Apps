@@ -52,7 +52,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Rechecks a reviewed form under the same SQLite writer that will commit its explicit action.</summary>
-    private static async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
+    internal static async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
     {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
             ProfileFilePath(db), StringComparison.Ordinal))
@@ -136,11 +136,12 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Saves the complete goal editor draft and its contribution plan atomically; null removes the plan.</summary>
-    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default)
+    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
     {
         ArgumentNullException.ThrowIfNull(goal);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goal.Id, cancellationToken);
         var original = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goal.Id, cancellationToken) : null;
         // D-123: reject the complete draft before pin/protection normalization or an old plan can change.
@@ -304,15 +305,11 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             return null;
         }
         if (!Enum.IsDefined(plan.Method)) throw new ArgumentException("A contribution requires a known method.", nameof(plan));
-        var counted = target?.State is GoalState.Active or GoalState.Paused;
-        var reopening = counted && original is not null && original.State is not (GoalState.Active or GoalState.Paused);
-        var newWork = GoalContributionPolicy.HasWork(plan) && (!GoalContributionPolicy.HasWork(existing) || reopening
-            || (counted && existing is not null && (plan.Method != existing.Method
-                || (GoalContributionPolicy.HasAdvancedDates(plan) && !GoalContributionPolicy.HasAdvancedDates(existing)))));
+        var newWork = GoalContributionPolicy.StartsWork(plan, existing, target, original);
         write.DemandFeature(newWork ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
         // D-123: empty date rows support the basic goal without an amount. Reminders are a separate paid tool;
         // turning one off/removing history never consumes a new right or creates an earmark/ledger movement.
-        var startsReminder = plan.ReminderEnabled && (existing?.ReminderEnabled != true || reopening);
+        var startsReminder = GoalContributionPolicy.StartsReminder(plan, existing, target, original);
         if (startsReminder)
             write.DemandFeature(CommercialFeature.ContributionReviewReminders);
         return newWork ? CommercialFeature.AdvancedGoals : startsReminder ? CommercialFeature.ContributionReviewReminders : null;

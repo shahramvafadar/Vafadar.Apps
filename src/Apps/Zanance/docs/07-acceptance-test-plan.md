@@ -1089,3 +1089,26 @@ Store signing/publication or commercial-activation acceptance is implied.
 Actual-source cases cover complete original financial packets/pins, unavailable positive work, historical releases, over-release rejection, consent cancellation/busy serialization, changed file/rights/choice/metadata/units, committed reload failure, price correction, numeric culture/currency drafts, paused choice and historical reopening.
 
 [Evidence](quality/goal-work-views.md).
+
+## AT-149 - Reviewed goal editor and explicit budget cuts
+
+40 new AT-149 actual-source/real SQLite cases pass. Final normal parallel main 2,560 / App.Tests 537 pass,
+zero failures/skips; test output cleaned. Strict Windows and Android builds and canonical Release APK build have zero
+warnings/errors. Eighteen English/Persian/German, light/dark, 360/412/wide contexts check the actual Advanced and Simple
+modal at process-local 1.5 font stress: complete changed glyphs, real 44-pixel Invoke targets, stale Save rejection,
+retained reviewed reload/current saved summary and native Close. All 25 complete fixture tables and original development
+data/sidecar bytes are restored. The review uses independent fictitious data and explicit native-effect answers, not
+replacement MAUI controls or a production entitlement replacement.
+
+Six normal signed Release owned-emulator cases check the original archived account, uncommon rule, multiple-category
+warning, pinned Save and native Close/Back. One actual note-only Save succeeds; complete original rule/categories,
+accounts, ledger, allocations and other metadata stay equal. Only that goal note/audit and the previously delivered
+D-141 migration differ. Exact owned original bytes/sidecars and Main/English/System are restored; the normal Release
+remains installed/stopped. No physical-device, iOS, OS accessibility, provider, performance, Store signing/publication
+or commercial-activation acceptance is implied.
+
+ENT-02/03 remain in progress. Continue remaining actual budget/new-work bindings, then other resources/operations,
+import/restore/native paths and commercial messages under D-69. Commercial activation and owner/external gates stay
+separate; this editor slice is not completion of the commercial release.
+
+Evidence: `docs/quality/goal-editor-work.md`.

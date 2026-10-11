@@ -508,3 +508,38 @@ No EF model/schema change; no migration or compiled-model regeneration is requir
 Each actual detail command passes its captured GoalWorkSnapshot to the original store. The same SQLite writer rechecks file/rights/choice, all original goal/rule/allocation metadata (including equal-time note/pin changes) and account/holding units/availability before mutation. Stable identity comes from the actual factory-bound connection setting, since native SQLite DataSource resolution can differ between auto-closed reads and open writers. Another configured profile file is still rejected. Legacy callers keep their existing boundary; no model/schema change occurs. Native color/query partials are excluded from actual-source application tests. Complete original calculation inputs are never filtered by the new-work projection.
 
 [Evidence](../../src/Apps/Zanance/docs/quality/goal-work-views.md).
+
+## Reviewed paired goal and explicit budget writers (D-147)
+
+Keep the original goal identity/state, archived references, hidden contribution method, complete saved recurrence
+rule/end/calendar/holiday choices, all unchanged spending-cut categories and the retained price assumption. Metadata-only
+corrections never create a contribution plan for a legacy goal without one. A new draft saves its explicit named monthly
+anchor. Show the actual rule/end/next dates and original method even in Simple mode; multiple saved categories remain
+explicit rather than silently becoming the first category.
+
+Construction performs no database read. Cover complete initial/retry publication; preserve explicit dirty fields and their
+numeric parse culture/unit. Live captions never replace selections or reinterpret raw input. Changed currency/measurement
+facts require actual reentry. Explicit reload merges only dirty fields into fresh original values, displays the current
+saved target/rule/note and requires the review action when original inputs changed. It never silently accepts an overwrite.
+Shell's empty native modal-attachment query retains an already opened identity; another explicit identity is rejected.
+
+Separate original corrections from new paid contribution/reminder configuration. Paused selected paid configuration stays
+paused and never prompts or delivers a reminder. Retained corrections/disabling remain available. Production commercial
+registration is still inactive and unrestricted. No choice, display change, opening, permission or navigation posts money.
+
+The paired writer rechecks the captured actual file/rights/choice and complete goal/rule/allocation/reference stamps before
+mutation. Clone the complete original goal; never mutate it before a successful write. A successful save retires the draft
+before returning, so navigation failure cannot resubmit it. One busy guard spans consent, permission, write and navigation.
+An explicit holding/quote-reference change confirms clearing only the previous assumed price; cancellation keeps the draft.
+
+Apply to budget remains a separate explicit confirmation. Its original monthly category limit, full budget metadata/all
+limits, financial period/day and category wording are rechecked inside the actual SQLite writer. Change only the confirmed
+category limit, never a goal, contribution, allocation, account or ledger entry. Concurrent equal-time edits and duplicate
+commands are rejected; unrelated name/display changes do not reenable the same already applied cut.
+
+Canonical Build-AndroidApk.ps1 produces artifacts/android/zanance-d147-release.apk, package pro.vafadar.zanance,
+nondebuggable Release, intact ZIP, full ARM64/x64 assembly stores and application AOT, verified v2/v3 signature with
+the existing local test certificate. Bytes: 81491883. SHA-256: `d3aa44afc6f55aae1ea3b4a0fe82700c5120ad196343afcd7cdcfbdf0d6879aa`.
+No schema/model/migration, portable preference, security policy, credential, SDK, paid grant or permission change.
+
+Evidence: `src/Apps/Zanance/docs/quality/goal-editor-work.md`.

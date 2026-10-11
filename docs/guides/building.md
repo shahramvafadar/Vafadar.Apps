@@ -511,3 +511,29 @@ Use the canonical complete signed Release APK for Android actions. Read actual o
 Use VAFADAR_SNAPSHOT_ONLY=goal-work-views for actual list/detail/Home and goal-work-release-hint for the focused neutral explanation. Fixtures use independent artifact databases and page-local fictitious Free input; release registration stays inactive. The hidden own AppWindow, native glyph/target/Invoke checks and exact original data/display restoration remain required. Android acceptance uses the complete signed Release. An unlaunched complete Debug package reads/prepares/restores the exact owned sample file; a separate complete Debug run may diagnose an already failed owned action, without being counted as Release acceptance. Preserve failed helper attempts and never infer physical/OS/Store/startup acceptance.
 
 [Evidence](../../src/Apps/Zanance/docs/quality/goal-work-views.md).
+
+## Focused original goal-editor review (D-147)
+
+The Debug-only `goal-editor-work` snapshot route uses an independently owned artifact database, actual Advanced/Simple
+modals and real native Invoke targets. Set the usual own-window snapshot size/theme/languages and process-local font
+stress; preserve/restore all original development database/sidecar bytes and display. It checks rejected stale Save,
+reviewed reload, complete original rules/categories, glyphs/targets and native Close. Explicit review-effect answers
+never replace release registration or MAUI controls. Android proof uses the normal complete signed Release in the
+owned emulator and only its exact fictitious profile; one note-only Save preserves original financial rows.
+
+40 new AT-149 actual-source/real SQLite cases pass. Final normal parallel main 2,560 / App.Tests 537 pass,
+zero failures/skips; test output cleaned. Strict Windows and Android builds and canonical Release APK build have zero
+warnings/errors. Eighteen English/Persian/German, light/dark, 360/412/wide contexts check the actual Advanced and Simple
+modal at process-local 1.5 font stress: complete changed glyphs, real 44-pixel Invoke targets, stale Save rejection,
+retained reviewed reload/current saved summary and native Close. All 25 complete fixture tables and original development
+data/sidecar bytes are restored. The review uses independent fictitious data and explicit native-effect answers, not
+replacement MAUI controls or a production entitlement replacement.
+
+Six normal signed Release owned-emulator cases check the original archived account, uncommon rule, multiple-category
+warning, pinned Save and native Close/Back. One actual note-only Save succeeds; complete original rule/categories,
+accounts, ledger, allocations and other metadata stay equal. Only that goal note/audit and the previously delivered
+D-141 migration differ. Exact owned original bytes/sidecars and Main/English/System are restored; the normal Release
+remains installed/stopped. No physical-device, iOS, OS accessibility, provider, performance, Store signing/publication
+or commercial-activation acceptance is implied.
+
+Evidence: `src/Apps/Zanance/docs/quality/goal-editor-work.md`.

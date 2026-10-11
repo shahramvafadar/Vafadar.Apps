@@ -20,6 +20,12 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalsViewModel.cs" Link="Application/GoalsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalHomeProjection.cs" Link="Application/GoalHomeProjection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalDetailViewModel.cs" Link="Application/GoalDetailViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalEditorViewModel.cs" Link="Application/GoalEditorViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/IGoalEditorNotifications.cs" Link="Application/IGoalEditorNotifications.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/AccountChoice.cs" Link="Application/AccountChoice.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IUnsavedChanges.cs" Link="Application/IUnsavedChanges.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/PlanText.cs" Link="Application/PlanText.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/CategoryLookup.cs" Link="Application/CategoryLookup.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingText.cs" Link="Application/HoldingText.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IThemeAware.cs" Link="Application/IThemeAware.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />

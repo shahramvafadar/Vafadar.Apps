@@ -939,3 +939,18 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   committed reload failure disables writes and exposes growing feedback/retry outside the body. Retry never reposts.
 * Native semantic colors/query interfaces remain real MAUI partials; application tests compile actual non-UI sources.
   Review uses independent fictitious data, restores all original rows/bytes/display and never activates commercial limits.
+
+## 80. Reviewed goal editor and explicit budget cuts (D-147)
+
+* Keep complete original goal/rule/end/calendar/categories/hidden method/assumption and archived references. A metadata
+  correction of a legacy no-plan goal creates no plan. New monthly drafts retain their explicit named anchor.
+* Cover complete publication. Preserve raw input/culture/unit and only dirty fields on explicit reload; changed units
+  require reentry and changed original inputs require review of current saved values. Empty native modal-attachment
+  queries retain the opened identity; another explicit identity fails. Live captions never reinterpret unsaved input.
+* Separate retained corrections from new contribution/reminder configuration; paused configuration never resumes or
+  prompts. Recheck the actual file/rights/choice/full inputs under the paired writer; retire a committed draft before
+  failed navigation. One busy guard spans permission/confirmation/write/return. Never post ledger money here.
+* Apply to budget confirms the original category limit and rechecks full budget/period/day/category under one actual
+  writer. Change only that limit; no goal/plan/allocation/ledger write or repeat of an unchanged already applied cut.
+* Native review measures the changed actual captions after layout/real scroll realization, including Simple mode,
+  uses an independent fixture and restores complete original data/display. Failed helpers are negative evidence.

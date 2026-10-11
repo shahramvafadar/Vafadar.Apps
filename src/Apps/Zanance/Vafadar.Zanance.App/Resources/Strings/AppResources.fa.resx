@@ -5853,4 +5853,43 @@
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>ارز ذخیره‌شده از «{0}» به «{1}» تغییر کرده است. مقدار واردشده حفظ شده است. پیش از ذخیره، مبلغ را دوباره با ارز «{1}» وارد کنید.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>اطلاعات ذخیره‌شدهٔ هدف قابل ویرایش است. در حال حاضر برنامهٔ مشارکت و یادآور جدید برای این هدف در دسترس نیست.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>حفظ قاعدهٔ تکرار ذخیره‌شده</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>برنامهٔ ذخیره‌شده از «{0}» دسته استفاده می‌کند. تا زمانی که دستهٔ جایگزین را انتخاب نکنید، همگی حفظ می‌شوند.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>انتخاب ذخیره‌شدهٔ یادآور حفظ می‌شود. این هدف در حال حاضر شرایط ارسال یادآور را ندارد.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>ارز یا واحد اندازه‌گیری تغییر کرده است. پیش از ذخیره، این مقدار را پاک کنید و با واحد نمایش‌داده‌شده دوباره وارد کنید.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>درصدی بیشتر از صفر و حداکثر صد وارد کنید.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>تغییر دارایی یا ارز قیمت آن، فرض قیمتِ ذخیره‌شده را پاک می‌کند. این تغییرات ذخیره شوند؟</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>تغییرات ذخیره نشدند. ورودی شما حفظ شده است. پیش از تلاش دوباره، اطلاعات ذخیره‌شدهٔ فعلی را بازخوانی کنید.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>هدف ذخیره شد، اما فرم بسته نشد. برای بازگشت، فرم را ببندید؛ تغییرات دوباره ذخیره نمی‌شوند.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>هدف ذخیره‌شدهٔ فعلی: «{0}»
+مقدار هدف: «{1}»
+قاعدهٔ تکرار: «{2}»
+یادداشت: «{3}»</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>اطلاعات ذخیره‌شده هنگام باز بودن فرم تغییر کرده است. فیلدهای ویرایش‌شدهٔ شما حفظ شده‌اند و سایر فیلدها اطلاعات فعلی را نشان می‌دهند. پیش از حفظ ویرایش‌ها، آن‌ها را بررسی کنید.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>حفظ ویرایش‌های بررسی‌شدهٔ من</value>
+  </data>
 </root>

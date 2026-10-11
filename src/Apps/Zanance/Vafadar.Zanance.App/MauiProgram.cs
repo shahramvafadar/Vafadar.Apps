@@ -73,6 +73,7 @@ public static class MauiProgram
                 services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(), "display-settings.json", Vafadar.Localization.LocalizationService.PortableKeys))
             .AddSingleton<UndoService>()
             .AddSingleton<ReminderService>()
+            .AddSingleton<Features.Goals.IGoalEditorNotifications, Features.Goals.MauiGoalEditorNotifications>()
             .AddSingleton<Interaction.MauiAppInteraction>()
             .AddSingleton<Interaction.IAppInteraction>(s => s.GetRequiredService<Interaction.MauiAppInteraction>())
             .AddSingleton<Interaction.IAppFlowHost>(s => s.GetRequiredService<Interaction.MauiAppInteraction>())

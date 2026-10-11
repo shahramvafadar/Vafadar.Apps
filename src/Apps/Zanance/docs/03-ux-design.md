@@ -873,3 +873,52 @@ Keep original progress/history separate from selected new work; selection does n
 Keep lifecycle, financial tone/progress and new-work availability separate. Preserve original Home pins and let long goal identities wrap. Newly opened release-only goals show Release and an original earmarked account; reload retains explicit input. The neutral hint explains both earmarking and releasing without moving money. Keep price/currency feedback beside its input and failed-publication feedback/retry outside the disabled body viewport. One native busy guard spans consent/write/publication.
 
 [Running-app evidence](quality/goal-work-views.md).
+
+## Reviewed goal editor and retained contribution drafts (D-147)
+
+Keep the original goal identity/state, archived references, hidden contribution method, complete saved recurrence
+rule/end/calendar/holiday choices, all unchanged spending-cut categories and the retained price assumption. Metadata-only
+corrections never create a contribution plan for a legacy goal without one. A new draft saves its explicit named monthly
+anchor. Show the actual rule/end/next dates and original method even in Simple mode; multiple saved categories remain
+explicit rather than silently becoming the first category.
+
+Construction performs no database read. Cover complete initial/retry publication; preserve explicit dirty fields and their
+numeric parse culture/unit. Live captions never replace selections or reinterpret raw input. Changed currency/measurement
+facts require actual reentry. Explicit reload merges only dirty fields into fresh original values, displays the current
+saved target/rule/note and requires the review action when original inputs changed. It never silently accepts an overwrite.
+Shell's empty native modal-attachment query retains an already opened identity; another explicit identity is rejected.
+
+Separate original corrections from new paid contribution/reminder configuration. Paused selected paid configuration stays
+paused and never prompts or delivers a reminder. Retained corrections/disabling remain available. Production commercial
+registration is still inactive and unrestricted. No choice, display change, opening, permission or navigation posts money.
+
+The paired writer rechecks the captured actual file/rights/choice and complete goal/rule/allocation/reference stamps before
+mutation. Clone the complete original goal; never mutate it before a successful write. A successful save retires the draft
+before returning, so navigation failure cannot resubmit it. One busy guard spans consent, permission, write and navigation.
+An explicit holding/quote-reference change confirms clearing only the previous assumed price; cancellation keeps the draft.
+
+Apply to budget remains a separate explicit confirmation. Its original monthly category limit, full budget metadata/all
+limits, financial period/day and category wording are rechecked inside the actual SQLite writer. Change only the confirmed
+category limit, never a goal, contribution, allocation, account or ledger entry. Concurrent equal-time edits and duplicate
+commands are rejected; unrelated name/display changes do not reenable the same already applied cut.
+
+40 new AT-149 actual-source/real SQLite cases pass. Final normal parallel main 2,560 / App.Tests 537 pass,
+zero failures/skips; test output cleaned. Strict Windows and Android builds and canonical Release APK build have zero
+warnings/errors. Eighteen English/Persian/German, light/dark, 360/412/wide contexts check the actual Advanced and Simple
+modal at process-local 1.5 font stress: complete changed glyphs, real 44-pixel Invoke targets, stale Save rejection,
+retained reviewed reload/current saved summary and native Close. All 25 complete fixture tables and original development
+data/sidecar bytes are restored. The review uses independent fictitious data and explicit native-effect answers, not
+replacement MAUI controls or a production entitlement replacement.
+
+Six normal signed Release owned-emulator cases check the original archived account, uncommon rule, multiple-category
+warning, pinned Save and native Close/Back. One actual note-only Save succeeds; complete original rule/categories,
+accounts, ledger, allocations and other metadata stay equal. Only that goal note/audit and the previously delivered
+D-141 migration differ. Exact owned original bytes/sidecars and Main/English/System are restored; the normal Release
+remains installed/stopped. No physical-device, iOS, OS accessibility, provider, performance, Store signing/publication
+or commercial-activation acceptance is implied.
+
+ENT-02/03 remain in progress. Continue remaining actual budget/new-work bindings, then other resources/operations,
+import/restore/native paths and commercial messages under D-69. Commercial activation and owner/external gates stay
+separate; this editor slice is not completion of the commercial release.
+
+Evidence: `docs/quality/goal-editor-work.md`.

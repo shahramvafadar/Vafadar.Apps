@@ -5822,4 +5822,43 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La moneda guardada ha cambiado de {0} a {1}. Se conserva tu borrador. Introduce de nuevo el importe en {1} antes de guardar.</value>
   </data>
+  <data name="Goal_ContributionUnavailable" xml:space="preserve">
+    <value>Puedes editar los datos guardados del objetivo. Ahora no están disponibles los nuevos planes de aportación ni los recordatorios para este objetivo.</value>
+  </data>
+  <data name="Goal_SavedSchedule" xml:space="preserve">
+    <value>Conservar la repetición guardada</value>
+  </data>
+  <data name="Goal_SavedCategories" xml:space="preserve">
+    <value>El plan guardado utiliza {0} categorías. Se conservan hasta que elijas una categoría de sustitución.</value>
+  </data>
+  <data name="Goal_ReminderUnavailable" xml:space="preserve">
+    <value>Se conserva tu elección del recordatorio. Ahora este objetivo no reúne las condiciones para recibir recordatorios.</value>
+  </data>
+  <data name="Goal_DraftUnitChanged" xml:space="preserve">
+    <value>La moneda o la unidad ha cambiado. Borra el valor y vuelve a introducirlo con la unidad mostrada antes de guardar.</value>
+  </data>
+  <data name="Goal_PercentInvalid" xml:space="preserve">
+    <value>Introduce un porcentaje mayor que 0 y como máximo de 100.</value>
+  </data>
+  <data name="Goal_ResetPriceForHolding" xml:space="preserve">
+    <value>Cambiar el activo o la moneda de su precio borrará la estimación de precio guardada. ¿Quieres guardar estos cambios?</value>
+  </data>
+  <data name="Goal_SaveFailed" xml:space="preserve">
+    <value>No se han podido guardar los cambios. Tus datos se conservan. Vuelve a cargar los valores guardados antes de intentarlo de nuevo.</value>
+  </data>
+  <data name="Goal_SavedReturnFailed" xml:space="preserve">
+    <value>El objetivo se ha guardado, pero no se pudo cerrar el formulario. Ciérralo para volver; los cambios no se guardarán dos veces.</value>
+  </data>
+  <data name="Goal_ReloadedSaved" xml:space="preserve">
+    <value>Objetivo guardado actual: {0}
+Meta: {1}
+Repetición: {2}
+Nota: {3}</value>
+  </data>
+  <data name="Goal_ReloadReview" xml:space="preserve">
+    <value>Los datos guardados han cambiado. Tus campos editados se conservan; los demás muestran los valores actuales. Revísalos antes de conservar tus cambios.</value>
+  </data>
+  <data name="Goal_KeepEdits" xml:space="preserve">
+    <value>Conservar mis cambios revisados</value>
+  </data>
 </root>
