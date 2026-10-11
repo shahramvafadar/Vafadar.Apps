@@ -783,5 +783,15 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Explicit linking rechecks the stored rule/slice and actual entry kind/accounts/destination/partial/link markers.
   Never steal another occurrence's payment. Entry markers and state commit together without posting another entry
   or changing financial metadata. Preserve normal idempotent links and actual paid totals.
-* Current registration stays inactive. New/full/partial settlement, reopening generated money, selected-plan
-  generation and automation remain separate unfinished boundaries; do not describe this slice as full enforcement.
+* Current registration stays inactive. D-134 completes the new/full/partial settlement writer boundary.
+  Reopening generated money and selected-plan generation/automation remain unfinished; no full enforcement claim.
+
+## 67. Atomic new occurrence payments (D-134)
+
+* New full, partial and final payments recheck the stored rule/slice, kind/accounts/destination and actual state
+  under the same actual-file writer as ledger validation and Save. Never overwrite an existing entry identity.
+* Classify partial/final payment from actual linked partial money and Core effective amount/date rules, preserving
+  explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
+  all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
+* Current registration remains inactive. Generated-entry reopening, selected-plan generation/automation, choice
+  persistence/UI and occurrence-command exception feedback remain separate unfinished boundaries.

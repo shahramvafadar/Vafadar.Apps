@@ -1068,7 +1068,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// <summary>Validates the complete ledger batch within its caller's writer; correction grants are private identities.</summary>
     private async Task<SaveResult> SaveEntriesUnderWriterAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds, Guid? moveAttachmentsTo,
-        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken)
+        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken, OccurrenceState? settlement = null)
     {
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
@@ -1144,6 +1144,13 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             await db.Attachments.Where(a => deleteIds.Contains(a.EntryId)).ExecuteUpdateAsync(a => a.SetProperty(x => x.EntryId, target), cancellationToken);
         }
 
+        if (settlement is not null)
+        {
+            // D-134: the final state shares the ledger writer, including actual partial totals and failure rollback.
+            if (db.Entry(settlement).State == EntityState.Detached) db.OccurrenceStates.Add(settlement);
+            write.EnsureCurrent();
+            await db.SaveChangesAsync(cancellationToken);
+        }
         await write.CommitAsync(cancellationToken);
 
         OnChanged();

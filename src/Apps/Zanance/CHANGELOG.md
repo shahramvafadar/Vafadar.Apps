@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Complete planned payment saves (2026-10-11, D-134)
+
+- Save a planned payment and its settled status together, so a storage failure cannot leave half the operation saved.
+- Use the current remaining amount when recording part of a payment, including payments made since the form opened.
+- Preserve the actual payment amount and date; keep earlier partial payments separate.
+
 ### Fixed - Safe linking of an existing payment (2026-10-11, D-133)
 
 - Link the payment and its planned occurrence together; a failed save leaves neither half committed.

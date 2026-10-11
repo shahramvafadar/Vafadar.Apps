@@ -875,3 +875,13 @@ destination, five actual post-SQL access retirements/retries, no-op repair/histo
 independent writers assigning one payment only once. Normal installed en/fa/de light/dark explicit confirmations
 retain actual 950 minor units, complete tags/notes/payee/receipts and one settled state without a second entry.
 [Evidence](quality/occurrence-correction-writer.md). Strict builds/full signed APK do not complete all commercial/native/external gates.
+
+## AT-136 - Atomic new planned payments (D-134)
+
+16 actual SQLite cases compare complete 24-table snapshots on state failure, invalid inputs, changed actual
+relationships and cached-access retirement after entry SQL, then retry without duplicate money. Cover old form
+partial balance, actual changed/moved amount with retained metadata and two independent writers competing for
+full/partial payments. One final settlement, correct prior paid total and preserved actual amount/date.
+Main 2,157 pass, App.Tests 318. Normal Release en/fa/de light full Confirm and dark partial then final Pay part
+are checked through native inputs/actions, plus complete stored rows. [Evidence](quality/atomic-occurrence-payments.md).
+Strict builds and emulator evidence do not complete physical-device/iOS/production acceptance.

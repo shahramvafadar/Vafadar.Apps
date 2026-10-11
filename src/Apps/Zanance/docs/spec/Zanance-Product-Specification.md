@@ -1867,3 +1867,12 @@ preserving actual money and metadata without a second ledger entry. SQL/access f
 Changed; concurrent writers cannot steal a payment. 39 new cases/main 2,141 pass, App.Tests 318. Current commercial
 registration remains inactive. [Native/package evidence](../quality/occurrence-correction-writer.md). Other settlement/reopening, selected-plan
 generation, automation, choice persistence/UI, command feedback and existing external release gates remain open.
+
+### 31.47. Atomic new planned payments (D-134 / AT-136)
+
+Settle/PayPart reuse complete ledger validation in the same actual-file writer as stored occurrence checks and
+state/paid-total publication. Actual linked partial money and Core effective amount/date determine the remaining
+payment even from a stale form. SQL/access failure rolls back money and state before notifications; independent
+writers keep one final settlement. 16 new SQLite cases/main 2,157 pass, App.Tests 318; [evidence](../quality/atomic-occurrence-payments.md).
+Normal commercial registration remains inactive. Reopening generated money, selected-plan automation,
+choice persistence/UI, command exception feedback and external gates remain open.

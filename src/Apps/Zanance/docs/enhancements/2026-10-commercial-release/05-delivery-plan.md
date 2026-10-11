@@ -477,3 +477,9 @@ linking under the actual-file writer. 39 added cases/main 2,141 pass, App.Tests 
 normal confirmations preserve actual money/metadata and create no second entry. Registration stays inactive.
 New settlements/partial/final posting, generated-entry reopening, selected-plan generation, automation, choice UI/
 persistence and occurrence command failure feedback remain unfinished: [evidence](../../quality/occurrence-correction-writer.md).
+
+D-134 continues ENT-02/03 with atomic new full/partial/final payments under the actual-file writer and current
+remaining money. Reuse ledger validation; recheck stored relationships and Core occurrence rules, with complete
+SQL/access rollback and notifications after commit. 16 added SQLite cases/main 2,157 pass, App.Tests 318;
+six normal Release en/fa/de light/dark flows. Registration stays inactive. Generated-entry reopening,
+selected-plan automation, choice persistence/UI and command exception feedback remain open: [evidence](../../quality/atomic-occurrence-payments.md).

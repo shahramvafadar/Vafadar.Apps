@@ -761,3 +761,10 @@ payment, silently moves another occurrence's payment or changes actual money/met
 and repair do not need a selected account or paid host. Normal installed confirmations are verified independently
 of enabled commercial SQLite tests; the current app remains unrestricted. No caption/layout change is introduced.
 Existing occurrence-command failure feedback and other settlement/reopening paths remain separate follow-ups.
+
+## Complete planned payment saves (D-134)
+
+Existing Confirm and Pay part actions keep explicit actual amount/date and established validation. A payment and
+its matching status commit together. Pay part uses the current stored amount and earlier actual payments, not an
+old form balance; reaching the remaining amount settles once. No caption/layout change. Native normal delivery
+is separate from SQLite failure rollback; existing command exception feedback remains an unfinished follow-up.

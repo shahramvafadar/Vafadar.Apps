@@ -29,3 +29,5 @@ Status words used everywhere: **Implemented – verified** (behaviour tested), *
 Complete growing transaction category choices: [runtime evidence](quality/entry-category-captions.md).
 
 Retained occurrence correction and atomic payment linking: [engineering evidence](quality/occurrence-correction-writer.md) (D-133 / AT-135).
+
+Atomic new planned payments: [engineering evidence](quality/atomic-occurrence-payments.md) (D-134 / AT-136).

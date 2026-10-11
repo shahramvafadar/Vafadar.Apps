@@ -8,7 +8,7 @@ namespace Vafadar.Zanance.Data;
 
 /// <summary>
 /// Data access for plans and their occurrences (docs/02-domain-design.md §5–§7). Explicit links and occurrence
-/// corrections commit atomically. New settlements retain their entry-first recovery through RepairSettlementsAsync.
+/// corrections and new occurrence payments commit atomically. RepairSettlementsAsync retains legacy recovery.
 /// </summary>
 public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store,
     ICommercialWriteAccessSource commercialAccess)
@@ -214,21 +214,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        entry.ScheduleId = occurrence.Schedule.Id;
-        entry.OccurrenceDate = occurrence.OriginalDate;
-
-        var result = await store.SaveEntryAsync(entry, cancellationToken);
-        if (result.Succeeded)
-        {
-            // The entry and the state are two writes; if the second one is lost (app killed, disk error), the next
-            // RepairSettlementsAsync restores it from the entry, so the occurrence can never stay open next to its entry.
-            await UpdateStateAsync(occurrence, state =>
-            {
-                state.Status = OccurrenceStatus.Settled;
-                state.EntryId = entry.Id;
-            }, cancellationToken);
-        }
-
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken);
+        if (result.Succeeded) OnChanged();
         return result;
     }
 
@@ -290,21 +277,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        if (occurrence.Outstanding is { } outstanding && entry.Amount >= outstanding)
-        {
-            entry.IsPartialPayment = false;
-            return await SettleAsync(occurrence, entry, cancellationToken);
-        }
-
-        entry.ScheduleId = occurrence.Schedule.Id;
-        entry.OccurrenceDate = occurrence.OriginalDate;
-        entry.IsPartialPayment = true;
-        var result = await store.SaveEntryAsync(entry, cancellationToken);
-        if (result.Succeeded)
-        {
-            OnChanged();
-        }
-
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken);
+        if (result.Succeeded) OnChanged();
         return result;
     }
 

@@ -380,3 +380,12 @@ the stored rule/slice and entry relationships before updating markers and state 
 or cached-access failure rolls back both. No extra ledger entry, changed actual monetary metadata or schema change.
 New Settle/PayPart and generated-entry Unsettle still have separate boundaries; their atomic/automation follow-up
 is not inferred from this slice. Current commercial registration remains inactive.
+
+## Atomic new occurrence payments (D-134)
+
+ZananceStore.SaveOccurrencePaymentAsync binds stored plan/rule/slice/state and actual linked partial money to
+CommercialWriteTransaction before the shared private ledger save pipeline. Reuse Core effective occurrence
+rules for classification; preserve explicit actual money/date. Save final state within the same transaction as
+entries and partial paid totals. SQL failure or retired cached facts rolls back all writes before Changed.
+Independent writers preserve one final settlement. Legacy repair remains for older interrupted data; no schema
+or production-source activation. Generated-entry Unsettle and automation binding remain unfinished boundaries.

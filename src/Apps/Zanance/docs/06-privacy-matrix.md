@@ -266,3 +266,7 @@ receipt, backup and erasure policies apply unchanged. The test-build source rema
 D-133 uses existing occurrence/link fields and cached exact-file rights; no schema, migration, backup field,
 credential, SDK, network call or permission addition. Actual financial metadata and receipt ownership/bytes remain.
 The normal test-build source remains inactive; no paid facts or selection preferences enter portable backups.
+
+D-134 reuses existing ledger/occurrence fields, exact-file cached access and actual payment rows. No schema,
+backup field, credential, permission, SDK or network addition. No paid facts are stored in portable preferences;
+normal commercial registration stays inactive. Complete rejected writes preserve all original financial rows.

@@ -1275,3 +1275,16 @@ Preserve complete actual financial metadata and receipts, without posting a seco
 No schema, SDK, permission, portable paid fact, caption/layout or activation change. New settlement/partial/final
 posting, generated-entry reopening, selected-plan generation and automation remain unfinished, as does existing
 occurrence command failure feedback. This is partial ENT-02/03 engineering evidence, not release acceptance.
+
+## D-134 - Atomic new occurrence money and actual remaining payment (2026-10-11)
+
+Two negative actual SQLite cases reproduce a full payment committed before a failed state insert, and a final
+partial payment left open by an old form balance. Reuse the established complete ledger validation and writer
+pipeline for Settle/PayPart, rechecking actual stored rule/slice, kind/accounts/destination, existing entry identity,
+state and linked partial money. Core computes the effective amount/date and remaining payment, including moved
+or changed occurrences. Full/final state and actual paid total commit with money; failure/access retirement
+rolls back every row before notifications. Preserve actual money/date, partial totals and unique settlement;
+legacy RepairSettlements remains for older data. No new quota grants or inactive-source activation.
+16 added SQLite cases/main 2,157 pass, App.Tests 318; [native/package evidence](quality/atomic-occurrence-payments.md).
+No schema, permission, SDK, caption or layout change. Generated-entry reopening, selected-plan automation,
+choice persistence/UI and occurrence-command exception feedback remain unfinished; ENT-02/03 stay in progress.

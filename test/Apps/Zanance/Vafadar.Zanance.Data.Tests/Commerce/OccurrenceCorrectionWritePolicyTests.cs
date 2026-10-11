@@ -12,7 +12,7 @@ using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data.Tests.Commerce;
 
-/// <summary>AT-135: retained occurrence corrections and atomic explicit linking in actual SQLite writers.</summary>
+/// <summary>AT-135/136: retained occurrence corrections, links and new payments in actual SQLite writers.</summary>
 [Trait("AT", "AT-135")]
 public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
 {
@@ -324,6 +324,151 @@ public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
         var actual = Assert.IsType<LedgerEntry>(await f.Store.GetEntryAsync(seed.Entry.Id, Ct));
         Assert.Equal(state.EntryId, actual.Id); Assert.Equal(state.OriginalDate, actual.OccurrenceDate);
         Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Theory]
+    [Trait("AT", "AT-136")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task A_failed_new_settlement_state_write_rolls_back_money_and_all_notifications(bool partial)
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER OwnedPaymentFailure BEFORE INSERT ON OccurrenceStates BEGIN SELECT RAISE(ABORT, 'Owned payment failure'); END", Ct);
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        var entry = Occurrences.CreateEntry(seed.Occurrence, partial ? 400 : 1000, Day.AddDays(-2), ReviewState.Confirmed);
+        await Assert.ThrowsAsync<DbUpdateException>(async () =>
+        {
+            if (partial) await seed.Plans.PayPartAsync(seed.Occurrence, entry, Ct);
+            else await seed.Plans.SettleAsync(seed.Occurrence, entry, Ct);
+        });
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-136")]
+    public async Task Final_partial_payment_uses_actual_paid_money_instead_of_the_old_form_balance()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var first = Occurrences.CreateEntry(seed.Occurrence, 600, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.PayPartAsync(seed.Occurrence, first, Ct)).Succeeded);
+        var final = Occurrences.CreateEntry(seed.Occurrence, 400, Day.AddDays(1), ReviewState.Confirmed);
+        Assert.True((await seed.Plans.PayPartAsync(seed.Occurrence, final, Ct)).Succeeded);
+        var actual = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Settled, actual.Status); Assert.Equal(final.Id, actual.EntryId);
+        Assert.Equal(600, actual.PaidAmount);
+        Assert.False(Assert.IsType<LedgerEntry>(await f.Store.GetEntryAsync(final.Id, Ct)).IsPartialPayment);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-136")]
+    [InlineData("missing")]
+    [InlineData("skipped")]
+    [InlineData("kind")]
+    [InlineData("account")]
+    [InlineData("date")]
+    [InlineData("existing")]
+    public async Task Changed_actual_occurrence_relationships_reject_new_money_without_writes(string change)
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var entry = Occurrences.CreateEntry(seed.Occurrence, 700, Day, ReviewState.Confirmed);
+        switch (change)
+        {
+            case "missing": Assert.True(await seed.Plans.DeleteScheduleAsync(seed.Plan.Id, Ct)); break;
+            case "skipped": await seed.Plans.SkipAsync(seed.Occurrence, Ct); break;
+            case "kind": entry.Kind = EntryKind.Income; break;
+            case "account": entry.AccountId = f.Accounts[1].Id; break;
+            case "date": seed.Plan.Rule.Start = Day.AddDays(1); await seed.Plans.SaveScheduleAsync(seed.Plan, Ct); break;
+            case "existing": entry = seed.Entry; break;
+        }
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => seed.Plans.SettleAsync(seed.Occurrence, entry, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-136")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Actual_post_sql_access_retirement_rolls_back_payment_and_all_state_before_retry(bool partial)
+    {
+        var f = await FixtureAsync(trigger: true); var seed = await SeedAsync(f); f.Enable(ProductPlan.Pro);
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER OwnedPaymentRetirement AFTER INSERT ON Entries BEGIN SELECT AfterOccurrenceSql(); END", Ct);
+        f.Access.AfterSql = () => f.Access.Current = CommercialWriteAccess.Inactive;
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        var entry = Occurrences.CreateEntry(seed.Occurrence, partial ? 400 : 1000, Day.AddDays(-1), ReviewState.Confirmed);
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            if (partial) await seed.Plans.PayPartAsync(seed.Occurrence, entry, Ct);
+            else await seed.Plans.SettleAsync(seed.Occurrence, entry, Ct);
+        });
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+        f.Access.AfterSql = null; f.Enable(ProductPlan.Pro);
+        Assert.True((partial ? await seed.Plans.PayPartAsync(seed.Occurrence, entry, Ct)
+            : await seed.Plans.SettleAsync(seed.Occurrence, entry, Ct)).Succeeded);
+        Assert.Equal(2, events);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-136")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Invalid_payment_keeps_all_complete_rows_and_notifications_unchanged(bool partial)
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        var entry = Occurrences.CreateEntry(seed.Occurrence, 0, Day, ReviewState.Confirmed);
+        var result = partial ? await seed.Plans.PayPartAsync(seed.Occurrence, entry, Ct) : await seed.Plans.SettleAsync(seed.Occurrence, entry, Ct);
+        Assert.False(result.Succeeded); Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-136")]
+    public async Task Changed_actual_amount_and_moved_due_date_classify_partial_payment_without_losing_metadata()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        await seed.Plans.ChangeOccurrenceAsync(seed.Occurrence, Day.AddDays(10), 2000, "Owned moved amount", Ct);
+        var entry = Occurrences.CreateEntry(seed.Occurrence, 1000, Day.AddDays(-1), ReviewState.Confirmed);
+        entry.Payee = "Owned actual payee"; entry.Note = "Owned actual note"; entry.Tags = ["owned"];
+        Assert.True((await seed.Plans.PayPartAsync(seed.Occurrence, entry, Ct)).Succeeded);
+        var state = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Open, state.Status); Assert.Equal(1000, state.PaidAmount);
+        Assert.Equal(2000, state.Amount); Assert.Equal(Day.AddDays(10), state.DueDate); Assert.Equal("Owned moved amount", state.Note);
+        var actual = Assert.IsType<LedgerEntry>(await f.Store.GetEntryAsync(entry.Id, Ct));
+        Assert.True(actual.IsPartialPayment); Assert.Equal(Day.AddDays(-1), actual.Date);
+        Assert.Equal(entry.Payee, actual.Payee); Assert.Equal(entry.Note, actual.Note); Assert.Equal(entry.Tags, actual.Tags);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-136")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Independent_writers_classify_actual_payments_without_two_final_settlements(bool partial)
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var provider = new ServiceCollection().AddSingleton<TimeProvider>(new FixedTime())
+            .AddSingleton<ICommercialWriteAccessSource>(f.Access).AddZananceData(f.Path).BuildServiceProvider();
+        _providers.Add(provider); var other = provider.GetRequiredService<PlanStore>();
+        async Task<bool> Pay(PlanStore plans)
+        {
+            var entry = Occurrences.CreateEntry(seed.Occurrence, partial ? 600 : 1000, Day, ReviewState.Confirmed);
+            try { return (partial ? await plans.PayPartAsync(seed.Occurrence, entry, Ct)
+                : await plans.SettleAsync(seed.Occurrence, entry, Ct)).Succeeded; }
+            catch (DbUpdateException) { return false; }
+        }
+        var results = await Task.WhenAll(Task.Run(() => Pay(seed.Plans), Ct), Task.Run(() => Pay(other), Ct));
+        Assert.Equal(partial ? 2 : 1, results.Count(r => r));
+        var entries = (await f.Store.GetEntriesAsync(cancellationToken: Ct)).Where(e => e.ScheduleId == seed.Plan.Id).ToList();
+        Assert.Single(entries, e => !e.IsPartialPayment);
+        var state = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Settled, state.Status); Assert.Equal(partial ? 600 : 0, state.PaidAmount);
+        Assert.Equal(partial ? 1200 : 1000, entries.Sum(e => e.Amount));
+        Assert.Equal(entries.Single(e => !e.IsPartialPayment).Id, state.EntryId);
     }
 
     private static async Task<string> SnapshotAsync(ServiceProvider provider)

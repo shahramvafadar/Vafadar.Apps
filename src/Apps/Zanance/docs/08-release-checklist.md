@@ -329,3 +329,8 @@ D-133 proves atomic explicit Link and actual-file retained occurrence correction
 main 2,141 passing tests, strict platforms and six normal signed Release native confirmations. Current test limits
 stay inactive. Other commercial writer/automation/feedback paths and all provider/device/iOS/security/billing/
 publication gates remain open: [evidence](quality/occurrence-correction-writer.md).
+
+D-134: 16 new SQLite cases/main 2,157 pass, strict Windows/Android, complete signed Release and six native normal
+full/partial/final flows. No test-build commercial activation. Generated-entry reopening/automation/choice UI/
+exception feedback and all external provider/device/iOS/security/billing/publication gates remain open.
+[Evidence](quality/atomic-occurrence-payments.md).
