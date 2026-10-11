@@ -2283,3 +2283,24 @@ explicit absent identity and canonical zero stored month coordinates; complete o
 Physical device, iOS, paid activation and product publication are not claimed.
 
 See [evidence](../quality/budget-editor-drafts.md).
+
+### 31.66 Reviewed original budget view actions (D-153)
+
+Original budget view actions now use the complete displayed BudgetEditorReview for copy, confirmed replacement
+and deletion, rechecked before/after confirmation and under the existing actual-file writer. Period lookup uses
+original calendar/currency/explicit weekly dates and rejects ambiguity. Viewing, original correction and deletion
+remain separate from paid new tools and net current-definition capacity; future periods do not consume today's
+slot. Busy spans native confirmation through refresh. A committed operation whose refresh fails requires a
+read-only Retry, without repeating Copy/Delete. Read-only opening no longer creates Settings; financial history
+and all original calculation inputs remain visible. Current commercial registration remains inactive.
+
+26 new AT-155 actual application/isolated SQLite cases pass. Final ordinary main 2,707 / App.Tests 650 pass
+without failures/skips; outputs cleaned. Strict Windows and canonical complete strict Android Release pass with
+no warnings/errors. Eighteen hidden Windows cases cover en/fa/de, light/dark, 360/412/wide, full native action
+names/targets, retained paid history/correction, changed-confirmation rejection and read-only Retry. Six normal
+Release Android language/theme cases verify actual original copy/delete confirmations; exactly one owned copy
+and deletion of that copy preserve all original 25-table data. Original owned bytes/sidecars/Main/English/System
+are restored, final signed Release installed/stopped. ENT-02/03 and remaining resource/operation/import/restore/
+native paths stay open. Physical-device, iOS, provider, paid activation and publication acceptance are not claimed.
+
+See [evidence](../quality/budget-view-actions.md).

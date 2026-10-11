@@ -575,3 +575,7 @@ Actual-file budget snapshot identity is a device-local digest, independent of st
 ## Paired budget form reviews (D-152)
 
 BudgetEditorReview captures immutable original periods/limits and complete original accounts/categories/preferences, including the distinct absent Settings state. Reader publication and Save/Replace/Delete use the same complete validation overload; reviewed writes acquire the actual SQLite writer before checking. Caller mutation, changed references/preferences/limits/date/file/access/choice revision/value retire the review. BudgetEditPolicy is the shared correction/new-tool feature rule; it grants neither capacity nor membership. A detached Budget(Guid) constructor retains original identity without adding EF properties or schema. No migration, compiled-model, portable backup or credential change is introduced. Original budget navigation hands id plus opaque actual-file scope to the editor.
+
+D-153: budget view actions reuse the complete BudgetEditorReview and paired writer overloads. Immutable displayed
+source/replacement packets reject concurrent/retired data through confirmation. No schema, compiled-model, backup
+format, security or credential change; inactive registration remains unchanged.

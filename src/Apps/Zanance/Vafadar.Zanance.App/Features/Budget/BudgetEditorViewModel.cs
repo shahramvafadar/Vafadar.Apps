@@ -282,10 +282,9 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     {
         if (_review is null || !Enum.IsDefined((BudgetMethod)MethodIndex) || !Enum.IsDefined((BudgetRollover)RolloverIndex)) return false;
         var target = Configuration();
-        if (!_review.Choices.CanConfigure(target)) return false;
-        // A future saved period does not consume today's active-definition slot. The paired writer owns exact net capacity.
-        return _budget is not null || !BudgetSelectionPolicy.IsCurrent(target, _review.Choices.Today, _review.Choices.MonthStartDay)
-            || _work.CanCreate(target.Method, target.Rollover, target.Period);
+        // D-153: sharing a selected definition or replacing its last current footprint does not need an extra slot.
+        // Future periods remain independent of today's capacity; the paired writer rechecks the exact net change.
+        return _review.Choices.CanSave(target);
     }
     private string CategoryName(Guid id) => _lookup?.Get(id) is { } category ? CategoryLookup.NameOf(category, _translator)
         : _translator.Format("Budget_MissingReference", id.ToString("N"));

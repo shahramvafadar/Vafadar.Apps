@@ -395,3 +395,6 @@ An opaque actual-file SHA-256 digest and original budget Guid enter only device-
 ## Original budget editor review (D-152)
 
 The reviewed budget form retains complete original references and pinned input cultures in memory. No new data class, permission, SDK, network, credential or backup/export field is introduced. Explicit Save rechecks the actual SQLite writer; opening and reload do not post money or create Settings. Original row/file identity does not grant commercial rights.
+
+D-153: reviewed original budget view actions add no data category, network/SDK/permission or portable grant.
+Complete original references stay local; paired Copy/Delete never mutate financial ledger rows.

@@ -378,3 +378,6 @@ An opaque actual-file SHA-256 digest and original budget Guid enter only device-
 ## Original budget editor review (D-152)
 
 Complete original financial references/preferences remain in memory for the covered budget draft and reviewed SQLite writer. No network, SDK, permission, schema, credential, portable preference or export is added. The opaque file handoff grants no authority. Opening/reload/display changes never post money or create a settings row; only explicit Save changes the original budget configuration. Diagnostic fixtures are independent and restored completely.
+
+D-153: budget action review stays local and contains only original budget/reference/preference data. Copy/Delete
+change no ledger data; no network, SDK, permission, export, portable grant, credential or security-state change.

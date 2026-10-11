@@ -82,6 +82,32 @@ public sealed class BudgetChoiceSnapshot
     }
     /// <summary>Gets deletion rights independently of current definition selection.</summary>
     public bool CanDelete => Access.Context is not { } context || PlanPolicy.Check(CommercialFeature.DeleteData, context) == FeaturePermission.Allowed;
+    /// <summary>Projects the reviewed writer's feature and net current-definition capacity without modifying any choice.</summary>
+    public bool CanSave(Budget target, Guid? replacedId = null)
+    {
+        ArgumentNullException.ThrowIfNull(target);
+        if (Access.Context is not { } context) return true;
+        if (!Enum.IsDefined(target.Method) || !Enum.IsDefined(target.Rollover) || !Enum.IsDefined(target.Period)
+            || !Enum.IsDefined(target.Calendar)) return false;
+        var scope = StoredResourceSelection.Scope(context);
+        var original = Items.SingleOrDefault(item => item.Id == (replacedId ?? target.Id))?.ToBudget();
+        if (PlanPolicy.Check(BudgetEditPolicy.Feature(target, original, scope, Today, MonthStartDay), context)
+            != FeaturePermission.Allowed) return false;
+        if (!BudgetSelectionPolicy.IsCurrent(target, Today, MonthStartDay)) return true;
+        var key = BudgetDefinitionKey.From(scope, target);
+        if (original is not null && BudgetDefinitionKey.From(scope, original) == key
+            && BudgetSelectionPolicy.IsCurrent(original, Today, MonthStartDay)) return true;
+        if (RequiresSelection) return false;
+        var selected = SelectedDefinitions.ToHashSet();
+        if (original is not null)
+        {
+            var previous = BudgetDefinitionKey.From(scope, original);
+            if (previous != key && !Items.Any(item => item.Id != original.Id
+                && BudgetSelectionPolicy.IsCurrent(item.ToBudget(), Today, MonthStartDay) && item.Definition(scope) == previous))
+                selected.Remove(previous);
+        }
+        return selected.Contains(key) || Maximum is null || selected.Count < Maximum;
+    }
     /// <summary>Gets separate current new-work rights; original calculations continue using every original budget.</summary>
     public BudgetWorkPolicy Work { get; }
     /// <summary>Gets the actual file's opaque device-local notification identity; it grants no rights.</summary>

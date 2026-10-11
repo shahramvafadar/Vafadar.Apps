@@ -1013,3 +1013,17 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Retire a committed draft before native return; failed return uses Close without another Save. Busy native Back
   shares the same discard guard. Review fixtures are independent; restore complete rows/bytes/display.
   Current registration remains inactive; budget view copy/delete/work bindings remain open.
+
+## 86. Reviewed original budget view actions (D-153)
+
+* Render every original financial input independently of work selection. Publish original action rights only after
+  complete actual-file periods, references, preferences and presentation reads validate; failed loads retain history
+  but require Retry. Opening never creates Settings.
+* Bind Copy/Delete to the displayed review, including both source and replacement. Validate before/after native
+  confirmation and under the existing paired writer; same-timestamp changes, retired publications and foreign files
+  require a fresh explicit read, never a guessed period. Preserve named calendars and canonical weekly coordinates.
+* Keep original correction/delete, paid new tools and net current-definition capacity separate. Future definitions
+  do not consume today's slot; replacing an existing footprint or sharing a selected definition is not a new slot.
+* One busy guard covers confirmation, write and reload. A committed operation with failed refresh offers read-only
+  Retry and cannot repeat its write. Native growing captions keep complete names and 44-pixel targets. Independent
+  fixture review restores complete rows/owned bytes/display; commercial registration stays inactive.

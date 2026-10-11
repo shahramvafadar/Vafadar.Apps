@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Review original budget copy and delete actions (2026-10-11, D-153)
+
+- Copying or deleting a budget rechecks the same information shown on the page, including changes made while a confirmation is open.
+- Original figures remain available when a saved configuration cannot start new work. Editing, copying and deleting use their own availability rules.
+- Long action captions wrap. Failed operations offer Retry; after a saved operation, Retry refreshes the page without saving twice.
+
 ### Improved - Retain and review original budget edits (2026-10-11, D-152)
 
 - The budget form waits until its original accounts, categories and settings are ready; failed loading offers Retry.

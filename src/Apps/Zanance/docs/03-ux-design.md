@@ -956,3 +956,7 @@ General later visits keep current-default behavior. Commercial view/editor affor
 ## Reviewed original budget editor (D-152)
 
 Cover the whole form until complete original references/preferences and work rights publish synchronously. Keep original archived/missing limits and explicit account scopes in Simple and Advanced. Separate current new-tool eligibility from retained corrections; future periods do not use today's capacity affordance. Show every invalid amount beside its field in one attempt. Category identity/suggestion occupies its own growing row above the amount. Raw amounts retain their input culture until retyped. Stale Save keeps input, pins retry feedback and requires explicit reload/review. Merge only edited fields; show current complete saved values before Keep reviewed edits. Save retires the form before return; Close remains available if return fails. Native Back shares the busy/discard guard. Opening never posts ledger money or creates Settings.
+
+D-153: the original budget page publishes independent edit/copy/delete availability after complete review. Keep
+all original figures visible when new work is unavailable. Growing action captions retain native names/targets;
+failed writes require explicit reload, while a saved operation with failed refresh offers only read-only retry.

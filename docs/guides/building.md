@@ -570,3 +570,7 @@ Main 2,646 / App.Tests 589 pass and normal cleanup completes. Strict Windows and
 ## Original budget editor verification (D-152)
 
 The budget-editor-work Debug route uses an independent fictitious database, hidden native modal and real Invoke providers. Run en/fa/de in both themes at 360/412/wide; compare all 25 complete table/column/row packets after stale Save, explicit Reload/Keep edits and native Close. Retain failed route/convention evidence. Complete signed APK: artifacts/android/zanance-d152-release.apk. See Zanance docs/quality/budget-editor-drafts.md. Native tests use only the independently owned QA03 database and private emulator/server; no owner device settings.
+
+D-153: the focused `budget-actions-work` Debug review uses the actual budget page over an independent fictitious
+database, native Invoke targets and complete 25-table comparison. Failed captures are negative evidence.
+Normal Release emulator review retains FLAG_SECURE and restores exact owned rows/sidecars/display.

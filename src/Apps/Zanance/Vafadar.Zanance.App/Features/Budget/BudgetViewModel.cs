@@ -14,6 +14,7 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App.Features.Budget;
 
@@ -64,6 +65,12 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private Core.Reminders.BudgetReminderLink? _requestedReminder;
     private string? _visitCurrency;
     private string? _budgetScope;
+    private BudgetEditorReview? _review;
+
+    /// <summary>Gets the actual reviewed original view commands; financial presentation is never filtered by them.</summary>
+    public BudgetActionsViewModel Actions { get; }
+    /// <summary>Gets the same covered/busy state for period navigation and original view actions.</summary>
+    public bool CanNavigate => Actions.CanInteract;
 
     /// <summary>Retains a validated notification destination until the actual page reload resolves its profile again.</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -75,7 +82,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public BudgetViewModel(ZananceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    public BudgetViewModel(ZananceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
     {
         _store = store;
         _plans = plans;
@@ -84,6 +91,15 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         _dates = dates;
         _localization = localization;
         _time = time;
+        Actions = new(store, translator, dates, interaction, ReloadAfterActionAsync);
+        Actions.EditorOpening += (_, _) => _backFromEditor = true;
+        Actions.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(Actions.CanInteract))
+            {
+                OnPropertyChanged(nameof(CanNavigate)); PreviousCommand.NotifyCanExecuteChanged(); NextCommand.NotifyCanExecuteChanged();
+            }
+        };
         PeriodText = string.Empty;
     }
 
@@ -182,7 +198,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     partial void OnPeriodIndexChanged(int value)
     {
-        if (_refreshing || !Enum.IsDefined((BudgetPeriod)value))
+        if (_refreshing || !Actions.CanInteract || !Enum.IsDefined((BudgetPeriod)value))
         {
             return;
         }
@@ -195,7 +211,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     // The day two-week periods repeat from (e.g. a payday); changing it shows the period of today on the new grid.
     async partial void OnFortnightStartChanged(DateOnly value)
     {
-        if (_refreshing)
+        if (_refreshing || !Actions.CanInteract)
         {
             return;
         }
@@ -210,7 +226,10 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    partial void OnConfirmedOnlyChanged(bool value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
+    partial void OnConfirmedOnlyChanged(bool value)
+    {
+        if (!_refreshing && Actions.CanInteract) _ = Presentation.Failures.GuardAsync(LoadAsync);
+    }
 
     private bool _backFromEditor;
 
@@ -236,7 +255,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         if (_budget is { } budget)
         {
             budget.Method = method;
-            await _store.SaveBudgetAsync(budget);
+            await _store.SaveBudgetAsync(budget, review: _review);
             await LoadAsync();
         }
     }
@@ -254,7 +273,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     // The choice is remembered per profile and also decides the budget shown on Home.
     async partial void OnSelectedCurrencyChanged(string? value)
     {
-        if (_refreshing || string.IsNullOrEmpty(value) || value == _currency)
+        if (_refreshing || !Actions.CanInteract || string.IsNullOrEmpty(value) || value == _currency)
         {
             return;
         }
@@ -275,10 +294,12 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         await _loading.WaitAsync();
         try
         {
+            Actions.BeginLoad();
             // Publish the pending target only inside the gate; an older appearing reload must not consume a newer request.
             _requestedReminder = reminder;
             await LoadCoreAsync();
         }
+        catch { Actions.FailLoad(); throw; }
         finally { _loading.Release(); }
     }
 
@@ -292,11 +313,24 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     public async Task LoadAsync()
     {
+        if (Actions.IsBusy) return;
+        await ReloadAfterActionAsync(null);
+    }
+
+    private async Task ReloadAfterActionAsync(BudgetVisit? visit)
+    {
         await _loading.WaitAsync();
         try
         {
+            if (visit is not null)
+            {
+                _year = visit.Year; _month = visit.Month; _calendar = visit.Calendar;
+                _period = visit.Period; _periodStart = visit.Start; _visitCurrency = visit.Currency;
+            }
+            Actions.BeginLoad();
             await LoadCoreAsync();
         }
+        catch { Actions.FailLoad(); throw; }
         finally
         {
             _loading.Release();
@@ -316,7 +350,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             _period = original.Period; _periodStart = original.PeriodStart;
             _visitCurrency = original.CurrencyCode;
         }
-        var settings = await _store.GetSettingsAsync();
+        var reviewedBudgets = await _store.GetBudgetEditorReviewAsync();
+        var settings = reviewedBudgets.Settings ?? new ZananceSettings();
         _startDay = settings.MonthStartDay;
         if (_year == 0)
         {
@@ -326,9 +361,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         }
 
         // The budget of the default account's currency, or the one picked in the switcher (ZEX-P02).
-        var allAccounts = await _store.GetAccountsAsync();
+        var allAccounts = reviewedBudgets.Accounts;
         _currency = _visitCurrency ?? BudgetCurrency.Resolve(settings, allAccounts);
-        var reviewedBudgets = await _store.GetBudgetEditorReviewAsync();
         _budgetScope = reviewedBudgets.Choices.ReminderScope;
         var budgets = reviewedBudgets.Choices.Items.Select(item => item.ToBudget()).ToList();
         _refreshing = true;
@@ -386,10 +420,10 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
                 PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
             }
 
-            _budget = original is null ? await _store.GetBudgetAsync(_year, _month, _calendar, _currency)
+            _budget = original is null ? BudgetActionsViewModel.Find(budgets, new(_year, _month, _calendar, _period, _periodStart, _currency))
                 : budgets.SingleOrDefault(budget => budget.Id == original.Id);
             var (py, pm) = PeriodMath.Previous(_year, _month);
-            CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(py, pm, _calendar, _currency) is not null;
+            CanCopyPrevious = _budget is null && BudgetActionsViewModel.Find(budgets, new(py, pm, _calendar, _period, _periodStart, _currency)) is not null;
         }
         else
         {
@@ -399,7 +433,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             }
 
             // A budget made before the week start was changed keeps its own dates.
-            _budget = original is null ? await _store.GetBudgetAsync(_period, _periodStart, _currency)
+            _budget = original is null ? BudgetActionsViewModel.Find(budgets, new(_year, _month, _calendar, _period, _periodStart, _currency))
                 : budgets.SingleOrDefault(budget => budget.Id == original.Id);
             if (_budget is not null)
             {
@@ -408,7 +442,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
             (from, to) = BudgetPeriods.Range(_period, _periodStart);
             PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
-            CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(_period, _periodStart.AddDays(-1), _currency) is not null;
+            CanCopyPrevious = _budget is null && BudgetActionsViewModel.Find(budgets, new(_year, _month, _calendar, _period,
+                BudgetPeriods.Step(_period, _periodStart, -1), _currency)) is not null;
         }
 
         CurrencyText = _translator.Format("Budget_Currency", _currency, _translator[Presentation.Calendars.NameKey(_calendar)]);
@@ -419,7 +454,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         var entries = await _store.GetEntriesAsync(from, to);
         var schedules = await _plans.GetSchedulesAsync();
         var states = await _plans.GetStatesAsync();
-        var categories = await _store.GetCategoriesAsync();
+        var categories = reviewedBudgets.Categories;
         var lookup = new CategoryLookup(categories, _translator);
         var culture = _localization.CurrentCulture;
 
@@ -480,6 +515,9 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             .Select(BudgetPlanning.MonthlyEquivalent)
             .Sum(v => v ?? 0);
         EquivalentText = equivalent > 0 && _period == BudgetPeriod.Month ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
+        await _store.ValidateBudgetEditorReviewAsync(reviewedBudgets);
+        _review = reviewedBudgets;
+        Actions.Publish(reviewedBudgets, new(_year, _month, _calendar, _period, _periodStart, _currency), _budget?.Id);
     }
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
@@ -583,16 +621,18 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             color);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanNavigate))]
     private Task PreviousAsync()
     {
+        if (!CanNavigate) return Task.CompletedTask;
         Move(-1);
         return LoadAsync();
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanNavigate))]
     private Task NextAsync()
     {
+        if (!CanNavigate) return Task.CompletedTask;
         Move(1);
         return LoadAsync();
     }
@@ -609,107 +649,12 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         }
     }
 
-    [RelayCommand]
-    private Task EditAsync()
-    {
-        _backFromEditor = true;
-        return Shell.Current.GoToAsync(AppShell.BudgetEditorRoute, new Dictionary<string, object>
-        {
-            ["id"] = (object?)_budget?.Id ?? null!,
-            ["scope"] = _budgetScope!,
-            ["year"] = _year,
-            ["month"] = _month,
-            ["calendar"] = _calendar,
-            ["currency"] = _currency,
-            ["period"] = _period,
-            ["start"] = _periodStart,
-        });
-    }
-
-    [RelayCommand]
-    private async Task CopyPreviousAsync()
-    {
-        if (_period != BudgetPeriod.Month)
-        {
-            if (await _store.GetBudgetAsync(_period, _periodStart.AddDays(-1), _currency) is { } previousWeek)
-            {
-                await _store.SaveBudgetAsync(BudgetPlanning.CopyTo(previousWeek, _periodStart));
-                await LoadAsync();
-            }
-
-            return;
-        }
-
-        var (py, pm) = PeriodMath.Previous(_year, _month);
-        if (await _store.GetBudgetAsync(py, pm, _calendar, _currency) is { } previous)
-        {
-            await _store.SaveBudgetAsync(BudgetPlanning.CopyTo(previous, _year, _month));
-            await LoadAsync();
-        }
-    }
-
-    [RelayCommand]
-    private async Task CopyToNextAsync()
-    {
-        if (_budget is null)
-        {
-            return;
-        }
-
-        var (ny, nm) = PeriodMath.Next(_year, _month);
-        var nextStart = _period == BudgetPeriod.Month ? default : BudgetPeriods.Step(_period, _periodStart, 1);
-        string target;
-        Core.Budgets.Budget? existing;
-        if (_period == BudgetPeriod.Month)
-        {
-            var (nextFrom, _) = PeriodMath.MonthRange(ny, nm, _calendar, _startDay);
-            target = _dates.Format(nextFrom, DateFormatStyle.MonthYear);
-            existing = await _store.GetBudgetAsync(ny, nm, _calendar, _currency);
-        }
-        else
-        {
-            var (first, last) = BudgetPeriods.Range(_period, nextStart);
-            target = $"{_dates.Format(first, DateFormatStyle.Short)} – {_dates.Format(last, DateFormatStyle.Short)}";
-            existing = await _store.GetBudgetAsync(_period, nextStart, _currency);
-        }
-
-        var message = _translator.Format(existing is null ? "Budget_CopyMessage" : "Budget_CopyReplaceMessage", target);
-        if (!await Shell.Current.DisplayAlertAsync(_translator["Budget_CopyNext"], message, _translator["Budget_Copy"], _translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        // Over an existing budget the copy replaces it in one step: if it cannot be saved, the old budget stays.
-        var copy = _period == BudgetPeriod.Month ? BudgetPlanning.CopyTo(_budget, ny, nm) : BudgetPlanning.CopyTo(_budget, nextStart);
-        if (existing is not null)
-        {
-            await _store.ReplaceBudgetAsync(existing.Id, copy);
-        }
-        else
-        {
-            await _store.SaveBudgetAsync(copy);
-        }
-        if (_period == BudgetPeriod.Month)
-        {
-            (_year, _month) = (ny, nm);
-        }
-        else
-        {
-            _periodStart = nextStart;
-        }
-
-        await LoadAsync();
-    }
-
-    [RelayCommand]
-    private async Task DeleteAsync()
-    {
-        if (_budget is null || !await Shell.Current.DisplayAlertAsync(_translator["Budget_Delete"], _translator["Budget_DeleteMessage"], _translator["Common_Delete"], _translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        await _store.DeleteBudgetAsync(_budget.Id);
-        await LoadAsync();
-    }
+    /// <summary>Gets the original reviewed editor command used by the page and existing native diagnostics.</summary>
+    public IAsyncRelayCommand EditCommand => Actions.EditCommand;
+    /// <summary>Gets the guarded previous-period copy command.</summary>
+    public IAsyncRelayCommand CopyPreviousCommand => Actions.CopyPreviousCommand;
+    /// <summary>Gets the guarded next-period copy/replacement command.</summary>
+    public IAsyncRelayCommand CopyToNextCommand => Actions.CopyToNextCommand;
+    /// <summary>Gets the separately authorized original deletion command.</summary>
+    public IAsyncRelayCommand DeleteCommand => Actions.DeleteCommand;
 }

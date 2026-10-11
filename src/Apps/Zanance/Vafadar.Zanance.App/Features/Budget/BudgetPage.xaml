@@ -40,24 +40,25 @@
         </DataTemplate>
     </ContentPage.Resources>
 
+    <Grid RowDefinitions="*,Auto">
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Budgets in several currencies: pick which one is shown here and on Home (ZEX-P02) -->
-            <Grid ColumnDefinitions="*,120" ColumnSpacing="8" IsVisible="{Binding HasCurrencyChoices}">
+            <Grid ColumnDefinitions="*,120" ColumnSpacing="8" IsVisible="{Binding HasCurrencyChoices}" IsEnabled="{Binding Actions.CanInteract}">
                 <Label Text="{v:Translate Budget_ShownCurrency}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                 <Picker Grid.Column="1" ItemsSource="{Binding CurrencyChoices}" SelectedItem="{Binding SelectedCurrency}"
                         SemanticProperties.Description="{v:Translate Budget_ShownCurrency}" />
             </Grid>
 
             <!-- Period length (§10.3): month, week or two weeks; in Simple only when such a budget exists (ZEX-S0502) -->
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding ShowsPeriods}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding ShowsPeriods}" IsEnabled="{Binding Actions.CanInteract}">
                 <!-- D-87: show all three period decisions in growing rows rather than hiding later choices in a filter strip. -->
                 <v:ChoiceChips x:Name="BudgetPeriods" ItemsSource="{Binding PeriodNames}" SelectedIndex="{Binding PeriodIndex}" />
                 <v:HelpButton Grid.Column="1" Topic="BudgetPeriod" />
             </Grid>
             <!-- The date boxes need the full width at 360 px, so the date sits below its label -->
-            <VerticalStackLayout Spacing="2" IsVisible="{Binding IsTwoWeeks}">
+            <VerticalStackLayout Spacing="2" IsVisible="{Binding IsTwoWeeks}" IsEnabled="{Binding Actions.CanInteract}">
                 <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6">
                     <Label Text="{v:Translate Budget_FortnightStart}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                     <v:HelpButton Grid.Column="1" Topic="FortnightStart" />
@@ -92,9 +93,9 @@
                 <VerticalStackLayout Spacing="12">
                     <fi:SymbolIcon Symbol="Target" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                     <Label Text="{v:Translate Budget_None}" HorizontalTextAlignment="Center" />
-                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Budget_Create}" Command="{Binding EditCommand}" />
-                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyPrevious}" Command="{Binding CopyPreviousCommand}"
-                            IsVisible="{Binding CanCopyPrevious}" />
+                    <p:WrappingAction Appearance="Primary" Text="{v:Translate Budget_Create}" Command="{Binding Actions.EditCommand}" />
+                    <p:WrappingAction Text="{v:Translate Budget_CopyPrevious}" Command="{Binding Actions.CopyPreviousCommand}"
+                            IsVisible="{Binding Actions.HasPrevious}" />
                 </VerticalStackLayout>
             </Border>
 
@@ -163,7 +164,7 @@
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Budget_ConfirmedOnly}" VerticalOptions="Center" />
-                        <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Budget_ConfirmedOnly}" />
+                        <Switch Grid.Column="1" IsEnabled="{Binding Actions.CanInteract}" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Budget_ConfirmedOnly}" />
                     </Grid>
                     <Label Text="{Binding UnreviewedText}" TextColor="{DynamicResource WarningText}"
                            IsVisible="{Binding UnreviewedText, Converter={StaticResource IsNotNullConverter}}" />
@@ -180,10 +181,21 @@
             </Border>
 
             <VerticalStackLayout Spacing="8" IsVisible="{Binding HasBudget}" Margin="0,8,0,0">
-                <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" />
-                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Budget_CopyNext}" Command="{Binding CopyToNextCommand}" />
-                <Button Text="{v:Translate Budget_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" />
+                <p:WrappingAction Appearance="Primary" Text="{v:Translate Common_Edit}" Command="{Binding Actions.EditCommand}" />
+                <p:WrappingAction Text="{v:Translate Budget_CopyNext}" Command="{Binding Actions.CopyToNextCommand}" />
+                <p:WrappingAction Appearance="Destructive" Text="{v:Translate Budget_Delete}" Command="{Binding Actions.DeleteCommand}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout Grid.Row="1" Padding="16,8" Spacing="8">
+        <ActivityIndicator IsRunning="{Binding Actions.IsLoading}" IsVisible="{Binding Actions.IsLoading}" />
+        <Label Text="{v:Translate Budget_Loading}" IsVisible="{Binding Actions.IsLoading}" />
+        <Label Text="{Binding Actions.WorkText}" Style="{StaticResource Secondary}"
+               IsVisible="{Binding Actions.WorkText, Converter={StaticResource IsNotNullConverter}}" />
+        <Label Text="{Binding Actions.Feedback}" TextColor="{DynamicResource WarningText}"
+               IsVisible="{Binding Actions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
+        <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding Actions.ReloadCommand}"
+                          IsVisible="{Binding Actions.NeedsReload}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
