@@ -18,7 +18,7 @@ public sealed class MigrationTests : IDisposable
 
     public void Dispose()
     {
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 

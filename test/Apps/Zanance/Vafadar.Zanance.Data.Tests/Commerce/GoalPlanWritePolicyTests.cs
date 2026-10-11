@@ -123,7 +123,7 @@ public sealed class GoalPlanWritePolicyTests : IDisposable
     public void Dispose()
     {
         foreach (var provider in _providers) provider.Dispose();
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 

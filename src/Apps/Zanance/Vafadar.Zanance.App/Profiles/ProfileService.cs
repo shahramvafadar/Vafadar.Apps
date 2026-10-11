@@ -114,7 +114,7 @@ public sealed partial class ProfileService(
 
         Save([.. Others(preferences).Where(p => p.Id != profile.Id)]);
         var path = PathOf(MainPath(), profile.Id);
-        Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
+        LocalDatabasePools.ClearFile(path);
 
         // Its backups on this device go too (its backup set, see CurrentBackupSet); cloud backups stay in the account.
         var backups = new[] { "backups", "backups-safety" }

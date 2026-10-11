@@ -20,7 +20,7 @@ public sealed class ZexPhase1DataTests : IDisposable
 
     public void Dispose()
     {
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 

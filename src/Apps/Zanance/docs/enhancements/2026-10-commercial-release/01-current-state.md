@@ -162,3 +162,5 @@ fixed Save, with native scalable wrapping text and complete spoken names. Explic
 failure retain reviewed draft fields and stored rows; field validation clears obsolete general feedback. No data,
 permission, algorithm or commercial activation changes. Remaining ENT-02/03/04 and external gates stay open:
 [evidence](../../quality/entry-save-feedback-visible.md).
+
+D-137 completes exact-file pool retirement for profiles/restore and 39 fixture cleanup sites. Normal parallel full suite 2,210 passes without the D-136 output workaround; App.Tests 348. Native Release profile/restore/deletion and complete signed APK verified. Continue ready ENT-02/03 resource/automation bindings; choice UI/persistence, activation and external gates stay open. [Evidence](../../quality/local-sqlite-pools.md).

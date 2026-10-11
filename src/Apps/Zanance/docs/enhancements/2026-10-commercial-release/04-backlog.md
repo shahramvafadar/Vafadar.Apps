@@ -673,5 +673,9 @@ App.Tests 318; six normal Release native confirmations. Current registration sta
 generation/automation, choice persistence/UI and command exception feedback remain unfinished.
 [Evidence](../../quality/atomic-occurrence-reopening.md).
 
-D-136 completes exception feedback and shared consent/writer/publication gates for occurrence commands. 29 added application-flow cases; App.Tests 347 and main 2,201 pass with owned output-only Data.Tests serialization. Normal Release native failures preserve drafts and all complete rows. Negative parallel pool-cleanup evidence remains open. Commercial registration remains inactive; selected-plan generation/automation, choice persistence/UI and external gates remain unfinished.
+D-136 completes exception feedback and shared consent/writer/publication gates for occurrence commands. 29 added application-flow cases; App.Tests 347 and main 2,201 pass with owned output-only Data.Tests serialization. Normal Release native failures preserve drafts and all complete rows. Negative parallel evidence is retained; D-137 later completes file-scoped cleanup isolation. Commercial registration remains inactive; selected-plan generation/automation, choice persistence/UI and external gates remain unfinished.
 [Evidence](../../quality/occurrence-command-feedback.md).
+
+### D-137 - Independent local SQLite pool cleanup
+
+Maintenance follow-up to the D-136 observed parallel cleanup/migration failures is complete: actual-file pool retirement, captured restore destination, 39 isolated fixture cleanup sites; nine regressions, normal parallel full suite 2,210 pass, App.Tests 348, strict builds/native profile lifecycle/full signed APK verified. This does not complete the remaining ENT-02/03 bindings, choice UI/persistence or external gates. [Evidence](../../quality/local-sqlite-pools.md).

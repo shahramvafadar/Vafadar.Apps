@@ -789,7 +789,7 @@ present two cancellation captions. No commercial activation, schema, SDK, permis
 29 added actual application-flow cases (AT-138), App.Tests 347. Main 2,201 pass with an independently owned,
 ignored Data.Tests output configuration limiting collection concurrency to one. Explicit writer-race tests retain
 their concurrent operations. Two normal parallel full-suite attempts failed in unrelated Data.Tests SQLite cleanup/
-migration (locked file and disposed native handle). Preserve negative logs; pool-cleanup isolation remains open.
+migration (locked file and disposed native handle). Preserve negative logs; D-137 later completes file-scoped pool cleanup isolation.
 An unsupported argument ran zero tests and a help invocation failed; neither is acceptance. Output-only test
 configuration was removed; no product workaround or test execution policy was committed.
 Strict Windows/Android builds and complete signed Release APK verified. Native normal Release emulator checks cover
@@ -799,3 +799,7 @@ but-not-refreshed message and reject replay from enabled native actions. No Wind
 command, real phone, iOS, provider or publication acceptance claim. Selected-plan generation/automation, choice
 persistence/UI, commercial activation and existing external gates remain open.
 [Evidence](quality/occurrence-command-feedback.md).
+
+## Independent profile lifecycle (D-137)
+
+Profile switching, inactive deletion and first-run restore retain the existing actions, confirmations, busy states and onboarding/account policy. Pool retirement affects only the owned database. No new caption/control/layout; normal Release native profile and restore checks are recorded in [evidence](quality/local-sqlite-pools.md).

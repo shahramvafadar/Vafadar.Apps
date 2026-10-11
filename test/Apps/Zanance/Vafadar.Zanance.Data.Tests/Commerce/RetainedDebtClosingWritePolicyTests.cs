@@ -387,6 +387,6 @@ public sealed class RetainedDebtClosingWritePolicyTests : IDisposable
     }
     public void Dispose()
     {
-        foreach (var provider in _providers) provider.Dispose(); SqliteConnection.ClearAllPools(); _directory.Dispose();
+        foreach (var provider in _providers) provider.Dispose(); SqliteTestPools.Clear(_directory); _directory.Dispose();
     }
 }

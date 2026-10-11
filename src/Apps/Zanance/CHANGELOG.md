@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Independent profile database connections (2026-10-11, D-137)
+
+- Keep other local database connections intact while switching profiles, deleting an inactive profile or restoring a backup.
+
 ### Fixed - Clear feedback for planned payment failures (2026-10-11, D-136)
 
 - Keep entered amounts, dates and notes when payment, linking or occurrence changes fail.

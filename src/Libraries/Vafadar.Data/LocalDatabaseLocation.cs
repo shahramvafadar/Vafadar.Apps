@@ -44,7 +44,7 @@ public sealed class LocalDatabaseLocation<TContext>
                 return;
             }
 
-            SqliteConnection.ClearAllPools();
+            LocalDatabasePools.ClearFile(Path);
             Path = full;
         }
 

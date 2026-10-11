@@ -27,7 +27,7 @@ public sealed class ZexPhase4DataTests : IDisposable
     public void Dispose()
     {
         _services.Dispose();
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 

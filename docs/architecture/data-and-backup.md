@@ -398,3 +398,13 @@ existing group/refund/receipt/paid-total/file-bound Undo rules and already atomi
 a second writer after Changed. Manual/imported money stays; ExecuteUpdate releases only the verified link with
 the opened/suppressed state. Exact membership and post-SQL freshness apply, without selecting retained accounts.
 No schema/activation change. Selected-plan automation and occurrence exception feedback remain unfinished.
+
+## File-scoped pool retirement (D-137)
+
+LocalDatabasePools.ClearFile normalizes the path and clears only the default and explicit ReadWriteCreate,
+ReadWrite and ReadOnly connection strings used by the local factory/diagnostics. It does not enumerate arbitrary
+variants. Their owners use SqliteConnection.ClearPool with their exact connection. MoveTo clears the previous
+file; deleting an inactive profile clears its file before known sidecar/backup deletion. Restore instead clears
+GetDbConnection on its captured context after CloseConnectionAsync and migrates that same context. Never use
+ambient current location or ClearAllPools after asynchronous input. Actual authorization, integrity check, unpooled
+snapshot handling and online backup remain unchanged. No schema or portable security-state change.

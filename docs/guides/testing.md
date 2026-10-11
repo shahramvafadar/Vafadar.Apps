@@ -154,3 +154,13 @@ but-not-refreshed message and reject replay from enabled native actions. No Wind
 command, real phone, iOS, provider or publication acceptance claim. Selected-plan generation/automation, choice
 persistence/UI, commercial activation and existing external gates remain open.
 [Evidence](../../src/Apps/Zanance/docs/quality/occurrence-command-feedback.md).
+
+## Independent SQLite cleanup (D-137 / AT-139)
+
+Dispose owned contexts/providers before SqliteTestPools.Clear(TemporaryDirectory), then dispose the directory.
+The helper calls actual LocalDatabasePools for existing *.db files inside that unique directory, including nested
+fixtures/profiles. Custom strings require exact owner-scoped ClearPool. Never use ClearAllPools from a test: it can
+reclaim another parallel test's native handle during migration. Real TEMP-table session markers prove isolation.
+The normal strict full command now passes 2,210 cases without output runner configuration/collection serialization;
+explicit concurrent writer scenarios remain concurrent. D-136's historical failures and zero-test attempts remain
+negative evidence; output-only serialization was removed. Clean Vafadar.Tests.slnf after runs as before.

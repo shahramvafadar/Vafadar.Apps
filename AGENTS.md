@@ -817,3 +817,13 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Reopening consent uses explicit Reopen/Cancel captions, distinct in all six languages. No commercial activation.
 * Preserve negative parallel SQLite cleanup/migration evidence. Owned output-only serialization is test evidence,
   not a fix to pool cleanup isolation or a product policy. Zero-test attempts are not acceptance.
+
+## 70. Independent local SQLite pools (D-137)
+
+* Never clear process-wide SQLite pools for profile switching, deletion, restore or test cleanup. Retire only the
+  named full-path file's known pools; custom connection-string owners clear their exact pool themselves.
+* Restore clears the actual captured destination connection and migrates the same context after input, even if
+  the current profile moves. Keep authorization checks and online-copy/integrity behavior.
+* Dispose test-owned providers before clearing only their existing owned files, including nested fixture/profile
+  folders. Real TEMP-table markers verify foreign session retention; keep normal parallel execution and explicit
+  concurrent writer tests. Preserve historical negative/zero-test evidence; do not turn serialization into a fix.

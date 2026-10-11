@@ -1,4 +1,6 @@
 using System.Text;
+using Microsoft.Data.Sqlite;
+using Vafadar.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
 using Vafadar.Zanance.App.Features.Profiles;
@@ -114,6 +116,21 @@ public sealed class ProfileTests
         Assert.DoesNotContain(f.Translator["Common_Delete"], f.Platform.OfferedActions[^1]);
         f.Platform.Choices.Enqueue(f.Translator["Common_Delete"]); f.Platform.Confirmations.Enqueue(true); f.Platform.Confirmations.Enqueue(true);
         await vm.ChooseCommand.ExecuteAsync(row); Assert.Single(profiles.All); Assert.Single(vm.Profiles);
+    }
+
+    [Fact, Trait("AT", "AT-139")]
+    public async Task Deleting_an_inactive_profile_preserves_the_current_profiles_native_session_and_rows()
+    {
+        using var f = new FlowFixture(); var profiles = Create(f, new ProfileRuntime(f)); var main = profiles.Current;
+        var other = profiles.Create("Fictitious pool removal"); Assert.True(await profiles.SwitchToAsync(other));
+        var otherPath = Location(f).Path; Assert.True(await profiles.SwitchToAsync(main));
+        await f.Store.SaveAccountAsync(new Account { Name = "Fictitious retained", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1) }, Ct);
+        var connection = new SqliteConnectionStringBuilder { DataSource = Location(f).Path, Mode = SqliteOpenMode.ReadWriteCreate }.ToString();
+        SqlitePoolProbe.Mark(connection);
+        profiles.Delete(other);
+        Assert.Equal("retained", SqlitePoolProbe.Read(connection)); Assert.False(File.Exists(otherPath));
+        Assert.Equal("Fictitious retained", Assert.Single(await f.Store.GetAccountsAsync(cancellationToken: Ct)).Name);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); Assert.True(profiles.Current.IsMain);
     }
 
     private static LocalDatabaseLocation<ZananceDbContext> Location(FlowFixture f) => f.Services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();

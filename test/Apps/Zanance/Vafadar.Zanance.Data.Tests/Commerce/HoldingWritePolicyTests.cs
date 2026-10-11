@@ -112,7 +112,7 @@ public sealed class HoldingWritePolicyTests : IDisposable
     public void Dispose()
     {
         foreach (var provider in _providers) provider.Dispose();
-        SqliteConnection.ClearAllPools(); _directory.Dispose();
+        SqliteTestPools.Clear(_directory); _directory.Dispose();
     }
 
     [Theory]

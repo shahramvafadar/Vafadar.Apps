@@ -59,3 +59,7 @@ original financial row/state preservation are separate runtime evidence in docs/
 ## Occurrence commands (D-136 / AT-138)
 
 Actual OccurrenceCommands source is linked through IAppInteraction with isolated SQLite/localization. 29 cases: seven SQL failures/retries, 12 translated cancellations, three consent/failure/publication busy gates, six saved-but-refresh-failed messages and actual archived-account inline ledger rejection. App.Tests total: 347. No fake MAUI controls or duplicated writer algorithms. Native adapters/rendering require actual application checks.
+
+## Profile pool isolation (D-137 / AT-139)
+
+Actual ProfileService.Delete preserves the current profile native session and actual SQLite rows. Shared fixture cleanup is exact-directory/file scoped. One added application-flow case, App.Tests 348; normal full suite 2,210 pass. Runtime profile creation/switch/restore/deletion is separately checked in normal Release on the owned emulator.

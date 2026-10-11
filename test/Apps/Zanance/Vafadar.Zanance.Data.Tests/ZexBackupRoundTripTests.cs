@@ -23,7 +23,7 @@ public sealed class ZexBackupRoundTripTests : IDisposable
 
     public void Dispose()
     {
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 

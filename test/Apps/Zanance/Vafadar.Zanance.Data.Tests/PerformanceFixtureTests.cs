@@ -15,7 +15,7 @@ public sealed class PerformanceFixtureTests : IDisposable
     private readonly TemporaryDirectory _directory = new();
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
-    public void Dispose() { SqliteConnection.ClearAllPools(); _directory.Dispose(); }
+    public void Dispose() { SqliteTestPools.Clear(_directory); _directory.Dispose(); }
 
     [Fact, Trait("AT", "AT-82")]
     public void Tenfold_scales_entries_accounts_and_schedules_together()

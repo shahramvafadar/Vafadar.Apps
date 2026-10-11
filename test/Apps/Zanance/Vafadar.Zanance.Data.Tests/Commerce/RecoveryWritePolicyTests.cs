@@ -328,7 +328,7 @@ public sealed class RecoveryWritePolicyTests : IDisposable
     public void Dispose()
     {
         foreach (var provider in _providers) provider.Dispose();
-        SqliteConnection.ClearAllPools(); _directory.Dispose();
+        SqliteTestPools.Clear(_directory); _directory.Dispose();
     }
 
     /// <summary>A real readable snapshot whose asynchronous copy changes only the independent fixture's profile.</summary>

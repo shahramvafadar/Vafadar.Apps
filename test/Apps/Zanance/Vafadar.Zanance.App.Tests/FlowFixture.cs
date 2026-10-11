@@ -46,7 +46,7 @@ internal sealed class FlowFixture : IDisposable
     public void Dispose()
     {
         Services.Dispose();
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(Directory);
         Directory.Dispose();
         Vafadar.Localization.Formatting.NativeDigits.IsEnabled = _nativeDigits;
         Vafadar.Localization.Formatting.NativeDigits.PreserveSeparators = _preserveSeparators;

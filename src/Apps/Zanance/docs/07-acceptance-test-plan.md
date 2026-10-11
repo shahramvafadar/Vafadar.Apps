@@ -908,7 +908,7 @@ present two cancellation captions. No commercial activation, schema, SDK, permis
 29 added actual application-flow cases (AT-138), App.Tests 347. Main 2,201 pass with an independently owned,
 ignored Data.Tests output configuration limiting collection concurrency to one. Explicit writer-race tests retain
 their concurrent operations. Two normal parallel full-suite attempts failed in unrelated Data.Tests SQLite cleanup/
-migration (locked file and disposed native handle). Preserve negative logs; pool-cleanup isolation remains open.
+migration (locked file and disposed native handle). Preserve negative logs; D-137 later completes file-scoped pool cleanup isolation.
 An unsupported argument ran zero tests and a help invocation failed; neither is acceptance. Output-only test
 configuration was removed; no product workaround or test execution policy was committed.
 Strict Windows/Android builds and complete signed Release APK verified. Native normal Release emulator checks cover
@@ -918,3 +918,29 @@ but-not-refreshed message and reject replay from enabled native actions. No Wind
 command, real phone, iOS, provider or publication acceptance claim. Selected-plan generation/automation, choice
 persistence/UI, commercial activation and existing external gates remain open.
 [Evidence](quality/occurrence-command-feedback.md).
+
+## AT-139 - Independent profile and fixture SQLite pools (D-137)
+
+Profile switching and inactive-profile deletion retire only the named file's known pools; restore clears the
+exact captured destination connection before migrating that same context. Other SQLite files and active profile
+sessions stay independent. Fixture cleanup uses the same production helper only for existing databases under its
+unique owned directory, after disposing its providers. Default/factory/read-write/read-only strings are covered;
+arbitrary connection-string variants remain their owner's exact-pool responsibility. No process-wide clearing,
+collection serialization, schema, permission, backup format, commercial activation or visible layout change.
+Nine added AT-139 cases use real TEMP-table session markers and actual profile/backup services. The original
+MoveTo/restore behavior lost another database's marker; negative baseline retained. Main 2,210 / App.Tests 348
+pass with the normal parallel runner and explicit writer-race tests unchanged (58.337 s; no output runner config).
+Strict Windows and Android builds: zero warnings/errors. Complete signed Release APK verified. Normal Release
+English/light emulator profile creation/switch, first-run restore from an actual production-service package, return
+and inactive-profile deletion succeed. All 24 restored tables are compared: financial rows and other metadata match the actual snapshot; only the existing
+onboarding-completion Settings.UpdatedAt audit write differs. Original profile
+files/sidecars, complete rows and English/original System theme are restored. Temporary helpers remain ignored.
+Release correctly denied the initial inspection-only run-as inventory; the helper was corrected to inspect only an
+unlaunched Debug package. One stale prompt-coordinate attempt cancelled before Save; later input used the actual
+focused field. Transient hierarchy misses resumed the same created profile without replaying creation/restore.
+The observed native document provider was checked before selecting the exact owned file. Negative helper/capture
+logs are retained; unsuccessful attempts are not acceptance. One early nested fixture probe used a noncanonical mixed-separator connection string and failed cleanup; it was
+corrected to the application's full-path convention before the successful full run. No Windows native, physical
+phone, iOS, provider, 200-percent layout or publication acceptance claim. Planned entitlement bindings/automation,
+choice persistence/UI and existing external gates remain open.
+[Evidence](quality/local-sqlite-pools.md).

@@ -31,7 +31,7 @@ public sealed class ZexPhase3DataTests : IDisposable
     public void Dispose()
     {
         _services.Dispose();
-        SqliteConnection.ClearAllPools();
+        SqliteTestPools.Clear(_directory);
         _directory.Dispose();
     }
 
@@ -136,7 +136,8 @@ public sealed class ZexPhase3DataTests : IDisposable
         Assert.Equal((0, 4), (second.Imported, second.Skipped));
         Assert.Equal(20_000, HoldingsLedger.Quantity(await target.GetEventsAsync(cancellationToken: Ct), gold.Id, Day));
         Assert.Equal(50_00_000, Assert.Single(await target.GetValuationsAsync(cancellationToken: Ct)).PricePerUnitMilli);
-        SqliteConnection.ClearAllPools();
+        await services.DisposeAsync();
+        SqliteTestPools.Clear(other);
     }
 
     [Fact]

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Authentication\Vafadar.Authentication.csproj" />
+    <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Data\Vafadar.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -89,7 +89,8 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
             }
 
             await context.Database.CloseConnectionAsync();
-            SqliteConnection.ClearAllPools();
+            // D-137: retire the captured destination pool, even if the current profile moved during input.
+            SqliteConnection.ClearPool((SqliteConnection)context.Database.GetDbConnection());
 
             await context.Database.MigrateAsync(cancellationToken);
         }

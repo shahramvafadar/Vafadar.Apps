@@ -491,5 +491,7 @@ App.Tests 318; six normal Release native confirmations. Current registration sta
 generation/automation, choice persistence/UI and command exception feedback remain unfinished.
 [Evidence](../../quality/atomic-occurrence-reopening.md).
 
-D-136 completes exception feedback and shared consent/writer/publication gates for occurrence commands. 29 added application-flow cases; App.Tests 347 and main 2,201 pass with owned output-only Data.Tests serialization. Normal Release native failures preserve drafts and all complete rows. Negative parallel pool-cleanup evidence remains open. Commercial registration remains inactive; selected-plan generation/automation, choice persistence/UI and external gates remain unfinished.
+D-136 completes exception feedback and shared consent/writer/publication gates for occurrence commands. 29 added application-flow cases; App.Tests 347 and main 2,201 pass with owned output-only Data.Tests serialization. Normal Release native failures preserve drafts and all complete rows. Negative parallel evidence is retained; D-137 later completes file-scoped cleanup isolation. Commercial registration remains inactive; selected-plan generation/automation, choice persistence/UI and external gates remain unfinished.
 [Evidence](../../quality/occurrence-command-feedback.md).
+
+D-137 completes exact-file pool retirement for profiles/restore and 39 fixture cleanup sites. Normal parallel full suite 2,210 passes without the D-136 output workaround; App.Tests 348. Native Release profile/restore/deletion and complete signed APK verified. Continue ready ENT-02/03 resource/automation bindings; choice UI/persistence, activation and external gates stay open. [Evidence](../../quality/local-sqlite-pools.md).
