@@ -53,8 +53,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
-| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..144: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
-| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..144: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser; goal projection/reminders and remaining resources/bindings open) | ENT-02 |
+| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..145: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
+| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..145: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders; goal-view contribution affordances and remaining resources/bindings open) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | Proposed | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
@@ -789,3 +789,39 @@ Release own-emulator cases, exact original byte/display restoration and complete
 [Evidence](../../quality/goal-chooser.md).
 
 Continue actual effective goal/contribution/reminder bindings. ENT-02/03 remain in progress.
+
+## D-145 - Actual goal work and scoped reminder delivery
+
+Read complete original goals, saved contribution rules and allocations from the actual opened database, with
+new-work eligibility kept separate from original financial progress. Selection never changes funding/protection,
+resumes a paused goal or grants a paid tool. Free balance-goal activity, advanced goal work and contribution reminders
+are independent rights. Missing, empty, malformed, foreign and historical choices keep their original data.
+
+New paid contribution work checks the actual chosen goal under the same SQLite writer. A paired new goal can join
+its slot before that check; reject failed activity before pin/protection normalization. Retained amount corrections,
+reminder disabling/removal and negative earmark releases stay available. These operations never post ledger money.
+
+Prepare goal reminders only for eligible original progress before the pending cap. Keep saved opt-in, generic/details
+privacy, fixed 09:00 device-local rule dates, existing permission and the shared bounded queue. Native returning data
+contains bounded original goal/date members and an opaque actual-file identity. Taps resolve that file after unlocking,
+open the existing single detail or Goals root, and never switch profiles or grant new work. Retained history remains
+readable after a choice change. Existing legacy historical links remain supported.
+
+Validate actual file, cached rights, persisted choice revision and original goal/rule/allocation input stamp before
+and after native publication; clear a retired queue, including failed snapshot preparation. The stamp is transient,
+invariant and reflection-free, not a new schema, portable preference or credential. Current commercial registration
+remains inactive and unrestricted. Goal-view contribution affordances and other remaining bindings follow separately.
+
+36 new AT-147 actual application/real SQLite cases; focused 36 pass (9.147 s). Normal parallel main 2,484 /
+App.Tests 461 pass (71.478 s), no failures/skips; test output cleaned. Strict Windows 15.49 s / Android 35.35 s,
+zero warnings/errors. Six normal signed Release owned-emulator cases cover English/Persian/German, light/dark,
+actual native stored single/group Intent routing, original destinations/Back, and rejection in another real profile.
+The real pending queue retains all three original goals, bounded members, generic privacy and saved dates at 09:00.
+No financial Save; complete original rows and exact owned bytes/sidecars plus Main/English/System restored.
+This verifies stored native requests and actual Android Intent delivery, not future alarm firing at 09:00.
+Complete signed installable APK verified. No layout/copy change; D-144 geometry evidence remains revision-specific.
+Physical-phone, iOS, provider, OS accessibility, Store signing/publication and commercial activation remain unaccepted.
+
+[Evidence](../../quality/goal-work-reminders.md).
+
+Next ready slice: bind goal/Home/detail contribution affordances to the separate work policy while keeping all original progress/history and retained corrections. Other resources/operations, commercial messages/activation and owner/external gates remain open; ENT-02/03 are not complete.

@@ -1,0 +1,39 @@
+using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.Core.Goals;
+
+namespace Vafadar.Zanance.Data;
+
+/// <summary>Complete original goal inputs and a separate new-work policy for the actual opened profile file.</summary>
+/// <param name="Goals">Every original goal, including unselected and historical identities.</param>
+/// <param name="ContributionPlans">Complete saved rules, retained without paid-tool or selection rewriting.</param>
+/// <param name="Allocations">All original earmarks and releases needed by complete funding/protection calculations.</param>
+/// <param name="Work">Independent eligibility for new activity; never pass it into financial progress calculations.</param>
+public sealed record GoalWorkSnapshot(List<Goal> Goals, List<ContributionPlan> ContributionPlans,
+    List<GoalAllocation> Allocations, GoalWorkPolicy Work)
+{
+    /// <summary>Gets the actual file's opaque local notification identity, never an authorization token.</summary>
+    public string ReminderScope { get; internal init; } = string.Empty;
+    /// <summary>Gets the actual captured file, retained only inside the data boundary.</summary>
+    internal string DatabasePath { get; init; } = string.Empty;
+    /// <summary>Gets the persisted choice revision, with absence distinct from an explicit empty choice.</summary>
+    internal Guid? SelectionRevision { get; init; }
+    /// <summary>Gets a private original-input stamp, including state/rules/funding changes without a choice change.</summary>
+    internal string InputStamp { get; init; } = string.Empty;
+    /// <summary>Gets the immutable cached-rights guard captured by the actual read.</summary>
+    internal Commerce.CommercialFileAccess? Access { get; init; }
+
+    /// <summary>Captures native preparation inputs without reflection serialization, portable state or schema changes.</summary>
+    internal static string CaptureInputs(IEnumerable<Goal> goals, IEnumerable<ContributionPlan> plans, IEnumerable<GoalAllocation> allocations)
+    {
+        static string Text(string? value) => value is null ? "-" : Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+        var values = goals.OrderBy(goal => goal.Id).Select(goal => FormattableString.Invariant(
+            $"goal|{goal.Id:N}|{Text(goal.Name)}|{goal.State}|{goal.Type}|{goal.TargetAmount}|{goal.TargetDate?.DayNumber}|{Text(goal.CurrencyCode)}|{goal.AccountId:N}|{goal.AssetTypeId:N}|{goal.LocationId:N}|{goal.Priority}|{goal.Protect}|{goal.UpdatedAt.UtcTicks}"))
+            .Concat(plans.OrderBy(plan => plan.Id).Select(plan => FormattableString.Invariant(
+                $"plan|{plan.Id:N}|{plan.GoalId:N}|{plan.ReminderEnabled}|{plan.Method}|{plan.Amount}|{plan.Percent}|{plan.AssumedPricePerUnitMilli}|{string.Join(',', plan.CategoryIds)}|{plan.UpdatedAt.UtcTicks}|{plan.Rule.Frequency}|{plan.Rule.Interval}|{plan.Rule.Start.DayNumber}|{plan.Rule.Calendar}|{plan.Rule.DayRule}|{plan.Rule.MissingDay}|{plan.Rule.SecondDay}|{plan.Rule.End}|{plan.Rule.EndDate?.DayNumber}|{plan.Rule.Count}|{plan.Rule.WeekendShift}|{plan.Rule.WeekendDays}|{Text(plan.Rule.HolidayRegion)}")))
+            .Concat(allocations.OrderBy(allocation => allocation.Id).Select(allocation => FormattableString.Invariant(
+                $"allocation|{allocation.Id:N}|{allocation.GoalId:N}|{allocation.AccountId:N}|{allocation.Amount}|{allocation.Date.DayNumber}")));
+        // Names/region are length-safe encodings; canonical order and invariant numbers survive live display changes.
+        return Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(string.Join('\n', values))));
+    }
+}

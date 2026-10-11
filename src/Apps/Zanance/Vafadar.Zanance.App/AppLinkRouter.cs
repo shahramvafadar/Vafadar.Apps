@@ -7,7 +7,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App;
 
 /// <summary>Opens only supported widget/reminder destinations after secure startup and unlocking, never posting money.</summary>
-public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans)
+public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans, GoalStore goals)
 {
     /// <summary>Prepares the first visible page after unlocking, then opens the startup link that waited for that page.</summary>
     public Task StartAsync(Func<Task<string?>> preparePage)
@@ -24,6 +24,20 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
     /// <summary>Validates an external link before queuing its navigation behind the application access gate.</summary>
     public Task OpenAsync(string link)
     {
+        if (GoalReminderLink.Parse(link) is { } goalReminder)
+            return appLock.RunWhenUnlockedAsync(async () =>
+            {
+                // Resolve after unlocking; a restored goal Guid alone cannot identify the original notification file.
+                var snapshot = await goals.GetWorkSnapshotAsync();
+                if (snapshot.ReminderScope != goalReminder.Scope) return;
+                var existing = goalReminder.Targets.Where(target => snapshot.Goals.Any(goal => goal.Id == target.GoalId)).ToList();
+                if (existing.Count == 0) return;
+                await goals.ValidateWorkSnapshotAsync(snapshot);
+                if (goalReminder.Targets.Count == 1)
+                    await interaction.NavigateAsync(AppRoutes.GoalDetailRoute, new Dictionary<string, object> { ["id"] = existing[0].GoalId });
+                else await interaction.NavigateAsync(AppRoutes.GoalsRoute);
+            });
+
         if (PlanReminderLink.Parse(link) is { } reminder)
             return appLock.RunWhenUnlockedAsync(async () =>
             {

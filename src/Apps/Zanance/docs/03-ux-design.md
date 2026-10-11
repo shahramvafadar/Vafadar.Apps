@@ -861,3 +861,9 @@ identity, measurement and state separately from choice. Currency belongs to mone
 Completed is a goal state; do not call it an ended Plan. Pause counts without resuming. Keep the same covered loading,
 explicit scoped Save, growing pinned error/action, exact live draft and dirty-transition consent. Explain one-goal
 capacity with a concrete translated example and keep paid-tool rights separate. [Native evidence](quality/goal-chooser.md).
+
+## Original goal work and reminder destinations (D-145)
+
+Keep original progress/history separate from selected new work; selection does not resume a pause or unlock a paid tool. Reminder taps open the original detail or existing Goals root through app lock, with actual-file validation and no silent profile switch or financial Save. Preserve generic/detail privacy, opt-in and 09:00 local rule dates. Goal-view contribution affordances follow separately. No layout/copy change; current inactive test builds stay unrestricted.
+
+[Native delivery evidence](quality/goal-work-reminders.md).

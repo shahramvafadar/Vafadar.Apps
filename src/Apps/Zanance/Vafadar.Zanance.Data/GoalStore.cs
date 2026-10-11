@@ -15,6 +15,51 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// <summary>Raised after goals or allocations were written.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Reads complete original goal inputs and current exact-file rights without writing or filtering history.</summary>
+    public async Task<GoalWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var access = new CommercialFileAccess(commercialAccess, db.Database.GetDbConnection().DataSource);
+        access.DemandFeature(CommercialFeature.History);
+        var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken);
+        var originals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
+        var plans = await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
+        var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);
+        var context = access.Context;
+        var work = context is null ? GoalWorkPolicy.Inactive : GoalWorkPolicy.Resolve(context,
+            StoredResourceSelection.Scope(context), originals, stored?.ForNewWork() ?? access.GoalSelection);
+        if ((await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken))?.Revision != stored?.Revision)
+            throw new InvalidOperationException("The goal choice changed during notification preparation.");
+        access.EnsureSnapshotCurrent();
+        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        return new(originals, plans, allocations, work)
+        {
+            DatabasePath = path, Access = access, SelectionRevision = stored?.Revision,
+            InputStamp = GoalWorkSnapshot.CaptureInputs(originals, plans, allocations),
+            ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
+        };
+    }
+
+    /// <summary>Rejects another file, retired rights or a changed/ABA choice before and after native publication.</summary>
+    public async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
+            Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
+            throw new InvalidOperationException("The goal work snapshot belongs to another opened file.");
+        snapshot.Access.DemandFeature(CommercialFeature.History);
+        snapshot.Access.EnsureSnapshotCurrent();
+        if ((await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.Goals, cancellationToken))?.Revision != snapshot.SelectionRevision)
+            throw new InvalidOperationException("The goal choice changed during notification preparation.");
+        var originals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
+        var plans = await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
+        var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);
+        if (GoalWorkSnapshot.CaptureInputs(originals, plans, allocations) != snapshot.InputStamp)
+            throw new InvalidOperationException("Goal notification inputs changed during preparation.");
+        snapshot.Access.EnsureSnapshotCurrent();
+    }
+
     /// <summary>Returns all goals: active first, then by priority and target date.</summary>
     public async Task<List<Goal>> GetGoalsAsync(CancellationToken cancellationToken = default)
     {
@@ -54,8 +99,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         ArgumentNullException.ThrowIfNull(goal);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
-        await CheckRetainedContributionActivationAsync(db, write, goal, cancellationToken);
-        await PrepareGoalAsync(db, write, goal, cancellationToken);
+        var activity = await CheckRetainedContributionActivationAsync(db, write, goal, cancellationToken);
+        await PrepareGoalAsync(db, write, goal, cancellationToken, activity);
 
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
@@ -72,8 +117,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goal.Id, cancellationToken);
         var original = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goal.Id, cancellationToken) : null;
         // D-123: reject the complete draft before pin/protection normalization or an old plan can change.
-        CheckContributionSave(write, plan, existing, goal, original);
-        await PrepareGoalAsync(db, write, goal, cancellationToken);
+        var activity = CheckContributionSave(write, plan, existing, goal, original);
+        await PrepareGoalAsync(db, write, goal, cancellationToken, activity);
         PrepareContributionPlan(db, goal.Id, plan, existing);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
@@ -82,7 +127,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Prepares the established goal invariants and capacity checks inside the caller's writer.</summary>
-    private static async Task PrepareGoalAsync(ZananceDbContext db, CommercialWriteTransaction write, Goal goal, CancellationToken cancellationToken)
+    private static async Task PrepareGoalAsync(ZananceDbContext db, CommercialWriteTransaction write, Goal goal,
+        CancellationToken cancellationToken, CommercialFeature? contributionActivity = null)
     {
         var existing = await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goal.Id, cancellationToken);
         var others = await db.Goals.AsNoTracking().Where(g => g.Id != goal.Id).ToListAsync(cancellationToken);
@@ -106,6 +152,10 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
         // D-143: retain historical state/corrections, but join a new or reopened goal under the same writer.
         await write.PrepareGoalChangeAsync(db, goal, existing, cancellationToken);
+        // D-145: a newly joined slot is visible inside this writer, before pin/protection normalization.
+        // Retained corrections and disabling/removing a contribution need no selected new-work identity.
+        if (contributionActivity is { } feature)
+            write.DemandSelectedGoal(feature, others.Append(goal), goal.Id);
         if (write.Enforced && existing?.State == GoalState.Paused && goal.State == GoalState.Active)
             write.DemandSelectedGoal(CommercialFeature.BasicGoals, others.Append(existing), goal.Id);
         if (goal.Type == GoalType.AccountBalance && goal.State is GoalState.Active or GoalState.Paused
@@ -142,14 +192,14 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Reopening a retained goal cannot silently reactivate its paid contribution work or reminders.</summary>
-    private static async Task CheckRetainedContributionActivationAsync(ZananceDbContext db, CommercialWriteTransaction write,
+    private static async Task<CommercialFeature?> CheckRetainedContributionActivationAsync(ZananceDbContext db, CommercialWriteTransaction write,
         Goal target, CancellationToken cancellationToken)
     {
-        if (!write.Enforced || target.State is not (GoalState.Active or GoalState.Paused)) return;
+        if (!write.Enforced || target.State is not (GoalState.Active or GoalState.Paused)) return null;
         var original = await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == target.Id, cancellationToken);
-        if (original is null || original.State is GoalState.Active or GoalState.Paused) return;
+        if (original is null || original.State is GoalState.Active or GoalState.Paused) return null;
         var plan = await db.ContributionPlans.AsNoTracking().FirstOrDefaultAsync(p => p.GoalId == target.Id, cancellationToken);
-        if (plan is not null) CheckContributionSave(write, plan, plan, target, original);
+        return plan is null ? null : CheckContributionSave(write, plan, plan, target, original);
     }
 
     /// <summary>Records an allocation (positive) or a release (negative).</summary>
@@ -203,7 +253,9 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goalId, cancellationToken);
         var goal = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goalId, cancellationToken) : null;
-        CheckContributionSave(write, plan, existing, goal, goal);
+        var activity = CheckContributionSave(write, plan, existing, goal, goal);
+        if (activity is { } feature)
+            write.DemandSelectedGoal(feature, await db.Goals.AsNoTracking().ToListAsync(cancellationToken), goalId);
         PrepareContributionPlan(db, goalId, plan, existing);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
@@ -212,14 +264,14 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Checks new paid contribution work independently of retained corrections and empty date scaffolding.</summary>
-    private static void CheckContributionSave(CommercialWriteTransaction write, ContributionPlan? plan, ContributionPlan? existing,
+    private static CommercialFeature? CheckContributionSave(CommercialWriteTransaction write, ContributionPlan? plan, ContributionPlan? existing,
         Goal? target, Goal? original)
     {
-        if (!write.Enforced) return;
+        if (!write.Enforced) return null;
         if (plan is null)
         {
             write.DemandFeature(CommercialFeature.DeleteData);
-            return;
+            return null;
         }
         if (!Enum.IsDefined(plan.Method)) throw new ArgumentException("A contribution requires a known method.", nameof(plan));
         static bool AdvancedDates(ContributionPlan p) => p.Rule.Frequency is not (Frequency.Weekly or Frequency.Monthly)
@@ -234,8 +286,10 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         write.DemandFeature(newWork ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
         // D-123: empty date rows support the basic goal without an amount. Reminders are a separate paid tool;
         // turning one off/removing history never consumes a new right or creates an earmark/ledger movement.
-        if (plan.ReminderEnabled && (existing?.ReminderEnabled != true || reopening))
+        var startsReminder = plan.ReminderEnabled && (existing?.ReminderEnabled != true || reopening);
+        if (startsReminder)
             write.DemandFeature(CommercialFeature.ContributionReviewReminders);
+        return newWork ? CommercialFeature.AdvancedGoals : startsReminder ? CommercialFeature.ContributionReviewReminders : null;
     }
 
     /// <summary>Copies the complete explicitly saved contribution draft without replacing an existing plan identity.</summary>

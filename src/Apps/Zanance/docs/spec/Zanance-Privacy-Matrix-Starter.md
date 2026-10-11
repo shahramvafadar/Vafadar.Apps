@@ -336,3 +336,13 @@ The existing Settings form reads original local goal identity/measurement/curren
 the D-143 scoped choice row. Unsaved choices stay in memory. No schema, credential, device-security, SDK, permission,
 network or telemetry change. No financial write from selection, reload, language, Help or Back. Registration remains
 inactive. Limited-layout input stays only in an independent Debug fixture/page, never Release DI. [Evidence](../quality/goal-chooser.md).
+
+## D-145 scoped goal-reminder privacy boundary
+
+Existing native pending returning data now carries bounded original goal ids/rule dates and a SHA-256 opaque
+actual-file identity, never the file path or an authorization token. Existing generic/detail opt-in, permission,
+09:00 device-local scheduling and capped shared queue remain. Goal/rule/allocation validation stamps stay only in
+memory; no schema, portable preference, credential, security, SDK, network or telemetry addition. Taps recheck the
+current actual file after unlock and never switch profiles or post money. Current enforcement remains inactive.
+
+[Evidence](../quality/goal-work-reminders.md).

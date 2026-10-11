@@ -499,3 +499,9 @@ The existing active-items Debug route now checks three real choice groups, origi
 one-goal capacity. active-items-entry includes the normal registered Goals choice plus actual updated Help/Back.
 Keep the same independent fixture/page-only bounded input, hidden own AppWindow, native Invoke/glyph/target checks
 and exact original data/display restoration. [Current matrix/APK evidence](../../src/Apps/Zanance/docs/quality/goal-chooser.md).
+
+## Goal-reminder delivery review (D-145)
+
+Use the canonical complete signed Release APK for Android actions. Read actual owned native pending requests and deliver their unchanged single/group returning data through the real native Intent adapter; do not claim future 09:00 firing. Existing Debug goal-reminder preparation now validates the scoped original member/file identity. Keep independent fictitious files, original bytes/sidecars and display restoration. No desktop input, clock/system settings, physical device or runtime entitlement replacement.
+
+[Source/native/APK evidence](../../src/Apps/Zanance/docs/quality/goal-work-reminders.md).

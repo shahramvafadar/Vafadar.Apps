@@ -122,7 +122,15 @@ public sealed class ReminderService(
     // Refresh and action share the gate and queue cap. Do not persist an action before its actual-file read succeeds.
     private async Task RefreshUnderGateAsync(SnoozeRequest? request = null)
     {
-        var snapshot = await plans.GetWorkSnapshotAsync();
+        PlanWorkSnapshot snapshot;
+        GoalWorkSnapshot goalSnapshot;
+        try { snapshot = await plans.GetWorkSnapshotAsync(); goalSnapshot = await goals.GetWorkSnapshotAsync(); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            // A retired read must also clear the older queue, before any new native work is published.
+            await scheduler.ReplaceAllAsync([]);
+            throw;
+        }
         var settings = await store.GetSettingsAsync();
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var culture = localization.CurrentCulture;
@@ -150,20 +158,21 @@ public sealed class ReminderService(
         }));
 
         // Contributions only remind the user. Progress includes funded earmarks and held quantities, not prices.
-        var contributionPlans = await goals.GetContributionPlansAsync();
+        var contributionPlans = goalSnapshot.ContributionPlans;
         if (contributionPlans.Any(p => p.ReminderEnabled))
         {
             var progress = GoalProgressService.Evaluate(
-                await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts.Values.ToList(),
+                goalSnapshot.Goals, goalSnapshot.Allocations, accounts.Values.ToList(),
                 await store.GetEntriesAsync(), contributionPlans, DateOnly.FromDateTime(now),
                 await holdings.GetEventsAsync(), await holdings.GetTypesAsync());
-            notifications.AddRange(GoalReminderPlanner.Plan(progress, contributionPlans, now)
+            // Apply selection/paid eligibility before the cap, retaining every original input in progress evaluation.
+            notifications.AddRange(GoalReminderPlanner.Plan(progress.Where(p => goalSnapshot.Work.CanRemind(p.Goal.Id)), contributionPlans, now)
                 .GroupBy(r => r.NotifyAt).Select(group =>
                 {
                     var first = group.First();
                     var items = group.ToList();
                     var single = items.Count == 1;
-                    var link = single ? string.Create(CultureInfo.InvariantCulture, $"goal|{first.Goal.Id}") : "goals";
+                    var link = GoalReminderLink.Format(goalSnapshot.ReminderScope, items.Select(item => new GoalReminderTarget(item.Goal.Id, item.Date)));
                     var title = settings.NotificationsShowDetails
                         ? single ? first.Goal.Name : translator.Format("Reminder_GoalSummary", items.Count)
                         : translator["App_Name"];
@@ -206,13 +215,13 @@ public sealed class ReminderService(
 
         // Legacy unscoped groups cannot prove their profile or members. Drop that cache, rebuilding normal reminders.
         // The original routing format remains supported for retained historical taps, not for new snoozes.
-        await ValidatePublicationAsync(snapshot);
+        await ValidatePublicationAsync(snapshot, goalSnapshot);
         preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
         notifications.AddRange(snoozes.Where(s => notifications.All(n => n.Id != s.Id))
             .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
         await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
             .Take(ReminderPlanner.MaxPending).ToList());
-        await ValidatePublicationAsync(snapshot);
+        await ValidatePublicationAsync(snapshot, goalSnapshot);
         await CheckBudgetAsync(settings, accounts.Values.ToList(), culture);
 
         ReminderNotification? Rebuild(int id, DateTime at, string link)
@@ -252,9 +261,9 @@ public sealed class ReminderService(
 
     // Retire both a previously pending queue and a newly published one when this read loses its file/rights.
     // Otherwise a failure before native publication leaves earlier unavailable work scheduled (D-140).
-    private async Task ValidatePublicationAsync(PlanWorkSnapshot snapshot)
+    private async Task ValidatePublicationAsync(PlanWorkSnapshot snapshot, GoalWorkSnapshot goalSnapshot)
     {
-        try { await plans.ValidateWorkSnapshotAsync(snapshot); }
+        try { await plans.ValidateWorkSnapshotAsync(snapshot); await goals.ValidateWorkSnapshotAsync(goalSnapshot); }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             await scheduler.ReplaceAllAsync([]);

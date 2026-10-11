@@ -35,3 +35,5 @@ Atomic new planned payments: [engineering evidence](quality/atomic-occurrence-pa
 Exact reviewed occurrence reopening: [engineering evidence](quality/atomic-occurrence-reopening.md) (D-135 / AT-137).
 
 Occurrence command failures: [engineering evidence](quality/occurrence-command-feedback.md) (D-136 / AT-138).
+
+Actual goal work and scoped reminders: [engineering and native delivery evidence](quality/goal-work-reminders.md) (D-145 / AT-147). Goal-view contribution affordances and remaining ENT-02/03 bindings follow separately; current enforcement remains inactive.

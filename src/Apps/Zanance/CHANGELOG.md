@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Goal contribution reminders (2026-10-11, D-145)
+
+- Open the original goal from a reminder and reject a reminder belonging to another profile.
+- Keep contribution reminders tied to saved dates and clear a queue when its preparation inputs change.
+- Prepare selected-goal activity separately from original progress/history; choosing a goal never unlocks paid tools.
+- Current test builds remain unrestricted; retained corrections and turning reminders off stay available.
+
 ### Added - Clear savings-goal availability (2026-10-11, D-144)
 
 - Review savings goals alongside accounts and plans from Settings.

@@ -1053,3 +1053,19 @@ Strict Windows/Android zero warnings/errors. Actual form and registered Settings
 18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
 Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
 [Evidence](quality/goal-chooser.md).
+
+## AT-147 - Actual goal work, publication and original reminder routing
+
+36 new AT-147 actual application/real SQLite cases; focused 36 pass (9.147 s). Normal parallel main 2,484 /
+App.Tests 461 pass (71.478 s), no failures/skips; test output cleaned. Strict Windows 15.49 s / Android 35.35 s,
+zero warnings/errors. Six normal signed Release owned-emulator cases cover English/Persian/German, light/dark,
+actual native stored single/group Intent routing, original destinations/Back, and rejection in another real profile.
+The real pending queue retains all three original goals, bounded members, generic privacy and saved dates at 09:00.
+No financial Save; complete original rows and exact owned bytes/sidecars plus Main/English/System restored.
+This verifies stored native requests and actual Android Intent delivery, not future alarm firing at 09:00.
+Complete signed installable APK verified. No layout/copy change; D-144 geometry evidence remains revision-specific.
+Physical-phone, iOS, provider, OS accessibility, Store signing/publication and commercial activation remain unaccepted.
+
+Exact choices and paid rights stay separate; all original financial inputs remain. Parameterized concurrent state/rule/allocation writes actually change rows, then retire native publication. Locked taps resolve original single/group members after unlocking and reject another file even with a restored identical Guid. Retained corrections/disabling and paired new-goal joining are exercised under actual writers.
+
+[Evidence](quality/goal-work-reminders.md). ENT-02/03 and external gates remain in progress.

@@ -46,7 +46,7 @@ public sealed class GoalChooserFlowTests
         return new(f, source, store, vm);
     }
 
-    private static async Task<string> SnapshotAsync(FlowFixture f, bool choices = true)
+    internal static async Task<string> SnapshotAsync(FlowFixture f, bool choices = true)
     {
         await using var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.OpenConnectionAsync(Ct); var connection = db.Database.GetDbConnection(); var tables = new List<string>();

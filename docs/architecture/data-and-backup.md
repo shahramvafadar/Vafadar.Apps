@@ -476,3 +476,29 @@ cached fallback under the actual file's SQLite writer. New/reopened goals join c
 archive/delete removes only their id. Invalid choices need explicit repair while corrections/releases stay possible.
 Positive earmarks independently check feature and usable original goal/account choices; never ledger balances.
 Release registration remains inactive. [Evidence](../../src/Apps/Zanance/docs/quality/goal-resource-choices.md).
+
+## Goal work snapshot and native routing (D-145)
+
+Read complete original goals, saved contribution rules and allocations from the actual opened database, with
+new-work eligibility kept separate from original financial progress. Selection never changes funding/protection,
+resumes a paused goal or grants a paid tool. Free balance-goal activity, advanced goal work and contribution reminders
+are independent rights. Missing, empty, malformed, foreign and historical choices keep their original data.
+
+New paid contribution work checks the actual chosen goal under the same SQLite writer. A paired new goal can join
+its slot before that check; reject failed activity before pin/protection normalization. Retained amount corrections,
+reminder disabling/removal and negative earmark releases stay available. These operations never post ledger money.
+
+Prepare goal reminders only for eligible original progress before the pending cap. Keep saved opt-in, generic/details
+privacy, fixed 09:00 device-local rule dates, existing permission and the shared bounded queue. Native returning data
+contains bounded original goal/date members and an opaque actual-file identity. Taps resolve that file after unlocking,
+open the existing single detail or Goals root, and never switch profiles or grant new work. Retained history remains
+readable after a choice change. Existing legacy historical links remain supported.
+
+Validate actual file, cached rights, persisted choice revision and original goal/rule/allocation input stamp before
+and after native publication; clear a retired queue, including failed snapshot preparation. The stamp is transient,
+invariant and reflection-free, not a new schema, portable preference or credential. Current commercial registration
+remains inactive and unrestricted. Goal-view contribution affordances and other remaining bindings follow separately.
+
+No EF model/schema change; no migration or compiled-model regeneration is required.
+
+[Evidence](../../src/Apps/Zanance/docs/quality/goal-work-reminders.md).

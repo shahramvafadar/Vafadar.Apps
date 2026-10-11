@@ -6,6 +6,7 @@ using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Diagnostics;
@@ -82,7 +83,9 @@ internal static class DebugGoalReminders
         var enabled = await reminders.EnsurePermissionAsync();
         await reminders.RefreshAsync();
         var pending = await LocalNotificationCenter.Current.GetPendingNotificationList();
-        var scheduled = pending.Where(p => p.ReturningData == $"goal|{ids.GoalId}").ToList();
+        var snapshot = await goals.GetWorkSnapshotAsync();
+        var scheduled = pending.Where(p => GoalReminderLink.Parse(p.ReturningData) is { } link
+            && link.Scope == snapshot.ReminderScope && link.Targets.Any(target => target.GoalId == ids.GoalId)).ToList();
         var goal = await goals.GetGoalAsync(ids.GoalId);
         var eligible = goal?.State == GoalState.Active
             && (await goals.GetContributionPlansAsync()).Any(p => p.GoalId == ids.GoalId && p.ReminderEnabled);

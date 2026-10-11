@@ -1518,3 +1518,37 @@ Strict Windows/Android zero warnings/errors. Actual form and registered Settings
 18-case English/Persian/German, light/dark, 360/412/wide matrix with process-local font stress. Six normal signed
 Release own-emulator cases, exact original byte/display restoration and complete signed APK verified.
 [Evidence](quality/goal-chooser.md).
+
+## D-145 - Actual selected goal work and scoped reminder delivery (2026-10-11)
+
+Read complete original goals, saved contribution rules and allocations from the actual opened database, with
+new-work eligibility kept separate from original financial progress. Selection never changes funding/protection,
+resumes a paused goal or grants a paid tool. Free balance-goal activity, advanced goal work and contribution reminders
+are independent rights. Missing, empty, malformed, foreign and historical choices keep their original data.
+
+New paid contribution work checks the actual chosen goal under the same SQLite writer. A paired new goal can join
+its slot before that check; reject failed activity before pin/protection normalization. Retained amount corrections,
+reminder disabling/removal and negative earmark releases stay available. These operations never post ledger money.
+
+Prepare goal reminders only for eligible original progress before the pending cap. Keep saved opt-in, generic/details
+privacy, fixed 09:00 device-local rule dates, existing permission and the shared bounded queue. Native returning data
+contains bounded original goal/date members and an opaque actual-file identity. Taps resolve that file after unlocking,
+open the existing single detail or Goals root, and never switch profiles or grant new work. Retained history remains
+readable after a choice change. Existing legacy historical links remain supported.
+
+Validate actual file, cached rights, persisted choice revision and original goal/rule/allocation input stamp before
+and after native publication; clear a retired queue, including failed snapshot preparation. The stamp is transient,
+invariant and reflection-free, not a new schema, portable preference or credential. Current commercial registration
+remains inactive and unrestricted. Goal-view contribution affordances and other remaining bindings follow separately.
+
+36 new AT-147 actual application/real SQLite cases; focused 36 pass (9.147 s). Normal parallel main 2,484 /
+App.Tests 461 pass (71.478 s), no failures/skips; test output cleaned. Strict Windows 15.49 s / Android 35.35 s,
+zero warnings/errors. Six normal signed Release owned-emulator cases cover English/Persian/German, light/dark,
+actual native stored single/group Intent routing, original destinations/Back, and rejection in another real profile.
+The real pending queue retains all three original goals, bounded members, generic privacy and saved dates at 09:00.
+No financial Save; complete original rows and exact owned bytes/sidecars plus Main/English/System restored.
+This verifies stored native requests and actual Android Intent delivery, not future alarm firing at 09:00.
+Complete signed installable APK verified. No layout/copy change; D-144 geometry evidence remains revision-specific.
+Physical-phone, iOS, provider, OS accessibility, Store signing/publication and commercial activation remain unaccepted.
+
+[Evidence](quality/goal-work-reminders.md).

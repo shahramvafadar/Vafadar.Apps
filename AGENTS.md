@@ -911,3 +911,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   discard/busy guard and committed-review retirement. No selection/navigation/display action posts financial data.
 * Current registration stays unrestricted. Selection never unlocks paid goal tools. Effective contribution/reminder
   projection and other remaining resource bindings are separate unfinished work, not proof of activation.
+
+## 78. Actual goal work and scoped reminder delivery (D-145)
+
+* Read complete original goals/rules/allocations; project selected new work separately. Never filter financial
+  funding/protection/history inputs. Pause consumes capacity without resuming; choosing a goal grants no paid tool.
+* New paid contribution work checks the original selected goal under the actual writer, including a newly joined
+  paired goal slot before pin/protection normalization. Retained corrections/disabling/removal stay available.
+* Filter eligible reminders before the cap; retain opt-in, generic/detail privacy and 09:00 local saved rule dates.
+  Bound original goal/date members plus opaque actual-file identity; resolve after unlock without switching files.
+* Validate actual file/rights, stored revision and original goal/rule/allocation stamp before/after native publication;
+  clear retired queues and failed preparation. No schema, portable security or financial movement. Registration stays
+  inactive; goal-view affordances and other bindings follow separately. Native stored requests/Intent observations
+  do not prove future alarm firing, physical devices or iOS.

@@ -11,6 +11,7 @@ using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Reminders;
 
 namespace Vafadar.Zanance.Data.Tests;
 
@@ -69,7 +70,7 @@ public sealed class GoalReminderDeliveryTests : IDisposable
             Assert.Equal(_translator["App_Name"], n.Title);
             Assert.Equal(_translator["Reminder_GoalGeneric"], n.Body);
             Assert.DoesNotContain(goal.Name, n.Body);
-            Assert.Equal($"goal|{goal.Id}", n.Link);
+            Assert.Equal(goal.Id, Assert.Single(GoalReminderLink.Parse(n.Link)!.Targets).GoalId);
             Assert.False(n.CanSnooze);
             Assert.Equal(9, n.NotifyAt!.Value.Hour);
         });
@@ -85,7 +86,8 @@ public sealed class GoalReminderDeliveryTests : IDisposable
         var (second, _) = await SaveGoalAsync("Second private goal");
         await _reminders.RefreshAsync();
         Assert.All(_scheduler.Pending, n => Assert.Equal(_translator["Reminder_GoalGeneric"], n.Body));
-        Assert.All(_scheduler.Pending, n => Assert.Equal("goals", n.Link));
+        Assert.All(_scheduler.Pending, n => Assert.Equal(new[] { first.Id, second.Id }.Order(),
+            GoalReminderLink.Parse(n.Link)!.Targets.Select(target => target.GoalId).Order()));
 
         var settings = await _store.GetSettingsAsync(Ct);
         settings.NotificationsShowDetails = true;
@@ -171,7 +173,7 @@ public sealed class GoalReminderDeliveryTests : IDisposable
         await _reminders.RefreshAsync();
 
         Assert.Equal(Vafadar.Zanance.Core.Reminders.ReminderPlanner.MaxPending, _scheduler.Pending.Count);
-        Assert.Equal($"goal|{goal.Id}", _scheduler.Pending[0].Link);
+        Assert.Equal(goal.Id, Assert.Single(GoalReminderLink.Parse(_scheduler.Pending[0].Link)!.Targets).GoalId);
         Assert.Equal(_scheduler.Pending.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id), _scheduler.Pending);
         Assert.Contains(_scheduler.Pending, n => Vafadar.Zanance.Core.Reminders.PlanReminderLink.Parse(n.Link) is { IsContract: false });
         Assert.Contains(_scheduler.Pending, n => n.Link == "review");
