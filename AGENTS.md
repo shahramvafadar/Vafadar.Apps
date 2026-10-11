@@ -1027,3 +1027,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * One busy guard covers confirmation, write and reload. A committed operation with failed refresh offers read-only
   Retry and cannot repeat its write. Native growing captions keep complete names and 44-pixel targets. Independent
   fixture review restores complete rows/owned bytes/display; commercial registration stays inactive.
+
+
+## 87. Reviewed original quick resources (D-154)
+
+* Persist explicit quick-template/saved-filter choices in the existing actual-file scope; retain every original
+  full packet and recheck value/revision, file/rights, references and unchanged-timestamp mutations.
+* Separate selected template draft activity/new definition slots from retained correction/delete/query history.
+  A confirmed replacement transfers only its chosen slot; malformed input requires explicit repair for new work.
+* Capture the full query before prompts; map duplicate names to original ids. Revalidate before/after dialogs and
+  under the paired writer. One busy guard covers write/refresh; retire committed requests before native effects.
+* Cover shared template publication, wrap names and offer explicit Reload. Applying a template never saves money;
+  the existing account/ledger writer remains authoritative. Independent native fixtures restore complete rows,
+  owned bytes and display. Debug layout waits inspect only the current page; registration stays inactive.

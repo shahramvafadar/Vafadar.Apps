@@ -5874,7 +5874,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Available items and history</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>After a downgrade, choose the original items that remain available for new work. Paused plans and goals still count; selecting them never resumes them. Budget copies share one currency/period/accounts definition. Selection changes no states, limits, balances or history and grants no paid tool. Save applies your choice; Reload asks before discarding edits. Test builds remain unrestricted.</value>
+    <value>After a downgrade, choose the original items that remain available for new work. Paused plans and goals still count; selecting them never resumes them. Budget copies share one currency/period/accounts definition. Selection changes no states, limits, balances or history and grants no paid tool. Save applies your choice; Reload asks before discarding edits. Test builds remain unrestricted. Quick templates select new draft activity. Retained saved filters remain available to view history; their selection counts saved-definition slots.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Two copied EUR monthly budgets for the same accounts use one definition. Choose it for new budget work; your earlier limits and figures remain unchanged.</value>
@@ -5972,5 +5972,8 @@ Category limits:
   </data>
   <data name="Budget_MissingReference" xml:space="preserve">
     <value>Unavailable reference «{0}»</value>
+  </data>
+  <data name="ActiveItems_FilterRetained" xml:space="preserve">
+    <value>Available for viewing history</value>
   </data>
 </root>

@@ -5845,7 +5845,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Verfügbare Einträge und Verlauf</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Nach einem Wechsel wählen Sie vorhandene Elemente für neue Vorgänge. Pausierte Pläne und Ziele zählen weiterhin; die Auswahl setzt sie nicht fort. Budgetkopien teilen eine Währungs-, Zeitraum- und Kontendefinition. Zustände, Grenzen, Salden und Verlauf ändern sich nicht; kostenpflichtige Werkzeuge werden nicht freigeschaltet. Speichern übernimmt die Auswahl; vor dem Verwerfen fragt Neu laden nach. Testversionen bleiben uneingeschränkt.</value>
+    <value>Nach einem Wechsel wählen Sie vorhandene Elemente für neue Vorgänge. Pausierte Pläne und Ziele zählen weiterhin; die Auswahl setzt sie nicht fort. Budgetkopien teilen eine Währungs-, Zeitraum- und Kontendefinition. Zustände, Grenzen, Salden und Verlauf ändern sich nicht; kostenpflichtige Werkzeuge werden nicht freigeschaltet. Speichern übernimmt die Auswahl; vor dem Verwerfen fragt Neu laden nach. Testversionen bleiben uneingeschränkt. Schnellvorlagen wählen neue Entwürfe. Vorhandene Filter bleiben für den Verlauf verfügbar; ihre Auswahl zählt gespeicherte Definitionen.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Zwei kopierte monatliche EUR-Budgets derselben Konten bilden eine Definition. Wählen Sie sie für neue Budgetvorgänge; frühere Grenzen und Zahlen bleiben unverändert.</value>
@@ -5943,5 +5943,8 @@ Kategorielimits:
   </data>
   <data name="Budget_MissingReference" xml:space="preserve">
     <value>Nicht verfügbare Referenz «{0}»</value>
+  </data>
+  <data name="ActiveItems_FilterRetained" xml:space="preserve">
+    <value>Für die Verlaufssicht verfügbar</value>
   </data>
 </root>

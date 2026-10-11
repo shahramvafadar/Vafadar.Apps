@@ -93,7 +93,7 @@ public sealed class BudgetChooserFlowTests
     public async Task Actual_kind_groups_copied_periods_preserves_archived_scope_names_and_keeps_history_unselectable()
     {
         var r = await CreateAsync(); using var f = r.Fixture; var vm = r.ViewModel; var before = await SnapshotAsync(f);
-        Assert.Equal(4, vm.KindNames.Count); Assert.Equal(f.Translator["Budget_Title"], vm.KindNames[3]); Assert.Equal(3, vm.Items.Count);
+        Assert.Equal(6, vm.KindNames.Count); Assert.Equal(f.Translator["Budget_Title"], vm.KindNames[3]); Assert.Equal(3, vm.Items.Count);
         var euro = Row(r, "EUR"); Assert.Contains(r.Accounts[0].Name, euro.DetailText); Assert.Contains(r.Accounts[1].Name, euro.DetailText);
         Assert.Contains(f.Translator["Budget_MethodEnvelopes"], euro.DetailText); Assert.True(euro.IsEligible); Assert.False(euro.IsSelected);
         var history = Row(r, "GBP"); Assert.False(history.IsEligible); Assert.Equal(f.Translator["ActiveItems_History"], history.StateText);

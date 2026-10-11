@@ -17,7 +17,11 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Entries;
 
 /// <summary>A quick template above a new entry, with the icon and colour of its category (TX-04).</summary>
-public sealed record TemplateChip(EntryTemplate Template, Symbol Icon, Color IconColor);
+public sealed record TemplateChip(EntryTemplate Template, Symbol Icon, Color IconColor)
+{
+    /// <summary>Gets separate reviewed activity availability; retained identities remain visible.</summary>
+    public bool CanApply { get; init; } = true;
+}
 
 /// <summary>A bounded receipt choice; choosing it fills the form, never saves the entry.</summary>
 public sealed record ReceiptChoice(ReceiptAmountCandidate Candidate, string Label);
@@ -58,6 +62,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private static readonly EntryKind[] ChipKinds = [EntryKind.Expense, EntryKind.Income, EntryKind.Transfer];
 
     private readonly ZananceStore _store;
+    private readonly Commerce.QuickResourceActions _quick;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
@@ -82,9 +87,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private readonly Presentation.UndoService _undo;
     private readonly AssetEntryConfirmation _assetConfirmation;
 
-    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation)
+    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation, Interaction.IAppInteraction interaction)
     {
         _assetConfirmation = assetConfirmation;
+        _quick = new(store, translator, interaction);
         _undo = undo;
         _store = store;
         _translator = translator;
@@ -464,7 +470,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         try
         {
             await LoadReferenceDataAsync();
-            var settings = await _store.GetSettingsAsync();
+            var settings = _quick.Review!.Settings ?? new ZananceSettings();
             _canAggregate = settings.Shows(Feature.AggregatedEntries);
             _showsFee = settings.Shows(Feature.TransferFee);
             _startDay = settings.MonthStartDay;
@@ -570,18 +576,18 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 }
 
                 // Quick templates fill a new entry only (TX-04).
-                Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? await _store.GetTemplatesAsync() : [];
+                Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? _quick.Review!.Templates : [];
                 HasTemplates = Templates.Count > 0;
 
                 // Shown like on Home: the category icon in its colour (slate for a transfer).
                 TemplateChips = [.. Templates.Select(t => t.Kind == EntryKind.Transfer
-                    ? new TemplateChip(t, Symbol.ArrowSwap, Presentation.Palette.TransferText)
-                    : new TemplateChip(t, Icons.Parse(t.Icon, _categories.Icon(t.CategoryId)), _categories.Color(t.CategoryId)))];
+                    ? new TemplateChip(t, Symbol.ArrowSwap, Presentation.Palette.TransferText) { CanApply = _quick.Review!.Work.CanApplyTemplate(t.Id) }
+                    : new TemplateChip(t, Icons.Parse(t.Icon, _categories.Icon(t.CategoryId)), _categories.Color(t.CategoryId)) { CanApply = _quick.Review!.Work.CanApplyTemplate(t.Id) })];
 
                 // A template chosen on Home fills the form at once (Home quick add).
                 if (Get(query, "template") is { } templateId && Templates.FirstOrDefault(t => t.Id == templateId) is { } chosen)
                 {
-                    ApplyTemplate(chosen);
+                    await ApplyTemplateAsync(chosen);
                     _loading = true;
                 }
             }
@@ -728,7 +734,15 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     // Fills the form from a template; the date stays today and nothing is saved until the user taps Save (TX-04).
     [RelayCommand]
-    private void ApplyTemplate(EntryTemplate template)
+    private async Task ApplyTemplateAsync(EntryTemplate template)
+    {
+        if (IsBusy) return;
+        IsBusy = true;
+        try { await _quick.ApplyTemplateAsync(template.Id, ApplyReviewedTemplate); }
+        finally { IsBusy = false; }
+    }
+
+    private void ApplyReviewedTemplate(EntryTemplate template)
     {
         var entry = template.CreateEntry(Date == default ? Today : Date);
         AccountNotice = null;
@@ -767,9 +781,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     private async Task LoadReferenceDataAsync()
     {
-        var accounts = await _store.GetAccountsAsync();
+        await _quick.LoadAsync();
+        var accounts = _quick.Review!.Accounts;
         _accounts = accounts.ToDictionary(a => a.Id);
-        _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+        _categories = new CategoryLookup(_quick.Review.Categories, _translator);
         Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
         ToAccounts = Accounts;
         HasNoAccounts = Accounts.Count == 0;

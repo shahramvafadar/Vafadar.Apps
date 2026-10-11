@@ -960,3 +960,10 @@ Cover the whole form until complete original references/preferences and work rig
 D-153: the original budget page publishes independent edit/copy/delete availability after complete review. Keep
 all original figures visible when new work is unavailable. Growing action captions retain native names/targets;
 failed writes require explicit reload, while a saved operation with failed refresh offers only read-only retry.
+
+
+D-154: show six growing resource destinations. Keep all original quick templates visible with separate draft
+activity enablement; retained saved queries remain history-only, independently of saved-definition slots. Pin
+the complete submitted query before prompts, map duplicate names to original ids and confirm deletion. Cover
+template publication, wrap complete template names and offer explicit Reload beside pinned failure feedback.
+Never repeat a committed operation after failed native feedback/refresh.

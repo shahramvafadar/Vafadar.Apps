@@ -36,6 +36,7 @@ public sealed record AccountFilterOption(Guid? Id, string Name)
 public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private readonly ZananceStore _store;
+    private readonly Commerce.QuickResourceActions _quick;
     private readonly TransactionUndoViewModel _undoAction;
     private int _startDay = 1;
     private readonly Translator _translator;
@@ -76,6 +77,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     public TransactionsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, UndoService undo, IAppInteraction interaction)
     {
         _store = store;
+        _quick = new(store, translator, interaction);
         _translator = translator;
         _localization = localization;
         _dates = dates;
@@ -472,7 +474,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     private async Task LoadSavedFiltersAsync()
     {
-        _savedFilters = await _store.GetSavedFiltersAsync();
+        await _quick.LoadAsync();
+        _savedFilters = [.. _quick.Review!.Filters.OrderBy(f => f.SortOrder).ThenBy(f => f.Name)];
         SavedFilters.Clear();
         foreach (var filter in _savedFilters)
         {
@@ -484,57 +487,15 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
 
     // Saved filters (REP-08): the current combination under a name, applied again with one tap; entries never change.
     [RelayCommand]
-    private async Task SavedFilterMenuAsync()
+    private Task SavedFilterMenuAsync() => _quick.FilterMenuAsync(new SavedFilter
     {
-        var save = _translator["Filter_SaveCurrent"];
-        var remove = _translator["Filter_Remove"];
-        string[] actions = _savedFilters.Count > 0 ? [save, remove] : [save];
-        var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Filter_Title"], _translator["Common_Cancel"], null, actions);
-        if (choice == save)
-        {
-            await SaveCurrentFilterAsync();
-        }
-        else if (choice == remove)
-        {
-            var name = await Shell.Current.DisplayActionSheetAsync(remove, _translator["Common_Cancel"], null, [.. _savedFilters.Select(f => f.Name)]);
-            if (_savedFilters.FirstOrDefault(f => f.Name == name) is { } filter)
-            {
-                await _store.DeleteSavedFilterAsync(filter.Id);
-                await LoadSavedFiltersAsync();
-            }
-        }
-    }
-
-    private async Task SaveCurrentFilterAsync()
-    {
-        var name = (await Shell.Current.DisplayPromptAsync(_translator["Filter_SaveCurrent"], _translator["Filter_NameMessage"], _translator["Common_Save"], _translator["Common_Cancel"], maxLength: SavedFilter.MaxNameLength))?.Trim();
-        if (string.IsNullOrEmpty(name))
-        {
-            return;
-        }
-
-        if (_savedFilters.Any(f => string.Equals(f.Name, name, StringComparison.CurrentCultureIgnoreCase))
-            && !await Shell.Current.DisplayAlertAsync(_translator["Filter_SaveCurrent"], _translator.Format("Filter_Replace", name), _translator["Common_Save"], _translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        await _store.SaveSavedFilterAsync(new SavedFilter
-        {
-            Name = name,
-            Period = Math.Max(0, PeriodIndex),
-            From = _customPeriod?.From,
-            To = _customPeriod?.To,
-            Kind = KindIndex,
-            AccountId = SelectedAccount?.Id,
-            CategoryIds = _categoryIds is null ? [] : [.. _categoryIds],
-            CategoryName = CategoryFilterName,
-            UnreviewedOnly = UnreviewedOnly,
-            InTotalsOnly = _inTotalsOnly,
-            Search = string.IsNullOrWhiteSpace(SearchText) ? null : SearchText.Trim(),
-        });
-        await LoadSavedFiltersAsync();
-    }
+        Name = string.Empty,
+        Period = Math.Max(0, PeriodIndex), From = _customPeriod?.From, To = _customPeriod?.To,
+        Kind = KindIndex, AccountId = SelectedAccount?.Id,
+        CategoryIds = _categoryIds is null ? [] : [.. _categoryIds], CategoryName = CategoryFilterName,
+        UnreviewedOnly = UnreviewedOnly, InTotalsOnly = _inTotalsOnly,
+        Search = string.IsNullOrWhiteSpace(SearchText) ? null : SearchText.Trim(),
+    }, LoadSavedFiltersAsync);
 
     [RelayCommand]
     private void ApplySavedFilter(SavedFilter filter)

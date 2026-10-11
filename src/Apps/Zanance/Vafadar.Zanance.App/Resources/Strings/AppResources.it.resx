@@ -5834,7 +5834,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Elementi disponibili e cronologia</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Dopo il passaggio a un piano inferiore, scegli gli elementi originali per nuove operazioni. I piani e gli obiettivi in pausa continuano a contare; selezionarli non li riprende. Le copie di budget condividono valuta, periodo e conti. La selezione non cambia stati, limiti, saldi o storico e non sblocca strumenti a pagamento. Salva applica la scelta; Ricarica chiede conferma prima di scartare le modifiche. Le versioni di prova restano senza limiti.</value>
+    <value>Dopo il passaggio a un piano inferiore, scegli gli elementi originali per nuove operazioni. I piani e gli obiettivi in pausa continuano a contare; selezionarli non li riprende. Le copie di budget condividono valuta, periodo e conti. La selezione non cambia stati, limiti, saldi o storico e non sblocca strumenti a pagamento. Salva applica la scelta; Ricarica chiede conferma prima di scartare le modifiche. Le versioni di prova restano senza limiti. I modelli rapidi selezionano le nuove bozze. I filtri esistenti restano disponibili per consultare lo storico; la selezione conta le definizioni salvate.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Due budget mensili EUR copiati per gli stessi conti usano una definizione. Selezionala per nuove operazioni; i limiti e i valori precedenti restano invariati.</value>
@@ -5932,5 +5932,8 @@ Limiti per categoria:
   </data>
   <data name="Budget_MissingReference" xml:space="preserve">
     <value>Riferimento non disponibile «{0}»</value>
+  </data>
+  <data name="ActiveItems_FilterRetained" xml:space="preserve">
+    <value>Disponibile per consultare lo storico</value>
   </data>
 </root>

@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Review quick templates and saved filters (2026-10-11, D-154)
+
+- Keep original quick templates and saved queries visible, with explicit activity choices ready for approved plan limits.
+- Save the filter combination shown before naming it, and confirm deletion of the exact selected query.
+- Recheck changes made while a dialog is open and keep committed saves from being repeated after refresh failure.
+- Show complete template names and covered loading with Reload. Test builds continue without commercial limits.
+
 ### Improved - Review original budget copy and delete actions (2026-10-11, D-153)
 
 - Copying or deleting a budget rechecks the same information shown on the page, including changes made while a confirmation is open.

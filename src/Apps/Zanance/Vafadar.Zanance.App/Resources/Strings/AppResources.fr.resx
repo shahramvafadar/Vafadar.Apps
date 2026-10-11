@@ -5822,7 +5822,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Éléments disponibles et historique</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Après un passage à une offre inférieure, choisissez les éléments d’origine pour de nouvelles opérations. Les plans et objectifs en pause comptent toujours ; les sélectionner ne les reprend pas. Les copies de budget partagent une définition de devise, période et comptes. La sélection ne modifie ni états, limites, soldes ou historique et ne débloque aucun outil payant. Enregistrer applique votre choix ; Recharger demande confirmation avant d’abandonner vos modifications. Les versions de test restent sans limites.</value>
+    <value>Après un passage à une offre inférieure, choisissez les éléments d’origine pour de nouvelles opérations. Les plans et objectifs en pause comptent toujours ; les sélectionner ne les reprend pas. Les copies de budget partagent une définition de devise, période et comptes. La sélection ne modifie ni états, limites, soldes ou historique et ne débloque aucun outil payant. Enregistrer applique votre choix ; Recharger demande confirmation avant d’abandonner vos modifications. Les versions de test restent sans limites. Les modèles rapides sélectionnent les nouveaux brouillons. Les filtres existants restent disponibles pour consulter l’historique ; leur sélection compte les définitions enregistrées.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Deux budgets mensuels EUR copiés pour les mêmes comptes utilisent une définition. Choisissez-la pour de nouvelles opérations ; vos anciennes limites et valeurs restent inchangées.</value>
@@ -5920,5 +5920,8 @@ Plafonds par catégorie :
   </data>
   <data name="Budget_MissingReference" xml:space="preserve">
     <value>Référence indisponible «{0}»</value>
+  </data>
+  <data name="ActiveItems_FilterRetained" xml:space="preserve">
+    <value>Disponible pour consulter l’historique</value>
   </data>
 </root>

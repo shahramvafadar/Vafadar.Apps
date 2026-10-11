@@ -574,3 +574,11 @@ The budget-editor-work Debug route uses an independent fictitious database, hidd
 D-153: the focused `budget-actions-work` Debug review uses the actual budget page over an independent fictitious
 database, native Invoke targets and complete 25-table comparison. Failed captures are negative evidence.
 Normal Release emulator review retains FLAG_SECURE and restores exact owned rows/sidecars/display.
+
+
+D-154: the focused `active-quick-resources` Debug route uses the actual six-kind chooser and template page over
+an independently owned SQLite fixture. It invokes native choice/Save/Delete patterns, captures current realized
+caption/target/name geometry and restores all 25 tables. It waits at most one second for queued current native
+kind layout and rejects retired pages. Failed captures are negative evidence. Normal complete Release Android
+checks use only the existing owned sample profile/private emulator transport; restore exact bytes/display and
+leave the final signed Release installed/stopped. This does not activate production commercial limits.

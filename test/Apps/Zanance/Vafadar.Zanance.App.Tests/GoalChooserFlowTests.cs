@@ -75,7 +75,7 @@ public sealed class GoalChooserFlowTests
     public async Task Inactive_goal_form_keeps_every_original_identity_state_and_requires_no_save()
     {
         var r = await CreateAsync(false); using var f = r.Fixture; var vm = r.ViewModel; var before = await SnapshotAsync(f);
-        Assert.Equal(4, vm.KindNames.Count); Assert.Equal(f.Translator["Goals_Title"], vm.KindNames[2]);
+        Assert.Equal(6, vm.KindNames.Count); Assert.Equal(f.Translator["Goals_Title"], vm.KindNames[2]);
         Assert.Equal(2, vm.KindIndex); Assert.Equal(5, vm.Items.Count); Assert.Equal(3, vm.Items.Count(row => row.IsSelected));
         Assert.False(vm.CanChoose); Assert.False(vm.CanSave); Assert.All(vm.Items, row => Assert.False(row.CanToggle));
         Assert.Equal(f.Translator["ActiveItems_Unlimited"], vm.AllowanceText);

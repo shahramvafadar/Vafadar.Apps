@@ -655,26 +655,24 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Adds a template at the end, or updates an existing one.</summary>
-    public async Task SaveTemplateAsync(EntryTemplate template, CancellationToken cancellationToken = default)
+    public async Task SaveTemplateAsync(EntryTemplate template, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
     {
         ArgumentNullException.ThrowIfNull(template);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
-        var existing = await db.Templates.AnyAsync(t => t.Id == template.Id, cancellationToken);
-        write.DemandFeature(existing ? CommercialFeature.Corrections : CommercialFeature.QuickTemplates);
-        if (existing)
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
+        var originals = await db.Templates.AsNoTracking().ToListAsync(cancellationToken);
+        var existing = originals.SingleOrDefault(t => t.Id == template.Id);
+        write.DemandFeature(existing is not null ? CommercialFeature.Corrections : CommercialFeature.QuickTemplates);
+        write.PrepareQuickResourceChange(QuotaKind.QuickTemplates, originals.Select(t => t.Id), template.Id);
+        if (existing is not null)
         {
+            template.CreatedAt = existing.CreatedAt;
             db.Templates.Update(template);
         }
         else
         {
-            // D-119: every template-producing caller uses this count under the same SQLite writer. Edits reuse a
-            // slot; reject a new template before changing its sort order or any stored/audited fields.
-            if (write.Enforced && write.DemandCapacity(CommercialFeature.QuickTemplates, QuotaKind.QuickTemplates) is { } maximum)
-            {
-                var current = await db.Templates.CountAsync(cancellationToken);
-                write.DemandCount(CommercialFeature.QuickTemplates, QuotaKind.QuickTemplates, maximum, current);
-            }
+            // D-154: the reviewed selected-slot check precedes every caller's sort order or metadata assignment.
             template.SortOrder = await db.Templates.Select(t => (int?)t.SortOrder).MaxAsync(cancellationToken) + 1 ?? 0;
             db.Templates.Add(template);
         }
@@ -686,10 +684,16 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Deletes a template; entries created from it are not affected.</summary>
-    public async Task DeleteTemplateAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteTemplateAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
+        write.DemandFeature(CommercialFeature.DeleteData);
+        write.PrepareQuickResourceChange(QuotaKind.QuickTemplates, await db.Templates.Select(t => t.Id).ToListAsync(cancellationToken), id, deleting: true);
         await db.Templates.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 
@@ -701,26 +705,24 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Adds a filter at the end, or replaces the one with the same id or the same name.</summary>
-    public async Task SaveSavedFilterAsync(SavedFilter filter, CancellationToken cancellationToken = default)
+    public async Task SaveSavedFilterAsync(SavedFilter filter, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
     {
         ArgumentNullException.ThrowIfNull(filter);
         filter.Name = filter.Name.Trim();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
         var all = await db.SavedFilters.ToListAsync(cancellationToken);
         var sameId = all.FirstOrDefault(f => f.Id == filter.Id);
 
         // Another filter with the same name is replaced (the user confirmed it); the filter itself is updated in place.
         // One SaveChanges, so nothing is removed unless the whole change is saved.
-        var sameName = all.Where(f => f.Id != filter.Id && string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        var sameName = all.Where(f => f.Id != filter.Id && (review?.SameName(f.Name, filter.Name)
+            ?? string.Equals(f.Name, filter.Name, StringComparison.CurrentCultureIgnoreCase))).ToList();
         var addsSlot = sameId is null && sameName.Count == 0;
         write.DemandFeature(addsSlot ? CommercialFeature.SavedFilters : CommercialFeature.Corrections);
-        // D-119: an explicitly confirmed same-name replacement consumes the original slot, even with a new row id.
-        // Quota rejection precedes removal/sort assignment so every original query and its metadata remain intact.
-        if (addsSlot && write.Enforced && write.DemandCapacity(CommercialFeature.SavedFilters, QuotaKind.SavedFilters) is { } maximum)
-        {
-            write.DemandCount(CommercialFeature.SavedFilters, QuotaKind.SavedFilters, maximum, all.Count);
-        }
+        // D-154: explicit replacement follows the reviewed original name culture and selected slot under this writer.
+        write.PrepareQuickResourceChange(QuotaKind.SavedFilters, all.Select(f => f.Id), filter.Id, sameName.Select(f => f.Id).ToArray());
         filter.SortOrder = sameId?.SortOrder ?? sameName.FirstOrDefault()?.SortOrder ?? (all.Count == 0 ? 0 : all.Max(f => f.SortOrder) + 1);
         db.SavedFilters.RemoveRange(sameName);
         if (sameId is not null)
@@ -741,10 +743,16 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Deletes a saved filter; entries are never affected.</summary>
-    public async Task DeleteSavedFilterAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteSavedFilterAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
+        write.DemandFeature(CommercialFeature.DeleteData);
+        write.PrepareQuickResourceChange(QuotaKind.SavedFilters, await db.SavedFilters.Select(f => f.Id).ToListAsync(cancellationToken), id, deleting: true);
         await db.SavedFilters.Where(f => f.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
         OnChanged();
     }
 

@@ -5814,7 +5814,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Elementos disponibles e historial</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Tras pasar a un plan inferior, elige los elementos originales para nuevas operaciones. Los planes y objetivos pausados siguen contando; elegirlos no los reanuda. Las copias de presupuesto comparten moneda, periodo y cuentas. La selección no cambia estados, límites, saldos ni historial y no desbloquea herramientas de pago. Guardar aplica tu elección; Recargar pide permiso antes de descartar cambios. Las versiones de prueba no tienen límites.</value>
+    <value>Tras pasar a un plan inferior, elige los elementos originales para nuevas operaciones. Los planes y objetivos pausados siguen contando; elegirlos no los reanuda. Las copias de presupuesto comparten moneda, periodo y cuentas. La selección no cambia estados, límites, saldos ni historial y no desbloquea herramientas de pago. Guardar aplica tu elección; Recargar pide permiso antes de descartar cambios. Las versiones de prueba no tienen límites. Las plantillas rápidas seleccionan nuevos borradores. Los filtros anteriores siguen disponibles para consultar el historial; su selección cuenta las definiciones guardadas.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
     <value>Dos presupuestos mensuales EUR copiados para las mismas cuentas usan una definición. Elígela para nuevas operaciones; tus límites y cifras anteriores no cambian.</value>
@@ -5912,5 +5912,8 @@ Límites por categoría:
   </data>
   <data name="Budget_MissingReference" xml:space="preserve">
     <value>Referencia no disponible «{0}»</value>
+  </data>
+  <data name="ActiveItems_FilterRetained" xml:space="preserve">
+    <value>Disponible para consultar el historial</value>
   </data>
 </root>

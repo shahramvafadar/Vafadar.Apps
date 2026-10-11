@@ -265,3 +265,21 @@ Original budget editor: D-152 retains full original scope/limits and raw input c
 
 Reviewed original budget copy/delete and separate work availability (D-153):
 [quality evidence](docs/quality/budget-view-actions.md). Remaining commercial integration is in progress.
+
+
+### Reviewed quick templates and saved queries (D-154)
+
+Durable explicit quick-template/saved-filter choices retain every original packet, recheck revision/value and
+same-timestamp changes, and use the existing actual-file scoped writer. Chosen new slots and explicit filter
+replacement are atomic; retained correction/delete/history stay separate. Actual template create/apply/delete
+and saved-query save/delete commands use complete reviews and one busy dialog/write/refresh guard. Queries are
+captured before prompts; committed refresh failure never resubmits. Template names wrap, publication is covered
+and explicit Reload is available. Six growing chooser destinations and help explain retained query history.
+Current Release registration stays inactive; no schema, network, SDK, permission or portable grant is added.
+
+29 new AT-156 cases/main 2,736 behaviours (App.Tests 679) pass after repairing one stale four-kind expectation;
+only that failed case reran. Strict Windows/complete Android Release have zero warnings/errors. Eighteen hidden
+Windows locale/theme/width cases and six normal Release emulator cases restore complete owned rows/bytes/display.
+Physical-device, iOS, OAuth, commercial activation and publication gates remain open. ENT-02/03 are still in progress.
+
+See [evidence](docs/quality/quick-resources.md).

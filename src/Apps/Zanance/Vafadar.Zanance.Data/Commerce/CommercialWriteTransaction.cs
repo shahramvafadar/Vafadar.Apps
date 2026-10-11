@@ -24,6 +24,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     private StoredResourceSelection? _storedGoals;
     private StoredResourceSelection? _storedBudgets;
     private BudgetSelection? _budgetSelection;
+    private readonly Dictionary<QuotaKind, StoredResourceSelection?> _storedQuick = [];
 
     /// <summary>Gets this writer's exact verified context, never a newly selected profile.</summary>
     internal CapabilityContext? Context => _access.Context;
@@ -72,6 +73,8 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
             result._goalSelection = result._storedGoals?.ForNewWork() ?? access.GoalSelection;
             result._accountSelection = result._storedAccounts?.ForNewWork() ?? access.AccountSelection;
             result._planSelection = result._storedPlans?.ForNewWork() ?? access.PlanSelection;
+            foreach (var kind in new[] { QuotaKind.QuickTemplates, QuotaKind.SavedFilters })
+                result._storedQuick[kind] = await StoredResourceSelection.ReadAsync(db, access, kind, cancellationToken, tracking: true);
             result.EnsureCurrent();
             return result;
         }
@@ -186,6 +189,43 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
 
     /// <summary>Gets whether an existing persisted account choice owns the transaction-local addition check.</summary>
     public bool HasStoredAccountChoice => _storedAccounts is not null;
+
+    /// <summary>Checks net chosen quick-resource creation/replacement/deletion under this same actual-file writer.</summary>
+    internal void PrepareQuickResourceChange(QuotaKind kind, IEnumerable<Guid> originalIds, Guid target,
+        IReadOnlyList<Guid>? replacedIds = null, bool deleting = false)
+    {
+        if (!Enforced) return;
+        if (kind is not (QuotaKind.QuickTemplates or QuotaKind.SavedFilters)) throw new ArgumentOutOfRangeException(nameof(kind));
+        var row = _storedQuick.GetValueOrDefault(kind);
+        var originals = originalIds.ToHashSet(); var replaced = replacedIds ?? [];
+        if (deleting)
+        {
+            // Malformed choices retain their exact value until explicit reviewed repair; deletion grants no new work.
+            if (row is not null && row.HasValidValue())
+                ReplaceChoice(row, new(kind, FinancialScope, row.ToSelection().SelectedIds.Where(id => id != target)));
+            return;
+        }
+        var feature = kind == QuotaKind.QuickTemplates ? CommercialFeature.QuickTemplates : CommercialFeature.SavedFilters;
+        var creating = !originals.Contains(target) && replaced.Count == 0;
+        DemandFeature(creating ? feature : CommercialFeature.Corrections);
+        var choice = row?.ForNewWork();
+        var ids = choice?.SelectedIds.ToHashSet();
+        if (creating && GetMaximum(kind) is { } maximum)
+        {
+            var availability = ResourceSelectionPolicy.Resolve(kind, FinancialScope, Context!,
+                originals.Select(id => new QuotaItem(kind, FinancialScope, id, QuotaItemState.Active)), choice);
+            if (availability.RequiresSelection || row is not null && !row.HasValidValue())
+                throw new CommercialWriteRejectedException(feature, kind, target, true);
+            DemandCount(feature, kind, maximum, availability.SelectedCount);
+        }
+        if (row is null || !row.HasValidValue()) return;
+        if (creating) ids!.Add(target);
+        else if (replaced.Any(id => ids!.Contains(id)))
+        {
+            ids!.ExceptWith(replaced); ids.Add(target);
+        }
+        ReplaceChoice(row, new(kind, FinancialScope, ids!));
+    }
 
     /// <summary>Updates a persisted plan choice for explicit creation, ending or a validated slot-preserving split.</summary>
     public async Task PreparePlanChangesAsync(ZananceDbContext db, IReadOnlyList<Schedule> batch,

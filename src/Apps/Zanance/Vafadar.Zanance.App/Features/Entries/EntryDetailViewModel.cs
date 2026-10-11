@@ -35,8 +35,9 @@ public sealed partial class EntryDetailViewModel(
     IDateFormatter dates,
     UndoService undo,
     HoldingStore holdings,
-    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
+    private readonly Commerce.QuickResourceActions _quick = new(store, translator, interaction);
     private Guid _id;
     private Guid? _holdingTypeId;
     private LedgerEntry? _entry;
@@ -145,8 +146,11 @@ public sealed partial class EntryDetailViewModel(
         }
 
         var entry = _entry;
-        var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
-        var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
+        await _quick.LoadAsync(entry.Id);
+        var review = _quick.Review!;
+        if (!review.MatchesSource(entry)) throw new InvalidOperationException("The displayed template source changed.");
+        var accounts = review.Accounts.ToDictionary(a => a.Id);
+        var categories = new CategoryLookup(review.Categories, translator);
         var culture = localization.CurrentCulture;
         var presenter = new EntryPresenter(accounts, categories, translator, culture);
         var row = presenter.Row(entry);
@@ -161,7 +165,7 @@ public sealed partial class EntryDetailViewModel(
         IsUnreviewed = row.IsUnreviewed;
         CanPayBack = entry.Kind == EntryKind.Income;
         CanMakeRecurring = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && entry.ScheduleId is null;
-        CanSaveTemplate = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer;
+        CanSaveTemplate = entry.Kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer && review.Work.CanCreateTemplate;
         _ruleMatch = entry.Kind is EntryKind.Income or EntryKind.Expense && entry.CategoryId is { } ruleCategory
             && categories.Get(ruleCategory) is { SystemKey: not Core.Categories.DefaultCategories.Uncategorized }
                 ? (entry.Payee ?? entry.Title)?.Trim()
@@ -460,19 +464,8 @@ public sealed partial class EntryDetailViewModel(
             return;
         }
 
-        var name = await Shell.Current.DisplayPromptAsync(
-            translator["Templates_SaveTitle"], translator["Templates_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"],
-            initialValue: Heading ?? string.Empty, maxLength: 60);
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return;
-        }
-
-        var keepAmount = _entry.Amount > 0 && await Shell.Current.DisplayAlertAsync(
-            translator["Templates_SaveTitle"], translator.Format("Templates_KeepAmount", AmountText ?? string.Empty),
-            translator["Templates_KeepAmountYes"], translator["Templates_KeepAmountNo"]);
-        await store.SaveTemplateAsync(EntryTemplate.From(_entry, name, keepAmount));
-        await Shell.Current.DisplayAlertAsync(translator["Templates_SaveTitle"], translator.Format("Templates_Saved", name.Trim()), translator["Common_Ok"]);
+        await _quick.CreateTemplateAsync(_entry, Heading ?? string.Empty, AmountText ?? string.Empty);
+        CanSaveTemplate = _quick.Review?.Work.CanCreateTemplate == true;
     }
 
     // TX-04: an entry becomes the template of a plan; the entry itself stays as it is.

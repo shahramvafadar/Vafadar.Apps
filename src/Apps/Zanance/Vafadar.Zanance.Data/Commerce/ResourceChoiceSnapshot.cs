@@ -13,6 +13,8 @@ public sealed record ResourceChoiceItem(Guid Id, string Name, QuotaItemState Sta
     public Core.Ledger.EntryKind? EntryKind { get; init; }
     /// <summary>Gets the original goal measurement kind, when choosing goals.</summary>
     public Core.Goals.GoalType? GoalType { get; init; }
+    /// <summary>Gets the complete immutable original quick-resource packet, detecting same-timestamp metadata changes.</summary>
+    public string? OriginalPacket { get; init; }
 }
 
 /// <summary>Immutable reviewed choice bound to the opened file, original items, current rights and stored revision.</summary>
@@ -31,6 +33,7 @@ public sealed class ResourceChoiceSnapshot
         DatabasePath = path;
         Access = access;
         Revision = stored?.Revision;
+        StoredValue = stored?.IdentitySet;
     }
 
     /// <summary>Gets the reviewed resource kind.</summary>
@@ -51,4 +54,6 @@ public sealed class ResourceChoiceSnapshot
     internal CommercialFileAccess Access { get; }
     /// <summary>Gets the captured row revision, including the distinct absent-row state.</summary>
     internal Guid? Revision { get; }
+    /// <summary>Gets the original canonical choice value, including distinct absence, independently of its revision.</summary>
+    internal string? StoredValue { get; }
 }

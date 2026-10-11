@@ -74,7 +74,7 @@
                                     </Border>
                                     <Button Style="{StaticResource OverlayButton}" CornerRadius="20"
                                             Command="{Binding ApplyTemplateCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
-                                            CommandParameter="{Binding Template}" SemanticProperties.Description="{Binding Template.Name}" />
+                                            CommandParameter="{Binding Template}" IsEnabled="{Binding CanApply}" SemanticProperties.Description="{Binding Template.Name}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

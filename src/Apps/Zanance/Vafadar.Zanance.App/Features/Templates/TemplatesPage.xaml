@@ -6,10 +6,12 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Templates"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     x:DataType="local:TemplatesViewModel"
     Title="{v:Translate Templates_Title}">
 
-    <ScrollView>
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView IsVisible="{Binding Loading.IsReady}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Templates_Intro}" Style="{StaticResource Secondary}" />
 
@@ -29,12 +31,12 @@
                                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" />
+                                    <Label Text="{Binding Name}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" MaxLines="-1" />
                                     <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
                                 <Button Grid.Column="2" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" SemanticProperties.Hint="{Binding Name}"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:TemplatesViewModel}}, x:DataType=local:TemplatesViewModel}"
-                                        CommandParameter="{Binding .}" />
+                                        CommandParameter="{Binding .}" IsEnabled="{Binding Actions.CanDeleteTemplates, Source={RelativeSource AncestorType={x:Type local:TemplatesViewModel}}, x:DataType=local:TemplatesViewModel}" />
                             </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -42,4 +44,14 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+        <Label Text="{v:Translate ActiveItems_Loading}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+    <Label Text="{v:Translate ActiveItems_LoadFailed}" Margin="32" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}" />
+    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+        <Label Text="{Binding Actions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Actions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
+        <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

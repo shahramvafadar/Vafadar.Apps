@@ -4,7 +4,7 @@ using Vafadar.Zanance.Core.Plans;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
-/// <summary>Explicit, actual-file account, plan and goal choices with optimistic review and a serialized SQLite writer.</summary>
+/// <summary>Explicit actual-file financial resource choices with optimistic review and a serialized SQLite writer.</summary>
 public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> contextFactory,
     ICommercialWriteAccessSource commercialAccess)
 {
@@ -30,13 +30,16 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
                 QuotaKind.FinancialAccounts => access.AccountSelection,
                 QuotaKind.RecurringPlans => access.PlanSelection,
                 QuotaKind.Goals => access.GoalSelection,
+                QuotaKind.QuickTemplates or QuotaKind.SavedFilters => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(kind)),
             };
             availability = ResourceSelectionPolicy.Resolve(kind, scope, context,
                 items.Select(item => new QuotaItem(kind, scope, item.Id, item.State)), selection);
         }
         // A racing chooser save must not publish a mixture of two choices and the reviewed original item list.
-        if ((await StoredResourceSelection.ReadAsync(db, access, kind, cancellationToken))?.Revision != stored?.Revision)
+        var current = await StoredResourceSelection.ReadAsync(db, access, kind, cancellationToken);
+        if (current?.Revision != stored?.Revision || current?.IdentitySet != stored?.IdentitySet
+            || !(await ReadItemsAsync(db, kind, cancellationToken)).SequenceEqual(items))
             throw new InvalidOperationException("The resource choice changed during loading; reload it.");
         access.EnsureSnapshotCurrent();
         return new(kind, items, availability, path, access, stored);
@@ -60,7 +63,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var row = await StoredResourceSelection.ReadAsync(db, reviewed.Access, reviewed.Kind, cancellationToken, tracking: true);
         var items = await ReadItemsAsync(db, reviewed.Kind, cancellationToken);
-        if (row?.Revision != reviewed.Revision || !items.SequenceEqual(reviewed.Items))
+        if (row?.Revision != reviewed.Revision || row?.IdentitySet != reviewed.StoredValue || !items.SequenceEqual(reviewed.Items))
             throw new InvalidOperationException("The reviewed resource list or choice changed; reload it before saving.");
         var availability = ResourceSelectionPolicy.Resolve(reviewed.Kind, choice.Scope, reviewed.Access.Context!,
             items.Select(item => new QuotaItem(reviewed.Kind, choice.Scope, item.Id, item.State)), choice);
@@ -87,9 +90,38 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         return true;
     }
 
+    /// <summary>Rechecks an original reviewed list without modifying its entities or persisted choice.</summary>
+    public async Task ValidateAsync(ResourceChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateAsync(reviewed, db, cancellationToken);
+    }
+
+    /// <summary>Shares validation with the actual writer, never an unrelated read connection.</summary>
+    internal async Task ValidateAsync(ResourceChoiceSnapshot reviewed, ZananceDbContext db, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(reviewed); DemandKind(reviewed.Kind);
+        if (Path.GetFullPath(db.Database.GetDbConnection().DataSource) != reviewed.DatabasePath)
+            throw new InvalidOperationException("The reviewed resource list belongs to another opened file.");
+        reviewed.Access.EnsureSnapshotCurrent();
+        var current = await StoredResourceSelection.ReadAsync(db, reviewed.Access, reviewed.Kind, cancellationToken);
+        if (current?.Revision != reviewed.Revision || current?.IdentitySet != reviewed.StoredValue
+            || !(await ReadItemsAsync(db, reviewed.Kind, cancellationToken)).SequenceEqual(reviewed.Items))
+            throw new InvalidOperationException("The original resource list or choice changed; reload it.");
+        reviewed.Access.EnsureSnapshotCurrent();
+    }
+
     private static async Task<List<ResourceChoiceItem>> ReadItemsAsync(ZananceDbContext db, QuotaKind kind, CancellationToken cancellationToken)
     {
-        var items = kind == QuotaKind.FinancialAccounts
+        var items = kind == QuotaKind.QuickTemplates
+            ? (await db.Templates.AsNoTracking().ToListAsync(cancellationToken)).Select(template =>
+                new ResourceChoiceItem(template.Id, template.Name, QuotaItemState.Active)
+                { EntryKind = template.Kind, OriginalPacket = System.Text.Json.JsonSerializer.Serialize(template) })
+            : kind == QuotaKind.SavedFilters
+            ? (await db.SavedFilters.AsNoTracking().ToListAsync(cancellationToken)).Select(filter =>
+                new ResourceChoiceItem(filter.Id, filter.Name, QuotaItemState.Active)
+                { OriginalPacket = System.Text.Json.JsonSerializer.Serialize(filter) })
+            : kind == QuotaKind.FinancialAccounts
             ? (await db.Accounts.AsNoTracking().ToListAsync(cancellationToken)).Select(account =>
                 new ResourceChoiceItem(account.Id, account.Name, account.IsArchived ? QuotaItemState.Archived : QuotaItemState.Active)
                 { AccountType = account.Type, CurrencyCode = account.CurrencyCode })
@@ -117,7 +149,8 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
 
     private static void DemandKind(QuotaKind kind)
     {
-        if (kind is not (QuotaKind.FinancialAccounts or QuotaKind.RecurringPlans or QuotaKind.Goals))
+        if (kind is not (QuotaKind.FinancialAccounts or QuotaKind.RecurringPlans or QuotaKind.Goals
+            or QuotaKind.QuickTemplates or QuotaKind.SavedFilters))
             throw new ArgumentOutOfRangeException(nameof(kind), "This resource uses its separate selection boundary.");
     }
 }

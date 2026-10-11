@@ -60,7 +60,7 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
     }
 
     /// <summary>Gets the separate availability caption; a historical state never becomes an active choice.</summary>
-    public string ChoiceText => translator[!IsEligible ? "ActiveItems_History" : IsSelected ? "ActiveItems_Selected" : "ActiveItems_ReadOnly"];
+    public string ChoiceText => translator[!IsEligible ? "ActiveItems_History" : IsSelected ? "ActiveItems_Selected" : owner.KindIndex == 5 ? "ActiveItems_FilterRetained" : "ActiveItems_ReadOnly"];
     /// <summary>Gets a complete live spoken name for the real native target.</summary>
     public string AccessibilityText => translator.Format("ActiveItems_RowDescription", Name, DetailText ?? StateText, StateText, ChoiceText);
 
@@ -198,7 +198,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     partial void OnKindIndexChanged(int value)
     {
         if (_publishing) return;
-        if (!CanInteract || value is not (0 or 1 or 2 or 3)) { RestoreIndex(); return; }
+        if (!CanInteract || value is not (0 or 1 or 2 or 3 or 4 or 5)) { RestoreIndex(); return; }
         PendingKindChange = SwitchAsync(value);
     }
 
@@ -300,7 +300,8 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     public void RefreshDisplay()
     {
         _publishing = true;
-        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"], _translator["Budget_Title"]]; }
+        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"], _translator["Budget_Title"],
+            _translator["Templates_Title"], _translator["Filter_Title"]]; }
         finally { _publishing = false; }
         SetFeedback(_feedbackKey); RefreshCapabilities();
     }
@@ -320,6 +321,8 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
         0 => QuotaKind.FinancialAccounts,
         1 => QuotaKind.RecurringPlans,
         2 => QuotaKind.Goals,
+        4 => QuotaKind.QuickTemplates,
+        5 => QuotaKind.SavedFilters,
         _ => throw new ArgumentOutOfRangeException(nameof(index)),
     };
 }

@@ -579,3 +579,10 @@ BudgetEditorReview captures immutable original periods/limits and complete origi
 D-153: budget view actions reuse the complete BudgetEditorReview and paired writer overloads. Immutable displayed
 source/replacement packets reject concurrent/retired data through confirmation. No schema, compiled-model, backup
 format, security or credential change; inactive registration remains unchanged.
+
+
+D-154: QuickResourceReview pairs complete original templates/queries/references/raw nullable preferences and
+optional source entry with both resource choices. ResourceChoiceStore checks canonical value/revision and full
+resource JSON packets. Actual reviewed Save/Delete writers serialize slot creation, confirmed replacement and
+choice release in the same transaction; malformed values remain for explicit repair. No EF property/schema
+changes are made. Saved queries grant only history; account/ledger writers still own new money.

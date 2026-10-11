@@ -381,3 +381,9 @@ Complete original financial references/preferences remain in memory for the cove
 
 D-153: budget action review stays local and contains only original budget/reference/preference data. Copy/Delete
 change no ledger data; no network, SDK, permission, export, portable grant, credential or security-state change.
+
+
+D-154: original quick-resource/reference/preference packets and an optional source entry stay in memory for
+reviewed local configuration writes. Existing choice rows support two more resource kinds; no schema, network,
+SDK, permission, credential, export, portable entitlement or security state is added. Template application is
+only an unsaved draft; saved-query viewing posts no money. Independent native fixtures are completely restored.
