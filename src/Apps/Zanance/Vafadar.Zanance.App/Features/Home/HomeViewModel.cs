@@ -27,7 +27,11 @@ public sealed record PeriodSummary(string IncomeText, string ExpenseText, string
 public sealed record CategorySlice(IReadOnlyCollection<Guid> CategoryIds, string Name, double Value, string AmountText, string PercentText, Color Color, Brush Brush);
 
 /// <summary>A quick template on Home (TX-04): one tap opens a new entry filled from it, nothing is saved yet.</summary>
-public sealed record QuickTemplate(Guid Id, string Name, FluentIcons.Common.Symbol Icon, Color IconColor, string Description);
+public sealed record QuickTemplate(Guid Id, string Name, FluentIcons.Common.Symbol Icon, Color IconColor, string Description)
+{
+    /// <summary>Gets separate original activity enablement; every retained definition remains in its source review.</summary>
+    public bool CanUse { get; init; }
+}
 
 /// <summary>
 /// Home dashboard (UI-02, DASH-01..04). Every number uses one filter set – the period chosen at the top, the accounts
@@ -38,6 +42,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private const int MaxSlices = 6;
 
     private readonly ZananceStore _store;
+    /// <summary>Gets the actual reviewed template navigation source, independent of financial presentation.</summary>
+    public TemplateNavigationViewModel TemplateNavigation { get; }
     private readonly PlanStore _plans;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
@@ -58,9 +64,10 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private readonly Vafadar.Backup.IBackupService _backup;
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
     {
         _backup = backup;
+        TemplateNavigation = new(store, translator, interaction, LoadAsync);
         _holdings = holdings;
         _holdingText = holdingText;
         _goals = goals;
@@ -274,7 +281,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         await _loading.WaitAsync();
         try
         {
-            await LoadCoreAsync();
+            TemplateNavigation.BeginLoad();
+            try { await LoadCoreAsync(); }
+            catch { TemplateNavigation.FailLoad(); throw; }
         }
         finally
         {
@@ -286,12 +295,13 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
-        var settings = await _store.GetSettingsAsync();
+        var templateReview = await _store.GetQuickResourceReviewAsync();
+        var settings = templateReview.Settings ?? new ZananceSettings();
         _reportCurrency = settings.ReportCurrencyCode;
         _startDay = settings.MonthStartDay;
         var (from, to) = PeriodRange(today);
 
-        var allAccounts = await _store.GetAccountsAsync();
+        var allAccounts = templateReview.Accounts.OrderBy(a => a.IsArchived).ThenBy(a => a.SortOrder).ThenBy(a => TemplateNavigationViewModel.StoredNameOrderKey(a.Name), StringComparer.Ordinal).ToList();
         var accounts = allAccounts.Where(a => !a.IsArchived).ToList();
         _homeCurrency = BudgetCurrency.Resolve(settings, allAccounts);
 
@@ -304,7 +314,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = await _store.GetEntriesAsync();
         var accountEntries = new AccountEntryIndex(entries);
-        var categoryList = await _store.GetCategoriesAsync();
+        var categoryList = templateReview.Categories.OrderBy(c => c.Kind).ThenBy(c => c.SortOrder).ToList();
         var categories = new CategoryLookup(categoryList, _translator);
 
         // Plans are read once for the due items, the forecast and getting started.
@@ -394,21 +404,6 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         // D-92: keep the existing native rows and publish the complete, freshly formatted snapshot once.
         Accounts.ReplaceAll(accountRows);
 
-        // Quick templates (TX-04) one tap away from Home; the editor still opens for a check before saving.
-        QuickTemplates.Clear();
-        foreach (var template in (await _store.GetTemplatesAsync()).OrderBy(t => t.SortOrder).Take(6))
-        {
-            var transfer = template.Kind == EntryKind.Transfer;
-            QuickTemplates.Add(new QuickTemplate(
-                template.Id,
-                template.Name,
-                transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(template.Icon, categories.Icon(template.CategoryId)),
-                transfer ? Palette.TransferText : categories.Color(template.CategoryId),
-                _translator.Format("Home_TemplateDescription", template.Name)));
-        }
-
-        HasQuickTemplates = QuickTemplates.Count > 0;
-
         // The last entries show at a glance what was recorded and that a quick add worked.
         var presenter = new EntryPresenter(byId, categories, _translator, culture);
         RecentEntries.Clear();
@@ -429,6 +424,18 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         await LoadGoalsAsync(allAccounts, entries, today);
         await LoadHoldingsAsync(today);
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
+        await _store.ValidateQuickResourceReviewAsync(templateReview);
+        TemplateNavigation.Publish(templateReview);
+        QuickTemplates.Clear();
+        foreach (var template in TemplateNavigation.Items)
+        {
+            var transfer = template.Kind == EntryKind.Transfer;
+            QuickTemplates.Add(new QuickTemplate(template.Id, template.Name,
+                transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(template.Icon, categories.Icon(template.CategoryId)),
+                transfer ? Palette.TransferText : categories.Color(template.CategoryId),
+                _translator.Format("Home_TemplateDescription", template.Name)) { CanUse = templateReview.Work.CanApplyTemplate(template.Id) });
+        }
+        HasQuickTemplates = QuickTemplates.Count > 0;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
@@ -741,8 +748,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         : Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
 
     [RelayCommand]
-    private Task UseTemplateAsync(QuickTemplate template) =>
-        Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["template"] = template.Id });
+    private Task UseTemplateAsync(QuickTemplate template) => TemplateNavigation.OpenAsync(template.Id);
 
     [RelayCommand]
     private Task OpenEntryAsync(EntryRow row) =>

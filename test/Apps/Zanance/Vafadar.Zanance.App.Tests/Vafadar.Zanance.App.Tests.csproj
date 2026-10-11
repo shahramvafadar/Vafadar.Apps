@@ -16,6 +16,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanDraft.cs" Link="Application/EntryPlanDraft.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ActiveItemsViewModel.cs" Link="Application/ActiveItemsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/QuickResourceActions.cs" Link="Application/QuickResourceActions.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Home/TemplateNavigationViewModel.cs" Link="Application/TemplateNavigationViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalTone.cs" Link="Application/GoalTone.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalPresenter.cs" Link="Application/GoalPresenter.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/GoalsViewModel.cs" Link="Application/GoalsViewModel.cs" />

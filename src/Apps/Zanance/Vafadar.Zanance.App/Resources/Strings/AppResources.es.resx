@@ -5742,7 +5742,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Elementos disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Elige las cuentas, planes, objetivos y definiciones de presupuesto para nuevas operaciones. Todo el historial original sigue disponible.</value>
+    <value>Elige los elementos originales disponibles para nuevas operaciones. Todo el historial original sigue disponible y puedes consultarlo con los filtros guardados.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Activo</value>
@@ -5915,5 +5915,11 @@ Límites por categoría:
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>Disponible para consultar el historial</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>Algunas plantillas se conservan como referencia. Selecciona los elementos activos para usarlas en una nueva transacción.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>No se pudo abrir la plantilla con los datos revisados. Vuelve a cargar los datos originales y selecciónala de nuevo. No se guardó nada.</value>
   </data>
 </root>

@@ -6,6 +6,24 @@ namespace Vafadar.Zanance.Data;
 
 public sealed partial class ZananceStore
 {
+    /// <summary>Creates a process-local original handoff after validating the displayed source and activity choice.</summary>
+    public async Task<TemplateVisit> CreateTemplateVisitAsync(QuickResourceReview review, Guid templateId, CancellationToken cancellationToken = default)
+    {
+        await ValidateQuickResourceReviewAsync(review, cancellationToken);
+        if (!review.Templates.Any(template => template.Id == templateId) || !review.Work.CanApplyTemplate(templateId))
+            throw new InvalidOperationException("The original template is unavailable for new draft activity.");
+        return new(review, templateId);
+    }
+
+    /// <summary>Resolves the exact original source again at the destination, never another file's same-id template.</summary>
+    public async Task<Core.Ledger.EntryTemplate> ResolveTemplateVisitAsync(TemplateVisit visit, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(visit);
+        await ValidateQuickResourceReviewAsync(visit.Review, cancellationToken);
+        if (!visit.Review.Work.CanApplyTemplate(visit.TemplateId)) throw new InvalidOperationException("Template activity is unavailable.");
+        return visit.Review.Templates.Single(template => template.Id == visit.TemplateId);
+    }
+
     /// <summary>Reads complete original quick definitions/references and an optional original entry without writing defaults.</summary>
     public async Task<QuickResourceReview> GetQuickResourceReviewAsync(Guid? sourceEntryId = null, CancellationToken cancellationToken = default)
     {

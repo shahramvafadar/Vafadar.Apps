@@ -57,6 +57,22 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         });
     }
 
+    /// <summary>Rechecks an original Home handoff and current publication before filling a detached draft.</summary>
+    public async Task ApplyTemplateVisitAsync(TemplateVisit visit, Action<EntryTemplate> apply)
+    {
+        ArgumentNullException.ThrowIfNull(visit);
+        if (!CanInteract || _review is not { } review) return;
+        await RunAsync(async () =>
+        {
+            await ValidateAsync(review);
+            var original = await store.ResolveTemplateVisitAsync(visit);
+            if (!review.Work.CanApplyTemplate(original.Id) || !review.Templates.Any(template => template.Id == original.Id))
+                throw new InvalidOperationException("The original template is unavailable at this destination.");
+            await ValidateAsync(review);
+            apply(original); return false;
+        }, failureKey: "Templates_SourceChanged");
+    }
+
     /// <summary>Creates only an explicitly named template from the exact displayed source, never another profile's same id.</summary>
     public async Task CreateTemplateAsync(LedgerEntry displayed, string heading, string amountText)
     {
@@ -139,7 +155,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         }, reload);
     }
 
-    private async Task RunAsync(Func<Task<bool>> operation, Func<Task>? afterCommit = null)
+    private async Task RunAsync(Func<Task<bool>> operation, Func<Task>? afterCommit = null, string failureKey = "Error_Unexpected")
     {
         if (!CanInteract) return;
         IsBusy = true; Feedback = null; var committed = false;
@@ -155,7 +171,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             _review = null; ++_generation;
-            Feedback = translator[committed ? "Occurrence_SavedRefreshFailed" : "Error_Unexpected"];
+            Feedback = translator[committed ? "Occurrence_SavedRefreshFailed" : failureKey];
             if (committed) await interaction.AlertAsync(translator["Error_Title"], translator["Occurrence_SavedRefreshFailed"], translator["Common_Ok"]);
             else await interaction.ShowFailureAsync(exception);
         }

@@ -125,7 +125,7 @@
                                     CommandParameter="Expense" SemanticProperties.Description="{Binding QuickAddTargetText}" />
                         </Grid>
 
-                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasQuickTemplates}">
+                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasQuickTemplates}" IsEnabled="{Binding TemplateNavigation.CanInteract}">
                             <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding QuickTemplates}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="local:QuickTemplate">
@@ -138,12 +138,16 @@
                                             </Border>
                                             <Button Style="{StaticResource OverlayButton}" CornerRadius="20"
                                                     Command="{Binding UseTemplateCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                    CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                                    CommandParameter="{Binding .}" IsEnabled="{Binding CanUse}" SemanticProperties.Description="{Binding Description}" />
                                         </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </HorizontalStackLayout>
                         </ScrollView>
+                        <Label Text="{Binding TemplateNavigation.WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding TemplateNavigation.WorkText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding TemplateNavigation.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding TemplateNavigation.Feedback, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:WrappingAction Text="{v:Translate ActiveItems_Title}" Command="{Binding TemplateNavigation.ChooseCommand}" IsVisible="{Binding TemplateNavigation.CanChoose}" />
+                        <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding TemplateNavigation.ReloadCommand}" IsVisible="{Binding TemplateNavigation.Feedback, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Border>
 

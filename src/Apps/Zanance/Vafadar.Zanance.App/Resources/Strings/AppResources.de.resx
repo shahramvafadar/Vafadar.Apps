@@ -5773,7 +5773,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Verfügbare Elemente</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Wählen Sie Konten, Pläne, Ziele und Budgetdefinitionen für neue Vorgänge. Der gesamte bisherige Verlauf bleibt verfügbar.</value>
+    <value>Wählen Sie die Originaleinträge für neue Vorgänge. Der gesamte Verlauf bleibt verfügbar und kann weiterhin mit gespeicherten Filtern angezeigt werden.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Aktiv</value>
@@ -5946,5 +5946,11 @@ Kategorielimits:
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>Für die Verlaufssicht verfügbar</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>Einige Vorlagen bleiben zum Nachschlagen erhalten. Wählen Sie aktive Einträge, um sie für eine neue Buchung zu verwenden.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>Die Vorlage konnte aus den geprüften Daten nicht geöffnet werden. Laden Sie die Originaldaten neu und wählen Sie sie erneut. Es wurde nichts gespeichert.</value>
   </data>
 </root>

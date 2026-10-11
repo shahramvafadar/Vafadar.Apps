@@ -103,6 +103,20 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
         RefreshDisplay();
     }
 
+    /// <summary>Sets only a valid initial destination before reading; this never writes a choice or discards a draft.</summary>
+    public void SetInitialKind(QuotaKind kind)
+    {
+        if (IsBusy || Loading.HasLoaded || _snapshot is not null || _budgetSnapshot is not null)
+            throw new InvalidOperationException("The resource destination was already opened.");
+        var index = kind switch
+        { QuotaKind.FinancialAccounts => 0, QuotaKind.RecurringPlans => 1, QuotaKind.Goals => 2,
+            QuotaKind.BudgetDefinitions => 3, QuotaKind.QuickTemplates => 4, QuotaKind.SavedFilters => 5,
+            _ => throw new ArgumentOutOfRangeException(nameof(kind)) };
+        _publishing = true;
+        try { KindIndex = _publishedKindIndex = index; }
+        finally { _publishing = false; }
+    }
+
     /// <summary>Gets initial/loading/failure publication state for the complete form.</summary>
     public SnapshotLoadState Loading { get; } = new();
     /// <summary>Gets retained rows, sorted for display without changing the stored identity set.</summary>

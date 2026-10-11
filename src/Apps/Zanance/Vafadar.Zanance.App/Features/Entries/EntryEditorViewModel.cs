@@ -63,6 +63,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     private readonly ZananceStore _store;
     private readonly Commerce.QuickResourceActions _quick;
+    /// <summary>Gets original template application state and visible feedback without saving the entry draft.</summary>
+    public Commerce.QuickResourceActions QuickActions => _quick;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
@@ -469,6 +471,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         _pendingAttachment = null;
         try
         {
+            TemplateVisit? templateVisit = null;
+            if (query.TryGetValue("templateVisit", out var handoff))
+            {
+                templateVisit = handoff as TemplateVisit ?? throw new ArgumentException("Unsupported template handoff.", nameof(query));
+                if (Get(query, "template") != templateVisit.TemplateId) throw new ArgumentException("The template handoff identity does not match.", nameof(query));
+            }
             await LoadReferenceDataAsync();
             var settings = _quick.Review!.Settings ?? new ZananceSettings();
             _canAggregate = settings.Shows(Feature.AggregatedEntries);
@@ -585,9 +593,16 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                     : new TemplateChip(t, Icons.Parse(t.Icon, _categories.Icon(t.CategoryId)), _categories.Color(t.CategoryId)) { CanApply = _quick.Review!.Work.CanApplyTemplate(t.Id) })];
 
                 // A template chosen on Home fills the form at once (Home quick add).
-                if (Get(query, "template") is { } templateId && Templates.FirstOrDefault(t => t.Id == templateId) is { } chosen)
+                if (query.ContainsKey("template"))
                 {
-                    await ApplyTemplateAsync(chosen);
+                    var templateId = Get(query, "template") ?? throw new ArgumentException("Unsupported template identity.", nameof(query));
+                    if (templateVisit is null)
+                    {
+                        var chosen = Templates.SingleOrDefault(t => t.Id == templateId)
+                            ?? throw new InvalidOperationException("The original template is no longer available.");
+                        await ApplyTemplateAsync(chosen);
+                    }
+                    else await _quick.ApplyTemplateVisitAsync(templateVisit, ApplyReviewedTemplate);
                     _loading = true;
                 }
             }

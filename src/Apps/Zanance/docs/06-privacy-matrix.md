@@ -387,3 +387,7 @@ D-154: original quick-resource/reference/preference packets and an optional sour
 reviewed local configuration writes. Existing choice rows support two more resource kinds; no schema, network,
 SDK, permission, credential, export, portable entitlement or security state is added. Template application is
 only an unsaved draft; saved-query viewing posts no money. Independent native fixtures are completely restored.
+
+## D-155 - Process-local original template destination
+
+The reviewed original template handoff is process-local only; it adds no portable preference, credential, device security value, network request, SDK or permission. Template selection/application never saves ledger money. Complete original data and declined interim OS backup policy remain unchanged. Existing provider/certificate, device, iOS and publication acceptance remains open.

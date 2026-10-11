@@ -1040,3 +1040,10 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Cover shared template publication, wrap names and offer explicit Reload. Applying a template never saves money;
   the existing account/ledger writer remains authoritative. Independent native fixtures restore complete rows,
   owned bytes and display. Debug layout waits inspect only the current page; registration stays inactive.
+
+## 88. Original Home template destinations (D-155)
+
+* Publish shortcut availability only after the complete parent review. Prioritize explicitly available later originals within the existing six shortcuts; keep all retained history and financial inputs independent.
+* Carry the process-local reviewed original file/packet to the entry destination. Recheck both source and current publication; changed, removed or foreign originals never guess a newer same-id row or save money.
+* Shortcut policy availability stays separate from transient parent-command busy state; Retry must restore enabled original targets after publication. Failed navigation requires explicit read-only Reload; show destination failure beside Save. Initial chooser navigation receives only the typed resource kind, never guessed selection. Home layout fallback is read-only until explicit customization.
+* Native fixtures await actual appearance and Shell initial-query publication before changing inputs/applying a recorded handoff. Require realized visible feedback and complete original form data; restore complete rows/owned bytes/display and retain failed captures as negative evidence. Registration stays inactive.

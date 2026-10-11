@@ -10,6 +10,8 @@ public partial class HomePage : ContentPage
     private readonly Vafadar.Zanance.Data.ZananceStore _store;
     private readonly Dictionary<HomeSection, VerticalStackLayout> _sections;
     private HomeLayout _layout = HomeLayout.Default;
+    /// <summary>Gets the actual appearance publication so native review awaits this lifecycle rather than racing a second read.</summary>
+    internal Task PendingPublication { get; private set; } = Task.CompletedTask;
 
     public HomePage(HomeViewModel viewModel, Vafadar.Zanance.Data.ZananceStore store)
     {
@@ -50,7 +52,8 @@ public partial class HomePage : ContentPage
         ApplyLayout();
 
         // Language, calendar or data may have changed elsewhere.
-        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
+        PendingPublication = _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(() => PendingPublication);
     }
 
     // The user's order and visibility of the sections (§21.5); balance and attention always stay on top (DASH-03).

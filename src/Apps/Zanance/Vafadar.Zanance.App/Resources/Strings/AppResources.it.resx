@@ -5762,7 +5762,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Elementi disponibili</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Scegli i conti, i piani, gli obiettivi e le definizioni di budget per nuove operazioni. Tutto lo storico originale resta disponibile.</value>
+    <value>Scegli gli elementi originali disponibili per nuove operazioni. Tutta la cronologia resta disponibile e consultabile con i filtri salvati.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Attivo</value>
@@ -5935,5 +5935,11 @@ Limiti per categoria:
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>Disponibile per consultare lo storico</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>Alcuni modelli restano disponibili come riferimento. Scegli gli elementi attivi per usarli in una nuova transazione.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>Non è stato possibile aprire il modello dai dati verificati. Ricarica i dati originali e selezionalo di nuovo. Nulla è stato salvato.</value>
   </data>
 </root>

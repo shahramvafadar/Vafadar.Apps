@@ -586,3 +586,7 @@ optional source entry with both resource choices. ResourceChoiceStore checks can
 resource JSON packets. Actual reviewed Save/Delete writers serialize slot creation, confirmed replacement and
 choice release in the same transaction; malformed values remain for explicit repair. No EF property/schema
 changes are made. Saved queries grant only history; account/ledger writers still own new money.
+
+## Original Home template destinations (D-155)
+
+TemplateVisit holds the original reviewed actual-file/full packet only in memory. Data creation/resolution validates file/access/choices and complete original resources/references; the actual destination also validates its own publication. A same-id row in another file or a changed packet never replaces the original request. No EF property/schema/migration or portable preference/grant is added. Home reads the legacy layout fallback without creating Settings; only explicit customization writes it.

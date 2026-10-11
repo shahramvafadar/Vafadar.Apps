@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Open original quick templates from Home (2026-10-11, D-155)
+
+- Keep available templates reachable on Home and explain when an activity choice is needed.
+- Open the reviewed original template in a new transaction; changed or unavailable data requires a fresh choice without saving money.
+- Keep failure feedback beside Save and open the template chooser directly.
+- Opening Home reads its previous layout without saving default settings.
+
 ### Improved - Review quick templates and saved filters (2026-10-11, D-154)
 
 - Keep original quick templates and saved queries visible, with explicit activity choices ready for approved plan limits.

@@ -709,3 +709,28 @@ Windows locale/theme/width cases and six normal Release emulator cases restore c
 Physical-device, iOS, OAuth, commercial activation and publication gates remain open. ENT-02/03 are still in progress.
 
 See [evidence](../../quality/quick-resources.md).
+
+### D-155 - Original Home template destinations
+
+Home quick templates publish separate original activity availability after the complete parent read. Explicitly
+available later definitions remain reachable within the existing six shortcuts; retained history and all original
+financial calculations remain independent. A process-local TemplateVisit carries the reviewed actual-file/full
+packet to the existing entry route. A changed/deleted original, reference, choice or right, or another actual file,
+is rejected without guessing a newer same-id row or saving money. Failed navigation pins translated feedback and
+requires explicit read-only Reload. The actual initial chooser receives only its typed resource kind, never a
+selection. Destination feedback is visible beside Save; applying a template remains a detached draft.
+
+Opening Home no longer creates or updates Settings for its layout fallback. Existing saved layouts remain exact;
+the legacy device layout is read until an explicit profile-layout Save. Commercial registration stays inactive.
+No schema, SDK, permission, network request, portable preference or entitlement grant is added.
+
+21 new AT-157 actual-source/real SQLite cases pass. The ordinary main run passes 2,754 / App.Tests 697;
+three focused name-order cases bring the verified total to 2,757 behaviours / App.Tests 700. The changed flow
+class passes all 21 cases; the unchanged full suite is not repeated. Pending navigation awaits its actual event.
+Outputs are cleaned. Strict Windows and complete strict Android Release have zero warnings/errors. Eighteen
+hidden Windows Home/chooser contexts and eighteen focused destination continuations cover en/fa/de, light/dark,
+360/412/wide. Six normal signed Release emulator cases open original Home templates, fill original amount/title
+and cancel/discard without financial Save. Complete owned rows/bytes/display are restored. Physical-device, iOS,
+OAuth, commercial activation and publication gates remain open; ENT-02/03 remain in progress.
+
+See [evidence](../../quality/home-template-destinations.md).

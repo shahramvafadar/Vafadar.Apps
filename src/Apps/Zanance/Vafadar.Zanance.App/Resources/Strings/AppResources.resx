@@ -5802,7 +5802,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Available items</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Choose which accounts, plans, goals and budget definitions can be used for new work. All original history stays available.</value>
+    <value>Choose the original items available for new work. All original history stays available, and saved filters can still be used to view it.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Active</value>
@@ -5975,5 +5975,11 @@ Category limits:
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>Available for viewing history</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>Some templates are kept for reference. Choose active items to use them for a new transaction.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>The template could not be opened from the reviewed data. Reload the original data and choose it again. Nothing was saved.</value>
   </data>
 </root>

@@ -967,3 +967,7 @@ activity enablement; retained saved queries remain history-only, independently o
 the complete submitted query before prompts, map duplicate names to original ids and confirm deletion. Cover
 template publication, wrap complete template names and offer explicit Reload beside pinned failure feedback.
 Never repeat a committed operation after failed native feedback/refresh.
+
+## Original Home quick-template destinations (D-155)
+
+Keep the existing six shortcuts, with explicitly available later templates first. Preserve complete user identity and spoken name, separate selected enablement and parent publication guards. Show translated unavailable/reload feedback in Home; a changed original destination leaves the draft intact and pins feedback beside Save. Initial selection navigation opens only the template kind, without guessing choices. Reading a legacy Home layout never writes Settings.

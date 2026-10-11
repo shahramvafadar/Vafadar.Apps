@@ -5750,7 +5750,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Éléments disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Choisissez les comptes, plans, objectifs et définitions de budget utilisables pour de nouvelles opérations. Tout l’historique d’origine reste accessible.</value>
+    <value>Choisissez les éléments d’origine disponibles pour de nouvelles opérations. Tout l’historique reste disponible et consultable avec les filtres enregistrés.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Actif</value>
@@ -5923,5 +5923,11 @@ Plafonds par catégorie :
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>Disponible pour consulter l’historique</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>Certains modèles sont conservés pour consultation. Choisissez les éléments actifs pour les utiliser dans une nouvelle transaction.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>Le modèle n’a pas pu être ouvert à partir des données vérifiées. Rechargez les données originales et choisissez-le à nouveau. Rien n’a été enregistré.</value>
   </data>
 </root>

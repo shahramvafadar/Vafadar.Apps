@@ -334,6 +334,7 @@
         <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="6"
                              IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <!-- D-130: a rejected Save stays visible beside its action at every form scroll position. -->
+            <Label Text="{Binding QuickActions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding QuickActions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
             <Label x:Name="SaveErrorLabel" Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
                    LineBreakMode="WordWrap" SemanticProperties.Description="{Binding SaveError}"
                    IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />

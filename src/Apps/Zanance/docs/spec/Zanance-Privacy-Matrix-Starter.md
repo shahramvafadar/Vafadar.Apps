@@ -403,3 +403,7 @@ Complete original references stay local; paired Copy/Delete never mutate financi
 D-154: reviewed local quick templates/saved queries add no data category, schema, network, SDK or permission.
 Full packets exist only for in-memory review and existing explicit configuration/choice writes. No portable
 grant or credentials are introduced; template draft/query viewing never writes the ledger.
+
+## D-155 - Process-local original template destination
+
+The reviewed original template handoff is process-local only; it adds no portable preference, credential, device security value, network request, SDK or permission. Template selection/application never saves ledger money. Complete original data and declined interim OS backup policy remain unchanged. Existing provider/certificate, device, iOS and publication acceptance remains open.

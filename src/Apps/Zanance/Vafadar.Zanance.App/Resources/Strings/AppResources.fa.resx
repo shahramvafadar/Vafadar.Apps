@@ -5773,7 +5773,7 @@
     <value>موارد در دسترس</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>انتخاب کنید کدام حساب‌ها، پلن‌ها، هدف‌ها و تعریف‌های بودجه برای کارهای جدید قابل استفاده باشند. همهٔ سوابق اصلی حفظ می‌شوند.</value>
+    <value>موارد اصلی قابل استفاده برای کارهای جدید را انتخاب کنید. تمام سوابق اصلی حفظ می‌شوند و فیلترهای ذخیره‌شده همچنان برای مشاهدهٔ آن‌ها قابل استفاده‌اند.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>فعال</value>
@@ -5946,5 +5946,11 @@
   </data>
   <data name="ActiveItems_FilterRetained" xml:space="preserve">
     <value>برای مرور سابقه در دسترس است</value>
+  </data>
+  <data name="Templates_WorkUnavailable" xml:space="preserve">
+    <value>بعضی قالب‌ها برای مراجعه حفظ شده‌اند. برای استفاده در تراکنش جدید، آن‌ها را در موارد فعال انتخاب کنید.</value>
+  </data>
+  <data name="Templates_SourceChanged" xml:space="preserve">
+    <value>قالب از داده‌های بررسی‌شده باز نشد. داده‌های اصلی را دوباره بارگیری کنید و قالب را مجدداً انتخاب کنید. چیزی ذخیره نشده است.</value>
   </data>
 </root>

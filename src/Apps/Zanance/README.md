@@ -283,3 +283,5 @@ Windows locale/theme/width cases and six normal Release emulator cases restore c
 Physical-device, iOS, OAuth, commercial activation and publication gates remain open. ENT-02/03 are still in progress.
 
 See [evidence](docs/quality/quick-resources.md).
+
+D-155: Home shortcuts use reviewed original template handoffs and separate work availability, with explicit Retry and typed initial choices. Opening Home keeps legacy layout fallback read-only. Test builds remain unrestricted; [native/SQLite evidence](docs/quality/home-template-destinations.md) does not close commercial activation or external release gates.

@@ -57,14 +57,21 @@ internal static partial class DebugSnapshots
             Type = index == 1 ? GoalType.Earmark : index == 2 ? GoalType.HoldingQuantity : GoalType.AccountBalance,
             State = index == 2 ? GoalState.Paused : index == 3 ? GoalState.Completed : index == 4 ? GoalState.Archived : GoalState.Active,
         });
-        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-quick-resources")
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "active-quick-resources" or "home-template-work" or "home-template-destination")
         {
-            for (var index = 0; index < 5; index++) await store.SaveTemplateAsync(new Core.Ledger.EntryTemplate
-            { Name = "Fictitious original quick template with complete identity " + index, AccountId = accounts[0].Id,
-                Kind = Core.Ledger.EntryKind.Expense, Amount = 12345, Title = "Complete original source", Payee = "Original payee" });
+            for (var index = 0; index < (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-template-work" or "home-template-destination" ? 8 : 5); index++) await store.SaveTemplateAsync(new Core.Ledger.EntryTemplate
+            { Name = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_TEMPLATE_ORDER") == "1"
+                    ? new[] { "Ä original", "Z original", "a original", "A original", "ا original", "😀 original", "\uE000 original", "𐐀 original" }[index]
+                    : "Fictitious original quick template with complete identity " + index, AccountId = accounts[0].Id,
+                Kind = Core.Ledger.EntryKind.Expense, Amount = 12345, SortOrder = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_TEMPLATE_ORDER") == "1" ? 0 : index, Title = "Complete original source", Payee = "Original payee" });
             for (var index = 0; index < 3; index++) await store.SaveSavedFilterAsync(new Core.Ledger.SavedFilter
             { Name = "Fictitious original saved query with complete identity " + index, Period = 3, Search = "#original",
                 AccountId = accounts[0].Id, From = new(2026, 7, 1), To = new(2026, 7, 20) });
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_TEMPLATE_ORDER") == "1")
+        {
+            await using var db = await factory.CreateDbContextAsync();
+            await db.Templates.ExecuteUpdateAsync(u => u.SetProperty(t => t.SortOrder, 0));
         }
         var budgetOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-budget-definitions";
         if (budgetOnly)
@@ -115,6 +122,11 @@ internal static partial class DebugSnapshots
             await SetLanguageAsync(app, localization, language);
             var access = new ActiveItemsReviewAccess { Current = new(path,
                 new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("41414141-5252-6363-7474-858585858585")))) };
+            if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-template-work" or "home-template-destination")
+            {
+                await ReviewHomeTemplateAsync(app, services, fixture, factory, access, folder, language, StoredAsync, before);
+                continue;
+            }
             var vm = new ActiveItemsViewModel(new(factory, access), translator, interaction, new(factory, access, TimeProvider.System));
             var page = new ActiveItemsPage(vm, localization);
             await Shell.Current.Navigation.PushAsync(page);

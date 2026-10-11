@@ -582,3 +582,7 @@ caption/target/name geometry and restores all 25 tables. It waits at most one se
 kind layout and rejects retired pages. Failed captures are negative evidence. Normal complete Release Android
 checks use only the existing owned sample profile/private emulator transport; restore exact bytes/display and
 leave the final signed Release installed/stopped. This does not activate production commercial limits.
+
+## Home template native review (D-155)
+
+Windows Debug routes `home-template-work` and `home-template-destination` use an independent fictitious database, actual Home/chooser/entry controls and recorded original native-effect parameters. The continuation waits for the real Shell initial query before applying the recorded typed handoff, checks realized pinned feedback, restores complete rows and renders only the hidden app root. Earlier failed/racing captures are negative evidence. Canonical signed APK remains required for phone handoff; build/CI is not device or publication acceptance.
