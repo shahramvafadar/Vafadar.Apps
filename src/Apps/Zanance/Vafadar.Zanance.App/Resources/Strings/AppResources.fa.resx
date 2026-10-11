@@ -5763,4 +5763,10 @@
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>حساب یا ارز آن تغییر کرده است. حساب‌ها را انتخاب کنید و مبلغ را دوباره وارد کنید؛ با بازگشت، پیش‌نویس اصلی تراکنش همچنان در دسترس است.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>تغییر شما ذخیره شد، اما این صفحه به‌روزرسانی نشد. پیش از تغییر بعدی، صفحه را ببندید و دوباره باز کنید.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>بازکردن دوباره</value>
+  </data>
 </root>

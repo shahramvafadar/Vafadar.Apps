@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Clear feedback for planned payment failures (2026-10-11, D-136)
+
+- Keep entered amounts, dates and notes when payment, linking or occurrence changes fail.
+- Prevent overlapping occurrence actions while confirmation or error feedback is open.
+- Distinguish reopening from cancelling, and saved changes from screen refresh failures.
+
 ### Fixed - Safe reopening of a planned payment (2026-10-11, D-135)
 
 - Recheck the payment when reopening a planned occurrence, so an old form cannot remove another payment.

@@ -5752,4 +5752,10 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>Un conto o la sua valuta è cambiato. Scegli i conti e inserisci nuovamente l’importo; il modulo originale rimane disponibile quando torni.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>La modifica è stata salvata, ma non è stato possibile aggiornare questa schermata. Chiudila e riaprila prima di effettuare un’altra modifica.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>Riapri</value>
+  </data>
 </root>

@@ -5792,4 +5792,10 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>An account or its currency changed. Choose accounts and enter the amount again; your original transaction draft is still available when you return.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>Your change was saved, but this screen could not be updated. Close and reopen it before making another change.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>Reopen</value>
+  </data>
 </root>

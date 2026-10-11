@@ -894,3 +894,27 @@ two actual post-SQL access retirements/retries, complete refund/receipt Undo and
 Compare all 24 complete tables for rejected writes; Undo comparison excepts only the explicitly asserted retained
 automatic-post suppression flag. Main 2,172 pass, App.Tests 318. Six normal Release en/fa/de light/dark explicit
 native reopening confirmations and actual stored-row proof: [evidence](quality/atomic-occurrence-reopening.md). Device/iOS acceptance remains open.
+
+## AT-138 - Rejected occurrence commands retain drafts (D-136)
+
+Full/partial payment, explicit linking, Skip/Unskip, date/amount/note changes and reopening use actual
+OccurrenceCommands with the existing PlanStore writers. One gate spans native consent, writer failure feedback
+and successful display publication. Rejection/cancellation never reloads, navigates or replaces the draft; ledger
+validation stays inline. Unexpected failure uses the native interaction port without raw user-facing exceptions.
+Retire the writable reviewed snapshot before post-commit navigation/refresh and publish its replacement only after
+all load reads finish. A refresh failure explicitly says the change was saved and requires closing/reopening the
+screen before another change. Explicit Reopen/Cancel captions exist in all six languages; French/Italian no longer
+present two cancellation captions. No commercial activation, schema, SDK, permission, backup or device-setting change.
+29 added actual application-flow cases (AT-138), App.Tests 347. Main 2,201 pass with an independently owned,
+ignored Data.Tests output configuration limiting collection concurrency to one. Explicit writer-race tests retain
+their concurrent operations. Two normal parallel full-suite attempts failed in unrelated Data.Tests SQLite cleanup/
+migration (locked file and disposed native handle). Preserve negative logs; pool-cleanup isolation remains open.
+An unsupported argument ran zero tests and a help invocation failed; neither is acceptance. Output-only test
+configuration was removed; no product workaround or test execution policy was committed.
+Strict Windows/Android builds and complete signed Release APK verified. Native normal Release emulator checks cover
+en/fa/de, light/dark, actual error dialogs, retained drafts and all 24 complete stored tables. Six additional normal
+Release cases commit an actual partial payment, deliberately break only the owned fixture read, display the saved-
+but-not-refreshed message and reject replay from enabled native actions. No Windows native
+command, real phone, iOS, provider or publication acceptance claim. Selected-plan generation/automation, choice
+persistence/UI, commercial activation and existing external gates remain open.
+[Evidence](quality/occurrence-command-feedback.md).

@@ -148,7 +148,7 @@ public static class MauiProgram
             .AddTransient<PlansPage>().AddTransient<PlansViewModel>()
             .AddTransient<PlanEditorPage>().AddTransient<PlanEditorViewModel>()
             .AddTransient<PlanDetailPage>().AddTransient<PlanDetailViewModel>()
-            .AddTransient<OccurrencePage>().AddTransient<OccurrenceViewModel>()
+            .AddTransient<OccurrencePage>().AddTransient<OccurrenceViewModel>().AddTransient<OccurrenceCommands>()
             .AddTransient<BackupPage>().AddTransient<BackupViewModel>()
             .AddTransient<BudgetPage>().AddTransient<BudgetViewModel>()
             .AddTransient<BudgetEditorPage>().AddTransient<BudgetEditorViewModel>()

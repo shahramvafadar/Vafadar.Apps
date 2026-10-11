@@ -55,3 +55,7 @@ geometry and financial row preservation are separately recorded in docs/quality/
 D-103 adds OccurrenceAmountValidationTests: 14 AT-108 cases over the actual linked required/optional regional
 validator. Main suite 1,484; App.Tests 248. Actual native metadata/partial/completion, correct field feedback and
 original financial row/state preservation are separate runtime evidence in docs/quality/occurrence-feedback.md.
+
+## Occurrence commands (D-136 / AT-138)
+
+Actual OccurrenceCommands source is linked through IAppInteraction with isolated SQLite/localization. 29 cases: seven SQL failures/retries, 12 translated cancellations, three consent/failure/publication busy gates, six saved-but-refresh-failed messages and actual archived-account inline ledger rejection. App.Tests total: 347. No fake MAUI controls or duplicated writer algorithms. Native adapters/rendering require actual application checks.

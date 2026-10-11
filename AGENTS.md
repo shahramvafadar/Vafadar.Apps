@@ -794,7 +794,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
   all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
 * Current registration remains inactive. D-135 completes generated-entry reopening. Selected-plan generation/automation,
-  choice persistence/UI and occurrence-command exception feedback remain separate unfinished boundaries.
+  choice persistence/UI remain unfinished; D-136 supplies occurrence-command exception feedback.
 
 ## 68. Reopening the exact reviewed settlement (D-135)
 
@@ -806,4 +806,14 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Keep actual manual/imported money and metadata, releasing only its checked link atomically with the opened state.
 * SQL/access failure rolls back all complete rows before notifications. Earlier partial payments and occurrence
   overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; selected-plan
-  generation/automation, choice persistence/UI and occurrence-command exception feedback remain unfinished.
+  generation/automation and choice persistence/UI remain unfinished; D-136 supplies command exception feedback.
+
+## 69. Occurrence action failure and publication feedback (D-136)
+
+* Keep one gate through consent, actual writer, error feedback and successful publication for occurrence actions.
+  Cancellation/rejection retains the draft and page; ledger errors stay inline. Release busy in finally.
+* Retire the writable reviewed snapshot before fallible post-commit navigation/reload; publish a replacement only
+  after dependent reads succeed. Distinguish saved-but-not-refreshed feedback from rejected writes.
+* Reopening consent uses explicit Reopen/Cancel captions, distinct in all six languages. No commercial activation.
+* Preserve negative parallel SQLite cleanup/migration evidence. Owned output-only serialization is test evidence,
+  not a fix to pool cleanup isolation or a product policy. Zero-test attempts are not acceptance.

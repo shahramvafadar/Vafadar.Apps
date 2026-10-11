@@ -341,3 +341,6 @@ write. Preserve partial money, overrides, refund/receipt ownership and suppressi
 App.Tests 318; six normal Release native confirmations. Current registration stays inactive. Other selected-plan
 generation/automation, choice persistence/UI and command exception feedback remain unfinished.
 Strict Windows/Android and complete signed APK verified; external gates remain open. [Evidence](quality/atomic-occurrence-reopening.md).
+
+D-136 completes exception feedback and shared consent/writer/publication gates for occurrence commands. 29 added application-flow cases; App.Tests 347 and main 2,201 pass with owned output-only Data.Tests serialization. Normal Release native failures preserve drafts and all complete rows. Negative parallel pool-cleanup evidence remains open. Commercial registration remains inactive; selected-plan generation/automation, choice persistence/UI and external gates remain unfinished.
+[Evidence](quality/occurrence-command-feedback.md).

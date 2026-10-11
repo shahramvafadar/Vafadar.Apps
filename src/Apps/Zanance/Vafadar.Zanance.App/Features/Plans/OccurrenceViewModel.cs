@@ -22,7 +22,8 @@ public sealed partial class OccurrenceViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time,
+    OccurrenceCommands commands) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _scheduleId;
     private DateOnly _originalDate;
@@ -164,19 +165,20 @@ public sealed partial class OccurrenceViewModel(
 
     public async Task LoadAsync()
     {
+        _occurrence = null;
         var schedule = await plans.GetScheduleAsync(_scheduleId);
         var states = await plans.GetStatesAsync(_scheduleId);
 
         // The due date may have been moved away from the original date; search around it.
-        _occurrence = schedule is null ? null : Occurrences.Between(schedule, states, _originalDate.AddDays(-400), _originalDate.AddDays(400), Today)
+        var loaded = schedule is null ? null : Occurrences.Between(schedule, states, _originalDate.AddDays(-400), _originalDate.AddDays(400), Today)
             .FirstOrDefault(o => o.OriginalDate == _originalDate);
-        NotFound = _occurrence is null;
-        if (_occurrence is null || schedule is null)
+        NotFound = loaded is null;
+        if (loaded is null || schedule is null)
         {
             return;
         }
 
-        var occurrence = _occurrence;
+        var occurrence = loaded;
         var culture = localization.CurrentCulture;
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
@@ -229,114 +231,45 @@ public sealed partial class OccurrenceViewModel(
             : occurrence.Outstanding is { } outstanding
                 ? translator.Format("Occurrence_PaidSoFar", MoneyText.Format(occurrence.Paid, _currency, culture), MoneyText.Format(outstanding, _currency, culture))
                 : translator.Format("Occurrence_PaidSoFarUnknown", MoneyText.Format(occurrence.Paid, _currency, culture));
+        _occurrence = occurrence;
     }
 
-    // F2-TX-02: records part of the amount; the occurrence stays open (and reminded) until the rest is paid.
+    // D-136: one visible busy gate spans every write and confirmation. Rejected writes never reload the draft.
     [RelayCommand]
-    private async Task PayPartAsync()
+    private Task PayPartAsync() => PayAsync(partial: true);
+
+    [RelayCommand]
+    private Task ConfirmAsync() => PayAsync(partial: false);
+
+    /// <summary>Validates the current input before sending its captured actual amount/date to the writer.</summary>
+    private async Task PayAsync(bool partial)
     {
-        if (_occurrence is null || IsBusy)
-        {
-            return;
-        }
-
+        if (_occurrence is not { } occurrence || IsBusy) { return; }
         Error = null;
-        if (ValidatePayment() is not { } amount)
-        {
-            return;
-        }
-
-        IsBusy = true;
-        try
-        {
-            var entry = Occurrences.CreateEntry(_occurrence, amount, ActualDate, ReviewState.Confirmed);
-            var result = await plans.PayPartAsync(_occurrence, entry);
-            if (!result.Succeeded)
-            {
-                Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"]));
-                return;
-            }
-
-            await LoadAsync();
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+        if (ValidatePayment() is not { } amount) { return; }
+        await RunCommandAsync(() => commands.PayAsync(occurrence, amount, ActualDate, partial,
+            error => Error = error, () => CompleteCommandAsync(navigate: !partial)));
     }
 
     [RelayCommand]
     private Task OpenPaymentAsync(EntryRow row) => Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
-    private async Task ConfirmAsync()
-    {
-        if (_occurrence is null || IsBusy)
-        {
-            return;
-        }
-
-        Error = null;
-        if (ValidatePayment() is not { } amount)
-        {
-            return;
-        }
-
-        IsBusy = true;
-        try
-        {
-            var entry = Occurrences.CreateEntry(_occurrence, amount, ActualDate, ReviewState.Confirmed);
-            var result = await plans.SettleAsync(_occurrence, entry);
-            if (!result.Succeeded)
-            {
-                Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"]));
-                return;
-            }
-
-            await Shell.Current.GoToAsync("..");
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
+    private Task LinkAsync(EntryRow row) => _occurrence is { } occurrence
+        ? RunCommandAsync(() => commands.LinkAsync(occurrence, row.Id, row.Title, row.AmountText,
+            () => CompleteCommandAsync(navigate: true))) : Task.CompletedTask;
 
     [RelayCommand]
-    private async Task LinkAsync(EntryRow row)
-    {
-        if (_occurrence is null || !await Shell.Current.DisplayAlertAsync(
-                translator["Occurrence_Link"], translator.Format("Occurrence_LinkMessage", row.Title, row.AmountText), translator["Occurrence_Link"], translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        await plans.LinkAsync(_occurrence, row.Id);
-        await Shell.Current.GoToAsync("..");
-    }
+    private Task SkipAsync() => _occurrence is { } occurrence
+        ? RunCommandAsync(() => commands.SkipAsync(occurrence, () => CompleteCommandAsync(navigate: true))) : Task.CompletedTask;
 
     [RelayCommand]
-    private async Task SkipAsync()
-    {
-        if (_occurrence is null)
-        {
-            return;
-        }
-
-        await plans.SkipAsync(_occurrence);
-        await Shell.Current.GoToAsync("..");
-    }
-
-    [RelayCommand]
-    private void ToggleChange() => ShowChange = !ShowChange;
+    private void ToggleChange() { if (!IsBusy) { ShowChange = !ShowChange; } }
 
     [RelayCommand]
     private async Task SaveChangeAsync()
     {
-        if (_occurrence is null || IsBusy)
-        {
-            return;
-        }
-
+        if (_occurrence is not { } occurrence || IsBusy) { return; }
         Error = null;
         _overrideValidationRequested = true;
         var validation = ValidateAmount(OccurrenceInput.Override);
@@ -345,41 +278,33 @@ public sealed partial class OccurrenceViewModel(
             ValidationFailed?.Invoke(OccurrenceInput.Override);
             return;
         }
-
-        IsBusy = true;
-        try
-        {
-            await plans.ChangeOccurrenceAsync(_occurrence, DueDate, validation.Amount, OccurrenceNote);
-            ShowChange = false;
-            await LoadAsync();
-        }
-        finally { IsBusy = false; }
+        await RunCommandAsync(() => commands.ChangeAsync(occurrence, DueDate, validation.Amount, OccurrenceNote,
+            () => CompleteCommandAsync(navigate: false, hideChange: true)));
     }
 
     [RelayCommand]
-    private async Task UndoAsync()
+    private Task UndoAsync() => _occurrence is { } occurrence
+        ? RunCommandAsync(() => commands.UndoAsync(occurrence, () => CompleteCommandAsync(navigate: false))) : Task.CompletedTask;
+
+    /// <summary>Keeps all commands mutually exclusive, including while the native consent/failure dialog is open.</summary>
+    private async Task RunCommandAsync(Func<Task<bool>> command)
     {
-        if (_occurrence is null)
-        {
-            return;
-        }
+        if (IsBusy) { return; }
+        IsBusy = true;
+        try { await command(); }
+        finally { IsBusy = false; }
+    }
 
-        if (IsSkipped)
+    /// <summary>Retires the previous payment identity before any fallible post-commit navigation or reload.</summary>
+    private async Task CompleteCommandAsync(bool navigate, bool hideChange = false)
+    {
+        _occurrence = null;
+        if (navigate) { await Shell.Current.GoToAsync(".."); }
+        else
         {
-            await plans.UnskipAsync(_occurrence);
+            await LoadAsync();
+            if (hideChange) { ShowChange = false; }
         }
-        else if (IsSettled)
-        {
-            // Explain the effect first (REC-18): a plan-created entry is deleted, a linked own entry is only unlinked.
-            if (!await Shell.Current.DisplayAlertAsync(translator["Occurrence_Undo"], translator["Occurrence_UndoMessage"], translator["Occurrence_Undo"], translator["Common_Cancel"]))
-            {
-                return;
-            }
-
-            await plans.UnsettleAsync(_occurrence);
-        }
-
-        await LoadAsync();
     }
 
     [RelayCommand]

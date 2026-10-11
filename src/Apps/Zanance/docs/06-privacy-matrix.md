@@ -274,3 +274,5 @@ normal commercial registration stays inactive. Complete rejected writes preserve
 D-135 reuses existing financial state/link fields and the file-bound deletion Undo journal. No schema, portable
 preference, credential, permission, SDK or network addition. Preserve complete manual money, refund relationships
 and receipt bytes/ownership; no commercial facts are stored in backups. Current registration remains inactive.
+
+D-136 reuses existing local draft fields, writers and translated native dialogs. No schema, portable preference, credential, permission, SDK or network addition. User-facing errors contain no raw exception details. Commercial registration remains inactive.

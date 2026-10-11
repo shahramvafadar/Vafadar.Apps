@@ -5763,4 +5763,10 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>Ein Konto oder seine Währung hat sich geändert. Wähle die Konten und gib den Betrag erneut ein. Dein ursprünglicher Buchungsentwurf ist bei der Rückkehr weiterhin verfügbar.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>Ihre Änderung wurde gespeichert, aber diese Ansicht konnte nicht aktualisiert werden. Schließen Sie sie und öffnen Sie sie erneut, bevor Sie weitere Änderungen vornehmen.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>Wieder öffnen</value>
+  </data>
 </root>

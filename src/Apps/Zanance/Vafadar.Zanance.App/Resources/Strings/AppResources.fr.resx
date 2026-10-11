@@ -5740,4 +5740,10 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>Un compte ou sa devise a changé. Choisissez les comptes et saisissez de nouveau le montant ; votre brouillon d’origine reste disponible à votre retour.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>Votre modification a été enregistrée, mais cet écran n’a pas pu être actualisé. Fermez-le et rouvrez-le avant de faire une autre modification.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>Rouvrir</value>
+  </data>
 </root>

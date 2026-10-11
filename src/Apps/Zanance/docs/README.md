@@ -33,3 +33,5 @@ Retained occurrence correction and atomic payment linking: [engineering evidence
 Atomic new planned payments: [engineering evidence](quality/atomic-occurrence-payments.md) (D-134 / AT-136).
 
 Exact reviewed occurrence reopening: [engineering evidence](quality/atomic-occurrence-reopening.md) (D-135 / AT-137).
+
+Occurrence command failures: [engineering evidence](quality/occurrence-command-feedback.md) (D-136 / AT-138).

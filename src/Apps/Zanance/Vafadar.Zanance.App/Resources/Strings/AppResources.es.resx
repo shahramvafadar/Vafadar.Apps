@@ -5732,4 +5732,10 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
   <data name="Plan_EntryDraftUnavailable" xml:space="preserve">
     <value>Ha cambiado una cuenta o su moneda. Elige las cuentas y vuelve a introducir el importe; tu borrador original sigue disponible al volver.</value>
   </data>
+  <data name="Occurrence_SavedRefreshFailed" xml:space="preserve">
+    <value>Tu cambio se ha guardado, pero no se ha podido actualizar esta pantalla. Ciérrala y vuelve a abrirla antes de hacer otro cambio.</value>
+  </data>
+  <data name="Occurrence_ReopenConfirm" xml:space="preserve">
+    <value>Reabrir</value>
+  </data>
 </root>
