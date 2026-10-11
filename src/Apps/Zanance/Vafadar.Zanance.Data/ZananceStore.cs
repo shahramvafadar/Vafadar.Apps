@@ -375,11 +375,12 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Inserts or updates a budget including its category limits.</summary>
-    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default)
+    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
     {
         ArgumentNullException.ThrowIfNull(budget);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
         var existing = await db.Budgets.FirstOrDefaultAsync(b => b.Id == budget.Id, cancellationToken);
         // D-121: updates retain stored period/currency identity. Never count a caller's ignored changed date/code
         // while the actual saved row still belongs to the current financial period.
@@ -420,12 +421,13 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// Saves <paramref name="budget"/> in place of the budget <paramref name="replacedId"/> in one transaction (copy to the
     /// next period over an existing budget, BUD-07): if the new budget cannot be saved, the old one stays.
     /// </summary>
-    public async Task ReplaceBudgetAsync(Guid replacedId, Budget budget, CancellationToken cancellationToken = default)
+    public async Task ReplaceBudgetAsync(Guid replacedId, Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
     {
         ArgumentNullException.ThrowIfNull(budget);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
         var replaced = await db.Budgets.FirstOrDefaultAsync(b => b.Id == replacedId, cancellationToken);
         await CheckCommercialBudgetSaveAsync(db, write, budget, replaced, cancellationToken);
         if (replaced is not null)
@@ -455,32 +457,19 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         // Read the existing preference row without creating/updating Settings inside a financial write.
         var startDay = await db.Settings.Select(s => (int?)s.MonthStartDay).FirstOrDefaultAsync(cancellationToken) ?? 1;
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
-        bool Current(Budget b)
-        {
-            var (first, last) = BudgetPeriods.Range(b, startDay);
-            return today >= first && today <= last;
-        }
-        var targetCurrent = Current(target);
-        var scope = write.FinancialScope;
-        var key = BudgetDefinitionKey.From(scope, target);
-        var sameDefinition = original is not null && BudgetDefinitionKey.From(scope, original) == key;
-        var newUse = original is null || !sameDefinition || (targetCurrent && !Current(original));
-        var addsAdvanced = (newUse || targetCurrent) &&
-            ((target.Method != BudgetMethod.Limits && (newUse || original!.Method == BudgetMethod.Limits))
-                || (target.Rollover != BudgetRollover.None && (newUse || original!.Rollover == BudgetRollover.None))
-                || (target.Period != BudgetPeriod.Month && (newUse || original!.Period == BudgetPeriod.Month)));
-        write.DemandFeature(addsAdvanced ? CommercialFeature.AdvancedBudgets
-            : newUse ? CommercialFeature.BasicBudgets : CommercialFeature.Corrections);
+        var targetCurrent = BudgetSelectionPolicy.IsCurrent(target, today, startDay);
+        write.DemandFeature(BudgetEditPolicy.Feature(target, original, write.FinancialScope, today, startDay));
         if (!targetCurrent) return;
         var all = await db.Budgets.AsNoTracking().ToListAsync(cancellationToken);
         write.PrepareBudgetChange(all, target, original, today, startDay);
     }
 
     /// <summary>Deletes a budget; entries are not affected.</summary>
-    public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData);
         if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == id, cancellationToken) is not { } budget) return;
         var originals = await db.Budgets.AsNoTracking().ToListAsync(cancellationToken);

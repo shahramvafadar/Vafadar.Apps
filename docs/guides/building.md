@@ -566,3 +566,7 @@ See Zanance docs/quality/budget-alert-work.md for logs, proof paths and remainin
 ## Original budget notification verification (D-151)
 
 Main 2,646 / App.Tests 589 pass and normal cleanup completes. Strict Windows and canonical strict Android Release have no warnings/errors. The budget-reminder Debug route renders hidden original periods without Save; final native Monthly navigation is checked after a weekly destination. Six normal signed Release emulator cases check four exact original targets per case and restore all owned rows/bytes/display. Complete APK: artifacts/android/zanance-d151-release.apk. See Zanance docs/quality/budget-reminder-routing.md.
+
+## Original budget editor verification (D-152)
+
+The budget-editor-work Debug route uses an independent fictitious database, hidden native modal and real Invoke providers. Run en/fa/de in both themes at 360/412/wide; compare all 25 complete table/column/row packets after stale Save, explicit Reload/Keep edits and native Close. Retain failed route/convention evidence. Complete signed APK: artifacts/android/zanance-d152-release.apk. See Zanance docs/quality/budget-editor-drafts.md. Native tests use only the independently owned QA03 database and private emulator/server; no owner device settings.

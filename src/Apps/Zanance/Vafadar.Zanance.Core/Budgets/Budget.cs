@@ -66,6 +66,12 @@ public enum BudgetPeriod
 /// </summary>
 public sealed class Budget : Entity, IAuditableEntity
 {
+    /// <summary>Creates a new budget with a generated identity.</summary>
+    public Budget() { }
+
+    /// <summary>Retains an original identity in a detached reviewed editing draft.</summary>
+    public Budget(Guid id) : base(id) { }
+
     /// <summary>Gets or sets the period length; months are the default and the only choice in Simple mode.</summary>
     public BudgetPeriod Period { get; set; }
 

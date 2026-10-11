@@ -374,3 +374,7 @@ links remain unscoped for Budget and require a later file-bound routing slice. S
 ## D-151 - Device-local budget routing identity
 
 An opaque actual-file SHA-256 digest and original budget Guid enter only device-local notification returning-data. No paths, credentials, financial values, portable preference, network SDK, permission or schema changes. Resolve after unlock and during page loading; another profile never inherits the destination. See [evidence](quality/budget-reminder-routing.md).
+
+## Original budget editor review (D-152)
+
+Complete original financial references/preferences remain in memory for the covered budget draft and reviewed SQLite writer. No network, SDK, permission, schema, credential, portable preference or export is added. The opaque file handoff grants no authority. Opening/reload/display changes never post money or create a settings row; only explicit Save changes the original budget configuration. Diagnostic fixtures are independent and restored completely.

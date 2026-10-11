@@ -50,8 +50,14 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     /// <summary>Rejects a retired read, including same-revision edits, date changes and inactive-to-active transitions, without writes.</summary>
     public async Task ValidateAsync(BudgetChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(reviewed);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateAsync(reviewed, db, cancellationToken);
+    }
+
+    /// <summary>Rechecks original choices and metadata inside the caller's exact SQLite writer.</summary>
+    internal async Task ValidateAsync(BudgetChoiceSnapshot reviewed, ZananceDbContext db, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(reviewed);
         if (FilePath(db) != reviewed.DatabasePath) throw new InvalidOperationException("The reviewed budgets belong to another file.");
         reviewed.Access.DemandFeature(CommercialFeature.History);
         reviewed.Access.EnsureSnapshotCurrent();

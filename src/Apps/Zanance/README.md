@@ -260,3 +260,5 @@ and retains retryable thresholds after failed or retired publication. Test build
 editor and scoped returning-data integration remain open. [Evidence](docs/quality/budget-alert-work.md).
 
 Original budget notifications: D-151 opens the saved period in its original currency/calendar without changing Home preferences. 2,646 / App.Tests 589 pass; complete signed artifacts/android/zanance-d151-release.apk and native emulator routing verified. Commercial budget view/editor bindings and other ENT-02/03 work remain open.
+
+Original budget editor: D-152 retains full original scope/limits and raw input cultures behind a covered read, with paired stale-save rejection and explicit reviewed dirty-only reload. 2,681 / App.Tests 624 pass; strict builds, 18 Windows and six normal Release editor cases plus final Create/Close and weekly Save verified. Budget view commercial copy/delete/work bindings and other ENT-02/03 work remain open. See docs/quality/budget-editor-drafts.md; complete signed artifacts/android/zanance-d152-release.apk.

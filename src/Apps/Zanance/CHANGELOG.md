@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Retain and review original budget edits (2026-10-11, D-152)
+
+- The budget form waits until its original accounts, categories and settings are ready; failed loading offers Retry.
+- Archived or unavailable references and existing hidden category limits stay intact when you edit a saved budget.
+- Changing language or number formatting keeps the meaning of amounts already typed. Invalid amounts show errors beside every affected field.
+- If saved information changes, your edits stay in the form. Reload shows current saved values and asks you to review retained edits before saving again.
+- Category amounts have their own full-width row. A successful save closes the form; if closing fails, Close returns without saving twice.
+
 ### Improved - Open the original budget from notifications (2026-10-11, D-151)
 
 - Open the notification's saved budget period in its original currency and calendar.

@@ -1000,3 +1000,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * The budget-reminder Debug route uses fictitious original rows, real native period invocation and no Save.
   Keep failed/transient captures as negative evidence; wait for regenerated native bindings before capture.
   Commercial view/editor bindings remain open and current release registration stays inactive.
+
+## 85. Reviewed original budget editor drafts (D-152)
+
+* Publish complete original references/preferences behind the cover; construction and opening never create Settings.
+  Keep archived/missing limits and exact explicit account scopes, including hidden Simple-mode originals.
+* Pin raw amount culture until user retyping; live captions never reinterpret input. Show field errors together.
+  Dirty-only reload merges unchanged current fields and requires explicit review when saved inputs changed.
+* Recheck complete original review under the actual Save/Replace/Delete SQLite writer. Reject retired file/access/
+  choice/date/references even at unchanged timestamps. Keep correction rights separate from new paid tools/capacity.
+* New weeks/two-week rows retain canonical zero year/month, never navigation month coordinates.
+* Retire a committed draft before native return; failed return uses Close without another Save. Busy native Back
+  shares the same discard guard. Review fixtures are independent; restore complete rows/bytes/display.
+  Current registration remains inactive; budget view copy/delete/work bindings remain open.

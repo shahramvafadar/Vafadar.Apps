@@ -5912,4 +5912,36 @@ Gespeicherte Zeiträume: {2}</value>
   <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
     <value>Gespeicherte Methode nicht verfügbar</value>
   </data>
+  <data name="Budget_Loading" xml:space="preserve">
+    <value>Budget wird geladen…</value>
+  </data>
+  <data name="Budget_LoadFailed" xml:space="preserve">
+    <value>Das Budget konnte nicht geladen werden. Ihre Eingaben bleiben erhalten. Laden Sie die aktuellen gespeicherten Werte erneut.</value>
+  </data>
+  <data name="Budget_SaveFailed" xml:space="preserve">
+    <value>Das Budget wurde nicht gespeichert. Ihre Eingaben bleiben erhalten. Laden und prüfen Sie die Werte vor dem erneuten Speichern.</value>
+  </data>
+  <data name="Budget_SavedReturnFailed" xml:space="preserve">
+    <value>Das Budget wurde gespeichert, aber das Formular konnte nicht geschlossen werden. Wählen Sie Schließen, um zurückzukehren.</value>
+  </data>
+  <data name="Budget_ReloadedSaved" xml:space="preserve">
+    <value>Aktuell gespeichert
+Gesamtlimit: {0}
+Konten: {1}
+Methode und Übertrag: {2}
+Kategorielimits:
+{3}</value>
+  </data>
+  <data name="Budget_ReloadReview" xml:space="preserve">
+    <value>Gespeicherte Werte haben sich geändert. Ihre bearbeiteten Felder bleiben erhalten; unveränderte Felder verwenden die aktuellen Werte. Prüfen Sie beides, bevor Sie Ihre Eingaben behalten.</value>
+  </data>
+  <data name="Budget_KeepEdits" xml:space="preserve">
+    <value>Geprüfte Eingaben behalten</value>
+  </data>
+  <data name="Budget_WorkUnavailable" xml:space="preserve">
+    <value>Die ursprünglichen Werte dieses Budgets bleiben zur Prüfung und Korrektur verfügbar. Die aktuellen Rechte für neue Arbeit umfassen diese Konfiguration nicht.</value>
+  </data>
+  <data name="Budget_MissingReference" xml:space="preserve">
+    <value>Nicht verfügbare Referenz «{0}»</value>
+  </data>
 </root>

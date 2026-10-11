@@ -5912,4 +5912,36 @@
   <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
     <value>روش ذخیره‌شده در دسترس نیست</value>
   </data>
+  <data name="Budget_Loading" xml:space="preserve">
+    <value>در حال بارگذاری بودجه…</value>
+  </data>
+  <data name="Budget_LoadFailed" xml:space="preserve">
+    <value>بودجه بارگذاری نشد. تغییرات شما حفظ شده‌اند. برای بررسی اطلاعات ذخیره‌شدهٔ فعلی دوباره تلاش کنید.</value>
+  </data>
+  <data name="Budget_SaveFailed" xml:space="preserve">
+    <value>بودجه ذخیره نشد. تغییرات شما حفظ شده‌اند. پیش از ذخیرهٔ دوباره، اطلاعات را بازخوانی و بررسی کنید.</value>
+  </data>
+  <data name="Budget_SavedReturnFailed" xml:space="preserve">
+    <value>بودجه ذخیره شد، ولی فرم بسته نشد. برای بازگشت، بستن را انتخاب کنید.</value>
+  </data>
+  <data name="Budget_ReloadedSaved" xml:space="preserve">
+    <value>اطلاعات ذخیره‌شدهٔ فعلی
+سقف کلی: {0}
+حساب‌ها: {1}
+روش و انتقال مانده: {2}
+سقف دسته‌ها:
+{3}</value>
+  </data>
+  <data name="Budget_ReloadReview" xml:space="preserve">
+    <value>اطلاعات ذخیره‌شده تغییر کرده‌اند. فیلدهای ویرایش‌شدهٔ شما حفظ شده‌اند و فیلدهای دست‌نخورده، مقدار ذخیره‌شدهٔ فعلی را دارند. پیش از نگه‌داشتن تغییرات، هر دو را بررسی کنید.</value>
+  </data>
+  <data name="Budget_KeepEdits" xml:space="preserve">
+    <value>نگه‌داشتن تغییرات بررسی‌شده</value>
+  </data>
+  <data name="Budget_WorkUnavailable" xml:space="preserve">
+    <value>اطلاعات اصلی این بودجه برای بررسی و اصلاح در دسترس‌اند. مجوزهای فعلیِ کار جدید شامل این تنظیمات نمی‌شوند.</value>
+  </data>
+  <data name="Budget_MissingReference" xml:space="preserve">
+    <value>مرجع در دسترس نیست: «{0}»</value>
+  </data>
 </root>

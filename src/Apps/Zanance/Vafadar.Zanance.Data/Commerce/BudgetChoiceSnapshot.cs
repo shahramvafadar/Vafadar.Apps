@@ -8,6 +8,21 @@ public sealed record BudgetChoiceItem(Guid Id, int Year, int Month, PeriodCalend
     DateOnly PeriodStart, string CurrencyCode, BudgetMethod Method, BudgetRollover Rollover, long? TotalLimit,
     bool AlertsEnabled, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt, string Accounts, string Limits)
 {
+    /// <summary>Creates a detached original row; editing it cannot mutate the reviewed period fingerprint.</summary>
+    public Budget ToBudget() => new(Id)
+    {
+        Year = Year, Month = Month, Calendar = Calendar, Period = Period, PeriodStart = PeriodStart,
+        CurrencyCode = CurrencyCode, Method = Method, Rollover = Rollover, TotalLimit = TotalLimit,
+        AlertsEnabled = AlertsEnabled, CreatedAt = CreatedAt, UpdatedAt = UpdatedAt,
+        AccountIds = Accounts.Length == 0 ? [] : Accounts.Split(';').Select(Guid.Parse).ToList(),
+        CategoryLimits = Limits.Length == 0 ? [] : Limits.Split(';').Select(packet =>
+        {
+            var parts = packet.Split(':');
+            return new BudgetCategoryLimit { CategoryId = Guid.Parse(parts[0]),
+                Limit = long.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture) };
+        }).ToList(),
+    };
+
     /// <summary>Returns canonical financial identity without the row id, dates, calendar, method or limits.</summary>
     public BudgetDefinitionKey Definition(QuotaScope scope) => new(scope, CurrencyCode, Period,
         Accounts.Length == 0 ? [] : Accounts.Split(';').Select(Guid.Parse));
@@ -56,6 +71,17 @@ public sealed class BudgetChoiceSnapshot
     public bool RequiresSelection { get; }
     /// <summary>Gets currently selected definitions, never guessed row identities.</summary>
     public IReadOnlyList<BudgetDefinitionKey> SelectedDefinitions { get; }
+    /// <summary>Checks retained correction/new-tool feature rights without claiming selection or capacity authorization.</summary>
+    public bool CanConfigure(Budget target)
+    {
+        ArgumentNullException.ThrowIfNull(target);
+        if (Access.Context is not { } context) return true;
+        var original = Items.SingleOrDefault(item => item.Id == target.Id)?.ToBudget();
+        var feature = BudgetEditPolicy.Feature(target, original, StoredResourceSelection.Scope(context), Today, MonthStartDay);
+        return PlanPolicy.Check(feature, context) == FeaturePermission.Allowed;
+    }
+    /// <summary>Gets deletion rights independently of current definition selection.</summary>
+    public bool CanDelete => Access.Context is not { } context || PlanPolicy.Check(CommercialFeature.DeleteData, context) == FeaturePermission.Allowed;
     /// <summary>Gets separate current new-work rights; original calculations continue using every original budget.</summary>
     public BudgetWorkPolicy Work { get; }
     /// <summary>Gets the actual file's opaque device-local notification identity; it grants no rights.</summary>

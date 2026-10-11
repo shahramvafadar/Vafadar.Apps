@@ -571,3 +571,7 @@ failed batches remove exact attempted native ids. No schema/model or backup-form
 ## Original budget notification identity (D-151)
 
 Actual-file budget snapshot identity is a device-local digest, independent of stored entitlement scope and portable data. Typed original Guid resolution requires the current actual file and History rights after unlock and at page load. It never grants new work or changes money/preferences. See Zanance docs/quality/budget-reminder-routing.md.
+
+## Paired budget form reviews (D-152)
+
+BudgetEditorReview captures immutable original periods/limits and complete original accounts/categories/preferences, including the distinct absent Settings state. Reader publication and Save/Replace/Delete use the same complete validation overload; reviewed writes acquire the actual SQLite writer before checking. Caller mutation, changed references/preferences/limits/date/file/access/choice revision/value retire the review. BudgetEditPolicy is the shared correction/new-tool feature rule; it grants neither capacity nor membership. A detached Budget(Guid) constructor retains original identity without adding EF properties or schema. No migration, compiled-model, portable backup or credential change is introduced. Original budget navigation hands id plus opaque actual-file scope to the editor.

@@ -5901,4 +5901,36 @@ Periodi salvati: {2}</value>
   <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
     <value>Metodo salvato non disponibile</value>
   </data>
+  <data name="Budget_Loading" xml:space="preserve">
+    <value>Caricamento del budget…</value>
+  </data>
+  <data name="Budget_LoadFailed" xml:space="preserve">
+    <value>Impossibile caricare il budget. Le tue modifiche sono conservate. Riprova per verificare i valori attualmente salvati.</value>
+  </data>
+  <data name="Budget_SaveFailed" xml:space="preserve">
+    <value>Il budget non è stato salvato. Le tue modifiche sono conservate. Ricarica e verifica prima di salvare di nuovo.</value>
+  </data>
+  <data name="Budget_SavedReturnFailed" xml:space="preserve">
+    <value>Il budget è stato salvato, ma il modulo non si è chiuso. Usa Chiudi per tornare indietro.</value>
+  </data>
+  <data name="Budget_ReloadedSaved" xml:space="preserve">
+    <value>Valori attualmente salvati
+Limite complessivo: {0}
+Conti: {1}
+Metodo e riporto: {2}
+Limiti per categoria:
+{3}</value>
+  </data>
+  <data name="Budget_ReloadReview" xml:space="preserve">
+    <value>I valori salvati sono cambiati. I campi che hai modificato sono conservati; gli altri usano i valori attuali. Verifica entrambi prima di mantenere le tue modifiche.</value>
+  </data>
+  <data name="Budget_KeepEdits" xml:space="preserve">
+    <value>Mantieni le modifiche verificate</value>
+  </data>
+  <data name="Budget_WorkUnavailable" xml:space="preserve">
+    <value>I valori originali di questo budget restano disponibili per verifica e correzione. I diritti attuali per nuove operazioni non includono questa configurazione.</value>
+  </data>
+  <data name="Budget_MissingReference" xml:space="preserve">
+    <value>Riferimento non disponibile «{0}»</value>
+  </data>
 </root>

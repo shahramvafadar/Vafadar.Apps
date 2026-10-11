@@ -63,6 +63,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private bool _refreshing;
     private Core.Reminders.BudgetReminderLink? _requestedReminder;
     private string? _visitCurrency;
+    private string? _budgetScope;
 
     /// <summary>Retains a validated notification destination until the actual page reload resolves its profile again.</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -327,7 +328,9 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         // The budget of the default account's currency, or the one picked in the switcher (ZEX-P02).
         var allAccounts = await _store.GetAccountsAsync();
         _currency = _visitCurrency ?? BudgetCurrency.Resolve(settings, allAccounts);
-        var budgets = await _store.GetBudgetsAsync();
+        var reviewedBudgets = await _store.GetBudgetEditorReviewAsync();
+        _budgetScope = reviewedBudgets.Choices.ReminderScope;
+        var budgets = reviewedBudgets.Choices.Items.Select(item => item.ToBudget()).ToList();
         _refreshing = true;
         try
         {
@@ -612,6 +615,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         _backFromEditor = true;
         return Shell.Current.GoToAsync(AppShell.BudgetEditorRoute, new Dictionary<string, object>
         {
+            ["id"] = (object?)_budget?.Id ?? null!,
+            ["scope"] = _budgetScope!,
             ["year"] = _year,
             ["month"] = _month,
             ["calendar"] = _calendar,

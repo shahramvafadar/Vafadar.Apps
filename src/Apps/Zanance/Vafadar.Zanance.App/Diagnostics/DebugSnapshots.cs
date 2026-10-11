@@ -258,7 +258,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "budget-reminder";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "budget-reminder" or "budget-editor-work";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -315,6 +315,11 @@ internal static partial class DebugSnapshots
         }
 
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "budget-editor-work")
+        {
+            await ReviewBudgetEditorAsync(app, services, folder, languages);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "goal-editor-work")
         {
             await ReviewGoalEditorAsync(app, services, folder, languages);

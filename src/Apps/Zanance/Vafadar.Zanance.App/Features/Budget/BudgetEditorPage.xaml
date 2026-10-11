@@ -6,6 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Budget"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     x:DataType="local:BudgetEditorViewModel"
     Title="{v:Translate Budget_EditTitle}"
     Shell.PresentationMode="ModalAnimated">
@@ -14,13 +15,17 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Button Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{v:Translate Budget_EditTitle}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
             <VerticalStackLayout Padding="16" Spacing="8">
+                <Label Text="{Binding WorkText}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
+                <Label Text="{Binding ReloadedSavedSummary}" IsVisible="{Binding RequiresReview}" />
+                <Label Text="{v:Translate Budget_ReloadReview}" IsVisible="{Binding RequiresReview}" />
+                <p:WrappingAction Text="{v:Translate Budget_KeepEdits}" Command="{Binding AcceptReviewCommand}" IsVisible="{Binding RequiresReview}" />
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Budget_TotalLimit}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4"
@@ -31,6 +36,7 @@
                                    SemanticProperties.Description="{v:Translate Budget_TotalLimit}" />
                             <Label Grid.Column="1" Text="{Binding CurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                         </Grid>
+                        <Label Text="{Binding TotalError}" Style="{StaticResource ErrorText}" IsVisible="{Binding TotalError, Converter={StaticResource IsNotNullConverter}}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="0,4,0,0"
                               IsVisible="{Binding TotalSuggestionText, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding TotalSuggestionText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
@@ -47,14 +53,14 @@
                                 <Label Text="{v:Translate Rollover_Title}" Style="{StaticResource FieldLabel}" Margin="0" />
                                 <v:HelpButton Grid.Column="1" Topic="Rollover" Margin="0" />
                             </Grid>
-                            <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" />
+                            <v:ChoiceChips ItemsSource="{Binding RolloverNames}" SelectedIndex="{Binding RolloverIndex}" IsEnabled="{Binding CanChooseRollover}" />
                             <Label Text="{v:Translate Rollover_Hint}" Style="{StaticResource Secondary}" />
                             <VerticalStackLayout IsVisible="{Binding ShowMethods}" Spacing="4">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                                     <Label Text="{v:Translate Budget_Method}" Style="{StaticResource FieldLabel}" />
                                     <v:HelpButton Grid.Column="1" Topic="BudgetMethod" Margin="0,8,0,0" />
                                 </Grid>
-                                <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" />
+                                <v:ChoiceChips ItemsSource="{Binding MethodNames}" SelectedIndex="{Binding MethodIndex}" IsEnabled="{Binding CanChooseMethod}" />
                                 <Label Text="{v:Translate Budget_MethodHint}" Style="{StaticResource Secondary}" />
                             </VerticalStackLayout>
                             <Label Text="{v:Translate Budget_WeeklyLimitsOnly}" Style="{StaticResource Secondary}" IsVisible="{Binding IsWeekly}" />
@@ -87,25 +93,35 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Limits}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:LimitInput">
-                                <Grid ColumnDefinitions="Auto,*,120" ColumnSpacing="10" MinimumHeightRequest="52">
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10" MinimumHeightRequest="52" Padding="0,4">
                                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding Color}" VerticalOptions="Center" />
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label Text="{Binding Name}" />
                                         <Label Text="{Binding SuggestionText}" Style="{StaticResource Secondary}" FontSize="12"
                                                IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                                     </VerticalStackLayout>
-                                    <Entry Grid.Column="2" Text="{Binding Text}" Keyboard="Numeric" Placeholder="–" HorizontalTextAlignment="End"
+                                    <Entry Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Text}" Keyboard="Numeric" Placeholder="–" HorizontalTextAlignment="End"
                                            SemanticProperties.Description="{Binding Name}" />
+                                    <Label Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" />
+        <Grid Grid.Row="1" BackgroundColor="{DynamicResource PageBackground}" IsVisible="{Binding IsCovered}">
+            <VerticalStackLayout VerticalOptions="Center" Padding="16" Spacing="8">
+                <ActivityIndicator IsRunning="{Binding IsLoading}" Color="{DynamicResource Primary}" />
+                <Label Text="{v:Translate Budget_Loading}" IsVisible="{Binding IsLoading}" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Grid>
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8">
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding ReloadCommand}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" Appearance="Primary" IsVisible="{Binding IsReady}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

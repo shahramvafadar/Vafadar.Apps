@@ -2262,3 +2262,24 @@ six hidden Windows language/theme cases plus targeted native month navigation, a
 Android cases each tap four exact original currency/calendar/period destinations; owned data/display restored.
 Commercial activation stays inactive. Budget view/editor commercial affordances and other ENT-02/03 paths remain
 open. See [evidence](../quality/budget-reminder-routing.md).
+
+### 31.65 Reviewed original budget editor drafts (D-152)
+
+The original budget editor publishes complete references and defaults behind a loading cover. Exact original
+id/file handoff retains archived/missing account/category limits and explicit scopes in both experience modes.
+Raw amounts keep their input culture through live display changes. Save rechecks the complete review under the
+actual SQLite writer; stale failures retain input and require explicit reload/review. Dirty fields alone survive
+reload, unchanged fields adopt current saved values, and a committed form retires before native return.
+Current new-tool rights are separate from retained corrections and future-period capacity. Registration remains
+inactive. Budget view copy/delete/other work affordances and the remaining ENT-02/03 paths are still open.
+
+35 new AT-154 actual application/isolated SQLite cases pass. Final ordinary main 2,681 / App.Tests 624 pass,
+without failures/skips; outputs cleaned. Strict Windows and canonical complete strict Android Release pass
+without warnings/errors. Eighteen hidden Windows cases cover en/fa/de, light/dark, 360/412/wide, native
+validation/stale Save/Reload/Keep edits/Close and complete 25-table restoration. Six normal Release Android
+language/theme cases verify original corrections/archived references; one explicit original-total Save preserves
+all other metadata and ledger rows. Final normal Release Create/Close and a targeted weekly Create/Save verify
+explicit absent identity and canonical zero stored month coordinates; complete owned data/bytes/display restored.
+Physical device, iOS, paid activation and product publication are not claimed.
+
+See [evidence](../quality/budget-editor-drafts.md).

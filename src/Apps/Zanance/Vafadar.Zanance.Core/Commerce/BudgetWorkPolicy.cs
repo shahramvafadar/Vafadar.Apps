@@ -20,7 +20,9 @@ public sealed class BudgetWorkPolicy
     /// <summary>Checks only new current-period activity. Never use this filter for original totals or carry history.</summary>
     public bool CanUse(Guid id) => _usable is null || _usable.Contains(id);
     /// <summary>Checks a new definition affordance; the actual writer checks the resulting net capacity again.</summary>
-    public bool CanCreate(BudgetMethod method, BudgetRollover rollover, BudgetPeriod period) => _room && _basic
+    public bool CanCreate(BudgetMethod method, BudgetRollover rollover, BudgetPeriod period) => _room && CanConfigure(method, rollover, period);
+    /// <summary>Checks new tools independently of today's definition capacity; future periods are checked by their writer.</summary>
+    public bool CanConfigure(BudgetMethod method, BudgetRollover rollover, BudgetPeriod period) => _basic
         && Enum.IsDefined(method) && Enum.IsDefined(rollover) && Enum.IsDefined(period)
         && (!RequiresAdvanced(method, rollover, period) || _advanced);
     /// <summary>Checks the separate paid tools; a selected definition alone never grants them.</summary>
