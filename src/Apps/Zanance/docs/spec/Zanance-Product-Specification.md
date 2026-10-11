@@ -2051,3 +2051,26 @@ fictitious Free context belongs only to its separate artifact SQLite database/pa
 The account/Plan chooser is delivered; other resource choices/bindings, activation and owner/external gates stay open.
 
 25 new actual application cases; normal parallel main 2,399 / App.Tests 407 pass, zero failures/skips (97.432 s). Strict builds, 18 form/18 registered-entry Windows combinations, six normal Release own-emulator cases and complete signed APK are recorded in [evidence](../quality/active-item-chooser.md). Physical-phone, native OS accessibility, iOS, provider, performance and publication acceptance remain open.
+
+### 31.56. Durable goal choices and actual writes (D-143 / AT-145)
+
+Extend the existing ResourceSelections boundary to Goals without a schema/entity change. Reviewed original names,
+measurement kinds, currency and active/paused/completed/archived states are rechecked with actual file, financial
+scope, verified rights, stored revision and capacity. Free's one goal counts a pause; explicit empty is retained.
+Invalid/stale choices need review, and choosing an advanced retained goal never grants its paid tools.
+
+The goal writer reads stored choice under the actual SQLite writer; it overrides only cached choice, never
+entitlement/membership. Explicit new or reopened goals join a free chosen slot atomically, rather than counting
+unselected retained history again. Completion/archive/delete releases only that identity; pause keeps it.
+Unselected paused goals cannot resume. Retained notes/state corrections, negative earmark releases and deletion
+remain available. Positive earmarks independently require AdvancedGoals and usable goal/account choices; no ledger
+or balance is written. Full editor/contribution failures roll back goal, pins, plan and choice together.
+
+Current release registration remains inactive and unrestricted. Settings still exposes Accounts/Plans. Goal
+chooser UI, effective goal/contribution projection and native reminder delivery follow in subsequent ENT-02/03
+slices. Other selected resources, activation and owner/provider/device/iOS/publication gates remain open.
+
+31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
+Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
+exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
+verified. [Evidence](../quality/goal-resource-choices.md).

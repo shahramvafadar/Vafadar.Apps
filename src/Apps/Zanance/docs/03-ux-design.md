@@ -846,3 +846,10 @@ loading/failure publication and offer translated retry. Resolve dirty switch/rel
 translation/help drafts and retire a saved review before navigation. Unrestricted test builds explain that no subset
 is needed. Keep rejected Save feedback beside the pinned action, outside the scrolling list; do not make a
 user scroll back to discover a failure. [Native matrix and actual registered navigation](quality/active-item-chooser.md).
+
+## Selected goal semantics (D-143)
+
+Retain original goal state and measurement separately from future availability. Pause counts without resuming on
+selection. Explicit Save uses reviewed choice; no guessed subset, financial posting or historical rewrite. Goal
+chooser UI and effective contribution/reminder presentation remain open. Current Accounts/Plans form and
+unrestricted release behavior are unchanged. [Writer evidence](quality/goal-resource-choices.md).

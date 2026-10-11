@@ -321,3 +321,11 @@ D-141 scoped choice row. Unsaved drafts remain in memory. No new data entity, sc
 telemetry or network operation; no money/state write on selection, reload, language/help/navigation. Commercial
 registration remains inactive. Fictitious limited-layout inputs exist only in an independently owned Debug review
 database/page and are absent from Release. [Evidence](../quality/active-item-chooser.md).
+
+## D-143 goal-choice privacy boundary
+
+Existing profile-local ResourceSelections can contain explicitly chosen original goal ids under verified financial
+scope. No entitlement, membership, credential or device-security value is stored. Goal metadata projects existing
+columns; no schema/entity, SDK, permission, network or telemetry change. Choice/lifecycle writes never write ledger
+money; retained history remains. Registration stays inactive. Native checks use the exact owned fictitious QA03
+file and restore every original byte/sidecar. [Evidence](../quality/goal-resource-choices.md).

@@ -11,6 +11,8 @@ public sealed record ResourceChoiceItem(Guid Id, string Name, QuotaItemState Sta
     public string? CurrencyCode { get; init; }
     /// <summary>Gets the original planned movement kind, when choosing plans.</summary>
     public Core.Ledger.EntryKind? EntryKind { get; init; }
+    /// <summary>Gets the original goal measurement kind, when choosing goals.</summary>
+    public Core.Goals.GoalType? GoalType { get; init; }
 }
 
 /// <summary>Immutable reviewed choice bound to the opened file, original items, current rights and stored revision.</summary>

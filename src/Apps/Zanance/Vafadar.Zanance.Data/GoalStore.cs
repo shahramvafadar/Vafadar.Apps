@@ -98,12 +98,16 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
                 : newUse ? CommercialFeature.BasicGoals : CommercialFeature.Corrections);
             // D-120: pause retains its slot. Reopening completed/archived goals consumes capacity before pin or
             // protection normalization can mutate the supplied draft or another goal's stored metadata.
-            if (counted && !wasCounted && write.DemandCapacity(CommercialFeature.BasicGoals, QuotaKind.Goals) is { } maximum)
+            if (counted && !wasCounted && !write.HasStoredGoalChoice && write.DemandCapacity(CommercialFeature.BasicGoals, QuotaKind.Goals) is { } maximum)
             {
                 var current = others.Count(g => g.State is GoalState.Active or GoalState.Paused);
                 write.DemandCount(CommercialFeature.BasicGoals, QuotaKind.Goals, maximum, current);
             }
         }
+        // D-143: retain historical state/corrections, but join a new or reopened goal under the same writer.
+        await write.PrepareGoalChangeAsync(db, goal, existing, cancellationToken);
+        if (write.Enforced && existing?.State == GoalState.Paused && goal.State == GoalState.Active)
+            write.DemandSelectedGoal(CommercialFeature.BasicGoals, others.Append(existing), goal.Id);
         if (goal.Type == GoalType.AccountBalance && goal.State is GoalState.Active or GoalState.Paused
             && (goal.AccountId is not { } accountId || GoalProgressService.HasOtherBalanceGoal(others, accountId, goal.Id)))
         {
@@ -160,6 +164,13 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         write.DemandFeature(allocation.Amount > 0 ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
+        if (allocation.Amount > 0 && write.Enforced)
+        {
+            var goals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
+            write.DemandSelectedGoal(CommercialFeature.AdvancedGoals, goals, allocation.GoalId);
+            var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(account => account.Id, cancellationToken);
+            write.DemandSelectedAccounts(CommercialFeature.AdvancedGoals, accounts, [allocation.AccountId]);
+        }
         db.GoalAllocations.Add(allocation);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
@@ -272,6 +283,9 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         await db.GoalAllocations.Where(a => a.GoalId == id).ExecuteDeleteAsync(cancellationToken);
         await db.ContributionPlans.Where(p => p.GoalId == id).ExecuteDeleteAsync(cancellationToken);
         await db.Goals.Where(g => g.Id == id).ExecuteDeleteAsync(cancellationToken);
+        write.PrepareGoalDeletion(id);
+        write.EnsureCurrent();
+        await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
         Changed?.Invoke(this, EventArgs.Empty);
     }

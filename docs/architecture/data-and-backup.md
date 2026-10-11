@@ -467,3 +467,12 @@ Reviewed Save rechecks these original display facts under the same writer; chang
 These are projected existing columns, not new entities/columns or portable entitlement facts. No migration or compiled
 model regeneration is needed here. The form writes only the D-141 choice row explicitly and never posts financial
 entries or rewrites original states. Current registration remains inactive. [Evidence](../../src/Apps/Zanance/docs/quality/active-item-chooser.md).
+
+## Goal selection writer (D-143)
+
+ResourceSelections also uses the existing Goals quota key; no model/schema change or new migration/compiled model.
+ResourceChoiceItem projects goal kind/currency from existing columns for optimistic review. Stored choices override
+cached fallback under the actual file's SQLite writer. New/reopened goals join chosen slots atomically; completion,
+archive/delete removes only their id. Invalid choices need explicit repair while corrections/releases stay possible.
+Positive earmarks independently check feature and usable original goal/account choices; never ledger balances.
+Release registration remains inactive. [Evidence](../../src/Apps/Zanance/docs/quality/goal-resource-choices.md).

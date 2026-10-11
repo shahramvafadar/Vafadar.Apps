@@ -891,3 +891,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Debug review uses an independently owned artifact database and page-local fictitious Free input, never a runtime
   entitlement replacement. Registered Settings/Help/Back review uses the unchanged inactive production registration.
   Compare all 25 complete tables; preserve original development data/sidecars and restore display theme as well.
+
+## 76. Durable selected goals (D-143)
+
+* Goal choices use the existing exact-file/scope reviewed row, retaining original measurement/currency/state.
+  Selection grants no paid tool. Pause consumes its slot; unselected paused goals cannot resume.
+* Read choices under the actual writer. New/reopened goals join a free chosen slot atomically; completion/archive
+  and explicit deletion release only that identity. Keep original history, corrections and negative earmark releases.
+* Positive earmarks independently require the actual paid feature and usable goal/account choices. Never post ledger
+  money here. Roll back complete goal/contribution/pin/choice writes on failure; Changed follows committed writes.
+* Registration remains inactive. Goal chooser UI and effective contribution/reminder projection remain open.

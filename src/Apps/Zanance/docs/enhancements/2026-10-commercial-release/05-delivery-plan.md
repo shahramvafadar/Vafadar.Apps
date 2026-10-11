@@ -526,3 +526,12 @@ The next D-141 slice, actual reviewed account/Plan chooser UI, is delivered and 
 main 2,399 / App.Tests 407 pass, strict builds and complete signed APK/native evidence recorded. Current registration
 remains inactive. Continue ready planned selected-resource choices and their actual service/UI bindings; activation,
 purchases and existing owner/external gates remain separate. [Evidence](../../quality/active-item-chooser.md).
+
+## D-143 continuous-delivery result
+
+31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
+Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
+exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
+verified. [Evidence](../../quality/goal-resource-choices.md).
+
+Continue goal chooser/effective contribution/reminder bindings under D-69; keep activation and external gates separate.

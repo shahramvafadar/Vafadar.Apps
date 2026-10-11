@@ -4,7 +4,7 @@ using Vafadar.Zanance.Core.Plans;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
-/// <summary>Explicit, actual-file account and plan choices with optimistic review and a serialized SQLite writer.</summary>
+/// <summary>Explicit, actual-file account, plan and goal choices with optimistic review and a serialized SQLite writer.</summary>
 public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> contextFactory,
     ICommercialWriteAccessSource commercialAccess)
 {
@@ -25,7 +25,13 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         if (access.Context is { } context)
         {
             var scope = StoredResourceSelection.Scope(context);
-            var selection = stored?.ForNewWork() ?? (kind == QuotaKind.FinancialAccounts ? access.AccountSelection : access.PlanSelection);
+            var selection = stored?.ForNewWork() ?? kind switch
+            {
+                QuotaKind.FinancialAccounts => access.AccountSelection,
+                QuotaKind.RecurringPlans => access.PlanSelection,
+                QuotaKind.Goals => access.GoalSelection,
+                _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+            };
             availability = ResourceSelectionPolicy.Resolve(kind, scope, context,
                 items.Select(item => new QuotaItem(kind, scope, item.Id, item.State)), selection);
         }
@@ -87,6 +93,17 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
             ? (await db.Accounts.AsNoTracking().ToListAsync(cancellationToken)).Select(account =>
                 new ResourceChoiceItem(account.Id, account.Name, account.IsArchived ? QuotaItemState.Archived : QuotaItemState.Active)
                 { AccountType = account.Type, CurrencyCode = account.CurrencyCode })
+            : kind == QuotaKind.Goals
+            ? (await db.Goals.AsNoTracking().ToListAsync(cancellationToken)).Select(goal =>
+                new ResourceChoiceItem(goal.Id, goal.Name, goal.State switch
+                {
+                    Core.Goals.GoalState.Active => QuotaItemState.Active,
+                    Core.Goals.GoalState.Paused => QuotaItemState.Paused,
+                    Core.Goals.GoalState.Completed => QuotaItemState.Ended,
+                    Core.Goals.GoalState.Archived => QuotaItemState.Archived,
+                    _ => throw new InvalidOperationException("The original goal state is invalid."),
+                })
+                { GoalType = goal.Type, CurrencyCode = goal.CurrencyCode })
             : (await db.Schedules.AsNoTracking().ToListAsync(cancellationToken)).Select(plan =>
                 new ResourceChoiceItem(plan.Id, plan.Name, plan.State switch
                 {
@@ -100,7 +117,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
 
     private static void DemandKind(QuotaKind kind)
     {
-        if (kind is not (QuotaKind.FinancialAccounts or QuotaKind.RecurringPlans))
+        if (kind is not (QuotaKind.FinancialAccounts or QuotaKind.RecurringPlans or QuotaKind.Goals))
             throw new ArgumentOutOfRangeException(nameof(kind), "This resource uses its separate selection boundary.");
     }
 }

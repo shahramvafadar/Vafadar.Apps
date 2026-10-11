@@ -19,7 +19,7 @@ public sealed record CommercialWriteAccess
     private CommercialWriteAccess() { }
 
     /// <summary>Creates enabled facts for one actual database; it is the provider's responsibility to verify them.</summary>
-    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null, ResourceSelection? planSelection = null)
+    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null, ResourceSelection? planSelection = null, ResourceSelection? goalSelection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(databasePath);
         ArgumentNullException.ThrowIfNull(context);
@@ -39,6 +39,14 @@ public sealed record CommercialWriteAccess
             if (planSelection.Kind != QuotaKind.RecurringPlans || planSelection.Scope != scope)
                 throw new ArgumentException("The plan choice belongs to another financial boundary.", nameof(planSelection));
         }
+        if (goalSelection is not null)
+        {
+            var scope = new QuotaScope(context.Scope.Kind == EntitlementScopeKind.PersonalProfile
+                ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id);
+            if (goalSelection.Kind != QuotaKind.Goals || goalSelection.Scope != scope)
+                throw new ArgumentException("The goal choice belongs to another financial boundary.", nameof(goalSelection));
+        }
+        GoalSelection = goalSelection;
         AccountSelection = accountSelection;
         PlanSelection = planSelection;
     }
@@ -55,6 +63,8 @@ public sealed record CommercialWriteAccess
     public ResourceSelection? AccountSelection { get; }
     /// <summary>Gets the explicit scoped plan choice; it never grants an automatic-posting capability.</summary>
     public ResourceSelection? PlanSelection { get; }
+    /// <summary>Gets the explicit scoped goal choice; it never grants paid contribution tools.</summary>
+    public ResourceSelection? GoalSelection { get; }
 }
 
 /// <summary>

@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Retained savings goals (2026-10-11, D-143)
+
+- Prepare durable goal choices for future approved activation without deleting saved goals or history.
+- Save new or reopened goals and their chosen slot together; pause retains its slot and completion releases it.
+- Keep retained corrections and earmark releases available; choosing a goal never unlocks paid tools.
+- Current test builds remain unrestricted. Goal selection UI and delivery bindings are still being completed.
+
+
 ### Added - Clear account and Plan availability (2026-10-11, D-142)
 
 - Open available accounts and plans from Settings, with complete names, separate states and an explanation.

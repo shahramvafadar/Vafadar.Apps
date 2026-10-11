@@ -378,3 +378,14 @@ restored. Canonical signed installable APK: artifacts/android/zanance-d142-relea
 pass; strict Windows/Android zero warnings/errors. [Proof and APK digest](quality/active-item-chooser.md). This does
 not activate commercial limits or satisfy physical-phone, iOS, provider, store-signing/publication or native OS
 accessibility acceptance.
+
+## D-143 revision-specific local evidence
+
+Canonical installable signed APK: artifacts/android/zanance-d143-release.apk. Current commercial registration
+remains inactive. Goal UI/projection/reminders and physical/iOS/provider/publication gates remain open.
+
+
+31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
+Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
+exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
+verified. [Evidence](quality/goal-resource-choices.md).

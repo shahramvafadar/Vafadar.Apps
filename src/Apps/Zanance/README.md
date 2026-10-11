@@ -149,7 +149,7 @@ Independent saved-filter results after report navigation: [runtime evidence](doc
 
 Complete growing transaction category choices: [runtime evidence](docs/quality/entry-category-captions.md).
 
-Current local quality baseline (D-142): normal parallel main suite 2,399 / App.Tests 407 pass; strict Windows/Android builds have zero warnings/errors. Settings opens the reviewed account/Plan chooser, while test builds remain unrestricted. Actual native matrix and complete signed APK: [evidence](docs/quality/active-item-chooser.md). Other resource bindings and owner/provider/device/iOS/release gates remain open.
+Current local quality baseline (D-143): normal parallel main suite 2,430 / App.Tests 407 pass; strict Windows/Android builds have zero warnings/errors. Settings opens the reviewed account/Plan chooser, while test builds remain unrestricted. Actual native matrix and complete signed APK: [evidence](docs/quality/active-item-chooser.md). Other resource bindings and owner/provider/device/iOS/release gates remain open.
 
 ## Durable local resource choices (D-141)
 
@@ -160,6 +160,29 @@ complete. Current test builds stay unrestricted. D-142 delivers the reviewed cho
 ## Reviewed account and Plan availability (D-142)
 
 Settings opens the reviewed local chooser with growing identities, separate states, capacity feedback and explicit
-Save. Current test builds need no subset. Latest local main/App test baseline: 2,399/407 pass, strict builds zero
+Save. Current test builds need no subset. D-142 main/App test baseline: 2,399/407 pass, strict builds zero
 warnings/errors; actual Windows matrix, normal Release own-emulator cases and complete signed APK are in
 [the quality record](docs/quality/active-item-chooser.md). Other resource bindings and owner/external gates remain open.
+
+## Durable goal choices (D-143)
+
+Extend the existing ResourceSelections boundary to Goals without a schema/entity change. Reviewed original names,
+measurement kinds, currency and active/paused/completed/archived states are rechecked with actual file, financial
+scope, verified rights, stored revision and capacity. Free's one goal counts a pause; explicit empty is retained.
+Invalid/stale choices need review, and choosing an advanced retained goal never grants its paid tools.
+
+The goal writer reads stored choice under the actual SQLite writer; it overrides only cached choice, never
+entitlement/membership. Explicit new or reopened goals join a free chosen slot atomically, rather than counting
+unselected retained history again. Completion/archive/delete releases only that identity; pause keeps it.
+Unselected paused goals cannot resume. Retained notes/state corrections, negative earmark releases and deletion
+remain available. Positive earmarks independently require AdvancedGoals and usable goal/account choices; no ledger
+or balance is written. Full editor/contribution failures roll back goal, pins, plan and choice together.
+
+Current release registration remains inactive and unrestricted. Settings still exposes Accounts/Plans. Goal
+chooser UI, effective goal/contribution projection and native reminder delivery follow in subsequent ENT-02/03
+slices. Other selected resources, activation and owner/provider/device/iOS/publication gates remain open.
+
+31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
+Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
+exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
+verified. [Evidence](docs/quality/goal-resource-choices.md).

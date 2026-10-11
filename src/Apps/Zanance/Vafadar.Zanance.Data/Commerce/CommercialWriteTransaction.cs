@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Goals;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
@@ -19,6 +20,8 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     private ResourceSelection? _planSelection;
     private StoredResourceSelection? _storedAccounts;
     private StoredResourceSelection? _storedPlans;
+    private ResourceSelection? _goalSelection;
+    private StoredResourceSelection? _storedGoals;
 
     private CommercialWriteTransaction(CommercialFileAccess access, IDbContextTransaction? transaction)
     {
@@ -26,6 +29,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         _ownedTransaction = transaction;
         _accountSelection = access.AccountSelection;
         _planSelection = access.PlanSelection;
+        _goalSelection = access.GoalSelection;
     }
 
     /// <summary>Gets whether a write requires commercial checks.</summary>
@@ -57,6 +61,8 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
             // cached fallback choices; a selection never modifies or grants the source's verified paid facts.
             result._storedAccounts = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.FinancialAccounts, cancellationToken, tracking: true);
             result._storedPlans = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken, tracking: true);
+            result._storedGoals = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken, tracking: true);
+            result._goalSelection = result._storedGoals?.ForNewWork() ?? access.GoalSelection;
             result._accountSelection = result._storedAccounts?.ForNewWork() ?? access.AccountSelection;
             result._planSelection = result._storedPlans?.ForNewWork() ?? access.PlanSelection;
             result.EnsureCurrent();
@@ -213,6 +219,55 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
 
     /// <summary>Gets whether persisted plan choices own the transaction-local net capacity check.</summary>
     public bool HasStoredPlanChoice => _storedPlans is not null;
+
+    /// <summary>Checks new goal use against original states and this writer's exact-scope choice.</summary>
+    public void DemandSelectedGoal(CommercialFeature feature, IEnumerable<Goal> goals, Guid requestedId)
+    {
+        DemandFeature(feature);
+        if (!Enforced) return;
+        var availability = ResourceSelectionPolicy.Resolve(QuotaKind.Goals, FinancialScope, _access.Context!,
+            goals.Select(goal => QuotaItem.From(FinancialScope, goal)), _goalSelection);
+        if (!availability.IsSelected(requestedId))
+            throw new CommercialWriteRejectedException(feature, QuotaKind.Goals, requestedId,
+                availability.RequiresSelection || (_storedGoals is not null && !_storedGoals.HasValidValue()));
+    }
+
+    /// <summary>Joins explicit creation/reopening to a free chosen slot and releases completed/archived identities atomically.</summary>
+    public async Task PrepareGoalChangeAsync(ZananceDbContext db, Goal target, Goal? original, CancellationToken cancellationToken)
+    {
+        if (!Enforced || _storedGoals is null) return;
+        var counted = target.State is GoalState.Active or GoalState.Paused;
+        var adds = counted && original?.State is not (GoalState.Active or GoalState.Paused);
+        if (!_storedGoals.HasValidValue())
+        {
+            if (adds && GetMaximum(QuotaKind.Goals) is not null)
+                throw new CommercialWriteRejectedException(CommercialFeature.BasicGoals, QuotaKind.Goals, target.Id, true);
+            return;
+        }
+        var ids = _goalSelection!.SelectedIds.ToHashSet();
+        if (adds && GetMaximum(QuotaKind.Goals) is { } maximum)
+        {
+            var goals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
+            var availability = ResourceSelectionPolicy.Resolve(QuotaKind.Goals, FinancialScope, _access.Context!,
+                goals.Select(goal => QuotaItem.From(FinancialScope, goal)), _goalSelection);
+            if (availability.RequiresSelection)
+                throw new CommercialWriteRejectedException(CommercialFeature.BasicGoals, QuotaKind.Goals, target.Id, true);
+            DemandCount(CommercialFeature.BasicGoals, QuotaKind.Goals, maximum, availability.SelectedCount);
+            ids.Add(target.Id);
+        }
+        if (!counted) ids.Remove(target.Id);
+        ReplaceChoice(_storedGoals, new(QuotaKind.Goals, FinancialScope, ids));
+    }
+
+    /// <summary>Releases only the explicitly deleted goal identity, preserving malformed input for reviewed repair.</summary>
+    public void PrepareGoalDeletion(Guid id)
+    {
+        if (!Enforced || _storedGoals is null || !_storedGoals.HasValidValue()) return;
+        ReplaceChoice(_storedGoals, new(QuotaKind.Goals, FinancialScope, _goalSelection!.SelectedIds.Where(selected => selected != id)));
+    }
+
+    /// <summary>Gets whether a persisted goal choice owns the transaction-local addition check.</summary>
+    public bool HasStoredGoalChoice => _storedGoals is not null;
 
     private static void ReplaceChoice(StoredResourceSelection row, ResourceSelection choice)
     {

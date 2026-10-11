@@ -1025,3 +1025,17 @@ and nonempty Save, exact no-money row equality, stale name/currency/type/Plan-ki
 languages, accepted/rejected kind and reload discard, consent/navigation busy guard, committed navigation failure
 retirement and covered read failure/retry. Main 2,399 / App.Tests 407 pass with no failures/skips. Actual native
 form and registered Settings/Help/Back matrix plus six normal Release emulator cases: [evidence](quality/active-item-chooser.md).
+
+## AT-145 - Durable goal choice and writer
+
+31 real SQLite cases cover inactive original states, scoped single/empty choice, reopen/no-op without financial
+writes, excess/foreign/historical ids, stale choice/name/type/currency/state/rights/scope, atomic creation/counting
+pause, completion/archive/reopening, unselected resume with retained corrections, explicit deletion, SQL/plan/delete
+and post-SQL rights rollback, malformed value/revision with retained releases and repair, independent last-slot
+contention, exact-file switch, immutable scoped cached fallback, unlimited upgrades and no paid rights from choice.
+
+
+31 new AT-145 real SQLite cases; normal parallel main 2,430 / App.Tests 407 pass, zero failures/skips (69.359 s).
+Strict Windows/Android have zero warnings/errors. Normal signed Release actual goal/contribution/earmark Save and
+exact owned-file restoration are verified on the owned emulator. No visible layout change. Complete signed APK
+verified. [Evidence](quality/goal-resource-choices.md).
