@@ -278,7 +278,7 @@ public sealed class ProfileFileWorkFlowTests
         Assert.Equal(external ? 0 : 1, source.Disposals); Assert.Equal(external ? 0 : 1, created);
     }
 
-    private sealed class Fixture : IDisposable
+    internal sealed class Fixture : IDisposable
     {
         internal readonly FlowFixture Flow = new(); internal readonly Preferences Preferences = new(); internal readonly DeviceSource Device = new();
         internal readonly FinancialSource Financial; internal readonly ServiceProvider Services;
@@ -315,25 +315,25 @@ public sealed class ProfileFileWorkFlowTests
         }
         public void Dispose() { Services.Dispose(); Flow.Dispose(); }
     }
-    private sealed class Preferences : ISettingsStore
+    internal sealed class Preferences : ISettingsStore
     {
         private readonly InMemorySettingsStore _inner = new(); internal int Reads; internal bool FailRead;
         public string? Get(string key) { Reads++; return FailRead ? throw new IOException("Fictitious preference failure.") : _inner.Get(key); }
         public void Set(string key, string? value) => _inner.Set(key, value); public void Remove(string key) => _inner.Remove(key);
     }
-    private sealed class DeviceSource : IProfileWorkAccessSource
+    internal sealed class DeviceSource : IProfileWorkAccessSource
     {
         internal ProfileWorkAccess Current = ProfileWorkAccess.Inactive; internal int Reads; internal bool Fail;
         internal readonly QuotaScope Scope = new(QuotaScopeKind.Device, Guid.NewGuid()); internal readonly EntitlementScope Personal = new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid());
         public ProfileWorkAccess Capture(string cataloguePath) { Reads++; return Fail ? throw new IOException("Fictitious device read.") : Current; }
     }
-    private sealed class FinancialSource : ICommercialWriteAccessSource
+    internal sealed class FinancialSource : ICommercialWriteAccessSource
     {
         internal CommercialWriteAccess Main = CommercialWriteAccess.Inactive; internal readonly Dictionary<string, CommercialWriteAccess> Others = new(StringComparer.Ordinal);
         internal readonly EntitlementScope Scope = new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid()); internal Action? AfterCapture;
         public CommercialWriteAccess Capture(string databasePath) { var value = Others.GetValueOrDefault(databasePath, Main); AfterCapture?.Invoke(); return value; }
     }
-    private sealed class UnexpectedRuntime : IProfileRuntime
+    internal sealed class UnexpectedRuntime : IProfileRuntime
     {
         public Task RunExclusiveAsync(Func<Task> action) => throw new InvalidOperationException("Unexpected native profile switch.");
         public Task MigrateAsync() => throw new InvalidOperationException("Unexpected destination migration."); public Task<bool> AuthenticateAsync(string reason) => throw new InvalidOperationException("Unexpected authentication.");

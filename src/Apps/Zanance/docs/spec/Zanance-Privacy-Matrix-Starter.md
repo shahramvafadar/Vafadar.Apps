@@ -425,3 +425,12 @@ preference, purchase or identity migration. It does not enter backups. Complete 
 unchanged; backup restore and owned export retain their independently verified rights. Inactive production
 capture performs no device-source/preference read. No data schema, permission, SDK, network, credential or interim
 OS-backup policy change. Native fixtures remain independent and restore complete original rows/files/display.
+
+## D-158 - Guarded original reminder publication
+
+Complete preferences and first-recorded account date are rechecked in memory against the exact original file.
+Display/day facts remain process-local; no new portable field, provider identity or credential is stored. The
+existing device-only Snooze cache commits after accepted/current native publication and stays retryable after
+refusal. Partial pending batches are removed without deleting delivered notifications. Catalogue events schedule
+only an owned read/notification refresh; no financial write or review completion. No new permission, SDK,
+network request, schema, analytics or interim OS-backup policy. Independent fixtures restore owned data/display.

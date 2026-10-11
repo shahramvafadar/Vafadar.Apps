@@ -1256,3 +1256,15 @@ shared membership isolation, verified unlimited plans, paid/foreign-fact rejecti
 Ordinary main 2,821 / App.Tests 764 pass; strict builds, original native pages, normal Release emulator and APK
 proof are in [evidence](quality/profile-file-work.md). Native bindings, commercial activation and external
 platform/provider/device/publication acceptance remain separate.
+
+## AT-160 - Original catalogue reminder lifetime and period reviews (D-158)
+
+25 cases compile actual source and use real isolated SQLite. They cover inactive/Free/Plus/Pro/unresolved-file
+review policy, all six live languages with an explicit independent calendar, actual catalogue choice/rename
+refresh, scoped pending/snooze withdrawal without financial actions, retirement inside native publication,
+lifetime cancellation and no-read/idempotent registration, foreign-catalogue rejection, native action detachment,
+privacy/opt-in/first-date/missing-settings/calendar/day retirement, no Settings recreation and rejected partial
+batch cache preservation/retry. Final main 2,846 / App.Tests 789 pass; strict builds, actual native Save/watcher,
+normal signed Release SDK evidence and exact restoration: [evidence](quality/profile-reminder-work.md).
+Original Plan/Goal financial-input and other operation/native acceptance, commercial activation and external
+platform/provider/device/publication gates remain open.

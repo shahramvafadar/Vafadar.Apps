@@ -618,3 +618,26 @@ Android Release builds have zero warnings/errors. Focused original-page Windows 
 results, exact data restoration, retained negative evidence and the complete signed APK are recorded in
 [the evidence document](quality/profile-file-work.md). Commercial activation, physical-device, iOS, OAuth,
 Store signing/publication and the remaining original-operation bindings remain open.
+
+## D-158 - Original catalogue and period-review reminders
+
+Original catalogue changes now reach the actual reminder watcher, so explicit activity choices rebuild the
+queue without another financial action. The shared event port introduces no construction-time database read.
+Subscriptions are lifetime-scoped and idempotent; a different catalogue cannot be substituted. Delayed work uses
+the injected clock and exposes its actual full batch task for owned-lifetime checks. Disposal cancels future work,
+detaches subscriptions and asynchronously drains current work without deleting valid native reminders.
+
+Period-review delivery uses the same captured actual-file paid/profile facts. Complete original preferences,
+first-recorded account date, language/formatting/calendar/digits and local day validate before/after native
+publication. Revalidation never creates Settings. SDK request refusal is consumed for scheduled requests as well
+as immediate alerts; partial pending work is withdrawn and Snooze cache commits only after successful complete
+publication. Original financial rows and recovery remain independent. Current registrations stay inactive.
+No EF/model/schema/migration, permission, SDK, network, credential or portable format change.
+
+25 new AT-160 actual-source/real SQLite cases pass. The final ordinary main suite passes 2,846 tests
+(App.Tests 789), with zero failures/skips, and output is cleaned. Strict Windows and canonical complete strict
+Android Release build have zero warnings/errors. Original native Profiles Save drives the real watcher in an
+independent fixture; complete rows/catalogue and owned development bytes are restored. Final normal Release
+SDK delivery, exact owned restoration, APK details and negative evidence are recorded in
+[evidence](quality/profile-reminder-work.md). Commercial activation, physical-device, iOS, OAuth and publication
+remain separate. Original Plan/Goal financial-input retirement and other operation/native bindings remain open.

@@ -12,6 +12,10 @@ public sealed record PlanWorkSnapshot(List<Schedule> Schedules, List<OccurrenceS
     /// <summary>Gets the actual file's opaque local notification identity; it grants no rights.</summary>
     public string ReminderScope { get; internal init; } = string.Empty;
 
+    /// <summary>Gets separately authorized period-review delivery from the same captured actual-file facts.</summary>
+    public bool CanRemindPeriodReview => Access?.Context is not { } context
+        || PlanPolicy.Check(CommercialFeature.ContributionReviewReminders, context) == FeaturePermission.Allowed;
+
     /// <summary>Gets the actual captured file, retained only inside the data boundary.</summary>
     internal string DatabasePath { get; init; } = string.Empty;
 

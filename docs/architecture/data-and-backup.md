@@ -622,3 +622,17 @@ remain the verified original values. New work uses PlanPolicy; complete financia
 filter by profile availability. Separately verified backup/restore/correction rights survive malformed catalogue
 metadata without repairing it or guessing an identity. No EF/schema/compiled-model or portable-format change.
 Remaining operation/import/native acceptance and production activation are separate.
+
+## Original catalogue reminder publication (D-158)
+
+The actual app passes ProfileService through IProfileCatalogueChanges to ReminderService after construction.
+One lifetime owns financial/resource/catalogue/native-action subscriptions. Coalesced delay uses TimeProvider;
+PendingRefresh is the actual task including final native/database guards. Async disposal drains it before an
+independent owned database is removed. No database/provider read occurs merely to subscribe.
+
+PlanWorkSnapshot projects period-review permission from its captured original context. Revalidation uses the
+same actual path/access, complete immutable preference packet and a nullable first-account-date scalar query;
+missing Settings remains missing. Original live display and local day retire stale batches. Every SDK Show result
+is accepted explicitly. Partial pending batches are withdrawn and existing delivered requests remain separate.
+Snooze preferences commit after native acceptance and complete current-input checks. No EF/compiled model or
+portable schema change. Broader original Plan/Goal financial-input retirement remains a following slice.

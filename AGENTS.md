@@ -1074,3 +1074,17 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Native file-work fixtures use the actual decorated DI and original pages over independent fictitious rows;
   compare complete data, retain raw drafts and restore catalogue/owned bytes/display. No financial Save or paid
   activation. Remaining operation/import/restore/native and commercial-message coverage follows separately.
+
+## 91. Original catalogue reminder lifetime and period review (D-158)
+
+* Subscribe the actual reminder watcher to original catalogue changes without a startup database read.
+  Keep one catalogue per lifetime, cancel delayed work on disposal and drain current owned batches asynchronously.
+  Valid native reminders survive watcher disposal; original SDK actions are detached.
+* Period-review eligibility comes from captured actual-file paid/profile facts. Recheck complete original
+  preferences, first-recorded account date, live display and local day before/after native publication.
+  Revalidation never creates Settings or marks a review finished.
+* Consume each SDK scheduling result. Withdraw partial pending batches after refusal; preserve delivered
+  notifications and keep the original Snooze cache retryable until complete acceptance/current-input validation.
+* Await the actual complete coalesced batch in native fixtures, not just the first adapter callback. Use real
+  Profiles Invoke/Save and independent financial data; restore complete rows/catalogue/owned bytes/display.
+  Registration remains inactive; broader original Plan/Goal financial-input retirement follows separately.

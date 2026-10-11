@@ -57,7 +57,7 @@ public partial class App : Application
         this.ApplyToModalPages(localization);
 
         var reminders = services.GetRequiredService<ReminderService>();
-        reminders.WatchChanges();
+        reminders.WatchChanges(services.GetRequiredService<Profiles.ProfileService>());
         reminders.Scheduler.Tapped += OnReminderTapped;
     }
 

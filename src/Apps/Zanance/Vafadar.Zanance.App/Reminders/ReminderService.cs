@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 using Vafadar.Core.Settings;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
@@ -29,25 +30,78 @@ public sealed class ReminderService(
     ILocalizationService localization,
     TimeProvider time,
     ResourceChoiceStore? choices = null,
-    BudgetChoiceStore? budgetChoices = null)
+    BudgetChoiceStore? budgetChoices = null) : IDisposable, IAsyncDisposable
 {
     private const string BudgetAlertKey = "budget.alert.";
     private const string SnoozeKey = "reminders.snoozed";
     private readonly SemaphoreSlim _gate = new(1, 1);
     private CancellationTokenSource? _pending;
+    private readonly object _changesGate = new();
+    private Profiles.IProfileCatalogueChanges? _watchedProfiles;
+    private bool _watching;
+    private bool _watchingSnoozes;
+    private int _disposed;
+    private Task _pendingRefresh = Task.CompletedTask;
+
+    /// <summary>Gets the current coalesced batch, including its final guards, for exact owned-lifetime review.</summary>
+    internal Task PendingRefresh { get { lock (_changesGate) return _pendingRefresh; } }
 
     /// <summary>Gets the scheduler (for permission prompts and tap handling).</summary>
     public IReminderScheduler Scheduler => scheduler;
 
-    /// <summary>Refreshes shortly after every change of entries, plans, goals or holdings (a burst of changes refreshes once).</summary>
-    public void WatchChanges()
+    /// <summary>Watches original financial/resource/catalogue changes once; subscription does not read a database.</summary>
+    public void WatchChanges(Profiles.IProfileCatalogueChanges? profiles = null)
     {
-        store.Changed += (_, _) => RefreshSoon();
-        plans.Changed += (_, _) => RefreshSoon();
-        if (choices is not null) choices.Changed += (_, _) => RefreshSoon();
-        if (budgetChoices is not null) budgetChoices.Changed += (_, _) => RefreshSoon();
-        goals.Changed += (_, _) => RefreshSoon();
-        holdings.Changed += (_, _) => RefreshSoon();
+        lock (_changesGate)
+        {
+            ObjectDisposedException.ThrowIf(_disposed != 0, this);
+            if (_watching)
+            {
+                if (!ReferenceEquals(profiles, _watchedProfiles))
+                    throw new InvalidOperationException("A reminder watcher cannot inherit another original catalogue.");
+                return;
+            }
+            _watchedProfiles = profiles;
+            store.Changed += OnDataChanged; plans.Changed += OnDataChanged;
+            if (choices is not null) choices.Changed += OnDataChanged;
+            if (budgetChoices is not null) budgetChoices.Changed += OnDataChanged;
+            goals.Changed += OnDataChanged; holdings.Changed += OnDataChanged;
+            if (profiles is not null) profiles.Changed += OnDataChanged;
+            _watching = true;
+        }
+    }
+
+    private void OnDataChanged(object? sender, EventArgs args) => RefreshSoon();
+    private void OnSnoozeRequested(object? sender, SnoozeRequest request) => _ = SnoozeAsync(request);
+
+    /// <summary>Detaches lifetime-scoped sources and cancels delayed work without deleting valid native reminders.</summary>
+    public void Dispose()
+    {
+        lock (_changesGate)
+        {
+            if (_disposed != 0) return;
+            Volatile.Write(ref _disposed, 1);
+            if (_watching)
+            {
+                store.Changed -= OnDataChanged; plans.Changed -= OnDataChanged;
+                if (choices is not null) choices.Changed -= OnDataChanged;
+                if (budgetChoices is not null) budgetChoices.Changed -= OnDataChanged;
+                goals.Changed -= OnDataChanged; holdings.Changed -= OnDataChanged;
+                if (_watchedProfiles is not null) _watchedProfiles.Changed -= OnDataChanged;
+            }
+            if (_watchingSnoozes) scheduler.SnoozeRequested -= OnSnoozeRequested;
+            _pending?.Cancel(); _pending?.Dispose(); _pending = null;
+            // Native awaits may already own the semaphore; do not dispose it underneath their final Release.
+        }
+    }
+
+    /// <summary>Detaches delayed work and drains the current native/database batch before an owned fixture is removed.</summary>
+    public async ValueTask DisposeAsync()
+    {
+        Dispose();
+        try { await PendingRefresh; } catch (OperationCanceledException) { }
+        await _gate.WaitAsync();
+        _gate.Release();
     }
 
     /// <summary>
@@ -57,18 +111,24 @@ public sealed class ReminderService(
     public void WatchSnoozes()
     {
         // A scheduled Android receiver can initialize the process without opening a page. No database startup work.
-        scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
-        scheduler.SnoozeRequested += (_, request) => _ = SnoozeAsync(request);
+        lock (_changesGate)
+        {
+            ObjectDisposedException.ThrowIf(_disposed != 0, this);
+            if (_watchingSnoozes) return;
+            scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
+            scheduler.SnoozeRequested += OnSnoozeRequested;
+            _watchingSnoozes = true;
+        }
     }
 
     /// <summary>Rebuilds a snoozed occurrence from current file, rule, rights and privacy; never changes its due date.</summary>
     public async Task SnoozeAsync(SnoozeRequest request)
     {
-        if (!scheduler.IsSupported) return;
+        if (Volatile.Read(ref _disposed) != 0 || !scheduler.IsSupported) return;
         await _gate.WaitAsync();
         try
         {
-            if (!await scheduler.AreEnabledAsync()) return;
+            if (Volatile.Read(ref _disposed) != 0 || !await scheduler.AreEnabledAsync()) return;
             await RefreshUnderGateAsync(request);
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
@@ -82,23 +142,22 @@ public sealed class ReminderService(
     /// <summary>Schedules a refresh after a short delay; later calls within the delay replace earlier ones.</summary>
     public void RefreshSoon()
     {
-        // Changes are reported from any thread: swap the timer atomically, so two changes at once can never both start a
-        // refresh, and release the one it replaces.
-        var next = new CancellationTokenSource();
-        var token = next.Token;
-        if (Interlocked.Exchange(ref _pending, next) is { } previous)
+        // Catalogue events and disposal may race financial events from a writer thread. Serialize only the
+        // short timer/subscription state; no provider, database or native await runs under this gate.
+        lock (_changesGate)
         {
-            previous.Cancel();
-            previous.Dispose();
+            if (_disposed != 0) return;
+            var next = new CancellationTokenSource(); var token = next.Token;
+            _pending?.Cancel(); _pending?.Dispose(); _pending = next;
+            _pendingRefresh = Task.Delay(TimeSpan.FromSeconds(1.5), time, token).ContinueWith(_ => RefreshAsync(), token,
+                TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default).Unwrap();
         }
-
-        _ = Task.Delay(TimeSpan.FromSeconds(1.5), token).ContinueWith(_ => RefreshAsync(), token, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
     }
 
     /// <summary>Rebuilds reminders and checks budget alerts; failures never affect the ledger.</summary>
     public async Task RefreshAsync()
     {
-        if (!scheduler.IsSupported)
+        if (Volatile.Read(ref _disposed) != 0 || !scheduler.IsSupported)
         {
             return;
         }
@@ -106,7 +165,7 @@ public sealed class ReminderService(
         await _gate.WaitAsync();
         try
         {
-            if (!await scheduler.AreEnabledAsync())
+            if (Volatile.Read(ref _disposed) != 0 || !await scheduler.AreEnabledAsync())
             {
                 return;
             }
@@ -136,6 +195,7 @@ public sealed class ReminderService(
         var settings = await store.GetSettingsAsync();
         var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
         var culture = localization.CurrentCulture;
+        var originalDisplay = CaptureDisplay();
         scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
         var schedules = snapshot.Schedules;
         var states = snapshot.States;
@@ -194,7 +254,8 @@ public sealed class ReminderService(
             _ => PeriodCalendar.Gregorian,
         };
         var firstData = accounts.Count == 0 ? (DateOnly?)null : accounts.Values.Min(a => a.OpeningDate);
-        notifications.AddRange(ReviewReminderPlanner.Plan(settings.ReviewReminderEnabled, settings.ReviewProgress,
+        var originalSettingsPacket = JsonSerializer.Serialize(settings);
+        notifications.AddRange(ReviewReminderPlanner.Plan(settings.ReviewReminderEnabled && snapshot.CanRemindPeriodReview, settings.ReviewProgress,
             now, reviewCalendar, settings.MonthStartDay, firstData).Select(reminder =>
             new ReminderNotification(reminder.Id, translator["App_Name"],
                 settings.NotificationsShowDetails
@@ -217,14 +278,44 @@ public sealed class ReminderService(
 
         // Legacy unscoped groups cannot prove their profile or members. Drop that cache, rebuilding normal reminders.
         // The original routing format remains supported for retained historical taps, not for new snoozes.
-        await ValidatePublicationAsync(snapshot, goalSnapshot);
-        preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
+        await ValidateCurrentBatchAsync();
         notifications.AddRange(snoozes.Where(s => notifications.All(n => n.Id != s.Id))
             .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
-        await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
-            .Take(ReminderPlanner.MaxPending).ToList());
-        await ValidatePublicationAsync(snapshot, goalSnapshot);
+        try
+        {
+            await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)
+                .Take(ReminderPlanner.MaxPending).ToList());
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            // SDK refusal can follow a partially accepted batch; keep its cache retryable and withdraw pending work.
+            await scheduler.ReplaceAllAsync([]); throw;
+        }
+        await ValidateCurrentBatchAsync();
+        preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
         await CheckBudgetAsync(culture);
+
+        string CaptureDisplay() => JsonSerializer.Serialize(new
+        {
+            Language = localization.CurrentLanguage.CultureName, Culture = localization.CurrentCulture.Name,
+            localization.FormattingCultureName, localization.CurrentCalendar, localization.CurrentDigits,
+            NativeDigits.IsEnabled, NativeDigits.PreserveSeparators,
+        });
+        async Task ValidateCurrentBatchAsync()
+        {
+            try
+            {
+                await plans.ValidateWorkSnapshotAsync(snapshot); await goals.ValidateWorkSnapshotAsync(goalSnapshot);
+                await store.ValidateReviewReminderInputsAsync(snapshot, originalSettingsPacket, firstData);
+                if (originalDisplay != CaptureDisplay() || today != DateOnly.FromDateTime(time.GetLocalNow().DateTime))
+                    throw new InvalidOperationException("The original reminder display or local day changed.");
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
+            {
+                // The old queue and a newly accepted native batch must both retire when privacy/period facts change.
+                await scheduler.ReplaceAllAsync([]); throw;
+            }
+        }
 
         ReminderNotification? Rebuild(int id, DateTime at, string link)
         {
@@ -258,18 +349,6 @@ public sealed class ReminderService(
                 : translator["Plan_AmountUnknown"];
             return new(id, occurrence.Schedule.Name,
                 translator.Format("Reminder_Details", amount, dates.Format(occurrence.DueDate, DateFormatStyle.Long)), at, link, CanSnooze: true);
-        }
-    }
-
-    // Retire both a previously pending queue and a newly published one when this read loses its file/rights.
-    // Otherwise a failure before native publication leaves earlier unavailable work scheduled (D-140).
-    private async Task ValidatePublicationAsync(PlanWorkSnapshot snapshot, GoalWorkSnapshot goalSnapshot)
-    {
-        try { await plans.ValidateWorkSnapshotAsync(snapshot); await goals.ValidateWorkSnapshotAsync(goalSnapshot); }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            await scheduler.ReplaceAllAsync([]);
-            throw;
         }
     }
 

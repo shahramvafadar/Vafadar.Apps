@@ -27,7 +27,7 @@ public sealed partial class ProfileService(
     ISettingsStore preferences,
     IProfileRuntime runtime,
     Translator translator,
-    IProfileWorkAccessSource? workAccess = null)
+    IProfileWorkAccessSource? workAccess = null) : IProfileCatalogueChanges
 {
     private const string ListKey = "profiles.list";
     private const string CurrentKey = "profiles.current";

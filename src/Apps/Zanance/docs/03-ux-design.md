@@ -991,3 +991,11 @@ separate eligibility from creating a definition or starting positive work. Retur
 restores its separately authorized basic work. Current test builds remain unrestricted; translated dedicated
 profile-limit messages and remaining operation forms are a later ENT-04 slice.
 See [evidence](quality/profile-file-work.md).
+
+## Reminder refresh after original profile choices (D-158)
+
+Saving a device activity choice refreshes the current original profile's reminder queue; no additional financial
+Save or profile switch is required. All original names and history remain visible. Review reminders keep the
+established opt-in and fixed 09:00/calendar/month-start behaviour, with independently authorized delivery.
+Privacy/display/period changes retire stale publication. Existing forms, captions and layout stay unchanged.
+Test builds remain unrestricted. See [evidence](quality/profile-reminder-work.md).

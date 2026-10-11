@@ -298,3 +298,10 @@ Original device choices now compose with the verified actual-file financial sour
 identity, paid rights or complete financial calculations. Retained history, correction, backup/restore and export
 stay independent from new work. Current test builds remain unrestricted; remaining operation/native/commercial
 messages and activation are open. [Verification and signed APK](docs/quality/profile-file-work.md).
+
+## Original catalogue reminder refresh (D-158)
+
+Explicit original profile activity choices refresh reminders without financial writes. Period-review delivery
+uses the same file's independently authorized rights, and privacy/period changes retire stale publication.
+SDK refusal leaves Snooze retryable. Test builds remain unrestricted.
+[Verification and signed APK](docs/quality/profile-reminder-work.md).

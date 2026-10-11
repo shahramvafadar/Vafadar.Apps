@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Refresh original profile reminders safely (2026-10-12, D-158)
+
+- Refresh the current profile's reminders after saving profile activity choices or changing the catalogue.
+- Keep period-review reminders aligned with authorized delivery, original preferences and live privacy/display choices.
+- Withdraw rejected partial notification batches and preserve Snooze information for retry. Test builds remain unrestricted.
+
 ### Improved - Keep original profile history independent from new work (2026-10-11, D-157)
 
 - Keep complete progress, history, saved-query viewing, corrections and backup/restore available in retained profiles.

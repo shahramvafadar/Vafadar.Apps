@@ -607,3 +607,13 @@ Complete 25-table data and original catalogue are compared/restored. Only the ap
 retained WinRT read objects survive through normal review-process exit. The original independent-profile review
 remains `profile-work`. Failed prototype assertions are negative evidence. See
 `src/Apps/Zanance/docs/quality/profile-file-work.md`.
+
+## Original catalogue reminder native review (D-158)
+
+Windows Debug `profile-reminder-work` uses actual decorated DI, Profiles controls and the real reminder watcher
+over independent fictitious SQLite. A recording native-effect port avoids desktop notifications; actual native
+Save withdraws/restores the original queue, while the same Free context does not grant period-review delivery.
+Await PendingRefresh through its final guards, compare complete 25-table data and restore catalogue/owned files.
+The form layout is unchanged; do not repeat the existing full layout matrix. Normal Release emulator SDK delivery
+and original native returning-data checks remain distinct from fixture ports and commercial activation.
+See `src/Apps/Zanance/docs/quality/profile-reminder-work.md`.

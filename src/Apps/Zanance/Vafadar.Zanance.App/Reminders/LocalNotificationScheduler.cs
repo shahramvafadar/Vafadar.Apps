@@ -84,7 +84,7 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 
         foreach (var reminder in reminders)
         {
-            await _service.Show(Request(reminder));
+            await ReminderPublication.RequireAcceptedAsync(_service.Show(Request(reminder)));
         }
     }
 
