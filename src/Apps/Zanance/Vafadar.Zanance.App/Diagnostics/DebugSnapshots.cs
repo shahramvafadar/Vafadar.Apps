@@ -258,7 +258,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "budget-reminder";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -467,6 +467,7 @@ internal static partial class DebugSnapshots
             ("insights-tabs", AppShell.BudgetRoute, null),
             ("budget-periods", AppShell.BudgetRoute, null),
             ("budget-readouts", AppShell.BudgetRoute, null),
+            ("budget-reminder", AppShell.BudgetRoute, null),
             ("budget", AppShell.BudgetRoute, null),
             ("forecast", AppShell.ForecastRoute, null),
             ("rates", AppShell.RatesRoute, null),
@@ -590,6 +591,11 @@ internal static partial class DebugSnapshots
                 if (name == "budget-periods" && Shell.Current.CurrentPage is Features.Budget.BudgetPage budgetPeriods)
                 {
                     await ReviewBudgetPeriodsAsync(app, services, budgetPeriods, folder, language);
+                }
+
+                if (name == "budget-reminder")
+                {
+                    await ReviewBudgetReminderAsync(app, services, folder, language);
                 }
 
                 if (name == "budget-readouts" && Shell.Current.CurrentPage is Features.Budget.BudgetPage budgetReadouts)

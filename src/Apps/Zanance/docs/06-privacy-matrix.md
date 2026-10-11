@@ -370,3 +370,7 @@ Existing financial/privacy inputs are captured temporarily in memory and recheck
 Threshold caches remain device-local, without passwords or paid authority. Generic/details choice remains
 explicit. No new SDK, permission, external transmission, schema/model or portable grants. Existing notification
 links remain unscoped for Budget and require a later file-bound routing slice. See [evidence](quality/budget-alert-work.md).
+
+## D-151 - Device-local budget routing identity
+
+An opaque actual-file SHA-256 digest and original budget Guid enter only device-local notification returning-data. No paths, credentials, financial values, portable preference, network SDK, permission or schema changes. Resolve after unlock and during page loading; another profile never inherits the destination. See [evidence](quality/budget-reminder-routing.md).

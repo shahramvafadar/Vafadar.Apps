@@ -258,3 +258,5 @@ preserves explicit drafts on failure. Effective budget/view/alert integration st
 Budget alerts: D-150 checks every eligible original current period with guarded spending/carry and privacy,
 and retains retryable thresholds after failed or retired publication. Test builds unrestricted. Budget views,
 editor and scoped returning-data integration remain open. [Evidence](docs/quality/budget-alert-work.md).
+
+Original budget notifications: D-151 opens the saved period in its original currency/calendar without changing Home preferences. 2,646 / App.Tests 589 pass; complete signed artifacts/android/zanance-d151-release.apk and native emulator routing verified. Commercial budget view/editor bindings and other ENT-02/03 work remain open.

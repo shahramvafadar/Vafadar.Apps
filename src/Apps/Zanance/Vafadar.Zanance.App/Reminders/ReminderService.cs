@@ -311,7 +311,8 @@ public sealed class ReminderService(
                     var id = ReminderPlanner.StableId(candidate.BudgetId, snapshot.Today) ^ 0x4000_0000;
                     // Track before Show: a native failure can occur after a platform partially publishes the notification.
                     published.Add(id);
-                    await scheduler.ShowAsync(new(id, translator["Budget_Title"], body, null, "budget"));
+                    await scheduler.ShowAsync(new(id, translator["Budget_Title"], body, null,
+                        BudgetReminderLink.Format(snapshot.ReminderScope, candidate.BudgetId)));
                     await store.ValidateBudgetAlertSnapshotAsync(snapshot);
                 }
                 // A refund can lower the level. Commit all device caches only after the entire batch remains valid.

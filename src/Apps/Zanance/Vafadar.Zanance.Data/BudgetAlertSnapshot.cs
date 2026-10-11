@@ -23,6 +23,8 @@ public sealed class BudgetAlertSnapshot
     public IReadOnlyList<BudgetAlertCandidate> Candidates { get; }
     /// <summary>Gets the reviewed local date for stable notification identities.</summary>
     public DateOnly Today => Choice.Today;
+    /// <summary>Gets the original file routing identity, independent of the later active profile.</summary>
+    public string ReminderScope => Choice.ReminderScope;
     /// <summary>Gets the current explicit notification privacy choice.</summary>
     public bool ShowDetails { get; }
     /// <summary>Gets the complete original definition review, private to the data boundary.</summary>

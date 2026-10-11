@@ -2,7 +2,8 @@
 
 Status: selected current-period alert preparation/delivery implemented. Commercial registration remains
 inactive and test builds remain unrestricted. ENT-02/03 remain in progress: budget view/editor affordances,
-scoped budget notification returning-data and remaining operations/resources/import/restore are not finished.
+remaining operations/resources/import/restore are not finished. Original scoped notification returning-data
+was subsequently delivered by [D-151](budget-reminder-routing.md).
 
 ## Complete original calculations and independent delivery
 

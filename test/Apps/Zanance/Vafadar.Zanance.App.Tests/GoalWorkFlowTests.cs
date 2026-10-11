@@ -161,7 +161,7 @@ public sealed class GoalWorkFlowTests
             await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Goals SET Id={s.Items[0].Id} WHERE Id={restored.Id}", Ct);
         await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateWorkSnapshotAsync(original, Ct));
         var security = AppLockTests.Create(other); await security.Lock.StartAsync();
-        var router = new AppLinkRouter(security.Lock, other.Platform, other.Services.GetRequiredService<PlanStore>(), store);
+        var router = new AppLinkRouter(security.Lock, other.Platform, other.Services.GetRequiredService<PlanStore>(), store, other.Store);
         await router.OpenAsync(GoalReminderLink.Format(original.ReminderScope, [new(s.Items[0].Id, new(2026, 10, 10))]));
         Assert.Empty(other.Platform.Routes);
     }
@@ -172,7 +172,7 @@ public sealed class GoalWorkFlowTests
     {
         using var f = new FlowFixture(); var s = await SeedAsync(f); var read = await s.Goals.GetWorkSnapshotAsync(Ct);
         await AppLockTests.EnableDeviceAsync(f); var security = AppLockTests.Create(f); await security.Lock.StartAsync();
-        var router = new AppLinkRouter(security.Lock, f.Platform, s.Plans, s.Goals);
+        var router = new AppLinkRouter(security.Lock, f.Platform, s.Plans, s.Goals, f.Store);
         var targets = group ? s.Items.Take(2).Select(goal => new GoalReminderTarget(goal.Id, new(2026, 10, 10)))
             : [new GoalReminderTarget(s.Items[0].Id, new(2026, 10, 10))];
         await router.OpenAsync(GoalReminderLink.Format(read.ReminderScope, targets)); Assert.Empty(f.Platform.Routes);

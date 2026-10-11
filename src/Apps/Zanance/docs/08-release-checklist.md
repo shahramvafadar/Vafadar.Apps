@@ -472,3 +472,17 @@ Main 2,632 / App.Tests 575, strict builds, six hidden Windows budget renders, si
 and complete installable APK verified; exact owned data/display restored. Registration remains inactive; scoped
 budget returning-data and view/editor integration are unfinished. No physical/iOS/Store acceptance implied.
 See [evidence](quality/budget-alert-work.md).
+
+## D-151 - Original budget notification routing
+
+Budget alerts now carry the opaque actual-file identity and original saved period id. Resolve after unlock and
+again in the real budget page; reject another file, deleted identities and failed reads without guessing a
+replacement. Retain original currency/calendar/period and monthly navigation coordinates without changing
+Home currency or financial rows. Historical/unselected paid methods remain readable without granting new work.
+14 new AT-153 cases; main 2,646 / App.Tests 589 pass. Strict Windows and complete strict Android Release pass;
+six hidden Windows language/theme cases plus targeted native month navigation, and six normal signed Release
+Android cases each tap four exact original currency/calendar/period destinations; owned data/display restored.
+Commercial activation stays inactive. Budget view/editor commercial affordances and other ENT-02/03 paths remain
+open. See [evidence](quality/budget-reminder-routing.md).
+
+Complete signed phone artifact: artifacts/android/zanance-d151-release.apk. Physical-device/iOS/provider and publication gates stay open.

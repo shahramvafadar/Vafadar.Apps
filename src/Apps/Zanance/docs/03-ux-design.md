@@ -944,3 +944,11 @@ Default new-budget calendar never filters saved current alerts. Retain original 
 and generic text unless details were explicitly allowed. A failed or retired native batch must not consume
 threshold levels. Refunds permit later re-alerting. Existing current-budget destination stays behind app lock;
 scoped returning-data and view/editor work affordances remain open.
+
+## Original budget notification navigation (D-151)
+
+Open the exact original saved period through app lock, even if it is now historical. Never reinterpret a USD,
+weekly or other-calendar alert through current Home/new-budget defaults. Notification navigation does not
+change the saved Home currency; period/theme reloads retain the in-memory visit. Weekly rows prepare valid
+month coordinates in their original calendar. Deleted/foreign/error destinations never guess a replacement.
+General later visits keep current-default behavior. Commercial view/editor affordances remain open.

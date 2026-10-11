@@ -58,6 +58,9 @@ public sealed class BudgetChoiceSnapshot
     public IReadOnlyList<BudgetDefinitionKey> SelectedDefinitions { get; }
     /// <summary>Gets separate current new-work rights; original calculations continue using every original budget.</summary>
     public BudgetWorkPolicy Work { get; }
+    /// <summary>Gets the actual file's opaque device-local notification identity; it grants no rights.</summary>
+    public string ReminderScope => Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(
+        System.Text.Encoding.UTF8.GetBytes(DatabasePath)));
     /// <summary>Retains detached original entities inside the data boundary for calculations, guarded by immutable Items.</summary>
     internal IReadOnlyList<Budget> Budgets { get; }
     /// <summary>Gets the exact captured file, private to the data boundary.</summary>

@@ -989,4 +989,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Consume the native SDK request result explicitly; a false result must not consume a budget level.
 * On partial/retired publication, remove only attempted exact notification ids and leave levels retryable.
   Preserve generic/details opt-in, refund resets and unrelated notifications. Registration stays inactive;
-  scoped Budget returning-data and view/editor affordances remain separate unfinished slices.
+  original scoped Budget returning-data follows D-151; view/editor affordances remain unfinished.
+
+## 84. Original budget notification destinations (D-151)
+
+* Budget alerts carry the opaque actual-file identity and original period id; resolve after unlock and again in
+  the budget page. Deleted/foreign/error targets never guess another period or profile.
+* Keep original currency/calendar/custom period dates. Historical viewing grants no new work; notification
+  navigation never saves Home currency. Weekly rows still prepare valid original-calendar month navigation.
+* The budget-reminder Debug route uses fictitious original rows, real native period invocation and no Save.
+  Keep failed/transient captures as negative evidence; wait for regenerated native bindings before capture.
+  Commercial view/editor bindings remain open and current release registration stays inactive.

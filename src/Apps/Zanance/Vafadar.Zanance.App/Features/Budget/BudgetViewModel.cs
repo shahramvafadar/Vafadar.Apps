@@ -37,7 +37,7 @@ public sealed record FlexLine(string Title, string Detail, Symbol Icon, Color Ic
 /// The monthly budget (UI-10). A missing budget is shown as "no budget", never as zero (BUD-01); a zero limit has no
 /// percentage (BUD-05); overspending and negative net expense are shown as they are.
 /// </summary>
-public sealed partial class BudgetViewModel : ViewModelBase, Presentation.IThemeAware
+public sealed partial class BudgetViewModel : ViewModelBase, Presentation.IThemeAware, IQueryAttributable
 {
     // Traffic light of the palette (D-27): within the limit is a positive result (green), then amber, then red. Blue is
     // the action colour and never shows the state of money.
@@ -61,6 +61,17 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private BudgetPeriod _period;
     private DateOnly _periodStart;
     private bool _refreshing;
+    private Core.Reminders.BudgetReminderLink? _requestedReminder;
+    private string? _visitCurrency;
+
+    /// <summary>Retains a validated notification destination until the actual page reload resolves its profile again.</summary>
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        ArgumentNullException.ThrowIfNull(query);
+        if (query.TryGetValue("budgetReminder", out var value) && value is Core.Reminders.BudgetReminderLink reminder)
+            _requestedReminder = reminder;
+    }
+
     private readonly SemaphoreSlim _loading = new(1, 1);
 
     public BudgetViewModel(ZananceStore store, PlanStore plans, GoalStore goals, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
@@ -212,6 +223,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         {
             _year = 0;
             _periodStart = default;
+            _visitCurrency = null;
         }
 
         _backFromEditor = false;
@@ -250,8 +262,23 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         await Presentation.Failures.GuardAsync(async () =>
         {
             await _store.UpdateSettingsAsync(s => s.HomeBudgetCurrencyCode = value);
+            _visitCurrency = value;
             await LoadAsync();
         });
+    }
+
+    /// <summary>Completes a native reminder navigation, including an already visible root tab, under the existing load gate.</summary>
+    public async Task ShowReminderAsync(Core.Reminders.BudgetReminderLink reminder)
+    {
+        ArgumentNullException.ThrowIfNull(reminder);
+        await _loading.WaitAsync();
+        try
+        {
+            // Publish the pending target only inside the gate; an older appearing reload must not consume a newer request.
+            _requestedReminder = reminder;
+            await LoadCoreAsync();
+        }
+        finally { _loading.Release(); }
     }
 
     /// <summary>Loads the shown period.</summary>
@@ -277,17 +304,29 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     private async Task LoadCoreAsync()
     {
+        var destination = _requestedReminder;
+        var original = destination is null ? null : await _store.ResolveBudgetReminderAsync(destination);
+        if (destination is not null && original is null)
+            throw new InvalidOperationException("The budget notification belongs to an unavailable profile or period.");
+        if (original is not null)
+        {
+            _calendar = original.Calendar;
+            _year = original.Year; _month = original.Month;
+            _period = original.Period; _periodStart = original.PeriodStart;
+            _visitCurrency = original.CurrencyCode;
+        }
         var settings = await _store.GetSettingsAsync();
         _startDay = settings.MonthStartDay;
         if (_year == 0)
         {
-            _calendar = settings.BudgetCalendar;
+            // Weekly rows have no month coordinates. Prepare navigation without replacing an alert's original calendar.
+            if (_visitCurrency is null) _calendar = settings.BudgetCalendar;
             (_year, _month) = PeriodMath.MonthOf(Today, _calendar, _startDay);
         }
 
         // The budget of the default account's currency, or the one picked in the switcher (ZEX-P02).
         var allAccounts = await _store.GetAccountsAsync();
-        _currency = BudgetCurrency.Resolve(settings, allAccounts);
+        _currency = _visitCurrency ?? BudgetCurrency.Resolve(settings, allAccounts);
         var budgets = await _store.GetBudgetsAsync();
         _refreshing = true;
         try
@@ -320,6 +359,13 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             _refreshing = false;
         }
 
+        if (destination is not null)
+        {
+            var current = await _store.ResolveBudgetReminderAsync(destination);
+            if (current != original) throw new InvalidOperationException("The original budget notification period changed; reload it.");
+            _requestedReminder = null;
+        }
+
         // Chevrons point in the reading direction (UX: direction-dependent icons mirror in RTL).
         PreviousIcon = _localization.IsRightToLeft ? Symbol.ChevronRight : Symbol.ChevronLeft;
         NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
@@ -337,7 +383,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
                 PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
             }
 
-            _budget = await _store.GetBudgetAsync(_year, _month, _calendar, _currency);
+            _budget = original is null ? await _store.GetBudgetAsync(_year, _month, _calendar, _currency)
+                : budgets.SingleOrDefault(budget => budget.Id == original.Id);
             var (py, pm) = PeriodMath.Previous(_year, _month);
             CanCopyPrevious = _budget is null && await _store.GetBudgetAsync(py, pm, _calendar, _currency) is not null;
         }
@@ -349,7 +396,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             }
 
             // A budget made before the week start was changed keeps its own dates.
-            _budget = await _store.GetBudgetAsync(_period, _periodStart, _currency);
+            _budget = original is null ? await _store.GetBudgetAsync(_period, _periodStart, _currency)
+                : budgets.SingleOrDefault(budget => budget.Id == original.Id);
             if (_budget is not null)
             {
                 _periodStart = _budget.PeriodStart;

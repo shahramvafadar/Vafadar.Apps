@@ -151,7 +151,7 @@ public sealed class ReminderFlowTests
     public async Task Scoped_tap_resolves_after_unlock_and_rejects_another_file_without_posting_money()
     {
         using var f = new FlowFixture(); var s = await SeedAsync(f); await AppLockTests.EnableDeviceAsync(f); var security = AppLockTests.Create(f);
-        var router = new AppLinkRouter(security.Lock, f.Platform, s.Reader, f.Services.GetRequiredService<GoalStore>()); var snapshot = await s.Reader.GetWorkSnapshotAsync(Ct);
+        var router = new AppLinkRouter(security.Lock, f.Platform, s.Reader, f.Services.GetRequiredService<GoalStore>(), f.Store); var snapshot = await s.Reader.GetWorkSnapshotAsync(Ct);
         await security.Lock.StartAsync();
         await router.OpenAsync(PlanReminderLink.Format(snapshot.ReminderScope, [new(s.Plans[0].Id, Day)]));
         await router.OpenAsync(PlanReminderLink.Format(new string('a', 64), [new(s.Plans[0].Id, Day)]));

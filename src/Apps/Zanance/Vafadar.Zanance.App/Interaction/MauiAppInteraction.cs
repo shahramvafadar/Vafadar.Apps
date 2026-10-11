@@ -29,8 +29,20 @@ internal sealed class MauiAppInteraction : IAppInteraction, IAppFlowHost
     public Task<string?> ChooseAsync(string title, string cancel, params string[] actions) => Page.DisplayActionSheetAsync(title, cancel, null, actions);
 
     /// <inheritdoc />
-    public Task NavigateAsync(string route, IDictionary<string, object>? parameters = null) => parameters is null
-        ? Shell.Current.GoToAsync(route) : Shell.Current.GoToAsync(route, parameters);
+    public async Task NavigateAsync(string route, IDictionary<string, object>? parameters = null)
+    {
+        if (parameters is null) await Shell.Current.GoToAsync(route);
+        else await Shell.Current.GoToAsync(route, parameters);
+        // D-151: Shell applies a root tab's new query without Appearing when that tab is already visible.
+        // Complete the exact destination after navigation rather than relying on a lifecycle reload.
+        if (route == AppRoutes.BudgetRoute && parameters is not null
+            && parameters.TryGetValue("budgetReminder", out var value) && value is Core.Reminders.BudgetReminderLink reminder)
+        {
+            if (Shell.Current.CurrentPage.BindingContext is not Features.Budget.BudgetViewModel budget)
+                throw new InvalidOperationException("The original budget destination is not available.");
+            await budget.ShowReminderAsync(reminder);
+        }
+    }
 
     /// <inheritdoc />
     public Task ShowFailureAsync(Exception exception) => Failures.ShowAsync(exception);

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Open the original budget from notifications (2026-10-11, D-151)
+
+- Open the notification's saved budget period in its original currency and calendar.
+- Keep Home currency unchanged, retain valid month navigation after weekly notifications and avoid opening another profile's budget.
+- Keep past budget periods readable without creating transactions or unlocking paid tools.
+
 ### Improved - Reliable current budget alerts (2026-10-11, D-150)
 
 - Check all current saved budget periods in their own calendar and currency, including overlapping periods.

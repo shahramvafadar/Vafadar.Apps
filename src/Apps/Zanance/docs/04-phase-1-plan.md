@@ -525,3 +525,15 @@ Carry no longer mixes another account definition. 25 new AT-152 cases; main 2,63
 six hidden Windows budget renders, six normal Release Android delivery cases (five with individual taps), a final rebuilt SDK-acceptance case and complete signed APK pass;
 owned data/display restored. Enforcement remains inactive. Budget view/editor/scoped returning-data and other
 ENT-02/03 paths remain open. See [evidence](quality/budget-alert-work.md).
+
+## D-151 - Original budget notification destinations
+
+Budget alerts now carry the opaque actual-file identity and original saved period id. Resolve after unlock and
+again in the real budget page; reject another file, deleted identities and failed reads without guessing a
+replacement. Retain original currency/calendar/period and monthly navigation coordinates without changing
+Home currency or financial rows. Historical/unselected paid methods remain readable without granting new work.
+14 new AT-153 cases; main 2,646 / App.Tests 589 pass. Strict Windows and complete strict Android Release pass;
+six hidden Windows language/theme cases plus targeted native month navigation, and six normal signed Release
+Android cases each tap four exact original currency/calendar/period destinations; owned data/display restored.
+Commercial activation stays inactive. Budget view/editor commercial affordances and other ENT-02/03 paths remain
+open. See [evidence](quality/budget-reminder-routing.md).

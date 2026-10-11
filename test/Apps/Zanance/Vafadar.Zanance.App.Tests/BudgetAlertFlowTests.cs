@@ -8,6 +8,7 @@ using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 
@@ -100,6 +101,9 @@ public sealed class BudgetAlertFlowTests
         var snapshot = await r.Store.GetBudgetAlertSnapshotAsync(Ct); Assert.Equal(expected, snapshot.Candidates.Count);
         Assert.All(snapshot.Candidates, candidate => { Assert.Equal(10000, candidate.Status.Limit); Assert.Equal(8500, candidate.Status.Spent); });
         await r.Service.RefreshAsync(); Assert.Equal(expected, r.Native.Shown.Count); Assert.Empty(r.Native.Removed);
+        Assert.Equal(snapshot.Candidates.Select(candidate => candidate.BudgetId).Order(), r.Native.Shown
+            .Select(notification => BudgetReminderLink.Parse(notification.Link)!.BudgetId).Order());
+        Assert.All(r.Native.Shown, notification => Assert.Equal(snapshot.ReminderScope, BudgetReminderLink.Parse(notification.Link)!.Scope));
         Assert.All(r.Native.Shown, notification => { Assert.Equal(f.Translator["Reminder_BudgetGeneric"], notification.Body); Assert.Null(notification.NotifyAt); Assert.False(notification.CanSnooze); });
         await r.Service.RefreshAsync(); Assert.Equal(expected, r.Native.Shown.Count);
         Assert.Null(f.Preferences.Get(Key(r.Budgets[5]))); Assert.Null(f.Preferences.Get(Key(r.Budgets[6])));

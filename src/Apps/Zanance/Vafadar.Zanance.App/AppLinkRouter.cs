@@ -7,7 +7,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App;
 
 /// <summary>Opens only supported widget/reminder destinations after secure startup and unlocking, never posting money.</summary>
-public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans, GoalStore goals)
+public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans, GoalStore goals, ZananceStore store)
 {
     /// <summary>Prepares the first visible page after unlocking, then opens the startup link that waited for that page.</summary>
     public Task StartAsync(Func<Task<string?>> preparePage)
@@ -24,6 +24,15 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
     /// <summary>Validates an external link before queuing its navigation behind the application access gate.</summary>
     public Task OpenAsync(string link)
     {
+        if (BudgetReminderLink.Parse(link) is { } budgetReminder)
+            return appLock.RunWhenUnlockedAsync(async () =>
+            {
+                // An alert opens its original period without selecting a new Home currency or changing account data.
+                if (await store.ResolveBudgetReminderAsync(budgetReminder) is null) return;
+                await interaction.NavigateAsync(AppRoutes.BudgetRoute,
+                    new Dictionary<string, object> { ["budgetReminder"] = budgetReminder });
+            });
+
         if (GoalReminderLink.Parse(link) is { } goalReminder)
             return appLock.RunWhenUnlockedAsync(async () =>
             {

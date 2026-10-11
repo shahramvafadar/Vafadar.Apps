@@ -567,3 +567,7 @@ Immutable alert candidates retain original monetary calculations; bounded comple
 ledger inputs and privacy are rechecked before/after native effects. Shared original carry follows canonical
 account definition as well as period/currency/calendar. Device levels commit only after final batch validation;
 failed batches remove exact attempted native ids. No schema/model or backup-format changes.
+
+## Original budget notification identity (D-151)
+
+Actual-file budget snapshot identity is a device-local digest, independent of stored entitlement scope and portable data. Typed original Guid resolution requires the current actual file and History rights after unlock and at page load. It never grants new work or changes money/preferences. See Zanance docs/quality/budget-reminder-routing.md.
