@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Current automatic planned payments (2026-10-11, D-138)
+
+- Avoid another full automatic payment after a manual partial payment or an independently completed settlement.
+- Use current amounts, dates and accounts, and recheck stopped or changed plans before recording money.
+
 ### Fixed - Independent profile database connections (2026-10-11, D-137)
 
 - Keep other local database connections intact while switching profiles, deleting an inactive profile or restoring a backup.

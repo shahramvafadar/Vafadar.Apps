@@ -19,7 +19,7 @@ public sealed record CommercialWriteAccess
     private CommercialWriteAccess() { }
 
     /// <summary>Creates enabled facts for one actual database; it is the provider's responsibility to verify them.</summary>
-    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null)
+    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null, ResourceSelection? planSelection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(databasePath);
         ArgumentNullException.ThrowIfNull(context);
@@ -32,7 +32,15 @@ public sealed record CommercialWriteAccess
             if (accountSelection.Kind != QuotaKind.FinancialAccounts || accountSelection.Scope != scope)
                 throw new ArgumentException("The account choice belongs to another financial boundary.", nameof(accountSelection));
         }
+        if (planSelection is not null)
+        {
+            var scope = new QuotaScope(context.Scope.Kind == EntitlementScopeKind.PersonalProfile
+                ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id);
+            if (planSelection.Kind != QuotaKind.RecurringPlans || planSelection.Scope != scope)
+                throw new ArgumentException("The plan choice belongs to another financial boundary.", nameof(planSelection));
+        }
         AccountSelection = accountSelection;
+        PlanSelection = planSelection;
     }
 
     /// <summary>Gets the separately gated inactive policy; this grants no permanent customer entitlement.</summary>
@@ -45,6 +53,8 @@ public sealed record CommercialWriteAccess
     public CapabilityContext? Context { get; }
     /// <summary>Gets the explicit scoped account choice; absence never invents a choice above capacity.</summary>
     public ResourceSelection? AccountSelection { get; }
+    /// <summary>Gets the explicit scoped plan choice; it never grants an automatic-posting capability.</summary>
+    public ResourceSelection? PlanSelection { get; }
 }
 
 /// <summary>

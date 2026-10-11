@@ -1939,3 +1939,27 @@ corrected to the application's full-path convention before the successful full r
 phone, iOS, provider, 200-percent layout or publication acceptance claim. Planned entitlement bindings/automation,
 choice persistence/UI and existing external gates remain open.
 [Evidence](../quality/local-sqlite-pools.md).
+
+### 31.51. Actual automatic payment writer (D-138 / AT-140)
+
+Automatic payment discovery is only a candidate list. Recheck the stored active rule/slice, actual open state,
+linked partial/full money, current amount/due date and accounts inside the same SQLite writer as ledger Save.
+Manual partial money, including a legacy incorrect paid cache, prevents another automatic full payment. Removed,
+paused, skipped, moved-future or already settled candidates post nothing. Use current overrides/account routing;
+transfers remain one entry and automatic money stays unreviewed. Exact cached membership, selected plan and
+AdvancedPlans rights apply when enforcement is enabled; choices grant no paid rights. Current registration stays
+inactive. Snapshot plan choices are immutable, scoped and in memory only; no selection persistence/UI, schema,
+backup format, SDK, permission or visible layout change.
+31 added AT-140 actual SQLite cases; main 2,241 / App.Tests 348 pass with normal parallel execution (67.124 s).
+Strict Windows/Android builds: zero warnings/errors. Complete signed Release APK verified. Six normal Release
+emulator foreground flows cover en/fa/de, light/dark, actual posting/override/transfer and partial/paused/disabled
+blocking. All 24 unrelated complete tables match; exact original sample files/sidecars and English/System theme
+are restored, then the original Main profile is reopened. The first native assertion inspected an inactive sample
+while Main was open; its fixture runs through actual services successfully. Selecting the exact owned sample
+through native UI resolves the review setup. Transient hierarchy misses resume the same fixture; a local helper
+syntax error executes no native action and is corrected. Preserve these negative attempts; they are not acceptance.
+The original source reproduces automatic full money after independent manual partial payment; the final writer
+prevents it. One expanded test initially expected a result instead of the existing missing-membership exception;
+the corrected test retains the rejection. No Windows native, physical-phone, iOS, provider, performance or release
+acceptance claim. Other resource bindings, generation/reminders, choice UI/persistence and external gates remain open.
+[Evidence](../quality/automatic-occurrence-writer.md).

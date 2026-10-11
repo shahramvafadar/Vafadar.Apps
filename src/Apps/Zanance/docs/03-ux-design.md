@@ -803,3 +803,7 @@ persistence/UI, commercial activation and existing external gates remain open.
 ## Independent profile lifecycle (D-137)
 
 Profile switching, inactive deletion and first-run restore retain the existing actions, confirmations, busy states and onboarding/account policy. Pool retirement affects only the owned database. No new caption/control/layout; normal Release native profile and restore checks are recorded in [evidence](quality/local-sqlite-pools.md).
+
+## Current automatic payment values (D-138)
+
+Automatic posting rechecks the actual plan and occurrence at Save, without asking for a second confirmation or creating a new form. Partial manual money and suppressed/blocked candidates remain for explicit review; settled or no-longer-due candidates are not reported as pending payments. Current overrides and accounts supply the recorded money/date. Existing layout and inactive commercial registration remain. [Evidence](quality/automatic-occurrence-writer.md).

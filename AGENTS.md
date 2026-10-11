@@ -784,7 +784,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Never steal another occurrence's payment. Entry markers and state commit together without posting another entry
   or changing financial metadata. Preserve normal idempotent links and actual paid totals.
 * Current registration stays inactive. D-134 completes the new/full/partial settlement writer boundary.
-  D-135 completes reviewed reopening; selected-plan generation/automation remain unfinished. No full enforcement claim.
+  D-135 completes reviewed reopening; D-138 completes automatic posting. Selected-plan generation/reminders remain unfinished. No full enforcement claim.
 
 ## 67. Atomic new occurrence payments (D-134)
 
@@ -793,8 +793,8 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Classify partial/final payment from actual linked partial money and Core effective amount/date rules, preserving
   explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
   all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
-* Current registration remains inactive. D-135 completes generated-entry reopening. Selected-plan generation/automation,
-  choice persistence/UI remain unfinished; D-136 supplies occurrence-command exception feedback.
+* Current registration remains inactive. D-135 completes generated-entry reopening. Selected-plan generation/reminders,
+  choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 68. Reopening the exact reviewed settlement (D-135)
 
@@ -806,7 +806,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Keep actual manual/imported money and metadata, releasing only its checked link atomically with the opened state.
 * SQL/access failure rolls back all complete rows before notifications. Earlier partial payments and occurrence
   overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; selected-plan
-  generation/automation and choice persistence/UI remain unfinished; D-136 supplies command exception feedback.
+  generation/reminders and choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 69. Occurrence action failure and publication feedback (D-136)
 
@@ -827,3 +827,9 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Dispose test-owned providers before clearing only their existing owned files, including nested fixture/profile
   folders. Real TEMP-table markers verify foreign session retention; keep normal parallel execution and explicit
   concurrent writer tests. Preserve historical negative/zero-test evidence; do not turn serialization into a fix.
+
+## 71. Actual automatic payment candidates (D-138)
+
+* Discovery never authorizes money or supplies final values. Recheck stored rule/slice, active state, current due/amount, accounts and actual partial/full money under the ledger writer. Partial manual money, suppression and blocked rights require review; settled/removed/paused/future candidates post nothing.
+* Keep original transfer/unreviewed semantics, atomic state/money, rollback and Changed after commit. Enabled cached facts require exact membership, explicit selected plan and AdvancedPlans; choices never grant rights. Test registration stays inactive. Generation/reminders, choice UI/persistence and other bindings remain open.
+* Native fixtures must select their exact independently owned profile through real UI before claiming its financial results. Preserve failed setup evidence, restore original active profile and exact owned data/display state.

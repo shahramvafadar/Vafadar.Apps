@@ -495,3 +495,5 @@ D-136 completes exception feedback and shared consent/writer/publication gates f
 [Evidence](../../quality/occurrence-command-feedback.md).
 
 D-137 completes exact-file pool retirement for profiles/restore and 39 fixture cleanup sites. Normal parallel full suite 2,210 passes without the D-136 output workaround; App.Tests 348. Native Release profile/restore/deletion and complete signed APK verified. Continue ready ENT-02/03 resource/automation bindings; choice UI/persistence, activation and external gates stay open. [Evidence](../../quality/local-sqlite-pools.md).
+
+D-138 continues ENT-02/03 with fresh automatic payment eligibility/values and explicit cached plan choice under the actual ledger writer. 31 new cases; normal parallel main 2,241 / App.Tests 348 pass. Strict builds, six normal Release native flows and complete signed APK verified. Enforcement remains inactive; generation/reminders, choice persistence/UI and other selected bindings/external gates remain open. [Evidence](../../quality/automatic-occurrence-writer.md).

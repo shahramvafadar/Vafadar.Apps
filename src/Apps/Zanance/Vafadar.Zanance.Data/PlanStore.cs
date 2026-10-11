@@ -219,6 +219,16 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         return result;
     }
 
+    /// <summary>Rechecks a discovered automatic candidate and commits only current eligible money.</summary>
+    public async Task<AutomaticPostStatus> TryPostAutomaticallyAsync(Guid scheduleId, DateOnly originalDate, DateOnly today,
+        CancellationToken cancellationToken = default)
+    {
+        if (scheduleId == Guid.Empty) throw new ArgumentException("An automatic candidate requires a plan identity.", nameof(scheduleId));
+        var result = await store.PostAutomaticOccurrenceAsync(scheduleId, originalDate, today, cancellationToken);
+        if (result == AutomaticPostStatus.Posted) OnChanged();
+        return result;
+    }
+
     /// <summary>
     /// Makes every occurrence that has a settling entry (not a partial payment) settled with that entry. Idempotent; run
     /// before automatic posting. Reopening an occurrence deletes or unlinks its entry first, so it is never undone here.

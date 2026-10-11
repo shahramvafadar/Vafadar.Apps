@@ -309,3 +309,7 @@ it. Restore validates existing siblings, refund semantic/creation identities and
 Reject stale relationships as one whole operation, without writes/Changed. Reuse existing source-generated ledger
 comparison; no reflection serializer is introduced in trimmed builds. Account naming/archival retain corrections;
 complete batches remain no-ops. No activation/schema/SDK/permission change. [Evidence](../../quality/ledger-undo-conflicts.md).
+
+## 20. Actual automatic plan money (D-138)
+
+Cached discovery supplies only plan/date identity. Rebuild actual rule/state/accounts and linked partial/full money under the same SQLite ledger writer, then check exact cached membership, selected original plan and AdvancedPlans before recording unreviewed money. PlanSelection is immutable exact-scope input; inactive registration does not query quota lists. No paid facts or choices enter portable preferences; no choice persistence/UI is activated. Generation/reminders and other bindings remain open. [Evidence](../../quality/automatic-occurrence-writer.md).

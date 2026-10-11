@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Plans;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
@@ -98,6 +99,18 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
             if (accounts.TryGetValue(id, out var account) && !account.IsArchived && !availability.IsSelected(id))
                 throw new CommercialWriteRejectedException(feature, QuotaKind.FinancialAccounts, id, availability.RequiresSelection);
         }
+    }
+
+    /// <summary>Checks new automated plan work against original states and the explicit exact-scope choice.</summary>
+    public void DemandSelectedPlan(CommercialFeature feature, IEnumerable<Schedule> plans, Guid requestedId)
+    {
+        DemandFeature(feature);
+        if (!Enforced) return;
+        var scope = FinancialScope;
+        var availability = ResourceSelectionPolicy.Resolve(QuotaKind.RecurringPlans, scope, _access.Context!,
+            plans.Select(plan => QuotaItem.From(scope, plan)), _access.PlanSelection);
+        if (!availability.IsSelected(requestedId))
+            throw new CommercialWriteRejectedException(feature, QuotaKind.RecurringPlans, requestedId, availability.RequiresSelection);
     }
 
     /// <summary>Rejects a changed entitlement/scope snapshot before saving rather than using retired profile rights.</summary>

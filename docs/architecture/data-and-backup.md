@@ -408,3 +408,7 @@ file; deleting an inactive profile clears its file before known sidecar/backup d
 GetDbConnection on its captured context after CloseConnectionAsync and migrates that same context. Never use
 ambient current location or ClearAllPools after asynchronous input. Actual authorization, integrity check, unpooled
 snapshot handling and online backup remain unchanged. No schema or portable security-state change.
+
+## Actual automatic occurrence writes (D-138)
+
+PlanStore.TryPostAutomaticallyAsync uses ZananceStore.PostAutomaticOccurrenceAsync under CommercialWriteTransaction, rebuilding actual stored rule/state/accounts before SaveEntriesUnderWriterAsync. Actual linked partial/full entries override discovery assumptions; no new writer or post-commit state write. Posted/NeedsReview/NoLongerDue distinguish committed money, retained review and retired candidates. Enabled snapshots demand exact membership, selected original plan and AdvancedPlans; original states consume slots and choice never grants a capability. PlanSelection is immutable exact-scope cached input, never portable or persistent here. Current registration stays inactive. Generation/reminders, other selected bindings and selection persistence/UI remain unfinished. No model/migration change.

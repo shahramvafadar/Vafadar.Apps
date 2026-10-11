@@ -69,17 +69,12 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
                         continue;
                     }
 
-                    var entry = Occurrences.CreateEntry(occurrence, occurrence.Amount!.Value, occurrence.DueDate, ReviewState.Unreviewed);
                     try
                     {
-                        if ((await plans.SettleAsync(occurrence, entry, cancellationToken)).Succeeded)
-                        {
-                            posted++;
-                        }
-                        else
-                        {
-                            needsReview++;
-                        }
+                        // D-138: cached discovery never supplies the amount/date or authorizes the actual money write.
+                        var result = await plans.TryPostAutomaticallyAsync(schedule.Id, occurrence.OriginalDate, today, cancellationToken);
+                        if (result == AutomaticPostStatus.Posted) posted++;
+                        else if (result == AutomaticPostStatus.NeedsReview) needsReview++;
                     }
                     catch (DbUpdateException)
                     {

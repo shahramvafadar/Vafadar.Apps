@@ -164,3 +164,7 @@ reclaim another parallel test's native handle during migration. Real TEMP-table 
 The normal strict full command now passes 2,210 cases without output runner configuration/collection serialization;
 explicit concurrent writer scenarios remain concurrent. D-136's historical failures and zero-test attempts remain
 negative evidence; output-only serialization was removed. Clean Vafadar.Tests.slnf after runs as before.
+
+## Automatic candidates and actual writers (D-138 / AT-140)
+
+AutomaticOccurrenceWriteTests delays the fifth actual context after repair/accounts/plans/states, before the money writer. Independent real providers commit manual partial/full money, overrides, stopped plans and account changes. Compare all 24 complete tables; SQL failure and retirement after actual insert must roll back money/state and publish no Changed. Test stale file/scope, missing membership, Free/Plus/Pro/host and immutable choices. Main 2,241 pass with normal parallel execution; clean the test filter afterwards. Native review selects the exact fictitious QA03 profile through UI before inspecting its database, then restores the original Main profile, display and exact owned sample bytes. No device settings or secure-flag removal. [Evidence](../../src/Apps/Zanance/docs/quality/automatic-occurrence-writer.md).
