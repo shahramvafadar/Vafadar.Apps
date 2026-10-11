@@ -20,6 +20,7 @@
                     <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex, Mode=TwoWay}"
                                    IsEnabled="{Binding CanInteract}" />
                     <Label Text="{Binding AllowanceText}" Style="{StaticResource Secondary}" />
+                    <Label Text="{Binding BudgetHint}" Style="{StaticResource Secondary}" IsVisible="{Binding BudgetHint, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{Binding Counter}" FontAttributes="Bold" />
                     <Label Text="{Binding CapacityError}" Style="{StaticResource ErrorText}"
                            IsVisible="{Binding CapacityError, Converter={StaticResource IsNotNullConverter}}" />

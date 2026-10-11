@@ -5759,10 +5759,10 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Riapri</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Conti, piani e obiettivi disponibili</value>
+    <value>Elementi disponibili</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Controlla gli elementi disponibili per nuove operazioni. La cronologia resta visibile e modificabile.</value>
+    <value>Scegli i conti, i piani, gli obiettivi e le definizioni di budget per nuove operazioni. Tutto lo storico originale resta disponibile.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Attivo</value>
@@ -5834,10 +5834,10 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>Elementi disponibili e cronologia</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Se la disponibilità è limitata, scegli i conti per i nuovi movimenti, i piani per le nuove attività pianificate e gli obiettivi di risparmio per le nuove attività dell’obiettivo. Salvare la scelta non archivia, termina, mette in pausa o elimina nulla. Lo storico e le correzioni restano disponibili. I piani e gli obiettivi in pausa vengono conteggiati, ma restano in pausa. La scelta non abilita funzioni a pagamento separate. Se tutti gli elementi sono già disponibili, non serve scegliere un sottoinsieme.</value>
+    <value>Dopo il passaggio a un piano inferiore, scegli gli elementi originali per nuove operazioni. I piani e gli obiettivi in pausa continuano a contare; selezionarli non li riprende. Le copie di budget condividono valuta, periodo e conti. La selezione non cambia stati, limiti, saldi o storico e non sblocca strumenti a pagamento. Salva applica la scelta; Ricarica chiede conferma prima di scartare le modifiche. Le versioni di prova restano senza limiti.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Se puoi avere un obiettivo disponibile e ne hai due, scegline uno e salva. Entrambi conservano i progressi e lo storico. Un obiettivo selezionato in pausa resta in pausa; scegliere un obiettivo avanzato non abilita i suoi strumenti a pagamento.</value>
+    <value>Due budget mensili EUR copiati per gli stessi conti usano una definizione. Selezionala per nuove operazioni; i limiti e i valori precedenti restano invariati.</value>
   </data>
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La valuta salvata è cambiata da {0} a {1}. La tua bozza viene conservata. Inserisci di nuovo l’importo in {1} prima di salvare.</value>
@@ -5880,5 +5880,25 @@ Nota: {3}</value>
   </data>
   <data name="Goal_KeepEdits" xml:space="preserve">
     <value>Mantieni le modifiche controllate</value>
+  </data>
+  <data name="ActiveItems_BudgetName" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="ActiveItems_BudgetAllAccounts" xml:space="preserve">
+    <value>Tutti i conti in questa valuta inclusi nei totali</value>
+  </data>
+  <data name="ActiveItems_BudgetMissingAccount" xml:space="preserve">
+    <value>Conto originale non disponibile</value>
+  </data>
+  <data name="ActiveItems_BudgetDetails" xml:space="preserve">
+    <value>Conti: {0}
+Metodi: {1}
+Periodi salvati: {2}</value>
+  </data>
+  <data name="ActiveItems_BudgetHint" xml:space="preserve">
+    <value>I periodi copiati con la stessa valuta, durata e gli stessi conti condividono una definizione. Selezionarla non sblocca metodi a pagamento e non cambia limiti. Tutti i valori precedenti restano disponibili.</value>
+  </data>
+  <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
+    <value>Metodo salvato non disponibile</value>
   </data>
 </root>

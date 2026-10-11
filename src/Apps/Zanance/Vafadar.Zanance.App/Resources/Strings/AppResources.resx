@@ -5799,10 +5799,10 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Reopen</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Available accounts, plans and goals</value>
+    <value>Available items</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Review items available for new activity. Your history stays visible and can be corrected.</value>
+    <value>Choose which accounts, plans, goals and budget definitions can be used for new work. All original history stays available.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Active</value>
@@ -5874,10 +5874,10 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>Available items and history</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>When your allowance is bounded, choose the accounts used for new money, the plans used for new planned activity and the savings goals used for new goal activity. Saving a choice does not archive, end, pause or delete anything. History and corrections stay available. Paused plans and goals count, but keep their pause. Choosing an item does not unlock separately paid features. If every item is already available, no subset needs choosing.</value>
+    <value>After a downgrade, choose the original items that remain available for new work. Paused plans and goals still count; selecting them never resumes them. Budget copies share one currency/period/accounts definition. Selection changes no states, limits, balances or history and grants no paid tool. Save applies your choice; Reload asks before discarding edits. Test builds remain unrestricted.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>If your allowance is one goal and you have two, select one and save. Both keep their progress and history. A selected paused goal stays paused; selecting an advanced goal does not unlock its paid tools.</value>
+    <value>Two copied EUR monthly budgets for the same accounts use one definition. Choose it for new budget work; your earlier limits and figures remain unchanged.</value>
   </data>
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>The saved currency changed from {0} to {1}. Your draft is kept. Enter the amount again in {1} before saving.</value>
@@ -5920,5 +5920,25 @@ Note: {3}</value>
   </data>
   <data name="Goal_KeepEdits" xml:space="preserve">
     <value>Keep my reviewed edits</value>
+  </data>
+  <data name="ActiveItems_BudgetName" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="ActiveItems_BudgetAllAccounts" xml:space="preserve">
+    <value>All accounts included in totals in this currency</value>
+  </data>
+  <data name="ActiveItems_BudgetMissingAccount" xml:space="preserve">
+    <value>Unavailable original account</value>
+  </data>
+  <data name="ActiveItems_BudgetDetails" xml:space="preserve">
+    <value>Accounts: {0}
+Methods: {1}
+Saved periods: {2}</value>
+  </data>
+  <data name="ActiveItems_BudgetHint" xml:space="preserve">
+    <value>Copied periods share one definition: currency, period length and accounts. Selecting it does not unlock a paid method or change any limit. All previous figures stay available.</value>
+  </data>
+  <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
+    <value>Unavailable saved method</value>
   </data>
 </root>

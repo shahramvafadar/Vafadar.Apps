@@ -1120,3 +1120,11 @@ comparisons. Main 2,594 / App.Tests 537, strict builds and signed APK pass. Norm
 budget Save/Delete and unchanged editor in en/fa/de light/dark, with exact owned data/display restoration.
 Enabled native chooser/view/alert, physical device and iOS acceptance remain open.
 See [evidence](quality/budget-definition-choice.md).
+
+## AT-151 - Actual reviewed budget chooser (D-149)
+
+13 actual App/SQLite cases, including ordinal exact-name/count assertions, pass; main 2,607 / App.Tests 550 and strict builds pass. All 18 Windows native cases
+verify complete captions/targets/names, capacity, rejected and canonical successful Save/return with complete
+25-table restoration. Another 18 registered Settings/help/Back cases retain complete stored data. Six normal Release emulator cases show inactive original groups and no financial Save;
+restore original owned bytes/display. Physical-device/iOS and remaining view/alert work acceptance stay open.
+See [evidence](quality/budget-definition-chooser.md).

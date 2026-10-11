@@ -458,3 +458,10 @@ Main 2,594 / App.Tests 537, strict Windows/Android, native unrestricted budget S
 verified. Reviewed budget chooser and effective view/alert integration are unfinished; current enforcement stays
 inactive. Native emulator evidence is not physical-device/iOS/Store or commercial-release acceptance.
 See [evidence](quality/budget-definition-choice.md).
+
+## D-149 - Native budget chooser
+
+Main 2,607 / App.Tests 550, strict builds, 36 actual Windows native cases, six normal signed Release emulator
+cases and complete APK verified; exact owned data/display restored. Enforcement remains inactive and budget
+view/alert integration remains unfinished. Emulator checks do not prove physical-device/iOS/Store acceptance.
+See [evidence](quality/budget-definition-chooser.md).

@@ -118,6 +118,26 @@ public sealed record BudgetDefinitionKey
     {
         ArgumentNullException.ThrowIfNull(scope);
         QuotaUsage.ValidateScope(QuotaKind.BudgetDefinitions, scope);
+        var identity = Normalize(currencyCode, period, accountIds);
+        Scope = scope;
+        CurrencyCode = identity.Currency;
+        Period = period;
+        AccountSet = identity.Accounts;
+    }
+
+    /// <summary>Gets canonical definition identity without a date or row id; scope remains a separate authority.</summary>
+    public string Identity => CanonicalIdentity(CurrencyCode, Period, AccountSet.Length == 0 ? []
+        : AccountSet.Split(';').Select(id => Guid.ParseExact(id, "N")));
+
+    /// <summary>Groups original period rows for display without inventing a verified profile or granting access.</summary>
+    public static string CanonicalIdentity(string currencyCode, BudgetPeriod period, IEnumerable<Guid> accountIds)
+    {
+        var identity = Normalize(currencyCode, period, accountIds);
+        return string.Concat(identity.Currency, "|", ((int)period).ToString(System.Globalization.CultureInfo.InvariantCulture), "|", identity.Accounts);
+    }
+
+    private static (string Currency, string Accounts) Normalize(string currencyCode, BudgetPeriod period, IEnumerable<Guid> accountIds)
+    {
         ArgumentException.ThrowIfNullOrWhiteSpace(currencyCode);
         if (currencyCode.Length != 3 || currencyCode.Any(c => !char.IsAsciiLetter(c)))
             throw new ArgumentException("An ISO currency code has three Latin letters.", nameof(currencyCode));
@@ -125,11 +145,9 @@ public sealed record BudgetDefinitionKey
         ArgumentNullException.ThrowIfNull(accountIds);
         var ids = accountIds.Distinct().Order().ToArray();
         if (ids.Contains(Guid.Empty)) throw new ArgumentException("Account identities cannot be empty.", nameof(accountIds));
-        Scope = scope;
-        CurrencyCode = currencyCode.ToUpperInvariant();
-        Period = period;
-        AccountSet = string.Join(";", ids.Select(id => id.ToString("N")));
+        return (currencyCode.ToUpperInvariant(), string.Join(";", ids.Select(id => id.ToString("N"))));
     }
+
     /// <summary>Gets the financial scope.</summary>
     public QuotaScope Scope { get; }
     /// <summary>Gets the normalized currency code.</summary>

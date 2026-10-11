@@ -5739,10 +5739,10 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Reabrir</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Cuentas, planes y metas disponibles</value>
+    <value>Elementos disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Revisa los elementos disponibles para nuevas operaciones. Tu historial sigue visible y puedes corregirlo.</value>
+    <value>Elige las cuentas, planes, objetivos y definiciones de presupuesto para nuevas operaciones. Todo el historial original sigue disponible.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Activo</value>
@@ -5814,10 +5814,10 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>Elementos disponibles e historial</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Si tu capacidad está limitada, selecciona las cuentas para nuevos movimientos, los planes para nuevas actividades programadas y las metas de ahorro para nuevas actividades de la meta. Guardar la selección no archiva, finaliza, pausa ni elimina nada. El historial y las correcciones siguen disponibles. Los planes y las metas en pausa cuentan, pero siguen en pausa. La selección no habilita funciones de pago independientes. Si todos los elementos ya están disponibles, no necesitas elegir un subconjunto.</value>
+    <value>Tras pasar a un plan inferior, elige los elementos originales para nuevas operaciones. Los planes y objetivos pausados siguen contando; elegirlos no los reanuda. Las copias de presupuesto comparten moneda, periodo y cuentas. La selección no cambia estados, límites, saldos ni historial y no desbloquea herramientas de pago. Guardar aplica tu elección; Recargar pide permiso antes de descartar cambios. Las versiones de prueba no tienen límites.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Si tu capacidad es de una meta y tienes dos, selecciona una y guarda. Ambas conservan su progreso e historial. Una meta seleccionada en pausa sigue en pausa; seleccionar una meta avanzada no habilita sus herramientas de pago.</value>
+    <value>Dos presupuestos mensuales EUR copiados para las mismas cuentas usan una definición. Elígela para nuevas operaciones; tus límites y cifras anteriores no cambian.</value>
   </data>
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La moneda guardada ha cambiado de {0} a {1}. Se conserva tu borrador. Introduce de nuevo el importe en {1} antes de guardar.</value>
@@ -5860,5 +5860,25 @@ Nota: {3}</value>
   </data>
   <data name="Goal_KeepEdits" xml:space="preserve">
     <value>Conservar mis cambios revisados</value>
+  </data>
+  <data name="ActiveItems_BudgetName" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="ActiveItems_BudgetAllAccounts" xml:space="preserve">
+    <value>Todas las cuentas de esta moneda incluidas en los totales</value>
+  </data>
+  <data name="ActiveItems_BudgetMissingAccount" xml:space="preserve">
+    <value>Cuenta original no disponible</value>
+  </data>
+  <data name="ActiveItems_BudgetDetails" xml:space="preserve">
+    <value>Cuentas: {0}
+Métodos: {1}
+Periodos guardados: {2}</value>
+  </data>
+  <data name="ActiveItems_BudgetHint" xml:space="preserve">
+    <value>Los periodos copiados con la misma moneda, duración y cuentas comparten una definición. Elegirla no desbloquea un método de pago ni cambia límites. Conservas todas las cifras anteriores.</value>
+  </data>
+  <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
+    <value>Método guardado no disponible</value>
   </data>
 </root>

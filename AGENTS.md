@@ -964,5 +964,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * New Save/Replace joins or transfers chosen capacity only when the old definition's last current row retires.
   Retained same-definition corrections stay available. Delete uses the same actual-file writer/membership right
   and releases only its final current definition; failed SQL restores limits and choice together.
-* Registration stays inactive. Budget chooser/view/alert consumers follow separately. Native unrestricted
+* Registration stays inactive. The budget chooser follows section 82; view/alert consumers follow separately. Native unrestricted
   Save/Delete is not enabled chooser or physical/iOS acceptance; restore exact owned data and display state.
+
+## 82. Reviewed budget definition choices (D-149)
+
+* Group original copied periods by canonical currency/period/account set without inventing display scope authority.
+  A real original row id relays the native command only; Save stores definitions in the reviewed verified scope.
+* Preserve original archived/missing account references, methods and history; choices grant no paid method and
+  change no financial limit. Display count digits separately, never rewrite user-written account names.
+* Recheck complete reference metadata with original periods/file/access/date/revision/value under the writer.
+  Shared covered reads, explicit discard/Save/Reload and pinned failure feedback retain exact drafts.
+* Registration remains inactive. Native fixture Save changes only its choice and restores complete original data;
+  normal Release shows all current definitions without requiring Save. View/alert work bindings follow separately.

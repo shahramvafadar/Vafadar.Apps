@@ -6,11 +6,17 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Clear budget definition choices (2026-10-11, D-149)
+
+- Show copied budget periods as one choice with their original accounts, method and saved-period count.
+- Keep past definitions visible and preserve your selection when a save fails or you decline to discard it.
+- Preserve account names when changing digit shapes; test builds continue to offer every current definition.
+
 ### Improved - Preserve budget definitions through changes (2026-10-11, D-148)
 
 - Keep copied months under one financial budget definition and retain past limits and paid-method history.
 - Protect budget changes and deletion with the same database transaction as their explicit active-definition choice.
-- Retain unrestricted test builds; the budget selection screen and effective display bindings follow separately.
+- Retain unrestricted test builds; effective budget display bindings follow separately.
 
 ### Improved - Preserve goal plans while editing (2026-10-11, D-147)
 

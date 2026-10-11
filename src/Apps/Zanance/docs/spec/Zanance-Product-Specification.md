@@ -2230,3 +2230,13 @@ limits and financial rows remain intact. 34 new AT-150 cases; normal parallel ma
 strict builds, normal Release native Save/Delete and six unchanged-editor language/theme checks, complete signed
 APK and exact owned data/display restoration verified. Registration remains inactive. Budget chooser/view/alert
 binding and other ENT-02/03 paths remain open. See [evidence](../quality/budget-definition-choice.md).
+
+### 31.62 Reviewed budget definition chooser (D-149)
+
+The actual active-items form includes canonical budget definitions, grouped across copied periods with
+original scope names/current methods and unselectable history. Covered review captures full account references;
+explicit Save rechecks original metadata and writes only chosen definitions. Original account names stay exact
+when display digits change. 13 new AT-151 cases; main 2,607 / App.Tests 550 pass; strict builds, 18 Windows native
+chooser cases plus 18 registered Settings/help cases, six normal Release emulator cases, exact data/display restoration and complete signed
+APK verified. Registration remains inactive. Effective budget/view/alert bindings and other ENT-02/03 paths
+remain open. See [evidence](../quality/budget-definition-chooser.md).

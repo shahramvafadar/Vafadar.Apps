@@ -929,3 +929,11 @@ The foundation supplies all original periods and an independent work projection.
 currency/period/account-set definitions; copied months are not separate choices. Preserve visible history and paid
 method numbers; selection never grants a method. Reviewed choice Save must retain drafts on stale input and never
 write limits or money. No visible layout or commercial enforcement is changed by this foundation.
+
+## Reviewed budget definition rows (D-149)
+
+Use the existing fourth growing choice alongside accounts/plans/goals. Group copied periods once and show original
+currency/period, explicit account names or the all-included meaning, current saved methods and saved-period count.
+Retain history but disable historical-only choice. Format count digits without rewriting user account names.
+Explain that choosing a definition grants no paid tool and changes no financial limit. Shared covered publication,
+discard guards and pinned explicit Save/retry feedback apply. Inactive release remains unrestricted/read-only here.

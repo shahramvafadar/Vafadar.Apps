@@ -374,3 +374,9 @@ The existing profile-local scoped choice row can contain canonical budget defini
 membership or security grants. No new schema, SDK, permission or external transmission. Restore does not retag
 financial scope or activate commercial rights. Original budget and ledger rows are unchanged by choice Save.
 See [evidence](../quality/budget-definition-choice.md).
+
+## Reviewed budget chooser (D-149)
+
+Original reference captions are captured in memory to reject stale reviews; no account balance or new financial
+data is written. Explicit definition choices use the existing local scoped row/revision. No SDK, permission,
+external transmission, schema or security/purchase grant changes. See [evidence](../quality/budget-definition-chooser.md).

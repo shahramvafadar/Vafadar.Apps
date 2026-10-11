@@ -20,6 +20,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.BudgetDefinitions, cancellationToken);
         var budgets = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
+        var accounts = await ReadAccountsAsync(db, cancellationToken);
         var startDay = await ReadStartDayAsync(db, cancellationToken);
         var today = Today();
         BudgetAvailability? availability = null;
@@ -37,10 +38,12 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         var items = budgets.Select(BudgetChoiceItem.From).ToArray();
         if (current?.Revision != stored?.Revision || current?.IdentitySet != stored?.IdentitySet
             || !items.SequenceEqual(reread.Select(BudgetChoiceItem.From))
+            || !accounts.SequenceEqual(await ReadAccountsAsync(db, cancellationToken))
             || startDay != await ReadStartDayAsync(db, cancellationToken) || today != Today())
             throw new InvalidOperationException("Budget inputs changed during loading; reload them.");
         access.EnsureSnapshotCurrent();
-        return new(items, path, access, stored, today, startDay, availability, work);
+        return new(items, path, access, stored, today, startDay, availability, work, accounts,
+            budgets.Where(budget => BudgetSelectionPolicy.IsCurrent(budget, today, startDay)).Select(budget => budget.Id).ToHashSet());
     }
 
     /// <summary>Saves only the reviewed current definitions; no financial row or paid capability is rewritten.</summary>
@@ -59,6 +62,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         var stored = await StoredResourceSelection.ReadAsync(db, reviewed.Access, QuotaKind.BudgetDefinitions, cancellationToken, tracking: true);
         var budgets = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
         if (stored?.Revision != reviewed.Revision || stored?.IdentitySet != reviewed.StoredValue || !reviewed.Items.SequenceEqual(budgets.Select(BudgetChoiceItem.From))
+            || !reviewed.Accounts.SequenceEqual(await ReadAccountsAsync(db, cancellationToken))
             || reviewed.MonthStartDay != await ReadStartDayAsync(db, cancellationToken) || reviewed.Today != Today())
             throw new InvalidOperationException("The reviewed budgets or period changed; reload them before saving.");
         var availability = BudgetSelectionPolicy.Resolve(reviewed.Access.Context!, scope, budgets, reviewed.Today, reviewed.MonthStartDay, choice);
@@ -79,6 +83,24 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         Changed?.Invoke(this, EventArgs.Empty);
         return true;
     }
+
+    /// <summary>Relays explicit native row choices to their reviewed definitions; row ids never become stored definition identity.</summary>
+    public Task<bool> SaveGroupsAsync(BudgetChoiceSnapshot reviewed, IEnumerable<Guid> selectedGroupIds,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(reviewed);
+        ArgumentNullException.ThrowIfNull(selectedGroupIds);
+        if (!reviewed.CanChoose) throw new InvalidOperationException("No bounded budget choice is required.");
+        var ids = selectedGroupIds.Distinct().ToArray();
+        var groups = reviewed.Groups.ToDictionary(group => group.RepresentativeId);
+        if (ids.Any(id => !groups.ContainsKey(id))) throw new ArgumentException("A choice is not in the reviewed definition list.", nameof(selectedGroupIds));
+        var scope = StoredResourceSelection.Scope(reviewed.Access.Context!);
+        return SaveAsync(reviewed, ids.Select(id => groups[id].Definition(scope)), cancellationToken);
+    }
+
+    private static async Task<List<BudgetChoiceAccount>> ReadAccountsAsync(ZananceDbContext db, CancellationToken cancellationToken) =>
+        (await db.Accounts.AsNoTracking().OrderBy(account => account.Id).ToListAsync(cancellationToken))
+            .Select(BudgetChoiceAccount.From).ToList();
 
     private DateOnly Today() => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     /// <summary>Reads the current financial-month boundary without creating or updating a settings row.</summary>

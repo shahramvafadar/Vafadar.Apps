@@ -5747,10 +5747,10 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Rouvrir</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Comptes, plans et objectifs disponibles</value>
+    <value>Éléments disponibles</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Vérifiez les éléments disponibles pour de nouvelles opérations. Votre historique reste visible et modifiable.</value>
+    <value>Choisissez les comptes, plans, objectifs et définitions de budget utilisables pour de nouvelles opérations. Tout l’historique d’origine reste accessible.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Actif</value>
@@ -5822,10 +5822,10 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>Éléments disponibles et historique</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Si votre capacité est limitée, choisissez les comptes pour les nouveaux mouvements, les plans pour les nouvelles activités prévues et les objectifs d’épargne pour les nouvelles activités liées aux objectifs. Enregistrer une sélection n’archive, ne termine, ne met en pause et ne supprime rien. L’historique et les corrections restent disponibles. Les plans et objectifs en pause comptent, mais restent en pause. Une sélection ne débloque pas les fonctions payantes distinctes. Si tous les éléments sont déjà disponibles, aucune sélection n’est nécessaire.</value>
+    <value>Après un passage à une offre inférieure, choisissez les éléments d’origine pour de nouvelles opérations. Les plans et objectifs en pause comptent toujours ; les sélectionner ne les reprend pas. Les copies de budget partagent une définition de devise, période et comptes. La sélection ne modifie ni états, limites, soldes ou historique et ne débloque aucun outil payant. Enregistrer applique votre choix ; Recharger demande confirmation avant d’abandonner vos modifications. Les versions de test restent sans limites.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Si votre capacité est d’un objectif et que vous en avez deux, sélectionnez-en un et enregistrez. Les deux conservent leur progression et leur historique. Un objectif sélectionné en pause reste en pause ; sélectionner un objectif avancé ne débloque pas ses outils payants.</value>
+    <value>Deux budgets mensuels EUR copiés pour les mêmes comptes utilisent une définition. Choisissez-la pour de nouvelles opérations ; vos anciennes limites et valeurs restent inchangées.</value>
   </data>
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>La devise enregistrée est passée de {0} à {1}. Votre brouillon est conservé. Saisissez à nouveau le montant en {1} avant de l’enregistrer.</value>
@@ -5868,5 +5868,25 @@ Note : {3}</value>
   </data>
   <data name="Goal_KeepEdits" xml:space="preserve">
     <value>Conserver mes modifications vérifiées</value>
+  </data>
+  <data name="ActiveItems_BudgetName" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="ActiveItems_BudgetAllAccounts" xml:space="preserve">
+    <value>Tous les comptes dans cette devise inclus dans les totaux</value>
+  </data>
+  <data name="ActiveItems_BudgetMissingAccount" xml:space="preserve">
+    <value>Compte d’origine indisponible</value>
+  </data>
+  <data name="ActiveItems_BudgetDetails" xml:space="preserve">
+    <value>Comptes : {0}
+Méthodes : {1}
+Périodes enregistrées : {2}</value>
+  </data>
+  <data name="ActiveItems_BudgetHint" xml:space="preserve">
+    <value>Les périodes copiées avec la même devise, durée et les mêmes comptes partagent une définition. La sélection ne débloque aucune méthode payante et ne modifie aucune limite. Toutes les anciennes valeurs restent accessibles.</value>
+  </data>
+  <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
+    <value>Méthode enregistrée indisponible</value>
   </data>
 </root>

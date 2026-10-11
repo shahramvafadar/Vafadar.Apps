@@ -5770,10 +5770,10 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Wieder öffnen</value>
   </data>
   <data name="ActiveItems_Title" xml:space="preserve">
-    <value>Verfügbare Konten, Pläne und Ziele</value>
+    <value>Verfügbare Elemente</value>
   </data>
   <data name="ActiveItems_Intro" xml:space="preserve">
-    <value>Prüfe die verfügbaren Einträge für neue Vorgänge. Dein Verlauf bleibt sichtbar und korrigierbar.</value>
+    <value>Wählen Sie Konten, Pläne, Ziele und Budgetdefinitionen für neue Vorgänge. Der gesamte bisherige Verlauf bleibt verfügbar.</value>
   </data>
   <data name="ActiveItems_Active" xml:space="preserve">
     <value>Aktiv</value>
@@ -5845,10 +5845,10 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Verfügbare Einträge und Verlauf</value>
   </data>
   <data name="Help_ActiveItems_Text" xml:space="preserve">
-    <value>Bei einer begrenzten Anzahl wählst du die Konten für neue Geldbuchungen, die Pläne für neue geplante Vorgänge und die Sparziele für neue Zielaktivitäten. Das Speichern archiviert, beendet, pausiert oder löscht nichts. Verlauf und Korrekturen bleiben zugänglich. Pausierte Pläne und Ziele zählen, bleiben aber pausiert. Eine Auswahl schaltet keine gesondert kostenpflichtigen Funktionen frei. Sind bereits alle Einträge verfügbar, ist keine Auswahl nötig.</value>
+    <value>Nach einem Wechsel wählen Sie vorhandene Elemente für neue Vorgänge. Pausierte Pläne und Ziele zählen weiterhin; die Auswahl setzt sie nicht fort. Budgetkopien teilen eine Währungs-, Zeitraum- und Kontendefinition. Zustände, Grenzen, Salden und Verlauf ändern sich nicht; kostenpflichtige Werkzeuge werden nicht freigeschaltet. Speichern übernimmt die Auswahl; vor dem Verwerfen fragt Neu laden nach. Testversionen bleiben uneingeschränkt.</value>
   </data>
   <data name="Help_ActiveItems_Example" xml:space="preserve">
-    <value>Wenn ein Ziel verfügbar sein darf und du zwei hast, wähle eines und speichere. Beide behalten Fortschritt und Verlauf. Ein ausgewähltes pausiertes Ziel bleibt pausiert; die Auswahl eines erweiterten Ziels schaltet dessen kostenpflichtige Werkzeuge nicht frei.</value>
+    <value>Zwei kopierte monatliche EUR-Budgets derselben Konten bilden eine Definition. Wählen Sie sie für neue Budgetvorgänge; frühere Grenzen und Zahlen bleiben unverändert.</value>
   </data>
   <data name="Goal_DraftCurrencyChanged" xml:space="preserve">
     <value>Die gespeicherte Währung wurde von {0} auf {1} geändert. Ihr Entwurf bleibt erhalten. Geben Sie den Betrag vor dem Speichern erneut in {1} ein.</value>
@@ -5891,5 +5891,25 @@ Notiz: {3}</value>
   </data>
   <data name="Goal_KeepEdits" xml:space="preserve">
     <value>Meine geprüften Eingaben behalten</value>
+  </data>
+  <data name="ActiveItems_BudgetName" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="ActiveItems_BudgetAllAccounts" xml:space="preserve">
+    <value>Alle Konten dieser Währung, die in Summen zählen</value>
+  </data>
+  <data name="ActiveItems_BudgetMissingAccount" xml:space="preserve">
+    <value>Ursprüngliches Konto nicht verfügbar</value>
+  </data>
+  <data name="ActiveItems_BudgetDetails" xml:space="preserve">
+    <value>Konten: {0}
+Methoden: {1}
+Gespeicherte Zeiträume: {2}</value>
+  </data>
+  <data name="ActiveItems_BudgetHint" xml:space="preserve">
+    <value>Kopierte Zeiträume mit gleicher Währung, Dauer und gleichen Konten bilden eine Definition. Die Auswahl schaltet keine kostenpflichtige Methode frei und ändert keine Grenze. Frühere Zahlen bleiben verfügbar.</value>
+  </data>
+  <data name="ActiveItems_BudgetMethodUnavailable" xml:space="preserve">
+    <value>Gespeicherte Methode nicht verfügbar</value>
   </data>
 </root>

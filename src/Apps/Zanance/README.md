@@ -248,5 +248,9 @@ separate; this editor slice is not completion of the commercial release.
 Evidence: `docs/quality/goal-editor-work.md`.
 
 Budget choices: D-148 supplies canonical definition persistence and actual writer checks, retaining all original
-periods/limits and unrestricted test builds. Chooser UI and effective view/alert integration remain open.
+periods/limits and unrestricted test builds. D-149 supplies the chooser; effective view/alert integration remains open.
 [Evidence](docs/quality/budget-definition-choice.md).
+
+Budget choices: the D-149 native chooser groups copied periods, retains original scope/method/history and
+preserves explicit drafts on failure. Effective budget/view/alert integration stays open; test builds unrestricted.
+[Evidence](docs/quality/budget-definition-chooser.md).

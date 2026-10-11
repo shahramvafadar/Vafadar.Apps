@@ -8,6 +8,7 @@ using Vafadar.Maui.Controls;
 using Vafadar.Zanance.App.Features.Commerce;
 using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
@@ -56,6 +57,23 @@ internal static partial class DebugSnapshots
             Type = index == 1 ? GoalType.Earmark : index == 2 ? GoalType.HoldingQuantity : GoalType.AccountBalance,
             State = index == 2 ? GoalState.Paused : index == 3 ? GoalState.Completed : index == 4 ? GoalState.Archived : GoalState.Active,
         });
+        var budgetOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-budget-definitions";
+        if (budgetOnly)
+        {
+            var today = DateOnly.FromDateTime(TimeProvider.System.GetLocalNow().DateTime);
+            var next = today.AddMonths(1); var past = today.AddMonths(-1);
+            var budgets = new[]
+            {
+                new Budget { CurrencyCode = "EUR", Year = today.Year, Month = today.Month,
+                    AccountIds = [accounts[0].Id, accounts[4].Id], Method = BudgetMethod.Envelopes, TotalLimit = 12345 },
+                new Budget { CurrencyCode = "eur", Year = next.Year, Month = next.Month,
+                    AccountIds = [accounts[4].Id, accounts[0].Id, accounts[4].Id], TotalLimit = 23456 },
+                new Budget { CurrencyCode = "USD", Year = today.Year, Month = today.Month, TotalLimit = 34567 },
+                new Budget { CurrencyCode = "GBP", Year = past.Year, Month = past.Month, TotalLimit = 45678 },
+            };
+            await using var db = await factory.CreateDbContextAsync();
+            db.Budgets.AddRange(budgets); await db.SaveChangesAsync();
+        }
         async Task<string> StoredAsync()
         {
             await using var db = await factory.CreateDbContextAsync();
@@ -88,12 +106,17 @@ internal static partial class DebugSnapshots
             await SetLanguageAsync(app, localization, language);
             var access = new ActiveItemsReviewAccess { Current = new(path,
                 new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("41414141-5252-6363-7474-858585858585")))) };
-            var vm = new ActiveItemsViewModel(new(factory, access), translator, interaction);
+            var vm = new ActiveItemsViewModel(new(factory, access), translator, interaction, new(factory, access, TimeProvider.System));
             var page = new ActiveItemsPage(vm, localization);
             await Shell.Current.Navigation.PushAsync(page);
             for (var attempt = 0; attempt < 100 && !vm.Loading.IsReady; attempt++) await Task.Delay(50);
             if (!vm.Loading.IsReady) throw new InvalidOperationException("The actual choice page did not publish.");
             await Task.Delay(350);
+            if (budgetOnly)
+            {
+                await ReviewActiveBudgetDefinitionsAsync(app, page, vm, factory, folder, language, StoredAsync, before);
+                continue;
+            }
             if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "active-items-save-feedback")
             {
                 await ReviewActiveItemsSaveFeedbackAsync(app, page, vm, factory, folder, language);
@@ -158,7 +181,7 @@ internal static partial class DebugSnapshots
             if (!paused.IsSelected || !vm.IsDirty || paused.StateText != translator["Plan_Paused"]) throw new InvalidOperationException("A paused choice incorrectly resumed the plan.");
             await CheckAsync("paused"); InvokeChoiceReview(pausedButton); await Task.Delay(100);
             await viewport.ScrollToAsync(0, 0, false); await Task.Delay(150);
-            InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().Last()); await vm.PendingKindChange; await Task.Delay(300);
+            InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().ElementAt(2)); await vm.PendingKindChange; await Task.Delay(300);
             if (vm.KindIndex != 2 || vm.Items.Count != 5 || vm.IsDirty) throw new InvalidOperationException("Native goal choices did not publish.");
             await CheckAsync("goals");
             var pausedGoal = vm.Items.Single(row => row.StateText == translator["GoalState_Paused"]);
@@ -274,7 +297,7 @@ internal static partial class DebugSnapshots
             throw new InvalidOperationException("Native Back cancellation lost the actual unsaved choice.");
         var chips = VisualDescendants(page).OfType<ChoiceChips>().Single();
         await ScrollToViewIfNeededAsync(VisualDescendants(page).OfType<ScrollView>().Single(), chips);
-        InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().Last()); await AnswerAsync(false, "kind-cancel"); await vm.PendingKindChange;
+        InvokeChoiceReview(VisualDescendants(chips).OfType<Button>().ElementAt(2)); await AnswerAsync(false, "kind-cancel"); await vm.PendingKindChange;
         if (vm.KindIndex != 0 || !ReferenceEquals(vm.Items.First(item => item.Id == row.Id), row) || !row.IsSelected || !vm.IsDirty)
             throw new InvalidOperationException("Native kind cancellation lost the original identity or draft.");
         void Reload() => InvokeChoiceReview(VisualDescendants(WrappingActions(page)
@@ -353,7 +376,7 @@ internal static partial class DebugSnapshots
         dismiss.Invoke(); await Task.Delay(250);
         var kinds = VisualDescendants(page).OfType<ChoiceChips>().Single();
         await ScrollToViewIfNeededAsync(FindScrollView(page) ?? throw new InvalidOperationException("Missing registered form viewport."), kinds);
-        InvokeChoiceReview(VisualDescendants(kinds).OfType<Button>().Last()); await vm.PendingKindChange; await Task.Delay(250);
+        InvokeChoiceReview(VisualDescendants(kinds).OfType<Button>().ElementAt(2)); await vm.PendingKindChange; await Task.Delay(250);
         if (vm.KindIndex != 2 || vm.CanChoose || vm.CanSave) throw new InvalidOperationException("Registered Goals activated a required subset.");
         foreach (var label in VisualDescendants(page).OfType<Label>().Where(Visible)) CheckCaption(label);
         await CaptureAsync(app, folder, language + "-active-items-registered-goals");

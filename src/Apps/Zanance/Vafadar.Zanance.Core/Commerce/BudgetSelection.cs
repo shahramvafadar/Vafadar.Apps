@@ -38,8 +38,7 @@ public sealed record BudgetSelection
         return selection;
     }
 
-    private static string Encode(BudgetDefinitionKey key) => string.Concat(key.CurrencyCode, "|",
-        ((int)key.Period).ToString(CultureInfo.InvariantCulture), "|", key.AccountSet);
+    private static string Encode(BudgetDefinitionKey key) => key.Identity;
 
     private static BudgetDefinitionKey Decode(QuotaScope scope, string value)
     {

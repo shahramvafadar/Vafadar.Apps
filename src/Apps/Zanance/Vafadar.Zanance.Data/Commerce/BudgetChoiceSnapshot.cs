@@ -24,16 +24,25 @@ public sealed class BudgetChoiceSnapshot
 {
     /// <summary>Retains the reviewed actual-file inputs independently of later entity/caller mutations.</summary>
     internal BudgetChoiceSnapshot(IReadOnlyList<BudgetChoiceItem> items, string path, CommercialFileAccess access,
-        StoredResourceSelection? stored, DateOnly today, int monthStartDay, BudgetAvailability? availability, BudgetWorkPolicy work)
+        StoredResourceSelection? stored, DateOnly today, int monthStartDay, BudgetAvailability? availability, BudgetWorkPolicy work,
+        IReadOnlyList<BudgetChoiceAccount> accounts, IReadOnlySet<Guid> currentIds)
     {
         Items = Array.AsReadOnly(items.ToArray()); DatabasePath = path; Access = access; Revision = stored?.Revision; StoredValue = stored?.IdentitySet;
         Today = today; MonthStartDay = monthStartDay; Maximum = availability?.Maximum;
         SelectedDefinitions = availability?.SelectedDefinitions ?? Array.AsReadOnly(Array.Empty<BudgetDefinitionKey>());
         RequiresSelection = availability?.RequiresSelection == true || Maximum is > 0 && stored is not null && !StoredBudgetSelection.IsValid(stored);
         Work = work;
+        Accounts = Array.AsReadOnly(accounts.ToArray());
+        Groups = Array.AsReadOnly(items.GroupBy(item => BudgetDefinitionKey.CanonicalIdentity(item.CurrencyCode, item.Period,
+            item.Accounts.Length == 0 ? [] : item.Accounts.Split(';').Select(Guid.Parse)))
+            .Select(group => new BudgetChoiceGroup(group, currentIds)).OrderBy(group => group.Identity, StringComparer.Ordinal).ToArray());
     }
     /// <summary>Gets every complete original period, including unselected budgets and historical paid methods.</summary>
     public IReadOnlyList<BudgetChoiceItem> Items { get; }
+    /// <summary>Gets original reference captions, preserving archived and unavailable account identities.</summary>
+    public IReadOnlyList<BudgetChoiceAccount> Accounts { get; }
+    /// <summary>Gets grouped definitions without inventing a verified scope when release enforcement is inactive.</summary>
+    public IReadOnlyList<BudgetChoiceGroup> Groups { get; }
     /// <summary>Gets the actual local date used for the reviewed financial periods.</summary>
     public DateOnly Today { get; }
     /// <summary>Gets the original financial month-start preference, without creating Settings.</summary>

@@ -545,3 +545,12 @@ and Android and canonical Build-AndroidApk.ps1 complete. Artifacts: budget-choic
 build/clean logs, budget-choice-native/final-proof.json and budget-choice-apk-proof.json. Signed full phone artifact:
 artifacts/android/zanance-d148-release.apk. No UI source changed; completed layout matrices are retained. The normal
 Release native Save/Delete does not activate or prove the later enabled chooser/view/alert integration.
+
+## Budget chooser verification (D-149)
+
+Main 2,607 / App.Tests 550 pass, followed by ordinary cleanup. Strict Windows/Android and canonical Release pass.
+The active-budget-definitions Debug route operates actual native choices and real Save in an independent fixture,
+restoring all 25 tables. Evidence covers 18 Windows chooser and 18 registered Settings/help cases plus six
+normal inactive Release emulator cases.
+Artifacts: budget-chooser build/test/clean logs, verified-size/theme proof folders, native/final-proof.json and
+APK proof. Complete phone artifact: artifacts/android/zanance-d149-release.apk. Physical/iOS gates remain separate.

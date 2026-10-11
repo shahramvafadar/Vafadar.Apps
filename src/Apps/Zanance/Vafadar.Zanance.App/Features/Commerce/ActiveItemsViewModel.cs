@@ -12,20 +12,22 @@ using Vafadar.Zanance.Data.Commerce;
 namespace Vafadar.Zanance.App.Features.Commerce;
 
 /// <summary>One retained item with independently translated original state and unsaved choice.</summary>
-public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel owner, Translator translator) : ObservableObject
+public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel owner, Translator translator,
+    BudgetChoiceGroup? budget = null, IReadOnlyList<BudgetChoiceAccount>? accounts = null) : ObservableObject
 {
     /// <summary>Gets the immutable original identity, never its visual label.</summary>
     public Guid Id => item.Id;
     /// <summary>Gets the complete original user-written name.</summary>
-    public string Name => item.Name;
+    public string Name => budget is null ? item.Name : translator.Format("ActiveItems_BudgetName", budget.CurrencyCode,
+        translator[$"Budget_Period{budget.Period}"]);
     /// <summary>Gets whether the original state can occupy a slot; pauses count without resuming a plan or goal.</summary>
-    public bool IsEligible => item.State is QuotaItemState.Active or QuotaItemState.Paused;
+    public bool IsEligible => budget?.IsEligible ?? item.State is QuotaItemState.Active or QuotaItemState.Paused;
     /// <summary>Gets the in-memory choice; only the explicit Save command persists it.</summary>
     public bool IsSelected => owner.IsSelected(Id);
     /// <summary>Gets whether the real row button can change this reviewed draft.</summary>
     public bool CanToggle => IsEligible && owner.CanChoose && owner.CanInteract;
     /// <summary>Gets the translated original state, independent of selection.</summary>
-    public string StateText => translator[item.State switch
+    public string StateText => budget is not null ? translator[budget.IsEligible ? "ActiveItems_Active" : "ActiveItems_History"] : translator[item.State switch
     {
         QuotaItemState.Paused => item.GoalType is null ? "Plan_Paused" : "GoalState_Paused",
         QuotaItemState.Archived => "ActiveItems_Archived",
@@ -33,13 +35,30 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
         _ => "ActiveItems_Active",
     }];
     /// <summary>Gets identity details without displaying or changing money.</summary>
-    public string? DetailText => item.AccountType is { } type
+    public string? DetailText => budget is not null ? BudgetDetails() : item.AccountType is { } type
         ? translator.Format("ActiveItems_AccountDetail", translator[$"AccountType_{type}"], item.CurrencyCode)
         : item.EntryKind is { } kind ? translator[$"EntryKind_{kind}"]
         : item.GoalType is { } goalType ? goalType == Core.Goals.GoalType.HoldingQuantity
             ? translator[$"GoalType_{goalType}"]
             : translator.Format("ActiveItems_AccountDetail", translator[$"GoalType_{goalType}"], item.CurrencyCode)
         : null;
+    private string BudgetDetails()
+    {
+        var scope = budget!.AccountIds.Count == 0 ? translator["ActiveItems_BudgetAllAccounts"] : string.Join(", ",
+            budget.AccountIds.Select(id => accounts?.FirstOrDefault(account => account.Id == id)?.Name ?? translator["ActiveItems_BudgetMissingAccount"]));
+        var originals = budget.IsEligible ? budget.CurrentPeriods : budget.Periods;
+        var methods = string.Join(", ", originals.Select(row => row.Method).Distinct().Order().Select(method => translator[method switch
+        {
+            Core.Budgets.BudgetMethod.Envelopes => "Budget_MethodEnvelopes",
+            Core.Budgets.BudgetMethod.Flex => "Budget_MethodFlex",
+            Core.Budgets.BudgetMethod.Limits => "Budget_MethodLimits",
+            _ => "ActiveItems_BudgetMethodUnavailable",
+        }]));
+        // Original user-written account names remain exact; digit preferences apply only to the displayed count.
+        return translator.Format("ActiveItems_BudgetDetails", scope, methods,
+            NativeDigits.Apply(budget.Periods.Count.ToString(translator.Culture)));
+    }
+
     /// <summary>Gets the separate availability caption; a historical state never becomes an active choice.</summary>
     public string ChoiceText => translator[!IsEligible ? "ActiveItems_History" : IsSelected ? "ActiveItems_Selected" : "ActiveItems_ReadOnly"];
     /// <summary>Gets a complete live spoken name for the real native target.</summary>
@@ -48,16 +67,19 @@ public sealed class ActiveItemRow(ResourceChoiceItem item, ActiveItemsViewModel 
     /// <summary>Refreshes only captions and draft-dependent properties, retaining the original identity and state.</summary>
     internal void Refresh()
     {
-        OnPropertyChanged(nameof(IsSelected)); OnPropertyChanged(nameof(CanToggle));
+        OnPropertyChanged(nameof(Name)); OnPropertyChanged(nameof(IsSelected)); OnPropertyChanged(nameof(CanToggle));
         OnPropertyChanged(nameof(StateText)); OnPropertyChanged(nameof(DetailText));
         OnPropertyChanged(nameof(ChoiceText)); OnPropertyChanged(nameof(AccessibilityText));
     }
 }
 
-/// <summary>Reviewed scoped account/Plan/goal choices with covered reads, explicit Save and no commercial activation.</summary>
+/// <summary>Reviewed scoped account/Plan/goal/budget definition choices with covered reads, explicit Save and no commercial activation.</summary>
 public sealed partial class ActiveItemsViewModel : ViewModelBase
 {
     private readonly ResourceChoiceStore _store;
+    private readonly BudgetChoiceStore? _budgetStore;
+    private BudgetChoiceSnapshot? _budgetSnapshot;
+    private int? Maximum => _budgetSnapshot?.Maximum ?? _snapshot?.Maximum;
     private readonly Translator _translator;
     private readonly IAppInteraction _interaction;
     private ResourceChoiceSnapshot? _snapshot;
@@ -73,9 +95,9 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     private string? _feedbackKey;
 
     /// <summary>Creates the empty covered form without reading the database or writing default choices.</summary>
-    public ActiveItemsViewModel(ResourceChoiceStore store, Translator translator, IAppInteraction interaction)
+    public ActiveItemsViewModel(ResourceChoiceStore store, Translator translator, IAppInteraction interaction, BudgetChoiceStore? budgetStore = null)
     {
-        _store = store; _translator = translator; _interaction = interaction;
+        _store = store; _translator = translator; _interaction = interaction; _budgetStore = budgetStore;
         Loading.PropertyChanged += (_, _) => RefreshCapabilities();
         PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy)) RefreshCapabilities(); };
         RefreshDisplay();
@@ -97,9 +119,9 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     /// <summary>Gets whether one published review is currently interactive.</summary>
     public bool CanInteract => Loading.IsReady && !IsBusy;
     /// <summary>Gets whether the current review allows a bounded explicit choice.</summary>
-    public bool CanChoose => _snapshot?.CanChoose == true && !_reviewRetired;
+    public bool CanChoose => (_budgetSnapshot?.CanChoose ?? _snapshot?.CanChoose) == true && !_reviewRetired;
     /// <summary>Gets whether an eligible subset exceeds its current maximum.</summary>
-    public bool OverCapacity => _snapshot?.Maximum is { } maximum && _selected.Count > maximum;
+    public bool OverCapacity => Maximum is { } maximum && _selected.Count > maximum;
     /// <summary>Gets whether current draft choices differ from the last published or successfully saved baseline.</summary>
     public bool IsDirty => !_discardApproved && !_selected.SetEquals(_baseline);
     /// <summary>Gets whether the complete explicit draft can be submitted; empty is a valid explicit choice.</summary>
@@ -109,18 +131,21 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     /// <summary>Gets whether the original list is empty.</summary>
     public bool IsEmpty => Items.Count == 0;
     /// <summary>Gets a complete translated counter with the user's current display digits.</summary>
-    public string Counter => NativeDigits.Apply(_snapshot?.Maximum is { } maximum
+    public string Counter => NativeDigits.Apply(Maximum is { } maximum
         ? _translator.Format("ActiveItems_Count", _selected.Count, maximum)
         : _translator.Format("ActiveItems_AllCount", _selected.Count))!;
     /// <summary>Gets the current allowance explanation without inventing a product tier.</summary>
-    public string AllowanceText => _translator[_snapshot?.Maximum switch
+    public string AllowanceText => _translator[Maximum switch
     {
         0 => "ActiveItems_Unavailable",
         null => "ActiveItems_Unlimited",
         _ => "ActiveItems_ChooseHint",
     }];
+    /// <summary>Explains canonical budget grouping and independent paid tools without changing any selection.</summary>
+    public string? BudgetHint => _publishedKindIndex == 3 ? _translator["ActiveItems_BudgetHint"] : null;
+
     /// <summary>Gets the inline capacity error beside the choices.</summary>
-    public string? CapacityError => OverCapacity ? NativeDigits.Apply(_translator.Format("ActiveItems_Limit", _snapshot!.Maximum)) : null;
+    public string? CapacityError => OverCapacity ? NativeDigits.Apply(_translator.Format("ActiveItems_Limit", Maximum)) : null;
 
     /// <summary>Reads and publishes once on first appearance; returning from help keeps the exact unsaved draft.</summary>
     public Task EnsureLoadedAsync() => Loading.HasLoaded ? Task.CompletedTask : LoadAsync();
@@ -137,15 +162,33 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     private async Task LoadCoreAsync(int index)
     {
         ResourceChoiceSnapshot? next = null;
+        BudgetChoiceSnapshot? nextBudget = null;
         try
         {
-            await Loading.RunAsync(async () => next = await _store.ReadAsync(Kind(index)), () =>
+            await Loading.RunAsync(async () =>
             {
-                _snapshot = next!; _reviewRetired = false; _discardApproved = false; _publishedKindIndex = index;
-                _selected = next!.SelectedIds.ToHashSet(); _baseline = _selected.ToHashSet();
+                if (index == 3) nextBudget = await (_budgetStore ?? throw new InvalidOperationException("The budget choice store is unavailable.")).ReadAsync();
+                else next = await _store.ReadAsync(Kind(index));
+            }, () =>
+            {
+                _snapshot = next; _budgetSnapshot = nextBudget; _reviewRetired = false; _discardApproved = false; _publishedKindIndex = index;
                 Items.Clear();
-                foreach (var item in next.Items.OrderBy(item => item.Name, StringComparer.CurrentCulture).ThenBy(item => item.Id))
-                    Items.Add(new(item, this, _translator));
+                if (nextBudget is not null)
+                {
+                    var chosen = nextBudget.SelectedDefinitions.Select(key => key.Identity).ToHashSet();
+                    _selected = nextBudget.Groups.Where(group => group.IsEligible && (nextBudget.Maximum is null || chosen.Contains(group.Identity)))
+                        .Select(group => group.RepresentativeId).ToHashSet();
+                    foreach (var group in nextBudget.Groups)
+                        Items.Add(new(new(group.RepresentativeId, string.Empty, group.IsEligible ? QuotaItemState.Active : QuotaItemState.Ended),
+                            this, _translator, group, nextBudget.Accounts));
+                }
+                else
+                {
+                    _selected = next!.SelectedIds.ToHashSet();
+                    foreach (var item in next.Items.OrderBy(item => item.Name, StringComparer.CurrentCulture).ThenBy(item => item.Id))
+                        Items.Add(new(item, this, _translator));
+                }
+                _baseline = _selected.ToHashSet();
                 SetFeedback(null); RefreshCapabilities();
             });
         }
@@ -155,7 +198,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     partial void OnKindIndexChanged(int value)
     {
         if (_publishing) return;
-        if (!CanInteract || value is not (0 or 1 or 2)) { RestoreIndex(); return; }
+        if (!CanInteract || value is not (0 or 1 or 2 or 3)) { RestoreIndex(); return; }
         PendingKindChange = SwitchAsync(value);
     }
 
@@ -223,12 +266,17 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (!CanSave || _snapshot is not { } reviewed) return;
+        if (!CanSave || _snapshot is null && _budgetSnapshot is null) return;
+        var reviewed = _snapshot; var reviewedBudget = _budgetSnapshot;
         IsBusy = true;
         var submitted = _selected.ToArray();
         try
         {
-            try { await _store.SaveAsync(reviewed, submitted); }
+            try
+            {
+                if (reviewedBudget is not null) await _budgetStore!.SaveGroupsAsync(reviewedBudget, submitted);
+                else await _store.SaveAsync(reviewed!, submitted);
+            }
             catch (Exception) { SetFeedback("ActiveItems_SaveFailed"); return; }
             // D-142: a committed review must not authorize another Save if post-commit navigation fails.
             _baseline = submitted.ToHashSet(); _discardApproved = false; _reviewRetired = true; SetFeedback(null); RefreshCapabilities();
@@ -252,7 +300,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     public void RefreshDisplay()
     {
         _publishing = true;
-        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"]]; }
+        try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"], _translator["Budget_Title"]]; }
         finally { _publishing = false; }
         SetFeedback(_feedbackKey); RefreshCapabilities();
     }
@@ -262,7 +310,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     private void RefreshCapabilities()
     {
         foreach (var name in new[] { nameof(CanInteract), nameof(CanChoose), nameof(CanSave), nameof(CanLeave), nameof(IsDirty),
-            nameof(OverCapacity), nameof(Counter), nameof(AllowanceText), nameof(CapacityError), nameof(IsEmpty) }) OnPropertyChanged(name);
+            nameof(OverCapacity), nameof(Counter), nameof(AllowanceText), nameof(CapacityError), nameof(IsEmpty), nameof(BudgetHint) }) OnPropertyChanged(name);
         foreach (var item in Items) item.Refresh();
         SaveCommand.NotifyCanExecuteChanged();
     }
