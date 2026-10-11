@@ -5922,4 +5922,31 @@ Límites por categoría:
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>No se pudo abrir la plantilla con los datos revisados. Vuelve a cargar los datos originales y selecciónala de nuevo. No se guardó nada.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>Elige un perfil para nuevas operaciones en este dispositivo. Puedes seguir abriendo todos los perfiles para consultar, hacer copias, exportar y corregir datos. Guardar aplica tu selección; abrir un perfil no lo selecciona.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>La lista de perfiles, la selección o los permisos han cambiado o no se han podido leer. Tu selección sin guardar sigue aquí. Vuelve a cargar los datos originales actuales.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>Disponible para nuevas operaciones</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>Conservado para consultas, copias y correcciones</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>Acciones del perfil {0}. {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>Cambiar la selección para nuevas operaciones en el perfil {0}. {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>Elige un perfil para nuevas operaciones en este dispositivo. Puedes seguir abriendo todos los perfiles para consultar, hacer copias, exportar y corregir datos. Guardar aplica tu selección; abrir un perfil no lo selecciona.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>Perfiles y nuevas operaciones</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>Al volver a Free, puedes elegir Personal para nuevos registros y seguir abriendo Negocio para consultar el historial o hacer una copia. Abrir Negocio no cambia tu selección guardada.</value>
+  </data>
 </root>

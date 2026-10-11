@@ -407,3 +407,12 @@ grant or credentials are introduced; template draft/query viewing never writes t
 ## D-155 - Process-local original template destination
 
 The reviewed original template handoff is process-local only; it adds no portable preference, credential, device security value, network request, SDK or permission. Template selection/application never saves ledger money. Complete original data and declined interim OS backup policy remain unchanged. Existing provider/certificate, device, iOS and publication acceptance remains open.
+
+## D-156 - Device catalogue and profile activity choice
+
+`profiles.work.catalogue` stores original local profile ids/names, catalogue revision and an optional scoped
+device choice/revision in existing device preferences. It is not in the portable preference allowlist and contains
+no credential, PIN verifier, financial value or provider identity. Device policy comes from a synchronous cached
+port; production registration is inactive. No network, SDK, permission, EF schema or interim OS backup policy
+change. Original backup-set resolution follows exact original ids. Native fixtures use independently owned
+fictitious catalogues and restore their complete financial data and owned files.

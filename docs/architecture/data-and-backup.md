@@ -590,3 +590,17 @@ changes are made. Saved queries grant only history; account/ledger writers still
 ## Original Home template destinations (D-155)
 
 TemplateVisit holds the original reviewed actual-file/full packet only in memory. Data creation/resolution validates file/access/choices and complete original resources/references; the actual destination also validates its own publication. A same-id row in another file or a changed packet never replaces the original request. No EF property/schema/migration or portable preference/grant is added. Home reads the legacy layout fallback without creating Settings; only explicit customization writes it.
+
+## Reviewed original device profile catalogue (D-156)
+
+ProfileService reads the legacy original list/name until first explicit mutation, then reads the single
+`profiles.work.catalogue` packet from device preferences. Format 1 has eight fields: version, nullable Base64
+main name/list, encoded catalogue path, device scope, encoded exact original chosen ids, catalogue revision and
+choice revision. The original main id stays empty; `~` is only its encoded choice sentinel. Full raw packet,
+legacy values, current id/file and cached access are retained in an immutable review. Synchronous per-main-file
+gates serialize reviewed catalogue mutations across service instances. One Set publishes catalogue/choice;
+it is not a cross-process or physical power-loss guarantee. Original startup/backup-set readers use the same
+packet. Malformed choice data requires explicit repair without erasing original catalogue metadata.
+Separate choice revision prevents rename from repairing an invalid choice implicitly. Authentication success
+alone is not a committed switch: recheck complete facts, commit current id, otherwise restore previous path.
+No EF/schema/compiled model or portable backup change. Actual per-file financial policy binding remains open.

@@ -5953,4 +5953,31 @@ Kategorielimits:
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>Die Vorlage konnte aus den geprüften Daten nicht geöffnet werden. Laden Sie die Originaldaten neu und wählen Sie sie erneut. Es wurde nichts gespeichert.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>Wählen Sie ein Profil für neue Vorgänge auf diesem Gerät. Alle Profile bleiben für Ansicht, Sicherung, Export und Korrekturen zugänglich. Erst Speichern übernimmt die Auswahl; das Öffnen wählt kein Profil aus.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>Die Profilliste, Auswahl oder Zugriffsrechte haben sich geändert oder konnten nicht gelesen werden. Ihre ungespeicherte Auswahl bleibt erhalten. Laden Sie die aktuellen Originale neu.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>Für neue Vorgänge verfügbar</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>Für Ansicht, Sicherung und Korrekturen erhalten</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>Profilaktionen für {0}. {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>Auswahl für neue Vorgänge im Profil {0} ändern. {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>Wählen Sie ein Profil für neue Vorgänge auf diesem Gerät. Alle Profile bleiben für Ansicht, Sicherung, Export und Korrekturen zugänglich. Erst Speichern übernimmt die Auswahl; das Öffnen wählt kein Profil aus.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>Profile und neue Vorgänge</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>Nach dem Wechsel zu Free können Sie Privat für neue Buchungen auswählen und Geschäft weiterhin für Verlauf oder Sicherung öffnen. Das Öffnen von Geschäft ändert Ihre gespeicherte Auswahl nicht.</value>
+  </data>
 </root>

@@ -2347,3 +2347,27 @@ and cancel/discard without financial Save. Complete owned rows/bytes/display are
 OAuth, commercial activation and publication gates remain open; ENT-02/03 remain in progress.
 
 See [evidence](../quality/home-template-destinations.md).
+
+### 31.69 Reviewed original device profile catalogue (D-156)
+
+Original device profile choices now use the existing empty main id and exact original profile ids/names.
+The actual Profiles form separates open/rename/delete from an explicit saved activity subset and unsaved choice.
+One device preference publication contains the complete catalogue and scoped choice, with separate revisions;
+legacy keys remain untouched and every catalogue/startup/backup-set reader uses the new packet after first mutation.
+Opening reads only. Complete file/current-profile/provider/catalogue reviews guard publication, both delete
+confirmations and creation; authentication is rechecked before committing a switch, with previous-path rollback
+when that review retires. Unselected originals remain openable for retained history and correction.
+
+Production device registration remains inactive. Per-file financial/new-money/automation bindings to the chosen
+profile remain unfinished; this slice does not complete ENT-02/03 or activate commercial limits. No EF model,
+schema, migration, permission, SDK, network request, credential or portable grant is added.
+
+33 new AT-158 actual-source/real isolated SQLite behaviours pass. The ordinary main run passes all 2,790
+tests (App.Tests 733), with no failures/skips; outputs are cleaned. Strict Windows and canonical complete Android
+Release builds have zero warnings/errors. Eighteen hidden Windows en/fa/de, light/dark, 360/412/wide contexts
+check actual native targets, complete growing captions, explicit choice Save, stale Save, retained drafts,
+Cancel/Discard/Reload and unchanged complete fixture data. All review processes exit normally and exact owned
+development bytes/sidecars are restored. Normal signed Release emulator checks and APK details are recorded in
+the evidence document. Physical-device, iOS, OAuth, paid activation and publication gates remain open.
+
+See [evidence](../quality/local-profile-work.md).

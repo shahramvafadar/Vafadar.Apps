@@ -971,3 +971,13 @@ Never repeat a committed operation after failed native feedback/refresh.
 ## Original Home quick-template destinations (D-155)
 
 Keep the existing six shortcuts, with explicitly available later templates first. Preserve complete user identity and spoken name, separate selected enablement and parent publication guards. Show translated unavailable/reload feedback in Home; a changed original destination leaves the draft intact and pins feedback beside Save. Initial selection navigation opens only the template kind, without guessing choices. Reading a legacy Home layout never writes Settings.
+
+## Reviewed original Profiles form (D-156)
+
+Original profile cards have independent real navigation and activity-choice targets with complete live spoken
+names. Original saved availability and the unsaved choice caption are separate. Explicit Save changes only the
+device subset; opening never silently selects an original. Creation requires a free chosen slot when verified
+bounded policy applies. Unchosen history remains reachable; current/main profiles cannot be deleted. Full loading
+and failed-read covers publish all originals before input. Save/Add/Reload reserve their own rows outside the
+scroll viewport, while long names wrap. Busy prompts and Back share the same discard guard; live captions retain
+raw names and unsaved identities. Test-build registration remains inactive. See [evidence](quality/local-profile-work.md).

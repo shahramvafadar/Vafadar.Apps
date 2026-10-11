@@ -1047,3 +1047,15 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Carry the process-local reviewed original file/packet to the entry destination. Recheck both source and current publication; changed, removed or foreign originals never guess a newer same-id row or save money.
 * Shortcut policy availability stays separate from transient parent-command busy state; Retry must restore enabled original targets after publication. Failed navigation requires explicit read-only Reload; show destination failure beside Save. Initial chooser navigation receives only the typed resource kind, never guessed selection. Home layout fallback is read-only until explicit customization.
 * Native fixtures await actual appearance and Shell initial-query publication before changing inputs/applying a recorded handoff. Require realized visible feedback and complete original form data; restore complete rows/owned bytes/display and retain failed captures as negative evidence. Registration stays inactive.
+
+## 89. Reviewed original device profile catalogue (D-156)
+
+* Keep the original empty main id and exact original catalogue ids/names; a device quota scope is separate.
+* Publish catalogue plus explicit scoped choice with one preference Set; use separate catalogue/choice revisions.
+  Startup, backup-set and all catalogue readers follow the composite packet after first explicit mutation.
+* Capture complete original/current-file/provider facts before prompts; recheck both delete confirmations and
+  after authentication before committing a switch. Restore the previous path when an authenticated review retires.
+* Original navigation/correction remains distinct from unsaved activity toggles. Keep covered publication,
+  growing native names, pinned Save/Add/Reload and busy/discard Back. Failed committed refresh retries reads only.
+* Device choices never enter portable preferences or grant paid rights. Registration remains inactive;
+  per-file financial/new-money/automation bindings are still open. Independent fixtures restore exact owned data.

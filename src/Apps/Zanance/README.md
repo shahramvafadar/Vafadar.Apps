@@ -285,3 +285,9 @@ Physical-device, iOS, OAuth, commercial activation and publication gates remain 
 See [evidence](docs/quality/quick-resources.md).
 
 D-155: Home shortcuts use reviewed original template handoffs and separate work availability, with explicit Retry and typed initial choices. Opening Home keeps legacy layout fallback read-only. Test builds remain unrestricted; [native/SQLite evidence](docs/quality/home-template-destinations.md) does not close commercial activation or external release gates.
+
+## Original device profile choices (D-156)
+
+The Profiles form now reviews original identities and keeps explicit device activity choice separate from
+opening, renaming or deleting retained profiles. Test builds remain unrestricted. Per-file financial bindings
+and commercial activation are still open. [Verification and signed APK](docs/quality/local-profile-work.md).

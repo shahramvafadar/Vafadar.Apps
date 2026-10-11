@@ -60,6 +60,9 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DigitFormatting.cs" Link="Application/DigitFormatting.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitNote.cs" Link="Application/DisplayUnitNote.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.cs" Link="Application/ProfileService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Work.cs" Link="Application/ProfileService.Work.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileCatalogueReview.cs" Link="Application/ProfileCatalogueReview.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileWorkAccess.cs" Link="Application/ProfileWorkAccess.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileRuntime.cs" Link="Application/IProfileRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/BulkTransactionsViewModel.cs" Link="Application/BulkTransactionsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/UndoService.cs" Link="Application/UndoService.cs" />

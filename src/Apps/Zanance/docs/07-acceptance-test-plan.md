@@ -1233,3 +1233,14 @@ and cancel/discard without financial Save. Complete owned rows/bytes/display are
 OAuth, commercial activation and publication gates remain open; ENT-02/03 remain in progress.
 
 See [evidence](quality/home-template-destinations.md).
+
+## AT-158 - Reviewed original device profile catalogue (D-156)
+
+Implemented and locally/native verified: exact empty main identity; explicit later/empty device choices;
+inactive/unlimited original access; bounded create capacity; retained original rename/delete/open/backup;
+malformed/foreign choice repair; distinct revisions; complete source retirement through prompts/authentication;
+one preference Set failure; concurrent service slot validation; covered actual form; saved versus unsaved state;
+duplicate-name feedback; busy/discard/reload; committed refresh failure with read-only Retry; live six-language
+captions preserving original rows. 33 new behaviours, main 2,790/App.Tests 733 pass. Strict builds, actual native
+Windows and normal signed Release emulator evidence: [local profile work](quality/local-profile-work.md).
+Per-file financial bindings, commercial activation, physical-device, iOS, OAuth and publication remain open.

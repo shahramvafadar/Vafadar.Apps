@@ -5982,4 +5982,31 @@ Category limits:
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>The template could not be opened from the reviewed data. Reload the original data and choose it again. Nothing was saved.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>Choose a profile for new work on this device. All profiles stay openable for viewing, backup, export and corrections. Save applies your choice; opening a profile does not select it.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>The profile list, selection or available access changed or could not be read. Your unsaved choices remain here. Reload to review the current originals.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>Available for new work</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>Retained for viewing, backup and corrections</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>Profile actions for {0}. {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>Change the work selection for {0}. {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>Choose a profile for new work on this device. All profiles stay openable for viewing, backup, export and corrections. Save applies your choice; opening a profile does not select it.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>Profiles and new work</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>After returning to Free, you can choose Personal for new entries and still open Business to view its history or make a backup. Opening Business does not replace your saved choice.</value>
+  </data>
 </root>

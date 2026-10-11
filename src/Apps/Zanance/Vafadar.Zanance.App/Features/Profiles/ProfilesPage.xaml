@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="Vafadar.Zanance.App.Features.Profiles.ProfilesPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:v="http://vafadar.pro/schemas/maui"
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Profiles.ProfilesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Profiles"
-    x:DataType="local:ProfilesViewModel"
-    Title="{v:Translate Profile_Title}">
-
-    <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="8">
-            <Label Text="{v:Translate Profile_Intro}" Style="{StaticResource Secondary}" />
-
-            <Border Style="{StaticResource Card}" Padding="0">
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Profiles}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="local:ProfileRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <fi:SymbolIcon Symbol="Person" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center" />
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" FontSize="16" />
-                                    <Label Text="{Binding Detail}" Style="{StaticResource Secondary}" IsVisible="{Binding Detail, Converter={StaticResource IsNotNullConverter}}" />
-                                </VerticalStackLayout>
-                                <fi:SymbolIcon Grid.Column="2" Symbol="Checkmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Center"
-                                               IsVisible="{Binding IsCurrent}" />
-                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                                <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
-                                        Command="{Binding ChooseCommand, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
-                                        CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Detail}" />
-                            </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+    x:DataType="local:ProfilesViewModel" Title="{v:Translate Profile_Title}">
+    <Grid>
+        <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="12">
+                    <Label Text="{v:Translate Profile_Intro}" Style="{StaticResource Secondary}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{Binding AllowanceText}" Style="{StaticResource Secondary}" />
+                        <v:HelpButton Grid.Column="1" Topic="ProfileWork" VerticalOptions="Start" />
+                    </Grid>
+                    <Label Text="{Binding Counter}" FontAttributes="Bold" />
+                    <Label Text="{Binding CapacityError}" Style="{StaticResource ErrorText}" IsVisible="{Binding CapacityError, Converter={StaticResource IsNotNullConverter}}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Profiles}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:ProfileRow">
+                                <Border Style="{StaticResource Card}" Padding="0">
+                                    <VerticalStackLayout>
+                                        <Grid Padding="16,12" RowDefinitions="Auto,Auto,Auto" RowSpacing="4" MinimumHeightRequest="44">
+                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                            <Label Grid.Row="1" Text="{Binding Detail}" Style="{StaticResource Secondary}" IsVisible="{Binding Detail, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Grid.Row="2" Text="{Binding WorkText}" Style="{StaticResource Secondary}" />
+                                            <Button Grid.RowSpan="3" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                IsEnabled="{Binding CanInteract, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
+                                                Command="{Binding ChooseCommand, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding AccessibilityText}" />
+                                        </Grid>
+                                        <Grid Padding="16,12" ColumnDefinitions="Auto,*" ColumnSpacing="8" MinimumHeightRequest="44"
+                                            IsVisible="{Binding CanChoose, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}">
+                                            <Border WidthRequest="28" HeightRequest="28" Stroke="{DynamicResource DividerColor}" StrokeThickness="1" VerticalOptions="Center" InputTransparent="True">
+                                                <fi:SymbolIcon Symbol="Checkmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" IsVisible="{Binding IsSelected}" />
+                                            </Border>
+                                            <Label Grid.Column="1" Text="{Binding ChoiceText}" VerticalOptions="Center" />
+                                            <Button Grid.ColumnSpan="2" Style="{StaticResource OverlayButton}" CornerRadius="0" IsEnabled="{Binding CanToggle}"
+                                                Command="{Binding ToggleCommand, Source={RelativeSource AncestorType={x:Type local:ProfilesViewModel}}, x:DataType=local:ProfilesViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding ChoiceDescription}" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate Profile_Note}" Style="{StaticResource Secondary}" />
                 </VerticalStackLayout>
-            </Border>
-
-            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
-            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Profile_Add}" Command="{Binding AddCommand}" />
-            <Label Text="{v:Translate Profile_Note}" Style="{StaticResource Secondary}" FontSize="12" />
+            </ScrollView>
+            <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                <p:WrappingAction Text="{v:Translate ActiveItems_Save}" Command="{Binding SaveChoiceCommand}" IsVisible="{Binding CanChoose}" Appearance="Primary" />
+                <p:WrappingAction Text="{v:Translate Profile_Add}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}" />
+                <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}" />
+            </VerticalStackLayout>
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate ActiveItems_Loading}" HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
-    </ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Profile_SourceChanged}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

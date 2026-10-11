@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Review original device profiles (2026-10-11, D-156)
+
+- Keep original profile names and history accessible, with complete growing action captions.
+- Recheck the same original catalogue through name prompts, both delete confirmations and profile unlock.
+- Show covered loading, explicit Reload and guarded Back; a failed refresh cannot repeat a committed save.
+- Prepare explicit device activity choices and profile creation capacity for approved limits. Test builds remain unrestricted.
+
 ### Improved - Open original quick templates from Home (2026-10-11, D-155)
 
 - Keep available templates reachable on Home and explain when an activity choice is needed.

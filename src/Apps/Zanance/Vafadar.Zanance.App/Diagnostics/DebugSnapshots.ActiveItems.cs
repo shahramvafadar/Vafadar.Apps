@@ -432,28 +432,33 @@ internal static partial class DebugSnapshots
         return true;
     }
 
-    private static void CheckCaption(Label label)
+    private static void CheckCaption(Label label, ICollection<object>? retainedReads = null)
     {
         if (string.IsNullOrEmpty(label.Text)) return;
         if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || native.IsTextTrimmed
             || !native.IsTextScaleFactorEnabled || native.ActualWidth < 1 || native.ActualHeight < 1)
             throw new InvalidOperationException("Missing complete native scaled choice caption: " + label.Text);
+        retainedReads?.Add(native);
         var glyphs = new List<Windows.Foundation.Rect>();
         for (var offset = 0; offset <= native.ContentEnd.Offset - native.ContentStart.Offset; offset++)
             if (native.ContentStart.GetPositionAtOffset(offset, Microsoft.UI.Xaml.Documents.LogicalDirection.Forward) is { } pointer)
+            {
+                retainedReads?.Add(pointer);
                 glyphs.Add(pointer.GetCharacterRect(Microsoft.UI.Xaml.Documents.LogicalDirection.Forward));
+            }
         if (glyphs.Count == 0 || glyphs.Min(rect => rect.Left) < -1 || glyphs.Max(rect => rect.Right) > label.Width + 1
             || glyphs.Max(rect => rect.Bottom) > label.Height + 1)
             throw new InvalidOperationException("Choice-caption glyphs exceed their actual growing allocation: " + label.Text);
     }
 
-    private static void InvokeChoiceReview(Button button)
+    private static void InvokeChoiceReview(Button button, ICollection<object>? retainedReads = null)
     {
         if (button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native) throw new InvalidOperationException("Missing native choice button.");
         var peer = Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer.CreatePeerForElement(native)
             as Microsoft.UI.Xaml.Automation.Peers.ButtonAutomationPeer;
         if (peer?.GetPattern(Microsoft.UI.Xaml.Automation.Peers.PatternInterface.Invoke) is not Microsoft.UI.Xaml.Automation.Provider.IInvokeProvider invoke)
             throw new InvalidOperationException("Missing real native choice Invoke pattern.");
+        retainedReads?.Add(native); retainedReads?.Add(peer); retainedReads?.Add(invoke);
         invoke.Invoke();
     }
 }

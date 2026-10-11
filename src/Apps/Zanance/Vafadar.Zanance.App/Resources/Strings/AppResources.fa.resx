@@ -5953,4 +5953,31 @@
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>قالب از داده‌های بررسی‌شده باز نشد. داده‌های اصلی را دوباره بارگیری کنید و قالب را مجدداً انتخاب کنید. چیزی ذخیره نشده است.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>برای کار جدید در این دستگاه یک پروفایل انتخاب کنید. همهٔ پروفایل‌ها برای مشاهده، بکاپ، خروجی گرفتن و اصلاح اشتباهات قابل بازکردن می‌مانند. دکمهٔ ذخیره انتخاب شما را اعمال می‌کند؛ بازکردن پروفایل آن را انتخاب نمی‌کند.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>فهرست پروفایل‌ها، انتخاب یا دسترسی موجود تغییر کرده یا خواندن آن ممکن نبوده است. انتخاب‌های ذخیره‌نشدهٔ شما اینجا باقی می‌مانند. برای بررسی اطلاعات اصلی فعلی، بازخوانی کنید.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>برای کار جدید در دسترس است</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>برای مشاهده، بکاپ و اصلاحات نگه داشته شده است</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>عملیات پروفایل «{0}». {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>تغییر انتخاب برای کار جدید در پروفایل «{0}». {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>برای کار جدید در این دستگاه یک پروفایل انتخاب کنید. همهٔ پروفایل‌ها برای مشاهده، بکاپ، خروجی گرفتن و اصلاح اشتباهات قابل بازکردن می‌مانند. دکمهٔ ذخیره انتخاب شما را اعمال می‌کند؛ بازکردن پروفایل آن را انتخاب نمی‌کند.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>پروفایل‌ها و کار جدید</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>پس از بازگشت به Free می‌توانید پروفایل شخصی را برای ثبت‌های جدید انتخاب کنید و همچنان پروفایل کاری را برای دیدن تاریخچه یا گرفتن بکاپ باز کنید. بازکردن پروفایل کاری انتخاب ذخیره‌شدهٔ شما را عوض نمی‌کند.</value>
+  </data>
 </root>

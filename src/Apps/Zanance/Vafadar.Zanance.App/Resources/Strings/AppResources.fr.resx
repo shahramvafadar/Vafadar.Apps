@@ -5930,4 +5930,31 @@ Plafonds par catégorie :
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>Le modèle n’a pas pu être ouvert à partir des données vérifiées. Rechargez les données originales et choisissez-le à nouveau. Rien n’a été enregistré.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>Choisissez un profil pour les nouvelles opérations sur cet appareil. Tous les profils restent accessibles pour la consultation, la sauvegarde, l’exportation et les corrections. Enregistrer applique votre sélection ; ouvrir un profil ne le sélectionne pas.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>La liste des profils, la sélection ou les droits d’accès ont changé ou n’ont pas pu être lus. Votre sélection non enregistrée reste ici. Rechargez les données originales actuelles.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>Disponible pour de nouvelles opérations</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>Conservé pour la consultation, la sauvegarde et les corrections</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>Actions du profil {0}. {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>Modifier la sélection pour de nouvelles opérations dans le profil {0}. {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>Choisissez un profil pour les nouvelles opérations sur cet appareil. Tous les profils restent accessibles pour la consultation, la sauvegarde, l’exportation et les corrections. Enregistrer applique votre sélection ; ouvrir un profil ne le sélectionne pas.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>Profils et nouvelles opérations</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>Après votre retour à Free, vous pouvez choisir Personnel pour les nouvelles écritures et ouvrir Professionnel pour consulter son historique ou le sauvegarder. Ouvrir Professionnel ne remplace pas votre sélection enregistrée.</value>
+  </data>
 </root>

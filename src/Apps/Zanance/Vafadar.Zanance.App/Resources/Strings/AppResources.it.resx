@@ -5942,4 +5942,31 @@ Limiti per categoria:
   <data name="Templates_SourceChanged" xml:space="preserve">
     <value>Non è stato possibile aprire il modello dai dati verificati. Ricarica i dati originali e selezionalo di nuovo. Nulla è stato salvato.</value>
   </data>
+  <data name="Profile_WorkHint" xml:space="preserve">
+    <value>Scegli un profilo per le nuove operazioni su questo dispositivo. Tutti i profili restano accessibili per consultare, fare backup, esportare e correggere i dati. Salva applica la tua scelta; aprire un profilo non lo seleziona.</value>
+  </data>
+  <data name="Profile_SourceChanged" xml:space="preserve">
+    <value>L’elenco dei profili, la selezione o i permessi sono cambiati o non è stato possibile leggerli. La tua scelta non salvata resta qui. Ricarica i dati originali attuali.</value>
+  </data>
+  <data name="Profile_WorkAvailable" xml:space="preserve">
+    <value>Disponibile per nuove operazioni</value>
+  </data>
+  <data name="Profile_WorkRetained" xml:space="preserve">
+    <value>Conservato per consultazione, backup e correzioni</value>
+  </data>
+  <data name="Profile_ActionsDescription" xml:space="preserve">
+    <value>Azioni del profilo {0}. {1}</value>
+  </data>
+  <data name="Profile_ChoiceDescription" xml:space="preserve">
+    <value>Cambia la selezione per nuove operazioni nel profilo {0}. {1}</value>
+  </data>
+  <data name="Help_ProfileWork_Text" xml:space="preserve">
+    <value>Scegli un profilo per le nuove operazioni su questo dispositivo. Tutti i profili restano accessibili per consultare, fare backup, esportare e correggere i dati. Salva applica la tua scelta; aprire un profilo non lo seleziona.</value>
+  </data>
+  <data name="Help_ProfileWork_Title" xml:space="preserve">
+    <value>Profili e nuove operazioni</value>
+  </data>
+  <data name="Help_ProfileWork_Example" xml:space="preserve">
+    <value>Dopo il ritorno a Free puoi scegliere Personale per le nuove registrazioni e aprire Lavoro per consultare la cronologia o fare un backup. Aprire Lavoro non cambia la scelta salvata.</value>
+  </data>
 </root>

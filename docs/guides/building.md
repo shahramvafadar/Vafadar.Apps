@@ -586,3 +586,13 @@ leave the final signed Release installed/stopped. This does not activate product
 ## Home template native review (D-155)
 
 Windows Debug routes `home-template-work` and `home-template-destination` use an independent fictitious database, actual Home/chooser/entry controls and recorded original native-effect parameters. The continuation waits for the real Shell initial query before applying the recorded typed handoff, checks realized pinned feedback, restores complete rows and renders only the hidden app root. Earlier failed/racing captures are negative evidence. Canonical signed APK remains required for phone handoff; build/CI is not device or publication acceptance.
+
+## Original profile choice native review (D-156)
+
+The Windows Debug `profile-work` route uses an independent fictitious catalogue/database and actual Profiles
+controls. It checks inactive/bounded original publication, explicit selected identity, stale Save, retained
+drafts and native Cancel/Discard/Reload without financial Save. Hidden native AppWindow/root rendering retains
+its own WinRT caption/Invoke read objects for the short review process; require normal process exit as well as
+completed proof. Keep interrupted/finalizer-failed captures as negative evidence. The ordinary `profiles` screen
+already belongs to the snapshot route list. No production provider replacement or OS/device setting change.
+See the repository evidence at `src/Apps/Zanance/docs/quality/local-profile-work.md`.

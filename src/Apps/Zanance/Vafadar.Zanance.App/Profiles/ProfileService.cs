@@ -26,7 +26,8 @@ public sealed partial class ProfileService(
     ZananceStore store,
     ISettingsStore preferences,
     IProfileRuntime runtime,
-    Translator translator)
+    Translator translator,
+    IProfileWorkAccessSource? workAccess = null)
 {
     private const string ListKey = "profiles.list";
     private const string CurrentKey = "profiles.current";
@@ -39,7 +40,7 @@ public sealed partial class ProfileService(
     public event EventHandler? Changed;
 
     /// <summary>Gets all profiles, the main one first.</summary>
-    public IReadOnlyList<LocalProfile> All => [new LocalProfile(string.Empty, preferences.Get(MainNameKey)), .. Others(preferences)];
+    public IReadOnlyList<LocalProfile> All => CatalogueProfiles(ReadCatalogue(preferences));
 
     /// <summary>Gets the open profile.</summary>
     public LocalProfile Current => All.FirstOrDefault(p => p.Id == CurrentId(preferences)) ?? All[0];
@@ -72,68 +73,54 @@ public sealed partial class ProfileService(
     }
 
     /// <summary>Adds a profile; it is opened separately and starts with onboarding.</summary>
-    public LocalProfile Create(string name)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        var profile = new LocalProfile(Guid.NewGuid().ToString("N"), Clean(name));
-        Save([.. Others(preferences), profile]);
-        Changed?.Invoke(this, EventArgs.Empty);
-        return profile;
-    }
+    public LocalProfile Create(string name) => CreateReviewed(ReadWorkReview(), name);
 
-    /// <summary>Renames a profile.</summary>
-    public void Rename(LocalProfile profile, string name)
-    {
-        ArgumentNullException.ThrowIfNull(profile);
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        RequireKnown(profile);
-        if (profile.IsMain)
-        {
-            preferences.Set(MainNameKey, Clean(name));
-        }
-        else
-        {
-            Save([.. Others(preferences).Select(p => p.Id == profile.Id ? p with { Name = Clean(name) } : p)]);
-        }
-
-        Changed?.Invoke(this, EventArgs.Empty);
-    }
+    /// <summary>Renames a complete original profile using the current reviewed catalogue.</summary>
+    public void Rename(LocalProfile profile, string name) => RenameReviewed(ReadWorkReview(), profile, name);
 
     /// <summary>
     /// Deletes a profile that is not open, with all its data. The main profile cannot be deleted; its data can be
     /// deleted in the settings.
     /// </summary>
-    public void Delete(LocalProfile profile)
+    public void Delete(LocalProfile profile) => DeleteReviewed(ReadWorkReview(), profile);
+
+    /// <summary>Deletes only the reviewed inactive original and releases its selected device slot atomically.</summary>
+    public void DeleteReviewed(ProfileCatalogueReview review, LocalProfile profile)
     {
-        ArgumentNullException.ThrowIfNull(profile);
-        RequireKnown(profile);
-        if (profile.IsMain || profile.Id == Current.Id)
+        lock (CatalogueGate)
         {
-            throw new InvalidOperationException("The main profile and the open profile cannot be deleted.");
-        }
-
-        Save([.. Others(preferences).Where(p => p.Id != profile.Id)]);
-        var path = PathOf(MainPath(), profile.Id);
-        LocalDatabasePools.ClearFile(path);
-
-        // Its backups on this device go too (its backup set, see CurrentBackupSet); cloud backups stay in the account.
-        var backups = new[] { "backups", "backups-safety" }
-            .Select(folder => Path.Combine(Path.GetDirectoryName(MainPath())!, folder))
-            .Where(Directory.Exists)
-            .SelectMany(folder => Directory.EnumerateFiles(folder, $"{ZananceApp.AppId}~{profile.Id}_*"));
-        foreach (var file in new[] { path, path + "-wal", path + "-shm", path + "-journal" }.Concat(backups))
-        {
-            try
+            ValidateWorkCore(review, true); RequireReviewedProfile(review, profile);
+            if (profile.IsMain || profile.Id == Current.Id)
             {
-                File.Delete(file);
+                throw new InvalidOperationException("The main profile and the open profile cannot be deleted.");
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-            {
-                System.Diagnostics.Debug.WriteLine($"Profile file not deleted: {ex.GetType().Name}");
-            }
-        }
 
-        Changed?.Invoke(this, EventArgs.Empty);
+            var state = ReadCatalogue(preferences) with { List = EncodeProfiles(review.Profiles.Where(p => !p.IsMain && p.Id != profile.Id)) };
+            if (review.Maximum is not null && !review.RequiresSelection)
+                state = state with { Choice = EncodeField(string.Join(';', review.SelectedIds.Where(id => id != profile.Id).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = Guid.NewGuid().ToString("N") };
+            PublishCatalogue(state);
+            var path = PathOf(MainPath(), profile.Id);
+            LocalDatabasePools.ClearFile(path);
+
+            // Its backups on this device go too (its backup set, see CurrentBackupSet); cloud backups stay in the account.
+            var backups = new[] { "backups", "backups-safety" }
+                .Select(folder => Path.Combine(Path.GetDirectoryName(MainPath())!, folder))
+                .Where(Directory.Exists)
+                .SelectMany(folder => Directory.EnumerateFiles(folder, $"{ZananceApp.AppId}~{profile.Id}_*"));
+            foreach (var file in new[] { path, path + "-wal", path + "-shm", path + "-journal" }.Concat(backups))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Profile file not deleted: {ex.GetType().Name}");
+                }
+            }
+
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     /// <summary>
@@ -141,10 +128,12 @@ public sealed partial class ProfileService(
     /// the open profile stays.
     /// </summary>
     /// <returns><see langword="true"/> when the profile is open.</returns>
-    public async Task<bool> SwitchToAsync(LocalProfile profile)
+    public Task<bool> SwitchToAsync(LocalProfile profile) => SwitchReviewedAsync(ReadWorkReview(), profile);
+
+    /// <summary>Opens any reviewed original for retained work; rechecks catalogue and rights before committing after authentication.</summary>
+    public async Task<bool> SwitchReviewedAsync(ProfileCatalogueReview review, LocalProfile profile)
     {
-        ArgumentNullException.ThrowIfNull(profile);
-        RequireKnown(profile);
+        ValidateWorkReview(review); RequireReviewedProfile(review, profile);
         if (profile.Id == Current.Id)
         {
             return true;
@@ -157,17 +146,25 @@ public sealed partial class ProfileService(
         // Automatic posting never runs while the database moves, so no occurrence is posted into the wrong profile.
         await runtime.RunExclusiveAsync(async () =>
         {
+            ValidateWorkReview(review);
             location.MoveTo(PathOf(MainPath(), profile.Id));
             try
             {
                 await runtime.MigrateAsync();
                 var settings = await store.GetSettingsAsync();
-                opened = !settings.AppLockEnabled
+                var authenticated = !settings.AppLockEnabled
                     || await runtime.AuthenticateAsync(translator["Profile_UnlockReason"]);
-                if (opened)
+                if (authenticated)
                 {
                     // Backups and the next start follow the open profile from the same moment on.
-                    preferences.Set(CurrentKey, profile.Id);
+                    lock (CatalogueGate)
+                    {
+                        ValidateWorkCore(review, checkCurrentPath: false);
+                        preferences.Set(CurrentKey, profile.Id);
+                        // Successful authentication alone is not a committed switch. A retired catalogue must
+                        // restore the previous path even when the device authentication itself succeeded.
+                        opened = true;
+                    }
                 }
             }
             finally
@@ -190,12 +187,6 @@ public sealed partial class ProfileService(
         return true;
     }
 
-    // Only catalogue identities may form a path or select a database; length alone does not validate stored ids.
-    private void RequireKnown(LocalProfile profile)
-    {
-        if (!All.Any(p => p.Id == profile.Id)) { throw new ArgumentException("The profile is not in the local catalogue.", nameof(profile)); }
-    }
-
     private string MainPath() => Path.Combine(Path.GetDirectoryName(location.Path)!, ZananceApp.DatabaseFileName);
 
     private static string PathOf(string mainPath, string id) =>
@@ -210,17 +201,16 @@ public sealed partial class ProfileService(
     }
 
     // Stored as "id:base64(name);…": no JSON serializer needed and safe with any name.
-    private static List<LocalProfile> Others(ISettingsStore preferences) =>
+    private static List<LocalProfile> Others(ISettingsStore preferences) => ParseOthers(ReadCatalogue(preferences).List);
+
+    private static List<LocalProfile> ParseOthers(string? list) =>
     [
-        .. (preferences.Get(ListKey) ?? string.Empty)
+        .. (list ?? string.Empty)
             .Split(';', StringSplitOptions.RemoveEmptyEntries)
             .Select(item => item.Split(':', 2))
             .Where(parts => parts.Length == 2 && Guid.TryParseExact(parts[0], "N", out _))
             .Select(parts => new LocalProfile(parts[0], Decode(parts[1]))),
     ];
-
-    private void Save(IEnumerable<LocalProfile> profiles) =>
-        preferences.Set(ListKey, string.Join(';', profiles.Select(p => $"{p.Id}:{Convert.ToBase64String(Encoding.UTF8.GetBytes(p.Name ?? string.Empty))}")));
 
     private static string? Decode(string value)
     {

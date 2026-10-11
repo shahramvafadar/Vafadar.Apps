@@ -86,6 +86,7 @@ public static class MauiProgram
             .AddSingleton<Vafadar.Zanance.Core.Security.IPinStorage, SecurePinStorage>()
             .AddSingleton<Vafadar.Zanance.Core.Security.PinLock>()
             .AddSingleton<Profiles.IProfileRuntime, Profiles.MauiProfileRuntime>()
+            .AddSingleton<Profiles.IProfileWorkAccessSource, Profiles.InactiveProfileWorkAccessSource>()
             .AddSingleton<Profiles.ProfileService>();
 
 #if IOS
