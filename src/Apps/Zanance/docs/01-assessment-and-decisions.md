@@ -1288,3 +1288,16 @@ legacy RepairSettlements remains for older data. No new quota grants or inactive
 16 added SQLite cases/main 2,157 pass, App.Tests 318; [native/package evidence](quality/atomic-occurrence-payments.md).
 No schema, permission, SDK, caption or layout change. Generated-entry reopening, selected-plan automation,
 choice persistence/UI and occurrence-command exception feedback remain unfinished; ENT-02/03 stay in progress.
+
+## D-135 - Atomic reopening of the exact reviewed settlement (2026-10-11)
+
+Reopen exactly the reviewed settlement under the actual-file writer. Check stored state EntryId/status and
+actual payment plan/date/partial markers; reject stale identities without deleting or releasing another payment.
+Generated entries reuse complete ledger deletion, groups, refund links, receipt ownership, paid totals and the
+file-bound Undo journal. Manual/imported money is kept; unlink it with the opened state atomically. No second
+writer after committed Changed. Preserve earlier partial money and complete occurrence overrides; retain automatic
+posting suppression through Undo. SQL/access failure rolls back all rows before store/plan notifications.
+15 added SQLite cases/main 2,172 pass; App.Tests 318. Current commercial registration stays inactive.
+No schema, migration, SDK, permission, backup field, caption or layout change. Selected-plan generation/automation,
+choice persistence/UI, command exception feedback and existing external acceptance gates remain unfinished.
+[Evidence](quality/atomic-occurrence-reopening.md).

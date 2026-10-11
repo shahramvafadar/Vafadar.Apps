@@ -784,7 +784,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   Never steal another occurrence's payment. Entry markers and state commit together without posting another entry
   or changing financial metadata. Preserve normal idempotent links and actual paid totals.
 * Current registration stays inactive. D-134 completes the new/full/partial settlement writer boundary.
-  Reopening generated money and selected-plan generation/automation remain unfinished; no full enforcement claim.
+  D-135 completes reviewed reopening; selected-plan generation/automation remain unfinished. No full enforcement claim.
 
 ## 67. Atomic new occurrence payments (D-134)
 
@@ -793,5 +793,17 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Classify partial/final payment from actual linked partial money and Core effective amount/date rules, preserving
   explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
   all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
-* Current registration remains inactive. Generated-entry reopening, selected-plan generation/automation, choice
-  persistence/UI and occurrence-command exception feedback remain separate unfinished boundaries.
+* Current registration remains inactive. D-135 completes generated-entry reopening. Selected-plan generation/automation,
+  choice persistence/UI and occurrence-command exception feedback remain separate unfinished boundaries.
+
+## 68. Reopening the exact reviewed settlement (D-135)
+
+* Bind the reviewed EntryId, actual settled state and entry plan/date/partial markers to one actual-file writer.
+  Reject stale identities/relationships before deleting or unlinking another payment. Retained history remains
+  correctable without account selection or paid host; require exact membership.
+* Generated reopening reuses the established complete ledger deletion pipeline, including groups, paid totals,
+  refund links, receipt ownership and file-bound Undo journal. It already reopens states; no second post-commit write.
+  Keep actual manual/imported money and metadata, releasing only its checked link atomically with the opened state.
+* SQL/access failure rolls back all complete rows before notifications. Earlier partial payments and occurrence
+  overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; selected-plan
+  generation/automation, choice persistence/UI and occurrence-command exception feedback remain unfinished.

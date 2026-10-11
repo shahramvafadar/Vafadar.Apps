@@ -483,3 +483,10 @@ remaining money. Reuse ledger validation; recheck stored relationships and Core 
 SQL/access rollback and notifications after commit. 16 added SQLite cases/main 2,157 pass, App.Tests 318;
 six normal Release en/fa/de light/dark flows. Registration stays inactive. Generated-entry reopening,
 selected-plan automation, choice persistence/UI and command exception feedback remain open: [evidence](../../quality/atomic-occurrence-payments.md).
+
+D-135 continues ENT-02/03 with the reviewed settlement identity and actual entry relationship bound to the
+same writer as generated deletion or manual unlinking. Reuse complete deletion/Undo; no second committed-state
+write. Preserve partial money, overrides, refund/receipt ownership and suppression. 15 new cases/main 2,172 pass,
+App.Tests 318; six normal Release native confirmations. Current registration stays inactive. Other selected-plan
+generation/automation, choice persistence/UI and command exception feedback remain unfinished.
+[Evidence](../../quality/atomic-occurrence-reopening.md).

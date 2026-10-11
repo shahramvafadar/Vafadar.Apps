@@ -885,3 +885,12 @@ full/partial payments. One final settlement, correct prior paid total and preser
 Main 2,157 pass, App.Tests 318. Normal Release en/fa/de light full Confirm and dark partial then final Pay part
 are checked through native inputs/actions, plus complete stored rows. [Evidence](quality/atomic-occurrence-payments.md).
 Strict builds and emulator evidence do not complete physical-device/iOS/production acceptance.
+
+## AT-137 - Exact reviewed settlement reopening (D-135)
+
+15 new SQLite cases: stale reviewed payment identity, changed actual link, no second write after committed
+Changed retires scope, two SQL state failures, two membership rejections, four retained Free/expired-host paths,
+two actual post-SQL access retirements/retries, complete refund/receipt Undo and earlier partial money/overrides.
+Compare all 24 complete tables for rejected writes; Undo comparison excepts only the explicitly asserted retained
+automatic-post suppression flag. Main 2,172 pass, App.Tests 318. Six normal Release en/fa/de light/dark explicit
+native reopening confirmations and actual stored-row proof: [evidence](quality/atomic-occurrence-reopening.md). Device/iOS acceptance remains open.

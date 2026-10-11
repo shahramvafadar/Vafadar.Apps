@@ -389,3 +389,12 @@ rules for classification; preserve explicit actual money/date. Save final state 
 entries and partial paid totals. SQL failure or retired cached facts rolls back all writes before Changed.
 Independent writers preserve one final settlement. Legacy repair remains for older interrupted data; no schema
 or production-source activation. Generated-entry Unsettle and automation binding remain unfinished boundaries.
+
+## Reopening the exact reviewed occurrence (D-135)
+
+ZananceStore.ReopenOccurrenceAsync binds actual settled state/reviewed EntryId and actual entry markers to one
+CommercialWriteTransaction. Generated payments reuse private DeleteEntriesUnderWriterAsync, preserving the
+existing group/refund/receipt/paid-total/file-bound Undo rules and already atomic state reopening. Never reacquire
+a second writer after Changed. Manual/imported money stays; ExecuteUpdate releases only the verified link with
+the opened/suppressed state. Exact membership and post-SQL freshness apply, without selecting retained accounts.
+No schema/activation change. Selected-plan automation and occurrence exception feedback remain unfinished.

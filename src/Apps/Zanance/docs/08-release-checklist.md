@@ -334,3 +334,10 @@ D-134: 16 new SQLite cases/main 2,157 pass, strict Windows/Android, complete sig
 full/partial/final flows. No test-build commercial activation. Generated-entry reopening/automation/choice UI/
 exception feedback and all external provider/device/iOS/security/billing/publication gates remain open.
 [Evidence](quality/atomic-occurrence-payments.md).
+
+D-135 continues ENT-02/03 with the reviewed settlement identity and actual entry relationship bound to the
+same writer as generated deletion or manual unlinking. Reuse complete deletion/Undo; no second committed-state
+write. Preserve partial money, overrides, refund/receipt ownership and suppression. 15 new cases/main 2,172 pass,
+App.Tests 318; six normal Release native confirmations. Current registration stays inactive. Other selected-plan
+generation/automation, choice persistence/UI and command exception feedback remain unfinished.
+Strict Windows/Android and complete signed APK verified; external gates remain open. [Evidence](quality/atomic-occurrence-reopening.md).

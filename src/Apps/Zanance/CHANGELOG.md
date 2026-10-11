@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Safe reopening of a planned payment (2026-10-11, D-135)
+
+- Recheck the payment when reopening a planned occurrence, so an old form cannot remove another payment.
+- Keep manual payments and release only their link; remove generated payments and reopen their occurrence together.
+- Preserve earlier partial payments, occurrence changes, receipt ownership and the existing deletion Undo data.
+
 ### Fixed - Complete planned payment saves (2026-10-11, D-134)
 
 - Save a planned payment and its settled status together, so a storage failure cannot leave half the operation saved.

@@ -768,3 +768,10 @@ Existing Confirm and Pay part actions keep explicit actual amount/date and estab
 its matching status commit together. Pay part uses the current stored amount and earlier actual payments, not an
 old form balance; reaching the remaining amount settles once. No caption/layout change. Native normal delivery
 is separate from SQLite failure rollback; existing command exception feedback remains an unfinished follow-up.
+
+## Reopening the reviewed payment (D-135)
+
+Keep the existing explicit Reopen confirmation and financial effect: generated payment deletion, manual/imported
+payment unlinking. Recheck the reviewed identity under the writer; never target a different payment from an old
+form. Preserve earlier partial amounts and edited occurrence details. No caption/layout change. Normal native
+success is verified separately from SQL/access rollback; command exception feedback remains an unfinished follow-up.

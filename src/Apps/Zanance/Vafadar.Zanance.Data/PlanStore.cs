@@ -329,29 +329,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<IReadOnlyList<LedgerEntry>> UnsettleAsync(Occurrence occurrence, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
-        IReadOnlyList<LedgerEntry> deleted = [];
-        Func<ZananceDbContext, Task>? unlink = null;
-        if (occurrence.State?.EntryId is { } entryId && await store.GetEntryAsync(entryId, cancellationToken) is { } entry)
-        {
-            if (entry.Source == EntrySource.Schedule)
-            {
-                deleted = await store.DeleteEntryAsync(entryId, cancellationToken);
-            }
-            else
-            {
-                // An entry the user recorded stays; it only loses its link, together with the reopened occurrence.
-                unlink = db => db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
-                    e => e.SetProperty(x => x.ScheduleId, (Guid?)null).SetProperty(x => x.OccurrenceDate, (DateOnly?)null),
-                    cancellationToken);
-            }
-        }
-
-        await UpdateStateAsync(occurrence, state =>
-        {
-            state.Status = OccurrenceStatus.Open;
-            state.EntryId = null;
-            state.AutoPostSuppressed = true;
-        }, cancellationToken, unlink);
+        var deleted = await store.ReopenOccurrenceAsync(occurrence, cancellationToken);
+        OnChanged();
         return deleted;
     }
 

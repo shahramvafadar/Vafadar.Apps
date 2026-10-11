@@ -1248,8 +1248,15 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(ids);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        return await DeleteEntriesUnderWriterAsync(db, write, ids, cancellationToken);
+    }
+
+    /// <summary>Deletes complete ledger groups and reopens their states within the caller's actual-file writer.</summary>
+    private async Task<IReadOnlyList<LedgerEntry>> DeleteEntriesUnderWriterAsync(ZananceDbContext db,
+        CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
+    {
+        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
         write.DemandFeature(CommercialFeature.DeleteData);
         var wanted = ids.Distinct().ToList();
         var entries = await db.Entries.Where(e => wanted.Contains(e.Id)).ToListAsync(cancellationToken);

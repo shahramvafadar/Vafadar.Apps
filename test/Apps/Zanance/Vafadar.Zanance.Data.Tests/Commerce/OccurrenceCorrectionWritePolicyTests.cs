@@ -12,7 +12,7 @@ using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data.Tests.Commerce;
 
-/// <summary>AT-135/136: retained occurrence corrections, links and new payments in actual SQLite writers.</summary>
+/// <summary>AT-135/136/137: retained occurrence corrections, links and new payments in actual SQLite writers.</summary>
 [Trait("AT", "AT-135")]
 public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
 {
@@ -471,7 +471,182 @@ public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
         Assert.Equal(entries.Single(e => !e.IsPartialPayment).Id, state.EntryId);
     }
 
-    private static async Task<string> SnapshotAsync(ServiceProvider provider)
+    [Fact]
+    [Trait("AT", "AT-137")]
+    public async Task A_stale_reviewed_settlement_cannot_delete_another_occurrences_generated_money()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var own = Occurrences.CreateEntry(seed.Occurrence, 1000, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.SettleAsync(seed.Occurrence, own, Ct)).Succeeded);
+        var otherDate = Day.AddMonths(-1);
+        var other = Occurrences.Between(seed.Plan, [], otherDate, otherDate, Day).Single();
+        var payment = Occurrences.CreateEntry(other, 1000, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.SettleAsync(other, payment, Ct)).Succeeded);
+        var stale = seed.Occurrence with { State = new OccurrenceState { ScheduleId = seed.Plan.Id, OriginalDate = Day,
+            Status = OccurrenceStatus.Settled, EntryId = payment.Id }, Status = OccurrenceView.Settled };
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => seed.Plans.UnsettleAsync(stale, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-137")]
+    public async Task Reopening_rechecks_actual_link_markers_before_unlinking_the_reviewed_payment()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        await seed.Plans.LinkAsync(seed.Occurrence, seed.Entry.Id, Ct);
+        var reviewed = Occurrences.Between(seed.Plan, await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct), Day, Day, Day).Single();
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Entries.Where(e => e.Id == seed.Entry.Id).ExecuteUpdateAsync(e => e.SetProperty(x => x.OccurrenceDate, Day.AddMonths(-1)), Ct);
+        var before = await SnapshotAsync(f.Provider);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => seed.Plans.UnsettleAsync(reviewed, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-137")]
+    public async Task A_committed_generated_reopening_has_no_second_write_after_changed_retires_its_scope()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        var payment = Occurrences.CreateEntry(seed.Occurrence, 1000, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.SettleAsync(seed.Occurrence, payment, Ct)).Succeeded);
+        var reviewed = Occurrences.Between(seed.Plan, await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct), Day, Day, Day).Single();
+        f.Enable(); f.Store.Changed += (_, _) => f.Access.Current = new(f.Path, Context(ProductPlan.Free, true, false, false));
+        var deleted = await seed.Plans.UnsettleAsync(reviewed, Ct);
+        Assert.Equal(payment.Id, Assert.Single(deleted).Id);
+        Assert.Null(await f.Store.GetEntryAsync(payment.Id, Ct));
+        var state = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Open, state.Status); Assert.Null(state.EntryId); Assert.True(state.AutoPostSuppressed);
+    }
+
+    private static async Task<(PlanStore Plans, Schedule Plan, Occurrence Reviewed, LedgerEntry Payment)> ReopeningAsync(Fixture f, bool generated)
+    {
+        var seed = await SeedAsync(f); var payment = generated
+            ? Occurrences.CreateEntry(seed.Occurrence, 1000, Day, ReviewState.Confirmed) : seed.Entry;
+        if (generated) Assert.True((await seed.Plans.SettleAsync(seed.Occurrence, payment, Ct)).Succeeded);
+        else await seed.Plans.LinkAsync(seed.Occurrence, payment.Id, Ct);
+        var reviewed = Occurrences.Between(seed.Plan, await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct), Day, Day, Day).Single();
+        return (seed.Plans, seed.Plan, reviewed, payment);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-137")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Failed_reopening_state_update_rolls_back_complete_money_and_relationships(bool generated)
+    {
+        var f = await FixtureAsync(); var seed = await ReopeningAsync(f, generated);
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER OwnedReopenFailure BEFORE UPDATE ON OccurrenceStates BEGIN SELECT RAISE(ABORT, 'Owned reopen failure'); END", Ct);
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        await Assert.ThrowsAsync<DbUpdateException>(() => seed.Plans.UnsettleAsync(seed.Reviewed, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-137")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Reopening_requires_actual_membership_before_any_generated_or_linked_money_write(bool generated)
+    {
+        var f = await FixtureAsync(); var seed = await ReopeningAsync(f, generated);
+        f.Access.Current = new(f.Path, Context(ProductPlan.Pro, true, false, true));
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        await Assert.ThrowsAsync<CommercialWriteRejectedException>(() => seed.Plans.UnsettleAsync(seed.Reviewed, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+    }
+
+    [Theory]
+    [Trait("AT", "AT-137")]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public async Task Reopening_retains_free_and_expired_host_rights_without_selecting_accounts(bool generated, bool expiredHost)
+    {
+        var f = await FixtureAsync(); var seed = await ReopeningAsync(f, generated);
+        f.Access.Current = new(f.Path, Context(ProductPlan.Free, expiredHost, true, !expiredHost));
+        var original = JsonSerializer.Serialize(await f.Store.GetEntryAsync(seed.Payment.Id, Ct)); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        var deleted = await seed.Plans.UnsettleAsync(seed.Reviewed, Ct);
+        var state = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Open, state.Status); Assert.Null(state.EntryId); Assert.True(state.AutoPostSuppressed);
+        Assert.Equal(2, events);
+        if (generated)
+        {
+            Assert.Equal(original, JsonSerializer.Serialize(Assert.Single(deleted)));
+            await f.Store.RestoreEntriesAsync(deleted, Ct);
+            Assert.Equal(original, JsonSerializer.Serialize(await f.Store.GetEntryAsync(seed.Payment.Id, Ct)));
+        }
+        else
+        {
+            Assert.Empty(deleted); var payment = Assert.IsType<LedgerEntry>(await f.Store.GetEntryAsync(seed.Payment.Id, Ct));
+            Assert.Null(payment.ScheduleId); Assert.Null(payment.OccurrenceDate);
+            payment.ScheduleId = seed.Plan.Id; payment.OccurrenceDate = Day;
+            Assert.Equal(original, JsonSerializer.Serialize(payment));
+        }
+    }
+
+    [Theory]
+    [Trait("AT", "AT-137")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Rights_retired_by_actual_reopening_sql_roll_back_before_retry(bool generated)
+    {
+        var f = await FixtureAsync(trigger: true); var seed = await ReopeningAsync(f, generated); f.Enable();
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        var sql = generated
+            ? "CREATE TRIGGER OwnedReopenRetirement AFTER DELETE ON Entries BEGIN SELECT AfterOccurrenceSql(); END"
+            : "CREATE TRIGGER OwnedReopenRetirement AFTER UPDATE ON Entries BEGIN SELECT AfterOccurrenceSql(); END";
+        await db.Database.ExecuteSqlRawAsync(sql, Ct);
+        f.Access.AfterSql = () => f.Access.Current = CommercialWriteAccess.Inactive;
+        var before = await SnapshotAsync(f.Provider); var events = 0;
+        seed.Plans.Changed += (_, _) => events++; f.Store.Changed += (_, _) => events++;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => seed.Plans.UnsettleAsync(seed.Reviewed, Ct));
+        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
+        f.Access.AfterSql = null; f.Enable(); await seed.Plans.UnsettleAsync(seed.Reviewed, Ct); Assert.Equal(2, events);
+    }
+
+    [Fact]
+    [Trait("AT", "AT-137")]
+    public async Task Generated_reopening_returns_the_exact_file_bound_refund_and_receipt_undo_journal()
+    {
+        var f = await FixtureAsync(); var seed = await ReopeningAsync(f, true);
+        var receipt = new EntryAttachment { EntryId = seed.Payment.Id, FileName = "owned-reopening.txt", ContentType = "text/plain", Data = [1, 2, 3] };
+        await f.Store.AddAttachmentAsync(receipt, Ct);
+        var refund = EntryActions.CreateRefund(seed.Payment, 400, f.Accounts[0].Id, Day);
+        Assert.True((await f.Store.SaveEntryAsync(refund, Ct)).Succeeded);
+        var before = await SnapshotAsync(f.Provider, ignoreAutoPostSuppressed: true);
+        var deleted = await seed.Plans.UnsettleAsync(seed.Reviewed, Ct);
+        Assert.Null(Assert.IsType<LedgerEntry>(await f.Store.GetEntryAsync(refund.Id, Ct)).RefundOfId);
+        Assert.Equal(receipt.Data, Assert.IsType<EntryAttachment>(await f.Store.GetAttachmentAsync(receipt.Id, Ct)).Data);
+        await f.Store.RestoreEntriesAsync(deleted, Ct);
+        Assert.True(Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct)).AutoPostSuppressed);
+        Assert.Equal(before, await SnapshotAsync(f.Provider, ignoreAutoPostSuppressed: true));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-137")]
+    public async Task Reopening_a_final_payment_keeps_earlier_partial_money_and_complete_occurrence_overrides()
+    {
+        var f = await FixtureAsync(); var seed = await SeedAsync(f);
+        await seed.Plans.ChangeOccurrenceAsync(seed.Occurrence, Day.AddDays(2), 1200, "Owned retained override", Ct);
+        var part = Occurrences.CreateEntry(seed.Occurrence, 400, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.PayPartAsync(seed.Occurrence, part, Ct)).Succeeded);
+        var final = Occurrences.CreateEntry(seed.Occurrence, 800, Day, ReviewState.Confirmed);
+        Assert.True((await seed.Plans.PayPartAsync(seed.Occurrence, final, Ct)).Succeeded);
+        var reviewed = Occurrences.Between(seed.Plan, await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct), Day, Day.AddDays(2), Day).Single();
+        await seed.Plans.UnsettleAsync(reviewed, Ct);
+        var state = Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct));
+        Assert.Equal(OccurrenceStatus.Open, state.Status); Assert.Equal(400, state.PaidAmount);
+        Assert.Equal(1200, state.Amount); Assert.Equal(Day.AddDays(2), state.DueDate); Assert.Equal("Owned retained override", state.Note);
+        Assert.NotNull(await f.Store.GetEntryAsync(part.Id, Ct)); Assert.Null(await f.Store.GetEntryAsync(final.Id, Ct));
+    }
+
+    private static async Task<string> SnapshotAsync(ServiceProvider provider, bool ignoreAutoPostSuppressed = false)
     {
         await using var db = await provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.OpenConnectionAsync(Ct); var connection = db.Database.GetDbConnection(); var tables = new List<string>();
@@ -488,7 +663,8 @@ public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
             while (await reader.ReadAsync(Ct))
             {
                 var values = new object?[reader.FieldCount];
-                for (var i = 0; i < values.Length; i++) values[i] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                for (var i = 0; i < values.Length; i++) values[i] = ignoreAutoPostSuppressed && table == "OccurrenceStates" && reader.GetName(i) == "AutoPostSuppressed"
+                    ? 0L : reader.IsDBNull(i) ? null : reader.GetValue(i);
                 rows.Add(JsonSerializer.Serialize(values));
             }
             rows.Sort(StringComparer.Ordinal); all[table] = rows;

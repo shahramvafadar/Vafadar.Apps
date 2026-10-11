@@ -287,3 +287,7 @@ The normal test-build source remains inactive; no paid facts or selection prefer
 D-134 reuses existing ledger/occurrence fields, exact-file cached access and actual payment rows. No schema,
 backup field, credential, permission, SDK or network addition. No paid facts are stored in portable preferences;
 normal commercial registration stays inactive. Complete rejected writes preserve all original financial rows.
+
+D-135 reuses existing financial state/link fields and the file-bound deletion Undo journal. No schema, portable
+preference, credential, permission, SDK or network addition. Preserve complete manual money, refund relationships
+and receipt bytes/ownership; no commercial facts are stored in backups. Current registration remains inactive.

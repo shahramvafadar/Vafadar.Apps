@@ -1876,3 +1876,16 @@ payment even from a stale form. SQL/access failure rolls back money and state be
 writers keep one final settlement. 16 new SQLite cases/main 2,157 pass, App.Tests 318; [evidence](../quality/atomic-occurrence-payments.md).
 Normal commercial registration remains inactive. Reopening generated money, selected-plan automation,
 choice persistence/UI, command exception feedback and external gates remain open.
+
+### 31.48. Exact reviewed occurrence reopening (D-135 / AT-137)
+
+Reopen exactly the reviewed settlement under the actual-file writer. Check stored state EntryId/status and
+actual payment plan/date/partial markers; reject stale identities without deleting or releasing another payment.
+Generated entries reuse complete ledger deletion, groups, refund links, receipt ownership, paid totals and the
+file-bound Undo journal. Manual/imported money is kept; unlink it with the opened state atomically. No second
+writer after committed Changed. Preserve earlier partial money and complete occurrence overrides; retain automatic
+posting suppression through Undo. SQL/access failure rolls back all rows before store/plan notifications.
+15 added SQLite cases/main 2,172 pass; App.Tests 318. Current commercial registration stays inactive.
+No schema, migration, SDK, permission, backup field, caption or layout change. Selected-plan generation/automation,
+choice persistence/UI, command exception feedback and existing external acceptance gates remain unfinished.
+[Native/package evidence](../quality/atomic-occurrence-reopening.md).
