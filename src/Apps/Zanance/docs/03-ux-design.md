@@ -922,3 +922,10 @@ import/restore/native paths and commercial messages under D-69. Commercial activ
 separate; this editor slice is not completion of the commercial release.
 
 Evidence: `docs/quality/goal-editor-work.md`.
+
+## Selected budget definitions (D-148)
+
+The foundation supplies all original periods and an independent work projection. The later chooser groups canonical
+currency/period/account-set definitions; copied months are not separate choices. Preserve visible history and paid
+method numbers; selection never grants a method. Reviewed choice Save must retain drafts on stale input and never
+write limits or money. No visible layout or commercial enforcement is changed by this foundation.

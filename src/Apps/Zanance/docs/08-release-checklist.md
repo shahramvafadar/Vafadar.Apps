@@ -451,3 +451,10 @@ import/restore/native paths and commercial messages under D-69. Commercial activ
 separate; this editor slice is not completion of the commercial release.
 
 Evidence: `docs/quality/goal-editor-work.md`.
+
+## D-148 - Budget choice foundation
+
+Main 2,594 / App.Tests 537, strict Windows/Android, native unrestricted budget Save/Delete and complete signed APK
+verified. Reviewed budget chooser and effective view/alert integration are unfinished; current enforcement stays
+inactive. Native emulator evidence is not physical-device/iOS/Store or commercial-release acceptance.
+See [evidence](quality/budget-definition-choice.md).

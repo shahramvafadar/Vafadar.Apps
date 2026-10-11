@@ -515,28 +515,26 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
                 || (target.Period != BudgetPeriod.Month && (newUse || original!.Period == BudgetPeriod.Month)));
         write.DemandFeature(addsAdvanced ? CommercialFeature.AdvancedBudgets
             : newUse ? CommercialFeature.BasicBudgets : CommercialFeature.Corrections);
-        if (!targetCurrent || write.GetMaximum(QuotaKind.BudgetDefinitions) is not { } maximum) return;
+        if (!targetCurrent) return;
         var all = await db.Budgets.AsNoTracking().ToListAsync(cancellationToken);
-        var current = all.Where(Current).Select(b => BudgetDefinitionKey.From(scope, b)).ToHashSet();
-        var after = all.Where(b => b.Id != original?.Id).Where(Current).Select(b => BudgetDefinitionKey.From(scope, b)).ToHashSet();
-        after.Add(key);
-        // D-121: period row ids/calendars and copied months are not new definitions. Existing corrections and
-        // slot-neutral replacement remain available above quota; historical/future rows do not count as current.
-        // Explicit active/read-only selection and activation as a future period arrives are later ENT-02/03 work.
-        if (after.Count <= current.Count) return;
-        write.DemandCount(CommercialFeature.BasicBudgets, QuotaKind.BudgetDefinitions, maximum, current.Count, after.Count - current.Count);
+        write.PrepareBudgetChange(all, target, original, today, startDay);
     }
 
     /// <summary>Deletes a budget; entries are not affected.</summary>
     public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == id, cancellationToken) is { } budget)
-        {
-            db.Budgets.Remove(budget);
-            await db.SaveChangesAsync(cancellationToken);
-            OnChanged();
-        }
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.DeleteData);
+        if (await db.Budgets.FirstOrDefaultAsync(b => b.Id == id, cancellationToken) is not { } budget) return;
+        var originals = await db.Budgets.AsNoTracking().ToListAsync(cancellationToken);
+        var startDay = await BudgetChoiceStore.ReadStartDayAsync(db, cancellationToken);
+        write.PrepareBudgetDeletion(originals, budget, DateOnly.FromDateTime(time.GetLocalNow().DateTime), startDay);
+        db.Budgets.Remove(budget);
+        write.EnsureCurrent();
+        await db.SaveChangesAsync(cancellationToken);
+        await write.CommitAsync(cancellationToken);
+        OnChanged();
     }
 
     /// <summary>Returns all manual exchange rates, newest first.</summary>

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Preserve budget definitions through changes (2026-10-11, D-148)
+
+- Keep copied months under one financial budget definition and retain past limits and paid-method history.
+- Protect budget changes and deletion with the same database transaction as their explicit active-definition choice.
+- Retain unrestricted test builds; the budget selection screen and effective display bindings follow separately.
+
 ### Improved - Preserve goal plans while editing (2026-10-11, D-147)
 
 - Keep saved repeat rules, end dates/counts, categories and contribution methods when editing a goal, including Simple mode.

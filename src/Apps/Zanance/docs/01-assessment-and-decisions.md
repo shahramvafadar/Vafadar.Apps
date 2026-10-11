@@ -1640,3 +1640,13 @@ import/restore/native paths and commercial messages under D-69. Commercial activ
 separate; this editor slice is not completion of the commercial release.
 
 Evidence: `docs/quality/goal-editor-work.md`.
+
+## D-148 - Canonical selected budget definitions (2026-10-11)
+
+Canonical scoped budget definition choice and separate current-work projection are implemented with
+reviewed actual-file persistence. Save/Replace join or transfer chosen capacity atomically; Delete retains exact
+membership checks and releases only the last current definition. Original history, paid-method corrections,
+limits and financial rows remain intact. 34 new AT-150 cases; normal parallel main 2,594 / App.Tests 537 pass;
+strict builds, normal Release native Save/Delete and six unchanged-editor language/theme checks, complete signed
+APK and exact owned data/display restoration verified. Registration remains inactive. Budget chooser/view/alert
+binding and other ENT-02/03 paths remain open. See [evidence](quality/budget-definition-choice.md).

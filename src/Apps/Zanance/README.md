@@ -246,3 +246,7 @@ import/restore/native paths and commercial messages under D-69. Commercial activ
 separate; this editor slice is not completion of the commercial release.
 
 Evidence: `docs/quality/goal-editor-work.md`.
+
+Budget choices: D-148 supplies canonical definition persistence and actual writer checks, retaining all original
+periods/limits and unrestricted test builds. Chooser UI and effective view/alert integration remain open.
+[Evidence](docs/quality/budget-definition-choice.md).

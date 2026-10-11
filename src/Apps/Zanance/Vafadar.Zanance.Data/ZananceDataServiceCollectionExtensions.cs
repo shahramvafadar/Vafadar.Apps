@@ -35,6 +35,7 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<ZananceStore>()
             .AddSingleton<PlanStore>()
             .AddSingleton<ResourceChoiceStore>()
+            .AddSingleton<BudgetChoiceStore>()
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()
             .AddSingleton<AutoPostProcessor>()

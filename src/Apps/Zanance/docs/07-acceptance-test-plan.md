@@ -1112,3 +1112,11 @@ import/restore/native paths and commercial messages under D-69. Commercial activ
 separate; this editor slice is not completion of the commercial release.
 
 Evidence: `docs/quality/goal-editor-work.md`.
+
+## AT-150 - Selected budget definitions (D-148)
+
+34 actual Core/SQLite cases pass (15/19), including two independent provider races and complete original-row
+comparisons. Main 2,594 / App.Tests 537, strict builds and signed APK pass. Normal installed Release checks actual
+budget Save/Delete and unchanged editor in en/fa/de light/dark, with exact owned data/display restoration.
+Enabled native chooser/view/alert, physical device and iOS acceptance remain open.
+See [evidence](quality/budget-definition-choice.md).

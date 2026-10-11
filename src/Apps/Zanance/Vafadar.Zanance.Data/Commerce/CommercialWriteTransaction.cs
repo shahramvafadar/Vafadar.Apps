@@ -22,6 +22,11 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     private StoredResourceSelection? _storedPlans;
     private ResourceSelection? _goalSelection;
     private StoredResourceSelection? _storedGoals;
+    private StoredResourceSelection? _storedBudgets;
+    private BudgetSelection? _budgetSelection;
+
+    /// <summary>Gets this writer's exact verified context, never a newly selected profile.</summary>
+    internal CapabilityContext? Context => _access.Context;
 
     private CommercialWriteTransaction(CommercialFileAccess access, IDbContextTransaction? transaction)
     {
@@ -62,6 +67,8 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
             result._storedAccounts = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.FinancialAccounts, cancellationToken, tracking: true);
             result._storedPlans = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken, tracking: true);
             result._storedGoals = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken, tracking: true);
+            result._storedBudgets = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.BudgetDefinitions, cancellationToken, tracking: true);
+            result._budgetSelection = result._storedBudgets is null ? access.BudgetSelection : StoredBudgetSelection.ForNewWork(result._storedBudgets);
             result._goalSelection = result._storedGoals?.ForNewWork() ?? access.GoalSelection;
             result._accountSelection = result._storedAccounts?.ForNewWork() ?? access.AccountSelection;
             result._planSelection = result._storedPlans?.ForNewWork() ?? access.PlanSelection;
@@ -268,6 +275,46 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
 
     /// <summary>Gets whether a persisted goal choice owns the transaction-local addition check.</summary>
     public bool HasStoredGoalChoice => _storedGoals is not null;
+
+    /// <summary>Checks a new current definition and atomically transfers only a retired chosen definition slot.</summary>
+    internal void PrepareBudgetChange(IReadOnlyList<Core.Budgets.Budget> originals, Core.Budgets.Budget target,
+        Core.Budgets.Budget? original, DateOnly today, int monthStartDay)
+    {
+        if (!Enforced || !BudgetSelectionPolicy.IsCurrent(target, today, monthStartDay)) return;
+        var scope = FinancialScope;
+        var key = BudgetDefinitionKey.From(scope, target);
+        var availability = BudgetSelectionPolicy.Resolve(Context!, scope, originals, today, monthStartDay, _budgetSelection);
+        // Existing same-definition edits are corrections; malformed or obsolete choices do not bar them.
+        if (original is not null && BudgetDefinitionKey.From(scope, original) == key
+            && BudgetSelectionPolicy.IsCurrent(original, today, monthStartDay)) return;
+        if (availability.RequiresSelection || _storedBudgets is not null && !StoredBudgetSelection.IsValid(_storedBudgets)
+            && availability.Maximum is not null)
+            throw new CommercialWriteRejectedException(CommercialFeature.BasicBudgets, QuotaKind.BudgetDefinitions, target.Id, true);
+        var selected = availability.SelectedDefinitions.ToHashSet();
+        if (original is not null)
+        {
+            var previous = BudgetDefinitionKey.From(scope, original);
+            if (previous != key && !originals.Any(b => b.Id != original.Id
+                && BudgetSelectionPolicy.IsCurrent(b, today, monthStartDay) && BudgetDefinitionKey.From(scope, b) == previous))
+                selected.Remove(previous);
+        }
+        if (!selected.Contains(key) && availability.Maximum is { } maximum)
+            DemandCount(CommercialFeature.BasicBudgets, QuotaKind.BudgetDefinitions, maximum, selected.Count);
+        selected.Add(key);
+        if (_storedBudgets is not null && StoredBudgetSelection.IsValid(_storedBudgets))
+            StoredBudgetSelection.Replace(_storedBudgets, new(scope, selected));
+    }
+
+    /// <summary>Releases a deleted definition only when its last current period row is removed.</summary>
+    internal void PrepareBudgetDeletion(IReadOnlyList<Core.Budgets.Budget> originals, Core.Budgets.Budget removed,
+        DateOnly today, int monthStartDay)
+    {
+        if (!Enforced || _storedBudgets is null || !StoredBudgetSelection.IsValid(_storedBudgets)) return;
+        var key = BudgetDefinitionKey.From(FinancialScope, removed);
+        if (originals.Any(b => b.Id != removed.Id && BudgetSelectionPolicy.IsCurrent(b, today, monthStartDay)
+            && BudgetDefinitionKey.From(FinancialScope, b) == key)) return;
+        StoredBudgetSelection.Replace(_storedBudgets, new(FinancialScope, _budgetSelection!.Definitions.Where(k => k != key)));
+    }
 
     private static void ReplaceChoice(StoredResourceSelection row, ResourceSelection choice)
     {

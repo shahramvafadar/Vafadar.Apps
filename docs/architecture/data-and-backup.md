@@ -543,3 +543,12 @@ the existing local test certificate. Bytes: 81491883. SHA-256: `d3aa44afc6f55aae
 No schema/model/migration, portable preference, security policy, credential, SDK, paid grant or permission change.
 
 Evidence: `src/Apps/Zanance/docs/quality/goal-editor-work.md`.
+
+## Canonical budget choices (D-148)
+
+BudgetDefinitions uses the existing exact-scope ResourceSelections row with a canonical definition encoding,
+not hashed row ids. Each value contains currency, period kind and sorted original account identities; no dates,
+paid or membership facts. BudgetChoiceStore captures complete original period/limit metadata and date/month-start
+plus actual file/access/revision; Save rechecks under the SQLite writer. New budget changes transfer only the last
+retired definition's chosen slot; deletion and SQL rollback include choice changes. Current registration stays
+inactive. No EF property/schema/compiled-model or backup format change; restored scopes are never guessed/retagged.

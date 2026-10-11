@@ -19,7 +19,7 @@ public sealed record CommercialWriteAccess
     private CommercialWriteAccess() { }
 
     /// <summary>Creates enabled facts for one actual database; it is the provider's responsibility to verify them.</summary>
-    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null, ResourceSelection? planSelection = null, ResourceSelection? goalSelection = null)
+    public CommercialWriteAccess(string databasePath, CapabilityContext context, ResourceSelection? accountSelection = null, ResourceSelection? planSelection = null, ResourceSelection? goalSelection = null, BudgetSelection? budgetSelection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(databasePath);
         ArgumentNullException.ThrowIfNull(context);
@@ -46,6 +46,10 @@ public sealed record CommercialWriteAccess
             if (goalSelection.Kind != QuotaKind.Goals || goalSelection.Scope != scope)
                 throw new ArgumentException("The goal choice belongs to another financial boundary.", nameof(goalSelection));
         }
+        if (budgetSelection is not null && budgetSelection.Scope != new QuotaScope(
+            context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id))
+            throw new ArgumentException("The budget choice belongs to another financial boundary.", nameof(budgetSelection));
+        BudgetSelection = budgetSelection;
         GoalSelection = goalSelection;
         AccountSelection = accountSelection;
         PlanSelection = planSelection;
@@ -65,6 +69,8 @@ public sealed record CommercialWriteAccess
     public ResourceSelection? PlanSelection { get; }
     /// <summary>Gets the explicit scoped goal choice; it never grants paid contribution tools.</summary>
     public ResourceSelection? GoalSelection { get; }
+    /// <summary>Gets the explicit canonical budget-definition choice, independent of copied period rows.</summary>
+    public BudgetSelection? BudgetSelection { get; }
 }
 
 /// <summary>

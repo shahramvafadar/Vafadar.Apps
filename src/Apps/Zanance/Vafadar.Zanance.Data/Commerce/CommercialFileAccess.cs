@@ -34,6 +34,9 @@ internal sealed class CommercialFileAccess
     /// <summary>Gets the immutable explicit goal choice captured for this actual file and financial scope.</summary>
     public ResourceSelection? GoalSelection => _snapshot.GoalSelection;
 
+    /// <summary>Gets the immutable canonical budget choice captured for this actual file and scope.</summary>
+    public BudgetSelection? BudgetSelection => _snapshot.BudgetSelection;
+
     /// <summary>Rejects retired facts without consulting a subsequently selected profile or a network provider.</summary>
     public void EnsureCurrent()
     {

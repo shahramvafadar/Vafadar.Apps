@@ -350,3 +350,10 @@ never resumes delivery. Original data/sidecars/display are restored after indepe
 ENT-02/03 remain in progress. Continue remaining actual budget/new-work bindings, then other resources/operations,
 import/restore/native paths and commercial messages under D-69. Commercial activation and owner/external gates stay
 separate; this editor slice is not completion of the commercial release.
+
+## Budget definition choices (D-148)
+
+The existing profile-local scoped choice row can contain canonical budget definitions and a revision, never paid,
+membership or security grants. No new schema, SDK, permission or external transmission. Restore does not retag
+financial scope or activate commercial rights. Original budget and ledger rows are unchanged by choice Save.
+See [evidence](quality/budget-definition-choice.md).

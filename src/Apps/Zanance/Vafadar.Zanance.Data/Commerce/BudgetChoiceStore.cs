@@ -1,0 +1,87 @@
+using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Commerce;
+
+namespace Vafadar.Zanance.Data.Commerce;
+
+/// <summary>Reviewed canonical budget choices under the exact SQLite writer; selecting never posts money or changes limits.</summary>
+public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contextFactory,
+    ICommercialWriteAccessSource commercialAccess, TimeProvider time)
+{
+    /// <summary>Raised only after a changed explicit choice commits.</summary>
+    public event EventHandler? Changed;
+
+    /// <summary>Reads all original periods and separate live eligibility without creating preferences or paid facts.</summary>
+    public async Task<BudgetChoiceSnapshot> ReadAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var access = new CommercialFileAccess(commercialAccess, path);
+        access.DemandFeature(CommercialFeature.History);
+        var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.BudgetDefinitions, cancellationToken);
+        var budgets = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
+        var startDay = await ReadStartDayAsync(db, cancellationToken);
+        var today = Today();
+        BudgetAvailability? availability = null;
+        var work = BudgetWorkPolicy.Inactive;
+        if (access.Context is { } context)
+        {
+            var scope = StoredResourceSelection.Scope(context);
+            var selection = stored is null ? access.BudgetSelection : StoredBudgetSelection.ForNewWork(stored);
+            availability = BudgetSelectionPolicy.Resolve(context, scope, budgets, today, startDay, selection);
+            work = BudgetWorkPolicy.Resolve(context, scope, budgets, today, startDay, selection);
+        }
+        // A review must never combine an old choice with newly loaded financial inputs or a changed period.
+        var current = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.BudgetDefinitions, cancellationToken);
+        var reread = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
+        var items = budgets.Select(BudgetChoiceItem.From).ToArray();
+        if (current?.Revision != stored?.Revision || current?.IdentitySet != stored?.IdentitySet
+            || !items.SequenceEqual(reread.Select(BudgetChoiceItem.From))
+            || startDay != await ReadStartDayAsync(db, cancellationToken) || today != Today())
+            throw new InvalidOperationException("Budget inputs changed during loading; reload them.");
+        access.EnsureSnapshotCurrent();
+        return new(items, path, access, stored, today, startDay, availability, work);
+    }
+
+    /// <summary>Saves only the reviewed current definitions; no financial row or paid capability is rewritten.</summary>
+    public async Task<bool> SaveAsync(BudgetChoiceSnapshot reviewed, IEnumerable<BudgetDefinitionKey> selected,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(reviewed);
+        if (!reviewed.CanChoose) throw new InvalidOperationException("No bounded budget choice is required.");
+        var scope = StoredResourceSelection.Scope(reviewed.Access.Context!);
+        var choice = new BudgetSelection(scope, selected);
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (Path.GetFullPath(db.Database.GetDbConnection().DataSource) != reviewed.DatabasePath)
+            throw new InvalidOperationException("The reviewed budgets belong to another file.");
+        reviewed.Access.DemandFeature(CommercialFeature.Corrections);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var stored = await StoredResourceSelection.ReadAsync(db, reviewed.Access, QuotaKind.BudgetDefinitions, cancellationToken, tracking: true);
+        var budgets = await db.Budgets.AsNoTracking().OrderBy(b => b.Id).ToListAsync(cancellationToken);
+        if (stored?.Revision != reviewed.Revision || stored?.IdentitySet != reviewed.StoredValue || !reviewed.Items.SequenceEqual(budgets.Select(BudgetChoiceItem.From))
+            || reviewed.MonthStartDay != await ReadStartDayAsync(db, cancellationToken) || reviewed.Today != Today())
+            throw new InvalidOperationException("The reviewed budgets or period changed; reload them before saving.");
+        var availability = BudgetSelectionPolicy.Resolve(reviewed.Access.Context!, scope, budgets, reviewed.Today, reviewed.MonthStartDay, choice);
+        if (availability.RequiresSelection || choice.Definitions.Count != availability.SelectedDefinitions.Count)
+            throw new ArgumentException("Choose only current definitions within capacity.", nameof(selected));
+        if (stored is not null && StoredBudgetSelection.IsValid(stored) && stored.IdentitySet == choice.Value)
+        { reviewed.Access.EnsureSnapshotCurrent(); return false; }
+        if (stored is null)
+        {
+            stored = new() { Kind = QuotaKind.BudgetDefinitions, ScopeKind = scope.Kind, ScopeId = scope.Id };
+            db.ResourceSelections.Add(stored);
+        }
+        StoredBudgetSelection.Replace(stored, choice);
+        reviewed.Access.EnsureSnapshotCurrent();
+        await db.SaveChangesAsync(cancellationToken);
+        reviewed.Access.EnsureSnapshotCurrent();
+        await transaction.CommitAsync(cancellationToken);
+        Changed?.Invoke(this, EventArgs.Empty);
+        return true;
+    }
+
+    private DateOnly Today() => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+    /// <summary>Reads the current financial-month boundary without creating or updating a settings row.</summary>
+    internal static async Task<int> ReadStartDayAsync(ZananceDbContext db, CancellationToken cancellationToken) =>
+        await db.Settings.Select(s => (int?)s.MonthStartDay).FirstOrDefaultAsync(cancellationToken) ?? 1;
+}

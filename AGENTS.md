@@ -954,3 +954,15 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   writer. Change only that limit; no goal/plan/allocation/ledger write or repeat of an unchanged already applied cut.
 * Native review measures the changed actual captions after layout/real scroll realization, including Simple mode,
   uses an independent fixture and restores complete original data/display. Failed helpers are negative evidence.
+
+## 81. Canonical selected budget definitions (D-148)
+
+* Choose exact scope/currency/period/account-set definitions, never dates, calendars, paid methods or hashed row ids.
+  Keep all original history/limits separate from current work; selected definitions grant no paid tool or membership.
+* Reviewed choice Save rechecks full periods/limits, date/month start, actual file/access and revision/value under
+  the writer. Preserve explicit empty/no-op and malformed repair; reject stale/ABA without financial changes.
+* New Save/Replace joins or transfers chosen capacity only when the old definition's last current row retires.
+  Retained same-definition corrections stay available. Delete uses the same actual-file writer/membership right
+  and releases only its final current definition; failed SQL restores limits and choice together.
+* Registration stays inactive. Budget chooser/view/alert consumers follow separately. Native unrestricted
+  Save/Delete is not enabled chooser or physical/iOS acceptance; restore exact owned data and display state.

@@ -537,3 +537,11 @@ remains installed/stopped. No physical-device, iOS, OS accessibility, provider, 
 or commercial-activation acceptance is implied.
 
 Evidence: `src/Apps/Zanance/docs/quality/goal-editor-work.md`.
+
+## Budget definition verification (D-148)
+
+Final normal parallel main suite: 2,594 / App.Tests 537, followed by ordinary test output cleanup. Strict Windows
+and Android and canonical Build-AndroidApk.ps1 complete. Artifacts: budget-choice-all-tests-final.log, matching
+build/clean logs, budget-choice-native/final-proof.json and budget-choice-apk-proof.json. Signed full phone artifact:
+artifacts/android/zanance-d148-release.apk. No UI source changed; completed layout matrices are retained. The normal
+Release native Save/Delete does not activate or prove the later enabled chooser/view/alert integration.
