@@ -8,6 +8,7 @@ using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Reminders;
+using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 
@@ -192,15 +193,25 @@ public sealed class ReminderService(
             await scheduler.ReplaceAllAsync([]);
             throw;
         }
-        var settings = await store.GetSettingsAsync();
-        var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
+        var now = time.GetLocalNow().DateTime;
+        var today = DateOnly.FromDateTime(now);
+        ZananceSettings settings; ReminderFinancialSnapshot financials;
+        try
+        {
+            settings = await store.GetSettingsAsync();
+            financials = await store.GetReminderFinancialSnapshotAsync(snapshot, goalSnapshot, today);
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            // A failed original financial read must retire the older pending queue before any new publication.
+            await scheduler.ReplaceAllAsync([]); throw;
+        }
+        var accounts = financials.Accounts.ToDictionary(a => a.Id);
         var culture = localization.CurrentCulture;
         var originalDisplay = CaptureDisplay();
         scheduler.SetSnoozeActions(translator["Reminder_SnoozeHour"], translator["Reminder_SnoozeTomorrow"]);
         var schedules = snapshot.Schedules;
         var states = snapshot.States;
-        var now = time.GetLocalNow().DateTime;
-        var today = DateOnly.FromDateTime(now);
         // Filter before the planner's cap: unavailable plans must not displace selected reminders.
         var planned = ReminderPlanner.Plan(schedules.Where(s => snapshot.Work.CanRemind(s.Id)), states, now);
         var notifications = ReminderPlanner.GroupByTime(planned).Select(group =>
@@ -225,8 +236,7 @@ public sealed class ReminderService(
         {
             var progress = GoalProgressService.Evaluate(
                 goalSnapshot.Goals, goalSnapshot.Allocations, accounts.Values.ToList(),
-                await store.GetEntriesAsync(), contributionPlans, DateOnly.FromDateTime(now),
-                await holdings.GetEventsAsync(), await holdings.GetTypesAsync());
+                financials.Entries, contributionPlans, today, financials.Events, financials.Types);
             // Apply selection/paid eligibility before the cap, retaining every original input in progress evaluation.
             notifications.AddRange(GoalReminderPlanner.Plan(progress.Where(p => goalSnapshot.Work.CanRemind(p.Goal.Id)), contributionPlans, now)
                 .GroupBy(r => r.NotifyAt).Select(group =>
@@ -305,8 +315,7 @@ public sealed class ReminderService(
         {
             try
             {
-                await plans.ValidateWorkSnapshotAsync(snapshot); await goals.ValidateWorkSnapshotAsync(goalSnapshot);
-                await store.ValidateReviewReminderInputsAsync(snapshot, originalSettingsPacket, firstData);
+                await store.ValidateReminderPreparationAsync(financials, snapshot, goalSnapshot, originalSettingsPacket, firstData);
                 if (originalDisplay != CaptureDisplay() || today != DateOnly.FromDateTime(time.GetLocalNow().DateTime))
                     throw new InvalidOperationException("The original reminder display or local day changed.");
             }

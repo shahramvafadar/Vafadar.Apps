@@ -999,3 +999,10 @@ Save or profile switch is required. All original names and history remain visibl
 established opt-in and fixed 09:00/calendar/month-start behaviour, with independently authorized delivery.
 Privacy/display/period changes retire stale publication. Existing forms, captions and layout stay unchanged.
 Test builds remain unrestricted. See [evidence](quality/profile-reminder-work.md).
+
+## Reminder consistency with original Plan/Goal data (D-159)
+
+Changing original reminder rules, state or effective financial progress retires stale pending work. A Goal
+that reaches its target does not keep an old contribution request. Complete history and explicit drafts remain
+independent; publication never saves money or a review. Existing forms/layout/translations stay intact.
+See [evidence](quality/reminder-input-work.md).

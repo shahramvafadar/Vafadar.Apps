@@ -1088,3 +1088,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Await the actual complete coalesced batch in native fixtures, not just the first adapter callback. Use real
   Profiles Invoke/Save and independent financial data; restore complete rows/catalogue/owned bytes/display.
   Registration remains inactive; broader original Plan/Goal financial-input retirement follows separately.
+
+## 92. Coherent original reminder financial packets (D-159)
+
+* Retain complete original Plan rules/states, Goal/contribution/allocation packets and raw choice values;
+  audit times or choice revisions alone do not prove unchanged inputs.
+* Capture original accounts and needed date-bounded ledger/quantity inputs in a deferred SQLite reader.
+  Use established financial calculators without selection filtering or duplicated algorithms.
+* Revalidate all original packets/preferences in the same reader before/after native publication. Withdraw
+  retired pending batches; preserve Snooze retry and legitimate explicit Goal editor draft mutation.
+* Native fixtures change only their independent fictitious database, restore complete rows/owned bytes and
+  retain failed checks as negative evidence. Production registrations and external release gates stay separate.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Keep reminders aligned with current plans and goal progress (2026-10-12, D-159)
+
+- Withdraw pending reminders whose original rules, state or financial inputs change during preparation.
+- Stop contribution reminders after a fresh calculation shows that a goal has reached its target.
+- Preserve complete financial calculations, explicit drafts and retryable Snooze information.
+
 ### Improved - Refresh original profile reminders safely (2026-10-12, D-158)
 
 - Refresh the current profile's reminders after saving profile activity choices or changing the catalogue.

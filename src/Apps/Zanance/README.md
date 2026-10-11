@@ -305,3 +305,9 @@ Explicit original profile activity choices refresh reminders without financial w
 uses the same file's independently authorized rights, and privacy/period changes retire stale publication.
 SDK refusal leaves Snooze retryable. Test builds remain unrestricted.
 [Verification and signed APK](docs/quality/profile-reminder-work.md).
+
+## Original reminder input retirement (D-159)
+
+Stale Plan/Goal and financial inputs withdraw pending reminders; reached goals suppress contribution requests
+on fresh calculation. Existing financial rules and unrestricted test builds remain.
+[Verification and signed APK](docs/quality/reminder-input-work.md).

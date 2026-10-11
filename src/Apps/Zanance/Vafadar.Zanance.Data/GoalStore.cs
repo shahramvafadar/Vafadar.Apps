@@ -30,13 +30,13 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         var context = access.Context;
         var work = context is null ? GoalWorkPolicy.Inactive : GoalWorkPolicy.Resolve(context,
             StoredResourceSelection.Scope(context), originals, stored?.ForNewWork() ?? access.GoalSelection);
-        if ((await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken))?.Revision != stored?.Revision)
+        if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken)) != StoredResourceSelection.Capture(stored))
             throw new InvalidOperationException("The goal choice changed during notification preparation.");
         access.EnsureSnapshotCurrent();
         var path = ProfileFilePath(db);
         return new(Ordered(originals), plans, allocations, work)
         {
-            DatabasePath = path, Access = access, SelectionRevision = stored?.Revision,
+            DatabasePath = path, Access = access, SelectionRevision = stored?.Revision, SelectionStamp = StoredResourceSelection.Capture(stored),
             InputStamp = GoalWorkSnapshot.CaptureInputs(originals, plans, allocations),
             ReferenceStamp = references,
             ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
@@ -59,8 +59,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             throw new InvalidOperationException("The goal work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
         snapshot.Access.EnsureSnapshotCurrent();
-        if ((await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.Goals, cancellationToken))?.Revision != snapshot.SelectionRevision)
-            throw new InvalidOperationException("The goal choice changed during notification preparation.");
+        if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.Goals, cancellationToken)) != snapshot.SelectionStamp)
+            throw new InvalidOperationException("The original goal choice changed during notification preparation.");
         var originals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
         var plans = await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
         var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);

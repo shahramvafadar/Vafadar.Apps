@@ -26,11 +26,16 @@ internal static partial class DebugSnapshots
         public event EventHandler<SnoozeRequest>? SnoozeRequested { add { } remove { } }
         internal IReadOnlyList<ReminderNotification> Pending = [];
         internal Action? AfterLabels;
+        internal Func<Task>? AfterPublication;
         public bool IsSupported => true;
         public Task<bool> AreEnabledAsync() => Task.FromResult(true);
         public Task<bool> RequestPermissionAsync() => throw new InvalidOperationException("Unexpected fixture permission request.");
         public void SetSnoozeActions(string oneHour, string tomorrow) => AfterLabels?.Invoke();
-        public Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders) { Pending = reminders.ToArray(); return Task.CompletedTask; }
+        public async Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders)
+        {
+            Pending = reminders.ToArray();
+            if (AfterPublication is { } publication) await publication();
+        }
         public Task ShowAsync(ReminderNotification reminder) => throw new InvalidOperationException("Unexpected immediate fixture notification.");
         public Task RemoveAsync(int notificationId) => Task.CompletedTask;
     }
@@ -51,13 +56,27 @@ internal static partial class DebugSnapshots
         var later = profiles.Create("Fictitious other original profile"); var day = DateOnly.FromDateTime(DateTime.Now);
         var account = new Account { Name = "Fictitious original reminder funding", CurrencyCode = "EUR", OpeningDate = day, OpeningBalance = 10000 };
         await store.SaveAccountAsync(account);
-        await plans.SaveScheduleAsync(new Schedule { Name = "Fictitious original due plan", AccountId = account.Id, Amount = 1234,
-            ReminderEnabled = true, ReminderDaysBefore = 0, Rule = new() { Start = day.AddDays(1) } });
+        var originalPlan = new Schedule { Name = "Fictitious original due plan", AccountId = account.Id, Amount = 1234,
+            ReminderEnabled = true, ReminderDaysBefore = 0, Rule = new() { Start = day.AddDays(1) } };
+        await plans.SaveScheduleAsync(originalPlan);
+        var inputReview = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "reminder-input-work";
+        var goals = fixture.GetRequiredService<GoalStore>();
+        var originalGoal = new Vafadar.Zanance.Core.Goals.Goal { Name = "Fictitious original balance goal", AccountId = account.Id,
+            Type = Vafadar.Zanance.Core.Goals.GoalType.AccountBalance, CurrencyCode = "EUR", TargetAmount = 20000 };
+        if (inputReview)
+            await goals.SaveGoalWithContributionPlanAsync(originalGoal, new Vafadar.Zanance.Core.Goals.ContributionPlan
+            { GoalId = originalGoal.Id, Amount = 1000, ReminderEnabled = true, Rule = new() { Start = day.AddDays(1) } });
         await store.UpdateSettingsAsync(s => { s.ReviewReminderEnabled = true; s.MonthStartDay = day.Day < 28 ? day.Day + 1 : 1; });
         financial.Current = new(path, new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("45454545-5656-6767-7878-898989898989"))));
         device.Current = new(path, new(QuotaScopeKind.Device, Guid.Parse("75757575-8686-9797-a8a8-b9b9b9b9b9b9")),
             new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("65656565-7676-8787-9898-a9a9a9a9a9a9"))));
         profiles.SaveWorkChoice(profiles.ReadWorkReview(), [""]); var originalPacket = preferences.Get("profiles.work.catalogue");
+        if (inputReview)
+        {
+            financial.Current = new(path, new(ProductPlan.Plus, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("45454545-5656-6767-7878-898989898989"))));
+            device.Current = new(path, new(QuotaScopeKind.Device, Guid.Parse("75757575-8686-9797-a8a8-b9b9b9b9b9b9")),
+                new(ProductPlan.Plus, new(EntitlementScopeKind.PersonalProfile, Guid.Parse("65656565-7676-8787-9898-a9a9a9a9a9a9"))));
+        }
         var factory = fixture.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
         async Task<string> StoredAsync()
         {
@@ -81,6 +100,12 @@ internal static partial class DebugSnapshots
             preferences, translator, new DateFormatter(localization), localization, TimeProvider.System,
             fixture.GetRequiredService<ResourceChoiceStore>(), fixture.GetRequiredService<BudgetChoiceStore>());
         reminders.WatchChanges(profiles);
+        if (inputReview)
+        {
+            await ReviewReminderInputsAsync(app, services, fixture, store, plans, goals, factory, reminders, scheduler,
+                account, originalPlan, originalGoal, StoredAsync, before, folder, languages);
+            return;
+        }
         foreach (var language in languages)
         {
             await SetLanguageAsync(app, localization, language); await reminders.RefreshAsync();

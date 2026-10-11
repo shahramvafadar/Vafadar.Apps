@@ -636,3 +636,12 @@ missing Settings remains missing. Original live display and local day retire sta
 is accepted explicitly. Partial pending batches are withdrawn and existing delivered requests remain separate.
 Snooze preferences commit after native acceptance and complete current-input checks. No EF/compiled model or
 portable schema change. Broader original Plan/Goal financial-input retirement remains a following slice.
+
+## Coherent original reminder financial inputs (D-159)
+
+Plan/Goal snapshots retain full original packets and raw resource choices. ReminderFinancialSnapshot reads
+complete original accounts and only the needed dated ledger/quantity data in a deferred SQLite transaction.
+The same reader validates original rules, financial packets, preferences and first-data date before/after
+native publication. Native preparation alone rejects modified in-memory packets; existing explicit reviewed
+Goal draft writers remain unchanged. No model/migration or portable format change.
+See `src/Apps/Zanance/docs/quality/reminder-input-work.md`.

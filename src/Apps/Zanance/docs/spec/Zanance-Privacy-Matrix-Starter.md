@@ -434,3 +434,10 @@ existing device-only Snooze cache commits after accepted/current native publicat
 refusal. Partial pending batches are removed without deleting delivered notifications. Catalogue events schedule
 only an owned read/notification refresh; no financial write or review completion. No new permission, SDK,
 network request, schema, analytics or interim OS-backup policy. Independent fixtures restore owned data/display.
+
+## D-159 - Original reminder input witnesses
+
+Complete original rule/state, raw selection and needed dated financial packets are process-local witnesses
+for the actual file, never portable grants or credentials. Validation is a deferred read and writes no money,
+Settings, allocation or review. No new schema, permission, SDK, network or interim OS-backup policy.
+Independent fixtures restore complete owned rows/files/display; production registrations stay inactive.

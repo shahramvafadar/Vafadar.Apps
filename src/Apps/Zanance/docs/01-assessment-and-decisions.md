@@ -1837,3 +1837,29 @@ independent fixture; complete rows/catalogue and owned development bytes are res
 SDK delivery, exact owned restoration, APK details and negative evidence are recorded in
 [evidence](quality/profile-reminder-work.md). Commercial activation, physical-device, iOS, OAuth and publication
 remain separate. Original Plan/Goal financial-input retirement and other operation/native bindings remain open.
+
+## D-159 - Original reminder input retirement
+
+Original Plan rules/states, Goal/contribution/allocation packets and raw resource choices now retire a
+reminder batch when any captured value changes, including changes at unchanged audit times or choice revisions.
+Complete original accounts and the date-bounded ledger/quantity inputs used by the existing GoalProgress
+calculator are captured in one deferred SQLite reader. Financial data is never filtered by activity selection.
+The same coherent reader validates all original packets, preferences and first-data date before/after native
+publication; a changed or failed preparation withdraws pending work and preserves the retryable Snooze cache.
+Only needed ledger/quantity inputs are read. Future movements remain outside today's calculation.
+
+Snapshot self-mutation rejection belongs to the reminder boundary: existing Goal editors can still mutate their
+reviewed draft before the established explicit writer. Full raw selection values distinguish absent/empty
+choices. No schema/model/migration, permission, SDK, network, credential or portable preference is added.
+Commercial registrations remain inactive and test builds stay unrestricted.
+
+24 new AT-161 actual-source/real SQLite behaviours pass; 100 related reminder/Goal editor/view cases pass.
+Final ordinary main: 2,870 passed, zero failures/skips, App.Tests 813, 2m 03.711s; output cleaned.
+Strict Windows and canonical complete Android Release have zero warnings/errors. Original running Goals pages
+in en/fa/de at 412 pixels/dark verify stale Plan/financial retirement, reached-goal suppression, fresh retry and
+complete 25-table restoration. Unchanged layout matrices and successful suites are not repeated.
+APK signature/structure and all nine changed production-source PDB checksums match.
+Native Release details and retained negative evidence are in the evidence document. Physical device, iOS,
+OAuth, paid activation and publication are separate; ENT-02/03 and the commercial release are not complete.
+
+See [evidence](quality/reminder-input-work.md).

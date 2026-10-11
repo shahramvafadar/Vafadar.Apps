@@ -12,6 +12,13 @@ public sealed partial class ZananceStore
     {
         ArgumentNullException.ThrowIfNull(snapshot); ArgumentException.ThrowIfNullOrWhiteSpace(originalSettingsPacket);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateReviewReminderInputsAsync(snapshot, originalSettingsPacket, firstData, db, cancellationToken);
+    }
+
+    /// <summary>Rechecks the same original period inputs within a caller-owned coherent reader.</summary>
+    internal static async Task ValidateReviewReminderInputsAsync(PlanWorkSnapshot snapshot, string originalSettingsPacket,
+        DateOnly? firstData, ZananceDbContext db, CancellationToken cancellationToken)
+    {
         if (snapshot.Access is null || snapshot.DatabasePath != Path.GetFullPath(db.Database.GetDbConnection().DataSource))
             throw new InvalidOperationException("The review reminder belongs to another original file.");
         snapshot.Access.DemandFeature(CommercialFeature.History); snapshot.Access.EnsureSnapshotCurrent();

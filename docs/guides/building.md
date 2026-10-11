@@ -617,3 +617,12 @@ Await PendingRefresh through its final guards, compare complete 25-table data an
 The form layout is unchanged; do not repeat the existing full layout matrix. Normal Release emulator SDK delivery
 and original native returning-data checks remain distinct from fixture ports and commercial activation.
 See `src/Apps/Zanance/docs/quality/profile-reminder-work.md`.
+
+## Original reminder input native review (D-159)
+
+Debug `reminder-input-work` renders the actual Goals page over independent fictitious SQLite/decorated DI.
+A recording native-effect port changes original Plan/financial inputs during publication; the queue retires,
+fresh reached-goal progress suppresses contribution work, and complete 25-table data restores. Capture only
+the hidden own native window, preserve exact owned development files/sidecars and distinguish fixture ports
+from actual SDK delivery. No form/layout change requires another unchanged full layout matrix.
+See `src/Apps/Zanance/docs/quality/reminder-input-work.md`.

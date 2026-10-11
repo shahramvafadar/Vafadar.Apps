@@ -36,7 +36,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         var work = context is null ? PlanWorkPolicy.Inactive : PlanWorkPolicy.Resolve(context,
             new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace,
                 context.Scope.Id), schedules, stored?.ForNewWork() ?? access.PlanSelection);
-        if ((await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken))?.Revision != stored?.Revision)
+        if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken)) != StoredResourceSelection.Capture(stored))
             throw new InvalidOperationException("The plan choice changed during notification preparation.");
         access.EnsureCurrent();
         var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
@@ -45,6 +45,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             DatabasePath = path,
             Access = access,
             SelectionRevision = stored?.Revision,
+            SelectionStamp = StoredResourceSelection.Capture(stored), InputStamp = PlanWorkSnapshot.CaptureInputs(schedules, states),
             ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
         };
     }
@@ -54,13 +55,23 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateWorkSnapshotAsync(snapshot, db, cancellationToken);
+    }
+
+    /// <summary>Rechecks complete original packets inside an existing coherent read or financial writer.</summary>
+    internal static async Task ValidateWorkSnapshotAsync(PlanWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
+    {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
             Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
             throw new InvalidOperationException("The plan work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
         snapshot.Access.EnsureSnapshotCurrent();
-        if ((await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.RecurringPlans, cancellationToken))?.Revision != snapshot.SelectionRevision)
-            throw new InvalidOperationException("The plan choice changed during notification preparation.");
+        if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.RecurringPlans, cancellationToken)) != snapshot.SelectionStamp)
+            throw new InvalidOperationException("The original plan choice changed during notification preparation.");
+        var schedules = await db.Schedules.AsNoTracking().ToListAsync(cancellationToken);
+        var states = await db.OccurrenceStates.AsNoTracking().ToListAsync(cancellationToken);
+        if (PlanWorkSnapshot.CaptureInputs(schedules, states) != snapshot.InputStamp)
+            throw new InvalidOperationException("Original plan rules or occurrence states changed during preparation.");
         snapshot.Access.EnsureSnapshotCurrent();
     }
 

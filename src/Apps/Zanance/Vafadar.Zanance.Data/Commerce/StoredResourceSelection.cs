@@ -51,6 +51,9 @@ internal sealed class StoredResourceSelection
         return query.SingleOrDefaultAsync(row => row.Kind == kind && row.ScopeKind == scope.Kind && row.ScopeId == scope.Id, cancellationToken);
     }
 
+    /// <summary>Retains the complete raw choice, including unchanged-revision mutations and malformed values.</summary>
+    internal static string Capture(StoredResourceSelection? selection) => System.Text.Json.JsonSerializer.Serialize(selection);
+
     /// <summary>Uses verified financial identity only, never a guessed main-profile id or device identity.</summary>
     internal static QuotaScope Scope(CapabilityContext context) => new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile
         ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace, context.Scope.Id);

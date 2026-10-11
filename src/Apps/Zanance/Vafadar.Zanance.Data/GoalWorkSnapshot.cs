@@ -17,6 +17,8 @@ public sealed record GoalWorkSnapshot(List<Goal> Goals, List<ContributionPlan> C
     internal string DatabasePath { get; init; } = string.Empty;
     /// <summary>Gets the persisted choice revision, with absence distinct from an explicit empty choice.</summary>
     internal Guid? SelectionRevision { get; init; }
+    /// <summary>Gets the complete raw original choice packet, including unchanged-revision mutations.</summary>
+    internal string SelectionStamp { get; init; } = string.Empty;
     /// <summary>Gets a private original-input stamp, including state/rules/funding changes without a choice change.</summary>
     internal string InputStamp { get; init; } = string.Empty;
     /// <summary>Gets the referenced account/holding eligibility and price-currency stamp for reviewed detail writes.</summary>
@@ -29,7 +31,7 @@ public sealed record GoalWorkSnapshot(List<Goal> Goals, List<ContributionPlan> C
     {
         ArgumentNullException.ThrowIfNull(other);
         return DatabasePath == other.DatabasePath && SelectionRevision == other.SelectionRevision
-            && InputStamp == other.InputStamp && ReferenceStamp == other.ReferenceStamp;
+            && SelectionStamp == other.SelectionStamp && InputStamp == other.InputStamp && ReferenceStamp == other.ReferenceStamp;
     }
 
     /// <summary>Captures original account/holding units and availability on which the goal form relies.</summary>

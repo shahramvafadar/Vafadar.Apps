@@ -162,7 +162,7 @@ public sealed class ProfileReminderFlowTests
         Assert.Equal(before, await f.RowsAsync());
     }
 
-    private sealed class Fixture : IDisposable, IAsyncDisposable
+    internal sealed class Fixture : IDisposable, IAsyncDisposable
     {
         internal readonly ProfileFileWorkFlowTests.Fixture Data = new();
         internal readonly ManualClock Clock = new(); internal readonly NativeScheduler Native = new();
@@ -183,7 +183,7 @@ public sealed class ProfileReminderFlowTests
     }
 
     /// <summary>An explicit native-effect port; actual planners, source, records and publication guards remain unchanged.</summary>
-    private sealed class NativeScheduler : IReminderScheduler
+    internal sealed class NativeScheduler : IReminderScheduler
     {
         private EventHandler<SnoozeRequest>? _snoozes;
         public event EventHandler<string>? Tapped { add { } remove { } }
@@ -204,7 +204,7 @@ public sealed class ProfileReminderFlowTests
     }
 
     /// <summary>Controls only the injected timer boundary; it does not replace any reminder calculation or OS clock.</summary>
-    private sealed class ManualClock : TimeProvider
+    internal sealed class ManualClock : TimeProvider
     {
         internal DateTimeOffset Now { get; set; } = new(2026, 10, 10, 8, 0, 0, TimeSpan.Zero);
         private readonly List<ManualTimer> _timers = [];

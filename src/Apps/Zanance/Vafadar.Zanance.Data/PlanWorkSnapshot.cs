@@ -22,6 +22,14 @@ public sealed record PlanWorkSnapshot(List<Schedule> Schedules, List<OccurrenceS
     /// <summary>Gets the persisted plan-choice revision, with absence distinct from an explicit empty choice.</summary>
     internal Guid? SelectionRevision { get; init; }
 
+    /// <summary>Gets the complete original rule/state packet, independent of timestamps or work projection.</summary>
+    internal string InputStamp { get; init; } = string.Empty;
+    /// <summary>Gets the complete raw choice packet, with absence distinct from an empty choice.</summary>
+    internal string SelectionStamp { get; init; } = string.Empty;
+    /// <summary>Captures original rule/state values in stable identity order without rewriting financial data.</summary>
+    internal static string CaptureInputs(IEnumerable<Schedule> schedules, IEnumerable<OccurrenceState> states) =>
+        System.Text.Json.JsonSerializer.Serialize(new { Schedules = schedules.OrderBy(item => item.Id), States = states.OrderBy(item => item.Id) });
+
     /// <summary>Gets the cached-rights guard captured by the real read operation.</summary>
     internal Commerce.CommercialFileAccess? Access { get; init; }
 }
