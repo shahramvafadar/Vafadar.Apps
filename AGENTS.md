@@ -793,7 +793,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 * Classify partial/final payment from actual linked partial money and Core effective amount/date rules, preserving
   explicit actual amount/date. Commit money, paid total and settlement together; failures/retired facts roll back
   all rows and publish no Changed. Keep concurrent settlement uniqueness and legacy repair.
-* Current registration remains inactive. D-135 completes generated-entry reopening. D-139 completes selected future occurrences; D-140 completes scoped reminder delivery. Choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
+* Current registration remains inactive. D-135 completes generated-entry reopening. D-139 completes selected future occurrences; D-140 completes scoped reminder delivery. D-141 supplies account/Plan choice persistence; chooser UI remains unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 68. Reopening the exact reviewed settlement (D-135)
 
@@ -804,7 +804,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
   refund links, receipt ownership and file-bound Undo journal. It already reopens states; no second post-commit write.
   Keep actual manual/imported money and metadata, releasing only its checked link atomically with the opened state.
 * SQL/access failure rolls back all complete rows before notifications. Earlier partial payments and occurrence
-  overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; D-139 completes selected future occurrences; D-140 completes scoped reminder delivery. Choice persistence/UI remain unfinished; D-136 supplies command feedback and D-138 automatic posting.
+  overrides remain. Undo retains automatic-post suppression. Current registration stays inactive; D-139 completes selected future occurrences; D-140 completes scoped reminder delivery. D-141 supplies account/Plan choice persistence; chooser UI remains unfinished; D-136 supplies command feedback and D-138 automatic posting.
 
 ## 69. Occurrence action failure and publication feedback (D-136)
 
@@ -829,7 +829,7 @@ Retired pages fail explicitly; do not wait on their stale native scroll controls
 ## 71. Actual automatic payment candidates (D-138)
 
 * Discovery never authorizes money or supplies final values. Recheck stored rule/slice, active state, current due/amount, accounts and actual partial/full money under the ledger writer. Partial manual money, suppression and blocked rights require review; settled/removed/paused/future candidates post nothing.
-* Keep original transfer/unreviewed semantics, atomic state/money, rollback and Changed after commit. Enabled cached facts require exact membership, explicit selected plan and AdvancedPlans; choices never grant rights. Test registration stays inactive. D-139/D-140 complete selected generation/reminder delivery; choice UI/persistence and other bindings remain open.
+* Keep original transfer/unreviewed semantics, atomic state/money, rollback and Changed after commit. Enabled cached facts require exact membership, explicit selected plan and AdvancedPlans; choices never grant rights. Test registration stays inactive. D-139/D-140 complete selected generation/reminder delivery; D-141 supplies account/Plan persistence; chooser UI and other selected bindings remain open.
 * Native fixtures must select their exact independently owned profile through real UI before claiming its financial results. Preserve failed setup evidence, restore original active profile and exact owned data/display state.
 
 ## 72. Selected future plan work and retained calculations (D-139)
@@ -855,7 +855,7 @@ are detached. Keep current forms, deferred display rebuilds and the startup lock
   snooze id marker in generated occurrence ids. Pending delivery/taps/actions never move due dates or post money.
 * Validate file/rights before and after native publication; cancel retired pending queues and membership-denied
   delivery. Taps recheck the current file after unlocking and never silently switch profiles. Current commercial
-  registration remains inactive; choice persistence/UI and other selected bindings stay open.
+  registration remains inactive; D-141 supplies account/Plan persistence; chooser UI and other selected bindings stay open.
 
 D-140 native review also requires retaining Android's first registered notification category while replacing its
 complete action list. The 14.1.2 adapter appends categories rather than replacing them. Receiver initialization
@@ -866,3 +866,15 @@ can discard normal late OS delivery. Keep the existing inexact scheduling and pe
 
 Validate before and after publication through the same queue-retirement guard. A rejected pre-publication read
 must cancel its earlier pending queue too, rather than retaining unavailable old work (D-140).
+
+## 74. Durable financial choices (D-141)
+
+* Store choices only in the actual profile database under the verified resource/scope key. Never invent a main
+  identity, retag restored scope or persist paid/membership/security facts. Registration stays inactive.
+* Reviewed Save rechecks actual file, rights, original complete identity/name/state list, revision and capacity
+  under the SQLite writer. Preserve explicit empty/no-op and reject stale/ABA; Changed follows a changed commit.
+* Persisted choice overrides cached choice only. New account/unarchive/Plan joins a free chosen slot atomically;
+  archive/end releases its own identity and a checked split transfers only its selected predecessor slot.
+  Pause consumes capacity. Malformed choice blocks bounded new work, not history correction; repair is explicit.
+* Capture the stored Plan revision in native preparation and validate before/after publication; refresh on choice
+  changes. No choice Save posts money or rewrites original states/calculation input. Chooser UI remains open.

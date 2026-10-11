@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("d164702f-b998-43e0-a8e5-8e92910ba717"), entityTypeCount: 24)
+            : base(skipDetectChanges: false, modelId: new Guid("44588a9b-3c44-428a-b8d2-6b979fbb103b"), entityTypeCount: 25)
         {
         }
 
@@ -40,6 +40,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var recurrenceRule0 = RecurrenceRule0EntityType.Create(this);
             var exchangeRate = ExchangeRateEntityType.Create(this);
             var zananceSettings = ZananceSettingsEntityType.Create(this);
+            var storedResourceSelection = StoredResourceSelectionEntityType.Create(this);
             var importLinkBatch = ImportLinkBatchEntityType.Create(this);
 
             BudgetCategoryLimitEntityType.CreateForeignKey1(budgetCategoryLimit, budget);
@@ -84,6 +85,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             RecurrenceRule0EntityType.CreateAnnotations(recurrenceRule0);
             ExchangeRateEntityType.CreateAnnotations(exchangeRate);
             ZananceSettingsEntityType.CreateAnnotations(zananceSettings);
+            StoredResourceSelectionEntityType.CreateAnnotations(storedResourceSelection);
             ImportLinkBatchEntityType.CreateAnnotations(importLinkBatch);
 
             AddAnnotation("ProductVersion", "10.0.12");

@@ -15,6 +15,9 @@ public sealed record PlanWorkSnapshot(List<Schedule> Schedules, List<OccurrenceS
     /// <summary>Gets the actual captured file, retained only inside the data boundary.</summary>
     internal string DatabasePath { get; init; } = string.Empty;
 
+    /// <summary>Gets the persisted plan-choice revision, with absence distinct from an explicit empty choice.</summary>
+    internal Guid? SelectionRevision { get; init; }
+
     /// <summary>Gets the cached-rights guard captured by the real read operation.</summary>
     internal Commerce.CommercialFileAccess? Access { get; init; }
 }

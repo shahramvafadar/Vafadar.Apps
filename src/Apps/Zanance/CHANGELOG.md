@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Durable active-item choices (2026-10-11, D-141)
+
+- Prepare account and Plan choices to survive reopening without changing financial history or calculations.
+- Reject outdated selection forms and keep corrections available if a stored choice needs repair.
+- Keep new items and plan continuations consistent with explicitly chosen capacity.
+- Rebuild reminders when saved Plan choices change. Test builds remain unrestricted; the chooser screen follows.
+
 ### Changed - Current Plan reminder and snooze identity (2026-10-11, D-140)
 
 - Android reminders accept ordinary inexact delivery delays instead of silently dropping an alert after one minute.

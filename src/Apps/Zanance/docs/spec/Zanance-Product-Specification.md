@@ -2002,3 +2002,31 @@ external acceptance remain open. [Evidence](../quality/selected-plan-reminders.m
 D-140 final adapter includes the observed stale Android action-caption correction and database-free receiver
 caption initialization. Final baseline: 48 new AT-142 cases, normal parallel main 2,330 / App.Tests 380 pass,
 zero failures/skips; strict Windows/Android zero warnings/errors. See the same quality record for final native/APK proof.
+
+### 31.54. Durable scoped account and Plan choices (D-141 / AT-143)
+
+Persist explicit account and plan choices in one additive profile-local ResourceSelections table, keyed by
+resource kind and the verified financial scope kind/id. A fresh revision rejects stale and ABA drafts. Reviewed Save
+rechecks actual file, membership/rights, original identities/names/states, row revision and capacity under the same
+SQLite writer; no-op saves preserve revision and publish no Changed. Never archive/end or erase financial data to
+represent read-only availability. Stored choices override cached fallback selections, never verified capabilities.
+
+New account/unarchive and Plan creation join an existing bounded choice atomically when capacity remains. Explicit
+archive/ending releases only its own chosen identity; a validated split transfers only the actual selected
+predecessor slot. Pauses still count. Current work/reminder snapshots capture the stored revision and retire pending
+publication after a change; choices trigger the existing reminder refresh. Retained corrections remain possible even
+with malformed choice input, which grants no bounded new work until explicit reviewed repair.
+
+Commercial registration remains inactive: no guessed main-profile identity, fake paid facts, new limits or purchase
+activation. Inactive/unlimited loading writes nothing and requires no bounded choice. Choices are financial-profile
+preference data in the normal database backup, not security, entitlement or credential facts; restore does not retag
+a foreign financial scope. The chooser UI, remaining resource bindings and external/release gates remain open.
+
+44 new AT-143 cases (42 real SQLite / 2 actual application flows); normal parallel main 2,374 / App.Tests 382 pass,
+zero failures/skips (67.349 s). AddResourceSelections migration and regenerated compiled model are exercised by
+the complete suite. No visible screen or string change. [Evidence](../quality/durable-resource-choices.md).
+
+D-141 final strict Windows/Android builds have zero warnings/errors. Normal installed Release applies the additive
+migration with all 23 complete preexisting non-migration tables unchanged, an empty choice table and six original
+plans still available above Free capacity. Complete signed local-test APK/package verified; enabled chooser UI,
+physical-device, iOS, provider and publication acceptance remain open. See the D-141 quality record.

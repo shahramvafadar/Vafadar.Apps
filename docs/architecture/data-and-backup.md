@@ -436,3 +436,26 @@ using complete originals. Versioned bounded links carry exact original members t
 Rebuild snoozes from fresh rows/rights/privacy, resolving an original date directly even after a move beyond the
 range window. Legacy unscoped caches do not establish group or profile ownership. No database migration or portable
 preference addition; selection persistence/activation and remaining resource bindings are still separate work.
+
+## Durable financial selections (D-141)
+
+Persist explicit account and plan choices in one additive profile-local ResourceSelections table, keyed by
+resource kind and the verified financial scope kind/id. A fresh revision rejects stale and ABA drafts. Reviewed Save
+rechecks actual file, membership/rights, original identities/names/states, row revision and capacity under the same
+SQLite writer; no-op saves preserve revision and publish no Changed. Never archive/end or erase financial data to
+represent read-only availability. Stored choices override cached fallback selections, never verified capabilities.
+
+New account/unarchive and Plan creation join an existing bounded choice atomically when capacity remains. Explicit
+archive/ending releases only its own chosen identity; a validated split transfers only the actual selected
+predecessor slot. Pauses still count. Current work/reminder snapshots capture the stored revision and retire pending
+publication after a change; choices trigger the existing reminder refresh. Retained corrections remain possible even
+with malformed choice input, which grants no bounded new work until explicit reviewed repair.
+
+Commercial registration remains inactive: no guessed main-profile identity, fake paid facts, new limits or purchase
+activation. Inactive/unlimited loading writes nothing and requires no bounded choice. Choices are financial-profile
+preference data in the normal database backup, not security, entitlement or credential facts; restore does not retag
+a foreign financial scope. The chooser UI, remaining resource bindings and external/release gates remain open.
+
+The additive AddResourceSelections migration creates only its composite-key choice table; all first-schema rows
+and old history remain. Regenerate the compiled model after every model change. Whole-row comparison now covers
+25 tables, including ResourceSelections. Historical D-140 24-table evidence remains revision-specific.

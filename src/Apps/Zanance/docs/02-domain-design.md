@@ -135,3 +135,22 @@ non-monthly schedules = amount × occurrences per year / 12, shown only for comp
 * Transfer: `AccountId ≠ ToAccountId`; `ToAmount` required when currencies differ.
 * Σ linked refunds ≤ refundable amount of the original purchase (REF-04, AT-15).
 * Archived accounts accept no new entries; their schedules must be moved, paused or ended first (ACC-06).
+
+## Explicit profile-local resource choices (D-141)
+
+Persist explicit account and plan choices in one additive profile-local ResourceSelections table, keyed by
+resource kind and the verified financial scope kind/id. A fresh revision rejects stale and ABA drafts. Reviewed Save
+rechecks actual file, membership/rights, original identities/names/states, row revision and capacity under the same
+SQLite writer; no-op saves preserve revision and publish no Changed. Never archive/end or erase financial data to
+represent read-only availability. Stored choices override cached fallback selections, never verified capabilities.
+
+New account/unarchive and Plan creation join an existing bounded choice atomically when capacity remains. Explicit
+archive/ending releases only its own chosen identity; a validated split transfers only the actual selected
+predecessor slot. Pauses still count. Current work/reminder snapshots capture the stored revision and retire pending
+publication after a change; choices trigger the existing reminder refresh. Retained corrections remain possible even
+with malformed choice input, which grants no bounded new work until explicit reviewed repair.
+
+Commercial registration remains inactive: no guessed main-profile identity, fake paid facts, new limits or purchase
+activation. Inactive/unlimited loading writes nothing and requires no bounded choice. Choices are financial-profile
+preference data in the normal database backup, not security, entitlement or credential facts; restore does not retag
+a foreign financial scope. The chooser UI, remaining resource bindings and external/release gates remain open.

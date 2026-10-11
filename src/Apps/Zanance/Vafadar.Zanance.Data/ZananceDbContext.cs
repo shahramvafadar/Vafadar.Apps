@@ -21,6 +21,9 @@ namespace Vafadar.Zanance.Data;
 /// </remarks>
 public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options) : LocalDbContext(options)
 {
+    /// <summary>Gets profile-local explicit financial resource choices, independent of verified paid facts.</summary>
+    internal DbSet<Commerce.StoredResourceSelection> ResourceSelections => Set<Commerce.StoredResourceSelection>();
+
     /// <summary>Gets the accounts.</summary>
     public DbSet<Account> Accounts => Set<Account>();
 

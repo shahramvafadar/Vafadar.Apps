@@ -29,18 +29,22 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var access = new CommercialFileAccess(commercialAccess, db.Database.GetDbConnection().DataSource);
         access.DemandFeature(CommercialFeature.History);
+        var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken);
         var schedules = await db.Schedules.AsNoTracking().OrderBy(s => s.State).ThenBy(s => s.Name).ToListAsync(cancellationToken);
         var states = await db.OccurrenceStates.AsNoTracking().ToListAsync(cancellationToken);
         var context = access.Context;
         var work = context is null ? PlanWorkPolicy.Inactive : PlanWorkPolicy.Resolve(context,
             new(context.Scope.Kind == EntitlementScopeKind.PersonalProfile ? QuotaScopeKind.PersonalProfile : QuotaScopeKind.SharedSpace,
-                context.Scope.Id), schedules, access.PlanSelection);
+                context.Scope.Id), schedules, stored?.ForNewWork() ?? access.PlanSelection);
+        if ((await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken))?.Revision != stored?.Revision)
+            throw new InvalidOperationException("The plan choice changed during notification preparation.");
         access.EnsureCurrent();
         var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
         return new(schedules, states, work)
         {
             DatabasePath = path,
             Access = access,
+            SelectionRevision = stored?.Revision,
             ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
         };
     }
@@ -54,6 +58,9 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
             throw new InvalidOperationException("The plan work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
+        snapshot.Access.EnsureSnapshotCurrent();
+        if ((await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.RecurringPlans, cancellationToken))?.Revision != snapshot.SelectionRevision)
+            throw new InvalidOperationException("The plan choice changed during notification preparation.");
         snapshot.Access.EnsureSnapshotCurrent();
     }
 
@@ -186,6 +193,11 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
                 : newUse ? CommercialFeature.BasicPlans : CommercialFeature.Corrections);
         }
         if (batch.Count == 0) { write.DemandFeature(CommercialFeature.Corrections); return; }
+        if (write.HasStoredPlanChoice)
+        {
+            await write.PreparePlanChangesAsync(db, batch, continuationOf, cancellationToken);
+            return;
+        }
         var oldSlots = existing.Values.Count(s => s.State is ScheduleState.Active or ScheduleState.Paused);
         var newSlots = batch.Count(s => s.State is ScheduleState.Active or ScheduleState.Paused);
         // Ending an old slice and creating its continuation is one slot, regardless of input order. Corrections

@@ -150,3 +150,9 @@ Independent saved-filter results after report navigation: [runtime evidence](doc
 Complete growing transaction category choices: [runtime evidence](docs/quality/entry-category-captions.md).
 
 Current local quality baseline (D-140): normal parallel main suite 2,330 / App.Tests 380 pass; strict Windows/Android builds have zero warnings/errors. Actual Plan reminder/snooze delivery keeps exact file and original group identities, fresh state/privacy and unchanged financial dates. See [evidence](docs/quality/selected-plan-reminders.md) for normal Release native/APK results and limits. Commercial registration remains inactive. Choice UI/persistence, other resource bindings and owner/provider/device/iOS/release gates remain open.
+
+## Durable local resource choices (D-141)
+
+Account and Plan choices now have scoped, reviewed persistence and actual writer/reminder binding; history remains
+complete. Current test builds stay unrestricted. The chooser UI and other resource bindings remain open.
+[Evidence](docs/quality/durable-resource-choices.md).

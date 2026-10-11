@@ -362,3 +362,9 @@ reminders are rebuilt; legacy navigation remains readable. Notification taps res
 unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
 keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
 external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).
+
+## D-141 delivery boundary
+
+Durable account/Plan selections and their actual writer/reminder bindings do not activate commercial limits.
+Chooser UI and other resource bindings remain required before ENT-03 acceptance. Verify [current evidence](quality/durable-resource-choices.md)
+and retain provider, physical-device, iOS and publication gates; a signed local APK or CI is not those approvals.

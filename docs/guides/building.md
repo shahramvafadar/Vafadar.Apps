@@ -475,3 +475,10 @@ D-140 reminder verification compiles the actual ReminderService, IReminderSchedu
 App.Tests, with isolated real SQLite/localization and explicit native-effect ports. No fake MAUI controls or
 duplicated reminder algorithm. Normal signed Release native evidence and the complete APK are recorded in
 src/Apps/Zanance/docs/quality/selected-plan-reminders.md. Builds/tests are separate from physical-phone/iOS acceptance.
+
+## Durable-choice verification (D-141)
+
+D-141 changes the database model: run AddResourceSelections and regenerate the compiled model with the standard
+commands above. The full suite checks first-schema upgrade and current model; compare all 25 complete tables.
+Current normal Release keeps commercial registration inactive. No enabled native commercial acceptance is implied.
+See [the revision-specific evidence](../../src/Apps/Zanance/docs/quality/durable-resource-choices.md).

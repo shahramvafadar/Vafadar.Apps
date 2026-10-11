@@ -27,7 +27,8 @@ public sealed class ReminderService(
     Translator translator,
     IDateFormatter dates,
     ILocalizationService localization,
-    TimeProvider time)
+    TimeProvider time,
+    ResourceChoiceStore? choices = null)
 {
     private const string BudgetAlertKey = "budget.alert.";
     private const string SnoozeKey = "reminders.snoozed";
@@ -42,6 +43,7 @@ public sealed class ReminderService(
     {
         store.Changed += (_, _) => RefreshSoon();
         plans.Changed += (_, _) => RefreshSoon();
+        if (choices is not null) choices.Changed += (_, _) => RefreshSoon();
         goals.Changed += (_, _) => RefreshSoon();
         holdings.Changed += (_, _) => RefreshSoon();
     }

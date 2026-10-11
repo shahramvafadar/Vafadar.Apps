@@ -53,8 +53,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
-| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..140: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
-| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138/D-139/D-140: explicit scoped Core projection, cached automatic-post choice and selected future occurrence views/writers; actual scoped reminder/snooze delivery; choice UI/persistence and remaining bindings open) | ENT-02 |
+| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..141: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
+| ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..141: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices; chooser UI and remaining resources/bindings open) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | Proposed | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
@@ -695,3 +695,25 @@ reminders are rebuilt; legacy navigation remains readable. Notification taps res
 unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
 keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
 external acceptance remain open. [Evidence](../../quality/selected-plan-reminders.md).
+
+### D-141 - Durable account and Plan choices
+
+Persist explicit account and plan choices in one additive profile-local ResourceSelections table, keyed by
+resource kind and the verified financial scope kind/id. A fresh revision rejects stale and ABA drafts. Reviewed Save
+rechecks actual file, membership/rights, original identities/names/states, row revision and capacity under the same
+SQLite writer; no-op saves preserve revision and publish no Changed. Never archive/end or erase financial data to
+represent read-only availability. Stored choices override cached fallback selections, never verified capabilities.
+
+New account/unarchive and Plan creation join an existing bounded choice atomically when capacity remains. Explicit
+archive/ending releases only its own chosen identity; a validated split transfers only the actual selected
+predecessor slot. Pauses still count. Current work/reminder snapshots capture the stored revision and retire pending
+publication after a change; choices trigger the existing reminder refresh. Retained corrections remain possible even
+with malformed choice input, which grants no bounded new work until explicit reviewed repair.
+
+Commercial registration remains inactive: no guessed main-profile identity, fake paid facts, new limits or purchase
+activation. Inactive/unlimited loading writes nothing and requires no bounded choice. Choices are financial-profile
+preference data in the normal database backup, not security, entitlement or credential facts; restore does not retag
+a foreign financial scope. The chooser UI, remaining resource bindings and external/release gates remain open.
+
+44 added AT-143 cases; main 2,374 / App.Tests 382 pass. ENT-02/03 remain in progress, with chooser UI as the next
+ready step. [Evidence](../../quality/durable-resource-choices.md).

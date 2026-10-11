@@ -34,6 +34,7 @@ public static class ZananceDataServiceCollectionExtensions
         return services.AddSingleton<IBackupSource, ZananceDatabaseBackupSource>()
             .AddSingleton<ZananceStore>()
             .AddSingleton<PlanStore>()
+            .AddSingleton<ResourceChoiceStore>()
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()
             .AddSingleton<AutoPostProcessor>()

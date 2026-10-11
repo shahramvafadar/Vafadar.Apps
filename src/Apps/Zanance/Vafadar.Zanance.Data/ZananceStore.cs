@@ -198,7 +198,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
         var existing = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == account.Id, cancellationToken);
         write.DemandFeature(existing is null ? CommercialFeature.FinancialAccounts : CommercialFeature.Corrections);
-        if (write.Enforced && !account.IsArchived && (existing is null || existing.IsArchived))
+        if (write.Enforced && !write.HasStoredAccountChoice && !account.IsArchived && (existing is null || existing.IsArchived))
         {
             // D-118: creation and unarchive consume the same slot. Existing corrections and archival stay possible
             // above quota; no chosen account, money, visibility or historical status is changed automatically.
@@ -223,6 +223,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.Accounts.Update(account);
         }
 
+        await write.PrepareAccountChangeAsync(db, account, existing, cancellationToken);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);

@@ -1001,3 +1001,18 @@ rights, explicit choice/no choice, fresh privacy/language/amount/moved date, ori
 removed/changed/disabled members, legacy cache retirement, wrong-file actions, stable repeat deadlines, permission,
 retirement cancellation before and after native publication, membership loss and post-unlock tap routing. Main parallel suite 2,330 /
 App.Tests 380 pass, zero failures/skips. Running native evidence and external limits: [quality evidence](quality/selected-plan-reminders.md).
+
+## AT-143 - Durable scoped resource choices
+
+44 added cases: 42 actual Data SQLite and two actual ReminderService flows. Cover persistence across independent
+providers, complete non-choice row equality, explicit empty/no-op choices, duplicates/capacity/foreign/historical
+ids, retired original list/rights/scope/file/revision and ABA, independent concurrent writers, SQL/post-SQL access
+rollback/no Changed, unlimited/inactive retention, exact shared membership, actual new money/retained corrections,
+atomic new-slot joining/release/split, malformed input/repair, scoped reminder narrowing and native-await retirement.
+Main normal parallel suite 2,374 / App.Tests 382 pass with zero failures/skips. Native/package and external limits:
+[quality evidence](quality/durable-resource-choices.md).
+
+D-141 final strict Windows/Android builds have zero warnings/errors. Normal installed Release applies the additive
+migration with all 23 complete preexisting non-migration tables unchanged, an empty choice table and six original
+plans still available above Free capacity. Complete signed local-test APK/package verified; enabled chooser UI,
+physical-device, iOS, provider and publication acceptance remain open. See the D-141 quality record.

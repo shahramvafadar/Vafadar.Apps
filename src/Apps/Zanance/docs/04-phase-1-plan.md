@@ -365,3 +365,10 @@ reminders are rebuilt; legacy navigation remains readable. Notification taps res
 unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
 keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
 external acceptance remain open. [Evidence](quality/selected-plan-reminders.md).
+
+## D-141 delivery - Durable financial resource choices
+
+ENT-02/03 account/Plan choice persistence and actual writer/reminder binding are delivered without commercial
+activation. Additive schema, explicit scoped Save and retained history/correction behavior: 44 new AT-143 cases,
+main 2,374 / App.Tests 382 pass. Chooser UI, other resources/operations and owner/external gates remain open.
+[Evidence](quality/durable-resource-choices.md).

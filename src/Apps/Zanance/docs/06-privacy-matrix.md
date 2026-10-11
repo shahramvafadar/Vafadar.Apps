@@ -288,3 +288,11 @@ full database path and at most 30 original plan/date members. The identifier gra
 path. No new schema, SDK, permission, network, security credential or portable backup setting. Existing snooze
 text is refreshed from current privacy/display/state; unscoped legacy caches are retired without guessing a profile
 or group. Shared pending/snooze caps stay 30/20. No ledger, due-date or profile write from delivery/taps/actions.
+
+## Durable account and Plan choices (D-141)
+
+ResourceSelections stores only kind, verified financial scope kind/id, canonical selected original entity ids and
+a random change revision inside each profile database. It contains no paid facts, membership proof, credentials,
+PIN or device security. The normal database backup includes these local financial choices; imported/restored scopes
+are never guessed or reassigned. Current inactive registration creates no choice rows. No new SDK, network,
+permission or security-storage use. Selection does not alter original financial data or grant service access.

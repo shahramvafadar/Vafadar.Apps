@@ -11,6 +11,19 @@ using Vafadar.Zanance.Core.Settings;
 
 namespace Vafadar.Zanance.Data.Configurations;
 
+/// <summary>Maps exact financial choices without changing original account or plan states.</summary>
+internal sealed class StoredResourceSelectionConfiguration : IEntityTypeConfiguration<Commerce.StoredResourceSelection>
+{
+    /// <inheritdoc />
+    public void Configure(EntityTypeBuilder<Commerce.StoredResourceSelection> builder)
+    {
+        builder.ToTable("ResourceSelections");
+        builder.HasKey(row => new { row.Kind, row.ScopeKind, row.ScopeId });
+        builder.Property(row => row.IdentitySet).IsRequired().HasMaxLength(8447);
+        builder.Property(row => row.Revision).IsConcurrencyToken();
+    }
+}
+
 internal sealed class ImportLinkBatchConfiguration : IEntityTypeConfiguration<Importing.ImportLinkBatch>
 {
     public void Configure(EntityTypeBuilder<Importing.ImportLinkBatch> builder)

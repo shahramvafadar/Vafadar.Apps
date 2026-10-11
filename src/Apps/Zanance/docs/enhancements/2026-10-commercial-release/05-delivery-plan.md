@@ -511,3 +511,11 @@ reminders are rebuilt; legacy navigation remains readable. Notification taps res
 unlocking, without profile guessing or money writes. Reserve the snooze id marker so a hashed occurrence id cannot
 keep the original deadline. Registration remains inactive. Choice UI/persistence, other selected resources and
 external acceptance remain open. [Evidence](../../quality/selected-plan-reminders.md).
+
+## D-141 completed boundary and next ready work
+
+D-141 delivers scoped account/Plan selection persistence and actual new-money/work/reminder bindings, including
+atomic explicit new-slot changes. 44 new cases / main 2,374 / App.Tests 382 pass. No commercial activation.
+Next: the reviewed account/Plan chooser UI, covered loading, explicit Save and preserved draft/error feedback;
+then remaining selected resources/operations. Continuous delivery remains authorized; owner/external gates stay open.
+[Evidence](../../quality/durable-resource-choices.md).

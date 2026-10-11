@@ -827,3 +827,11 @@ or moves a due date. Rebuild text from current privacy and display choices; gene
 item count. Keep one shared pending queue and stable repeat id. Taps wait for the app lock and resolve the current
 file, without silently switching profiles. Unscoped legacy caches cannot prove membership and are retired when
 normal notifications are rebuilt. This is the final routing format, not a temporary commercial policy.
+
+## Durable reviewed choices (D-141)
+
+Choice loading is read-only. Present the complete original identities and states, never a guessed first subset
+above capacity. An explicit empty choice differs from no choice. Saving a reviewed bounded choice must reject a
+changed profile, revision, original list or rights; retain the form for review instead of overwriting a newer choice.
+All financial history remains visible/correctable. Unlimited and inactive test builds need no choice. This slice
+provides the store and actual writer/reminder bindings; the visible chooser is the next delivery step.

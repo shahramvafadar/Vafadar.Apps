@@ -224,6 +224,38 @@ public sealed class ReminderFlowTests
         Assert.NotEqual(snapshot.ReminderScope, (await otherPlans.GetWorkSnapshotAsync(Ct)).ReminderScope);
     }
 
+    [Fact, Trait("AT", "AT-143")]
+    public async Task A_durable_plan_choice_rebuilds_actual_delivery_and_snoozes_only_original_selected_members()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); SetAccess(f, s, "missing");
+        var choices = new ResourceChoiceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), s.Access);
+        await choices.SaveAsync(await choices.ReadAsync(QuotaKind.RecurringPlans, Ct), [s.Plans[0].Id, s.Plans[1].Id], Ct);
+        await s.Service.RefreshAsync(); var original = Assert.Single(s.Native.Pending);
+        Assert.Equal(2, PlanReminderLink.Parse(original.Link)!.Targets.Count);
+        await choices.SaveAsync(await choices.ReadAsync(QuotaKind.RecurringPlans, Ct), [s.Plans[1].Id, s.Plans[2].Id], Ct);
+        var before = await RowsAsync(f); await s.Service.SnoozeAsync(new(original, SnoozeChoice.OneHour));
+        var snooze = s.Native.Pending.Single(item => item.Id == ReminderSnoozes.IdFor(original.Id));
+        Assert.Equal(s.Plans[1].Id, Assert.Single(PlanReminderLink.Parse(snooze.Link)!.Targets).PlanId);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    [Fact, Trait("AT", "AT-143")]
+    public async Task A_durable_choice_changed_during_native_publication_cancels_retired_delivery()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); SetAccess(f, s, "missing");
+        var choices = new ResourceChoiceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), s.Access);
+        await choices.SaveAsync(await choices.ReadAsync(QuotaKind.RecurringPlans, Ct), [s.Plans[0].Id], Ct);
+        s.Native.OnReplace = async () =>
+        {
+            s.Native.OnReplace = null;
+            await choices.SaveAsync(await choices.ReadAsync(QuotaKind.RecurringPlans, Ct), [s.Plans[1].Id], Ct);
+        };
+        await s.Service.RefreshAsync(); Assert.Empty(s.Native.Pending);
+        var before = await RowsAsync(f); await s.Service.RefreshAsync();
+        Assert.Equal(s.Plans[1].Id, Assert.Single(PlanReminderLink.Parse(Assert.Single(s.Native.Pending).Link)!.Targets).PlanId);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
     private static async Task<Seed> SeedAsync(FlowFixture f)
     {
         var account = new Account { Name = "Owned cash", CurrencyCode = "EUR", OpeningDate = Day.AddDays(-2), OpeningBalance = 100000 };
@@ -258,7 +290,7 @@ public sealed class ReminderFlowTests
             command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name";
             using var reader = await command.ExecuteReaderAsync(Ct); while (await reader.ReadAsync(Ct)) tables.Add(reader.GetString(0));
         }
-        Assert.Equal(24, tables.Count); var rows = new SortedDictionary<string, List<string>>();
+        Assert.Equal(25, tables.Count); var rows = new SortedDictionary<string, List<string>>();
         foreach (var table in tables)
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

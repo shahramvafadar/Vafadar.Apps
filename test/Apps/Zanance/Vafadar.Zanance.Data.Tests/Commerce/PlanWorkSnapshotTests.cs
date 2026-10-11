@@ -176,7 +176,7 @@ public sealed class PlanWorkSnapshotTests : IDisposable
             command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name";
             using var reader = await command.ExecuteReaderAsync(Ct); while (await reader.ReadAsync(Ct)) tables.Add(reader.GetString(0));
         }
-        Assert.Equal(24, tables.Count); var all = new Dictionary<string, List<string>>();
+        Assert.Equal(25, tables.Count); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";
