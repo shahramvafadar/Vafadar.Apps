@@ -1685,3 +1685,14 @@ not key persistence, filesystem durability, restart recovery or whole-app encryp
 
 Strict main Windows and Android builds pass with zero errors and warnings.
 Evidence: artifacts/native-sqlcipher/d188-{full-tests,windows-build,android-build}.log.
+
+## AT-188 - Resumable migration coordination
+
+Fifteen behavior cases cover interruption after eight native effects/commits, selected-key loss,
+false successful persistence, cleanup ordering, retired context across awaits, identity/regression,
+completed restart and cancellation. Focused 57/full 3,220 pass, zero failures/skips. The test native
+port is faultable, not a filesystem or SecureStorage implementation. Real adapter restart and
+power-loss checks remain open. No visible UI or app activation requires a repeated UI matrix.
+
+D-189 strict main Windows and Android builds pass with zero errors and warnings.
+Evidence: artifacts/native-sqlcipher/d189-{coordinator-tests,full-tests,windows-build,android-build}.log.

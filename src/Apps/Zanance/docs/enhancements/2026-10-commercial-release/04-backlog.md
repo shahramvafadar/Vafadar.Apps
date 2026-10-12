@@ -19,7 +19,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | Proposed | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | Proposed | SEC-02, SEC-03 |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-189 coordinator; native key/selector/cleanup adapters and real restart acceptance open) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Final policy open; interim exclusion declined (D-114) | OD-10 |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
@@ -1463,3 +1463,10 @@ Immutable non-secret profile/generation transition model and eight behavior case
 Original remains authoritative until Selected. SEC-05 is not complete: durable storage/key pairing,
 selector reopen, exact cleanup and restart fault injection still require the actual coordinator.
 No live encryption/provider/backup policy activation; OD-04 and OD-10 remain owner gates.
+
+## Resumable coordination progress (D-189)
+
+Final coordinator checks actual checkpoint/readback, captured context, candidate reopen before
+selection/cleanup and refuses plaintext fallback on missing key. Fifteen cases/full 3,220 pass.
+SEC-05 remains in progress: native durable key/selector/cleanup adapters, real restart/fault tests
+and owner OD-04/OD-10 policy are not accepted by faultable-port tests. No app provider activation.

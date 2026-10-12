@@ -1077,3 +1077,9 @@ keys and crash-safe migration. SEC-01 and full release remain open.
 Eight cases/full 3,205 pass for explicit immutable ordered generation transitions. Final durable
 key/selector/cleanup/recovery coordinator remains open; live app data stays plaintext. No UI/schema
 or commercial activation. See the canonical commercial-release backlog and AT-187.
+
+## D-189 resumable migration coordination
+
+Fifteen new/full 3,220 cases pass for exclusive native-effect coordination, stored checkpoint
+readback and fail-closed selected-key behavior. Native adapters/real restart/key/recovery policy
+remain open. No UI, live encryption/provider/backup or commercial activation.

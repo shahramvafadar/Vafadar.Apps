@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Resumable migration coordination (2026-10-13, D-189)
+
+- Prepare checkpoint readback and keyed candidate reopen before obsolete plaintext cleanup.
+- Final platform key/storage adapters and real interruption acceptance are still required.
+
 ### Development - Generation migration checkpoints (2026-10-13, D-188)
 
 - Prepare ordered profile-bound migration states without changing live databases or backup behavior.

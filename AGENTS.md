@@ -1377,3 +1377,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   stays selected until selector commit. Never infer plaintext fallback from a missing candidate key.
 * The immutable model does not certify durable effects. Actual key persistence, staged verification,
   selector storage/reopen, exact cleanup and restart fault injection remain coordinator obligations.
+
+## 121. Resumable migration coordinator (D-189)
+
+* Coordinate only an exclusively captured profile writer session. Read actual stored progress,
+  reject regression/foreign identities, and revalidate context/cancellation after native awaits.
+* Compare-and-commit then read back every checkpoint before the next effect. Selected restart
+  reopens the candidate with its key before exact cleanup; never fall back to plaintext.
+* Native effects must be idempotent after interruptions. Faultable port tests prove coordination,
+  not actual key/filesystem/power-loss durability; require real adapters and restart proof before activation.

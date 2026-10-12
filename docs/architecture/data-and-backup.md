@@ -780,3 +780,10 @@ Do not activate without per-profile keys, access and crash-safe verification/com
 [Explicit checkpoints](sqlcipher-generation-checkpoints.md) bind ordered selection to one profile
 and two distinct generations. This model does not persist keys/files, change app composition or
 certify crash durability. Actual coordinator/restart/recovery acceptance remains required.
+
+## Resumable generation coordination (D-189)
+
+DatabaseGenerationMigration and IDatabaseGenerationMigrationSession coordinate the captured
+writer lease, idempotent native effects and stored readback. Native key/selector/cleanup adapters
+are still required; existing application and portable backup composition are unchanged.
+See [protocol and remaining durability obligations](sqlcipher-generation-checkpoints.md).

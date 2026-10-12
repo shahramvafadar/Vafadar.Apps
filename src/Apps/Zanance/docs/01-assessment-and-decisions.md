@@ -2374,3 +2374,15 @@ in AT-187. This model never certifies external effects or touches files/keys. No
 provider or backup change; live databases remain plaintext. Durable key/selector/cleanup/restart
 coordinator and OD-04/OD-10 policy gates remain open.
 [Guide](../../../../docs/architecture/sqlcipher-generation-checkpoints.md).
+
+## D-189 - Resumable native-effect migration coordinator
+
+Implement the final coordinator over an explicitly exclusive native session, with actual stored
+checkpoint reads, identity/regression rejection, context/cancellation checks after awaits and
+compare-and-commit followed by exact readback. Reopen candidate before selection and again before
+cleanup after Selected restart. Missing key stops without plaintext fallback; Completed restart
+only reopens. Fifteen fault/retirement/cancellation cases added; full 3,220 pass, no failures/skips.
+Strict main build results recorded in AT-188. No key/journal adapter, schema/UI/provider/backup
+activation. Faultable ports are not real power-loss/restart proof. Native durable adapters and
+OD-04/OD-10 remain prerequisites; main databases are still plaintext.
+[Guide](../../../../docs/architecture/sqlcipher-generation-checkpoints.md).

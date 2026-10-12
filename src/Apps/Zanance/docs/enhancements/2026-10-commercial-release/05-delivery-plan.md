@@ -1241,3 +1241,10 @@ Final protocol model rejects skipped/repeated/foreign-identity transitions and r
 selection until explicit commit. Eight cases/full 3,205 pass. Continue actual durable key/generation
 coordination and restart fault injection; the model alone is not crash-safe migration acceptance.
 Keep OD-04/OD-10 gates and live database/provider/backup composition unchanged until accepted.
+
+## Resumable coordination (D-189)
+
+Ordered native-effect coordination and readback checks pass fifteen new/full 3,220 cases. Do not
+substitute faultable-port tests for real native durability. Continue actual captured key/selector/
+cleanup adapters and process-restart proof after required policy choices; app encryption and final
+migration remain incomplete. Do not repeat unchanged UI/native matrices.

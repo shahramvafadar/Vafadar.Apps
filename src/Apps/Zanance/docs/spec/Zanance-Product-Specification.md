@@ -2870,3 +2870,11 @@ Eight behavior cases and full 3,205 pass for immutable profile/generation-bound 
 Original is selected until explicit selection. No storage/key/recovery effects are certified by
 this model; durable coordinator and restart/fault tests remain open. No UI/schema/provider or
 backup activation; main databases are still plaintext.
+
+### 31.102 Resumable migration coordination (D-189 / AT-188)
+
+Actual checkpoint/readback and ordered native-effect coordinator implemented, with missing-key,
+identity/regression, retired context and cancellation refusal. Fifteen added cases/full 3,220 pass.
+Native key/selector/cleanup adapters and real restart/fault/power-loss acceptance remain open.
+This infrastructure does not activate migration or encryption in the app; OD-04/OD-10 still gate
+final policy. Existing UI, provider and backup composition remain unchanged.
