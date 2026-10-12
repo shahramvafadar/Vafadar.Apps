@@ -11,7 +11,8 @@
     x:DataType="local:AccountDetailViewModel"
     Title="{Binding Name}">
 
-    <ScrollView>
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding IsNotBusy}">
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Balance (FIN-12) -->
@@ -43,7 +44,9 @@
                             IsVisible="{Binding IsArchived, Converter={StaticResource InvertedBoolConverter}}" />
                     <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />
                     <Label Text="{v:Translate Loan_Title}" FontAttributes="Bold" />
-                    <VerticalStackLayout Spacing="6" IsVisible="{Binding HasLoanTerms}">
+                    <Label Text="{Binding LoanWorkFeedback}" Style="{StaticResource Secondary}" IsVisible="{Binding LoanWorkFeedback, Converter={StaticResource IsNotNullConverter}}" />
+                    <Label Text="{Binding LoanEssentialWarning}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding LoanEssentialWarning, Converter={StaticResource IsNotNullConverter}}" />
+                    <VerticalStackLayout Spacing="6" IsVisible="{Binding ShowLoanEstimate}">
                         <Label Text="{Binding LoanNextText}" />
                         <Label Text="{Binding LoanPayoffText}" Style="{StaticResource Secondary}" />
                         <Label Text="{v:Translate Loan_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" />
@@ -51,8 +54,8 @@
                             <p:WrappingAction Appearance="Primary" Text="{v:Translate Loan_RecordInstallment}" Command="{Binding RecordInstallmentCommand}" />
                             <p:WrappingAction Appearance="Secondary" Text="{v:Translate Loan_ShowSchedule}" Command="{Binding ShowScheduleCommand}" />
                         </VerticalStackLayout>
-                        <p:WrappingAction Text="{v:Translate Loan_OtherAmount}" Command="{Binding DebtActionCommand}" Appearance="Text" />
                     </VerticalStackLayout>
+                    <p:WrappingAction Text="{Binding ManualLoanActionText}" Command="{Binding DebtActionCommand}" Appearance="Text" IsVisible="{Binding HasLoanTerms}" />
                     <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding HasLoanTerms, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>
             </Border>
@@ -117,4 +120,17 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+        <Label Text="{Binding Installment.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Installment.Error, Converter={StaticResource IsNotNullConverter}}" />
+        <Label Text="{Binding Installment.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Installment.Result, Converter={StaticResource IsNotNullConverter}}" />
+        <p:WrappingAction Text="{v:Translate Account_Refresh}" Command="{Binding RefreshLoanCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+        <Label Text="{v:Translate Account_Loading}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.HasFailed}">
+        <Label Text="{Binding LoanWorkFeedback}" Style="{StaticResource ErrorText}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

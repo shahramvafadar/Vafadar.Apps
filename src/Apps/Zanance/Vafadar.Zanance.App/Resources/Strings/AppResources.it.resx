@@ -6212,4 +6212,28 @@ Limiti per categoria:
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>Non è stato possibile leggere la ricevuta con il file e l’accesso attuali. Non è stato salvato nulla. Riprova.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>Non è stato possibile verificare i dati del prestito o l’accesso. Aggiornali prima di riprovare. Non è stato salvato alcun nuovo pagamento.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>La rata è stata registrata.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>La rata è stata registrata, ma non è stato possibile aggiornare completamente la vista. Aggiornala per vederla; non registrare di nuovo lo stesso pagamento.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>Aggiorna prestito e accesso</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>Caricamento dei dati originali del prestito…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>Aggiorna conto e accesso</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>Caricamento dei dati originali del conto…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>Non è stato possibile caricare completamente il conto. Aggiornalo per riprovare; i dati di riconciliazione inseriti vengono conservati.</value>
+  </data>
 </root>

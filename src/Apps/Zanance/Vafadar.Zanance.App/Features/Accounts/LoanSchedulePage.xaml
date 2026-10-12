@@ -4,11 +4,20 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
     x:DataType="local:LoanScheduleViewModel"
     Title="{v:Translate Loan_ScheduleTitle}">
 
-    <CollectionView ItemsSource="{Binding Rows}" SelectionMode="None">
+    <ContentPage.Resources>
+        <Style x:Key="LoanPaymentStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+    <CollectionView IsVisible="{Binding Loading.IsReady}" ItemsSource="{Binding Rows}" SelectionMode="None">
         <CollectionView.Header>
             <VerticalStackLayout Padding="16,16,16,8" Spacing="6">
                 <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
@@ -18,20 +27,27 @@
         </CollectionView.Header>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="local:LoanRow">
-                <!-- Padding, not a margin on the row: Windows ignores the margin of a list item's root. The title shares its
-                     line only with the short payment; principal and interest, and what remains, get a line each instead of
-                     wrapping next to each other. -->
+                <!-- Windows ignores a list root's margin: use padding. Identity, full payment packet, split and remaining
+                     balance each own a growing row, so scalable dates never squeeze monetary digits (D-171). -->
                 <Grid Padding="16,0">
-                    <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto,Auto" RowSpacing="2">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                            <Label Text="{Binding Title}" />
-                            <Label Grid.Column="1" Text="{Binding Payment}" FontAttributes="Bold" />
-                        </Grid>
-                        <Label Grid.Row="1" Text="{Binding Split}" Style="{StaticResource Secondary}" />
-                        <Label Grid.Row="2" Text="{Binding Remaining}" Style="{StaticResource Secondary}" />
+                    <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="2">
+                        <Label Text="{Binding Title}" />
+                        <p:AmountReadout Grid.Row="1" AmountText="{Binding Payment}" CaptionStyle="{StaticResource LoanPaymentStyle}" />
+                        <Label Grid.Row="2" Text="{Binding Split}" Style="{StaticResource Secondary}" />
+                        <Label Grid.Row="3" Text="{Binding Remaining}" Style="{StaticResource Secondary}" />
                     </Grid>
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
+    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+        <Label Text="{Binding Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Feedback, Converter={StaticResource IsNotNullConverter}}" />
+        <Label Text="{Binding EssentialWarning}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding EssentialWarning, Converter={StaticResource IsNotNullConverter}}" />
+        <p:WrappingAction Text="{v:Translate Loan_Refresh}" Command="{Binding RefreshCommand}" IsEnabled="{Binding Loading.IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+        <Label Text="{v:Translate Loan_Loading}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

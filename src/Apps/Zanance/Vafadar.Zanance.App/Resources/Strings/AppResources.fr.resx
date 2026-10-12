@@ -6200,4 +6200,28 @@ Plafonds par catégorie :
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>Le reçu n’a pas pu être lu avec le fichier et l’accès actuels. Rien n’a été enregistré. Veuillez réessayer.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>Les données du prêt ou l’accès n’ont pas pu être vérifiés. Actualisez-les avant de réessayer. Aucun nouveau paiement n’a été enregistré.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>L’échéance a été enregistrée.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>L’échéance a été enregistrée, mais l’affichage n’a pas pu être entièrement actualisé. Actualisez-le pour la voir ; n’enregistrez pas le même paiement à nouveau.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>Actualiser le prêt et l’accès</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>Chargement des données originales du prêt…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>Actualiser le compte et l’accès</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>Chargement des données originales du compte…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>Le compte n’a pas pu être entièrement chargé. Actualisez-le pour réessayer ; vos données de rapprochement sont conservées.</value>
+  </data>
 </root>

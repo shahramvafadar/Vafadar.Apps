@@ -1107,3 +1107,11 @@ Main 3,104 tests, strict builds, 36 Windows contexts, both actual Release Androi
 and full signed APK verified. No commercial activation or external corpus/device acceptance.
 [Evidence](../../quality/receipt-work.md). Next: loan/report/PDF, followed by the bounded ENT-02/03 audit.
 ENT-04 provider facts and owner/external release dependencies remain open.
+
+## Delivered original loan operation (D-171)
+
+The actual loan calculation/confirmation/writer portion of group 3 is delivered locally with original
+Free balances/manual repayment/warnings. Main 3,141, strict builds, 36 Windows contexts, normal Release
+Android schedule/consent/payment readback and full signed APK verified. No commercial activation.
+[Evidence](../../quality/loan-work.md). Next: original report packages and advanced PDF, then bounded
+ENT-02/03 completion audit. Billing/provider/owner/external gates and ENT-04 remain open.

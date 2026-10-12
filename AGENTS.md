@@ -1217,3 +1217,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   pending bytes reach a new draft; transient recognition never enters portable data.
 * Native fixtures identify fictitious picker/recognition ports, await newly revealed native layout and
   restore complete owned rows/bytes/display. A digital PDF test is not camera/image-OCR corpus acceptance.
+
+## 104. Original loan analysis and confirmed payment writer (D-171)
+
+* Keep recorded balance, manual repayments/reconciliation and essential interest-coverage warning Free;
+  paid loan schedules/splits are independent of Simple/Advanced. Preserve real terms and raw drafts.
+* Capture coherent original file/accounts/ledger/categories and nullable Settings. Validate complete
+  packets, cached access and day after native choices/consent; caller mutation or audit equality is not authority.
+* Compute and save original confirmed installments inside the existing ledger writer, with its original
+  selected-account/new-money checks. Principal is a transfer; only interest is spending/income.
+* Recheck after inserts while excluding only this batch's exact new ids. Roll back changed original
+  inputs/triggers; retain typed accepted outcomes after subscriber failure and never repeat an old review.
+* Cover account/schedule publication, anchor typed destination/refresh to original file and keep valid
+  DateField. Independent native fixtures restore complete rows/bytes/display. Report/PDF work remains next.

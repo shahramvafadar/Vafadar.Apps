@@ -1509,3 +1509,17 @@ Source mutation/foreign-file/access-retirement cases use actual application/Data
 real SQLite, not copied parsing or fake controls. Native Windows effect ports and actual Android
 digital-PDF engine are distinguished from camera/image OCR/device acceptance.
 See [bounded scenarios, negative evidence and restoration](quality/receipt-work.md).
+
+## AT-172 - Original loan work and atomic confirmed installment (D-171)
+
+37 AT-172 cases and ordinary main 3,141 / App.Tests 1,084 pass, zero failures/skips, 2m 54.955s;
+cleanup and strict Windows/complete Android Release builds succeed without warnings/errors. Thirty-six
+Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced, with actual native payment
+consent and original ledger readback. Normal signed Release Android verifies original account/schedule,
+native payment consent and exact principal/interest entries. Complete owned fixtures and baseline bytes/
+sidecars/Main/English/System are restored; final Release installed/stopped. Commercial registration
+stays inactive; physical phone/iOS/provider/billing/Store and full-release acceptance remain separate.
+Original calculators, actual non-UI application flows and real SQLite cover source retirement, direct
+writer access, whole-batch/trigger rollback, final clamp, transfer/interest invariants and accepted
+subscriber failure without old-review replay. Native effects and restoration are bounded separately.
+See [scenarios and negative evidence](quality/loan-work.md).

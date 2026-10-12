@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Loan review and confirmed payments (2026-10-12, D-171)
+
+- Keep manual repayment, recorded balance and essential warnings available independently of loan analysis.
+- Recheck the original loan, account and terms before recording a confirmed installment.
+- Keep completed payment feedback after notification failure and prevent repeating the old confirmed request.
+- Refresh account data without losing reconciliation input; show complete installment amounts on separate rows.
+
 ### Improved - Safe shared receipt reading (2026-10-12, D-170)
 
 - Check the current receipt source and access before reading and before opening its review form.

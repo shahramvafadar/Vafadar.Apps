@@ -6252,4 +6252,28 @@ Category limits:
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>The receipt could not be read with the current source and access. Nothing was saved. Please try again.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>The loan inputs or access could not be verified. Refresh before trying again. No new payment was saved.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>The installment was recorded.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>The installment was recorded, but the view could not be refreshed completely. Refresh to see it; do not submit the same payment again.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>Refresh loan and access</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>Loading the original loan…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>Refresh account and access</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>Loading the original account…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>The account could not be loaded completely. Refresh to try again; your reconciliation input is kept.</value>
+  </data>
 </root>

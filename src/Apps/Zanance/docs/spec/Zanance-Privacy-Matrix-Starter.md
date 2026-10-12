@@ -510,3 +510,10 @@ process-local, not a portable field or log. Recognition original remains transie
 compact metadata-free pending data enters the explicitly saved attachment. No SDK/permission/network/
 credential/schema or backup-policy change; original camera explanation and app lock stay intact.
 Digital-PDF native verification is not camera/image OCR or physical-device corpus acceptance.
+
+## Original loan review boundary (D-171)
+
+Existing local accounts, terms, ledger and categories only. Complete review/fingerprint is process-local,
+not portable or logged. Ordinary explicitly confirmed principal/interest entries use existing schema
+and ledger/backup policy. No SDK/permission/network/credential/format or commercial activation change.
+Independent native fixtures contain fictitious data and restore exact owned original files/display.

@@ -1015,7 +1015,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// <summary>Validates the complete ledger batch within its caller's writer; correction grants are private identities.</summary>
     private async Task<SaveResult> SaveEntriesUnderWriterAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds, Guid? moveAttachmentsTo,
-        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken, OccurrenceState? settlement = null)
+        IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken, OccurrenceState? settlement = null, LoanReadReview? loanReview = null)
     {
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
@@ -1098,8 +1098,12 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             write.EnsureCurrent();
             await db.SaveChangesAsync(cancellationToken);
         }
+        // D-171: original loan inputs can be changed by a trigger even after the batch inserts.
+        // Ignore only this writer's new entry ids; other mutations must roll back the complete payment.
+        if (loanReview is not null) await loanReview.ValidateWriterAsync(db, entries.Select(item => item.Id).ToArray(), cancellationToken);
         await write.CommitAsync(cancellationToken);
 
+        if (loanReview is not null) return CommittedWriteNotification.Publish(OnChanged, SaveResult.Success);
         OnChanged();
         return SaveResult.Success;
     }

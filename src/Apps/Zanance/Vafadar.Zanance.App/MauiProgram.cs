@@ -84,6 +84,7 @@ public static class MauiProgram
             .AddSingleton<AppLockService>()
             .AddSingleton<Features.Receipts.IReceiptRuntime, Features.Receipts.MauiReceiptRuntime>()
             .AddTransient<Features.Receipts.ReceiptReadingSession>()
+            .AddTransient<Features.Accounts.LoanInstallmentSession>()
             .AddSingleton<IDataFileInteraction, MauiDataFileInteraction>()
             .AddSingleton<AppLinkRouter>()
             .AddSingleton<Vafadar.Zanance.Core.Security.IPinStorage, SecurePinStorage>()

@@ -6223,4 +6223,28 @@ Kategorielimits:
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>Der Beleg konnte mit der aktuellen Datei und Berechtigung nicht gelesen werden. Es wurde nichts gespeichert. Bitte versuchen Sie es erneut.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>Die Darlehensdaten oder Berechtigung konnten nicht geprüft werden. Aktualisieren Sie sie vor einem erneuten Versuch. Es wurde keine neue Zahlung gespeichert.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>Die Rate wurde erfasst.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>Die Rate wurde erfasst, aber die Ansicht konnte nicht vollständig aktualisiert werden. Aktualisieren Sie sie; erfassen Sie dieselbe Zahlung nicht erneut.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>Darlehen und Berechtigung aktualisieren</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>Die ursprünglichen Darlehensdaten werden geladen…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>Konto und Berechtigung aktualisieren</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>Die ursprünglichen Kontodaten werden geladen…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>Das Konto konnte nicht vollständig geladen werden. Aktualisieren Sie es erneut; Ihre Eingaben zum Kontenabgleich bleiben erhalten.</value>
+  </data>
 </root>

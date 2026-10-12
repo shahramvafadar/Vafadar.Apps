@@ -6192,4 +6192,28 @@ Límites por categoría:
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>No se pudo leer el recibo con el archivo y el acceso actuales. No se guardó nada. Inténtalo de nuevo.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>No se pudieron verificar los datos del préstamo o el acceso. Actualízalos antes de intentarlo de nuevo. No se guardó ningún pago nuevo.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>La cuota se ha registrado.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>La cuota se ha registrado, pero no se pudo actualizar toda la vista. Actualízala para verla; no vuelvas a registrar el mismo pago.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>Actualizar préstamo y acceso</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>Cargando los datos originales del préstamo…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>Actualizar cuenta y acceso</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>Cargando los datos originales de la cuenta…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>No se pudo cargar toda la cuenta. Actualízala para intentarlo de nuevo; se conservan los datos de conciliación introducidos.</value>
+  </data>
 </root>

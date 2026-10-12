@@ -6223,4 +6223,28 @@
   <data name="Receipt_ReadFailed" xml:space="preserve">
     <value>خواندن رسید با فایل و دسترسی فعلی ممکن نشد. چیزی ذخیره نشده است. دوباره تلاش کنید.</value>
   </data>
+  <data name="Loan_ReadFailed" xml:space="preserve">
+    <value>بررسی اطلاعات وام یا دسترسی ممکن نشد. پیش از تلاش دوباره، اطلاعات را تازه کنید. پرداخت جدیدی ذخیره نشده است.</value>
+  </data>
+  <data name="Loan_Recorded" xml:space="preserve">
+    <value>پرداخت قسط ثبت شد.</value>
+  </data>
+  <data name="Loan_RecordedFollowUpFailed" xml:space="preserve">
+    <value>پرداخت قسط ثبت شد، اما تازه‌سازی کامل صفحه ممکن نشد. برای دیدن آن، صفحه را تازه کنید؛ همان پرداخت را دوباره ثبت نکنید.</value>
+  </data>
+  <data name="Loan_Refresh" xml:space="preserve">
+    <value>تازه‌سازی وام و دسترسی</value>
+  </data>
+  <data name="Loan_Loading" xml:space="preserve">
+    <value>در حال بارگذاری اطلاعات وام…</value>
+  </data>
+  <data name="Account_Refresh" xml:space="preserve">
+    <value>تازه‌سازی حساب و دسترسی</value>
+  </data>
+  <data name="Account_Loading" xml:space="preserve">
+    <value>در حال بارگذاری اطلاعات حساب…</value>
+  </data>
+  <data name="Account_ReadFailed" xml:space="preserve">
+    <value>بارگذاری کامل حساب ممکن نشد. برای تلاش دوباره، اطلاعات را تازه کنید؛ ورودی‌های تطبیق موجودی حفظ شده‌اند.</value>
+  </data>
 </root>

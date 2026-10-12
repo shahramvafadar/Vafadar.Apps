@@ -29,9 +29,23 @@ public sealed partial class AccountDetailViewModel(
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time, Data.Commerce.LoanWorkStore loanReader, LoanInstallmentSession installment, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
+    private Data.Commerce.LoanReadReview? _loanReview;
+    /// <summary>Gets covered complete publication; failed reads retain drafts behind explicit Retry.</summary>
+    public SnapshotLoadState Loading { get; } = new();
+    /// <summary>Gets the original confirmed installment lifetime and accepted outcome.</summary>
+    public LoanInstallmentSession Installment { get; } = installment;
+    /// <summary>Gets translated current loan access/read feedback.</summary>
+    [ObservableProperty] public partial string? LoanWorkFeedback { get; private set; }
+    /// <summary>Gets whether original paid estimates and installment tools can be shown.</summary>
+    [ObservableProperty] public partial bool ShowLoanEstimate { get; private set; }
+    /// <summary>Gets an essential original warning independently of analytical access.</summary>
+    [ObservableProperty] public partial string? LoanEssentialWarning { get; private set; }
+    /// <summary>Gets the original manual repayment caption without claiming an unavailable calculated installment.</summary>
+    [ObservableProperty] public partial string? ManualLoanActionText { get; private set; }
+
     private Account? _account;
     private ReconciliationResult? _result;
 
@@ -95,7 +109,7 @@ public sealed partial class AccountDetailViewModel(
     public partial string ObservedText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial DateOnly ReconcileDate { get; set; }
+    public partial DateOnly ReconcileDate { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
     [ObservableProperty]
     public partial string? ResultText { get; set; }
@@ -143,16 +157,30 @@ public sealed partial class AccountDetailViewModel(
 
     public async Task LoadAsync()
     {
-        _account = (await store.GetAccountsAsync()).FirstOrDefault(a => a.Id == _id);
+        try { await Loading.RunAsync(LoadCoreAsync, () => { }); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Account_ReadFailed"); }
+    }
+
+    /// <summary>Explicitly refreshes the same original account without resetting reconciliation input.</summary>
+    [RelayCommand]
+    private Task RefreshLoanAsync() => LoadAsync();
+
+    private async Task LoadCoreAsync()
+    {
+        var reviewed = await loanReader.ReadAsync();
+        if (_loanReview is not null) await loanReader.ValidateFileAsync(_loanReview);
+        _loanReview = reviewed;
+        _account = reviewed.Accounts.FirstOrDefault(a => a.Id == _id);
         if (_account is not { } account)
         {
-            return;
+            throw new InvalidOperationException("The original account is no longer available.");
         }
 
         var culture = localization.CurrentCulture;
-        var settings = await store.GetSettingsAsync();
-        var entries = await store.GetEntriesAsync();
-        var today = Today;
+        var settings = reviewed.Settings;
+        var entries = reviewed.Entries;
+        var today = reviewed.Day;
         if (ReconcileDate == default)
         {
             ReconcileDate = today;
@@ -182,7 +210,7 @@ public sealed partial class AccountDetailViewModel(
         var confirmed = LedgerCalculator.Balance(account, entries, today, confirmedOnly: true);
         BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
         BalanceColor = balance < 0 ? EntryPresenter.DangerColor : Palette.AmountText;
-        LoadLoanEstimate(account, balance, today, culture);
+        LoadLoanEstimate(account, culture);
 
         // Money set aside for goals in this account and what is still free (F2-GOAL-05).
         var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
@@ -224,81 +252,59 @@ public sealed partial class AccountDetailViewModel(
         Add("Report_TransfersOut", movement.TransfersOut, negative: true);
         Add("Report_Adjustments", movement.Adjustments);
         Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
+        await loanReader.ValidateAsync(reviewed);
     }
 
-    private void LoadLoanEstimate(Account account, long balance, DateOnly today, System.Globalization.CultureInfo culture)
+    private void LoadLoanEstimate(Account account, System.Globalization.CultureInfo culture)
     {
-        _outstanding = LoanCalculator.Outstanding(account.Type, balance);
+        var reviewed = _loanReview ?? throw new InvalidOperationException("Missing original loan review.");
+        _outstanding = reviewed.Outstanding(account);
         HasLoanTerms = IsDebt && account.Installment is > 0 && _outstanding > 0;
         ShowDebtAction = DebtActionText is not null && !HasLoanTerms;
-        LoanNextText = LoanPayoffText = null;
-        if (!HasLoanTerms)
+        ShowLoanEstimate = false; LoanNextText = LoanPayoffText = LoanWorkFeedback = null;
+        LoanEssentialWarning = reviewed.HasUnderpaymentWarning(account) ? translator["Loan_NeverPaidOff"] : null;
+        ManualLoanActionText = DebtActionText;
+        if (!HasLoanTerms) return;
+        if (reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis) != Core.Commerce.FeaturePermission.Allowed)
         {
+            LoanWorkFeedback = CommercialFailureMessage.Describe(new Data.Commerce.CommercialWriteRejectedException(
+                Core.Commerce.CommercialFeature.LoanAnalysis, reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis)), translator);
             return;
         }
-
+        var (interest, principal) = reviewed.Split(account);
         string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
-        var rate = account.InterestRate ?? 0;
-        var (interest, principal) = LoanCalculator.Split(_outstanding, rate, account.Installment!.Value);
         LoanNextText = translator.Format("Loan_Next", Money(interest + principal), Money(principal), Money(interest));
-        var schedule = LoanCalculator.Schedule(_outstanding, rate, account.Installment.Value, today.AddMonths(1));
+        var schedule = reviewed.Schedule(account);
         LoanPayoffText = schedule.LastDate is { } last
             ? translator.Format("Loan_Payoff", schedule.Installments.Count, dates.Format(last, DateFormatStyle.MonthYear), Money(schedule.TotalInterest))
             : translator["Loan_NeverPaidOff"];
+        ShowLoanEstimate = true; ManualLoanActionText = translator["Loan_OtherAmount"];
     }
 
-    // One installment as a principal transfer and a separate interest entry, after the user chose the account (F2-DEBT-02).
+    // D-171: the original calculated payment is revalidated by the same writer that commits its whole batch.
     [RelayCommand]
     private async Task RecordInstallmentAsync()
     {
-        if (_account is not { Installment: > 0 } account || _outstanding <= 0)
-        {
-            return;
-        }
-
-        var cash = (await store.GetAccountsAsync())
-            .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && a.CurrencyCode == account.CurrencyCode).ToList();
-        if (cash.Count == 0)
-        {
-            await Shell.Current.DisplayAlertAsync(translator["Loan_RecordInstallment"], translator["Loan_NoCashAccount"], translator["Common_Ok"]);
-            return;
-        }
-
-        var loan = account.Type == AccountType.Loan;
-        // Accounts with the same name are told apart by their position, so the choice maps back to one account.
-        var labels = cash.Select((a, i) => cash.Count(c => c.Name == a.Name) > 1 ? $"{a.Name} ({i + 1})" : a.Name).ToList();
-        var chosen = cash.Count == 1 ? labels[0]
-            : await Shell.Current.DisplayActionSheetAsync(translator[loan ? "Loan_PayFrom" : "Loan_ReceiveInto"], translator["Common_Cancel"], null, [.. labels]);
-        if (labels.IndexOf(chosen) is not (>= 0 and var index))
-        {
-            return;
-        }
-
-        var from = cash[index];
-
-        var culture = localization.CurrentCulture;
-        string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
-        var rate = account.InterestRate ?? 0;
-        var (interest, principal) = LoanCalculator.Split(_outstanding, rate, account.Installment.Value);
-        var message = translator.Format(loan ? "Loan_ConfirmPay" : "Loan_ConfirmReceive", Money(principal), Money(interest), from.Name);
-        if (!await Shell.Current.DisplayAlertAsync(translator["Loan_RecordInstallment"], message, translator["Common_Save"], translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        var categories = await store.GetCategoriesAsync();
-        var category = loan
-            ? categories.First(c => c.Kind == CategoryKind.Expense && c.SystemKey == DefaultCategories.Fees)
-            : categories.FirstOrDefault(c => c.Kind == CategoryKind.Income && c.SystemKey == "Interest")
-              ?? categories.First(c => c.Kind == CategoryKind.Income && c.SystemKey == DefaultCategories.Uncategorized);
-        var entries = LoanCalculator.CreateInstallment(account, from.Id, _outstanding, rate, account.Installment.Value, Today, category.Id, translator.Format("Loan_InterestTitle", account.Name));
-        var saved = await store.SaveEntriesAsync(entries, []);
-        Error = saved.Succeeded ? null : string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"]));
-        await LoadAsync();
+        if (IsBusy || !Loading.IsReady || _loanReview is not { } reviewed) return;
+        IsBusy = true;
+        try { await Installment.RecordAsync(reviewed, _id); await LoadAsync(); }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    private Task ShowScheduleAsync() => Shell.Current.GoToAsync(AppShell.LoanScheduleRoute, new Dictionary<string, object> { ["id"] = _id });
+    private async Task ShowScheduleAsync()
+    {
+        if (IsBusy || !Loading.IsReady || _loanReview is not { } reviewed) return;
+        IsBusy = true;
+        try
+        {
+            await loanReader.ValidateAsync(reviewed); reviewed.Demand(Core.Commerce.CommercialFeature.LoanAnalysis);
+            await interaction.NavigateAsync(AppShell.LoanScheduleRoute, new Dictionary<string, object> { ["id"] = _id, ["loanReview"] = reviewed });
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Loan_ReadFailed"); }
+        finally { IsBusy = false; }
+    }
 
     [RelayCommand]
     private async Task CompareAsync()

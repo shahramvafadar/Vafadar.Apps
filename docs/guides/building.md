@@ -706,3 +706,11 @@ translated feedback/Close and original typed editor. Picker/unlock/recognition a
 ports over independent SQLite. Await real newly revealed caption geometry; preserve negative captures.
 Only own hidden window/root is captured. Restore complete owned rows/bytes/display. Normal Release
 digital-PDF verification and signed APK handoff remain separate from camera/OCR/device acceptance.
+
+## Focused original loan review (D-171)
+
+Windows Debug VAFADAR_SNAPSHOT_ONLY=loan-work uses independent SQLite, actual account/schedule targets,
+original calculators/ledger writer and native confirmation Save. Cached rights and schedule navigation
+capture alone are fictitious. Check Free balance/manual action/warning, retained reconciliation drafts,
+full paid schedule/payment and exact 25-table restoration; render only the own hidden window/root.
+Restore original development bytes/sidecars/display and separately verify normal signed Release APK/device flow.

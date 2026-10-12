@@ -2134,3 +2134,21 @@ Save. Complete prepared rows and exact owned baseline bytes/sidecars are restore
 Commercial registration remains inactive; phone/iOS/camera/OCR corpus/provider/Store acceptance is separate.
 APK: artifacts/android/zanance-d170-release.apk. [Evidence](quality/receipt-work.md).
 Next finite ready group: original loan/report/PDF computation; the commercial release remains incomplete.
+
+## D-171 - Original loan analysis and confirmed installments
+
+Complete the loan portion of the confirmed loan/report/PDF group at its actual calculations and writer.
+Preserve Free balances/manual repayment/reconciliation/essential warnings; paid schedule/split access is
+independent of UI mode. Original confirmation and transfer/interest calculation stay intact, but full
+file/input/access/day checks now occur after native awaits and under the actual whole-batch ledger writer,
+including after inserts. Typed accepted outcomes cannot be mistaken for rollback or replayed.
+
+37 AT-172 cases and ordinary main 3,141 / App.Tests 1,084 pass, zero failures/skips, 2m 54.955s;
+cleanup and strict Windows/complete Android Release builds succeed without warnings/errors. Thirty-six
+Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced, with actual native payment
+consent and original ledger readback. Normal signed Release Android verifies original account/schedule,
+native payment consent and exact principal/interest entries. Complete owned fixtures and baseline bytes/
+sidecars/Main/English/System are restored; final Release installed/stopped. Commercial registration
+stays inactive; physical phone/iOS/provider/billing/Store and full-release acceptance remain separate.
+APK: artifacts/android/zanance-d171-release.apk. [Evidence](quality/loan-work.md).
+Next distinct ready operation: original report packages and advanced PDF; full commercial release remains incomplete.

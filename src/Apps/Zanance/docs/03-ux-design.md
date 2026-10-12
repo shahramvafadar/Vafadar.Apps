@@ -1085,3 +1085,11 @@ covers picking/unlock/recognition/dialog/navigation. Refusal precedes native sou
 feedback gives no exception content. Empty existing rereading never erases an amount. A typed source
 is checked again before applying to the editor. Native review waits for the newly revealed detail
 action's actual caption/command/name geometry; no font or device setting is changed.
+
+## Original loan review and payment lifetime (D-171)
+
+Cover complete account/schedule reads; retain observed balance/reason/date on explicit refresh. Real
+terms do not imply paid estimate availability. Keep original manual repayment and essential underpayment
+warning; captions describe the actual manual or calculated action. Full feedback/result and Refresh
+own a growing footer. Schedule identity/payment/split/remaining own rows with original scalable caption
+typography and complete MoneyText packet. Busy native consent/write never silently repeats accepted payment.

@@ -2696,3 +2696,18 @@ Save. Complete prepared rows and exact owned baseline bytes/sidecars are restore
 Commercial registration remains inactive; phone/iOS/camera/OCR corpus/provider/Store acceptance is separate.
 APK: artifacts/android/zanance-d170-release.apk. [Evidence](../quality/receipt-work.md).
 Next: original loan/report/PDF computation; external and full commercial release acceptance stay open.
+
+### 31.84 Original loan work and confirmed installments (D-171)
+
+Coherent actual-file loan analysis and whole original ledger payment boundary are implemented. Keep
+Free balances/manual repayment/reconciliation/essential warnings; recheck original terms/source/rights
+after consent and under writer. Accepted outcomes are retained without replay.
+37 AT-172 cases and ordinary main 3,141 / App.Tests 1,084 pass, zero failures/skips, 2m 54.955s;
+cleanup and strict Windows/complete Android Release builds succeed without warnings/errors. Thirty-six
+Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced, with actual native payment
+consent and original ledger readback. Normal signed Release Android verifies original account/schedule,
+native payment consent and exact principal/interest entries. Complete owned fixtures and baseline bytes/
+sidecars/Main/English/System are restored; final Release installed/stopped. Commercial registration
+stays inactive; physical phone/iOS/provider/billing/Store and full-release acceptance remain separate.
+APK: artifacts/android/zanance-d171-release.apk. [Evidence](../quality/loan-work.md).
+Original report packages/advanced PDF and external/full commercial release acceptance remain open.

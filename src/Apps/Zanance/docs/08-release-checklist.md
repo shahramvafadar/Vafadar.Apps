@@ -893,3 +893,10 @@ original no-Save review and manual attachment policy intact. Main 3,104 tests, s
 Windows contexts and both actual digital-PDF Release Android callers pass. Complete signed APK:
 artifacts/android/zanance-d170-release.apk. [Evidence](quality/receipt-work.md).
 Phone/iOS/camera/OCR corpus/provider/activation/release gates remain open. Next: loan/report/PDF.
+
+## Original loan follow-through (D-171)
+
+Loan analysis/confirmed payment writer are locally verified: main 3,141, strict clean builds, 36 native
+Windows contexts and actual signed Release Android schedule/consent/ledger readback. Original balances,
+manual repayment and essential warnings stay Free. Full signed APK: artifacts/android/zanance-d171-release.apk.
+[Evidence](quality/loan-work.md). Next ready operation: reports/advanced PDF. Full release/external acceptance remains open.

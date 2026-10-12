@@ -374,3 +374,10 @@ Both receipt entry points validate current source/access and typed editor destin
 remain unchanged until explicit Save. Main 3,104 tests pass and actual Release digital-PDF paths are
 verified. Signed APK: artifacts/android/zanance-d170-release.apk.
 See [evidence](docs/quality/receipt-work.md). Next ready group: loan/report/PDF computation.
+
+## Original loan review and payments (D-171)
+
+Recheck original terms and source through native confirmation and atomic payment. Keep manual repayment,
+balances/warnings and reconciliation input intact; distinguish completed payments from follow-through
+failure. Main 3,141 and native checks pass. Signed APK: artifacts/android/zanance-d171-release.apk.
+[Evidence](docs/quality/loan-work.md). Next ready work is original reports and advanced PDF.

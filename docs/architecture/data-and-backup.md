@@ -749,3 +749,12 @@ reader. Complete entry JSON and metadata/content fingerprint reject same-timesta
 current factory file/access before publication and before typed EntryEditor application. Neither the
 review nor bounded recognition original is portable; saved compact attachment policy is unchanged.
 No writer, migration or monetary/parser algorithm is added. [Evidence](../../src/Apps/Zanance/docs/quality/receipt-work.md).
+
+## Original loan financial review and writer (D-171)
+
+LoanWorkStore uses a coherent deferred reader with nullable original Settings and complete financial
+packets. SaveLoanInstallmentAsync revalidates and computes the original installment inside the existing
+CommercialWriteTransaction/SaveEntriesUnderWriterAsync. Recheck after inserts excluding only exact own
+new ids; reject trigger/input retirement. Only this writer uses typed committed SaveResult, preserving
+ordinary ledger notification semantics. No schema or portable format change.
+[Evidence](../../src/Apps/Zanance/docs/quality/loan-work.md).
