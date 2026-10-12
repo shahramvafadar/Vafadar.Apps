@@ -2747,3 +2747,12 @@ languages/two app themes/two widths, actual unsaved intents and a cold Persian r
 Complete original owned rows/bytes/sidecars, display and launcher test widgets are restored. Signed
 complete D-174 APK available. TalkBack is installed but inactive; spoken/full-screen/platform/device
 acceptance and A11Y-01 remain open. [Evidence](../quality/android-widget-accessibility.md).
+
+### 31.88 Contextual original date names (D-175)
+
+DateField and 26 original date usages publish translated purpose on actual part/calendar names,
+including dynamic debt reference and Plan start/end. Main 3,169; strict builds, 18 Windows contexts
+with retained partial input/three calendars, six Release Plan cases and three debt cases verified.
+Original Windows data and owned Android rows/bytes/sidecars/display restored; complete signed APK.
+No new data/schema/permission or date/financial policy. Spoken/full platform acceptance remains open.
+[Evidence](../quality/date-context-accessibility.md).

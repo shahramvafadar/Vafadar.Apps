@@ -63,7 +63,7 @@
                     <Label Text="{v:Translate Budget_FortnightStart}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                     <v:HelpButton Grid.Column="1" Topic="FortnightStart" />
                 </Grid>
-                <v:DateField Date="{Binding FortnightStart}" SemanticProperties.Description="{v:Translate Budget_FortnightStart}" />
+                <v:DateField Date="{Binding FortnightStart}" AccessibilityLabel="{v:Translate Budget_FortnightStart}" />
             </VerticalStackLayout>
 
             <!-- Period -->

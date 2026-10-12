@@ -51,6 +51,11 @@ public sealed class DateField : ContentView
             field.Write();
         });
 
+    /// <summary>Identifies the optional translated purpose used in each child input's accessible name.</summary>
+    public static readonly BindableProperty AccessibilityLabelProperty = BindableProperty.Create(
+        nameof(AccessibilityLabel), typeof(string), typeof(DateField), null,
+        propertyChanged: (bindable, _, _) => ((DateField)bindable).UpdateAccessibilityNames());
+
     private readonly Dictionary<DatePart, Entry> _boxes = [];
     private readonly Dictionary<DatePart, Label> _separators = [];
     private readonly Dictionary<DatePart, Grid> _partGroups = [];
@@ -211,6 +216,16 @@ public sealed class DateField : ContentView
         set => SetValue(CalendarOverrideProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets this date's translated purpose, such as start date or balance reference date.
+    /// It labels the three actual inputs and calendar action without changing values or partial drafts.
+    /// </summary>
+    public string? AccessibilityLabel
+    {
+        get => (string?)GetValue(AccessibilityLabelProperty);
+        set => SetValue(AccessibilityLabelProperty, value);
+    }
+
     private static IServiceProvider? Services => IPlatformApplication.Current?.Services;
 
     private static ILocalizationService? Localization => Services?.GetService<ILocalizationService>();
@@ -279,15 +294,24 @@ public sealed class DateField : ContentView
             label.Text = string.IsNullOrEmpty(separator) ? "/" : separator;
         }
 
+        UpdateAccessibilityNames();
+    }
+
+    // D-175: repeated date parts need their original field purpose; a label update never rewrites a draft.
+    private void UpdateAccessibilityNames()
+    {
         var translator = Translator.Instance;
+        string Name(string caption) => string.IsNullOrWhiteSpace(AccessibilityLabel)
+            ? caption : $"{AccessibilityLabel} — {caption}";
         foreach (var (part, box) in _boxes)
         {
             var name = translator[$"DateField_{part}"];
             box.Placeholder = name;
-            SemanticProperties.SetDescription(box, name);
+            SemanticProperties.SetDescription(box, Name(name));
         }
 
-        SemanticProperties.SetDescription(_calendarButton, translator["Common_SelectDate"]);
+        if (_calendarButton is not null)
+            SemanticProperties.SetDescription(_calendarButton, Name(translator["Common_SelectDate"]));
     }
 
     // Writes the stored date into the boxes and the line below.

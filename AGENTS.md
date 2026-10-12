@@ -1263,3 +1263,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   and layout direction; prefer Android 13+ persisted app locales before startup preferences publish.
 * Distinguish native role/name/target/intent checks from spoken TalkBack/system scaling acceptance.
   Use real launcher callbacks, never bypass a rejected protected broadcast. Remove only owned test widgets.
+
+## 108. Original date purposes on native inputs (D-175)
+
+* DateField AccessibilityLabel labels each original day/month/year box and calendar action using
+  existing translated purpose. Empty context retains generic names; publishing a name never writes
+  Date, reorders parts or resets a raw draft. Preserve visible placeholders and original calendars.
+* All original date usages bind their own purpose, including dynamic debt reference labels. Native
+  review measures real names and retained partial input; do not infer a spoken screen-reader pass.
+* Reset only owned fictitious snapshot data between direct launches; never weaken a unique financial
+  index for duplicate seeding. Restore original data/sidecars and remove the temporary sample marker.

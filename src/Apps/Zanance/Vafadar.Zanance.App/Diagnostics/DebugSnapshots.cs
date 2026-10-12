@@ -1640,12 +1640,13 @@ internal static partial class DebugSnapshots
         var field = VisualDescendants(page).OfType<Vafadar.Maui.Controls.DateField>().Single();
         var originalDate = field.Date;
         var originalCalendar = field.CalendarOverride;
+        var originalLabel = field.AccessibilityLabel;
         var unchanged = System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync());
         try
         {
             field.CalendarOverride = CalendarSystem.Gregorian;
             var boxes = VisualDescendants(field).OfType<Entry>().ToArray();
-            Entry Box(string part) => boxes.Single(box => SemanticProperties.GetDescription(box) == Translator.Instance["DateField_" + part]);
+            Entry Box(string part) => boxes.Single(box => box.Placeholder == Translator.Instance["DateField_" + part]);
             void Set(Entry box, string value) => box.Text = value;
             Set(Box("Year"), "2027");
             Set(Box("Month"), "02");
@@ -1656,6 +1657,28 @@ internal static partial class DebugSnapshots
             await Task.Delay(100);
             if (field.Date != new DateOnly(2027, 2, 28) || Box("Year").Text != "2")
             { throw new InvalidOperationException("Partial year input rewrote the stored date or the draft."); }
+            // D-175: change only the purpose of these original inputs while a partial year is retained.
+            foreach (var purpose in new[] { Translator.Instance["Plan_Start"], Translator.Instance["Plan_End"], null })
+            {
+                field.AccessibilityLabel = purpose;
+                await Task.Delay(100);
+                foreach (var part in new[] { "Day", "Month", "Year" })
+                {
+                    var caption = Translator.Instance["DateField_" + part];
+                    var expected = purpose is null ? caption : $"{purpose} — {caption}";
+                    if (Box(part).Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox native
+                        || Microsoft.UI.Xaml.Automation.AutomationProperties.GetName(native) != expected)
+                    { throw new InvalidOperationException("The actual native date input lost its current purpose."); }
+                }
+                var calendarAction = VisualDescendants(field).OfType<Button>().Single();
+                var choose = Translator.Instance["Common_SelectDate"];
+                var expectedAction = purpose is null ? choose : $"{purpose} — {choose}";
+                if (calendarAction.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button nativeAction
+                    || Microsoft.UI.Xaml.Automation.AutomationProperties.GetName(nativeAction) != expectedAction
+                    || field.Date != new DateOnly(2027, 2, 28) || Box("Year").Text != "2")
+                { throw new InvalidOperationException("Date purpose publication changed a partial draft or calendar action."); }
+            }
+            field.AccessibilityLabel = originalLabel;
             if (FindScrollView(page) is not { } scroll) { throw new InvalidOperationException("Date review needs its real scroll viewport."); }
             await ScrollToViewIfNeededAsync(scroll, field);
             await Task.Delay(300);
@@ -1674,11 +1697,11 @@ internal static partial class DebugSnapshots
                 await CaptureAsync(app, folder, language + "-date-inputs-" + calendar);
             }
         }
-        finally { field.CalendarOverride = originalCalendar; field.Date = originalDate; }
+        finally { field.AccessibilityLabel = originalLabel; field.CalendarOverride = originalCalendar; field.Date = originalDate; }
         if (unchanged != System.Text.Json.JsonSerializer.Serialize(await services.GetRequiredService<ZananceStore>().GetEntriesAsync()))
         { throw new InvalidOperationException("Native date review wrote ledger entries."); }
         await File.WriteAllTextAsync(Path.Combine(folder, language + "-date-inputs-proof.json"),
-            "{\"ProgrammaticDraftInput\":true,\"PartialYearPreserved\":true,\"ThreeCalendarParts\":true,\"StoredEntriesUnchanged\":true}");
+            "{\"NativePurposeAndFallbackNames\":true,\"PurposeChangePreservesPartialDraft\":true,\"ProgrammaticDraftInput\":true,\"PartialYearPreserved\":true,\"ThreeCalendarParts\":true,\"StoredEntriesUnchanged\":true}");
     }
 
     private static IEnumerable<VisualElement> VisualDescendants(IVisualTreeElement root)

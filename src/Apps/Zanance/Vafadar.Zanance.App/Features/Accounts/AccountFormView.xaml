@@ -79,7 +79,7 @@
     </Grid>
 
     <Label Text="{Binding OpeningDateLabel}" Style="{StaticResource FieldLabel}" />
-    <v:DateField Date="{Binding OpeningDate}" />
+    <v:DateField Date="{Binding OpeningDate}" AccessibilityLabel="{Binding OpeningDateLabel}" />
     <Label Text="{Binding OpeningHint}" Style="{StaticResource Secondary}" Margin="0,6,0,0" />
 
     <VerticalStackLayout IsVisible="{Binding IsDebtType}">
@@ -89,7 +89,7 @@
                 <Label Text="{v:Translate Account_HasDueDate}" VerticalOptions="Center" />
                 <Switch Grid.Column="1" IsToggled="{Binding HasDueDate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_HasDueDate}" />
             </Grid>
-            <v:DateField Date="{Binding DueDate}" IsVisible="{Binding HasDueDate}" />
+            <v:DateField Date="{Binding DueDate}" AccessibilityLabel="{v:Translate Account_HasDueDate}" IsVisible="{Binding HasDueDate}" />
         </VerticalStackLayout>
         <Button Text="{v:Translate Debt_EstimateOptions}" Command="{Binding ToggleDebtTermsCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
         <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />

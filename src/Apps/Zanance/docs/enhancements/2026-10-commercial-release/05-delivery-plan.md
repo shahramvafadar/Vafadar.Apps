@@ -1137,3 +1137,10 @@ Fix observed native roles, target and stale-language defects; retain original in
 settings. Twelve actual widget cases/cold receiver/three-language draft routes and the complete signed
 APK are verified. The whole TalkBack pass remains open; continue remaining actual accessibility work.
 [Evidence](../../quality/android-widget-accessibility.md).
+
+## Date naming continuation (D-175)
+
+Original date-purpose names and calendar actions are locally delivered with retained raw input and
+unchanged values/calendars. Eighteen Windows and nine normal Release Android Plan/debt contexts;
+main 3,169 and full signed APK. Continue actual remaining accessibility findings; spoken/platform
+acceptance remains separate. [Evidence](../../quality/date-context-accessibility.md).

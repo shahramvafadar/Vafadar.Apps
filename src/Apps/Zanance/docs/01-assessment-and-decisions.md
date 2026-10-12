@@ -2197,3 +2197,13 @@ Main 3,169 passes, strict builds, twelve native widget cases and actual three-la
 cold Persian receiver, complete unchanged owned rows/restoration and full signed APK are recorded.
 No TalkBack activation or spoken/platform/phone acceptance; A11Y-01 stays in progress.
 [Evidence](quality/android-widget-accessibility.md).
+
+## D-175 - Contextual original date input names
+
+Observed identical generic names on original Plan start/end dates. Give DateField an optional translated
+purpose for each native input/calendar action and bind all 26 existing usages, including dynamic debt
+reference captions. Keep Date/calendar/parser/part order/placeholders/raw drafts and fallback unchanged.
+Main 3,169; strict builds, 18 Windows name/partial/calendar contexts, six normal Release Plan cases and
+three original debt cases verified. Restore original Windows data and owned Android fixture/display;
+full signed D-175 APK. Spoken screen readers/platform acceptance remain open.
+[Evidence](quality/date-context-accessibility.md).

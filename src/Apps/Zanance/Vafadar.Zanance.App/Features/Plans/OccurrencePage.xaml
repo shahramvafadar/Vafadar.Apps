@@ -51,7 +51,7 @@
                         <Label x:Name="PaymentErrorLabel" Text="{Binding PaymentAmountError}" Style="{StaticResource ErrorText}" Margin="0,4,0,0"
                                IsVisible="{Binding PaymentAmountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Occurrence_ActualDate}" Style="{StaticResource FieldLabel}" />
-                        <v:DateField Date="{Binding ActualDate}" />
+                        <v:DateField Date="{Binding ActualDate}" AccessibilityLabel="{v:Translate Occurrence_ActualDate}" />
                         <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" Margin="0,8,0,0"
                                IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                         <p:WrappingAction x:Name="ConfirmAction" Appearance="Primary" Text="{v:Translate Occurrence_Confirm}" Command="{Binding ConfirmCommand}"
@@ -92,7 +92,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowChange}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Occurrence_MoveDue}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                        <v:DateField Date="{Binding DueDate}" />
+                        <v:DateField Date="{Binding DueDate}" AccessibilityLabel="{v:Translate Occurrence_MoveDue}" />
                         <Label Text="{v:Translate Occurrence_AmountThisTime}" Style="{StaticResource FieldLabel}" />
                         <Entry x:Name="OverrideInput" Text="{Binding OverrideAmountText}" Keyboard="Numeric" Placeholder="{Binding PlannedAmountText}"
                                SemanticProperties.Description="{v:Translate Occurrence_AmountThisTime}" />

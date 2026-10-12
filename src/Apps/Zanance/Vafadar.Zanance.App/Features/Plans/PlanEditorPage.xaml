@@ -83,7 +83,7 @@
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Plan_Start}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
                         <Label Text="{Binding RuleCalendarName}" Style="{StaticResource Secondary}" Margin="0,0,0,4" />
-                        <v:DateField Date="{Binding Start}" CalendarOverride="{Binding RuleCalendar}" />
+                        <v:DateField Date="{Binding Start}" AccessibilityLabel="{v:Translate Plan_Start}" CalendarOverride="{Binding RuleCalendar}" />
 
                         <VerticalStackLayout IsVisible="{Binding ShowPastChoice}">
                             <Label Text="{v:Translate Plan_PastStart}" Style="{StaticResource FieldLabel}" />
@@ -123,7 +123,7 @@
                         <VerticalStackLayout IsVisible="{Binding ShowEnd}">
                             <Label Text="{v:Translate Plan_End}" Style="{StaticResource FieldLabel}" />
                             <v:ChoiceChips ItemsSource="{Binding EndNames}" SelectedIndex="{Binding EndIndex}" />
-                            <v:DateField Date="{Binding EndDate}" IsVisible="{Binding ShowEndDate}" CalendarOverride="{Binding RuleCalendar}" />
+                            <v:DateField Date="{Binding EndDate}" AccessibilityLabel="{v:Translate Plan_End}" IsVisible="{Binding ShowEndDate}" CalendarOverride="{Binding RuleCalendar}" />
                             <Grid ColumnDefinitions="100,*" ColumnSpacing="8" IsVisible="{Binding ShowCount}">
                                 <Entry Text="{Binding CountText}" Keyboard="Numeric" HorizontalTextAlignment="Center"
                                        SemanticProperties.Description="{v:Translate End_AfterCount}" />
@@ -174,7 +174,7 @@
                                 <Label Text="{v:Translate Plan_ApplyFrom}" Style="{StaticResource FieldLabel}" />
                                 <v:HelpButton Grid.Column="1" Topic="PlanApplyFrom" Margin="0,8,0,0" />
                             </Grid>
-                            <v:DateField Date="{Binding ApplyFrom}" CalendarOverride="{Binding RuleCalendar}" />
+                            <v:DateField Date="{Binding ApplyFrom}" AccessibilityLabel="{v:Translate Plan_ApplyFrom}" CalendarOverride="{Binding RuleCalendar}" />
                             <Label Text="{v:Translate Plan_ApplyFromHint}" Style="{StaticResource Secondary}" Margin="0,4,0,0" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -228,7 +228,7 @@
                                 <Switch Grid.Column="1" IsToggled="{Binding HasContractEnd}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_End}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasContractEnd}" Spacing="4">
-                                <v:DateField Date="{Binding ContractEnd}" />
+                                <v:DateField Date="{Binding ContractEnd}" AccessibilityLabel="{v:Translate Contract_End}" />
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Text="{v:Translate Contract_Renews}" VerticalOptions="Center" />
                                     <Switch Grid.Column="1" IsToggled="{Binding ContractRenews}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Renews}" />
@@ -240,7 +240,7 @@
                                 <Switch Grid.Column="1" IsToggled="{Binding HasCancellationDeadline}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Deadline}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasCancellationDeadline}">
-                                <v:DateField Date="{Binding CancellationDeadline}" />
+                                <v:DateField Date="{Binding CancellationDeadline}" AccessibilityLabel="{v:Translate Contract_Deadline}" />
                             </VerticalStackLayout>
 
                             <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
@@ -248,7 +248,7 @@
                                 <Switch Grid.Column="1" IsToggled="{Binding HasReviewDate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Contract_Review}" />
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding HasReviewDate}">
-                                <v:DateField Date="{Binding ReviewDate}" />
+                                <v:DateField Date="{Binding ReviewDate}" AccessibilityLabel="{v:Translate Contract_Review}" />
                             </VerticalStackLayout>
                             <Label Text="{v:Translate Contract_Hint}" Style="{StaticResource Secondary}" FontSize="12" />
                         </VerticalStackLayout>

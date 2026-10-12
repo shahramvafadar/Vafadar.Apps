@@ -1560,3 +1560,11 @@ complete original owned rows and exact fixture/display/widget restoration. Main 
 this native scenario is not an additional automated test count. TalkBack remains inactive; spoken
 order/announcements, other screens, system scaling and phone/platform acceptance are open.
 [Evidence](quality/android-widget-accessibility.md).
+
+## AT-175 - Original date purpose names and retained partial input
+
+Checked locally: 18 actual Windows language/theme/width contexts; native start/end/fallback names
+with partial year unchanged and original three-calendar values. Six original Release Plan cases and
+three debt reference cases; Cancel/own discard without Save, complete original data restoration.
+Main remains 3,169; this native scenario does not invent an additional automated count. Spoken
+TalkBack/Narrator/OS-scaling/phone/iOS acceptance is separate. [Evidence](quality/date-context-accessibility.md).

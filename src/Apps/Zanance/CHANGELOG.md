@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Date input accessibility (2026-10-12, D-175)
+
+- Identify the purpose of each date part and calendar button, such as Plan start/end or debt reference date.
+- Keep the entered date and partial typing while those accessible names update.
+
 ### Fixed - Android quick widget (2026-10-12, D-174)
 
 - Expose quick-add actions as real buttons and enlarge the app-symbol touch target.

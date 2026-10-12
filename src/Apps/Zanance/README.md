@@ -396,3 +396,10 @@ Quick actions are real native buttons with original app-language captions/direct
 symbol target. Twelve actual widget cases, original unsaved intents and cold Persian update are
 verified; spoken TalkBack/phone acceptance remain open. Complete signed local test package:
 artifacts/android/zanance-d174-release.apk. [Evidence](docs/quality/android-widget-accessibility.md).
+
+### Original date input purposes (D-175)
+
+Actual date parts/calendar actions identify their original start/end/reference purpose, retaining
+raw dates and drafts. Main 3,169 and Windows/normal Release Android checks; full signed local test
+APK: artifacts/android/zanance-d175-release.apk. [Evidence](docs/quality/date-context-accessibility.md).
+Spoken screen-reader/device acceptance remains separate.

@@ -68,7 +68,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding IsPaused}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Plan_ResumeFrom}" Style="{StaticResource Secondary}" />
-                        <v:DateField Date="{Binding ResumeFrom}" />
+                        <v:DateField Date="{Binding ResumeFrom}" AccessibilityLabel="{v:Translate Plan_ResumeFrom}" />
                         <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Plan_Resume}" Command="{Binding ResumeCommand}" />
                     </VerticalStackLayout>
                 </Border>

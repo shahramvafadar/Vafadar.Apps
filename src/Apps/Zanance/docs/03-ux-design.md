@@ -1109,3 +1109,10 @@ Android launcher actions use native Button/ImageButton roles, named in the app l
 keeps its original 40 dp artwork within a 44 dp target. Caption/direction updates must not rely on a
 host's cached resource locale or unpublished startup defaults. Original immutable intents open only
 unsaved work through the existing app gate. Native trees are not a spoken screen-reader pass.
+
+## Original date purpose names (D-175)
+
+A date's three native inputs and calendar button include their own existing translated purpose.
+Do not rely on encountering a preceding visual label to distinguish several dates. Name updates
+retain raw typing, date value, calendar, part order and visible placeholders; no container grouping
+replaces the actual editable children. Native naming evidence is separate from spoken navigation.

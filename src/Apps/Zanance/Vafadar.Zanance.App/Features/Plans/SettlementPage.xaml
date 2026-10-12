@@ -25,9 +25,9 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Settlement_From}" Style="{StaticResource FieldLabel}" Margin="0" />
-                        <v:DateField x:Name="FromInput" Date="{Binding From}" />
+                        <v:DateField x:Name="FromInput" Date="{Binding From}" AccessibilityLabel="{v:Translate Settlement_From}" />
                         <Label Text="{v:Translate Settlement_To}" Style="{StaticResource FieldLabel}" />
-                        <v:DateField x:Name="ToInput" Date="{Binding To}" />
+                        <v:DateField x:Name="ToInput" Date="{Binding To}" AccessibilityLabel="{v:Translate Settlement_To}" />
                         <Label Text="{Binding PeriodError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PeriodError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding AdvancesText}" FontAttributes="Bold" Margin="0,8,0,0" />
                         <Label Text="{v:Translate Settlement_Actual}" Style="{StaticResource FieldLabel}" />

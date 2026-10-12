@@ -1039,3 +1039,9 @@ Owner/external dependencies and full commercial-release acceptance remain open.
 Canonical A11Y-01 is in progress: actual widget button roles, targets, translated names/direction and
 cold receiver/original intent checks are delivered locally. No spoken TalkBack or full accessibility
 pass is claimed. Main 3,169 and full signed APK; [evidence](quality/android-widget-accessibility.md).
+
+## D-175 date accessibility naming
+
+Existing date purposes now identify actual child inputs/calendar actions in all 26 usages. Native
+Windows/Release Android naming and no-write checks plus full signed APK are delivered; spoken
+screen-reader and system-scaling/platform acceptance remain open. [Evidence](quality/date-context-accessibility.md).

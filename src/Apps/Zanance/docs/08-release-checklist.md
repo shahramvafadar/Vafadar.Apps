@@ -924,3 +924,9 @@ delivered locally, but bounded ENT-02/03 review and owner/external/full-release 
 Twelve native widget cases and original/cold intents checked; full signed installable APK verified.
 TalkBack is installed but inactive; no physical-phone, system-font, iOS, OAuth, Store signing or release
 acceptance. A11Y-01 remains open. [Evidence](quality/android-widget-accessibility.md).
+
+## D-175 date naming evidence
+
+Local native names/draft/calendar/no-write checks and full signed installable APK verified. Spoken
+TalkBack/Narrator, system scaling, physical phone/iOS/provider and release acceptance remain open.
+[Evidence](quality/date-context-accessibility.md).

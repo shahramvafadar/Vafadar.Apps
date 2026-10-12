@@ -170,7 +170,7 @@
                                SemanticProperties.Description="{v:Translate Entry_Title}" />
 
                         <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
-                        <v:DateField Date="{Binding Date}" />
+                        <v:DateField Date="{Binding Date}" AccessibilityLabel="{v:Translate Entry_Date}" />
 
 
                         <VerticalStackLayout IsVisible="{Binding IsTransfer}">
@@ -271,7 +271,7 @@
                                     <Label Text="{v:Translate Entry_ReimbursementDue}" VerticalOptions="Center" />
                                     <Switch Grid.Column="1" IsToggled="{Binding HasReimbursementDue}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Entry_ReimbursementDue}" />
                                 </Grid>
-                                <v:DateField Date="{Binding ReimbursementDue}" IsVisible="{Binding HasReimbursementDue}" />
+                                <v:DateField Date="{Binding ReimbursementDue}" AccessibilityLabel="{v:Translate Entry_ReimbursementDue}" IsVisible="{Binding HasReimbursementDue}" />
                                 <Label Text="{v:Translate Entry_ReimbursableHint}" Style="{StaticResource Secondary}" FontSize="12" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
@@ -286,9 +286,9 @@
                             <!-- One date under the other: the date boxes need the full width at 360 px -->
                             <VerticalStackLayout IsVisible="{Binding IsAggregated}">
                                 <Label Text="{v:Translate Entry_AggregatedFrom}" Style="{StaticResource FieldLabel}" />
-                                <v:DateField Date="{Binding AggregatedFrom}" />
+                                <v:DateField Date="{Binding AggregatedFrom}" AccessibilityLabel="{v:Translate Entry_AggregatedFrom}" />
                                 <Label Text="{v:Translate Entry_AggregatedTo}" Style="{StaticResource FieldLabel}" />
-                                <v:DateField Date="{Binding AggregatedTo}" />
+                                <v:DateField Date="{Binding AggregatedTo}" AccessibilityLabel="{v:Translate Entry_AggregatedTo}" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
 

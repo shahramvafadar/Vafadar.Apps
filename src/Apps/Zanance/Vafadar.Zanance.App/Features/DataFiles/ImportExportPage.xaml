@@ -19,9 +19,9 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Export_From}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                        <v:DateField Date="{Binding ExportFrom}" />
+                        <v:DateField Date="{Binding ExportFrom}" AccessibilityLabel="{v:Translate Export_From}" />
                         <Label Text="{v:Translate Export_To}" Style="{StaticResource FieldLabel}" />
-                        <v:DateField Date="{Binding ExportTo}" />
+                        <v:DateField Date="{Binding ExportTo}" AccessibilityLabel="{v:Translate Export_To}" />
                         <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                             <Label Text="{v:Translate Export_IncludeNotes}" VerticalOptions="Center" />
                             <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Export_IncludeNotes}" />
