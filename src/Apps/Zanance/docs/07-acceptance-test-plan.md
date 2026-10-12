@@ -1593,3 +1593,14 @@ in both themes, retaining the same buttons and draft. Invoke original default/Ho
 native patterns and compare complete stored rows without Save. Native checks and complete
 APK verification pass locally; no new non-UI test count or spoken/device acceptance is invented.
 [Evidence](quality/icon-language-accessibility.md).
+
+## AT-179 - Official Community independent compatibility scope
+
+Actual Windows C API and Microsoft.Data.Sqlite.Core 10.0.12/provider.sqlcipher 3.0.5 report pinned
+SQLCipher/OpenSSL versions. Correct-key reopen preserves original Int64/date/currency; wrong/missing
+keys and altered pages refuse reads, and fictitious sentinel is absent from encrypted DB/WAL.
+Encrypted same/different-key backup succeeds; plaintext BackupDatabase refuses, original memory
+export succeeds. Native Windows tool fresh restore/cache identity checks pass. Main suite remains
+3,179 from unchanged D-179; no invented automated test count. Full-schema/EF, upstream suites,
+reproducibility, native mobile, key/recovery, crash migration and product release are unaccepted.
+See [compatibility](../../../../docs/architecture/sqlcipher-community-build.md).

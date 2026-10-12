@@ -2789,3 +2789,12 @@ attached translation changes. Lifetime-scoped subscriptions catch up after reatt
 financial writes, control reconstruction or draft loss. Native checks and complete signed
 APK verified locally; A11Y-01/02/03 and device/spoken acceptance remain open.
 [Evidence](../quality/icon-language-accessibility.md).
+
+### 31.93 Official Community direction and compatibility prerequisite (D-180 / AT-179)
+
+Owner selected maintained official Community source and reproducible native build/package/update/
+security delivery. Official 4.19.0/OpenSSL 3.5.9 LTS pinned; independent Windows native and current
+Microsoft.Data.Sqlite.Core/named provider money/date/key/tamper and encrypted-backup/memory-export
+checks pass. Main app and D-179 APK remain unchanged, main 3,179 baseline; databases are not yet
+encrypted. Production native matrix/EF/security/reproducibility and keys/recovery/migration remain
+open. See [compatibility](../../../../../docs/architecture/sqlcipher-community-build.md).

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Official Community encryption evaluation (2026-10-12, D-180)
+
+- Verify current official source and independent Windows/.NET compatibility before integration.
+- The app databases remain unchanged and are not yet encrypted.
+
 ### Fixed - Live icon accessibility names (2026-10-12, D-179)
 
 - Update icon names and selection descriptions when the language of an open form changes.

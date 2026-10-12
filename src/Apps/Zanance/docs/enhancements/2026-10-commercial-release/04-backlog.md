@@ -15,7 +15,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
-| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress | OD-04 |
+| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-180 official Community direction and Windows C/.NET proof; production native matrix/EF/security/key/recovery acceptance open) | OD-04 |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | Proposed | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
@@ -1382,3 +1382,12 @@ Fix the actual stale native icon caption on live language changes. Preserve orig
 and native targets; lifetime-scoped translation refresh does not rebuild forms or save financial data.
 Native Windows/Release Android checks and complete APK verified locally. A11Y-01/02/03 remain open; do not repeat
 completed commercial or unchanged layout reviews. [Evidence](../../quality/icon-language-accessibility.md).
+
+## Official Community prerequisite (D-180)
+
+Owner selected current official Community source without custom crypto/fork. Source/tool pins and
+independent Windows C/.NET key, tamper, original money/date and backup/export checks verified.
+Main app remains plaintext/unchanged and retains D-179 test/APK baseline. Next: production native
+recipe/package and actual EF compatibility, then Android Release proof; security suites,
+reproducibility, iOS/key/recovery/migration remain open. SEC-01 stays in progress; do not repeat
+delivered local UI/commercial work or use the deprecated probe bundle.

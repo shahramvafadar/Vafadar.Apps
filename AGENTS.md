@@ -147,8 +147,9 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   recovery only after successful device authentication plus confirmation. No NotAvailable fallback for a PIN lock.
   Keep the startup frame covered until secure state is read. This gate does not encrypt the database.
 * SEC-01 research (D-68): encryption probes use independent projects, fictitious directories and a distinct Android
-  package; never reference them from the app or touch its database. ADR 0010 remains proposed until owner review;
-  its deprecated Community native bundle is not a production dependency. Build proof is not runtime evidence.
+  package; never reference them from the app or touch its database. The owner selected current official Community
+  sources on 2026-10-12 (D-180); final key/recovery/migration and runtime acceptance remain open;
+  the deprecated proof bundle remains excluded from production. Build proof is not runtime evidence.
 * Ownership: owner-written source remains all rights reserved; bundled third-party notices apply to their components
   only and grant no rights to Zanance source. Keep that distinction clear in the app.
 * Privacy: no analytics, ads, crash reporting or network SDKs; offline builds declare no `INTERNET` permission
@@ -1294,3 +1295,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Resolve original icon keys in the current language, including selected names. Keep original targets,
   selection and drafts; subscribe only while loaded, detach on unload and refresh on reattachment.
 * Native names/Invoke evidence does not establish spoken TalkBack/Narrator, OS scaling or phone acceptance.
+
+## 112. Maintained official SQLCipher Community sources (D-180)
+
+* The owner selected SQLCipher Community Edition on 2026-10-12. Use current official source, without
+  custom cryptography or an unnecessary fork. Review security and maintenance of every native/managed dependency;
+  deprecated or unreviewed third-party encryption bundles are not an adoption path.
+* First verify architecture, required platforms and long-term maintenance. Deliver reproducible source/tool
+  restoration, native builds, packaging, updates and security tests, then integrate keys, crash-safe migration and CI.
+* Keep independent compatibility probes fictitious and outside the app's databases. A source pin, compiler build
+  or Windows proof does not establish Android/iOS, recovery, whole-app encryption or release acceptance.

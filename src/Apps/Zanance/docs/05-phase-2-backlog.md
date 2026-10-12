@@ -1064,3 +1064,10 @@ and external acceptance remain open. [Evidence](quality/asset-event-index.md).
 
 Fix the observed stale constructor-time name on retained icon controls. Native Windows/Release Android checks and complete APK verification pass locally; A11Y-01/02/03 remain open for broader/spoken/platform
 acceptance. [Evidence](quality/icon-language-accessibility.md).
+
+## D-180 Community evaluation prerequisite
+
+Owner direction selected; exact official source inputs and native host restoration are recorded.
+Independent Windows C/.NET compatibility and original backup/export behavior verified; main app
+remains unchanged/plaintext. Continue native production recipe/package/EF/mobile verification before
+keys and crash-safe migration. SEC-01 and full release remain open.

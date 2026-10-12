@@ -2244,3 +2244,18 @@ Translator culture on selection and attached language changes. Subscribe once wh
 on Unloaded and refresh on reattachment. No form rebuild, financial Save, schema, permission or SDK.
 Native Windows/Release Android checks and complete signed APK verified locally; spoken/platform acceptance remains open.
 [Evidence](quality/icon-language-accessibility.md).
+
+## D-180 - Maintained official Community source direction and bounded compatibility
+
+The owner selected current official SQLCipher Community source, no custom cryptography/unnecessary
+fork, reviewed dependencies and a repeatable native build/package/update/security process. Source
+4.19.0 and OpenSSL 3.5.9 LTS commits are verified and pinned; portable native Windows Perl restores
+with official size/hash/version checks without installation/global changes. Independent Windows C
+and Microsoft.Data.Sqlite.Core 10.0.12/provider.sqlcipher 3.0.5 checks pass: original money/date,
+correct-key reopen and wrong/missing-key/tamper refusal. Generic e_sqlite3 naming fails the driver's
+encryption check. Encrypted backup targets work; plaintext BackupDatabase fails and memory export
+works. The initial MSYS host and parser/locale issues remain recorded. This is not final native
+hardening/reproducibility/EF/mobile/recovery/migration acceptance. App, APK, main test count 3,179 and
+existing plaintext databases are unchanged. SEC-01/pipeline remain in progress; no interim policy.
+[Compatibility](../../../../docs/architecture/sqlcipher-community-build.md),
+[ADR](../../../../docs/adr/0010-database-encryption.md).

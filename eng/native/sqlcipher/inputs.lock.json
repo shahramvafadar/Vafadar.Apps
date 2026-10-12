@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-12",
+  "sources": {
+    "sqlcipher": {
+      "repository": "https://github.com/sqlcipher/sqlcipher.git",
+      "tag": "v4.19.0",
+      "commit": "c4b275a47932888216bade83aff2bbc73df0ff85",
+      "tagObject": "58beb4a302f0e3c37341d2312cef521f858b1273"
+    },
+    "openssl": {
+      "repository": "https://github.com/openssl/openssl.git",
+      "tag": "openssl-3.5.9",
+      "commit": "45e844fa2a14ec92d146bd8f5778ac130b6625fb",
+      "tagObject": "d0ca66a1abe52545f14eca635c648932fcde5615",
+      "supportEnds": "2030-04-08"
+    }
+  },
+  "windowsPerl": {
+    "version": "5.42.3.1",
+    "uri": "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54231_64bit/strawberry-perl-5.42.3.1-64bit-portable.zip",
+    "sha256": "6a081a811781c30aca51dbc036afd93092af91e3297901f02c17043795a10690",
+    "bytes": 304765269,
+    "metadata": "https://strawberryperl.com/releases.json"
+  },
+  "managedProviderReview": {
+    "package": "SQLitePCLRaw.provider.sqlcipher",
+    "version": "3.0.5",
+    "repository": "https://github.com/ericsink/SQLitePCL.raw.git",
+    "commit": "ed046114d5a30534e13294d94d78eb73de896ad4",
+    "scope": "Managed provider only; no third-party native encryption binary"
+  }
+}

@@ -32,3 +32,11 @@ OD-03: approved. Paused goals/plans count; Free has one limits-budget definition
 saved filter. Financial month start and basic forecast through the financial month end are Free. The owner also
 confirmed the Section 2 capability/tool matrix. ENT-01 builds the final Core model and tests only (D-117).
 No commercial restriction in test builds is approved, and no billing, server, store or release decision follows.
+
+## Community native source direction settled on 2026-10-12 (D-180)
+
+The owner selected SQLCipher Community Edition from current official source, no custom cryptography
+or unnecessary fork, with dependency security/maintenance review and a repeatable build/package/
+update/security process. Architecture/platform/maintenance compatibility comes before final
+integration. This settles source/licence direction; OD-04 recovery and OD-10 final OS-backup/key
+policy remain open. No paid native package, old third-party binary or interim app policy is chosen.

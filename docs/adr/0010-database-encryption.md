@@ -1,6 +1,6 @@
 # 0010. Profile database encryption and device-bound key envelopes
 
-- Status: **Proposed for owner review; not accepted or wired into Zanance**
+- Status: **Official Community source direction accepted on 2026-10-12; final integration under evaluation**
 - Date: 2026-10-08
 - Section: ZCR-SEC-01; decision log D-68
 - Source baseline: 081603c596c8b2331990112212798c9604a7b477
@@ -8,16 +8,44 @@
 
 ## Recommendation
 
-Use the SQLCipher format with a random 256-bit data-encryption key (DEK) per profile and a separate versioned device
-key envelope. Prefer maintained official Zetetic platform builds for production, conditional on the owner's licence
-budget approval and repeat verification with the exact purchased binaries. Do not ship the deprecated
-SQLitePCLRaw.bundle_e_sqlcipher 2.1.11 build. If the owner declines recurring licence cost, evaluate reproducible
-self-built current SQLCipher Community binaries in a separate section, including native build/update ownership,
-crypto dependencies, licences, platform packaging and iOS. SEE is a paid alternative, not an adopted dependency.
+The owner selected SQLCipher Community Edition on 2026-10-12 (D-180), superseding the paid-build preference.
+Use current official source without custom cryptography or an unnecessary fork. First verify architecture,
+required platforms and long-term maintenance; build a repeatable native build/packaging/update/security-test
+process before final key, migration and CI integration. Do not ship or reuse the deprecated
+SQLitePCLRaw.bundle_e_sqlcipher 2.1.11 proof binary. Review every native and managed dependency before adoption.
+
+The proposed data design remains a random 256-bit DEK per profile and a separate versioned device key envelope.
+The Community selection does not by itself accept forgotten-password recovery (OD-04), final OS-backup policy
+(OD-10), a production provider switch or an unverified migration. The main app remains plaintext at this point.
 
 This selects an architectural direction, not a production binary. Neither an unofficial successful probe nor a
 vendor's platform support statement establishes production readiness. No paid purchase, trial account, production
 provider switch, migration, password rule or recovery-policy approval occurs in this section.
+
+## Current Community evaluation (D-180, 2026-10-12)
+
+Initial app baseline: f0c25d7b45699179e51bff3d6dadb52a7abf95d7. Inputs are pinned in
+`eng/native/sqlcipher/inputs.lock.json`, not selected by a changing latest URL:
+
+| Input | Current evaluated source | Exact commit |
+|---|---|---|
+| SQLCipher | Official stable v4.19.0 | c4b275a47932888216bade83aff2bbc73df0ff85 |
+| OpenSSL | Official 3.5.9 LTS, support through 2030-04-08 | 45e844fa2a14ec92d146bd8f5778ac130b6625fb |
+
+The official [SQLCipher release](https://github.com/sqlcipher/sqlcipher/releases/tag/v4.19.0) fixes
+export-alias escaping and invalid hexkey handling among other issues. The 5.0 beta is explicitly not for production
+and changes the format/API. [OpenSSL's official release table](https://openssl-library.org/source/) supplies
+the LTS version/support horizon. These are version/source reviews, not a security certification.
+
+Both official checkouts match the pinned commits. The first MSVC configuration with Git's MSYS Perl failed
+source-path resolution; its log is retained. OpenSSL's own NOTES-PERL requires a matching build environment
+and recommends native Windows Perl for VC. The checksum-pinned portable 5.42.3.1 interpreter restores within
+artifacts without installation/global PATH changes. Independent native MSVC compilation and Windows C/.NET
+smoke checks now pass with exact 4.19.0 / OpenSSL 3.5.9 runtime identities. Named provider.sqlcipher 3.0.5
+works with Microsoft.Data.Sqlite.Core 10.0.12; config.e_sqlite3 naming is rejected by its encryption check.
+Encrypted-to-encrypted BackupDatabase works, while plaintext export requires sqlcipher_export.
+Full EF/migration, upstream security suites, reproducibility and mobile follow-through remain open.
+See [the bounded compatibility record](../architecture/sqlcipher-community-build.md).
 
 ## Verified current storage inventory
 
