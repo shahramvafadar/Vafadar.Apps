@@ -135,7 +135,10 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     public bool CanChooseRollover => CanInteract && (_work.CanConfigure(BudgetMethod.Limits, BudgetRollover.Surplus, _period)
         || _budget is { Rollover: not BudgetRollover.None } || RolloverIndex != (int)(_budget?.Rollover ?? BudgetRollover.None));
     /// <summary>Gets current feature feedback independently of preserved limits and historical amounts.</summary>
-    public string? WorkText => IsReady && (_budget is null ? !DraftAllowed() : !_work.CanUse(_budget.Id)) ? _translator["Budget_WorkUnavailable"] : null;
+    public string? WorkText => !IsReady ? null
+        : _review?.Choices.SaveRestriction(Configuration()) is { } restriction
+            ? CommercialFailureMessage.Describe(restriction, _translator) ?? _translator["Budget_WorkUnavailable"]
+            : _budget is not null && !_work.CanUse(_budget.Id) ? _translator["Budget_WorkUnavailable"] : null;
     /// <summary>Gets the complete close caption after a successful write, including failed return navigation.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
     /// <summary>Gets whether a complete current review can save this configuration; the writer rechecks capacity.</summary>

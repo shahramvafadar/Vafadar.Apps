@@ -5988,4 +5988,7 @@ Límites por categoría:
   <data name="Commercial_SharedMembers" xml:space="preserve">
     <value>Miembros e invitaciones pendientes</value>
   </data>
+  <data name="Commercial_SelectionRequired" xml:space="preserve">
+    <value>Revisa los elementos activos de «{0}» en Ajustes antes de iniciar nuevas actividades. El historial y las correcciones siguen disponibles.</value>
+  </data>
 </root>

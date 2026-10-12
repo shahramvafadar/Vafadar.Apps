@@ -16,6 +16,9 @@ public sealed class GoalWorkPolicy
     private readonly bool _canCorrect;
     private readonly bool _canConfigureContribution;
     private readonly bool _canConfigureReminders;
+    private WorkRestriction? NewBasic { get; init; }
+    private WorkRestriction? NewAdvanced { get; init; }
+    private WorkRestriction? NewReminder { get; init; }
 
     private GoalWorkPolicy(HashSet<Guid>? available, HashSet<Guid>? usable, HashSet<Guid>? contributing,
         HashSet<Guid>? reminding, bool canReopenBasic, bool canReopenAdvanced, bool canReopenReminders, bool canCorrect,
@@ -33,7 +36,7 @@ public sealed class GoalWorkPolicy
 
     /// <summary>Resolves original goal states and the exact explicit choice; selection grants no paid tool.</summary>
     public static GoalWorkPolicy Resolve(CapabilityContext context, QuotaScope scope,
-        IEnumerable<Goal> goals, ResourceSelection? selection = null)
+        IEnumerable<Goal> goals, ResourceSelection? selection = null, bool selectionNeedsReview = false)
     {
         ArgumentNullException.ThrowIfNull(goals);
         var originals = goals.ToArray();
@@ -56,10 +59,33 @@ public sealed class GoalWorkPolicy
             if (advanced && reminders) reminding.Add(goal.Id);
         }
         // A historical goal joins a free chosen slot only through its writer; this is a view affordance, not a grant.
-        var room = !availability.RequiresSelection && (availability.Maximum is null
+        var needsSelection = availability.RequiresSelection || availability.Maximum is > 0 && selectionNeedsReview;
+        var room = !needsSelection && (availability.Maximum is null
             || originals.Count(goal => availability.IsSelected(goal.Id)) < availability.Maximum);
+        WorkRestriction? Restriction(CommercialFeature feature)
+        {
+            var permission = PlanPolicy.Check(feature, context);
+            if (permission != FeaturePermission.Allowed) return new(feature, permission);
+            if (needsSelection) return new(feature, FeaturePermission.Allowed, QuotaKind.Goals, RequiresSelection: true);
+            if (!room) return new(feature, FeaturePermission.Allowed, QuotaKind.Goals, availability.Maximum, availability.SelectedCount, 1);
+            return null;
+        }
         return new(available, usable, contributing, reminding, basic && room, basic && advanced && room, basic && reminders && room,
-            PlanPolicy.Check(CommercialFeature.Corrections, context) == FeaturePermission.Allowed, basic && advanced, basic && advanced && reminders);
+            PlanPolicy.Check(CommercialFeature.Corrections, context) == FeaturePermission.Allowed, basic && advanced, basic && advanced && reminders)
+        {
+            NewBasic = Restriction(CommercialFeature.BasicGoals),
+            NewAdvanced = Restriction(CommercialFeature.AdvancedGoals),
+            NewReminder = Restriction(CommercialFeature.ContributionReviewReminders),
+        };
+    }
+
+    /// <summary>Explains a new paired goal's captured restriction without mutating its draft or authorizing a write.</summary>
+    public WorkRestriction? CreationRestriction(GoalType type, ContributionPlan? plan = null)
+    {
+        if (!Enum.IsDefined(type)) return new(CommercialFeature.BasicGoals, FeaturePermission.Allowed, InvalidConfiguration: true);
+        if (type != GoalType.AccountBalance || GoalContributionPolicy.HasWork(plan))
+            return NewAdvanced ?? (plan?.ReminderEnabled == true ? NewReminder : null);
+        return NewBasic ?? (plan?.ReminderEnabled == true ? NewReminder : null);
     }
 
     /// <summary>Checks original selected availability without resuming a pause or replacing its state caption.</summary>

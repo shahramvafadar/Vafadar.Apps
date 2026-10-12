@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Explain a disabled Save and retain input (2026-10-12, D-161)
+
+- New Goal and Budget forms explain their capacity, required access or activity selection before Save.
+- Keep all entered amounts, dates and other fields; existing corrections and history remain available.
+- Test builds remain unrestricted. No commercial activation or billing behavior changes.
+
 ### Improved - Explain limits and keep filter names for retry (2026-10-12, D-160)
 
 - Explain known limits, required access and activity selections instead of a generic unexpected error.

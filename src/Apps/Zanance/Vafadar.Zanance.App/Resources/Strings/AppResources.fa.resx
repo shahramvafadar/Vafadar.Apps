@@ -6019,4 +6019,7 @@
   <data name="Commercial_SharedMembers" xml:space="preserve">
     <value>اعضا و دعوت‌های در انتظار</value>
   </data>
+  <data name="Commercial_SelectionRequired" xml:space="preserve">
+    <value>پیش از شروع فعالیت جدید، موارد فعالِ «{0}» را در تنظیمات بررسی کنید. تاریخچه و اصلاح اطلاعات قبلی همچنان در دسترس‌اند.</value>
+  </data>
 </root>

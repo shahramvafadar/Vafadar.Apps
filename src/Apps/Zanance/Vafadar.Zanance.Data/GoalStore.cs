@@ -29,7 +29,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
             await db.AssetTypes.AsNoTracking().ToListAsync(cancellationToken));
         var context = access.Context;
         var work = context is null ? GoalWorkPolicy.Inactive : GoalWorkPolicy.Resolve(context,
-            StoredResourceSelection.Scope(context), originals, stored?.ForNewWork() ?? access.GoalSelection);
+            StoredResourceSelection.Scope(context), originals, stored?.ForNewWork() ?? access.GoalSelection,
+            stored is not null && !stored.HasValidValue());
         if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken)) != StoredResourceSelection.Capture(stored))
             throw new InvalidOperationException("The goal choice changed during notification preparation.");
         access.EnsureSnapshotCurrent();

@@ -39,6 +39,19 @@ internal static class CommercialFailureMessage
     internal static string OrFallback(Exception exception, Translator translator, string fallback, bool draftKept = false) =>
         Describe(exception, translator, draftKept) ?? translator[fallback];
 
+    /// <summary>Explains a captured pre-Save affordance without a false no-save promise or an authorization grant.</summary>
+    internal static string? Describe(WorkRestriction restriction, Translator translator)
+    {
+        ArgumentNullException.ThrowIfNull(restriction); ArgumentNullException.ThrowIfNull(translator);
+        if (restriction.InvalidConfiguration) return null;
+        if (restriction.RequiresSelection && restriction.Quota is { } kind && ResourceKey(kind) is { } resource)
+            return translator.Format("Commercial_SelectionRequired", translator[resource]);
+        if (restriction.Quota is { } quota && restriction.Maximum is { } maximum && restriction.Current is { } current
+            && restriction.Requested is { } requested)
+            return Describe(new CommercialWriteRejectedException(restriction.Feature, quota, maximum, current, requested), translator);
+        return Describe(new CommercialWriteRejectedException(restriction.Feature, restriction.Permission), translator);
+    }
+
     /// <summary>Maps original quota kinds to captions without displaying stored identifiers or enum names.</summary>
     private static string? ResourceKey(QuotaKind kind) => kind switch
     {

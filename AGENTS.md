@@ -1113,3 +1113,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 
 * Use DatabaseFileIdentity for the actual configured SQLite target across open/closed connection aliases;
   never guess another profile or replace a foreign-file guard with native reporting paths.
+
+## 94. Captured readiness before Save (D-161)
+
+* Explain blocked Goal/Budget drafts from the same original reviewed rights/capacity computation; a captured
+  WorkRestriction never grants a write or replaces atomic revalidation. Keep complete raw inputs.
+* Malformed bounded Goal choices require explicit repair; unlimited access and original corrections remain
+  available. Preserve Budget net-definition replacements, future periods and original calculations.
+* Keep Debug mode writes in the central coordinator. Run dependent tests, cleanup and builds sequentially;
+  negative preparations are not acceptance. Native fixtures restore complete rows and exact owned bytes.

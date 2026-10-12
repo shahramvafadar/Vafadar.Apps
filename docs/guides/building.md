@@ -634,3 +634,11 @@ fictitious SQLite. Native menu/name effects are explicit ports; the changed repo
 Invoke are actual native controls. Render the hidden own root and native popup separately. Compare full query
 scope and all 25 tables; restore exact development bytes. No desktop input/focus or commercial activation.
 See `src/Apps/Zanance/docs/quality/commercial-feedback.md`.
+
+## Actual pre-Save readiness review (D-161)
+
+Debug pre-save-readiness opens actual Goal/Budget editors over independent fictitious SQLite. Central Debug
+mode configuration alone controls Simple/Advanced. Read realized reason/disabled Save controls and invoke
+Cancel with explicit confirmation ports. Compare all 25 tables and complete raw drafts; restore exact owned
+development bytes. No financial Save, desktop input/focus, OS setting change or production activation.
+See `src/Apps/Zanance/docs/quality/pre-save-readiness.md`.

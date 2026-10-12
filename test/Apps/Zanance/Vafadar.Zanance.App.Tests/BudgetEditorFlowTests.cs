@@ -100,7 +100,9 @@ public sealed class BudgetEditorFlowTests
         using var f = new FlowFixture(); var s = await SeedAsync(f, advanced); await OpenAsync(s); s.Editor.TotalText = "321.45";
         await s.Editor.SaveCommand.ExecuteAsync(null); Assert.Empty(f.Platform.Failures);
         var saved = await SavedAsync(s); Assert.Equal(32145, saved.TotalLimit); Assert.Equal(s.Budget.AccountIds, saved.AccountIds);
-        Assert.Equal(s.Budget.CategoryLimits.Select(l => (l.CategoryId, l.Limit)), saved.CategoryLimits.Select(l => (l.CategoryId, l.Limit)));
+        // These child rows have no stored order; compare every original category/value pair independently of SQLite enumeration.
+        Assert.Equal(s.Budget.CategoryLimits.OrderBy(l => l.CategoryId).Select(l => (l.CategoryId, l.Limit)),
+            saved.CategoryLimits.OrderBy(l => l.CategoryId).Select(l => (l.CategoryId, l.Limit)));
         Assert.Equal((s.Budget.Calendar, s.Budget.Method, s.Budget.Rollover), (saved.Calendar, saved.Method, saved.Rollover));
         Assert.Empty(await s.Store.GetEntriesAsync(cancellationToken: Ct)); Assert.False(s.Editor.CanSave); Assert.False(s.Editor.IsDirty);
         Assert.Equal("..", Assert.Single(f.Platform.Routes).Route);

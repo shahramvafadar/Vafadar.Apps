@@ -1326,3 +1326,22 @@ Original configured SQLite targets now stay stable across open/closed Android re
 The shared Data helper extends the existing D-146 approach to resource reviews, writers, Plan/reminder
 packets, loan/backup boundaries and their unchanged foreign-file guards. Four added real SQLite cases
 verify open readers/writers, coherent financial validation and rejection of another actual file.
+
+## AT-163 - Captured pre-Save readiness (D-161)
+
+New Goal and Budget editors explain their captured capacity, missing feature right or required explicit
+selection before Save is disabled. The reason comes from the existing reviewed policy, uses all six real
+translations and preserves complete raw drafts. WorkRestriction is an explanation, never a grant or a
+replacement for the atomic writer. Existing budget net-definition/correction rules remain authoritative;
+malformed bounded Goal choices require explicit repair, while unlimited access remains unaffected.
+Production registrations stay inactive and test builds remain unrestricted.
+
+Nineteen AT-163 actual-source/real SQLite cases pass. The final ordinary suite passes 2,908 tests,
+App.Tests 851, zero failures/skips, in 2m 05.449s, followed by successful cleanup. Strict Windows and the
+canonical complete signed Android Release build have zero warnings/errors. Thirty-six actual Windows
+contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced, retaining complete drafts and all
+25 tables; exact owned development bytes restore. Native Android regression and negative evidence are
+reported separately in the evidence document. No schema/model/migration, permission, SDK, credential,
+network or portable preference is added. Physical-device, iOS, provider and activation gates stay separate.
+
+See [evidence](quality/pre-save-readiness.md).

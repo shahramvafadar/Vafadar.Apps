@@ -317,3 +317,9 @@ on fresh calculation. Existing financial rules and unrestricted test builds rema
 Explain known limits and missing rights while keeping the form. Reopen the filter name menu after rejection
 with the raw name and complete query intact. Test builds remain unrestricted; billing/activation are separate.
 [Verification and signed APK](docs/quality/commercial-feedback.md).
+
+## Understand a disabled Save (D-161)
+
+New Goal/Budget forms explain their original capacity or required access and keep all entered information.
+Existing corrections/history stay available. Test builds remain unrestricted.
+[Verification and signed APK](docs/quality/pre-save-readiness.md).

@@ -6019,4 +6019,7 @@ Kategorielimits:
   <data name="Commercial_SharedMembers" xml:space="preserve">
     <value>Mitglieder und ausstehende Einladungen</value>
   </data>
+  <data name="Commercial_SelectionRequired" xml:space="preserve">
+    <value>Prüfe die aktiven Einträge unter «{0}» in den Einstellungen, bevor du neue Aktivitäten beginnst. Verlauf und Korrekturen bleiben verfügbar.</value>
+  </data>
 </root>

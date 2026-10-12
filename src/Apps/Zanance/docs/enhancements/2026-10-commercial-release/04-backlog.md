@@ -55,7 +55,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..159: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus reviewed original goal views/detail actions and paired goal-editor/contribution drafts and canonical reviewed budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete and reviewed durable quick-template/saved-query choices, paired writers and actual create/apply/delete/save commands and original Home template activity/typed destinations and reviewed original device catalogue/choice/creation/form; actual-file original device profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..159: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus original goal/Home/detail affordances and reviewed goal editor; reviewed goal-editor drafts and budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete plus reviewed quick-template/saved-query choices, paired writers and actual commands and original Home template destinations and reviewed device profile catalogue/explicit choice delivered; actual-file original profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; remaining operation/import/native bindings open) | ENT-02 |
-| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (D-160 structured reasons and retained filter retry; plan/current-provider screen and initial blocked-action feedback open; activation inactive) | ENT-02, translations |
+| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (D-160/161 structured reasons, retained filter retry and original Goal/Budget pre-Save readiness; remaining blocked-action and plan/current-access UI open; activation inactive) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
 | ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | Proposed | BIL-01, ID-01 |
@@ -1075,3 +1075,24 @@ Original configured SQLite targets now stay stable across open/closed Android re
 The shared Data helper extends the existing D-146 approach to resource reviews, writers, Plan/reminder
 packets, loan/backup boundaries and their unchanged foreign-file guards. Four added real SQLite cases
 verify open readers/writers, coherent financial validation and rejection of another actual file.
+
+## D-161 - Explain readiness before a blocked Save
+
+New Goal and Budget editors explain their captured capacity, missing feature right or required explicit
+selection before Save is disabled. The reason comes from the existing reviewed policy, uses all six real
+translations and preserves complete raw drafts. WorkRestriction is an explanation, never a grant or a
+replacement for the atomic writer. Existing budget net-definition/correction rules remain authoritative;
+malformed bounded Goal choices require explicit repair, while unlimited access remains unaffected.
+Production registrations stay inactive and test builds remain unrestricted.
+
+Nineteen AT-163 actual-source/real SQLite cases pass. The final ordinary suite passes 2,908 tests,
+App.Tests 851, zero failures/skips, in 2m 05.449s, followed by successful cleanup. Strict Windows and the
+canonical complete signed Android Release build have zero warnings/errors. Thirty-six actual Windows
+contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced, retaining complete drafts and all
+25 tables; exact owned development bytes restore. Native Android regression and negative evidence are
+reported separately in the evidence document. No schema/model/migration, permission, SDK, credential,
+network or portable preference is added. Physical-device, iOS, provider and activation gates stay separate.
+
+Next ready slice: complete remaining original blocked-action explanations and ENT-04 plan comparison/current
+access presentation under D-69. Keep actual provider/renewal/purchase facts and activation independently gated.
+See [evidence](../../quality/pre-save-readiness.md).

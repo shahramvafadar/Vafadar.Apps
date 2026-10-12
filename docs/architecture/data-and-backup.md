@@ -656,3 +656,11 @@ See `src/Apps/Zanance/docs/quality/commercial-feedback.md`.
 
 Original file guards use the actual connection configuration; Android open-connection aliases cannot
 retire the same file. DatabaseFileIdentity preserves exact foreign-file rejection without new I/O or grants.
+
+## Captured pre-Save readiness (D-161)
+
+Core WorkRestriction is a captured explanation, not authorization. GoalWorkPolicy preserves its original
+rights/selected counts; Data retains malformed bounded choices explicitly. BudgetChoiceSnapshot.CanSave
+delegates to its original net-definition SaveRestriction computation. Presentation translates those facts
+without another quota algorithm; atomic writers still revalidate actual-file rights. No model/schema change.
+See `src/Apps/Zanance/docs/quality/pre-save-readiness.md`.

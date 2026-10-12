@@ -6008,4 +6008,7 @@ Limiti per categoria:
   <data name="Commercial_SharedMembers" xml:space="preserve">
     <value>Membri e inviti in attesa</value>
   </data>
+  <data name="Commercial_SelectionRequired" xml:space="preserve">
+    <value>Controlla gli elementi attivi di «{0}» nelle impostazioni prima di iniziare nuove attività. La cronologia e le correzioni restano disponibili.</value>
+  </data>
 </root>

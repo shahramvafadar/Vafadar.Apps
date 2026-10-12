@@ -5996,4 +5996,7 @@ Plafonds par catégorie :
   <data name="Commercial_SharedMembers" xml:space="preserve">
     <value>Membres et invitations en attente</value>
   </data>
+  <data name="Commercial_SelectionRequired" xml:space="preserve">
+    <value>Vérifiez les éléments actifs de «{0}» dans les paramètres avant de commencer de nouvelles activités. L’historique et les corrections restent disponibles.</value>
+  </data>
 </root>

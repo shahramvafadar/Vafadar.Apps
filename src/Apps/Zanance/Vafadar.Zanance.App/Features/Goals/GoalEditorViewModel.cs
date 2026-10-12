@@ -326,7 +326,16 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     /// <summary>Gets whether a retained opt-in can be disabled or a permitted new one can be enabled.</summary>
     public bool CanEditReminder => CanInteract && (NewReminder || _existingPlan?.ReminderEnabled == true || ReminderEnabled);
     /// <summary>Gets independent work feedback; original lifecycle/rules/values remain unchanged.</summary>
-    public string? WorkText => !IsReady || (NewContribution && _work.CanCorrect) ? null : _translator["Goal_ContributionUnavailable"];
+    public string? WorkText
+    {
+        get
+        {
+            if (!IsReady) return null;
+            if (_existing is null && _work.CreationRestriction(CurrentType, BuildPlan()) is { } restriction)
+                return CommercialFailureMessage.Describe(restriction, _translator) ?? _translator["Goal_ContributionUnavailable"];
+            return NewContribution && _work.CanCorrect ? null : _translator["Goal_ContributionUnavailable"];
+        }
+    }
     /// <summary>Gets the complete close/cancel caption, including a successfully committed form.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
     /// <summary>Gets whether the complete draft has current new-work/correction rights and a usable review.</summary>

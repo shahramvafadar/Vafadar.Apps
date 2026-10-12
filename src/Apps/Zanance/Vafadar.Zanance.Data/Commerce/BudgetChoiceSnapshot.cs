@@ -83,21 +83,25 @@ public sealed class BudgetChoiceSnapshot
     /// <summary>Gets deletion rights independently of current definition selection.</summary>
     public bool CanDelete => Access.Context is not { } context || PlanPolicy.Check(CommercialFeature.DeleteData, context) == FeaturePermission.Allowed;
     /// <summary>Projects the reviewed writer's feature and net current-definition capacity without modifying any choice.</summary>
-    public bool CanSave(Budget target, Guid? replacedId = null)
+    public bool CanSave(Budget target, Guid? replacedId = null) => SaveRestriction(target, replacedId) is null;
+
+    /// <summary>Explains the same reviewed net-definition decision used by CanSave; it grants no write right.</summary>
+    public WorkRestriction? SaveRestriction(Budget target, Guid? replacedId = null)
     {
         ArgumentNullException.ThrowIfNull(target);
-        if (Access.Context is not { } context) return true;
+        if (Access.Context is not { } context) return null;
         if (!Enum.IsDefined(target.Method) || !Enum.IsDefined(target.Rollover) || !Enum.IsDefined(target.Period)
-            || !Enum.IsDefined(target.Calendar)) return false;
+            || !Enum.IsDefined(target.Calendar)) return new(CommercialFeature.BasicBudgets, FeaturePermission.Allowed, InvalidConfiguration: true);
         var scope = StoredResourceSelection.Scope(context);
         var original = Items.SingleOrDefault(item => item.Id == (replacedId ?? target.Id))?.ToBudget();
-        if (PlanPolicy.Check(BudgetEditPolicy.Feature(target, original, scope, Today, MonthStartDay), context)
-            != FeaturePermission.Allowed) return false;
-        if (!BudgetSelectionPolicy.IsCurrent(target, Today, MonthStartDay)) return true;
+        var feature = BudgetEditPolicy.Feature(target, original, scope, Today, MonthStartDay);
+        var permission = PlanPolicy.Check(feature, context);
+        if (permission != FeaturePermission.Allowed) return new(feature, permission);
+        if (!BudgetSelectionPolicy.IsCurrent(target, Today, MonthStartDay)) return null;
         var key = BudgetDefinitionKey.From(scope, target);
         if (original is not null && BudgetDefinitionKey.From(scope, original) == key
-            && BudgetSelectionPolicy.IsCurrent(original, Today, MonthStartDay)) return true;
-        if (RequiresSelection) return false;
+            && BudgetSelectionPolicy.IsCurrent(original, Today, MonthStartDay)) return null;
+        if (RequiresSelection) return new(feature, FeaturePermission.Allowed, QuotaKind.BudgetDefinitions, RequiresSelection: true);
         var selected = SelectedDefinitions.ToHashSet();
         if (original is not null)
         {
@@ -106,7 +110,8 @@ public sealed class BudgetChoiceSnapshot
                 && BudgetSelectionPolicy.IsCurrent(item.ToBudget(), Today, MonthStartDay) && item.Definition(scope) == previous))
                 selected.Remove(previous);
         }
-        return selected.Contains(key) || Maximum is null || selected.Count < Maximum;
+        return selected.Contains(key) || Maximum is null || selected.Count < Maximum ? null
+            : new(feature, FeaturePermission.Allowed, QuotaKind.BudgetDefinitions, Maximum, selected.Count, 1);
     }
     /// <summary>Gets separate current new-work rights; original calculations continue using every original budget.</summary>
     public BudgetWorkPolicy Work { get; }

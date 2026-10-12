@@ -1015,3 +1015,11 @@ filter preserves its exact raw name and complete query; the next explicit tap re
 the page. Process-local names never cross original files. Counter text uses native digit choice and RTL marks.
 The shared reporter does not promise that nothing saved after a committed action.
 See [evidence](quality/commercial-feedback.md).
+
+## Explain readiness before Save (D-161)
+
+New Goal/Budget forms name their actual captured capacity, missing feature right or required explicit choice.
+Keep complete raw drafts and native disabled Save semantics. Use the same original reviewed policy that
+controls the affordance; never calculate a second quota or guess a purchase/provider state. Retain original
+correction/history behavior and distinguish field validation from commercial readiness.
+See [evidence](quality/pre-save-readiness.md).

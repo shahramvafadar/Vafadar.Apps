@@ -448,3 +448,10 @@ Known rejection messages use original rights and nonfinancial quota counts, neve
 responses, stored ids or exception details. Raw names and original file comparison remain process-local, never
 portable preferences or grants. No schema, permission, SDK, network, purchase, analytics or OS-backup change.
 Independent native fixtures preserve complete original data/owned bytes; test registrations remain inactive.
+
+## D-161 - Captured readiness explanations
+
+WorkRestriction carries existing feature decisions and nonfinancial quota counts in memory, never credentials,
+provider responses or stored identities. Raw drafts stay in the existing explicit-Save forms. No schema,
+portable format, permission, SDK, network, purchase, analytics or OS-backup change. Independent native fixtures
+restore complete original data/owned bytes; production registrations remain inactive.
