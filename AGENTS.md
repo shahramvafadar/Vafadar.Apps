@@ -1305,3 +1305,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   restoration, native builds, packaging, updates and security tests, then integrate keys, crash-safe migration and CI.
 * Keep independent compatibility probes fictitious and outside the app's databases. A source pin, compiler build
   or Windows proof does not establish Android/iOS, recovery, whole-app encryption or release acceptance.
+
+## 113. Independent Windows Community native producer (D-181)
+
+* Build pinned official sources with existing reviewed MSVC/SDK and checksum-verified portable Perl/NASM.
+  Keep assembly enabled and original codec/init/shutdown hooks, static crypto and explicit memory hardening.
+* An interrupted native build may resume only an identical recipe. Changed configuration requires a fresh
+  directory: upstream incremental objects can retain old filename/configuration data. Never patch binary bytes.
+* Package only a manifest-matched candidate after original compiled-model/schema/key/tamper checks and
+  native export/dependency inventory. Local candidate packaging is not app activation or publication.
+* Keep the complete app/APK baseline unchanged until native platform, security, keys and crash migration
+  are verified; Windows compatibility does not accept Android/iOS/recovery or database encryption.

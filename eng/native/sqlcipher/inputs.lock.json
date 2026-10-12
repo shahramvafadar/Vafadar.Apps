@@ -29,5 +29,18 @@
     "repository": "https://github.com/ericsink/SQLitePCL.raw.git",
     "commit": "ed046114d5a30534e13294d94d78eb73de896ad4",
     "scope": "Managed provider only; no third-party native encryption binary"
+  },
+  "windowsNasm": {
+    "uri": "https://www.nasm.us/pub/nasm/releasebuilds/3.02/win64/nasm-3.02-win64.zip",
+    "sha256": "161d0bfaff53c2f9e9f3e69fd0672323ebabafd1268976a5cec11be92a19aee7",
+    "bytes": 641314,
+    "version": "3.02",
+    "provenance": "Official HTTPS release asset, checksum computed during input review",
+    "executable": "nasm-3.02/nasm.exe"
+  },
+  "windowsCompiler": {
+    "installationVersion": "18.10.12201.205",
+    "toolsVersion": "14.51.36231",
+    "sdkVersion": "10.0.26100.0"
   }
 }

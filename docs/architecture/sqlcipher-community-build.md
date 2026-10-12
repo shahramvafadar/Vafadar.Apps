@@ -98,10 +98,74 @@ the existing app baseline; no new main-suite count is invented for independent p
    every slice and repeats compatibility/security/migration tests before adoption. Store publication
    and physical-device/iOS/provider acceptance remain external gates.
 
-Next concrete implementation: production source/recipe restoration and Windows native packaging
-with an actual EF/schema probe, followed by Android native Release proof. Key/recovery/migration
+Next concrete implementation: Android native source-built slices and upstream security-suite/CI
+work, followed by final key and crash-migration integration. Key/recovery/migration
 integration follows validated binaries. No app enforcement or temporary OS-backup policy is added.
 
 Records: artifacts/native-security-build/windows-x64/{msys-negative.log,tool-restore-final.log,
 amalgamate.log,build-native-perl.log,link-sqlcipher.log,capi-proof.json,dotnet-library-name-negative.log,
 dotnet-proof-final.log,dotnet-backup-proof.log,dotnet-export-proof.log}.
+
+## Windows candidate producer (D-181)
+
+The checked-in recipe builds official source with the locked existing MSVC 14.51.36231 / SDK
+10.0.26100.0 and portable native Perl plus NASM 3.02. NASM official HTTPS archive size/hash are
+reviewed; this is checksum provenance, not an asserted upstream signature. Assembly stays enabled.
+OpenSSL uses static libcrypto, no module/config autoload and upstream no-filenames; original source
+is not patched. SQLCipher retains its original codec/init/shutdown, memory temp store, foreign keys,
+threading, metadata and FTS5. PE linking enables CFG, ASLR, NX, high entropy and CET compatibility.
+
+Run from the repository root with PowerShell 7:
+
+```powershell
+pwsh -NoProfile -File eng/native/sqlcipher/Test-NativeInputs.ps1
+pwsh -NoProfile -File eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-proof
+pwsh -NoProfile -File eng/native/sqlcipher/Test-Windows.ps1 -RunName windows-proof
+pwsh -NoProfile -File eng/native/sqlcipher/Pack-Windows.ps1 -RunName windows-proof
+```
+
+Use distinct run names for clean comparisons. Resume only an interrupted identical recipe with
+`-Resume`; changes require fresh directories. Do not clean/reconfigure an old tree and infer a
+clean build. Initial missing /LD caused a link failure; corrected before any candidate packaging.
+Earlier incremental no-filenames changes left old OpenSSL folder strings and unequal hashes;
+those intermediate artifacts remain negative evidence. No binary byte patching is used.
+
+Eleven actual hostile origin/digest/archive traversal/ADS/symlink/size checks pass. The standalone
+net10 harness compiles original Vafadar.Data and Zanance.Data sources with the real compiled model,
+EF Core Sqlite.Core 10.0.12 and maintained managed-only named provider 3.0.5. It starts with first
+migration/raw fictitious financial rows, runs all 32 original migrations and reopens original
+identifiers, Unicode, EUR amount/date/settings. Missing/wrong key and altered page refuse reads;
+plaintext header/marker are absent and original default foreign keys remain enabled. Expected
+negative HMAC errors are retained. Only independently owned fictitious artifacts are opened.
+
+Packaging requires a matching manifest, original-schema proof and native dependency inventory;
+required original key/rekey/backup/serialize/deserialize exports are checked. It produces an
+unpublished candidate NuGet with exact managed-provider dependency and required component notices,
+stable entry order/time, native/input/compiler hashes and architecture/hardening checks. Owner
+source rights stay separate from component licences. This package is not yet referenced by the app.
+
+The main application and full D-179 signed APK remain unchanged; main 3,179 tests/builds retain their
+existing evidence. Native Android/iOS, upstream crypto/encryption suites, key wrapping/loss/recovery,
+all-profile crash-safe migration and CI matrix are still required before activation. The Windows
+candidate and fictitious original-schema test do not encrypt any existing app database.
+
+### Final clean Windows observations
+
+Fresh windows-c/windows-d builds produce byte-identical DLLs and local NuGet packages. Both
+original-source harness runs pass all 32 migrations and the bounded security/financial cases.
+Export inventory and dependency closure pass: only KERNEL32, ADVAPI32, CRYPT32, WS2_32 and USER32.
+Package CRC and embedded native hash verify. Native SHA-256:
+3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
+NuGet SHA-256: c5cce68ef5904bb52dc81164493c7d8bf46306d6a51bcc136dedd8ffe3dfb6e3.
+
+Each upstream native log contains 749 warning occurrences (including dependency-generation
+passes): C4267 670, C4244 73, C4133 2, C4319 2, C4334 2. They are not suppressed, patched or
+called a warning-free production build. These findings require upstream/security review before
+adoption. The managed compatibility build passes ContinuousIntegrationBuild; main application
+Windows/Android strict results remain the unchanged D-179 baseline. Upstream suites are still open.
+
+Records: artifacts/native-sqlcipher/{input-validation-reviewed.log,clean-comparison.json,
+build-windows-c.log,build-windows-d.log,test-windows-c.log,test-windows-d.log,pack-windows-c.log,
+pack-windows-d.log}, plus build/windows-{c,d}/{build.log,exports.txt,dependents.txt,
+candidate/manifest.json,compatibility-proof.json,package-proof.json}. Earlier windows-a/b unequal
+incremental outputs and the failed relative inventory-command invocation remain negative evidence.

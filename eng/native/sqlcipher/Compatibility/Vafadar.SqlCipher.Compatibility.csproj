@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Independent compatibility checks of official source-built SQLCipher with original data sources.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
+    <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
+    <!-- Compile actual original infrastructure/model/migrations without importing a default native bundle. -->
+    <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Data/**/*.cs"
+             Exclude="$(RepoRoot)src/Libraries/Vafadar.Data/bin/**;$(RepoRoot)src/Libraries/Vafadar.Data/obj/**" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/**/*.cs"
+             Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
+    <Content Include="$(NativeSqlCipherPath)" Link="sqlcipher.dll" CopyToOutputDirectory="Always"
+             Condition="'$(NativeSqlCipherPath)' != ''" />
+  </ItemGroup>
+  <Target Name="RequireCandidate" BeforeTargets="Build">
+    <Error Condition="'$(NativeSqlCipherPath)' == '' Or !Exists('$(NativeSqlCipherPath)')"
+           Text="Provide NativeSqlCipherPath pointing to the source-built candidate, not an app database." />
+  </Target>
+</Project>

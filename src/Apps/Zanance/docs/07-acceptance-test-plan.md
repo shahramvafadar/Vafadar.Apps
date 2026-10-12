@@ -1604,3 +1604,18 @@ export succeeds. Native Windows tool fresh restore/cache identity checks pass. M
 3,179 from unchanged D-179; no invented automated test count. Full-schema/EF, upstream suites,
 reproducibility, native mobile, key/recovery, crash migration and product release are unaccepted.
 See [compatibility](../../../../docs/architecture/sqlcipher-community-build.md).
+
+## AT-180 - Independent official Windows native producer
+
+Eleven hostile origin/digest/ZIP path/size/symlink cases refuse restoration. Original data/shared
+sources and actual compiled model run 32 migrations from first-schema fictitious financial rows.
+Correct-key reopen preserves identifiers/Unicode/currency/amount/date/settings, default foreign
+keys remain enabled; missing/wrong key and modified page refuse reads, plaintext header/marker
+are absent. Compare fresh native outputs and package hashes, recording failed incremental evidence.
+See [guide](../../../../docs/architecture/sqlcipher-community-build.md) for actual current results.
+Upstream suites, mobile/key/recovery/crash migration remain unaccepted; main 3,179 is unchanged.
+
+Fresh Windows DLL/package hashes match across two clean builds; both final original-schema
+harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
+Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
+remain open. These are local candidates, not warning-free production binaries or app activation.

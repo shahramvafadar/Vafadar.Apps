@@ -2798,3 +2798,18 @@ Microsoft.Data.Sqlite.Core/named provider money/date/key/tamper and encrypted-ba
 checks pass. Main app and D-179 APK remain unchanged, main 3,179 baseline; databases are not yet
 encrypted. Production native matrix/EF/security/reproducibility and keys/recovery/migration remain
 open. See [compatibility](../../../../../docs/architecture/sqlcipher-community-build.md).
+
+### 31.94 Independent Windows native producer (D-181 / AT-180)
+
+Official source/tool restoration, pinned assembly-enabled Windows recipe, guarded candidate
+packaging and actual original-source EF harness added outside the app. Eleven input validation
+cases and first-schema-to-current 32 migrations/key/tamper/Unicode/money/date/FK checks pass.
+Changed recipe resumption is rejected to prevent stale upstream objects. See build guide for
+clean comparison/package evidence. Main suite remains 3,179 and D-179 APK is unchanged; original
+databases are still plaintext. Native mobile/security suites, final keys/recovery/crash migration
+and CI matrix remain in progress; this is not SEC-01 completion or release acceptance.
+
+Fresh Windows DLL/package hashes match across two clean builds; both final original-schema
+harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
+Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
+remain open. These are local candidates, not warning-free production binaries or app activation.

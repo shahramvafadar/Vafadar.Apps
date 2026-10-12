@@ -1391,3 +1391,17 @@ Main app remains plaintext/unchanged and retains D-179 test/APK baseline. Next: 
 recipe/package and actual EF compatibility, then Android Release proof; security suites,
 reproducibility, iOS/key/recovery/migration remain open. SEC-01 stays in progress; do not repeat
 delivered local UI/commercial work or use the deprecated probe bundle.
+
+## Windows Community producer progress (D-181)
+
+Official source/tool module, assembly-enabled pinned Windows build/local package and original EF
+compiled-model compatibility harness are implemented independently. Eleven input checks and 32
+actual migrations plus original financial packets/key/tamper/FK checks pass. Native reproducibility
+and packaging evidence are in the build guide. SEC-01 remains in progress; next ready work is
+Android native slices and upstream security suites/CI, then final key/crash migration integration.
+Main app and D-179 APK remain unchanged/plaintext. Do not repeat completed UI/commercial work.
+
+Fresh Windows DLL/package hashes match across two clean builds; both final original-schema
+harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
+Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
+remain open. These are local candidates, not warning-free production binaries or app activation.

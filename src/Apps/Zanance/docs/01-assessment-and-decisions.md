@@ -2259,3 +2259,23 @@ hardening/reproducibility/EF/mobile/recovery/migration acceptance. App, APK, mai
 existing plaintext databases are unchanged. SEC-01/pipeline remain in progress; no interim policy.
 [Compatibility](../../../../docs/architecture/sqlcipher-community-build.md),
 [ADR](../../../../docs/adr/0010-database-encryption.md).
+
+## D-181 - Independent Windows Community native producer and original EF schema
+
+Add reusable official-source/tool restoration, pinned MSVC/SDK Windows recipe, local candidate
+packaging and an independent original-source EF compatibility harness. Assembly remains enabled;
+OpenSSL is static with no module/config autoload, and the DLL retains original codec/init/shutdown
+hooks, memory temp storage, foreign keys and PE hardening. No custom crypto, upstream patch,
+plaintext fallback or app dependency switch. Eleven hostile input/archive checks pass. Actual
+compiled model and 32 original migrations preserve Unicode/money/date/settings; correct-key reopen
+works and missing/wrong keys and modified page refuse reads. A missing /LD link flag was corrected.
+Initial incremental builds retained folder-dependent OpenSSL strings; changed recipes now require
+fresh directories, preserving negative evidence. Clean comparison and final package observations
+are recorded in the build guide. Main app/test count 3,179/D-179 APK are unchanged and plaintext.
+Android/iOS, upstream suites, keys, recovery and crash migration remain open.
+[Guide](../../../../docs/architecture/sqlcipher-community-build.md).
+
+Fresh Windows DLL/package hashes match across two clean builds; both final original-schema
+harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
+Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
+remain open. These are local candidates, not warning-free production binaries or app activation.

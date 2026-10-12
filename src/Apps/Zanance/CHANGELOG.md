@@ -1233,3 +1233,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Clarified that Android cloud-enabled builds can permit OCR SDK diagnostics before cloud sign-in.
 - Added explicit offline Release packaging and a permission guard for complete APKs. No new SDK, permission or
   financial-storage behaviour was introduced.
+
+### Database encryption preparation (D-181)
+
+- Added independent official-source Windows native build/package and original database-schema compatibility checks.
+- Existing app data and backups are unchanged; database encryption is not enabled yet.

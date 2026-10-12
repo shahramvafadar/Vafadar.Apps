@@ -265,3 +265,13 @@ Checked on 2026-10-08; prices are planning estimates, not purchase approval.
 - [Windows DPAPI user scope](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection)
 - [Apple Keychain accessibility](https://developer.apple.com/documentation/security/restricting-keychain-item-accessibility)
 - [OWASP KDF guidance](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+
+## D-181 Windows producer prerequisite
+
+Official source restoration and assembly-enabled Windows candidate build/package now live under
+eng/native/sqlcipher. Original infrastructure/model sources and compiled model pass first-schema
+through all 32 migrations with fictitious records; key/tamper/FK/financial packet checks pass.
+Changed recipes require clean directories rather than stale incremental objects. Exact comparison
+and packaging evidence is recorded in the architecture build guide. This remains an independent
+candidate; main app activation, upstream suites/mobile native matrix, keys/recovery and crash-safe
+migration are not accepted by this prerequisite. No temporary OS-backup policy is introduced.

@@ -1183,3 +1183,11 @@ Main app remains plaintext/unchanged and retains D-179 test/APK baseline. Next: 
 recipe/package and actual EF compatibility, then Android Release proof; security suites,
 reproducibility, iOS/key/recovery/migration remain open. SEC-01 stays in progress; do not repeat
 delivered local UI/commercial work or use the deprecated probe bundle.
+
+## Windows Community producer (D-181)
+
+Deliver official source/tool restoration and Windows build/package with original 32-migration
+compiled-model compatibility before native Android/security-suite work. Changed recipes cannot
+resume stale objects. Preserve negative determinism/link findings and exact clean/package results
+in the build guide. Main app stays on D-179 baseline until native platforms, keys and crash-safe
+migration are verified. No temporary OS-backup policy, recovery decision or publication is implied.
