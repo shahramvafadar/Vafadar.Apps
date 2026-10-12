@@ -2763,3 +2763,12 @@ Three bounded normal Release process-cold/warm-cache samples record ready-Home u
 18,670.44 / 14,981.63 / 13,107.65 ms including native dump overhead. Synchronous initial UI preparation
 is identified for the next implementation, not causally quantified. QA-06 remains open; main test
 count/package unchanged at D-175. No build/device/optimization claim. [Evidence](../quality/startup-current-baseline.md).
+
+### 31.90 Original Home layout reuse (D-177)
+
+Original sections stay attached when already in the saved order; only displaced containers move.
+Default XAML order matches the existing Core default. Keep every binding, visibility choice and
+financial calculation. Main 3,169, strict builds, 18 native Windows contexts and signed full APK
+verified; six normal Release Android Home/return cases and exact owned-data/display restoration verified. Earlier asynchronous startup candidates were rejected
+by actual Release timing and removed. QA-06 remains open; no two-second/device/release claim.
+[Evidence](../quality/home-layout-reuse.md).

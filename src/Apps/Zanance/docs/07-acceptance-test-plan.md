@@ -1568,3 +1568,12 @@ with partial year unchanged and original three-calendar values. Six original Rel
 three debt reference cases; Cancel/own discard without Save, complete original data restoration.
 Main remains 3,169; this native scenario does not invent an additional automated count. Spoken
 TalkBack/Narrator/OS-scaling/phone/iOS acceptance is separate. [Evidence](quality/date-context-accessibility.md).
+
+## AT-176 - Original Home layout reuse
+
+Locally verified: real appearance invoked twice across 18 Windows language/theme/width contexts;
+zero section add/remove events, original native handlers retained, actual order equals saved layout
+and complete accounts/entries/settings/budgets unchanged. Existing HomeLayout cases and full 3,169
+suite pass. Final normal Release Android Home/return and exact owned-data/display restoration verified. No new automated count is invented;
+QA-06, spoken/system-scaling/phone/iOS/provider and release gates remain open.
+[Evidence](quality/home-layout-reuse.md).

@@ -1151,3 +1151,11 @@ Current bounded measurements and synchronous source boundary are recorded. Imple
 original preparation, then native before/after and failure/retry checks; retain original security,
 financial/legacy-unit and link behavior. No unrelated test/build/APK repetition for measurement-only
 work. [Evidence](../../quality/startup-current-baseline.md).
+
+## Original Home section reuse (D-177)
+
+Unchanged native sections remain attached; only displaced original containers move. Default source
+order matches Core. Main 3,169, strict builds, 18 Windows contexts and complete signed APK verified;
+six normal Release Android Home/return cases and exact owned-data/display restoration verified. Async startup/appearance-gating candidates were rejected and
+removed after finite native timing; do not repeat them without new evidence. QA-06 and full release
+remain open. [Evidence](../../quality/home-layout-reuse.md).

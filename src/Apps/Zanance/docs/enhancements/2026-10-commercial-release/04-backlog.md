@@ -1359,3 +1359,11 @@ QA-06 records three bounded D-175 Release starts with preserved actual native ev
 change. Next ready implementation is protected original startup preparation outside the initial UI
 call, preserving database/display/security/link/foreground order. Duration/ANR/device/iOS acceptance
 remain open; do not claim the two-second goal. [Evidence](../../quality/startup-current-baseline.md).
+
+## Original Home section reuse (D-177)
+
+Unchanged native sections remain attached; only displaced original containers move. Default source
+order matches Core. Main 3,169, strict builds, 18 Windows contexts and complete signed APK verified;
+six normal Release Android Home/return cases and exact owned-data/display restoration verified. Async startup/appearance-gating candidates were rejected and
+removed after finite native timing; do not repeat them without new evidence. QA-06 and full release
+remain open. [Evidence](../../quality/home-layout-reuse.md).

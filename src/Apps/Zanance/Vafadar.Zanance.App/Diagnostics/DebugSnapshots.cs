@@ -488,6 +488,7 @@ internal static partial class DebugSnapshots
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
         {
             ("home", "//home", null),
+            ("home-layout-reuse", "//home", null),
             ("transactions", "//transactions", null),
             ("transactions-source", "//transactions", null),
             ("transactions-filters", "//transactions", null),
@@ -824,6 +825,8 @@ internal static partial class DebugSnapshots
                 { await ReviewEntrySaveFeedbackAsync(app, services, folder, language, expenseId); }
                 if (name == "plan-validation")
                 { await ReviewPlanValidationAsync(app, services, folder, language); }
+                if (name == "home-layout-reuse" && Shell.Current.CurrentPage is Features.Home.HomePage retainedHome)
+                { await ReviewHomeSnapshotAsync(services, retainedHome, folder, language); }
                 if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)
                 {
                     await ReviewHomeSnapshotAsync(services, homePage, folder, language);
@@ -3081,6 +3084,27 @@ internal static partial class DebugSnapshots
         { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(), Budgets = await store.GetBudgetsAsync() });
         await home.LoadAsync();
         var before = await StoredAsync();
+        // D-177: the actual appearance method must not detach correctly ordered native section trees.
+        var homePage = (Features.Home.HomePage)page;
+        var sections = page.FindByName<VerticalStackLayout>("Sections");
+        var expectedSections = Core.Dashboard.HomeLayout.Parse((await store.GetSettingsAsync()).HomeLayout).Sections
+            .Select(state => page.FindByName<VerticalStackLayout>(state.Section + "Section")).ToArray();
+        if (!sections.Children.Where(child => expectedSections.Contains(child)).SequenceEqual(expectedSections))
+            throw new InvalidOperationException("Actual Home sections do not match the saved original order.");
+        var sectionOrder = sections.Children.ToArray();
+        var handlers = sectionOrder.OfType<VisualElement>().Select(view => view.Handler?.PlatformView).ToArray();
+        var added = 0; var removed = 0;
+        EventHandler<ElementEventArgs> onAdded = (_, _) => added++;
+        EventHandler<ElementEventArgs> onRemoved = (_, _) => removed++;
+        sections.ChildAdded += onAdded; sections.ChildRemoved += onRemoved;
+        try { homePage.ApplyLayout(); homePage.ApplyLayout(); }
+        finally { sections.ChildAdded -= onAdded; sections.ChildRemoved -= onRemoved; }
+        if (added != 0 || removed != 0 || !sections.Children.SequenceEqual(sectionOrder)
+            || !sections.Children.OfType<VisualElement>().Select(view => view.Handler?.PlatformView)
+                .Zip(handlers).All(pair => ReferenceEquals(pair.First, pair.Second)) || await StoredAsync() != before)
+            throw new InvalidOperationException("Unchanged Home layout detached native sections or wrote original data.");
+        await File.WriteAllTextAsync(Path.Combine(folder, language + "-home-layout-reuse-proof.json"),
+            "{\"ActualAppearanceMethodTwice\":true,\"NativeSectionAddRemoveEvents\":0,\"OriginalNativeHandlersRetained\":true,\"StoredDataUnchanged\":true}");
         var accountValues = home.Accounts.ToArray();
         var section = page.FindByName<VerticalStackLayout>("AccountsSection");
         var rows = VisualDescendants(section).OfType<Features.Accounts.AccountRow>().ToArray();

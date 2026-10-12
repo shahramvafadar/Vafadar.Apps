@@ -2216,3 +2216,13 @@ Source confirms original synchronous migration/display/settings/root work before
 Next is protected asynchronous original preparation, preserving secure gate, links, onboarding and
 foreground ordering. No performance fix, two-second target, phone acceptance or new APK is claimed.
 [Evidence](quality/startup-current-baseline.md).
+
+## D-177 - Retain correctly ordered native Home sections
+
+Original Home appearance retains every correctly placed section and moves only a displaced original
+container; XAML starts in the existing Core default order. Preserve saved visibility/order and every
+original binding/child. Native review checks actual child events/handlers and stored data rather than
+inferring speed from source. Startup async/appearance-gating candidates were rejected after controlled
+Release observations; their changes were removed and original startup/security kept. Main 3,169,
+strict builds and 18 Windows contexts verified; six normal Release Android Home/return cases and exact owned-data/display restoration verified.
+[Evidence](quality/home-layout-reuse.md). QA-06/device/release acceptance remains open.

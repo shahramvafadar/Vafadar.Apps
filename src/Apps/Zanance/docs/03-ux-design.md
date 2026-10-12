@@ -1116,3 +1116,9 @@ A date's three native inputs and calendar button include their own existing tran
 Do not rely on encountering a preceding visual label to distinguish several dates. Name updates
 retain raw typing, date value, calendar, part order and visible placeholders; no container grouping
 replaces the actual editable children. Native naming evidence is separate from spoken navigation.
+
+## Original Home layout reuse (D-177)
+
+Default source order matches the existing saved-layout default. Keep correctly placed native sections
+attached on appearance; move only displaced containers. Visibility and complete financial bindings
+remain authoritative. Native tree reuse is engineering evidence, not a startup-duration or device claim.

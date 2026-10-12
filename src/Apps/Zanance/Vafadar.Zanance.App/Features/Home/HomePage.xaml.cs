@@ -57,19 +57,21 @@ public partial class HomePage : ContentPage
     }
 
     // The user's order and visibility of the sections (§21.5); balance and attention always stay on top (DASH-03).
-    private void ApplyLayout()
+    /// <summary>Applies saved visibility and order while retaining every correctly placed native section.</summary>
+    internal void ApplyLayout()
     {
         _layout = HomeLayoutPreferences.Load(_store);
-        var first = _sections.Values.Min(s => Sections.Children.IndexOf(s));
-        foreach (var section in _sections.Values)
+        var desired = _layout.Sections.Select(state => _sections[state.Section]).ToArray();
+        var first = _sections.Values.Min(section => Sections.Children.IndexOf(section));
+        // D-177: keep native section trees attached when their order already matches. Move only a displaced section,
+        // rather than detaching every chart, input and financial row on each appearance.
+        for (var index = 0; index < desired.Length; index++)
         {
+            var target = first + index;
+            var section = desired[index];
+            if (ReferenceEquals(Sections.Children[target], section)) continue;
             Sections.Children.Remove(section);
-        }
-
-        var index = first;
-        foreach (var state in _layout.Sections)
-        {
-            Sections.Children.Insert(index++, _sections[state.Section]);
+            Sections.Children.Insert(target, section);
         }
 
         UpdateVisibility();

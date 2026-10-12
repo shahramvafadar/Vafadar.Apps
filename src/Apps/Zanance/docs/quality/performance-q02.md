@@ -180,3 +180,11 @@ The D-175 package now has three bounded current samples: activity command wall 9
 observation overhead is included; no precise phase or device acceptance is inferred. Actual startup
 UI synchronous preparation is identified for the next protected async preparation work; no code
 optimization or new APK is claimed. [Evidence](startup-current-baseline.md).
+
+## Original native Home layout work (D-177)
+
+Unchanged appearance now performs zero original section add/remove operations in 18 actual Windows
+contexts, preserving native handlers and saved ordering. Source XAML uses Core's existing default.
+Main 3,169, strict builds and signed APK verified; Android Home/return and exact owned-data/display restoration verified. The earlier startup
+candidates were rejected after controlled timing and removed. No cold-duration, ANR, two-second or
+physical/iOS acceptance is implied. [Evidence](home-layout-reuse.md).

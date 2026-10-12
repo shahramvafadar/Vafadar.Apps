@@ -1273,3 +1273,11 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   review measures real names and retained partial input; do not infer a spoken screen-reader pass.
 * Reset only owned fictitious snapshot data between direct launches; never weaken a unique financial
   index for duplicate seeding. Restore original data/sidecars and remove the temporary sample marker.
+
+## 109. Retained original Home sections (D-177)
+
+* Source default section order matches Core. Appearance leaves correctly placed native containers
+  attached and moves only displaced ones; preserve saved visibility and all original financial bindings.
+* Review actual child events, native handler identity, saved order and unchanged stored data. Native
+  reuse does not prove a cold-start/device/ANR target. Rejected startup candidates remain removed;
+  do not repeat them without new evidence or count their temporary tests as delivered features.

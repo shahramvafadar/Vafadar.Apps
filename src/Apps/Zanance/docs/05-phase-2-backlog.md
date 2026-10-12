@@ -1045,3 +1045,10 @@ pass is claimed. Main 3,169 and full signed APK; [evidence](quality/android-widg
 Existing date purposes now identify actual child inputs/calendar actions in all 26 usages. Native
 Windows/Release Android naming and no-write checks plus full signed APK are delivered; spoken
 screen-reader and system-scaling/platform acceptance remain open. [Evidence](quality/date-context-accessibility.md).
+
+## D-177 original Home section reuse
+
+Remove redundant native section detachment on repeated appearance; retain existing saved order,
+visibility and original financial inputs. Main 3,169, strict builds and 18 Windows contexts verified;
+six normal Release Android Home/return cases and exact owned-data/display restoration verified. Rejected startup candidates are removed, not delivered.
+Canonical QA-06 and external acceptance remain open. [Evidence](quality/home-layout-reuse.md).

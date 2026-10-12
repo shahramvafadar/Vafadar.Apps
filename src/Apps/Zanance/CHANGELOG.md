@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Home section reuse (2026-10-12, D-177)
+
+- Keep correctly ordered Home sections attached when returning to the page.
+- Apply the saved arrangement by moving only sections whose positions changed.
+
 ### Improved - Date input accessibility (2026-10-12, D-175)
 
 - Identify the purpose of each date part and calendar button, such as Plan start/end or debt reference date.

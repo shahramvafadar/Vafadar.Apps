@@ -302,6 +302,117 @@
                 </VerticalStackLayout>
 
                 <!-- Sections the user can hide and reorder (§21.5); balance and attention stay on top (DASH-03) -->
+                <VerticalStackLayout x:Name="BudgetSection" Spacing="0">
+                    <!-- Budget remaining (only when a budget exists) -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasBudget}">
+                        <Label Text="{v:Translate Budget_Title}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Button Grid.Column="1" Text="{v:Translate Home_Details}" Style="{StaticResource SectionLink}" Command="{Binding OpenBudgetCommand}" />
+                    </Grid>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
+                        <Grid>
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{Binding BudgetText}" FontSize="15" FontAttributes="Bold" />
+                                <progress:SfLinearProgressBar Progress="{Binding BudgetProgress}" ProgressFill="{Binding BudgetColor}" />
+                                <Label Text="{Binding BudgetDailyText}" Style="{StaticResource Secondary}"
+                                       IsVisible="{Binding BudgetDailyText, Converter={StaticResource IsNotNullConverter}}" />
+                            </VerticalStackLayout>
+                            <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenBudgetCommand}"
+                                    SemanticProperties.Description="{Binding BudgetText}" SemanticProperties.Hint="{Binding BudgetDailyText}" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="UpcomingSection" Spacing="0">
+                    <!-- Next due items -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasUpcoming}">
+                        <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenDueCommand}" />
+                    </Grid>
+                    <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">
+                        <VerticalStackLayout>
+                            <!-- The total of the next 30 days (ZEX-K04), the same number as the commitments report -->
+                            <Label Text="{Binding Next30Text}" Style="{StaticResource Secondary}" FontSize="13" Margin="16,10,16,0" IsVisible="{Binding Next30Text, Converter={StaticResource IsNotNullConverter}}" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="plans:PlanRow">
+                                        <plans:PlanRowView Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                           CommandParameter="{Binding .}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Pinned goals (ZEX-GO06, GO07): at most two, one card each; no empty group -->
+                <VerticalStackLayout x:Name="GoalsSection" Spacing="0">
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasPinnedGoals}">
+                        <Label Text="{v:Translate Goals_Tab}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenGoalsCommand}" />
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding PinnedGoals}" IsVisible="{Binding HasPinnedGoals}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="goals:GoalRow">
+                                <Border Style="{StaticResource Card}">
+                                    <Grid>
+                                        <VerticalStackLayout Spacing="6">
+                                            <!-- The amount under the name, as on the goals page: next to it, a long amount squeezed the name letter by letter -->
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SavingText}" VerticalOptions="Center" />
+                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding FundedText}" />
+                                            </Grid>
+                                            <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
+                                            <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
+                                        </VerticalStackLayout>
+                                        <!-- The card is one button named with its whole text (ZEX-S0304) -->
+                                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
+                                                Command="{Binding OpenGoalCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="RecentSection" Spacing="0">
+                    <!-- The latest entries (D-37): what was recorded last, one tap to its details -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasRecent}">
+                        <Label Text="{v:Translate Home_Recent}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
+                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenTransactionsCommand}" />
+                    </Grid>
+                    <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRecent}">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentEntries}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="p:EntryRow">
+                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
+                                        <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
+                                            <!-- D-78: identity wraps above its amount; the review dot retains a separate column. -->
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
+                                                         SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
+                                                <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                        <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenEntryCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
                 <VerticalStackLayout x:Name="PeriodSection" Spacing="0">
                     <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasEntries}">
                         <Label Text="{v:Translate Home_ThisPeriod}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
@@ -375,117 +486,6 @@
                             <Button Grid.ColumnSpan="3" Margin="-14,-12" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenForecastCommand}"
                                     SemanticProperties.Description="{v:Translate Forecast_EndBalance}" SemanticProperties.Hint="{Binding ForecastEndText}" />
                         </Grid>
-                    </Border>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="BudgetSection" Spacing="0">
-                    <!-- Budget remaining (only when a budget exists) -->
-                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasBudget}">
-                        <Label Text="{v:Translate Budget_Title}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
-                        <Button Grid.Column="1" Text="{v:Translate Home_Details}" Style="{StaticResource SectionLink}" Command="{Binding OpenBudgetCommand}" />
-                    </Grid>
-                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget}">
-                        <Grid>
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="{Binding BudgetText}" FontSize="15" FontAttributes="Bold" />
-                                <progress:SfLinearProgressBar Progress="{Binding BudgetProgress}" ProgressFill="{Binding BudgetColor}" />
-                                <Label Text="{Binding BudgetDailyText}" Style="{StaticResource Secondary}"
-                                       IsVisible="{Binding BudgetDailyText, Converter={StaticResource IsNotNullConverter}}" />
-                            </VerticalStackLayout>
-                            <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding OpenBudgetCommand}"
-                                    SemanticProperties.Description="{Binding BudgetText}" SemanticProperties.Hint="{Binding BudgetDailyText}" />
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
-
-                <!-- Pinned goals (ZEX-GO06, GO07): at most two, one card each; no empty group -->
-                <VerticalStackLayout x:Name="GoalsSection" Spacing="0">
-                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasPinnedGoals}">
-                        <Label Text="{v:Translate Goals_Tab}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
-                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenGoalsCommand}" />
-                    </Grid>
-                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding PinnedGoals}" IsVisible="{Binding HasPinnedGoals}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="goals:GoalRow">
-                                <Border Style="{StaticResource Card}">
-                                    <Grid>
-                                        <VerticalStackLayout Spacing="6">
-                                            <!-- The amount under the name, as on the goals page: next to it, a long amount squeezed the name letter by letter -->
-                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
-                                                <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{DynamicResource SavingText}" VerticalOptions="Center" />
-                                                <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
-                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding FundedText}" />
-                                            </Grid>
-                                            <progress:SfLinearProgressBar Progress="{Binding Progress}" ProgressFill="{Binding ProgressColor}" />
-                                            <Label Text="{Binding RemainingText}" Style="{StaticResource Secondary}" IsVisible="{Binding RemainingText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding PlanText}" TextColor="{DynamicResource PlanText}" FontSize="13" IsVisible="{Binding PlanText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" FontSize="13" IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}" />
-                                            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}" IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
-                                        </VerticalStackLayout>
-                                        <!-- The card is one button named with its whole text (ZEX-S0304) -->
-                                        <Button Margin="-16" Style="{StaticResource OverlayButton}" CornerRadius="18"
-                                                Command="{Binding OpenGoalCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="UpcomingSection" Spacing="0">
-                    <!-- Next due items -->
-                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasUpcoming}">
-                        <Label Text="{v:Translate Home_Upcoming}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
-                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenDueCommand}" />
-                    </Grid>
-                    <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasUpcoming}">
-                        <VerticalStackLayout>
-                            <!-- The total of the next 30 days (ZEX-K04), the same number as the commitments report -->
-                            <Label Text="{Binding Next30Text}" Style="{StaticResource Secondary}" FontSize="13" Margin="16,10,16,0" IsVisible="{Binding Next30Text, Converter={StaticResource IsNotNullConverter}}" />
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Upcoming}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="plans:PlanRow">
-                                        <plans:PlanRowView Command="{Binding OpenOccurrenceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                           CommandParameter="{Binding .}" />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="RecentSection" Spacing="0">
-                    <!-- The latest entries (D-37): what was recorded last, one tap to its details -->
-                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasRecent}">
-                        <Label Text="{v:Translate Home_Recent}" Style="{StaticResource SectionHeader}" Margin="4,4,4,8" />
-                        <Button Grid.Column="1" Text="{v:Translate Home_All}" Style="{StaticResource SectionLink}" Command="{Binding OpenTransactionsCommand}" />
-                    </Grid>
-                    <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRecent}">
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentEntries}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="p:EntryRow">
-                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
-                                        <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
-                                            <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                        </Border>
-                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                            <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
-                                            <!-- D-78: identity wraps above its amount; the review dot retains a separate column. -->
-                                            <Grid ColumnDefinitions="Auto,*">
-                                                <Ellipse WidthRequest="8" HeightRequest="8" Margin="0,0,6,0" Fill="{DynamicResource RefundText}" VerticalOptions="Center" IsVisible="{Binding IsUnreviewed}"
-                                                         SemanticProperties.Description="{v:Translate Tx_Unreviewed}" />
-                                                <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
-                                            </Grid>
-                                        </VerticalStackLayout>
-                                        <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
-                                        <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
-                                                Command="{Binding OpenEntryCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 
