@@ -6145,4 +6145,16 @@ Kategorielimits:
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>Die Änderungen wurden gespeichert, aber die Seite konnte nicht geschlossen werden. Wähle Schließen, um zurückzukehren.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>Deine ungespeicherten Formulareingaben werden verworfen; diese Aktion speichert sie nicht.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>Dieses ursprüngliche Konto wieder aktivieren?</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>Der Kontostatus wurde nicht geändert. Deine Eingaben bleiben erhalten. Schließe das Konto und öffne es erneut, um die aktuellen Änderungen vor einem weiteren Versuch zu prüfen.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>Der Kontostatus und die zugehörigen Änderungen wurden gespeichert, aber die anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließe das Konto und öffne es erneut, um den aktuellen Zustand zu sehen.</value>
+  </data>
 </root>

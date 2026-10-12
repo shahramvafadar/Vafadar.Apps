@@ -680,3 +680,11 @@ property/model metadata or schema changes. Actual Account/Plan commit precedes o
 typed failure carries accepted-write semantics without hiding the subscriber error or retrying. Application
 flows use original native ports and actual writers.
 See `src/Apps/Zanance/docs/quality/editor-write-feedback.md`.
+
+## Reviewed atomic original archive (D-164)
+
+A deferred reader captures original account/related plans; a required actual writer rechecks full packets,
+file, day and cached access before the shared Account/Plan policies. State, Plans, exact default and choices
+commit together with no settings creation, ledger money or schema change. Original stores publish after
+commit; typed failure retains the accepted outcome.
+See `src/Apps/Zanance/docs/quality/account-archive.md`.

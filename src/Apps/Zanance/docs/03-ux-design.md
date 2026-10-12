@@ -1040,3 +1040,11 @@ Separate accepted write from default preference, subscriber and navigation failu
 read-only with Close and cannot resubmit. Keep loaded input enabled in its original binding context; no
 child-context lookup may accidentally grant editing. Native query/effect adapters stay separate from flows.
 See [evidence](quality/editor-write-feedback.md).
+
+## Explicit original archive consent (D-164)
+
+Archive never silently saves a dirty financial draft. Combine original affected-plan information with explicit
+draft-discard consent; declining keeps the same form. Block competing commands during consent/write. A stale
+review never toggles the inverse of a changed state. Accepted state/follow-up failure remains saved, read-only
+with Close; exact default cleanup is reported without guessing another account.
+See [evidence](quality/account-archive.md).

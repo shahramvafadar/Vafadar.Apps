@@ -174,7 +174,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Checks a whole save against transaction-local identities, states and net capacity before writes.</summary>
-    private static async Task CheckCommercialSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
+    internal static async Task CheckCommercialSaveAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<Schedule> batch, Guid? continuationOf, CancellationToken cancellationToken)
     {
         if (!write.Enforced) return;
@@ -442,6 +442,17 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
         OnChanged();
+    }
+
+    /// <summary>Publishes this original store after a combined account/plan transaction committed.</summary>
+    internal void NotifyCombinedCommit() => OnChanged();
+
+    /// <summary>Rejects a combined archive publisher from a different store instance or actual file.</summary>
+    internal async Task VerifyArchiveStoreAsync(ZananceStore owner, string path, CancellationToken cancellationToken)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (!ReferenceEquals(store, owner) || DatabaseFileIdentity.ConfiguredPath(db) != path)
+            throw new InvalidOperationException("The plan publication belongs to another account store or file.");
     }
 
     private void OnChanged() => Changed?.Invoke(this, EventArgs.Empty);

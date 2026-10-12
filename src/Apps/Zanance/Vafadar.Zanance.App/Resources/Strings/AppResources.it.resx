@@ -6134,4 +6134,16 @@ Limiti per categoria:
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>Le modifiche sono state salvate, ma non è stato possibile chiudere la pagina. Usa Chiudi per tornare indietro.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>Le modifiche non salvate del modulo verranno scartate; questa azione non le salva.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>Vuoi riattivare questo conto originale?</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>Lo stato del conto non è stato modificato. I dati inseriti sono conservati. Chiudi il conto e riaprilo per controllare le modifiche attuali prima di riprovare.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>Lo stato del conto e le modifiche collegate sono stati salvati, ma l’aggiornamento successivo non è stato completato. Chiudi il conto e riaprilo per vedere lo stato attuale.</value>
+  </data>
 </root>

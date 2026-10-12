@@ -335,3 +335,9 @@ no data or purchase. Test access stays unrestricted; unavailable online services
 Account/Plan forms retain entered values and show actual limits beside Save. Successful writes remain saved
 when a follow-up fails; Close is available and another Save is blocked. Historical retries preserve original
 plan state and boundaries. [Evidence and signed APK](docs/quality/editor-write-feedback.md).
+
+## Archive related changes together (D-164)
+
+Account archive, dependent active/paused plans, default cleanup and active-item choices now commit together.
+Unsaved financial edits need explicit discard consent and are not silently saved by archive.
+[Evidence and signed APK](docs/quality/account-archive.md).

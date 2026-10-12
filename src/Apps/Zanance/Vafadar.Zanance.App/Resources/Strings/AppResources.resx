@@ -6174,4 +6174,16 @@ Category limits:
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>The changes were saved, but the page could not close. Use Close to return.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>Your unsaved form changes will be discarded; this action does not save them.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>Restore this original account to active use?</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>The account status was not changed. Your input is retained. Close and reopen the account to review current changes before trying again.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>The account status and related changes were saved, but the follow-up refresh could not finish. Close and reopen the account to view its current state.</value>
+  </data>
 </root>

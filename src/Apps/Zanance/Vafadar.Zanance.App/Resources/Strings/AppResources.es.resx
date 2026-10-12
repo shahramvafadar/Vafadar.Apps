@@ -6114,4 +6114,16 @@ Límites por categoría:
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>Los cambios se han guardado, pero no se pudo cerrar la página. Usa Cerrar para volver.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>Se descartarán los cambios sin guardar del formulario; esta acción no los guarda.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>¿Quieres volver a activar esta cuenta original?</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>No se ha cambiado el estado de la cuenta. Tus datos introducidos se conservan. Cierra la cuenta y vuelve a abrirla para revisar los cambios actuales antes de intentarlo de nuevo.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>El estado de la cuenta y los cambios relacionados se han guardado, pero no se pudo terminar la actualización posterior. Cierra la cuenta y vuelve a abrirla para ver su estado actual.</value>
+  </data>
 </root>

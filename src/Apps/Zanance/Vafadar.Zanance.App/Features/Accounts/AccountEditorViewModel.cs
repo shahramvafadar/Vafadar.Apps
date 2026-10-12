@@ -177,48 +177,48 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task ToggleArchiveAsync()
     {
-        if (!IsArchived)
+        if (!CanInteract) return;
+        IsBusy = true; SaveError = null; AccountArchiveResult? accepted = null;
+        try
         {
-            // Future plans must not silently lose their account (ACC-06, AT-10): they are ended with the archive.
-            var active = (await _plans.GetSchedulesAsync())
-                .Where(s => s.State != Core.Plans.ScheduleState.Ended && (s.AccountId == _account.Id || s.ToAccountId == _account.Id))
-                .ToList();
-            var message = active.Count == 0
-                ? _translator["Account_ArchiveMessage"]
-                : _translator.Format("Account_ArchiveWithPlans", active.Count, string.Join(", ", active.Select(s => s.Name).Take(5)));
-            var confirmed = await _interaction.ConfirmAsync(_translator["Account_Archive"], message, _translator["Account_Archive"], _translator["Common_Cancel"]);
-            if (!confirmed)
+            var reviewed = await _store.ReadAccountArchiveAsync(_account.Id);
+            if (reviewed.IsArchived != IsArchived) throw new InvalidOperationException("The original archive state changed.");
+            var archive = !IsArchived; var action = _translator[archive ? "Account_Archive" : "Account_Unarchive"];
+            if (archive || IsDirty)
             {
-                return;
+                var message = reviewed.PlanNames.Count == 0 ? _translator["Account_ArchiveMessage"]
+                    : _translator.Format("Account_ArchiveWithPlans", reviewed.PlanNames.Count, string.Join(", ", reviewed.PlanNames.Take(5)));
+                if (!archive) message = _translator["Account_UnarchiveDraft"];
+                if (IsDirty) message += "\n\n" + _translator["Account_ArchiveDraftDiscard"];
+                if (!await _interaction.ConfirmAsync(action, message, action, _translator["Common_KeepEditing"])) return;
             }
-
-            var today = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
-            foreach (var schedule in active)
-            {
-                Core.Plans.PlanActions.End(schedule, today);
-            }
-
-            if (active.Count > 0)
-            {
-                await _plans.SaveSchedulesAsync(active);
-            }
+            accepted = await _store.WriteAccountArchiveAsync(reviewed, archive, _plans);
+            AcceptArchive(accepted);
+            Form.Load(_account, _localization.CurrentCulture, await _store.GetCurrencyLockAsync(_account.Id));
+            _snapshot = Snapshot();
+            if (accepted.DefaultCleared) await _interaction.AlertAsync(_translator["Account_Archive"], _translator["Account_DefaultCleared"], _translator["Common_Ok"]);
         }
-
-        _account.IsArchived = !IsArchived;
-        await _store.SaveAccountAsync(_account);
-        IsArchived = _account.IsArchived;
-
-        // An archived account cannot be the default any more: the default is cleared and the user is told, so quick add
-        // asks for an account instead of silently using another one (ZEX-S0103).
-        var settings = await _store.GetSettingsAsync();
-        if (IsArchived && settings.DefaultAccountId == _account.Id)
+        catch (AccountArchivePublicationException exception)
         {
-            settings.DefaultAccountId = null;
-            await _store.SaveSettingsAsync(settings);
-            await _interaction.AlertAsync(_translator["Account_Archive"], _translator["Account_DefaultCleared"], _translator["Common_Ok"]);
+            accepted = exception.Result; AcceptArchive(accepted); SaveError = _translator["Account_ArchiveSavedReview"]; return;
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            SaveError = accepted is not null ? _translator["Account_ArchiveSavedReview"]
+                : Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Account_ArchiveNeedsReview", draftKept: true);
+            return;
+        }
+        finally { IsBusy = false; }
+        try { await _interaction.NavigateAsync(".."); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+    }
 
-        await _interaction.NavigateAsync("..");
+    private void AcceptArchive(AccountArchiveResult result)
+    {
+        _account = result.Account; IsArchived = _account.IsArchived;
+        if (result.DefaultCleared) IsDefault = false;
+        _committed = true; _snapshot = Snapshot(); RefreshAccess();
     }
 
     [RelayCommand(CanExecute = nameof(CanLeave))]

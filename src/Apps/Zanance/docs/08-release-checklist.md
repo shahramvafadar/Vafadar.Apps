@@ -772,3 +772,30 @@ Production registrations remain inactive. Initial pre-attempt readiness and othe
 coverage remain open; this does not complete ENT-04 or the commercial release.
 
 See [evidence](quality/editor-write-feedback.md).
+
+## D-164 - Reviewed atomic account archive
+
+Account archive is now one reviewed SQLite transaction: original archive state, affected active/paused
+plans in either account direction, exact default cleanup and original persisted activity choices commit
+or roll back together. The reader captures complete original account/plan values and the local day without
+creating settings. The writer reacquires/rechecks complete inputs under the actual file's writer and rejects
+retired rows, day, cached access, another file or a different original notification owner.
+
+Original Account/Plan feature/capacity decisions are shared, not duplicated. Archiving ends related plans
+with established PlanActions; unarchive consumes the original account slot but never resumes ended plans.
+Another concurrently chosen default remains untouched. Both original stores publish only after commit;
+publication failures retain the accepted result and cannot cause a repeat. The UI blocks concurrent actions,
+requires explicit consent before discarding a dirty draft, never silently saves those financial inputs,
+and freezes an accepted result with Close after follow-up/return failure.
+
+17 AT-166 cases pass. Final main: 2,963 passed, App.Tests 906, zero failures/skips, 2m 10.406s, followed by
+cleanup. Strict Windows and complete signed Android Release have zero warnings/errors. 36 actual Windows
+contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced with original native Archive/Close,
+real SQL rollback and actual accepted account/plan/default writes over independent fictitious rows.
+Explicit fictitious consent/alert/return effects are identified. Actual normal Android consent-decline
+and exact owned restoration remain separate from typed fixture/physical-device acceptance. All four
+changed production-source PDB checksums match. No EF property/schema, migration, permission, SDK,
+credential, network or portable-format change. Production registration stays inactive; initial readiness
+and other commercial paths remain open, not release completion.
+
+See [evidence](quality/account-archive.md).

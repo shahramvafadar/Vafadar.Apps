@@ -197,17 +197,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
 
         var existing = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == account.Id, cancellationToken);
-        write.DemandFeature(existing is null ? CommercialFeature.FinancialAccounts : CommercialFeature.Corrections);
-        if (write.Enforced && !write.HasStoredAccountChoice && !account.IsArchived && (existing is null || existing.IsArchived))
-        {
-            // D-118: creation and unarchive consume the same slot. Existing corrections and archival stay possible
-            // above quota; no chosen account, money, visibility or historical status is changed automatically.
-            if (write.DemandCapacity(CommercialFeature.FinancialAccounts, QuotaKind.FinancialAccounts) is { } maximum)
-            {
-                var current = await db.Accounts.CountAsync(a => !a.IsArchived, cancellationToken);
-                write.DemandCount(CommercialFeature.FinancialAccounts, QuotaKind.FinancialAccounts, maximum, current);
-            }
-        }
+        await CheckAccountWorkAsync(db, write, account, existing, cancellationToken);
         if (existing is null)
         {
             db.Accounts.Add(account);

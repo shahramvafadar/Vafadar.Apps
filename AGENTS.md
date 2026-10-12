@@ -1144,3 +1144,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   without unused colored tiles. Freeze committed inputs in their actual parent context and expose Close.
 * Writer fixtures mutate only their independent owned rows, restore complete packets/bytes and identify
   fictitious native return/consent effects. Initial readiness and other operation coverage stay separate.
+
+## 97. Reviewed atomic account archive (D-164)
+
+* Recheck complete original account/related-plan packets, file, day and cached access in one actual writer.
+  Reuse original Account/Plan policy; archive, Plan ending, exact default and choice edits commit together.
+* A different current default stays untouched; do not create settings or silently resume ended plans.
+  Dirty financial fields require explicit discard consent and never become archive payloads.
+* Hold one busy lifetime through consent/write; accepted notification/return failures retain the actual saved
+  result, notify both original stores and cannot silently resubmit. Restore only independently owned fixtures.

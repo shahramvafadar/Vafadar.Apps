@@ -658,3 +658,11 @@ independent fictitious files. Return/consent refusals are explicit ports. Check 
 input/Save enablement; remove only owned successful test rows and compare all 25 originals. Restore exact
 development bytes. No owner desktop input/focus or original financial write.
 See `src/Apps/Zanance/docs/quality/editor-write-feedback.md`.
+
+## Original archive writer native review (D-164)
+
+Debug account-archive invokes original Archive/Close and actual SQL rollback/accepted writers in separate
+fictitious files. Consent/alert/return effects are explicit ports. Compare all 25 originals after declined
+consent/SQL refusal, verify accepted original state/default without dirty financial fields, and restore exact
+owned development bytes.
+See `src/Apps/Zanance/docs/quality/account-archive.md`.

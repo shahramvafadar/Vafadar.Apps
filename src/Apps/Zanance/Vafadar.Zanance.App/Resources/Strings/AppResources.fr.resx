@@ -6122,4 +6122,16 @@ Plafonds par catégorie :
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>Les modifications ont été enregistrées, mais la page n’a pas pu être fermée. Utilisez Fermer pour revenir.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>Vos modifications non enregistrées du formulaire seront abandonnées ; cette action ne les enregistre pas.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>Voulez-vous réactiver ce compte d’origine ?</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>Le statut du compte n’a pas été modifié. Vos saisies sont conservées. Fermez le compte et rouvrez-le pour vérifier les changements actuels avant de réessayer.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>Le statut du compte et les changements associés ont été enregistrés, mais l’actualisation suivante n’a pas pu se terminer. Fermez le compte et rouvrez-le pour voir son état actuel.</value>
+  </data>
 </root>

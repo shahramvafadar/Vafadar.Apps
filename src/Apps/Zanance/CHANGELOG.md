@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Archive account and related changes together (2026-10-12, D-164)
+
+- Archive the account, dependent active/paused plans and default cleanup together, with full rollback on failure.
+- Keep another chosen default; unarchive never resumes ended plans.
+- Ask before discarding unsaved financial edits; archive does not save them silently.
+
 ### Improved - Clear Account/Plan Save feedback and safe return (2026-10-12, D-163)
 
 - Keep entered values and explain actual limits beside Save.

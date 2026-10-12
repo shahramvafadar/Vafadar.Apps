@@ -6145,4 +6145,16 @@
   <data name="Editor_SavedReturnFailed" xml:space="preserve">
     <value>تغییرات ذخیره شدند، ولی صفحه بسته نشد. برای بازگشت، گزینهٔ بستن را انتخاب کنید.</value>
   </data>
+  <data name="Account_ArchiveDraftDiscard" xml:space="preserve">
+    <value>تغییرات ذخیره‌نشدهٔ فرم کنار گذاشته می‌شوند؛ این عملیات آن‌ها را ذخیره نمی‌کند.</value>
+  </data>
+  <data name="Account_UnarchiveDraft" xml:space="preserve">
+    <value>این حساب اصلی دوباره فعال شود؟</value>
+  </data>
+  <data name="Account_ArchiveNeedsReview" xml:space="preserve">
+    <value>وضعیت حساب تغییر نکرد. اطلاعات واردشده حفظ شده‌اند. حساب را ببندید و دوباره باز کنید تا پیش از تلاش بعدی، تغییرات فعلی را بررسی کنید.</value>
+  </data>
+  <data name="Account_ArchiveSavedReview" xml:space="preserve">
+    <value>وضعیت حساب و تغییرات مرتبط ذخیره شدند، ولی تازه‌سازی بعدی کامل نشد. حساب را ببندید و دوباره باز کنید تا وضعیت فعلی را ببینید.</value>
+  </data>
 </root>

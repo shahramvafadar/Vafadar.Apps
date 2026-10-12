@@ -468,3 +468,9 @@ change. Native fixtures restore complete original data/owned bytes; production r
 Copies and raw drafts stay process-local. Translated feedback exposes no stored identity, source exception
 message, credential or purchase data. No EF property/schema, permission, SDK, network, analytics, OS-backup
 or portable change. Native fixtures change only independently owned fictitious rows and restore exact data.
+
+## D-164 - Process-local original archive review
+
+Complete original packets remain in memory for one exact file/action/day. No credentials, stored ids or
+exception text are shown. No EF property/schema, permission, SDK, network, analytics, OS-backup or portable
+change. Writer reviews mutate only their independent fictitious files; original development bytes restore.
