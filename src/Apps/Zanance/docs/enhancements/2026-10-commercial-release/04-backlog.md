@@ -48,7 +48,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-75 measurements, D-76 loading gate, D-92 Home reload optimization, D-95 hidden native account view removal and D-104 repeated-filter row reuse and D-105 complete bulk-selection reload and D-106 exact Settings suggestion history and D-110 unchanged native-source reuse delivered; cold duration/ANR, native publication and device gates open) | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
-| ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | Proposed | – |
+| ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 native widget roles/targets/live-cold language and intents verified; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
@@ -1337,3 +1337,11 @@ The ordinary D-172 3,169-test evidence and boundary-specific native records rema
 build/test/device execution is claimed for this source/documentation review. ENT-04/05, billing/shared
 server work, QA-01/02/07 and the full release stay open. Next ready engineering: A11Y-01 Android
 accessibility review, without claiming physical-device acceptance. [Evidence](../../quality/commercial-completion-review.md).
+
+## Android widget accessibility continuation (D-174)
+
+Actual quick widget roles/targets, original-language captions and RTL, cold persisted locale and
+unsaved original intents are locally delivered. Twelve native widget cases; main 3,169; strict builds
+and full signed APK. A11Y-01 remains in progress: TalkBack is inactive and no spoken/full-screen/phone
+acceptance is claimed. [Evidence](../../quality/android-widget-accessibility.md). Continue actual
+remaining accessibility findings; do not repeat delivered commercial operation reviews.

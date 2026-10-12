@@ -1033,3 +1033,9 @@ inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product accept
 The confirmed D-168 report portion is delivered; finite ENT-02/03 completion review is next.
 Owner/external dependencies and full commercial-release acceptance remain open.
 [Evidence](quality/report-work.md).
+
+## D-174 native quick widget accessibility
+
+Canonical A11Y-01 is in progress: actual widget button roles, targets, translated names/direction and
+cold receiver/original intent checks are delivered locally. No spoken TalkBack or full accessibility
+pass is claimed. Main 3,169 and full signed APK; [evidence](quality/android-widget-accessibility.md).

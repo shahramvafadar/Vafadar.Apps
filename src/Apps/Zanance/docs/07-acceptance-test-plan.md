@@ -1551,3 +1551,12 @@ The finite mapping of ENT-02 boundaries and local ENT-03 downgrade scenarios is 
 behaviour/native evidence through AT-173. This review adds no acceptance scenario or test execution;
 main remains 3,169 passing tests. Native Intent, real shared-server lifecycle, activation, physical phone,
 OAuth and iOS acceptance stay open. [Evidence](quality/commercial-completion-review.md).
+
+## AT-174 - Native Android quick widget roles and original language
+
+Locally checked in twelve actual widget instances/cases: three languages, app light/dark choices,
+two widths; original three unsaved entry intents/logo, cold persisted Persian locale/covered intent,
+complete original owned rows and exact fixture/display/widget restoration. Main remains 3,169;
+this native scenario is not an additional automated test count. TalkBack remains inactive; spoken
+order/announcements, other screens, system scaling and phone/platform acceptance are open.
+[Evidence](quality/android-widget-accessibility.md).

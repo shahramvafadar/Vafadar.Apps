@@ -1102,3 +1102,10 @@ Simple/Advanced controls detail density, not paid access. Original financial fac
 account movement remain available. Native export busy starts before authentication; a detached PDF
 must preserve every live choice and status. Account tables state their original currency. Accepted
 contribution feedback stays distinct from refresh failure and does not imply a ledger payment.
+
+## Native quick widget actions (D-174)
+
+Android launcher actions use native Button/ImageButton roles, named in the app language. The symbol
+keeps its original 40 dp artwork within a 44 dp target. Caption/direction updates must not rely on a
+host's cached resource locale or unpublished startup defaults. Original immutable intents open only
+unsaved work through the existing app gate. Native trees are not a spoken screen-reader pass.

@@ -11,28 +11,32 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
+    <!-- Native action roles also expose the existing PendingIntents to screen readers (D-174). -->
+    <ImageButton
         android:id="@+id/widget_logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="6dp"
+        android:background="@android:color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
         android:contentDescription="@string/widget_open"
         android:src="@mipmap/appicon_round" />
 
-    <TextView
+    <Button
         android:id="@+id/widget_expense"
         style="@style/ZananceWidgetButton"
         android:text="@string/widget_expense"
         android:textColor="@color/widget_ink" />
 
-    <TextView
+    <Button
         android:id="@+id/widget_income"
         style="@style/ZananceWidgetButton"
         android:text="@string/widget_income"
         android:textColor="@color/widget_income" />
 
-    <TextView
+    <Button
         android:id="@+id/widget_transfer"
         style="@style/ZananceWidgetButton"
         android:text="@string/widget_transfer"

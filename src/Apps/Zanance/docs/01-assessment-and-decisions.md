@@ -2186,3 +2186,14 @@ acceptance separate; no guessed entitlement or temporary policy. Reuse the uncha
 3,169-test run and full signed APK instead of repeating builds/native matrices for a source-only review.
 No production code, schema, permissions or APK change. Next ready engineering is A11Y-01 Android
 accessibility. [Evidence](quality/commercial-completion-review.md).
+
+## D-174 - Native quick widget actions and retained app language
+
+Observed original clickable text roles, a 40 dp logo target and stale English widget captions while
+both app and persisted Android locale were Persian. Use actual native buttons, a 44 dp logo target
+with unchanged image size, explicit translated RemoteViews captions/descriptions/direction and the
+persisted per-app locale before startup defaults. Preserve original PendingIntents and no-money drafts.
+Main 3,169 passes, strict builds, twelve native widget cases and actual three-language original intents,
+cold Persian receiver, complete unchanged owned rows/restoration and full signed APK are recorded.
+No TalkBack activation or spoken/platform/phone acceptance; A11Y-01 stays in progress.
+[Evidence](quality/android-widget-accessibility.md).

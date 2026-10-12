@@ -2738,3 +2738,12 @@ the finite post-D-172 review is closed. Enforcement is inactive. Real shared-ser
 ENT-04/05, billing and native release acceptance remain open. No new runtime/build/test or APK is claimed:
 the ordinary main evidence remains 3,169 passing tests and the complete D-172 package. Next ready work
 is A11Y-01 Android accessibility. [Evidence](../quality/commercial-completion-review.md).
+
+### 31.87 Native quick widget accessibility and language (D-174)
+
+Real button roles, the 44 dp logo target and original-language RemoteViews captions/direction are
+implemented. Main remains 3,169 passing tests; strict builds, twelve actual widget cases across three
+languages/two app themes/two widths, actual unsaved intents and a cold Persian receiver are verified.
+Complete original owned rows/bytes/sidecars, display and launcher test widgets are restored. Signed
+complete D-174 APK available. TalkBack is installed but inactive; spoken/full-screen/platform/device
+acceptance and A11Y-01 remain open. [Evidence](../quality/android-widget-accessibility.md).

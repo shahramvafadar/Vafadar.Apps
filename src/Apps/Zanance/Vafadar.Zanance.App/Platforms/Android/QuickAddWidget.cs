@@ -1,13 +1,18 @@
 using Android.App;
 using Android.Appwidget;
 using Android.Content;
+using Android.Content.Res;
 using Android.Widget;
+using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Localization;
+using AndroidLocale = Java.Util.Locale;
 
 namespace Vafadar.Zanance.App;
 
 /// <summary>
 /// The quick add home-screen widget (D-30): the symbol opens the app, the buttons open a new expense, income or
-/// transfer. It shows no amounts and reads no data, so it needs no permission and exposes nothing on the home screen;
+/// transfer. It shows no amounts and reads no financial data, so it needs no permission and exposes nothing
+/// on the home screen;
 /// the app lock still applies before the editor opens.
 /// </summary>
 // A stable class name, so widgets on the home screen survive updates of the app.
@@ -30,7 +35,31 @@ public sealed class QuickAddWidget : AppWidgetProvider
             return;
         }
 
+        // D-174: launcher RemoteViews may retain their old resource locale after an app-language change.
+        // Resolve captions in the original app language before sending them, without changing device settings.
+        using var configuration = new Configuration(context.Resources!.Configuration!);
+        var language = IPlatformApplication.Current?.Services.GetService<ILocalizationService>()?.CurrentLanguage.CultureName;
+        // The widget receiver can run before localization preferences are published. Android 13+
+        // already owns the persisted per-app locale; do not replace it with a startup default.
+        if (OperatingSystem.IsAndroidVersionAtLeast(33)
+            && context.GetSystemService(Context.LocaleService) is LocaleManager manager
+            && manager.ApplicationLocales is { IsEmpty: false } locales)
+        {
+            language = locales.Get(0)?.ToLanguageTag();
+        }
+        if (!string.IsNullOrEmpty(language))
+        {
+            using var locale = AndroidLocale.ForLanguageTag(language)!;
+            configuration.SetLocale(locale);
+            configuration.SetLayoutDirection(locale);
+        }
+        using var translatedContext = context.CreateConfigurationContext(configuration)!;
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_quick_add);
+        views.SetTextViewText(Resource.Id.widget_expense, translatedContext.GetString(Resource.String.widget_expense));
+        views.SetTextViewText(Resource.Id.widget_income, translatedContext.GetString(Resource.String.widget_income));
+        views.SetTextViewText(Resource.Id.widget_transfer, translatedContext.GetString(Resource.String.widget_transfer));
+        views.SetContentDescription(Resource.Id.widget_logo, translatedContext.GetString(Resource.String.widget_open));
+        views.SetInt(Resource.Id.widget_root, "setLayoutDirection", (int)configuration.LayoutDirection);
         views.SetOnClickPendingIntent(Resource.Id.widget_logo, Open(context, null, 0));
         views.SetOnClickPendingIntent(Resource.Id.widget_expense, Open(context, "Expense", 1));
         views.SetOnClickPendingIntent(Resource.Id.widget_income, Open(context, "Income", 2));

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Android quick widget (2026-10-12, D-174)
+
+- Expose quick-add actions as real buttons and enlarge the app-symbol touch target.
+- Keep widget captions and reading direction aligned with the app language, including cold updates.
+- Preserve the existing expense, income and transfer drafts without recording money automatically.
+
 ### Improved - Reports and portable PDF (2026-10-12, D-172)
 
 - Keep report choices while refreshing or creating a PDF; show retry feedback when data cannot be checked.

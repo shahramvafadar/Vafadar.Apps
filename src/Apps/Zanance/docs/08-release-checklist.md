@@ -918,3 +918,9 @@ Complete local test APK: artifacts/android/zanance-d172-release.apk. Signature a
 structure checked with the existing local test certificate. The confirmed computation groups are
 delivered locally, but bounded ENT-02/03 review and owner/external/full-release gates remain open.
 [Evidence](quality/report-work.md).
+
+## D-174 local Android widget evidence
+
+Twelve native widget cases and original/cold intents checked; full signed installable APK verified.
+TalkBack is installed but inactive; no physical-phone, system-font, iOS, OAuth, Store signing or release
+acceptance. A11Y-01 remains open. [Evidence](quality/android-widget-accessibility.md).

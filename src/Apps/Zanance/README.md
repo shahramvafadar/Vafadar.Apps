@@ -389,3 +389,10 @@ detached PDF/native sharing are locally verified with 3,169 tests and a complete
 Report choices stay unchanged; accepted contribution rules preserve their named calendar without
 posting transactions. See [evidence](docs/quality/report-work.md). Commercial activation and external
 release acceptance are still separate.
+
+### Native Android quick widget (D-174)
+
+Quick actions are real native buttons with original app-language captions/direction and a 44 dp
+symbol target. Twelve actual widget cases, original unsaved intents and cold Persian update are
+verified; spoken TalkBack/phone acceptance remain open. Complete signed local test package:
+artifacts/android/zanance-d174-release.apk. [Evidence](docs/quality/android-widget-accessibility.md).

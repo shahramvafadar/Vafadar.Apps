@@ -1130,3 +1130,10 @@ activation, verified billing/provider facts and actual shared-server lifecycle r
 No unchanged tests/builds/native matrix or APK regeneration for this source-only review. Next ready
 engineering: A11Y-01 Android accessibility; record emulator limits and observed defects explicitly.
 [Evidence](../../quality/commercial-completion-review.md).
+
+## Android quick widget native continuation (D-174)
+
+Fix observed native roles, target and stale-language defects; retain original intents, data and device
+settings. Twelve actual widget cases/cold receiver/three-language draft routes and the complete signed
+APK are verified. The whole TalkBack pass remains open; continue remaining actual accessibility work.
+[Evidence](../../quality/android-widget-accessibility.md).

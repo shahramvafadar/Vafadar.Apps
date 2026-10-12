@@ -1254,3 +1254,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   shared-server grace/retention and device/iOS acceptance remain explicit separate work.
 * Source-only review does not require repeating unchanged successful tests/builds/native checks or
   generating another identical APK. Next ready engineering is the Android accessibility review.
+
+## 107. Actual quick widget roles and original app locale (D-174)
+
+* Widget actions are native Button/ImageButton controls with unchanged IDs/PendingIntents. Keep a
+  44 dp logo target around the original 40 dp approved image; preserve existing semantic colours.
+* Launcher RemoteViews can retain a resource locale. Send actual translated captions/descriptions
+  and layout direction; prefer Android 13+ persisted app locales before startup preferences publish.
+* Distinguish native role/name/target/intent checks from spoken TalkBack/system scaling acceptance.
+  Use real launcher callbacks, never bypass a rejected protected broadcast. Remove only owned test widgets.
