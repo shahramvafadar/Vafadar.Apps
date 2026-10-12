@@ -158,6 +158,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(AccountDetailRoute, typeof(AccountDetailPage));
         Routing.RegisterRoute(SettingsRoute, typeof(SettingsPage));
         Routing.RegisterRoute(AppRoutes.ActiveItemsRoute, typeof(ActiveItemsPage));
+        Routing.RegisterRoute(AppRoutes.ProductPlansRoute, typeof(ProductPlansPage));
         Routing.RegisterRoute(EntryEditorRoute, typeof(EntryEditorPage));
         Routing.RegisterRoute(EntryDetailRoute, typeof(EntryDetailPage));
         Routing.RegisterRoute(CategoriesRoute, typeof(CategoriesPage));

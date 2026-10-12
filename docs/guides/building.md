@@ -642,3 +642,11 @@ mode configuration alone controls Simple/Advanced. Read realized reason/disabled
 Cancel with explicit confirmation ports. Compare all 25 tables and complete raw drafts; restore exact owned
 development bytes. No financial Save, desktop input/focus, OS setting change or production activation.
 See `src/Apps/Zanance/docs/quality/pre-save-readiness.md`.
+
+## Actual plan comparison native review (D-162)
+
+Debug product-plans opens original comparison pages over independent fictitious SQLite with original native
+navigation effects. Reacquire overlay chip targets, read complete realized identities/values and native 44-pixel
+targets, and invoke actual help OK/Continue. Capture hidden own root and native popups separately; compare all
+25 complete tables and restore exact owned development bytes. productplans is in the ordinary screen route list.
+See `src/Apps/Zanance/docs/quality/product-plan-comparison.md`.

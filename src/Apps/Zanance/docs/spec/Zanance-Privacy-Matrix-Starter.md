@@ -455,3 +455,10 @@ WorkRestriction carries existing feature decisions and nonfinancial quota counts
 provider responses or stored identities. Raw drafts stay in the existing explicit-Save forms. No schema,
 portable format, permission, SDK, network, purchase, analytics or OS-backup change. Independent native fixtures
 restore complete original data/owned bytes; production registrations remain inactive.
+
+## D-162 - Read-only plan comparison
+
+Read cached original access for the actual configured file without opening SQLite or creating settings.
+Comparison scope/choice stays in memory and never reaches a provider, writer, profile or portable preference.
+No price, purchase/renewal, credentials, stored ids, schema, permission, SDK, network, analytics or OS-backup
+change. Native fixtures restore complete original data/owned bytes; production registrations stay inactive.

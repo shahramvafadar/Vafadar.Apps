@@ -1023,3 +1023,12 @@ Keep complete raw drafts and native disabled Save semantics. Use the same origin
 controls the affordance; never calculate a second quota or guess a purchase/provider state. Retain original
 correction/history behavior and distinguish field validation from commercial readiness.
 See [evidence](quality/pre-save-readiness.md).
+
+## Compare without changing current access (D-162)
+
+Keep the current access card separate from Free/Plus/Pro comparison choices. Use growing native chip targets
+and separate full-width identity/value rows; pinned Continue stays outside the scroll viewport. Every selection
+is presentation only. Shared/local/profile-choice facts stay distinct. Unavailable online services are an explicit
+roadmap; never sell unbuilt features or infer prices, renewals or purchase restoration. Explain no-change return
+and active-item navigation in complete translated help.
+See [evidence](quality/product-plan-comparison.md).

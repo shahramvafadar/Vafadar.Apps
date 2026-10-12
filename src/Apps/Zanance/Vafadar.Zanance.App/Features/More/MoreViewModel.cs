@@ -50,6 +50,7 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
             new(translator["More_App"],
             [
                 Item("Settings_Title", "More_SettingsHint", Symbol.Settings, AppShell.SettingsRoute),
+                Item("ProductPlans_Title", "ProductPlans_MenuHint", Symbol.Info, AppRoutes.ProductPlansRoute),
                 Item("About_Title", "More_AboutHint", Symbol.Info, AppShell.AboutRoute),
             ]),
         ];

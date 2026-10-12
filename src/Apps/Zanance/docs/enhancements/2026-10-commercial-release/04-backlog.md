@@ -55,7 +55,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..159: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus reviewed original goal views/detail actions and paired goal-editor/contribution drafts and canonical reviewed budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete and reviewed durable quick-template/saved-query choices, paired writers and actual create/apply/delete/save commands and original Home template activity/typed destinations and reviewed original device catalogue/choice/creation/form; actual-file original device profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..159: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus original goal/Home/detail affordances and reviewed goal editor; reviewed goal-editor drafts and budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete plus reviewed quick-template/saved-query choices, paired writers and actual commands and original Home template destinations and reviewed device profile catalogue/explicit choice delivered; actual-file original profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; remaining operation/import/native bindings open) | ENT-02 |
-| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (D-160/161 structured reasons, retained filter retry and original Goal/Budget pre-Save readiness; remaining blocked-action and plan/current-access UI open; activation inactive) | ENT-02, translations |
+| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (D-160..162 structured reasons, retained filter retry, Goal/Budget readiness and actual-local-access/plan comparison/Free return delivered; remaining original blocked-action and verified provider/renewal/manage/restore flows open; activation inactive) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
 | ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | Proposed | BIL-01, ID-01 |
@@ -1096,3 +1096,30 @@ network or portable preference is added. Physical-device, iOS, provider and acti
 Next ready slice: complete remaining original blocked-action explanations and ENT-04 plan comparison/current
 access presentation under D-69. Keep actual provider/renewal/purchase facts and activation independently gated.
 See [evidence](../../quality/pre-save-readiness.md).
+
+## D-162 - Read-only plan comparison and actual access
+
+More now opens Plans and access: a read-only comparison of the owner-approved Free/Plus/Pro model and
+original current local access for this exact file. Comparing tiers changes only in-memory presentation;
+counts and local tools come from existing Core QuotaPolicy/PlanPolicy. Current inactive test access never
+becomes a fake Free/Plus purchase. Personal rights, exact shared membership, the host's right and original
+profile choice remain distinct. All history, correction, backup/restore and owned export rules stay intact.
+
+Only built local tools are compared. Unavailable Pro online services are an explicitly separate roadmap;
+optional cloud backup belongs to every tier. Plus Lifetime is the same local Plus set, without invented
+renewal. No price, purchase, trial, renewal, cancellation, restore-purchase or provider status is inferred.
+Continue returns without changing a plan or buying anything; actual Free has the Continue with Free caption.
+The existing explicit active-item form opens without saving. Production registrations stay inactive.
+
+Seventeen AT-164 actual-source/real SQLite cases pass. Final ordinary main: 2,925 passed, App.Tests 868,
+zero failures/skips, 2m 05.555s, followed by successful cleanup. Strict Windows and canonical full signed
+Android Release have zero warnings/errors. Eighteen actual Windows contexts cover en/fa/de, light/dark,
+360/412/wide, all three native tier choices, complete realized row captions/values and native help/return.
+Actual Release Android More/chooser/comparison/help/Continue and exact owned restoration are verified.
+All eight changed production-source PDB checksums match. No schema/model/migration, permission, SDK,
+network, credential or portable paid data is added. Device, provider, billing and activation gates remain
+separate. ENT-04 and the commercial release are not complete.
+
+Next ready slice: original Account/Plan blocked-action explanations with retained drafts/history under D-69.
+Actual provider/renewal/purchase flows and activation remain independently gated.
+See [evidence](../../quality/product-plan-comparison.md).

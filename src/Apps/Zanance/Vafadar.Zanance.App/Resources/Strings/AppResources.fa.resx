@@ -6022,4 +6022,118 @@
   <data name="Commercial_SelectionRequired" xml:space="preserve">
     <value>پیش از شروع فعالیت جدید، موارد فعالِ «{0}» را در تنظیمات بررسی کنید. تاریخچه و اصلاح اطلاعات قبلی همچنان در دسترس‌اند.</value>
   </data>
+  <data name="ProductPlans_Title" xml:space="preserve">
+    <value>پلن‌ها و دسترسی</value>
+  </data>
+  <data name="ProductPlans_MenuHint" xml:space="preserve">
+    <value>مقایسهٔ Free، Plus و Pro و مشاهدهٔ دسترسی فعلی.</value>
+  </data>
+  <data name="ProductPlans_Current" xml:space="preserve">
+    <value>دسترسی فعلی شما</value>
+  </data>
+  <data name="ProductPlans_Compare" xml:space="preserve">
+    <value>مقایسهٔ پلن‌ها</value>
+  </data>
+  <data name="ProductPlans_TestAccess" xml:space="preserve">
+    <value>این نسخهٔ آزمایشی دسترسی محلی بدون محدودیت دارد. مقایسهٔ پلن‌ها دسترسی شما را تغییر نمی‌دهد.</value>
+  </data>
+  <data name="ProductPlans_PersonalAccess" xml:space="preserve">
+    <value>دسترسی محلی این پروفایل: «{0}».</value>
+  </data>
+  <data name="ProductPlans_NoMembership" xml:space="preserve">
+    <value>برای این فضای مشترک عضویت فعالی موجود نیست. دسترسی پولی شخصی، مجوز عضویت در این فضا نیست.</value>
+  </data>
+  <data name="ProductPlans_SharedPaused" xml:space="preserve">
+    <value>کار جدید در این فضای مشترک به دسترسی فعال Pro مالک آن نیاز دارد. تاریخچه و اصلاح اطلاعات موجود مستقل می‌مانند.</value>
+  </data>
+  <data name="ProductPlans_SharedPlus" xml:space="preserve">
+    <value>دسترسی محلی در این فضای مشترک: «Plus». این دسترسی به پروفایل‌های شخصی شما گسترش نمی‌یابد.</value>
+  </data>
+  <data name="ProductPlans_Availability" xml:space="preserve">
+    <value>این صفحه مدل تأییدشدهٔ پلن‌ها را مقایسه می‌کند. خرید و خدمات آنلاین در این نسخه در دسترس نیستند.</value>
+  </data>
+  <data name="ProductPlans_FreeDescription" xml:space="preserve">
+    <value>پلن Free برای مدیریت روزمرهٔ مالی محلی است؛ با ابزارهای پایه و سهمیه‌های زیر. به حساب آنلاین نیاز ندارد.</value>
+  </data>
+  <data name="ProductPlans_PlusDescription" xml:space="preserve">
+    <value>پلن Plus ابزارهای محلی و منابع محلی بدون محدودیت را دربرمی‌گیرد؛ از جمله بودجه‌ها، اهداف، برنامه‌ها و تحلیل‌های پیشرفته.</value>
+  </data>
+  <data name="ProductPlans_ProDescription" xml:space="preserve">
+    <value>پلن Pro همان امکانات محلی Plus را دارد. خدمات آنلاین برنامه‌ریزی‌شدهٔ آن در پایین جداگانه توضیح داده شده‌اند.</value>
+  </data>
+  <data name="ProductPlans_Always" xml:space="preserve">
+    <value>همهٔ پلن‌ها ثبت عادی تراکنش بدون محدودیت، تاریخچه، اصلاح، بکاپ، بازیابی و خروجی اطلاعات خودتان را حفظ می‌کنند. قفل برنامه، تنظیمات نمایش، تم و دسترس‌پذیری نیز در دسترس می‌مانند.</value>
+  </data>
+  <data name="ProductPlans_Unlimited" xml:space="preserve">
+    <value>بدون محدودیت</value>
+  </data>
+  <data name="ProductPlans_Included" xml:space="preserve">
+    <value>در این پلن موجود است</value>
+  </data>
+  <data name="ProductPlans_PlusRequired" xml:space="preserve">
+    <value>به Plus یا Pro نیاز دارد</value>
+  </data>
+  <data name="ProductPlans_Counting" xml:space="preserve">
+    <value>اهداف و برنامه‌های متوقف‌شده هم در سهمیه حساب می‌شوند. دوره‌های گذشته تعریف بودجهٔ اضافه محسوب نمی‌شوند. موارد فقط‌خواندنی و تاریخچهٔ آن‌ها خودکار حذف نمی‌شوند.</value>
+  </data>
+  <data name="ProductPlans_Lifetime" xml:space="preserve">
+    <value>پلن Plus Lifetime همان امکانات محلی Plus را با خرید یک‌باره و بدون تمدید ارائه می‌کند. خدمات آنلاین Pro یا افزونه‌های جداگانه در آن نیستند. این صفحه امکان خرید ندارد.</value>
+  </data>
+  <data name="ProductPlans_Online" xml:space="preserve">
+    <value>نقشهٔ راه: پلن Pro برای همگام‌سازی بین دستگاه‌های خودتان و میزبانی یک فضای مشترک در نظر گرفته شده است. این خدمات هنوز در دسترس نیستند. بکاپ در Drive یا OneDrive خودتان مستقل است و در همهٔ پلن‌ها قرار دارد.</value>
+  </data>
+  <data name="ProductPlans_Continue" xml:space="preserve">
+    <value>ادامهٔ استفاده از Zanance</value>
+  </data>
+  <data name="ProductPlans_ContinueFree" xml:space="preserve">
+    <value>ادامه با Free</value>
+  </data>
+  <data name="ProductPlans_Loading" xml:space="preserve">
+    <value>در حال خواندن دسترسی فعلی…</value>
+  </data>
+  <data name="ProductPlans_LoadFailed" xml:space="preserve">
+    <value>دسترسی فعلی خوانده نشد. دوباره تلاش کنید؛ هیچ خرید یا تنظیمی تغییر نکرده است.</value>
+  </data>
+  <data name="ProductPlans_Retry" xml:space="preserve">
+    <value>خواندن دوبارهٔ دسترسی</value>
+  </data>
+  <data name="ProductPlans_AdvancedBudgets" xml:space="preserve">
+    <value>روش‌های پیشرفتهٔ بودجه و انتقال مانده</value>
+  </data>
+  <data name="ProductPlans_AdvancedGoals" xml:space="preserve">
+    <value>اهداف تخصیص وجه، مقدار و برنامهٔ پس‌انداز</value>
+  </data>
+  <data name="ProductPlans_AdvancedPlans" xml:space="preserve">
+    <value>تکرار پیشرفته و ثبت خودکار</value>
+  </data>
+  <data name="ProductPlans_AdvancedReports" xml:space="preserve">
+    <value>تحلیل دارایی و گزارش‌های پیشرفته</value>
+  </data>
+  <data name="ProductPlans_AdvancedPdf" xml:space="preserve">
+    <value>گزارش‌های PDF پیشرفته</value>
+  </data>
+  <data name="ProductPlans_AdvancedForecast" xml:space="preserve">
+    <value>پیش‌بینی تفصیلی و سناریوها</value>
+  </data>
+  <data name="ProductPlans_ManageHoldings" xml:space="preserve">
+    <value>دارایی، خرید، فروش و قیمت جدید</value>
+  </data>
+  <data name="ProductPlans_LoanAnalysis" xml:space="preserve">
+    <value>تحلیل بهره و بازپرداخت بدهی</value>
+  </data>
+  <data name="ProductPlans_ReceiptReading" xml:space="preserve">
+    <value>خواندن رسید روی دستگاه</value>
+  </data>
+  <data name="ProductPlans_ReviewReminders" xml:space="preserve">
+    <value>یادآوری پس‌انداز هدف و مرور دوره</value>
+  </data>
+  <data name="Help_ProductPlans_Title" xml:space="preserve">
+    <value>پلن‌ها و اطلاعات شما</value>
+  </data>
+  <data name="Help_ProductPlans_Text" xml:space="preserve">
+    <value>برای مقایسهٔ امکانات محلی، یک پلن را انتخاب کنید. این کار فقط مقایسه را تغییر می‌دهد؛ نه دسترسی یا خرید شما را. دسترسی فعلی برای همین پروفایل یا فضای مشترک خوانده می‌شود. بررسی موارد فعال، فرم انتخاب صریح موجود را باز می‌کند و به‌خودی‌خود چیزی ذخیره نمی‌کند. ادامه بدون خرید، لغو یا تغییر پلن به صفحهٔ قبل برمی‌گردد. قیمت، تمدید و بازیابی خرید به اطلاعات واقعی فروشگاه نیاز دارند و در این صفحه ارائه نمی‌شوند.</value>
+  </data>
+  <data name="Help_ProductPlans_Example" xml:space="preserve">
+    <value>برای مقایسهٔ منابع محلی بدون محدودیت، Plus را انتخاب کنید و سپس به Free برگردید. دسترسی فعلی و همهٔ حساب‌ها، مبالغ و پیش‌نویس‌ها بدون تغییر می‌مانند.</value>
+  </data>
 </root>

@@ -184,6 +184,7 @@ public static class MauiProgram
             .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>()
             .AddTransient<DisplayUnitsPage>().AddTransient<DisplayUnitsViewModel>()
             .AddTransient<Features.Profiles.ProfilesPage>().AddTransient<Features.Profiles.ProfilesViewModel>()
+            .AddTransient<Features.Commerce.ProductPlansPage>().AddTransient<Features.Commerce.ProductPlansViewModel>()
             .AddTransient<Features.About.AboutPage>().AddTransient<Features.About.NoticesPage>().AddTransient<Features.About.AboutViewModel>()
             .AddTransient<Features.Home.HomeLayoutPage>().AddTransient<Features.Home.HomeLayoutViewModel>();
 

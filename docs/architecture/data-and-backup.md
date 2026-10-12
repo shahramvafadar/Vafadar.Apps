@@ -664,3 +664,11 @@ rights/selected counts; Data retains malformed bounded choices explicitly. Budge
 delegates to its original net-definition SaveRestriction computation. Presentation translates those facts
 without another quota algorithm; atomic writers still revalidate actual-file rights. No model/schema change.
 See `src/Apps/Zanance/docs/quality/pre-save-readiness.md`.
+
+## Read-only original access presentation (D-162)
+
+CommercialAccessStore obtains DatabaseFileIdentity.ConfiguredPath without opening SQLite or creating rows.
+Its original cached CommercialFileAccess packet is checked at read/publication, including activation changes.
+Comparison uses pure Core policy with an independent fictitious scope that never reaches a real writer/provider.
+Captured tier does not establish purchase/cadence/renewal/role facts. No schema/model/migration or portable change.
+See `src/Apps/Zanance/docs/quality/product-plan-comparison.md`.

@@ -323,3 +323,9 @@ with the raw name and complete query intact. Test builds remain unrestricted; bi
 New Goal/Budget forms explain their original capacity or required access and keep all entered information.
 Existing corrections/history stay available. Test builds remain unrestricted.
 [Verification and signed APK](docs/quality/pre-save-readiness.md).
+
+## Compare plans and view current access (D-162)
+
+More opens a read-only Free/Plus/Pro comparison and actual local access. Selecting a tier or Continue changes
+no data or purchase. Test access stays unrestricted; unavailable online services are identified separately.
+[Verification and signed APK](docs/quality/product-plan-comparison.md).

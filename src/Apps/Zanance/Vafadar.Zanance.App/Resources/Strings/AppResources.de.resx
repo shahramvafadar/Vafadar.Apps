@@ -6022,4 +6022,118 @@ Kategorielimits:
   <data name="Commercial_SelectionRequired" xml:space="preserve">
     <value>Prüfe die aktiven Einträge unter «{0}» in den Einstellungen, bevor du neue Aktivitäten beginnst. Verlauf und Korrekturen bleiben verfügbar.</value>
   </data>
+  <data name="ProductPlans_Title" xml:space="preserve">
+    <value>Tarife und Zugriff</value>
+  </data>
+  <data name="ProductPlans_MenuHint" xml:space="preserve">
+    <value>Free, Plus und Pro vergleichen; aktuellen Zugriff ansehen.</value>
+  </data>
+  <data name="ProductPlans_Current" xml:space="preserve">
+    <value>Dein aktueller Zugriff</value>
+  </data>
+  <data name="ProductPlans_Compare" xml:space="preserve">
+    <value>Tarife vergleichen</value>
+  </data>
+  <data name="ProductPlans_TestAccess" xml:space="preserve">
+    <value>Diese Testversion bietet uneingeschränkten lokalen Zugriff. Der Tarifvergleich ändert deinen Zugriff nicht.</value>
+  </data>
+  <data name="ProductPlans_PersonalAccess" xml:space="preserve">
+    <value>Lokaler Zugriff für dieses Profil: {0}.</value>
+  </data>
+  <data name="ProductPlans_NoMembership" xml:space="preserve">
+    <value>Für diesen gemeinsamen Bereich liegt keine aktive Mitgliedschaft vor. Ein persönlicher kostenpflichtiger Tarif gewährt keine Mitgliedschaft.</value>
+  </data>
+  <data name="ProductPlans_SharedPaused" xml:space="preserve">
+    <value>Neue Arbeit in diesem gemeinsamen Bereich benötigt den aktiven Pro-Zugriff des Eigentümers. Verlauf und Korrekturen bleiben davon getrennt.</value>
+  </data>
+  <data name="ProductPlans_SharedPlus" xml:space="preserve">
+    <value>Lokaler Zugriff in diesem gemeinsamen Bereich: Plus. Er gilt nicht für deine persönlichen Profile.</value>
+  </data>
+  <data name="ProductPlans_Availability" xml:space="preserve">
+    <value>Hier wird das bestätigte Tarifmodell verglichen. Käufe und Onlinedienste sind in dieser Version nicht verfügbar.</value>
+  </data>
+  <data name="ProductPlans_FreeDescription" xml:space="preserve">
+    <value>Free bietet lokale Geldverwaltung für den Alltag mit grundlegenden Werkzeugen und den folgenden Kontingenten. Ein Onlinekonto ist nicht erforderlich.</value>
+  </data>
+  <data name="ProductPlans_PlusDescription" xml:space="preserve">
+    <value>Plus umfasst die lokalen Werkzeuge und unbegrenzte lokale Ressourcen, einschließlich erweiterter Budgets, Ziele, Pläne und Analysen.</value>
+  </data>
+  <data name="ProductPlans_ProDescription" xml:space="preserve">
+    <value>Pro umfasst dieselben lokalen Funktionen wie Plus. Die geplanten Onlinedienste werden unten getrennt erläutert.</value>
+  </data>
+  <data name="ProductPlans_Always" xml:space="preserve">
+    <value>Alle Tarife behalten unbegrenzte gewöhnliche Buchungen, Verlauf, Korrekturen, Sicherung, Wiederherstellung und den Export deiner Daten. App-Sperre, Anzeigeeinstellungen, Designs und Barrierefreiheit bleiben verfügbar.</value>
+  </data>
+  <data name="ProductPlans_Unlimited" xml:space="preserve">
+    <value>Unbegrenzt</value>
+  </data>
+  <data name="ProductPlans_Included" xml:space="preserve">
+    <value>Enthalten</value>
+  </data>
+  <data name="ProductPlans_PlusRequired" xml:space="preserve">
+    <value>Benötigt Plus oder Pro</value>
+  </data>
+  <data name="ProductPlans_Counting" xml:space="preserve">
+    <value>Pausierte Ziele und Pläne zählen mit. Vergangene Zeiträume erzeugen keine zusätzlichen Budgetdefinitionen. Nur lesbare Einträge und ihr Verlauf werden nie automatisch gelöscht.</value>
+  </data>
+  <data name="ProductPlans_Lifetime" xml:space="preserve">
+    <value>Plus Lifetime bietet dieselben lokalen Plus-Funktionen durch einen einmaligen Kauf ohne Verlängerung. Pro-Onlinedienste und separate Zusatzangebote sind nicht enthalten. Hier wird kein Kauf angeboten.</value>
+  </data>
+  <data name="ProductPlans_Online" xml:space="preserve">
+    <value>Ausblick: Pro ist für die Synchronisierung eigener Geräte und einen eigenen gemeinsamen Bereich vorgesehen. Diese Dienste sind noch nicht verfügbar. Die Sicherung auf deinem Drive oder OneDrive bleibt getrennt und gehört zu allen Tarifen.</value>
+  </data>
+  <data name="ProductPlans_Continue" xml:space="preserve">
+    <value>Zanance weiter nutzen</value>
+  </data>
+  <data name="ProductPlans_ContinueFree" xml:space="preserve">
+    <value>Mit Free fortfahren</value>
+  </data>
+  <data name="ProductPlans_Loading" xml:space="preserve">
+    <value>Dein aktueller Zugriff wird gelesen…</value>
+  </data>
+  <data name="ProductPlans_LoadFailed" xml:space="preserve">
+    <value>Dein aktueller Zugriff konnte nicht gelesen werden. Versuche es erneut; Käufe und Einstellungen wurden nicht geändert.</value>
+  </data>
+  <data name="ProductPlans_Retry" xml:space="preserve">
+    <value>Zugriff erneut lesen</value>
+  </data>
+  <data name="ProductPlans_AdvancedBudgets" xml:space="preserve">
+    <value>Erweiterte Budgetmethoden und Überträge</value>
+  </data>
+  <data name="ProductPlans_AdvancedGoals" xml:space="preserve">
+    <value>Ziele für Vormerkungen, Mengen und Beiträge</value>
+  </data>
+  <data name="ProductPlans_AdvancedPlans" xml:space="preserve">
+    <value>Erweiterte Wiederholung und automatische Buchung</value>
+  </data>
+  <data name="ProductPlans_AdvancedReports" xml:space="preserve">
+    <value>Vermögensanalyse und erweiterte Berichte</value>
+  </data>
+  <data name="ProductPlans_AdvancedPdf" xml:space="preserve">
+    <value>Erweiterte PDF-Berichte</value>
+  </data>
+  <data name="ProductPlans_AdvancedForecast" xml:space="preserve">
+    <value>Detaillierte Prognosen und Szenarien</value>
+  </data>
+  <data name="ProductPlans_ManageHoldings" xml:space="preserve">
+    <value>Neue Bestände, Käufe, Verkäufe und Preise</value>
+  </data>
+  <data name="ProductPlans_LoanAnalysis" xml:space="preserve">
+    <value>Zins- und Rückzahlungsanalyse für Darlehen</value>
+  </data>
+  <data name="ProductPlans_ReceiptReading" xml:space="preserve">
+    <value>Beleglesen auf dem Gerät</value>
+  </data>
+  <data name="ProductPlans_ReviewReminders" xml:space="preserve">
+    <value>Erinnerungen für Zielbeiträge und Zeitraumprüfungen</value>
+  </data>
+  <data name="Help_ProductPlans_Title" xml:space="preserve">
+    <value>Tarife und deine Daten</value>
+  </data>
+  <data name="Help_ProductPlans_Text" xml:space="preserve">
+    <value>Wähle einen Tarif zum Vergleich seiner lokalen Funktionen. Das ändert nur den Vergleich, niemals deinen Zugriff oder einen Kauf. Der aktuelle Zugriff gilt genau für dieses Profil oder diesen gemeinsamen Bereich. Aktive Einträge prüfen öffnet das bestehende Auswahlformular und speichert allein nichts. Fortfahren kehrt ohne Kauf, Kündigung oder Tarifänderung zurück. Preise, Verlängerung und Kaufwiederherstellung benötigen echte Store-Daten und werden hier nicht angeboten.</value>
+  </data>
+  <data name="Help_ProductPlans_Example" xml:space="preserve">
+    <value>Wähle Plus zum Vergleich unbegrenzter lokaler Ressourcen und dann wieder Free. Dein aktueller Zugriff sowie alle Konten, Beträge und Entwürfe bleiben unverändert.</value>
+  </data>
 </root>

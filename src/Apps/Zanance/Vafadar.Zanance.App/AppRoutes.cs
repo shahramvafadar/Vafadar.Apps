@@ -18,6 +18,9 @@ public static class AppRoutes
     /// <summary>Route of explicit account and Plan choices for new work.</summary>
     public const string ActiveItemsRoute = "activeitems";
 
+    /// <summary>Route of the read-only plan comparison and actual current access.</summary>
+    public const string ProductPlansRoute = "productplans";
+
     /// <summary>Route of the entry editor (query: <c>id</c>, <c>duplicate</c>, <c>refundOf</c> or <c>kind</c>).</summary>
     public const string EntryEditorRoute = "entry";
 

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Compare plans and view your current access (2026-10-12, D-162)
+
+- More now explains Free, Plus and Pro with their local limits and tools, separate from current access.
+- Compare without buying or changing a plan; open the existing active-item choices or return to Zanance.
+- Clearly identify unrestricted test access and unavailable online services. Prices and purchases are not offered.
+
 ### Improved - Explain a disabled Save and retain input (2026-10-12, D-161)
 
 - New Goal and Budget forms explain their capacity, required access or activity selection before Save.

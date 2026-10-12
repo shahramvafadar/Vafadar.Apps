@@ -1122,3 +1122,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   available. Preserve Budget net-definition replacements, future periods and original calculations.
 * Keep Debug mode writes in the central coordinator. Run dependent tests, cleanup and builds sequentially;
   negative preparations are not acceptance. Native fixtures restore complete rows and exact owned bytes.
+
+## 95. Read-only comparison and actual local access (D-162)
+
+* Keep original actual-file access separate from in-memory Free/Plus/Pro comparison. Read cached current facts
+  without opening SQLite; failed/retired reads remain covered. Inactive tests never become a fake paid grant.
+* Use original Core counts/permissions only for the model; fictitious comparison scope never reaches a provider,
+  writer or portable preference. Shared membership/host access and personal profile choices stay distinct.
+* Compare built local tools only; identify unavailable online services separately. Never infer price, purchase,
+  cadence, renewal, role or restore rights. Continue returns without cancelling, downgrading or buying.
+* Native chip overlays retain complete names and 44-pixel targets. Grow identity/value rows; keep Continue
+  outside the viewport. Capture actual help popup separately and invoke its real translated OK.

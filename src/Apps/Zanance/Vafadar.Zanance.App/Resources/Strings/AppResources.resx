@@ -6051,4 +6051,118 @@ Category limits:
   <data name="Commercial_SelectionRequired" xml:space="preserve">
     <value>Review the active items in «{0}» in Settings before starting new activity. Existing history and corrections stay available.</value>
   </data>
+  <data name="ProductPlans_Title" xml:space="preserve">
+    <value>Plans and access</value>
+  </data>
+  <data name="ProductPlans_MenuHint" xml:space="preserve">
+    <value>Compare Free, Plus and Pro; view your current access.</value>
+  </data>
+  <data name="ProductPlans_Current" xml:space="preserve">
+    <value>Your current access</value>
+  </data>
+  <data name="ProductPlans_Compare" xml:space="preserve">
+    <value>Compare plans</value>
+  </data>
+  <data name="ProductPlans_TestAccess" xml:space="preserve">
+    <value>This test version has unrestricted local access. Comparing plans does not change your access.</value>
+  </data>
+  <data name="ProductPlans_PersonalAccess" xml:space="preserve">
+    <value>Local access for this profile: {0}.</value>
+  </data>
+  <data name="ProductPlans_NoMembership" xml:space="preserve">
+    <value>No active membership is available for this shared space. Personal paid access does not grant membership.</value>
+  </data>
+  <data name="ProductPlans_SharedPaused" xml:space="preserve">
+    <value>New work in this shared space requires the owner’s active Pro access. Retained history and corrections remain separate.</value>
+  </data>
+  <data name="ProductPlans_SharedPlus" xml:space="preserve">
+    <value>Local access inside this shared space: Plus. This does not extend to your personal profiles.</value>
+  </data>
+  <data name="ProductPlans_Availability" xml:space="preserve">
+    <value>This is a comparison of the approved plan model. Purchases and online services are not available in this version.</value>
+  </data>
+  <data name="ProductPlans_FreeDescription" xml:space="preserve">
+    <value>Free covers everyday local money management, with basic tools and the resource limits below. No online account is required.</value>
+  </data>
+  <data name="ProductPlans_PlusDescription" xml:space="preserve">
+    <value>Plus contains the local tools and unlimited local resources, including advanced budgets, goals, plans and analysis.</value>
+  </data>
+  <data name="ProductPlans_ProDescription" xml:space="preserve">
+    <value>Pro contains the same local capabilities as Plus. Its planned online services are explained separately below.</value>
+  </data>
+  <data name="ProductPlans_Always" xml:space="preserve">
+    <value>Every plan keeps unlimited ordinary transactions, history, corrections, backup, restore and your own export. App lock, display choices, themes and accessibility remain available.</value>
+  </data>
+  <data name="ProductPlans_Unlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="ProductPlans_Included" xml:space="preserve">
+    <value>Included</value>
+  </data>
+  <data name="ProductPlans_PlusRequired" xml:space="preserve">
+    <value>Requires Plus or Pro</value>
+  </data>
+  <data name="ProductPlans_Counting" xml:space="preserve">
+    <value>Paused goals and plans count toward these limits. Historical periods do not add budget definitions. Read-only items and their history are never deleted automatically.</value>
+  </data>
+  <data name="ProductPlans_Lifetime" xml:space="preserve">
+    <value>Plus Lifetime is the same local Plus capability set through a one-time purchase, with no renewal. It does not include Pro online services or separate add-ons. No purchase is offered here.</value>
+  </data>
+  <data name="ProductPlans_Online" xml:space="preserve">
+    <value>Roadmap: Pro is intended for sync between your own devices and hosting one shared space. These services are not available yet. Backup to your own Drive or OneDrive remains separate and belongs to every plan.</value>
+  </data>
+  <data name="ProductPlans_Continue" xml:space="preserve">
+    <value>Continue using Zanance</value>
+  </data>
+  <data name="ProductPlans_ContinueFree" xml:space="preserve">
+    <value>Continue with Free</value>
+  </data>
+  <data name="ProductPlans_Loading" xml:space="preserve">
+    <value>Reading your current access…</value>
+  </data>
+  <data name="ProductPlans_LoadFailed" xml:space="preserve">
+    <value>Your current access could not be read. Retry; no purchase or settings were changed.</value>
+  </data>
+  <data name="ProductPlans_Retry" xml:space="preserve">
+    <value>Read access again</value>
+  </data>
+  <data name="ProductPlans_AdvancedBudgets" xml:space="preserve">
+    <value>Advanced budget methods and rollover</value>
+  </data>
+  <data name="ProductPlans_AdvancedGoals" xml:space="preserve">
+    <value>Earmark, quantity and contribution goals</value>
+  </data>
+  <data name="ProductPlans_AdvancedPlans" xml:space="preserve">
+    <value>Advanced recurrence and automatic posting</value>
+  </data>
+  <data name="ProductPlans_AdvancedReports" xml:space="preserve">
+    <value>Wealth analysis and advanced reports</value>
+  </data>
+  <data name="ProductPlans_AdvancedPdf" xml:space="preserve">
+    <value>Advanced PDF reports</value>
+  </data>
+  <data name="ProductPlans_AdvancedForecast" xml:space="preserve">
+    <value>Detailed forecasts and scenarios</value>
+  </data>
+  <data name="ProductPlans_ManageHoldings" xml:space="preserve">
+    <value>New holdings, purchases, sales and prices</value>
+  </data>
+  <data name="ProductPlans_LoanAnalysis" xml:space="preserve">
+    <value>Loan interest and repayment analysis</value>
+  </data>
+  <data name="ProductPlans_ReceiptReading" xml:space="preserve">
+    <value>On-device receipt reading</value>
+  </data>
+  <data name="ProductPlans_ReviewReminders" xml:space="preserve">
+    <value>Goal contribution and period-review reminders</value>
+  </data>
+  <data name="Help_ProductPlans_Title" xml:space="preserve">
+    <value>Plans and your data</value>
+  </data>
+  <data name="Help_ProductPlans_Text" xml:space="preserve">
+    <value>Choose a tier to compare its local capabilities. This only changes the comparison, never your access or a purchase. Current access is read for this exact profile or shared space. Review active items opens the existing explicit-choice form; it saves nothing by itself. Continue returns without buying, cancelling or changing a plan. Prices, renewal and purchase restoration will require actual store information and are not offered here.</value>
+  </data>
+  <data name="Help_ProductPlans_Example" xml:space="preserve">
+    <value>Select Plus to compare unlimited local resources, then return to Free. Your current access and every account, amount and draft stay unchanged.</value>
+  </data>
 </root>

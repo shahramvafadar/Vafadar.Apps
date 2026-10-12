@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Commerce.ProductPlansPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Commerce" x:DataType="local:ProductPlansViewModel"
+    Title="{v:Translate ProductPlans_Title}">
+    <Grid>
+        <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="12">
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate ProductPlans_Current}" Style="{StaticResource SectionHeader}" Margin="0" />
+                            <Label Text="{Binding AccessText}" />
+                            <Label Text="{Binding ProfileText}" Style="{StaticResource Secondary}"
+                                   IsVisible="{Binding ProfileText, Converter={StaticResource IsNotNullConverter}}" />
+                            <p:WrappingAction Text="{v:Translate ActiveItems_Title}" Command="{Binding ActiveItemsCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{v:Translate ProductPlans_Compare}" Style="{StaticResource SectionHeader}" Margin="0" />
+                        <v:HelpButton Grid.Column="1" Topic="ProductPlans" VerticalOptions="Start" />
+                    </Grid>
+                    <Label Text="{v:Translate ProductPlans_Availability}" Style="{StaticResource Secondary}" />
+                    <v:ChoiceChips ItemsSource="{Binding PlanNames}" SelectedIndex="{Binding PlanIndex, Mode=TwoWay}"
+                                   IsEnabled="{Binding CanInteract}" />
+                    <Label Text="{Binding Description}" />
+                    <Label Text="{v:Translate ProductPlans_Always}" Style="{StaticResource Secondary}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}" Spacing="12">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:ProductPlanRow">
+                                    <!-- Grow complete identity and value independently at native text scale. -->
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Value}" Style="{StaticResource Secondary}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Label Text="{v:Translate ProductPlans_Counting}" Style="{StaticResource Secondary}" />
+                    <Label Text="{v:Translate ProductPlans_Lifetime}" IsVisible="{Binding ShowLifetime}" />
+                    <Label Text="{v:Translate ProductPlans_Online}" IsVisible="{Binding ShowOnline}" />
+                </VerticalStackLayout>
+            </ScrollView>
+            <p:WrappingAction Grid.Row="1" Margin="16,8,16,16" Text="{Binding ContinueText}"
+                              Command="{Binding ContinueCommand}" Appearance="Primary" />
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
+                               WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate ProductPlans_Loading}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate ProductPlans_LoadFailed}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction Text="{v:Translate ProductPlans_Retry}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

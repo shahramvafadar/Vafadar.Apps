@@ -5991,4 +5991,118 @@ Límites por categoría:
   <data name="Commercial_SelectionRequired" xml:space="preserve">
     <value>Revisa los elementos activos de «{0}» en Ajustes antes de iniciar nuevas actividades. El historial y las correcciones siguen disponibles.</value>
   </data>
+  <data name="ProductPlans_Title" xml:space="preserve">
+    <value>Planes y acceso</value>
+  </data>
+  <data name="ProductPlans_MenuHint" xml:space="preserve">
+    <value>Compara Free, Plus y Pro; consulta tu acceso actual.</value>
+  </data>
+  <data name="ProductPlans_Current" xml:space="preserve">
+    <value>Tu acceso actual</value>
+  </data>
+  <data name="ProductPlans_Compare" xml:space="preserve">
+    <value>Comparar planes</value>
+  </data>
+  <data name="ProductPlans_TestAccess" xml:space="preserve">
+    <value>Esta versión de prueba ofrece acceso local sin límites. Comparar planes no cambia tu acceso.</value>
+  </data>
+  <data name="ProductPlans_PersonalAccess" xml:space="preserve">
+    <value>Acceso local de este perfil: {0}.</value>
+  </data>
+  <data name="ProductPlans_NoMembership" xml:space="preserve">
+    <value>No hay una membresía activa para este espacio compartido. Tu acceso personal de pago no te concede una membresía.</value>
+  </data>
+  <data name="ProductPlans_SharedPaused" xml:space="preserve">
+    <value>Para trabajar con nuevos datos en este espacio compartido, su propietario necesita acceso Pro activo. El historial y las correcciones se mantienen separados.</value>
+  </data>
+  <data name="ProductPlans_SharedPlus" xml:space="preserve">
+    <value>Acceso local dentro de este espacio compartido: Plus. No se extiende a tus perfiles personales.</value>
+  </data>
+  <data name="ProductPlans_Availability" xml:space="preserve">
+    <value>Esta página compara el modelo de planes aprobado. Las compras y los servicios en línea no están disponibles en esta versión.</value>
+  </data>
+  <data name="ProductPlans_FreeDescription" xml:space="preserve">
+    <value>Free permite gestionar tu dinero a diario de forma local, con herramientas básicas y los límites indicados. No necesitas una cuenta en línea.</value>
+  </data>
+  <data name="ProductPlans_PlusDescription" xml:space="preserve">
+    <value>Plus incluye las herramientas locales y recursos locales sin límites, con presupuestos, objetivos, planes y análisis avanzados.</value>
+  </data>
+  <data name="ProductPlans_ProDescription" xml:space="preserve">
+    <value>Pro incluye las mismas funciones locales que Plus. Sus servicios en línea previstos se explican por separado más abajo.</value>
+  </data>
+  <data name="ProductPlans_Always" xml:space="preserve">
+    <value>Todos los planes mantienen las transacciones ordinarias sin límites, el historial, las correcciones, las copias, la restauración y la exportación de tus datos. El bloqueo, las opciones de visualización, los temas y la accesibilidad siguen disponibles.</value>
+  </data>
+  <data name="ProductPlans_Unlimited" xml:space="preserve">
+    <value>Sin límites</value>
+  </data>
+  <data name="ProductPlans_Included" xml:space="preserve">
+    <value>Incluido</value>
+  </data>
+  <data name="ProductPlans_PlusRequired" xml:space="preserve">
+    <value>Requiere Plus o Pro</value>
+  </data>
+  <data name="ProductPlans_Counting" xml:space="preserve">
+    <value>Los objetivos y planes en pausa cuentan para estos límites. Los períodos anteriores no añaden definiciones de presupuesto. Los elementos de solo lectura y su historial nunca se eliminan automáticamente.</value>
+  </data>
+  <data name="ProductPlans_Lifetime" xml:space="preserve">
+    <value>Plus Lifetime ofrece las mismas funciones locales de Plus mediante una compra única, sin renovación. No incluye los servicios en línea de Pro ni complementos separados. Aquí no se ofrece ninguna compra.</value>
+  </data>
+  <data name="ProductPlans_Online" xml:space="preserve">
+    <value>Hoja de ruta: Pro está previsto para sincronizar tus dispositivos y alojar un espacio compartido. Estos servicios aún no están disponibles. Las copias en tu Drive o OneDrive son independientes y están incluidas en todos los planes.</value>
+  </data>
+  <data name="ProductPlans_Continue" xml:space="preserve">
+    <value>Seguir usando Zanance</value>
+  </data>
+  <data name="ProductPlans_ContinueFree" xml:space="preserve">
+    <value>Continuar con Free</value>
+  </data>
+  <data name="ProductPlans_Loading" xml:space="preserve">
+    <value>Leyendo tu acceso actual…</value>
+  </data>
+  <data name="ProductPlans_LoadFailed" xml:space="preserve">
+    <value>No se pudo leer tu acceso actual. Vuelve a intentarlo; no se ha cambiado ninguna compra ni ajuste.</value>
+  </data>
+  <data name="ProductPlans_Retry" xml:space="preserve">
+    <value>Volver a leer el acceso</value>
+  </data>
+  <data name="ProductPlans_AdvancedBudgets" xml:space="preserve">
+    <value>Métodos de presupuesto avanzados y remanentes</value>
+  </data>
+  <data name="ProductPlans_AdvancedGoals" xml:space="preserve">
+    <value>Objetivos de reservas, cantidades y aportaciones</value>
+  </data>
+  <data name="ProductPlans_AdvancedPlans" xml:space="preserve">
+    <value>Repetición avanzada y registro automático</value>
+  </data>
+  <data name="ProductPlans_AdvancedReports" xml:space="preserve">
+    <value>Análisis patrimonial e informes avanzados</value>
+  </data>
+  <data name="ProductPlans_AdvancedPdf" xml:space="preserve">
+    <value>Informes PDF avanzados</value>
+  </data>
+  <data name="ProductPlans_AdvancedForecast" xml:space="preserve">
+    <value>Previsiones detalladas y escenarios</value>
+  </data>
+  <data name="ProductPlans_ManageHoldings" xml:space="preserve">
+    <value>Nuevas tenencias, compras, ventas y precios</value>
+  </data>
+  <data name="ProductPlans_LoanAnalysis" xml:space="preserve">
+    <value>Análisis de intereses y amortización de préstamos</value>
+  </data>
+  <data name="ProductPlans_ReceiptReading" xml:space="preserve">
+    <value>Lectura de recibos en el dispositivo</value>
+  </data>
+  <data name="ProductPlans_ReviewReminders" xml:space="preserve">
+    <value>Recordatorios de aportaciones y revisión de períodos</value>
+  </data>
+  <data name="Help_ProductPlans_Title" xml:space="preserve">
+    <value>Planes y tus datos</value>
+  </data>
+  <data name="Help_ProductPlans_Text" xml:space="preserve">
+    <value>Elige un plan para comparar sus funciones locales. Solo cambia la comparación, nunca tu acceso ni una compra. El acceso actual se lee para este perfil o espacio compartido concreto. Revisar elementos activos abre el formulario de selección existente y no guarda nada por sí solo. Continuar vuelve sin comprar, cancelar ni cambiar un plan. Los precios, la renovación y la restauración de compras requieren información real de la tienda y no se ofrecen aquí.</value>
+  </data>
+  <data name="Help_ProductPlans_Example" xml:space="preserve">
+    <value>Selecciona Plus para comparar los recursos locales sin límites y vuelve a Free. Tu acceso actual y todas las cuentas, importes y borradores permanecen iguales.</value>
+  </data>
 </root>

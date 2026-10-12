@@ -852,3 +852,28 @@ reported separately in the evidence document. No schema/model/migration, permiss
 network or portable preference is added. Physical-device, iOS, provider and activation gates stay separate.
 
 See [evidence](quality/pre-save-readiness.md).
+
+## D-162 - Read-only plan comparison and actual access
+
+More now opens Plans and access: a read-only comparison of the owner-approved Free/Plus/Pro model and
+original current local access for this exact file. Comparing tiers changes only in-memory presentation;
+counts and local tools come from existing Core QuotaPolicy/PlanPolicy. Current inactive test access never
+becomes a fake Free/Plus purchase. Personal rights, exact shared membership, the host's right and original
+profile choice remain distinct. All history, correction, backup/restore and owned export rules stay intact.
+
+Only built local tools are compared. Unavailable Pro online services are an explicitly separate roadmap;
+optional cloud backup belongs to every tier. Plus Lifetime is the same local Plus set, without invented
+renewal. No price, purchase, trial, renewal, cancellation, restore-purchase or provider status is inferred.
+Continue returns without changing a plan or buying anything; actual Free has the Continue with Free caption.
+The existing explicit active-item form opens without saving. Production registrations stay inactive.
+
+Seventeen AT-164 actual-source/real SQLite cases pass. Final ordinary main: 2,925 passed, App.Tests 868,
+zero failures/skips, 2m 05.555s, followed by successful cleanup. Strict Windows and canonical full signed
+Android Release have zero warnings/errors. Eighteen actual Windows contexts cover en/fa/de, light/dark,
+360/412/wide, all three native tier choices, complete realized row captions/values and native help/return.
+Actual Release Android More/chooser/comparison/help/Continue and exact owned restoration are verified.
+All eight changed production-source PDB checksums match. No schema/model/migration, permission, SDK,
+network, credential or portable paid data is added. Device, provider, billing and activation gates remain
+separate. ENT-04 and the commercial release are not complete.
+
+See [evidence](quality/product-plan-comparison.md).
