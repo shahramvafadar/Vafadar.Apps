@@ -1084,3 +1084,10 @@ mapped-CSV proposal is withdrawn: the approved matrix already includes CSV in Fr
 original import/restore deliberately recovers owned data above quota. Historical unfinished slice notes
 must be reconciled against current source. LOC-05/10 owner texts and encryption/provider/device/iOS/
 billing/release gates remain open; the commercial release and continuous goal are not complete.
+
+## Finite remaining operation groups (D-168)
+
+Continue the three confirmed ready groups in [the current inventory](07-current-entry-point-inventory.md):
+forecast/snapshots, receipt recognition, then loan/reports/PDF. Retain the original calculators and guards;
+prove each real new boundary once. Do not repeat delivered resource/recovery integrations or unchanged
+successful verification. External decisions and provider-dependent purchase UI remain separate.

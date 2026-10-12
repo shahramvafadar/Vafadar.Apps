@@ -2084,3 +2084,18 @@ artifacts/android/zanance-d167-release.apk. See [bounded evidence](quality/resto
 Next: finite current ENT-02/03/04 entry-point inventory, implementing confirmed gaps only. Generic mapped
 CSV is already approved Free/recovery; the previous suggested extra gate is withdrawn as unnecessary.
 External encryption/provider/device/iOS/billing/release gates and owner-text dependencies remain open.
+
+## D-168 - Finite current commercial entry-point inventory
+
+The owner reiterated completion of remaining work without unnecessary repetition. Current-source inspection
+reconciles historical partial-slice notes with delivered boundaries. Three confirmed operation groups remain:
+forecast/saved snapshots, both original receipt recognition callers, and loan/report/PDF analysis.
+The snapshot Save/Delete writer currently lacks CommercialWriteTransaction; original analytical/native
+computation callers lack their approved feature bindings. Implement these groups once, in that order.
+
+Delivered resource writers/choices/history/reminders/recovery are listed separately with actual source and
+existing suites. Generic mapped CSV stays Free/recovery. Provider purchase facts, activation, encryption,
+owner texts/markets/samples and external device/platform gates remain distinct dependencies.
+This is documentation-only inspection, not a fresh runtime claim: D-167's 3,045 passing tests, strict builds,
+native checks and signed APK remain the engineering baseline and are not needlessly repeated.
+See [current inventory](enhancements/2026-10-commercial-release/07-current-entry-point-inventory.md).

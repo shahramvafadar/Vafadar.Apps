@@ -2659,3 +2659,11 @@ source failure requires new review/consent; interrupted new reads retain the pre
 25-table readback pass. Owned bytes/sidecars and Main/English/System restored; final Release stopped.
 APK: artifacts/android/zanance-d167-release.apk. No schema/SDK/permission/portable-policy or paid activation.
 Commercial and external acceptance remain incomplete: [evidence](../quality/restore-outcomes.md).
+
+### 31.81 Current remaining commercial scope (D-168)
+
+Source inspection confirms three ready operation groups: forecast/saved snapshots, receipt recognition and
+loan/report/PDF analysis. Resource writers/choices/reminders/import/recovery are delivered; their historical
+partial notes are reconciled in the [current inventory](../enhancements/2026-10-commercial-release/07-current-entry-point-inventory.md).
+Documentation-only, no new runtime acceptance: D-167's 3,045 passing tests and complete signed APK remain
+the baseline. Provider/activation/encryption/owner-text/device/iOS/release dependencies remain open.

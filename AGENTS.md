@@ -1184,3 +1184,11 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   completion; preserve original optional protection and constructor no-write behavior.
 * Inventory current entry points finitely before claiming remaining gaps. Historical partial-slice notes are
   not fresh requirements; approved Free CSV import/recovery must not acquire an invented paid/quota gate.
+
+## 101. Finite commercial completion scope (D-168)
+
+* Use the current entry-point inventory linked from the canonical backlog. Complete confirmed forecast,
+  receipt and loan/report computation groups; do not rebuild delivered account/resource/import boundaries.
+* Preserve Free financial-month forecast, history, corrections, essential warnings and owned-data recovery.
+  Never infer paid access from Simple/Advanced or fabricate provider facts to complete purchase UI.
+* Source-only inventory changes do not justify repeating unchanged successful builds/native checks.
