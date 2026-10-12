@@ -75,3 +75,9 @@ owner recovery and OS-backup decisions remain. Existing app data is not yet encr
 
 The package uses the standard NuGet ID.version.nupkg filename under the owned run
 packages/<PackageName> directory; final standard-name generation matches the same package hash.
+
+## D-184 hosted build preparation
+
+Separate native-cipher workflow restores the locked Linux build image and exercises clean Android
+outputs, negative ELF cases and stock SQLCipher tests. Local commands/stock suite are verified;
+hosted execution and same-candidate runtime/packaging plus Windows/iOS matrix remain open.

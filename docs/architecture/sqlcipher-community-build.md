@@ -183,3 +183,9 @@ See [security validation](sqlcipher-security-validation.md) and Test-UpstreamWin
 Independent official-source Android arm64/x64 build, canonical archives, ELF/negative/package
 checks and native x64 emulator proof pass. App remains plaintext/unchanged.
 See [Android build guide](sqlcipher-android-build.md) for exact scope and remaining gates.
+
+## D-184 stock-suite / CI update
+
+Maintained official SQLCipher-specific fixture passes 226 tests with actual reviewed provider
+identity and reported allocation cleanup. Initial separate Linux Native CI is configured but its
+hosted run is not yet accepted. See [validation](sqlcipher-security-validation.md) for exact scope.

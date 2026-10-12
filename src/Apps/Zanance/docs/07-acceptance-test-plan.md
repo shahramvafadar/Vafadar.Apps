@@ -1638,3 +1638,13 @@ Int64.MinValue/EUR/date reopen pass; deployed bytes match, UUID-scoped fixtures 
 candidate packaging retains required notices and verifies CRC/native hashes. Main 3,179 unchanged.
 Arm64 physical/runtime, minimum API/16 KiB OS, managed schema/key/recovery/crash migration and iOS
 are unaccepted. [Guide](../../../../docs/architecture/sqlcipher-android-build.md).
+
+## AT-183 - Official SQLCipher fixture and initial Native CI
+
+Actual maintained runner: 226 stock tests, zero errors, reported no allocations leaked; cipher
+4.19.0 community/OpenSSL 3.5.9 runtime identity matches and no system crypto dependency is loaded.
+The initial provider identity read without a key failed and is retained; corrected scoped dummy
+key succeeds. Eleven input checks pass. Native workflow YAML/job structure parses; commands are
+locally exercised, hosted run and Windows/iOS/runtime matrix remain unaccepted. Main suite is
+still 3,179; do not add these stock tests to its count or call this full SQLite/app security.
+[Validation](../../../../docs/architecture/sqlcipher-security-validation.md).

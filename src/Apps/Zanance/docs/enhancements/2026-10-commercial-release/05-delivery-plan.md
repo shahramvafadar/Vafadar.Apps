@@ -1206,3 +1206,10 @@ are delivered independently. Keep main app and D-179 APK unchanged until the fin
 accepted. Next: SQLCipher upstream suite and native CI/iOS matrix, followed by actual managed
 platform schema, per-profile keys and crash-safe migration. Physical arm64/16 KiB/minimum-API
 and owner recovery/OS-backup gates remain; a candidate package is not whole-app activation.
+
+## Stock cipher suite and initial Native CI (D-184)
+
+Maintained stock SQLCipher runner passes 226 tests and verifies actual provider/no-fallback/no-leak
+evidence. Initial separate Linux Native workflow is configured and parsed; hosted execution is
+still unaccepted. Continue native CI/iOS/managed-platform schema and key/crash-migration work;
+physical/runtime and owner recovery/OS-backup gates remain. App and D-179 APK are unchanged.

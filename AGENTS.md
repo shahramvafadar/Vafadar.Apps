@@ -1335,3 +1335,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   fictitious key/file data, deployed hash checks and exact owned cleanup. Never open app storage.
 * Android candidates and local NuGet packages remain outside app composition; ABI build evidence,
   x64 emulator runtime, whole-app managed/key/migration and physical arm64 acceptance stay distinct.
+
+## 116. Stock SQLCipher suite and Native CI scope (D-184)
+
+* Run the documented SQLCipher-specific suite against the reviewed source-built static crypto, with
+  test hooks only in its independent fixture. Do not call this the full SQLite or mobile/app suite.
+* Initialize a fictitious key before querying provider identity. Check native version, no system
+  crypto fallback, actual error/test count and reported allocation cleanup; preserve failed probes.
+* Native CI publishes candidate/evidence artifacts only, never product packages, keys or releases.
+  Distinguish locally verified commands/YAML from actual hosted job results and remaining matrix/runtime gates.

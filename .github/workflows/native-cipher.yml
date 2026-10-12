@@ -1,0 +1,58 @@
+name: Native cipher candidates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'eng/native/sqlcipher/**'
+      - '.github/workflows/native-cipher.yml'
+  pull_request:
+    paths:
+      - 'eng/native/sqlcipher/**'
+      - '.github/workflows/native-cipher.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-cipher-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Official Android slices and stock cipher suite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build two clean Android native candidates
+        shell: pwsh
+        run: |
+          ./eng/native/sqlcipher/Build-Android.ps1 -RunName android-ci-a
+          ./eng/native/sqlcipher/Build-Android.ps1 -RunName android-ci-b
+          foreach ($abi in @('arm64-v8a','x86_64')) {
+            $first = Get-FileHash "artifacts/native-sqlcipher/build/android-ci-a/candidate/$abi/libsqlcipher.so"
+            $second = Get-FileHash "artifacts/native-sqlcipher/build/android-ci-b/candidate/$abi/libsqlcipher.so"
+            if ($first.Hash -ne $second.Hash) { throw "Clean native outputs differ: $abi" }
+          }
+      - name: Reject malformed native slices
+        run: |
+          python3 eng/native/sqlcipher/Linux/test-elf.py artifacts/native-sqlcipher/build/android-ci-b/candidate/arm64-v8a/libsqlcipher.so arm64-v8a artifacts/native-sqlcipher > artifacts/native-sqlcipher/elf-arm64.json
+          python3 eng/native/sqlcipher/Linux/test-elf.py artifacts/native-sqlcipher/build/android-ci-b/candidate/x86_64/libsqlcipher.so x86_64 artifacts/native-sqlcipher > artifacts/native-sqlcipher/elf-x64.json
+      - name: Run official SQLCipher suite with reviewed static crypto
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-UpstreamSqlCipher.ps1 -RunName sqlcipher-ci
+      - name: Preserve candidate and security evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: independent-native-candidates
+          path: |
+            artifacts/native-sqlcipher/build/**/candidate/**
+            artifacts/native-sqlcipher/build/**/evidence/**
+            artifacts/native-sqlcipher/build/**/host-proof.json
+            artifacts/native-sqlcipher/build/**/build.log
+            artifacts/native-sqlcipher/elf-*.json
+          if-no-files-found: warn
+          retention-days: 14

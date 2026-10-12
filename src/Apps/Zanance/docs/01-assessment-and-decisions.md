@@ -2306,3 +2306,18 @@ is deterministic for identical candidate input, with required notices and verifi
 Main 3,179/D-179 app/APK remain unchanged/plaintext. Arm64 runtime, API24/16 KiB devices, actual
 managed Android schema, SQLCipher upstream suite, iOS/keys/crash migration remain open.
 [Guide](../../../../docs/architecture/sqlcipher-android-build.md).
+
+## D-184 - Official SQLCipher suite and initial Native CI
+
+Stock testfixture/sqlcipher.test uses original official SQLCipher and source-built static OpenSSL,
+application codec/init/shutdown/temp/FK/metadata/FTS options plus upstream test hooks. Actual Linux
+suite: 226 tests, zero errors, reported no allocations leaked. Maintained runner verifies actual
+4.19.0 community/OpenSSL 3.5.9 identity and excludes system libcrypto/libssl dependencies. First
+extra identity probe queried provider before a key existed and failed; corrected by a fictitious
+fixture key, with failure retained. Eleven input checks pass after portable filesystem free-space
+preflight change. Initial separate Linux Native workflow builds two Android candidates, compares
+native hashes, tests malformed ELF and runs the stock suite, retaining only candidate/evidence
+artifacts. YAML parses and its commands are locally checked; hosted execution, Windows/iOS matrix
+and Android managed/device/runtime packaging remain unaccepted. Main 3,179/D-179 app/APK unchanged,
+databases plaintext; SQLCipher suite is abbreviated upstream scope, not full SQLite/app security.
+[Validation](../../../../docs/architecture/sqlcipher-security-validation.md).

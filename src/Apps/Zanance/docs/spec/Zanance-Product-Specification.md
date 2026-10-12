@@ -2830,3 +2830,11 @@ cases pass. X64 API36/4 KiB emulator key/tamper/minor-unit/currency/date/FK prob
 and owned cleanup pass. Identical candidate packaging/CRC/native checks pass. Main 3,179/D-179 APK
 unchanged/plaintext; no managed whole-app integration, arm64/API24/16 KiB device, iOS/key/crash
 migration or release acceptance. See the Android build guide; SEC-01 remains in progress.
+
+### 31.97 Stock cipher suite and initial Native CI (D-184 / AT-183)
+
+Maintained Linux stock SQLCipher suite verifies source-built cipher/provider identity, no system
+crypto fallback, 226 tests/zero errors and reported allocation cleanup. Failed initial unkeyed
+identity probe retained. Independent Linux Native CI is configured for two clean Android outputs,
+ELF negative tests and stock suite; hosted execution is not yet verified. This is not a full
+SQLite/mobile/managed/key/crash-migration matrix. Main 3,179/D-179 app/APK unchanged/plaintext.

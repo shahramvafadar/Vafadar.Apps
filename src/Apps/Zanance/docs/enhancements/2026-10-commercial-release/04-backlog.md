@@ -1422,3 +1422,12 @@ tamper/financial-packet probe passes with exact owned cleanup. Main app remains 
 SEC-01 stays in progress: SQLCipher upstream suite, native CI/iOS, managed Android/schema, platform
 keys/recovery/crash migration and arm64/16 KiB/minimum-API physical gates remain. Do not repeat
 completed native builds without a change/failure/concern or completed UI/commercial reviews.
+
+## Stock cipher suite and Native CI progress (D-184)
+
+Actual official SQLCipher suite: 226 tests/zero errors/reported no leaks, with checked runtime
+identity and source-built static crypto. Maintained runner and initial separate Linux Native CI
+are implemented; hosted run is pending acceptance, not a green result. Windows/iOS native CI,
+managed mobile/schema, runtime/package matrix, keys/recovery/crash migration and device gates
+remain. Main app/APK unchanged/plaintext; SEC-01 remains in progress. Do not repeat passed
+Windows/OpenSSL/SQLCipher/UI work absent a change, failure or unresolved concern.

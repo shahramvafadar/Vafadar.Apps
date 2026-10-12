@@ -69,3 +69,30 @@ Official r30 native arm64/x64 outputs match across clean builds, with actual ELF
 Native x64 API36/4 KiB emulator key/tamper/money/date proof and owned cleanup pass. Existing app
 remains unchanged/plaintext; managed schema, arm64/API24/16 KiB/iOS/key/migration gates remain.
 See [Android guide](sqlcipher-android-build.md).
+
+## D-184 actual stock SQLCipher suite and initial hosted workflow
+
+`pwsh -NoProfile -File eng/native/sqlcipher/Test-UpstreamSqlCipher.ps1 -RunName sqlcipher-upstream-c`
+completed successfully with 226 tests/zero errors and upstream's reported no allocations leaked.
+Fixture compiles official source with original codec/init/shutdown, temp-memory/FK/metadata/FTS
+options plus SQLCIPHER_TEST hooks. Runtime identity is 4.19.0 community/OpenSSL 3.5.9; dependency
+inventory includes Tcl/zlib/math/libc, with no system libcrypto/libssl fallback. This is Linux fixture
+scope, not the full SQLite suite or final Android/iOS/managed/key/crash migration acceptance.
+
+Initial sqlcipher-upstream-a passed the stock suite. An additional identity check in b failed before
+a key existed; querying provider identity then is invalid. Corrected independent fictitious-key
+initialization in c passes both native identity and the stock suite. Keep b's negative identity log.
+Fixtures/evidence stay in owned artifacts/containers; no application database or key is opened.
+
+The separate .github/workflows/native-cipher.yml initially covers Ubuntu24.04 restoration, two clean
+Android builds/hash comparison, malformed ELF refusal and stock SQLCipher suite, with candidate/
+evidence upload only. It contains no secret injection, package publication or product deployment.
+YAML and job structure parse; maintained commands pass locally. Hosted execution is not yet verified,
+and Windows/iOS native matrix plus same-candidate mobile runtime/packaging remains to complete.
+The portable free-space preflight uses filesystem DriveInfo rather than assuming a Windows drive
+letter. Eleven input-restoration tests pass; no unchanged app/test/build count is rerun or invented.
+
+Records: artifacts/native-sqlcipher/{upstream-sqlcipher-a.log,upstream-sqlcipher-b.log,
+upstream-sqlcipher-c.log,input-validation-d184.log}, sqlcipher-upstream-a/* and
+build/sqlcipher-upstream-{b,c}/evidence/{identity.log,fixture-dependencies.txt,sqlcipher-test.log,
+upstream-proof.json}. Main app and D-179 APK remain unchanged/plaintext, main suite baseline 3,179.

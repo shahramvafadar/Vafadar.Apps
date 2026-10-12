@@ -12,8 +12,7 @@ $androidLock = Get-Content -LiteralPath $androidLockPath -Raw -Encoding UTF8 | C
 if ($androidLock.schemaVersion -ne 1 -or $androidLock.ndk.minimumApi -ne 24) { throw 'Unsupported reviewed Android inputs.' }
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 if (Test-Path -LiteralPath $root) { throw 'Use a fresh Android run name and preserve previous evidence.' }
-$drive = Get-PSDrive -Name ([IO.Path]::GetPathRoot($root).Substring(0,1))
-if ($drive.Free -lt 5GB) { throw 'Native Android build requires at least 5 GB free.' }
+if ((Get-NativeFreeSpace) -lt 5GB) { throw 'Native Android build requires at least 5 GB free.' }
 $image = 'vafadar-native-sqlcipher-host:review-r30'
 $imageId = & docker image ls --quiet --filter ('reference=' + $image)
 if ($LASTEXITCODE -ne 0) { throw 'Container build engine unavailable.' }

@@ -7,6 +7,11 @@ function Get-NativeInputRoot {
     [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../../artifacts/native-sqlcipher'))
 }
 
+function Get-NativeFreeSpace {
+    <# .SYNOPSIS Reads available space using a filesystem root on both Windows and Linux hosts. #>
+    [IO.DriveInfo]::new([IO.Path]::GetPathRoot((Get-NativeInputRoot))).AvailableFreeSpace
+}
+
 function Restore-NativeZipTool {
     <# .SYNOPSIS Verifies a locked official ZIP and restores its executable without an installer. #>
     param([Parameter(Mandatory)]$Tool, [Parameter(Mandatory)][string]$Executable)
@@ -93,4 +98,4 @@ function Restore-NativeSource {
     $archive
 }
 
-Export-ModuleMember -Function Get-NativeInputRoot,Restore-NativeZipTool,Restore-NativeSource
+Export-ModuleMember -Function Get-NativeInputRoot,Get-NativeFreeSpace,Restore-NativeZipTool,Restore-NativeSource
