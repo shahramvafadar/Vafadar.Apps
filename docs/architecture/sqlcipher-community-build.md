@@ -169,3 +169,10 @@ build-windows-c.log,build-windows-d.log,test-windows-c.log,test-windows-d.log,pa
 pack-windows-d.log}, plus build/windows-{c,d}/{build.log,exports.txt,dependents.txt,
 candidate/manifest.json,compatibility-proof.json,package-proof.json}. Earlier windows-a/b unequal
 incremental outputs and the failed relative inventory-command invocation remain negative evidence.
+
+## D-182 upstream suite update
+
+The matching Windows candidate passes the stock OpenSSL suite: 347 files/3,818 reported tests,
+with 59 whole recipe skips and 114 skip markers retained. Native hash unchanged; this does not
+accept every warning, SQLCipher/mobile/key/crash migration or app encryption.
+See [security validation](sqlcipher-security-validation.md) and Test-UpstreamWindows.ps1.

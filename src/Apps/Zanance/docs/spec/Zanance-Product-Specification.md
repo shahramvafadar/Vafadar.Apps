@@ -2813,3 +2813,11 @@ Fresh Windows DLL/package hashes match across two clean builds; both final origi
 harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
 Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
 remain open. These are local candidates, not warning-free production binaries or app activation.
+
+### 31.95 Official upstream crypto suite (D-182 / AT-181)
+
+Matching Windows OpenSSL candidate: stock suite PASS, 347 files/3,818 reported tests; 59 whole
+recipe skips and 114 skip markers retained. Candidate native hash unchanged. Bounded source-warning
+inspection is documented; no comprehensive warning/security acceptance is inferred. These are
+separate from unchanged 3,179 main tests and D-179 APK. SQLCipher/native mobile/key/recovery/crash
+migration and final app encryption remain open. See the security-validation guide.

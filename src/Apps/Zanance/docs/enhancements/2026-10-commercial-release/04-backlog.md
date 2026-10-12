@@ -1405,3 +1405,11 @@ Fresh Windows DLL/package hashes match across two clean builds; both final origi
 harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
 Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
 remain open. These are local candidates, not warning-free production binaries or app activation.
+
+## Official crypto-suite progress (D-182)
+
+Windows matching-candidate OpenSSL stock suite PASS: 347 files/3,818 reported tests, explicit
+59 whole-recipe skips and unchanged native hash. Bounded warnings review retains unresolved
+adoption scope. Main 3,179/D-179 app/APK unchanged and plaintext. Next: official r30 native Android
+slices and SQLCipher upstream tests, then platform/key/crash-migration integration. SEC-01 remains
+in progress. Do not repeat the completed Windows suite without a change, failure or concern.

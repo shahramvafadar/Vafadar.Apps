@@ -2279,3 +2279,14 @@ Fresh Windows DLL/package hashes match across two clean builds; both final origi
 harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
 Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
 remain open. These are local candidates, not warning-free production binaries or app activation.
+
+## D-182 - Official Windows OpenSSL suite and bounded warning review
+
+The matching official-source candidate executes stock nmake test under a non-elevated account,
+without configuration changes or app data. Result PASS: 347 files, 3,818 reported tests, 777 seconds
+for the test phase; 59 wholly skipped recipes and 114 skip markers remain explicit, not exercised
+coverage. Native candidate SHA stays unchanged. Record narrowing/intrinsic/shift warning origins
+without blanket suppression or claiming all warnings safe. Main 3,179/D-179 APK remain unchanged.
+Independent Linux host/official r30 tool identity preparation is retained for Android work; no Android
+binary or app integration is accepted. SQLCipher upstream suite, native mobile, keys/recovery/crash
+migration remain open. [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).

@@ -1316,3 +1316,10 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   native export/dependency inventory. Local candidate packaging is not app activation or publication.
 * Keep the complete app/APK baseline unchanged until native platform, security, keys and crash migration
   are verified; Windows compatibility does not accept Android/iOS/recovery or database encryption.
+
+## 114. Official upstream crypto validation (D-182)
+
+* Run the stock OpenSSL suite under an unprivileged account in the matching candidate tree. Preserve
+  its configuration, original native hash, complete log, exit status and skipped recipe evidence.
+* Upstream PASS is scoped to its exercised configuration. Do not count disabled/platform/fuzz skips
+  as exercised, suppress unexplained warnings or infer SQLCipher/mobile/key/migration acceptance.

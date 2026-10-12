@@ -1191,3 +1191,10 @@ compiled-model compatibility before native Android/security-suite work. Changed 
 resume stale objects. Preserve negative determinism/link findings and exact clean/package results
 in the build guide. Main app stays on D-179 baseline until native platforms, keys and crash-safe
 migration are verified. No temporary OS-backup policy, recovery decision or publication is implied.
+
+## Official crypto suite (D-182)
+
+Stock Windows OpenSSL suite passes on matching candidate; record exercised tests and all skips
+separately. Native hash unchanged. Official r30/Linux host preparation enables the next Android
+source-build step; no mobile binary/runtime or app activation is yet accepted. Main app/APK remain
+D-179. Continue native matrix/SQLCipher suite, key/recovery and crash-safe migration work.

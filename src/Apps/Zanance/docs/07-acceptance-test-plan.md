@@ -1619,3 +1619,12 @@ Fresh Windows DLL/package hashes match across two clean builds; both final origi
 harness runs, native export/system-only dependency inventory and package CRC/native checks pass.
 Upstream logs retain 749 warning occurrences each; warning/security review and upstream suites
 remain open. These are local candidates, not warning-free production binaries or app activation.
+
+## AT-181 - Matching official OpenSSL suite
+
+Execute stock nmake test in the original configured independent candidate tree, non-elevated.
+Actual PASS: 347 files/3,818 reported tests, 777 test-phase seconds; candidate hash unchanged.
+Retain 59 wholly skipped recipes and 114 skip markers (configuration/platform/FIPS/fuzz coverage
+limits), compiler warnings and bounded source inspection. This does not exercise SQLCipher's
+upstream suite, native Android/iOS, keys or crash-safe migration; main app/test/APK unchanged.
+[Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
