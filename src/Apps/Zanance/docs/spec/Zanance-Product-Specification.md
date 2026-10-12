@@ -2821,3 +2821,12 @@ recipe skips and 114 skip markers retained. Candidate native hash unchanged. Bou
 inspection is documented; no comprehensive warning/security acceptance is inferred. These are
 separate from unchanged 3,179 main tests and D-179 APK. SQLCipher/native mobile/key/recovery/crash
 migration and final app encryption remain open. See the security-validation guide.
+
+### 31.96 Independent Android native candidates (D-183 / AT-182)
+
+Official locked r30 producer builds API24 arm64/x64 from canonical Git archives. Two fresh native
+outputs match; ELF 16 KiB alignment/hardening/exports/system dependencies and twelve hostile ELF
+cases pass. X64 API36/4 KiB emulator key/tamper/minor-unit/currency/date/FK probe, deployed-byte check
+and owned cleanup pass. Identical candidate packaging/CRC/native checks pass. Main 3,179/D-179 APK
+unchanged/plaintext; no managed whole-app integration, arm64/API24/16 KiB device, iOS/key/crash
+migration or release acceptance. See the Android build guide; SEC-01 remains in progress.

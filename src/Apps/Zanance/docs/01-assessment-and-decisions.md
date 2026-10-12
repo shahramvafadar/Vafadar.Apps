@@ -2290,3 +2290,19 @@ without blanket suppression or claiming all warnings safe. Main 3,179/D-179 APK 
 Independent Linux host/official r30 tool identity preparation is retained for Android work; no Android
 binary or app integration is accepted. SQLCipher upstream suite, native mobile, keys/recovery/crash
 migration remain open. [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
+
+## D-183 - Canonical Android Community native candidates
+
+Independent Linux recipe uses locked official NDK r30/Clang 21, original SQLCipher/OpenSSL and API
+24 arm64/x64 targets. Correct archive restoration's observed global-autocrlf conversion with scoped
+Git overrides; original Configure blobs match. Initial shell CRLF/preparation errors are retained,
+not hidden or fixed with upstream patches. Modern Clang's API macro alias is explicitly undefined
+before the requested API define; target remains 24 without warning suppression. Two clean native
+builds match per ABI; ELF 16 KiB alignment, hardening, original exports/system closure pass, plus six
+negative ELF cases per ABI and eleven input cases. Compiler output is warning-free; llvm-ar's new
+archive notification remains. Actual x64 API36/4 KiB emulator probe passes key/tamper/money/date/FK
+checks, deployed hash and exact owned cleanup; it never opens app storage. Local package generation
+is deterministic for identical candidate input, with required notices and verified CRC/slices.
+Main 3,179/D-179 app/APK remain unchanged/plaintext. Arm64 runtime, API24/16 KiB devices, actual
+managed Android schema, SQLCipher upstream suite, iOS/keys/crash migration remain open.
+[Guide](../../../../docs/architecture/sqlcipher-android-build.md).

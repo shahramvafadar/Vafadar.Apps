@@ -1238,3 +1238,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added independent official-source Windows native build/package and original database-schema compatibility checks.
 - Existing app data and backups are unchanged; database encryption is not enabled yet.
+
+### Android database-encryption preparation (D-183)
+
+- Added independent official-source Android native builds and integrity/compatibility checks.
+- Existing app data and the signed D-179 APK remain unchanged; encryption is not enabled yet.

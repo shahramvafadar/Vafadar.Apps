@@ -62,3 +62,10 @@ This is tool provenance, not an Android native build/runtime proof. Ubuntu image
 installed SDK, OS settings or unrelated containers/services changed. Host/Android producer pins,
 reproducibility and required native slices are next; the helper is not a shipped crypto dependency.
 Official current input table: https://developer.android.com/ndk/downloads.
+
+## D-183 independent Android scope
+
+Official r30 native arm64/x64 outputs match across clean builds, with actual ELF/negative checks.
+Native x64 API36/4 KiB emulator key/tamper/money/date proof and owned cleanup pass. Existing app
+remains unchanged/plaintext; managed schema, arm64/API24/16 KiB/iOS/key/migration gates remain.
+See [Android guide](sqlcipher-android-build.md).

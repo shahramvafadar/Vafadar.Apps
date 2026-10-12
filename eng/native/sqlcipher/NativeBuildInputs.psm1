@@ -88,7 +88,7 @@ function Restore-NativeSource {
     $tag = & git -C $checkout rev-parse ('refs/tags/' + $Source.tag)
     if ($LASTEXITCODE -ne 0 -or $tag -ne $Source.tagObject) { throw 'Native source tag object differs from its reviewed identity.' }
     $archive = Join-Path $cache ($Name + '-' + $Source.commit + '.tar')
-    & git -C $checkout archive --format=tar --output=$archive $Source.commit
+    & git -c core.autocrlf=false -c core.eol=lf -C $checkout archive --format=tar --output=$archive $Source.commit
     if ($LASTEXITCODE -ne 0) { throw 'Immutable native source archiving failed.' }
     $archive
 }

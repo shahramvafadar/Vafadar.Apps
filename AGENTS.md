@@ -1323,3 +1323,15 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   its configuration, original native hash, complete log, exit status and skipped recipe evidence.
 * Upstream PASS is scoped to its exercised configuration. Do not count disabled/platform/fuzz skips
   as exercised, suppress unexplained warnings or infer SQLCipher/mobile/key/migration acceptance.
+
+## 115. Canonical source and independent Android native producer (D-183)
+
+* Generate official source archives with process-scoped autocrlf=false/eol=lf; do not change global Git
+  configuration or patch upstream source. Check cross-host scripts against the original Git blobs.
+* Locked official NDK/host tools stay inside the independent Linux build image. Target API 24 and both
+  arm64/x64; verify actual ELF architecture, 16 KiB load alignment, RELRO/NOW, non-executable stack,
+  original exports and system-only dependencies. Do not infer a 16 KiB device pass from file alignment.
+* Native runtime probes use fresh UUID directories below /data/local/tmp/vafadar-sqlcipher- only,
+  fictitious key/file data, deployed hash checks and exact owned cleanup. Never open app storage.
+* Android candidates and local NuGet packages remain outside app composition; ABI build evidence,
+  x64 emulator runtime, whole-app managed/key/migration and physical arm64 acceptance stay distinct.

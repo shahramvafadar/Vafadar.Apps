@@ -1198,3 +1198,11 @@ Stock Windows OpenSSL suite passes on matching candidate; record exercised tests
 separately. Native hash unchanged. Official r30/Linux host preparation enables the next Android
 source-build step; no mobile binary/runtime or app activation is yet accepted. Main app/APK remain
 D-179. Continue native matrix/SQLCipher suite, key/recovery and crash-safe migration work.
+
+## Android native slices (D-183)
+
+Canonical source restoration and official r30 API24 arm64/x64 build/ELF/package/native x64 proof
+are delivered independently. Keep main app and D-179 APK unchanged until the final backend is
+accepted. Next: SQLCipher upstream suite and native CI/iOS matrix, followed by actual managed
+platform schema, per-profile keys and crash-safe migration. Physical arm64/16 KiB/minimum-API
+and owner recovery/OS-backup gates remain; a candidate package is not whole-app activation.

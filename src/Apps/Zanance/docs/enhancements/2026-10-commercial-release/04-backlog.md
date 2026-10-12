@@ -1413,3 +1413,12 @@ Windows matching-candidate OpenSSL stock suite PASS: 347 files/3,818 reported te
 adoption scope. Main 3,179/D-179 app/APK unchanged and plaintext. Next: official r30 native Android
 slices and SQLCipher upstream tests, then platform/key/crash-migration integration. SEC-01 remains
 in progress. Do not repeat the completed Windows suite without a change, failure or concern.
+
+## Android native producer progress (D-183)
+
+Locked official r30 API24 arm64/x64 native builds, canonical archives, ELF/hardening/negative
+checks and deterministic identical-input packaging verified. Actual x64 emulator independent key/
+tamper/financial-packet probe passes with exact owned cleanup. Main app remains D-179/plaintext.
+SEC-01 stays in progress: SQLCipher upstream suite, native CI/iOS, managed Android/schema, platform
+keys/recovery/crash migration and arm64/16 KiB/minimum-API physical gates remain. Do not repeat
+completed native builds without a change/failure/concern or completed UI/commercial reviews.

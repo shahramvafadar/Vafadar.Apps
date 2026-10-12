@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-12",
+  "ubuntuImage": "ubuntu@sha256:f610ab94648195aa356059f5b41d6085c9d4d903c072430cdd1af7bdb646106b",
+  "ndk": {
+    "version": "r30",
+    "revision": "30.0.16248370",
+    "uri": "https://dl.google.com/android/repository/android-ndk-r30-linux.zip",
+    "bytes": 738633529,
+    "sha256": "753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0fcb64df2",
+    "publishedSha1": "5107f898313790e449e87eee2183d9a20602dee9",
+    "clangVersion": "21.0.0",
+    "minimumApi": 24
+  },
+  "hostPackages": {
+    "build-essential": "12.10ubuntu1",
+    "ca-certificates": "20260601~24.04.1",
+    "perl": "5.38.2-3.2ubuntu0.6",
+    "python3": "3.12.3-0ubuntu2.1",
+    "tcl-dev": "8.6.14build1",
+    "unzip": "6.0-28ubuntu4.1",
+    "make": "4.3-4.1build2",
+    "gcc": "4:13.2.0-7ubuntu1",
+    "binutils": "2.42-4ubuntu2.10",
+    "tcl8.6-dev": "8.6.14+dfsg-1build1"
+  }
+}

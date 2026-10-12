@@ -17,8 +17,9 @@ no interim app policy or deprecated probe binary is introduced.
 `eng/native/sqlcipher/inputs.lock.json` records exact official tags/commits, reviewed date and the
 portable native Windows Perl URL/size/SHA-256. SQLCipher 4.19.0 commit c4b275a47932888216bade83aff2bbc73df0ff85
 and OpenSSL 3.5.9 LTS commit 45e844fa2a14ec92d146bd8f5778ac130b6625fb match official checkouts.
-Sources for the compatibility build are extracted from those Git objects without local newline
-conversion or source edits. This is HTTPS/commit/checksum provenance, not a claimed signature audit.
+Current source restoration extracts verified Git objects with explicit scoped LF conversion settings
+and no source edits. D-183 found earlier Windows archives inherited global CRLF conversion; see
+the Android build guide for the correction and preserved evidence. This is HTTPS/commit/checksum provenance, not a claimed signature audit.
 
 [SQLCipher 4.19.0](https://github.com/sqlcipher/sqlcipher/releases/tag/v4.19.0) fixes export-alias and
 hexkey issues. The 5.0 beta changes format/API and is not production input.
@@ -176,3 +177,9 @@ The matching Windows candidate passes the stock OpenSSL suite: 347 files/3,818 r
 with 59 whole recipe skips and 114 skip markers retained. Native hash unchanged; this does not
 accept every warning, SQLCipher/mobile/key/crash migration or app encryption.
 See [security validation](sqlcipher-security-validation.md) and Test-UpstreamWindows.ps1.
+
+## D-183 Android producer
+
+Independent official-source Android arm64/x64 build, canonical archives, ELF/negative/package
+checks and native x64 emulator proof pass. App remains plaintext/unchanged.
+See [Android build guide](sqlcipher-android-build.md) for exact scope and remaining gates.

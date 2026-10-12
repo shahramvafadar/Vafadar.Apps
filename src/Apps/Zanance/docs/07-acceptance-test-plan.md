@@ -1628,3 +1628,13 @@ Retain 59 wholly skipped recipes and 114 skip markers (configuration/platform/FI
 limits), compiler warnings and bounded source inspection. This does not exercise SQLCipher's
 upstream suite, native Android/iOS, keys or crash-safe migration; main app/test/APK unchanged.
 [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
+
+## AT-182 - Independent official Android Native slices
+
+API24 arm64/x64 clean native outputs match; actual ELF architecture/16 KiB segments, RELRO/NOW,
+non-executable stack, original exports and system-only dependency checks pass. Six malformed ELF
+cases per ABI refuse verification. Actual x64 API36/4 KiB emulator independent key/tamper/FK and
+Int64.MinValue/EUR/date reopen pass; deployed bytes match, UUID-scoped fixtures removed. Identical
+candidate packaging retains required notices and verifies CRC/native hashes. Main 3,179 unchanged.
+Arm64 physical/runtime, minimum API/16 KiB OS, managed schema/key/recovery/crash migration and iOS
+are unaccepted. [Guide](../../../../docs/architecture/sqlcipher-android-build.md).
