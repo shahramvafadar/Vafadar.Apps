@@ -1523,3 +1523,24 @@ Original calculators, actual non-UI application flows and real SQLite cover sour
 writer access, whole-batch/trigger rollback, final clamp, transfer/interest invariants and accepted
 subscriber failure without old-review replay. Native effects and restoration are bounded separately.
 See [scenarios and negative evidence](quality/loan-work.md).
+
+## AT-173 - Original report/PDF and contribution review (D-172)
+
+28 AT-173 application/real SQLite cases; ordinary main 3,169 / App.Tests 1,112 pass with zero
+failures/skips (2m 42.749s), followed by test-output cleanup. Final strict Windows and canonical complete
+Android Release builds have zero warnings/errors. Thirty-six en/fa/de, light/dark, 360/412/wide and
+Simple/Advanced Windows contexts exercise real package targets, original calculations, Free refusal
+without changing selection, detached actual PDF and unchanged original inputs. Final targeted PDFs
+also retain Free account opening/movement/closing tables and per-account currency scopes; native goal
+suggestion acceptance is checked in en/fa/de with its named-calendar rule and no ledger posting.
+Normal signed Release Android exercises original report/history, actual PDF cache/platform share,
+share-sheet cancellation and complete retained choices. Owned tables, cache, baseline bytes/sidecars
+and Main/English/System are restored; final Release installed/stopped. Commercial registration remains
+inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product acceptance remain separate.
+Covered: original Free balances/status/portable data; denied paid callback before authentication;
+inactive/Plus/Pro and shared membership/host distinction; changes during consent (data/Settings/rights/
+activation/day/form/caller packet/actual file); single-flight cancellation and failed unpublished-cache
+cleanup; original contribution transaction rejects stale source and retains accepted subscriber failure.
+Real native package selection, detached PDF/scope retention, basic balance/per-account currency, named
+calendar suggestion Save/no ledger posting and actual Release share/cancel/cache readback are local
+evidence. Phone/iOS/provider/billing/Store/performance remain pending. [Evidence](quality/report-work.md).

@@ -381,3 +381,11 @@ Recheck original terms and source through native confirmation and atomic payment
 balances/warnings and reconciliation input intact; distinguish completed payments from follow-through
 failure. Main 3,141 and native checks pass. Signed APK: artifacts/android/zanance-d171-release.apk.
 [Evidence](docs/quality/loan-work.md). Next ready work is original reports and advanced PDF.
+
+### Original reports and detached PDF (D-172)
+
+Complete original report packets, retained Free balances/status, guarded advanced projection and
+detached PDF/native sharing are locally verified with 3,169 tests and a complete signed Release APK.
+Report choices stay unchanged; accepted contribution rules preserve their named calendar without
+posting transactions. See [evidence](docs/quality/report-work.md). Commercial activation and external
+release acceptance are still separate.

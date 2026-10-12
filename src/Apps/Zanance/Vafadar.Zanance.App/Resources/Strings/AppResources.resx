@@ -6276,4 +6276,10 @@ Category limits:
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>The account could not be loaded completely. Refresh to try again; your reconciliation input is kept.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>The report data or access could not be verified. Refresh to try again. Your report choices are kept.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>Refresh report</value>
+  </data>
 </root>

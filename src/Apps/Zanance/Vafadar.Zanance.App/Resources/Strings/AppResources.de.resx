@@ -6247,4 +6247,10 @@ Kategorielimits:
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Das Konto konnte nicht vollständig geladen werden. Aktualisieren Sie es erneut; Ihre Eingaben zum Kontenabgleich bleiben erhalten.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>Die Berichtsdaten oder Berechtigung konnten nicht geprüft werden. Aktualisieren Sie den Bericht. Ihre Auswahl bleibt erhalten.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>Bericht aktualisieren</value>
+  </data>
 </root>

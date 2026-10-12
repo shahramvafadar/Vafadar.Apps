@@ -1115,3 +1115,10 @@ Free balances/manual repayment/warnings. Main 3,141, strict builds, 36 Windows c
 Android schedule/consent/payment readback and full signed APK verified. No commercial activation.
 [Evidence](../../quality/loan-work.md). Next: original report packages and advanced PDF, then bounded
 ENT-02/03 completion audit. Billing/provider/owner/external gates and ENT-04 remain open.
+
+## Original report/PDF continuation (D-172)
+
+The last confirmed D-168 operation group is locally delivered, with original financial calculations,
+Free facts/status, detached PDF and reviewed native sharing/contribution Save. Complete package and
+local evidence are in [report-work](../../quality/report-work.md). Next is the bounded ENT-02/03
+completion audit. Activation, billing/provider/encryption/owner/device/iOS/release gates stay separate.

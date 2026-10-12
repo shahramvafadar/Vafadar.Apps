@@ -2152,3 +2152,27 @@ sidecars/Main/English/System are restored; final Release installed/stopped. Comm
 stays inactive; physical phone/iOS/provider/billing/Store and full-release acceptance remain separate.
 APK: artifacts/android/zanance-d171-release.apk. [Evidence](quality/loan-work.md).
 Next distinct ready operation: original report packages and advanced PDF; full commercial release remains incomplete.
+
+## D-172 - Original report projection and detached PDF
+
+Finish the confirmed report/PDF operation with coherent actual-file financial inputs and independent
+commercial capability. Retain Free totals, original period balances and essential data status; keep
+unavailable selected packages and explicit scope. Build PDF through the same original calculators in
+a detached instance, with native consent/source/display checks and original cache/share policy. Basic
+balances must not be accidentally grouped behind wealth analysis. Contribution suggestions retain
+the original writer, complete reviewed inputs and named calendar, without posting money.
+
+28 AT-173 application/real SQLite cases; ordinary main 3,169 / App.Tests 1,112 pass with zero
+failures/skips (2m 42.749s), followed by test-output cleanup. Final strict Windows and canonical complete
+Android Release builds have zero warnings/errors. Thirty-six en/fa/de, light/dark, 360/412/wide and
+Simple/Advanced Windows contexts exercise real package targets, original calculations, Free refusal
+without changing selection, detached actual PDF and unchanged original inputs. Final targeted PDFs
+also retain Free account opening/movement/closing tables and per-account currency scopes; native goal
+suggestion acceptance is checked in en/fa/de with its named-calendar rule and no ledger posting.
+Normal signed Release Android exercises original report/history, actual PDF cache/platform share,
+share-sheet cancellation and complete retained choices. Owned tables, cache, baseline bytes/sidecars
+and Main/English/System are restored; final Release installed/stopped. Commercial registration remains
+inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product acceptance remain separate.
+APK: artifacts/android/zanance-d172-release.apk. [Evidence](quality/report-work.md).
+The confirmed D-168 computation groups are locally delivered; bounded ENT-02/03 review is next.
+Commercial activation and the full owner/external release objective remain incomplete.

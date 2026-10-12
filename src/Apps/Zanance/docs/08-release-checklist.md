@@ -900,3 +900,21 @@ Loan analysis/confirmed payment writer are locally verified: main 3,141, strict 
 Windows contexts and actual signed Release Android schedule/consent/ledger readback. Original balances,
 manual repayment and essential warnings stay Free. Full signed APK: artifacts/android/zanance-d171-release.apk.
 [Evidence](quality/loan-work.md). Next ready operation: reports/advanced PDF. Full release/external acceptance remains open.
+
+## Original report/PDF local package (D-172)
+
+28 AT-173 application/real SQLite cases; ordinary main 3,169 / App.Tests 1,112 pass with zero
+failures/skips (2m 42.749s), followed by test-output cleanup. Final strict Windows and canonical complete
+Android Release builds have zero warnings/errors. Thirty-six en/fa/de, light/dark, 360/412/wide and
+Simple/Advanced Windows contexts exercise real package targets, original calculations, Free refusal
+without changing selection, detached actual PDF and unchanged original inputs. Final targeted PDFs
+also retain Free account opening/movement/closing tables and per-account currency scopes; native goal
+suggestion acceptance is checked in en/fa/de with its named-calendar rule and no ledger posting.
+Normal signed Release Android exercises original report/history, actual PDF cache/platform share,
+share-sheet cancellation and complete retained choices. Owned tables, cache, baseline bytes/sidecars
+and Main/English/System are restored; final Release installed/stopped. Commercial registration remains
+inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product acceptance remain separate.
+Complete local test APK: artifacts/android/zanance-d172-release.apk. Signature and full assembly/AOT
+structure checked with the existing local test certificate. The confirmed computation groups are
+delivered locally, but bounded ENT-02/03 review and owner/external/full-release gates remain open.
+[Evidence](quality/report-work.md).

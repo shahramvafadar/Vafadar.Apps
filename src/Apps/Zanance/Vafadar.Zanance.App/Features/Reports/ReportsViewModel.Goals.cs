@@ -42,10 +42,11 @@ public sealed partial class ReportsViewModel
 
     private async Task BuildGoalsAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         var today = Today;
-        var goals = await _goals.GetGoalsAsync();
-        var plans = await _goals.GetContributionPlansAsync();
-        var progress = await _goalPresenter.EvaluateAsync(_goals, _accounts, entries, today, goals);
+        var goals = await Task.FromResult(Inputs.Goals);
+        var plans = await Task.FromResult(Inputs.ContributionPlans);
+        var progress = _goalPresenter.Evaluate(Inputs, today);
 
         // K03: every active or paused goal with its progress and the next step.
         GoalRows.Clear();
@@ -64,8 +65,8 @@ public sealed partial class ReportsViewModel
         CoverageDetail = null;
         if (IsAdvanced)
         {
-            var schedules = await _plans.GetSchedulesAsync();
-            _capacity = CapacityCalculator.Compute(_accounts, entries, schedules, await _plans.GetStatesAsync(), goals, plans, _currency, today, Calendar, _startDay);
+            var schedules = await Task.FromResult(Inputs.Schedules);
+            _capacity = CapacityCalculator.Compute(_accounts, entries, schedules, await Task.FromResult(Inputs.OccurrenceStates), goals, plans, _currency, today, Calendar, _startDay);
             if (_capacity.Amount is { } capacity)
             {
                 CapacityText = _translator.Format("Report_CapacityValue", Money(capacity));
@@ -95,14 +96,14 @@ public sealed partial class ReportsViewModel
             }
 
             // K07: months of essential costs the usable money covers; protected money is named, not removed.
-            _coverage = KpiCatalog.Coverage(_accounts, entries, await _store.GetCategoriesAsync(), schedules, _currency, today, Calendar, _startDay);
+            _coverage = KpiCatalog.Coverage(_accounts, entries, await Task.FromResult(Inputs.Categories), schedules, _currency, today, Calendar, _startDay);
             CoverageText = _coverage.Status switch
             {
                 CoverageStatus.Ok or CoverageStatus.BalanceNegative => _translator.Format("Report_Months", _coverage.Months!.Value.ToString("0.0", Culture)),
                 CoverageStatus.NotEnoughHistory => _translator["Report_NotEnoughHistory"],
                 _ => _translator["Report_NotAvailable"],
             };
-            var protectedMoney = LiquidityCalculator.ProtectedMoney(goals, await _goals.GetAllocationsAsync(), _accounts, entries, today).GetValueOrDefault(_currency);
+            var protectedMoney = LiquidityCalculator.ProtectedMoney(goals, await Task.FromResult(Inputs.GoalAllocations), _accounts, entries, today).GetValueOrDefault(_currency);
             CoverageDetail = _coverage.Status is CoverageStatus.Ok or CoverageStatus.BalanceNegative
                 ? _translator.Format("Report_CoverageDetail", Money(_coverage.UsableMoney), Money(_coverage.MonthlyEssential))
                   + (protectedMoney > 0 ? " · " + _translator.Format("Report_OfWhichProtected", Money(protectedMoney)) : string.Empty)
@@ -118,21 +119,30 @@ public sealed partial class ReportsViewModel
     [RelayCommand]
     private async Task AcceptSuggestionAsync(SuggestionRow row)
     {
-        if (!row.CanAccept)
+        if (IsBusy || !ReportReady || !row.CanAccept) return;
+        IsBusy = true; var accepted = false;
+        try
         {
-            return;
+            if (!Suggestions.Contains(row) || _review is null) throw new InvalidOperationException("The contribution suggestion is no longer displayed.");
+            var review = _review; var scope = ScopeStamp();
+            review.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
+            await _reportStore.ValidateAsync(review);
+            if (scope != ScopeStamp() || !ReferenceEquals(review, _review)) throw new InvalidOperationException("The report suggestion scope changed.");
+            var current = PeriodMath.MonthOf(Today, Calendar, _startDay); var next = PeriodMath.Next(current.Year, current.Month);
+            await _goals.SaveContributionPlanAsync(row.GoalId, new ContributionPlan
+            {
+                Method = ContributionMethod.FixedAmount, Amount = row.Suggested,
+                Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Calendar = Calendar, Start = PeriodMath.MonthRange(next.Year, next.Month, Calendar, _startDay).First },
+            }, reportReview: review);
+            accepted = true;
         }
-
-        var current = PeriodMath.MonthOf(Today, Calendar, _startDay);
-        var next = PeriodMath.Next(current.Year, current.Month);
-        await _goals.SaveContributionPlanAsync(row.GoalId, new ContributionPlan
+        catch (Data.Commerce.CommittedWriteNotificationException<Guid>) { accepted = true; }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { await Presentation.Failures.ShowAsync(exception); }
+        finally
         {
-            Method = ContributionMethod.FixedAmount,
-            Amount = row.Suggested,
-            Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Start = PeriodMath.MonthRange(next.Year, next.Month, Calendar, _startDay).First },
-        });
-        await Shell.Current.DisplayAlertAsync(_translator["Report_R3"], _translator.Format("Report_Accepted", row.SuggestedText, row.Name), _translator["Common_Ok"]);
-        await LoadAsync();
+            IsBusy = false; await LoadAsync();
+            if (accepted) ReportFeedback = _translator.Format("Report_Accepted", row.SuggestedText, row.Name) + (ReportFeedback is null ? string.Empty : "\n\n" + ReportFeedback);
+        }
     }
 
     [RelayCommand]

@@ -76,7 +76,7 @@ public sealed partial class ZananceStore
     private sealed record AlertInputs(List<Account> Accounts, List<LedgerEntry> Entries, List<Category> Categories, string Stamp, bool ShowDetails);
 
     // Canonical account sets must never mix carries from another definition. Reject duplicate periods instead of guessing a row.
-    private static List<Budget> BudgetCarryChain(Budget budget, IEnumerable<Budget> originals)
+    internal static List<Budget> BudgetCarryChain(Budget budget, IEnumerable<Budget> originals)
     {
         if (budget.Rollover == BudgetRollover.None) return [];
         var identity = BudgetDefinitionKey.CanonicalIdentity(budget.CurrencyCode, budget.Period, budget.AccountIds);
@@ -101,7 +101,7 @@ public sealed partial class ZananceStore
     }
 
     // Shared by the budget page and alert batch: tiers only decide new activity, never alter original carry/spending.
-    private static BudgetCarry CalculateBudgetCarry(Budget budget, List<Budget> chain, int startDay,
+    internal static BudgetCarry CalculateBudgetCarry(Budget budget, List<Budget> chain, int startDay,
         List<Account> accounts, List<LedgerEntry> entries, List<Category> categories)
     {
         if (chain.Count == 0) return BudgetCarry.None;

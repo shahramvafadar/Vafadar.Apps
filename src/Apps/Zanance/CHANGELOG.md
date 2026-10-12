@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Reports and portable PDF (2026-10-12, D-172)
+
+- Keep report choices while refreshing or creating a PDF; show retry feedback when data cannot be checked.
+- Preserve base financial totals, period balances and data warnings independently of advanced analysis.
+- Recheck original data and access before sharing a PDF; label each account table with its own currency.
+- Keep the original monthly calendar when accepting a savings suggestion, without posting transactions.
+
+
 ### Improved - Loan review and confirmed payments (2026-10-12, D-171)
 
 - Keep manual repayment, recorded balance and essential warnings available independently of loan analysis.

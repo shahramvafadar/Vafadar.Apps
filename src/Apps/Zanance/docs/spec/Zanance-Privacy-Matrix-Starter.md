@@ -517,3 +517,13 @@ Existing local accounts, terms, ledger and categories only. Complete review/fing
 not portable or logged. Ordinary explicitly confirmed principal/interest entries use existing schema
 and ledger/backup policy. No SDK/permission/network/credential/format or commercial activation change.
 Independent native fixtures contain fictitious data and restore exact owned original files/display.
+
+## Report review and owned PDF cache (D-172)
+
+No new financial schema, permission, network SDK, credential storage or commercial activation.
+Coherent original input packets are process-local and are not exported as a database dump. Original
+PDF remains a readable portable financial document using app-lock consent and the platform share sheet.
+Recheck file/data/access/scope around native/render/cache awaits. Remove only this operation's failed
+unpublished cache; preserve a file once native sharing starts because platform consumers may read later.
+Native fixtures are fictitious and restore original rows/bytes/display/cache; no recipient is selected.
+Encryption/OS-backup/provider/device acceptance and final release remain separately gated.

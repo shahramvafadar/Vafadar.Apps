@@ -6236,4 +6236,10 @@ Limiti per categoria:
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Non è stato possibile caricare completamente il conto. Aggiornalo per riprovare; i dati di riconciliazione inseriti vengono conservati.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>Non è stato possibile verificare i dati del rapporto o l’accesso. Aggiorna per riprovare. Le tue scelte del rapporto vengono conservate.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>Aggiorna rapporto</value>
+  </data>
 </root>

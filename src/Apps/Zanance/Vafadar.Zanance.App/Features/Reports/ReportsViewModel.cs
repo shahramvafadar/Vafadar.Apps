@@ -16,6 +16,9 @@ using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Core.Commerce;
+using System.Text.Json;
 
 namespace Vafadar.Zanance.App.Features.Reports;
 
@@ -26,7 +29,11 @@ public sealed record CategoryReportRow(IReadOnlyCollection<Guid> CategoryIds, st
 public sealed record AmountLine(string Label, string Amount, bool IsTotal, bool IsNegative = false, bool IsPositive = false);
 
 /// <summary>An account with its movement lines.</summary>
-public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines);
+public sealed record AccountReport(string Name, IReadOnlyList<AmountLine> Lines)
+{
+    /// <summary>Gets the original account currency for its independently labelled PDF scope.</summary>
+    public string CurrencyCode { get; init; } = string.Empty;
+}
 
 /// <summary>One month of the trend chart; amounts are major units for the chart axis.</summary>
 public sealed record TrendPoint(string Label, double Income, double Expense, string IncomeText, string ExpenseText, string ResultText, Color ResultColor);
@@ -49,6 +56,25 @@ public sealed record IssueRow(DataIssueKind Kind, string Text, string? ActionTex
 public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private const int TrendMonths = 6;
+    private readonly ReportWorkStore _reportStore;
+    private readonly ReportExportSession _export;
+    private ReportReadReview? _review;
+    private ReportInputs Inputs => _review?.Inputs ?? throw new InvalidOperationException("No report review is available.");
+    /// <summary>Gets whether all original sources and the selected projection are ready for interaction.</summary>
+    [ObservableProperty]
+    public partial bool ReportReady { get; set; }
+    /// <summary>Gets translated read/retry or selected-package access feedback without changing selection.</summary>
+    [ObservableProperty]
+    public partial string? ReportFeedback { get; set; }
+    /// <summary>Gets paid analysis availability separately from Simple/Advanced presentation.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowCommitments), nameof(ShowGoals), nameof(ShowWealth), nameof(ShowHistory))]
+    public partial bool CanUseAdvancedReports { get; set; }
+    /// <summary>Gets whether the covered original report read is still active.</summary>
+    [ObservableProperty]
+    public partial bool ReportLoading { get; set; }
+    private bool _detached;
+
 
     private readonly ZananceStore _store;
     private readonly PlanStore _plans;
@@ -88,9 +114,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         IDateFormatter dates,
         ILocalizationService localization,
         TimeProvider time,
-        Security.AppLockService appLock)
+        Security.AppLockService appLock, ReportWorkStore reportStore)
     {
-        _lock = appLock;
+        _lock = appLock; _reportStore = reportStore; _export = new(reportStore);
         _store = store;
         _plans = plans;
         _goals = goals;
@@ -185,21 +211,21 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public bool ShowOverview => PackageIndex == 0 && !IsEmpty;
 
-    public bool ShowCommitments => PackageIndex == 1;
+    public bool ShowCommitments => PackageIndex == 1 && CanUseAdvancedReports;
 
-    public bool ShowGoals => PackageIndex == 2;
+    public bool ShowGoals => PackageIndex == 2 && CanUseAdvancedReports;
 
-    public bool ShowWealth => PackageIndex == 3;
+    public bool ShowWealth => PackageIndex == 3 && CanUseAdvancedReports;
 
     /// <summary>Gets a value indicating whether the wealth change package R5 is shown (Advanced content, ZEX-E08).</summary>
-    public bool ShowHistory => PackageIndex == 4;
+    public bool ShowHistory => PackageIndex == 4 && CanUseAdvancedReports;
 
     public bool ShowStatus => PackageIndex == 5;
 
     /// <summary>Gets a value indicating whether the package has a period (commitments look ahead from today; wealth is today).</summary>
     public bool ShowPeriod => PackageIndex is 0 or 5;
 
-    private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
+    private DateOnly Today => _review?.Day ?? DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     private CultureInfo Culture => _localization.CurrentCulture;
 
@@ -223,7 +249,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private void Reload()
     {
-        if (_applying)
+        if (_applying || _detached)
         {
             return;
         }
@@ -263,8 +289,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public async Task LoadAsync()
     {
+        if (IsBusy) { _reloadRequested = true; return; }
         await _gate.WaitAsync();
-        _loading = true;
+        ReportReady = false; ReportFeedback = null; StatusText = null; ReportLoading = true; _loading = true;
         try
         {
             do
@@ -274,18 +301,23 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             }
             while (_reloadRequested);
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { ReportFeedback = CommercialFailureMessage.OrFallback(exception, _translator, "Report_ReadFailed"); }
         finally
         {
-            _loading = false;
+            _loading = false; ReportLoading = false;
             _gate.Release();
         }
     }
 
     private async Task LoadCoreAsync()
     {
-        _settings = await _store.GetSettingsAsync();
+        if (_review is not null) await _reportStore.ValidateFileAsync(_review);
+        _review = await _reportStore.ReadAsync();
+        _settings = Inputs.Settings ?? new();
+        CanUseAdvancedReports = _review.Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed;
         _startDay = _settings.MonthStartDay;
-        IsAdvanced = _settings.Shows(Feature.ReportDetails);
+        IsAdvanced = _settings.Shows(Feature.ReportDetails) && CanUseAdvancedReports;
         if (_year == 0)
         {
             (_year, _month) = PeriodMath.MonthOf(Today, Calendar, _startDay);
@@ -305,11 +337,18 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             PeriodText += " · " + _translator["Report_SoFar"];
         }
 
-        _accounts = await _store.GetAccountsAsync();
+        _accounts = await Task.FromResult(Inputs.Accounts);
         ApplyScope();
-        var entries = await _store.GetEntriesAsync();
+        var entries = await Task.FromResult(Inputs.Entries);
         IsEmpty = entries.Count == 0;
 
+        if (PackageIndex is >= 1 and <= 4 && !CanUseAdvancedReports)
+        {
+            ReportFeedback = CommercialFailureMessage.Describe(new CommercialWriteRejectedException(CommercialFeature.AdvancedReports,
+                _review.Permission(CommercialFeature.AdvancedReports)), _translator);
+            await _reportStore.ValidateAsync(_review); ReportReady = true; return;
+        }
+        _review.Project(PackageIndex, _ => true);
         switch (PackageIndex)
         {
             case 0:
@@ -331,7 +370,13 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 await BuildStatusAsync(entries, full: true);
                 break;
         }
+        await _reportStore.ValidateAsync(_review);
+        ReportReady = true;
     }
+
+    /// <summary>Explicitly retries the original file and retains the selected package and scope.</summary>
+    [RelayCommand]
+    private Task RefreshReportsAsync() => LoadAsync();
 
     // LoadScope sets the currency and the account itself; that must not start another load.
     private void ApplyScope()
@@ -433,15 +478,15 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     {
         if (full)
         {
-            var events = await _holdings.GetEventsAsync();
-            var values = Core.Holdings.AssetValuationService.Values(await _holdings.GetTypesAsync(), events, await _holdings.GetValuationsAsync(), Today);
+            var events = await Task.FromResult(Inputs.AssetEvents);
+            var values = Core.Holdings.AssetValuationService.Values(await Task.FromResult(Inputs.AssetTypes), events, await Task.FromResult(Inputs.AssetValuations), Today);
             holdingsWithoutPrice = values.Count(v => v.Quantity > 0 && v.Value is null);
-            var forecasts = Core.Forecasts.ForecastCalculator.Compute(_accounts, entries, await _plans.GetSchedulesAsync(), await _plans.GetStatesAsync(), Today, Today.AddDays(30));
+            var forecasts = Core.Forecasts.ForecastCalculator.Compute(_accounts, entries, await Task.FromResult(Inputs.Schedules), await Task.FromResult(Inputs.OccurrenceStates), Today, Today.AddDays(30));
             unknownAmounts = forecasts.Sum(f => f.UnknownCount);
         }
 
         var lastBackup = _backup.LastBackupAt is { } at ? DateOnly.FromDateTime(at.ToLocalTime().DateTime) : (DateOnly?)null;
-        var issues = DataStatus.Check(_accounts, entries, await _store.GetCategoriesAsync(), Filter(_from, _to), Today, lastBackup, unknownAmounts, rates, missingRates, holdingsWithoutPrice);
+        var issues = DataStatus.Check(_accounts, entries, await Task.FromResult(Inputs.Categories), Filter(_from, _to), Today, lastBackup, unknownAmounts, rates, missingRates, holdingsWithoutPrice);
         Issues.Clear();
         foreach (var issue in issues)
         {
@@ -525,42 +570,69 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [RelayCommand]
     private async Task SharePdfAsync()
     {
-        if (IsBusy || !await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
-        {
-            return;
-        }
-
+        if (IsBusy || !ReportReady || _review is null) return;
         IsBusy = true;
         try
         {
-            var pdf = await CreatePdfAsync();
-            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-report-{_from:yyyy-MM}.pdf"));
-            await File.WriteAllBytesAsync(path, pdf);
-            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
+            var review = _review; var scope = ScopeStamp();
+            var advanced = review.Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed
+                && review.Permission(CommercialFeature.AdvancedPdf) == FeaturePermission.Allowed;
+            await _export.ExportAsync(review, advanced, () =>
+            { if (scope != ScopeStamp() || !ReferenceEquals(review, _review)) throw new InvalidOperationException("The reviewed report scope changed."); },
+                () => CreatePdfAsync(advanced), new NativeExport(this));
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            await Failures.ShowAsync(ex);
-        }
-        finally
-        {
-            IsBusy = false;
-            await LoadAsync();
-        }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { await Failures.ShowAsync(ex); }
+        finally { IsBusy = false; if (_reloadRequested) await LoadAsync(); }
     }
 
-    /// <summary>Creates the PDF of the current scope with all packages; the screen must be reloaded afterwards.</summary>
-    public async Task<byte[]> CreatePdfAsync()
+    private string ScopeStamp() => JsonSerializer.Serialize(new { PackageIndex, PeriodKind, _year, _month, AccountScopeIndex,
+        account = ScopeAccount?.Id, CurrencyIndex, currencies = CurrencyNames, ConfirmedOnly, ChangeRangeIndex,
+        language = _localization.CurrentLanguage.CultureName, culture = Culture.Name, calendar = _localization.CurrentCalendar,
+        digits = _localization.CurrentDigits, region = _localization.CurrentRegion, week = _localization.FirstDayOfWeek });
+
+    private sealed class NativeExport(ReportsViewModel owner) : IReportExportRuntime
     {
-        // The PDF walks through every package on this view model: no load may run at the same time, and its own package
-        // changes reload nothing.
+        public Task<bool> ConfirmAsync() => owner._lock.ConfirmAsync(owner._translator["Lock_ConfirmExport"]);
+        public async Task<string> WriteAsync(byte[] document)
+        {
+            var path = Path.Combine(FileSystem.CacheDirectory, $"zanance-report-{Guid.NewGuid():N}.pdf");
+            try { await File.WriteAllBytesAsync(path, document); return path; }
+            catch { File.Delete(path); throw; }
+        }
+        public Task ShareAsync(string path) => Share.Default.RequestAsync(new ShareFileRequest
+            { Title = owner._translator["Report_SharePdf"], File = new ShareFile(path, "application/pdf") });
+        public Task RemoveAsync(string path) { File.Delete(path); return Task.CompletedTask; }
+    }
+
+    /// <summary>Creates a detached PDF of the reviewed original scope without walking the live page.</summary>
+    public Task<byte[]> CreatePdfAsync() => CreatePdfAsync(_review?.Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed
+        && _review.Permission(CommercialFeature.AdvancedPdf) == FeaturePermission.Allowed);
+
+    private async Task<byte[]> CreatePdfAsync(bool advanced)
+    {
+        var review = _review ?? throw new InvalidOperationException("Load the original report before export.");
+        review.DemandPdf(advanced); var scope = ScopeStamp(); await _reportStore.ValidateAsync(review);
+        var projection = new ReportsViewModel(_store, _plans, _goals, _holdings, _backup, _goalPresenter, _translator,
+            _dates, _localization, _time, _lock, _reportStore) { _detached = true, _review = review,
+            _settings = _settings, _accounts = Inputs.Accounts, _year = _year, _month = _month, _startDay = _startDay,
+            _from = _from, _to = _to, _currency = _currency, PeriodKind = PeriodKind, AccountScopeIndex = AccountScopeIndex,
+            ScopeAccount = ScopeAccount, CurrencyNames = CurrencyNames, CurrencyIndex = CurrencyIndex, ConfirmedOnly = ConfirmedOnly,
+            ChangeRangeIndex = ChangeRangeIndex, PeriodText = PeriodText, CanUseAdvancedReports = advanced, IsAdvanced = IsAdvanced && advanced };
+        var bytes = await projection.RenderPdfAsync(advanced); await _reportStore.ValidateAsync(review);
+        if (scope != ScopeStamp()) throw new InvalidOperationException("The original report scope changed during rendering.");
+        return bytes;
+    }
+
+    private async Task<byte[]> RenderPdfAsync(bool advanced)
+    {
+        // Only this detached projection walks packages; all sections share one reviewed original packet.
         await _gate.WaitAsync();
         var shown = PackageIndex;
         var tables = new List<Vafadar.Zanance.Reports.ReportTable>();
         _applying = true;
         try
         {
-            var entries = await _store.GetEntriesAsync();
+            var entries = await Task.FromResult(Inputs.Entries);
 
             // R1: the overview with categories, trend and tags.
             PackageIndex = 0;
@@ -575,20 +647,31 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                     [.. CategoryRows.Select(r => (IReadOnlyList<string>)[r.Name, r.GrossText, r.RefundsText, r.NetText])], new HashSet<int> { 1, 2, 3 }, overviewScope));
             }
 
-            BuildTrend(entries);
-            if (Trend.Count > 0)
+            // Original period balance/movements are basic owned-data reporting, not paid wealth analysis.
+            BuildAccounts(entries);
+            foreach (var account in Accounts)
+            {
+                tables.Add(new(account.Name, [_translator["Report_Item"], _translator["Report_Amount"]],
+                    [.. account.Lines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, overviewScope.Replace(" · " + _currency + " · ", " · " + account.CurrencyCode + " · ", StringComparison.Ordinal)));
+            }
+
+            if (advanced) { _review!.DemandPdf(true); BuildTrend(entries); }
+            if (advanced && Trend.Count > 0)
             {
                 tables.Add(new(_translator["Report_Trend"], [_translator["Report_Month"], _translator["KindFilter_Income"], _translator["KindFilter_Expenses"], _translator["Home_Result"]],
                     [.. Trend.Select(t => (IReadOnlyList<string>)[t.Label, t.IncomeText, t.ExpenseText, t.ResultText])], new HashSet<int> { 1, 2, 3 }, overviewScope));
             }
 
-            BuildTags(entries);
-            if (TagRows.Count > 0)
+            if (advanced) BuildTags(entries);
+            if (advanced && TagRows.Count > 0)
             {
                 tables.Add(new(_translator["Report_Tags"], [_translator["Entry_Tags"], _translator["Report_Net"]],
                     [.. TagRows.Select(t => (IReadOnlyList<string>)["#" + t.Tag, t.AmountText])], new HashSet<int> { 1 }, overviewScope + " · " + _translator["Report_TagsNote"]));
             }
 
+            if (advanced)
+            {
+            _review!.DemandPdf(true);
             // R2: commitments and plans.
             PackageIndex = 1;
             LoadScope();
@@ -615,12 +698,6 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                     [.. WealthLines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, ScopeText));
             }
 
-            foreach (var account in Accounts)
-            {
-                tables.Add(new(account.Name, [_translator["Report_Item"], _translator["Report_Amount"]],
-                    [.. account.Lines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, overviewScope));
-            }
-
             // R5: net worth at month ends and its change (Advanced data, printed when there is a history).
             PackageIndex = 4;
             LoadScope();
@@ -633,6 +710,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                     [.. ChangeLines.Select(l => (IReadOnlyList<string>)[l.Label, l.Amount])], new HashSet<int> { 1 }, ChangeNote ?? ScopeText));
             }
 
+            }
             PackageIndex = 5;
             await BuildStatusAsync(entries, full: true);
             var document = new Vafadar.Zanance.Reports.ReportDocument(

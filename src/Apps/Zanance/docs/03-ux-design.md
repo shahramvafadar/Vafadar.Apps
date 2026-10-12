@@ -1093,3 +1093,12 @@ terms do not imply paid estimate availability. Keep original manual repayment an
 warning; captions describe the actual manual or calculated action. Full feedback/result and Refresh
 own a growing footer. Schedule identity/payment/split/remaining own rows with original scalable caption
 typography and complete MoneyText packet. Busy native consent/write never silently repeats accepted payment.
+
+## Original report scope and detached export (D-172)
+
+Cover initial/refreshed original report publication; pin complete feedback and growing Refresh outside
+the viewport. Keep the selected unavailable package, rather than silently switching its content. UI
+Simple/Advanced controls detail density, not paid access. Original financial facts/warnings and basic
+account movement remain available. Native export busy starts before authentication; a detached PDF
+must preserve every live choice and status. Account tables state their original currency. Accepted
+contribution feedback stays distinct from refresh failure and does not imply a ledger payment.

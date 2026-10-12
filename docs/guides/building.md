@@ -714,3 +714,13 @@ original calculators/ledger writer and native confirmation Save. Cached rights a
 capture alone are fictitious. Check Free balance/manual action/warning, retained reconciliation drafts,
 full paid schedule/payment and exact 25-table restoration; render only the own hidden window/root.
 Restore original development bytes/sidecars/display and separately verify normal signed Release APK/device flow.
+
+## Focused original report review (D-172)
+
+Windows Debug `VAFADAR_SNAPSHOT_ONLY=report-work` exercises native Free/Plus package selection and
+detached actual PDF against one independently owned fictitious SQLite file. `report-pdf-work` adds
+final original balance/currency PDF tables and an original contribution suggestion/native writer with
+its named calendar and no ledger posting. Preserve successful contexts when repairing a probe; wait
+for Shell reconstruction before changing languages. Keep native app-window capture and restore exact
+owned rows/bytes. Android final signed Release checks the real share sheet without choosing recipients;
+this is emulator/local test-certificate evidence, not phone, provider or production acceptance.

@@ -6224,4 +6224,10 @@ Plafonds par catégorie :
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Le compte n’a pas pu être entièrement chargé. Actualisez-le pour réessayer ; vos données de rapprochement sont conservées.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>Les données du rapport ou l’accès n’ont pas pu être vérifiés. Actualisez pour réessayer. Vos choix de rapport sont conservés.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>Actualiser le rapport</value>
+  </data>
 </root>

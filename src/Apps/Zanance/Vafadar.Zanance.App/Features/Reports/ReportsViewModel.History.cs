@@ -48,11 +48,12 @@ public sealed partial class ReportsViewModel
     // of its change (ZEX-S0802). Converted with the valuation currency when it is on, natively otherwise.
     private async Task BuildHistoryAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         var today = Today;
-        var types = await _holdings.GetTypesAsync();
-        var events = await _holdings.GetEventsAsync();
-        var valuations = await _holdings.GetValuationsAsync();
-        var rates = new RateTable(await _store.GetRatesAsync());
+        var types = await Task.FromResult(Inputs.AssetTypes);
+        var events = await Task.FromResult(Inputs.AssetEvents);
+        var valuations = await Task.FromResult(Inputs.AssetValuations);
+        var rates = new RateTable(await Task.FromResult(Inputs.ExchangeRates));
         var converted = _settings.ValuationCurrencyEnabled;
         var target = converted ? _settings.ReportCurrencyCode : _currency;
         var currency = Currencies.TryGet(target, out var known) ? known : Currencies.Euro;

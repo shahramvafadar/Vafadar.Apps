@@ -27,8 +27,8 @@ ledger writer. They do not have an independent financial writer to retrofit. Nat
 and app-lock delivery acceptance remain separate. Manual attachments, tags, language, theme, account
 balances, retained holdings and essential warnings remain approved Free/history capabilities.
 
-The ordinary D-171 main run passes 3,141 tests, including these existing suites, without rerunning them
-solely for inventory updates. D-169/170/171 native acceptance is bounded in its evidence record.
+The ordinary D-172 main run passes 3,169 tests, including these existing suites, without rerunning them
+solely for inventory updates. D-169/170/171/172 native acceptance is bounded in its evidence record.
 
 ## Confirmed ready gaps: complete each group once
 
@@ -36,7 +36,7 @@ solely for inventory updates. D-169/170/171 native acceptance is bounded in its 
 |---|---|---|---|
 | 1 | Forecast and saved forecasts | Delivered locally (D-169 / AT-170): ForecastWorkStore/ForecastWorkspace, original atomic batch writer and retained saved view | Free financial-month forecast/history/Delete, explicit retained drafts, currency-safe new scopes and legacy comparison; no activation. See [evidence](../../quality/forecast-work.md) |
 | 2 | Receipt recognition | Delivered locally (D-170 / AT-171): ReceiptWorkStore/ReceiptReadingSession and typed EntryEditor destination | Shared original reader/parser, exact-file/current-source checks, compact-only pending copy, old amounts/no Save and separate manual attachments; no activation. See [evidence](../../quality/receipt-work.md) |
-| 3 | Loan analysis and reports/PDF | Loan portion delivered locally (D-171 / AT-172): LoanWorkStore, original confirmed installment writer and account/schedule UI. ReportsViewModel.LoadCoreAsync/CreatePdfAsync and package partials remain without commercial computation access | LoanAnalysis is bound to original calculation and atomic writer. Next bind AdvancedReports and AdvancedPdf at actual computations/publication. Preserve ordinary balances, recorded history, corrections, debt closing, basic reports/owned export and essential incomplete-data/shortfall warnings. Do not turn Simple/Advanced into a payment check |
+| 3 | Loan/report/PDF | Delivered locally: original loan writer (D-171 / AT-172), coherent report packets and detached PDF/contribution writer (D-172 / AT-173) | Free balance/manual payments/essential warnings/basic PDF, original paid calculators with actual-file checks and no live-page export mutation. See [loan](../../quality/loan-work.md) and [report](../../quality/report-work.md) evidence |
 
 Each group uses the already approved Core feature classification and actual-file cached access. New
 coverage should exercise the real operation, inactive unrestricted builds, Free refusal/retained draft,
@@ -44,8 +44,8 @@ Plus/Pro/shared membership, changed facts and unrelated stored rows. Do not test
 add a new policy purely to make an existing guard look incomplete. Native checks and a complete signed
 APK follow actual changes; unchanged successful checks are not repeated.
 
-ENT-02 remains in progress for reports/advanced PDF; forecast/snapshots, receipt recognition and loan work are delivered. ENT-03's original resource-choice,
-history and automation integration is implemented; analytical affordances depend on the same groups.
+ENT-02's confirmed operation groups are delivered locally; bounded completion review remains, with enforcement inactive. ENT-03's original resource-choice,
+history and automation integration is implemented; the confirmed analytical affordances are now delivered through D-172; bounded integration review remains.
 ENT-04's verified purchase/manage/renewal/restore UI depends on real billing/provider facts. Completing
 these groups permits a final bounded review of ENT-02/03, not activation or a fabricated purchase flow.
 

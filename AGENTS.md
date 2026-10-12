@@ -1230,3 +1230,18 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   inputs/triggers; retain typed accepted outcomes after subscriber failure and never repeat an old review.
 * Cover account/schedule publication, anchor typed destination/refresh to original file and keep valid
   DateField. Independent native fixtures restore complete rows/bytes/display. Report/PDF work remains next.
+
+## 105. Original report packets and detached portable PDF (D-172)
+
+* Capture all original financial report inputs in one actual-file reader; nullable Settings never
+  become a new row. Keep financial inputs independent of quota choices and UI presentation mode.
+* Free keeps totals, original period opening/movement/closing tables and essential data status.
+  Demand AdvancedReports before new paid calculators; retain an unavailable selected package.
+* Cover coherent publication; explicit Refresh keeps original report scope. Detached PDF walks its
+  own projection, never the live page. Each account table labels its own currency.
+* Hold busy before native authentication through render/cache/share; recheck original file/data/day,
+  cached access and scope/display after awaits. Remove only failed unpublished owned cache files.
+* Suggestions use the original contribution writer with report checks before and after Save, excluding
+  only its own accepted rule. Preserve named calendar, no ledger posting and typed accepted outcomes.
+* Retain real negative evidence and successful unchanged checks. Complete the finite original report
+  group, then perform the bounded ENT-02/03 review; do not invent provider/purchase or activation facts.

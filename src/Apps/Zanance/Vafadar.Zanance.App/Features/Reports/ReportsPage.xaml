@@ -43,7 +43,8 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView IsVisible="{Binding ReportReady}" IsEnabled="{Binding IsNotBusy}">
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Packages R1–R4 and R6 (ZEX-UI13) -->
@@ -141,7 +142,7 @@
                 </Border>
 
                 <!-- K11 spending changes, same length while the period runs -->
-                <Border Style="{StaticResource Card}">
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanUseAdvancedReports}">
                     <VerticalStackLayout Spacing="4">
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Text="{v:Translate Report_SpendingChange}" Style="{StaticResource CardTitle}" />
@@ -726,4 +727,10 @@
                    IsVisible="{Binding ShowStatus, Converter={StaticResource InvertedBoolConverter}}" />
         </VerticalStackLayout>
     </ScrollView>
+    <ActivityIndicator IsRunning="{Binding ReportLoading}" IsVisible="{Binding ReportLoading}" HorizontalOptions="Center" VerticalOptions="Center" />
+    <VerticalStackLayout Grid.Row="1" Padding="16,8" Spacing="8">
+        <Label Text="{Binding ReportFeedback}" IsVisible="{Binding ReportFeedback, Converter={StaticResource IsNotNullConverter}}" />
+        <p:WrappingAction Text="{v:Translate Report_Refresh}" Command="{Binding RefreshReportsCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

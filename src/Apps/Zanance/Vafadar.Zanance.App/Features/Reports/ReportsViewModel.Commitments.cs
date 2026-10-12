@@ -72,13 +72,14 @@ public sealed partial class ReportsViewModel
 
     private async Task BuildCommitmentsAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         var today = Today;
-        var schedules = await _plans.GetSchedulesAsync();
-        var states = await _plans.GetStatesAsync();
+        var schedules = await Task.FromResult(Inputs.Schedules);
+        var states = await Task.FromResult(Inputs.OccurrenceStates);
 
         // K02 and headroom: usable accounts, the next 30 days, protected money and the day-to-day estimate if set.
         var forecasts = ForecastCalculator.Compute(_accounts, entries, schedules, states, today, today.AddDays(30));
-        var protectedMoney = LiquidityCalculator.ProtectedMoney(await _goals.GetGoalsAsync(), await _goals.GetAllocationsAsync(), _accounts, entries, today);
+        var protectedMoney = LiquidityCalculator.ProtectedMoney(await Task.FromResult(Inputs.Goals), await Task.FromResult(Inputs.GoalAllocations), _accounts, entries, today);
         _liquidity = LiquidityCalculator.Compute(forecasts, protectedMoney, today, _settings.EssentialEstimate, _settings.EssentialEstimatePeriod, _settings.EssentialEstimateCurrency)
             .FirstOrDefault(l => string.Equals(l.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));
         BuildHeadroom();
@@ -112,7 +113,7 @@ public sealed partial class ReportsViewModel
         YearlyTotalText = null;
         if (IsAdvanced)
         {
-            var yearly = KpiCatalog.Yearly(_accounts, await _store.GetCategoriesAsync(), schedules, states, today).FirstOrDefault(y => string.Equals(y.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));
+            var yearly = KpiCatalog.Yearly(_accounts, await Task.FromResult(Inputs.Categories), schedules, states, today).FirstOrDefault(y => string.Equals(y.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));
             if (yearly is not null)
             {
                 YearlyTotalText = _translator.Format("Report_YearlyTotals", Money(yearly.Fixed), Money(yearly.NonMonthly), "≈ " + Money(yearly.Estimated))

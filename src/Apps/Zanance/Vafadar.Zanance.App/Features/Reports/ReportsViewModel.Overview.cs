@@ -95,7 +95,7 @@ public sealed partial class ReportsViewModel
 
     private async Task BuildOverviewAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
-        var categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
+        var categories = new CategoryLookup(await Task.FromResult(Inputs.Categories), _translator);
         var filter = Filter(_from, _to);
         var all = KpiCatalog.Surplus(_accounts, entries, filter);
         _surplus = all.FirstOrDefault(s => string.Equals(s.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));
@@ -111,9 +111,9 @@ public sealed partial class ReportsViewModel
         var others = all.Where(s => !string.Equals(s.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase) && s.Surplus != 0).ToList();
         OtherCurrenciesText = others.Count == 0 ? null : _translator.Format("Report_OtherCurrencies", string.Join(" · ", others.Select(s => Money(s.Surplus, s.CurrencyCode, showPlus: true))));
         ConvertedText = null;
-        if (_settings.Shows(Feature.ConvertedTotals) && _settings.ValuationCurrencyEnabled && all.Count > 1)
+        if (CanUseAdvancedReports && _settings.Shows(Feature.ConvertedTotals) && _settings.ValuationCurrencyEnabled && all.Count > 1)
         {
-            var combined = new Core.Rates.RateTable(await _store.GetRatesAsync()).Combine(all.ToDictionary(s => s.CurrencyCode, s => s.Surplus), _settings.ReportCurrencyCode, _to < Today ? _to : Today, new Core.Rates.RateFreshness(_settings.RateFreshnessDays));
+            var combined = new Core.Rates.RateTable(await Task.FromResult(Inputs.ExchangeRates)).Combine(all.ToDictionary(s => s.CurrencyCode, s => s.Surplus), _settings.ReportCurrencyCode, _to < Today ? _to : Today, new Core.Rates.RateFreshness(_settings.RateFreshnessDays));
             ConvertedText = combined.IsComplete
                 ? _translator.Format("Report_Converted", Money(combined.Total!.Value, _settings.ReportCurrencyCode, showPlus: true))
                 : _translator.Format("Home_CombinedIncomplete", string.Join(", ", combined.MissingCurrencies));
@@ -143,7 +143,8 @@ public sealed partial class ReportsViewModel
 
         HasSeparateLines = SeparateLines.Count > 0;
         await BuildBudgetAsync(entries, categories);
-        BuildChanges(entries, categories);
+        Changes.Clear(); HasChanges = false; ComparisonText = null;
+        if (CanUseAdvancedReports) BuildChanges(entries, categories);
         BuildExpenses(entries, categories);
         if (IsAdvanced)
         {
@@ -167,13 +168,13 @@ public sealed partial class ReportsViewModel
 
         var calendar = _settings.BudgetCalendar;
         var (year, month) = PeriodMath.MonthOf(_from, calendar, _startDay);
-        var budget = await _store.GetBudgetAsync(year, month, calendar, _currency);
+        var budget = await Task.FromResult(Inputs.Budgets.FirstOrDefault(b => b.Period == BudgetPeriod.Month && b.Year == year && b.Month == month && b.Calendar == calendar && b.CurrencyCode == _currency));
         if (budget?.TotalLimit is not { } ownLimit)
         {
             return;
         }
 
-        var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
+        var limit = ownLimit + (await Task.FromResult(_review!.BudgetCarry(budget))).Total;
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, [.. _accounts], [.. entries], categories.All, from, to));
         _budget = (limit, status.Spent);
@@ -189,6 +190,7 @@ public sealed partial class ReportsViewModel
     // K11: the comparison period has the same length while the period runs (AT30); Simple shows the top three.
     private void BuildChanges(IReadOnlyCollection<LedgerEntry> entries, CategoryLookup categories)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         Changes.Clear();
         var (previousFrom, previousTo) = PeriodKind == 0
             ? PeriodMath.MonthRange(PeriodMath.Previous(_year, _month).Year, PeriodMath.Previous(_year, _month).Month, Calendar, _startDay)

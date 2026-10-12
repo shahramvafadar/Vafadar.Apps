@@ -47,10 +47,11 @@ public sealed partial class ReportsViewModel
 
     private async Task BuildWealthAsync(IReadOnlyCollection<LedgerEntry> entries)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         var today = Today;
-        var types = await _holdings.GetTypesAsync();
+        var types = await Task.FromResult(Inputs.AssetTypes);
         var text = new Holdings.HoldingText(_translator, _localization, _dates);
-        _netWorth = NetWorthCalculator.Compute(_accounts, entries, types, await _holdings.GetEventsAsync(), await _holdings.GetValuationsAsync(), today);
+        _netWorth = NetWorthCalculator.Compute(_accounts, entries, types, await Task.FromResult(Inputs.AssetEvents), await Task.FromResult(Inputs.AssetValuations), today);
 
         // K10 per currency with its groups; currencies are never added without a rate.
         NetWorthText = _netWorth.Totals.Count == 0 ? null : string.Join(" · ", _netWorth.Totals.Select(t => Money(t.Total, t.CurrencyCode)));
@@ -90,7 +91,7 @@ public sealed partial class ReportsViewModel
         IReadOnlyCollection<string>? missing = null;
         if (_settings.Shows(Feature.ConvertedTotals) && _settings.ValuationCurrencyEnabled)
         {
-            var composition = NetWorthCalculator.Compose(_netWorth, new RateTable(await _store.GetRatesAsync()), _settings.ReportCurrencyCode, new RateFreshness(_settings.RateFreshnessDays));
+            var composition = NetWorthCalculator.Compose(_netWorth, new RateTable(await Task.FromResult(Inputs.ExchangeRates)), _settings.ReportCurrencyCode, new RateFreshness(_settings.RateFreshnessDays));
             rates = composition.Rates;
             missing = composition.MissingRates;
             var index = 0;
@@ -124,6 +125,7 @@ public sealed partial class ReportsViewModel
     // Opening → movements → closing for each account of the scope in the period (REP-03).
     private void BuildAccounts(IReadOnlyCollection<LedgerEntry> entries)
     {
+        _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.BasicReports);
         Accounts.Clear();
         var scope = LedgerCalculator.InScope(_accounts, ScopeIds()).Where(a => !a.IsArchived || entries.Any(e => e.AccountId == a.Id && e.Date >= _from && e.Date <= _to));
         foreach (var movement in ReportCalculator.AccountMovements(scope, entries, _from, _to))
@@ -149,7 +151,7 @@ public sealed partial class ReportsViewModel
             Add("Report_Capital", movement.Capital);
             Add("Report_Adjustments", movement.Adjustments);
             lines.Add(new AmountLine(_translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
-            Accounts.Add(new AccountReport(account.Name, lines));
+            Accounts.Add(new AccountReport(account.Name, lines) { CurrencyCode = movement.CurrencyCode });
         }
     }
 

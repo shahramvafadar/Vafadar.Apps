@@ -758,3 +758,13 @@ CommercialWriteTransaction/SaveEntriesUnderWriterAsync. Recheck after inserts ex
 new ids; reject trigger/input retirement. Only this writer uses typed committed SaveResult, preserving
 ordinary ledger notification semantics. No schema or portable format change.
 [Evidence](../../src/Apps/Zanance/docs/quality/loan-work.md).
+
+## Original report snapshots and portable PDF (D-172)
+
+ReportWorkStore uses one deferred SQLite reader and complete original inputs, immutable packet/day
+and cached actual-file access. It does not create Settings or filter financial facts by quota activity.
+Original carry and goal progress reuse existing calculators. Original contribution Save optionally
+validates this packet before/after the same writer transaction, excluding only its accepted rule.
+ReportExportSession holds native consent/render/cache/share and rejects retired file/data/scope;
+the detached original projection never mutates the live page. Basic balances and per-account currency
+remain portable data, separate from paid wealth analysis. No schema or key/provider policy is added.

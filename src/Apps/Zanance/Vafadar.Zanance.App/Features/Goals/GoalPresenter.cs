@@ -63,6 +63,14 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         return GoalProgressService.Evaluate(all ?? await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), accounts, entries, await goals.GetContributionPlansAsync(), today, events, _types);
     }
 
+    /// <summary>Evaluates the same original goal algorithm from one coherent report packet.</summary>
+    public IReadOnlyList<GoalProgress> Evaluate(Data.Commerce.ReportInputs inputs, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(inputs); _types = inputs.AssetTypes;
+        return GoalProgressService.Evaluate(inputs.Goals, inputs.GoalAllocations, inputs.Accounts, inputs.Entries,
+            inputs.ContributionPlans, today, inputs.AssetEvents, _types);
+    }
+
     /// <summary>Evaluates complete captured original financial inputs; availability never filters this calculation.</summary>
     public async Task<IReadOnlyList<GoalProgress>> EvaluateAsync(Data.GoalWorkSnapshot snapshot,
         IReadOnlyCollection<Account> accounts, IReadOnlyCollection<LedgerEntry> entries, DateOnly today)

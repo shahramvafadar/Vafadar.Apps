@@ -53,7 +53,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
-| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (resource writers/recovery and forecast snapshots and receipt reading and loan analysis delivered; report/PDF computation bindings remain; enforcement inactive) | ENT-01 |
+| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (confirmed resource/recovery and forecast/receipt/loan/report/PDF operations delivered; bounded final review remains; enforcement inactive) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (resource choices/history/automation delivered; remaining analytical affordances follow the finite current inventory) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (local comparison, readiness/reasons and retained outcomes delivered; remaining operation feedback plus verified billing/provider UI open) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
@@ -1310,3 +1310,21 @@ Free balances/manual repayment/warnings. Main 3,141, strict builds, 36 Windows c
 Android schedule/consent/payment readback and full signed APK verified. No commercial activation.
 [Evidence](../../quality/loan-work.md). Next: original report packages and advanced PDF, then bounded
 ENT-02/03 completion audit. Billing/provider/owner/external gates and ENT-04 remain open.
+
+## Delivered original reports/PDF (D-172)
+
+28 AT-173 application/real SQLite cases; ordinary main 3,169 / App.Tests 1,112 pass with zero
+failures/skips (2m 42.749s), followed by test-output cleanup. Final strict Windows and canonical complete
+Android Release builds have zero warnings/errors. Thirty-six en/fa/de, light/dark, 360/412/wide and
+Simple/Advanced Windows contexts exercise real package targets, original calculations, Free refusal
+without changing selection, detached actual PDF and unchanged original inputs. Final targeted PDFs
+also retain Free account opening/movement/closing tables and per-account currency scopes; native goal
+suggestion acceptance is checked in en/fa/de with its named-calendar rule and no ledger posting.
+Normal signed Release Android exercises original report/history, actual PDF cache/platform share,
+share-sheet cancellation and complete retained choices. Owned tables, cache, baseline bytes/sidecars
+and Main/English/System are restored; final Release installed/stopped. Commercial registration remains
+inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product acceptance remain separate.
+All three confirmed computation groups in the D-168 inventory are locally delivered. Retain base
+balances/status/export, detached original PDF and the same reviewed contribution writer/calendar.
+[Evidence](../../quality/report-work.md). Next: bounded current ENT-02/03 completion review; do not
+rebuild delivered resource/recovery groups or fabricate ENT-04 provider/purchase facts.

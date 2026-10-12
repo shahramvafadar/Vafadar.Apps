@@ -274,11 +274,12 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Saves the contribution plan of a goal, replacing an earlier one; <see langword="null"/> removes it.</summary>
-    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
+    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null, Commerce.ReportReadReview? reportReview = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || reportReview is not null);
         if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
+        if (reportReview is not null) await reportReview.ValidateContributionWriterAsync(db, null, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goalId, cancellationToken);
         var goal = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goalId, cancellationToken) : null;
         var activity = CheckContributionSave(write, plan, existing, goal, goal);
@@ -287,8 +288,10 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         PrepareContributionPlan(db, goalId, plan, existing);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        if (reportReview is not null) await reportReview.ValidateContributionWriterAsync(db, goalId, cancellationToken);
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
+        if (reportReview is not null) CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), goalId);
+        else Changed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Checks new paid contribution work independently of retained corrections and empty date scaffolding.</summary>

@@ -6216,4 +6216,10 @@ Límites por categoría:
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>No se pudo cargar toda la cuenta. Actualízala para intentarlo de nuevo; se conservan los datos de conciliación introducidos.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>No se pudieron verificar los datos del informe o el acceso. Actualiza para intentarlo de nuevo. Se conservan tus opciones del informe.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>Actualizar informe</value>
+  </data>
 </root>

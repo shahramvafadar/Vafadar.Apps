@@ -6247,4 +6247,10 @@
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>بارگذاری کامل حساب ممکن نشد. برای تلاش دوباره، اطلاعات را تازه کنید؛ ورودی‌های تطبیق موجودی حفظ شده‌اند.</value>
   </data>
+  <data name="Report_ReadFailed" xml:space="preserve">
+    <value>بررسی داده‌های گزارش یا دسترسی ممکن نشد. برای تلاش دوباره، اطلاعات را تازه کنید. انتخاب‌های گزارش شما حفظ شده‌اند.</value>
+  </data>
+  <data name="Report_Refresh" xml:space="preserve">
+    <value>تازه‌سازی گزارش</value>
+  </data>
 </root>
