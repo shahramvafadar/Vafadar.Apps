@@ -1281,3 +1281,10 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Review actual child events, native handler identity, saved order and unchanged stored data. Native
   reuse does not prove a cold-start/device/ANR target. Rejected startup candidates remain removed;
   do not repeat them without new evidence or count their temporary tests as delivered features.
+
+## 110. Original holdings event slices (D-178)
+
+* Index only one unchanged projection snapshot by asset type; retain event identity/order and call
+  HoldingsLedger.Quantity for date/direction/checked-overflow behavior. Never combine units or cache across profiles.
+* Distinguish Core computation/input-visit evidence from startup/device targets. Native captions follow
+  original digit shaping; explicitly select the known fixture profile and restore original Main/data/display.

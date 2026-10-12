@@ -2772,3 +2772,12 @@ financial calculation. Main 3,169, strict builds, 18 native Windows contexts and
 verified; six normal Release Android Home/return cases and exact owned-data/display restoration verified. Earlier asynchronous startup candidates were rejected
 by actual Release timing and removed. QA-06 remains open; no two-second/device/release claim.
 [Evidence](../quality/home-layout-reuse.md).
+
+### 31.91 Original asset-event slices (D-178)
+
+Home quantities retain original calculator, type/unit boundaries, event order, date and overflow.
+A projection-local index avoids complete-history scans for every type. Ten new cases; ordinary main
+3,179 passes, strict builds and signed APK verified. Bounded Core-only measurements preserve exact
+results; six Windows caption contexts pass. Six normal Release Android caption/return cases and original Main/fixture/display restoration verified.
+Whole startup, two-second/device/ANR/iOS/provider/release acceptance remains open.
+[Evidence](../quality/asset-event-index.md).

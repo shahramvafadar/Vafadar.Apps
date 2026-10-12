@@ -1577,3 +1577,11 @@ and complete accounts/entries/settings/budgets unchanged. Existing HomeLayout ca
 suite pass. Final normal Release Android Home/return and exact owned-data/display restoration verified. No new automated count is invented;
 QA-06, spoken/system-scaling/phone/iOS/provider and release gates remain open.
 [Evidence](quality/home-layout-reuse.md).
+
+## AT-177 - Original indexed asset-event quantities
+
+Ten automated behavior cases and main 3,179 pass. Original calculator remains the oracle across
+all kinds, types/dates, identity/order, neutral transfer and intermediate overflow. Core-only bounded
+measurements show exact original quantities with one input enumeration. Six Windows native caption
+contexts and original asset packets pass; Six normal Release Android scoped caption/return cases pass; original Main/fixture/display restored. No physical/iOS/whole-startup/ANR/release acceptance is inferred.
+[Evidence](quality/asset-event-index.md).

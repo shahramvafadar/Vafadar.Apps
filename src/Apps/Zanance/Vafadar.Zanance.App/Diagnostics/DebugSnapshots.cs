@@ -489,6 +489,7 @@ internal static partial class DebugSnapshots
         {
             ("home", "//home", null),
             ("home-layout-reuse", "//home", null),
+            ("home-holdings-index", "//home", null),
             ("transactions", "//transactions", null),
             ("transactions-source", "//transactions", null),
             ("transactions-filters", "//transactions", null),
@@ -825,6 +826,8 @@ internal static partial class DebugSnapshots
                 { await ReviewEntrySaveFeedbackAsync(app, services, folder, language, expenseId); }
                 if (name == "plan-validation")
                 { await ReviewPlanValidationAsync(app, services, folder, language); }
+                if (name == "home-holdings-index" && Shell.Current.CurrentPage is Features.Home.HomePage holdingsHome)
+                { await ReviewHomeHoldingsIndexAsync(services, holdingsHome, folder, language); }
                 if (name == "home-layout-reuse" && Shell.Current.CurrentPage is Features.Home.HomePage retainedHome)
                 { await ReviewHomeSnapshotAsync(services, retainedHome, folder, language); }
                 if (name == "home" && Shell.Current.CurrentPage is Features.Home.HomePage { BindingContext: Features.Home.HomeViewModel } homePage)
@@ -3073,6 +3076,37 @@ internal static partial class DebugSnapshots
         File.WriteAllText(Path.Combine(folder, language + "-account-descriptions-proof.json"),
             System.Text.Json.JsonSerializer.Serialize(new { Cases = cases, PresentationOnly = true, CompleteOriginalSnapshotRestored = true,
                 CompleteAccountsEntriesSettingsBudgetsUnchanged = true, NoSaveOrFinancialCalculation = true }));
+    }
+
+    // D-178: observe the actual indexed Home caption and original stored asset packets without financial writes.
+    private static async Task ReviewHomeHoldingsIndexAsync(IServiceProvider services, Features.Home.HomePage page,
+        string folder, string language)
+    {
+        var home = (Features.Home.HomeViewModel)page.BindingContext;
+        var holdings = services.GetRequiredService<HoldingStore>();
+        async Task<string> StoredAsync() => System.Text.Json.JsonSerializer.Serialize(new
+        { Types = await holdings.GetTypesAsync(), Events = await holdings.GetEventsAsync() });
+        await home.LoadAsync();
+        var before = await StoredAsync(); var caption = home.HoldingsText;
+        if (string.IsNullOrWhiteSpace(caption)) throw new InvalidOperationException("Fictitious holdings caption is unavailable.");
+        await home.LoadAsync();
+        if (home.HoldingsText != caption || await StoredAsync() != before)
+            throw new InvalidOperationException("Indexed Home changed original holdings data or its repeated caption.");
+        await Task.Delay(200);
+        var label = VisualDescendants(page).OfType<Label>().Single(view => view.Text == caption);
+        // The native Label mapper also converts digits embedded in original asset names (D-27/D-67).
+        var displayedCaption = Vafadar.Localization.Formatting.NativeDigits.Apply(caption);
+        if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || native.Text != displayedCaption)
+        {
+            await File.WriteAllTextAsync(Path.Combine(folder, language + "-holdings-native-negative.json"),
+                System.Text.Json.JsonSerializer.Serialize(new { Expected = displayedCaption,
+                    Actual = (label.Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBlock)?.Text,
+                    PlatformType = label.Handler?.PlatformView?.GetType().Name }));
+            throw new InvalidOperationException("The actual native holdings caption differs from its original projection.");
+        }
+        await File.WriteAllTextAsync(Path.Combine(folder, language + "-home-holdings-index-proof.json"),
+            System.Text.Json.JsonSerializer.Serialize(new { ActualNativeCaption = displayedCaption, RepeatedCaptionUnchanged = true,
+                CompleteOriginalAssetPacketsUnchanged = true, NoFinancialSave = true }));
     }
 
     // AT-98: visible bindings retain native account rows; hidden bindings keep the full snapshot without views or Save.

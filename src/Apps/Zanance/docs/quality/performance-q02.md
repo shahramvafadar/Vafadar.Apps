@@ -188,3 +188,11 @@ contexts, preserving native handlers and saved ordering. Source XAML uses Core's
 Main 3,169, strict builds and signed APK verified; Android Home/return and exact owned-data/display restoration verified. The earlier startup
 candidates were rejected after controlled timing and removed. No cold-duration, ANR, two-second or
 physical/iOS acceptance is implied. [Evidence](home-layout-reuse.md).
+
+## Original Home holdings computation (D-178)
+
+At 500 types/100,000 fictitious events, original input visits reduce from 50,000,000 to 100,000;
+original calculator results match exactly, including construction (226.2461 versus 5.5359 ms in the
+bounded local Core Release process). Per-type slices still use the original quantity formula.
+Ten cases and main 3,179 pass; six native Windows caption contexts pass. Six normal Release Android caption/return cases pass; original Main/fixture/display restored. This is not whole-Home/cold-start/device/ANR/target acceptance.
+[Evidence](asset-event-index.md).

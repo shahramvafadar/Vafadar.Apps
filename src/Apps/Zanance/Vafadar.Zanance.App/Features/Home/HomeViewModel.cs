@@ -546,9 +546,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             return;
         }
 
-        var events = await _holdings.GetEventsAsync();
+        var events = new AssetEventIndex(await _holdings.GetEventsAsync());
         var held = types.Values
-            .Select(t => (Type: t, Quantity: HoldingsLedger.Quantity(events, t.Id, today)))
+            .Select(t => (Type: t, Quantity: HoldingsLedger.Quantity(events.For(t.Id), t.Id, today)))
             .Where(h => h.Quantity > 0)
             .Select(h => $"{h.Type.Name} {_holdingText.Quantity(h.Quantity, h.Type)}")
             .ToList();

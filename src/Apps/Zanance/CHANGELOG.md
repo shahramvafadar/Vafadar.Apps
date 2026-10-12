@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Home holdings computation (2026-10-12, D-178)
+
+- Read the holdings-event snapshot once when calculating quantities for multiple asset types.
+- Keep the existing date, unit, transfer and overflow rules.
+
 ### Improved - Home section reuse (2026-10-12, D-177)
 
 - Keep correctly ordered Home sections attached when returning to the page.

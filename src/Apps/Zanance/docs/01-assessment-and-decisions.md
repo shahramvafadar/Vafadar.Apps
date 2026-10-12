@@ -2226,3 +2226,12 @@ inferring speed from source. Startup async/appearance-gating candidates were rej
 Release observations; their changes were removed and original startup/security kept. Main 3,169,
 strict builds and 18 Windows contexts verified; six normal Release Android Home/return cases and exact owned-data/display restoration verified.
 [Evidence](quality/home-layout-reuse.md). QA-06/device/release acceptance remains open.
+
+## D-178 - One original asset-event index per Home projection
+
+Group the unchanged holdings snapshot once by original asset type, preserving event identity/order;
+keep HoldingsLedger.Quantity as the sole date/direction/checked-overflow calculator. No new financial
+or commercial policy and no persisted cache/schema. Ten behavior cases and main 3,179 pass; bounded
+Core computation preserves exact results while reducing repeated input visits. Six Windows native
+caption contexts pass. Six normal Release Android caption/return cases pass; original Main and fixture data/display restored.
+[Evidence](quality/asset-event-index.md). Whole startup/device/release gates remain open.

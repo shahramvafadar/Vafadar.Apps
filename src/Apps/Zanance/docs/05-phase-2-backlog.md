@@ -1052,3 +1052,10 @@ Remove redundant native section detachment on repeated appearance; retain existi
 visibility and original financial inputs. Main 3,169, strict builds and 18 Windows contexts verified;
 six normal Release Android Home/return cases and exact owned-data/display restoration verified. Rejected startup candidates are removed, not delivered.
 Canonical QA-06 and external acceptance remain open. [Evidence](quality/home-layout-reuse.md).
+
+## D-178 original asset-event slices
+
+One projection-local type index preserves original quantity formulas/date/order/units while avoiding
+repeated complete-history scans. Ten new cases, main 3,179, strict builds, bounded Core measurements
+and six Windows caption contexts verified; Six normal Release Android caption/return cases and original Main/fixture/display restoration verified. Canonical QA-06
+and external acceptance remain open. [Evidence](quality/asset-event-index.md).

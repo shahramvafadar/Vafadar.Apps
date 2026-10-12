@@ -1122,3 +1122,9 @@ replaces the actual editable children. Native naming evidence is separate from s
 Default source order matches the existing saved-layout default. Keep correctly placed native sections
 attached on appearance; move only displaced containers. Visibility and complete financial bindings
 remain authoritative. Native tree reuse is engineering evidence, not a startup-duration or device claim.
+
+## Original holdings captions during Home projection (D-178)
+
+Keep quantity units separate by asset type and preserve original type order, date and formatting.
+Routing events once must not replace the original checked quantity calculation or alter stored
+names. Native digit shaping applies to the final caption, including digits within a stored name.

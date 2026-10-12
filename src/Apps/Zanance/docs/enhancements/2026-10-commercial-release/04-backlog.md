@@ -1367,3 +1367,11 @@ order matches Core. Main 3,169, strict builds, 18 Windows contexts and complete 
 six normal Release Android Home/return cases and exact owned-data/display restoration verified. Async startup/appearance-gating candidates were rejected and
 removed after finite native timing; do not repeat them without new evidence. QA-06 and full release
 remain open. [Evidence](../../quality/home-layout-reuse.md).
+
+## Original asset-event slices (D-178)
+
+Home uses one original type index per projection, retaining the original checked quantity calculator.
+Ten new cases; main 3,179, strict builds, bounded exact Core computation and six Windows caption
+contexts pass. Six normal Release Android caption/return cases and explicit QA03 fixture/Main/display restoration verified. QA-06 and
+whole release remain open; do not repeat unrelated completed layout or commercial reviews.
+[Evidence](../../quality/asset-event-index.md).
