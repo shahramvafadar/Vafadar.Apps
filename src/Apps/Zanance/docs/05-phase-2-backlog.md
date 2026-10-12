@@ -993,3 +993,11 @@ D-167 completes original backup restore outcome handling and nonreplacing comple
 35 AT-169 cases/main 3,045 pass; strict builds, 36 Windows contexts, actual Release Android recovery and
 complete signed APK verified. Current ENT-02/03/04 scope is audited next; external gates stay separate.
 See [evidence](quality/restore-outcomes.md).
+
+## Forecast/snapshot follow-through (D-169)
+
+The original computation/atomic Save/history/Delete group is verified locally; retained Free data and
+currency-safe legacy comparison are preserved. No commercial activation or external release acceptance.
+Main 3,074 tests, strict builds, native Windows/Android evidence and complete signed installable APK:
+artifacts/android/zanance-d169-release.apk. See [evidence](quality/forecast-work.md).
+Next finite ready group: receipt recognition, followed by loan/report/PDF.

@@ -6170,4 +6170,31 @@ Plafonds par catégorie :
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>La restauration n’a pas démarré, car la confirmation n’a pas pu aboutir. Vos données sont inchangées et l’aperçu est conservé.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>Votre horizon et votre scénario sont conservés. Choisissez la fin du mois et réinitialisez le scénario pour revenir à la prévision de base.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>Chargement de la prévision…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>La prévision n'a pas pu être actualisée. Vos choix sont conservés. Réessayez.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>Actualiser la prévision et l'accès</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>La prévision a été enregistrée.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>La prévision a été enregistrée, mais la liste n'a pas pu être actualisée. Actualisez-la pour continuer ; un nouvel enregistrement créerait une copie.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>La prévision n'a pas pu être enregistrée. Le nom et le scénario sont conservés.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>La prévision enregistrée n'a pas pu être supprimée. Réessayez.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>La prévision enregistrée a été supprimée, mais la page n'a pas terminé sa mise à jour. Revenez en arrière et actualisez la liste.</value>
+  </data>
 </root>

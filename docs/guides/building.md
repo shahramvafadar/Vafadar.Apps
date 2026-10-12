@@ -690,3 +690,11 @@ with explicit fictitious native completion effects and Debug-only discovery supp
 Release Android separately checks actual DocumentsUI/consent/source/root. No owner desktop input, global
 capture or device setting change. Exact owned fixtures restore; final signed Release remains stopped.
 See [evidence](../../src/Apps/Zanance/docs/quality/restore-outcomes.md).
+
+## Focused forecast review (D-169)
+
+Windows Debug VAFADAR_SNAPSHOT_ONLY=forecast-work covers original native horizon/Refresh/Reset/Save
+and retained saved data. forecast-currency-work adds actual two-currency Save and legacy comparison.
+Fixtures use independent SQLite; rights/prompt/consent/return effects are explicit. Capture only the
+hidden application's own root/window and restore complete owned rows/bytes/display. No device settings
+or owner desktop input. Follow the usual signed Release package and strict-build handoff requirements.

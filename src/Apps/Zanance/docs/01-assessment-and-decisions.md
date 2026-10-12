@@ -2099,3 +2099,20 @@ owner texts/markets/samples and external device/platform gates remain distinct d
 This is documentation-only inspection, not a fresh runtime claim: D-167's 3,045 passing tests, strict builds,
 native checks and signed APK remain the engineering baseline and are not needlessly repeated.
 See [current inventory](enhancements/2026-10-commercial-release/07-current-entry-point-inventory.md).
+
+## D-169 - Original forecast access and currency-safe snapshots
+
+Bind approved BasicForecast/AdvancedForecast to coherent original computation and saved-data paths.
+Retain Free financial-month results/history/deletion, exact raw drafts on refusal and explicit refresh.
+All-currency Save is atomic and accepted drafts cannot resubmit after follow-through failure.
+Reproduced EUR 12345 becoming 22221 from foreign USD 9876: new scopes are currency-specific and old
+comparisons filter by saved currency without rewriting metadata. No financial conversion is guessed.
+
+29 AT-170 cases and the ordinary 3,074-test suite pass (zero failures/skips); cleanup and strict
+Windows/complete Android Release builds pass without warnings/errors. Thirty-six existing Windows
+layout contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced. Three further native
+two-currency contexts verify per-currency saves and immutable legacy comparison with complete original
+25-table restoration. Normal Release Android name/Save/details/Delete consent was exercised once;
+exact owned bytes/sidecars and Main/English/System were restored. Final updated Release is installed/stopped.
+Commercial registration stays inactive. Phone, iOS, real OAuth, billing and release acceptance remain open.
+See [bounded evidence](quality/forecast-work.md). Next: receipt recognition, then loan/report/PDF.

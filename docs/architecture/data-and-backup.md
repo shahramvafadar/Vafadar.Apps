@@ -732,3 +732,12 @@ Later-source BackupException can follow a committed earlier source: uncertain re
 inspection/consent, not an invented rollback claim. Native effects use IBackupRestoreRuntime; original
 source/safety/automatic-post/security policy stays authoritative. No model or portable-format change.
 See [evidence](../../src/Apps/Zanance/docs/quality/restore-outcomes.md).
+
+## Coherent forecast work and immutable snapshots (D-169)
+
+ForecastWorkStore uses a deferred original SQLite reader with unsaved Settings defaults and captured
+actual-file access. Snapshot batches use CommercialWriteTransaction; accepted notification outcomes
+carry exact ids. ForecastWorkspace retires accepted drafts before fallible follow-through. New scopes
+contain only the saved currency; SnapshotComparer excludes foreign accounts in legacy scopes without
+mutating stored metadata. No migration or portable format change.
+See [evidence](../../src/Apps/Zanance/docs/quality/forecast-work.md).

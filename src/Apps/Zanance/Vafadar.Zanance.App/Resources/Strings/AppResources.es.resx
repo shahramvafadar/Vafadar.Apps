@@ -6162,4 +6162,31 @@ Límites por categoría:
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>La restauración no comenzó porque no se pudo completar la confirmación. Tus datos no han cambiado y la vista previa se conserva.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>Se conservan tu horizonte y tu escenario. Elige el fin de mes y restablece el escenario para volver a la previsión básica.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>Cargando la previsión…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>No se pudo actualizar la previsión. Se conserva tu selección. Vuelve a intentarlo.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>Actualizar previsión y acceso</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>Se ha guardado la previsión.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>Se ha guardado la previsión, pero no se pudo actualizar la lista. Actualízala para continuar; guardarla otra vez crearía una copia nueva.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>No se pudo guardar la previsión. Se conservan el nombre y el escenario.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>No se pudo eliminar la previsión guardada. Vuelve a intentarlo.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>Se ha eliminado la previsión guardada, pero la página no terminó de actualizarse. Vuelve atrás y actualiza la lista.</value>
+  </data>
 </root>

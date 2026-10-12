@@ -1446,26 +1446,45 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         return [.. (await db.ForecastSnapshots.AsNoTracking().ToListAsync(cancellationToken)).OrderByDescending(s => s.CreatedAt)];
     }
 
-    /// <summary>Saves a new forecast snapshot; snapshots are read-only, so an existing one is never changed (ZEX-AT40).</summary>
-    public async Task SaveForecastSnapshotAsync(Core.Forecasts.ForecastSnapshot snapshot, CancellationToken cancellationToken = default)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (await db.ForecastSnapshots.AnyAsync(s => s.Id == snapshot.Id, cancellationToken))
-        {
-            throw new InvalidOperationException("A forecast snapshot cannot be changed.");
-        }
+    /// <summary>Saves one immutable forecast through the same atomic original batch boundary.</summary>
+    public async Task SaveForecastSnapshotAsync(Core.Forecasts.ForecastSnapshot snapshot, CancellationToken cancellationToken = default) =>
+        await SaveForecastSnapshotsAsync([snapshot], cancellationToken: cancellationToken);
 
-        db.ForecastSnapshots.Add(snapshot);
+    /// <summary>Saves the original currency snapshots together; no accepted subset can survive a rejected batch.</summary>
+    public async Task<IReadOnlyList<Guid>> SaveForecastSnapshotsAsync(IEnumerable<Core.Forecasts.ForecastSnapshot> snapshots,
+        ForecastReadSnapshot? reviewed = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshots); var batch = snapshots.ToList();
+        if (batch.Count == 0 || batch.Any(item => item is null) || batch.Select(item => item.Id).Distinct().Count() != batch.Count)
+            throw new ArgumentException("Provide a nonempty batch of distinct original forecasts.", nameof(snapshots));
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        write.DemandFeature(CommercialFeature.AdvancedForecast); reviewed?.DemandWriterFile(db);
+        var ids = batch.Select(item => item.Id).ToArray();
+        if (await db.ForecastSnapshots.AnyAsync(item => ids.Contains(item.Id), cancellationToken))
+            throw new InvalidOperationException("A forecast snapshot cannot be changed.");
+        db.ForecastSnapshots.AddRange(batch);
+        write.EnsureCurrent(); reviewed?.DemandWriterFile(db);
         await db.SaveChangesAsync(cancellationToken);
-        OnChanged();
+        reviewed?.DemandWriterFile(db); await write.CommitAsync(cancellationToken);
+        return CommittedWriteNotification.Publish<IReadOnlyList<Guid>>(OnChanged, ids);
     }
 
-    /// <summary>Deletes a forecast snapshot.</summary>
-    public async Task DeleteForecastSnapshotAsync(Guid id, CancellationToken cancellationToken = default)
+    /// <summary>Deletes owned saved data independently of paid analytical access, with exact membership/file checks.</summary>
+    public Task DeleteForecastSnapshotAsync(Guid id, CancellationToken cancellationToken = default) =>
+        DeleteForecastCoreAsync(id, null, cancellationToken);
+
+    /// <summary>Deletes from the reviewed original file after native consent; no paid forecast capability is required.</summary>
+    public Task DeleteReviewedForecastSnapshotAsync(Guid id, ForecastReadSnapshot reviewed, CancellationToken cancellationToken = default) =>
+        DeleteForecastCoreAsync(id, reviewed ?? throw new ArgumentNullException(nameof(reviewed)), cancellationToken);
+
+    private async Task DeleteForecastCoreAsync(Guid id, ForecastReadSnapshot? reviewed, CancellationToken cancellationToken)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.ForecastSnapshots.Where(s => s.Id == id).ExecuteDeleteAsync(cancellationToken);
-        OnChanged();
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        write.DemandFeature(CommercialFeature.DeleteData); reviewed?.DemandWriterFile(db, CommercialFeature.DeleteData);
+        await db.ForecastSnapshots.Where(item => item.Id == id).ExecuteDeleteAsync(cancellationToken);
+        reviewed?.DemandWriterFile(db, CommercialFeature.DeleteData); await write.CommitAsync(cancellationToken);
+        CommittedWriteNotification.Publish(OnChanged);
     }
 }

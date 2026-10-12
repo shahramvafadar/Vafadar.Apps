@@ -7,6 +7,7 @@
     <PackageReference Include="FluentIcons.Common" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastWorkspace.cs" Link="Application/ForecastWorkspace.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestoreSession.cs" Link="Application/BackupRestoreSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/IBackupRestoreRuntime.cs" Link="Application/IBackupRestoreRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.cs" Link="Application/ImportExportViewModel.cs" />

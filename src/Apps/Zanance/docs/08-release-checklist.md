@@ -877,3 +877,11 @@ D-167 local/native recovery and complete signed APK checks pass; this is not rel
 See [restore-outcomes](quality/restore-outcomes.md) for 35 cases, main 3,045, strict builds, 36 Windows
 contexts, actual normal Release Android source recovery, original fixture restoration and signature.
 Physical-device/iOS/OAuth/billing/production certificate and encryption decisions remain open.
+
+## Forecast/snapshot follow-through (D-169)
+
+The original computation/atomic Save/history/Delete group is verified locally; retained Free data and
+currency-safe legacy comparison are preserved. No commercial activation or external release acceptance.
+Main 3,074 tests, strict builds, native Windows/Android evidence and complete signed installable APK:
+artifacts/android/zanance-d169-release.apk. See [evidence](quality/forecast-work.md).
+Next finite ready group: receipt recognition, followed by loan/report/PDF.

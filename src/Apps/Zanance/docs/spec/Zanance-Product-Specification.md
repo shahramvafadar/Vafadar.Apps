@@ -2667,3 +2667,18 @@ loan/report/PDF analysis. Resource writers/choices/reminders/import/recovery are
 partial notes are reconciled in the [current inventory](../enhancements/2026-10-commercial-release/07-current-entry-point-inventory.md).
 Documentation-only, no new runtime acceptance: D-167's 3,045 passing tests and complete signed APK remain
 the baseline. Provider/activation/encryption/owner-text/device/iOS/release dependencies remain open.
+
+### 31.82 Original forecast work and currency-safe saved comparison (D-169)
+
+Approved original forecast/scenario/snapshot boundaries are implemented. Preserve Free month-end,
+retained history/deletion and raw refused drafts; commit currency snapshots together without repeat.
+Legacy mixed scopes never sum foreign money and remain stored unchanged.
+29 AT-170 cases and the ordinary 3,074-test suite pass (zero failures/skips); cleanup and strict
+Windows/complete Android Release builds pass without warnings/errors. Thirty-six existing Windows
+layout contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced. Three further native
+two-currency contexts verify per-currency saves and immutable legacy comparison with complete original
+25-table restoration. Normal Release Android name/Save/details/Delete consent was exercised once;
+exact owned bytes/sidecars and Main/English/System were restored. Final updated Release is installed/stopped.
+Commercial registration stays inactive. Phone, iOS, real OAuth, billing and release acceptance remain open.
+APK: artifacts/android/zanance-d169-release.apk. [Evidence](../quality/forecast-work.md).
+Next: receipt recognition, then loan/report/PDF; the full commercial release remains incomplete.

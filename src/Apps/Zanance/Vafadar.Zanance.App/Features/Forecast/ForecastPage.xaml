@@ -11,7 +11,8 @@
     x:DataType="local:ForecastViewModel"
     Title="{v:Translate Forecast_Title}">
 
-    <ScrollView>
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding HorizonNames}" SelectedIndex="{Binding HorizonIndex}" />
             <Label Text="{Binding BasisText}" Style="{StaticResource Secondary}" />
@@ -120,7 +121,7 @@
             <Label Text="{v:Translate Forecast_Disclaimer}" Style="{StaticResource Secondary}" FontSize="12" Margin="0,8,0,0" />
 
             <!-- Snapshots (ZEX-S0803): save in Advanced; the list shows in both modes once there are any -->
-            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Snapshot_SaveTitle}" Command="{Binding SaveSnapshotCommand}" IsVisible="{Binding IsAdvanced}" Margin="0,8,0,0" />
+            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Snapshot_SaveTitle}" Command="{Binding SaveSnapshotCommand}" IsEnabled="{Binding CanSave}" IsVisible="{Binding IsAdvanced}" Margin="0,8,0,0" />
             <Label Text="{v:Translate Snapshot_ListTitle}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasSnapshots}" />
             <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasSnapshots}">
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Snapshots}">
@@ -142,4 +143,18 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Loading.IsReady}">
+            <Label Text="{Binding Workspace.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Workspace.Error, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding Workspace.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Workspace.Result, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" IsEnabled="{Binding CanInteract}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.RowSpan="2" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Forecast_Loading}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.RowSpan="2" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Forecast_LoadFailed}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

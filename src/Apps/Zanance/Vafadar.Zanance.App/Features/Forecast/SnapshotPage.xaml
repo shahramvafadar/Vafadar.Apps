@@ -3,6 +3,7 @@
     x:Class="Vafadar.Zanance.App.Features.Forecast.SnapshotPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:reports="clr-namespace:Vafadar.Zanance.App.Features.Reports"
@@ -11,6 +12,7 @@
     Title="{Binding Name}">
 
     <Grid>
+    <Grid IsVisible="{Binding Loading.IsReady}">
         <Label Text="{v:Translate Snapshot_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
         <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
@@ -23,7 +25,15 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{v:Translate Snapshot_NotStarted}" Style="{StaticResource Secondary}" Margin="4,8" IsVisible="{Binding NotStarted}" />
+                <Label Text="{Binding AccessError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AccessError, Converter={StaticResource IsNotNullConverter}}" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding SavedRows}" IsVisible="{Binding CanCompare, Converter={StaticResource InvertedBoolConverter}}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:ComparisonRow">
+                            <VerticalStackLayout Spacing="4"><Label Text="{Binding DateText}" /><p:AmountReadout AmountText="{Binding SavedText}" /></VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Text="{v:Translate Snapshot_NotStarted}" Style="{StaticResource Secondary}" Margin="4,8" IsVisible="{Binding ShowNotStarted}" />
 
                 <!-- Saved path and reality; the table below is the alternative to the chart -->
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding NotStarted, Converter={StaticResource InvertedBoolConverter}}">
@@ -72,9 +82,9 @@
                 </Border>
 
                 <!-- Where the difference comes from: the parts add up to it -->
-                <Label Text="{v:Translate Snapshot_Parts}" Style="{StaticResource SectionHeader}" />
+                <Label Text="{v:Translate Snapshot_Parts}" Style="{StaticResource SectionHeader}" IsVisible="{Binding CanCompare}" />
                 <Border Style="{StaticResource Card}">
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parts}" Spacing="8">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parts}" Spacing="8" IsVisible="{Binding CanCompare}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="reports:AmountLine">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
@@ -94,10 +104,19 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Border>
-                <Label Text="{v:Translate Snapshot_PartsNote}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" />
+                <Label Text="{v:Translate Snapshot_PartsNote}" Style="{StaticResource Secondary}" FontSize="12" Margin="4,0" IsVisible="{Binding CanCompare}" />
 
                 <Button Text="{v:Translate Snapshot_Delete}" Command="{Binding DeleteCommand}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}" />
             </VerticalStackLayout>
         </ScrollView>
+    </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Forecast_Loading}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Forecast_LoadFailed}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

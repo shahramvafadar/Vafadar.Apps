@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Forecast drafts and currency-safe saved comparisons (2026-10-12, D-169)
+
+- Keep forecast choices and names after a refused request; refresh explicitly without losing the draft.
+- Keep saved forecast values readable and deletable, with clear loading and completed Save feedback.
+- Save currencies together and compare each against its own accounts, including older saved forecasts.
+
 ### Improved - Honest restore results and completion retry (2026-10-12, D-167)
 
 - Keep the preceding reviewed backup when reading a newly selected file fails.

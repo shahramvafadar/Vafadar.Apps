@@ -11,6 +11,7 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Forecast;
 
@@ -61,30 +62,39 @@ public sealed record ForecastCard(
 /// </summary>
 public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThemeAware
 {
-    private readonly ZananceStore _store;
-    private readonly PlanStore _plans;
     private readonly Translator _translator;
+    private readonly IForecastInteraction _interaction;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
-    private readonly ForecastScenario _scenario = new();
+    private ForecastScenario _scenario => Workspace.Scenario;
     private Dictionary<Guid, string> _planCurrencies = [];
-    private IReadOnlyList<CurrencyForecast> _forecasts = [];
-    private List<Guid> _scope = [];
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public ForecastViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+    /// <summary>Composes the original native projection with guarded computation, draft and explicit native effects.</summary>
+    public ForecastViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, ForecastWorkStore work, IForecastInteraction? interaction = null)
     {
-        _store = store;
-        _plans = plans;
-        _translator = translator;
+        _translator = translator; _interaction = interaction ?? new MauiForecastInteraction();
         _dates = dates;
         _localization = localization;
         _time = time;
         HorizonNames = [translator["Forecast_EndOfMonth"], translator["Forecast_30Days"], translator["Forecast_90Days"]];
         BasisText = string.Empty;
+        Workspace = new ForecastWorkspace(work, store, translator);
+        Workspace.PropertyChanged += (_, _) => { OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); SaveSnapshotCommand.NotifyCanExecuteChanged(); };
+        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(IsBusy)) { OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); SaveSnapshotCommand.NotifyCanExecuteChanged(); } };
+        Loading.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanInteract));
     }
 
+    /// <summary>Gets the actual process-local forecast draft and original guarded writer.</summary>
+    public ForecastWorkspace Workspace { get; }
+    /// <summary>Gets coverage through original read and complete native projection publication.</summary>
+    public SnapshotLoadState Loading { get; } = new();
+    /// <summary>Gets native input availability after complete covered publication.</summary>
+    public bool CanInteract => Loading.IsReady && !Workspace.IsBusy && !IsBusy;
+    /// <summary>Gets whether the reviewed original computation may save one explicit new batch.</summary>
+    public bool CanSave => Workspace.CanSave && !IsBusy;
+    /// <summary>Gets the original translated month-end, thirty-day and ninety-day choices.</summary>
     public IReadOnlyList<string> HorizonNames { get; }
 
     public ObservableCollection<ForecastCard> Cards { get; } = [];
@@ -115,7 +125,16 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    partial void OnHorizonIndexChanged(int value) => _ = Presentation.Failures.GuardAsync(LoadAsync);
+    private bool _restoringHorizon;
+    partial void OnHorizonIndexChanged(int oldValue, int newValue)
+    {
+        if (_restoringHorizon) return;
+        if (!CanInteract || newValue is < 0 or > 2)
+        { _restoringHorizon = true; try { HorizonIndex = oldValue; } finally { _restoringHorizon = false; } return; }
+        Workspace.BeginNewDraft(); _ = Presentation.Failures.GuardAsync(LoadAsync);
+    }
+    [RelayCommand]
+    private Task RefreshAccessAsync() { Workspace.BeginNewDraft(); return LoadAsync(); }
 
     /// <summary>Computes the forecast of the chosen horizon.</summary>
     /// <remarks>Appearing, the horizon and the scenario can ask at once; loads run one after the other (as on Home, CR07-05).</remarks>
@@ -127,7 +146,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         await _loading.WaitAsync();
         try
         {
-            await LoadCoreAsync();
+            await Loading.RunAsync(LoadCoreAsync, () => { });
         }
         finally
         {
@@ -139,28 +158,17 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     {
         var today = Today;
         var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
-        var settings = await _store.GetSettingsAsync();
-        var startDay = settings.MonthStartDay;
-        IsAdvanced = settings.Shows(Feature.ForecastDetails);
-        var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
-        var horizon = HorizonIndex switch
-        {
-            1 => today.AddDays(30),
-            2 => today.AddDays(90),
-            _ => PeriodMath.MonthRange(year, month, calendar, startDay).Last,
-        };
-
-        var accounts = await _store.GetAccountsAsync();
-        var entries = await _store.GetEntriesAsync();
+        await Workspace.LoadAsync(HorizonIndex, calendar, today);
+        if (Workspace.Review is not { } review) return;
+        review.EnsureCurrent();
+        IsAdvanced = review.Settings.Shows(Feature.ForecastDetails);
+        var horizon = review.Horizon(HorizonIndex, calendar, today);
+        var accounts = review.Accounts; var entries = review.Entries; var schedules = review.Schedules;
         HasAccounts = accounts.Count > 0;
-        var schedules = await _plans.GetSchedulesAsync();
         var accountCurrencies = accounts.ToDictionary(a => a.Id, a => a.CurrencyCode);
         _planCurrencies = schedules.Where(p => accountCurrencies.ContainsKey(p.AccountId)).ToDictionary(p => p.Id, p => accountCurrencies[p.AccountId]);
-        var forecasts = ForecastCalculator.Compute(accounts, entries, schedules, await _plans.GetStatesAsync(), today, horizon, scenario: _scenario);
-        _forecasts = forecasts;
-        _scope = [.. accounts.Where(a => a.IncludeInTotals && !a.IsArchived && a.UsableForPayments).Select(a => a.Id)];
-        await LoadSnapshotsAsync();
-        HasScenario = !_scenario.IsEmpty;
+        var forecasts = Workspace.Forecasts;
+        PublishSnapshots(); HasScenario = !_scenario.IsEmpty;
         var culture = _localization.CurrentCulture;
 
         // The basis is always visible: accounts, base date, horizon, and whether unreviewed entries are included (FOR-09).
@@ -211,10 +219,10 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         }
     }
 
-    private async Task LoadSnapshotsAsync()
+    private void PublishSnapshots()
     {
         Snapshots.Clear();
-        foreach (var snapshot in await _store.GetForecastSnapshotsAsync())
+        foreach (var snapshot in Workspace.Review?.Snapshots ?? [])
         {
             Snapshots.Add(new SnapshotRow(snapshot.Id, snapshot.Name, _translator.Format("Snapshot_Saved", _dates.Format(snapshot.BaseDate, DateFormatStyle.Short), snapshot.CurrencyCode,
                 MoneyText.Format(snapshot.Minimum, snapshot.CurrencyCode, _localization.CurrentCulture), _dates.Format(snapshot.MinimumDate, DateFormatStyle.Short))));
@@ -224,36 +232,39 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     }
 
     // ZEX-S0803: the forecast as it is now – path, scope and assumptions – kept read-only for a later comparison.
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveSnapshotAsync()
     {
-        if (_forecasts.Count == 0)
+        if (!CanSave || Workspace.Review is not { } reviewed)
         {
             return;
         }
 
-        var name = await Shell.Current.DisplayPromptAsync(_translator["Snapshot_SaveTitle"], _translator["Snapshot_SaveMessage"], _translator["Common_Save"], _translator["Common_Cancel"],
-            initialValue: _dates.Format(Today, DateFormatStyle.Short), maxLength: 80);
-        if (string.IsNullOrWhiteSpace(name))
+        IsBusy = true;
+        try
         {
-            return;
-        }
+            await Workspace.ValidateAnalysisAsync(reviewed);
+            var name = await _interaction.PromptAsync(_translator["Snapshot_SaveTitle"], _translator["Snapshot_SaveMessage"], _translator["Common_Save"], _translator["Common_Cancel"],
+                initialValue: string.IsNullOrEmpty(Workspace.SnapshotName) ? _dates.Format(Workspace.BaseDate, DateFormatStyle.Short) : Workspace.SnapshotName, maxLength: 80);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return;
+            }
 
-        var assumptions = string.Join("; ", Cards.SelectMany(c => c.Rows).Where(r => r.Badge is not null && (r.IsExcluded || r.IsMoved || r.IsAmountAssumed)).Select(r => $"{r.Name}: {r.Badge}"));
-        foreach (var forecast in _forecasts)
-        {
-            var label = _forecasts.Count > 1 ? $"{name.Trim()} ({forecast.CurrencyCode})" : name.Trim();
-            await _store.SaveForecastSnapshotAsync(ForecastSnapshot.From(label, forecast, _scope, Today, assumptions, AppInfo.Current.VersionString));
+            var assumptions = string.Join("; ", Cards.SelectMany(c => c.Rows).Where(r => r.Badge is not null && (r.IsExcluded || r.IsMoved || r.IsAmountAssumed)).Select(r => $"{r.Name}: {r.Badge}"));
+            await Workspace.SaveAsync(name, assumptions, AppInfo.Current.VersionString);
+            PublishSnapshots();
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { Workspace.ReportAnalysisFailure(exception); }
+        finally { IsBusy = false; }
 
-        await LoadSnapshotsAsync();
     }
 
     [RelayCommand]
-    private Task OpenSnapshotAsync(SnapshotRow row) => Shell.Current.GoToAsync(AppShell.SnapshotRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    private Task OpenSnapshotAsync(SnapshotRow row) => _interaction.NavigateAsync(AppShell.SnapshotRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
-    private Task AddPlanAsync() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute);
+    private Task AddPlanAsync() => _interaction.NavigateAsync(AppShell.PlanEditorRoute);
 
     // FOR-04, FOR-10: a plan item can be left out, or assumed on another date or with another amount, for this view only;
     // nothing is saved.
@@ -265,67 +276,79 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
             return;
         }
 
-        var open = _translator["Forecast_OpenOccurrence"];
-        var toggle = row.IsExcluded ? _translator["Forecast_IncludeAgain"] : _translator["Forecast_LeaveOut"];
-        var move = _translator["Forecast_AssumeDate"];
-        var restore = _translator["Forecast_RestoreDate"];
-        var amount = row.IsAmountAssumed ? _translator["Forecast_RestoreAmount"] : _translator["Forecast_AssumeAmount"];
-        string[] actions = row.IsExcluded ? [open, toggle] : [open, toggle, row.IsMoved ? restore : move, amount];
-        var choice = await Shell.Current.DisplayActionSheetAsync(row.Name, _translator["Common_Cancel"], null, actions);
-        if (choice == open)
+        if (!CanInteract || Workspace.Review is not { } reviewed) return;
+        IsBusy = true;
+        try
         {
-            await Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = plan, ["date"] = original });
-            return;
-        }
+            var open = _translator["Forecast_OpenOccurrence"];
+            var toggle = row.IsExcluded ? _translator["Forecast_IncludeAgain"] : _translator["Forecast_LeaveOut"];
+            var move = _translator["Forecast_AssumeDate"];
+            var restore = _translator["Forecast_RestoreDate"];
+            var amount = row.IsAmountAssumed ? _translator["Forecast_RestoreAmount"] : _translator["Forecast_AssumeAmount"];
+            string[] actions = row.IsExcluded ? [open, toggle] : [open, toggle, row.IsMoved ? restore : move, amount];
+            var choice = await _interaction.ChooseAsync(row.Name, _translator["Common_Cancel"], actions);
+            if (choice == open)
+            {
+                await _interaction.NavigateAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = plan, ["date"] = original });
+                return;
+            }
 
-        if (choice == restore)
-        {
-            _scenario.SetDate(plan, original, null);
-        }
-        else if (choice == toggle)
-        {
-            _scenario.SetExcluded(plan, original, !row.IsExcluded);
-        }
-        else if (choice == amount && row.IsAmountAssumed)
-        {
-            _scenario.SetAmount(plan, original, null);
-        }
-        else if (choice == amount)
-        {
-            if (row.PlanCurrency is not { } currency)
+            if (choice is null || choice == _translator["Common_Cancel"]) return;
+            await Workspace.ValidateAnalysisAsync(reviewed);
+            if (choice == restore)
+            {
+                Workspace.EditScenario(s => s.SetDate(plan, original, null));
+            }
+            else if (choice == toggle)
+            {
+                Workspace.EditScenario(s => s.SetExcluded(plan, original, !row.IsExcluded));
+            }
+            else if (choice == amount && row.IsAmountAssumed)
+            {
+                Workspace.EditScenario(s => s.SetAmount(plan, original, null));
+            }
+            else if (choice == amount)
+            {
+                if (row.PlanCurrency is not { } currency)
+                {
+                    return;
+                }
+
+                var culture = _localization.CurrentCulture;
+                var text = await _interaction.PromptAsync(
+                    _translator["Forecast_AssumeAmount"], _translator.Format("Forecast_AssumeAmountMessage", MoneyText.UnitName(currency)), _translator["Common_Ok"], _translator["Common_Cancel"],
+                    initialValue: row.PlanAmount is { } current ? MoneyText.ForInput(current, currency, culture) : string.Empty, maxLength: 20, numeric: true);
+                if (text is null || !MoneyText.TryParse(text, currency, culture, out var assumed) || assumed <= 0)
+                {
+                    return;
+                }
+
+                await Workspace.ValidateAnalysisAsync(reviewed);
+                Workspace.EditScenario(s => s.SetAmount(plan, original, assumed));
+            }
+            else if (choice == move)
+            {
+                var text = await _interaction.PromptAsync(
+                    _translator["Forecast_AssumeDate"], _translator["Forecast_AssumeDateMessage"], _translator["Common_Ok"], _translator["Common_Cancel"],
+                    initialValue: "7", maxLength: 4, numeric: true);
+                if (!int.TryParse(Vafadar.Core.Text.Digits.ToAscii(text ?? string.Empty).Replace('−', '-'), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var days) || days == 0)
+                {
+                    return;
+                }
+
+                await Workspace.ValidateAnalysisAsync(reviewed);
+                Workspace.EditScenario(s => s.SetDate(plan, original, row.Date.AddDays(days)));
+            }
+            else
             {
                 return;
             }
 
-            var culture = _localization.CurrentCulture;
-            var text = await Shell.Current.DisplayPromptAsync(
-                _translator["Forecast_AssumeAmount"], _translator.Format("Forecast_AssumeAmountMessage", MoneyText.UnitName(currency)), _translator["Common_Ok"], _translator["Common_Cancel"],
-                initialValue: row.PlanAmount is { } current ? MoneyText.ForInput(current, currency, culture) : string.Empty, maxLength: 20, keyboard: Keyboard.Numeric);
-            if (text is null || !MoneyText.TryParse(text, currency, culture, out var assumed) || assumed <= 0)
-            {
-                return;
-            }
-
-            _scenario.SetAmount(plan, original, assumed);
+            await LoadAsync();
         }
-        else if (choice == move)
-        {
-            var text = await Shell.Current.DisplayPromptAsync(
-                _translator["Forecast_AssumeDate"], _translator["Forecast_AssumeDateMessage"], _translator["Common_Ok"], _translator["Common_Cancel"],
-                initialValue: "7", maxLength: 4, keyboard: Keyboard.Numeric);
-            if (!int.TryParse(Vafadar.Core.Text.Digits.ToAscii(text ?? string.Empty).Replace('−', '-'), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var days) || days == 0)
-            {
-                return;
-            }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { Workspace.ReportAnalysisFailure(exception); }
+        finally { IsBusy = false; }
 
-            _scenario.SetDate(plan, original, row.Date.AddDays(days));
-        }
-        else
-        {
-            return;
-        }
-
-        await LoadAsync();
     }
 
     /// <summary>Assumes another amount for a plan item of this view (FOR-10); nothing is saved.</summary>
@@ -333,7 +356,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     {
         if (row is { ScheduleId: { } plan, OriginalDate: { } original })
         {
-            _scenario.SetAmount(plan, original, amount);
+            Workspace.EditScenario(s => s.SetAmount(plan, original, amount));
             await LoadAsync();
         }
     }
@@ -341,7 +364,8 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     [RelayCommand]
     private async Task ResetScenarioAsync()
     {
-        _scenario.Clear();
+        if (!CanInteract) return;
+        Workspace.ResetScenario();
         await LoadAsync();
     }
 }

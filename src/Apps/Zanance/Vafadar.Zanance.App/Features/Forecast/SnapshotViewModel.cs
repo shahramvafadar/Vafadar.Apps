@@ -8,6 +8,8 @@ using Vafadar.Zanance.App.Features.Reports;
 using Vafadar.Zanance.Core.Forecasts;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Core.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Forecast;
 
@@ -22,10 +24,26 @@ public sealed record ComparisonRow(string DateText, string SavedText, string Act
 /// from today's ledger, and the difference split into recorded later, unplanned spending and income, and plans that
 /// changed – the parts always add up. The snapshot itself never changes.
 /// </summary>
-public sealed partial class SnapshotViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time)
+public sealed partial class SnapshotViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, ForecastWorkStore work, IForecastInteraction? interaction = null)
     : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
+    private readonly IForecastInteraction _interaction = interaction ?? new MauiForecastInteraction();
     private Guid _id;
+    private bool _deleted;
+    private ForecastReadSnapshot? _review;
+    /// <summary>Gets covered current-file publication state.</summary>
+    public Presentation.SnapshotLoadState Loading { get; } = new();
+    /// <summary>Gets retained saved points independently of paid new comparison.</summary>
+    public ObservableCollection<ComparisonRow> SavedRows { get; } = [];
+    /// <summary>Gets full translated access or accepted-delete follow-through feedback.</summary>
+    [ObservableProperty] public partial string? AccessError { get; set; }
+    /// <summary>Gets whether a new analytical comparison was permitted by the original current facts.</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(ShowNotStarted))] public partial bool CanCompare { get; set; }
+    /// <summary>Gets the original not-started comparison explanation only after an authorized comparison.</summary>
+    public bool ShowNotStarted => CanCompare && NotStarted;
+    /// <summary>Gets whether original saved data can still be explicitly deleted.</summary>
+    public bool CanDelete => Loading.IsReady && !IsBusy && !_deleted && !NotFound;
+    [RelayCommand] private Task ReloadAsync() => LoadAsync();
 
     public ObservableCollection<ComparisonPoint> Points { get; } = [];
 
@@ -49,6 +67,7 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
     public partial bool NotFound { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowNotStarted))]
     public partial bool NotStarted { get; set; }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -65,7 +84,15 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
 
     public async Task LoadAsync()
     {
-        var snapshot = (await store.GetForecastSnapshotsAsync()).FirstOrDefault(s => s.Id == _id);
+        ForecastReadSnapshot? reviewed = null;
+        await Loading.RunAsync(async () => reviewed = await work.ReadAsync(), () => Publish(reviewed!));
+        DeleteCommand.NotifyCanExecuteChanged();
+    }
+
+    private void Publish(ForecastReadSnapshot reviewed)
+    {
+        reviewed.EnsureCurrent(); _review = reviewed;
+        var snapshot = reviewed.Snapshots.FirstOrDefault(s => s.Id == _id);
         NotFound = snapshot is null;
         if (snapshot is null)
         {
@@ -81,7 +108,14 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
             + (snapshot.UnknownCount > 0 ? " · " + translator.Format("Forecast_Incomplete", snapshot.UnknownCount) : string.Empty);
         AssumptionsText = snapshot.Assumptions is { } assumptions ? translator.Format("Snapshot_Assumptions", assumptions) : null;
 
-        var comparison = SnapshotComparer.Compare(snapshot, await store.GetAccountsAsync(), await store.GetEntriesAsync(), today);
+        Points.Clear(); Rows.Clear(); Parts.Clear(); SavedRows.Clear(); ComparedText = null;
+        foreach (var point in snapshot.Points())
+            SavedRows.Add(new ComparisonRow(dates.Format(point.Date, DateFormatStyle.DayMonth), Money(point.Balance), string.Empty, string.Empty, Presentation.Palette.SecondaryText));
+        CanCompare = reviewed.Permission(CommercialFeature.AdvancedForecast) == FeaturePermission.Allowed;
+        AccessError = CanCompare ? null : Presentation.CommercialFailureMessage.Describe(
+            new CommercialWriteRejectedException(CommercialFeature.AdvancedForecast, reviewed.Permission(CommercialFeature.AdvancedForecast)), translator);
+        if (!CanCompare) { NotStarted = true; return; }
+        var comparison = reviewed.Compare(snapshot, today);
         var currency = Currencies.TryGet(snapshot.CurrencyCode, out var known) ? known : Currencies.Euro;
         Points.Clear();
         Rows.Clear();
@@ -107,13 +141,20 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
         Parts.Add(new AmountLine(translator["Snapshot_Difference"], Money(comparison.Difference, true), true, comparison.Difference < 0));
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanDelete))]
     private async Task DeleteAsync()
     {
-        if (await Shell.Current.DisplayAlertAsync(translator["Snapshot_Delete"], translator["Snapshot_DeleteMessage"], translator["Common_Delete"], translator["Common_Cancel"]))
+        if (!CanDelete || _review is not { } reviewed) return;
+        IsBusy = true; DeleteCommand.NotifyCanExecuteChanged();
+        try
         {
-            await store.DeleteForecastSnapshotAsync(_id);
-            await Shell.Current.GoToAsync("..");
+            if (!await _interaction.ConfirmAsync(translator["Snapshot_Delete"], translator["Snapshot_DeleteMessage"], translator["Common_Delete"], translator["Common_Cancel"])) return;
+            try { await work.ValidateAsync(reviewed); await store.DeleteReviewedForecastSnapshotAsync(_id, reviewed); }
+            catch (CommittedWriteNotificationException) { _deleted = true; AccessError = translator["Forecast_DeletedFollowUpFailed"]; }
+            _deleted = true; await _interaction.NavigateAsync("..");
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { AccessError = _deleted ? translator["Forecast_DeletedFollowUpFailed"] : Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Forecast_DeleteFailed"); }
+        finally { IsBusy = false; DeleteCommand.NotifyCanExecuteChanged(); }
     }
 }

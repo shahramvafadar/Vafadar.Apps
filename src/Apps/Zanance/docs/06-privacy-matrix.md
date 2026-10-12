@@ -479,3 +479,10 @@ provider and release acceptance. Test commercial registration is still inactive.
 Accepted package/password/preview is retired before completion; retry state remains process-local.
 No new data, SDK, network, permission, credential, portable field or encryption/OS-backup policy.
 Existing mandatory safety-copy retention and optional portable protection remain unchanged.
+
+## Forecast/saved-data boundary (D-169)
+
+Existing local accounts, ledger, plans and forecast metadata only. No new portable field, schema,
+permission, credential, SDK or network collection. Comparison filters foreign currency without rewriting
+saved originals. Cached analytical access is separate from retained owned-data history/deletion.
+Commercial registration remains inactive; existing security and backup policy are unchanged.

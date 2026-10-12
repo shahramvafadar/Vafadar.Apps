@@ -1091,3 +1091,11 @@ Continue the three confirmed ready groups in [the current inventory](07-current-
 forecast/snapshots, receipt recognition, then loan/reports/PDF. Retain the original calculators and guards;
 prove each real new boundary once. Do not repeat delivered resource/recovery integrations or unchanged
 successful verification. External decisions and provider-dependent purchase UI remain separate.
+
+## Delivered original forecast group (D-169)
+
+Original Basic/Advanced computation, retained draft feedback, atomic multi-currency snapshot Save and
+Free saved values/Delete are implemented. Currency-safe legacy comparison is verified without stored
+rewrites. Main 3,074 tests, strict builds, native checks and signed APK completed locally.
+See [evidence](../../quality/forecast-work.md). Next: receipt recognition, then loan/report/PDF.
+ENT-02/03/04 and owner/external gates remain in progress; commercial registration stays inactive.

@@ -6193,4 +6193,31 @@ Kategorielimits:
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>Die Wiederherstellung wurde nicht gestartet, weil die Bestätigung nicht abgeschlossen werden konnte. Deine Daten sind unverändert und die Vorschau bleibt erhalten.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>Zeitraum und Szenario bleiben erhalten. Wähle das Monatsende und setze das Szenario zurück, um zur Basisprognose zurückzukehren.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>Prognose wird geladen…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>Die Prognose konnte nicht aktualisiert werden. Deine Auswahl bleibt erhalten. Versuche es erneut.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>Prognose und Zugriff aktualisieren</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>Die Prognose wurde gespeichert.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>Die Prognose wurde gespeichert, aber die Liste konnte nicht aktualisiert werden. Aktualisiere sie zum Fortfahren; erneutes Speichern erstellt eine neue Kopie.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>Die Prognose konnte nicht gespeichert werden. Name und Szenario bleiben erhalten.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>Die gespeicherte Prognose konnte nicht gelöscht werden. Versuche es erneut.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>Die gespeicherte Prognose wurde gelöscht, aber die Seite konnte nicht fertig aktualisiert werden. Gehe zurück und aktualisiere die Liste.</value>
+  </data>
 </root>

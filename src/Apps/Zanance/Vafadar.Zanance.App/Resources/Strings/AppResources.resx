@@ -6222,4 +6222,31 @@ Category limits:
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>Restore did not start because confirmation could not be completed. Your data has not changed and the preview is retained.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>Your horizon and scenario are kept. Select month end and reset the scenario to return to the basic forecast.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>Loading the forecast…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>The forecast could not be refreshed. Your choices are kept. Try again.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>Refresh forecast and access</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>The forecast was saved.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>The forecast was saved, but its list could not be refreshed. Refresh to continue; saving again would create a new copy.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>The forecast could not be saved. Your name and scenario are kept.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>The saved forecast could not be deleted. Try again.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>The saved forecast was deleted, but the page could not finish updating. Return and refresh the list.</value>
+  </data>
 </root>

@@ -1192,3 +1192,15 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Preserve Free financial-month forecast, history, corrections, essential warnings and owned-data recovery.
   Never infer paid access from Simple/Advanced or fabricate provider facts to complete purchase UI.
 * Source-only inventory changes do not justify repeating unchanged successful builds/native checks.
+
+## 102. Original forecast work and currency-safe comparisons (D-169)
+
+* Preserve the Free named-calendar financial-month forecast and complete original financial inputs;
+  new advanced horizons/scenarios/saves/comparisons use actual-file cached rights independently of UI mode.
+* Cover coherent reads/projection; retain raw refused horizon/scenario/name and offer explicit Refresh/Reset.
+  Saved original values and owned Delete remain available without a new paid comparison.
+* Commit all currency snapshots together under the original actual-file writer. Retire accepted drafts
+  before fallible notification/history; a completed Save cannot repeat through retry.
+* Scope each new snapshot to its currency. Filter legacy mixed scopes at comparison without rewriting
+  saved metadata or adding foreign-currency minor units. Native fixtures restore complete owned data.
+* Continue the finite receipt and loan/report/PDF groups; do not rebuild delivered resource boundaries.

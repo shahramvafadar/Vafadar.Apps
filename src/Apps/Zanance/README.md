@@ -360,3 +360,10 @@ Completed restore stays distinct from failed follow-through. Retry reopening wit
 again; interrupted new file reads retain the previous review. Main 3,045/App.Tests 988 pass, strict builds
 and native Windows/Android recovery verified. Signed APK: artifacts/android/zanance-d167-release.apk.
 See [evidence](docs/quality/restore-outcomes.md); external release gates remain open.
+
+## Forecast drafts and saved currency comparisons (D-169)
+
+Retain choices after refusal, refresh explicitly, keep saved values readable/deletable and prevent repeated
+accepted saves. Each saved currency uses its own accounts, including legacy comparison. Main 3,074 tests
+pass; complete signed APK: artifacts/android/zanance-d169-release.apk.
+See [evidence](docs/quality/forecast-work.md); next ready work is receipt recognition.

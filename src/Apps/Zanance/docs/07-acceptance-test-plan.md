@@ -1481,3 +1481,17 @@ busy/consent/authentication preservation and actual automatic-post idempotency. 
 strict builds, 36 native Windows contexts and normal signed Release Android restore/readback pass.
 Native Back is guarded in source; Windows review checks its CanLeave affordance, not actual Back Invoke.
 Fixture effects, complete owned restoration and external gates: [evidence](quality/restore-outcomes.md).
+
+## AT-170 - Original forecast drafts, atomic saved paths and currency comparison (D-169)
+
+29 AT-170 cases and the ordinary 3,074-test suite pass (zero failures/skips); cleanup and strict
+Windows/complete Android Release builds pass without warnings/errors. Thirty-six existing Windows
+layout contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced. Three further native
+two-currency contexts verify per-currency saves and immutable legacy comparison with complete original
+25-table restoration. Normal Release Android name/Save/details/Delete consent was exercised once;
+exact owned bytes/sidecars and Main/English/System were restored. Final updated Release is installed/stopped.
+Commercial registration stays inactive. Phone, iOS, real OAuth, billing and release acceptance remain open.
+Direct current-file guards, SQL-trigger rollback, committed nonrepeatability and legacy foreign-money
+regression use original application/Core/Data sources and real SQLite. Fictitious native effects are
+explicitly identified; unchanged layout checks are reused only for unchanged presentation.
+See [bounded scenarios and negative evidence](quality/forecast-work.md).

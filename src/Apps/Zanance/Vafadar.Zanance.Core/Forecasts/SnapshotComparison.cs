@@ -35,7 +35,10 @@ public static class SnapshotComparer
         ArgumentNullException.ThrowIfNull(accounts);
         ArgumentNullException.ThrowIfNull(entries);
         var scope = snapshot.Scope().ToHashSet();
-        var scoped = accounts.Where(a => scope.Contains(a.Id)).ToList();
+        // Earlier multi-currency saves could carry every account id in each currency's scope (D-169).
+        // Retain that immutable saved metadata, but never add another currency's minor units to this comparison.
+        var scoped = accounts.Where(a => scope.Contains(a.Id)
+            && string.Equals(a.CurrencyCode, snapshot.CurrencyCode, StringComparison.OrdinalIgnoreCase)).ToList();
         var end = today < snapshot.Horizon ? today : snapshot.Horizon;
         var saved = snapshot.Points().Where(p => p.Date <= end).ToList();
 

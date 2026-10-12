@@ -6182,4 +6182,31 @@ Limiti per categoria:
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>Il ripristino non è iniziato perché non è stato possibile completare la conferma. I tuoi dati non sono cambiati e l’anteprima è conservata.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>L'orizzonte e lo scenario sono conservati. Scegli la fine del mese e azzera lo scenario per tornare alla previsione di base.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>Caricamento della previsione…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>Non è stato possibile aggiornare la previsione. Le tue scelte sono conservate. Riprova.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>Aggiorna previsione e accesso</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>La previsione è stata salvata.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>La previsione è stata salvata, ma non è stato possibile aggiornare l'elenco. Aggiornalo per continuare; salvarla di nuovo creerebbe una nuova copia.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>Non è stato possibile salvare la previsione. Il nome e lo scenario sono conservati.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>Non è stato possibile eliminare la previsione salvata. Riprova.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>La previsione salvata è stata eliminata, ma l'aggiornamento della pagina non è terminato. Torna indietro e aggiorna l'elenco.</value>
+  </data>
 </root>

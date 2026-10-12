@@ -6193,4 +6193,31 @@
   <data name="Backup_ConsentFailed" xml:space="preserve">
     <value>بازیابی شروع نشد، زیرا تأیید آن کامل نشد. داده‌های شما تغییر نکرده‌اند و پیش‌نمایش حفظ شده است.</value>
   </data>
+  <data name="Forecast_DraftRetained" xml:space="preserve">
+    <value>افق زمانی و سناریوی شما حفظ شده‌اند. برای بازگشت به پیش‌بینی پایه، پایان ماه را انتخاب و سناریو را پاک کنید.</value>
+  </data>
+  <data name="Forecast_Loading" xml:space="preserve">
+    <value>در حال بارگذاری پیش‌بینی…</value>
+  </data>
+  <data name="Forecast_LoadFailed" xml:space="preserve">
+    <value>تازه‌سازی پیش‌بینی انجام نشد. انتخاب‌های شما حفظ شده‌اند. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Forecast_Refresh" xml:space="preserve">
+    <value>تازه‌سازی پیش‌بینی و دسترسی</value>
+  </data>
+  <data name="Forecast_Saved" xml:space="preserve">
+    <value>پیش‌بینی ذخیره شد.</value>
+  </data>
+  <data name="Forecast_SavedFollowUpFailed" xml:space="preserve">
+    <value>پیش‌بینی ذخیره شد، اما فهرست آن تازه نشد. برای ادامه تازه‌سازی کنید؛ ذخیرهٔ دوباره یک نسخهٔ جدید می‌سازد.</value>
+  </data>
+  <data name="Forecast_SaveFailed" xml:space="preserve">
+    <value>پیش‌بینی ذخیره نشد. نام و سناریوی شما حفظ شده‌اند.</value>
+  </data>
+  <data name="Forecast_DeleteFailed" xml:space="preserve">
+    <value>پیش‌بینی ذخیره‌شده حذف نشد. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
+    <value>پیش‌بینی ذخیره‌شده حذف شد، اما تازه‌سازی صفحه کامل نشد. به صفحهٔ قبل برگردید و فهرست را تازه کنید.</value>
+  </data>
 </root>
