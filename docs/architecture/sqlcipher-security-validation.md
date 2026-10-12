@@ -96,3 +96,37 @@ Records: artifacts/native-sqlcipher/{upstream-sqlcipher-a.log,upstream-sqlcipher
 upstream-sqlcipher-c.log,input-validation-d184.log}, sqlcipher-upstream-a/* and
 build/sqlcipher-upstream-{b,c}/evidence/{identity.log,fixture-dependencies.txt,sqlcipher-test.log,
 upstream-proof.json}. Main app and D-179 APK remain unchanged/plaintext, main suite baseline 3,179.
+
+## D-185 actual managed Android original schema
+
+Compatibility/SchemaCompatibility.cs holds the existing actual source/model/migration probe once.
+Windows caller and Compatibility.Android invoke it; Android package is distinct
+pro.vafadar.zanance.nativecompatibility, independent private files only, with no app references.
+
+```powershell
+pwsh -NoProfile -File eng/native/sqlcipher/Test-ManagedAndroid.ps1 -RunName android-d
+```
+
+Complete signed Release APK retains AOT/trimming and both exact native candidates; no default
+SQLite bundle or INTERNET permission. Builds report zero warnings/errors. Initial probe's missing
+actual AddZananceData registration caused a Mono compiled-model initialization deadlock, already
+addressed by app D-44. Scoped stage and source evidence identify it; use original registration
+before loading the model, without resolving its keyless factory or patching generated code.
+
+Actual x64 API36/4 KiB run passes original compiled model/all 32 migrations, Unicode/identifiers/
+money/EUR/date/settings, default foreign keys and wrong/missing-key/changed-page refusal. Shared
+Windows caller passes after refactoring/composition. Maintained Android runner passes and stops
+only the independent package; that package was uninstalled after evidence capture. No owner data,
+main profile/security storage or main package was opened/changed. API24/16 KiB/arm64/iOS and final
+whole-app keys/recovery/crash migration are not accepted by this probe.
+
+Final independent APK: 29,392,143 bytes; SHA-256
+f5886eadfc4fc3a718724d80cab4b4d8bd62d1d6cce6e6293f92749f84568cac.
+Signature v2/v3, ZIP CRC, both native hashes and complete payload verified. This is a probe APK,
+not a new user-facing Zanance phone-test handoff; main signed APK remains D-179/main suite 3,179.
+
+Records: artifacts/native-sqlcipher/{android-managed-build.log,android-managed-diagnostic-build.log,
+android-managed-composed-build.log,android-managed-own-process.log,android-managed-own-process-latest.log,
+android-managed-composed-result.json,android-managed-final-apk-proof.json,windows-composed-shared-schema.log,
+test-managed-android-d.log} and build/android-d/managed-android-proof.json. Initial negative runs/
+scoped stage files are preserved as evidence; successful report does not erase them.

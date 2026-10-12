@@ -2838,3 +2838,12 @@ crypto fallback, 226 tests/zero errors and reported allocation cleanup. Failed i
 identity probe retained. Independent Linux Native CI is configured for two clean Android outputs,
 ELF negative tests and stock suite; hosted execution is not yet verified. This is not a full
 SQLite/mobile/managed/key/crash-migration matrix. Main 3,179/D-179 app/APK unchanged/plaintext.
+
+### 31.98 Managed Android original schema (D-185 / AT-184)
+
+Separate complete signed Release AOT/trimmed probe passes 32 original migrations/compiled model,
+original financial/settings packets and key/tamper/FK checks on x64 API36/4 KiB emulator. Shared
+Windows implementation passes. Exact native slices, no default bundle/INTERNET, APK CRC/signature
+and cleanup verified. Initial missing D-44 registration deadlock remains negative evidence; actual
+data registration resolves it without app/generated-model change. Main 3,179/D-179 app/APK remain
+unchanged/plaintext; final keys/recovery/crash migration, other platform/device gates remain open.

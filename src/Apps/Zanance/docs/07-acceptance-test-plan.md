@@ -1648,3 +1648,12 @@ key succeeds. Eleven input checks pass. Native workflow YAML/job structure parse
 locally exercised, hosted run and Windows/iOS/runtime matrix remain unaccepted. Main suite is
 still 3,179; do not add these stock tests to its count or call this full SQLite/app security.
 [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
+
+## AT-184 - Release managed Android original schema
+
+Actual maintained runner on a separate x64 API36/4 KiB probe package: all 32 migrations, actual
+compiled model/source, Unicode/IDs/money/EUR/date/settings/FK and wrong/missing-key/tamper refusal
+pass. Release AOT/trimming builds without warnings/errors; APK/native/signature/permission checks
+pass. Shared Windows path also passes. Only independent package/fictitious files removed; no main
+app data accessed. Preserve initial D-44 registration omission/deadlock diagnostics. Main suite
+3,179 unchanged. Arm64/API24/16 KiB/iOS, whole-app keys/recovery/crash migration remain unaccepted.

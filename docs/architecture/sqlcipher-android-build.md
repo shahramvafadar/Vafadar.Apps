@@ -81,3 +81,9 @@ packages/<PackageName> directory; final standard-name generation matches the sam
 Separate native-cipher workflow restores the locked Linux build image and exercises clean Android
 outputs, negative ELF cases and stock SQLCipher tests. Local commands/stock suite are verified;
 hosted execution and same-candidate runtime/packaging plus Windows/iOS matrix remain open.
+
+## D-185 managed runtime scope
+
+Separate signed Release AOT/trimmed Android probe passes the shared actual original-schema
+32-migration/compiled-model/key/tamper proof on x64. Main app unchanged/plaintext; see
+[security validation](sqlcipher-security-validation.md) for exact artifacts and remaining gates.

@@ -1344,3 +1344,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   crypto fallback, actual error/test count and reported allocation cleanup; preserve failed probes.
 * Native CI publishes candidate/evidence artifacts only, never product packages, keys or releases.
   Distinguish locally verified commands/YAML from actual hosted job results and remaining matrix/runtime gates.
+
+## 117. Independent managed Android schema compatibility (D-185)
+
+* Share the same actual-source/schema probe between Windows and a distinct Android package; never
+  reference that package from the app or open main app storage. Keep Release AOT/trimming and complete native bytes.
+* Use actual AddZananceData registration before compiled-model loading (D-44); do not patch generated
+  models or introduce a duplicate Mono workaround. Preserve negative initialization/stage evidence.
+* Delete only the independent package's old report on launch, inspect its private report, and remove
+  only that package after checking. Schema/provider proof is separate from keys/crash/recovery/device acceptance.

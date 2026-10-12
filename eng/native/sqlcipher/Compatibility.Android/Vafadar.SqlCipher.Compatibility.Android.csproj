@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <ApplicationId>pro.vafadar.zanance.nativecompatibility</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+    <RunAOTCompilation Condition="'$(Configuration)' == 'Release'">true</RunAOTCompilation>
+    <PublishTrimmed Condition="'$(Configuration)' == 'Release'">true</PublishTrimmed>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Independent compatibility checks of official source-built SQLCipher with original data sources.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
+    <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
+    <!-- Compile actual original infrastructure/model/migrations without importing a default native bundle. -->
+    <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Data/**/*.cs"
+             Exclude="$(RepoRoot)src/Libraries/Vafadar.Data/bin/**;$(RepoRoot)src/Libraries/Vafadar.Data/obj/**" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/**/*.cs"
+             Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
+    <Compile Include="../Compatibility/SchemaCompatibility.cs" Link="SchemaCompatibility.cs" />
+    <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />
+    <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/x86_64/libsqlcipher.so" Abi="x86_64" />
+  </ItemGroup>
+  <Target Name="RequireCandidate" BeforeTargets="Build">
+    <Error Condition="'$(NativeCandidateDirectory)' == '' Or !Exists('$(NativeCandidateDirectory)/x86_64/libsqlcipher.so') Or !Exists('$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so')"
+           Text="Provide NativeCandidateDirectory pointing to independently source-built Android slices." />
+  </Target>
+</Project>

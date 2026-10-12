@@ -2321,3 +2321,18 @@ artifacts. YAML parses and its commands are locally checked; hosted execution, W
 and Android managed/device/runtime packaging remain unaccepted. Main 3,179/D-179 app/APK unchanged,
 databases plaintext; SQLCipher suite is abbreviated upstream scope, not full SQLite/app security.
 [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
+
+## D-185 - Original managed schema on Release Android
+
+Extract the existing original-source EF probe into one shared schema implementation; Windows CLI
+and a new distinct pro.vafadar.zanance.nativecompatibility package call it. No main app reference,
+storage or credential access. Complete signed Release APK retains trimming/AOT, both exact native
+candidates, no default SQLite bundle or INTERNET permission. Initial probe hangs before options
+publication because it omitted actual data registration's D-44 Mono compiled-model setting; source
+and scoped stage evidence identify this. Use actual AddZananceData without resolving its keyless
+factory; no generated-model patch or app change. Release now passes all 32 actual migrations and
+compiled-model Unicode/identifiers/money/currency/date/settings/FK plus wrong/missing-key/tamper
+checks on x64 API36/4 KiB emulator. Maintained runner and shared Windows path pass; builds zero
+errors/warnings. APK signature/CRC/native byte checks pass; only the independent package removed.
+Main 3,179/D-179 app/APK unchanged/plaintext. This is not whole-app key/recovery/crash, arm64/API24/
+16 KiB/iOS or release acceptance. [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).

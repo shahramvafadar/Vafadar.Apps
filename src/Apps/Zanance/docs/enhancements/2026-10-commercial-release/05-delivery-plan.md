@@ -1213,3 +1213,10 @@ Maintained stock SQLCipher runner passes 226 tests and verifies actual provider/
 evidence. Initial separate Linux Native workflow is configured and parsed; hosted execution is
 still unaccepted. Continue native CI/iOS/managed-platform schema and key/crash-migration work;
 physical/runtime and owner recovery/OS-backup gates remain. App and D-179 APK are unchanged.
+
+## Managed Android schema (D-185)
+
+Separate Release original-source/schema probe and shared Windows caller pass; preserve actual
+D-44 composition and negative diagnostics. Main application stays on D-179/plaintext. Continue
+native hosted/iOS matrix and final keyed storage/crash migration work; owner recovery/OS-backup
+and physical/minimum-API/page-size gates remain. No interim app policy or full-release claim.

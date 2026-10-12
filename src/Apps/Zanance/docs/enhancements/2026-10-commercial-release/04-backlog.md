@@ -1431,3 +1431,12 @@ are implemented; hosted run is pending acceptance, not a green result. Windows/i
 managed mobile/schema, runtime/package matrix, keys/recovery/crash migration and device gates
 remain. Main app/APK unchanged/plaintext; SEC-01 remains in progress. Do not repeat passed
 Windows/OpenSSL/SQLCipher/UI work absent a change, failure or unresolved concern.
+
+## Managed Android compatibility progress (D-185)
+
+Separate signed Release AOT/trimmed managed probe passes actual 32-migration compiled-model
+financial/settings/key/tamper behavior on x64 emulator. Windows shared probe and artifact checks
+pass. Actual data registration preserves D-44; initial omitted-registration deadlock retained.
+Main app/APK unchanged/plaintext. SEC-01 remains in progress: native hosted/iOS matrix, final
+platform keys/recovery/crash migration and device acceptance. Do not repeat passed schema/UI
+checks unless a change, failure or unresolved concern requires them.
