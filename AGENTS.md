@@ -1099,3 +1099,17 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   retired pending batches; preserve Snooze retry and legitimate explicit Goal editor draft mutation.
 * Native fixtures change only their independent fictitious database, restore complete rows/owned bytes and
   retain failed checks as negative evidence. Production registrations and external release gates stay separate.
+
+## 93. Structured write reasons and explicit filter retry (D-160)
+
+* Translate original structured quotas/rights/selection without guessing purchase/provider state or exposing
+  stored ids/exception text. Keep unrelated failures on their original path.
+* Promise no-save/retained input only at the pre-write boundary. Committed return/reload failures remain saved
+  and cannot silently resubmit. Keep every dirty field and original financial calculations.
+* A rejected filter retires its review. The next explicit menu Invoke obtains a fresh packet and keeps the raw
+  name/current query; name drafts stay process-local and never cross original files.
+* Native effect ports are identified explicitly; actual native reason/Close/second Invoke and complete owned
+  restoration are separate from native menu/prompt, commercial activation and external release acceptance.
+
+* Use DatabaseFileIdentity for the actual configured SQLite target across open/closed connection aliases;
+  never guess another profile or replace a foreign-file guard with native reporting paths.

@@ -1006,3 +1006,12 @@ Changing original reminder rules, state or effective financial progress retires 
 that reaches its target does not keep an old contribution request. Complete history and explicit drafts remain
 independent; publication never saves money or a review. Existing forms/layout/translations stay intact.
 See [evidence](quality/reminder-input-work.md).
+
+## Expected write reasons and retained filter retry (D-160)
+
+Known quotas/permission/selection failures name the real reason in the current language, without enum ids
+or purchase claims. Keep every unsaved field and separate accepted-save/failed-return feedback. A rejected
+filter preserves its exact raw name and complete query; the next explicit tap rereads rights without clearing
+the page. Process-local names never cross original files. Counter text uses native digit choice and RTL marks.
+The shared reporter does not promise that nothing saved after a committed action.
+See [evidence](quality/commercial-feedback.md).

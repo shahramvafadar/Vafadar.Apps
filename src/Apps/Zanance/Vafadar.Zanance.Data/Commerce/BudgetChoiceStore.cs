@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.Sqlite;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Commerce;
 
@@ -73,8 +72,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     }
 
     // D-146: an opened Android SQLite connection can report an alias rather than its configured absolute file.
-    private static string FilePath(ZananceDbContext db) => Path.GetFullPath(
-        new SqliteConnectionStringBuilder(db.Database.GetDbConnection().ConnectionString).DataSource);
+    private static string FilePath(ZananceDbContext db) => DatabaseFileIdentity.ConfiguredPath(db);
 
     /// <summary>Saves only the reviewed current definitions; no financial row or paid capability is rewritten.</summary>
     public async Task<bool> SaveAsync(BudgetChoiceSnapshot reviewed, IEnumerable<BudgetDefinitionKey> selected,

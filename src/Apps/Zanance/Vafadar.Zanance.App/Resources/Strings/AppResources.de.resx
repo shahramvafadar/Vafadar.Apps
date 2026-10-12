@@ -5980,4 +5980,43 @@ Kategorielimits:
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>Nach dem Wechsel zu Free können Sie Privat für neue Buchungen auswählen und Geschäft weiterhin für Verlauf oder Sicherung öffnen. Das Öffnen von Geschäft ändert Ihre gespeicherte Auswahl nicht.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>Aktion nicht verfügbar</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>Dein Kontingent für «{0}» beträgt {1}. Diese Aktion würde die Anzahl auf {2} erhöhen. Du kannst die aktiven Einträge in den Einstellungen prüfen.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>Dieser Eintrag in «{0}» ist nicht für neue Aktivitäten ausgewählt. Prüfe die aktiven Einträge in den Einstellungen. Verlauf und Korrekturen bleiben verfügbar.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>Diese Aktion erfordert Plus. Verlauf, Korrekturen und Sicherungen bleiben verfügbar.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>Diese Aktion erfordert Zugriff auf Pro-Dienste. Deine bisherigen lokalen Daten bleiben verfügbar.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>Diese Aktion erfordert eine autorisierte Mitgliedschaft in diesem gemeinsamen Bereich. Der Zugriff auf einen anderen Bereich gilt hier nicht.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>Diese Aktion erfordert ein separates Zusatzpaket. Plus oder Pro allein enthält diese Funktion nicht.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>Diese Aktion ist in diesem Profil oder gemeinsamen Bereich nicht verfügbar. Der Zugriff eines anderen Profils oder Bereichs kann hier nicht verwendet werden.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>Dieses Profil ist auf diesem Gerät nicht für neue Aktivitäten ausgewählt. Prüfe die Auswahl unter Profile. Verlauf, Korrekturen, Sicherung und Export bleiben verfügbar.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>Diese Aktion hat keine Änderungen gespeichert. Deine Eingaben bleiben in diesem Formular erhalten.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>Budgetdefinitionen</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>Gehostete gemeinsame Bereiche</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>Mitglieder und ausstehende Einladungen</value>
+  </data>
 </root>

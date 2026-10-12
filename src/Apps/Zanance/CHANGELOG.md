@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Explain limits and keep filter names for retry (2026-10-12, D-160)
+
+- Explain known limits, required access and activity selections instead of a generic unexpected error.
+- Keep the filter name and current query after a rejected save; the next menu tap works without clearing the form.
+- Keep successful-save feedback distinct from a failed return or refresh. Test builds remain unrestricted.
+
 ### Improved - Keep reminders aligned with current plans and goal progress (2026-10-12, D-159)
 
 - Withdraw pending reminders whose original rules, state or financial inputs change during preparation.

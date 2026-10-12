@@ -47,6 +47,12 @@ public sealed class QuickResourceReview
     public ResourceChoiceSnapshot FilterChoice { get; }
     /// <summary>Gets independent activity, history, correction, delete and creation rights.</summary>
     public QuickResourceWorkPolicy Work { get; }
+    /// <summary>Checks original file identity for retaining process-local names; it grants no capability or financial right.</summary>
+    public bool BelongsToSameFile(QuickResourceReview other)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+        return string.Equals(TemplateChoice.DatabasePath, other.TemplateChoice.DatabasePath, StringComparison.Ordinal);
+    }
     /// <summary>Gets original name-comparison rules; a live formatting/language change never changes a reviewed replacement.</summary>
     public CultureInfo NameCulture { get; }
     /// <summary>Checks retained same-id/template correction without requiring a fresh selected slot.</summary>

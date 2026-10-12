@@ -26,7 +26,7 @@ internal sealed class ZananceDatabaseBackupSource(IDbContextFactory<ZananceDbCon
         CommercialFileAccess? access = null;
         return db =>
         {
-            access ??= new(commercialAccess, db.Database.GetDbConnection().DataSource);
+            access ??= new(commercialAccess, DatabaseFileIdentity.ConfiguredPath(db));
             // D-124: recovery preserves owned data above quota and after host expiry; membership remains separate.
             access.DemandFeature(CommercialFeature.BackupRestore);
         };

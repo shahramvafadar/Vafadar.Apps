@@ -19,7 +19,7 @@ public sealed partial class ZananceStore
     internal static async Task ValidateReviewReminderInputsAsync(PlanWorkSnapshot snapshot, string originalSettingsPacket,
         DateOnly? firstData, ZananceDbContext db, CancellationToken cancellationToken)
     {
-        if (snapshot.Access is null || snapshot.DatabasePath != Path.GetFullPath(db.Database.GetDbConnection().DataSource))
+        if (snapshot.Access is null || snapshot.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db))
             throw new InvalidOperationException("The review reminder belongs to another original file.");
         snapshot.Access.DemandFeature(CommercialFeature.History); snapshot.Access.EnsureSnapshotCurrent();
         var current = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);

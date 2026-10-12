@@ -718,3 +718,35 @@ Native Release details and retained negative evidence are in the evidence docume
 OAuth, paid activation and publication are separate; ENT-02/03 and the commercial release are not complete.
 
 See [evidence](quality/reminder-input-work.md).
+
+## D-160 - Structured write feedback and retained filter retry
+
+Original structured write rejections now explain quota counts, required Plus/Pro/add-on access, exact-space
+membership and original profile/resource selection in all six languages. The shared native reporter keeps
+unrelated failures on their original path and never guesses purchase, renewal, provider or activation state.
+Pre-write Goal/Budget/quick-resource feedback retains the form; committed-return/reload feedback remains
+distinct and never falsely says that the accepted write was not saved. Counts use safe Int64 addition,
+current formatting/digit choices and direction marks; stored identities and exception details are not shown.
+
+Saving a new filter above capacity now reaches the established reviewed atomic writer for its structured
+reason. A rejected operation retires its review; the next explicit menu invocation rereads it without clearing
+the current query. Exact raw filter names return to the name prompt. Name drafts are process-local and bounded
+by original file identity, independently of rights; another file never inherits them. No automatic retry or
+financial save, schema/model/migration, SDK, permission, network, credential or portable preference is added.
+Production financial/device registrations remain inactive; test builds stay unrestricted.
+
+19 new AT-162 cases pass with actual sources/resources and real isolated SQLite. Final ordinary main passes
+2,889 / App.Tests 832, no failures/skips, 2m 49.493s, followed by cleanup. A preceding main run passed 2,885
+before the real second-invocation fix; only the changed final behavior justified another run.
+Strict Windows and canonical complete Android Release have zero warnings/errors. Eighteen actual Windows
+reason/Close/second-Invoke cases cover en/fa/de, light/dark, 360/412/wide, with unchanged complete 25-table rows
+and exact owned development bytes restored. Fictitious menu/name effects are explicit ports; reason presentation
+uses the actual native adapter and buttons. Android evidence, negative artifacts and full signed APK are in
+the evidence document. Platform/provider/device/commercial activation and publication gates remain separate.
+
+See [evidence](quality/commercial-feedback.md).
+
+Original configured SQLite targets now stay stable across open/closed Android reporting aliases.
+The shared Data helper extends the existing D-146 approach to resource reviews, writers, Plan/reminder
+packets, loan/backup boundaries and their unchanged foreign-file guards. Four added real SQLite cases
+verify open readers/writers, coherent financial validation and rejection of another actual file.

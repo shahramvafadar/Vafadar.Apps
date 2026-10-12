@@ -27,7 +27,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<PlanWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var access = new CommercialFileAccess(commercialAccess, db.Database.GetDbConnection().DataSource);
+        var access = new CommercialFileAccess(commercialAccess, DatabaseFileIdentity.ConfiguredPath(db));
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken);
         var schedules = await db.Schedules.AsNoTracking().OrderBy(s => s.State).ThenBy(s => s.Name).ToListAsync(cancellationToken);
@@ -39,7 +39,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken)) != StoredResourceSelection.Capture(stored))
             throw new InvalidOperationException("The plan choice changed during notification preparation.");
         access.EnsureCurrent();
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
         return new(schedules, states, work)
         {
             DatabasePath = path,
@@ -62,7 +62,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     internal static async Task ValidateWorkSnapshotAsync(PlanWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
     {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
-            Path.GetFullPath(db.Database.GetDbConnection().DataSource), StringComparison.Ordinal))
+            DatabaseFileIdentity.ConfiguredPath(db), StringComparison.Ordinal))
             throw new InvalidOperationException("The plan work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
         snapshot.Access.EnsureSnapshotCurrent();

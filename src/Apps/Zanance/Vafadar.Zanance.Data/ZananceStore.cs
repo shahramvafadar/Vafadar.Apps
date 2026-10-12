@@ -1227,7 +1227,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     private async Task<IReadOnlyList<LedgerEntry>> DeleteEntriesUnderWriterAsync(ZananceDbContext db,
         CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
     {
-        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var file = DatabaseFileIdentity.ConfiguredPath(db);
         write.DemandFeature(CommercialFeature.DeleteData);
         var wanted = ids.Distinct().ToList();
         var entries = await db.Entries.Where(e => wanted.Contains(e.Id)).ToListAsync(cancellationToken);
@@ -1290,7 +1290,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         ArgumentNullException.ThrowIfNull(entries);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var file = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var file = DatabaseFileIdentity.ConfiguredPath(db);
         var deleted = entries as DeletedLedgerEntries;
         if (deleted is not null && !string.Equals(deleted.File, file, StringComparison.Ordinal))
             throw new InvalidOperationException("The deleted entries belong to another database.");

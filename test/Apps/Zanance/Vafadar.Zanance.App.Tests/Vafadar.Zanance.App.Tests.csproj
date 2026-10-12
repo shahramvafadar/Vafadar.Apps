@@ -28,6 +28,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Goals/IGoalEditorNotifications.cs" Link="Application/IGoalEditorNotifications.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/AccountChoice.cs" Link="Application/AccountChoice.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IUnsavedChanges.cs" Link="Application/IUnsavedChanges.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/CommercialFailureMessage.cs" Link="Application/CommercialFailureMessage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/PlanText.cs" Link="Application/PlanText.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/CategoryLookup.cs" Link="Application/CategoryLookup.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingText.cs" Link="Application/HoldingText.cs" />

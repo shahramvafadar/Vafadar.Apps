@@ -197,7 +197,8 @@ public sealed partial class BudgetActionsViewModel(ZananceStore store, Translato
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             _needsReload = true; _loading = false;
-            Feedback = translator[committed ? "Occurrence_SavedRefreshFailed" : "Error_Unexpected"];
+            Feedback = committed ? translator["Occurrence_SavedRefreshFailed"]
+                : Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Error_Unexpected", draftKept: true);
             if (!committed) await interaction.ShowFailureAsync(exception);
         }
         finally { IsBusy = false; RefreshActions(); }

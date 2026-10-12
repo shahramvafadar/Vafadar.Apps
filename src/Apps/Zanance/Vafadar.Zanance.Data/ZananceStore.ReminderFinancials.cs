@@ -37,7 +37,7 @@ public sealed partial class ZananceStore
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var reader = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
         await using var joined = await db.Database.UseTransactionAsync(reader, cancellationToken);
-        if (financials.DatabasePath != Path.GetFullPath(db.Database.GetDbConnection().DataSource))
+        if (financials.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db))
             throw new InvalidOperationException("The financial reminder packet belongs to another original file.");
         if (PlanWorkSnapshot.CaptureInputs(plans.Schedules, plans.States) != plans.InputStamp
             || GoalWorkSnapshot.CaptureInputs(goals.Goals, goals.ContributionPlans, goals.Allocations) != goals.InputStamp)
@@ -59,7 +59,7 @@ public sealed partial class ZananceStore
     // With no contribution reminder, the accounts still govern original plan currency and review first-data date.
     private static async Task<ReminderFinancialSnapshot> ReadReminderFinancialsAsync(ZananceDbContext db, DateOnly day,
         bool financials, bool quantities, CancellationToken cancellationToken) => new(
-            Path.GetFullPath(db.Database.GetDbConnection().DataSource), day, financials, quantities,
+            DatabaseFileIdentity.ConfiguredPath(db), day, financials, quantities,
             await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
             financials ? await db.Entries.AsNoTracking().Where(entry => entry.Date <= day).ToListAsync(cancellationToken) : [],
             quantities ? await db.AssetEvents.AsNoTracking().Where(item => item.Date <= day).ToListAsync(cancellationToken) : [],

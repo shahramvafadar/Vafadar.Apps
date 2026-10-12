@@ -52,7 +52,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     {
         ArgumentNullException.ThrowIfNull(db);
         ArgumentNullException.ThrowIfNull(source);
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
         var access = new CommercialFileAccess(source, path);
         if (!access.Enforced && !requireTransaction) return new(access, null);
         // Microsoft.Data.Sqlite's serializable writer transaction protects count and save across factories/processes.

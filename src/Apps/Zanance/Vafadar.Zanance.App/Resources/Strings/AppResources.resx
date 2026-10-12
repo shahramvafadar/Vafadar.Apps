@@ -6009,4 +6009,43 @@ Category limits:
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>After returning to Free, you can choose Personal for new entries and still open Business to view its history or make a backup. Opening Business does not replace your saved choice.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>Action unavailable</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>Your allowance for «{0}» is {1}. This action would bring the count to {2}. You can review active items in Settings.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>This item in «{0}» is not selected for new activity. Review active items in Settings. Existing history and corrections stay available.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>This action requires Plus. Existing history, corrections and backups stay available.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>This action requires access to Pro services. Your existing local data stays available.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>This action requires authorized membership in this shared space. Access to another space does not apply here.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>This action requires a separate add-on. A Plus or Pro plan alone does not include it.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>This action is not available in this profile or shared space. Access belonging to another profile or space cannot be used here.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>This profile is not selected for new activity on this device. Review the choice in Profiles. History, corrections, backup and export stay available.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>This action did not save changes. Your input is kept in this form.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>Budget definitions</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>Hosted shared spaces</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>Members and pending invitations</value>
+  </data>
 </root>

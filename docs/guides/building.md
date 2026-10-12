@@ -626,3 +626,11 @@ fresh reached-goal progress suppresses contribution work, and complete 25-table 
 the hidden own native window, preserve exact owned development files/sidecars and distinguish fixture ports
 from actual SDK delivery. No form/layout change requires another unchanged full layout matrix.
 See `src/Apps/Zanance/docs/quality/reminder-input-work.md`.
+
+## Actual structured feedback native review (D-160)
+
+Debug `commercial-feedback` uses original Transactions controls and actual atomic filter writer over separate
+fictitious SQLite. Native menu/name effects are explicit ports; the changed reporter/Close and second bookmark
+Invoke are actual native controls. Render the hidden own root and native popup separately. Compare full query
+scope and all 25 tables; restore exact development bytes. No desktop input/focus or commercial activation.
+See `src/Apps/Zanance/docs/quality/commercial-feedback.md`.

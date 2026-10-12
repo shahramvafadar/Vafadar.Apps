@@ -16,7 +16,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     {
         DemandKind(kind);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
         var access = new CommercialFileAccess(commercialAccess, path);
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, kind, cancellationToken);
@@ -55,7 +55,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         if (!reviewed.CanChoose) throw new InvalidOperationException("No bounded active-item choice is required.");
         var choice = new ResourceSelection(reviewed.Kind, StoredResourceSelection.Scope(reviewed.Access.Context!), selectedIds);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        var path = Path.GetFullPath(db.Database.GetDbConnection().DataSource);
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
         if (!string.Equals(path, reviewed.DatabasePath, StringComparison.Ordinal))
             throw new InvalidOperationException("The reviewed choice belongs to another opened file.");
         reviewed.Access.EnsureSnapshotCurrent();
@@ -101,7 +101,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     internal async Task ValidateAsync(ResourceChoiceSnapshot reviewed, ZananceDbContext db, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(reviewed); DemandKind(reviewed.Kind);
-        if (Path.GetFullPath(db.Database.GetDbConnection().DataSource) != reviewed.DatabasePath)
+        if (DatabaseFileIdentity.ConfiguredPath(db) != reviewed.DatabasePath)
             throw new InvalidOperationException("The reviewed resource list belongs to another opened file.");
         reviewed.Access.EnsureSnapshotCurrent();
         var current = await StoredResourceSelection.ReadAsync(db, reviewed.Access, reviewed.Kind, cancellationToken);

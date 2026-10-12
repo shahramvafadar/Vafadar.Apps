@@ -5957,4 +5957,43 @@ Plafonds par catégorie :
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>Après votre retour à Free, vous pouvez choisir Personnel pour les nouvelles écritures et ouvrir Professionnel pour consulter son historique ou le sauvegarder. Ouvrir Professionnel ne remplace pas votre sélection enregistrée.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>Action indisponible</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>Votre limite pour «{0}» est de {1}. Cette action porterait le nombre à {2}. Vous pouvez vérifier les éléments actifs dans les paramètres.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>Cet élément de «{0}» n’est pas sélectionné pour de nouvelles activités. Vérifiez les éléments actifs dans les paramètres. L’historique et les corrections restent disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>Cette action nécessite Plus. L’historique, les corrections et les sauvegardes restent disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>Cette action nécessite l’accès aux services Pro. Vos données locales existantes restent disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>Cette action nécessite une adhésion autorisée à cet espace partagé. L’accès à un autre espace ne s’applique pas ici.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>Cette action nécessite un module complémentaire distinct. Un forfait Plus ou Pro seul ne l’inclut pas.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>Cette action n’est pas disponible dans ce profil ou cet espace partagé. L’accès d’un autre profil ou espace ne peut pas être utilisé ici.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>Ce profil n’est pas sélectionné pour de nouvelles activités sur cet appareil. Vérifiez le choix dans Profils. L’historique, les corrections, la sauvegarde et l’exportation restent disponibles.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>Cette action n’a enregistré aucune modification. Vos saisies sont conservées dans ce formulaire.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>Définitions de budget</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>Espaces partagés hébergés</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>Membres et invitations en attente</value>
+  </data>
 </root>

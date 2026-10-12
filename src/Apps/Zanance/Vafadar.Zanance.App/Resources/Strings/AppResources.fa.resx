@@ -5980,4 +5980,43 @@
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>پس از بازگشت به Free می‌توانید پروفایل شخصی را برای ثبت‌های جدید انتخاب کنید و همچنان پروفایل کاری را برای دیدن تاریخچه یا گرفتن بکاپ باز کنید. بازکردن پروفایل کاری انتخاب ذخیره‌شدهٔ شما را عوض نمی‌کند.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>امکان انجام این کار وجود ندارد</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>سهمیهٔ شما برای «{0}» برابر با «{1}» است. با انجام این کار، تعداد به «{2}» می‌رسد. می‌توانید موارد فعال را در تنظیمات بررسی کنید.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>این مورد در «{0}» برای فعالیت جدید انتخاب نشده است. موارد فعال را در تنظیمات بررسی کنید. تاریخچه و اصلاح اطلاعات قبلی همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>این کار به پلن «Plus» نیاز دارد. تاریخچه، اصلاح اطلاعات قبلی و پشتیبان‌گیری همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>این کار به دسترسی به خدمات «Pro» نیاز دارد. اطلاعات محلی قبلی شما همچنان در دسترس است.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>این کار به عضویت مجاز در همین فضای مشترک نیاز دارد. دسترسی به فضای دیگر برای این فضا معتبر نیست.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>این کار به افزونه‌ای جداگانه نیاز دارد. داشتن پلن «Plus» یا «Pro» به‌تنهایی شامل این قابلیت نمی‌شود.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>این کار در این پروفایل یا فضای مشترک در دسترس نیست. دسترسی مربوط به پروفایل یا فضای دیگر را نمی‌توان اینجا استفاده کرد.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>این پروفایل برای فعالیت جدید روی این دستگاه انتخاب نشده است. انتخاب خود را در بخش پروفایل‌ها بررسی کنید. تاریخچه، اصلاح اطلاعات، پشتیبان‌گیری و خروجی همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>این کار هیچ تغییری ذخیره نکرد. اطلاعاتی که وارد کرده‌اید در همین فرم حفظ شده است.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>تعریف‌های بودجه</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>فضاهای مشترک میزبانی‌شده</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>اعضا و دعوت‌های در انتظار</value>
+  </data>
 </root>

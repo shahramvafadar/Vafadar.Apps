@@ -11,6 +11,7 @@ namespace Vafadar.Zanance.App.Features.Commerce;
 public sealed partial class QuickResourceActions(ZananceStore store, Translator translator, IAppInteraction interaction) : ViewModelBase
 {
     private QuickResourceReview? _review;
+    private QuickResourceReview? _draftReview;
     private int _generation;
     /// <summary>Gets pinned failure feedback without making a committed operation retryable.</summary>
     [ObservableProperty]
@@ -27,6 +28,8 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
     public bool CanInteract => _review is not null && IsNotBusy;
     /// <summary>Gets the last unsaved template name, retained after a failed request.</summary>
     public string? TemplateNameDraft { get; private set; }
+    /// <summary>Gets the exact unsaved filter name, retained for retry only in its original file.</summary>
+    public string? FilterNameDraft { get; private set; }
 
     /// <summary>Retires the previous review before reading; opening creates no preferences or financial rows.</summary>
     public async Task LoadAsync(Guid? sourceId = null)
@@ -34,7 +37,9 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         var generation = ++_generation; _review = null; RefreshAvailability();
         var reviewed = await store.GetQuickResourceReviewAsync(sourceId);
         if (generation != _generation) throw new InvalidOperationException("The quick-resource publication was retired.");
-        _review = reviewed; Feedback = null; RefreshAvailability();
+        if (_draftReview is { } original && !reviewed.BelongsToSameFile(original))
+        { TemplateNameDraft = null; FilterNameDraft = null; }
+        _draftReview = reviewed; _review = reviewed; Feedback = null; RefreshAvailability();
     }
 
     private async Task ValidateAsync(QuickResourceReview review)
@@ -115,6 +120,16 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
     /// <summary>Captures the entire current query before the menu/name dialogs; retained filter use remains history-only.</summary>
     public async Task FilterMenuAsync(SavedFilter draft, Func<Task> reload)
     {
+        if (IsBusy) return;
+        if (_review is null)
+        {
+            // A rejected write retires its review. The next explicit menu invocation rereads it without reloading or clearing the query form.
+            IsBusy = true;
+            try { await LoadAsync(); }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            { Feedback = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Error_Unexpected"); await interaction.ShowFailureAsync(exception); return; }
+            finally { IsBusy = false; }
+        }
         if (!CanInteract || _review is not { } review) return;
         // This detached fresh definition is owned by the operation. Later typing cannot alter the submitted query.
         var target = new SavedFilter { Name = string.Empty, Period = draft.Period, From = draft.From, To = draft.To,
@@ -132,11 +147,13 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
             var choice = await interaction.ChooseAsync(translator["Filter_Title"], translator["Common_Cancel"], [.. actions]);
             if (choice == save)
             {
-                var name = (await interaction.PromptAsync(save, translator["Filter_NameMessage"],
-                    translator["Common_Save"], translator["Common_Cancel"], maxLength: SavedFilter.MaxNameLength))?.Trim();
+                var input = await interaction.PromptAsync(save, translator["Filter_NameMessage"],
+                    translator["Common_Save"], translator["Common_Cancel"], initialValue: FilterNameDraft, maxLength: SavedFilter.MaxNameLength);
+                var name = input?.Trim();
                 if (string.IsNullOrEmpty(name)) return false;
+                FilterNameDraft = input;
                 target.Name = name;
-                if (!review.CanSaveFilter(target)) throw new InvalidOperationException("A fresh filter needs an available chosen slot.");
+                // The reviewed writer supplies the structured reason and rechecks capacity atomically before saving.
                 if (review.Filters.Any(f => review.SameName(f.Name, name)) && !await interaction.ConfirmAsync(save,
                     translator.Format("Filter_Replace", name), translator["Common_Save"], translator["Common_Cancel"])) return false;
                 await ValidateAsync(review);
@@ -171,7 +188,8 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             _review = null; ++_generation;
-            Feedback = translator[committed ? "Occurrence_SavedRefreshFailed" : failureKey];
+            Feedback = committed ? translator["Occurrence_SavedRefreshFailed"]
+                : Presentation.CommercialFailureMessage.OrFallback(exception, translator, failureKey, draftKept: true);
             if (committed) await interaction.AlertAsync(translator["Error_Title"], translator["Occurrence_SavedRefreshFailed"], translator["Common_Ok"]);
             else await interaction.ShowFailureAsync(exception);
         }

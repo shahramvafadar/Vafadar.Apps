@@ -747,7 +747,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             }
             try { await _goals.SaveGoalWithContributionPlanAsync(goal, plan, review: review); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
-            { _needsReload = true; SaveError = _translator["Goal_SaveFailed"]; await _interaction.ShowFailureAsync(exception); return; }
+            { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); return; }
             // A committed draft is retired before navigation; a failed return can never duplicate or resubmit it.
             _existing = goal; _baseline = CaptureDraft(); _committed = true; _pendingReview = false;
             try { await _interaction.NavigateAsync(".."); }
@@ -755,7 +755,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             { SaveError = _translator["Goal_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { SaveError = _translator["Goal_SaveFailed"]; await _interaction.ShowFailureAsync(exception); }
+        { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; RefreshCapabilities(); }
     }
 
@@ -781,7 +781,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             await _store.ApplyGoalBudgetCutAsync(budget, cut); _appliedCut = submitted;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = true; SaveError = _translator["Goal_SaveFailed"]; await _interaction.ShowFailureAsync(exception); }
+        { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; UpdatePreview(); RefreshCapabilities(); }
     }
 

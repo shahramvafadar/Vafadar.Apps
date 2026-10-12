@@ -391,7 +391,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             { Error = _translator["Budget_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = true; Error = _translator["Budget_SaveFailed"]; await _interaction.ShowFailureAsync(exception); }
+        { _needsReload = true; Error = CommercialFailureMessage.OrFallback(exception, _translator, "Budget_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; RefreshCapabilities(); }
     }
     [RelayCommand(CanExecute = nameof(CanLeave))]

@@ -5949,4 +5949,43 @@ Límites por categoría:
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>Al volver a Free, puedes elegir Personal para nuevos registros y seguir abriendo Negocio para consultar el historial o hacer una copia. Abrir Negocio no cambia tu selección guardada.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>Acción no disponible</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>Tu límite para «{0}» es {1}. Esta acción elevaría la cantidad a {2}. Puedes revisar los elementos activos en Ajustes.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>Este elemento de «{0}» no está seleccionado para nuevas actividades. Revisa los elementos activos en Ajustes. El historial y las correcciones siguen disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>Esta acción requiere Plus. El historial, las correcciones y las copias de seguridad siguen disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>Esta acción requiere acceso a los servicios Pro. Tus datos locales existentes siguen disponibles.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>Esta acción requiere una membresía autorizada en este espacio compartido. El acceso a otro espacio no se aplica aquí.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>Esta acción requiere un complemento independiente. Un plan Plus o Pro por sí solo no lo incluye.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>Esta acción no está disponible en este perfil o espacio compartido. El acceso de otro perfil o espacio no puede usarse aquí.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>Este perfil no está seleccionado para nuevas actividades en este dispositivo. Revisa la selección en Perfiles. El historial, las correcciones, las copias de seguridad y la exportación siguen disponibles.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>Esta acción no guardó cambios. Tus datos introducidos se conservan en este formulario.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>Definiciones de presupuesto</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>Espacios compartidos alojados</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>Miembros e invitaciones pendientes</value>
+  </data>
 </root>

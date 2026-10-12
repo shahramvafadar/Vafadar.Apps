@@ -608,7 +608,11 @@ public sealed partial class GoalDetailViewModel(
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             if (committed) { _needsReload = true; SaveError = translator["Occurrence_SavedRefreshFailed"]; }
-            else await interaction.ShowFailureAsync(exception);
+            else
+            {
+                SaveError = Presentation.CommercialFailureMessage.Describe(exception, translator, draftKept: true);
+                await interaction.ShowFailureAsync(exception);
+            }
         }
         finally { IsBusy = false; }
     }

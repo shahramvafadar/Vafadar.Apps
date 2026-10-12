@@ -75,11 +75,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// <summary>Gets the actual factory-bound file without SQLite's connection-state-dependent alias resolution.</summary>
     private static string ProfileFilePath(ZananceDbContext db)
     {
-        // Android's SQLite DataSource can resolve an app-private path differently while a transaction is open.
-        // D-146 uses the same immutable connection setting for open writers and auto-closed reads;
-        // another factory/profile still produces a different path and is rejected.
-        return Path.GetFullPath(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder(
-            db.Database.GetDbConnection().ConnectionString).DataSource);
+        return DatabaseFileIdentity.ConfiguredPath(db);
     }
 
     /// <summary>Returns all goals: active first, then by priority and target date.</summary>

@@ -441,3 +441,10 @@ Complete original rule/state, raw selection and needed dated financial packets a
 for the actual file, never portable grants or credentials. Validation is a deferred read and writes no money,
 Settings, allocation or review. No new schema, permission, SDK, network or interim OS-backup policy.
 Independent fixtures restore complete owned rows/files/display; production registrations stay inactive.
+
+## D-160 - Structured feedback and process-local name drafts
+
+Known rejection messages use original rights and nonfinancial quota counts, never credentials, provider
+responses, stored ids or exception details. Raw names and original file comparison remain process-local, never
+portable preferences or grants. No schema, permission, SDK, network, purchase, analytics or OS-backup change.
+Independent native fixtures preserve complete original data/owned bytes; test registrations remain inactive.

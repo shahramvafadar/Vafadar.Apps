@@ -5969,4 +5969,43 @@ Limiti per categoria:
   <data name="Help_ProfileWork_Example" xml:space="preserve">
     <value>Dopo il ritorno a Free puoi scegliere Personale per le nuove registrazioni e aprire Lavoro per consultare la cronologia o fare un backup. Aprire Lavoro non cambia la scelta salvata.</value>
   </data>
+  <data name="Commercial_ActionUnavailableTitle" xml:space="preserve">
+    <value>Azione non disponibile</value>
+  </data>
+  <data name="Commercial_QuotaReached" xml:space="preserve">
+    <value>Il tuo limite per «{0}» è {1}. Questa azione porterebbe il numero a {2}. Puoi controllare gli elementi attivi nelle impostazioni.</value>
+  </data>
+  <data name="Commercial_ResourceSelection" xml:space="preserve">
+    <value>Questo elemento di «{0}» non è selezionato per nuove attività. Controlla gli elementi attivi nelle impostazioni. La cronologia e le correzioni restano disponibili.</value>
+  </data>
+  <data name="Commercial_RequiresPlus" xml:space="preserve">
+    <value>Questa azione richiede Plus. La cronologia, le correzioni e i backup restano disponibili.</value>
+  </data>
+  <data name="Commercial_RequiresPro" xml:space="preserve">
+    <value>Questa azione richiede l’accesso ai servizi Pro. I tuoi dati locali esistenti restano disponibili.</value>
+  </data>
+  <data name="Commercial_RequiresMembership" xml:space="preserve">
+    <value>Questa azione richiede un’appartenenza autorizzata a questo spazio condiviso. L’accesso a un altro spazio non si applica qui.</value>
+  </data>
+  <data name="Commercial_RequiresAddOn" xml:space="preserve">
+    <value>Questa azione richiede un componente aggiuntivo separato. Un piano Plus o Pro da solo non lo include.</value>
+  </data>
+  <data name="Commercial_OutsideScope" xml:space="preserve">
+    <value>Questa azione non è disponibile in questo profilo o spazio condiviso. L’accesso di un altro profilo o spazio non può essere usato qui.</value>
+  </data>
+  <data name="Commercial_ProfileSelection" xml:space="preserve">
+    <value>Questo profilo non è selezionato per nuove attività su questo dispositivo. Controlla la scelta in Profili. La cronologia, le correzioni, il backup e l’esportazione restano disponibili.</value>
+  </data>
+  <data name="Commercial_DraftKept" xml:space="preserve">
+    <value>Questa azione non ha salvato modifiche. I dati inseriti restano in questo modulo.</value>
+  </data>
+  <data name="Commercial_BudgetDefinitions" xml:space="preserve">
+    <value>Definizioni di budget</value>
+  </data>
+  <data name="Commercial_HostedSpaces" xml:space="preserve">
+    <value>Spazi condivisi ospitati</value>
+  </data>
+  <data name="Commercial_SharedMembers" xml:space="preserve">
+    <value>Membri e inviti in attesa</value>
+  </data>
 </root>

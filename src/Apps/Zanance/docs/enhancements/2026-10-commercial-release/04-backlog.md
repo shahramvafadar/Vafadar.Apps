@@ -55,7 +55,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (D-118..159: actual-file resource/rule/ledger/recovery writes and selected-account new money with retained settlements/manual debt closure and atomic explicit links/corrections/new occurrence payments and reviewed reopening plus fresh automatic payments, selected future occurrence views/writers and actual scoped reminder/snooze delivery and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus reviewed original goal views/detail actions and paired goal-editor/contribution drafts and canonical reviewed budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete and reviewed durable quick-template/saved-query choices, paired writers and actual create/apply/delete/save commands and original Home template activity/typed destinations and reviewed original device catalogue/choice/creation/form; actual-file original device profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; other selected bindings/future activation and remaining operations/resources/import/restore/native paths open; current enforcement inactive) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (D-131/D-138..159: scoped Core projection, actual selected account/work/payment/reminder bindings and durable account/Plan choices and reviewed chooser UI plus scoped goal persistence/writers and reviewed goal chooser and actual goal work/scoped reminders plus original goal/Home/detail affordances and reviewed goal editor; reviewed goal-editor drafts and budget definition choices/writers, native chooser and guarded actual alerts and exact original scoped budget destinations and reviewed original budget editor drafts/paired writes and original view action rights/paired copy/delete plus reviewed quick-template/saved-query choices, paired writers and actual commands and original Home template destinations and reviewed device profile catalogue/explicit choice delivered; actual-file original profile work plus catalogue reminder refresh, guarded period-review publication and complete original reminder input retirement delivered; remaining operation/import/native bindings open) | ENT-02 |
-| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | Proposed | ENT-02, translations |
+| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (D-160 structured reasons and retained filter retry; plan/current-provider screen and initial blocked-action feedback open; activation inactive) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
 | ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
 | ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | Proposed | BIL-01, ID-01 |
@@ -1040,3 +1040,38 @@ OAuth, paid activation and publication are separate; ENT-02/03 and the commercia
 Next ready slice: complete remaining original operation/import/restore/native bindings and retained-draft
 rejection feedback under D-69; keep commercial activation and owner/external gates separate.
 See [evidence](../../quality/reminder-input-work.md).
+
+## D-160 - Structured write feedback and retained filter retry
+
+Original structured write rejections now explain quota counts, required Plus/Pro/add-on access, exact-space
+membership and original profile/resource selection in all six languages. The shared native reporter keeps
+unrelated failures on their original path and never guesses purchase, renewal, provider or activation state.
+Pre-write Goal/Budget/quick-resource feedback retains the form; committed-return/reload feedback remains
+distinct and never falsely says that the accepted write was not saved. Counts use safe Int64 addition,
+current formatting/digit choices and direction marks; stored identities and exception details are not shown.
+
+Saving a new filter above capacity now reaches the established reviewed atomic writer for its structured
+reason. A rejected operation retires its review; the next explicit menu invocation rereads it without clearing
+the current query. Exact raw filter names return to the name prompt. Name drafts are process-local and bounded
+by original file identity, independently of rights; another file never inherits them. No automatic retry or
+financial save, schema/model/migration, SDK, permission, network, credential or portable preference is added.
+Production financial/device registrations remain inactive; test builds stay unrestricted.
+
+19 new AT-162 cases pass with actual sources/resources and real isolated SQLite. Final ordinary main passes
+2,889 / App.Tests 832, no failures/skips, 2m 49.493s, followed by cleanup. A preceding main run passed 2,885
+before the real second-invocation fix; only the changed final behavior justified another run.
+Strict Windows and canonical complete Android Release have zero warnings/errors. Eighteen actual Windows
+reason/Close/second-Invoke cases cover en/fa/de, light/dark, 360/412/wide, with unchanged complete 25-table rows
+and exact owned development bytes restored. Fictitious menu/name effects are explicit ports; reason presentation
+uses the actual native adapter and buttons. Android evidence, negative artifacts and full signed APK are in
+the evidence document. Platform/provider/device/commercial activation and publication gates remain separate.
+
+Next ready slice: expose the original capacity/permission reason before a blocked Save, keeping complete
+drafts and history; continue the remaining ENT-04 screen and original enforcement paths under D-69.
+Actual purchase/provider/renewal fields and activation remain independently gated.
+See [evidence](../../quality/commercial-feedback.md).
+
+Original configured SQLite targets now stay stable across open/closed Android reporting aliases.
+The shared Data helper extends the existing D-146 approach to resource reviews, writers, Plan/reminder
+packets, loan/backup boundaries and their unchanged foreign-file guards. Four added real SQLite cases
+verify open readers/writers, coherent financial validation and rejection of another actual file.

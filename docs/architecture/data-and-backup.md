@@ -645,3 +645,14 @@ The same reader validates original rules, financial packets, preferences and fir
 native publication. Native preparation alone rejects modified in-memory packets; existing explicit reviewed
 Goal draft writers remain unchanged. No model/migration or portable format change.
 See `src/Apps/Zanance/docs/quality/reminder-input-work.md`.
+
+## Original write feedback and file-local transient names (D-160)
+
+The presentation layer translates CommercialWriteRejectedException without reimplementing financial or
+commercial authorization. Original atomic writers still decide and revalidate scope/capacity. Keep saved-return
+failures distinct from pre-write rejection. Quick-resource name drafts compare original file identity inside
+Data; they never become preferences or financial rights. No schema/model/migration or portable format change.
+See `src/Apps/Zanance/docs/quality/commercial-feedback.md`.
+
+Original file guards use the actual connection configuration; Android open-connection aliases cannot
+retire the same file. DatabaseFileIdentity preserves exact foreign-file rejection without new I/O or grants.

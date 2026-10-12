@@ -36,7 +36,9 @@ internal static class Failures
             if (Application.Current?.Windows.FirstOrDefault()?.Page is { } page)
             {
                 var translator = Translator.Instance;
-                await page.DisplayAlertAsync(translator["Error_Title"], translator["Error_Unexpected"], translator["Common_Ok"]);
+                var expected = CommercialFailureMessage.Describe(exception, translator);
+                await page.DisplayAlertAsync(translator[expected is null ? "Error_Title" : "Commercial_ActionUnavailableTitle"],
+                    expected ?? translator["Error_Unexpected"], translator["Common_Ok"]);
             }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
