@@ -1227,3 +1227,10 @@ Ship reusable infrastructure with actual schema/header/history/encrypted staging
 plaintext temporary-file workaround. Full 3,185/strict builds and independent Release runtime pass.
 Keep live source/provider/backup unchanged until per-profile keys, authorization and crash-safe
 verification/commit/recovery are accepted. Continue those final boundaries and remaining native matrix.
+
+## Complete staging verifier (D-187)
+
+Verify all original typed content and metadata before future generation acceptance; direct native
+span comparison resolves the observed driver crash. Full 3,197/strict builds/independent runtime
+pass. Continue final key/durable generation/recovery integration and remaining platform gates;
+no app provider/pointer migration is activated by a verification primitive.

@@ -1448,3 +1448,11 @@ activating them on live data. Six tests/full 3,185, strict builds and actual Win
 schema/header/history/restore proof pass. Live databases remain plaintext. SEC-01..08 continue:
 key/authorization integration, durable copy/verify/commit/cleanup/recovery and remaining native
 platform/CI/device gates are not satisfied by these primitives. No temporary OS policy is added.
+
+## Complete staging verification progress (D-187)
+
+Logical schema/header/all typed row/duplicate/exact byte and relational/cipher integrity verifier
+passes twelve new cases, full 3,197, strict builds and actual Windows/Release Android staging proof.
+Live databases remain plaintext; durable keys/generation commit/restart/cleanup/recovery and
+remaining native platform/hosted/device gates are still open. Do not repeat completed native/UI
+checks absent change, failure or unresolved concern; the initial native metadata crash is retained.

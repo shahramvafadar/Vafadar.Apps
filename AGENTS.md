@@ -1362,3 +1362,11 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   mode only in the owned memory copy as SQLite documents. Clear owned buffers; do not promise total process-memory erasure.
 * Encrypted restore exports into one exact new staging path, never an existing generation. Generic BackupDatabase
   cannot convert plaintext/cipher formats. Final profile authorization/key/crash-safe commit remains separate.
+
+## 119. Complete typed staging verification (D-187)
+
+* Before generation acceptance compare logical schema/header, all typed rows/duplicate multiplicity
+  and exact text/BLOB bytes; verify relational and cipher integrity. Do not log financial values.
+* Use direct native statement spans for expression BLOB columns; the maintained driver metadata
+  lookup caused an observed native crash. Preserve its negative evidence and real platform checks.
+* Verification is read-only and never commits a pointer or authorizes recovery/profile/key decisions.

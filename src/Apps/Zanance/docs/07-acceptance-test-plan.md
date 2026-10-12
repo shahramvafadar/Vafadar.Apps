@@ -1666,3 +1666,12 @@ Windows and separate Release Android source/compiled-model/migration probe addit
 portable header/history/schema and official encrypted staged restore. Strict main builds zero
 warnings/errors. Preserve unsupported plaintext BackupDatabase-to-cipher failure. No live
 provider/backup switch, key/recovery/crash-commit or other device/platform acceptance is inferred.
+
+## AT-186 - Complete typed staging verification
+
+Twelve cases preserve reordered equivalent rows/duplicates and reject changed integer/storage
+type/text/BLOB/duplicate count/header/schema, equal but invalid FK data and a changed large-BLOB
+last byte. Cancellation leaves callers usable. Full 3,197 pass. Actual original-schema encrypted
+staging checks pass in Windows and independent Release Android; strict main builds zero warnings/
+errors. Preserve fatal driver expression-BLOB metadata-read evidence. No commit/recovery/device/
+whole-app encryption inference; direct native comparisons do not report financial contents.

@@ -40,3 +40,9 @@ Records: artifacts/native-sqlcipher/{windows-portable-snapshot.log (failed gener
 windows-portable-export-restore.log,memory-data-tests.log,full-memory-tests.log,
 main-memory-windows-build.log,main-memory-android-build.log,android-portable-memory-run.log,
 memory-tests-clean.log} and build/android-d/managed-android-proof.json.
+
+## D-187 staging verification
+
+Complete logical schema/header/typed rows/duplicate/byte and integrity comparison is now available
+before future commit. See [verification](sqlcipher-staging-verification.md); durable key/generation
+acceptance remains separate and live composition stays unchanged.

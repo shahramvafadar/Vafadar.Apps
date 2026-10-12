@@ -90,6 +90,7 @@ internal static class SchemaCompatibility
             await memory.ExportEncryptedAsync(staged, restorePassword);
             await using var target = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = staged, Password = restorePassword, Pooling = false }.ToString());
             await target.OpenAsync();
+            await Vafadar.Data.SqliteSnapshotVerifier.VerifyAsync(memory.Connection, target);
             using var restored = target.CreateCommand(); restored.CommandText = "SELECT Name FROM Accounts";
             if ((string?)await restored.ExecuteScalarAsync() != "Fictitious بانک Ü") throw new InvalidOperationException("Encrypted staged restore lost data.");
         }
@@ -114,7 +115,7 @@ internal static class SchemaCompatibility
         }
         catch (SqliteException) { tamperRefused = true; }
         if (!tamperRefused) throw new InvalidOperationException("Modified candidate page was accepted.");
-        var proof = new { CipherVersion = cipherVersion, ProviderVersion = providerVersion, WrongMissingKeyAndTamperRefused = true, PlaintextHeaderAndUnicodeMarkerAbsent = true, ActualDataAndSharedDataSourcesCompiled = true, ActualCompiledModelUsed = true, FirstSchemaToCurrentMigrations = migrationCount, CorrectKeyReopenUnicodeAndOriginalMoneyDate = true, ForeignKeysRemainEnabled = true, FictitiousFilesOnly = true, PortableMemorySnapshotHeaderSchemaAndEncryptedRestore = true, NotAppKeyRecoveryCrashOrMobileAcceptance = true };
+        var proof = new { CipherVersion = cipherVersion, ProviderVersion = providerVersion, WrongMissingKeyAndTamperRefused = true, PlaintextHeaderAndUnicodeMarkerAbsent = true, ActualDataAndSharedDataSourcesCompiled = true, ActualCompiledModelUsed = true, FirstSchemaToCurrentMigrations = migrationCount, CorrectKeyReopenUnicodeAndOriginalMoneyDate = true, ForeignKeysRemainEnabled = true, FictitiousFilesOnly = true, PortableMemorySnapshotHeaderSchemaAndEncryptedRestore = true, CompleteStagingSchemaAndTypedRowsVerified = true, NotAppKeyRecoveryCrashOrMobileAcceptance = true };
         await File.WriteAllTextAsync(Path.Combine(evidenceRoot, "ef-proof.json"), JsonSerializer.Serialize(proof, new JsonSerializerOptions { WriteIndented = true })); return JsonSerializer.Serialize(proof);
     }
 }

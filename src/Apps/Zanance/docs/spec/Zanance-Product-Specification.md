@@ -2855,3 +2855,11 @@ header metadata; staged encryption uses official export rather than unsupported 
 conversion. Six tests added, full 3,185 pass; strict main builds and real Windows/Release Android
 probe pass. No live backup/provider activation or temporary plaintext file; final keys/authorization/
 crash commit/recovery/platform gates remain. Live application databases are still plaintext.
+
+### 31.100 Complete typed staging verification (D-187 / AT-186)
+
+Read-only logical schema/header/all-row typed comparison and relational/cipher integrity are
+implemented before future generation acceptance. Twelve tests added; full 3,197/strict builds and
+real independent Windows/Release Android proof pass. Native metadata-read crash preserved and
+avoided through direct statement spans. Pointer commit, keys/recovery/crash protocol and full
+platform/device activation remain open; main databases are not encrypted yet.

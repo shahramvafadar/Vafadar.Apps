@@ -1248,3 +1248,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added memory-only snapshot and encrypted staging infrastructure with original-schema checks.
 - Existing backup choices and live databases remain unchanged; database encryption is not enabled yet.
+
+### Encrypted staging preparation (D-187)
+
+- Added complete schema and typed-content verification for future encrypted migration staging.
+- Live databases and backup composition remain unchanged; encryption is not enabled yet.

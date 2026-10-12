@@ -2351,3 +2351,15 @@ probe verify original schema/history/header/Unicode and encrypted staged restore
 provider/backup activation; original live databases remain plaintext. Keys, authorization, full
 staging verification, durability/commit/rollback/recovery and remaining platforms are still open.
 [Guide](../../../../docs/architecture/sqlcipher-portable-snapshot.md).
+
+## D-187 - Complete typed staging verification
+
+Reusable verifier compares logical schema (including index/view/trigger SQL), header identifiers
+and every table's sorted storage classes/typed rows without guessing a primary key. Duplicate
+multiplicity, signed integers, real bits, exact text/BLOB bytes remain significant. Native direct
+statement spans avoid an observed fatal GetBytes expression-column metadata lookup in the driver;
+negative crash evidence retained. Relational/cipher/native integrity checked, errors contain no
+financial values. Twelve behavior cases added; full 3,197 pass, strict main Windows/Android builds
+zero errors/warnings. Original-schema encrypted staging proof passes on Windows and independent
+Release Android. No pointer/provider/backup/key activation or durable crash-recovery acceptance.
+Live databases remain plaintext. [Guide](../../../../docs/architecture/sqlcipher-staging-verification.md).
