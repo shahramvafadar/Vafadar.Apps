@@ -2176,3 +2176,13 @@ inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product accept
 APK: artifacts/android/zanance-d172-release.apk. [Evidence](quality/report-work.md).
 The confirmed D-168 computation groups are locally delivered; bounded ENT-02/03 review is next.
 Commercial activation and the full owner/external release objective remain incomplete.
+
+## D-173 - Bounded local commercial completion review
+
+Close the finite ENT-02/03 review after the three confirmed computation groups. Map original local
+writers, explicit choices, history/recovery and automation to current behaviour tests and prior native
+evidence. Keep activation, verified purchases, real shared-server lifecycle and physical-device/iOS
+acceptance separate; no guessed entitlement or temporary policy. Reuse the unchanged ordinary D-172
+3,169-test run and full signed APK instead of repeating builds/native matrices for a source-only review.
+No production code, schema, permissions or APK change. Next ready engineering is A11Y-01 Android
+accessibility. [Evidence](quality/commercial-completion-review.md).

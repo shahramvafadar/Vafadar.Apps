@@ -1,6 +1,6 @@
 # 07 - Current commercial entry-point inventory
 
-Reviewed against current source after D-171 on 2026-10-12. This is a finite completion checklist for
+Reviewed against current source after D-172/173 on 2026-10-12. This is a finite completion checklist for
 ENT-02/03/04, not another feature backlog. Historical quality records describe the state of their own
 slice; their remaining-work paragraphs do not override later implementations. The canonical state stays
 in [04-backlog.md](04-backlog.md). Production commercial sources remain inactive.
@@ -44,10 +44,12 @@ Plus/Pro/shared membership, changed facts and unrelated stored rows. Do not test
 add a new policy purely to make an existing guard look incomplete. Native checks and a complete signed
 APK follow actual changes; unchanged successful checks are not repeated.
 
-ENT-02's confirmed operation groups are delivered locally; bounded completion review remains, with enforcement inactive. ENT-03's original resource-choice,
-history and automation integration is implemented; the confirmed analytical affordances are now delivered through D-172; bounded integration review remains.
-ENT-04's verified purchase/manage/renewal/restore UI depends on real billing/provider facts. Completing
-these groups permits a final bounded review of ENT-02/03, not activation or a fabricated purchase flow.
+ENT-02's confirmed local operation groups and ENT-03's original resource-choice/history/automation
+integration are implemented. The bounded completion review is closed in D-173; enforcement remains
+inactive. Real shared-server grace/retention and native release acceptance remain separate. See the
+[bounded review](../../quality/commercial-completion-review.md).
+ENT-04's verified purchase/manage/renewal/restore UI depends on real billing/provider facts. This
+completed local review does not authorize activation or a fabricated purchase flow.
 
 ## Owner/external dependencies: do not replace with temporary behavior
 

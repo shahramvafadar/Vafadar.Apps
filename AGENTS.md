@@ -1245,3 +1245,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   only its own accepted rule. Preserve named calendar, no ledger posting and typed accepted outcomes.
 * Retain real negative evidence and successful unchanged checks. Complete the finite original report
   group, then perform the bounded ENT-02/03 review; do not invent provider/purchase or activation facts.
+
+## 106. Bounded local commercial review and separate release gates (D-173)
+
+* The finite original ENT-02/03 local completion review is closed; do not re-open delivered operations
+  from historical intermediate gap notes. Use the current inventory and bounded evidence record.
+* Inactive registration is not a permanent customer entitlement. Activation, real purchases, actual
+  shared-server grace/retention and device/iOS acceptance remain explicit separate work.
+* Source-only review does not require repeating unchanged successful tests/builds/native checks or
+  generating another identical APK. Next ready engineering is the Android accessibility review.

@@ -1544,3 +1544,10 @@ cleanup; original contribution transaction rejects stale source and retains acce
 Real native package selection, detached PDF/scope retention, basic balance/per-account currency, named
 calendar suggestion Save/no ledger posting and actual Release share/cancel/cache readback are local
 evidence. Phone/iOS/provider/billing/Store/performance remain pending. [Evidence](quality/report-work.md).
+
+## Current local commercial completion review (D-173)
+
+The finite mapping of ENT-02 boundaries and local ENT-03 downgrade scenarios is closed with existing
+behaviour/native evidence through AT-173. This review adds no acceptance scenario or test execution;
+main remains 3,169 passing tests. Native Intent, real shared-server lifecycle, activation, physical phone,
+OAuth and iOS acceptance stay open. [Evidence](quality/commercial-completion-review.md).

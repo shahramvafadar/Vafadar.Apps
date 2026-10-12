@@ -2730,3 +2730,11 @@ detached scoped PDF, basic balances/per-account currency and reviewed original c
 implemented. Named recurrence calendars and accepted post-commit outcomes are preserved. The finite
 remaining entry-point inventory now moves to bounded ENT-02/03 review. No enforcement activation,
 provider facts, encryption approval or full commercial release is implied. [Evidence](../quality/report-work.md).
+
+### 31.86 Bounded local commercial completion review (D-173)
+
+The confirmed local ENT-02 boundaries and ENT-03 resource/history/automation integration are implemented;
+the finite post-D-172 review is closed. Enforcement is inactive. Real shared-server grace/retention,
+ENT-04/05, billing and native release acceptance remain open. No new runtime/build/test or APK is claimed:
+the ordinary main evidence remains 3,169 passing tests and the complete D-172 package. Next ready work
+is A11Y-01 Android accessibility. [Evidence](../quality/commercial-completion-review.md).
