@@ -1585,3 +1585,11 @@ all kinds, types/dates, identity/order, neutral transfer and intermediate overfl
 measurements show exact original quantities with one input enumeration. Six Windows native caption
 contexts and original asset packets pass; Six normal Release Android scoped caption/return cases pass; original Main/fixture/display restored. No physical/iOS/whole-startup/ANR/release acceptance is inferred.
 [Evidence](quality/asset-event-index.md).
+
+## AT-178 - Retained original icon language and selection
+
+Measure actual native names for every original key/default/selected state through en/fa/de changes
+in both themes, retaining the same buttons and draft. Invoke original default/Home buttons through
+native patterns and compare complete stored rows without Save. Native checks and complete
+APK verification pass locally; no new non-UI test count or spoken/device acceptance is invented.
+[Evidence](quality/icon-language-accessibility.md).

@@ -1288,3 +1288,9 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   HoldingsLedger.Quantity for date/direction/checked-overflow behavior. Never combine units or cache across profiles.
 * Distinguish Core computation/input-visit evidence from startup/device targets. Native captions follow
   original digit shaping; explicitly select the known fixture profile and restore original Main/data/display.
+
+## 111. Live retained icon names (D-179)
+
+* Resolve original icon keys in the current language, including selected names. Keep original targets,
+  selection and drafts; subscribe only while loaded, detach on unload and refresh on reattachment.
+* Native names/Invoke evidence does not establish spoken TalkBack/Narrator, OS scaling or phone acceptance.

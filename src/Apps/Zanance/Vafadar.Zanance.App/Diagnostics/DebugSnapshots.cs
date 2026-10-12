@@ -505,6 +505,7 @@ internal static partial class DebugSnapshots
             ("entry-repeat-presentation", AppShell.EntryEditorRoute, null),
             ("entry-categories", AppShell.EntryEditorRoute, null),
             ("entry-tags", AppShell.EntryEditorRoute, null),
+            ("entry-icon-language", AppShell.EntryEditorRoute, null),
             ("entry-details", AppShell.EntryEditorRoute, null),
             ("entry-validation", AppShell.EntryEditorRoute, new() { ["kind"] = "Transfer" }),
             ("entry-fee-retention", AppShell.EntryEditorRoute, null),
@@ -767,6 +768,9 @@ internal static partial class DebugSnapshots
                 if (name == "entry-tags" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
                     is Features.Entries.EntryEditorPage tagPage)
                 { await ReviewTagChoicesAsync(app, services, tagPage, folder, language); }
+                if (name == "entry-icon-language" && (app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage)
+                    is Features.Entries.EntryEditorPage iconPage)
+                { await ReviewIconLanguageAsync(app, services, iconPage, folder, language); }
                 if ((app.Windows[0].Page?.Navigation.ModalStack.LastOrDefault() ?? Shell.Current.CurrentPage) is ContentPage readoutPage)
                 {
                     await ReviewAmountReadoutsAsync(app, readoutPage, folder, language + "-" + name);

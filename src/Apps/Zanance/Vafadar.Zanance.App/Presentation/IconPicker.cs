@@ -26,15 +26,17 @@ public sealed class IconPicker : ContentView
         "MoreHorizontal", "QuestionCircle",
     ];
 
+    /// <summary>Identifies the two-way original icon selection.</summary>
     public static readonly BindableProperty SelectedKeyProperty = BindableProperty.Create(
         nameof(SelectedKey), typeof(string), typeof(IconPicker), null, BindingMode.TwoWay,
         propertyChanged: (bindable, _, _) => ((IconPicker)bindable).UpdateStates());
 
     private readonly List<Tile> _tiles = [];
+    private bool _isLoaded;
 
+    /// <summary>Creates the original icon buttons and refreshes their names while attached.</summary>
     public IconPicker()
     {
-        var translator = Translator.Instance;
         var panel = new FlexLayout { Wrap = FlexWrap.Wrap };
         foreach (var key in Keys.Prepend(null))
         {
@@ -60,15 +62,16 @@ public sealed class IconPicker : ContentView
             AutomationProperties.SetIsInAccessibleTree(face, false);
 
             // What the icon shows ("Car", "Savings"), the same names as in the category editor; the first tile keeps the default.
-            var name = translator[key is null ? "Icon_Default" : $"Icon_{key}"];
             var button = new Button { Text = string.Empty, BackgroundColor = Colors.Transparent, BorderWidth = 0, CornerRadius = 12, Padding = 0 };
             button.Clicked += (_, _) => SelectedKey = key;
 
-            _tiles.Add(new Tile(key, face, button, name));
+            _tiles.Add(new Tile(key, face, button));
             panel.Children.Add(new Grid { WidthRequest = 44, HeightRequest = 44, Margin = new Thickness(2), Children = { face, button } });
         }
 
         Content = panel;
+        Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
         UpdateStates();
     }
 
@@ -78,6 +81,26 @@ public sealed class IconPicker : ContentView
         get => (string?)GetValue(SelectedKeyProperty);
         set => SetValue(SelectedKeyProperty, value);
     }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        if (!_isLoaded)
+        {
+            _isLoaded = true;
+            Translator.Instance.PropertyChanged += OnTranslatorChanged;
+        }
+        // D-179: a retained form can return after its language changed while this picker was detached.
+        UpdateStates();
+    }
+
+    private void OnUnloaded(object? sender, EventArgs e)
+    {
+        _isLoaded = false;
+        Translator.Instance.PropertyChanged -= OnTranslatorChanged;
+    }
+
+    private void OnTranslatorChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) =>
+        Dispatcher.Dispatch(() => { if (_isLoaded) UpdateStates(); });
 
     // The selection is marked like every other selection in the app: the soft action blue with a blue outline.
     private void UpdateStates()
@@ -100,9 +123,11 @@ public sealed class IconPicker : ContentView
                 tile.Face.BackgroundColor = Colors.Transparent;
             }
 
-            SemanticProperties.SetDescription(tile.Button, selected ? translator.Format("Common_SelectedItem", tile.Name) : tile.Name);
+            // Resolve the unchanged key in the current language; do not retain a constructor-time caption.
+            var name = translator[tile.Key is null ? "Icon_Default" : $"Icon_{tile.Key}"];
+            SemanticProperties.SetDescription(tile.Button, selected ? translator.Format("Common_SelectedItem", name) : name);
         }
     }
 
-    private sealed record Tile(string? Key, Border Face, Button Button, string Name);
+    private sealed record Tile(string? Key, Border Face, Button Button);
 }

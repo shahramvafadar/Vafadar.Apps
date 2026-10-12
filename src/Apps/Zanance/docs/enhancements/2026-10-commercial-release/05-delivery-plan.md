@@ -1167,3 +1167,10 @@ Ten new cases; main 3,179, strict builds, bounded exact Core computation and six
 contexts pass. Six normal Release Android caption/return cases and explicit QA03 fixture/Main/display restoration verified. QA-06 and
 whole release remain open; do not repeat unrelated completed layout or commercial reviews.
 [Evidence](../../quality/asset-event-index.md).
+
+## Retained original icon names (D-179)
+
+Fix the actual stale native icon caption on live language changes. Preserve original keys, selection
+and native targets; lifetime-scoped translation refresh does not rebuild forms or save financial data.
+Native Windows/Release Android checks and complete APK verified locally. A11Y-01/02/03 remain open; do not repeat
+completed commercial or unchanged layout reviews. [Evidence](../../quality/icon-language-accessibility.md).

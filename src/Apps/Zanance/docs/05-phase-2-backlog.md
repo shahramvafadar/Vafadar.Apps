@@ -1059,3 +1059,8 @@ One projection-local type index preserves original quantity formulas/date/order/
 repeated complete-history scans. Ten new cases, main 3,179, strict builds, bounded Core measurements
 and six Windows caption contexts verified; Six normal Release Android caption/return cases and original Main/fixture/display restoration verified. Canonical QA-06
 and external acceptance remain open. [Evidence](quality/asset-event-index.md).
+
+## D-179 live original icon names
+
+Fix the observed stale constructor-time name on retained icon controls. Native Windows/Release Android checks and complete APK verification pass locally; A11Y-01/02/03 remain open for broader/spoken/platform
+acceptance. [Evidence](quality/icon-language-accessibility.md).

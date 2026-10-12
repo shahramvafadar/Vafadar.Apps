@@ -1128,3 +1128,9 @@ remain authoritative. Native tree reuse is engineering evidence, not a startup-d
 Keep quantity units separate by asset type and preserve original type order, date and formatting.
 Routing events once must not replace the original checked quantity calculation or alter stored
 names. Native digit shaping applies to the final caption, including digits within a stored name.
+
+## Retained icon accessibility names (D-179)
+
+An unchanged icon key supplies its current translated accessible name, including the selected suffix.
+Retain the same native buttons and complete draft through language updates; unload removes the
+translation subscription and reattachment catches up without replacing the original selection.

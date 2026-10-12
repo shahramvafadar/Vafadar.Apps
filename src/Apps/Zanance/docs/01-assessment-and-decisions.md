@@ -2235,3 +2235,12 @@ or commercial policy and no persisted cache/schema. Ten behavior cases and main 
 Core computation preserves exact results while reducing repeated input visits. Six Windows native
 caption contexts pass. Six normal Release Android caption/return cases pass; original Main and fixture data/display restored.
 [Evidence](quality/asset-event-index.md). Whole startup/device/release gates remain open.
+
+## D-179 - Live original icon accessibility names
+
+The actual retained native picker reports English Default icon after a transient switch to Persian.
+Keep original icon keys/buttons/drawings and selection bindings; resolve each name in the current
+Translator culture on selection and attached language changes. Subscribe once while Loaded, detach
+on Unloaded and refresh on reattachment. No form rebuild, financial Save, schema, permission or SDK.
+Native Windows/Release Android checks and complete signed APK verified locally; spoken/platform acceptance remains open.
+[Evidence](quality/icon-language-accessibility.md).

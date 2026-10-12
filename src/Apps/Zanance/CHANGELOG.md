@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Live icon accessibility names (2026-10-12, D-179)
+
+- Update icon names and selection descriptions when the language of an open form changes.
+- Keep the chosen icon and original form inputs.
+
 ### Improved - Home holdings computation (2026-10-12, D-178)
 
 - Read the holdings-event snapshot once when calculating quantities for multiple asset types.

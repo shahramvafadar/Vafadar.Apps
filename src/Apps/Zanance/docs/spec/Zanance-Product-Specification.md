@@ -2781,3 +2781,11 @@ A projection-local index avoids complete-history scans for every type. Ten new c
 results; six Windows caption contexts pass. Six normal Release Android caption/return cases and original Main/fixture/display restoration verified.
 Whole startup, two-second/device/ANR/iOS/provider/release acceptance remains open.
 [Evidence](../quality/asset-event-index.md).
+
+### 31.92 Live original icon accessibility names (D-179)
+
+Retained icon controls resolve original keys in the current language and refresh selected names on
+attached translation changes. Lifetime-scoped subscriptions catch up after reattachment without
+financial writes, control reconstruction or draft loss. Native checks and complete signed
+APK verified locally; A11Y-01/02/03 and device/spoken acceptance remain open.
+[Evidence](../quality/icon-language-accessibility.md).
