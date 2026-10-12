@@ -774,3 +774,9 @@ remain portable data, separate from paid wealth analysis. No schema or key/provi
 Memory-only export/read-only import/encrypted staging primitives are implemented independently;
 current backup composition is unchanged. See [portable boundary](sqlcipher-portable-snapshot.md).
 Do not activate without per-profile keys, access and crash-safe verification/commit/recovery.
+
+## Generation protocol model (D-188)
+
+[Explicit checkpoints](sqlcipher-generation-checkpoints.md) bind ordered selection to one profile
+and two distinct generations. This model does not persist keys/files, change app composition or
+certify crash durability. Actual coordinator/restart/recovery acceptance remains required.

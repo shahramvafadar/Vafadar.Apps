@@ -1675,3 +1675,13 @@ last byte. Cancellation leaves callers usable. Full 3,197 pass. Actual original-
 staging checks pass in Windows and independent Release Android; strict main builds zero warnings/
 errors. Preserve fatal driver expression-BLOB metadata-read evidence. No commit/recovery/device/
 whole-app encryption inference; direct native comparisons do not report financial contents.
+
+## AT-187 - Explicit generation checkpoints
+
+Eight automated cases verify ordered selection, immutable original state, skipped/repeated phases,
+identity drift, invalid generation identities and terminal-state refusal. Full 3,205 pass, zero
+failures/skips. No visible screen changes require a new UI matrix. This is protocol-model evidence,
+not key persistence, filesystem durability, restart recovery or whole-app encryption acceptance.
+
+Strict main Windows and Android builds pass with zero errors and warnings.
+Evidence: artifacts/native-sqlcipher/d188-{full-tests,windows-build,android-build}.log.

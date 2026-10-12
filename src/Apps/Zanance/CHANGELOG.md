@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Generation migration checkpoints (2026-10-13, D-188)
+
+- Prepare ordered profile-bound migration states without changing live databases or backup behavior.
+- Final key storage, durable migration and recovery integration remain in progress.
+
 ### Development - Official Community encryption evaluation (2026-10-12, D-180)
 
 - Verify current official source and independent Windows/.NET compatibility before integration.

@@ -1234,3 +1234,10 @@ Verify all original typed content and metadata before future generation acceptan
 span comparison resolves the observed driver crash. Full 3,197/strict builds/independent runtime
 pass. Continue final key/durable generation/recovery integration and remaining platform gates;
 no app provider/pointer migration is activated by a verification primitive.
+
+## Explicit generation checkpoints (D-188)
+
+Final protocol model rejects skipped/repeated/foreign-identity transitions and retains original
+selection until explicit commit. Eight cases/full 3,205 pass. Continue actual durable key/generation
+coordination and restart fault injection; the model alone is not crash-safe migration acceptance.
+Keep OD-04/OD-10 gates and live database/provider/backup composition unchanged until accepted.

@@ -1370,3 +1370,10 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Use direct native statement spans for expression BLOB columns; the maintained driver metadata
   lookup caused an observed native crash. Preserve its negative evidence and real platform checks.
 * Verification is read-only and never commits a pointer or authorizes recovery/profile/key decisions.
+
+## 120. Non-secret generation protocol checkpoints (D-188)
+
+* Bind transitions to one profile and distinct explicit generations. Advance only in order; original
+  stays selected until selector commit. Never infer plaintext fallback from a missing candidate key.
+* The immutable model does not certify durable effects. Actual key persistence, staged verification,
+  selector storage/reopen, exact cleanup and restart fault injection remain coordinator obligations.

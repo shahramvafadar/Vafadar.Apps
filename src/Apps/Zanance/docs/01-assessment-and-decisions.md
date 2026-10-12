@@ -2363,3 +2363,14 @@ financial values. Twelve behavior cases added; full 3,197 pass, strict main Wind
 zero errors/warnings. Original-schema encrypted staging proof passes on Windows and independent
 Release Android. No pointer/provider/backup/key activation or durable crash-recovery acceptance.
 Live databases remain plaintext. [Guide](../../../../docs/architecture/sqlcipher-staging-verification.md).
+
+## D-188 - Explicit immutable generation checkpoints
+
+Add the final protocol model for one profile and distinct original/candidate identities. Ordered
+KeyPrepared/CandidateVerified/Selected/Completed transitions reject skips, repeats, identity drift
+and terminal advancement. Original remains selected until selection; immutable prior states remain
+unchanged. Eight cases and full 3,205 pass. Strict main Windows/Android build results are recorded
+in AT-187. This model never certifies external effects or touches files/keys. No UI, schema, live
+provider or backup change; live databases remain plaintext. Durable key/selector/cleanup/restart
+coordinator and OD-04/OD-10 policy gates remain open.
+[Guide](../../../../docs/architecture/sqlcipher-generation-checkpoints.md).

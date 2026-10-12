@@ -35,3 +35,10 @@ accept Action<TContext> cached authorization callbacks before input and native c
 move the database, do network work or start an external SQLite writer transaction. The library has no commercial
 policy dependency. Integrity checking and temporary snapshot cleanup remain intact. A later migration failure may
 follow a completed native replacement; callers still provide a safety copy before restore.
+
+## Encryption preparation
+
+Memory-only portable staging, complete typed verification and explicit immutable generation
+checkpoints are independent infrastructure; current application provider remains unchanged.
+See [generation protocol](../../../docs/architecture/sqlcipher-generation-checkpoints.md).
+Keys, durable selector/cleanup/restart and recovery policy remain separate integration obligations.

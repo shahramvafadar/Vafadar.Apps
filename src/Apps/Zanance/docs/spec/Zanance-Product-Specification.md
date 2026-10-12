@@ -2863,3 +2863,10 @@ implemented before future generation acceptance. Twelve tests added; full 3,197/
 real independent Windows/Release Android proof pass. Native metadata-read crash preserved and
 avoided through direct statement spans. Pointer commit, keys/recovery/crash protocol and full
 platform/device activation remain open; main databases are not encrypted yet.
+
+### 31.101 Generation protocol checkpoints (D-188 / AT-187)
+
+Eight behavior cases and full 3,205 pass for immutable profile/generation-bound ordered transitions.
+Original is selected until explicit selection. No storage/key/recovery effects are certified by
+this model; durable coordinator and restart/fault tests remain open. No UI/schema/provider or
+backup activation; main databases are still plaintext.

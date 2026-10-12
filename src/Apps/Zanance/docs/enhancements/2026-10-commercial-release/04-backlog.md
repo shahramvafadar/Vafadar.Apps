@@ -1456,3 +1456,10 @@ passes twelve new cases, full 3,197, strict builds and actual Windows/Release An
 Live databases remain plaintext; durable keys/generation commit/restart/cleanup/recovery and
 remaining native platform/hosted/device gates are still open. Do not repeat completed native/UI
 checks absent change, failure or unresolved concern; the initial native metadata crash is retained.
+
+## Generation checkpoint progress (D-188)
+
+Immutable non-secret profile/generation transition model and eight behavior cases/full 3,205 pass.
+Original remains authoritative until Selected. SEC-05 is not complete: durable storage/key pairing,
+selector reopen, exact cleanup and restart fault injection still require the actual coordinator.
+No live encryption/provider/backup policy activation; OD-04 and OD-10 remain owner gates.

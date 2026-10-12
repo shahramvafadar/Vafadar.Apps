@@ -1071,3 +1071,9 @@ Owner direction selected; exact official source inputs and native host restorati
 Independent Windows C/.NET compatibility and original backup/export behavior verified; main app
 remains unchanged/plaintext. Continue native production recipe/package/EF/mobile verification before
 keys and crash-safe migration. SEC-01 and full release remain open.
+
+## D-188 generation checkpoint foundation
+
+Eight cases/full 3,205 pass for explicit immutable ordered generation transitions. Final durable
+key/selector/cleanup/recovery coordinator remains open; live app data stays plaintext. No UI/schema
+or commercial activation. See the canonical commercial-release backlog and AT-187.
