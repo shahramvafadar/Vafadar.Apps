@@ -1144,3 +1144,10 @@ Original date-purpose names and calendar actions are locally delivered with reta
 unchanged values/calendars. Eighteen Windows and nine normal Release Android Plan/debt contexts;
 main 3,169 and full signed APK. Continue actual remaining accessibility findings; spoken/platform
 acceptance remains separate. [Evidence](../../quality/date-context-accessibility.md).
+
+## Startup preparation follow-up baseline (D-176)
+
+Current bounded measurements and synchronous source boundary are recorded. Implement protected
+original preparation, then native before/after and failure/retry checks; retain original security,
+financial/legacy-unit and link behavior. No unrelated test/build/APK repetition for measurement-only
+work. [Evidence](../../quality/startup-current-baseline.md).

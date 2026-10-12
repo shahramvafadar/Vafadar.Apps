@@ -172,3 +172,11 @@ artifacts/android/zanance-d76-release.apk, 80,664,491 bytes; SHA-256
 d7e2c558159ed3e9c4bab2cf4b7e0f9b5c049527989768ad6dc16d1f9a7fae9b. Package/version/SDK, v2/v3 signature, ZIP,
 ARM64/x86_64 embedded stores/app AOT and Cloud permission boundary verified. Strict Windows/Android: zero warnings/
 errors. This delivers the input boundary; Q-02 and QA-06's native duration/ANR/device objectives remain open.
+
+## Current Release process-cold baseline (D-176)
+
+The D-175 package now has three bounded current samples: activity command wall 9,549.44 / 6,755.98 /
+5,796.70 ms; first observed ready Home upper bounds 18,670.44 / 14,981.63 / 13,107.65 ms. Native
+observation overhead is included; no precise phase or device acceptance is inferred. Actual startup
+UI synchronous preparation is identified for the next protected async preparation work; no code
+optimization or new APK is claimed. [Evidence](startup-current-baseline.md).

@@ -2756,3 +2756,10 @@ with retained partial input/three calendars, six Release Plan cases and three de
 Original Windows data and owned Android rows/bytes/sidecars/display restored; complete signed APK.
 No new data/schema/permission or date/financial policy. Spoken/full platform acceptance remains open.
 [Evidence](../quality/date-context-accessibility.md).
+
+### 31.89 Current startup baseline (D-176)
+
+Three bounded normal Release process-cold/warm-cache samples record ready-Home upper bounds
+18,670.44 / 14,981.63 / 13,107.65 ms including native dump overhead. Synchronous initial UI preparation
+is identified for the next implementation, not causally quantified. QA-06 remains open; main test
+count/package unchanged at D-175. No build/device/optimization claim. [Evidence](../quality/startup-current-baseline.md).

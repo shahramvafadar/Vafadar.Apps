@@ -2207,3 +2207,12 @@ Main 3,169; strict builds, 18 Windows name/partial/calendar contexts, six normal
 three original debt cases verified. Restore original Windows data and owned Android fixture/display;
 full signed D-175 APK. Spoken screen readers/platform acceptance remain open.
 [Evidence](quality/date-context-accessibility.md).
+
+## D-176 - Current bounded Release startup baseline
+
+Measure three current process-cold/warm-cache starts without changing the app, data or system settings.
+Original Home readiness upper bounds include native observation overhead; retain missing-root evidence.
+Source confirms original synchronous migration/display/settings/root work before CreateWindow returns.
+Next is protected asynchronous original preparation, preserving secure gate, links, onboarding and
+foreground ordering. No performance fix, two-second target, phone acceptance or new APK is claimed.
+[Evidence](quality/startup-current-baseline.md).

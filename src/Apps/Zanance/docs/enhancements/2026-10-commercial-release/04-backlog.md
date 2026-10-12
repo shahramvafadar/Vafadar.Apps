@@ -1352,3 +1352,10 @@ Fix observed generic start/end date names; bind the existing purpose on all 26 o
 Native Windows name/draft/calendar cases and original Release Plan/debt fields verified, no Save.
 Main 3,169, strict builds and full signed APK; data/display restored. A11Y-01/02/03 remain open;
 this does not accept spoken navigation or physical/iOS/system scaling. [Evidence](../../quality/date-context-accessibility.md).
+
+## Current startup baseline (D-176)
+
+QA-06 records three bounded D-175 Release starts with preserved actual native evidence and no source
+change. Next ready implementation is protected original startup preparation outside the initial UI
+call, preserving database/display/security/link/foreground order. Duration/ANR/device/iOS acceptance
+remain open; do not claim the two-second goal. [Evidence](../../quality/startup-current-baseline.md).
