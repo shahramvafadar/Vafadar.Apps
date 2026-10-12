@@ -1220,3 +1220,10 @@ Separate Release original-source/schema probe and shared Windows caller pass; pr
 D-44 composition and negative diagnostics. Main application stays on D-179/plaintext. Continue
 native hosted/iOS matrix and final keyed storage/crash migration work; owner recovery/OS-backup
 and physical/minimum-API/page-size gates remain. No interim app policy or full-release claim.
+
+## Memory portable snapshot boundary (D-186)
+
+Ship reusable infrastructure with actual schema/header/history/encrypted staging proof, not a
+plaintext temporary-file workaround. Full 3,185/strict builds and independent Release runtime pass.
+Keep live source/provider/backup unchanged until per-profile keys, authorization and crash-safe
+verification/commit/recovery are accepted. Continue those final boundaries and remaining native matrix.

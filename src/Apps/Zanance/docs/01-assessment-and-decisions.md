@@ -2336,3 +2336,18 @@ checks on x64 API36/4 KiB emulator. Maintained runner and shared Windows path pa
 errors/warnings. APK signature/CRC/native byte checks pass; only the independent package removed.
 Main 3,179/D-179 app/APK unchanged/plaintext. This is not whole-app key/recovery/crash, arm64/API24/
 16 KiB/iOS or release acceptance. [Validation](../../../../docs/architecture/sqlcipher-security-validation.md).
+
+## D-186 - Final memory-only portable snapshot primitives
+
+Add infrastructure primitives for keyed-source official sqlcipher_export/serialize, preserving a
+consistent read view and user_version/application_id, bounded output and caller connection. The
+reader owns a bounded read-only native memory image, verifies integrity, normalizes WAL mode only
+in its memory copy per SQLite and clears owned allocations on disposal. Restore uses official
+export with bound key parameters into an exact newly reserved encrypted staging file; existing
+generations/sidecars are not overwritten. Plain-memory BackupDatabase to cipher fails and remains
+negative evidence; no plaintext-disk fallback. Six behavior tests and full 3,185 pass; strict main
+Windows/Android builds zero errors/warnings. Actual shared Windows and Release managed Android
+probe verify original schema/history/header/Unicode and encrypted staged restore. No UI or app
+provider/backup activation; original live databases remain plaintext. Keys, authorization, full
+staging verification, durability/commit/rollback/recovery and remaining platforms are still open.
+[Guide](../../../../docs/architecture/sqlcipher-portable-snapshot.md).

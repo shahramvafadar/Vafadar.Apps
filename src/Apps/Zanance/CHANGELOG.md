@@ -1243,3 +1243,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added independent official-source Android native builds and integrity/compatibility checks.
 - Existing app data and the signed D-179 APK remain unchanged; encryption is not enabled yet.
+
+### Portable encryption preparation (D-186)
+
+- Added memory-only snapshot and encrypted staging infrastructure with original-schema checks.
+- Existing backup choices and live databases remain unchanged; database encryption is not enabled yet.

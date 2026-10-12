@@ -1657,3 +1657,12 @@ pass. Release AOT/trimming builds without warnings/errors; APK/native/signature/
 pass. Shared Windows path also passes. Only independent package/fictitious files removed; no main
 app data accessed. Preserve initial D-44 registration omission/deadlock diagnostics. Main suite
 3,179 unchanged. Arm64/API24/16 KiB/iOS, whole-app keys/recovery/crash migration remain unaccepted.
+
+## AT-185 - Memory-only portable database primitives
+
+Six automated cases preserve signed amount/Unicode/read-only/WAL memory normalization, reject
+oversized/non-database/canceled input, and tolerate double disposal. Full 3,185 pass. Actual
+Windows and separate Release Android source/compiled-model/migration probe additionally verify
+portable header/history/schema and official encrypted staged restore. Strict main builds zero
+warnings/errors. Preserve unsupported plaintext BackupDatabase-to-cipher failure. No live
+provider/backup switch, key/recovery/crash-commit or other device/platform acceptance is inferred.

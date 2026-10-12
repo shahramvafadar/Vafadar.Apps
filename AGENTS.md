@@ -1353,3 +1353,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   models or introduce a duplicate Mono workaround. Preserve negative initialization/stage evidence.
 * Delete only the independent package's old report on launch, inspect its private report, and remove
   only that package after checking. Schema/provider proof is separate from keys/crash/recovery/device acceptance.
+
+## 118. Memory-only portable database boundary (D-186)
+
+* Portable SQLCipher export uses the official export/serialize APIs and a single source read transaction;
+  preserve user_version/application_id and original schema/history. Create no plaintext temporary database.
+* Bound portable input/output explicitly, validate read-only deserialized images and normalize WAL header
+  mode only in the owned memory copy as SQLite documents. Clear owned buffers; do not promise total process-memory erasure.
+* Encrypted restore exports into one exact new staging path, never an existing generation. Generic BackupDatabase
+  cannot convert plaintext/cipher formats. Final profile authorization/key/crash-safe commit remains separate.

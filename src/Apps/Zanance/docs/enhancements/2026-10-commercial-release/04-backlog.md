@@ -1440,3 +1440,11 @@ pass. Actual data registration preserves D-44; initial omitted-registration dead
 Main app/APK unchanged/plaintext. SEC-01 remains in progress: native hosted/iOS matrix, final
 platform keys/recovery/crash migration and device acceptance. Do not repeat passed schema/UI
 checks unless a change, failure or unresolved concern requires them.
+
+## Memory portable boundary progress (D-186)
+
+Final reusable memory export/read-only import/encrypted staging primitives implemented without
+activating them on live data. Six tests/full 3,185, strict builds and actual Windows/Release Android
+schema/header/history/restore proof pass. Live databases remain plaintext. SEC-01..08 continue:
+key/authorization integration, durable copy/verify/commit/cleanup/recovery and remaining native
+platform/CI/device gates are not satisfied by these primitives. No temporary OS policy is added.

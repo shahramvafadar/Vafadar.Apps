@@ -768,3 +768,9 @@ validates this packet before/after the same writer transaction, excluding only i
 ReportExportSession holds native consent/render/cache/share and rejects retired file/data/scope;
 the detached original projection never mutates the live page. Basic balances and per-account currency
 remain portable data, separate from paid wealth analysis. No schema or key/provider policy is added.
+
+## SQLCipher portable boundary preparation (D-186)
+
+Memory-only export/read-only import/encrypted staging primitives are implemented independently;
+current backup composition is unchanged. See [portable boundary](sqlcipher-portable-snapshot.md).
+Do not activate without per-profile keys, access and crash-safe verification/commit/recovery.

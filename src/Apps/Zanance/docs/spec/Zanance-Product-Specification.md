@@ -2847,3 +2847,11 @@ Windows implementation passes. Exact native slices, no default bundle/INTERNET, 
 and cleanup verified. Initial missing D-44 registration deadlock remains negative evidence; actual
 data registration resolves it without app/generated-model change. Main 3,179/D-179 app/APK remain
 unchanged/plaintext; final keys/recovery/crash migration, other platform/device gates remain open.
+
+### 31.99 Memory-only portable snapshot primitives (D-186 / AT-185)
+
+Official consistent memory export and bounded read-only import preserve original schema/history/
+header metadata; staged encryption uses official export rather than unsupported generic format
+conversion. Six tests added, full 3,185 pass; strict main builds and real Windows/Release Android
+probe pass. No live backup/provider activation or temporary plaintext file; final keys/authorization/
+crash commit/recovery/platform gates remain. Live application databases are still plaintext.

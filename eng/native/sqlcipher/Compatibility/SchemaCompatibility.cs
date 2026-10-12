@@ -61,6 +61,38 @@ internal static class SchemaCompatibility
             var settings = await db.Settings.SingleAsync();
             if (settings.Id != settingsId || settings.ReportCurrencyCode != "EUR" || !settings.OnboardingCompleted) throw new InvalidOperationException("Original settings packet changed.");
         }
+        using var portable = new MemoryStream();
+        await using (var exportSource = new SqliteConnection(connectionString))
+        {
+            await exportSource.OpenAsync();
+            using var headers = exportSource.CreateCommand(); headers.CommandText = "PRAGMA user_version=73; PRAGMA application_id=123456; PRAGMA journal_mode=WAL;";
+            await headers.ExecuteNonQueryAsync();
+            await Vafadar.Data.SqlCipherPortableSnapshot.WriteAsync(exportSource, portable, 16 * 1024 * 1024);
+            using var stillOpen = exportSource.CreateCommand(); stillOpen.CommandText = "SELECT COUNT(*) FROM Accounts";
+            if (Convert.ToInt64(await stillOpen.ExecuteScalarAsync()) != 1) throw new InvalidOperationException("Snapshot changed the caller's source.");
+        }
+        portable.Position = 0;
+        await using (var memory = await Vafadar.Data.SqliteMemorySnapshot.OpenAsync(portable, 16 * 1024 * 1024))
+        {
+            using var read = memory.Connection.CreateCommand(); read.CommandText = "SELECT Name FROM Accounts";
+            if ((string?)await read.ExecuteScalarAsync() != "Fictitious بانک Ü") throw new InvalidOperationException("Portable snapshot lost original Unicode metadata.");
+            read.CommandText = "PRAGMA user_version";
+            if (Convert.ToInt64(await read.ExecuteScalarAsync()) != 73) throw new InvalidOperationException("Portable header version lost.");
+            read.CommandText = "PRAGMA application_id";
+            if (Convert.ToInt64(await read.ExecuteScalarAsync()) != 123456) throw new InvalidOperationException("Portable application identifier lost.");
+            read.CommandText = "SELECT COUNT(*) FROM __EFMigrationsHistory";
+            if (Convert.ToInt64(await read.ExecuteScalarAsync()) != migrationCount) throw new InvalidOperationException("Portable migration history lost.");
+            var writeRefused = false;
+            try { read.CommandText = "DELETE FROM Accounts"; await read.ExecuteNonQueryAsync(); } catch (SqliteException) { writeRefused = true; }
+            if (!writeRefused) throw new InvalidOperationException("Portable read-only snapshot accepted writes.");
+            var staged = Path.Combine(folder, "encrypted-restore.db");
+            var restorePassword = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+            await memory.ExportEncryptedAsync(staged, restorePassword);
+            await using var target = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = staged, Password = restorePassword, Pooling = false }.ToString());
+            await target.OpenAsync();
+            using var restored = target.CreateCommand(); restored.CommandText = "SELECT Name FROM Accounts";
+            if ((string?)await restored.ExecuteScalarAsync() != "Fictitious بانک Ü") throw new InvalidOperationException("Encrypted staged restore lost data.");
+        }
         foreach (var rejectedPassword in new string?[] { null, Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)) })
         {
             var refused = false;
@@ -82,7 +114,7 @@ internal static class SchemaCompatibility
         }
         catch (SqliteException) { tamperRefused = true; }
         if (!tamperRefused) throw new InvalidOperationException("Modified candidate page was accepted.");
-        var proof = new { CipherVersion = cipherVersion, ProviderVersion = providerVersion, WrongMissingKeyAndTamperRefused = true, PlaintextHeaderAndUnicodeMarkerAbsent = true, ActualDataAndSharedDataSourcesCompiled = true, ActualCompiledModelUsed = true, FirstSchemaToCurrentMigrations = migrationCount, CorrectKeyReopenUnicodeAndOriginalMoneyDate = true, ForeignKeysRemainEnabled = true, FictitiousFilesOnly = true, NotAppKeyRecoveryCrashOrMobileAcceptance = true };
+        var proof = new { CipherVersion = cipherVersion, ProviderVersion = providerVersion, WrongMissingKeyAndTamperRefused = true, PlaintextHeaderAndUnicodeMarkerAbsent = true, ActualDataAndSharedDataSourcesCompiled = true, ActualCompiledModelUsed = true, FirstSchemaToCurrentMigrations = migrationCount, CorrectKeyReopenUnicodeAndOriginalMoneyDate = true, ForeignKeysRemainEnabled = true, FictitiousFilesOnly = true, PortableMemorySnapshotHeaderSchemaAndEncryptedRestore = true, NotAppKeyRecoveryCrashOrMobileAcceptance = true };
         await File.WriteAllTextAsync(Path.Combine(evidenceRoot, "ef-proof.json"), JsonSerializer.Serialize(proof, new JsonSerializerOptions { WriteIndented = true })); return JsonSerializer.Serialize(proof);
     }
 }
