@@ -7,6 +7,9 @@
     <PackageReference Include="FluentIcons.Common" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.cs" Link="Application/ImportExportViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportOverlapRow.cs" Link="Application/ImportOverlapRow.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/IDataFileInteraction.cs" Link="Application/IDataFileInteraction.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/AssetEntryConfirmation.cs" Link="Application/AssetEntryConfirmation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanDraftValidation.cs" Link="Application/PlanDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/SettlementDraftValidation.cs" Link="Application/SettlementDraftValidation.cs" />

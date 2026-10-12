@@ -673,3 +673,12 @@ The focused Debug route is editor-readiness. It opens independent actual Account
 fictitious original cached access, invokes native explicit refresh/failure/retry and verifies complete
 raw input plus all 25 original tables without Save. Main tests/cleanup/dependent builds remain sequential.
 See the app quality/editor-readiness document for exact final native and APK evidence.
+
+## Original data-file native review (D-166)
+
+The focused Debug route is import-outcomes. It invokes actual native review/import/Undo against original
+application/SQLite sources in an independently owned file. Picker/consent/failure-reporting and cached
+access are explicit fictitious ports; actual money writers and all 25-row packet checks remain real.
+WinUI must realize newly visible growing footer captions before measurement. Native failure is negative
+evidence; fix only its cause and do not repeat unchanged successful main/Android builds. See the app
+quality/import-outcomes document for final native and installable-package evidence.

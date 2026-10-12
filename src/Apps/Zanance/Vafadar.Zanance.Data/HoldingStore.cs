@@ -338,8 +338,8 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         await db.SaveChangesAsync(cancellationToken);
         write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
-        return (types.Count + locations.Count + events.Count + valuations.Count, skipped, null);
+        return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty),
+            (types.Count + locations.Count + events.Count + valuations.Count, skipped, (HoldingConflict?)null));
     }
 
     /// <summary>

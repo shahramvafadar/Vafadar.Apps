@@ -465,3 +465,11 @@ Account/Plan reviews retain original rows, choices and cached access in memory f
 Inactive tests open no financial database for this explanation. No preferences, credentials, portable paid
 rights, profile data, financial rows or security settings are written. No new schema, SDK, permission,
 network or export data. Fixtures are independently owned; production activation remains separately gated.
+
+## D-166 - Original CSV effects and process-local outcome guards
+
+Existing native CSV picking, app-lock export confirmation and neutral-named UTF-8 BOM CSV cache/share
+behavior now sit behind explicit application ports. No new data, export format, SDK, permission, network,
+credential or security setting. Accepted original counts/batches and Undo guards stay in memory, never
+portable paid facts. Owned fixtures and complete byte/row restoration remain separate from real device,
+provider and release acceptance. Test commercial registration is still inactive.

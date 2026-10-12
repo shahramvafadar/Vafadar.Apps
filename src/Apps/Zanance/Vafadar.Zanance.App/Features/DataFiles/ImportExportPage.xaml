@@ -4,13 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.DataFiles"
     x:DataType="local:ImportExportViewModel"
     Title="{v:Translate ImportExport_Title}">
 
-    <Grid>
+    <Grid RowDefinitions="*,Auto">
         <ScrollView>
-            <VerticalStackLayout Padding="16" Spacing="8">
+
+            <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding IsNotBusy}">
 
                 <!-- Export (IO-01..06) -->
                 <Label Text="{v:Translate Export_Title}" Style="{StaticResource SectionHeader}" />
@@ -68,7 +70,6 @@
                             <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Import_PreviewButton}" Command="{Binding PreviewCommand}" Margin="0,12,0,0" />
                         </VerticalStackLayout>
 
-                        <Label Text="{Binding ImportError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ImportError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <!-- Preview before anything is saved (IO-09) -->
                         <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
@@ -118,27 +119,20 @@
                                 <Label Text="{Binding OverlapError}" Style="{StaticResource ErrorText}"
                                        IsVisible="{Binding OverlapError, Converter={StaticResource IsNotNullConverter}}" />
                             </VerticalStackLayout>
-                            <Button Text="{v:Translate Import_RefreshPreview}" Style="{StaticResource SecondaryButton}"
-                                    Command="{Binding RefreshPreviewCommand}" IsEnabled="{Binding IsNotBusy}" />
-                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding ImportCommand}" IsEnabled="{Binding IsNotBusy}"
-                                    Text="{Binding ImportButtonText}" />
                         </VerticalStackLayout>
 
-                        <Label Text="{Binding ImportResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Past imports can be undone as a whole (IO-11) -->
-                <Label Text="{Binding UndoError}" Style="{StaticResource ErrorText}"
-                       IsVisible="{Binding UndoError, Converter={StaticResource IsNotNullConverter}}" />
                 <Label Text="{v:Translate Import_History}" Style="{StaticResource SectionHeader}" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}" />
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding Batches.Count, Converter={StaticResource IsPositiveConverter}}">
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Batches}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:BatchRow">
-                                <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding Text}" VerticalOptions="Center" />
-                                    <Button Grid.Column="1" Text="{v:Translate Import_Undo}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
+                                <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto" RowSpacing="8">
+                                    <Label Text="{Binding Text}" />
+                                    <p:WrappingAction Grid.Row="1" Text="{v:Translate Import_Undo}" Appearance="Destructive"
                                             Command="{Binding UndoCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>
@@ -149,7 +143,15 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
+        <!-- Original reviewed actions/outcomes retain their own growing row outside the scroll viewport. -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding HasImportDock}">
+            <Label Text="{Binding ImportResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding ImportError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ImportError, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding UndoError}" Style="{StaticResource ErrorText}" IsVisible="{Binding UndoError, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Import_RefreshPreview}" Command="{Binding RefreshPreviewCommand}" IsVisible="{Binding HasPreview}" />
+            <p:WrappingAction Text="{Binding ImportButtonText}" Appearance="Primary" Command="{Binding ImportCommand}" IsVisible="{Binding HasPreview}" />
+        </VerticalStackLayout>
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
                            HorizontalOptions="Center" VerticalOptions="Center" />
     </Grid>
 </ContentPage>

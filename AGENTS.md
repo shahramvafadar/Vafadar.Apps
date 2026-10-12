@@ -1162,3 +1162,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   write a draft or authorize a write; original atomic checks remain final.
 * Refresh explicitly without resetting raw inputs; failed/retired reviews disable Save with translated
   feedback. Preserve correction/history and real changed-review writer-rejection cases.
+
+## 99. Original import/Undo outcomes and retained picker review (D-166)
+
+* Retain the exact accepted import/Undo result across original post-commit notification failure.
+  Retire the reviewed payload and accepted Undo identity before fallible history/failure follow-through.
+* Keep pre-write rejection beside the unchanged review; picker cancellation does not reset it.
+  Publish history only after a complete read and retain other rows on failure.
+* Native picker/app-lock/cache/share effects stay behind explicit ports. Preserve neutral CSV names,
+  UTF-8 BOM and original security/financial policy. Busy guards cover consent and authentication.
+* Pin complete feedback/review/import actions outside the viewport; give history identity/Undo separate
+  growing rows. Measure newly visible captions after native layout, without weakening native checks.

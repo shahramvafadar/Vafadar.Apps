@@ -6166,4 +6166,19 @@
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>دسترسی هنگام تلاش برای ذخیره تغییر کرد. اطلاعات واردشده حفظ شده‌اند. پیش از تلاش دوباره، دسترسی را تازه‌سازی کنید.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>ورود اطلاعات انجام نشد. پیش‌نمایش و انتخاب‌های شما حفظ شده‌اند.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>اطلاعات واردشده ذخیره شدند، اما اطلاع‌رسانی یا تازه‌سازی تاریخچه ناموفق بود. این ورود اطلاعاتِ بررسی‌شده دوباره اجرا نمی‌شود.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>بازگردانی انجام نشد. تاریخچهٔ ورود اطلاعات حفظ شده است.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>بازگردانی ذخیره شد، اما اطلاع‌رسانی یا تازه‌سازی تاریخچه ناموفق بود. همان مجموعه دوباره بازگردانی نمی‌شود.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>پیش‌نمایش تازه‌سازی نشد. فایل شما حفظ شده است؛ پیش از ورود اطلاعات، پیش‌نمایش را تازه‌سازی کنید.</value>
+  </data>
 </root>

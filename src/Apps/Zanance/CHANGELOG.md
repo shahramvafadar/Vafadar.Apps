@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Retain import reviews and completed Undo outcomes (2026-10-12, D-166)
+
+- Keep the current preview and choices when file selection is cancelled or importing is refused.
+- Show actual completed import and Undo outcomes after a notification or history refresh fails; prevent repeats.
+- Keep review actions and complete feedback visible, with readable import history and Undo buttons.
+
 ### Improved - Account and Plan access before Save (2026-10-12, D-165)
 
 - Explain required access, capacity or active-item choices before trying to save.

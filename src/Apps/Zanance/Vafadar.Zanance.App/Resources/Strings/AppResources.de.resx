@@ -6166,4 +6166,19 @@ Kategorielimits:
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>Die Verfügbarkeit hat sich während des Speicherversuchs geändert. Deine Eingaben bleiben erhalten. Aktualisiere sie vor einem weiteren Versuch.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>Der Import konnte nicht abgeschlossen werden. Deine Vorschau und Auswahl bleiben erhalten.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>Der Import wurde gespeichert, aber die Benachrichtigung oder Aktualisierung des Verlaufs ist fehlgeschlagen. Dieser geprüfte Import wird nicht erneut ausgeführt.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>Das Rückgängigmachen konnte nicht abgeschlossen werden. Der Importverlauf bleibt erhalten.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>Das Rückgängigmachen wurde gespeichert, aber die Benachrichtigung oder Aktualisierung des Verlaufs ist fehlgeschlagen. Derselbe Import wird nicht erneut rückgängig gemacht.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>Die Vorschau konnte nicht aktualisiert werden. Deine Datei bleibt erhalten; aktualisiere die Vorschau vor dem Import.</value>
+  </data>
 </root>

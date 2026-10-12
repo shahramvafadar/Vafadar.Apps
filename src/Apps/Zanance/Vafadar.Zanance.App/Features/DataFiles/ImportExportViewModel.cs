@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
@@ -8,13 +7,15 @@ using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Presentation;
-using Vafadar.Zanance.App.Security;
+using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.DataFiles;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Core.Holdings;
 
 namespace Vafadar.Zanance.App.Features.DataFiles;
 
@@ -39,7 +40,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
-    private readonly AppLockService _lock;
+    private readonly IDataFileInteraction _files;
+    private readonly IAppInteraction _interaction;
+    private bool _previewAccepted;
+    private readonly HashSet<Guid> _completedUndo = [];
     private readonly HoldingStore _holdings;
     private HoldingsCsvContent? _holdingsContent;
     private IReadOnlyList<IReadOnlyList<string>> _rows = [];
@@ -50,10 +54,15 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private IReadOnlyDictionary<Guid, Core.Accounts.Account> _previewAccounts = new Dictionary<Guid, Core.Accounts.Account>();
     private CategoryLookup? _previewCategories;
 
-    public ImportExportViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, AppLockService appLock, HoldingStore holdings)
+    public ImportExportViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, HoldingStore holdings, IDataFileInteraction files, IAppInteraction interaction)
     {
         _holdings = holdings;
-        _lock = appLock;
+        _files = files;
+        _interaction = interaction;
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName is nameof(IsBusy) or nameof(CanImport) or nameof(HasPreview) or nameof(ImportError) or nameof(ImportResult) or nameof(UndoError)) RefreshActions();
+        };
         _store = store;
         _translator = translator;
         _dates = dates;
@@ -68,6 +77,21 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         CalendarNames = Presentation.Calendars.Names(translator);
         SeparatorNames = [translator["Import_DecimalPoint"], translator["Import_DecimalComma"]];
         SignNames = [translator["Import_SignNegativeExpense"], translator["Import_SignAllExpenses"], translator["Import_SignAllIncome"]];
+    }
+
+    /// <summary>Gets whether the exact current, unaccepted review can be imported explicitly.</summary>
+    public bool CanRunImport => CanImport && HasPreview && !IsBusy && !_previewAccepted;
+    /// <summary>Gets whether original raw CSV/mapping may be explicitly reviewed again.</summary>
+    public bool CanReviewPreview => !IsBusy && !_previewAccepted && _rows.Count > 1;
+    /// <summary>Gets whether pinned review actions or a complete import outcome need their own growing row.</summary>
+    public bool HasImportDock => HasPreview || ImportError is not null || ImportResult is not null || UndoError is not null;
+    private bool CanUndo(BatchRow? batch) => batch is not null && !IsBusy && !_completedUndo.Contains(batch.BatchId)
+        && Batches.Any(row => row.BatchId == batch.BatchId);
+    private void RefreshActions()
+    {
+        OnPropertyChanged(nameof(CanRunImport)); OnPropertyChanged(nameof(CanReviewPreview)); OnPropertyChanged(nameof(HasImportDock));
+        ImportCommand.NotifyCanExecuteChanged(); PreviewCommand.NotifyCanExecuteChanged(); RefreshPreviewCommand.NotifyCanExecuteChanged();
+        PickCommand.NotifyCanExecuteChanged(); ExportCommand.NotifyCanExecuteChanged(); ExportHoldingsCommand.NotifyCanExecuteChanged(); UndoCommand.NotifyCanExecuteChanged();
     }
 
     public IReadOnlyList<string> DateFormats { get; } = CsvImport.DateFormats;
@@ -196,39 +220,38 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
     private async Task LoadBatchesAsync()
     {
+        // Publish only after the complete read succeeds; failure must not erase original history.
+        var batches = await _store.GetImportBatchesAsync();
         Batches.Clear();
-        foreach (var batch in await _store.GetImportBatchesAsync())
+        foreach (var batch in batches)
         {
             Batches.Add(new BatchRow(batch.BatchId, _translator.Format("Import_Batch", _dates.Format(batch.ImportedAt, DateFormatStyle.Long), batch.Count)));
         }
+        UndoCommand.NotifyCanExecuteChanged();
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsNotBusy))]
     private async Task ExportAsync()
     {
         // Exports leave the app unencrypted: with the app lock on, the owner confirms first (SEC-02, AT-61).
-        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
-        {
-            return;
-        }
-
+        if (IsBusy) return;
         IsBusy = true;
         try
         {
+            if (!await _files.ConfirmExportAsync(_translator["Lock_ConfirmExport"])) return;
             var accounts = (await _store.GetAccountsAsync()).ToDictionary(a => a.Id);
             var lookup = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
             var entries = await _store.GetEntriesAsync(ExportFrom, ExportTo);
             var text = CsvExport.Write(entries, accounts, id => lookup.Name(id), IncludeNotes);
 
             // A neutral file name: no account names or amounts (BAK-08 applies to exports too).
-            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-export-{_time.GetLocalNow():yyyyMMdd-HHmm}.csv"));
-            await File.WriteAllTextAsync(path, text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+            var name = string.Create(CultureInfo.InvariantCulture, $"zanance-export-{_time.GetLocalNow():yyyyMMdd-HHmm}.csv");
+            await _files.ShareCsvAsync(name, _translator["Export_Title"], text);
             ExportResult = _translator.Format("Export_Done", entries.Count);
-            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Export_Title"], File = new ShareFile(path, "text/csv") });
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            await Failures.ShowAsync(ex);
+            await _interaction.ShowFailureAsync(ex);
         }
         finally
         {
@@ -237,27 +260,23 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     }
 
     // The holdings file: types, locations, events and prices; the money of purchases and sales is in the entries file.
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsNotBusy))]
     private async Task ExportHoldingsAsync()
     {
-        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmExport"]))
-        {
-            return;
-        }
-
+        if (IsBusy) return;
         IsBusy = true;
         try
         {
+            if (!await _files.ConfirmExportAsync(_translator["Lock_ConfirmExport"])) return;
             var events = await _holdings.GetEventsAsync();
             var text = HoldingsCsv.Write(await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync(), events, await _holdings.GetValuationsAsync(), IncludeNotes);
-            var path = Path.Combine(FileSystem.CacheDirectory, string.Create(CultureInfo.InvariantCulture, $"zanance-holdings-{_time.GetLocalNow():yyyyMMdd-HHmm}.csv"));
-            await File.WriteAllTextAsync(path, text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+            var name = string.Create(CultureInfo.InvariantCulture, $"zanance-holdings-{_time.GetLocalNow():yyyyMMdd-HHmm}.csv");
+            await _files.ShareCsvAsync(name, _translator["Export_Title"], text);
             ExportResult = _translator.Format("Export_HoldingsDone", events.Count);
-            await Share.Default.RequestAsync(new ShareFileRequest { Title = _translator["Export_Title"], File = new ShareFile(path, "text/csv") });
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            await Failures.ShowAsync(ex);
+            await _interaction.ShowFailureAsync(ex);
         }
         finally
         {
@@ -265,29 +284,26 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private Task PickAsync() => Failures.GuardAsync(PickFileAsync);
+    [RelayCommand(CanExecute = nameof(IsNotBusy))]
+    private async Task PickAsync()
+    {
+        if (IsBusy) return;
+        IsBusy = true;
+        try { await PickFileAsync(); }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { await _interaction.ShowFailureAsync(ex); }
+        finally { IsBusy = false; }
+    }
 
     private async Task PickFileAsync()
     {
-        ImportError = null;
-        ImportResult = null;
-        HasPreview = false;
-        var file = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = _translator["Import_Pick"] });
-        if (file is null)
-        {
-            return;
-        }
-
-        string text;
-        await using (var stream = await file.OpenReadAsync())
-        using (var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true))
-        {
-            text = await reader.ReadToEndAsync();
-        }
-
-        _rows = Csv.Read(text, Csv.DetectSeparator(text));
-        FileName = file.FileName;
+        var file = await _files.PickCsvAsync(_translator["Import_Pick"]);
+        if (file is null) return;
+        // Only an actual new selection replaces the previous raw review or accepted result.
+        ImportError = null; UndoError = null; ImportResult = null; HasPreview = false; CanImport = false; _previewAccepted = false;
+        _preview = []; _holdingsContent = null; Overlaps.Clear();
+        _rows = Csv.Read(file.Text, Csv.DetectSeparator(file.Text));
+        FileName = file.Name;
+        RefreshActions();
         if (_rows.Count < 2)
         {
             ImportError = _translator["Import_Empty"];
@@ -308,7 +324,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         ShowMapping = !_ownFormat;
         if (_ownFormat)
         {
-            await PreviewAsync();
+            await ReadPreviewAsync();
             return;
         }
 
@@ -324,11 +340,24 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         NoteColumn = Guess("note", "notiz", "یادداشت") ?? Columns[0];
     }
 
-    [RelayCommand]
-    private Task RefreshPreviewAsync() => _holdingsContent is not null ? PreviewHoldingsAsync() : PreviewAsync();
+    [RelayCommand(CanExecute = nameof(CanReviewPreview))]
+    private async Task RefreshPreviewAsync()
+    {
+        if (!CanReviewPreview) return;
+        IsBusy = true;
+        try { if (_holdingsContent is not null) await PreviewHoldingsAsync(); else await ReadPreviewAsync(); }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            _previewStale = true; CanImport = false; ImportError = _translator["Import_ReviewFailed"];
+            await _interaction.ShowFailureAsync(ex);
+        }
+        finally { IsBusy = false; }
+    }
 
-    [RelayCommand]
-    private async Task PreviewAsync()
+    [RelayCommand(CanExecute = nameof(CanReviewPreview))]
+    private Task PreviewAsync() => RefreshPreviewAsync();
+
+    private async Task ReadPreviewAsync()
     {
         ImportError = null;
         _previewStale = false;
@@ -388,6 +417,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
     private async Task PreviewHoldingsAsync()
     {
+        ImportError = null;
         var content = HoldingsCsv.Read(_rows, await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync());
         _holdingsContent = content;
         _preview = [];
@@ -444,9 +474,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         CanImport = ImportCount > 0 && !pending && !shared && !_previewStale;
     }
 
-    [RelayCommand(CanExecute = nameof(CanImport))]
+    [RelayCommand(CanExecute = nameof(CanRunImport))]
     private async Task ImportAsync()
     {
+        if (!CanRunImport) return;
         if (_holdingsContent is { } holdings)
         {
             await ImportHoldingsAsync(holdings);
@@ -464,7 +495,10 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         {
             ImportError = null;
             ImportResult = null;
-            var result = await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList());
+            ImportResult result;
+            Exception? publication = null;
+            try { result = await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList()); }
+            catch (CommittedWriteNotificationException<ImportResult> ex) { result = ex.Result; publication = ex; }
             if (result.Conflict is { } conflict)
             {
                 ImportError = _translator[$"Import_Overlap_{conflict}"];
@@ -479,15 +513,17 @@ public sealed partial class ImportExportViewModel : ViewModelBase
                 return;
             }
 
-            ImportResult = _translator.Format("Import_Done", result.Imported, result.Skipped);
-            HasPreview = false;
-            ShowMapping = false;
-            await LoadBatchesAsync();
+            CompleteImport(result.Imported, result.Skipped);
+            try { await LoadBatchesAsync(); }
+            catch (Exception ex) when (ex is not OutOfMemoryException) { publication ??= ex; }
+            if (publication is not null)
+            { ImportError = _translator["Import_SavedFollowUpFailed"]; await _interaction.ShowFailureAsync(publication); }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            // E.g. a constraint the checks did not catch: the batch is rolled back, nothing was imported.
-            await Failures.ShowAsync(ex);
+            ImportError = _translator[_previewAccepted ? "Import_SavedFollowUpFailed" : "Import_SaveFailed"];
+            if (!_previewAccepted) ImportError = CommercialFailureMessage.OrFallback(ex, _translator, "Import_SaveFailed", draftKept: true);
+            await _interaction.ShowFailureAsync(ex);
         }
         finally
         {
@@ -506,25 +542,42 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            var (imported, skipped, conflict) = await _holdings.ImportAsync(content);
+            (int Imported, int Skipped, HoldingConflict? Conflict) result;
+            Exception? publication = null;
+            try { result = await _holdings.ImportAsync(content); }
+            catch (CommittedWriteNotificationException<(int Imported, int Skipped, HoldingConflict? Conflict)> ex)
+            { result = ex.Result; publication = ex; }
+            var (imported, skipped, conflict) = result;
             if (conflict is not null)
             {
                 ImportError = _translator.Format("Import_HoldingsConflict", _dates.Format(conflict.Date, DateFormatStyle.Short));
                 return;
             }
 
-            ImportResult = _translator.Format("Import_Done", imported, skipped);
-            HasPreview = false;
-            _holdingsContent = null;
+            CompleteImport(imported, skipped);
+            if (publication is not null)
+            { ImportError = _translator["Import_SavedFollowUpFailed"]; await _interaction.ShowFailureAsync(publication); }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            await Failures.ShowAsync(ex);
+            ImportError = _previewAccepted ? _translator["Import_SavedFollowUpFailed"]
+                : CommercialFailureMessage.OrFallback(ex, _translator, "Import_SaveFailed", draftKept: true);
+            await _interaction.ShowFailureAsync(ex);
         }
         finally
         {
             IsBusy = false;
         }
+    }
+
+    /// <summary>Retires the accepted reviewed payload before any fallible publication/history follow-through.</summary>
+    private void CompleteImport(int imported, int skipped)
+    {
+        ImportError = null;
+        _previewAccepted = true; CanImport = false; HasPreview = false; ShowMapping = false;
+        _preview = []; _holdingsContent = null;
+        ImportResult = _translator.Format("Import_Done", imported, skipped);
+        RefreshActions();
     }
 
 #if DEBUG
@@ -538,34 +591,43 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         _ownFormat = true;
         _holdingsContent = null;
         FileName = "fictitious-import.csv";
-        await PreviewAsync();
+        await ReadPreviewAsync();
     }
 #endif
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanUndo))]
     private async Task UndoAsync(BatchRow batch)
     {
-        if (!await Shell.Current.DisplayAlertAsync(_translator["Import_Undo"], _translator["Import_UndoMessage"], _translator["Import_Undo"], _translator["Common_Cancel"]))
-        {
-            return;
-        }
-
+        if (!CanUndo(batch)) return;
+        // Keep one busy lifetime through explicit consent and the original atomic Undo.
         IsBusy = true;
+        var accepted = false;
         try
         {
-            UndoError = null;
-            ImportResult = null;
-            var result = await _store.TryUndoImportAsync(batch.BatchId);
-            if (result.Conflict) { UndoError = _translator["Import_UndoConflict"]; }
-            else
-            {
-                ImportResult = _translator["Import_UndoDone"];
-                // Preview choices may refer to the old remainder; obtain fresh evidence before another import.
-                HasPreview = false;
-                await LoadBatchesAsync();
-            }
+            if (!await _interaction.ConfirmAsync(_translator["Import_Undo"], _translator["Import_UndoMessage"], _translator["Import_Undo"], _translator["Common_Cancel"])) return;
+            UndoError = null; ImportResult = null;
+            ImportUndoResult result;
+            Exception? publication = null;
+            try { result = await _store.TryUndoImportAsync(batch.BatchId); }
+            catch (CommittedWriteNotificationException<ImportUndoResult> ex) { result = ex.Result; publication = ex; }
+            if (result.Conflict) { UndoError = _translator["Import_UndoConflict"]; return; }
+            accepted = true; ImportError = null; _completedUndo.Add(batch.BatchId);
+            foreach (var row in Batches.Where(row => row.BatchId == batch.BatchId).ToList()) Batches.Remove(row);
+            ImportResult = _translator["Import_UndoDone"];
+            // Original overlap evidence is retired. An explicit fresh review may intentionally import again.
+            HasPreview = false; CanImport = false; _previewStale = true; _previewAccepted = false;
+            _preview = []; Overlaps.Clear();
+            try { await LoadBatchesAsync(); }
+            catch (Exception ex) when (ex is not OutOfMemoryException) { publication ??= ex; }
+            if (publication is not null)
+            { UndoError = _translator["Import_UndoFollowUpFailed"]; await _interaction.ShowFailureAsync(publication); }
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException) { await Failures.ShowAsync(ex); }
-        finally { IsBusy = false; }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            UndoError = accepted ? _translator["Import_UndoFollowUpFailed"]
+                : CommercialFailureMessage.OrFallback(ex, _translator, "Import_UndoFailed");
+            await _interaction.ShowFailureAsync(ex);
+        }
+        finally { IsBusy = false; RefreshActions(); }
     }
 }

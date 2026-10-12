@@ -6143,4 +6143,19 @@ Plafonds par catégorie :
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>La disponibilité a changé pendant la tentative d’enregistrement. Vos saisies sont conservées. Actualisez-la avant de réessayer.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>L’importation n’a pas pu être effectuée. Votre aperçu et vos choix sont conservés.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>L’importation a été enregistrée, mais la notification ou l’actualisation de l’historique a échoué. Cette importation vérifiée ne sera pas relancée.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>L’annulation de l’importation n’a pas pu être effectuée. L’historique est conservé.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>L’annulation a été enregistrée, mais la notification ou l’actualisation de l’historique a échoué. Le même lot ne sera pas annulé de nouveau.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>L’aperçu n’a pas pu être actualisé. Votre fichier est conservé ; actualisez l’aperçu avant l’importation.</value>
+  </data>
 </root>

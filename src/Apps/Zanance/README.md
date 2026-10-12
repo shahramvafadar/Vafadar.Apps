@@ -347,3 +347,9 @@ Unsaved financial edits need explicit discard consent and are not silently saved
 Explain original access and capacity before Save; refresh without losing any amount, date or other draft.
 Original correction/history and atomic writer checks stay intact. Test builds remain unrestricted.
 See [evidence](docs/quality/editor-readiness.md).
+
+## Retained import review and honest completed outcomes (D-166)
+
+Keep the original file/preview when picking is cancelled or a write is refused. Complete imports and
+Undo remain completed after notification/history-refresh failure and cannot silently run again. Review
+actions and feedback remain visible outside the scroll viewport. See [evidence](docs/quality/import-outcomes.md).

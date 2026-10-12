@@ -6155,4 +6155,19 @@ Limiti per categoria:
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>La disponibilità è cambiata durante il tentativo di salvataggio. I tuoi dati sono conservati. Aggiornala prima di riprovare.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>Non è stato possibile completare l’importazione. L’anteprima e le tue scelte sono conservate.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>L’importazione è stata salvata, ma la notifica o l’aggiornamento della cronologia non è riuscito. Questa importazione verificata non verrà eseguita di nuovo.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>Non è stato possibile annullare l’importazione. La cronologia è conservata.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>L’annullamento è stato salvato, ma la notifica o l’aggiornamento della cronologia non è riuscito. Lo stesso gruppo non verrà annullato di nuovo.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>Non è stato possibile aggiornare l’anteprima. Il tuo file è conservato; aggiorna l’anteprima prima di importare.</value>
+  </data>
 </root>

@@ -1055,3 +1055,11 @@ Keep complete translated access/selection/capacity feedback above pinned Save. E
 reads current writer inputs without clearing, normalizing or saving any draft. Refresh failure disables
 Save with retry feedback; input stays editable. Current review is an explanation, never write authority.
 Actual rejection retires it until explicit refresh; historical correction/split behavior remains original.
+
+## Visible original import outcome and review (D-166)
+
+Pin complete import/Undo feedback and original review/import actions in their own growing row outside
+the body viewport. Keep full history identity separate from a growing native Undo action. A failed
+pre-write attempt retains the original reviewed file/choices; a completed attempt retires that payload
+before fallible publication. Picker cancellation preserves the form; busy guards cover consent and
+authentication. Successful notification/history failure states completion without offering a repeat.

@@ -6195,4 +6195,19 @@ Category limits:
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>Availability changed during the attempted save. Your input is retained. Refresh availability before trying again.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>Import could not be completed. Your preview and choices are retained.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>The import was saved, but its notification or history refresh failed. This reviewed import will not run again.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>Undo could not be completed. The import history is retained.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>Undo was saved, but its notification or history refresh failed. The same batch will not be undone again.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>The preview could not be refreshed. Your file is retained; refresh the preview before importing.</value>
+  </data>
 </root>

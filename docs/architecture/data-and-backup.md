@@ -704,3 +704,22 @@ state or grant a write. Explicit Refresh access keeps every raw amount/date/note
 A failed or retired read disables Save with translated feedback; an actual writer rejection still retains
 the draft and requires explicit fresh review. Atomic writers remain the final authority. No EF property,
 schema/migration, permission, SDK/network, credential or portable-format change. Test limits stay inactive.
+
+## Original committed data-file outcomes (D-166)
+
+Original ledger import, holdings import and durable Undo now retain the original accepted result across
+post-commit change-subscriber failure. A typed completed notification carries the exact counts/batch or
+Undo result; original atomic writers, metadata, overlap rechecks, rights and rollback stay unchanged.
+The application retires the accepted reviewed payload before any history/failure follow-through and
+removes an accepted Undo row before fallible reload. A retained old command cannot repeat that batch.
+A complete history read publishes only after success, preserving other original rows on failure.
+
+Structured pre-write rejection is shown beside the retained preview in all six languages. Successful
+follow-through failures state the completed outcome instead of pretending it rolled back. Picker
+cancellation keeps the existing file/preview/choices. One busy lifetime spans Undo consent/write and
+export authentication; explicit fresh review retires failed original evidence without silently saving.
+Picker, existing app-lock confirmation and UTF-8 BOM cache/share effects are native adapters. Actual
+non-UI application sources are compiled and tested through explicit ports, never stand-in MAUI controls.
+Pinned complete feedback/review/import actions reserve a growing row outside the viewport. Original
+history identity and growing Undo action have separate rows. No new feature policy, paid activation,
+schema/model/migration, SDK/permission/network, credentials or portable-format change.

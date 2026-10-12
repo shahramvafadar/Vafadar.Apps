@@ -1448,3 +1448,27 @@ owned byte/sidecar restoration. Final Release is installed/stopped. Canonical fu
 zero warnings/errors; all six changed production-source PDB checksums match. The installable APK is
 artifacts/android/zanance-d165-release.apk (82589781 bytes); signature/structure evidence is recorded
 in the focused quality document. No physical-phone, iOS, OAuth, billing or release acceptance is inferred.
+
+## AT-168 - Original import/Undo refusal and accepted follow-through (D-166)
+
+32 AT-168 cases pass with actual application sources, real isolated SQLite and all six resource languages.
+They cover original ledger/holdings permission refusal and retry, post-commit publication outcomes,
+nonrepeatable accepted import/Undo, real history-read failure with other batch retention, picker/consent
+cancellation and busy guards, explicit read-refusal/retry, security/export ports and neutral complete CSV,
+real SQL-trigger whole-transaction rollback, plus explicit aggregate links and complete restored metadata.
+Final ordinary main: 3,010 passed / App.Tests 953, zero failures/skips, 2m 42.936s, followed by cleanup.
+Strict Windows and canonical complete Android Release have zero warnings/errors. All seven changed
+production-source PDB checksums match. Device/platform/provider acceptance remains separate.
+
+Original overlap selection, currencies/signs, duplicate identity, complete metadata, atomic rollback and
+durable Undo stay authoritative. Native/effect boundaries and remaining gates:
+[focused evidence](quality/import-outcomes.md).
+
+Actual native/package follow-through: 36 Windows contexts (en/fa/de, both themes, 360/412/wide,
+Simple/Advanced) verify original native review/import/Undo, retained refusal and cancellation, complete
+pinned reasons/results/targets, accepted subscriber-failure semantics and all 25 original tables restored.
+Normal final Release Android verifies DocumentsUI picking, actual preview refresh, picker cancellation,
+Import and consented Undo, unchanged original rows, existing D-141 migration only, exact owned bytes/
+sidecars and Main/English/System restored. The new owned CSV is removed; final Release is installed/
+stopped. APK: artifacts/android/zanance-d166-release.apk (82175915 bytes), signature/structure and all
+seven production-source checksums verified. Physical-phone/iOS/OAuth/billing/activation stay separate.

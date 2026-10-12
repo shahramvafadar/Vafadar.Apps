@@ -6135,4 +6135,19 @@ Límites por categoría:
   <data name="Editor_WorkRetired" xml:space="preserve">
     <value>La disponibilidad cambió durante el intento de guardar. Tus datos se conservan. Actualízala antes de intentarlo de nuevo.</value>
   </data>
+  <data name="Import_SaveFailed" xml:space="preserve">
+    <value>No se pudo completar la importación. Tu vista previa y tus opciones se conservan.</value>
+  </data>
+  <data name="Import_SavedFollowUpFailed" xml:space="preserve">
+    <value>La importación se guardó, pero falló la notificación o la actualización del historial. Esta importación revisada no se ejecutará de nuevo.</value>
+  </data>
+  <data name="Import_UndoFailed" xml:space="preserve">
+    <value>No se pudo deshacer la importación. El historial se conserva.</value>
+  </data>
+  <data name="Import_UndoFollowUpFailed" xml:space="preserve">
+    <value>La acción de deshacer se guardó, pero falló la notificación o la actualización del historial. El mismo lote no se deshará de nuevo.</value>
+  </data>
+  <data name="Import_ReviewFailed" xml:space="preserve">
+    <value>No se pudo actualizar la vista previa. Tu archivo se conserva; actualiza la vista previa antes de importar.</value>
+  </data>
 </root>

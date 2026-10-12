@@ -133,8 +133,7 @@ public sealed partial class ZananceStore
         }
 
         await write.CommitAsync(cancellationToken);
-        OnChanged();
-        return new ImportResult(batchId, imported.Count, skipped, errors);
+        return CommittedWriteNotification.Publish(OnChanged, new ImportResult(batchId, imported.Count, skipped, errors));
     }
 
     /// <summary>Returns ids of aggregates consumed by an active linked import, for idempotent own-CSV preview.</summary>
@@ -229,8 +228,7 @@ public sealed partial class ZananceStore
         await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
-        OnChanged();
-        return new ImportUndoResult(count, false);
+        return CommittedWriteNotification.Publish(OnChanged, new ImportUndoResult(count, false));
     }
 
     private static ImportOverlapConflict? ValidateImportChoices(IReadOnlyList<AggregateOverlap> current, IReadOnlyList<ImportAggregateChoice> choices)
