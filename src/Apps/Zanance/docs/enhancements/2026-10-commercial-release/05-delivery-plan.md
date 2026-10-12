@@ -1066,3 +1066,21 @@ Import and consented Undo, unchanged original rows, existing D-141 migration onl
 sidecars and Main/English/System restored. The new owned CSV is removed; final Release is installed/
 stopped. APK: artifacts/android/zanance-d166-release.apk (82175915 bytes), signature/structure and all
 seven production-source checksums verified. Physical-phone/iOS/OAuth/billing/activation stay separate.
+
+## D-167 - Restore completed before fallible follow-through
+
+Original all-source recovery is recorded before display/onboarding/lock/work/root completion. Retire
+accepted input; explicit completion retry never repeats replacement/safety. Preserve old review on new
+read failure; uncertain partial-source failure requires fresh inspection/consent. No new commercial,
+security, schema, SDK, permission or portable policy. Test enforcement remains inactive.
+
+35 AT-169 cases; main 3,045/App.Tests 988, zero failures/skips; strict builds zero warnings/errors;
+36 Windows contexts and normal final Release Android picker/consent/source/root plus complete 25-table
+readback verified. Owned bytes/sidecars/Main/English/System restore; final signed Release stopped.
+APK: artifacts/android/zanance-d167-release.apk. [Evidence](../../quality/restore-outcomes.md).
+
+Next: finite current ENT-02/03/04 entry-point inventory and confirmed gaps only. The earlier extra generic
+mapped-CSV proposal is withdrawn: the approved matrix already includes CSV in Free, Core allows it and
+original import/restore deliberately recovers owned data above quota. Historical unfinished slice notes
+must be reconciled against current source. LOC-05/10 owner texts and encryption/provider/device/iOS/
+billing/release gates remain open; the commercial release and continuous goal are not complete.

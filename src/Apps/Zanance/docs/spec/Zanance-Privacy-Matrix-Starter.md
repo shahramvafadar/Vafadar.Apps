@@ -489,3 +489,9 @@ behavior now sit behind explicit application ports. No new data, export format, 
 credential or security setting. Accepted original counts/batches and Undo guards stay in memory, never
 portable paid facts. Owned fixtures and complete byte/row restoration remain separate from real device,
 provider and release acceptance. Test commercial registration is still inactive.
+
+## D-167 - Process-local restore outcome
+
+Accepted package/password/preview is retired before completion; retry state remains process-local.
+No new data, SDK, network, permission, credential, portable field or encryption/OS-backup policy.
+Existing mandatory safety-copy retention and optional portable protection remain unchanged.

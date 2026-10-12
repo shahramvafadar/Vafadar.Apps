@@ -1173,3 +1173,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   UTF-8 BOM and original security/financial policy. Busy guards cover consent and authentication.
 * Pin complete feedback/review/import actions outside the viewport; give history identity/Undo separate
   growing rows. Measure newly visible captions after native layout, without weakening native checks.
+
+## 100. Accepted restore before fallible completion (D-167)
+
+* Retire the accepted all-source package/password/preview before display, onboarding, lock, automatic-post,
+  reminder or root completion. Explicit completion retry must never replace data or create safety copies again.
+* A later source can fail after an earlier source changed data, even with BackupException. Report uncertainty;
+  require fresh explicit review/consent. Never promise rollback or unchanged data from the exception type.
+* Keep old review on incomplete new stream reads and pre-primary refusal. Hold busy/navigation guards through
+  completion; preserve original optional protection and constructor no-write behavior.
+* Inventory current entry points finitely before claiming remaining gaps. Historical partial-slice notes are
+  not fresh requirements; approved Free CSV import/recovery must not acquire an invented paid/quota gate.

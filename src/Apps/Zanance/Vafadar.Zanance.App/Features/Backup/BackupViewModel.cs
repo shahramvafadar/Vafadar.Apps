@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using Vafadar.Backup.Security;
 using Vafadar.Backup.Storage;
 using Vafadar.Backup;
 using Vafadar.Localization.Formatting;
@@ -28,8 +27,6 @@ public sealed partial class BackupViewModel : ViewModelBase
     private const string PasswordProtectionKey = "backup.usePassword";
 
     private readonly IBackupService _backup;
-    private readonly AutoPostProcessor _autoPost;
-    private readonly ReminderService _reminders;
     private readonly AppLockService _lock;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
@@ -37,7 +34,6 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly TimeProvider _time;
     private readonly LocalFolderBackupStorage _local;
     private readonly LocalFolderBackupStorage _safety;
-    private byte[]? _package;
     private Page? _page;
     private Func<Task>? _returnToOnboarding;
 
@@ -49,7 +45,21 @@ public sealed partial class BackupViewModel : ViewModelBase
     public partial bool IsRestoreOnly { get; set; }
 
     /// <summary>Gets whether creating or uploading a backup is offered on this page.</summary>
-    public bool CanCreateBackup => !IsRestoreOnly;
+    public bool CanCreateBackup => !IsRestoreOnly && !Restore.HasCompleted;
+    /// <summary>Gets the original non-UI restore flow used by local, picked and connected-cloud packages.</summary>
+    public BackupRestoreSession Restore { get; }
+    /// <summary>Gets whether backup inputs remain available before an accepted restore is opened.</summary>
+    public bool CanUseBackupTools => !IsBusy && !Restore.HasCompleted;
+    /// <summary>Gets whether native Back/tab navigation may leave the original restore flow.</summary>
+    public bool CanLeave => !IsBusy && Restore.CanLeave;
+    /// <summary>Forwards storage feedback from the original local/cloud adapters into the restore flow.</summary>
+    public string? RestoreError { get => Restore.Error; set => Restore.Error = value; }
+    private bool _restorePriorBusy;
+    private readonly bool _initializingProtection = true;
+#if DEBUG
+    /// <summary>Independent diagnostics skip native/cloud discovery and never display real provider identity.</summary>
+    internal bool IndependentRestoreReview { get; set; }
+#endif
 
     /// <summary>Sets the host for dialogs, including first run when no Shell exists.</summary>
     public void AttachPage(Page page) => _page = page;
@@ -65,9 +75,9 @@ public sealed partial class BackupViewModel : ViewModelBase
     [RelayCommand]
     private async Task BackToOnboardingAsync()
     {
-        if (!IsBusy)
+        if (CanLeave)
         {
-            ResetRestore();
+            Restore.CancelCommand.Execute(null);
             if (_returnToOnboarding is not null)
             {
                 await _returnToOnboarding();
@@ -75,6 +85,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>Composes original creation/discovery with the shared restore session and attached native effects.</summary>
     public BackupViewModel(
         IBackupService backup,
         AutoPostProcessor autoPost,
@@ -85,24 +96,41 @@ public sealed partial class BackupViewModel : ViewModelBase
         ILocalizationService localization,
         TimeProvider time,
         Vafadar.Authentication.Maui.CloudSignIn cloud,
-        IServiceProvider services)
+        IServiceProvider services,
+        IBackupRestoreRuntime? restoreRuntime = null)
     {
         _cloud = cloud;
-        _services = services;
         _lock = appLock;
-        _reminders = reminders;
+        _services = services;
         _backup = backup;
-        _autoPost = autoPost;
         _translator = translator;
         _dates = dates;
         _localization = localization;
         _time = time;
         _local = new LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups"));
         _safety = new LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups-safety"));
+        Restore = new BackupRestoreSession(backup, restoreRuntime ?? new MauiBackupRestoreRuntime(backup, autoPost, reminders, appLock, localization,
+            services.GetRequiredService<ZananceStore>(), _safety, () => DialogPage, () => _returnToOnboarding?.Invoke() ?? Task.CompletedTask),
+            translator, dates, localization, time, () => !IsBusy);
+        Restore.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(BackupRestoreSession.IsBusy))
+            {
+                // Preserve an outer cloud/file read's busy lifetime while the inner restore publishes its state (D-167).
+                if (Restore.IsBusy) { _restorePriorBusy = IsBusy; IsBusy = true; } else IsBusy = _restorePriorBusy;
+            }
+            if (e.PropertyName == nameof(BackupRestoreSession.HasCompleted)) OnPropertyChanged(nameof(CanCreateBackup));
+            OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave));
+        };
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(IsBusy)) { Restore.OwnerStateChanged(); OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave)); }
+            if (e.PropertyName == nameof(IsRestoreOnly)) Restore.IsOnboarding = IsRestoreOnly;
+        };
         Password = string.Empty;
         PasswordConfirm = string.Empty;
-        RestorePassword = string.Empty;
         UsePassword = Preferences.Default.Get(PasswordProtectionKey, true);
+        _initializingProtection = false;
         LastBackupText = string.Empty;
     }
 
@@ -117,7 +145,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     partial void OnUsePasswordChanged(bool value)
     {
         // Remember only the choice on this device, never the password. New installations default to encryption.
-        Preferences.Default.Set(PasswordProtectionKey, value);
+        if (!_initializingProtection) Preferences.Default.Set(PasswordProtectionKey, value);
         if (!value)
         {
             Password = string.Empty;
@@ -140,27 +168,11 @@ public sealed partial class BackupViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool HasLocalBackups { get; set; }
 
-    // Restore flow: pick → (password) → preview → confirm.
-    [ObservableProperty]
-    public partial bool NeedsRestorePassword { get; set; }
-
-    [ObservableProperty]
-    public partial string RestorePassword { get; set; }
-
-    [ObservableProperty]
-    public partial string? RestoreError { get; set; }
-
-    [ObservableProperty]
-    public partial string? PreviewText { get; set; }
-
-    [ObservableProperty]
-    public partial bool HasPreview { get; set; }
-
-    [ObservableProperty]
-    public partial string? PickedName { get; set; }
-
     public async Task LoadAsync()
     {
+#if DEBUG
+        if (IndependentRestoreReview) { LastBackupText = _translator["Backup_Never"]; return; }
+#endif
         LastBackupText = _backup.LastBackupAt is { } last
             ? _translator.Format("Backup_LastBackup", FormatTime(last))
             : _translator["Backup_Never"];
@@ -179,6 +191,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     [RelayCommand]
     private async Task CreateAsync()
     {
+        if (!CanUseBackupTools || !CanCreateBackup) return;
         CreateError = null;
         CreateResult = null;
         if (UsePassword && PasswordProblem() is { } problem)
@@ -220,6 +233,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenLocalAsync(LocalBackup backup)
     {
+        if (!CanUseBackupTools) return;
         var share = _translator["Backup_Share"];
         var restore = _translator["Backup_Restore"];
         var choice = IsRestoreOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
@@ -244,6 +258,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     [RelayCommand]
     private async Task PickFileAsync()
     {
+        if (!CanUseBackupTools) return;
         try
         {
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = _translator["Backup_PickFile"] });
@@ -261,155 +276,8 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
     }
 
-    // Reads the file and shows the password field or the preview; nothing is changed yet (BAK-09, BAK-10).
-    private async Task PrepareRestoreAsync(Stream stream, string name)
-    {
-        ResetRestore();
-        using var buffer = new MemoryStream();
-        await stream.CopyToAsync(buffer);
-        _package = buffer.ToArray();
-        PickedName = name;
-        NeedsRestorePassword = BackupEncryption.IsEncrypted(_package);
-        if (!NeedsRestorePassword)
-        {
-            await CheckAsync();
-        }
-    }
-
-    [RelayCommand]
-    private async Task CheckAsync()
-    {
-        if (_package is null)
-        {
-            return;
-        }
-
-        RestoreError = null;
-        IsBusy = true;
-        try
-        {
-            var manifest = await _backup.InspectPackageAsync(_package, NeedsRestorePassword ? RestorePassword : null);
-            PreviewText = Describe(manifest);
-            HasPreview = true;
-        }
-        catch (BackupException ex)
-        {
-            RestoreError = _translator[$"Backup_Error_{ex.Error}"];
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    [RelayCommand]
-    private async Task RestoreAsync()
-    {
-        if (_package is null || !HasPreview)
-        {
-            return;
-        }
-
-        if (!await DialogPage.DisplayAlertAsync(_translator["Backup_ReplaceTitle"], _translator["Backup_ReplaceMessage"], _translator["Backup_Replace"], _translator["Common_Cancel"])
-            || !await _lock.ConfirmAsync(_translator["Lock_ConfirmRestore"]))
-        {
-            return;
-        }
-
-        var restored = false;
-
-        // Until the safety copy exists nothing has been touched; from the restore on, a failure can leave the data
-        // replaced (e.g. a migration that fails after the copy), so only the first stage may say "not changed".
-        var replacing = false;
-        IsBusy = true;
-        try
-        {
-            // Keep a safety copy of the current data first (BAK-02, BAK-09).
-            await _backup.CreateSafetyCopyAsync(_safety);
-            var package = _package;
-            var password = NeedsRestorePassword ? RestorePassword : null;
-            replacing = true;
-            await _autoPost.RunExclusiveAsync(() => _backup.RestorePackageAsync(package, password));
-
-            // Portable formatting choices take effect on the UI thread after all backup sources have restored.
-            _localization.Initialize();
-            Presentation.DigitPreferences.Apply(_localization);
-
-            if (IsRestoreOnly)
-            {
-                // Existing accounts make onboarding unnecessary; restored profile preferences remain intact (D-62).
-                await _services.GetRequiredService<ZananceStore>().CompleteRestoredOnboardingAsync();
-            }
-
-            // The restored settings may switch the app lock on or off.
-            await _lock.ReloadAsync();
-
-            // Due occurrences are processed again; settled ones are not recreated (BAK-11). The restore itself succeeded
-            // even if this follow-up fails; it runs again on the next start.
-            try
-            {
-                await _autoPost.RunAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime));
-                await _reminders.RefreshAsync();
-            }
-            catch (Exception ex) when (ex is not OutOfMemoryException)
-            {
-                System.Diagnostics.Debug.WriteLine($"After restore: {ex.GetType().Name}");
-            }
-
-            ResetRestore();
-            restored = true;
-        }
-        catch (BackupException ex)
-        {
-            // Raised while the package is checked, before any data is replaced; each text says so where it applies.
-            RestoreError = _translator[$"Backup_Error_{ex.Error}"];
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException && !replacing)
-        {
-            RestoreError = _translator["Backup_Error_Storage"];
-        }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            // Before the restore: the safety copy failed and nothing changed. During it: the database may already be
-            // replaced but not migrated. The safety copy lies in "backups-safety", which the backup list does not show,
-            // so the message does not point to it.
-            System.Diagnostics.Debug.WriteLine($"Restore failed: {ex}");
-            RestoreError = _translator[replacing ? "Backup_Error_RestoreFailed" : "Backup_Error_SafetyCopyFailed"];
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-
-        // Telling the user and rebuilding the screens are not part of the restore: a problem there must not report the
-        // finished restore as failed.
-        if (restored)
-        {
-            await Presentation.Failures.GuardAsync(async () =>
-            {
-                await DialogPage.DisplayAlertAsync(_translator["Backup_Restored"], _translator["Backup_RestoredMessage"], _translator["Common_Ok"]);
-                if (IsRestoreOnly && _returnToOnboarding is not null)
-                {
-                    await _returnToOnboarding();
-                }
-                (Application.Current as App)?.ShowCurrentProfile();
-            });
-        }
-    }
-
-    [RelayCommand]
-    private void CancelRestore() => ResetRestore();
-
-    private void ResetRestore()
-    {
-        _package = null;
-        PickedName = null;
-        NeedsRestorePassword = false;
-        RestorePassword = string.Empty;
-        RestoreError = null;
-        PreviewText = null;
-        HasPreview = false;
-    }
+    // All local, picked and cloud streams share the one actual non-UI restore flow.
+    private Task PrepareRestoreAsync(Stream stream, string name) => Restore.PrepareAsync(stream, name);
 
     private async Task ShareAsync(BackupFileInfo file)
     {
@@ -419,37 +287,6 @@ public sealed partial class BackupViewModel : ViewModelBase
             Title = _translator["Backup_ShareTitle"],
             File = new ShareFile(path, "application/octet-stream"),
         });
-    }
-
-    private string Describe(BackupManifest manifest)
-    {
-        var lines = new List<string>
-        {
-            _translator.Format("Backup_PreviewCreated", FormatTime(manifest.CreatedAt)),
-            _translator.Format("Backup_PreviewDevice", manifest.DeviceName ?? "?", manifest.AppVersion),
-        };
-
-        if (manifest.Summary is { } summary)
-        {
-            lines.Add(_translator.Format(
-                "Backup_PreviewCounts",
-                summary.GetValueOrDefault(ZananceBackupSummary.Accounts, "?"),
-                summary.GetValueOrDefault(ZananceBackupSummary.Entries, "?"),
-                summary.GetValueOrDefault(ZananceBackupSummary.Plans, "?")));
-
-            // Goals and holdings are listed when the backup has them (backups of earlier versions do not; ZEX-S0409).
-            if (summary.TryGetValue(ZananceBackupSummary.Goals, out var goals) && summary.TryGetValue(ZananceBackupSummary.Holdings, out var holdings))
-            {
-                lines.Add(_translator.Format("Backup_PreviewGoalsHoldings", goals, holdings));
-            }
-
-            if (summary.TryGetValue(ZananceBackupSummary.Snapshots, out var snapshots) && snapshots != "0")
-            {
-                lines.Add(_translator.Format("Backup_PreviewSnapshots", snapshots));
-            }
-        }
-
-        return string.Join(Environment.NewLine, lines);
     }
 
     private string FormatTime(DateTimeOffset value) =>

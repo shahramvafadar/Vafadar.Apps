@@ -353,3 +353,10 @@ See [evidence](docs/quality/editor-readiness.md).
 Keep the original file/preview when picking is cancelled or a write is refused. Complete imports and
 Undo remain completed after notification/history-refresh failure and cannot silently run again. Review
 actions and feedback remain visible outside the scroll viewport. See [evidence](docs/quality/import-outcomes.md).
+
+## Restore results and reopening (D-167)
+
+Completed restore stays distinct from failed follow-through. Retry reopening without replacing data
+again; interrupted new file reads retain the previous review. Main 3,045/App.Tests 988 pass, strict builds
+and native Windows/Android recovery verified. Signed APK: artifacts/android/zanance-d167-release.apk.
+See [evidence](docs/quality/restore-outcomes.md); external release gates remain open.

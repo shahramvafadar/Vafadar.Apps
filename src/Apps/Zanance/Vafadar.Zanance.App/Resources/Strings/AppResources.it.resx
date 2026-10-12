@@ -6170,4 +6170,16 @@ Limiti per categoria:
   <data name="Import_ReviewFailed" xml:space="preserve">
     <value>Non è stato possibile aggiornare l’anteprima. Il tuo file è conservato; aggiorna l’anteprima prima di importare.</value>
   </data>
+  <data name="Backup_RestoredFollowUpFailed" xml:space="preserve">
+    <value>Il backup è stato ripristinato, ma l’apertura del profilo ripristinato non è stata completata. Apri il profilo per riprovare; il backup non verrà ripristinato di nuovo.</value>
+  </data>
+  <data name="Backup_OpenRestored" xml:space="preserve">
+    <value>Apri il profilo ripristinato</value>
+  </data>
+  <data name="Backup_ReviewFailed" xml:space="preserve">
+    <value>Non è stato possibile leggere l’anteprima del backup. Il file selezionato è conservato; controllalo di nuovo prima del ripristino.</value>
+  </data>
+  <data name="Backup_ConsentFailed" xml:space="preserve">
+    <value>Il ripristino non è iniziato perché non è stato possibile completare la conferma. I tuoi dati non sono cambiati e l’anteprima è conservata.</value>
+  </data>
 </root>

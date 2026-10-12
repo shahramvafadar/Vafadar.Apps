@@ -84,7 +84,8 @@ Original cloud/permission policy remains unchanged. No Store or physical-phone a
 
 ## Remaining scope
 
-Next ready slice: original generic mapped-CSV policy binding while preserving owned-data recovery and
-atomic import/Undo. Restore follow-through and other ENT-02/03/04 bindings stay open. Verified billing/
+D-167 completes restore follow-through. Its current-source review withdraws the proposed extra generic
+mapped-CSV gate: CSV already belongs to Free and owned-data recovery remains unrestricted. A finite
+current ENT-02/03/04 inventory follows; see [restore evidence](restore-outcomes.md). Verified billing/
 provider activation, encryption/library/recovery decisions, real OAuth, phone and iOS/Mac/signing remain
 independent owner/external gates; this slice does not complete the commercial release or full goal.

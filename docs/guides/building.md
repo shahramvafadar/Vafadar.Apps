@@ -682,3 +682,11 @@ access are explicit fictitious ports; actual money writers and all 25-row packet
 WinUI must realize newly visible growing footer captions before measurement. Native failure is negative
 evidence; fix only its cause and do not repeat unchanged successful main/Android builds. See the app
 quality/import-outcomes document for final native and installable-package evidence.
+
+## Restore outcome native review (D-167)
+
+Debug route restore-outcomes uses the actual flow/original independent SQLite and safety/source services,
+with explicit fictitious native completion effects and Debug-only discovery suppression. Ordinary final
+Release Android separately checks actual DocumentsUI/consent/source/root. No owner desktop input, global
+capture or device setting change. Exact owned fixtures restore; final signed Release remains stopped.
+See [evidence](../../src/Apps/Zanance/docs/quality/restore-outcomes.md).

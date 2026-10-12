@@ -5,13 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Backup"
     x:DataType="local:BackupViewModel"
     Title="{v:Translate Backup_Title}">
 
-    <Grid>
+    <Grid RowDefinitions="*,Auto">
         <ScrollView>
-            <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding IsNotBusy}">
+            <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding CanUseBackupTools}">
 
                 <!-- First-run restore uses this page directly, before a Shell or financial account exists (D-62). -->
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Back}" Command="{Binding BackToOnboardingCommand}"
@@ -159,34 +160,36 @@
                         <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Backup_PickFile}" Command="{Binding PickFileCommand}"
                                 IsEnabled="{Binding IsNotBusy}" />
 
-                        <Label Text="{Binding PickedName}" FontAttributes="Bold" IsVisible="{Binding PickedName, Converter={StaticResource IsNotNullConverter}}" />
-                        <VerticalStackLayout Spacing="8" IsVisible="{Binding NeedsRestorePassword}">
-                            <Entry Text="{Binding RestorePassword}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"
+                        <Label Text="{Binding Restore.PickedName}" FontAttributes="Bold" IsVisible="{Binding Restore.PickedName, Converter={StaticResource IsNotNullConverter}}" />
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding Restore.NeedsPassword}">
+                            <Entry Text="{Binding Restore.Password}" IsPassword="True" Placeholder="{v:Translate Backup_Password}"
                                    SemanticProperties.Description="{v:Translate Backup_Password}" />
-                            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Backup_Check}" Command="{Binding CheckCommand}"
-                                    IsVisible="{Binding HasPreview, Converter={StaticResource InvertedBoolConverter}}" />
                         </VerticalStackLayout>
-                        <Label Text="{Binding RestoreError}" Style="{StaticResource ErrorText}"
-                               IsVisible="{Binding RestoreError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <!-- Preview before anything is replaced (BAK-09) -->
-                        <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding Restore.HasPreview}">
                             <Border BackgroundColor="{DynamicResource PageBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
-                                <Label Text="{Binding PreviewText}" />
+                                <Label Text="{Binding Restore.PreviewText}" />
                             </Border>
                             <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
                                 <Label Text="{v:Translate Backup_ReplaceWarning}" TextColor="{DynamicResource WarningText}" />
                             </Border>
-                            <Button Text="{v:Translate Backup_Replace}" Command="{Binding RestoreCommand}" IsEnabled="{Binding IsNotBusy}"
-                                    BackgroundColor="{DynamicResource ExpenseText}" TextColor="{DynamicResource CardBackground}" CornerRadius="24" MinimumHeightRequest="48" FontAttributes="Bold" />
-                            <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelRestoreCommand}" Style="{StaticResource TextButton}" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
+        <!-- Current review and accepted completion reserve a growing row outside the scroll viewport. -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Restore.HasFeedback}">
+            <Label Text="{Binding Restore.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Restore.Result, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding Restore.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Restore.Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Backup_Check}" Command="{Binding Restore.CheckCommand}" IsVisible="{Binding Restore.NeedsReview}" />
+            <p:WrappingAction Text="{v:Translate Backup_Replace}" Appearance="Destructive" Command="{Binding Restore.RestoreCommand}" IsVisible="{Binding Restore.HasPreview}" />
+            <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding Restore.CancelCommand}" IsVisible="{Binding Restore.CanSelect}" />
+            <p:WrappingAction Text="{v:Translate Backup_OpenRestored}" Appearance="Primary" Command="{Binding Restore.FinishCommand}" IsVisible="{Binding Restore.CanFinish}" />
+        </VerticalStackLayout>
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
                            HorizontalOptions="Center" VerticalOptions="Center" />
     </Grid>
 </ContentPage>

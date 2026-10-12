@@ -1472,3 +1472,12 @@ Import and consented Undo, unchanged original rows, existing D-141 migration onl
 sidecars and Main/English/System restored. The new owned CSV is removed; final Release is installed/
 stopped. APK: artifacts/android/zanance-d166-release.apk (82175915 bytes), signature/structure and all
 seven production-source checksums verified. Physical-phone/iOS/OAuth/billing/activation stay separate.
+
+## AT-169 - Accepted restore, uncertain source failure and completion retry (D-167)
+
+35 actual-flow/original-service/SQLite cases pass across all six languages: accepted follow-through
+failures and nonrepeatable payload, explicit completion retry, real partial-source/safety/read failures,
+busy/consent/authentication preservation and actual automatic-post idempotency. Main 3,045/App.Tests 988;
+strict builds, 36 native Windows contexts and normal signed Release Android restore/readback pass.
+Native Back is guarded in source; Windows review checks its CanLeave affordance, not actual Back Invoke.
+Fixture effects, complete owned restoration and external gates: [evidence](quality/restore-outcomes.md).

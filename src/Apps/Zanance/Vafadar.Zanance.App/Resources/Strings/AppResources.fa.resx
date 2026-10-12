@@ -6181,4 +6181,16 @@
   <data name="Import_ReviewFailed" xml:space="preserve">
     <value>پیش‌نمایش تازه‌سازی نشد. فایل شما حفظ شده است؛ پیش از ورود اطلاعات، پیش‌نمایش را تازه‌سازی کنید.</value>
   </data>
+  <data name="Backup_RestoredFollowUpFailed" xml:space="preserve">
+    <value>بکاپ بازیابی شد، اما باز کردن پروفایل بازیابی‌شده کامل نشد. برای تلاش دوباره، پروفایل بازیابی‌شده را باز کنید؛ بکاپ دوباره بازیابی نمی‌شود.</value>
+  </data>
+  <data name="Backup_OpenRestored" xml:space="preserve">
+    <value>باز کردن پروفایل بازیابی‌شده</value>
+  </data>
+  <data name="Backup_ReviewFailed" xml:space="preserve">
+    <value>پیش‌نمایش بکاپ خوانده نشد. فایل انتخاب‌شده حفظ شده است؛ پیش از بازیابی، آن را دوباره بررسی کنید.</value>
+  </data>
+  <data name="Backup_ConsentFailed" xml:space="preserve">
+    <value>بازیابی شروع نشد، زیرا تأیید آن کامل نشد. داده‌های شما تغییر نکرده‌اند و پیش‌نمایش حفظ شده است.</value>
+  </data>
 </root>

@@ -23,6 +23,7 @@ public partial class BackupPage : ContentPage
     /// <summary>Prevents a device Back action from closing first-run restore while data is being replaced.</summary>
     protected override bool OnBackButtonPressed()
     {
+        if (!_viewModel.CanLeave) return true;
         if (_viewModel.IsRestoreOnly)
         {
             if (!_viewModel.IsBusy)

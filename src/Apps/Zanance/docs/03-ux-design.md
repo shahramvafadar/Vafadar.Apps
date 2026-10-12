@@ -1063,3 +1063,10 @@ the body viewport. Keep full history identity separate from a growing native Und
 pre-write attempt retains the original reviewed file/choices; a completed attempt retires that payload
 before fallible publication. Picker cancellation preserves the form; busy guards cover consent and
 authentication. Successful notification/history failure states completion without offering a repeat.
+
+## Restore review and completion (D-167)
+
+Keep complete review/result/error and growing actions outside the body viewport. Freeze accepted input;
+show completed restore separately from failed follow-through, with explicit Open restored data retry.
+Busy and unfinished accepted completion block Back/tab departure. New stream read failure retains old
+review; uncertain source replacement requires fresh review/consent. See [evidence](quality/restore-outcomes.md).

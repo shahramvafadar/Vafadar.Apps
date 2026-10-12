@@ -2067,3 +2067,20 @@ Import and consented Undo, unchanged original rows, existing D-141 migration onl
 sidecars and Main/English/System restored. The new owned CSV is removed; final Release is installed/
 stopped. APK: artifacts/android/zanance-d166-release.apk (82175915 bytes), signature/structure and all
 seven production-source checksums verified. Physical-phone/iOS/OAuth/billing/activation stay separate.
+
+## D-167 - Accepted restore and explicit completion
+
+Record the actual all-source restore before fallible display/onboarding/lock/work/root follow-through.
+Retire accepted input and expose explicit completion retry without a second replacement or safety copy.
+Distinguish uncertain partial-source failure from pre-primary refusal; preserve old review on read failure.
+The original source/security/portable-policy algorithms are unchanged. Opening the form does not write
+its protection default; growing pinned feedback/actions and Back/tab guards retain the completion flow.
+
+35 AT-169 cases; main 3,045 / App.Tests 988, zero failures/skips; strict Windows/Android zero warnings/errors;
+36 Windows contexts and actual normal Release Android original-source restore/complete-row readback pass.
+Complete owned fixtures are restored and final Release is installed/stopped. Signed installable APK:
+artifacts/android/zanance-d167-release.apk. See [bounded evidence](quality/restore-outcomes.md).
+
+Next: finite current ENT-02/03/04 entry-point inventory, implementing confirmed gaps only. Generic mapped
+CSV is already approved Free/recovery; the previous suggested extra gate is withdrawn as unnecessary.
+External encryption/provider/device/iOS/billing/release gates and owner-text dependencies remain open.

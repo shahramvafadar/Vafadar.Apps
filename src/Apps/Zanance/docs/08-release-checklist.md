@@ -872,3 +872,8 @@ Import and consented Undo, unchanged original rows, existing D-141 migration onl
 sidecars and Main/English/System restored. The new owned CSV is removed; final Release is installed/
 stopped. APK: artifacts/android/zanance-d166-release.apk (82175915 bytes), signature/structure and all
 seven production-source checksums verified. Physical-phone/iOS/OAuth/billing/activation stay separate.
+
+D-167 local/native recovery and complete signed APK checks pass; this is not release acceptance.
+See [restore-outcomes](quality/restore-outcomes.md) for 35 cases, main 3,045, strict builds, 36 Windows
+contexts, actual normal Release Android source recovery, original fixture restoration and signature.
+Physical-device/iOS/OAuth/billing/production certificate and encryption decisions remain open.

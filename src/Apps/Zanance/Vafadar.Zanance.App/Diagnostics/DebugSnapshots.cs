@@ -263,7 +263,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "active-quick-resources" or "home-template-work" or "home-template-destination" or "profile-work" or "profile-file-work" or "profile-reminder-work" or "reminder-input-work" or "commercial-feedback" or "pre-save-readiness" or "product-plans" or "editor-writes" or "account-archive" or "editor-readiness" or "import-outcomes" or "budget-reminder" or "budget-editor-work" or "budget-actions-work";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "active-quick-resources" or "home-template-work" or "home-template-destination" or "profile-work" or "profile-file-work" or "profile-reminder-work" or "reminder-input-work" or "commercial-feedback" or "pre-save-readiness" or "product-plans" or "editor-writes" or "account-archive" or "editor-readiness" or "import-outcomes" or "restore-outcomes" or "budget-reminder" or "budget-editor-work" or "budget-actions-work";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)
@@ -338,6 +338,11 @@ internal static partial class DebugSnapshots
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "goal-work-views" or "goal-work-release-hint")
         {
             await ReviewGoalWorkViewsAsync(app, services, folder, languages);
+            return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "restore-outcomes")
+        {
+            await ReviewRestoreOutcomesAsync(app, services, folder, languages);
             return;
         }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "import-outcomes")

@@ -192,6 +192,13 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(SettlementRoute, typeof(SettlementPage));
     }
 
+    /// <summary>Keeps the actual restore source/accepted follow-through attached through Back and tab navigation.</summary>
+    protected override void OnNavigating(ShellNavigatingEventArgs args)
+    {
+        if (CurrentPage?.BindingContext is BackupViewModel backup && !backup.CanLeave && args.CanCancel) args.Cancel();
+        base.OnNavigating(args);
+    }
+
     /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>
     internal void RetireNavigationBindings()
     {

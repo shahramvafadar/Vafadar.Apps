@@ -242,6 +242,7 @@ public sealed partial class BackupViewModel
     [RelayCommand]
     private async Task OpenCloudAsync(CloudBackup backup)
     {
+        if (!CanUseBackupTools) return;
         CloudError = null;
         var restore = _translator["Backup_Restore"];
         var delete = _translator["Common_Delete"];

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Honest restore results and completion retry (2026-10-12, D-167)
+
+- Keep the preceding reviewed backup when reading a newly selected file fails.
+- Show that data was restored even if reopening the app fails; retry reopening without restoring again.
+- Require a fresh review after an uncertain replacement failure, with complete feedback and actions visible.
+
 ### Improved - Retain import reviews and completed Undo outcomes (2026-10-12, D-166)
 
 - Keep the current preview and choices when file selection is cancelled or importing is refused.

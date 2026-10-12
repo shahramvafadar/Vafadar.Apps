@@ -6158,4 +6158,16 @@ Plafonds par catégorie :
   <data name="Import_ReviewFailed" xml:space="preserve">
     <value>L’aperçu n’a pas pu être actualisé. Votre fichier est conservé ; actualisez l’aperçu avant l’importation.</value>
   </data>
+  <data name="Backup_RestoredFollowUpFailed" xml:space="preserve">
+    <value>La sauvegarde a été restaurée, mais l’ouverture du profil restauré n’a pas abouti. Ouvrez le profil pour réessayer ; la sauvegarde ne sera pas restaurée de nouveau.</value>
+  </data>
+  <data name="Backup_OpenRestored" xml:space="preserve">
+    <value>Ouvrir le profil restauré</value>
+  </data>
+  <data name="Backup_ReviewFailed" xml:space="preserve">
+    <value>L’aperçu de la sauvegarde n’a pas pu être lu. Votre fichier sélectionné est conservé ; vérifiez-le de nouveau avant la restauration.</value>
+  </data>
+  <data name="Backup_ConsentFailed" xml:space="preserve">
+    <value>La restauration n’a pas démarré, car la confirmation n’a pas pu aboutir. Vos données sont inchangées et l’aperçu est conservé.</value>
+  </data>
 </root>

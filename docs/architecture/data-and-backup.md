@@ -723,3 +723,12 @@ non-UI application sources are compiled and tested through explicit ports, never
 Pinned complete feedback/review/import actions reserve a growing row outside the viewport. Original
 history identity and growing Undo action have separate rows. No new feature policy, paid activation,
 schema/model/migration, SDK/permission/network, credentials or portable-format change.
+
+## Restore completion checkpoint (D-167)
+
+BackupRestoreSession records all original sources returning before native display/onboarding/lock/work/
+root effects. Retire accepted input immediately; completion retry does not enter safety/primary restore.
+Later-source BackupException can follow a committed earlier source: uncertain replacement requires fresh
+inspection/consent, not an invented rollback claim. Native effects use IBackupRestoreRuntime; original
+source/safety/automatic-post/security policy stays authoritative. No model or portable-format change.
+See [evidence](../../src/Apps/Zanance/docs/quality/restore-outcomes.md).

@@ -6150,4 +6150,16 @@ Límites por categoría:
   <data name="Import_ReviewFailed" xml:space="preserve">
     <value>No se pudo actualizar la vista previa. Tu archivo se conserva; actualiza la vista previa antes de importar.</value>
   </data>
+  <data name="Backup_RestoredFollowUpFailed" xml:space="preserve">
+    <value>La copia se restauró, pero no se pudo terminar de abrir el perfil restaurado. Ábrelo para reintentar; la copia no se restaurará de nuevo.</value>
+  </data>
+  <data name="Backup_OpenRestored" xml:space="preserve">
+    <value>Abrir el perfil restaurado</value>
+  </data>
+  <data name="Backup_ReviewFailed" xml:space="preserve">
+    <value>No se pudo leer la vista previa de la copia. Tu archivo seleccionado se conserva; revísalo de nuevo antes de restaurarlo.</value>
+  </data>
+  <data name="Backup_ConsentFailed" xml:space="preserve">
+    <value>La restauración no comenzó porque no se pudo completar la confirmación. Tus datos no han cambiado y la vista previa se conserva.</value>
+  </data>
 </root>

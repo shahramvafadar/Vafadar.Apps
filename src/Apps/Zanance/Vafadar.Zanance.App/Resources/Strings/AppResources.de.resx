@@ -6181,4 +6181,16 @@ Kategorielimits:
   <data name="Import_ReviewFailed" xml:space="preserve">
     <value>Die Vorschau konnte nicht aktualisiert werden. Deine Datei bleibt erhalten; aktualisiere die Vorschau vor dem Import.</value>
   </data>
+  <data name="Backup_RestoredFollowUpFailed" xml:space="preserve">
+    <value>Die Sicherung wurde wiederhergestellt, aber das Öffnen des wiederhergestellten Profils wurde nicht abgeschlossen. Öffne das Profil erneut; die Sicherung wird nicht nochmals wiederhergestellt.</value>
+  </data>
+  <data name="Backup_OpenRestored" xml:space="preserve">
+    <value>Wiederhergestelltes Profil öffnen</value>
+  </data>
+  <data name="Backup_ReviewFailed" xml:space="preserve">
+    <value>Die Sicherungsvorschau konnte nicht gelesen werden. Deine gewählte Datei bleibt erhalten; prüfe sie vor dem Wiederherstellen erneut.</value>
+  </data>
+  <data name="Backup_ConsentFailed" xml:space="preserve">
+    <value>Die Wiederherstellung wurde nicht gestartet, weil die Bestätigung nicht abgeschlossen werden konnte. Deine Daten sind unverändert und die Vorschau bleibt erhalten.</value>
+  </data>
 </root>

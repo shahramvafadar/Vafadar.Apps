@@ -905,3 +905,8 @@ Strict Windows and canonical complete Android Release have zero warnings/errors.
 production-source PDB checksums match. Device/platform/provider acceptance remains separate.
 
 Other commercial bindings and external acceptance remain open; see [evidence](quality/import-outcomes.md).
+
+D-167 completes original backup restore outcome handling and nonreplacing completion retry.
+35 AT-169 cases/main 3,045 pass; strict builds, 36 Windows contexts, actual Release Android recovery and
+complete signed APK verified. Current ENT-02/03/04 scope is audited next; external gates stay separate.
+See [evidence](quality/restore-outcomes.md).
