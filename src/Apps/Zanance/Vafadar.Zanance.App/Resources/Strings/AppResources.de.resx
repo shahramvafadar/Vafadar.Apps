@@ -6136,4 +6136,13 @@ Kategorielimits:
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>Wähle Plus zum Vergleich unbegrenzter lokaler Ressourcen und dann wieder Free. Dein aktueller Zugriff sowie alle Konten, Beträge und Entwürfe bleiben unverändert.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>Das Konto wurde gespeichert, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Prüfe das Standardkonto in den Einstellungen; schließe diese Seite und öffne sie erneut.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>Der Plan wurde gespeichert, aber die anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließe diese Seite und öffne sie erneut, um die aktuellen Daten zu prüfen.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>Die Änderungen wurden gespeichert, aber die Seite konnte nicht geschlossen werden. Wähle Schließen, um zurückzukehren.</value>
+  </data>
 </root>

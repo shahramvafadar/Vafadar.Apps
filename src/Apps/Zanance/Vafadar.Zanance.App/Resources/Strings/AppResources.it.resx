@@ -6125,4 +6125,13 @@ Limiti per categoria:
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>Seleziona Plus per confrontare le risorse locali illimitate, poi torna a Free. Il tuo accesso attuale e tutti i conti, importi e bozze restano invariati.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>Il conto è stato salvato, ma un aggiornamento successivo non è stato completato. Controlla il conto predefinito nelle impostazioni; chiudi questa pagina e riaprila.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>Il piano è stato salvato, ma l’aggiornamento successivo non è stato completato. Chiudi questa pagina e riaprila per controllare i dati attuali.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>Le modifiche sono state salvate, ma non è stato possibile chiudere la pagina. Usa Chiudi per tornare indietro.</value>
+  </data>
 </root>

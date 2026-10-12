@@ -1,6 +1,6 @@
 namespace Vafadar.Zanance.App.Features.Plans;
 
-public partial class PlanEditorPage : ContentPage
+public partial class PlanEditorPage : ContentPage, IQueryAttributable
 {
     private readonly PlanEditorViewModel _viewModel;
     private bool _observingValidation;
@@ -97,8 +97,13 @@ public partial class PlanEditorPage : ContentPage
         return Handler is not null;
     }
 
+    /// <summary>Forwards the native route into the actual platform-independent draft loader.</summary>
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) =>
+        await Presentation.Failures.GuardAsync(() => _viewModel.ApplyQueryAsync(query));
+
     protected override bool OnBackButtonPressed()
     {
+        if (!_viewModel.CanLeave) return true;
         if (!_viewModel.IsDirty)
         {
             return base.OnBackButtonPressed();

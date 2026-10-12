@@ -6136,4 +6136,13 @@
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>برای مقایسهٔ منابع محلی بدون محدودیت، Plus را انتخاب کنید و سپس به Free برگردید. دسترسی فعلی و همهٔ حساب‌ها، مبالغ و پیش‌نویس‌ها بدون تغییر می‌مانند.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>حساب ذخیره شد، ولی یک به‌روزرسانی بعدی کامل نشد. حساب پیش‌فرض را در تنظیمات بررسی کنید؛ برای تازه‌سازی، این صفحه را ببندید و دوباره باز کنید.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>برنامه ذخیره شد، ولی تازه‌سازی بعدی کامل نشد. این صفحه را ببندید و دوباره باز کنید تا اطلاعات فعلی را بررسی کنید.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>تغییرات ذخیره شدند، ولی صفحه بسته نشد. برای بازگشت، گزینهٔ بستن را انتخاب کنید.</value>
+  </data>
 </root>

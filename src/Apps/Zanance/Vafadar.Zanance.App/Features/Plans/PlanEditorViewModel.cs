@@ -2,7 +2,8 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FluentIcons.Common;
+using Vafadar.Zanance.App.Interaction;
+using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -24,7 +25,7 @@ namespace Vafadar.Zanance.App.Features.Plans;
 /// Creates and edits plans (UI-08) with a live preview of the next six dates (REC-04). Changing a plan that already
 /// has settled or skipped occurrences applies "from a date on" by splitting it, so history is never rewritten (REC-15).
 /// </summary>
-public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IThemeAware
 {
     private static readonly EntryKind[] Kinds = [EntryKind.Expense, EntryKind.Income, EntryKind.Transfer];
 
@@ -42,12 +43,17 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     private Schedule? _existing;
     private bool _hasHistory;
     private string _snapshot = string.Empty;
+    private readonly IAppInteraction _interaction;
+    private bool _committed;
+    private bool _ready;
     private bool _loading = true;
     private CategoryLookup _categories;
     private Dictionary<Guid, Account> _accounts = [];
 
-    public PlanEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders)
+    public PlanEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders, IAppInteraction interaction)
     {
+        _interaction = interaction;
+        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(IsBusy)) RefreshAccess(); };
         _reminders = reminders;
         _store = store;
         _plans = plans;
@@ -98,6 +104,20 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         CalendarIndex = (int)Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
     }
 
+    /// <summary>Gets whether the original loaded, not-yet-committed draft can accept user input.</summary>
+    public bool CanInteract => _ready && !IsBusy && !_committed;
+    /// <summary>Gets whether an explicit Save may run; committed split continuations cannot be resubmitted.</summary>
+    public bool CanSave => CanInteract;
+    /// <summary>Gets whether a pending writer must finish before the form leaves.</summary>
+    public bool CanLeave => !IsBusy;
+    /// <summary>Gets the actual Close/Cancel caption after a successful write.</summary>
+    public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
+    private void RefreshAccess()
+    {
+        OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
+        SaveCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged(); AddAccountCommand.NotifyCanExecuteChanged();
+    }
+
     public IReadOnlyList<string> KindNames { get; }
 
     public IReadOnlyList<string> AmountModeNames { get; }
@@ -130,7 +150,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     /// <summary>Gets or sets the category shown by the compact picker.</summary>
     [ObservableProperty]
-    public partial CategoryChoice? SelectedCategory { get; set; }
+    public partial PlanCategoryChoice? SelectedCategory { get; set; }
 
     /// <summary>Gets the recurrence calendar used by this form's date fields.</summary>
     public CalendarSystem RuleCalendar => Calendars.ToDisplay(Calendar);
@@ -193,7 +213,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     public IReadOnlyList<string> PastNames { get; }
 
-    public ObservableCollection<CategoryChoice> Categories { get; } = [];
+    public ObservableCollection<PlanCategoryChoice> Categories { get; } = [];
 
     public ObservableCollection<string> Preview { get; } = [];
 
@@ -425,11 +445,11 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     };
 
     /// <summary>Query: <c>id</c> of an existing plan.</summary>
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
-
-    private async Task ApplyQueryAsync(IDictionary<string, object> query)
+    /// <summary>Loads the actual draft through the native page adapter without a write or route transition.</summary>
+    public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        _ready = false; RefreshAccess();
         _loading = true;
         try
         {
@@ -520,7 +540,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         }
         finally
         {
-            _loading = false;
+            _loading = false; RefreshAccess();
         }
 
         // The explicit repayment-reminder action needs the same contextual permission check as the toggle.
@@ -544,7 +564,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
             || _existing.Rule.SecondDay is not null || _existing.Rule.WeekendShift != WeekendShift.None
             || _existing.Rule.MissingDay != MissingDayPolicy.LastValidDay);
         Update();
-        _snapshot = Snapshot();
+        _snapshot = Snapshot(); _ready = true; RefreshAccess();
         query.Clear();
     }
 
@@ -675,7 +695,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
     partial void OnPastIndexChanged(int value) => Update();
 
-    partial void OnSelectedCategoryChanged(CategoryChoice? value)
+    partial void OnSelectedCategoryChanged(PlanCategoryChoice? value)
     {
         foreach (var category in Categories)
         {
@@ -801,7 +821,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                      .OrderBy(c => c.SystemKey == DefaultCategories.Uncategorized)
                      .ThenBy(c => c.SortOrder))
         {
-            Categories.Add(new CategoryChoice(category.Id, CategoryLookup.NameOf(category, _translator), Icons.Parse(category.Icon, Symbol.Tag), CategoryLookup.DisplayColor(category.Color))
+            Categories.Add(new PlanCategoryChoice(category.Id, CategoryLookup.NameOf(category, _translator))
             {
                 IsSelected = category.Id == selectedId,
             });
@@ -811,7 +831,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
     }
 
     [RelayCommand]
-    private void SelectCategory(CategoryChoice choice)
+    private void SelectCategory(PlanCategoryChoice choice)
     {
         foreach (var category in Categories)
         {
@@ -819,13 +839,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (IsBusy)
-        {
-            return;
-        }
+        if (!CanSave) return;
 
         SaveError = null;
         var culture = _localization.CurrentCulture;
@@ -859,7 +876,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         IsBusy = true;
         try
         {
-            var target = _existing is not null && _hasHistory ? PlanActions.SplitFrom(_existing, ApplyFrom) : _existing ?? new Schedule { Name = Name.Trim() };
+            var previous = _existing?.CopyForEditing();
+            var target = previous is not null && _hasHistory ? PlanActions.SplitFrom(previous, ApplyFrom) : previous ?? new Schedule { Name = Name.Trim() };
             target.Name = Name.Trim();
             target.Kind = Kind;
             target.AccountId = Account.Id;
@@ -898,7 +916,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
 
             if (_existing is not null && _hasHistory)
             {
-                if (!await _plans.SaveSplitAsync(_existing, target))
+                if (!await _plans.SaveSplitAsync(previous!, target))
                 {
                     // Recorded occurrences after the change date do not fit the new dates (e.g. another day of the month).
                     SaveError = _translator["Plan_SplitConflict"];
@@ -910,12 +928,17 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
                 await _plans.SaveScheduleAsync(target);
             }
 
-            _snapshot = Snapshot();
+            _snapshot = Snapshot(); _committed = true; RefreshAccess();
             saved = true;
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
+        catch (CommittedWriteNotificationException)
         {
-            SaveError = _translator["Common_SaveFailed"];
+            _committed = true; _snapshot = Snapshot(); RefreshAccess();
+            SaveError = _translator["Plan_SavedNeedsReview"];
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
         }
         finally
         {
@@ -925,26 +948,29 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, IQueryAttributa
         // Leaving the page is not part of saving: a navigation problem must not say "not saved".
         if (saved)
         {
-            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(".."));
+            try { await _interaction.NavigateAsync(".."); }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
-        if (!IsDirty || await ConfirmDiscardAsync())
+        if (!_ready || _committed || !IsDirty || await ConfirmDiscardAsync())
         {
-            await Shell.Current.GoToAsync("..");
+            try { await _interaction.NavigateAsync(".."); }
+            catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
         }
     }
 
-    [RelayCommand]
-    private Task AddAccountAsync() => Shell.Current.GoToAsync($"../{AppShell.AccountEditorRoute}");
+    [RelayCommand(CanExecute = nameof(CanInteract))]
+    private Task AddAccountAsync() => _interaction.NavigateAsync($"../{AppRoutes.AccountEditorRoute}");
 
-    public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(
+    public Task<bool> ConfirmDiscardAsync() => _interaction.ConfirmAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
+    private string Snapshot() => Presentation.DraftFingerprint.Create(
         KindIndex, Name, AmountModeIndex, AmountText, Account?.Id, ToAccount?.Id, ToAmountText, PresetIndex, IntervalText, UnitIndex, Start,
         CalendarIndex, DayRuleIndex, MissingDayIndex, WeekendIndex, SkipHolidays, HasSecondDay, SecondDayText, EndIndex, EndDate, CountText, PastIndex, AutoPost, ReminderEnabled, ReminderDaysText,
         ReminderTime, ReminderOnDueDate, Note, ContractProvider, ContractReference, HasContractEnd, ContractEnd, ContractRenews,

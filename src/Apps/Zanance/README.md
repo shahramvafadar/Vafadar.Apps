@@ -329,3 +329,9 @@ Existing corrections/history stay available. Test builds remain unrestricted.
 More opens a read-only Free/Plus/Pro comparison and actual local access. Selecting a tier or Continue changes
 no data or purchase. Test access stays unrestricted; unavailable online services are identified separately.
 [Verification and signed APK](docs/quality/product-plan-comparison.md).
+
+## Understand failed Save and successful return failures (D-163)
+
+Account/Plan forms retain entered values and show actual limits beside Save. Successful writes remain saved
+when a follow-up fails; Close is available and another Save is blocked. Historical retries preserve original
+plan state and boundaries. [Evidence and signed APK](docs/quality/editor-write-feedback.md).

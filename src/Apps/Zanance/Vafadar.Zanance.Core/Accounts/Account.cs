@@ -146,4 +146,7 @@ public sealed class Account : Entity, IAuditableEntity
 
     /// <inheritdoc />
     public DateTimeOffset UpdatedAt { get; set; }
+
+    /// <summary>Copies original account fields for an explicit form write without changing the reviewed source.</summary>
+    public Account CopyForEditing() => (Account)MemberwiseClone();
 }

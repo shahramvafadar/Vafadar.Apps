@@ -462,3 +462,9 @@ Read cached original access for the actual configured file without opening SQLit
 Comparison scope/choice stays in memory and never reaches a provider, writer, profile or portable preference.
 No price, purchase/renewal, credentials, stored ids, schema, permission, SDK, network, analytics or OS-backup
 change. Native fixtures restore complete original data/owned bytes; production registrations stay inactive.
+
+## D-163 - Original editor failure state
+
+Copies and raw drafts stay process-local. Translated feedback exposes no stored identity, source exception
+message, credential or purchase data. No EF property/schema, permission, SDK, network, analytics, OS-backup
+or portable change. Native fixtures change only independently owned fictitious rows and restore exact data.

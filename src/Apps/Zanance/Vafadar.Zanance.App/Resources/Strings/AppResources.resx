@@ -6165,4 +6165,13 @@ Category limits:
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>Select Plus to compare unlimited local resources, then return to Free. Your current access and every account, amount and draft stay unchanged.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>The account was saved, but a follow-up update could not be completed. Review the default account in Settings; close and reopen this page to refresh.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>The plan was saved, but the follow-up refresh could not be completed. Close and reopen this page to review the current data.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>The changes were saved, but the page could not close. Use Close to return.</value>
+  </data>
 </root>

@@ -1939,3 +1939,32 @@ network, credential or portable paid data is added. Device, provider, billing an
 separate. ENT-04 and the commercial release are not complete.
 
 See [evidence](quality/product-plan-comparison.md).
+
+## D-163 - Original editor write feedback and committed return
+
+Account and Plan Save now explain actual structured quota/permission rejection in all six languages,
+retain complete raw drafts and place complete feedback beside the pinned Save. Successful writes cannot
+be resubmitted after a failed return or follow-up; inputs become read-only and Cancel becomes Close.
+Account/default-preference boundaries stay distinct, including a default update that committed before
+its subscriber failed. Original change-notification failures after commit remain visible through a typed
+committed outcome, never a fake pre-write rejection. Exceptions are not silently swallowed.
+
+Both editors use original native-effect ports and actual platform-independent application sources.
+Native query interfaces stay on pages. Plan picker rows retain only their actual plain-text identity/name/
+selection, without unused native color/icon allocation. Account and Schedule edit copies preserve all
+original fields/identities; Schedule also clones its mutable rule. A refused historical split cannot mutate
+the original in-memory state, stop boundary or automatic-post anchor before an explicit corrected retry.
+Original validation, signs, calendars, currency locks, category selection, split rules and atomic writers
+remain authoritative. No EF property/schema, migration, permission, SDK, credential or portable-format change.
+
+21 AT-165 cases pass; final main passes 2,946 / App.Tests 889, zero failures/skips, 2m 07.788s, followed by
+cleanup. Strict Windows and canonical complete signed Android Release have zero warnings/errors.
+36 actual Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced. Actual Save invokes
+original atomic rejection/accepted writers over independent fictitious SQLite; raw drafts, pinned captions,
+real input/Save enablement and Close are checked. Explicit fictitious return/consent effects are identified;
+all 25 original tables and exact owned development bytes restore. Actual normal Android new-form/query
+regression and exact owned restoration are separate from typed fixture/physical-device acceptance.
+Production registrations remain inactive. Initial pre-attempt readiness and other operation/activation
+coverage remain open; this does not complete ENT-04 or the commercial release.
+
+See [evidence](quality/editor-write-feedback.md).

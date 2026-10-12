@@ -650,3 +650,11 @@ navigation effects. Reacquire overlay chip targets, read complete realized ident
 targets, and invoke actual help OK/Continue. Capture hidden own root and native popups separately; compare all
 25 complete tables and restore exact owned development bytes. productplans is in the ordinary screen route list.
 See `src/Apps/Zanance/docs/quality/product-plan-comparison.md`.
+
+## Original editor writer native review (D-163)
+
+Debug editor-writes uses actual Account/Plan pages and native Save/Close with original SQLite writers in
+independent fictitious files. Return/consent refusals are explicit ports. Check pinned reasons and actual
+input/Save enablement; remove only owned successful test rows and compare all 25 originals. Restore exact
+development bytes. No owner desktop input/focus or original financial write.
+See `src/Apps/Zanance/docs/quality/editor-write-feedback.md`.

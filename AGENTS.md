@@ -1133,3 +1133,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   cadence, renewal, role or restore rights. Continue returns without cancelling, downgrading or buying.
 * Native chip overlays retain complete names and 44-pixel targets. Grow identity/value rows; keep Continue
   outside the viewport. Capture actual help popup separately and invoke its real translated OK.
+
+## 96. Original editor rejection and committed Close (D-163)
+
+* Keep exact write reasons beside pinned Save and preserve every raw field. A saved primary write is separate
+  from preference, change-subscriber and native-return completion; no accepted action may silently resubmit.
+* Edit detached original fields/IDs and clone mutable Plan rules before split/write. Retain the established
+  split algorithm, pause, stop date and automatic-post anchor after a rejected attempt.
+* Keep native query/effect interfaces on adapters. Plain category pickers use original name/identity/selection
+  without unused colored tiles. Freeze committed inputs in their actual parent context and expose Close.
+* Writer fixtures mutate only their independent owned rows, restore complete packets/bytes and identify
+  fictitious native return/consent effects. Initial readiness and other operation coverage stay separate.

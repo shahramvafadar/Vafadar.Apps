@@ -139,6 +139,14 @@ public sealed class Schedule : Entity, IAuditableEntity
     /// <inheritdoc />
     public DateTimeOffset UpdatedAt { get; set; }
 
+    /// <summary>Copies every original field and rule for editing without mutating the reviewed source.</summary>
+    public Schedule CopyForEditing()
+    {
+        var copy = (Schedule)MemberwiseClone();
+        copy.Rule = Rule.Clone();
+        return copy;
+    }
+
     /// <summary>Returns whether <paramref name="originalDate"/> belongs to this plan's slice of the rule.</summary>
     public bool Owns(DateOnly originalDate) =>
         (ActiveFrom is not { } from || originalDate >= from)

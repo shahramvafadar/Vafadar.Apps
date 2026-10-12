@@ -6113,4 +6113,13 @@ Plafonds par catégorie :
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>Sélectionnez Plus pour comparer les ressources locales illimitées, puis revenez à Free. Votre accès actuel ainsi que tous les comptes, montants et brouillons restent inchangés.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>Le compte a été enregistré, mais une mise à jour suivante n’a pas pu être terminée. Vérifiez le compte par défaut dans les réglages ; fermez cette page et rouvrez-la.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>Le plan a été enregistré, mais l’actualisation suivante n’a pas pu être terminée. Fermez cette page et rouvrez-la pour vérifier les données actuelles.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>Les modifications ont été enregistrées, mais la page n’a pas pu être fermée. Utilisez Fermer pour revenir.</value>
+  </data>
 </root>

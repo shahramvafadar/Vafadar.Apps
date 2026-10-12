@@ -6105,4 +6105,13 @@ Límites por categoría:
   <data name="Help_ProductPlans_Example" xml:space="preserve">
     <value>Selecciona Plus para comparar los recursos locales sin límites y vuelve a Free. Tu acceso actual y todas las cuentas, importes y borradores permanecen iguales.</value>
   </data>
+  <data name="Account_SavedNeedsReview" xml:space="preserve">
+    <value>La cuenta se ha guardado, pero no se pudo completar una actualización posterior. Revisa la cuenta predeterminada en Ajustes; cierra esta página y vuelve a abrirla.</value>
+  </data>
+  <data name="Plan_SavedNeedsReview" xml:space="preserve">
+    <value>El plan se ha guardado, pero no se pudo completar la actualización posterior. Cierra esta página y vuelve a abrirla para revisar los datos actuales.</value>
+  </data>
+  <data name="Editor_SavedReturnFailed" xml:space="preserve">
+    <value>Los cambios se han guardado, pero no se pudo cerrar la página. Usa Cerrar para volver.</value>
+  </data>
 </root>

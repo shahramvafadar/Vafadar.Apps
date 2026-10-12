@@ -1032,3 +1032,11 @@ is presentation only. Shared/local/profile-choice facts stay distinct. Unavailab
 roadmap; never sell unbuilt features or infer prices, renewals or purchase restoration. Explain no-change return
 and active-item navigation in complete translated help.
 See [evidence](quality/product-plan-comparison.md).
+
+## Retained editor rejection and committed Close (D-163)
+
+Place complete actual write reasons above pinned Save, preserving every raw field and original validation.
+Separate accepted write from default preference, subscriber and navigation failures. Accepted forms become
+read-only with Close and cannot resubmit. Keep loaded input enabled in its original binding context; no
+child-context lookup may accidentally grant editing. Native query/effect adapters stay separate from flows.
+See [evidence](quality/editor-write-feedback.md).

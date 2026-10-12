@@ -672,3 +672,11 @@ Its original cached CommercialFileAccess packet is checked at read/publication, 
 Comparison uses pure Core policy with an independent fictitious scope that never reaches a real writer/provider.
 Captured tier does not establish purchase/cadence/renewal/role facts. No schema/model/migration or portable change.
 See `src/Apps/Zanance/docs/quality/product-plan-comparison.md`.
+
+## Original editor copies and committed publication (D-163)
+
+Entity edit-copy methods preserve original fields/IDs; Schedule clones the existing mutable rule. No EF
+property/model metadata or schema changes. Actual Account/Plan commit precedes original notification; its
+typed failure carries accepted-write semantics without hiding the subscriber error or retrying. Application
+flows use original native ports and actual writers.
+See `src/Apps/Zanance/docs/quality/editor-write-feedback.md`.

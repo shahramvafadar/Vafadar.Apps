@@ -228,7 +228,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
 
-        OnChanged();
+        CommittedWriteNotification.Publish(OnChanged);
         return true;
     }
 

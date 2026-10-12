@@ -14,27 +14,26 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Button Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="8">
-                <Border Style="{StaticResource Card}">
+                <Border Style="{StaticResource Card}" IsEnabled="{Binding CanInteract}">
                     <local:AccountFormView x:Name="AccountForm" BindingContext="{Binding Form}" />
                 </Border>
 
                 <!-- Only money accounts can be the default of new entries (ZEX-S0103) -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding CanBeDefault}">
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanBeDefault}" IsEnabled="{Binding CanInteract}">
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="{v:Translate Account_IsDefault}" VerticalOptions="Center" />
                         <Switch Grid.Column="1" IsToggled="{Binding IsDefault}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Account_IsDefault}" />
                     </Grid>
                 </Border>
 
-                <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
-                       IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
+
 
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_Archive}" Command="{Binding ToggleArchiveCommand}"
                         IsVisible="{Binding IsExisting}">
@@ -47,7 +46,11 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
-                Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
+                   IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
+        <Button Margin="0" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
+                Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

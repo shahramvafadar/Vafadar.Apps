@@ -14,6 +14,9 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/OccurrenceCommands.cs" Link="Application/OccurrenceCommands.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryDraftValidation.cs" Link="Application/EntryDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanDraft.cs" Link="Application/EntryPlanDraft.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountEditorViewModel.cs" Link="Application/AccountEditorViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanEditorViewModel.cs" Link="Application/PlanEditorViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanCategoryChoice.cs" Link="Application/PlanCategoryChoice.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ProductPlansViewModel.cs" Link="Application/ProductPlansViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ActiveItemsViewModel.cs" Link="Application/ActiveItemsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/QuickResourceActions.cs" Link="Application/QuickResourceActions.cs" />

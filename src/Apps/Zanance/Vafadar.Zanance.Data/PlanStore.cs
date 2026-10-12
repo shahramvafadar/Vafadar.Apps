@@ -119,7 +119,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
 
-        OnChanged();
+        CommittedWriteNotification.Publish(OnChanged);
     }
 
     /// <summary>Inserts or updates one plan.</summary>
@@ -169,7 +169,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             .ExecuteUpdateAsync(e => e.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         write.EnsureCurrent();
         await transaction.CommitAsync(cancellationToken);
-        OnChanged();
+        CommittedWriteNotification.Publish(OnChanged);
         return true;
     }
 

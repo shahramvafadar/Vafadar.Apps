@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Clear Account/Plan Save feedback and safe return (2026-10-12, D-163)
+
+- Keep entered values and explain actual limits beside Save.
+- Show successful saves honestly after a failed follow-up or return; Close without saving again.
+- Preserve original plan state, end date and automatic-post timing after a refused historical edit.
+
 ### Added - Compare plans and view your current access (2026-10-12, D-162)
 
 - More now explains Free, Plus and Pro with their local limits and tools, separate from current access.
