@@ -6197,4 +6197,7 @@ Plafonds par catégorie :
   <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
     <value>La prévision enregistrée a été supprimée, mais la page n'a pas terminé sa mise à jour. Revenez en arrière et actualisez la liste.</value>
   </data>
+  <data name="Receipt_ReadFailed" xml:space="preserve">
+    <value>Le reçu n’a pas pu être lu avec le fichier et l’accès actuels. Rien n’a été enregistré. Veuillez réessayer.</value>
+  </data>
 </root>

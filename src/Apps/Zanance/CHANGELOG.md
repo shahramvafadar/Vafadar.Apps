@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Safe shared receipt reading (2026-10-12, D-170)
+
+- Check the current receipt source and access before reading and before opening its review form.
+- Prevent a late result from reaching another profile or a changed transaction.
+- Keep camera/file picking busy through completion; cancellation and empty rereading preserve existing data.
+
 ### Improved - Forecast drafts and currency-safe saved comparisons (2026-10-12, D-169)
 
 - Keep forecast choices and names after a refused request; refresh explicitly without losing the draft.

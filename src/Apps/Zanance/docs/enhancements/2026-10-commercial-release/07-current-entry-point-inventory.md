@@ -1,6 +1,6 @@
 # 07 - Current commercial entry-point inventory
 
-Reviewed against current source after D-169 on 2026-10-12. This is a finite completion checklist for
+Reviewed against current source after D-170 on 2026-10-12. This is a finite completion checklist for
 ENT-02/03/04, not another feature backlog. Historical quality records describe the state of their own
 slice; their remaining-work paragraphs do not override later implementations. The canonical state stays
 in [04-backlog.md](04-backlog.md). Production commercial sources remain inactive.
@@ -27,15 +27,15 @@ ledger writer. They do not have an independent financial writer to retrofit. Nat
 and app-lock delivery acceptance remain separate. Manual attachments, tags, language, theme, account
 balances, retained holdings and essential warnings remain approved Free/history capabilities.
 
-The ordinary D-169 main run passes 3,074 tests, including these existing suites, without rerunning them
-solely for inventory updates. D-169 native acceptance is bounded in its evidence record.
+The ordinary D-170 main run passes 3,104 tests, including these existing suites, without rerunning them
+solely for inventory updates. D-169/170 native acceptance is bounded in its evidence record.
 
 ## Confirmed ready gaps: complete each group once
 
 | Order | Group | Actual current gap | Completion boundary |
 |---|---|---|---|
 | 1 | Forecast and saved forecasts | Delivered locally (D-169 / AT-170): ForecastWorkStore/ForecastWorkspace, original atomic batch writer and retained saved view | Free financial-month forecast/history/Delete, explicit retained drafts, currency-safe new scopes and legacy comparison; no activation. See [evidence](../../quality/forecast-work.md) |
-| 2 | Receipt recognition | HomeViewModel.OpenReceiptAsync and EntryDetailViewModel.ReadReceiptAsync call DocumentReader/ReceiptParser directly without ReceiptReading access | One original application recognition boundary used by both callers, with exact-file access and checks around native work/publication. Preserve confirmation before Save, bounded recognition/compact attachments, old amounts on missing evidence and manual attachment access |
+| 2 | Receipt recognition | Delivered locally (D-170 / AT-171): ReceiptWorkStore/ReceiptReadingSession and typed EntryEditor destination | Shared original reader/parser, exact-file/current-source checks, compact-only pending copy, old amounts/no Save and separate manual attachments; no activation. See [evidence](../../quality/receipt-work.md) |
 | 3 | Loan analysis and reports/PDF | LoanScheduleViewModel and AccountDetailViewModel compute schedules/estimates directly. ReportsViewModel.LoadCoreAsync/CreatePdfAsync and package partials build advanced calculations without commercial access | Bind LoanAnalysis, AdvancedReports and AdvancedPdf at actual computations/publication. Preserve ordinary balances, recorded history, corrections, debt closing, basic reports/owned export and essential incomplete-data/shortfall warnings. Do not turn Simple/Advanced into a payment check |
 
 Each group uses the already approved Core feature classification and actual-file cached access. New
@@ -44,7 +44,7 @@ Plus/Pro/shared membership, changed facts and unrelated stored rows. Do not test
 add a new policy purely to make an existing guard look incomplete. Native checks and a complete signed
 APK follow actual changes; unchanged successful checks are not repeated.
 
-ENT-02 remains in progress for the receipt and loan/report/PDF groups; forecast/snapshots are delivered. ENT-03's original resource-choice,
+ENT-02 remains in progress for loan/report/PDF; forecast/snapshots and receipt recognition are delivered. ENT-03's original resource-choice,
 history and automation integration is implemented; analytical affordances depend on the same groups.
 ENT-04's verified purchase/manage/renewal/restore UI depends on real billing/provider facts. Completing
 these groups permits a final bounded review of ENT-02/03, not activation or a fabricated purchase flow.

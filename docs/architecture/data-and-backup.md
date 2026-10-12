@@ -741,3 +741,11 @@ carry exact ids. ForecastWorkspace retires accepted drafts before fallible follo
 contain only the saved currency; SnapshotComparer excludes foreign accounts in legacy scopes without
 mutating stored metadata. No migration or portable format change.
 See [evidence](../../src/Apps/Zanance/docs/quality/forecast-work.md).
+
+## Original receipt read reviews (D-170)
+
+ReceiptWorkStore captures actual-file cached access and existing expense/attachment in a deferred
+reader. Complete entry JSON and metadata/content fingerprint reject same-timestamp mutation. Recheck
+current factory file/access before publication and before typed EntryEditor application. Neither the
+review nor bounded recognition original is portable; saved compact attachment policy is unchanged.
+No writer, migration or monetary/parser algorithm is added. [Evidence](../../src/Apps/Zanance/docs/quality/receipt-work.md).

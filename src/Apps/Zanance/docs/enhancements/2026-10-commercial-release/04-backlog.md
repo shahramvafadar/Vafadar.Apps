@@ -53,7 +53,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
-| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (resource writers/recovery and forecast snapshots delivered; receipt and loan/report computation bindings remain; enforcement inactive) | ENT-01 |
+| ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | In progress (resource writers/recovery and forecast snapshots and receipt reading delivered; loan/report computation bindings remain; enforcement inactive) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | In progress (resource choices/history/automation delivered; remaining analytical affordances follow the finite current inventory) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (local comparison, readiness/reasons and retained outcomes delivered; remaining operation feedback plus verified billing/provider UI open) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Proposed | OD-03 |
@@ -1294,3 +1294,11 @@ Free saved values/Delete are implemented. Currency-safe legacy comparison is ver
 rewrites. Main 3,074 tests, strict builds, native checks and signed APK completed locally.
 See [evidence](../../quality/forecast-work.md). Next: receipt recognition, then loan/report/PDF.
 ENT-02/03/04 and owner/external gates remain in progress; commercial registration stays inactive.
+
+## Delivered original receipt group (D-170)
+
+Shared actual-file recognition, original source rechecks and typed editor destination are delivered.
+Main 3,104 tests, strict builds, 36 Windows contexts, both actual Release Android digital-PDF callers
+and full signed APK verified. No commercial activation or external corpus/device acceptance.
+[Evidence](../../quality/receipt-work.md). Next: loan/report/PDF, followed by the bounded ENT-02/03 audit.
+ENT-04 provider facts and owner/external release dependencies remain open.

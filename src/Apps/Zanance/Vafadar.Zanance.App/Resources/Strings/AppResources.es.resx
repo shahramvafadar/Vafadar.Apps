@@ -6189,4 +6189,7 @@ Límites por categoría:
   <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
     <value>Se ha eliminado la previsión guardada, pero la página no terminó de actualizarse. Vuelve atrás y actualiza la lista.</value>
   </data>
+  <data name="Receipt_ReadFailed" xml:space="preserve">
+    <value>No se pudo leer el recibo con el archivo y el acceso actuales. No se guardó nada. Inténtalo de nuevo.</value>
+  </data>
 </root>

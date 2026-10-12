@@ -56,7 +56,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private string _homeCurrency = Currencies.Euro.Code;
     private int _startDay = 1;
     private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
-    private readonly Security.AppLockService _lock;
+    private readonly Receipts.ReceiptReadingSession _receipts;
     private readonly GoalStore _goals;
     private readonly Goals.GoalPresenter _goalPresenter;
     private readonly HoldingStore _holdings;
@@ -64,7 +64,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private readonly Vafadar.Backup.IBackupService _backup;
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Security.AppLockService appLock, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
+    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
     {
         _backup = backup;
         TemplateNavigation = new(store, translator, interaction, LoadAsync);
@@ -73,7 +73,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         _goals = goals;
         _goalPresenter = goalPresenter;
         _store = store;
-        _lock = appLock;
+        _receipts = receipts;
         _profiles = profiles;
         _plans = plans;
         _translator = translator;
@@ -773,88 +773,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             return;
         }
 
-        PreparedAttachment? file;
-        try
-        {
-            file = await ChooseReceiptAsync();
-        }
-        catch (InvalidDataException)
-        {
-            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"], _translator["Attachment_PhotoFailed"], _translator["Common_Ok"]);
-            return;
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException)
-        {
-            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"], _translator["Attachment_Failed"], _translator["Common_Ok"]);
-            return;
-        }
-
-        if (file is not { } picked)
-        {
-            return;
-        }
-
-        // The camera or picker took the user out of the app: with the app lock on, nothing opens before it is unlocked.
-        await _lock.RunWhenUnlockedAsync(() => OpenReceiptAsync(picked));
-    }
-
-    private async Task<PreparedAttachment?> ChooseReceiptAsync()
-    {
-        if (PermissionPrompts.CanTakePhoto)
-        {
-            var takePhoto = _translator["Receipt_TakePhoto"];
-            var choice = await Shell.Current.DisplayActionSheetAsync(_translator["Receipt_SourceTitle"], _translator["Common_Cancel"], null,
-                takePhoto, _translator["Receipt_ChooseFile"]);
-            if (choice == takePhoto)
-            {
-                return await PermissionPrompts.TakePhotoAsync(_translator) is { } photo
-                    ? await AttachmentFiles.FromCameraAsync(_translator["Camera_PhotoName"], photo)
-                    : null;
-            }
-
-            if (choice != _translator["Receipt_ChooseFile"])
-            {
-                return null;
-            }
-        }
-
-        return await AttachmentFiles.PickAsync(_translator["Attachment_Pick"], forRecognition: true);
-    }
-
-    private async Task OpenReceiptAsync(PreparedAttachment picked)
-    {
-        if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
-        {
-            await Shell.Current.DisplayAlertAsync(_translator["Attachment_Title"],
-                _translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], _translator["Common_Ok"]);
-            return;
-        }
-
-        Core.Receipts.ReceiptSuggestion receipt;
         IsBusy = true;
-        try
-        {
-            var document = await Vafadar.Documents.Maui.DocumentReader.ReadDocumentAsync(picked.RecognitionData ?? picked.Data, picked.ContentType);
-            receipt = Core.Receipts.ReceiptParser.Parse(document.Text, Today, document.IsAmbiguous);
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-
-        if (receipt.IsEmpty)
-        {
-            await Shell.Current.DisplayAlertAsync(_translator["Receipt_Title"], _translator["Receipt_NothingNew"], _translator["Common_Ok"]);
-        }
-
-        var query = new Dictionary<string, object>
-        {
-            ["kind"] = nameof(EntryKind.Expense),
-            ["receiptFile"] = new PendingAttachment(picked.Name, picked.ContentType, picked.Data),
-        };
-        query["receipt"] = receipt;
-
-        await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+        try { await _receipts.PickAsync(); }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]

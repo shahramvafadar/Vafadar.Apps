@@ -367,3 +367,10 @@ Retain choices after refusal, refresh explicitly, keep saved values readable/del
 accepted saves. Each saved currency uses its own accounts, including legacy comparison. Main 3,074 tests
 pass; complete signed APK: artifacts/android/zanance-d169-release.apk.
 See [evidence](docs/quality/forecast-work.md); next ready work is receipt recognition.
+
+## Shared original receipt reading (D-170)
+
+Both receipt entry points validate current source/access and typed editor destination; existing values
+remain unchanged until explicit Save. Main 3,104 tests pass and actual Release digital-PDF paths are
+verified. Signed APK: artifacts/android/zanance-d170-release.apk.
+See [evidence](docs/quality/receipt-work.md). Next ready group: loan/report/PDF computation.

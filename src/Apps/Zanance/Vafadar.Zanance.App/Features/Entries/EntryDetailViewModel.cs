@@ -35,7 +35,7 @@ public sealed partial class EntryDetailViewModel(
     IDateFormatter dates,
     UndoService undo,
     HoldingStore holdings,
-    TimeProvider time, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    Interaction.IAppInteraction interaction, Receipts.ReceiptReadingSession receipts) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private readonly Commerce.QuickResourceActions _quick = new(store, translator, interaction);
     private Guid _id;
@@ -295,32 +295,10 @@ public sealed partial class EntryDetailViewModel(
     [RelayCommand]
     private async Task ReadReceiptAsync(AttachmentRow row)
     {
-        if (IsBusy || await store.GetAttachmentAsync(row.Id) is not { } attachment)
-        {
-            return;
-        }
-
-        Vafadar.Documents.TextLayoutResult document;
+        if (IsBusy) return;
         IsBusy = true;
-        try
-        {
-            document = await DocumentReader.ReadDocumentAsync(attachment.Data, attachment.ContentType);
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-
-        var receipt = Core.Receipts.ReceiptParser.Parse(document.Text, DateOnly.FromDateTime(time.GetLocalNow().DateTime), document.IsAmbiguous);
-        if (receipt.IsEmpty)
-        {
-            await Shell.Current.DisplayAlertAsync(translator["Receipt_Title"], translator["Receipt_Nothing"], translator["Common_Ok"]);
-            return;
-        }
-
-        var query = new Dictionary<string, object> { ["id"] = _id, ["receipt"] = receipt };
-
-        await Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+        try { await receipts.ReadAttachmentAsync(_id, row.Id); }
+        finally { IsBusy = false; }
     }
 
     private async Task LoadAttachmentsAsync()

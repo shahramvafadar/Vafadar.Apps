@@ -6220,4 +6220,7 @@ Kategorielimits:
   <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
     <value>Die gespeicherte Prognose wurde gelöscht, aber die Seite konnte nicht fertig aktualisiert werden. Gehe zurück und aktualisiere die Liste.</value>
   </data>
+  <data name="Receipt_ReadFailed" xml:space="preserve">
+    <value>Der Beleg konnte mit der aktuellen Datei und Berechtigung nicht gelesen werden. Es wurde nichts gespeichert. Bitte versuchen Sie es erneut.</value>
+  </data>
 </root>

@@ -698,3 +698,11 @@ and retained saved data. forecast-currency-work adds actual two-currency Save an
 Fixtures use independent SQLite; rights/prompt/consent/return effects are explicit. Capture only the
 hidden application's own root/window and restore complete owned rows/bytes/display. No device settings
 or owner desktop input. Follow the usual signed Release package and strict-build handoff requirements.
+
+## Focused receipt review (D-170)
+
+Windows Debug VAFADAR_SNAPSHOT_ONLY=receipt-work invokes actual Home/attachment controls, native
+translated feedback/Close and original typed editor. Picker/unlock/recognition are explicit fixture
+ports over independent SQLite. Await real newly revealed caption geometry; preserve negative captures.
+Only own hidden window/root is captured. Restore complete owned rows/bytes/display. Normal Release
+digital-PDF verification and signed APK handoff remain separate from camera/OCR/device acceptance.

@@ -2682,3 +2682,17 @@ exact owned bytes/sidecars and Main/English/System were restored. Final updated 
 Commercial registration stays inactive. Phone, iOS, real OAuth, billing and release acceptance remain open.
 APK: artifacts/android/zanance-d169-release.apk. [Evidence](../quality/forecast-work.md).
 Next: receipt recognition, then loan/report/PDF; the full commercial release remains incomplete.
+
+### 31.83 Shared original receipt work (D-170)
+
+Actual-file source/access checks, shared Home/attachment reading and typed editor destinations are
+implemented. Preserve original parser, compact pending attachment, existing amount and explicit Save.
+30 AT-171 cases and the ordinary 3,104-test suite pass (App.Tests 1,047, no failures/skips,
+2m 30.954s), followed by cleanup. Strict Windows and canonical complete signed Android Release have no
+warnings/errors. Thirty-six Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced.
+Normal Release Android exercises actual Home source choice, DocumentsUI, original digital-PDF reading,
+typed new editor, retained attachment rereading, existing editor and explicit discard without financial
+Save. Complete prepared rows and exact owned baseline bytes/sidecars are restored; final Release stopped.
+Commercial registration remains inactive; phone/iOS/camera/OCR corpus/provider/Store acceptance is separate.
+APK: artifacts/android/zanance-d170-release.apk. [Evidence](../quality/receipt-work.md).
+Next: original loan/report/PDF computation; external and full commercial release acceptance stay open.

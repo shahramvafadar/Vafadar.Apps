@@ -1077,3 +1077,11 @@ Cover original reads/projection until all native choices/cards/history are ready
 and Refresh stay outside the viewport. Refusal preserves horizon/scenario/name; only explicit Reset
 removes a scenario. Simple/Advanced is presentation, not payment authority. Free saved details show the
 entire original path and Delete; hide newly computed comparison parts. Accepted Save stays completed.
+
+## Original receipt source and review lifetime (D-170)
+
+Keep original Home and attachment actions and explicit confirmation-before-Save form. One busy guard
+covers picking/unlock/recognition/dialog/navigation. Refusal precedes native source work; translated
+feedback gives no exception content. Empty existing rereading never erases an amount. A typed source
+is checked again before applying to the editor. Native review waits for the newly revealed detail
+action's actual caption/command/name geometry; no font or device setting is changed.

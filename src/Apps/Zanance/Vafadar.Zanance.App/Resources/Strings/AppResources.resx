@@ -6249,4 +6249,7 @@ Category limits:
   <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
     <value>The saved forecast was deleted, but the page could not finish updating. Return and refresh the list.</value>
   </data>
+  <data name="Receipt_ReadFailed" xml:space="preserve">
+    <value>The receipt could not be read with the current source and access. Nothing was saved. Please try again.</value>
+  </data>
 </root>

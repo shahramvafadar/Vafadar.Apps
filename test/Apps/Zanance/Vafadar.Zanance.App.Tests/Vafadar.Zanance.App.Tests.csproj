@@ -2,11 +2,14 @@
   <ItemGroup>
     <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
     <ProjectReference Include="../../../../src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <ProjectReference Include="../../../../src/Libraries/Vafadar.Documents/Vafadar.Documents.csproj" />
     <ProjectReference Include="../../../Shared/Vafadar.Testing/Vafadar.Testing.csproj" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="FluentIcons.Common" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Receipts/IReceiptRuntime.cs" Link="Application/IReceiptRuntime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Receipts/ReceiptReadingSession.cs" Link="Application/ReceiptReadingSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastWorkspace.cs" Link="Application/ForecastWorkspace.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestoreSession.cs" Link="Application/BackupRestoreSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/IBackupRestoreRuntime.cs" Link="Application/IBackupRestoreRuntime.cs" />

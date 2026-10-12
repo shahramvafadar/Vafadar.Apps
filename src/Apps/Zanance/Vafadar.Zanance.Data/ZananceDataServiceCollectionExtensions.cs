@@ -60,6 +60,7 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<ResourceChoiceStore>()
             .AddSingleton<CommercialAccessStore>()
             .AddSingleton<ForecastWorkStore>()
+            .AddSingleton<ReceiptWorkStore>()
             .AddSingleton<BudgetChoiceStore>()
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()

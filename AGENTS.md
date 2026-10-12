@@ -1204,3 +1204,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
 * Scope each new snapshot to its currency. Filter legacy mixed scopes at comparison without rewriting
   saved metadata or adding foreign-currency minor units. Native fixtures restore complete owned data.
 * Continue the finite receipt and loan/report/PDF groups; do not rebuild delivered resource boundaries.
+
+## 103. Original shared receipt reading and late destinations (D-170)
+
+* Home and attachment rereading share the actual ReceiptReadingSession and original reader/parser.
+  Demand actual-file ReceiptReading before native source work; UI mode never grants access.
+* Capture original expense/attachment ownership, full entry packet and complete content fingerprint;
+  recheck current file/access/source after awaits. Equal audit times do not prove unchanged inputs.
+* Keep one busy lifetime through picking/unlock/read/feedback/navigation. Retain original cancellation,
+  empty reread and explicit-review/no-Save behavior; manual attachments remain separate Free work.
+* Carry a typed process-local original destination and validate it again in EntryEditor. Only compact
+  pending bytes reach a new draft; transient recognition never enters portable data.
+* Native fixtures identify fictitious picker/recognition ports, await newly revealed native layout and
+  restore complete owned rows/bytes/display. A digital PDF test is not camera/image-OCR corpus acceptance.

@@ -1495,3 +1495,17 @@ Direct current-file guards, SQL-trigger rollback, committed nonrepeatability and
 regression use original application/Core/Data sources and real SQLite. Fictitious native effects are
 explicitly identified; unchanged layout checks are reused only for unchanged presentation.
 See [bounded scenarios and negative evidence](quality/forecast-work.md).
+
+## AT-171 - Shared original receipt work and late typed editor (D-170)
+
+30 AT-171 cases and the ordinary 3,104-test suite pass (App.Tests 1,047, no failures/skips,
+2m 30.954s), followed by cleanup. Strict Windows and canonical complete signed Android Release have no
+warnings/errors. Thirty-six Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced.
+Normal Release Android exercises actual Home source choice, DocumentsUI, original digital-PDF reading,
+typed new editor, retained attachment rereading, existing editor and explicit discard without financial
+Save. Complete prepared rows and exact owned baseline bytes/sidecars are restored; final Release stopped.
+Commercial registration remains inactive; phone/iOS/camera/OCR corpus/provider/Store acceptance is separate.
+Source mutation/foreign-file/access-retirement cases use actual application/Data/Core sources and
+real SQLite, not copied parsing or fake controls. Native Windows effect ports and actual Android
+digital-PDF engine are distinguished from camera/image OCR/device acceptance.
+See [bounded scenarios, negative evidence and restoration](quality/receipt-work.md).

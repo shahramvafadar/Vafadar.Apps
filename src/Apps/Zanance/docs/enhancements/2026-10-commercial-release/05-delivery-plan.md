@@ -1099,3 +1099,11 @@ Free saved values/Delete are implemented. Currency-safe legacy comparison is ver
 rewrites. Main 3,074 tests, strict builds, native checks and signed APK completed locally.
 See [evidence](../../quality/forecast-work.md). Next: receipt recognition, then loan/report/PDF.
 ENT-02/03/04 and owner/external gates remain in progress; commercial registration stays inactive.
+
+## Delivered original receipt group (D-170)
+
+Shared actual-file recognition, original source rechecks and typed editor destination are delivered.
+Main 3,104 tests, strict builds, 36 Windows contexts, both actual Release Android digital-PDF callers
+and full signed APK verified. No commercial activation or external corpus/device acceptance.
+[Evidence](../../quality/receipt-work.md). Next: loan/report/PDF, followed by the bounded ENT-02/03 audit.
+ENT-04 provider facts and owner/external release dependencies remain open.

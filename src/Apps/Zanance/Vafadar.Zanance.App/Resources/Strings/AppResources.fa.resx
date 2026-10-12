@@ -6220,4 +6220,7 @@
   <data name="Forecast_DeletedFollowUpFailed" xml:space="preserve">
     <value>پیش‌بینی ذخیره‌شده حذف شد، اما تازه‌سازی صفحه کامل نشد. به صفحهٔ قبل برگردید و فهرست را تازه کنید.</value>
   </data>
+  <data name="Receipt_ReadFailed" xml:space="preserve">
+    <value>خواندن رسید با فایل و دسترسی فعلی ممکن نشد. چیزی ذخیره نشده است. دوباره تلاش کنید.</value>
+  </data>
 </root>

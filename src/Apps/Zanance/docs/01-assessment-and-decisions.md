@@ -2116,3 +2116,21 @@ two-currency contexts verify per-currency saves and immutable legacy comparison 
 exact owned bytes/sidecars and Main/English/System were restored. Final updated Release is installed/stopped.
 Commercial registration stays inactive. Phone, iOS, real OAuth, billing and release acceptance remain open.
 See [bounded evidence](quality/forecast-work.md). Next: receipt recognition, then loan/report/PDF.
+
+## D-170 - Shared original receipt recognition and typed destinations
+
+Complete the confirmed receipt group without rebuilding D-64 total parsing or manual attachments.
+ReceiptWorkStore/ReceiptReadingSession bind actual-file cached rights before native work and recheck
+full original source/destination afterward. Both original callers use the shared flow; EntryEditor
+revalidates typed handoff before applying. Preserve bounded recognition, compact pending copy, old
+amount on missing evidence and ordinary explicit Save. UI mode is not payment authority.
+
+30 AT-171 cases and the ordinary 3,104-test suite pass (App.Tests 1,047, no failures/skips,
+2m 30.954s), followed by cleanup. Strict Windows and canonical complete signed Android Release have no
+warnings/errors. Thirty-six Windows contexts cover en/fa/de, light/dark, 360/412/wide and Simple/Advanced.
+Normal Release Android exercises actual Home source choice, DocumentsUI, original digital-PDF reading,
+typed new editor, retained attachment rereading, existing editor and explicit discard without financial
+Save. Complete prepared rows and exact owned baseline bytes/sidecars are restored; final Release stopped.
+Commercial registration remains inactive; phone/iOS/camera/OCR corpus/provider/Store acceptance is separate.
+APK: artifacts/android/zanance-d170-release.apk. [Evidence](quality/receipt-work.md).
+Next finite ready group: original loan/report/PDF computation; the commercial release remains incomplete.

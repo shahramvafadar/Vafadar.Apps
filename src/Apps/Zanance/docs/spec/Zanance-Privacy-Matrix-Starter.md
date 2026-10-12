@@ -502,3 +502,11 @@ Existing local accounts, ledger, plans and forecast metadata only. No new portab
 permission, credential, SDK or network collection. Comparison filters foreign currency without rewriting
 saved originals. Cached analytical access is separate from retained owned-data history/deletion.
 Commercial registration remains inactive; existing security and backup policy are unchanged.
+
+## Shared original receipt boundary (D-170)
+
+Existing local source/entry/attachment data only. Full-content fingerprint and typed destination are
+process-local, not a portable field or log. Recognition original remains transient; only existing
+compact metadata-free pending data enters the explicitly saved attachment. No SDK/permission/network/
+credential/schema or backup-policy change; original camera explanation and app lock stay intact.
+Digital-PDF native verification is not camera/image OCR or physical-device corpus acceptance.

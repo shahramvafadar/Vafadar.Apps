@@ -1001,3 +1001,11 @@ currency-safe legacy comparison are preserved. No commercial activation or exter
 Main 3,074 tests, strict builds, native Windows/Android evidence and complete signed installable APK:
 artifacts/android/zanance-d169-release.apk. See [evidence](quality/forecast-work.md).
 Next finite ready group: receipt recognition, followed by loan/report/PDF.
+
+## Shared receipt follow-through (D-170)
+
+Original Home/attachment recognition and typed editor source validation are delivered locally, with
+original no-Save review and manual attachment policy intact. Main 3,104 tests, strict builds, 36 native
+Windows contexts and both actual digital-PDF Release Android callers pass. Complete signed APK:
+artifacts/android/zanance-d170-release.apk. [Evidence](quality/receipt-work.md).
+Phone/iOS/camera/OCR corpus/provider/activation/release gates remain open. Next: loan/report/PDF.

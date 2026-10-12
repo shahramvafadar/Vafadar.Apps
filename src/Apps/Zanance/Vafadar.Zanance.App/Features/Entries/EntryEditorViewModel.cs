@@ -88,10 +88,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private long _receiptDisplayFactor = 1;
     private readonly Presentation.UndoService _undo;
     private readonly AssetEntryConfirmation _assetConfirmation;
+    private readonly Data.Commerce.ReceiptWorkStore _receiptReader;
 
-    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation, Interaction.IAppInteraction interaction)
+    public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation, Interaction.IAppInteraction interaction, Data.Commerce.ReceiptWorkStore receiptReader)
     {
         _assetConfirmation = assetConfirmation;
+        _receiptReader = receiptReader;
         _quick = new(store, translator, interaction);
         _undo = undo;
         _store = store;
@@ -466,6 +468,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        var receiptVisit = query.TryGetValue("receiptVisit", out var receiptHandoff)
+            ? receiptHandoff as Receipts.ReceiptDraft ?? throw new ArgumentException("Unsupported receipt handoff.", nameof(query)) : null;
+        if (receiptVisit is not null)
+        {
+            try { await receiptVisit.ValidateAsync(_receiptReader, Get(query, "id")); }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Receipt_ReadFailed"); query.Clear(); return; }
+        }
         _loading = true;
         _isNew = false;
         _pendingAttachment = null;
@@ -615,6 +625,18 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         UpdateKindState();
         await UpdateRefundInfoAsync();
         _snapshot = Snapshot();
+        if (receiptVisit is not null)
+        {
+            // D-170: Shell/reference reads can outlive the original file or receipt. Never apply a late foreign suggestion.
+            try
+            {
+                await receiptVisit.ValidateAsync(_receiptReader, _isNew ? null : _entry.Id);
+                query["receipt"] = receiptVisit.Suggestion;
+                if (receiptVisit.File is { } file) query["receiptFile"] = new PendingAttachment(file.Name, file.ContentType, file.Data);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Receipt_ReadFailed"); query.Clear(); return; }
+        }
         ApplyReceipt(query);
         query.Clear();
     }
