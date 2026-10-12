@@ -45,6 +45,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     private string _snapshot = string.Empty;
     private readonly IAppInteraction _interaction;
     private bool _committed;
+    private EditorWorkReview? _work;
+    private bool _reviewingWork;
+    private bool _workFailed;
+    private bool _workRetired;
     private bool _ready;
     private bool _loading = true;
     private CategoryLookup _categories;
@@ -53,7 +57,12 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     public PlanEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders, IAppInteraction interaction)
     {
         _interaction = interaction;
-        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(IsBusy)) RefreshAccess(); };
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName is nameof(IsBusy) or nameof(ContractProvider) or nameof(ContractReference) or nameof(HasContractEnd)
+                or nameof(ContractEnd) or nameof(ContractRenews) or nameof(HasCancellationDeadline) or nameof(CancellationDeadline)
+                or nameof(HasReviewDate) or nameof(ReviewDate) or nameof(AutoPost)) RefreshAccess();
+        };
         _reminders = reminders;
         _store = store;
         _plans = plans;
@@ -107,13 +116,36 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     /// <summary>Gets whether the original loaded, not-yet-committed draft can accept user input.</summary>
     public bool CanInteract => _ready && !IsBusy && !_committed;
     /// <summary>Gets whether an explicit Save may run; committed split continuations cannot be resubmitted.</summary>
-    public bool CanSave => CanInteract;
+    public bool CanSave => CanInteract && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before the form leaves.</summary>
     public bool CanLeave => !IsBusy;
     /// <summary>Gets the actual Close/Cancel caption after a successful write.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
+    private Core.Commerce.WorkRestriction? WorkRestriction => _work?.PlanRestriction(BuildWriteCandidate(BuildRule()).Target, _hasHistory ? _existing?.Id : null);
+    /// <summary>Gets a captured reason before Save; no financial field validation or write occurs here.</summary>
+    public string? WorkText => _workFailed ? _translator["Editor_WorkReadFailed"]
+        : _workRetired ? _translator["Editor_WorkRetired"]
+        : WorkRestriction is { } restriction ? Presentation.CommercialFailureMessage.Describe(restriction, _translator) : null;
+    /// <summary>Gets whether the original availability can be explicitly refreshed without changing any draft.</summary>
+    public bool CanReviewWork => _ready && !IsBusy && !_committed && !_reviewingWork;
+    private async Task ReadWorkAsync()
+    {
+        _reviewingWork = true; RefreshAccess();
+        try
+        {
+            var next = await _plans.ReadEditorWorkAsync();
+            next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { _work = null; _workFailed = true; }
+        finally { _reviewingWork = false; RefreshAccess(); }
+    }
+    [RelayCommand(CanExecute = nameof(CanReviewWork))]
+    private Task ReviewWorkAsync() => ReadWorkAsync();
+
     private void RefreshAccess()
     {
+        OnPropertyChanged(nameof(WorkText)); OnPropertyChanged(nameof(CanReviewWork)); ReviewWorkCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
         SaveCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged(); AddAccountCommand.NotifyCanExecuteChanged();
     }
@@ -564,6 +596,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
             || _existing.Rule.SecondDay is not null || _existing.Rule.WeekendShift != WeekendShift.None
             || _existing.Rule.MissingDay != MissingDayPolicy.LastValidDay);
         Update();
+        await ReadWorkAsync();
         _snapshot = Snapshot(); _ready = true; RefreshAccess();
         query.Clear();
     }
@@ -768,6 +801,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         var rule = BuildRule();
         RuleError = Recurrence.Validate(rule) is { } problem ? _translator[$"Plan_{problem}"] : null;
         var text = new PlanText(_translator, _dates, _localization);
+        RefreshAccess();
         RuleSummary = text.EditorSummary(rule);
         ShortMonthHint = text.ShortMonthHint(rule);
         Preview.Clear();
@@ -839,6 +873,50 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         }
     }
 
+    /// <summary>Builds the same detached original candidate for Save and readiness, without parsing or mutating input.</summary>
+    private (Schedule? Previous, Schedule Target) BuildWriteCandidate(RecurrenceRule rule)
+    {
+        var previous = _existing?.CopyForEditing();
+        var target = previous is not null && _hasHistory ? PlanActions.SplitFrom(previous, ApplyFrom) : previous ?? new Schedule { Name = Name.Trim() };
+        target.Name = Name.Trim();
+        target.Kind = Kind;
+        target.AccountId = Account?.Id ?? Guid.Empty;
+        target.ToAccountId = IsTransfer ? ToAccount?.Id : null;
+
+        target.CategoryId = IsTransfer ? null : Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense);
+        target.AmountMode = (AmountMode)AmountModeIndex;
+
+        target.Rule = rule;
+        target.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.Trim();
+        target.ContractProvider = string.IsNullOrWhiteSpace(ContractProvider) ? null : ContractProvider.Trim();
+        target.ContractReference = string.IsNullOrWhiteSpace(ContractReference) ? null : ContractReference.Trim();
+        target.ContractEnd = HasContractEnd ? ContractEnd : null;
+        target.ContractRenews = HasContractEnd && ContractRenews;
+        target.CancellationDeadline = HasCancellationDeadline ? CancellationDeadline : null;
+        target.ReviewDate = HasReviewDate ? ReviewDate : null;
+        target.ReminderEnabled = ReminderEnabled;
+        target.ReminderDaysBefore = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), NumberStyles.None, CultureInfo.InvariantCulture, out var days) ? Math.Clamp(days, 0, 60) : 3;
+        target.ReminderTime = TimeOnly.FromTimeSpan(ReminderTime ?? new TimeSpan(9, 0, 0));
+        target.ReminderOnDueDate = ReminderOnDueDate;
+
+        if (_existing is null && ShowPastChoice && PastIndex == 0)
+        {
+            // Past start: occurrences before today are not part of the plan (REC-07).
+            target.ActiveFrom = Today;
+        }
+
+        // Enabling automatic posting never records occurrences from before that moment (REC-07).
+        var autoPost = AutoPost && CanAutoPost;
+        if (autoPost && (!target.AutoPost || target.AutoPostFrom is null))
+        {
+            target.AutoPostFrom = Today;
+        }
+
+        target.AutoPost = autoPost;
+
+        return (previous, target);
+    }
+
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
@@ -876,43 +954,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         IsBusy = true;
         try
         {
-            var previous = _existing?.CopyForEditing();
-            var target = previous is not null && _hasHistory ? PlanActions.SplitFrom(previous, ApplyFrom) : previous ?? new Schedule { Name = Name.Trim() };
-            target.Name = Name.Trim();
-            target.Kind = Kind;
-            target.AccountId = Account.Id;
-            target.ToAccountId = IsTransfer ? ToAccount?.Id : null;
-            target.ToAmount = toAmount;
-            target.CategoryId = IsTransfer ? null : Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense);
-            target.AmountMode = (AmountMode)AmountModeIndex;
-            target.Amount = amount;
-            target.Rule = rule;
-            target.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.Trim();
-            target.ContractProvider = string.IsNullOrWhiteSpace(ContractProvider) ? null : ContractProvider.Trim();
-            target.ContractReference = string.IsNullOrWhiteSpace(ContractReference) ? null : ContractReference.Trim();
-            target.ContractEnd = HasContractEnd ? ContractEnd : null;
-            target.ContractRenews = HasContractEnd && ContractRenews;
-            target.CancellationDeadline = HasCancellationDeadline ? CancellationDeadline : null;
-            target.ReviewDate = HasReviewDate ? ReviewDate : null;
-            target.ReminderEnabled = ReminderEnabled;
-            target.ReminderDaysBefore = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), NumberStyles.None, CultureInfo.InvariantCulture, out var days) ? Math.Clamp(days, 0, 60) : 3;
-            target.ReminderTime = TimeOnly.FromTimeSpan(ReminderTime ?? new TimeSpan(9, 0, 0));
-            target.ReminderOnDueDate = ReminderOnDueDate;
-
-            if (_existing is null && ShowPastChoice && PastIndex == 0)
-            {
-                // Past start: occurrences before today are not part of the plan (REC-07).
-                target.ActiveFrom = Today;
-            }
-
-            // Enabling automatic posting never records occurrences from before that moment (REC-07).
-            var autoPost = AutoPost && CanAutoPost;
-            if (autoPost && (!target.AutoPost || target.AutoPostFrom is null))
-            {
-                target.AutoPostFrom = Today;
-            }
-
-            target.AutoPost = autoPost;
+            var (previous, target) = BuildWriteCandidate(rule);
+            target.Amount = amount; target.ToAmount = toAmount;
 
             if (_existing is not null && _hasHistory)
             {
@@ -938,6 +981,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            if (exception is CommercialWriteRejectedException) { _workRetired = true; RefreshAccess(); }
             SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
         }
         finally

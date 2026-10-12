@@ -6157,4 +6157,13 @@
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>وضعیت حساب و تغییرات مرتبط ذخیره شدند، ولی تازه‌سازی بعدی کامل نشد. حساب را ببندید و دوباره باز کنید تا وضعیت فعلی را ببینید.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>تازه‌سازی دسترسی</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>دسترسی خوانده نشد. اطلاعات واردشده حفظ شده‌اند. پیش از ذخیره، دسترسی را تازه‌سازی و بررسی کنید.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>دسترسی هنگام تلاش برای ذخیره تغییر کرد. اطلاعات واردشده حفظ شده‌اند. پیش از تلاش دوباره، دسترسی را تازه‌سازی کنید.</value>
+  </data>
 </root>

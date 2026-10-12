@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:entries="clr-namespace:Vafadar.Zanance.App.Features.Entries"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     x:DataType="local:PlanEditorViewModel"
     Title="{Binding Title}"
@@ -267,6 +268,10 @@
         </ScrollView>
 
         <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}"
+                   IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Editor_ReviewWork}" Command="{Binding ReviewWorkCommand}"
+                              IsVisible="{Binding CanReviewWork}" />
             <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}"
                    IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
         <Button Margin="0" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"

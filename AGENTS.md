@@ -1153,3 +1153,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   Dirty financial fields require explicit discard consent and never become archive payloads.
 * Hold one busy lifetime through consent/write; accepted notification/return failures retain the actual saved
   result, notify both original stores and cannot silently resubmit. Restore only independently owned fixtures.
+
+## 98. Original editor readiness and retained explicit refresh (D-165)
+
+* Read original writer inputs for the exact file; inactive tests do not open financial rows/choices.
+  Missing persisted choices count all eligible original rows, never a cached fallback subset.
+* Share original Plan classification and detached candidate with Save. Readiness does not parse money,
+  write a draft or authorize a write; original atomic checks remain final.
+* Refresh explicitly without resetting raw inputs; failed/retired reviews disable Save with translated
+  feedback. Preserve correction/history and real changed-review writer-rejection cases.

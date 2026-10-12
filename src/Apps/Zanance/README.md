@@ -341,3 +341,9 @@ plan state and boundaries. [Evidence and signed APK](docs/quality/editor-write-f
 Account archive, dependent active/paused plans, default cleanup and active-item choices now commit together.
 Unsaved financial edits need explicit discard consent and are not silently saved by archive.
 [Evidence and signed APK](docs/quality/account-archive.md).
+
+## Account/Plan access before Save (D-165)
+
+Explain original access and capacity before Save; refresh without losing any amount, date or other draft.
+Original correction/history and atomic writer checks stay intact. Test builds remain unrestricted.
+See [evidence](docs/quality/editor-readiness.md).

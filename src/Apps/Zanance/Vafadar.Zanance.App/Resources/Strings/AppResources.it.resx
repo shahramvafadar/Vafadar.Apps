@@ -6146,4 +6146,13 @@ Limiti per categoria:
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>Lo stato del conto e le modifiche collegate sono stati salvati, ma l’aggiornamento successivo non è stato completato. Chiudi il conto e riaprilo per vedere lo stato attuale.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>Aggiorna la disponibilità</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>Non è stato possibile leggere la disponibilità. I tuoi dati sono conservati. Aggiornala prima di salvare.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>La disponibilità è cambiata durante il tentativo di salvataggio. I tuoi dati sono conservati. Aggiornala prima di riprovare.</value>
+  </data>
 </root>

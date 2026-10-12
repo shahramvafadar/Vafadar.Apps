@@ -6126,4 +6126,13 @@ Límites por categoría:
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>El estado de la cuenta y los cambios relacionados se han guardado, pero no se pudo terminar la actualización posterior. Cierra la cuenta y vuelve a abrirla para ver su estado actual.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>Actualizar disponibilidad</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>No se pudo leer la disponibilidad. Tus datos se conservan. Actualízala para revisarla antes de guardar.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>La disponibilidad cambió durante el intento de guardar. Tus datos se conservan. Actualízala antes de intentarlo de nuevo.</value>
+  </data>
 </root>

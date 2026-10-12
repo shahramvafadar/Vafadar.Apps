@@ -688,3 +688,19 @@ file, day and cached access before the shared Account/Plan policies. State, Plan
 commit together with no settings creation, ledger money or schema change. Original stores publish after
 commit; typed failure retains the accepted outcome.
 See `src/Apps/Zanance/docs/quality/account-archive.md`.
+
+## Original editor readiness reader (D-165)
+
+Account and Plan forms now explain original feature/capacity/selection decisions before an attempted
+Save. The read-only review uses each original writer's actual configured file and cached access. Active
+reads capture complete original rows and persisted choices in a deferred SQLite reader; inactive test
+access performs no financial-row/choice read or paid activation. A missing persisted choice counts all
+original eligible rows, matching the writer instead of a cached fallback subset. Original correction,
+retained advanced-rule and historical net-slot behavior stays available.
+
+The original advanced Plan classification is shared through Core PlanEditPolicy. Save and readiness build
+the same detached candidate; readiness does not parse money, validate financial input, mutate original
+state or grant a write. Explicit Refresh access keeps every raw amount/date/note/reminder/selection.
+A failed or retired read disables Save with translated feedback; an actual writer rejection still retains
+the draft and requires explicit fresh review. Atomic writers remain the final authority. No EF property,
+schema/migration, permission, SDK/network, credential or portable-format change. Test limits stay inactive.

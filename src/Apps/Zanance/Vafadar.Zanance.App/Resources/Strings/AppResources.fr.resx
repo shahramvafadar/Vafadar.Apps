@@ -6134,4 +6134,13 @@ Plafonds par catégorie :
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>Le statut du compte et les changements associés ont été enregistrés, mais l’actualisation suivante n’a pas pu se terminer. Fermez le compte et rouvrez-le pour voir son état actuel.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>Actualiser la disponibilité</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>La disponibilité n’a pas pu être lue. Vos saisies sont conservées. Actualisez-la pour la vérifier avant d’enregistrer.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>La disponibilité a changé pendant la tentative d’enregistrement. Vos saisies sont conservées. Actualisez-la avant de réessayer.</value>
+  </data>
 </root>

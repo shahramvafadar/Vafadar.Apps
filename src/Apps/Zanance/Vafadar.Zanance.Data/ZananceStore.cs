@@ -50,6 +50,11 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// <summary>Raised after data was written, e.g. to refresh reminders.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Captures read-only readiness from this original writer's exact factory and cached access source.</summary>
+    public Task<EditorWorkReview> ReadEditorWorkAsync(CancellationToken cancellationToken = default) =>
+        new EditorWorkStore(contextFactory, commercialAccess).ReadAsync(cancellationToken);
+
+
     /// <summary>
     /// Completes first run after restoring a profile with accounts, preserving its preferences and creating no
     /// account (D-62). An empty backup still needs onboarding.

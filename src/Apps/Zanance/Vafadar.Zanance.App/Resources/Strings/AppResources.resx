@@ -6186,4 +6186,13 @@ Category limits:
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>The account status and related changes were saved, but the follow-up refresh could not finish. Close and reopen the account to view its current state.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>Refresh availability</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>Availability could not be read. Your input is retained. Refresh availability to review it before saving.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>Availability changed during the attempted save. Your input is retained. Refresh availability before trying again.</value>
+  </data>
 </root>

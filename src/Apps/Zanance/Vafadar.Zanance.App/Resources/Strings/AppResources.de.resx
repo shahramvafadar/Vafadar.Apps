@@ -6157,4 +6157,13 @@ Kategorielimits:
   <data name="Account_ArchiveSavedReview" xml:space="preserve">
     <value>Der Kontostatus und die zugehörigen Änderungen wurden gespeichert, aber die anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließe das Konto und öffne es erneut, um den aktuellen Zustand zu sehen.</value>
   </data>
+  <data name="Editor_ReviewWork" xml:space="preserve">
+    <value>Verfügbarkeit aktualisieren</value>
+  </data>
+  <data name="Editor_WorkReadFailed" xml:space="preserve">
+    <value>Die Verfügbarkeit konnte nicht gelesen werden. Deine Eingaben bleiben erhalten. Aktualisiere sie vor dem Speichern.</value>
+  </data>
+  <data name="Editor_WorkRetired" xml:space="preserve">
+    <value>Die Verfügbarkeit hat sich während des Speicherversuchs geändert. Deine Eingaben bleiben erhalten. Aktualisiere sie vor einem weiteren Versuch.</value>
+  </data>
 </root>

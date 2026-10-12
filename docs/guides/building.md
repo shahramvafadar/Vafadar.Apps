@@ -666,3 +666,10 @@ fictitious files. Consent/alert/return effects are explicit ports. Compare all 2
 consent/SQL refusal, verify accepted original state/default without dirty financial fields, and restore exact
 owned development bytes.
 See `src/Apps/Zanance/docs/quality/account-archive.md`.
+
+## Original editor readiness native review (D-165)
+
+The focused Debug route is editor-readiness. It opens independent actual Account/Plan pages, reads
+fictitious original cached access, invokes native explicit refresh/failure/retry and verifies complete
+raw input plus all 25 original tables without Save. Main tests/cleanup/dependent builds remain sequential.
+See the app quality/editor-readiness document for exact final native and APK evidence.

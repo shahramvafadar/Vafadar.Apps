@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Account and Plan access before Save (2026-10-12, D-165)
+
+- Explain required access, capacity or active-item choices before trying to save.
+- Refresh access without losing entered amounts, dates, notes or other choices.
+- Keep corrections available; retry a failed review explicitly without saving anything.
+
 ### Improved - Archive account and related changes together (2026-10-12, D-164)
 
 - Archive the account, dependent active/paused plans and default cleanup together, with full rollback on failure.

@@ -81,7 +81,7 @@ internal static partial class DebugSnapshots
             await SetLanguageAsync(app, localization, language);
             foreach (var isPlan in new[] { false, true })
             {
-                access.Current = new(path, new(ProductPlan.Free, scope));
+                access.Current = new(path, new(ProductPlan.Plus, scope));
                 var effects = new EditorWriteReviewInteraction(); ContentPage page;
                 AccountEditorViewModel? accountEditor = null; PlanEditorViewModel? planEditor = null;
                 if (isPlan)
@@ -104,6 +104,7 @@ internal static partial class DebugSnapshots
                     is not Microsoft.UI.Xaml.Controls.TextBox { IsEnabled: true })
                     throw new InvalidOperationException("A loaded original draft lost its enabled native input.");
                 var raw = isPlan ? JsonSerializer.Serialize(new { planEditor!.Name, planEditor.Note, planEditor.AmountText, planEditor.Start, planEditor.Account }) : accountEditor!.Form.Snapshot();
+                access.Current = new(path, new(ProductPlan.Free, scope));
                 InvokeChoiceReview(save, ProfileNativeReads); if (saveCommand.ExecutionTask is { } writing) await writing;
                 var reason = isPlan ? planEditor!.SaveError : accountEditor!.SaveError;
                 if (reason is null || !reason.Contains(translator["Commercial_DraftKept"], StringComparison.Ordinal) || await StoredAsync() != before)
@@ -117,6 +118,7 @@ internal static partial class DebugSnapshots
                 if (raw != nextRaw) throw new InvalidOperationException("Native rejection discarded original input.");
                 await CaptureAsync(app, folder, language + "-editor-write-" + (isPlan ? "plan" : "account") + "-rejected");
                 access.Current = new(path, new(ProductPlan.Plus, scope)); effects.RefuseReturn = true;
+                if (isPlan) await planEditor!.ReviewWorkCommand.ExecuteAsync(null); else await accountEditor!.ReviewWorkCommand.ExecuteAsync(null);
                 InvokeChoiceReview(save, ProfileNativeReads); if (saveCommand.ExecutionTask is { } accepted) await accepted;
                 reason = isPlan ? planEditor!.SaveError : accountEditor!.SaveError;
                 if (reason != translator["Editor_SavedReturnFailed"] || (isPlan ? planEditor!.CanSave : accountEditor!.CanSave)

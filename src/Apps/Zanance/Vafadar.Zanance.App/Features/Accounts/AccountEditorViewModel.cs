@@ -22,6 +22,10 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private string _snapshot = string.Empty;
     private readonly IAppInteraction _interaction;
     private bool _committed;
+    private EditorWorkReview? _work;
+    private bool _reviewingWork;
+    private bool _workFailed;
+    private bool _workRetired;
     private bool _loading = true;
 
     /// <summary>Creates the original form without starting database or native work.</summary>
@@ -53,13 +57,36 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     /// <summary>Gets whether user input can change this loaded, not-yet-committed form.</summary>
     public bool CanInteract => !_loading && !IsBusy && !_committed;
     /// <summary>Gets whether a financial Save can run; a committed account cannot be resubmitted.</summary>
-    public bool CanSave => CanInteract;
+    public bool CanSave => CanInteract && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before leaving this form.</summary>
     public bool CanLeave => !IsBusy;
     /// <summary>Gets the actual Close/Cancel caption after the commit boundary.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
+    private Core.Commerce.WorkRestriction? WorkRestriction => _work?.AccountRestriction(_account.Id, IsArchived);
+    /// <summary>Gets a captured reason before Save; no financial field validation or write occurs here.</summary>
+    public string? WorkText => _workFailed ? _translator["Editor_WorkReadFailed"]
+        : _workRetired ? _translator["Editor_WorkRetired"]
+        : WorkRestriction is { } restriction ? Presentation.CommercialFailureMessage.Describe(restriction, _translator) : null;
+    /// <summary>Gets whether the original availability can be explicitly refreshed without changing any draft.</summary>
+    public bool CanReviewWork => !_loading && !IsBusy && !_committed && !_reviewingWork;
+    private async Task ReadWorkAsync()
+    {
+        _reviewingWork = true; RefreshAccess();
+        try
+        {
+            var next = await _store.ReadEditorWorkAsync();
+            next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { _work = null; _workFailed = true; }
+        finally { _reviewingWork = false; RefreshAccess(); }
+    }
+    [RelayCommand(CanExecute = nameof(CanReviewWork))]
+    private Task ReviewWorkAsync() => ReadWorkAsync();
+
     private void RefreshAccess()
     {
+        OnPropertyChanged(nameof(WorkText)); OnPropertyChanged(nameof(CanReviewWork)); ReviewWorkCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
         SaveCommand.NotifyCanExecuteChanged(); ToggleArchiveCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged();
     }
@@ -128,6 +155,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
 
         Title = _translator[Form.IsDebtType ? (IsExisting ? "Debt_EditTitle" : "Debt_NewTitle") : (IsExisting ? "Account_EditTitle" : "Account_NewTitle")];
 
+        await ReadWorkAsync();
         _snapshot = Snapshot(); _loading = false; RefreshAccess();
     }
 
@@ -156,6 +184,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            if (!_committed && exception is CommercialWriteRejectedException) { _workRetired = true; RefreshAccess(); }
             SaveError = _committed ? _translator["Account_SavedNeedsReview"]
                 : Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
             return;

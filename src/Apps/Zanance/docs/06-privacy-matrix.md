@@ -458,3 +458,10 @@ or portable change. Native fixtures change only independently owned fictitious r
 Complete original packets remain in memory for one exact file/action/day. No credentials, stored ids or
 exception text are shown. No EF property/schema, permission, SDK, network, analytics, OS-backup or portable
 change. Writer reviews mutate only their independent fictitious files; original development bytes restore.
+
+## D-165 - Process-local original editor readiness
+
+Account/Plan reviews retain original rows, choices and cached access in memory for their actual file only.
+Inactive tests open no financial database for this explanation. No preferences, credentials, portable paid
+rights, profile data, financial rows or security settings are written. No new schema, SDK, permission,
+network or export data. Fixtures are independently owned; production activation remains separately gated.

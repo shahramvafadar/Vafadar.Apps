@@ -52,21 +52,25 @@ public sealed class EditorWriteFlowTests
         using var f = new FlowFixture(); f.Localization.SetLanguage(f.Localization.SupportedLanguages.Single(item => item.CultureName == language));
         await f.Store.GetSettingsAsync(Ct); var account = await SeedAccountAsync(f, "Fictitious original funding");
         if (plan)
-            for (var i = 0; i < 5; i++) await f.Services.GetRequiredService<PlanStore>().SaveScheduleAsync(new Schedule
+            for (var i = 0; i < 4; i++) await f.Services.GetRequiredService<PlanStore>().SaveScheduleAsync(new Schedule
             { Name = "Fictitious original plan " + i, AccountId = account.Id, Amount = 1234, Rule = new() { Frequency = Frequency.Once, Start = new(2026, 10, 20) } }, Ct);
-        else { await SeedAccountAsync(f, "Fictitious original second"); await SeedAccountAsync(f, "Fictitious original third"); }
+        else { await SeedAccountAsync(f, "Fictitious original second"); }
         var access = new Access(); Enable(f, access); var (store, plans) = Stores(f, access);
-        await using var reminders = Reminders(f, store, plans); var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await using var reminders = Reminders(f, store, plans);
         if (plan)
         {
             var vm = PlanEditor(f, store, plans, reminders); Assert.False(vm.CanSave); await vm.ApplyQueryAsync(new Dictionary<string, object>());
             vm.Name = "  Complete raw new plan  "; vm.Note = "Complete raw note\nsecond line";
             vm.AmountText = " " + MoneyText.ForInput(45678, "EUR", f.Localization.CurrentCulture) + " "; vm.Start = new(2026, 11, 20);
             var raw = (vm.Name, vm.Note, vm.AmountText, vm.Start, vm.Account!.Id, vm.ReminderDaysText, vm.ReminderTime);
+            // A real background addition retires the previously reviewed free slot at the actual writer.
+            await f.Services.GetRequiredService<PlanStore>().SaveScheduleAsync(new Schedule { Name = "Fictitious racing final plan", AccountId = account.Id,
+                Rule = new() { Start = new(2026, 10, 20) } }, Ct);
+            var before = await GoalChooserFlowTests.SnapshotAsync(f);
             await vm.SaveCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Tab_Plans"], vm.SaveError!); Assert.Contains(f.Translator["Commercial_DraftKept"], vm.SaveError!);
-            Assert.Equal(raw, (vm.Name, vm.Note, vm.AmountText, vm.Start, vm.Account!.Id, vm.ReminderDaysText, vm.ReminderTime)); Assert.True(vm.CanSave);
+            Assert.Equal(raw, (vm.Name, vm.Note, vm.AmountText, vm.Start, vm.Account!.Id, vm.ReminderDaysText, vm.ReminderTime)); Assert.False(vm.CanSave);
             Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(f.Platform.Routes);
-            Enable(f, access, ProductPlan.Plus); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.False(vm.CanSave); Assert.False(vm.CanInteract);
+            Enable(f, access, ProductPlan.Plus); await vm.ReviewWorkCommand.ExecuteAsync(null); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.False(vm.CanSave); Assert.False(vm.CanInteract);
             var accepted = await GoalChooserFlowTests.SnapshotAsync(f); await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f));
             Assert.Equal(f.Translator["Common_Close"], vm.CloseText); Assert.Equal("..", Assert.Single(f.Platform.Routes).Route);
             Assert.Equal(6, (await plans.GetSchedulesAsync(Ct)).Count);
@@ -76,9 +80,10 @@ public sealed class EditorWriteFlowTests
             var vm = AccountEditor(f, store, plans); Assert.False(vm.CanSave); await vm.ApplyQueryAsync(new Dictionary<string, object>());
             vm.Form.Name = "  Complete raw new account  "; vm.Form.OpeningText = " " + MoneyText.ForInput(45678, "EUR", f.Localization.CurrentCulture) + " ";
             vm.Form.OpeningDate = new(2026, 9, 20); vm.IsDefault = true; var raw = vm.Form.Snapshot();
+            await SeedAccountAsync(f, "Fictitious racing final account"); var before = await GoalChooserFlowTests.SnapshotAsync(f);
             await vm.SaveCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Accounts_Title"], vm.SaveError!); Assert.Contains(f.Translator["Commercial_DraftKept"], vm.SaveError!);
-            Assert.Equal(raw, vm.Form.Snapshot()); Assert.True(vm.IsDefault); Assert.True(vm.CanSave); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(f.Platform.Routes);
-            Enable(f, access, ProductPlan.Plus); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.False(vm.CanSave); Assert.False(vm.CanInteract);
+            Assert.Equal(raw, vm.Form.Snapshot()); Assert.True(vm.IsDefault); Assert.False(vm.CanSave); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(f.Platform.Routes);
+            Enable(f, access, ProductPlan.Plus); await vm.ReviewWorkCommand.ExecuteAsync(null); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.False(vm.CanSave); Assert.False(vm.CanInteract);
             var accepted = await GoalChooserFlowTests.SnapshotAsync(f); await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f));
             var saved = (await store.GetAccountsAsync(cancellationToken: Ct)).Single(row => row.Name == vm.Form.Name.Trim()); Assert.Equal(45678, saved.OpeningBalance);
             Assert.Equal(saved.Id, (await store.GetSettingsAsync(Ct)).DefaultAccountId); Assert.Equal(f.Translator["Common_Close"], vm.CloseText);
@@ -149,13 +154,13 @@ public sealed class EditorWriteFlowTests
         var access = new Access(); var (store, plans) = Stores(f, access); await plans.SaveScheduleAsync(original, Ct);
         await using (var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
         { db.OccurrenceStates.Add(new() { ScheduleId = original.Id, OriginalDate = new(2026, 9, 1), Status = OccurrenceStatus.Skipped }); await db.SaveChangesAsync(Ct); }
-        await using var reminders = Reminders(f, store, plans); Enable(f, access);
+        await using var reminders = Reminders(f, store, plans); Enable(f, access, ProductPlan.Plus);
         var vm = PlanEditor(f, store, plans, reminders); await vm.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = original.Id });
         vm.Name = "  Fictitious complete revised name  "; vm.Note = "Complete original revised draft"; vm.HasSecondDay = true; vm.SecondDayText = "20";
         var before = await GoalChooserFlowTests.SnapshotAsync(f); var raw = (vm.Name, vm.Note, vm.Start, vm.ApplyFrom, vm.Account!.Id, vm.AutoPost);
-        await vm.SaveCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Commercial_RequiresPlus"], vm.SaveError!); Assert.True(vm.CanSave);
+        Enable(f, access); await vm.SaveCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Commercial_RequiresPlus"], vm.SaveError!); Assert.False(vm.CanSave);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(raw, (vm.Name, vm.Note, vm.Start, vm.ApplyFrom, vm.Account!.Id, vm.AutoPost));
-        vm.HasSecondDay = false; await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError);
+        vm.HasSecondDay = false; await vm.ReviewWorkCommand.ExecuteAsync(null); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError);
         var next = (await plans.GetSchedulesAsync(Ct)).Single(row => row.PreviousScheduleId == original.Id);
         Assert.Equal(state, next.State); Assert.Equal(original.PausedFrom, next.PausedFrom); Assert.Equal(original.ActiveUntil, next.ActiveUntil);
         Assert.True(next.AutoPost); Assert.Equal(original.AutoPostFrom, next.AutoPostFrom); Assert.Equal(vm.Name.Trim(), next.Name);

@@ -1048,3 +1048,10 @@ draft-discard consent; declining keeps the same form. Block competing commands d
 review never toggles the inverse of a changed state. Accepted state/follow-up failure remains saved, read-only
 with Close; exact default cleanup is reported without guessing another account.
 See [evidence](quality/account-archive.md).
+
+## Original Account/Plan pre-attempt explanation (D-165)
+
+Keep complete translated access/selection/capacity feedback above pinned Save. Explicit Refresh access
+reads current writer inputs without clearing, normalizing or saving any draft. Refresh failure disables
+Save with retry feedback; input stays editable. Current review is an explanation, never write authority.
+Actual rejection retires it until explicit refresh; historical correction/split behavior remains original.

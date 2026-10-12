@@ -1426,3 +1426,25 @@ credential, network or portable-format change. Production registration stays ina
 and other commercial paths remain open, not release completion.
 
 See [evidence](quality/account-archive.md).
+
+## AT-167 - Original Account/Plan readiness and retained refresh (D-165)
+
+Fifteen AT-167 cases pass with actual application sources and isolated SQLite. The original 21 AT-165
+cases also pass: known full quotas now disable Save before attempting it, so original writer-rejection
+cases capture a free slot and then exercise a real later addition/access change. They still prove original
+atomic rejection and an explicit corrected retry. Final main: 2,978 passed / App.Tests 921, zero failures
+or skips, 2m 12.110s, followed by cleanup. Strict Windows has zero warnings/errors.
+
+Six resource languages cover precise quota reasons, retained raw drafts and explicit refresh/read-refusal
+retry. Additional cases cover original advanced rules/correction, persisted-choice counts/malformed repair,
+unlimited Plus and inactive unopened-file behavior. Existing AT-165 races still exercise actual original
+writers after a changed review. Native and package evidence: [editor-readiness](quality/editor-readiness.md).
+
+Actual native/package follow-through: 36 Windows contexts (en/fa/de, both themes, 360/412/wide,
+Simple/Advanced) prove native disabled Save, complete reasons/refresh, retained input/read-refusal/retry
+and all 25 unchanged original tables. Normal final signed Release Android verifies actual refresh and
+Cancel with retained native fields, unchanged original rows, existing D-141 migration only and exact
+owned byte/sidecar restoration. Final Release is installed/stopped. Canonical full Android build has
+zero warnings/errors; all six changed production-source PDB checksums match. The installable APK is
+artifacts/android/zanance-d165-release.apk (82589781 bytes); signature/structure evidence is recorded
+in the focused quality document. No physical-phone, iOS, OAuth, billing or release acceptance is inferred.

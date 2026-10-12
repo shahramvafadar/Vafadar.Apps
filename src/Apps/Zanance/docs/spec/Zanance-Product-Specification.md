@@ -2575,3 +2575,37 @@ credential, network or portable-format change. Production registration stays ina
 and other commercial paths remain open, not release completion.
 
 See [evidence](../quality/account-archive.md).
+
+### 31.78 Original Account/Plan pre-attempt readiness (D-165)
+
+Account and Plan forms now explain original feature/capacity/selection decisions before an attempted
+Save. The read-only review uses each original writer's actual configured file and cached access. Active
+reads capture complete original rows and persisted choices in a deferred SQLite reader; inactive test
+access performs no financial-row/choice read or paid activation. A missing persisted choice counts all
+original eligible rows, matching the writer instead of a cached fallback subset. Original correction,
+retained advanced-rule and historical net-slot behavior stays available.
+
+The original advanced Plan classification is shared through Core PlanEditPolicy. Save and readiness build
+the same detached candidate; readiness does not parse money, validate financial input, mutate original
+state or grant a write. Explicit Refresh access keeps every raw amount/date/note/reminder/selection.
+A failed or retired read disables Save with translated feedback; an actual writer rejection still retains
+the draft and requires explicit fresh review. Atomic writers remain the final authority. No EF property,
+schema/migration, permission, SDK/network, credential or portable-format change. Test limits stay inactive.
+
+Fifteen AT-167 cases pass with actual application sources and isolated SQLite. The original 21 AT-165
+cases also pass: known full quotas now disable Save before attempting it, so original writer-rejection
+cases capture a free slot and then exercise a real later addition/access change. They still prove original
+atomic rejection and an explicit corrected retry. Final main: 2,978 passed / App.Tests 921, zero failures
+or skips, 2m 12.110s, followed by cleanup. Strict Windows has zero warnings/errors.
+
+The full commercial release and external acceptance remain incomplete; detailed evidence is in
+[editor-readiness](../quality/editor-readiness.md).
+
+Actual native/package follow-through: 36 Windows contexts (en/fa/de, both themes, 360/412/wide,
+Simple/Advanced) prove native disabled Save, complete reasons/refresh, retained input/read-refusal/retry
+and all 25 unchanged original tables. Normal final signed Release Android verifies actual refresh and
+Cancel with retained native fields, unchanged original rows, existing D-141 migration only and exact
+owned byte/sidecar restoration. Final Release is installed/stopped. Canonical full Android build has
+zero warnings/errors; all six changed production-source PDB checksums match. The installable APK is
+artifacts/android/zanance-d165-release.apk (82589781 bytes); signature/structure evidence is recorded
+in the focused quality document. No physical-phone, iOS, OAuth, billing or release acceptance is inferred.

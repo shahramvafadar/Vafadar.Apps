@@ -16,6 +16,11 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// <summary>Raised after plans or occurrence states were written.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Captures read-only readiness from this original writer's exact factory and cached access source.</summary>
+    public Task<EditorWorkReview> ReadEditorWorkAsync(CancellationToken cancellationToken = default) =>
+        new EditorWorkStore(contextFactory, commercialAccess).ReadAsync(cancellationToken);
+
+
     /// <summary>Returns all plans, active first.</summary>
     public async Task<List<Schedule>> GetSchedulesAsync(CancellationToken cancellationToken = default)
     {
@@ -197,11 +202,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             // with the stored predecessor, never the already-mutated Ended object supplied by the UI.
             if (original is null && continued?.State is ScheduleState.Active or ScheduleState.Paused
                 && schedule.PreviousScheduleId == continued.Id) original = continued;
-            var counted = schedule.State is ScheduleState.Active or ScheduleState.Paused;
-            var newUse = original is null || (counted && original.State == ScheduleState.Ended);
-            var addsAdvanced = (newUse || counted) && AddsAdvancedTools(schedule, newUse ? null : original);
-            write.DemandFeature(addsAdvanced ? CommercialFeature.AdvancedPlans
-                : newUse ? CommercialFeature.BasicPlans : CommercialFeature.Corrections);
+            write.DemandFeature(PlanEditPolicy.Feature(schedule, original));
         }
         if (batch.Count == 0) { write.DemandFeature(CommercialFeature.Corrections); return; }
         if (write.HasStoredPlanChoice)
@@ -217,20 +218,6 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         if (write.DemandCapacity(CommercialFeature.BasicPlans, QuotaKind.RecurringPlans) is not { } maximum) return;
         var current = await db.Schedules.CountAsync(s => s.State == ScheduleState.Active || s.State == ScheduleState.Paused, cancellationToken);
         write.DemandCount(CommercialFeature.BasicPlans, QuotaKind.RecurringPlans, maximum, current, newSlots - oldSlots);
-    }
-
-    /// <summary>Detects newly enabled paid tools while retained tool corrections remain available after expiry.</summary>
-    private static bool AddsAdvancedTools(Schedule target, Schedule? original)
-    {
-        static bool Weekday(Schedule s) => s.Rule.Frequency is Frequency.Monthly or Frequency.Yearly && s.Rule.DayRule.IsWeekday();
-        static bool SecondDay(Schedule s) => s.Rule.Frequency == Frequency.Monthly && s.Rule.SecondDay is not null;
-        static bool Shift(Schedule s) => s.Rule.WeekendShift != WeekendShift.None;
-        static bool Contract(Schedule s) => s.HasContract || s.ContractReference is not null || s.ContractRenews;
-        return (target.AutoPost && original?.AutoPost != true)
-            || (Weekday(target) && (original is null || !Weekday(original)))
-            || (SecondDay(target) && (original is null || !SecondDay(original)))
-            || (Shift(target) && (original is null || !Shift(original)))
-            || (Contract(target) && (original is null || !Contract(original)));
     }
 
     /// <summary>Returns whether any occurrence of the plan was settled or skipped.</summary>
