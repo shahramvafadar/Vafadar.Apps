@@ -1002,3 +1002,7 @@ provider acceptance before activation. The gate alone is not encrypted database 
 D-204 connects actual profile switch/migrations/settings to maintenance ownership. Native fixture
 accept/refuse ports are not biometric/device acceptance; still require protected catalogue/provider
 and covered startup integration, key/recovery/retention and physical/iOS acceptance.
+
+D-205 real inactive deletion now owns maintenance. Do not treat this as final protected generation/
+key/capsule/rollback cleanup or filesystem transaction acceptance. Current/main refusal and original
+local file scope remain; protected deletion/retention lifecycle is still mandatory before release.

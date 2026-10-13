@@ -87,8 +87,28 @@ public sealed partial class ProfileService(
     /// <summary>Deletes only the reviewed inactive original and releases its selected device slot atomically.</summary>
     public void DeleteReviewed(ProfileCatalogueReview review, LocalProfile profile)
     {
+        using var owner = location.Access.AcquireExclusive();
+        DeleteCore(review, profile, owner);
+    }
+
+    /// <summary>Deletes an inactive profile after active context/file work drains; rechecks the original reviewed catalogue.</summary>
+    public Task DeleteAsync(LocalProfile profile, CancellationToken cancellationToken = default) =>
+        DeleteReviewedAsync(ReadWorkReview(), profile, cancellationToken);
+
+    /// <summary>Waits without blocking UI, then deletes only the still-reviewed inactive original under maintenance ownership.</summary>
+    public async Task DeleteReviewedAsync(ProfileCatalogueReview review, LocalProfile profile, CancellationToken cancellationToken = default)
+    {
+        ValidateWorkReview(review); RequireReviewedProfile(review, profile);
+        using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested(); DeleteCore(review, profile, owner);
+    }
+
+    private void DeleteCore(ProfileCatalogueReview review, LocalProfile profile, DatabaseAccessGate.ExclusiveLease owner)
+    {
+        owner.Validate();
         lock (CatalogueGate)
         {
+            owner.Validate();
             ValidateWorkCore(review, true); RequireReviewedProfile(review, profile);
             if (profile.IsMain || profile.Id == Current.Id)
             {

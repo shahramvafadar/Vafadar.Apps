@@ -1077,3 +1077,33 @@ run 43b655df1e514b16a6a09209cde0ae87. Logs: d204-{profile-tests,full-tests,main-
 main-android,native-build,native-profile,test-clean}.log. No visible layout or unchanged crypto matrix
 rerun. Remaining destructive inactive-profile file operations still need maintenance coordination,
 alongside protected catalogue/provider/startup integration; main databases remain plaintext.
+
+### Inactive profile deletion under actual maintenance (D-205)
+
+ProfilesViewModel now awaits ProfileService.DeleteReviewedAsync after the existing confirmations.
+The method validates the original review, takes location.Access exclusive ownership asynchronously,
+then rechecks catalogue/policy/current path and known inactive identity inside the original catalogue
+lock before removing the profile/selected slot/files/local backup set. Cancellation during admission
+or before mutation leaves data unchanged. Deletion continues its original synchronous file cleanup
+once mutation starts; it does not promise mid-delete cancellation or filesystem transaction rollback.
+
+Legacy Delete/DeleteReviewed use immediately available AcquireExclusive and fail closed if contexts
+or maintenance are active/pending. This API never waits on a UI thread or skips queued writers.
+Both paths share DeleteCore with the same owner/context checks. Existing main/current refusal and
+exact owned profile/local-backup deletion boundaries remain; cloud backups and unrelated files stay.
+File-error swallowing/retained physical leftovers remains the existing cleanup policy, not accepted
+final encrypted generation/key/capsule/rollback deletion. Whole protected deletion/retention lifecycle
+and catalogue/provider/startup activation remain open.
+
+D-205 verification: 103 profile tests and all 3,299 tests pass, zero failures/skips. Strict Windows/
+Android and independent Release AOT/trim builds zero warnings/errors. Original Android x64 API36/
+4 KiB profile fixture confirms inactive deletion waits for an actual retained context, then removes
+only inactive database/sidecars and retains original main/catalogue/money; original drain/authentication
+refusal cases also pass. APK signature and driver packaged ABI identity verify; package uninstalled,
+tests cleaned. The first observation expired while PID 22737 remained live; subsequent actual result
+contained all six successful flags. Record same completed run without restart/recreation:
+artifacts/native-sqlcipher/d205-native-profile-proof.json, run f3f5098787bd414da33b20f85a6cfe55.
+Preserve d205-native-profile.log expiration evidence. Other logs: d205-{profile-tests,full-tests,
+main-windows,main-android,native-build,test-clean}.log. Authentication is the decision port, not native
+biometric acceptance; no new UI layout, unchanged crypto matrix, main encryption or protected deletion
+lifecycle acceptance is claimed.

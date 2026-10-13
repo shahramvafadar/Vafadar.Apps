@@ -190,7 +190,7 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
                 if (!await interaction.ConfirmAsync(translator["Profile_Delete"], translator.Format("Profile_DeleteMessage", row.Name), delete, translator["Common_Cancel"])) return;
                 profiles.ValidateWorkReview(review);
                 if (!await interaction.ConfirmAsync(translator["Profile_Delete"], translator["Profile_DeleteFinal"], delete, translator["Common_Cancel"])) return;
-                profiles.DeleteReviewed(review, row.Profile); _retired = true; await LoadCoreAsync();
+                await profiles.DeleteReviewedAsync(review, row.Profile); _retired = true; await LoadCoreAsync();
             }
         }
         catch (Exception) { _retired = true; SetError("Profile_SourceChanged"); }

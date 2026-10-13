@@ -49,7 +49,14 @@ internal static class ProfileMaintenanceCompatibility
         if (new SqliteConnectionStringBuilder(reopened.Database.GetDbConnection().ConnectionString).DataSource != mainPath ||
             (await reopened.Accounts.SingleAsync()).OpeningBalance != 1250 || profiles.Current.Id != main.Id ||
             (await reopened.Entries.CountAsync()) != 0) throw new IOException("Queued work opened the wrong profile or changed money.");
-        return "{\"OriginalProfileFlow\":true,\"DrainBeforePathChange\":true,\"OwnedMigrationAndSettings\":true,\"RefusedAuthenticationRestoresQueuedWork\":true,\"NoFinancialPosting\":true}";
+        var inactivePath = Path.Combine(folder, "zanance-" + work.Id + ".db");
+        var deletion = profiles.DeleteAsync(work);
+        if (deletion.IsCompleted || !File.Exists(inactivePath) || profiles.All.Count != 2)
+            throw new IOException("Inactive deletion did not wait for actual contexts.");
+        await reopened.DisposeAsync(); await deletion;
+        if (File.Exists(inactivePath) || profiles.All.Count != 1 || !File.Exists(mainPath))
+            throw new IOException("Inactive deletion changed the original main or failed to remove its owned file.");
+        return "{\"OriginalProfileFlow\":true,\"DrainBeforePathChange\":true,\"OwnedMigrationAndSettings\":true,\"RefusedAuthenticationRestoresQueuedWork\":true,\"NoFinancialPosting\":true,\"InactiveDeletionDrainsAndRetainsMain\":true}";
     }
 
     private sealed class Runtime(IServiceProvider services) : IProfileRuntime

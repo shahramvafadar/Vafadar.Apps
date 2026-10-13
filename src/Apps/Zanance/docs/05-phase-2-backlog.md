@@ -1166,3 +1166,7 @@ acceptance remain incomplete. No native warning acceptance or encryption activat
 D-204 original profile switching now owns factory maintenance, including actual migrations/settings,
 authentication/catalogue commit and rollback. Final protected catalogue/provider/startup/key/retention
 activation and SEC-01 acceptance remain open; no encrypted main-profile claim.
+
+D-205 actual confirmed inactive-profile deletion awaits maintenance/context drain and revalidates
+reviewed inputs. Protected generation/key/rollback deletion/retention and main encryption lifecycle
+remain incomplete; existing file-error cleanup policy is unchanged.

@@ -1530,3 +1530,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   Queued work captures its endpoint after admission; refusal never opens the temporary destination.
 * Owned settings share the original settings initialization algorithm and semaphore. No guessed accounts,
   ledger posting, cipher fallback or ownership bypass is added; protected catalogue adoption remains separate.
+
+## 137. Inactive profile deletion maintenance (D-205)
+
+* The real profile form awaits context drain before deleting an inactive profile or its local backups.
+  Recheck the captured catalogue/policy/current profile after waiting and before any mutation.
+* Cancellation before deletion and stale reviews preserve original files/catalogue. Legacy synchronous
+  calls acquire only immediately available ownership; never block the UI or bypass pending writers.
+* Current/main deletion remains forbidden. Existing file-error cleanup policy is unchanged; final
+  protected generation/key/rollback retention and deletion lifecycle are separate outstanding work.

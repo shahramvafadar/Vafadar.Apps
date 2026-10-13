@@ -1344,3 +1344,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Profile changes wait for existing database contexts before changing files. If destination access
   is refused, waiting work resumes against the previous profile instead of the temporary destination.
+
+### D-205 — Safe waiting before deleting a local profile
+
+- Confirmed profile deletion waits for active database contexts and rechecks the reviewed profile
+  before removing files. A cancelled or outdated request leaves the profile intact.

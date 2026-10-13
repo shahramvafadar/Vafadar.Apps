@@ -1578,3 +1578,7 @@ policy need completion. The unchanged default native dependency still requires r
 D-204 connects actual reviewed profile switching to D-203 ownership with no self-deadlock and
 correct queued-work rollback after refused authentication. SEC-01 still needs native/provider security
 acceptance and protected catalogue/all-profile/startup/key/retention/recovery/OS-policy activation.
+
+D-205 coordinates actual inactive profile deletion with D-203/D-204 ownership and stale/cancelled
+review refusal. Final protected profile/generation/key/rollback retention/deletion, provider/candidate
+acceptance, metadata/startup and recovery/OS policy remain open; main databases are plaintext.

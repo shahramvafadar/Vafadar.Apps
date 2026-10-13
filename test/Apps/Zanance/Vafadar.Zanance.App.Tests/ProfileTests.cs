@@ -137,6 +137,52 @@ public sealed class ProfileTests
     private static LocalDatabaseLocation<ZananceDbContext> Location(FlowFixture f) => f.Services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
     private static ProfileService Create(FlowFixture f, ProfileRuntime runtime) => new(Location(f), f.Store, f.Preferences, runtime, f.Translator);
 
+    [Fact, Trait("AT", "AT-204")]
+    public async Task Inactive_deletion_waits_for_contexts_and_preserves_catalogue_and_file_until_drain()
+    {
+        using var f = new FlowFixture(); var profiles = Create(f, new ProfileRuntime(f)); var main = profiles.Current;
+        var other = profiles.Create("Fictitious waiting deletion"); Assert.True(await profiles.SwitchToAsync(other));
+        var otherPath = Location(f).Path; Assert.True(await profiles.SwitchToAsync(main));
+        var factory = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(); var context = await factory.CreateDbContextAsync(Ct);
+        var deletion = profiles.DeleteAsync(other, Ct);
+        Assert.False(deletion.IsCompleted); Assert.True(File.Exists(otherPath)); Assert.Equal(2, profiles.All.Count);
+        await context.DisposeAsync(); await deletion;
+        Assert.False(File.Exists(otherPath)); Assert.Single(profiles.All); Assert.True(File.Exists(Location(f).Path));
+    }
+
+    [Fact, Trait("AT", "AT-204")]
+    public async Task Catalogue_change_while_deletion_waits_rejects_old_review_without_removing_files()
+    {
+        using var f = new FlowFixture(); var profiles = Create(f, new ProfileRuntime(f)); var main = profiles.Current;
+        var other = profiles.Create("Fictitious retained deletion"); Assert.True(await profiles.SwitchToAsync(other));
+        var otherPath = Location(f).Path; Assert.True(await profiles.SwitchToAsync(main));
+        var review = profiles.ReadWorkReview(); var owner = await Location(f).Access.AcquireExclusiveAsync(Ct);
+        var deletion = profiles.DeleteReviewedAsync(review, other, Ct); Assert.False(deletion.IsCompleted);
+        profiles.Rename(other, "Fictitious renamed while waiting"); owner.Dispose();
+        await Assert.ThrowsAsync<InvalidOperationException>(() => deletion);
+        Assert.True(File.Exists(otherPath)); Assert.Equal(2, profiles.All.Count);
+    }
+
+    [Fact, Trait("AT", "AT-204")]
+    public async Task Cancelled_deletion_waiter_preserves_original_and_does_not_leak_maintenance()
+    {
+        using var f = new FlowFixture(); var profiles = Create(f, new ProfileRuntime(f)); var other = profiles.Create("Fictitious cancelled deletion");
+        using var context = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContext();
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var deletion = profiles.DeleteAsync(other, cancellation.Token); cancellation.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => deletion);
+        Assert.Equal(2, profiles.All.Count); context.Dispose(); await profiles.DeleteAsync(other, Ct); Assert.Single(profiles.All);
+    }
+
+    [Fact, Trait("AT", "AT-204")]
+    public void Synchronous_delete_refuses_busy_context_instead_of_blocking_or_mutating_catalogue()
+    {
+        using var f = new FlowFixture(); var profiles = Create(f, new ProfileRuntime(f)); var other = profiles.Create("Fictitious sync deletion");
+        using var context = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContext();
+        Assert.Throws<InvalidOperationException>(() => profiles.Delete(other)); Assert.Equal(2, profiles.All.Count);
+        context.Dispose(); profiles.Delete(other); Assert.Single(profiles.All);
+    }
+
     [Fact, Trait("AT", "AT-203")]
     public async Task Switch_waits_for_existing_context_before_moving_the_actual_profile_path()
     {

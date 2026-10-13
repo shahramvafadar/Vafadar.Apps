@@ -12,6 +12,17 @@ public sealed class DatabaseAccessGate
     private int pendingWriters;
     private ExclusiveLease? exclusive;
 
+    /// <summary>Captures exclusive ownership only when immediately available; never blocks a synchronous/UI caller.</summary>
+    public ExclusiveLease AcquireExclusive()
+    {
+        lock (sync)
+        {
+            if (readers != 0 || exclusive is not null || pendingWriters != 0 || !writers.Wait(0))
+                throw new InvalidOperationException("Database maintenance is pending, active or waiting for contexts.");
+            exclusive = new(this); Pulse(); return exclusive;
+        }
+    }
+
     /// <summary>Waits for existing factory contexts to close and captures exclusive maintenance ownership.</summary>
     public async Task<ExclusiveLease> AcquireExclusiveAsync(CancellationToken ct = default)
     {
