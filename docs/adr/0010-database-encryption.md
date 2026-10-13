@@ -486,3 +486,35 @@ The final native host must retain/reconcile uncommitted identity/creation artifa
 publication, rather than deleting referenced keys or treating missing history as a fresh profile.
 This step does not register that host, activate main encryption, implement orphan reconciliation,
 optional recovery, retention or coupled OS policy. These remain in the full SEC scope.
+
+### D-221 — Review Windows upstream atomic-width warnings
+
+The two C4133 diagnostics are in unchanged OpenSSL tsan_add calls for 32-bit new_nid and
+global_seed. The MSVC macro type-checks both arms of a sizeof-based conditional; its unselected
+64-bit arm causes the pointer diagnostic. Exact original obj_dat.obj disassembly uses lock xadd
+dword ptr at new_nid. Exact property.obj uses lock add dword ptr at global_seed because its fetch
+result is unused. Both original operations are 32-bit; no upstream source patch or warning suppression
+was added. This is compiler/source evidence, not a claim that incompatible pointer warnings are
+universally harmless. See the official [intrinsic signatures](https://learn.microsoft.com/en-us/cpp/intrinsics/interlockedexchangeadd-intrinsic-functions?view=msvc-170).
+
+Test-WindowsAtomicWidth.ps1 verifies the exact header against the pinned official Git object, the
+unchanged candidate DLL hash and pinned MSVC/SDK. A compiled upstream-macro probe exercises -1 + 1
+with an adjacent sentinel (an incorrect 64-bit addition would carry into it), 64-bit values above
+2^32 and 800,000 atomic additions across four threads. Probe disassembly separately verifies DWORD
+and QWORD operations. The first verifier expected xadd for the unused global_seed result and failed;
+inspection showed the valid lock add optimization. Corrected only that matching rule, then the related
+probe passed. No unrelated native suite, main build/tests/UI or APK was repeated.
+
+Static range review also bounds two C4334 diagnostics: the QUIC first-byte shift is 0..3 and its
+result 1..8 fits 32 bits before widening. The two C4319 diagnostics complement a shifted unsigned
+32-bit bit value, then intersect it with a final bit-0 mask; upper extension cannot affect that
+condition. These are expression-level reviews, not independent acceptance of BN/QUIC algorithms.
+The remaining 743 C4244/C4267 narrowing diagnostics still need review; the Windows native candidate
+is not yet adopted or declared warning-free. Main encryption and the full recovery/platform scope
+remain unfinished. Main tests (3,343) and signed APK are unchanged from D-220.
+
+Proof: artifacts/native-sqlcipher/build/windows-d/atomic-width-4c3a49b4d702474aab6fc39a35172841/proof.json;
+first verifier evidence retained in atomic-width-77cc4e16c9904d2ca91fda28fa00f259.
+Full 749-occurrence inventory: artifacts/native-sqlcipher/d221-warning-inventory.json.
+Native hash remains 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
+Review records source-header and both original-object hashes; the harness parser passes.
