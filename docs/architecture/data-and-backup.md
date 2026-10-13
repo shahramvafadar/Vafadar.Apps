@@ -1227,3 +1227,41 @@ and reviewed packaged ABI identity pass, independent package uninstalled, test o
 after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
 physical/iOS/preference-durability acceptance is claimed.
+
+### One-time preference replay marker (D-209)
+
+Encrypted restore capsule protocol v2 adds a checked Applied field, initially zero regardless of
+caller packet flags. Read validates integer 0/1 and context/version/bounded original/restored packets.
+SqlCipherPackageRestoreReceiver now requires persistPreferences: the host must actually persist the
+just-applied platform values and fail if that effect cannot be verified. It does not accept a missing
+callback or interpret ISettingsStore.Get readback as disk persistence. After successful persistence,
+MarkAppliedAsync writes/readbacks the bound marker in native DELETE/EXTRA transaction and synchronizes
+the closed encrypted capsule before selected-reference/publication effects proceed.
+
+Pending capsules still replay idempotently after failure/kill. Applied capsules skip original preference
+replay and persistence, preserving subsequent legitimate language/culture/date choices on cold reopen.
+The retained original packet and rollback remain for owned recovery. Direct Apply also respects a
+validated Applied packet while retaining access/allowlist checks. Status is not cryptographic authority.
+
+Protocol v1 existed only in independent/inactive probes, not main-profile activation. Version 2 is
+explicit: v1 fails closed and is not rewritten/reset silently. Final main integration must qualify
+actual Android/Windows/iOS preference persistence and startup/key/access handling. Current main
+MauiSettingsStore remains unchanged and is not claimed durable by this callback contract. No main
+provider/startup/encryption activation or automatic key/file/reference pruning follows.
+
+D-209 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB actual package
+receiver resumes externally interrupted partial SharedPreferences writes. Injected persistence failure
+occurs before Applied/reference/publication; native guard confirms marker/reference remain pending.
+Real synchronous SharedPreferences Commit then succeeds, encrypted marker readback passes and
+protected publication/money/device-state checks pass. Later user language/culture edits are committed;
+a third cold process reopens Applied state, preserves those edits and uses a persistence callback
+that throws if old values are persisted again. No unchanged fixture/matrix repeat. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b3ab782cc57a4d8eb520356be0d66168.json,
+run 53b6bb4b9a1a44a3ab0dfb4ec6481bda. Complete signature and driver reviewed ABI identity verify;
+independent package uninstalled. This validates the independent synchronous adapter/ordering, not
+main MAUI platform durability, device/iOS, main encryption/startup or recovery/retention acceptance.
+
+D-209 final managed evidence: 142 infrastructure tests and all 3,316 tests pass with zero failures/
+skips. Strict main Windows/Android and independent Release builds have zero warnings/errors.
+Test outputs cleaned after both main builds completed. Logs: d209-{data-tests,full-tests,
+main-windows,main-android,native-build,native-replay,test-clean}.log. Driver parser passes.

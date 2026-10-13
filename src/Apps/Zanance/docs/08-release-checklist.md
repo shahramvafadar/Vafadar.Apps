@@ -1018,3 +1018,7 @@ key/recovery/retention/OS-policy and platform acceptance before release.
 D-208 retained restore history must be supplied by final main integration and consulted before initial
 bootstrap fallback. Selected metadata is not package/preference durability or key/file authorization.
 Main live resolver/provider/startup, replay/later edits and protected retention/recovery remain open.
+
+D-209 callback/marker must be paired with a qualified real platform persistence adapter. A Task
+placeholder, Set/Get readback or metadata flag is insufficient. Main adapter/startup/provider and
+protected recovery/retention remain open; v1 independent capsules are not silently reset or migrated.

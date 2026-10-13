@@ -26,6 +26,7 @@ internal static class GenerationMigrationCompatibility
         if (phase == "restore-selected-resume") return await ResumeRestoreSelectionAsync(folder);
         if (phase == "package-restore") return await CheckRestoreStagingAsync(folder, select: true, package: true);
         if (phase == "package-resume") return await ResumePackageAsync(folder);
+        if (phase == "package-applied-reopen") return await ResumePackageAsync(folder, applied: true);
         var contextPath = Path.Combine(folder, "migration-context.txt");
         DatabaseGenerationCheckpoint initial;
         Guid installation;
@@ -283,20 +284,20 @@ internal static class GenerationMigrationCompatibility
     private static SqlCipherPackageRestoreReceiver PackageReceiver(string folder, DatabaseGenerationCheckpoint captured,
         SqliteDatabaseGenerationJournal journal, DatabaseKeyBinding binding, AndroidGenerationKeyStore keys,
         Vafadar.Core.Settings.ISettingsStore settings, Func<CancellationToken, Task<SqliteConnection>> openCurrent,
-        Func<CancellationToken, Task> publish) => new(captured, journal, Path.Combine(folder, "package-restored.cipher.db"),
+        Func<CancellationToken, Task> publish, Func<CancellationToken, Task>? persist = null) => new(captured, journal, Path.Combine(folder, "package-restored.cipher.db"),
         binding, keys, new AndroidGenerationFileDurability(folder), settings, PackagePreferenceKeys, openCurrent,
         async (connection, ct) =>
         {
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
                 .UseModel(ZananceDbContextModel.Instance).Options;
             await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
-        }, publish, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0", PackageHistory(folder, captured, binding));
+        }, publish, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0", persist ?? (ct => new NativePreferenceStore().PersistAsync(ct)), PackageHistory(folder, captured, binding));
 
     private static SqliteProfileRestoreHistory PackageHistory(string folder, DatabaseGenerationCheckpoint captured, DatabaseKeyBinding binding) =>
         new(Path.Combine(folder, "restore-history.sqlite"), new(binding.ProfileId, binding.InstallationId, captured.OriginalGeneration),
             () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); });
 
-    private static async Task<string> ResumePackageAsync(string folder)
+    private static async Task<string> ResumePackageAsync(string folder, bool applied = false)
     {
         var ids = (await File.ReadAllTextAsync(Path.Combine(folder, "restore-bindings.txt"))).Split('\n');
         var binding = new DatabaseKeyBinding(Guid.ParseExact(ids[0], "N"), Guid.ParseExact(ids[1], "N"), Guid.ParseExact(ids[3], "N"));
@@ -305,26 +306,40 @@ internal static class GenerationMigrationCompatibility
         var candidate = Path.Combine(folder, "package-restored.cipher.db"); var keys = new AndroidGenerationKeyStore(folder);
         using var services = new ServiceCollection().AddZananceData(candidate).BuildServiceProvider();
         var settings = new NativePreferenceStore();
-        if (settings.Get(PackagePreferenceKeys[0]) != "en" || settings.Get(PackagePreferenceKeys[1]) != "fa-IR")
+        if (settings.Get(PackagePreferenceKeys[0]) != (applied ? "fr" : "en") || settings.Get(PackagePreferenceKeys[1]) != (applied ? "en-GB" : "fa-IR"))
             throw new IOException("Actual partial preference write did not survive interruption.");
         var history = PackageHistory(folder, captured, binding);
         var pending = (await history.ReadAsync())[^1];
-        if (pending.Selected || pending.CandidateGeneration != binding.GenerationId) throw new IOException("Interrupted restore reference did not retain its pending target.");
+        if (pending.Selected != applied || pending.CandidateGeneration != binding.GenerationId) throw new IOException("Interrupted restore reference did not retain its pending target.");
         var key = await keys.ReadAsync(binding, CancellationToken.None);
         try
         {
             var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
             var published = false;
+            if (!applied)
+            {
+                var persistenceRequested = false;
+                var failing = PackageReceiver(folder, captured, journal, binding, keys, settings,
+                    _ => throw new IOException("Selected package must not open original."),
+                    _ => throw new IOException("Failed persistence must not publish."),
+                    _ => { persistenceRequested = true; throw new IOException("Fictitious preference persistence failure."); });
+                try { await failing.ResumeAsync(); throw new IOException("Failed persistence unexpectedly completed."); }
+                catch (IOException) when (persistenceRequested) { }
+                var pendingCapsule = new SqlCipherRestorePreferences(candidate + ".preferences.cipher.db", binding, keys,
+                    new AndroidGenerationFileDurability(folder), "4.19.0", PackagePreferenceKeys);
+                if ((await pendingCapsule.ReadAsync(() => { })).Applied || (await history.ReadAsync())[^1].Selected)
+                    throw new IOException("Failed preference persistence marked replay/reference complete.");
+            }
             var receiver = PackageReceiver(folder, captured, journal, binding, keys, settings,
                 _ => throw new IOException("Selected package restart requested old database access."),
                 _ =>
                 {
-                    if (settings.Get(PackagePreferenceKeys[0]) != "en" || settings.Get(PackagePreferenceKeys[1]) != "de-DE")
+                    if (settings.Get(PackagePreferenceKeys[0]) != (applied ? "fr" : "en") || settings.Get(PackagePreferenceKeys[1]) != (applied ? "en-GB" : "de-DE"))
                         throw new IOException("Database publication preceded complete preference replay.");
                     location.MoveToProtected(candidate, () => new SqliteConnection(new SqliteConnectionStringBuilder
                     { DataSource = candidate, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString()), "4.19.0");
                     published = true; return Task.CompletedTask;
-                });
+                }, applied ? (_ => throw new IOException("Completed replay must not persist old preferences.")) : null);
             await receiver.ResumeAsync();
             var references = await history.ReadAsync();
             if (references.Count != 2 || !references[^1].Selected || references[^1].OriginalGeneration != captured.OriginalGeneration || references[^1].CandidateGeneration != binding.GenerationId)
@@ -335,6 +350,7 @@ internal static class GenerationMigrationCompatibility
             var capsule = new SqlCipherRestorePreferences(candidate + ".preferences.cipher.db", binding, keys,
                 new AndroidGenerationFileDurability(folder), "4.19.0", PackagePreferenceKeys);
             var packet = await capsule.ReadAsync(() => { });
+            if (!packet.Applied) throw new IOException("Successful persistence did not commit replay marker.");
             if (packet.Original[PackagePreferenceKeys[0]] != "fa" || packet.Original[PackagePreferenceKeys[1]] != "fa-IR")
                 throw new IOException("Original preference rollback packet was lost.");
             foreach (var path in new[] { candidate + ".preferences.cipher.db", candidate + ".before-restore.cipher.db" })
@@ -342,6 +358,8 @@ internal static class GenerationMigrationCompatibility
                     throw new IOException("Protected package rollback missing or plaintext.");
         }
         finally { CryptographicOperations.ZeroMemory(key); }
+        if (applied) return "{\"AppliedReplaySkippedAfterColdRestart\":true,\"LaterUserPreferencesRetained\":true,\"NoRepeatedPreferencePersistence\":true}";
+        settings.Set(PackagePreferenceKeys[0], "fr"); settings.Set(PackagePreferenceKeys[1], "en-GB");
         return "{\"ActualPackageReceiver\":true,\"PartialPlatformPreferencesSurvivedKill\":true,\"DurableReplayBeforeProtectedPublication\":true,\"FinancialAndDeviceStateCorrect\":true,\"EncryptedPreferenceAndDatabaseRollbackRetained\":true,\"RestoreReferencesSurviveKillAndSelection\":true}";
     }
 
@@ -362,6 +380,12 @@ internal static class GenerationMigrationCompatibility
     {
         private readonly global::Android.Content.ISharedPreferences preferences = global::Android.App.Application.Context
             .GetSharedPreferences("fictitious-package-restore", global::Android.Content.FileCreationMode.Private)!;
+        public Task PersistAsync(CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested(); using var editor = preferences.Edit()!;
+            if (!editor.Commit()) throw new IOException("Fictitious native preference persistence failed.");
+            return Task.CompletedTask;
+        }
         public string? Get(string key) => preferences.GetString(key, null);
         public void Remove(string key) => Set(key, null);
         public void Set(string key, string? value)

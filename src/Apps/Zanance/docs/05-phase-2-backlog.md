@@ -1182,3 +1182,7 @@ remain incomplete; main databases are still plaintext.
 D-208 durable restore intent/ancestry is connected to actual package receiver checks and selected
 journal readback. Main live resolver/provider/startup, durable one-time preference replay/later edits,
 key/reference retention/deletion/recovery and final OS-policy acceptance remain incomplete.
+
+D-209 adds one-time encrypted replay completion after actual preference persistence; later edits
+are preserved. Main durable platform adapters/startup/provider/live selection and final recovery/
+retention/OS-policy acceptance remain incomplete.

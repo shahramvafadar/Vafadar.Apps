@@ -2016,3 +2016,26 @@ and reviewed packaged ABI identity pass, independent package uninstalled, test o
 after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
 physical/iOS/preference-durability acceptance is claimed.
+
+### AT-208 — One-time durable restore preferences (D-209)
+
+Managed pending/applied packet behaviours cover later preference preservation and current access
+checks. Native actual package/persistence-failure/marker/cold-later-edit cases are separate evidence;
+main adapter durability and lifecycle/platform acceptance remain open.
+
+D-209 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB actual package
+receiver resumes externally interrupted partial SharedPreferences writes. Injected persistence failure
+occurs before Applied/reference/publication; native guard confirms marker/reference remain pending.
+Real synchronous SharedPreferences Commit then succeeds, encrypted marker readback passes and
+protected publication/money/device-state checks pass. Later user language/culture edits are committed;
+a third cold process reopens Applied state, preserves those edits and uses a persistence callback
+that throws if old values are persisted again. No unchanged fixture/matrix repeat. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b3ab782cc57a4d8eb520356be0d66168.json,
+run 53b6bb4b9a1a44a3ab0dfb4ec6481bda. Complete signature and driver reviewed ABI identity verify;
+independent package uninstalled. This validates the independent synchronous adapter/ordering, not
+main MAUI platform durability, device/iOS, main encryption/startup or recovery/retention acceptance.
+
+D-209 final managed evidence: 142 infrastructure tests and all 3,316 tests pass with zero failures/
+skips. Strict main Windows/Android and independent Release builds have zero warnings/errors.
+Test outputs cleaned after both main builds completed. Logs: d209-{data-tests,full-tests,
+main-windows,main-android,native-build,native-replay,test-clean}.log. Driver parser passes.

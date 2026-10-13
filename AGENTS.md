@@ -1567,3 +1567,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   journal/key/file verification and preference replay; Selected is not package/prefs durability.
 * Never fall back to the initial generation after missing/corrupt reference state. Retain all prior
   references, key/capsule/rollback ownership; live startup resolution and pruning remain separate work.
+
+## 141. One-time durable restore preference replay (D-209)
+
+* A pending encrypted capsule replays settings, then requires an actual platform persistence callback
+  before committing/readback/synchronizing Applied. Memory readback or a completed placeholder is not durability.
+* Applied capsules preserve later user edits and skip replay/persistence on subsequent startup.
+  Failed persistence leaves replay/reference publication pending; retained original values stay unchanged.
+* Protocol v2 is explicit; old independent v1 capsules fail closed rather than silently upgrade or reset.
+  Main platform persistence adapters and final startup/provider activation remain unqualified/open.

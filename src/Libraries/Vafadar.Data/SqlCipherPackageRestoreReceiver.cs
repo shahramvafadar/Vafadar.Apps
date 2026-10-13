@@ -25,20 +25,25 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
     private readonly string version;
     private readonly int maximumBytes;
     private readonly SqliteProfileRestoreHistory? history;
+    private readonly Func<CancellationToken, Task> persistPreferences;
 
     /// <summary>Captures the actual generation, current connection owner and covered final publication effects.</summary>
     /// <remarks>The openCurrent callback transfers a registered open connection for receiver disposal. The
-    /// publish callback owns the selected key/endpoint lifetime beyond this call; it must not expose access before replay.</remarks>
+    /// publish callback owns the selected key/endpoint lifetime beyond this call; it must not expose access before replay.
+    /// persistPreferences must actually persist the just-applied platform values and fail when that cannot be verified;
+    /// an in-memory readback or completed placeholder task is not a durability implementation.</remarks>
     public SqlCipherPackageRestoreReceiver(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal,
         string candidate, DatabaseKeyBinding binding, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
         ISettingsStore settings, IReadOnlyList<string> portableKeys, Func<CancellationToken, Task<SqliteConnection>> openCurrent,
         Func<SqliteConnection, CancellationToken, Task> upgrade, Func<CancellationToken, Task> publish,
-        Action validate, int maximumBytes, string version, SqliteProfileRestoreHistory? history = null)
+        Action validate, int maximumBytes, string version, Func<CancellationToken, Task> persistPreferences,
+        SqliteProfileRestoreHistory? history = null)
     {
         ArgumentNullException.ThrowIfNull(captured); ArgumentNullException.ThrowIfNull(journal);
         ArgumentNullException.ThrowIfNull(binding); ArgumentNullException.ThrowIfNull(keys); ArgumentNullException.ThrowIfNull(durability);
         ArgumentNullException.ThrowIfNull(settings); ArgumentNullException.ThrowIfNull(openCurrent);
         ArgumentNullException.ThrowIfNull(upgrade); ArgumentNullException.ThrowIfNull(publish); ArgumentNullException.ThrowIfNull(validate);
+        ArgumentNullException.ThrowIfNull(persistPreferences);
         ArgumentException.ThrowIfNullOrWhiteSpace(candidate); ArgumentException.ThrowIfNullOrWhiteSpace(version);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
         if (!Path.IsPathFullyQualified(candidate) || captured.ProfileId != binding.ProfileId || captured.CandidateGeneration != binding.GenerationId)
@@ -47,6 +52,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
         this.keys = keys; this.durability = durability; this.settings = settings; this.openCurrent = openCurrent;
         this.upgrade = upgrade; this.publish = publish; this.validate = validate; this.maximumBytes = maximumBytes; this.version = version;
         this.history = history;
+        this.persistPreferences = persistPreferences;
         preferences = new(this.candidate + ".preferences.cipher.db", binding, keys, durability, version, portableKeys);
     }
 
@@ -84,7 +90,12 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
         await using var current = state.CandidateSelected ? new SqliteConnection() : await openCurrent(ct).ConfigureAwait(false);
         await SqlCipherRestoreSelection.SelectAsync(captured, journal, candidate, binding, current, keys, durability, validate,
             maximumBytes, version, ct).ConfigureAwait(false); Check(ct);
-        preferences.Apply(packet, settings, validate, ct); Check(ct);
+        if (!packet.Applied)
+        {
+            preferences.Apply(packet, settings, validate, ct); Check(ct);
+            await persistPreferences(ct).ConfigureAwait(false); Check(ct);
+            await preferences.MarkAppliedAsync(validate, ct).ConfigureAwait(false); Check(ct);
+        }
         if (history is not null) await history.RecordSelectedAsync(captured, journal, ct).ConfigureAwait(false);
         await publish(ct).ConfigureAwait(false);
         // Publication may retire the previous access endpoint. The host keeps the cover until this task returns.

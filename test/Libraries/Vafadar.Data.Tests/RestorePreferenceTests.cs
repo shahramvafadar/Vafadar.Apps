@@ -61,6 +61,24 @@ public sealed class RestorePreferenceTests : IDisposable
     private SqlCipherRestorePreferences Capsule() => new(Path.Combine(directory.Path, "preferences.cipher.db"),
         new(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()), new UnusedKeys(), new UnusedDurability(), "4.19.0", ["language", "culture"]);
 
+    [Fact, Trait("AT", "AT-208")]
+    public void Applied_packet_does_not_overwrite_later_user_choices()
+    {
+        var settings = new InMemorySettingsStore(); settings.Set("language", "fa"); settings.Set("culture", "fa-IR");
+        var capsule = Capsule(); var packet = capsule.Capture("""{"language":"en","culture":"de-DE"}"""u8.ToArray(), settings) with { Applied = true };
+        settings.Set("language", "fr"); settings.Set("culture", "en-GB");
+        capsule.Apply(packet, settings, () => { }, TestContext.Current.CancellationToken);
+        Assert.Equal("fr", settings.Get("language")); Assert.Equal("en-GB", settings.Get("culture"));
+    }
+
+    [Fact, Trait("AT", "AT-208")]
+    public void Applied_packet_still_requires_current_access()
+    {
+        var settings = new InMemorySettingsStore(); var capsule = Capsule(); var packet = capsule.Capture(null, settings) with { Applied = true };
+        Assert.Throws<InvalidOperationException>(() => capsule.Apply(packet, settings,
+            () => throw new InvalidOperationException("Retired fictitious access."), TestContext.Current.CancellationToken));
+    }
+
     private sealed class InterruptedStore : ISettingsStore
     {
         private readonly InMemorySettingsStore inner = new();

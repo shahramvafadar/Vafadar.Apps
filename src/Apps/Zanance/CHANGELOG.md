@@ -1364,3 +1364,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added retained original/target restore references to protected package recovery so later startup
   can find the restored generation. Main encrypted startup is not yet activated.
+
+### D-209 — Keep later preferences after protected recovery
+
+- Added one-time protected preference replay after confirmed durable storage so future opens can
+  preserve later language/format choices. Main encrypted recovery is not yet activated.

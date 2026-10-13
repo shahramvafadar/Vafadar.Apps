@@ -1594,3 +1594,7 @@ key lifetime/recovery/retention/deletion/OS policy and platform acceptance; no m
 D-208 retains ordered restore intent/ancestry and links actual receiver selection readback. Main
 live generation resolution/provider/startup, one-time durable replay/later preference writes,
 key/rollback/reference retention/deletion/recovery and OS policy remain; main is plaintext.
+
+D-209 fixes protected replay overriding later preferences, with actual-persistence-before-marker
+ordering. Main durable platform effects/live resolver/provider/startup, key/rollback/reference
+retention/recovery/deletion and OS policy remain; main databases are plaintext.

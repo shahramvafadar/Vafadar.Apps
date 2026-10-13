@@ -7,8 +7,8 @@ using Vafadar.Core.Settings;
 namespace Vafadar.Data;
 
 /// <summary>Retains original and restored allowlisted preferences in an encrypted, generation-bound restore capsule.</summary>
-/// <remarks>The capsule stays authoritative for replay before unlocking the app; platform preference writes alone
-/// do not certify durable publication. The caller retains this capsule and its key with the database rollback.</remarks>
+/// <remarks>Pending capsules replay before unlock. Once actual preference persistence is durably marked, later
+/// user edits are retained. The caller retains this capsule and its key with the database rollback.</remarks>
 public sealed class SqlCipherRestorePreferences
 {
     private readonly string path;
@@ -73,9 +73,9 @@ public sealed class SqlCipherRestorePreferences
                 Check(validateAccess, ct);
                 using var transaction = connection.BeginTransaction(deferred: false);
                 using var command = connection.CreateCommand(); command.Transaction = transaction;
-                command.CommandText = "PRAGMA application_id=1448751696; PRAGMA user_version=1; " +
-                    "CREATE TABLE restore_preferences(id INTEGER PRIMARY KEY CHECK(id=1), binding TEXT NOT NULL, original BLOB NOT NULL, restored BLOB NOT NULL); " +
-                    "INSERT INTO restore_preferences VALUES(1,$binding,$original,$restored)";
+                command.CommandText = "PRAGMA application_id=1448751696; PRAGMA user_version=2; " +
+                    "CREATE TABLE restore_preferences(id INTEGER PRIMARY KEY CHECK(id=1), binding TEXT NOT NULL, original BLOB NOT NULL, restored BLOB NOT NULL, applied INTEGER NOT NULL CHECK(applied BETWEEN 0 AND 1)); " +
+                    "INSERT INTO restore_preferences VALUES(1,$binding,$original,$restored,0)";
                 command.Parameters.AddWithValue("$binding", Identity()); command.Parameters.AddWithValue("$original", before);
                 command.Parameters.AddWithValue("$restored", after); await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
                 Check(validateAccess, ct); transaction.Commit();
@@ -97,18 +97,19 @@ public sealed class SqlCipherRestorePreferences
         command.CommandText = "PRAGMA application_id";
         if (Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 1448751696) throw new InvalidDataException("Foreign restore capsule.");
         command.CommandText = "PRAGMA user_version";
-        if (Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 1) throw new InvalidDataException("Unsupported restore capsule.");
-        command.CommandText = "SELECT id,binding,length(original),length(restored),original,restored FROM restore_preferences";
+        if (Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 2) throw new InvalidDataException("Unsupported restore capsule.");
+        command.CommandText = "SELECT id,binding,length(original),length(restored),original,restored,applied FROM restore_preferences";
         await using var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false);
         if (!await reader.ReadAsync(ct).ConfigureAwait(false) || reader.GetInt64(0) != 1 || reader.GetString(1) != Identity() ||
-            reader.GetInt64(2) is <= 0 or > MaximumBytes || reader.GetInt64(3) is <= 0 or > MaximumBytes)
+            reader.GetInt64(2) is <= 0 or > MaximumBytes || reader.GetInt64(3) is <= 0 or > MaximumBytes ||
+            reader.GetFieldType(6) != typeof(long) || reader.GetInt64(6) is < 0 or > 1)
             throw new InvalidDataException("Restore capsule identity or bounds differ.");
         var before = reader.GetFieldValue<byte[]>(4); var after = reader.GetFieldValue<byte[]>(5);
         try
         {
             var packet = new RestorePreferencePacket(
                 JsonSerializer.Deserialize(before, RestorePreferencesJsonContext.Default.DictionaryStringString) ?? throw new InvalidDataException("Original preferences missing."),
-                JsonSerializer.Deserialize(after, RestorePreferencesJsonContext.Default.DictionaryStringString) ?? throw new InvalidDataException("Restored preferences missing."));
+                JsonSerializer.Deserialize(after, RestorePreferencesJsonContext.Default.DictionaryStringString) ?? throw new InvalidDataException("Restored preferences missing."), reader.GetInt64(6) == 1);
             ValidatePacket(packet);
             if (await reader.ReadAsync(ct).ConfigureAwait(false)) throw new InvalidDataException("Restore capsule has extra rows.");
             Check(validateAccess, ct); return packet;
@@ -120,9 +121,31 @@ public sealed class SqlCipherRestorePreferences
     public void Apply(RestorePreferencePacket packet, ISettingsStore settings, Action validateAccess, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(settings); ArgumentNullException.ThrowIfNull(validateAccess); ValidatePacket(packet);
+        Check(validateAccess, ct);
+        if (packet.Applied) return;
         foreach (var name in allowed) { Check(validateAccess, ct); settings.Set(name, packet.Restored[name]); }
         Check(validateAccess, ct);
         if (allowed.Any(name => settings.Get(name) != packet.Restored[name])) throw new IOException("Restored preference publication differs.");
+    }
+
+    /// <summary>Durably records one-time replay only after the caller's actual preference persistence succeeds.</summary>
+    internal async Task MarkAppliedAsync(Action validateAccess, CancellationToken ct)
+    {
+        _ = await ReadAsync(validateAccess, ct).ConfigureAwait(false); Check(validateAccess, ct);
+        await using (var connection = await OpenAsync(false, ct).ConfigureAwait(false))
+        {
+            using var mode = connection.CreateCommand(); mode.CommandText = "PRAGMA journal_mode=DELETE";
+            if (!string.Equals(Convert.ToString(await mode.ExecuteScalarAsync(ct).ConfigureAwait(false)), "delete", StringComparison.OrdinalIgnoreCase)) throw new IOException("Replay marker rollback mode unavailable.");
+            mode.CommandText = "PRAGMA synchronous=EXTRA; PRAGMA synchronous";
+            if (Convert.ToInt64(await mode.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 3) throw new IOException("Replay marker synchronization unavailable.");
+            using var transaction = connection.BeginTransaction(deferred: false); using var command = connection.CreateCommand(); command.Transaction = transaction;
+            command.CommandText = "UPDATE restore_preferences SET applied=1 WHERE id=1 AND binding=$binding";
+            command.Parameters.AddWithValue("$binding", Identity());
+            if (await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false) != 1) throw new IOException("Replay marker identity changed.");
+            Check(validateAccess, ct); transaction.Commit();
+        }
+        await durability.SynchronizeFileAsync(path, ct).ConfigureAwait(false); Check(validateAccess, ct);
+        if (!(await ReadAsync(validateAccess, ct).ConfigureAwait(false)).Applied) throw new IOException("Replay marker readback differs.");
     }
 
     private async Task<SqliteConnection> OpenAsync(bool creating, CancellationToken ct)
@@ -179,8 +202,11 @@ public sealed class SqlCipherRestorePreferences
     private static void Check(Action validate, CancellationToken ct) { ct.ThrowIfCancellationRequested(); validate(); }
 }
 
-/// <summary>Owned allowlisted previous/restored values; contains no device security or credentials.</summary>
-public sealed record RestorePreferencePacket(Dictionary<string, string?> Original, Dictionary<string, string?> Restored);
+/// <summary>Owned allowlisted previous/restored values and durable replay state; contains no device security or credentials.</summary>
+/// <param name="Original">Captured previous values.</param>
+/// <param name="Restored">Captured restored values.</param>
+/// <param name="Applied">Actual capsule replay marker; new capsule creation always starts pending.</param>
+public sealed record RestorePreferencePacket(Dictionary<string, string?> Original, Dictionary<string, string?> Restored, bool Applied = false);
 
 [JsonSerializable(typeof(Dictionary<string, string?>))]
 internal sealed partial class RestorePreferencesJsonContext : JsonSerializerContext;
