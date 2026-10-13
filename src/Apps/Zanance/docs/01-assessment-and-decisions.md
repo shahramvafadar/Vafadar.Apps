@@ -3500,3 +3500,42 @@ is retained separately. Full managed suite: 3,366 pass, zero failures/skips (3m1
 Windows 26.09s and Android 44.32s: zero warnings/errors. Final independent native build 83.58s:
 zero warnings/errors. Main runtime registration, recovery/lifecycle/retention/OS adoption, physical
 phone, remaining native matrix and iOS acceptance remain unfinished.
+
+### D-226 — Native Windows generation keys and file synchronization
+
+WindowsGenerationKeyStore now implements the actual generation-key effects with CurrentUser
+DPAPI, canonical captured bindings and immutable final file creation. The file receives a protected
+owner-only ACL at creation, is flushed through the native handle and its directory, and is reopened
+and authenticated before preparation returns. A missing read never prepares a key; existing damaged,
+foreign or hard-linked envelopes fail without replacement. Caller-owned DEK buffers are cleared.
+A torn exclusive final write is retained for reconciliation, never repaired by fresh random key material.
+
+WindowsPrivateFiles uses exact no-follow native handles, regular-file/link-count checks, redirected
+ancestry rejection and final handle/path identity checks. It holds a non-deletable root handle during
+operations. WindowsGenerationFileDurability calls real FlushFileBuffers for captured regular files
+and the directory; native failure propagates. A direct owned-folder probe first observed successful
+directory flush on this development filesystem. This is observed API completion, not a universal
+filesystem guarantee or physical power-loss acceptance. Same-user/privileged code is outside DPAPI's
+protection boundary. Official API references:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-flushfilebuffers
+https://learn.microsoft.com/en-us/windows/win32/fileio/obtaining-a-handle-to-a-directory
+
+Nine Windows-native storage tests pass, including repeat preparation retaining exact envelope bytes,
+missing/foreign/truncated/oversized state, retired access, unrelated-file refusal and hard-link refusal.
+The independent Windows native caller now uses these actual effects. Two separate processes create
+and reopen the exact encrypted SQLCipher packet (Int64.MinValue), using existing keys only in the
+second process. It does not replace the original complete schema/migration algorithm or rerun an
+unchanged producer/upstream suite. Proof:
+artifacts/native-sqlcipher/build/windows-d/key-proof-563590e555544bed8b7802c7204859df/key-reopen-proof.json.
+Actual ACL readback: protected DACL, one non-inherited Allow rule for current user only;
+artifacts/native-sqlcipher/d226-acl-proof.json. No credential/key bytes are logged.
+
+Main native/provider/startup registration, profile lifecycle reconciliation, optional recovery,
+retention, coupled OS policy, remaining native matrix and Windows narrowing-warning review remain
+unfinished. Main storage is plaintext; this does not establish final native adoption or release.
+D-226 terminal verification: 3,375 tests pass, zero failures/skips (3m04.599s). Strict Windows
+56.85s and Android 49.48s builds have zero warnings/errors. Nine native Windows storage behaviours
+pass; independent two-process key/database reopen and actual current-user-only protected ACL
+readback succeed. Test-WindowsKeys.ps1 now enforces that ACL and records its own acl-proof.json;
+the new check was applied to the same existing fictitious file without regenerating keys/data.
+No visible layout changed or unchanged Android runtime/upstream native suite was repeated.

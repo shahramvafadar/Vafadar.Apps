@@ -15,4 +15,19 @@ $project = Join-Path $PSScriptRoot 'Compatibility/Vafadar.SqlCipher.Compatibilit
 if ($LASTEXITCODE -ne 0) { throw 'Fictitious protected-key creation failed.' }
 & dotnet run --project $project -c Release --no-build "-p:NativeSqlCipherPath=$library" -- --reopen-key-proof $evidence
 if ($LASTEXITCODE -ne 0) { throw 'Protected-key data reopen in a new process failed.' }
+$files = @(Get-ChildItem -LiteralPath $evidence -Filter '*.key')
+if ($files.Count -ne 1) { throw 'Expected one exact independently owned key envelope.' }
+$acl = Get-Acl -LiteralPath $files[0].FullName
+$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+try {
+    $rules = $acl.GetAccessRules($true, $true, [Security.Principal.SecurityIdentifier])
+    if (-not $acl.AreAccessRulesProtected -or $rules.Count -ne 1 -or
+        $rules[0].IdentityReference -ne $identity.User -or $rules[0].IsInherited -or
+        $rules[0].AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow -or
+        $rules[0].FileSystemRights -ne [Security.AccessControl.FileSystemRights]::FullControl) {
+        throw 'Actual envelope ACL does not match the captured current-user policy.'
+    }
+} finally { $identity.Dispose() }
+[ordered]@{ ProtectedAcl = $true; RuleCount = 1; OnlyCurrentUser = $true; FullControl = $true } |
+    ConvertTo-Json | Set-Content -LiteralPath (Join-Path $evidence 'acl-proof.json') -Encoding UTF8
 Write-Output (Join-Path $evidence 'key-reopen-proof.json')

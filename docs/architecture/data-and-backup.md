@@ -1764,3 +1764,15 @@ verification, then complete bootstrap and session publication proceed normally. 
 financial original is created. ExistingInstallation forbids missing metadata initialization.
 The final host must select authority from verified install/recovery state; it is not registered
 yet. See D-225 in the application decision log for native and negative fixture evidence.
+
+
+### D-226 — Windows native storage effects
+
+WindowsGenerationKeyStore composes the existing WindowsDatabaseKeyProtector with canonical
+immutable .key files and native owner-only protected ACL creation. WindowsPrivateFiles validates
+actual handles and rejects linked/reparse/unrelated storage; the root stays held during operations.
+WindowsGenerationFileDurability performs real file/directory FlushFileBuffers and propagates
+unsupported/denied effects. Root storage must be an existing local app-private directory; remote
+shares and relative authority are refused. Callers retain the actual exclusive application lease.
+No final metadata/key reconciliation or physical power-loss guarantee is implied. Main registration
+is still pending. See D-226 in the decision log for actual native/ACL evidence and official API links.

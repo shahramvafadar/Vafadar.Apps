@@ -1911,3 +1911,13 @@ Missing existing metadata never permits replacement. Three authority tests pass;
 and cold phases use retained fictitious data. Final main provider/lifecycle registration, orphan
 reconciliation, restore routing, optional recovery, safety retention and coupled OS policy
 remain open. Detailed evidence is in D-225 in the decision log and specification Section 31.
+
+
+### D-226 — Windows key and synchronization effects
+
+SEC-01 remains in progress. Actual Windows generation-key/file effects now persist immutable
+CurrentUser DPAPI envelopes with owner-only ACLs, actual file/directory flush and existing-key
+reopen. Nine native Windows tests and the separate-process encrypted native packet pass.
+Final main adoption, Windows narrowing-warning review, profile lifecycle reconciliation,
+optional recovery, retained-file policy, coupled OS exclusions and external platform/device
+gates remain open. Exact proof is in D-226 in the decision log and specification Section 31.

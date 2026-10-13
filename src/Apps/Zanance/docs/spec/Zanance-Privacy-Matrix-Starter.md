@@ -625,3 +625,8 @@ D-223: internal safety protection uses device-local per-copy platform keys, auth
 profile/installation/generation references and standard AES-256-GCM. Key material is neither
 portable nor logged. Protected .vbs files stay outside portable discovery/pruning. Main registration
 and final reference-aware retention/OS exclusion remain pending; portable passwords stay optional.
+
+D-226: Windows generation keys persist only as CurrentUser DPAPI envelopes in private .key
+files with owner-only non-inherited ACLs; bindings remain non-portable local identity metadata.
+No new credential input, network permission, SDK, telemetry or portable preference is introduced.
+The independent proof uses fictitious files; final main registration remains inactive.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Windows protected storage effects (D-226)
+
+- Prepared device-local key files with Windows user protection and restricted access.
+- Missing or damaged key files cannot silently be replaced during reopening.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Added - Protected fresh-install startup path (D-225)
 
 - Prepared creation of a new encrypted database without a plaintext original or automatic account.

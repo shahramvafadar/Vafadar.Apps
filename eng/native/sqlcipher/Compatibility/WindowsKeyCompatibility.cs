@@ -23,26 +23,25 @@ internal static class WindowsKeyCompatibility
             Directory.CreateDirectory(folder);
         }
         else if (!Directory.Exists(folder)) throw new InvalidOperationException("Owned key proof is unavailable.");
-        var envelopePath = Path.Combine(folder, "fictitious-envelope.bin");
         var contextPath = Path.Combine(folder, "fictitious-context.json");
+        var store = new WindowsGenerationKeyStore(folder, () => { });
+        var durability = new WindowsGenerationFileDurability(folder);
         DatabaseKeyBinding binding;
         byte[] key;
         if (create)
         {
             binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
-            key = RandomNumberGenerator.GetBytes(32);
-            try
-            {
-                await File.WriteAllBytesAsync(envelopePath, WindowsDatabaseKeyProtector.Protect(key, binding));
-                await File.WriteAllTextAsync(contextPath, JsonSerializer.Serialize(new[] { binding.ProfileId, binding.InstallationId, binding.GenerationId }));
-            }
-            catch { CryptographicOperations.ZeroMemory(key); throw; }
+            await store.PrepareAsync(binding, CancellationToken.None);
+            await File.WriteAllTextAsync(contextPath, JsonSerializer.Serialize(new[] { binding.ProfileId, binding.InstallationId, binding.GenerationId }));
+            await durability.SynchronizeFileAsync(contextPath, CancellationToken.None);
+            key = await store.ReadAsync(binding, CancellationToken.None);
         }
         else
         {
             var identities = JsonSerializer.Deserialize<Guid[]>(await File.ReadAllTextAsync(contextPath))!;
             binding = new DatabaseKeyBinding(identities[0], identities[1], identities[2]);
-            key = WindowsDatabaseKeyProtector.Unprotect(await File.ReadAllBytesAsync(envelopePath), binding);
+            // Cold verification only reads the exact existing native envelope; it never calls preparation.
+            key = await store.ReadAsync(binding, CancellationToken.None);
         }
         try
         {
@@ -68,7 +67,7 @@ internal static class WindowsKeyCompatibility
             command.CommandText = "SELECT amount FROM packet";
             if ((long)(await command.ExecuteScalarAsync())! != long.MinValue) throw new InvalidOperationException("Protected key did not preserve encrypted data.");
             if (!create) await File.WriteAllTextAsync(Path.Combine(folder, "key-reopen-proof.json"),
-                "{\"CurrentUserDpapiAcrossProcesses\":true,\"EncryptedNativeDatabaseReopened\":true,\"FictitiousFilesOnly\":true}");
+                "{\"CurrentUserDpapiAcrossProcesses\":true,\"ActualGenerationKeyStore\":true,\"NativeFileAndDirectoryFlush\":true,\"ColdReadOnly\":true,\"EncryptedNativeDatabaseReopened\":true,\"FictitiousFilesOnly\":true}");
             Console.WriteLine(create ? "Fictitious protected key and encrypted database created." : "Protected key and encrypted database reopened in a new process.");
         }
         finally { CryptographicOperations.ZeroMemory(key); }

@@ -1033,3 +1033,8 @@ D-225 phone artifact: artifacts/android-d225-delivery/pro.vafadar.zanance-Signed
 existing local test certificate, apksigner verification succeeds. Actual package pro.vafadar.zanance,
 API 24/36 and complete arm64-v8a/x86_64 assembly stores verified. Main storage remains plaintext;
 this artifact does not establish encrypted-main, phone, iOS, recovery or release acceptance.
+
+D-226 phone artifact: artifacts/android-d226-delivery/pro.vafadar.zanance-Signed.apk (79.5 MiB),
+existing local test certificate; apksigner verification succeeds. Package pro.vafadar.zanance,
+API 24/36 and complete arm64-v8a/x86_64 assembly stores verified. Main storage remains plaintext;
+this is not encrypted-main, phone, iOS, recovery or release acceptance.

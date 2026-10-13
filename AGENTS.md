@@ -1885,3 +1885,12 @@ new installation. Missing metadata never chooses a mode. Fresh schema stays in m
 not manufacture an account. Retained financial/key artifacts refuse replacement installation
 identity; cold reopen reads existing keys only. Final main registration/recovery/retention/OS
 policy and other platform/device gates remain separate and unfinished.
+
+
+### D-226 — Native Windows generation storage
+
+Windows envelopes use CurrentUser DPAPI and owner-only protected ACLs from native CreateNew.
+Existing damaged/foreign/linked entries never get replaced; missing reads never prepare keys.
+Native file/directory flush errors fail closed. Observed API completion is not physical power-loss
+acceptance; current-user DPAPI is not a same-user or privileged-code security boundary. Final
+main/provider/recovery/lifecycle/retention/OS adoption remains separate and unfinished.

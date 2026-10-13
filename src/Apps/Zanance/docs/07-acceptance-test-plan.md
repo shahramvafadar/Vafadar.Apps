@@ -2468,3 +2468,15 @@ its same-process completed result was read before restart. Only cold verificatio
 after the file-name guard change, using the same fixture and final signed Release AOT binary.
 Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-96d18899dce344978fd693ea0b53cc69.json.
 Main registration, recovery, retention, other device/platform and release acceptance remain open.
+
+
+### D-226 / AT-226 — Native Windows generation storage
+
+Nine real Windows tests pass for immutable preparation/reopen, missing/foreign/corrupt envelopes,
+retired access, captured native flush and hard-link refusal. The independent original native
+caller uses actual WindowsGenerationKeyStore/WindowsGenerationFileDurability; separate-process
+DPAPI reopen preserves the encrypted Int64.MinValue packet. ACL readback has one explicit
+current-user FullControl rule and protected DACL. Full suite: 3,375 pass, zero failures/skips.
+Proof: artifacts/native-sqlcipher/build/windows-d/key-proof-563590e555544bed8b7802c7204859df/
+key-reopen-proof.json and acl-proof.json. Observed native directory flush is not physical power-loss
+or all-filesystem acceptance. Main adoption/recovery/retention and native warning review remain open.
