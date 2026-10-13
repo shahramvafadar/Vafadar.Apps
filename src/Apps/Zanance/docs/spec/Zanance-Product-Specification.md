@@ -3134,3 +3134,28 @@ D-206 negative build evidence: test-output cleanup was mistakenly started before
 finished, removing required copied assemblies/resources (MSB3030, 27 errors). Preserve
 d206-main-android-clean-race.log; retry only the build after cleanup completes. No test/native
 fixture restart or success claim for that failed attempt; final sequential Android build is separate.
+
+### 31.120 Initial protected generation composition (D-207)
+
+Actual identity and existing journal now compose through native migration/keyed cleanup into a
+verified retained-key factory publication. Missing state does not regenerate; disposed key owners
+refuse construction. Main provider/startup/live restored catalogue and full security lifecycle
+acceptance remain incomplete; no new financial model or UI layout.
+
+D-207 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB joins actual
+stable identity, initial journal, original 32-migration model, native Keystore/envelope/fs effects,
+full migration/cleanup and retained-key original factory. Saved account-name write/money survive
+external process termination and cold reopen with an ExistingOnlyKeys port that forbids preparation.
+Original is absent, encrypted rollback retained and disposed key owner rejects new factory access.
+Initial observer expiry occurred while PID 23665 remained live; subsequent completed first-phase
+result passed. Continue the same run via bootstrap-reopen only, without recreating data/key/journal.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-88e6c4bdb0fe4c3aaab969def6fcabee.json,
+run a480c4301bbc4109bface2e6ab1530dc. Preserve d207-native-bootstrap.log expiration and
+ d207-native-bootstrap-resume.log. Signature and reviewed packaged ABI identity pass; owned package
+uninstalled. This is initial composition evidence, not main activation/live restored references,
+hardware power-loss, physical arm64/iOS, final recovery/retention/OS policy or product release.
+
+D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass, zero failures/skips.
+Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
+only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.

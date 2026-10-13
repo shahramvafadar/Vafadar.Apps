@@ -1548,3 +1548,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   profile registration preserves existing committed bindings; no names, keys or paid facts are stored.
 * These are initial migration identities, not a live selector. Actual journal/key/file verification
   and final catalogue/startup integration are still required; no portable or main activation follows.
+
+## 139. Initial protected generation composition (D-207)
+
+* Reopen actual stable identity and existing journal under the location's maintenance owner; do not
+  fabricate captured ids or initialize missing selected state on read. Explicit first-journal creation
+  requires the known plaintext original and no candidate/rollback.
+* Join original migration/native key/durability effects, then verify the exact retained key read before
+  atomic protected factory publication. Retain the key owner while active; drain contexts before disposal.
+* Disposed key owners refuse further construction; no original/plaintext fallback. This initial
+  composition is not a selector for later restored generations or main startup/provider activation.

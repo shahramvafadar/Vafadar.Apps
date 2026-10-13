@@ -1354,3 +1354,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added durable private installation/profile bindings, including the main profile, for upcoming
   automatic database keys. Main encryption is not activated by identity bootstrap.
+
+### D-207 — Initial protected database composition
+
+- Connected durable identities, resumable migration and retained key ownership to protected factory
+  publication. This initial composition is not yet registered in main application startup.

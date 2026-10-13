@@ -1149,3 +1149,44 @@ D-206 negative build evidence: test-output cleanup was mistakenly started before
 finished, removing required copied assemblies/resources (MSB3030, 27 errors). Preserve
 d206-main-android-clean-race.log; retry only the build after cleanup completes. No test/native
 fixture restart or success claim for that failed attempt; final sequential Android build is separate.
+
+### Initial profile generation and retained key ownership (D-207)
+
+SqlCipherProfileGeneration composes actual identity catalogue, initial generation journal, native
+key/file session, original coordinator and protected factory publication. It captures only a row
+reopened from the actual catalogue, checks the exact location maintenance owner and requires current
+endpoint to match original/initial candidate. InitializeJournalAsync is an explicit separate first
+operation requiring plaintext original/no existing ciphertext; OpenInitialAsync never initializes
+missing journal or selects fallback. Existing session handles migration/checkpoints/rollback/cleanup.
+
+After completion, OpenInitialAsync reads the retained key and reopens/integrity-checks that exact
+copy with reviewed provider identity before returning its owner. Publish atomically supplies path
+and keyed construction under the same location owner. CreateConnection returns closed existing-only
+unpooled keyed connections; later ordinary factory contexts retain D-197 access/version checks.
+The owner clears mutable key bytes on disposal and refuses new construction. Hosts retain it while
+active, quiesce contexts before retirement and supply a profile/access lifetime validator that
+remains valid after maintenance closes. Immutable provider connection strings/native memory are
+not claimed to be fully wiped by clearing this managed buffer.
+
+This is initial migration composition, not a live registry after later restore. Hosts must resolve
+restored generation references before choosing a bootstrap path. Main startup/all-profile/provider
+registration, final current catalogue, recovery/retention/deletion/OS policy and platform acceptance
+remain open; the main app is not activated/encrypted by this implementation.
+
+D-207 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB joins actual
+stable identity, initial journal, original 32-migration model, native Keystore/envelope/fs effects,
+full migration/cleanup and retained-key original factory. Saved account-name write/money survive
+external process termination and cold reopen with an ExistingOnlyKeys port that forbids preparation.
+Original is absent, encrypted rollback retained and disposed key owner rejects new factory access.
+Initial observer expiry occurred while PID 23665 remained live; subsequent completed first-phase
+result passed. Continue the same run via bootstrap-reopen only, without recreating data/key/journal.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-88e6c4bdb0fe4c3aaab969def6fcabee.json,
+run a480c4301bbc4109bface2e6ab1530dc. Preserve d207-native-bootstrap.log expiration and
+ d207-native-bootstrap-resume.log. Signature and reviewed packaged ABI identity pass; owned package
+uninstalled. This is initial composition evidence, not main activation/live restored references,
+hardware power-loss, physical arm64/iOS, final recovery/retention/OS policy or product release.
+
+D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass, zero failures/skips.
+Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
+only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.

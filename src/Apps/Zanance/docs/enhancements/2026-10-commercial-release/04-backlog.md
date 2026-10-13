@@ -1586,3 +1586,7 @@ acceptance, metadata/startup and recovery/OS policy remain open; main databases 
 D-206 persists initial installation/key-profile/generation identities without read-time regeneration.
 SEC-01 still needs main bootstrap/provider/live catalogue/later-restore references and protected
 retention/deletion/recovery/OS policy integration and platform acceptance. Main remains plaintext.
+
+D-207 joins actual initial identities/journal/native keys/migration with retained-key protected
+publication. SEC-01 still needs main provider/bootstrap/live restored registry/all-profile/startup,
+key lifetime/recovery/retention/deletion/OS policy and platform acceptance; no main activation.

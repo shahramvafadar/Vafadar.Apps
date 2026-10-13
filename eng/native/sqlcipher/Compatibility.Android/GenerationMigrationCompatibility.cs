@@ -18,6 +18,7 @@ internal static class GenerationMigrationCompatibility
     internal static async Task<string> RunAsync(string folder, string phase)
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+        if (phase is "bootstrap-create" or "bootstrap-reopen") return await InitialGenerationCompatibility.RunAsync(folder, phase == "bootstrap-create");
         if (phase is "identity-create" or "identity-reopen") return await IdentityCatalogueCompatibility.RunAsync(folder, phase == "identity-create");
         if (phase == "profile-maintenance") return await ProfileMaintenanceCompatibility.RunAsync(folder);
         if (phase == "restore-staging") return await CheckRestoreStagingAsync(folder);
@@ -427,7 +428,8 @@ internal static class GenerationMigrationCompatibility
         }
     }
 
-    private static async Task CreateOriginalAsync(string original)
+    /// <summary>Creates only the original fictitious app model for independent lifecycle checks.</summary>
+    internal static async Task CreateOriginalAsync(string original)
     {
         // Actual original registration and compiled model (D-44), not a duplicate financial schema or mapper.
         _ = new ServiceCollection().AddZananceData(original);

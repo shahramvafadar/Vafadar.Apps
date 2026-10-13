@@ -1010,3 +1010,7 @@ local file scope remain; protected deletion/retention lifecycle is still mandato
 D-206 identity catalogue is private/non-portable and not registered in main startup. Initial ids
 are not live selection authority. Require actual journal/key/file reopen, early partial reconciliation,
 all-profile bootstrap/live references, native provider/security and recovery/retention before activation.
+
+D-207 initial composition/retained key ownership does not activate main provider/startup. Require
+live restored-generation resolution, all-profile registration, covered startup/access lifetime,
+key/recovery/retention/OS-policy and platform acceptance before release.

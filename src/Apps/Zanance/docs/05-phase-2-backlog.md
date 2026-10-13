@@ -1174,3 +1174,7 @@ remain incomplete; existing file-error cleanup policy is unchanged.
 D-206 durable initial installation/profile/key-generation identities are implemented, with main
 empty-id mapping and idempotent registration. Main startup/bootstrap/live selector/provider and
 protected retention/recovery/deletion/OS-policy activation remain incomplete.
+
+D-207 composes real initial identity/journal/key/migration/cleanup with retained-key factory
+publication. Main startup/provider/live restored references and final security lifecycle acceptance
+remain incomplete; main databases are still plaintext.
