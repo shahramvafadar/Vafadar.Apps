@@ -3404,3 +3404,34 @@ Final normal phone artifact: artifacts/android-d222-delivery/pro.vafadar.zanance
 Package pro.vafadar.zanance, local test signature, API24/36, arm64/x64 assembly stores verified.
 It is a complete Release package; main storage is still plaintext. All temporary proof instrumentation
 and build flags are absent from final source. Test outputs were cleaned after all builds/tests ended.
+
+### D-223 — Device-key protection for internal restore safety packages
+
+BackupService now accepts an explicit IBackupSafetyCopyProtection port. Safety-only creation builds
+its ZIP in bounded memory, protects it before the first storage upload and clears its owned package
+buffers. Portable backups retain the independent optional password choice. DeviceKeySafetyCopyProtection
+uses a separate durable platform key per safety copy, bound to the captured profile/installation and
+fresh generation; it never borrows the live database key. Opening reads only the existing key and
+rejects foreign contexts before key access. No missing-key preparation or plaintext ZIP fallback occurs.
+The envelope uses standard AES-256-GCM with a fresh nonce and authenticated non-secret binding/header.
+Creation and safety extraction bound cumulative source bytes and package bytes to 256 MiB. Failed
+manifest/checksum validation clears materialized entries. This is a format/storage integration, not
+a custom cryptographic algorithm or a replacement for SQLCipher.
+
+Two real safety uploads in one second exposed the existing timestamp filename overwrite. Protected
+copies now have unique opaque .vbs names outside portable discovery/retention. Generic portable pruning
+cannot delete these referenced recovery artifacts. Final native registration still needs private
+storage, reference-aware retention and orphan reconciliation; skipping pruning is not that final policy.
+
+Focused Backup tests pass 54/54 and Data tests 169/169. The independent signed Release AOT Android
+package uses the actual BackupService, DeviceKeySafetyCopyProtection and AndroidGenerationKeyStore.
+Two protected copies restore exact fictitious content, tamper fails authentication, and a cold process
+reopens both using a port that forbids key preparation. The cold observation deadline expired; the
+same process subsequently wrote its successful result, read without restart. Negative timeout evidence
+is retained. Native build has zero warnings/errors. Proof: artifacts/native-sqlcipher/d223-safety-native-proof.json,
+run 26da5f287da548f09acdf6abd6d37bf4. The runner now gives these cold phases its established longer bound.
+
+Main protection registration remains inactive. Main database/provider/session/bootstrap, final
+Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
+remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
+No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.

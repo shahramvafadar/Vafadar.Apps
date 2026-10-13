@@ -27,6 +27,7 @@ public sealed class BackupService : IBackupService
     private readonly TimeProvider _time;
     private readonly BackupOptions _options;
     private readonly IBackupPackageRestoreReceiver? _restoreReceiver;
+    private readonly IBackupSafetyCopyProtection? _safetyProtection;
     private readonly SemaphoreSlim _gate = new(1, 1);
 
     /// <summary>Creates the service.</summary>
@@ -36,8 +37,9 @@ public sealed class BackupService : IBackupService
         ISettingsStore settings,
         TimeProvider time,
         BackupOptions options,
-        IBackupPackageRestoreReceiver? restoreReceiver = null)
-        : this(sources, [], app, settings, time, options, restoreReceiver)
+        IBackupPackageRestoreReceiver? restoreReceiver = null,
+        IBackupSafetyCopyProtection? safetyProtection = null)
+        : this(sources, [], app, settings, time, options, restoreReceiver, safetyProtection)
     {
     }
 
@@ -49,7 +51,8 @@ public sealed class BackupService : IBackupService
         ISettingsStore settings,
         TimeProvider time,
         BackupOptions options,
-        IBackupPackageRestoreReceiver? restoreReceiver = null)
+        IBackupPackageRestoreReceiver? restoreReceiver = null,
+        IBackupSafetyCopyProtection? safetyProtection = null)
     {
         ArgumentNullException.ThrowIfNull(sources);
         ArgumentNullException.ThrowIfNull(summaries);
@@ -65,6 +68,7 @@ public sealed class BackupService : IBackupService
         _time = time;
         _options = options;
         _restoreReceiver = restoreReceiver;
+        _safetyProtection = safetyProtection;
     }
 
     /// <inheritdoc />
@@ -113,13 +117,25 @@ public sealed class BackupService : IBackupService
         try
         {
             var createdAt = _time.GetUtcNow();
-            var package = await CreatePackageCoreAsync(createdAt, password, cancellationToken);
-
+            var protectedSafety = !recordAsBackup && _safetyProtection is not null;
+            var package = await CreatePackageCoreAsync(createdAt, password, cancellationToken,
+                protectedSafety ? DeviceSafetyEncryption.MaximumPackageBytes : null);
             BackupFileInfo file;
-            using (var content = new MemoryStream(package, writable: false))
+            try
             {
-                file = await storage.UploadAsync(BackupFileName.Create(FileAppId(), createdAt), content, cancellationToken);
+                if (protectedSafety)
+                {
+                    var plaintext = package;
+                    try { package = await Task.Run(() => _safetyProtection!.ProtectAsync(plaintext, cancellationToken), cancellationToken); }
+                    finally { CryptographicOperations.ZeroMemory(plaintext); }
+                }
+                using var content = new MemoryStream(package, writable: false);
+                // Separate opaque safety identities cannot overwrite another copy in the same second,
+                // and cannot enter portable discovery or its timestamp-based retention.
+                var name = protectedSafety ? $"safety-{Guid.NewGuid():N}.vbs" : BackupFileName.Create(FileAppId(), createdAt);
+                file = await storage.UploadAsync(name, content, cancellationToken);
             }
+            finally { CryptographicOperations.ZeroMemory(package); }
 
             if (recordAsBackup)
             {
@@ -128,7 +144,8 @@ public sealed class BackupService : IBackupService
 
             try
             {
-                await ApplyRetentionCoreAsync(storage, cancellationToken);
+                // Internal key/file references require their own recovery-aware retention, never portable pruning.
+                if (!protectedSafety) await ApplyRetentionCoreAsync(storage, cancellationToken);
             }
             catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
             {
@@ -205,8 +222,9 @@ public sealed class BackupService : IBackupService
     public async Task<BackupManifest> InspectPackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(package);
-        var (manifest, _) = await OpenAsync(package, password, cancellationToken);
-        return manifest;
+        var (manifest, entries) = await OpenAsync(package, password, cancellationToken);
+        try { return manifest; }
+        finally { foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content); }
     }
 
     /// <inheritdoc />
@@ -279,26 +297,44 @@ public sealed class BackupService : IBackupService
 
     private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenCoreAsync(byte[] package, string? password, CancellationToken cancellationToken)
     {
-        if (BackupEncryption.IsEncrypted(package))
+        byte[]? decoded = null;
+        var originalPackage = package;
+        try
         {
-            if (string.IsNullOrEmpty(password))
+            if (DeviceSafetyEncryption.IsEncrypted(package))
             {
-                throw new BackupException(BackupError.PasswordRequired, "This backup is protected with a password.");
+                if (_safetyProtection is null) throw new BackupException(BackupError.InvalidFormat, "This internal safety copy requires its existing local key context.");
+                decoded = await _safetyProtection.OpenAsync(package, cancellationToken);
+                package = decoded;
+            }
+            else if (BackupEncryption.IsEncrypted(package))
+            {
+                if (string.IsNullOrEmpty(password))
+                {
+                    throw new BackupException(BackupError.PasswordRequired, "This backup is protected with a password.");
+                }
+
+                decoded = BackupEncryption.Decrypt(package, password);
+                package = decoded;
             }
 
-            package = BackupEncryption.Decrypt(package, password);
+            var result = await BackupPackage.ReadAsync(package, cancellationToken,
+                decoded is not null && DeviceSafetyEncryption.IsEncrypted(originalPackage) ? DeviceSafetyEncryption.MaximumPackageBytes : null);
+            try { Validate(result.Manifest); return result; }
+            catch
+            {
+                foreach (var content in result.Entries.Values) CryptographicOperations.ZeroMemory(content);
+                throw;
+            }
         }
-
-        var result = await BackupPackage.ReadAsync(package, cancellationToken);
-        Validate(result.Manifest);
-        return result;
+        finally { if (decoded is not null) CryptographicOperations.ZeroMemory(decoded); }
     }
 
     // Builds the package on the thread pool (see the remarks).
-    private Task<byte[]> CreatePackageCoreAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken) =>
-        Task.Run(() => BuildPackageAsync(createdAt, password, cancellationToken), cancellationToken);
+    private Task<byte[]> CreatePackageCoreAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken, int? maximumBytes = null) =>
+        Task.Run(() => BuildPackageAsync(createdAt, password, cancellationToken, maximumBytes), cancellationToken);
 
-    private async Task<byte[]> BuildPackageAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken)
+    private async Task<byte[]> BuildPackageAsync(DateTimeOffset createdAt, string? password, CancellationToken cancellationToken, int? maximumBytes)
     {
         if (_sources.Count == 0)
         {
@@ -328,9 +364,11 @@ public sealed class BackupService : IBackupService
                 Entries = entries,
                 Summary = summary,
             },
-            cancellationToken);
+            cancellationToken, maximumBytes);
 
-        return string.IsNullOrEmpty(password) ? package : BackupEncryption.Encrypt(package, password);
+        if (string.IsNullOrEmpty(password)) return package;
+        try { return BackupEncryption.Encrypt(package, password); }
+        finally { CryptographicOperations.ZeroMemory(package); }
     }
 
     private async Task<int> ApplyRetentionCoreAsync(IBackupStorage storage, CancellationToken cancellationToken)

@@ -16,18 +16,20 @@ internal static class BackupPackage
     public static async Task<byte[]> CreateAsync(
         IReadOnlyList<IBackupSource> sources,
         Func<IReadOnlyList<BackupManifestEntry>, BackupManifest> createManifest,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, int? maximumBytes = null)
     {
         ValidateSourceNames(sources);
 
-        using var buffer = new MemoryStream();
+        using var buffer = new BoundedPackageBuffer(maximumBytes ?? int.MaxValue);
+        long totalBytes = 0;
         using (var archive = new ZipArchive(buffer, ZipArchiveMode.Create, leaveOpen: true))
         {
             var entries = new List<BackupManifestEntry>(sources.Count);
             foreach (var source in sources)
             {
-                using var content = new MemoryStream();
+                using var content = new BoundedPackageBuffer((maximumBytes ?? int.MaxValue) - totalBytes);
                 await source.WriteAsync(content, cancellationToken);
+                totalBytes = checked(totalBytes + content.Length);
 
                 content.Position = 0;
                 var hash = Convert.ToHexStringLower(SHA256.HashData(content));
@@ -52,14 +54,18 @@ internal static class BackupPackage
 
     public static async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> ReadAsync(
         byte[] package,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, int? maximumBytes = null)
     {
+        var entries = new Dictionary<string, byte[]>(StringComparer.Ordinal);
+        var completed = false;
         try
         {
             using var archive = new ZipArchive(new MemoryStream(package, writable: false), ZipArchiveMode.Read);
 
             var manifestEntry = archive.GetEntry(ManifestEntryName)
                 ?? throw new BackupException(BackupError.InvalidFormat, "The backup package has no manifest.");
+            if (manifestEntry.Length > (maximumBytes ?? int.MaxValue))
+                throw new BackupException(BackupError.InvalidFormat, "The backup manifest exceeds its bound.");
 
             BackupManifest manifest;
             await using (var manifestStream = manifestEntry.Open())
@@ -80,19 +86,21 @@ internal static class BackupPackage
                 throw new BackupException(BackupError.InvalidFormat, "The backup manifest is incomplete.");
             }
 
-            var entries = new Dictionary<string, byte[]>(StringComparer.Ordinal);
+            long totalBytes = 0;
             foreach (var described in manifest.Entries)
             {
                 var entry = archive.GetEntry(DataFolder + described.Name)
                     ?? throw new BackupException(BackupError.Corrupted, $"The backup entry '{described.Name}' is missing.");
 
                 // The size is checked before reading, so a damaged or hostile package cannot fill the memory.
-                if (entry.Length != described.Length)
+                if (entry.Length != described.Length || described.Length < 0
+                    || described.Length > (maximumBytes ?? int.MaxValue) - totalBytes)
                 {
                     throw new BackupException(BackupError.Corrupted, $"The backup entry '{described.Name}' is damaged.");
                 }
 
-                using var content = new MemoryStream();
+                totalBytes = checked(totalBytes + described.Length);
+                using var content = new BoundedPackageBuffer(described.Length);
                 await using (var entryStream = entry.Open())
                 {
                     await entryStream.CopyToAsync(content, cancellationToken);
@@ -102,17 +110,27 @@ internal static class BackupPackage
                 if (bytes.LongLength != described.Length
                     || !string.Equals(Convert.ToHexStringLower(SHA256.HashData(bytes)), described.Sha256, StringComparison.Ordinal))
                 {
+                    CryptographicOperations.ZeroMemory(bytes);
                     throw new BackupException(BackupError.Corrupted, $"The backup entry '{described.Name}' is damaged.");
                 }
 
-                entries[described.Name] = bytes;
+                if (!entries.TryAdd(described.Name, bytes))
+                {
+                    CryptographicOperations.ZeroMemory(bytes);
+                    throw new BackupException(BackupError.InvalidFormat, "Duplicate backup entry.");
+                }
             }
 
+            completed = true;
             return (manifest, entries);
         }
         catch (Exception ex) when (ex is InvalidDataException or JsonException)
         {
             throw new BackupException(BackupError.InvalidFormat, "The file is not a valid backup package.", ex);
+        }
+        finally
+        {
+            if (!completed) foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content);
         }
     }
 

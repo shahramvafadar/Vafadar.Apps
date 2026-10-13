@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Internal safety-copy protection infrastructure (D-223)
+
+- Added device-key protection and cold-reopen checks for internal restore safety copies.
+- Protected copies keep distinct names even when created within the same second.
+- Main-app activation and recovery-aware retention remain pending; portable backup passwords stay optional.
+
 ### Changed - Covered background startup (2026-10-13, D-222)
 
 - Zanance shows a preparation screen while its database is prepared off the window thread.

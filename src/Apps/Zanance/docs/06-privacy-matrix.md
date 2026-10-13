@@ -606,3 +606,9 @@ D-210: Android stores one device-local random preference persistence-generation 
 a checked synchronous snapshot write after MAUI asynchronous writes. It carries no financial
 value, credential or user identifier and is excluded by the portable preference allowlist.
 No new permission, network SDK or main encryption activation is introduced.
+
+
+D-223: internal safety protection uses device-local per-copy platform keys, authenticated opaque
+profile/installation/generation references and standard AES-256-GCM. Key material is neither
+portable nor logged. Protected .vbs files stay outside portable discovery/pruning. Main registration
+and final reference-aware retention/OS exclusion remain pending; portable passwords stay optional.
