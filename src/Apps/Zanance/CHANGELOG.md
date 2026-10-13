@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Resumable encrypted-profile retirement infrastructure (D-231)
+
+- Record a reviewed deletion request before its ordered catalogue, file and identity stages.
+- A failed storage synchronization blocks cleanup until the retained barrier is requalified.
+- Final protected-profile deletion and main encryption activation remain pending integration.
+
 ### Fixed - Protected profile deletion boundary (D-230)
 
 - Prevent legacy deletion from removing a profile row while retaining its encrypted files.

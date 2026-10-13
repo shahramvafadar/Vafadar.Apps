@@ -1927,3 +1927,10 @@ The legacy delete path must refuse protected active storage or actual target mig
 ciphertext artifacts before removing a catalogue row. Final protected retirement needs durable
 intent, verified catalogue outcome and complete file/key-reference reconciliation; a filename
 loop cannot supply that authority. This boundary does not complete retirement or main adoption.
+
+### D-231 — Requalify retirement barriers before cleanup
+
+An observable retirement commit after failed native synchronization is not cleanup authority.
+Resume synchronizes and rechecks the existing journal before the host's idempotent next effect.
+Missing metadata cannot authorize retirement. Final host catalogue publication, complete captured
+artifact/key references and identity reconciliation remain required before main integration.

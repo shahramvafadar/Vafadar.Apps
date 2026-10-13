@@ -2534,3 +2534,12 @@ android-migration-proof-3577a018f28e42409c0e679b11872c8f.json. Activity observat
 did not reset the run; separate post-proof adb cleanup failure was resolved on the same port.
 Protected retirement, orphan reconciliation, main adoption, recovery/retention/OS and release
 acceptance remain unfinished; refusal is not completion of native deletion.
+
+### D-231 — Persist and resume reviewed retirement barriers
+
+SEC remains in progress. Exact non-main private retirement requests now record ordered catalogue,
+artifact and identity barriers. Resume requalifies actual native synchronization before effects,
+including a phase visible after a failed flush. Nine focused cases and a two-process actual Windows
+file fixture pass. This is not complete native profile retirement: final catalogue/key-reference
+inventory and application registration remain open, with recovery/retention/OS/platform gates.
+See D-231 in the decision log for the observed evidence and its limits.

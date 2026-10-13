@@ -1824,3 +1824,16 @@ patterns. A complete native retirement transaction with durable owner authorizat
 catalogue outcome and referenced-set reconciliation remains required before activation. New
 profile preparation artifacts after failed catalogue publication need the same lifecycle design.
 See D-230 in the application decision log for actual profile/retained-byte native checks.
+
+### D-231 — Existing-only retirement continuation
+
+SqliteProfileRetirementJournal stages a reviewed non-main request and accepts only exact schema,
+typed row and captured identity. CompareAndAdvance commits one phase and requires native file /
+directory synchronization. SynchronizeAndRead requalifies a previously observable commit before
+resumed effects; SQLite visibility alone is not a durable cleanup barrier. The coordinator serializes
+its own resumes, rechecks host validation and advances only after each verified idempotent effect.
+The native host must still supply exclusive maintenance ownership, actual preference readback,
+complete artifact inventory and reference-aware key/identity retirement. Main registration is absent.
+Independent Windows modes retirement-create and retirement-resume use the same retained fixture path,
+under artifacts/native-sqlcipher only. They demonstrate explicit flush-failure ordering and cold
+continuation with actual Windows synchronization, not forced-kill/power-loss or final MAUI effects.

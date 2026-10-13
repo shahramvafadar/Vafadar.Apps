@@ -617,3 +617,7 @@ D-226: Windows generation keys persist only as CurrentUser DPAPI envelopes in pr
 files with owner-only non-inherited ACLs; bindings remain non-portable local identity metadata.
 No new credential input, network permission, SDK, telemetry or portable preference is introduced.
 The independent proof uses fictitious files; final main registration remains inactive.
+
+D-231: retirement metadata contains only existing local non-secret profile/installation/request
+identities and ordered phase values. No labels, financial data, keys, portable preferences, new
+permission or SDK are added. Final native catalogue/artifact/key retirement is not registered.

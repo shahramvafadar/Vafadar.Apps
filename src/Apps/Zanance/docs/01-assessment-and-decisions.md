@@ -3712,3 +3712,57 @@ Activity observation timed out with PID 14037 confirmed live; the same run compl
 verification followed without reset. A later adb cleanup connection failed after the proof was
 saved; the same local port was reconnected and only the owned independent package uninstalled.
 This does not implement protected retirement or activate main encryption; those remain open.
+
+### D-231 — Durable retirement barriers and ordered continuation
+
+A reviewed non-main retirement now has an exact private SQLite request binding (legacy profile,
+stable profile, installation and operation), with ordered Authorized / CatalogueRemoved /
+ArtifactsRemoved / Completed barriers. Metadata is staged, verified, published without replacement
+and synchronized through the native durability port. Missing, foreign, incorrectly typed or extra
+schema state never creates deletion authority. Main retirement is refused.
+
+ProfileRetirementCoordinator resumes only an existing request under the host's exclusive
+maintenance ownership. Host operations must be idempotent and verify actual durable catalogue,
+complete captured artifacts and key-reference reconciliation before the next barrier is committed.
+No filename enumeration, key deletion, inferred identity or main-app registration is supplied here.
+A committed SQLite phase may remain observable after native synchronization fails. Resume therefore
+synchronizes the actual journal and directory and checks unchanged state before every native effect;
+reading the phase alone cannot authorize cleanup. Completed resumes validate the host without
+repeating deletion. Cancellation and failed ownership/phase validation preserve the retained intent.
+
+Nine focused real-SQLite tests pass. They include observable commit followed by native flush failure,
+repeated failed requalification with no cleanup, exact successful continuation, stale/foreign/missing
+requests, extra schema and retired ownership. Test durability/effect ports prove ordering only.
+The independent Windows caller uses the reviewed native SQLCipher DLL and actual private Windows
+file/directory flushes in two processes. The first durably clears a fictitious catalogue file, commits
+CatalogueRemoved, injects an explicit flush failure and leaves both captured fictitious files intact.
+A separate cold process requalifies that exact journal, removes only the captured fixture files,
+synchronizes each removal and completes; repeated completion does not repeat effects. Evidence:
+artifacts/native-sqlcipher/d231-native-create.log and d231-native-resume.log; the retained independently
+owned directory is recorded in d231-owned-retirement-path.txt. Native build has zero warnings/errors.
+These fictitious file effects are not final MAUI preference publication, a complete profile/key
+inventory, forced process termination, physical power-loss acceptance or Android/iOS retirement proof.
+
+Main registration remains plaintext. Actual protected profile retirement, uncommitted creation
+reconciliation, optional recovery, reference-aware safety retention, coupled OS exclusion and remaining
+native/platform/device gates are still open. No visible layout changed; upstream native producer suites
+and unchanged UI matrices were not repeated. Terminal managed/main-build evidence follows below.
+
+D-231 managed verification: the complete suite passed 3,393 cases with zero failures/skips
+(3m32.653s). Final review found that LIKE treats the underscore in sqlite_% as a wildcard,
+which could conceal an unrelated sqliteAlias table. Exact GLOB filtering now keeps the underscore
+literal; the extra-schema regression uses that name and all nine affected cases pass again
+(1.048s). Unchanged application/UI scenarios were not repeated for this isolated validation fix.
+The final native Windows caller was rebuilt without warnings/errors (1.91s); both actual
+Windows fixture processes pass again. Final main Windows strict build has zero warnings/errors
+(25.51s). Android/package verification is recorded below. Final Android/iOS retirement effects
+and main encryption activation remain open.
+
+D-231 final main Android strict build has zero warnings/errors (42.29s). No native producer,
+unchanged UI matrix or unrelated acceptance suite was rerun for the final schema-filter correction.
+
+D-231 final signed complete Release APK: artifacts/android-d231-delivery/pro.vafadar.zanance-Signed.apk
+(83,417,818 bytes), local test certificate. apksigner verification succeeds; package
+pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores were checked.
+Test outputs were cleaned after terminal builds/tests. This is not phone installation, native
+retirement integration, encrypted main registration, store signing or product release acceptance.

@@ -40,6 +40,17 @@ if (args.Length == 2 && args[0] is "fresh-startup-create" or "fresh-startup-reop
     return;
 }
 
+if (args.Length == 2 && args[0] is "retirement-create" or "retirement-resume")
+{
+    if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Retirement proof requires Windows.");
+    var owned = Path.GetFullPath(args[1]);
+    var root = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "native-sqlcipher"));
+    if (!owned.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Retirement proof must stay in independently owned artifacts.");
+    Console.WriteLine(await RetirementCompatibility.RunAsync(owned, args[0] == "retirement-create"));
+    return;
+}
+
 if (args.Length == 2 && args[0].StartsWith("journal-", StringComparison.Ordinal))
 {
     var owned = Path.GetFullPath(args[1]);

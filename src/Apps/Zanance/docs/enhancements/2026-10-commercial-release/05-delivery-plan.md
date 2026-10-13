@@ -1269,3 +1269,12 @@ optional recovery UX and final coupled OS exclusion without another policy quest
 DPAPI/context primitives pass twelve new/full 3,232 cases and actual two-process encrypted reopen.
 Do not substitute this primitive for durable storage or full app activation. Existing UI/native
 build/suite acceptance is not repeated without an actual change/concern.
+
+### D-231 — Persist and resume reviewed retirement barriers
+
+SEC remains in progress. Exact non-main private retirement requests now record ordered catalogue,
+artifact and identity barriers. Resume requalifies actual native synchronization before effects,
+including a phase visible after a failed flush. Nine focused cases and a two-process actual Windows
+file fixture pass. This is not complete native profile retirement: final catalogue/key-reference
+inventory and application registration remain open, with recovery/retention/OS/platform gates.
+See D-231 in the decision log for the observed evidence and its limits.
