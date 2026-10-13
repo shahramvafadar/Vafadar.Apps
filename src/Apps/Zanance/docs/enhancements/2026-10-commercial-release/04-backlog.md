@@ -1482,5 +1482,7 @@ UI or APK regenerated; final encryption/platform/recovery acceptance remains ope
 
 D-190 corrected output ownership but mode 750 on build home blocks foreign UID traversal. Actual
 old image failure reproduced; only parent traversal changes to 0755, with no foreign parent writes.
-Seven focused cases/exact reviewed host pass. Require full corrected hosted workflow completion;
-application/encryption/recovery acceptance is not implied and unrelated checks are not repeated.
+Seven focused cases/exact reviewed host pass. Full corrected hosted [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully with matching
+clean ABI outputs, twelve ELF refusals and 226 cipher tests/zero errors. Linux hosted native
+build/suite gate is closed; app/key/recovery/other-platform acceptance remains open. Unrelated
+checks were not repeated.

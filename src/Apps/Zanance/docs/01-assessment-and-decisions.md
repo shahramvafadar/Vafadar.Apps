@@ -2408,4 +2408,8 @@ by 10001; the work mount alone cannot bypass its parent. Add a foreign UID 1001 
 which reproduces the failure locally on the old image. Set only the immutable build home to 0755
 in Dockerfile; foreign UID still cannot write the parent. Rebuilt image passes all seven focused
 workspace checks and unchanged exact host/NDK/compiler review. No root compilation, world-write,
-source/crypto flag, app/UI/APK changes or unrelated retesting. Hosted workflow completion pending.
+source/crypto flag, app/UI/APK changes or unrelated retesting. Hosted workflow [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully on 2026-10-13 for
+135d99386ef035fd63eedef3d735d6263a0ae387. Both clean ABI builds match original reviewed hashes;
+all twelve negative ELF cases and 226 stock SQLCipher tests pass (zero errors, reported no leaks).
+Artifact 11795943134 digest/actual library bytes independently verified. This closes the Linux
+hosted native build/suite gate only; app encryption, other platforms and key/recovery gates remain.

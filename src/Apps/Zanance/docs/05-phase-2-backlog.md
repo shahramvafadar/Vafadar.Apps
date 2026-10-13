@@ -1093,4 +1093,6 @@ Application/3,220-test/build/APK baseline unchanged. Canonical security/release 
 ## D-191 native parent traversal
 
 Actual hosted/local foreign UID failure corrected by traversal-only permission on immutable build
-home. Seven focused checks/host identity pass. Full hosted completion pending; app baseline unchanged.
+home. Seven focused checks/host identity pass. Full hosted
+[38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) succeeds with matching ABI builds, twelve ELF refusals and
+226 cipher tests/zero errors; app baseline unchanged.

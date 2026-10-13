@@ -108,4 +108,10 @@ The D-190 hosted regression exposed a second ownership boundary: /home/nativebui
 The matched runner UID cannot traverse it to the otherwise owned work mount. Docker Desktop's
 default image UID had hidden this issue locally. A foreign-UID actual-mount case now reproduces
 old-image failure; Dockerfile grants only 0755 parent traversal and preserves foreign write refusal.
-All seven focused checks and exact reviewed host identity pass; actual full hosted result pending.
+All seven focused checks and exact reviewed host identity pass. Full hosted
+[38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) succeeded on 2026-10-13. Both ABI files from clean builds
+a/b are byte-identical and match the original reviewed native hashes above. Twelve ELF negative
+cases and 226 official cipher tests pass. Artifact 11795943134 SHA256:
+267c33e4d6a3ff211ada4f0472c4239cf0306c21c3699cff8b1da06abc5caec2.
+Local copy: artifacts/native-sqlcipher/d191-hosted-success.zip. This closes hosted Linux native
+build/suite evidence, not app key/recovery/migration or other platform/device acceptance.

@@ -1258,5 +1258,6 @@ new hosted run once; do not repeat application tests/builds/UI or unchanged upst
 ## Native parent traversal correction (D-191)
 
 Fix the actual remaining mode-750 parent refusal and reproduce it on the old image with foreign UID.
-Seven focused runtime checks/exact host identity pass after scoped 0755 traversal. Continue the
-same workflow to actual success; investigate subsequent actual failures without unrelated retests.
+Seven focused runtime checks/exact host identity pass after scoped 0755 traversal. The same hosted
+workflow [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully; ABI hash comparison, all ELF
+refusals and official 226-case suite pass. No unrelated application checks or native rerun required.

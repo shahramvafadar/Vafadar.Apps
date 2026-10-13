@@ -1711,5 +1711,7 @@ Evidence: artifacts/native-sqlcipher/d190-workspace-check.log and failed hosted 
 Old image mode 750 reproduces matched foreign-UID work mount refusal. Corrected image mode 0755
 passes all seven focused workspace cases; foreign parent writes remain refused. Native host/NDK/
 clang identity still matches the lock. Records: d191-parent-negative.log, d191-workspace-positive.log,
-d191-host-rebuild.log under artifacts/native-sqlcipher. Hosted complete run remains pending.
+d191-host-rebuild.log under artifacts/native-sqlcipher. Hosted [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully; all seven workspace cases, two
+matching clean ABI builds, twelve ELF refusals and 226 cipher tests/zero errors pass. Success
+artifact digest and actual library bytes verified. This is not whole-app encryption acceptance.
 No unchanged application tests/builds/UI/APK repeated.

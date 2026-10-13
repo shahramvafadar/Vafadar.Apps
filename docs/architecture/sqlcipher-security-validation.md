@@ -144,4 +144,8 @@ contract success is not a substitute for hosted/native/mobile/encryption accepta
 Old-image foreign UID fails actual work mount traversal; mode 750 is observed, not inferred.
 Only immutable parent traversal changes to 0755; parent writes stay refused, work/output owner,
 read-only sources/recipe and network isolation remain enforced. Seven cases and exact host review
-pass. Actual full hosted build/suite completion is required separately; no main app activation.
+pass. Actual hosted
+[38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully for 135d993 on 2026-10-13: both clean
+ABI builds match reviewed bytes, all twelve ELF malformed cases are refused, official cipher
+suite reports 226 tests/zero errors/no leaks. Artifact digest and actual matching libraries
+independently checked. No main app activation or other native/device/recovery acceptance follows.

@@ -2891,5 +2891,6 @@ native build/security suite success is still pending; encryption integration rem
 
 Actual old-image failure reproduced under a foreign non-root UID; immutable home traversal now
 0755 while foreign parent writes stay refused. Seven workspace cases and exact reviewed host
-identity pass. Actual hosted workflow completion remains pending; app/UI/APK and main 3,220-test
-baseline are unchanged and not rerun.
+identity pass. Hosted [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully: matching clean ABI outputs, twelve
+negative ELF cases and 226 official cipher tests/zero errors. App/UI/APK and main 3,220-test
+baseline are unchanged and not rerun. Other encryption/platform/recovery acceptance remains open.
