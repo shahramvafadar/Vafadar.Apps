@@ -35,6 +35,7 @@ internal static class DebugImportLinks
 
     private static async Task RunAsync(App app, IServiceProvider services, string report, Action<string> stage)
     {
+        await app.WaitForStartupAsync();
         var store = services.GetRequiredService<ZananceStore>();
         var marker = Path.Combine(FileSystem.AppDataDirectory, "import-link-fixture.json");
         var reminderMarker = Path.Combine(FileSystem.AppDataDirectory, "review-reminder-fixture.json");

@@ -6230,4 +6230,13 @@ Plafonds par catégorie :
   <data name="Report_Refresh" xml:space="preserve">
     <value>Actualiser le rapport</value>
   </data>
+  <data name="Startup_Loading" xml:space="preserve">
+    <value>Préparation de Zanance…</value>
+  </data>
+  <data name="Startup_Failed" xml:space="preserve">
+    <value>L’application n’a pas pu être préparée. Vos données financières restent masquées. Réessayez.</value>
+  </data>
+  <data name="Startup_Retry" xml:space="preserve">
+    <value>Réessayer</value>
+  </data>
 </root>

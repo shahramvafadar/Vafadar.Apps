@@ -37,6 +37,7 @@ internal static class DebugGoalReminders
 
     private static async Task RunAsync(App app, IServiceProvider services, string file)
     {
+        await app.WaitForStartupAsync();
         var store = services.GetRequiredService<ZananceStore>();
         var goals = services.GetRequiredService<GoalStore>();
         var marker = Path.Combine(FileSystem.AppDataDirectory, "goal-reminder-fixture.json");

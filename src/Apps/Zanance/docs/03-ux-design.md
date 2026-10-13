@@ -1134,3 +1134,10 @@ names. Native digit shaping applies to the final caption, including digits withi
 An unchanged icon key supplies its current translated accessible name, including the selected suffix.
 Retain the same native buttons and complete draft through language updates; unload removes the
 translation subscription and reattachment catches up without replacing the original selection.
+
+### D-222 startup surface
+
+The first page contains only the untranslated product name, native progress indicator and translated
+preparation status. A failed preparation shows generic wrapping feedback and a growing native retry
+button. Financial pages stay unpublished through storage/access preparation. No exception details,
+key values or filesystem instructions appear in this product flow. Native text scaling is retained.

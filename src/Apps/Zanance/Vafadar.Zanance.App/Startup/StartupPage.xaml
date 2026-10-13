@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Startup.StartupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:local="clr-namespace:Vafadar.Zanance.App.Startup"
+    x:DataType="local:StartupViewModel">
+    <ScrollView VerticalOptions="Center">
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center">
+            <Label Text="Zanance" Style="{StaticResource PageTitle}" HorizontalTextAlignment="Center" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
+                WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Startup_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" IsVisible="{Binding IsBusy}" />
+            <Label Text="{v:Translate Startup_Failed}" HorizontalTextAlignment="Center" IsVisible="{Binding HasFailed}" />
+            <Button Text="{v:Translate Startup_Retry}" Style="{StaticResource SecondaryButton}" HeightRequest="-1" MinimumHeightRequest="44"
+                IsVisible="{Binding HasFailed}" Command="{Binding InitializeCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

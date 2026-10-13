@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/StartupViewModel.cs" Link="Application/StartupViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="Application/IAppDatabaseStartup.cs" />
     <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
     <ProjectReference Include="../../../../src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
     <ProjectReference Include="../../../../src/Libraries/Vafadar.Documents/Vafadar.Documents.csproj" />

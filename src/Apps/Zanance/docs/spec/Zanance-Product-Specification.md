@@ -3588,3 +3588,77 @@ first verifier evidence retained in atomic-width-77cc4e16c9904d2ca91fda28fa00f25
 Full 749-occurrence inventory: artifacts/native-sqlcipher/d221-warning-inventory.json.
 Native hash remains 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
 Review records source-header and both original-object hashes; the harness parser passes.
+
+### D-222 — Cover the first window while preparing storage off its thread
+
+CreateWindow now constructs only a non-financial StartupPage. OnStart runs the actual migration and
+initial settings/display-unit persistence through a worker before creating financial content and
+reading secure access state. Foreground posting, reminder refresh and theme/language rebuilds are
+suppressed until preparation and the existing app-lock/router setup finish. Existing PIN protection
+and deferred links remain separate; link navigation failures use the established generic feedback
+and do not misclassify an already prepared database as failed startup.
+
+The real loading/failure/retry surface uses dynamic theme colors, wrapping scalable text and a native
+button. StartupViewModel retains the cover on preparation failure, exposes no exception payload,
+rejects overlapping attempts and never reruns a completed preparation. Three new translated messages
+exist in all six languages. The initial prepared settings row also supplies display units; no extra
+startup settings read is added by display-unit publication.
+
+IAppDatabaseStartup is the final initialization port. The existing plaintext host migrates only the
+current legacy database and explicitly refuses a configured protected session/publication. The final
+native host must replace this registration with complete captured-profile bootstrap. Main SQLCipher
+provider/key/recovery/retention/OS integration remains unactivated. This is actual startup integration,
+not a claim of completed encryption, the two-second performance target or platform/device acceptance.
+
+Diagnostic routes now await actual startup before accessing data. A Debug-only thread observation
+records actual storage work on a different thread from window creation. The startup review renders
+real controls with fictitious preparation outcomes, invokes the native retry target and compares all
+stored table rows. Run-Snapshots.ps1 -UseExistingBuild reuses only a caller-owned verified Windows
+Debug executable for distinct layout cases; default behavior still builds and fails on build errors.
+Callers must not infer success from a stale LASTEXITCODE when no native build command was run.
+D-222 managed verification: all 3,346 cases pass, zero failures/skips (2m55.9s), including actual
+StartupViewModel overlap/completion, explicit failure retry and refusal of plaintext startup with
+a configured protected session. Eighteen native Windows cases cover en/fa/de, light/dark and
+360x800/412x892/1280x820 at process-local FontScale 2. Thirty-six own-window captures show complete
+loading/failure captions. Real native retry Invoke, at least 44px targets, actual storage/window
+thread separation and complete stored table-row equality all pass. Records: artifacts/d222-startup.
+The original app-data directory was restored without reading its contents; final fictitious data
+was parked separately. No desktop focus/input, whole-desktop capture or OS setting change was used.
+
+The first diagnostic compilation passed a language string where AppLanguage was required; corrected
+the exact language lookup. A later matrix caller mistook stale LASTEXITCODE for a failed skipped build;
+the already successful light-360 case was retained, not repeated. Remaining cases used terminating
+script failures and actual proof validation. Do not erase these negative harness observations.
+
+Final ordering review found the early reminder watcher could schedule a read after the initial
+settings write. WatchChanges now attaches only after storage/access preparation. This changes only
+the MAUI host subscription order, not the tested non-UI sources or reviewed layout; their passing
+checks are retained. Final strict builds and cold application QA cover the host change.
+
+An isolated functional startup package overrides ApplicationId to
+pro.vafadar.zanance.startupverification; it never installs over or reads the existing Android package.
+The Debug variant failed OS process attach/start timeout before Activity startup, with no managed
+startup error reported. Its negative observation remains; Release QA uses the phone build settings.
+This is application startup QA, not an encryption research probe or acceptance of OAuth/device/PIN,
+performance, iOS, complete encryption or release. No native FLAG_SECURE was removed.
+D-222 Android completion: isolated signed Release AOT/trim QA visibly displayed the actual preparing
+surface, then reached the real onboarding wizard with Welcome/Language/Next and no forced account.
+The process remained live. A slow observed migration was initially treated as a possible dispatcher
+problem; adding the real Window.Created dispatcher hook did not establish that diagnosis. Temporary
+QA-only fixed milestone/thread records showed window/start/prepare/worker/storage/settings/UI
+continuation/access/ready all completed. No deadlock or dispatcher failure is claimed. Slow emulator
+observations do not meet the performance target. The per-window start hook is retained with the
+existing duplicate-attempt guard; its normal startup and compatibility callback are verified together.
+
+All temporary milestone source, compile flag and project override were removed before final delivery.
+The isolated QA package and exactly owned dump files were removed. Existing main Android data/package
+was never installed over or read. Records: artifacts/native-sqlcipher/d222-qa-{milestones.txt,
+release-ui.xml,proof-ready.xml}. Final normal Windows 20.96s and Android 69.98s builds have no warnings
+or errors; earlier intermediate build timings are not final delivery evidence. No non-UI tested source
+or layout changed during these host/diagnostic corrections, so the passing 3,346 cases and 18 geometry
+cases were retained. The normal phone APK is rebuilt after diagnostic removal.
+
+Final normal phone artifact: artifacts/android-d222-delivery/pro.vafadar.zanance-Signed.apk.
+Package pro.vafadar.zanance, local test signature, API24/36, arm64/x64 assembly stores verified.
+It is a complete Release package; main storage is still plaintext. All temporary proof instrumentation
+and build flags are absent from final source. Test outputs were cleaned after all builds/tests ended.

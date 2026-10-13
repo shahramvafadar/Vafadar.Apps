@@ -42,7 +42,9 @@ param(
     # Digits of the Persian interface; default: Persian digits (the app's default).
     [ValidateSet('persian', 'latin')] [string]$Digits = 'persian',
     # Process-local Windows layout stress, not OS text-scale acceptance; never changes system settings.
-    [ValidateRange(1.0, 2.0)] [double]$FontScale = 1.0)
+    [ValidateRange(1.0, 2.0)] [double]$FontScale = 1.0,
+    # Reuse only a caller-owned, already verified Windows Debug build for distinct layout cases.
+    [switch]$UseExistingBuild)
 $ErrorActionPreference = 'Stop'
 $root = Resolve-Path (Join-Path $PSScriptRoot '..\..')
 Set-Location $root
@@ -71,9 +73,12 @@ if (Test-Path $data) {
 New-Item -ItemType Directory -Force $Output | Out-Null
 Get-ChildItem $Output -File | ForEach-Object { [IO.File]::Delete($_.FullName) }
 
-dotnet build src\Apps\Zanance\Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -p:ContinuousIntegrationBuild=true -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
-if ($LASTEXITCODE -ne 0) { throw "Windows build failed; no previous executable was launched." }
+if (-not $UseExistingBuild) {
+    dotnet build src\Apps\Zanance\Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -p:ContinuousIntegrationBuild=true -v q -nologo 2>&1 | Select-String ' error |warning CS' | Select-Object -Unique -First 15
+    if ($LASTEXITCODE -ne 0) { throw "Windows build failed; no previous executable was launched." }
+}
 $exe = Get-ChildItem 'src\Apps\Zanance\Vafadar.Zanance.App\bin\Debug\net10.0-windows10.0.19041.0' -Recurse -Filter 'Vafadar.Zanance.App.exe' | Select-Object -First 1
+if (-not $exe) { throw 'No caller-owned Windows Debug executable exists.' }
 $env:VAFADAR_SNAPSHOTS = (Resolve-Path $Output)
 $env:VAFADAR_SNAPSHOT_LANGUAGES = ($Languages -join ',')
 $env:VAFADAR_SNAPSHOT_THEME = $Theme

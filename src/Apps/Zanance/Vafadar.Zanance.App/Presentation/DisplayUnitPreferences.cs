@@ -28,8 +28,11 @@ internal static class DisplayUnitPreferences
             store.SaveSettings(settings);
         }
 
-        DisplayUnits.Set(Parse(settings.DisplayUnits));
+        Apply(settings.DisplayUnits);
     }
+
+    /// <summary>Applies a prepared profile value on the UI thread without performing database work.</summary>
+    internal static void Apply(string serialized) => DisplayUnits.Set(Parse(serialized));
 
     /// <summary>Removes every unit of the open profile, e.g. with "Delete all data".</summary>
     public static Task ClearAsync(ZananceStore store) => SaveAsync(store, []);

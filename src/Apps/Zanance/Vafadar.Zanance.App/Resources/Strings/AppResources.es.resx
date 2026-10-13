@@ -6222,4 +6222,13 @@ Límites por categoría:
   <data name="Report_Refresh" xml:space="preserve">
     <value>Actualizar informe</value>
   </data>
+  <data name="Startup_Loading" xml:space="preserve">
+    <value>Preparando Zanance…</value>
+  </data>
+  <data name="Startup_Failed" xml:space="preserve">
+    <value>No se pudo preparar la aplicación. Tus datos financieros siguen ocultos. Vuelve a intentarlo.</value>
+  </data>
+  <data name="Startup_Retry" xml:space="preserve">
+    <value>Volver a intentar</value>
+  </data>
 </root>

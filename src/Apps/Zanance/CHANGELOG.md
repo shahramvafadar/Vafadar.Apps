@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Changed - Covered background startup (2026-10-13, D-222)
+
+- Zanance shows a preparation screen while its database is prepared off the window thread.
+- Startup failures keep financial content hidden and offer a translated retry action.
+- Automatic work and page rebuilds wait for preparation and the app-access gate.
+
 ### Development - Prepare profiles before publishing (2026-10-13, D-220)
 
 - Profile creation now awaits database preparation before adding the profile to the list.

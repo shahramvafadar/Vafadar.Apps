@@ -6253,4 +6253,13 @@
   <data name="Report_Refresh" xml:space="preserve">
     <value>تازه‌سازی گزارش</value>
   </data>
+  <data name="Startup_Loading" xml:space="preserve">
+    <value>در حال آماده‌سازی Zanance…</value>
+  </data>
+  <data name="Startup_Failed" xml:space="preserve">
+    <value>برنامه آماده نشد. اطلاعات مالی شما همچنان پنهان است. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Startup_Retry" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
 </root>

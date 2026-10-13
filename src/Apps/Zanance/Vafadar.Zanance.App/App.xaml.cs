@@ -13,6 +13,18 @@ public partial class App : Application
 {
     private readonly IServiceProvider _services;
     private Page? _startupPage;
+    private Startup.StartupViewModel? _startup;
+    private bool _databaseReady;
+    private readonly TaskCompletionSource _startupReady = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>Lets diagnostic routes wait for actual storage and access initialization instead of racing migration.</summary>
+    internal Task WaitForStartupAsync() => _startupReady.Task;
+#if DEBUG
+    private int _startupWindowThread;
+    private int _startupStorageThread;
+    /// <summary>Reports actual window/storage thread separation for the requested native startup review.</summary>
+    internal bool StartupStorageRanOffWindowThread => _startupStorageThread != 0 && _startupStorageThread != _startupWindowThread;
+#endif
 
     public App(IServiceProvider services)
     {
@@ -57,7 +69,6 @@ public partial class App : Application
         this.ApplyToModalPages(localization);
 
         var reminders = services.GetRequiredService<ReminderService>();
-        reminders.WatchChanges(services.GetRequiredService<Profiles.ProfileService>());
         reminders.Scheduler.Tapped += OnReminderTapped;
     }
 
@@ -150,21 +161,19 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        // The database is created or upgraded here, before the first page reads it, and not while the app is built:
-        // Android builds the app in Application.onCreate, also when it starts the process only to deliver a notification,
-        // and reports the app as not responding when that takes too long on a slow device (D-46).
-        _services.MigrateLocalDatabase<ZananceDbContext>();
-
-        // Display units (e.g. toman) of the open profile, before any amount is shown (FX-07, ZEX-P20).
-        Presentation.DisplayUnitPreferences.Load(_services.GetRequiredService<ZananceStore>());
-        var settings = _services.GetRequiredService<ZananceStore>().GetSettings();
-        Page root = settings.OnboardingCompleted
-            ? CreateShell()
-            : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
-
-        // Keep financial content out of the first frame while the secure PIN state is read (D-63).
-        _startupPage = root;
-        var window = new Window(new ContentPage()) { Title = Translator.Instance["App_Name"] };
+#if DEBUG
+        _startupWindowThread = Environment.CurrentManagedThreadId;
+#endif
+        // Android builds the app in Application.onCreate, including notification-only process starts (D-46).
+        // Window construction must not migrate or open a financial context on that thread.
+        // D-222: the first window contains no financial page. Native key/migration work is deferred to a worker.
+        _startup = new Startup.StartupViewModel(PrepareStartupAsync);
+        var cover = new Startup.StartupPage(_startup).WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        var window = new Window(cover) { Title = Translator.Instance["App_Name"] };
+        var startup = _startup;
+        // Use the actual window dispatcher after native creation, including Android activity recreation.
+        // The view model excludes duplicate preparation from the compatibility OnStart callback.
+        window.Created += (_, _) => window.Dispatcher.Dispatch(async () => await startup.InitializeAsync());
 #if WINDOWS
         // The window title in the app's colours with the symbol in front of it (D-45). The default title keeps the
         // Windows theme: white on the light page when Windows is dark, black on the dark page when it is light.
@@ -185,10 +194,34 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
-        Dispatcher.Dispatch(async () =>
+        Dispatcher.Dispatch(async () => { if (_startup is not null) await _startup.InitializeAsync(); });
+    }
+
+    private async Task PrepareStartupAsync()
+    {
+        var window = Windows.FirstOrDefault() ?? throw new InvalidOperationException("Startup window is unavailable.");
+        var store = _services.GetRequiredService<ZananceStore>();
+        var legacyUnits = Preferences.Default.Get("display_units", string.Empty);
+        var settings = await Task.Run(async () =>
         {
-            await _services.GetRequiredService<AppLockService>().StartAsync();
-            await _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
+#if DEBUG
+            _startupStorageThread = Environment.CurrentManagedThreadId;
+#endif
+            await _services.GetRequiredService<Startup.IAppDatabaseStartup>().PrepareAsync();
+            var prepared = await store.GetSettingsAsync();
+            if (prepared.DisplayUnits is null)
+            {
+                prepared.DisplayUnits = legacyUnits; await store.SaveSettingsAsync(prepared);
+            }
+            return prepared;
+        });
+        if (!Windows.Contains(window)) throw new InvalidOperationException("Startup window closed.");
+        Presentation.DisplayUnitPreferences.Apply(settings.DisplayUnits!);
+        _startupPage = settings.OnboardingCompleted ? CreateShell()
+            : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        await _services.GetRequiredService<AppLockService>().StartAsync();
+        // A rejected deep link is a navigation failure after secure initialization, not a database-startup failure.
+        await Presentation.Failures.GuardAsync(() => _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
             {
                 if (_startupPage is { } page && Windows.FirstOrDefault() is { } window)
                 {
@@ -205,21 +238,24 @@ public partial class App : Application
                     OfferNotificationsSoon();
                 }
                 return Task.FromResult(link);
-            });
-        });
+            }));
+        _databaseReady = true;
+        // The initial settings write must not schedule a competing reminder database read during preparation.
+        _services.GetRequiredService<ReminderService>().WatchChanges(_services.GetRequiredService<Profiles.ProfileService>());
+        _startupReady.TrySetResult();
         RunForegroundWork(starting: true);
     }
 
     protected override void OnSleep()
     {
         base.OnSleep();
-        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
+        if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
     }
 
     protected override void OnResume()
     {
         base.OnResume();
-        Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
+        if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
         RunForegroundWork(starting: false);
     }
 
@@ -227,6 +263,7 @@ public partial class App : Application
     // correctness never depends on background execution (REC-22). Failures are not fatal: occurrences stay open.
     private void RunForegroundWork(bool starting)
     {
+        if (!_databaseReady) return;
         var processor = _services.GetRequiredService<AutoPostProcessor>();
         var reminders = _services.GetRequiredService<ReminderService>();
         var store = _services.GetRequiredService<ZananceStore>();
@@ -294,6 +331,7 @@ public partial class App : Application
     // was typed stay. Pages that are not shown reload when they appear.
     private void OnThemeChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>
     {
+        if (!_databaseReady) return;
         if (Windows.FirstOrDefault()?.Page is not AppShell shell || IsOnTab(shell))
         {
             _rebuildWhenBackOnTab = false;
@@ -342,6 +380,7 @@ public partial class App : Application
     // so the lock cover is never lost with the old window content.
     private void OnLocalizationChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(() =>
     {
+        if (!_databaseReady) return;
         // Reminder texts are translated when they are scheduled (REM-07).
         _services.GetRequiredService<ReminderService>().RefreshSoon();
         // Keep open forms and the live regional preview intact; rebuild cached tab content after returning (D-67).
@@ -356,6 +395,7 @@ public partial class App : Application
 
     private void QueueRebuild()
     {
+        if (!_databaseReady) return;
         if (_rebuildQueued)
         {
             return;

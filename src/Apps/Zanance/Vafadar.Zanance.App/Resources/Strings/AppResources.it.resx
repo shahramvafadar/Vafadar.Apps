@@ -6242,4 +6242,13 @@ Limiti per categoria:
   <data name="Report_Refresh" xml:space="preserve">
     <value>Aggiorna rapporto</value>
   </data>
+  <data name="Startup_Loading" xml:space="preserve">
+    <value>Preparazione di Zanance…</value>
+  </data>
+  <data name="Startup_Failed" xml:space="preserve">
+    <value>Non è stato possibile preparare l’app. I tuoi dati finanziari restano nascosti. Riprova.</value>
+  </data>
+  <data name="Startup_Retry" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
 </root>

@@ -6253,4 +6253,13 @@ Kategorielimits:
   <data name="Report_Refresh" xml:space="preserve">
     <value>Bericht aktualisieren</value>
   </data>
+  <data name="Startup_Loading" xml:space="preserve">
+    <value>Zanance wird vorbereitet…</value>
+  </data>
+  <data name="Startup_Failed" xml:space="preserve">
+    <value>Die App konnte nicht vorbereitet werden. Ihre Finanzdaten bleiben verborgen. Versuchen Sie es erneut.</value>
+  </data>
+  <data name="Startup_Retry" xml:space="preserve">
+    <value>Erneut versuchen</value>
+  </data>
 </root>

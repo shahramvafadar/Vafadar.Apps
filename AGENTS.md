@@ -113,7 +113,7 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   with raw SQL, so it keeps working when entities grow. **After every model change regenerate the compiled model**
   (`dotnet ef dbcontext optimize …`, command in `docs/architecture/data-and-backup.md`); a test fails when it is stale.
 * Startup: no database work while the app is built (`IMauiInitializeService`, Android `Application.onCreate`); the
-  database is migrated in `App.CreateWindow` (D-46). Keep startup work small – measure before and after.
+  database is prepared after window creation by the covered startup worker (D-222). Keep startup work small – measure before and after.
 * UI strings: every key in **all** of `.resx` en/fa/de/es/fr/it (tests enforce it); a new string needs a real translation
   in every language – never copy English into a translation file. Spanish uses the informal `tú`, French the polite `vous`, Italian the informal `tu` – use `eng/scripts/Add-Strings.ps1`.
   App strings: `Vafadar.Zanance.App/Resources/Strings/AppResources`; shared strings:
@@ -1811,3 +1811,31 @@ first verifier evidence retained in atomic-width-77cc4e16c9904d2ca91fda28fa00f25
 Full 749-occurrence inventory: artifacts/native-sqlcipher/d221-warning-inventory.json.
 Native hash remains 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
 Review records source-header and both original-object hashes; the harness parser passes.
+
+### D-222 — Cover the first window while preparing storage off its thread
+
+CreateWindow now constructs only a non-financial StartupPage. OnStart runs the actual migration and
+initial settings/display-unit persistence through a worker before creating financial content and
+reading secure access state. Foreground posting, reminder refresh and theme/language rebuilds are
+suppressed until preparation and the existing app-lock/router setup finish. Existing PIN protection
+and deferred links remain separate; link navigation failures use the established generic feedback
+and do not misclassify an already prepared database as failed startup.
+
+The real loading/failure/retry surface uses dynamic theme colors, wrapping scalable text and a native
+button. StartupViewModel retains the cover on preparation failure, exposes no exception payload,
+rejects overlapping attempts and never reruns a completed preparation. Three new translated messages
+exist in all six languages. The initial prepared settings row also supplies display units; no extra
+startup settings read is added by display-unit publication.
+
+IAppDatabaseStartup is the final initialization port. The existing plaintext host migrates only the
+current legacy database and explicitly refuses a configured protected session/publication. The final
+native host must replace this registration with complete captured-profile bootstrap. Main SQLCipher
+provider/key/recovery/retention/OS integration remains unactivated. This is actual startup integration,
+not a claim of completed encryption, the two-second performance target or platform/device acceptance.
+
+Diagnostic routes now await actual startup before accessing data. A Debug-only thread observation
+records actual storage work on a different thread from window creation. The startup review renders
+real controls with fictitious preparation outcomes, invokes the native retry target and compares all
+stored table rows. Run-Snapshots.ps1 -UseExistingBuild reuses only a caller-owned verified Windows
+Debug executable for distinct layout cases; default behavior still builds and fails on build errors.
+Callers must not infer success from a stale LASTEXITCODE when no native build command was run.

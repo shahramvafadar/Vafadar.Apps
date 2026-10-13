@@ -31,6 +31,7 @@ internal static class DebugReviewReminders
 
     private static async Task RunAsync(App app, IServiceProvider services, string report)
     {
+        await app.WaitForStartupAsync();
         var store = services.GetRequiredService<ZananceStore>();
         var goals = services.GetRequiredService<GoalStore>();
         var marker = Path.Combine(FileSystem.AppDataDirectory, "review-reminder-fixture.json");

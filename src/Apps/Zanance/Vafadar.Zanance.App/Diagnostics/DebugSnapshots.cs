@@ -44,6 +44,7 @@ internal static partial class DebugSnapshots
             SetSize(window);
             app.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(3), async () =>
             {
+                await app.WaitForStartupAsync();
                 if (Shell.Current is { } shell)
                 {
                     foreach (var step in route.Split(';', StringSplitOptions.RemoveEmptyEntries))
@@ -204,6 +205,7 @@ internal static partial class DebugSnapshots
 
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
+        await app.WaitForStartupAsync();
         var settings = services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>();
         var saved = LocalizationService.PortableKeys.Append("ui.theme").ToDictionary(key => key, settings.Get);
         var passwordChoice = Preferences.Default.Get("backup.usePassword", true);
@@ -257,6 +259,13 @@ internal static partial class DebugSnapshots
         {
             services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>().Remove("localization.calendar");
         }
+
+#if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "startup")
+        {
+            await ReviewStartupAsync(app, services, folder, languages); return;
+        }
+#endif
 
         if (app.Windows[0].Page is OnboardingPage onboarding && onboarding.BindingContext is OnboardingViewModel vm)
         {

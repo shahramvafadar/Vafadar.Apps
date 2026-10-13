@@ -82,6 +82,7 @@ public static class MauiProgram
             .AddTransient<IMauiInitializeService, ReminderInitializer>()
             .AddSingleton<IAppLockHost, MauiAppLockHost>()
             .AddSingleton<AppLockService>()
+            .AddSingleton<Startup.IAppDatabaseStartup, Startup.LocalDatabaseStartup>()
             .AddSingleton<Features.Receipts.IReceiptRuntime, Features.Receipts.MauiReceiptRuntime>()
             .AddTransient<Features.Receipts.ReceiptReadingSession>()
             .AddTransient<Features.Accounts.LoanInstallmentSession>()

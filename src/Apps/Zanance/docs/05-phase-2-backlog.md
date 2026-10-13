@@ -1389,3 +1389,31 @@ The final native host must retain/reconcile uncommitted identity/creation artifa
 publication, rather than deleting referenced keys or treating missing history as a fresh profile.
 This step does not register that host, activate main encryption, implement orphan reconciliation,
 optional recovery, retention or coupled OS policy. These remain in the full SEC scope.
+
+### D-222 — Cover the first window while preparing storage off its thread
+
+CreateWindow now constructs only a non-financial StartupPage. OnStart runs the actual migration and
+initial settings/display-unit persistence through a worker before creating financial content and
+reading secure access state. Foreground posting, reminder refresh and theme/language rebuilds are
+suppressed until preparation and the existing app-lock/router setup finish. Existing PIN protection
+and deferred links remain separate; link navigation failures use the established generic feedback
+and do not misclassify an already prepared database as failed startup.
+
+The real loading/failure/retry surface uses dynamic theme colors, wrapping scalable text and a native
+button. StartupViewModel retains the cover on preparation failure, exposes no exception payload,
+rejects overlapping attempts and never reruns a completed preparation. Three new translated messages
+exist in all six languages. The initial prepared settings row also supplies display units; no extra
+startup settings read is added by display-unit publication.
+
+IAppDatabaseStartup is the final initialization port. The existing plaintext host migrates only the
+current legacy database and explicitly refuses a configured protected session/publication. The final
+native host must replace this registration with complete captured-profile bootstrap. Main SQLCipher
+provider/key/recovery/retention/OS integration remains unactivated. This is actual startup integration,
+not a claim of completed encryption, the two-second performance target or platform/device acceptance.
+
+Diagnostic routes now await actual startup before accessing data. A Debug-only thread observation
+records actual storage work on a different thread from window creation. The startup review renders
+real controls with fictitious preparation outcomes, invokes the native retry target and compares all
+stored table rows. Run-Snapshots.ps1 -UseExistingBuild reuses only a caller-owned verified Windows
+Debug executable for distinct layout cases; default behavior still builds and fails on build errors.
+Callers must not infer success from a stale LASTEXITCODE when no native build command was run.
