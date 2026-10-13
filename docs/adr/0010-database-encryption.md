@@ -1,10 +1,10 @@
 # 0010. Profile database encryption and device-bound key envelopes
 
-- Status: **Official Community source direction accepted on 2026-10-12; final integration under evaluation**
+- Status: **Official Community source and OD-04/OD-10 policy accepted; final integration in progress (2026-10-13)**
 - Date: 2026-10-08
 - Section: ZCR-SEC-01; decision log D-68
 - Source baseline: 081603c596c8b2331990112212798c9604a7b477
-- Scope: research, fictitious independent feasibility harness and migration design only.
+- Scope: approved final key/recovery/OS-backup policy and implementation in progress; independent probes retain fictitious data only.
 
 ## Recommendation
 
@@ -15,12 +15,14 @@ process before final key, migration and CI integration. Do not ship or reuse the
 SQLitePCLRaw.bundle_e_sqlcipher 2.1.11 proof binary. Review every native and managed dependency before adoption.
 
 The proposed data design remains a random 256-bit DEK per profile and a separate versioned device key envelope.
-The Community selection does not by itself accept forgotten-password recovery (OD-04), final OS-backup policy
-(OD-10), a production provider switch or an unverified migration. The main app remains plaintext at this point.
+The owner separately accepted OD-04 and OD-10 on 2026-10-13 (D-192): automatic local key, optional
+recovery key and Zanance backup recovery; permanent Android/iOS sensitive-data backup/transfer
+exclusion with completed encryption. No interim policy. The main app still remains plaintext
+until native storage/migration integration and acceptance are complete.
 
 This selects an architectural direction, not a production binary. Neither an unofficial successful probe nor a
 vendor's platform support statement establishes production readiness. No paid purchase, trial account, production
-provider switch, migration, password rule or recovery-policy approval occurs in this section.
+provider switch or unverified migration follows merely from source selection. OD-04/OD-10 policy approval is separately recorded in D-192.
 
 ## Current Community evaluation (D-180, 2026-10-12)
 
@@ -89,7 +91,7 @@ backup/export destinations. Local-first Free remains usable without an account, 
 | Modified ciphertext | SQLCipher page authentication rejects altered pages; this does not prevent valid old-snapshot rollback or all metadata tampering |
 | Screenshots, notifications, exported files | Existing D-63 policy and generic notifications remain separate. Allowed screenshots and shared copies escape the DB boundary |
 | Length/timing/path/WAL-index observations | File sizes, paths, access patterns and SHM metadata can remain observable; not hidden by page encryption |
-| Forgotten password / lost device | Requires a separately approved recovery channel; no service can magically reconstruct an unknown random DEK |
+| Forgotten password / lost device | Optional recovery key and Zanance backups approved in D-192; no service can reconstruct an unknown random DEK |
 
 ## Library and deployment comparison (primary sources checked 2026-10-08)
 
@@ -116,7 +118,7 @@ proof of encryption. Do not log a key-bearing connection string, SQL key pragma 
 | Four-digit PIN as DEK password | Familiar | Offline enumeration is trivial; reject. Current PIN stays a UI gate |
 | Device-only envelope | No extra remembered secret; fits existing UX | Cannot recover from device/key loss by itself; recommended default with explicit backup/recovery choices |
 | Strong password-derived KEK | Portable/recoverable envelope option | User memory burden and offline guessing; requires versioned KDF and a product decision |
-| High-entropy recovery secret | Can rewrap after loss/forgotten password | User must preserve it; shown once and verified by a future user flow. OD-04 remains proposed |
+| High-entropy recovery secret | Can rewrap after loss/forgotten password | User must preserve it; shown once and verified by a future user flow. Optional recovery is approved in D-192 |
 
 Flow: generate the profile DEK; encrypt database pages with it; seal the DEK under an OS-protected wrapping key;
 persist only a versioned authenticated envelope. Authenticate profile id, installation id, key generation and format
@@ -275,3 +277,13 @@ Changed recipes require clean directories rather than stale incremental objects.
 and packaging evidence is recorded in the architecture build guide. This remains an independent
 candidate; main app activation, upstream suites/mobile native matrix, keys/recovery and crash-safe
 migration are not accepted by this prerequisite. No temporary OS-backup policy is introduced.
+
+## D-192 accepted policy and Windows key primitive
+
+OD-04/OD-10 are settled; remaining native adapters, durable migration/cleanup, recovery UX and
+platform/runtime acceptance are engineering work, not repeated owner policy questions. The actual
+Windows CurrentUser DPAPI protector authenticates profile/installation/generation in a versioned
+context, accepts only 32-byte DEKs and bounded envelopes, and refuses wrong context/damaged blobs.
+Independent generated envelope/keyed database reopen in another Windows process passes. No app
+provider/key/storage activation or OS backup change yet; Android/iOS adapters and final integration
+remain incomplete. CurrentUser is not a hardware/device-only guarantee or defence against same-user code.

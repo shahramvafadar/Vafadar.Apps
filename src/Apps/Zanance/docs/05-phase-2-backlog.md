@@ -1096,3 +1096,9 @@ Actual hosted/local foreign UID failure corrected by traversal-only permission o
 home. Seven focused checks/host identity pass. Full hosted
 [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) succeeds with matching ABI builds, twelve ELF refusals and
 226 cipher tests/zero errors; app baseline unchanged.
+
+## D-192 approved recovery policy and Windows key protection
+
+Automatic local key/optional recovery/Zanance backups and final coupled Android/iOS OS exclusion
+approved. Windows CurrentUser/context primitive and real two-process encrypted reopen pass;
+full 3,232. Actual native storage, other platforms and final migration/recovery integration remain.

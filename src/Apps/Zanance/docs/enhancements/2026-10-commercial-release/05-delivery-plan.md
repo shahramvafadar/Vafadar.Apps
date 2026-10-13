@@ -1261,3 +1261,11 @@ Fix the actual remaining mode-750 parent refusal and reproduce it on the old ima
 Seven focused runtime checks/exact host identity pass after scoped 0755 traversal. The same hosted
 workflow [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully; ABI hash comparison, all ELF
 refusals and official 226-case suite pass. No unrelated application checks or native rerun required.
+
+## Approved recovery/OS policy and Windows keys (D-192)
+
+OD-04/OD-10 are settled; continue native key persistence/adapters, durable generation migration,
+optional recovery UX and final coupled OS exclusion without another policy question. Windows
+DPAPI/context primitives pass twelve new/full 3,232 cases and actual two-process encrypted reopen.
+Do not substitute this primitive for durable storage or full app activation. Existing UI/native
+build/suite acceptance is not repeated without an actual change/concern.

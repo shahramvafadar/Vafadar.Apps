@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <ProjectReference Include="..\Vafadar.Backup\Vafadar.Backup.csproj" />
     <ProjectReference Include="..\Vafadar.Core\Vafadar.Core.csproj" />
   </ItemGroup>

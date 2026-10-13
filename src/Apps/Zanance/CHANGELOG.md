@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Device-key recovery policy and Windows protection (2026-10-13, D-192)
+
+- Confirm automatic device keys, optional recovery keys and recovery from Zanance backups.
+- Prepare bound Windows user-protected database keys; final storage/migration integration is still in progress.
+
 ### Development - Native build-home traversal (2026-10-13, D-191)
 
 - Let the non-root runner reach its owned native work mount while refusing writes to the build-home parent.

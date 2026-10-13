@@ -2894,3 +2894,12 @@ Actual old-image failure reproduced under a foreign non-root UID; immutable home
 identity pass. Hosted [38363100746](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38363100746) completed successfully: matching clean ABI outputs, twelve
 negative ELF cases and 226 official cipher tests/zero errors. App/UI/APK and main 3,220-test
 baseline are unchanged and not rerun. Other encryption/platform/recovery acceptance remains open.
+
+### 31.105 Approved policy and Windows protected DEK (D-192 / AT-191)
+
+OD-04/OD-10 approved: automatic local key, optional recovery key and Zanance backup recovery;
+permanent sensitive Android/iOS OS-backup/transfer exclusion with completed encryption, no interim
+policy or mandatory portable password. Windows CurrentUser DPAPI/context/bounded key primitives
+implemented. Twelve added cases/full 3,232 pass, actual encrypted reopen across independent
+Windows processes passes. Main database/provider/storage/backup still unchanged; remaining native
+adapters/durable migration/recovery/platform checks remain incomplete, not owner policy questions.

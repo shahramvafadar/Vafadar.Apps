@@ -527,3 +527,11 @@ Recheck file/data/access/scope around native/render/cache awaits. Remove only th
 unpublished cache; preserve a file once native sharing starts because platform consumers may read later.
 Native fixtures are fictitious and restore original rows/bytes/display/cache; no recipient is selected.
 Encryption/OS-backup/provider/device acceptance and final release remain separately gated.
+
+## Data-key context and Windows protection (D-192)
+
+Non-secret profile/installation/generation context binds local DEKs; device keys/installation
+security metadata are excluded from portable preferences and logs. CurrentUser DPAPI primitive
+and fictitious independent proof only, no live storage or provider change. No new network,
+permission or financial schema. Owned key-copy clearing is best effort, not whole-process erasure.
+OD-04/OD-10 approved; optional recovery UX and final Android/iOS OS exclusion remain implementation.

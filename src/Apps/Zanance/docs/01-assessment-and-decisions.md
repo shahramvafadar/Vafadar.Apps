@@ -2413,3 +2413,21 @@ source/crypto flag, app/UI/APK changes or unrelated retesting. Hosted workflow [
 all twelve negative ELF cases and 226 stock SQLCipher tests pass (zero errors, reported no leaks).
 Artifact 11795943134 digest/actual library bytes independently verified. This closes the Linux
 hosted native build/suite gate only; app encryption, other platforms and key/recovery gates remain.
+
+## D-192 - Approved final recovery policy and Windows DEK protection
+
+Owner approves OD-04 automatic device-protected key plus optional recovery key/Zanance backups,
+and OD-10 permanent Android/iOS sensitive-data OS backup/transfer exclusion with completed
+integration. Portable backup passwords stay optional; declined interim policy stays declined.
+Do not ask these decisions again. Native adapters/durable migration/recovery UX remain work.
+
+Add immutable profile/installation/generation context and Windows CurrentUser DPAPI protector
+using the already pinned official ProtectedData 10.0.12 package. Only 32-byte DEKs and bounded
+opaque envelopes accepted; wrong profile/installation/generation, tampering, missing/oversized
+blob and wrong decrypted length refused. Owned temporary key buffers cleared; callers clear
+successful returned keys. CurrentUser is not a hardware/device-only or same-user-code guarantee.
+Twelve behavior cases added; focused 69 and full 3,232 pass. Actual source-built SQLCipher/key
+creation then encrypted read in a second independent Windows process passes with native identity
+and manifest hash checks. Strict main build evidence in AT-191. No UI/schema/live provider/key
+storage/OS exclusion activated. Android/iOS adapters, final persistence/recovery/crash integration
+remain. [Guide](../../../../docs/architecture/sqlcipher-device-keys.md).

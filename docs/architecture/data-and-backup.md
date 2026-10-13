@@ -787,3 +787,9 @@ DatabaseGenerationMigration and IDatabaseGenerationMigrationSession coordinate t
 writer lease, idempotent native effects and stored readback. Native key/selector/cleanup adapters
 are still required; existing application and portable backup composition are unchanged.
 See [protocol and remaining durability obligations](sqlcipher-generation-checkpoints.md).
+
+## Accepted encryption recovery policy (D-192)
+
+Automatic local profile keys, optional separate recovery and Zanance backup recovery are approved.
+Android/iOS sensitive data leave OS backup/transfer with completed encryption integration, not an
+interim measure. Portable password choice remains optional. See [device keys](sqlcipher-device-keys.md).

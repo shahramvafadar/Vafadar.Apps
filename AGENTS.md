@@ -1402,3 +1402,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   build home permits traversal (0755), not foreign writes; actual work/output remain separately owned.
 * Exercise a foreign non-root UID through the actual work mount even on Docker Desktop. Preserve
   the failing old-image evidence and require actual hosted native completion after corrections.
+
+## 124. Approved key recovery and permanent OS-backup policy (D-192)
+
+* OD-04 is settled: automatic local profile key, optional separate recovery key and Zanance backup
+  recovery. Portable backup passwords remain optional. Do not ask this product choice again.
+* OD-10 is settled: Android/iOS databases and sensitive files are excluded from OS backup/transfer
+  with completed encryption integration; new devices restore Zanance backups with fresh local keys.
+  No interim policy. Native storage/migration/recovery/platform acceptance still requires implementation.
+* Bind platform envelopes to profile, installation, generation and format. Windows uses CurrentUser
+  DPAPI, not LocalMachine; do not claim hardware/device-only protection or same-user malware resistance.

@@ -1715,3 +1715,20 @@ d191-host-rebuild.log under artifacts/native-sqlcipher. Hosted [38363100746](htt
 matching clean ABI builds, twelve ELF refusals and 226 cipher tests/zero errors pass. Success
 artifact digest and actual library bytes verified. This is not whole-app encryption acceptance.
 No unchanged application tests/builds/UI/APK repeated.
+
+## AT-191 - Bound Windows data-key protection
+
+Four context cases and eight native Windows cases cover required identities, stable versioned
+context, CurrentUser roundtrip, wrong profile/installation/generation, altered blob, absent/
+oversized envelope and wrong plaintext length. Focused 69/full 3,232 pass on Windows; eight DPAPI
+cases explicitly skip on non-Windows hosts, not pretend to run. Test-WindowsKeys creates a fictitious
+protected envelope/encrypted DB then reopens both in a new process using actual source code and
+reviewed native hash/version. No existing credentials/main app data accessed. Native Android/iOS,
+durable production storage, recovery UX and full migration/crash acceptance remain open.
+
+D-192 strict main Windows and Android builds pass with zero errors/warnings. No visible screen
+changed. Evidence: artifacts/native-sqlcipher/d192-{windows-build,android-build}.log.
+
+The separate Android compatibility project compiles the same changed infrastructure/managed
+package under ContinuousIntegrationBuild with zero warnings/errors (d192-android-probe-build.log).
+Its unchanged schema/native runtime checks were not repeated for unused Windows key code.

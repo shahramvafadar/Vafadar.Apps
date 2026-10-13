@@ -511,3 +511,13 @@ Recheck file/data/access/scope around native/render/cache awaits. Remove only th
 unpublished cache; preserve a file once native sharing starts because platform consumers may read later.
 Native fixtures are fictitious and restore original rows/bytes/display/cache; no recipient is selected.
 Encryption/OS-backup/provider/device acceptance and final release remain separately gated.
+
+## Data-key context and Windows protection (D-192)
+
+Profile/installation/generation IDs authenticate an OS-protected 32-byte DEK; neither keys nor
+installation security metadata enter portable preferences/backups or logs. This slice performs
+CurrentUser DPAPI wrapping only, with generated fictitious independent proof files; no live key
+store/provider activation. No network/permission/financial schema change. Official .NET ProtectedData
+10.0.12 is local Windows infrastructure; existing .NET notices cover it. Owned mutable key copies
+are cleared, without claiming whole-process erasure. Permanent Android/iOS OS exclusion is approved
+for completed encryption; not yet applied. Optional recovery material/UX remains to implement.

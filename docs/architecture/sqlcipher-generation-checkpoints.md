@@ -55,3 +55,9 @@ metadata database/schema or certify an unimplemented selector adapter.
 
 D-189 strict main Windows and Android builds pass with zero errors and warnings.
 Evidence: artifacts/native-sqlcipher/d189-{coordinator-tests,full-tests,windows-build,android-build}.log.
+
+## Current policy after D-192
+
+OD-04 and OD-10 are now approved, superseding their earlier pending references above. Continue
+native storage/migration/recovery engineering without asking these policies again. Windows key
+protection is implemented separately; durable session adapters and app activation remain incomplete.
