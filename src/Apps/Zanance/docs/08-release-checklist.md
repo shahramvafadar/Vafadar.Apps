@@ -990,3 +990,7 @@ provider/main recovery/OS policy or physical/iOS/full-crash release acceptance.
 D-201 whole-package receiver dispatch is available but unregistered in the app. Do not treat this
 as durable all-source restore or encrypted database activation; native package journal/recovery,
 portable-preference publication and application lease acceptance remain mandatory.
+
+D-202 receiver/capsule does not activate main encryption. Require covered exclusive startup/profile
+lease, durable catalogue/key reference publication, unfinished staging reconciliation, capsule replay
+before unlock and final rollback retention/recovery acceptance before registration/release.

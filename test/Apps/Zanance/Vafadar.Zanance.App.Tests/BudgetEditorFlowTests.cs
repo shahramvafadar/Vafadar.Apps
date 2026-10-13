@@ -125,7 +125,9 @@ public sealed class BudgetEditorFlowTests
         f.Localization.SetFormattingCulture("de-DE"); s.Editor.RefreshDisplay();
         if (retype) s.Editor.TotalText = "987,65";
         await s.Editor.SaveCommand.ExecuteAsync(null); Assert.Empty(f.Platform.Failures); Assert.Equal(expected, (await SavedAsync(s)).TotalLimit);
-        Assert.Equal(s.Budget.CategoryLimits.Select(l => l.Limit), (await SavedAsync(s)).CategoryLimits.Select(l => l.Limit));
+        // Category-limit children have no stored order; retain category/value identity across culture changes.
+        Assert.Equal(s.Budget.CategoryLimits.OrderBy(l => l.CategoryId).Select(l => (l.CategoryId, l.Limit)),
+            (await SavedAsync(s)).CategoryLimits.OrderBy(l => l.CategoryId).Select(l => (l.CategoryId, l.Limit)));
     }
 
     [Theory]

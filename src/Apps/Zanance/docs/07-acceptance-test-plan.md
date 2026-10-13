@@ -1861,3 +1861,32 @@ D-201 verification: 42 backup tests and the complete 3,282-test suite pass with 
 Strict Windows and Android builds pass with zero warnings/errors. Logs: artifacts/native-sqlcipher/
 d201-{backup-tests,full-tests,main-windows,main-android,test-clean}.log. No changed screens or native
 code: no UI/unchanged native matrix rerun and no phone acceptance claim.
+
+### AT-201 — Protected package preference replay (D-202)
+
+Managed behaviours cover missing/null values, imported device-key exclusion, malformed/oversized
+preferences, foreign allowlist refusal and idempotent replay after partial writes. Native package
+interruption/publication evidence is recorded separately; main application/device acceptance is open.
+
+D-202 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB fixture passed
+actual BackupService package receiver, first-schema/current model migrations, external kill after
+first native SharedPreferences committed value, reopened original/restored capsule, replay before
+actual protected factory publication and restored money/device-state checks. Encrypted preference
+and database rollback retained. Proof: artifacts/native-sqlcipher/build/android-d/android-migration-
+proof-96d1bcfdefd34c75b456534548dc4fa1.json, run 8cc8558c1a494c9f944d987e0e6b5445.
+The fixture uses its own named SharedPreferences with synchronous Commit; it does not certify the
+main MAUI adapter's asynchronous durability. Initial native compile lacked the MAUI preferences
+reference; corrected fixture to native isolated adapter without adding a production package/bundle.
+Native build zero warnings/errors; complete APK signature, ZIP and both reviewed ABI hashes pass;
+independent package uninstalled. Driver can use an explicitly existing built APK and checks packaged
+ABI identity before installation; no unchanged native suite or UI matrix rerun.
+
+D-202 final managed evidence: 119 infrastructure tests pass. The complete run executes 3,287 tests:
+3,286 pass and one pre-existing budget input-culture assertion fails because unordered child rows
+were compared by enumeration order. Correct the assertion to compare category/value pairs sorted
+by category identity (same established convention as the adjacent budget test). Focused rerun of
+both input-culture variants passes; do not describe the original full run as green or repeat the
+complete suite without another concern. Strict Windows/Android builds zero warnings/errors;
+test outputs cleaned. Logs under artifacts/native-sqlcipher/d202-{data-tests,full-tests,
+budget-order-tests,main-windows,main-android,test-clean}.log. Script parser and focused packaged
+ABI hash helper pass after driver-only edits; unchanged native/runtime matrices not repeated.

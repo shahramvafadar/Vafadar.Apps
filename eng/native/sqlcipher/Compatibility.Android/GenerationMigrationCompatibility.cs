@@ -21,6 +21,8 @@ internal static class GenerationMigrationCompatibility
         if (phase == "restore-staging") return await CheckRestoreStagingAsync(folder);
         if (phase == "restore-select") return await CheckRestoreStagingAsync(folder, select: true);
         if (phase == "restore-selected-resume") return await ResumeRestoreSelectionAsync(folder);
+        if (phase == "package-restore") return await CheckRestoreStagingAsync(folder, select: true, package: true);
+        if (phase == "package-resume") return await ResumePackageAsync(folder);
         var contextPath = Path.Combine(folder, "migration-context.txt");
         DatabaseGenerationCheckpoint initial;
         Guid installation;
@@ -117,7 +119,7 @@ internal static class GenerationMigrationCompatibility
         return "{\"CompleteMigration\":true,\"OriginalModelAndMoneyPreserved\":true,\"EncryptedRollbackRetained\":true,\"ExactPlaintextCleanup\":true}";
     }
 
-    private static async Task<string> CheckRestoreStagingAsync(string folder, bool select = false)
+    private static async Task<string> CheckRestoreStagingAsync(string folder, bool select = false, bool package = false)
     {
         if (Directory.Exists(folder)) throw new IOException("Use a fresh restore fixture directory.");
         Directory.CreateDirectory(folder);
@@ -202,6 +204,12 @@ internal static class GenerationMigrationCompatibility
                 var journal = new SqliteDatabaseGenerationJournal(Path.Combine(folder, "restore-selection.sqlite"), captured);
                 await journal.CreateNewAsync();
                 await File.WriteAllTextAsync(Path.Combine(folder, "restore-bindings.txt"), string.Join("\n", binding.ProfileId.ToString("N"), binding.InstallationId.ToString("N"), oldBinding.GenerationId.ToString("N"), binding.GenerationId.ToString("N")));
+                if (package)
+                {
+                    await RestorePackageAsync(folder, sourcePath, captured, journal, binding, keys,
+                        (SqliteConnection)current.Database.GetDbConnection());
+                    throw new IOException("Package interruption barrier unexpectedly returned.");
+                }
                 var selected = await SqlCipherRestoreSelection.SelectAsync(captured, journal, candidate, binding,
                     (SqliteConnection)current.Database.GetDbConnection(), keys, new AndroidGenerationFileDurability(folder),
                     () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
@@ -242,6 +250,111 @@ internal static class GenerationMigrationCompatibility
         finally { CryptographicOperations.ZeroMemory(key); }
         if (!File.Exists(Path.Combine(folder, "fictitious-current.cipher.db"))) throw new IOException("Restore selection deleted original current data.");
         return "{\"RestoreSelectedAfterProcessKill\":true,\"RestoredAndPreviousFinancialPacketsCorrect\":true,\"EncryptedRollbackAndOriginalRetained\":true,\"NoOldConnectionNeededOnSelectedRestart\":true}";
+    }
+
+    private static readonly string[] PackagePreferenceKeys = ["localization.language", "localization.culture"];
+
+    private static async Task RestorePackageAsync(string folder, string sourcePath, DatabaseGenerationCheckpoint captured,
+        SqliteDatabaseGenerationJournal journal, DatabaseKeyBinding binding, AndroidGenerationKeyStore keys, SqliteConnection current)
+    {
+        var settings = new NativePreferenceStore();
+        settings.Set(PackagePreferenceKeys[0], "fa"); settings.Set(PackagePreferenceKeys[1], "fa-IR");
+        settings.Set("device.fictitious.security", "keep-device-state");
+        var imported = new Vafadar.Core.Settings.InMemorySettingsStore();
+        imported.Set(PackagePreferenceKeys[0], "en"); imported.Set(PackagePreferenceKeys[1], "de-DE");
+        using var sourceServices = new ServiceCollection().AddZananceData(sourcePath).BuildServiceProvider();
+        var sources = sourceServices.GetServices<Vafadar.Backup.IBackupSource>().Append(
+            new Vafadar.Backup.SettingsBackupSource(imported, "display-settings.json", PackagePreferenceKeys));
+        var environment = new Vafadar.Core.Hosting.StaticAppEnvironment("pro.vafadar.zanance", "Zanance", new Version(1, 0), "Independent fixture", "Fixture");
+        var sourceBackup = new Vafadar.Backup.BackupService(sources, environment, imported, TimeProvider.System, new());
+        var portable = await sourceBackup.CreatePackageAsync();
+        var receiver = PackageReceiver(folder, captured, journal, binding, keys, new InterruptedPreferenceStore(settings, folder),
+            _ => Task.FromResult(current), _ => throw new IOException("Package publication occurred before the interruption barrier."));
+        var actualBackup = new Vafadar.Backup.BackupService([], [], environment, settings, TimeProvider.System, new(), receiver);
+        try { await actualBackup.RestorePackageAsync(portable); }
+        finally { CryptographicOperations.ZeroMemory(portable); }
+    }
+
+    private static SqlCipherPackageRestoreReceiver PackageReceiver(string folder, DatabaseGenerationCheckpoint captured,
+        SqliteDatabaseGenerationJournal journal, DatabaseKeyBinding binding, AndroidGenerationKeyStore keys,
+        Vafadar.Core.Settings.ISettingsStore settings, Func<CancellationToken, Task<SqliteConnection>> openCurrent,
+        Func<CancellationToken, Task> publish) => new(captured, journal, Path.Combine(folder, "package-restored.cipher.db"),
+        binding, keys, new AndroidGenerationFileDurability(folder), settings, PackagePreferenceKeys, openCurrent,
+        async (connection, ct) =>
+        {
+            var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
+                .UseModel(ZananceDbContextModel.Instance).Options;
+            await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
+        }, publish, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+
+    private static async Task<string> ResumePackageAsync(string folder)
+    {
+        var ids = (await File.ReadAllTextAsync(Path.Combine(folder, "restore-bindings.txt"))).Split('\n');
+        var binding = new DatabaseKeyBinding(Guid.ParseExact(ids[0], "N"), Guid.ParseExact(ids[1], "N"), Guid.ParseExact(ids[3], "N"));
+        var captured = new DatabaseGenerationCheckpoint(binding.ProfileId, Guid.ParseExact(ids[2], "N"), binding.GenerationId);
+        var journal = new SqliteDatabaseGenerationJournal(Path.Combine(folder, "restore-selection.sqlite"), captured);
+        var candidate = Path.Combine(folder, "package-restored.cipher.db"); var keys = new AndroidGenerationKeyStore(folder);
+        using var services = new ServiceCollection().AddZananceData(candidate).BuildServiceProvider();
+        var settings = new NativePreferenceStore();
+        if (settings.Get(PackagePreferenceKeys[0]) != "en" || settings.Get(PackagePreferenceKeys[1]) != "fa-IR")
+            throw new IOException("Actual partial preference write did not survive interruption.");
+        var key = await keys.ReadAsync(binding, CancellationToken.None);
+        try
+        {
+            var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+            var published = false;
+            var receiver = PackageReceiver(folder, captured, journal, binding, keys, settings,
+                _ => throw new IOException("Selected package restart requested old database access."),
+                _ =>
+                {
+                    if (settings.Get(PackagePreferenceKeys[0]) != "en" || settings.Get(PackagePreferenceKeys[1]) != "de-DE")
+                        throw new IOException("Database publication preceded complete preference replay.");
+                    location.MoveToProtected(candidate, () => new SqliteConnection(new SqliteConnectionStringBuilder
+                    { DataSource = candidate, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString()), "4.19.0");
+                    published = true; return Task.CompletedTask;
+                });
+            await receiver.ResumeAsync();
+            await using var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync();
+            if (!published || (await db.Entries.SingleAsync()).Amount != 730 || settings.Get("device.fictitious.security") != "keep-device-state")
+                throw new IOException("Actual restored package publication changed financial/device state.");
+            var capsule = new SqlCipherRestorePreferences(candidate + ".preferences.cipher.db", binding, keys,
+                new AndroidGenerationFileDurability(folder), "4.19.0", PackagePreferenceKeys);
+            var packet = await capsule.ReadAsync(() => { });
+            if (packet.Original[PackagePreferenceKeys[0]] != "fa" || packet.Original[PackagePreferenceKeys[1]] != "fa-IR")
+                throw new IOException("Original preference rollback packet was lost.");
+            foreach (var path in new[] { candidate + ".preferences.cipher.db", candidate + ".before-restore.cipher.db" })
+                if (!File.Exists(path) || (await File.ReadAllBytesAsync(path)).AsSpan().StartsWith("SQLite format 3"u8))
+                    throw new IOException("Protected package rollback missing or plaintext.");
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+        return "{\"ActualPackageReceiver\":true,\"PartialPlatformPreferencesSurvivedKill\":true,\"DurableReplayBeforeProtectedPublication\":true,\"FinancialAndDeviceStateCorrect\":true,\"EncryptedPreferenceAndDatabaseRollbackRetained\":true}";
+    }
+
+    private sealed class InterruptedPreferenceStore(Vafadar.Core.Settings.ISettingsStore inner, string folder) : Vafadar.Core.Settings.ISettingsStore
+    {
+        public string? Get(string key) => inner.Get(key);
+        public void Remove(string key) => inner.Remove(key);
+        public void Set(string key, string? value)
+        {
+            inner.Set(key, value);
+            // Actual platform Set is not a disk-flush promise. External observation/restart verifies this fixture.
+            File.WriteAllText(Path.Combine(folder, "package-partial.json"), "{\"ActualPartialPreferenceWrite\":true}");
+            using var barrier = new ManualResetEvent(false); barrier.WaitOne();
+        }
+    }
+
+    private sealed class NativePreferenceStore : Vafadar.Core.Settings.ISettingsStore
+    {
+        private readonly global::Android.Content.ISharedPreferences preferences = global::Android.App.Application.Context
+            .GetSharedPreferences("fictitious-package-restore", global::Android.Content.FileCreationMode.Private)!;
+        public string? Get(string key) => preferences.GetString(key, null);
+        public void Remove(string key) => Set(key, null);
+        public void Set(string key, string? value)
+        {
+            using var editor = preferences.Edit()!;
+            if (value is null) editor.Remove(key); else editor.PutString(key, value);
+            if (!editor.Commit()) throw new IOException("Fictitious native preferences commit failed.");
+        }
     }
 
     private static async Task CheckProtectedFactoryAsync(string path, byte[] key)

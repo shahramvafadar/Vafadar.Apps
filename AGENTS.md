@@ -1503,3 +1503,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   absent entries do not imply deletion. No receiver retains borrowed portable buffers after completion.
 * The service gate is not a global application lease. Receiver registration alone provides no durable
   package transaction; native staging, rollback, journal reconciliation and publication remain required.
+
+## 134. Protected package preference replay (D-202)
+
+* Stage the database and generation-bound encrypted original/restored portable-preference capsule
+  before selection. Reject unsupported sources before effects; absent portable values preserve current choices.
+* Resume selected packages without old connection or original portable input. Replay the exact allowlist
+  before protected publication under a covered exclusive application lease. Retain capsule/database rollback/key.
+* Platform preference writes alone are not durable completion. Startup must replay the capsule before unlock;
+  unfinished pre-capsule staging fails closed for reconciliation, not guessed overwrite or regenerated keys.

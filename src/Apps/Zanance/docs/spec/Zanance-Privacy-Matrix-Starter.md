@@ -602,3 +602,7 @@ candidate key is read, never regenerated on Selected resume. No original deletio
 portable key/credential, network/permission or main OS policy effect. Retain original/rollback/key
 until outer transaction owns safe retention. Full process/string/flash erasure not promised.
 Main unchanged/plaintext; package/catalogue/provider/recovery integration remains required.
+
+D-202: private SQLCipher restore capsule contains allowlisted previous/restored display preferences
+only, retained with candidate key/rollback for startup replay. No credentials/PIN or new permission/
+network SDK. Capsule is not a portable backup source; final main retention/OS policy remains open.

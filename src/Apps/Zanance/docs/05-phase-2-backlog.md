@@ -1154,3 +1154,7 @@ source rollback/retention/provider/main/all-profile/recovery/OS policy acceptanc
 D-201 connects an optional complete-package receiver to the actual BackupService after validation,
 without per-source fallback. Main registration, durable package staging/publication and SEC-01
 acceptance remain incomplete; this is not a new released restore feature.
+
+D-202 adds the protected two-source package receiver and retained encrypted preference replay.
+Main lifecycle/provider registration, pre-capsule interrupted staging reconciliation, global lease,
+safety/retention and recovery UI remain open; SEC-01 is not complete.

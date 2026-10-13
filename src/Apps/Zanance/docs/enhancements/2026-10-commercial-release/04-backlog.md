@@ -1564,3 +1564,8 @@ provider/startup/all-profile/recovery/OS policy not active. SEC-08 is not comple
 D-201: actual BackupService now has exclusive optional validated package dispatch with no legacy
 fallback and scoped decoded buffers. SEC-01/SEC-07 remain incomplete: register and implement the
 protected complete-package receiver, durable all-source recovery and final profile publication.
+
+D-202: protected package receiver composes database staging/selection and encrypted original/restored
+portable preferences with replay before endpoint publication. SEC-01/SEC-07 remain open: main provider/
+all-profile/startup registration, interrupted early-stage reconciliation, global lease and key/retention/
+recovery/OS exclusion acceptance remain.

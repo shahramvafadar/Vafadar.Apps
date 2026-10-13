@@ -1329,3 +1329,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added validated whole-package restore dispatch for the upcoming protected restore receiver.
   Main-app recovery behavior and database encryption are not activated by this change.
+
+### D-202 — Protected restore preparation
+
+- Added protected package recovery with retained original/restored display preferences and replay
+  before database access. This receiver is not yet activated for main application profiles.

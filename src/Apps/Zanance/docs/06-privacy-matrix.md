@@ -588,3 +588,8 @@ candidate key is read, never regenerated on Selected resume. No original deletio
 portable key/credential, network/permission or main OS policy effect. Retain original/rollback/key
 until outer transaction owns safe retention. Full process/string/flash erasure not promised.
 Main unchanged/plaintext; package/catalogue/provider/recovery integration remains required.
+
+D-202 operational restore capsule stores only allowlisted previous/restored display preferences,
+encrypted through reviewed SQLCipher with candidate device key. It is private, retained with rollback,
+not a portable source; no device PIN, credentials, SDK/network/permission additions. Main activation
+and final retention/OS-backup policy integration remain open.

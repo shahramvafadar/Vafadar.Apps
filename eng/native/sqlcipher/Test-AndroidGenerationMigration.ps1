@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '')
 $ErrorActionPreference = 'Stop'
 if ($ResumeRestoreSelectionRun -and -not $RestoreSelection) { throw 'Recorded selection resume requires the restore-selection mode.' }
@@ -19,8 +19,24 @@ $projectRoot = Join-Path $PSScriptRoot 'Compatibility.Android'
 $adb = Join-Path ${env:ProgramFiles(x86)} 'Android/android-sdk/platform-tools/adb.exe'
 $package = 'pro.vafadar.zanance.nativecompatibility'
 if (-not $ResumeRestoreSelectionRun) {
-    & dotnet build (Join-Path $projectRoot 'Vafadar.SqlCipher.Compatibility.Android.csproj') -c Release -p:ContinuousIntegrationBuild=true "-p:NativeCandidateDirectory=$candidate" *> (Join-Path $root 'android-migration-build.log')
-    if ($LASTEXITCODE -ne 0) { throw 'Independent complete migration build failed.' }
+    if (-not $UseExistingBuild) {
+        & dotnet build (Join-Path $projectRoot 'Vafadar.SqlCipher.Compatibility.Android.csproj') -c Release -p:ContinuousIntegrationBuild=true "-p:NativeCandidateDirectory=$candidate" *> (Join-Path $root 'android-migration-build.log')
+        if ($LASTEXITCODE -ne 0) { throw 'Independent complete migration build failed.' }
+    }
+    # Existing builds are explicitly caller-owned; verify both reviewed native slices inside the actual APK.
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $apkPath = Join-Path $projectRoot 'bin/Release/net10.0-android/pro.vafadar.zanance.nativecompatibility-Signed.apk'
+    $archive = [IO.Compression.ZipFile]::OpenRead($apkPath)
+    try {
+        foreach ($file in $manifest.files) {
+            $entry = $archive.GetEntry('lib/' + $file.abi + '/libsqlcipher.so')
+            if (-not $entry) { throw 'Complete APK is missing a reviewed native slice.' }
+            $stream = $entry.Open(); $digest = [Security.Cryptography.SHA256]::Create()
+            try { $actual = [BitConverter]::ToString($digest.ComputeHash($stream)).Replace('-', '').ToLowerInvariant() }
+            finally { $stream.Dispose(); $digest.Dispose() }
+            if ($actual -ne $file.sha256) { throw 'Complete APK differs from reviewed native slices.' }
+        }
+    } finally { $archive.Dispose() }
     & $adb -P $AdbPort -s $DeviceSerial install -r (Join-Path $projectRoot 'bin/Release/net10.0-android/pro.vafadar.zanance.nativecompatibility-Signed.apk') | Out-Host
     if ($LASTEXITCODE -ne 0) { throw 'Independent migration package installation failed.' }
 }
@@ -33,7 +49,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Barrier -eq 'restore-selected') { 300 } else { 100 }
+    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -41,7 +57,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
             & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -e ($folder + '/' + $name)
             if ($LASTEXITCODE -eq 0) { $report = [pscustomobject]@{ ActualCandidateCreationObserved = $true }; break }
         } else {
-            $path = if ($Barrier -in @('selected','restore-selected')) { $folder + $(if ($Barrier -eq 'restore-selected') { '/restore-selected.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
+            $path = if ($Barrier -in @('selected','restore-selected','package-partial')) { $folder + $(if ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
             $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
             if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
         }
@@ -60,9 +76,17 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-$scenarios = if ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+$scenarios = if ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
     $identity = if ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    if ($scenario -eq 'package-restore') {
+        $partial = Invoke-OwnedMigration 'package-restore' $identity 'package-partial'
+        if (-not $partial.ActualPartialPreferenceWrite) { throw 'Actual partial platform preference barrier missing.' }
+        $finished = Invoke-OwnedMigration 'package-resume' $identity
+        if (-not $finished.ActualPackageReceiver -or -not $finished.PartialPlatformPreferencesSurvivedKill -or -not $finished.DurableReplayBeforeProtectedPublication -or -not $finished.FinancialAndDeviceStateCorrect -or -not $finished.EncryptedPreferenceAndDatabaseRollbackRetained) { throw 'Actual package restore restart evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Interrupted = $partial; Result = $finished }
+        continue
+    }
     if ($scenario -eq 'restore-selection') {
         if ($ResumeRestoreSelectionRun) {
             $pidText = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()
