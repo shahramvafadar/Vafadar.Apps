@@ -1569,3 +1569,8 @@ D-202: protected package receiver composes database staging/selection and encryp
 portable preferences with replay before endpoint publication. SEC-01/SEC-07 remain open: main provider/
 all-profile/startup registration, interrupted early-stage reconciliation, global lease and key/retention/
 recovery/OS exclusion acceptance remain.
+
+D-203 connects lifetime ownership to the original local factory and base DbContext, with explicit
+maintenance contexts/publications. SEC-01 remains incomplete: main startup/all-profile orchestration,
+provider/candidate security acceptance, stable metadata/key lifetime, recovery/retention and final OS
+policy need completion. The unchanged default native dependency still requires replacement.

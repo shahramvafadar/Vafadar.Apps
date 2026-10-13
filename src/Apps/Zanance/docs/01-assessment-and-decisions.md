@@ -2720,3 +2720,31 @@ complete suite without another concern. Strict Windows/Android builds zero warni
 test outputs cleaned. Logs under artifacts/native-sqlcipher/d202-{data-tests,full-tests,
 budget-order-tests,main-windows,main-android,test-clean}.log. Script parser and focused packaged
 ABI hash helper pass after driver-only edits; unchanged native/runtime matrices not repeated.
+
+## D-203 — Actual factory lifetime maintenance gate
+
+**Decision.** Connect shared/exclusive ownership to the original DI factory and LocalDbContext
+disposal rather than relying only on the autopost semaphore or remembered connection paths. An
+exclusive request drains active contexts and blocks new admission; cancelled waiters release only
+their claim. Explicit maintenance contexts come from the same factory with the exact current owner.
+Owned queries and protected publication refuse retired ownership. Early owner disposal retains
+exclusion until its native context is disposed. Synchronous callers fail closed instead of blocking UI.
+
+**Reason.** Final migration/restore/profile publication cannot run while unrelated financial readers
+or writers still own native contexts. Cover/background coordination remains an application lifecycle
+responsibility. Main default-provider dependency was inspected and is still the SQLite bundle; its
+final replacement also needs native candidate acceptance, including the recorded Windows warnings.
+No production provider switch or main database encryption is claimed.
+
+D-203 final evidence: 125 infrastructure tests and all 3,293 tests pass (zero failures/skips).
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Actual Android x64 API36/4 KiB protected factory additionally creates an owned maintenance context,
+checks unchanged money, blocks ordinary admission, closes owner while its context is live, refuses
+its next native command, then admits the waiter only after native/context disposal. Complete APK
+signature and driver packaged native-ABI identity verify; owned package uninstalled and tests cleaned.
+Native proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-a146cb94724947fb84be6f20740f02aa.json,
+run 6c8e6cac24eb463e955482ba8ccd3d6c. The initial original-model observation expired; live PID 21141
+subsequently reported OriginalModelCreated/32. Continued the same fixture with explicit completed-model
+continuation, without recreating it. Preserve d203-native-factory.log and d203-native-factory-resume.log;
+no timeout restart. Other logs: d203-{data-tests,full-tests,main-windows,main-android,native-build,test-clean}.log.
+No UI/native crypto matrix rerun, main encryption activation or physical/iOS/performance acceptance.

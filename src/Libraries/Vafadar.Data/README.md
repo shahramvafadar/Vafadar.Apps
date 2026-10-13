@@ -52,3 +52,10 @@ protected EF options are not cached by path. Old EF contexts retire after every 
 Legacy MoveTo and plaintext online-copy backup cannot be used for protected generations. Compose
 native generation-aware backup/restore and application lifecycle before enabling this on live data.
 See [data architecture](../../../docs/architecture/data-and-backup.md) for evidence and limits.
+
+LocalDatabaseLocation.Access supplies explicit maintenance exclusion across its factory contexts.
+IDbContextFactory contexts hold ownership until Dispose/DisposeAsync. AcquireExclusiveAsync waits
+for them to close; sync creation fails while pending/active and async creation waits with cancellation.
+The same factory is registered as ILocalDbContextFactory for owned maintenance contexts. Pass the
+current owner to MoveTo/MoveToProtected during maintenance. Keep lifecycle covered and stop work
+outside the factory; the gate does not protect arbitrary native connections or encrypt files.

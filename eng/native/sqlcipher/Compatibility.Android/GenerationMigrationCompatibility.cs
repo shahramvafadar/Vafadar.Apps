@@ -399,6 +399,20 @@ internal static class GenerationMigrationCompatibility
         try { await backup.RestoreAsync(restore, CancellationToken.None); }
         catch (InvalidOperationException) { refused = true; }
         if (!refused || restore.Position != 0) throw new IOException("Legacy keyed restore consumed input.");
+        await first.DisposeAsync();
+        var owner = await location.Access.AcquireExclusiveAsync();
+        var owned = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(owner);
+        if ((await owned.Entries.SingleAsync()).Amount != 250) throw new IOException("Maintenance factory changed money.");
+        var waiting = factory.CreateDbContextAsync();
+        if (waiting.IsCompleted) throw new IOException("Ordinary factory entered active maintenance.");
+        owner.Dispose();
+        if (waiting.IsCompleted) throw new IOException("Closing owner released its live native context.");
+        refused = false;
+        try { await owned.Entries.SingleAsync(); } catch (InvalidOperationException) { refused = true; }
+        if (!refused) throw new IOException("Closed maintenance owner still issued native commands.");
+        await owned.DisposeAsync();
+        await using var released = await waiting;
+        if ((await released.Entries.SingleAsync()).Amount != 250) throw new IOException("Native context admission did not recover.");
     }
 
     private sealed class RetiringOutput(Action retire) : MemoryStream

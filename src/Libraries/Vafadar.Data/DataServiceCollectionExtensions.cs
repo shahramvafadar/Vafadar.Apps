@@ -28,6 +28,8 @@ public static class DataServiceCollectionExtensions
         services.TryAddSingleton<AuditingSaveChangesInterceptor>();
         services.AddSingleton(new LocalDatabaseLocation<TContext>(databasePath));
         services.AddSingleton<IDbContextFactory<TContext>, LocalDbContextFactory<TContext>>();
+        services.AddSingleton<ILocalDbContextFactory<TContext>>(provider =>
+            (ILocalDbContextFactory<TContext>)provider.GetRequiredService<IDbContextFactory<TContext>>());
         services.AddSingleton<IBackupSource, SqliteDatabaseBackupSource<TContext>>();
 
         return services;

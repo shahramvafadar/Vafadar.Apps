@@ -18,6 +18,9 @@ public sealed class LocalDatabaseLocation<TContext>
     private Endpoint _endpoint;
     private bool _protectionRequired;
 
+    /// <summary>Shared by every context from this location, including all local profile publications.</summary>
+    public DatabaseAccessGate Access { get; } = new();
+
     /// <summary>Creates the location with its first file.</summary>
     public LocalDatabaseLocation(string path)
     {
@@ -35,12 +38,13 @@ public sealed class LocalDatabaseLocation<TContext>
     /// Uses the database at <paramref name="path"/> from now on. Pooled connections to the old file are closed; apply
     /// migrations to the new file before reading it.
     /// </summary>
-    public void MoveTo(string path)
+    public void MoveTo(string path, DatabaseAccessGate.ExclusiveLease? owner = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var full = System.IO.Path.GetFullPath(path);
         lock (_gate)
         {
+            Access.RequirePublication(owner);
             if (_protectionRequired) throw new InvalidOperationException("Protected databases require a bound protected publication.");
             if (string.Equals(full, _endpoint.Path, StringComparison.Ordinal))
             {
@@ -57,13 +61,15 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Atomically publishes a verified encrypted generation and its captured key/access connection creator.</summary>
     /// <remarks>Caller verifies the generation first and owns key lifetime/access validation. The creator returns a new
     /// closed, unpooled ReadWrite connection to this exact existing file, never a plaintext fallback or Create mode.</remarks>
-    public void MoveToProtected(string path, Func<SqliteConnection> createConnection, string cipherVersion)
+    public void MoveToProtected(string path, Func<SqliteConnection> createConnection, string cipherVersion,
+        DatabaseAccessGate.ExclusiveLease? owner = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path); ArgumentNullException.ThrowIfNull(createConnection);
         ArgumentException.ThrowIfNullOrWhiteSpace(cipherVersion);
         var full = System.IO.Path.GetFullPath(path);
         lock (_gate)
         {
+            Access.RequirePublication(owner);
             LocalDatabasePools.ClearFile(_endpoint.Path);
             _protectionRequired = true;
             _endpoint = new(full, createConnection, cipherVersion);
@@ -88,27 +94,67 @@ public sealed class LocalDatabaseLocation<TContext>
 internal sealed class LocalDbContextFactory<TContext>(
     IServiceProvider services,
     LocalDatabaseLocation<TContext> location,
-    AuditingSaveChangesInterceptor interceptor) : IDbContextFactory<TContext>
+    AuditingSaveChangesInterceptor interceptor) : ILocalDbContextFactory<TContext>
     where TContext : LocalDbContext
 {
     private static readonly ObjectFactory Create = ActivatorUtilities.CreateFactory(typeof(TContext), [typeof(DbContextOptions<TContext>)]);
     private readonly ConcurrentDictionary<string, DbContextOptions<TContext>> _options = new(StringComparer.Ordinal);
 
     /// <inheritdoc />
-    public TContext CreateDbContext() => CreateCaptured(location.Capture());
-
-    /// <inheritdoc />
-    public Task<TContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
+    public TContext CreateDbContext()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        var captured = location.Capture();
-        return captured.CreateConnection is null ? Task.FromResult(CreateCaptured(captured))
-            : Task.Run(() => CreateCaptured(captured), cancellationToken);
+        var lease = location.Access.EnterRead(); return CreateLeased(location.Capture(), lease, null);
     }
 
-    private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured)
+    /// <inheritdoc />
+    public async Task<TContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
     {
-        if (captured.CreateConnection is null) return (TContext)Create(services, [_options.GetOrAdd(captured.Path, Build)]);
+        var lease = await location.Access.EnterReadAsync(cancellationToken).ConfigureAwait(false);
+        var captured = location.Capture();
+        try
+        {
+            return captured.CreateConnection is null ? CreateLeased(captured, lease, null)
+                : await Task.Run(() => CreateLeased(captured, lease, null), cancellationToken).ConfigureAwait(false);
+        }
+        catch { lease.Dispose(); throw; }
+    }
+
+    /// <inheritdoc />
+    public TContext CreateDbContext(DatabaseAccessGate.ExclusiveLease owner)
+    {
+        var lease = location.Access.EnterOwnedContext(owner); return CreateLeased(location.Capture(), lease, owner);
+    }
+
+    /// <inheritdoc />
+    public async Task<TContext> CreateDbContextAsync(DatabaseAccessGate.ExclusiveLease owner, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var lease = location.Access.EnterOwnedContext(owner); var captured = location.Capture();
+        try { return await Task.Run(() => CreateLeased(captured, lease, owner), cancellationToken).ConfigureAwait(false); }
+        catch { lease.Dispose(); throw; }
+    }
+
+    private TContext CreateLeased(LocalDatabaseLocation<TContext>.Endpoint captured, IDisposable lease,
+        DatabaseAccessGate.ExclusiveLease? owner)
+    {
+        try
+        {
+            var context = CreateCaptured(captured, owner); context.AttachAccessLease(lease); return context;
+        }
+        catch { lease.Dispose(); throw; }
+    }
+
+    private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ExclusiveLease? owner)
+    {
+        if (owner is not null) location.Access.RequireOwner(owner);
+        if (captured.CreateConnection is null)
+        {
+            var options = _options.GetOrAdd(captured.Path, Build);
+            if (owner is not null) options = new DbContextOptionsBuilder<TContext>(options)
+                .AddInterceptors(new ProtectedSqliteCommandInterceptor(() =>
+                { location.RequireCurrent(captured); location.Access.RequireOwner(owner); })).Options;
+            return (TContext)Create(services, [options]);
+        }
         location.RequireCurrent(captured);
         var connection = captured.CreateConnection();
         try
@@ -118,7 +164,7 @@ internal sealed class LocalDbContextFactory<TContext>(
             if (connection.State != System.Data.ConnectionState.Closed || options.Mode != SqliteOpenMode.ReadWrite || options.Pooling ||
                 string.IsNullOrEmpty(options.Password) || System.IO.Path.GetFullPath(options.DataSource) != captured.Path)
                 throw new InvalidOperationException("Protected creator returned an unsafe or foreign connection.");
-            Action validate = () => location.RequireCurrent(captured);
+            Action validate = () => { location.RequireCurrent(captured); if (owner is not null) location.Access.RequireOwner(owner); };
             ProtectedSqliteAccess.Register(connection, validate);
             // D-197: never cache a key-bearing options/connection string by path across key/profile publications.
             var configured = new DbContextOptionsBuilder<TContext>().UseSqlite(connection, contextOwnsConnection: true)

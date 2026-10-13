@@ -18,6 +18,28 @@ namespace Vafadar.Data;
 /// </remarks>
 public abstract class LocalDbContext : DbContext
 {
+    private IDisposable? accessLease;
+
+    /// <summary>Transfers exactly one factory lifetime lease to this context.</summary>
+    internal void AttachAccessLease(IDisposable lease)
+    {
+        if (accessLease is not null) throw new InvalidOperationException("Context already owns database access.");
+        accessLease = lease;
+    }
+
+    /// <inheritdoc />
+    public override void Dispose()
+    {
+        try { base.Dispose(); }
+        finally { Interlocked.Exchange(ref accessLease, null)?.Dispose(); }
+    }
+
+    /// <inheritdoc />
+    public override async ValueTask DisposeAsync()
+    {
+        try { await base.DisposeAsync().ConfigureAwait(false); }
+        finally { Interlocked.Exchange(ref accessLease, null)?.Dispose(); }
+    }
     /// <summary>Creates the context.</summary>
     protected LocalDbContext(DbContextOptions options)
         : base(options)

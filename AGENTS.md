@@ -1512,3 +1512,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   before protected publication under a covered exclusive application lease. Retain capsule/database rollback/key.
 * Platform preference writes alone are not durable completion. Startup must replay the capsule before unlock;
   unfinished pre-capsule staging fails closed for reconciliation, not guessed overwrite or regenerated keys.
+
+## 135. Factory lifetime maintenance exclusion (D-203)
+
+* Every original local-factory context owns one access lease until native/context disposal finishes.
+  Pending exclusive work stops reader admission, drains existing contexts and supports cancellation.
+* Maintenance contexts require the exact live owner from that location. Early owner disposal retires
+  commands/publication but cannot release other work until its owned contexts close. No reader bypass.
+* Publish with explicit ownership while maintenance is active. Covered lifecycle must coordinate
+  background work and native effects outside the factory; the gate does not encrypt data by itself.

@@ -1158,3 +1158,7 @@ acceptance remain incomplete; this is not a new released restore feature.
 D-202 adds the protected two-source package receiver and retained encrypted preference replay.
 Main lifecycle/provider registration, pre-capsule interrupted staging reconciliation, global lease,
 safety/retention and recovery UI remain open; SEC-01 is not complete.
+
+D-203 factory leases/owned maintenance contexts are connected to the actual DI/context disposal path.
+Main lifecycle/profile orchestration, provider adoption, key/retention/recovery/OS policy and SEC-01
+acceptance remain incomplete. No native warning acceptance or encryption activation follows.

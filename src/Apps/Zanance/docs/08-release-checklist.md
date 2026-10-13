@@ -994,3 +994,7 @@ portable-preference publication and application lease acceptance remain mandator
 D-202 receiver/capsule does not activate main encryption. Require covered exclusive startup/profile
 lease, durable catalogue/key reference publication, unfinished staging reconciliation, capsule replay
 before unlock and final rollback retention/recovery acceptance before registration/release.
+
+D-203 actual factory leases support maintenance exclusion. Still require covered startup/profile
+coordination, background cancellation/reconciliation, trusted direct-native work ownership and exact
+provider acceptance before activation. The gate alone is not encrypted database or device acceptance.

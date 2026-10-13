@@ -1009,3 +1009,39 @@ complete suite without another concern. Strict Windows/Android builds zero warni
 test outputs cleaned. Logs under artifacts/native-sqlcipher/d202-{data-tests,full-tests,
 budget-order-tests,main-windows,main-android,test-clean}.log. Script parser and focused packaged
 ABI hash helper pass after driver-only edits; unchanged native/runtime matrices not repeated.
+
+### Actual factory context lifetime exclusion (D-203)
+
+LocalDatabaseLocation.Access is one DatabaseAccessGate across all publications/profiles of the DI
+location. The original IDbContextFactory acquires read ownership before capturing the endpoint and
+transfers it to LocalDbContext, which releases exactly once after sync/async base disposal. Failed
+construction/cancelled credential work releases its own lease. No database/key work occurs on DI
+construction. Async readers wait with cancellation; sync readers fail closed while a writer is
+pending/active rather than blocking a UI thread. Pending writers prevent new reader admission.
+
+AcquireExclusiveAsync drains existing factory contexts before giving a captured owner. The same
+factory instance is additionally registered as ILocalDbContextFactory for explicit owned contexts.
+Owned commands validate gate ownership; protected commands also retain endpoint/key/access checks.
+Closing an owner rejects future owned commands and publications, but other readers/writers stay
+excluded until its live owned contexts finish disposal. A foreign/retired owner cannot bypass the
+factory. MoveTo/MoveToProtected require the active owner during maintenance; ordinary legacy
+publication outside maintenance remains unchanged. Main profile orchestration still needs to take
+this gate explicitly and keep the frame covered while suspending/reconciling background work.
+
+This is factory context exclusion, not a filesystem/process lock or protection of arbitrary direct
+native connections. EF context concurrent use/disposal is not supported. Key/provider/all-profile
+startup adoption, remaining Windows upstream warning review and final encryption acceptance stay
+open. Source selection alone does not authorize an unverified production provider switch.
+
+D-203 final evidence: 125 infrastructure tests and all 3,293 tests pass (zero failures/skips).
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Actual Android x64 API36/4 KiB protected factory additionally creates an owned maintenance context,
+checks unchanged money, blocks ordinary admission, closes owner while its context is live, refuses
+its next native command, then admits the waiter only after native/context disposal. Complete APK
+signature and driver packaged native-ABI identity verify; owned package uninstalled and tests cleaned.
+Native proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-a146cb94724947fb84be6f20740f02aa.json,
+run 6c8e6cac24eb463e955482ba8ccd3d6c. The initial original-model observation expired; live PID 21141
+subsequently reported OriginalModelCreated/32. Continued the same fixture with explicit completed-model
+continuation, without recreating it. Preserve d203-native-factory.log and d203-native-factory-resume.log;
+no timeout restart. Other logs: d203-{data-tests,full-tests,main-windows,main-android,native-build,test-clean}.log.
+No UI/native crypto matrix rerun, main encryption activation or physical/iOS/performance acceptance.

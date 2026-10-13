@@ -3,9 +3,11 @@
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
     [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild,
-    [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '')
+    [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
+    [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '')
 $ErrorActionPreference = 'Stop'
 if ($ResumeRestoreSelectionRun -and -not $RestoreSelection) { throw 'Recorded selection resume requires the restore-selection mode.' }
+if ($ResumeFactoryRun -and (-not $Factory -or $ResumeRestoreSelectionRun)) { throw 'Recorded factory continuation requires only the factory mode.' }
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
@@ -18,7 +20,7 @@ foreach ($file in $manifest.files) {
 $projectRoot = Join-Path $PSScriptRoot 'Compatibility.Android'
 $adb = Join-Path ${env:ProgramFiles(x86)} 'Android/android-sdk/platform-tools/adb.exe'
 $package = 'pro.vafadar.zanance.nativecompatibility'
-if (-not $ResumeRestoreSelectionRun) {
+if (-not $ResumeRestoreSelectionRun -and -not $ResumeFactoryRun) {
     if (-not $UseExistingBuild) {
         & dotnet build (Join-Path $projectRoot 'Vafadar.SqlCipher.Compatibility.Android.csproj') -c Release -p:ContinuousIntegrationBuild=true "-p:NativeCandidateDirectory=$candidate" *> (Join-Path $root 'android-migration-build.log')
         if ($LASTEXITCODE -ne 0) { throw 'Independent complete migration build failed.' }
@@ -78,7 +80,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
 $proofs = @()
 $scenarios = if ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
-    $identity = if ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    $identity = if ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
     if ($scenario -eq 'package-restore') {
         $partial = Invoke-OwnedMigration 'package-restore' $identity 'package-partial'
         if (-not $partial.ActualPartialPreferenceWrite) { throw 'Actual partial platform preference barrier missing.' }
@@ -107,7 +109,13 @@ foreach ($scenario in $scenarios) {
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $restored }
         continue
     }
-    $created = Invoke-OwnedMigration 'migration-create' $identity
+    if ($ResumeFactoryRun) {
+        $pidText = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()
+        if ($pidText -notmatch '^\d+$') { throw 'Recorded original-model process is no longer live.' }
+        & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -f ('files/native-compatibility/migration-proofs/' + $identity + '/migration-context.txt')
+        if ($LASTEXITCODE -ne 0) { throw 'Recorded original-model context is missing.' }
+        $created = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat files/result.json | Out-String) | ConvertFrom-Json
+    } else { $created = Invoke-OwnedMigration 'migration-create' $identity }
     if (-not $created.OriginalModelCreated -or $created.Migrations -ne 32) { throw 'Actual original model fixture missing.' }
     $prepared = Invoke-OwnedMigration 'migration-key-prepare' $identity
     if (-not $prepared.KeyDurablyPrepared) { throw 'Actual native protected key preparation missing.' }

@@ -1334,3 +1334,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added protected package recovery with retained original/restored display preferences and replay
   before database access. This receiver is not yet activated for main application profiles.
+
+### D-203 — Database maintenance ownership
+
+- Connected factory context lifetimes to cancellable maintenance exclusion so final encryption and
+  profile work can wait for active contexts to close. Main encryption activation remains unfinished.
