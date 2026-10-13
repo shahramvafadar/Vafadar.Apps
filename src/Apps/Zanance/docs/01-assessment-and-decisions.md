@@ -3215,3 +3215,41 @@ run 6f788670f1204d3d8e32072835e6a0a1. Created/Result all eight guards pass, with
 or unchanged native suite/UI matrix. ABI identities/signature verified; independent package uninstalled.
 Outputs cleaned after terminal tests/builds. This verifies captured existing profiles, not automatic
 new-profile creation, inactive restore policy/UI, main activation, physical/iOS or release acceptance.
+
+### D-219 — Initialize new profiles without plaintext financial files
+
+SqlCipherNewProfile creates the actual current schema in an unpooled in-memory database and exports
+bounded memory into verified encrypted candidate and rollback files. A dedicated new-profile intent
+captures explicit creation separately from existing-profile migration. Missing existing state never
+authorizes an empty replacement. Existing originals/sidecars, unknown ciphertext and foreign or
+selected ancestry fail closed before schema/key work. Native synchronization qualifies checkpoints
+and the no-replace rename into the existing generation journal. The normal current-generation owner
+then verifies the retained key before application publication.
+
+An interrupted unpublished empty-schema attempt may rebuild only under its captured KeyPrepared
+intent, using the existing key. The original financial path never exists on disk. Both encrypted
+packets are fully compared before selection; later ordinary writes are retained on cold open.
+This infrastructure is not yet registered in the main product's profile creation/startup. Main
+storage remains plaintext; provider adoption, lifecycle/catalogue registration, optional recovery,
+retention and coupled final OS backup policy remain unfinished. No new owner decision is required
+for this step; OD-04 and OD-10 remain the approved final policy.
+
+D-219 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB stops after
+actual durable key preparation and resumes the same captured new-profile intent. All 32 real
+migrations execute in memory; encrypted candidate/rollback match, original plaintext path is absent.
+The saved real settings row survives cold reopen. The prepared native key envelope SHA-256 is
+unchanged in both later processes; the cold key port cannot prepare keys. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-02ee3d0d3285402f86b1ba06858b6c33.json,
+run 0dbe974b57f94fe6975c57e9331aba71. Both packaged ABI hashes and APK signature verified; independent
+package uninstalled. No scenario restart or unchanged native suite/UI matrix. Strict final independent
+Release 56.86s, Windows 21.77s and Android 20.19s builds have zero warnings/errors.
+
+AT-219 managed guards reject existing originals, missing explicit intent and unknown ciphertext.
+Two initial fixture cases used a sibling directory outside the captured private database directory
+and failed before exercising their intended guards. Corrected fixture paths; all 166 Data tests
+pass in 1.94s. No application code changed for this correction, so native/build checks were retained.
+
+D-219 managed verification covers 3,340 cases: the full solution run passed all other assemblies
+and reported only the two new fixture-path failures (3m02s). After the fixture-only correction,
+all 166 Data cases pass with zero skips/failures. No unresolved failure remains; the unchanged
+assemblies were not rerun. Test output cleaned only after all builds/tests became terminal.

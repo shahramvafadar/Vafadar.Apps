@@ -1352,3 +1352,21 @@ All encrypted rollback/envelopes remain retained, and temporary key owners are d
 next profile. No intermediate application publication or fallback is added. New empty profile
 creation, full restore callback/lifecycle registration, covered main async startup, provider adoption,
 recovery/retention and OS policy remain open. Main application storage is still plaintext.
+
+### D-219 — Initialize new profiles without plaintext financial files
+
+SqlCipherNewProfile creates the actual current schema in an unpooled in-memory database and exports
+bounded memory into verified encrypted candidate and rollback files. A dedicated new-profile intent
+captures explicit creation separately from existing-profile migration. Missing existing state never
+authorizes an empty replacement. Existing originals/sidecars, unknown ciphertext and foreign or
+selected ancestry fail closed before schema/key work. Native synchronization qualifies checkpoints
+and the no-replace rename into the existing generation journal. The normal current-generation owner
+then verifies the retained key before application publication.
+
+An interrupted unpublished empty-schema attempt may rebuild only under its captured KeyPrepared
+intent, using the existing key. The original financial path never exists on disk. Both encrypted
+packets are fully compared before selection; later ordinary writes are retained on cold open.
+This infrastructure is not yet registered in the main product's profile creation/startup. Main
+storage remains plaintext; provider adoption, lifecycle/catalogue registration, optional recovery,
+retention and coupled final OS backup policy remain unfinished. No new owner decision is required
+for this step; OD-04 and OD-10 remain the approved final policy.

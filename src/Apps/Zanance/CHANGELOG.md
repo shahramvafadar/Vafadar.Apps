@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Encrypted new-profile initialization (2026-10-13, D-219)
+
+- Added new-profile schema creation entirely in memory, with encrypted files from the first disk write.
+- Added restart handling that retains the prepared device key and refuses empty replacements of existing data.
+- This remains independent infrastructure; encryption of the main app is not activated yet.
+
 ### Development - Protected restored-data selection (2026-10-13, D-200)
 
 - Added verified encrypted previous-data rollback before selecting a restored database.

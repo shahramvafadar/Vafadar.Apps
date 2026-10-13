@@ -54,6 +54,23 @@ public sealed class ProfileGenerationBootstrapTests
 
     private static LocalDatabaseLocation<TestDbContext> Location(TestDatabase db) => db.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
 
+    [Theory, InlineData("existing-original"), InlineData("missing-intent"), InlineData("unknown-ciphertext"), Trait("AT", "AT-219")]
+    public async Task Empty_profile_creation_never_replaces_existing_data_or_guesses_missing_intent(string scenario)
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var identities = new SqliteDatabaseIdentityCatalogue(db.PathOf("identities.sqlite"), owner.Validate);
+        await identities.CreateNewAsync([""], Ct); var identity = Assert.Single(await identities.ReadAsync(Ct));
+        var original = scenario == "existing-original" ? location.Path : Path.Combine(Path.GetDirectoryName(location.Path)!, "new.db");
+        var candidate = original + "." + identity.CandidateGeneration.ToString("N") + ".cipher.db";
+        if (scenario == "unknown-ciphertext") await File.WriteAllBytesAsync(candidate, [1, 2, 3], Ct);
+        await Assert.ThrowsAsync<IOException>(async () => _ = await SqlCipherNewProfile.OpenAsync(location, identities, "", original,
+            scenario != "missing-intent", new NoKeys(), new NoDurability(), (_, _) => throw new InvalidOperationException("Unexpected schema construction."),
+            owner, () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.True(File.Exists(location.Path)); Assert.False(File.Exists(original + ".new-profile.sqlite"));
+        Assert.False(File.Exists(original + ".generation.sqlite"));
+        if (scenario == "unknown-ciphertext") Assert.Equal(new byte[] { 1, 2, 3 }, await File.ReadAllBytesAsync(candidate, Ct));
+    }
+
     [Fact, Trait("AT", "AT-217")]
     public async Task Missing_installation_with_existing_migration_state_cannot_generate_replacement_bindings()
     {

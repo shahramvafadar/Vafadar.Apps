@@ -25,6 +25,8 @@ internal static class GenerationMigrationCompatibility
         if (phase is "settings-create" or "settings-reopen")
             return await SettingsPersistenceCompatibility.RunAsync(folder, phase == "settings-create");
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+        if (phase is "new-profile-create" or "new-profile-resume" or "new-profile-reopen")
+            return await NewProfileCompatibility.RunAsync(folder, phase);
         if (phase is "all-profiles-create" or "all-profiles-reopen")
             return await ProfileBootstrapCompatibility.RunAsync(folder, phase == "all-profiles-create");
         if (phase is "bootstrap-intent" or "bootstrap-create" or "bootstrap-reopen") return await InitialGenerationCompatibility.RunAsync(folder, phase);
