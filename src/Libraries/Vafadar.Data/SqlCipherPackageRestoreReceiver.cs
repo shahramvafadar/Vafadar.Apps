@@ -27,6 +27,19 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
     private readonly SqliteProfileRestoreHistory? history;
     private readonly Func<CancellationToken, Task> persistPreferences;
 
+    /// <summary>The immutable device binding used to validate retained restore publication.</summary>
+    internal DatabaseKeyBinding Binding => binding;
+    /// <summary>The exact captured endpoint; never inferred from a directory listing.</summary>
+    internal string CandidatePath => candidate;
+    /// <summary>The actual captured transition used by this package.</summary>
+    internal DatabaseGenerationCheckpoint Captured => captured;
+    /// <summary>Rejects untracked or differently captured history before resuming any platform effects.</summary>
+    internal void RequireHistory(SqliteProfileRestoreHistory expected)
+    {
+        if (history is null || !history.IsSameStore(expected))
+            throw new InvalidOperationException("Retained generation requires the receiver's exact restore history.");
+    }
+
     /// <summary>Captures the actual generation, current connection owner and covered final publication effects.</summary>
     /// <remarks>The openCurrent callback transfers a registered open connection for receiver disposal. The
     /// publish callback owns the selected key/endpoint lifetime beyond this call; it must not expose access before replay.
@@ -82,6 +95,12 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
 
     /// <summary>Resumes an already prepared package; reapplies durable allowlisted preferences before publishing the selected database.</summary>
     public async Task ResumeAsync(CancellationToken ct = default)
+        => await ResumeCoreAsync(true, ct).ConfigureAwait(false);
+
+    /// <summary>Finishes actual replay without invoking an earlier host publication callback.</summary>
+    internal Task ResumeForGenerationAsync(CancellationToken ct) => ResumeCoreAsync(false, ct);
+
+    private async Task ResumeCoreAsync(bool publishAccess, CancellationToken ct)
     {
         Check(ct); var packet = await preferences.ReadAsync(validate, ct).ConfigureAwait(false); Check(ct);
         if (history is not null) await history.RequireAsync(captured, ct).ConfigureAwait(false);
@@ -97,7 +116,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
             await preferences.MarkAppliedAsync(validate, ct).ConfigureAwait(false); Check(ct);
         }
         if (history is not null) await history.RecordSelectedAsync(captured, journal, ct).ConfigureAwait(false);
-        await publish(ct).ConfigureAwait(false);
+        if (publishAccess) await publish(ct).ConfigureAwait(false);
         // Publication may retire the previous access endpoint. The host keeps the cover until this task returns.
         // Do not mark migration Completed: original/capsule/rollback retention belongs to final package lifecycle.
     }

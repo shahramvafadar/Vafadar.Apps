@@ -1594,3 +1594,20 @@ actual MAUI Essentials 10.0.110 in the independent Android package. It writes on
 checks cancellation, terminates the process, verifies a retained value and removed key in a cold
 process, then cleans its own values. This is Android x64 API36/4 KiB evidence, not phone, iOS,
 hardware-key, whole-application encryption or product-release acceptance.
+### D-211 — Retain the restored generation through cold startup composition
+
+SqlCipherProfileGeneration.OpenRestoredAsync resumes the actual latest package under the current
+location's exclusive maintenance owner. It requires the receiver's exact private restore-history
+store and installation/profile key namespace before native effects. Pending preference replay and
+actual candidate/rollback/journal verification finish before retaining the exact existing key.
+Readback requires the latest selected target; missing or mismatched history fails closed. No original
+or initial-generation fallback, key preparation, directory guessing or early publication is added.
+The retained key owner verifies the provider/integrity again and publishes through the same original
+protected factory lifetime used by initial migration. Its disposal still refuses new connections.
+
+The receiver has an internal no-publication resume path for this composition. A stale publication
+callback from another process is never invoked; the current host publishes only after obtaining the
+retained key owner. The public restore entry retains its existing behavior. Automatic all-profile
+startup routing, main provider adoption, early staging reconciliation, optional recovery and retained
+file/key lifecycle remain open. Main application storage remains plaintext. This change is not a
+claim of complete encryption, device/iOS/OAuth or release acceptance.

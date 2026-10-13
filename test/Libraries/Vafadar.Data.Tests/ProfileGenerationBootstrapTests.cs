@@ -53,6 +53,31 @@ public sealed class ProfileGenerationBootstrapTests
     }
 
     private static LocalDatabaseLocation<TestDbContext> Location(TestDatabase db) => db.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-210")]
+    public async Task Restored_owner_rejects_foreign_history_or_installation_before_native_effects(bool foreignInstallation)
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var initial = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var history = new SqliteProfileRestoreHistory(db.PathOf("restore-history.sqlite"), initial, owner.Validate);
+        await history.CreateNewAsync(Ct);
+        var captured = new DatabaseGenerationCheckpoint(initial.ProfileId, initial.GenerationId, Guid.NewGuid());
+        await history.ReserveAsync(captured, Ct);
+        var binding = new DatabaseKeyBinding(initial.ProfileId, foreignInstallation ? Guid.NewGuid() : initial.InstallationId, captured.CandidateGeneration);
+        var receiverHistory = foreignInstallation ? history : new SqliteProfileRestoreHistory(db.PathOf("other-history.sqlite"), initial, owner.Validate);
+        var receiver = new SqlCipherPackageRestoreReceiver(captured,
+            new SqliteDatabaseGenerationJournal(db.PathOf("restore-journal.sqlite"), captured), db.PathOf("candidate.db"),
+            binding, new NoKeys(), new NoDurability(), new Vafadar.Core.Settings.InMemorySettingsStore(), ["language"],
+            _ => throw new InvalidOperationException("Unexpected current open."),
+            (_, _) => throw new InvalidOperationException("Unexpected upgrade."),
+            _ => throw new InvalidOperationException("Unexpected publication."), owner.Validate, 1024 * 1024, "4.19.0",
+            _ => throw new InvalidOperationException("Unexpected persistence."), receiverHistory);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => SqlCipherProfileGeneration.OpenRestoredAsync(location, history,
+            receiver, new NoKeys(), owner, () => { }, "4.19.0", Ct));
+        Assert.True(File.Exists(location.Path)); Assert.False(File.Exists(db.PathOf("candidate.db")));
+        Assert.False(File.Exists(db.PathOf("restore-journal.sqlite")));
+        Assert.False((await history.ReadAsync(Ct))[^1].Selected);
+    }
     private sealed class NoKeys : IDatabaseGenerationKeyStore
     {
         public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new InvalidOperationException("Unexpected key preparation.");

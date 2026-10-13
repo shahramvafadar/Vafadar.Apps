@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 
 namespace Vafadar.Data;
 
-/// <summary>Owns one verified initial protected generation and its retained mutable device key.</summary>
+/// <summary>Owns one verified protected generation and its retained mutable device key.</summary>
 /// <remarks>Hosts retain this owner while published, drain contexts before disposal and separately resolve later
 /// restored generations. Native provider, all-profile startup, PIN/recovery UI and retained-file policy are not activated here.</remarks>
 public sealed class SqlCipherProfileGeneration : IDisposable
@@ -70,6 +70,46 @@ public sealed class SqlCipherProfileGeneration : IDisposable
                 throw new InvalidDataException("Retained key generation integrity failed.");
             Validate();
             return new(session.CandidatePath, cipherVersion, state.Identity.InitialCandidateKey, key, validateAccess);
+        }
+        catch { CryptographicOperations.ZeroMemory(key); throw; }
+    }
+
+    /// <summary>Resumes the latest recorded restored package and retains its exact existing key for publication.</summary>
+    /// <remarks>The host chooses this route whenever restore history contains an intent. Missing or incomplete
+    /// state fails closed; never reopen the initial generation as a fallback. Existing contexts must be drained.</remarks>
+    public static async Task<SqlCipherProfileGeneration> OpenRestoredAsync<TContext>(LocalDatabaseLocation<TContext> location,
+        SqliteProfileRestoreHistory history, SqlCipherPackageRestoreReceiver receiver, IDatabaseGenerationKeyStore keys,
+        DatabaseAccessGate.ExclusiveLease owner, Action validateAccess, string cipherVersion, CancellationToken ct = default)
+        where TContext : LocalDbContext
+    {
+        ArgumentNullException.ThrowIfNull(history); ArgumentNullException.ThrowIfNull(receiver);
+        ArgumentNullException.ThrowIfNull(keys); ArgumentNullException.ThrowIfNull(location);
+        ArgumentNullException.ThrowIfNull(owner); ArgumentNullException.ThrowIfNull(validateAccess);
+        ArgumentException.ThrowIfNullOrWhiteSpace(cipherVersion);
+        void Validate() => Check(location, owner, validateAccess, ct);
+        Validate(); receiver.RequireHistory(history); history.RequireBinding(receiver.Binding);
+        await history.RequireAsync(receiver.Captured, ct).ConfigureAwait(false); Validate();
+        // Resume verifies actual candidate/rollback and durable preference replay. Publication belongs to
+        // this retained key owner, not a receiver callback captured before a cold process restart.
+        await receiver.ResumeForGenerationAsync(ct).ConfigureAwait(false); Validate();
+        var latest = (await history.ReadAsync(ct).ConfigureAwait(false))[^1];
+        if (!latest.Selected || latest.CandidateGeneration != receiver.Binding.GenerationId)
+            throw new IOException("Latest restore intent has not completed selected publication prerequisites.");
+        var key = await keys.ReadAsync(receiver.Binding, ct).ConfigureAwait(false);
+        try
+        {
+            Validate(); if (key.Length != 32) throw new CryptographicException("Selected restore key is invalid.");
+            await using var reopened = new SqliteConnection(new SqliteConnectionStringBuilder
+            { DataSource = receiver.CandidatePath, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ToString());
+            await reopened.OpenAsync(ct).ConfigureAwait(false);
+            using var check = reopened.CreateCommand(); check.CommandText = "PRAGMA cipher_version";
+            if ((Convert.ToString(await check.ExecuteScalarAsync(ct).ConfigureAwait(false)) ?? "").Split(' ')[0] != cipherVersion)
+                throw new InvalidDataException("Restored owner requires the reviewed cipher provider.");
+            check.CommandText = "PRAGMA integrity_check";
+            if (!string.Equals(await check.ExecuteScalarAsync(ct).ConfigureAwait(false) as string, "ok", StringComparison.Ordinal))
+                throw new InvalidDataException("Retained restore key integrity failed.");
+            Validate(); await history.RequireAsync(receiver.Captured, ct).ConfigureAwait(false); Validate();
+            return new(receiver.CandidatePath, cipherVersion, receiver.Binding, key, validateAccess);
         }
         catch { CryptographicOperations.ZeroMemory(key); throw; }
     }

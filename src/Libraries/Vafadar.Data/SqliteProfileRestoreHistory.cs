@@ -69,6 +69,17 @@ public sealed class SqliteProfileRestoreHistory
             throw new InvalidOperationException("Package receiver does not own the latest restore reference.");
     }
 
+    /// <summary>Requires the same stable installation/profile key namespace before restore effects.</summary>
+    internal void RequireBinding(DatabaseKeyBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        if (binding.InstallationId != initial.InstallationId || binding.ProfileId != initial.ProfileId)
+            throw new InvalidOperationException("Restore key binding belongs to another installation or profile.");
+    }
+
+    /// <summary>Matches the private reference store captured by the receiver, without reading any key.</summary>
+    internal bool IsSameStore(SqliteProfileRestoreHistory other) => path == other.path && initial == other.initial;
+
     /// <summary>Mirrors actual selected journal state after receiver key/file verification; this is not preference durability or package completion.</summary>
     internal async Task RecordSelectedAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal, CancellationToken ct)
     {

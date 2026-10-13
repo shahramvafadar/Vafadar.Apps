@@ -1290,3 +1290,32 @@ The Windows PowerShell 5 observer stopped on expected temporary missing result s
 live process later produced both creation success flags. Only its cold-reopen phase was launched,
 without recreating the fixture. Independent signed APK verified; package uninstalled afterward.
 Strict Windows/Android/independent Release builds report zero warnings and errors.
+### D-211 — Retain the restored generation through cold startup composition
+
+SqlCipherProfileGeneration.OpenRestoredAsync resumes the actual latest package under the current
+location's exclusive maintenance owner. It requires the receiver's exact private restore-history
+store and installation/profile key namespace before native effects. Pending preference replay and
+actual candidate/rollback/journal verification finish before retaining the exact existing key.
+Readback requires the latest selected target; missing or mismatched history fails closed. No original
+or initial-generation fallback, key preparation, directory guessing or early publication is added.
+The retained key owner verifies the provider/integrity again and publishes through the same original
+protected factory lifetime used by initial migration. Its disposal still refuses new connections.
+
+The receiver has an internal no-publication resume path for this composition. A stale publication
+callback from another process is never invoked; the current host publishes only after obtaining the
+retained key owner. The public restore entry retains its existing behavior. Automatic all-profile
+startup routing, main provider adoption, early staging reconciliation, optional recovery and retained
+file/key lifecycle remain open. Main application storage remains plaintext. This change is not a
+claim of complete encryption, device/iOS/OAuth or release acceptance.
+D-211 evidence: two managed guards reject foreign history/installation before key/file effects;
+all 3,318 tests pass (zero failures/skips, 3m07s). Strict Windows 30.69s, Android 56.77s and
+independent Release 82.66s builds have zero warnings/errors. Signed Release AOT/trim Android
+x64 API36/4 KiB runs the modified actual package restore: external partial-write interruption,
+pending resume into the retained owner, real protected factory money 730 and device-state checks,
+then cold Applied reopen preserving later choices. The obsolete publish callback throws if called;
+both opens succeed without calling it. Exact restored binding/path are asserted before publication.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-e008a03fbb624134aa6ce18f65354aeb.json,
+run bcd5d26ed6ad4da48fe20a7476f0854d. Signature/reviewed ABI identities verified; independent
+package uninstalled. Test outputs cleaned after terminal builds. No unchanged native producer suite,
+UI matrix or main phone APK was repeated. Main automatic startup routing/provider activation and
+recovery/retention remain open; this is not complete application encryption or physical-device acceptance.

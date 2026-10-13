@@ -308,3 +308,12 @@ first schema/32 migrations and financial packets remain correct. Source ReadWrit
 is required for writable attached-memory export under exclusive lease; no ledger writes. Encrypted
 rollback retained. Main lifecycle/provider/all-profile/recovery/OS exclusion remains incomplete;
 this does not accept hardware power loss, disk matrix, Windows/iOS effects or product release.
+
+## D-211 restored generation owner
+
+The actual package receiver can resume before publication into a retained generation key owner.
+Require its exact reference store and installation/profile namespace; replay pending preferences
+durably, verify candidate/rollback and latest selection, then retain/reopen the existing key.
+Never invoke a publication callback retained from a prior process or fall back to an initial
+generation. Main startup/provider, early staging reconciliation, recovery/retention and platform
+acceptance remain engineering work. No new owner policy decision or main activation follows.

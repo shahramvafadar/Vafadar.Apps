@@ -1373,3 +1373,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 ### D-210 - Android recovery preference persistence
 
 Prepared real durable Android preference writes for protected recovery. Database encryption remains inactive pending final integration.
+
+### D-211 - Restored database lifetime
+
+Prepared cold startup ownership for restored encrypted data without replaying obsolete publication callbacks. Main encryption activation remains pending.

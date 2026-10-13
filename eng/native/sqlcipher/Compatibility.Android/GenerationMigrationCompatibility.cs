@@ -334,15 +334,15 @@ internal static class GenerationMigrationCompatibility
             }
             var receiver = PackageReceiver(folder, captured, journal, binding, keys, settings,
                 _ => throw new IOException("Selected package restart requested old database access."),
-                _ =>
-                {
-                    if (settings.Get(PackagePreferenceKeys[0]) != (applied ? "fr" : "en") || settings.Get(PackagePreferenceKeys[1]) != (applied ? "en-GB" : "de-DE"))
-                        throw new IOException("Database publication preceded complete preference replay.");
-                    location.MoveToProtected(candidate, () => new SqliteConnection(new SqliteConnectionStringBuilder
-                    { DataSource = candidate, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString()), "4.19.0");
-                    published = true; return Task.CompletedTask;
-                }, applied ? (_ => throw new IOException("Completed replay must not persist old preferences.")) : null);
-            await receiver.ResumeAsync();
+                _ => throw new IOException("Cold retained owner must not invoke an old publication callback."),
+                applied ? (_ => throw new IOException("Completed replay must not persist old preferences.")) : null);
+            using var maintenance = await location.Access.AcquireExclusiveAsync();
+            using var restored = await SqlCipherProfileGeneration.OpenRestoredAsync(location, history, receiver, keys,
+                maintenance, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, "4.19.0");
+            if (settings.Get(PackagePreferenceKeys[0]) != (applied ? "fr" : "en") || settings.Get(PackagePreferenceKeys[1]) != (applied ? "en-GB" : "de-DE"))
+                throw new IOException("Retained owner preceded complete preference replay.");
+            if (restored.Binding != binding || restored.Path != candidate) throw new IOException("Restored owner selected another generation.");
+            restored.Publish(location, maintenance); published = true; maintenance.Dispose();
             var references = await history.ReadAsync();
             if (references.Count != 2 || !references[^1].Selected || references[^1].OriginalGeneration != captured.OriginalGeneration || references[^1].CandidateGeneration != binding.GenerationId)
                 throw new IOException("Selected restore references changed or lost ancestry.");
