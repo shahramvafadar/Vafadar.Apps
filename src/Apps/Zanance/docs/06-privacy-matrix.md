@@ -601,3 +601,8 @@ No SDK/permission/network change. Main activation and final OS backup exclusion 
 D-208 private restore reference history retains non-secret installation/profile/parent/target GUIDs,
 sequence and selected-reference flag only. No keys, names, finance, paths, credentials or portable
 entry; no SDK/network/permission changes. Main/final OS-policy and pruning remain open.
+
+D-210: Android stores one device-local random preference persistence-generation marker to force
+a checked synchronous snapshot write after MAUI asynchronous writes. It carries no financial
+value, credential or user identifier and is excluded by the portable preference allowlist.
+No new permission, network SDK or main encryption activation is introduced.

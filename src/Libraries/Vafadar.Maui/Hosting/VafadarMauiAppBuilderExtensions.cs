@@ -90,6 +90,9 @@ public static class VafadarMauiAppBuilderExtensions
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton(Preferences.Default);
         services.TryAddSingleton<ISettingsStore, MauiSettingsStore>();
+#if ANDROID
+        services.TryAddSingleton<ISettingsPersistence, AndroidSettingsPersistence>();
+#endif
         services.TryAddSingleton<IAppEnvironment>(new MauiAppEnvironment(options.AppId));
         services.TryAddSingleton<Security.IDeviceAuthenticator, Security.DeviceAuthenticator>();
         services.AddVafadarLocalization(options.ConfigureLocalization);

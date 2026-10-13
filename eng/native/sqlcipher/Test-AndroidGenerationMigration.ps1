@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '')
@@ -80,9 +80,17 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-$scenarios = if ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+$scenarios = if ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
     $identity = if ($ResumeBootstrapRun) { $ResumeBootstrapRun } elseif ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    if ($scenario -eq 'settings-persistence') {
+        $created = Invoke-OwnedMigration 'settings-create' $identity
+        if (-not $created.OriginalMauiWritesPersisted -or -not $created.CanceledPersistenceRejected) { throw 'Original MAUI persistence evidence missing.' }
+        $finished = Invoke-OwnedMigration 'settings-reopen' $identity
+        if (-not $finished.OriginalMauiValueRetainedAfterRestart -or -not $finished.RemovalRetainedAfterRestart) { throw 'Original MAUI cold persistence evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Result = $finished }
+        continue
+    }
     if ($scenario -eq 'initial-bootstrap') {
         if ($ResumeBootstrapRun) {
             $pidText = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()

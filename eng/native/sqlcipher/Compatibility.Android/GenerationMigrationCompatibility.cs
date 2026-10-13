@@ -17,6 +17,8 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "settings-create" or "settings-reopen")
+            return await SettingsPersistenceCompatibility.RunAsync(folder, phase == "settings-create");
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
         if (phase is "bootstrap-create" or "bootstrap-reopen") return await InitialGenerationCompatibility.RunAsync(folder, phase == "bootstrap-create");
         if (phase is "identity-create" or "identity-reopen") return await IdentityCatalogueCompatibility.RunAsync(folder, phase == "identity-create");

@@ -1598,3 +1598,21 @@ key/rollback/reference retention/deletion/recovery and OS policy remain; main is
 D-209 fixes protected replay overriding later preferences, with actual-persistence-before-marker
 ordering. Main durable platform effects/live resolver/provider/startup, key/rollback/reference
 retention/recovery/deletion and OS policy remain; main databases are plaintext.
+
+### D-210 — Persist original Android MAUI preferences before recovery completion
+
+The Android host now registers ISettingsPersistence against the exact Preferences.Default backend
+used by MAUI 10.0.110. Native PreferenceManager selects the same default SharedPreferences; a custom
+IPreferences backend is refused rather than writing a guessed file. Persistence runs off the UI thread.
+A fresh device-local operational marker forces a real snapshot write, rather than an empty editor
+that may skip writing. Commit failure or cancellation throws; the protected receiver must not mark
+its capsule Applied or publish until this completes under exclusive preference-writer ownership.
+The marker is neither a secret nor a portable preference. Windows/iOS persistence, live generation
+resolution, final provider/startup/recovery and sensitive-file OS exclusion remain open. The main
+application database remains plaintext; registration alone does not activate encryption.
+
+Focused acceptance compiles the original MauiSettingsStore and native persistence adapter with
+actual MAUI Essentials 10.0.110 in the independent Android package. It writes only fictitious values,
+checks cancellation, terminates the process, verifies a retained value and removed key in a cold
+process, then cleans its own values. This is Android x64 API36/4 KiB evidence, not phone, iOS,
+hardware-key, whole-application encryption or product-release acceptance.

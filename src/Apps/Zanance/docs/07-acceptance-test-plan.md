@@ -2039,3 +2039,31 @@ D-209 final managed evidence: 142 infrastructure tests and all 3,316 tests pass 
 skips. Strict main Windows/Android and independent Release builds have zero warnings/errors.
 Test outputs cleaned after both main builds completed. Logs: d209-{data-tests,full-tests,
 main-windows,main-android,native-build,native-replay,test-clean}.log. Driver parser passes.
+
+### D-210 — Persist original Android MAUI preferences before recovery completion
+
+The Android host now registers ISettingsPersistence against the exact Preferences.Default backend
+used by MAUI 10.0.110. Native PreferenceManager selects the same default SharedPreferences; a custom
+IPreferences backend is refused rather than writing a guessed file. Persistence runs off the UI thread.
+A fresh device-local operational marker forces a real snapshot write, rather than an empty editor
+that may skip writing. Commit failure or cancellation throws; the protected receiver must not mark
+its capsule Applied or publish until this completes under exclusive preference-writer ownership.
+The marker is neither a secret nor a portable preference. Windows/iOS persistence, live generation
+resolution, final provider/startup/recovery and sensitive-file OS exclusion remain open. The main
+application database remains plaintext; registration alone does not activate encryption.
+
+Focused acceptance compiles the original MauiSettingsStore and native persistence adapter with
+actual MAUI Essentials 10.0.110 in the independent Android package. It writes only fictitious values,
+checks cancellation, terminates the process, verifies a retained value and removed key in a cold
+process, then cleans its own values. This is Android x64 API36/4 KiB evidence, not phone, iOS,
+hardware-key, whole-application encryption or product-release acceptance.
+D-210 native evidence: original MAUI 10.0.110 Set/Remove and Android native persistence pass,
+including cancellation refusal and cold restart value/removal checks. Run
+098f4a594a9d4cd5b79703db501727f5; artifacts/native-sqlcipher/d210-native-cold-result.json.
+The Windows PowerShell 5 observer stopped on expected temporary missing result stderr; the same
+live process later produced both creation success flags. Only its cold-reopen phase was launched,
+without recreating the fixture. Independent signed APK verified; package uninstalled afterward.
+Strict Windows/Android/independent Release builds report zero warnings and errors.
+D-210 final evidence: all 3,316 managed tests passed, zero failures or skips (3m32s).
+Strict Windows (21.17s), Android (75.44s) and independent Release (77.46s) builds
+passed with zero warnings/errors. Logs: artifacts/native-sqlcipher/d210-*.log.

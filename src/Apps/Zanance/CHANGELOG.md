@@ -1369,3 +1369,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added one-time protected preference replay after confirmed durable storage so future opens can
   preserve later language/format choices. Main encrypted recovery is not yet activated.
+
+### D-210 - Android recovery preference persistence
+
+Prepared real durable Android preference writes for protected recovery. Database encryption remains inactive pending final integration.

@@ -614,3 +614,8 @@ permission or network change. Main/final OS-policy integration remains open.
 D-208 private reference metadata contains installation/profile/parent/target GUIDs, sequence and
 selected-reference flag only, not keys/names/finance/paths or portable preferences. No SDK/network/
 permission change; main final OS-policy and referenced key/file pruning are still open.
+
+D-210: Android stores one device-local random preference persistence-generation marker to force
+a checked synchronous snapshot write after MAUI asynchronous writes. It carries no financial
+value, credential or user identifier and is excluded by the portable preference allowlist.
+No new permission, network SDK or main encryption activation is introduced.
