@@ -6,8 +6,8 @@ public interface IProfileRuntime
     /// <summary>Serializes the database move against automatic posting and restore.</summary>
     Task RunExclusiveAsync(Func<Task> action);
 
-    /// <summary>Migrates the selected database after its path has changed.</summary>
-    Task MigrateAsync();
+    /// <summary>Migrates the selected database through contexts owned by the current maintenance lease.</summary>
+    Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner);
 
     /// <summary>Confirms the destination profile's device lock; unavailable authentication fails.</summary>
     Task<bool> AuthenticateAsync(string reason);

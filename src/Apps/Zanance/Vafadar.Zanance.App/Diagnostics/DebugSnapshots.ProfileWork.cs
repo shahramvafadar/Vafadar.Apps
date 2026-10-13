@@ -30,7 +30,7 @@ internal static partial class DebugSnapshots
     private sealed class ProfileReviewRuntime : IProfileRuntime
     {
         public Task RunExclusiveAsync(Func<Task> action) => throw new InvalidOperationException("Unexpected profile switch in selection-only review.");
-        public Task MigrateAsync() => throw new InvalidOperationException("Unexpected destination migration.");
+        public Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner) => throw new InvalidOperationException("Unexpected destination migration.");
         public Task<bool> AuthenticateAsync(string reason) => throw new InvalidOperationException("Unexpected authentication.");
         public Task ReloadLockAsync() => throw new InvalidOperationException("Unexpected lock reload.");
         public void DismissUndo() => throw new InvalidOperationException("Unexpected Undo dismissal.");

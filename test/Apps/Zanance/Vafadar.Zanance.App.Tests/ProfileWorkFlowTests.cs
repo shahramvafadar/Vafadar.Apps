@@ -301,7 +301,7 @@ public sealed class ProfileWorkFlowTests
         internal int ExclusiveRuns;
         internal Action? DuringAuthentication;
         public async Task RunExclusiveAsync(Func<Task> action) { ExclusiveRuns++; await action(); }
-        public Task MigrateAsync() => flow.Services.MigrateLocalDatabaseAsync<ZananceDbContext>(Ct);
+        public Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner) => flow.Services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner, Ct);
         public Task<bool> AuthenticateAsync(string reason) { DuringAuthentication?.Invoke(); return Task.FromResult(true); }
         public Task ReloadLockAsync() => Task.CompletedTask;
         public void DismissUndo() { }

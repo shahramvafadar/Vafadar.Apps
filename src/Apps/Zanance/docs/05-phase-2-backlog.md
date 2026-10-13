@@ -1162,3 +1162,7 @@ safety/retention and recovery UI remain open; SEC-01 is not complete.
 D-203 factory leases/owned maintenance contexts are connected to the actual DI/context disposal path.
 Main lifecycle/profile orchestration, provider adoption, key/retention/recovery/OS policy and SEC-01
 acceptance remain incomplete. No native warning acceptance or encryption activation follows.
+
+D-204 original profile switching now owns factory maintenance, including actual migrations/settings,
+authentication/catalogue commit and rollback. Final protected catalogue/provider/startup/key/retention
+activation and SEC-01 acceptance remain open; no encrypted main-profile claim.

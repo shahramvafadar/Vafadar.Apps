@@ -19,6 +19,7 @@
     <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
     <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
     <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
     <!-- Compile actual original infrastructure/model/migrations without importing a default native bundle. -->
     <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Data/**/*.cs"
              Exclude="$(RepoRoot)src/Libraries/Vafadar.Data/bin/**;$(RepoRoot)src/Libraries/Vafadar.Data/obj/**" />
@@ -29,6 +30,8 @@
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidGenerationMigrationStorage.cs" Link="AndroidGenerationMigrationStorage.cs" />
     <Compile Include="../Compatibility/SchemaCompatibility.cs" Link="SchemaCompatibility.cs" />
     <Compile Include="../Compatibility/JournalCompatibility.cs" Link="JournalCompatibility.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/*.cs"
+             Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Maui.cs" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/x86_64/libsqlcipher.so" Abi="x86_64" />
   </ItemGroup>

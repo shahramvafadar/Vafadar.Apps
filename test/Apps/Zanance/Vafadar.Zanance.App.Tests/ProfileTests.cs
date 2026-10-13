@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Vafadar.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
@@ -136,19 +137,52 @@ public sealed class ProfileTests
     private static LocalDatabaseLocation<ZananceDbContext> Location(FlowFixture f) => f.Services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
     private static ProfileService Create(FlowFixture f, ProfileRuntime runtime) => new(Location(f), f.Store, f.Preferences, runtime, f.Translator);
 
+    [Fact, Trait("AT", "AT-203")]
+    public async Task Switch_waits_for_existing_context_before_moving_the_actual_profile_path()
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var target = profiles.Create("Fictitious drained destination"); var originalPath = Location(f).Path;
+        var factory = f.Services.GetRequiredService<Microsoft.EntityFrameworkCore.IDbContextFactory<ZananceDbContext>>();
+        var current = await factory.CreateDbContextAsync(Ct);
+        var switching = profiles.SwitchToAsync(target);
+        Assert.False(switching.IsCompleted); Assert.Equal(originalPath, Location(f).Path); Assert.True(profiles.Current.IsMain);
+        Assert.Throws<InvalidOperationException>(() => factory.CreateDbContext());
+        await current.DisposeAsync(); Assert.True(await switching);
+        Assert.Equal(target.Id, profiles.Current.Id); Assert.NotEqual(originalPath, Location(f).Path);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact, Trait("AT", "AT-203")]
+    public async Task Work_queued_during_refused_authentication_opens_only_the_restored_previous_profile()
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var main = profiles.Current; var target = profiles.Create("Fictitious refused destination");
+        Assert.True(await profiles.SwitchToAsync(target)); await f.Store.UpdateSettingsAsync(s => s.AppLockEnabled = true, Ct);
+        Assert.True(await profiles.SwitchToAsync(main)); runtime.AuthenticationAllowed = false;
+        var factory = f.Services.GetRequiredService<Microsoft.EntityFrameworkCore.IDbContextFactory<ZananceDbContext>>();
+        Task<ZananceDbContext>? queued = null;
+        runtime.DuringAuthentication = () => { queued = factory.CreateDbContextAsync(Ct); Assert.False(queued.IsCompleted); };
+        var originalPath = Location(f).Path;
+        Assert.False(await profiles.SwitchToAsync(target));
+        await using var reopened = await queued!;
+        Assert.Equal(originalPath, new SqliteConnectionStringBuilder(reopened.Database.GetDbConnection().ConnectionString).DataSource);
+        Assert.Equal(main.Id, profiles.Current.Id);
+    }
+
     private sealed class ProfileRuntime(FlowFixture fixture) : IProfileRuntime
     {
         internal int ExclusiveRuns, LockReloads, AuthenticationCalls, UndoDismissals;
         internal bool AuthenticationAllowed = true, FailMigration;
+        internal Action? DuringAuthentication;
         private bool _exclusive;
         public async Task RunExclusiveAsync(Func<Task> action) { Assert.False(_exclusive); ExclusiveRuns++; _exclusive = true; try { await action(); } finally { _exclusive = false; } }
-        public Task MigrateAsync()
+        public Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner)
         {
             Assert.True(_exclusive);
             if (FailMigration) { throw new IOException("Fictitious migration failure."); }
-            return fixture.Services.MigrateLocalDatabaseAsync<ZananceDbContext>(Ct);
+            return fixture.Services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner, Ct);
         }
-        public Task<bool> AuthenticateAsync(string reason) { Assert.True(_exclusive); AuthenticationCalls++; return Task.FromResult(AuthenticationAllowed); }
+        public Task<bool> AuthenticateAsync(string reason) { Assert.True(_exclusive); AuthenticationCalls++; DuringAuthentication?.Invoke(); return Task.FromResult(AuthenticationAllowed); }
         public Task ReloadLockAsync() { Assert.False(_exclusive); LockReloads++; return Task.CompletedTask; }
         public void DismissUndo() => UndoDismissals++;
     }

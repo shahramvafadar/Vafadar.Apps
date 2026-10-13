@@ -67,4 +67,16 @@ public static class DataServiceCollectionExtensions
             await context.Database.MigrateAsync(cancellationToken);
         }
     }
+
+    /// <summary>Applies migrations through the original factory while explicit maintenance ownership excludes ordinary work.</summary>
+    public static async Task MigrateLocalDatabaseForMaintenanceAsync<TContext>(this IServiceProvider services,
+        DatabaseAccessGate.ExclusiveLease owner, CancellationToken cancellationToken = default) where TContext : LocalDbContext
+    {
+        ArgumentNullException.ThrowIfNull(services); ArgumentNullException.ThrowIfNull(owner);
+        await using var context = await services.GetRequiredService<ILocalDbContextFactory<TContext>>()
+            .CreateDbContextAsync(owner, cancellationToken).ConfigureAwait(false);
+        if ((await context.Database.GetPendingMigrationsAsync(cancellationToken).ConfigureAwait(false)).Any())
+            await context.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+        owner.Validate();
+    }
 }

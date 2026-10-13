@@ -1045,3 +1045,35 @@ subsequently reported OriginalModelCreated/32. Continued the same fixture with e
 continuation, without recreating it. Preserve d203-native-factory.log and d203-native-factory-resume.log;
 no timeout restart. Other logs: d203-{data-tests,full-tests,main-windows,main-android,native-build,test-clean}.log.
 No UI/native crypto matrix rerun, main encryption activation or physical/iOS/performance acceptance.
+
+### Actual profile switching owns factory maintenance (D-204)
+
+ProfileService.SwitchReviewedAsync now acquires location.Access exclusive ownership inside its
+existing AutoPostProcessor exclusion before destination publication. It rechecks the original review
+after drain, moves with the owner, calls original migration through
+MigrateLocalDatabaseForMaintenanceAsync and reads/initializes original settings through
+ZananceStore.GetSettingsForMaintenanceAsync. This store method shares GetSettingsCoreAsync,
+including existing singleton/default/settings semaphore logic rather than duplicating it.
+
+IProfileRuntime.MigrateAsync explicitly carries the captured owner; the native MAUI adapter uses
+the same maintenance migration helper. Authentication and catalogue commit remain inside ownership;
+refusal/failure restores previous path with the owner before releasing waiting contexts. Only then
+do session reset, lock reload and Changed run. Pending contexts capture the selected endpoint after
+admission, preventing unrelated work from reading the temporary unauthenticated destination.
+
+No new financial schema or UI layout. Existing default/plain profile path behavior remains; final
+protected generation catalogue/provider/startup/key lifetime integration is still open. No conversion
+of already protected endpoints back to plaintext is permitted or implemented by this slice.
+
+D-204 final evidence: 99 profile-related tests and all 3,295 tests pass with zero failures/skips.
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Original ProfileService/store/32 migrations/autopost/factory run in an independent Android x64
+API36/4 KiB fixture: old context drains before path move, owned destination migration/settings
+finish, unrelated work waits through refused authentication and reopens original main money/state,
+with no ledger posting. Explicit native authentication decision port is simulated, not a real device
+prompt. Full signature and reviewed packaged native-ABI checks pass; package uninstalled/tests cleaned.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-0e375f15d51e42fb955d1901d95dc132.json,
+run 43b655df1e514b16a6a09209cde0ae87. Logs: d204-{profile-tests,full-tests,main-windows,
+main-android,native-build,native-profile,test-clean}.log. No visible layout or unchanged crypto matrix
+rerun. Remaining destructive inactive-profile file operations still need maintenance coordination,
+alongside protected catalogue/provider/startup integration; main databases remain plaintext.

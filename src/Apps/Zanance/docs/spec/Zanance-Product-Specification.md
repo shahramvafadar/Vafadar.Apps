@@ -3069,3 +3069,23 @@ subsequently reported OriginalModelCreated/32. Continued the same fixture with e
 continuation, without recreating it. Preserve d203-native-factory.log and d203-native-factory-resume.log;
 no timeout restart. Other logs: d203-{data-tests,full-tests,main-windows,main-android,native-build,test-clean}.log.
 No UI/native crypto matrix rerun, main encryption activation or physical/iOS/performance acceptance.
+
+### 31.117 Actual profile switch maintenance (D-204)
+
+The original profile flow drains existing contexts before changing paths, uses owned destination
+migration/settings and retains exclusion through authentication/commit or previous-path restoration.
+Queued work opens only the committed/restored profile. Main encryption/provider/catalogue/startup
+adoption and device authentication acceptance remain open; no new model/UI layout.
+
+D-204 final evidence: 99 profile-related tests and all 3,295 tests pass with zero failures/skips.
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Original ProfileService/store/32 migrations/autopost/factory run in an independent Android x64
+API36/4 KiB fixture: old context drains before path move, owned destination migration/settings
+finish, unrelated work waits through refused authentication and reopens original main money/state,
+with no ledger posting. Explicit native authentication decision port is simulated, not a real device
+prompt. Full signature and reviewed packaged native-ABI checks pass; package uninstalled/tests cleaned.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-0e375f15d51e42fb955d1901d95dc132.json,
+run 43b655df1e514b16a6a09209cde0ae87. Logs: d204-{profile-tests,full-tests,main-windows,
+main-android,native-build,native-profile,test-clean}.log. No visible layout or unchanged crypto matrix
+rerun. Remaining destructive inactive-profile file operations still need maintenance coordination,
+alongside protected catalogue/provider/startup integration; main databases remain plaintext.

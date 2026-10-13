@@ -1521,3 +1521,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   commands/publication but cannot release other work until its owned contexts close. No reader bypass.
 * Publish with explicit ownership while maintenance is active. Covered lifecycle must coordinate
   background work and native effects outside the factory; the gate does not encrypt data by itself.
+
+## 136. Original profile switch maintenance ownership (D-204)
+
+* Take the location's maintenance owner inside automatic-posting exclusion before moving a profile.
+  Destination migrations and settings reads use the same owned factory, never await ordinary admission.
+* Keep the owner through authentication/catalogue commit or restoration of the previous path.
+  Queued work captures its endpoint after admission; refusal never opens the temporary destination.
+* Owned settings share the original settings initialization algorithm and semaphore. No guessed accounts,
+  ledger posting, cipher fallback or ownership bypass is added; protected catalogue adoption remains separate.

@@ -18,6 +18,7 @@ internal static class GenerationMigrationCompatibility
     internal static async Task<string> RunAsync(string folder, string phase)
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+        if (phase == "profile-maintenance") return await ProfileMaintenanceCompatibility.RunAsync(folder);
         if (phase == "restore-staging") return await CheckRestoreStagingAsync(folder);
         if (phase == "restore-select") return await CheckRestoreStagingAsync(folder, select: true);
         if (phase == "restore-selected-resume") return await ResumeRestoreSelectionAsync(folder);

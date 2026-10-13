@@ -33,7 +33,7 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     /// <inheritdoc />
     public Task RunExclusiveAsync(Func<Task> action) => autoPost.RunExclusiveAsync(action);
     /// <inheritdoc />
-    public Task MigrateAsync() => services.MigrateLocalDatabaseAsync<ZananceDbContext>();
+    public Task MigrateAsync(DatabaseAccessGate.ExclusiveLease owner) => services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner);
     /// <inheritdoc />
     public async Task<bool> AuthenticateAsync(string reason) => await appLock.Authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success;
     /// <inheritdoc />

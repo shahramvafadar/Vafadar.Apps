@@ -998,3 +998,7 @@ before unlock and final rollback retention/recovery acceptance before registrati
 D-203 actual factory leases support maintenance exclusion. Still require covered startup/profile
 coordination, background cancellation/reconciliation, trusted direct-native work ownership and exact
 provider acceptance before activation. The gate alone is not encrypted database or device acceptance.
+
+D-204 connects actual profile switch/migrations/settings to maintenance ownership. Native fixture
+accept/refuse ports are not biometric/device acceptance; still require protected catalogue/provider
+and covered startup integration, key/recovery/retention and physical/iOS acceptance.

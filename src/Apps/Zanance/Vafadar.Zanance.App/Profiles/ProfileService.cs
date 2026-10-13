@@ -146,12 +146,13 @@ public sealed partial class ProfileService(
         // Automatic posting never runs while the database moves, so no occurrence is posted into the wrong profile.
         await runtime.RunExclusiveAsync(async () =>
         {
+            using var owner = await location.Access.AcquireExclusiveAsync();
             ValidateWorkReview(review);
-            location.MoveTo(PathOf(MainPath(), profile.Id));
+            location.MoveTo(PathOf(MainPath(), profile.Id), owner);
             try
             {
-                await runtime.MigrateAsync();
-                var settings = await store.GetSettingsAsync();
+                await runtime.MigrateAsync(owner);
+                var settings = await store.GetSettingsForMaintenanceAsync(owner);
                 var authenticated = !settings.AppLockEnabled
                     || await runtime.AuthenticateAsync(translator["Profile_UnlockReason"]);
                 if (authenticated)
@@ -171,7 +172,7 @@ public sealed partial class ProfileService(
             {
                 if (!opened)
                 {
-                    location.MoveTo(previous);
+                    location.MoveTo(previous, owner);
                 }
             }
         });

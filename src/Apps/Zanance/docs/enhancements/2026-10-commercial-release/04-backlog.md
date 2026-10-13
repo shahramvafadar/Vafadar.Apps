@@ -1574,3 +1574,7 @@ D-203 connects lifetime ownership to the original local factory and base DbConte
 maintenance contexts/publications. SEC-01 remains incomplete: main startup/all-profile orchestration,
 provider/candidate security acceptance, stable metadata/key lifetime, recovery/retention and final OS
 policy need completion. The unchanged default native dependency still requires replacement.
+
+D-204 connects actual reviewed profile switching to D-203 ownership with no self-deadlock and
+correct queued-work rollback after refused authentication. SEC-01 still needs native/provider security
+acceptance and protected catalogue/all-profile/startup/key/retention/recovery/OS-policy activation.

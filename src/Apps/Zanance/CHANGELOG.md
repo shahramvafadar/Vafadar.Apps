@@ -1339,3 +1339,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Connected factory context lifetimes to cancellable maintenance exclusion so final encryption and
   profile work can wait for active contexts to close. Main encryption activation remains unfinished.
+
+### D-204 — Wait for database work when changing profiles
+
+- Profile changes wait for existing database contexts before changing files. If destination access
+  is refused, waiting work resumes against the previous profile instead of the temporary destination.

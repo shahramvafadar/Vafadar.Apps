@@ -103,9 +103,21 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Returns the settings row, creating it on first use.</summary>
-    public async Task<ZananceSettings> GetSettingsAsync(CancellationToken cancellationToken = default)
+    public Task<ZananceSettings> GetSettingsAsync(CancellationToken cancellationToken = default) =>
+        GetSettingsCoreAsync(null, cancellationToken);
+
+    /// <summary>Reads/initializes the destination settings through the actual owned factory during profile maintenance.</summary>
+    public Task<ZananceSettings> GetSettingsForMaintenanceAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner,
+        CancellationToken cancellationToken = default)
     {
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        ArgumentNullException.ThrowIfNull(owner); return GetSettingsCoreAsync(owner, cancellationToken);
+    }
+
+    private async Task<ZananceSettings> GetSettingsCoreAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease? owner,
+        CancellationToken cancellationToken)
+    {
+        await using var db = owner is null ? await contextFactory.CreateDbContextAsync(cancellationToken)
+            : await ((Vafadar.Data.ILocalDbContextFactory<ZananceDbContext>)contextFactory).CreateDbContextAsync(owner, cancellationToken);
         var settings = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);
         if (settings is not null)
         {
