@@ -1089,3 +1089,8 @@ remain open. No UI, live encryption/provider/backup or commercial activation.
 Actual hosted Permission denied root cause corrected through Linux non-root host ownership and
 fresh work mounts. Six runtime workspace checks pass; corrected full hosted native run pending.
 Application/3,220-test/build/APK baseline unchanged. Canonical security/release gates remain open.
+
+## D-191 native parent traversal
+
+Actual hosted/local foreign UID failure corrected by traversal-only permission on immutable build
+home. Seven focused checks/host identity pass. Full hosted completion pending; app baseline unchanged.

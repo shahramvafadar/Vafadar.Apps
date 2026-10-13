@@ -101,3 +101,11 @@ Test-ContainerWorkspace.ps1 uses one freshly named, exactly removed Linux fixtur
 actual negative/positive permission checks, plus both original argument builders and ownership
 boundary refusals. All six pass locally; it now runs in hosted CI before compilation. No native
 version/flags or app/API/UI/APK change. Full corrected hosted native result remains pending.
+
+## Private build-home traversal (D-191)
+
+The D-190 hosted regression exposed a second ownership boundary: /home/nativebuild is 750/10001.
+The matched runner UID cannot traverse it to the otherwise owned work mount. Docker Desktop's
+default image UID had hidden this issue locally. A foreign-UID actual-mount case now reproduces
+old-image failure; Dockerfile grants only 0755 parent traversal and preserves foreign write refusal.
+All seven focused checks and exact reviewed host identity pass; actual full hosted result pending.

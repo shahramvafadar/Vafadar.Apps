@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Native build-home traversal (2026-10-13, D-191)
+
+- Let the non-root runner reach its owned native work mount while refusing writes to the build-home parent.
+- Add the foreign-user regression missing from the earlier Docker Desktop check.
+
 ### Development - Native CI Linux workspace access (2026-10-13, D-190)
 
 - Correct native build output/work ownership on Linux runners while keeping compilation non-root.

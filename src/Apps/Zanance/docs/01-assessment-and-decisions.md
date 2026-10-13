@@ -2399,3 +2399,13 @@ permission/mount/ownership-boundary cases pass; four PowerShell files parse and 
 validates. Add the focused workspace regression before native builds in CI. No source/version,
 crypto/compiler flags, app code/UI/provider or APK changes. Previous 3,220 main tests/strict builds
 remain the unchanged baseline, not rerun. Full corrected hosted native run remains pending.
+
+## D-191 - Native CI private parent traversal
+
+Job 115162355717/run 38357079252 now fails in the added workspace regression: /home/nativebuild/work
+cannot be reached by matched runner UID. Actual image stat shows /home/nativebuild mode 750 owned
+by 10001; the work mount alone cannot bypass its parent. Add a foreign UID 1001 actual-mount check,
+which reproduces the failure locally on the old image. Set only the immutable build home to 0755
+in Dockerfile; foreign UID still cannot write the parent. Rebuilt image passes all seven focused
+workspace checks and unchanged exact host/NDK/compiler review. No root compilation, world-write,
+source/crypto flag, app/UI/APK changes or unrelated retesting. Hosted workflow completion pending.

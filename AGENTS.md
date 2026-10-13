@@ -1395,3 +1395,10 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   Do not fix ownership by making output world-writable or running native compilation as root.
 * Preserve and surface failed native build logs. Workspace proof is separate from full hosted native
   build/security suite results; do not repeat unchanged application tests/UI/APKs for a tooling-only fix.
+
+## 123. Native work parent traversal (D-191)
+
+* Matching bind UID is insufficient if its parent is private to the image user. The immutable
+  build home permits traversal (0755), not foreign writes; actual work/output remain separately owned.
+* Exercise a foreign non-root UID through the actual work mount even on Docker Desktop. Preserve
+  the failing old-image evidence and require actual hosted native completion after corrections.

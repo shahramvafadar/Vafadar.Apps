@@ -1254,3 +1254,9 @@ migration remain incomplete. Do not repeat unchanged UI/native matrices.
 Fix the observed hosted Linux output refusal with shared non-root owner/work mounts and focused
 runtime regression. Keep all original native versions/hash/security checks. Push and check the
 new hosted run once; do not repeat application tests/builds/UI or unchanged upstream suites locally.
+
+## Native parent traversal correction (D-191)
+
+Fix the actual remaining mode-750 parent refusal and reproduce it on the old image with foreign UID.
+Seven focused runtime checks/exact host identity pass after scoped 0755 traversal. Continue the
+same workflow to actual success; investigate subsequent actual failures without unrelated retests.

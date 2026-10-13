@@ -1705,3 +1705,11 @@ arguments allow their work/output but refuse recipe/input writes; existing and n
 requests are rejected. Four modified PowerShell sources parse and workflow YAML validates. Full
 hosted native execution remains pending. App tests/builds/UI/APK are unchanged and not repeated.
 Evidence: artifacts/native-sqlcipher/d190-workspace-check.log and failed hosted artifact 11777219319.
+
+## AT-190 - Foreign non-root parent traversal
+
+Old image mode 750 reproduces matched foreign-UID work mount refusal. Corrected image mode 0755
+passes all seven focused workspace cases; foreign parent writes remain refused. Native host/NDK/
+clang identity still matches the lock. Records: d191-parent-negative.log, d191-workspace-positive.log,
+d191-host-rebuild.log under artifacts/native-sqlcipher. Hosted complete run remains pending.
+No unchanged application tests/builds/UI/APK repeated.

@@ -24,6 +24,10 @@ try {
     $arguments = @(Get-NativeContainerRunArguments -RunRoot $run -OutputName candidate -WorkTarget '/home/nativebuild/work')
     & docker run @arguments $image bash -c 'test "$(id -u)" != 0 && touch /output/workspace-proof /home/nativebuild/work/workspace-proof && test ! -w /recipe/Linux/build-android.sh && test ! -w /inputs'
     if ($LASTEXITCODE -ne 0) { throw 'Actual native mount arguments failed.' }
+    # Docker Desktop masks bind ownership, but an explicit foreign UID still exposes private parent traversal.
+    & docker run @arguments --user 1001:1001 $image bash -c 'test -x /home/nativebuild && test ! -w /home/nativebuild && touch /output/foreign-owner-proof /home/nativebuild/work/foreign-owner-proof'
+    if ($LASTEXITCODE -ne 0) { throw 'Matched foreign user cannot traverse the native workspace parent.' }
+
     $upstreamRun = Join-Path (Get-NativeInputRoot) ('build/workspace-upstream-check-' + [Guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory (Join-Path $upstreamRun 'inputs'),(Join-Path $upstreamRun 'evidence') -Force | Out-Null
     $upstreamArguments = @(Get-NativeContainerRunArguments -RunRoot $upstreamRun -OutputName evidence -WorkTarget '/home/nativebuild/upstream')
@@ -37,7 +41,7 @@ try {
     try { Get-NativeContainerRunArguments -RunRoot (Join-Path $run 'nested') -OutputName candidate -WorkTarget '/home/nativebuild/work' | Out-Null }
     catch { if ($_.Exception.Message -notlike 'Native container work must*') { throw }; $refused = $true }
     if (-not $refused) { throw 'Nested unowned native workspace was accepted.' }
-    Write-Output 'Six native workspace checks passed: original refusal, matched non-root owner, Android/upstream actual mounts, existing and nested run refusal.'
+    Write-Output 'Seven native workspace checks passed: original refusal, matched non-root owner, parent traversal, Android/upstream actual mounts, existing and nested run refusal.'
 }
 finally {
     # Remove only the exact freshly created volume; never prune or touch unrelated machine resources.

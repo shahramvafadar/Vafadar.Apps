@@ -15,7 +15,8 @@ assert s.hexdigest()=='753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0f
 pathlib.Path('/opt/ndk-archive-sha256.txt').write_text(s.hexdigest()+'\n')
 PY
 RUN unzip -q /tmp/ndk.zip -d /opt && rm /tmp/ndk.zip && grep -q '30.0.16248370' /opt/android-ndk-r30/source.properties
-RUN useradd --create-home --uid 10001 nativebuild
+# Matched runner UIDs need traversal to owned work mounts, never write access to this parent.
+RUN useradd --create-home --uid 10001 nativebuild && chmod 0755 /home/nativebuild
 ENV ANDROID_NDK_ROOT=/opt/android-ndk-r30
 USER nativebuild
 WORKDIR /home/nativebuild

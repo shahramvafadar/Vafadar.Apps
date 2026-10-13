@@ -1477,3 +1477,10 @@ Hosted build stopped before compilation: fixed native UID lacked runner output p
 host non-root identity and fresh work bind correct Android/upstream mounts; six focused Docker
 checks/parser/YAML pass. Corrected hosted native suite remains pending. No unchanged app tests,
 UI or APK regenerated; final encryption/platform/recovery acceptance remains open.
+
+## Native parent traversal follow-up (D-191)
+
+D-190 corrected output ownership but mode 750 on build home blocks foreign UID traversal. Actual
+old image failure reproduced; only parent traversal changes to 0755, with no foreign parent writes.
+Seven focused cases/exact reviewed host pass. Require full corrected hosted workflow completion;
+application/encryption/recovery acceptance is not implied and unrelated checks are not repeated.

@@ -138,3 +138,10 @@ Non-root host identity/fresh work binds correct this without weakening reviewed 
 or suite gates. Six focused Docker workspace regressions pass; previous upstream suites are not
 rerun locally. A complete corrected hosted build/suite result is still pending; local filesystem
 contract success is not a substitute for hosted/native/mobile/encryption acceptance.
+
+## Native parent traversal regression (D-191)
+
+Old-image foreign UID fails actual work mount traversal; mode 750 is observed, not inferred.
+Only immutable parent traversal changes to 0755; parent writes stay refused, work/output owner,
+read-only sources/recipe and network isolation remain enforced. Seven cases and exact host review
+pass. Actual full hosted build/suite completion is required separately; no main app activation.

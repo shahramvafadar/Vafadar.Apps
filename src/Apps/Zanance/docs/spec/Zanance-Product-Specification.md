@@ -2886,3 +2886,10 @@ host identity/fresh work mounts fix that boundary without relaxing source/versio
 Six focused Docker permission/mount checks, parser and YAML validation pass. Application baseline
 3,220/strict builds and D-179 APK unchanged; no redundant app test/UI/APK run. Corrected hosted
 native build/security suite success is still pending; encryption integration remains incomplete.
+
+### 31.104 Native parent traversal correction (D-191 / AT-190)
+
+Actual old-image failure reproduced under a foreign non-root UID; immutable home traversal now
+0755 while foreign parent writes stay refused. Seven workspace cases and exact reviewed host
+identity pass. Actual hosted workflow completion remains pending; app/UI/APK and main 3,220-test
+baseline are unchanged and not rerun.
