@@ -1465,3 +1465,13 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   This does not replace a global exclusive reader/writer lease or guard arbitrary direct native SQL.
 * The legacy online-copy backup source remains permanently plaintext-only and refuses keyed contexts
   before stream/temp work. Final generation-aware portable backup/restore is a separate composition.
+
+## 130. Protected portable backup export (D-198)
+
+* Keyed factory sources export a coherent bounded portable image through SQLCipher memory only;
+  no plaintext temporary file or online cipher/plain page copy. Portable password choice stays optional.
+* Validate captured connection publication and cached commercial access before/after native effects
+  and every output chunk. Keep chunk size independent from ArrayPool capacity; partial output is
+  caller-owned on failure and must never be published as a successful backup.
+* Weak connection/access association stores no key material. Existing-only encrypted generation
+  restore/selection still requires its own receiver; legacy plaintext restore refuses keyed contexts.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Portable export from encrypted data (2026-10-13, D-198)
+
+- Connected encrypted database backup export without a plaintext temporary file.
+- Stop output when captured profile access changes; portable password remains optional.
+- Existing app backups are unchanged; final encrypted restore/profile activation remains unfinished.
+
 ### Development - Protected data-layer connections (2026-10-13, D-197)
 
 - Added bound encrypted context publication, read/write checks and retirement of old profile contexts.

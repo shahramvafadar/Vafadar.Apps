@@ -563,3 +563,12 @@ and access lifetime; native connection password strings cannot be completely era
 SQL/in-flight commands are not covered by EF retirement. Legacy backup refuses keyed data before
 stream/temp work; final generation-aware portable backup remains pending. Independent fixture only;
 no main credential/data/permission/network/OS-backup policy activation.
+
+## Keyed portable output (D-198)
+
+Protected database plaintext exists only in owned memory and intentional caller output stream,
+not a temporary disk snapshot. Portable password stays optional; unprotected completed package is
+readable by its holder. Captured access validates each chunk; partial output on failure cannot be
+published as success. Weak registry stores no key material; native strings/full erasure not promised.
+Current main plaintext backups unchanged; no new permission/network/portable credential or OS policy.
+Generation-aware encrypted restore/safety/recovery and final main adoption remain.

@@ -119,6 +119,7 @@ internal sealed class LocalDbContextFactory<TContext>(
                 string.IsNullOrEmpty(options.Password) || System.IO.Path.GetFullPath(options.DataSource) != captured.Path)
                 throw new InvalidOperationException("Protected creator returned an unsafe or foreign connection.");
             Action validate = () => location.RequireCurrent(captured);
+            ProtectedSqliteAccess.Register(connection, validate);
             // D-197: never cache a key-bearing options/connection string by path across key/profile publications.
             var configured = new DbContextOptionsBuilder<TContext>().UseSqlite(connection, contextOwnsConnection: true)
                 .AddInterceptors(interceptor, new ProtectedSqliteConnectionInterceptor(captured.Path, captured.CipherVersion!, validate),

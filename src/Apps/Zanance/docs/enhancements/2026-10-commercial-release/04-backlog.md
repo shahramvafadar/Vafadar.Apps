@@ -1537,3 +1537,11 @@ Actual native original-model factory read/write and ten guards pass (focused 102
 plaintext; reviewed provider packaging/lifecycle/catalogue/all-profile and generation-aware backup/
 restore/recovery composition remain. Plain legacy backup format guard is permanent, not interim
 OS policy. All other security/physical/platform release gates remain.
+
+## Protected portable backup writer (D-198)
+
+SEC-02 integration adds actual keyed factory/commercial portable memory export, typed native proof
+and mid-output publication retirement. Supersedes keyed-write refusal in D-197; keyed generation
+restore remains pending/fail-closed. Main remains plaintext/current backups unchanged; receiver,
+provider/catalogue/startup/all-profile/recovery/OS policy and other security gates remain. SEC-08
+restore safety is not closed by this export path.

@@ -965,3 +965,10 @@ Original factory performs keyed native real-model read/write and stale/unkeyed/l
 refusal in separate signed Release Android package. Main provider/lifecycle/all-profile/portable
 backup/recovery/OS exclusion adoption still open; no physical/iOS/whole-product acceptance.
 Permanent legacy format guard is not a temporary restriction on current main backups.
+
+## D-198 portable writer evidence
+
+Protected actual-source portable/live typed comparison and first-chunk retirement pass independent
+signed Release Android. Fixed output chunk, no plaintext temporary file, optional password retained.
+Main/profile/provider/restore/recovery/all-profile/OS policy and device/iOS/full-product acceptance
+remain. Do not publish partial output as a complete backup or claim current app encryption.

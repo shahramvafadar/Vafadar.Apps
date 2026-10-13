@@ -1132,3 +1132,9 @@ refusal. No main/provider/all-profile adoption; backup/recovery and broader acce
 Atomic path/credential publication and original factory actual native read/write/retirement pass.
 Permanent legacy plaintext backup constraint enforced. Main remains plaintext pending complete
 provider/lifecycle/all-profile/portable backup/recovery composition; no temporary OS policy.
+
+## D-198 protected portable backup writer
+
+Actual keyed source/commercial wrapper memory export and typed native comparison/retired-output
+stop pass. No plaintext temporary file; optional password unchanged. Main/profile/provider/restore/
+recovery/OS policy composition remains; no current user backup restriction or temporary exclusion.

@@ -855,3 +855,33 @@ D-197 final results: all 3,265 tests pass with zero failures/skips; output clean
 Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
 {factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
 No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.
+
+## Keyed portable writer (D-198)
+
+Keyed actual-factory backup now uses SqlCipherPortableSnapshot memory export and the unchanged
+portable database.sqlite entry. It creates no temporary plaintext file/path. The default output
+image bound is 256 MiB; native serialization/output is bounded, not a guarantee of total process
+peak RAM. Current plaintext profile backup keeps its existing path. Keyed legacy restore still
+refuses before input: encrypted staging/new generation/verified selection must be composed.
+This supersedes D-197 keyed export refusal; optional portable password policy stays unchanged.
+
+ProtectedSqliteAccess weakly associates the actual factory connection with captured publication
+validation, no key bytes. Unregistered keyed sources fail closed. Export calls that validator and
+cached actual-file commercial access around native stages and before/after each destination write.
+The check cannot query data/move profiles/do network work. Output chunk is fixed 81,920 bytes even
+when ArrayPool rents a larger bucket. Retired access does not select another source; partial output
+on failure remains caller-owned and cannot be published as a successful package. Owned serialization
+and scratch buffers clear on all exits; native strings/whole process erasure are not promised.
+
+Original DI/commercial wrapper signed Release Android proof opens the portable image in memory,
+compares complete live schema/header/typed content and rejects retirement after its first chunk.
+The initial larger rented-bucket assertion failure is retained; fixed output bound passes. Keyed
+legacy restore consumes zero input. Proof under artifacts/native-sqlcipher/build/android-d:
+android-migration-proof-3627499fea30423b84b0eafebb360091.json; runtime d198-native-backup-runtime.log.
+ZIP/v2/v3 signature and reviewed arm64/x64 hashes match; only independent package removed. Main
+provider/startup/catalogue/all-profile/recovery/restore/OS policy integration remains incomplete.
+
+D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
+passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.

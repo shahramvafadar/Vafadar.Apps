@@ -2572,3 +2572,32 @@ D-197 final results: all 3,265 tests pass with zero failures/skips; output clean
 Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
 {factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
 No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.
+
+## D-198 - Protected portable backup writer
+
+Connect original SqliteDatabaseBackupSource/Zanance commercial wrapper to memory-only SQLCipher
+portable export for keyed factory contexts. No plaintext temporary path/file is created or cleaned
+on this branch. Plaintext current profiles retain their unchanged online-copy path; keyed restore
+remains fail-closed before input pending generation-aware receiver. Portable package password
+remains optional. Supersedes D-197's keyed-write refusal only; legacy keyed restore refusal remains.
+
+Actual factory native connection receives a weak captured-publication validator, no key material
+in the registry. Export verifies it and cached commercial access before/after native phases and
+every output chunk, including after destination awaits. Retired publication stops output without
+rebinding. Native serialization is bounded, owned buffers cleared; no promise of complete native
+string/memory erasure. Partial output belongs to caller and must not become a successful package.
+
+Independent signed Release Android actual DI factory backup is opened in memory and fully compared
+with live schema/header/typed rows, including real model/32-migration financial data and 2 MiB BLOB.
+Retire same-path publication after first destination write: export refuses and emits at most 81,920
+bytes. Initial test failed because ArrayPool can return a 131,072-byte bucket; output size now uses
+fixed 81,920 rather than rented capacity. Failure retained; changed related native path passes.
+Plain-source protected export and keyed legacy restore guard tests pass; focused 102. APK ZIP/v2/v3
+signature/native hashes and package uninstall checked. AT-197 records full/build evidence. Main
+provider/profiles remain plaintext pending catalogue/startup/provider/restore/recovery/all-profile
+activation; current user backups are unchanged, with no temporary OS exclusion.
+
+D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
+passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.

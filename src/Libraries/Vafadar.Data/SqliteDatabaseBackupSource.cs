@@ -9,11 +9,13 @@ namespace Vafadar.Data;
 /// </summary>
 /// <remarks>
 /// <para>
-/// Backups use SQLite's online backup API, which produces a consistent snapshot even while the app is using the
+/// Plaintext backups use SQLite's online backup API, which produces a consistent snapshot even while the app is using the
 /// database (including WAL mode). Copying the database file directly could capture a half-written state.
 /// </para>
+/// <para>Protected factory connections export coherent bounded portable images through SQLCipher memory only,
+/// rechecking captured access at each output chunk. Keyed restores require generation-aware receivers.</para>
 /// <para>
-/// A restore first checks the snapshot with <c>PRAGMA integrity_check</c>, then copies it into the live database and
+/// A plaintext restore first checks the snapshot with <c>PRAGMA integrity_check</c>, then copies it into the live database and
 /// finally applies EF Core migrations, so a backup from an older app version is upgraded to the current schema.
 /// </para>
 /// </remarks>
@@ -22,6 +24,9 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
 {
     /// <summary>The name of the database entry in backup packages.</summary>
     public const string EntryName = "database.sqlite";
+
+    /// <summary>Maximum bounded in-memory portable image for a protected live database.</summary>
+    public const int MaximumProtectedSnapshotBytes = 256 * 1024 * 1024;
 
     /// <inheritdoc />
     public string Name => EntryName;
@@ -34,13 +39,24 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
     public async Task WriteAsync(Stream destination, Action<TContext>? verifyAccess, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(destination);
-        var snapshotPath = CreateTemporaryPath();
+        string? snapshotPath = null;
 
         try
         {
             await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
             verifyAccess?.Invoke(context);
-            RequirePlainBackupAdapter(context);
+            var captured = (SqliteConnection)context.Database.GetDbConnection();
+            if (!string.IsNullOrEmpty(new SqliteConnectionStringBuilder(captured.ConnectionString).Password))
+            {
+                // D-198: native memory export converts keyed pages into portable plaintext without a disk snapshot.
+                void Check() { ProtectedSqliteAccess.Require(captured); verifyAccess?.Invoke(context); }
+                Check();
+                await context.Database.OpenConnectionAsync(cancellationToken);
+                Check();
+                await SqlCipherPortableSnapshot.WriteAsync(captured, destination, MaximumProtectedSnapshotBytes, Check, cancellationToken);
+                return;
+            }
+            snapshotPath = CreateTemporaryPath();
             await using (var snapshot = OpenUnpooled(snapshotPath))
             {
                 await context.Database.OpenConnectionAsync(cancellationToken);
@@ -55,7 +71,7 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
         }
         finally
         {
-            TryDelete(snapshotPath);
+            if (snapshotPath is not null) TryDelete(snapshotPath);
         }
     }
 
@@ -127,7 +143,7 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
     private static void RequirePlainBackupAdapter(TContext context)
     {
         // D-197: online BackupDatabase cannot convert between portable plaintext and keyed live generations.
-        // This adapter remains plaintext-only; generation-aware sources own keyed restore/export.
+        // Restore remains plaintext-only; generation-aware receivers own keyed restore/selection.
         if (!string.IsNullOrEmpty(new SqliteConnectionStringBuilder(context.Database.GetDbConnection().ConnectionString).Password))
             throw new InvalidOperationException("Protected databases require the generation-aware portable backup adapter.");
     }

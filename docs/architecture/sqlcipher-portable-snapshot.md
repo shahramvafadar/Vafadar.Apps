@@ -46,3 +46,13 @@ memory-tests-clean.log} and build/android-d/managed-android-proof.json.
 Complete logical schema/header/typed rows/duplicate/byte and integrity comparison is now available
 before future commit. See [verification](sqlcipher-staging-verification.md); durable key/generation
 acceptance remains separate and live composition stays unchanged.
+
+## Actual protected backup source (D-198)
+
+The original backup source now uses this exporter for registered keyed factory connections and
+checks captured publication/commercial access around native phases and every output chunk. Fixed
+81,920 output size is independent of rented ArrayPool capacity. No temporary plaintext file/path.
+Complete actual-model portable/live comparison and retirement mid-output pass independent signed
+Release Android. Source identity cannot redirect on await; partial output must not be published.
+Native registry holds only weak connection/access checks, no keys. Main activation/keyed generation
+restore and whole-product acceptance remain; portable password choice is still optional.

@@ -64,7 +64,7 @@ foreach ($scenario in $scenarios) {
     if (-not $prepared.KeyDurablyPrepared) { throw 'Actual native protected key preparation missing.' }
     if ($scenario -eq 'factory-layer') {
         $finished = Invoke-OwnedMigration 'migration-factory' $identity
-        if (-not $finished.ProtectedFactoryReadWriteAndRetirement -or -not $finished.LegacyBackupRefusedBeforeData) { throw 'Actual protected factory evidence missing.' }
+        if (-not $finished.ProtectedFactoryReadWriteAndRetirement -or -not $finished.ProtectedPortableBackupVerified -or -not $finished.RetiredExportStopped -or -not $finished.LegacyRestoreRefusedBeforeData) { throw 'Actual protected factory evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $finished }
         continue
     } elseif ($scenario -eq 'interrupted-export') {

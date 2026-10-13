@@ -1803,3 +1803,18 @@ D-197 final results: all 3,265 tests pass with zero failures/skips; output clean
 Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
 {factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
 No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.
+
+## AT-197 - Actual protected portable backup output
+
+Original factory/Zanance commercial backup source exports protected live data through memory only.
+Independent signed Release Android portable image opens/validates in memory and compares complete
+schema/header/typed real-model/migration/financial/2 MiB BLOB data. Publication retirement in the
+first destination write stops output within one 81,920-byte chunk. Larger ArrayPool bucket failure
+retained and fixed; actual related path passes. Legacy keyed restore consumes zero input. Focused
+102 pass. APK ZIP/signature/native hashes and exact package removal verified. Main unchanged and
+plaintext; generation-aware receiver/startup/all-profile/recovery/OS policy and external gates remain.
+
+D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
+passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.

@@ -72,17 +72,25 @@ public sealed class ProtectedLocalDatabaseFactoryTests
         Assert.Throws<InvalidOperationException>(() => location.MoveTo(path)); Assert.Equal(path, location.Path);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task Legacy_backup_adapter_refuses_keyed_context_before_consuming_or_writing_data(bool restore)
+    [Fact]
+    public async Task Protected_backup_rejects_plaintext_source_before_output()
+    {
+        using var database = new TestDatabase();
+        var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>(); var path = location.Path;
+        location.MoveToProtected(path, () => Connection(path), "4.19.0");
+        using var output = new MemoryStream();
+        await Assert.ThrowsAsync<InvalidDataException>(() => database.Services.GetRequiredService<IBackupSource>().WriteAsync(output, Ct));
+        Assert.Equal(0, output.Length);
+    }
+
+    [Fact]
+    public async Task Legacy_restore_adapter_refuses_keyed_context_before_consuming_data()
     {
         using var database = new TestDatabase();
         var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>(); var path = location.Path;
         location.MoveToProtected(path, () => Connection(path), "4.19.0");
         var backup = database.Services.GetRequiredService<IBackupSource>(); using var stream = new MemoryStream([1, 2, 3]);
-        if (restore) await Assert.ThrowsAsync<InvalidOperationException>(() => backup.RestoreAsync(stream, Ct));
-        else await Assert.ThrowsAsync<InvalidOperationException>(() => backup.WriteAsync(stream, Ct));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => backup.RestoreAsync(stream, Ct));
         Assert.Equal(0, stream.Position); Assert.Equal(3, stream.Length);
     }
 }

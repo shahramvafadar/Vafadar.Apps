@@ -2964,3 +2964,17 @@ D-197 final results: all 3,265 tests pass with zero failures/skips; output clean
 Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
 {factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
 No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.
+
+### 31.111 Protected portable backup export (D-198 / AT-197)
+
+Original backup/commercial source now writes coherent protected live database as bounded portable
+memory output, with no plaintext temp file and captured access checks before/after chunks. Actual
+signed Release native complete typed comparison and retirement stop pass; fixed chunk bound does
+not depend on pooled buffer size. Portable password remains optional. Keyed restore still requires
+new encrypted generation receiver; main profiles/provider remain plaintext and current backups
+unchanged. Final lifecycle/catalogue/all-profile/recovery/OS policy and external acceptance remain.
+
+D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
+passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.

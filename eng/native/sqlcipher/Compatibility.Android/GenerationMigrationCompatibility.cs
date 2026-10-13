@@ -110,7 +110,7 @@ internal static class GenerationMigrationCompatibility
             if (content.AsSpan().StartsWith("SQLite format 3\0"u8) || content.AsSpan().IndexOf(System.Text.Encoding.UTF8.GetBytes("Fictitious بانک Ü")) >= 0)
                 throw new IOException("Selected or rollback file leaked the fictitious marker.");
         }
-        if (phase == "migration-factory") return "{\"ProtectedFactoryReadWriteAndRetirement\":true,\"LegacyBackupRefusedBeforeData\":true}";
+        if (phase == "migration-factory") return "{\"ProtectedFactoryReadWriteAndRetirement\":true,\"ProtectedPortableBackupVerified\":true,\"RetiredExportStopped\":true,\"LegacyRestoreRefusedBeforeData\":true}";
         return "{\"CompleteMigration\":true,\"OriginalModelAndMoneyPreserved\":true,\"EncryptedRollbackRetained\":true,\"ExactPlaintextCleanup\":true}";
     }
 
@@ -136,11 +136,36 @@ internal static class GenerationMigrationCompatibility
         refused = false;
         try { location.MoveTo(path); } catch (InvalidOperationException) { refused = true; }
         if (!refused) throw new IOException("Protected location fell back to unkeyed access.");
+        var backup = services.GetRequiredService<Vafadar.Backup.IBackupSource>();
         using var output = new MemoryStream();
+        await backup.WriteAsync(output, CancellationToken.None);
+        output.Position = 0;
+        await using (var portable = await SqliteMemorySnapshot.OpenAsync(output, 16 * 1024 * 1024))
+        await using (var current = await factory.CreateDbContextAsync())
+        {
+            await current.Database.OpenConnectionAsync();
+            await SqliteSnapshotVerifier.VerifyAsync(portable.Connection, (SqliteConnection)current.Database.GetDbConnection());
+        }
+        using var retiredOutput = new RetiringOutput(() => location.MoveToProtected(path, Create, "4.19.0"));
         refused = false;
-        try { await services.GetRequiredService<Vafadar.Backup.IBackupSource>().WriteAsync(output, CancellationToken.None); }
+        try { await backup.WriteAsync(retiredOutput, CancellationToken.None); }
         catch (InvalidOperationException) { refused = true; }
-        if (!refused || output.Length != 0) throw new IOException("Legacy keyed backup consumed or wrote data.");
+        if (!refused || retiredOutput.Length is <= 0 or > 81920) throw new IOException("Retired portable export continued after its first output chunk.");
+        using var restore = new MemoryStream([1, 2, 3]);
+        refused = false;
+        try { await backup.RestoreAsync(restore, CancellationToken.None); }
+        catch (InvalidOperationException) { refused = true; }
+        if (!refused || restore.Position != 0) throw new IOException("Legacy keyed restore consumed input.");
+    }
+
+    private sealed class RetiringOutput(Action retire) : MemoryStream
+    {
+        private bool retired;
+        public override async ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            await base.WriteAsync(buffer, cancellationToken);
+            if (!retired) { retired = true; retire(); }
+        }
     }
 
     private static async Task CreateOriginalAsync(string original)
