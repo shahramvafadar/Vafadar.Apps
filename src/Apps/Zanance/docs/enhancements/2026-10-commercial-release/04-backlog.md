@@ -19,7 +19,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-189 coordinator; native key/selector/cleanup adapters and real restart acceptance open) | SEC-02, SEC-03 |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-195 transactional selector / D-189 coordinator; complete key/candidate/cleanup session and restart matrix open) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Policy approved D-192; final coupled integration pending, no interim exclusion | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
@@ -1510,3 +1510,12 @@ reads and exclusive-create/file-directory flush. Torn files refuse; whole-file a
 reopen and eight storage behaviors checked. Actual publication-crash matrix, durable selector,
 Windows/iOS files, optional recovery and all-profile activation remain. Main remains plaintext.
 No decision required beyond approved OD-04/OD-10; physical platform/release gates remain separate.
+
+## Transactional selection and native kill/restart (D-195)
+
+SEC-05 now has original concrete SQLite selector storage, not only coordinator ports. A versioned
+private non-secret protocol file enforces bound identities, ordered CAS and DELETE/EXTRA. Thirteen
+behavior cases pass (focused 82). Actual native hot-journal rollback and committed selection after
+external process kill pass Windows and independent Release Android. No whole-session activation:
+key/candidate/cleanup integration, all-profile mapping, recovery, crash/disk matrix and iOS remain.
+Main is still plaintext. Owner policy OD-04/OD-10 remains approved, not a repeated question.

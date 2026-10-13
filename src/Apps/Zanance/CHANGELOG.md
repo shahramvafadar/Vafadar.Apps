@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Migration selection persistence (2026-10-13, D-195)
+
+- Added transactional recording of database migration progress and generation selection.
+- Verified rollback and committed selection after real process termination in independent fixtures.
+- Live database encryption and complete migration/recovery are still pending integration.
+
 ### Development - Private Android key file foundation (2026-10-13, D-194)
 
 - Added immutable storage for protected Android database keys, refusing replacement and damaged files.

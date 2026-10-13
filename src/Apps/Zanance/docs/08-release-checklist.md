@@ -943,3 +943,10 @@ No whole-app encryption, OS backup or release acceptance inferred. Managed basel
 Independent stored-key process reopen/eight file behaviors exercise actual Android storage.
 No injected publication crash, hardware power-loss, iOS or phone acceptance. Main remains plaintext;
 final selector/journal/recovery/all-profile activation and OS policy coupling remain release gates.
+
+## D-195 native journal restart evidence
+
+Original transactional selector survives actual native process kills as expected on Windows and
+independent signed Release Android; hot rollback header and committed selection checked. No
+full-session crash/disk-pressure/hardware-power-loss, arm64/API24/16 KiB OS, phone/iOS or release
+acceptance. Main provider remains plaintext and final multi-resource migration/recovery is open.

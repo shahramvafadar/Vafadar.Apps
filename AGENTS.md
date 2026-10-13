@@ -1430,3 +1430,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   publication was refused with EACCES. Torn files fail closed and are never replaced with a new key.
 * Reads use native no-follow/nonblocking open and regular-file validation with bounded fixed lengths.
   Never create missing keys or choose orphan staging files. Process restart is not power-loss acceptance.
+
+## 127. Transactional non-secret generation journal (D-195)
+
+* Keep the migration selector in an explicitly created, versioned private SQLite protocol file;
+  only bound profile/generation IDs and ordered phase belong there, never keys or financial data.
+* Use rollback DELETE and synchronous EXTRA, validate captured schema/context before changing an
+  existing file's mode, and compare-and-commit the next phase under an immediate transaction.
+* Missing/unknown/corrupt journals never become Original automatically. Caller retains its exclusive
+  access/profile lease; no file store alone authorizes opening/cleanup or a plaintext fallback.
+* Verify actual native hot-journal and committed-selection process kills separately from full
+  multi-resource migration, disk-pressure/hardware-power-loss and physical-platform acceptance.

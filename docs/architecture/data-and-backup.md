@@ -806,3 +806,11 @@ Durable storage, migration/recovery and approved final OS backup policy still re
 Original private-file key store creates exclusively and flushes file/directory; bounded
 no-follow reads authenticate original binding. This is not a live selector or backup conversion.
 [Device-key guide](sqlcipher-device-keys.md) records process proof and remaining crash/recovery gates.
+
+## Native transactional migration journal (D-195)
+
+SqliteDatabaseGenerationJournal owns a versioned protocol file containing only identities/phase,
+with explicit creation, rollback DELETE/synchronous EXTRA and next-phase compare-and-commit.
+It is not an EF financial entity/model or a portable backup member. Native process-kill rollback
+and committed selection pass Windows/independent Release Android. Main composition unchanged.
+[Generation guide](sqlcipher-generation-checkpoints.md) records complete scope and remaining work.

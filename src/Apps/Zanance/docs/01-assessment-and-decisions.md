@@ -2475,3 +2475,33 @@ This is not atomic whole-file publication; partial writes are fail-closed protoc
 No unrelated native crypto suites, managed baseline/UI matrices or main phone APK repeated.
 Main remains plaintext; selector/journal, all-profile migration, Windows/iOS file adapters,
 optional recovery and approved final OS exclusion still require final integration.
+
+## D-195 - Transactional generation selection journal
+
+Implement actual versioned SQLite protocol storage for the D-189 migration session. Prefer tested
+SQLite/VFS atomic commit to unsupported Android hard links or assumed managed rename durability.
+The dedicated private file contains only one bound profile/original/candidate GUID tuple and its
+ordered phase, no financial data, DEK, path or portable preference. Format 1/application_id VZGJ,
+strict original schema and singleton checks are independent from the unchanged EF finance model;
+no EF entity/schema or compiled-model change. Explicit CreateNew never replaces an existing file.
+Missing/interrupted/foreign/damaged state fails closed. Validate format/context before changing
+existing journal mode. DELETE/EXTRA settings are read back. Immediate transaction compares actual
+state before committing exactly the next phase. Caller still holds the exclusive access/profile
+lease; records cannot certify key/snapshot/cleanup effects or authorize a plaintext fallback.
+
+Thirteen new behavior cases pass; focused Data.Tests 82. Original code compiled against reviewed
+SQLCipher on Windows and signed Release AOT/trimmed Android. Each five-process sequence flushes
+actual native dirty pages and verifies a hot rollback journal header before external termination;
+next process recovers CandidateVerified. A second terminated writer commits Selected through the
+original store; next process retains Selected. These are actual process kills, not faultable-port
+simulations or hardware power-loss/full-migration acceptance. Initial Windows observation failed
+because File.ReadAllBytes refused SQLite's open writer handle; corrected bounded read permits
+existing write/delete sharing, and the failure is retained. Native candidates are unchanged.
+AT-194 records final test/build and independent package verification. Main provider stays plaintext;
+actual session/key/candidate/cleanup integration, optional recovery, all-profile activation, iOS
+and final OS exclusion remain. No unchanged upstream crypto suite or UI matrix repeated.
+
+D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; test output cleaned.
+Main strict Windows/Android builds pass with zero warnings/errors. Records under
+artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
+Independent native strict builds also pass; no visible main screen changes or phone-test handoff.

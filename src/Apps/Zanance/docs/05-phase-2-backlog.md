@@ -1114,3 +1114,9 @@ managed baseline retained. Durable files/recovery/coordinator and iOS remain; ap
 Actual immutable private-file key storage added; independent process reopen/eight file behaviors
 checked. Orphan fixture is not an injected publication crash. Selector/recovery/migration and
 other platform files remain; live database unchanged/plaintext.
+
+## D-195 transactional migration selector
+
+Concrete non-secret SQLite protocol storage and actual native hot-journal/committed-selection
+kill/restart pass on Windows and independent Release Android. Complete native session/migration,
+optional recovery and all-profile/physical/iOS acceptance remain. Main remains plaintext.

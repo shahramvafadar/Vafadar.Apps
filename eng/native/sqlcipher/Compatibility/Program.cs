@@ -11,6 +11,16 @@ if (args.Length == 2 && args[0] is "--create-key-proof" or "--reopen-key-proof")
     return;
 }
 
+if (args.Length == 2 && args[0].StartsWith("journal-", StringComparison.Ordinal))
+{
+    var owned = Path.GetFullPath(args[1]);
+    var root = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "native-sqlcipher"));
+    if (!owned.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Journal proof must stay in independently owned artifacts.");
+    Console.WriteLine(await JournalCompatibility.RunAsync(owned, args[0]));
+    return;
+}
+
 if (args.Length != 1) throw new ArgumentException("Provide an owned evidence folder for the independent native check.");
 var expectedRoot = Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "native-sqlcipher");
 Console.WriteLine(await SchemaCompatibility.RunAsync(args[0], expectedRoot));

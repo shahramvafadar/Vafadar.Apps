@@ -61,3 +61,51 @@ Evidence: artifacts/native-sqlcipher/d189-{coordinator-tests,full-tests,windows-
 OD-04 and OD-10 are now approved, superseding their earlier pending references above. Continue
 native storage/migration/recovery engineering without asking these policies again. Windows key
 protection is implemented separately; durable session adapters and app activation remain incomplete.
+
+## Transactional selector storage (D-195)
+
+SqliteDatabaseGenerationJournal is the actual non-secret durable protocol file for a captured
+private path and bound profile/original/candidate tuple. It does not contain keys, financial data,
+paths, labels or portable preferences. SQLite/VFS transactions are chosen over a custom binary
+log or unsupported Android hard-link publication. Application ID 0x565a474a (VZGJ), user_version 1,
+one exact generation_state schema/singleton and phase 0..4 are validated. This protocol format is
+independent of the unchanged EF financial schema; no compiled-model or EF migration change.
+
+CreateNewAsync reserves an exact new path, then commits original state. Existing/interrupted files
+are never replaced. Read/commit use ReadWrite (not ReadWriteCreate), allowing SQLite hot-journal
+recovery while refusing missing state. They validate original format/context before any journal
+mode adjustment. DELETE and synchronous EXTRA are read back. According to
+[SQLite's synchronous semantics](https://www.sqlite.org/pragma.html#pragma_synchronous), EXTRA adds
+containing-directory synchronization after DELETE journal unlink. Physical storage must still
+honor SQLite/VFS sync assumptions; this is not hardware power-loss certification.
+
+CompareAndCommitAsync validates exactly one bound next phase, obtains an immediate transaction,
+rechecks actual state, updates one row and commits. Subsequent coordinator readback/keyed reopen
+remains required. Unknown, missing, damaged and foreign states fail closed rather than selecting
+Original. The caller owns trusted path ancestors and an exclusive access/profile lease. Same-UID
+malicious modification is outside this storage boundary; no claim of metadata cryptographic
+integrity. A journal row never proves the candidate/key/content actually exists or authorizes
+cleanup. No main provider/startup or OS backup policy is activated yet.
+
+Thirteen behavior cases cover real isolated SQLite, all ordered reopen phases, stale commit,
+no missing-state recreation, explicit no-replace initialization, three foreign identity cases,
+unknown version/unexpected schema/missing row/invalid phase, cancellation and skipped advance.
+Focused Data.Tests 82 pass. Test-GenerationJournal.ps1 -RunName windows-d and
+Test-AndroidGenerationJournal.ps1 -RunName android-d run the same original code against reviewed
+native candidates in five distinct processes each. Official sqlite3_db_cacheflush is used only
+by the independent fixture to force an uncommitted page to disk; a bounded actual rollback-header
+read proves the hot journal before the external process kill. Restart recovers CandidateVerified.
+A separate actual store commit followed by external kill/restart retains Selected. The Windows
+observer must allow SQLite's existing write handle (ReadWrite/Delete share); the failed first
+observation is retained, not counted as crash acceptance. Android is x64/API36/4 KiB, not physical
+arm64/API24/16 KiB, iOS, disk-pressure, envelope/candidate/cleanup or hardware-power-loss acceptance.
+
+Windows proof: artifacts/native-sqlcipher/build/windows-d/journal-proof-af2cbb35a32548d3b9297abddc16c406/journal-process-proof.json.
+Android proof: artifacts/native-sqlcipher/build/android-d/android-journal-proof-87dc7d500fab448794e70c30e9cd1e28.json.
+Independent Release APK v2/v3 signature, ZIP and both native payload hashes match reviewed slices;
+only its distinct package was uninstalled after proof. No main app files/credentials were touched.
+
+D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; test output cleaned.
+Main strict Windows/Android builds pass with zero warnings/errors. Records under
+artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
+Independent native strict builds also pass; no visible main screen changes or phone-test handoff.

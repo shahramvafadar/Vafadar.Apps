@@ -550,3 +550,12 @@ Bound encrypted DEK envelope and transient ciphertext staging only in caller-own
 no network, permission, key export or portable preference. Reads never accept linked/nonregular
 files. Independent proof owns fictitious directories/keys; exact package removed after checking.
 Main composition does not use store yet. Final OS exclusion remains coupled to completed encryption.
+
+## Non-secret migration selection file (D-195)
+
+A dedicated versioned private SQLite protocol file holds profile/original/candidate GUIDs and
+phase only. No DEK, amount, currency, profile label, financial data, portable path/export preference,
+network or permission. Its rollback sidecar contains only that same metadata. Caller provides
+trusted private path/access lease; same-UID malicious modification is not cryptographically prevented.
+Independent Windows/Android fictitious proof only; main creation/OS exclusion is not activated.
+Final encrypted-data and approved OS-backup integration remain required before release.

@@ -287,3 +287,14 @@ context, accepts only 32-byte DEKs and bounded envelopes, and refuses wrong cont
 Independent generated envelope/keyed database reopen in another Windows process passes. No app
 provider/key/storage activation or OS backup change yet; Android/iOS adapters and final integration
 remain incomplete. CurrentUser is not a hardware/device-only guarantee or defence against same-user code.
+
+## D-195 tested transactional protocol journal
+
+Final selection metadata uses a dedicated versioned private SQLite rollback journal transaction,
+DELETE/synchronous EXTRA, containing only non-secret profile/generation IDs and phase. This is the
+small migration manifest/selector in the approved outline, not another financial database. Original
+schema/context, explicit no-replace creation and next-phase compare-and-commit are enforced.
+Actual native flushed hot-journal kill/restart recovers uncommitted selection, and actual committed
+selection survives another external kill/restart on Windows and independent Release Android.
+These results do not accept the complete envelope/export/keyed-reopen/cleanup protocol, disk pressure,
+hardware power loss, all profiles, iOS, recovery UX or live app encryption. See generation guide.

@@ -1753,3 +1753,19 @@ approach retained. Torn final files refuse; not atomic whole-file publication. N
 restart matrix remains. Independent APK signature/native bytes and exact package cleanup checked.
 Strict main build results recorded in d194-main-{windows,android}.log. Unchanged managed 3,232
 and D-193 protector fifteen cases retained without rerunning unrelated suites. Main still plaintext.
+
+## AT-194 - Real transactional selection and native process restart
+
+Thirteen original-store SQLite behaviors pass (focused 82). Windows and independent Android
+Release AOT/trimmed each use five fresh processes: create CandidateVerified, write/flush native
+hot journal then external kill, reopen/rollback with original selected, actual commit Selected
+then external kill, reopen with candidate selected. Original checkpoint code reads actual files.
+Initial Windows writer-sharing observation failed and was corrected; no restart on observation
+expiry. APK signature/ZIP/native hashes and exact independent package removal verified. Main
+finance model/UI/provider unchanged; complete migration/key/cleanup/recovery, power loss, device,
+iOS and all-profile acceptance remain open. Full/strict build evidence follows below.
+
+D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; test output cleaned.
+Main strict Windows/Android builds pass with zero warnings/errors. Records under
+artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
+Independent native strict builds also pass; no visible main screen changes or phone-test handoff.

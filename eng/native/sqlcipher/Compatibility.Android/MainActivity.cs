@@ -22,6 +22,9 @@ public sealed class MainActivity : Activity
         try
         {
             var keyPhase = Intent?.GetStringExtra("key_phase");
+            var journalPhase = Intent?.GetStringExtra("journal_phase");
+            if (journalPhase is not null && (keyPhase is not null || journalPhase is not ("journal-create" or "journal-uncommitted" or "journal-reopen-rollback" or "journal-committed" or "journal-reopen-selected")))
+                throw new ArgumentException("Unknown or combined independent journal phase.");
             if (keyPhase is not null && keyPhase is not ("keys-create" or "keys-reopen" or "keys-negative" or "keys-store-create" or "keys-store-reopen" or "keys-store-negative"))
                 throw new ArgumentException("Unknown independent key phase.");
             var keyRoot = owned;
@@ -31,7 +34,16 @@ public sealed class MainActivity : Activity
                     throw new ArgumentException("Independent key check requires a fresh run identity.");
                 keyRoot = Path.Combine(owned, "key-proofs", keyRun.ToString("N"));
             }
-            var result = keyPhase is null
+            var journalRoot = owned;
+            if (journalPhase is not null)
+            {
+                if (!Guid.TryParseExact(Intent?.GetStringExtra("journal_run"), "N", out var journalRun) || journalRun == Guid.Empty)
+                    throw new ArgumentException("Independent journal requires fresh run identity.");
+                journalRoot = Path.Combine(owned, "journal-proofs", journalRun.ToString("N"));
+            }
+            var result = journalPhase is not null
+                ? await Task.Run(() => JournalCompatibility.RunAsync(journalRoot, journalPhase))
+                : keyPhase is null
                 ? await Task.Run(() => SchemaCompatibility.RunAsync(evidence, owned))
                 : await Task.Run(() => AndroidKeyCompatibility.RunAsync(keyRoot, keyPhase));
             await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, "result.json"), result);

@@ -2920,3 +2920,17 @@ implemented. Independent Release stored-key encrypted reopen and eight file beha
 A fictitious staged orphan is not actual kill/power-loss acceptance. Managed baseline unchanged;
 main provider remains plaintext. Native selector/journal, all-profile migration/recovery, other
 platform file adapters, final OS exclusion and runtime/device release acceptance remain open.
+
+### 31.108 Transactional generation selection (D-195 / AT-194)
+
+Actual private versioned SQLite protocol journal implemented: non-secret identity/phase only,
+explicit no-replace creation, format/context checks, rollback DELETE/EXTRA and immediate
+compare-and-commit. Thirteen cases/focused 82 pass. Real native hot-journal process kill recovers
+uncommitted selection and committed selection persists after another kill in Windows and separate
+Release Android. This is selector proof, not complete crash-safe key/export/cleanup/recovery or
+all-profile encryption. Main database still plaintext; iOS/physical/power-loss gates remain.
+
+D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; test output cleaned.
+Main strict Windows/Android builds pass with zero warnings/errors. Records under
+artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
+Independent native strict builds also pass; no visible main screen changes or phone-test handoff.
