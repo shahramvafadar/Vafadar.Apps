@@ -593,3 +593,7 @@ D-202 operational restore capsule stores only allowlisted previous/restored disp
 encrypted through reviewed SQLCipher with candidate device key. It is private, retained with rollback,
 not a portable source; no device PIN, credentials, SDK/network/permission additions. Main activation
 and final retention/OS-backup policy integration remain open.
+
+D-206 private non-secret protocol metadata holds installation/legacy/key-profile/initial generation
+GUIDs only. No names, financial rows, key bytes, credentials, paid facts or portable preference entry.
+No SDK/permission/network change. Main activation and final OS backup exclusion remain incomplete.

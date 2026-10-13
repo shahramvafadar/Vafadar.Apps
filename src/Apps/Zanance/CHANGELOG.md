@@ -1349,3 +1349,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Confirmed profile deletion waits for active database contexts and rechecks the reviewed profile
   before removing files. A cancelled or outdated request leaves the profile intact.
+
+### D-206 — Device database identity preparation
+
+- Added durable private installation/profile bindings, including the main profile, for upcoming
+  automatic database keys. Main encryption is not activated by identity bootstrap.

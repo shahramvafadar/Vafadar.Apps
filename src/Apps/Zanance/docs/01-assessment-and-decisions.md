@@ -2803,3 +2803,36 @@ Preserve d205-native-profile.log expiration evidence. Other logs: d205-{profile-
 main-windows,main-android,native-build,test-clean}.log. Authentication is the decision port, not native
 biometric acceptance; no new UI layout, unchanged crypto matrix, main encryption or protected deletion
 lifecycle acceptance is claimed.
+
+## D-206 — Persist nonempty local installation/profile key bindings
+
+**Decision.** Use an explicit private versioned SQLite operational identity catalogue for automatic
+installation GUID, legacy-to-key-binding profile mapping and captured initial generation pair.
+The empty-id main profile gets a separate nonempty key-binding identity. Known profiles register
+transactionally/idempotently; missing/corrupt state is never replaced by reads or registration.
+
+**Reason.** Device key AAD and generation journal identity must survive process restart and cannot
+be guessed from display names, account ids, commercial scope or a changing profile preference.
+No keys/labels/financial facts or portable security preferences are added.
+
+**Boundary.** This is identity bootstrap, not live selection/whole lifecycle activation. Main DI/
+startup and later restored-generation references are not registered yet; protocol/journal/key/file
+verification and final protected retention/recovery/deletion remain open. No EF financial model change.
+
+D-206 final evidence: 131 infrastructure tests and all 3,305 tests pass with zero failures/skips.
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Independent Android x64 API36/4 KiB creates/commits actual two-profile identity catalogue and main
+initial generation journal, externally terminates the completed process and reopens in a new one.
+Exact identity fingerprint, nonempty main binding, existing registration and new-profile installation
+preservation pass. No DEK/key preparation or main activation occurs. Signature and packaged reviewed
+ABI identity verify; independent package uninstalled and test outputs cleaned. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b540cdeaaef44a2d82592e745cd8a3c3.json,
+run ded8acc1a61547d19614cc82a3f3e58a. Logs: d206-{data-tests,full-tests,main-windows,main-android,
+native-build,native-identity,test-clean}.log. Typed blob rejection was added during review before the
+native fixture execution. No unchanged cipher/crypto suite, UI matrix, physical power-loss or main
+whole-lifecycle acceptance is claimed.
+
+D-206 negative build evidence: test-output cleanup was mistakenly started before Android build
+finished, removing required copied assemblies/resources (MSB3030, 27 errors). Preserve
+d206-main-android-clean-race.log; retry only the build after cleanup completes. No test/native
+fixture restart or success claim for that failed attempt; final sequential Android build is separate.

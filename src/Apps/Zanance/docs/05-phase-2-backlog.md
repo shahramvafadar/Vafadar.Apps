@@ -1170,3 +1170,7 @@ activation and SEC-01 acceptance remain open; no encrypted main-profile claim.
 D-205 actual confirmed inactive-profile deletion awaits maintenance/context drain and revalidates
 reviewed inputs. Protected generation/key/rollback deletion/retention and main encryption lifecycle
 remain incomplete; existing file-error cleanup policy is unchanged.
+
+D-206 durable initial installation/profile/key-generation identities are implemented, with main
+empty-id mapping and idempotent registration. Main startup/bootstrap/live selector/provider and
+protected retention/recovery/deletion/OS-policy activation remain incomplete.

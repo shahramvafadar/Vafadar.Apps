@@ -1107,3 +1107,45 @@ Preserve d205-native-profile.log expiration evidence. Other logs: d205-{profile-
 main-windows,main-android,native-build,test-clean}.log. Authentication is the decision port, not native
 biometric acceptance; no new UI layout, unchanged crypto matrix, main encryption or protected deletion
 lifecycle acceptance is claimed.
+
+### Durable local identity bootstrap (D-206)
+
+SqliteDatabaseIdentityCatalogue explicitly creates a new private operational protocol file containing
+one installation GUID and a mapping from known legacy profile ids (empty main or canonical N-format
+local GUID) to distinct nonempty key-binding profile and initial original/candidate generation GUIDs.
+This resolves the main profile's empty UI/catalogue identity without borrowing an account/commercial
+identity. DatabaseProfileIdentity projects exact DatabaseKeyBinding and initial generation checkpoint.
+No key bytes, labels, financial rows, paths or provider/paid facts are stored or made portable.
+
+CreateNew requires an existing trusted private directory and main/unique known profiles, reserves
+without replacement, writes the complete initial set in one DELETE/EXTRA transaction and reopens
+readback. ReadWrite without Create allows SQLite hot-journal recovery; existing format/version/exact
+schema/typed canonical identities are validated before mode changes. Missing/corrupt/partial/foreign
+state never regenerates during read or explicit registration. RegisterAsync is transactional and
+idempotent for an already committed known legacy id, retaining installation and other profile ids.
+The caller supplies live maintenance/access validation before/after effects and owns the root.
+
+This is a separate non-secret operational schema, not a financial EF model/migration. Initial
+generations remain immutable bootstrap references, not authority to open a database or a current
+selector after later restore. Actual stored generation journal, existing key/encrypted files and
+final live catalogue/retention/deletion/recovery/startup integration still govern activation. The
+main app does not yet register/bootstrap this store and remains plaintext. Bootstrap interrupted
+before valid completion fails closed; physical power-loss/early reconciliation acceptance is open.
+
+D-206 final evidence: 131 infrastructure tests and all 3,305 tests pass with zero failures/skips.
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Independent Android x64 API36/4 KiB creates/commits actual two-profile identity catalogue and main
+initial generation journal, externally terminates the completed process and reopens in a new one.
+Exact identity fingerprint, nonempty main binding, existing registration and new-profile installation
+preservation pass. No DEK/key preparation or main activation occurs. Signature and packaged reviewed
+ABI identity verify; independent package uninstalled and test outputs cleaned. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b540cdeaaef44a2d82592e745cd8a3c3.json,
+run ded8acc1a61547d19614cc82a3f3e58a. Logs: d206-{data-tests,full-tests,main-windows,main-android,
+native-build,native-identity,test-clean}.log. Typed blob rejection was added during review before the
+native fixture execution. No unchanged cipher/crypto suite, UI matrix, physical power-loss or main
+whole-lifecycle acceptance is claimed.
+
+D-206 negative build evidence: test-output cleanup was mistakenly started before Android build
+finished, removing required copied assemblies/resources (MSB3030, 27 errors). Preserve
+d206-main-android-clean-race.log; retry only the build after cleanup completes. No test/native
+fixture restart or success claim for that failed attempt; final sequential Android build is separate.

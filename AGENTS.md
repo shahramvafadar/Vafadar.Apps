@@ -1539,3 +1539,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   calls acquire only immediately available ownership; never block the UI or bypass pending writers.
 * Current/main deletion remains forbidden. Existing file-error cleanup policy is unchanged; final
   protected generation/key/rollback retention and deletion lifecycle are separate outstanding work.
+
+## 138. Durable local key-binding identities (D-206)
+
+* Private versioned identity bootstrap records one installation and nonempty key-binding profile ids,
+  including the legacy empty-id main profile. Initial original/candidate generations are captured once.
+* Read never creates or regenerates missing/corrupt/foreign/incorrectly typed identities. Explicit
+  profile registration preserves existing committed bindings; no names, keys or paid facts are stored.
+* These are initial migration identities, not a live selector. Actual journal/key/file verification
+  and final catalogue/startup integration are still required; no portable or main activation follows.

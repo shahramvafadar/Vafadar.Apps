@@ -3109,3 +3109,28 @@ Preserve d205-native-profile.log expiration evidence. Other logs: d205-{profile-
 main-windows,main-android,native-build,test-clean}.log. Authentication is the decision port, not native
 biometric acceptance; no new UI layout, unchanged crypto matrix, main encryption or protected deletion
 lifecycle acceptance is claimed.
+
+### 31.119 Durable initial database key identities (D-206)
+
+Private explicit identity bootstrap maps the legacy main/other profile ids to persistent installation
+and nonempty key-binding profile/initial generation ids. Idempotent registration retains existing
+identities; missing/corrupt state cannot regenerate on read. Main startup/live selector/encryption
+activation and final lifecycle acceptance remain incomplete; separate operational schema, no EF change.
+
+D-206 final evidence: 131 infrastructure tests and all 3,305 tests pass with zero failures/skips.
+Strict main Windows/Android and independent Release AOT/trim builds have zero warnings/errors.
+Independent Android x64 API36/4 KiB creates/commits actual two-profile identity catalogue and main
+initial generation journal, externally terminates the completed process and reopens in a new one.
+Exact identity fingerprint, nonempty main binding, existing registration and new-profile installation
+preservation pass. No DEK/key preparation or main activation occurs. Signature and packaged reviewed
+ABI identity verify; independent package uninstalled and test outputs cleaned. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b540cdeaaef44a2d82592e745cd8a3c3.json,
+run ded8acc1a61547d19614cc82a3f3e58a. Logs: d206-{data-tests,full-tests,main-windows,main-android,
+native-build,native-identity,test-clean}.log. Typed blob rejection was added during review before the
+native fixture execution. No unchanged cipher/crypto suite, UI matrix, physical power-loss or main
+whole-lifecycle acceptance is claimed.
+
+D-206 negative build evidence: test-output cleanup was mistakenly started before Android build
+finished, removing required copied assemblies/resources (MSB3030, 27 errors). Preserve
+d206-main-android-clean-race.log; retry only the build after cleanup completes. No test/native
+fixture restart or success claim for that failed attempt; final sequential Android build is separate.

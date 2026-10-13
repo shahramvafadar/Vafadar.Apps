@@ -606,3 +606,7 @@ Main unchanged/plaintext; package/catalogue/provider/recovery integration remain
 D-202: private SQLCipher restore capsule contains allowlisted previous/restored display preferences
 only, retained with candidate key/rollback for startup replay. No credentials/PIN or new permission/
 network SDK. Capsule is not a portable backup source; final main retention/OS policy remains open.
+
+D-206 local identity bootstrap records only non-secret installation/legacy/key-profile/generation
+GUIDs in private protocol storage. No keys/labels/financial facts or portable source and no SDK,
+permission or network change. Main/final OS-policy integration remains open.

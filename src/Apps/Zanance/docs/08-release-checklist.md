@@ -1006,3 +1006,7 @@ and covered startup integration, key/recovery/retention and physical/iOS accepta
 D-205 real inactive deletion now owns maintenance. Do not treat this as final protected generation/
 key/capsule/rollback cleanup or filesystem transaction acceptance. Current/main refusal and original
 local file scope remain; protected deletion/retention lifecycle is still mandatory before release.
+
+D-206 identity catalogue is private/non-portable and not registered in main startup. Initial ids
+are not live selection authority. Require actual journal/key/file reopen, early partial reconciliation,
+all-profile bootstrap/live references, native provider/security and recovery/retention before activation.

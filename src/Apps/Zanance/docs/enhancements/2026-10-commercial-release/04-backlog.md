@@ -1582,3 +1582,7 @@ acceptance and protected catalogue/all-profile/startup/key/retention/recovery/OS
 D-205 coordinates actual inactive profile deletion with D-203/D-204 ownership and stale/cancelled
 review refusal. Final protected profile/generation/key/rollback retention/deletion, provider/candidate
 acceptance, metadata/startup and recovery/OS policy remain open; main databases are plaintext.
+
+D-206 persists initial installation/key-profile/generation identities without read-time regeneration.
+SEC-01 still needs main bootstrap/provider/live catalogue/later-restore references and protected
+retention/deletion/recovery/OS policy integration and platform acceptance. Main remains plaintext.
