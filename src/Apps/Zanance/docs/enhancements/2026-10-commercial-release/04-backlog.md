@@ -1545,3 +1545,10 @@ and mid-output publication retirement. Supersedes keyed-write refusal in D-197; 
 restore remains pending/fail-closed. Main remains plaintext/current backups unchanged; receiver,
 provider/catalogue/startup/all-profile/recovery/OS policy and other security gates remain. SEC-08
 restore safety is not closed by this export path.
+
+## Restored encrypted staging (D-199)
+
+SEC-02 adds bounded memory portable import into fresh keyed staging, typed validation and actual
+old-schema upgrade, verified in independent original-model Release Android. Six guards/focused
+108 pass. This does not close SEC-08 safety/package rollback or main restore dispatch/selection;
+all main provider/lifecycle/catalogue/recovery/all-profile/OS policy gates remain.

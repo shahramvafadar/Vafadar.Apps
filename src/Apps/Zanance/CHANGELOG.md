@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Encrypted restore staging (2026-10-13, D-199)
+
+- Added validated portable import into a fresh encrypted candidate and upgrade with actual app migrations.
+- Verified old-backup account, transaction and profile settings preservation.
+- Live selection, safety rollback and final app restore activation remain unfinished.
+
 ### Development - Portable export from encrypted data (2026-10-13, D-198)
 
 - Connected encrypted database backup export without a plaintext temporary file.

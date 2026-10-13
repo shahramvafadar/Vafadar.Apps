@@ -2601,3 +2601,31 @@ D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and 
 Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
 passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.
+
+## D-199 - Encrypted restored candidate and actual schema upgrade
+
+Add SqlCipherRestoreStaging for a captured exclusive owner: bounded portable memory validation,
+explicit fresh candidate/sidecar refusal before input, local key preparation/reopen, encrypted
+export and complete source/candidate schema/header/typed verification. Invoke actual application
+migration callback only after imported content matches, then reopen for native/cipher/foreign-key
+integrity and file/directory synchronization. Returned key cleared. Access/cancellation rechecked
+around native awaits; no original/live pointer/data deletion or plaintext temporary staging.
+Failed/unselected candidate remains caller-owned for journal reconciliation, not guessed cleanup.
+Input bound does not promise total process peak RAM or complete native string erasure.
+
+Six new guard cases pass (focused 108): existing output/sidecar, invalid/oversized input, retired
+access and cancellation refuse before key/output changes. Separate signed Release AOT/trimmed
+Android original registration/compiled model creates a real first-schema backup with fictitious
+account/entry/settings. Portable image imports under a new profile/installation/generation key,
+actual application migrations advance through all 32, and financial IDs/name/currency/opening amount,
+entry amount/date and onboarding remain correct. Original backup file hash unchanged; encrypted
+candidate has no plain header/marker. No live selection performed. Initial fixture span/await
+compile error corrected before execution; no runtime workaround or native source change. APK ZIP/
+v2/v3 signature/ABI hashes and package removal checked. AT-198 records final tests/builds. Main
+still plaintext: receiver dispatch/durable selection/safety rollback/package atomicity, provider/
+startup/catalogue/all-profile/recovery/OS policy and broader platform/runtime gates remain.
+
+D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
+d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
+restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.

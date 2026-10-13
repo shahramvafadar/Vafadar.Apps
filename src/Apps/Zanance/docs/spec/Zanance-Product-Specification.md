@@ -2978,3 +2978,17 @@ D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and 
 Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
 passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.
+
+### 31.112 Encrypted restored candidate (D-199 / AT-198)
+
+Bounded portable memory import, fresh local binding, complete pre-upgrade typed verification,
+actual migration callback, keyed integrity/reopen and synchronization implemented. Six guards/
+focused 108 and real first-schema-to-32-migration financial/profile preservation pass signed
+Release Android. No plaintext temporary staging or live selection. Main is still plaintext;
+receiver dispatch/durable selection/safety/package rollback, provider/lifecycle/all-profile/
+recovery/OS policy and broader platform/runtime acceptance remain.
+
+D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
+d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
+restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.

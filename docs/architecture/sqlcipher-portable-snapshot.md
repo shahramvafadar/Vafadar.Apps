@@ -56,3 +56,11 @@ Complete actual-model portable/live comparison and retirement mid-output pass in
 Release Android. Source identity cannot redirect on await; partial output must not be published.
 Native registry holds only weak connection/access checks, no keys. Main activation/keyed generation
 restore and whole-product acceptance remain; portable password choice is still optional.
+
+## Restored encrypted staging (D-199)
+
+Bounded portable memory input now feeds SqlCipherRestoreStaging: fresh bound key, exact new
+candidate, complete typed validation before actual schema migration, keyed reopen/integrity and
+native synchronization. First-schema-to-current actual model proof passes independent Release
+Android without changing source. No live selection/safety/package transaction or main adoption
+claimed; input/output bounds are not total peak-RAM or full process-erasure guarantees.

@@ -586,3 +586,11 @@ readable by its holder. Captured access validates each chunk; partial output on 
 published as success. Weak registry stores no key material; native strings/full erasure not promised.
 Current main plaintext backups unchanged; no new permission/network/portable credential or OS policy.
 Generation-aware encrypted restore/safety/recovery and final main adoption remain.
+
+## Encrypted restore candidate (D-199)
+
+Portable plaintext stays in owned memory; a new local bound DEK protects the explicit candidate
+before native app migrations. No plaintext temporary database, original deletion, live selector
+change, portable credential, permission or network effect. Mutable owned keys/buffers cleared;
+full native/string erasure/total peak RAM not promised. Current main unchanged/plaintext; final
+safety/package rollback/dispatch/recovery/OS exclusion and acceptance still required.

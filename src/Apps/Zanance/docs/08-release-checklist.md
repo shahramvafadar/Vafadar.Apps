@@ -972,3 +972,10 @@ Protected actual-source portable/live typed comparison and first-chunk retiremen
 signed Release Android. Fixed output chunk, no plaintext temporary file, optional password retained.
 Main/profile/provider/restore/recovery/all-profile/OS policy and device/iOS/full-product acceptance
 remain. Do not publish partial output as a complete backup or claim current app encryption.
+
+## D-199 old-backup staging proof
+
+Original first schema imports under fresh local key and upgrades through all 32 migrations in
+independent signed Release Android, preserving financial/profile packets and source bytes. No
+live selection, safety/package rollback or main activation. Receiver dispatch/lifecycle/provider/
+all-profile/recovery/OS policy, physical/iOS/wider crash acceptance remain release gates.

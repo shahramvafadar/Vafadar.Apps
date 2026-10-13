@@ -1475,3 +1475,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   caller-owned on failure and must never be published as a successful backup.
 * Weak connection/access association stores no key material. Existing-only encrypted generation
   restore/selection still requires its own receiver; legacy plaintext restore refuses keyed contexts.
+
+## 131. Encrypted restored staging (D-199)
+
+* Read portable images into bounded owned memory; refuse existing candidate/sidecars before input
+  consumption and prepare a fresh captured device binding only after input integrity/access checks.
+* Verify complete imported schema/header/typed rows before actual application migrations, reopen
+  upgraded candidate for cipher/relational integrity and synchronize it. No plaintext temporary file.
+* Candidate preparation alone never selects live data, deletes originals or certifies safety rollback;
+  generation-aware selection/package transaction and restart acceptance remain separate obligations.

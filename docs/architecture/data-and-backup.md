@@ -885,3 +885,27 @@ D-198 final managed evidence: all 3,265 tests pass with zero failures/skips and 
 Main strict Windows/Android builds have zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d198-{backup-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native backup route
 passes; unchanged migration/crypto/Windows-key/UI matrices and main phone APK were not repeated.
+
+## Encrypted restored staging (D-199)
+
+SqlCipherRestoreStaging consumes a bounded portable stream in owned memory, validates integrity
+before key effects, refuses existing candidate/sidecars before input consumption and imports into
+an explicit new local binding. Verify all original schema/header/typed content before invoking
+actual application schema upgrade; then reopen and check native/cipher/foreign-key integrity and
+synchronize candidate file/directory. It does not choose a live generation, create an automatic
+replacement key for selected data, delete originals or provide a package rollback transaction.
+Caller owns exclusive access/private ancestors, actual migration callback and durable later selection.
+Failed candidate stays unselected/caller-owned; no broad cleanup. No plaintext temporary disk file.
+
+Independent -Restore route uses original registration/compiled model and first real schema backup,
+new local key, actual 32 migration history, original IDs/money/date/profile packet and unchanged
+source file digest. Candidate lacks plain marker/header. Proof under artifacts/native-sqlcipher/
+build/android-d/android-migration-proof-279bedf581a24cf5a4a2489da6178c0a.json; runtime d199-native-
+restore-runtime.log. Six guards/focused 108 pass. Initial span/await fixture compile failure retained
+and corrected, strict native Release build/signature/ZIP/reviewed ABI bytes and exact package removal
+pass. Main dispatch/lifecycle/catalogue/provider/selection/safety/recovery/OS policy remain unadopted.
+
+D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
+d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
+restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.

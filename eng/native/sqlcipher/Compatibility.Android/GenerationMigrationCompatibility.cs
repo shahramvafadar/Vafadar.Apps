@@ -18,6 +18,7 @@ internal static class GenerationMigrationCompatibility
     internal static async Task<string> RunAsync(string folder, string phase)
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+        if (phase == "restore-staging") return await CheckRestoreStagingAsync(folder);
         var contextPath = Path.Combine(folder, "migration-context.txt");
         DatabaseGenerationCheckpoint initial;
         Guid installation;
@@ -112,6 +113,68 @@ internal static class GenerationMigrationCompatibility
         }
         if (phase == "migration-factory") return "{\"ProtectedFactoryReadWriteAndRetirement\":true,\"ProtectedPortableBackupVerified\":true,\"RetiredExportStopped\":true,\"LegacyRestoreRefusedBeforeData\":true}";
         return "{\"CompleteMigration\":true,\"OriginalModelAndMoneyPreserved\":true,\"EncryptedRollbackRetained\":true,\"ExactPlaintextCleanup\":true}";
+    }
+
+    private static async Task<string> CheckRestoreStagingAsync(string folder)
+    {
+        if (Directory.Exists(folder)) throw new IOException("Use a fresh restore fixture directory.");
+        Directory.CreateDirectory(folder);
+        var sourcePath = Path.Combine(folder, "fictitious-old-backup.db");
+        _ = new ServiceCollection().AddZananceData(sourcePath);
+        var sourceOptions = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(new SqliteConnectionStringBuilder
+        { DataSource = sourcePath, Pooling = false }.ToString()).UseModel(ZananceDbContextModel.Instance).Options;
+        var accountId = Guid.NewGuid(); var entryId = Guid.NewGuid(); var settingsId = Guid.NewGuid();
+        await using (var old = new ZananceDbContext(sourceOptions))
+        {
+            var migrations = old.Database.GetMigrations().ToList();
+            if (migrations.Count != 32) throw new IOException("Review actual restored migration baseline.");
+            await old.GetService<IMigrator>().MigrateAsync(migrations[0]);
+            await old.Database.ExecuteSqlAsync($"INSERT INTO Settings (Id, ReportCurrencyCode, Mode, BudgetCalendar, WeekStart, ReminderDaysBefore, ReminderTime, NotificationsShowDetails, AppLockEnabled, OnboardingCompleted, CreatedAt, UpdatedAt) VALUES ({settingsId}, 'EUR', 0, 0, 1, 3, '09:00:00', 0, 0, 1, 0, 0)");
+            await old.Database.ExecuteSqlAsync($"INSERT INTO Accounts (Id, Name, Type, CurrencyCode, OpeningBalance, OpeningDate, OpeningBalanceKnown, IncludeInTotals, IsArchived, SortOrder, CreatedAt, UpdatedAt) VALUES ({accountId}, 'Fictitious old restore بانک Ü', 0, 'EUR', 9100, '2025-01-01', 1, 1, 0, 0, 0, 0)");
+            await old.Database.ExecuteSqlAsync($"INSERT INTO Entries (Id, Kind, Date, AccountId, Amount, Review, Source, CreatedAt, UpdatedAt) VALUES ({entryId}, 1, '2025-01-19', {accountId}, 730, 0, 0, 0, 0)");
+        }
+        var digest = SHA256.HashData(await File.ReadAllBytesAsync(sourcePath));
+        using var portable = new MemoryStream();
+        await using (var source = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = sourcePath, Pooling = false, Mode = SqliteOpenMode.ReadWrite }.ToString()))
+        {
+            await source.OpenAsync();
+            await SqlCipherPortableSnapshot.WriteAsync(source, portable, 16 * 1024 * 1024);
+        }
+        portable.Position = 0;
+        var binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var keys = new AndroidGenerationKeyStore(folder);
+        var candidate = Path.Combine(folder, "fictitious-restored.cipher.db");
+        var upgraded = false;
+        await SqlCipherRestoreStaging.PrepareAsync(portable, candidate, binding, keys, new AndroidGenerationFileDurability(folder),
+            async (connection, ct) =>
+            {
+                var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
+                    .UseModel(ZananceDbContextModel.Instance).Options;
+                await using var context = new ZananceDbContext(options);
+                await context.Database.MigrateAsync(ct);
+                if ((await context.Database.GetPendingMigrationsAsync(ct)).Any()) throw new IOException("Restored actual migrations incomplete.");
+                upgraded = true;
+            }, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+        var key = await keys.ReadAsync(binding, CancellationToken.None);
+        try
+        {
+            var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(new SqliteConnectionStringBuilder
+            { DataSource = candidate, Pooling = false, Mode = SqliteOpenMode.ReadOnly, Password = Convert.ToBase64String(key) }.ToString())
+                .UseModel(ZananceDbContextModel.Instance).Options;
+            await using var current = new ZananceDbContext(options);
+            var account = await current.Accounts.SingleAsync(); var entry = await current.Entries.SingleAsync(); var settings = await current.Settings.SingleAsync();
+            if (!upgraded || account.Id != accountId || account.Name != "Fictitious old restore بانک Ü" || account.OpeningBalance != 9100 ||
+                entry.Id != entryId || entry.Amount != 730 || entry.Date != new DateOnly(2025, 1, 19) || settings.Id != settingsId || !settings.OnboardingCompleted)
+                throw new IOException("Restored actual financial/profile packet changed.");
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+        var afterDigest = SHA256.HashData(await File.ReadAllBytesAsync(sourcePath));
+        if (!CryptographicOperations.FixedTimeEquals(digest, afterDigest))
+            throw new IOException("Restore staging changed original backup source.");
+        var encrypted = await File.ReadAllBytesAsync(candidate);
+        if (encrypted.AsSpan().StartsWith("SQLite format 3"u8) || encrypted.AsSpan().IndexOf(System.Text.Encoding.UTF8.GetBytes("Fictitious old restore بانک Ü")) >= 0)
+            throw new IOException("Restored staging leaked its plain marker.");
+        return "{\"EncryptedRestoreStaging\":true,\"FirstSchemaTo32Migrations\":true,\"OriginalFinancialPacketsPreserved\":true,\"OriginalSourceUnchanged\":true,\"NoLiveSelection\":true}";
     }
 
     private static async Task CheckProtectedFactoryAsync(string path, byte[] key)

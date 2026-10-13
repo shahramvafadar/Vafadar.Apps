@@ -1138,3 +1138,9 @@ provider/lifecycle/all-profile/portable backup/recovery composition; no temporar
 Actual keyed source/commercial wrapper memory export and typed native comparison/retired-output
 stop pass. No plaintext temporary file; optional password unchanged. Main/profile/provider/restore/
 recovery/OS policy composition remains; no current user backup restriction or temporary exclusion.
+
+## D-199 encrypted restored staging
+
+Actual bounded portable import/new local key/typed verification/32 schema migrations pass native
+old-backup proof. No live selection or original mutation; final receiver dispatch/rollback/catalogue/
+provider/all-profile/recovery/OS policy composition and platform acceptance remain.

@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory)
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
@@ -55,9 +55,15 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-$scenarios = if ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+$scenarios = if ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
     $identity = [Guid]::NewGuid().ToString('N')
+    if ($scenario -eq 'restore-staging') {
+        $restored = Invoke-OwnedMigration 'restore-staging' $identity
+        if (-not $restored.EncryptedRestoreStaging -or -not $restored.FirstSchemaTo32Migrations -or -not $restored.OriginalFinancialPacketsPreserved -or -not $restored.OriginalSourceUnchanged -or -not $restored.NoLiveSelection) { throw 'Actual native encrypted restore staging evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $restored }
+        continue
+    }
     $created = Invoke-OwnedMigration 'migration-create' $identity
     if (-not $created.OriginalModelCreated -or $created.Migrations -ne 32) { throw 'Actual original model fixture missing.' }
     $prepared = Invoke-OwnedMigration 'migration-key-prepare' $identity
