@@ -644,3 +644,8 @@ D-234: captured native directory identity additionally binds local retirement in
 checks actual application UID ownership and descriptor-relative inode identity. No financial
 payload, credential input, permission, network SDK or portable preference is added. This local
 operational metadata stays outside portable backup sources; main registration remains inactive.
+
+D-235: private retirement discovery authenticates generation envelopes and opaque safety ownership
+under maintenance ownership, clears its owned decrypted/key buffers and records only existing native
+reference fingerprints. Foreign safety headers do not authorize key access. Cloud/shared installation
+keys are outside removal. No new permission, network SDK or portable credential/preference is added.

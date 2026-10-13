@@ -8,7 +8,7 @@ namespace Vafadar.Data;
 /// <remarks>The host supplies complete reference discovery and exclusive maintenance ownership.
 /// This class does not enumerate filenames, classify profile ownership or erase physical storage sectors.</remarks>
 [SupportedOSPlatform("windows")]
-public sealed class WindowsProfileRetirementFiles
+public sealed class WindowsProfileRetirementFiles : IProfileRetirementReferenceFiles
 {
     private readonly IReadOnlyDictionary<string, string> roots;
     private readonly Action validate;
@@ -40,6 +40,29 @@ public sealed class WindowsProfileRetirementFiles
         Check(ct);
         if (stream.Length != length) throw new IOException("Captured retirement file changed while hashing.");
         return new(root, name, identity, length, digest, directory.DirectoryIdentity);
+    }
+
+    /// <summary>Lists bounded direct entries in the actual host-owned private root; never applies a deletion pattern.</summary>
+    public Task<IReadOnlyList<string>> ListNamesAsync(string root, CancellationToken ct = default)
+    {
+        Check(ct); var path = roots.TryGetValue(root, out var value) ? value : throw new IOException("Unknown private root.");
+        using var directory = new WindowsPrivateFiles(path);
+        var names = Directory.EnumerateFileSystemEntries(path).Select(entry => Path.GetFileName(entry)!).Take(4097).ToArray();
+        if (names.Length > 4096) throw new IOException("Private reference listing exceeds its bound.");
+        Check(ct); return Task.FromResult<IReadOnlyList<string>>(names!);
+    }
+
+    /// <summary>Reads only a bounded regular owned file or its prefix through the same verified native handle.</summary>
+    public async Task<byte[]> ReadAsync(string root, string name, int maximumBytes, bool prefix, CancellationToken ct = default)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
+        var sample = new ProfileRetirementArtifact(root, name, "0", 0, new string('0', 64));
+        Check(ct); var path = Resolve(sample); using var directory = new WindowsPrivateFiles(roots[root]);
+        using var handle = directory.OpenFile(path, writable: false); using var stream = new FileStream(handle, FileAccess.Read);
+        if (!prefix && stream.Length > maximumBytes) throw new IOException("Private reference file exceeds its read bound.");
+        var result = new byte[checked((int)Math.Min(stream.Length, maximumBytes))];
+        try { await stream.ReadExactlyAsync(result, ct).ConfigureAwait(false); Check(ct); return result; }
+        catch { CryptographicOperations.ZeroMemory(result); throw; }
     }
 
     /// <summary>Preflights the captured set, then deletes matching objects and synchronizes actual directories.</summary>

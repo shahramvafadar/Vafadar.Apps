@@ -40,6 +40,20 @@ if (args.Length == 2 && args[0] is "fresh-startup-create" or "fresh-startup-reop
     return;
 }
 
+if (args.Length == 2 && args[0] == "retirement-discovery")
+{
+    if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Windows discovery requires Windows.");
+    var owned = Path.GetFullPath(args[1]);
+    var root = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "native-sqlcipher"));
+    if (!owned.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Discovery must stay in independently owned artifacts.");
+    Console.WriteLine(await RetirementDiscoveryCompatibility.RunAsync(owned,
+        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationKeyStore(path, () => { }); },
+        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationFileDurability(path); },
+        roots => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsProfileRetirementFiles(roots, () => { }); }));
+    return;
+}
+
 if (args.Length == 2 && args[0] is "retirement-create" or "retirement-resume")
 {
     if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Retirement proof requires Windows.");

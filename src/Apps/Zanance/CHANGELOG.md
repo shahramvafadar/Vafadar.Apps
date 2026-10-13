@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Verified encrypted-profile reference discovery (D-235)
+
+- Capture retained databases, restore files, local backups and their authenticated key references.
+- Exclude other profiles and refuse uncertain ownership before preparing cleanup.
+- Final app retirement and main encryption activation remain pending integration.
+
 ### Added - Native Android retirement cleanup (D-234)
 
 - Prepared exact Android cleanup with preserved main keys and continuation after storage failure.

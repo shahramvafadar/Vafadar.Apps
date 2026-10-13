@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.App.Security;
 /// <summary>Inspects exact UID-private Android directory/file objects and unlinks captured entries through their directory descriptor.</summary>
 /// <remarks>The host supplies complete authenticated reference discovery and exclusive maintenance ownership.
 /// This is namespace cleanup, not physical erasure or a defence against privileged/same-UID code.</remarks>
-public sealed class AndroidProfileRetirementFiles
+public sealed class AndroidProfileRetirementFiles : IProfileRetirementReferenceFiles
 {
     private readonly IReadOnlyDictionary<string, string> roots;
     private readonly Action validate;
@@ -34,6 +34,35 @@ public sealed class AndroidProfileRetirementFiles
         var hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, ct).ConfigureAwait(false));
         Check(ct); if (Inspect(handle) != identity) throw new IOException("Captured Android file changed while hashing.");
         return new(root, name, identity.Identity, identity.Length, hash, directory.Identity);
+    }
+
+    /// <summary>Lists only bounded direct private-root entries, retaining the actual root identity through observation.</summary>
+    public Task<IReadOnlyList<string>> ListNamesAsync(string root, CancellationToken ct = default)
+    {
+        var sample = new ProfileRetirementArtifact(root, "entry", "0", 0, new string('0', 64));
+        Check(ct); using var directory = OpenRoot(sample);
+        var path = roots[root]; var names = Directory.EnumerateFileSystemEntries(path).Select(entry => Path.GetFileName(entry)!).Take(4097).ToArray();
+        using var actual = OpenRoot(sample);
+        if (actual.Identity != directory.Identity || names.Length > 4096) throw new IOException("Private root changed or exceeds listing bound.");
+        Check(ct); return Task.FromResult<IReadOnlyList<string>>(names!);
+    }
+
+    /// <summary>Reads a bounded direct native file or header prefix without following names outside its root descriptor.</summary>
+    public async Task<byte[]> ReadAsync(string root, string name, int maximumBytes, bool prefix, CancellationToken ct = default)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
+        var sample = new ProfileRetirementArtifact(root, name, "0", 0, new string('0', 64));
+        Check(ct); using var directory = OpenRoot(sample); using var handle = directory.OpenFile(name);
+        var identity = Inspect(handle); using var stream = new FileStream(handle, FileAccess.Read);
+        if (!prefix && identity.Length > maximumBytes) throw new IOException("Private reference file exceeds its read bound.");
+        var result = new byte[checked((int)Math.Min(identity.Length, maximumBytes))];
+        try
+        {
+            await stream.ReadExactlyAsync(result, ct).ConfigureAwait(false); Check(ct);
+            if (Inspect(handle) != identity) throw new IOException("Private reference file changed during read.");
+            return result;
+        }
+        catch { CryptographicOperations.ZeroMemory(result); throw; }
     }
 
     /// <summary>Uses the shared durable preflight/removal algorithm with actual Android descriptor-relative effects.</summary>

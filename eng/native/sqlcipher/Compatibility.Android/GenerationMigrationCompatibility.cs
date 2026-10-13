@@ -17,6 +17,10 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "retirement-discovery" or "retirement-discovery-resume")
+            return await Vafadar.SqlCipher.Compatibility.RetirementDiscoveryFreshCompatibility.RunAsync(folder,
+                path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path),
+                roots => new AndroidProfileRetirementFiles(roots, () => { }), resume: phase == "retirement-discovery-resume");
         if (phase == "retirement-negatives")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

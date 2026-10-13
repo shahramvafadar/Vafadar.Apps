@@ -1872,3 +1872,15 @@ The shared independent fixture uses actual platform keys and runtime effects; it
 fictitious native-flushed file storage. Final complete ownership/reference discovery and application
 catalogue/recovery/retention/OS activation remain separate and unfinished. Bionic API reference:
 https://android.googlesource.com/platform/bionic/+/main/libc/include/unistd.h
+
+### D-235 — Identity/history and authenticated safety reference inventory
+
+Discovery uses actual identity/history readers, exact supported database/capsule/journal families,
+authenticated generation envelopes, BackupFileName profile sets and full authenticated VBS ownership.
+The native reference ports list bounded direct entries and read through private native handles.
+Inventory publication rechecks all names, identities and captured objects; unknown profile namespace
+artifacts are refused for reconciliation. Foreign unverified safety headers never initiate foreign
+key reads; matching headers still need complete GCM verification. Owned decrypted buffers are cleared.
+Cloud files/shared installation wrapping keys are excluded. The native host still supplies complete
+private-root mappings and real maintenance ownership; final catalogue/startup/recovery integration
+is separate. Main registration is not activated by this discovery operation.

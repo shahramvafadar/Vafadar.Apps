@@ -1305,3 +1305,12 @@ prevents accepting absence in a replacement directory on both native adapters. A
 Android lifecycle/cold main-key preservation and three focused changed-object refusals pass.
 Final complete reference discovery, app catalogue integration, reconciliation/recovery/retention/OS
 and platform/device acceptance remain open. Exact observed scope is recorded in D-234.
+
+### D-235 — Capture complete known native profile references
+
+SEC remains in progress. Actual identity/history metadata, authenticated native generation envelopes,
+exact portable backup sets and authenticated opaque safety references now supply retirement inventory.
+Unknown target namespace artifacts and changed snapshots fail closed; foreign safety/main references
+are preserved. Actual Windows retained encrypted fixture capture succeeds without finance deletion.
+Final app catalogue/startup reconciliation, recovery/retention/OS and platform/device integration
+remain open. See D-235 in the decision log for exact observed coverage and limits.

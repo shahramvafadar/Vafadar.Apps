@@ -4240,3 +4240,77 @@ pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly store
 Test outputs were cleaned after terminal checks. Main encryption activation, complete reference
 inventory/app catalogue integration, recovery/retention/OS policy and external platform/device/
 store acceptance remain unfinished.
+
+### D-235 — Native profile reference discovery before retirement
+
+ProfileRetirementReferenceDiscovery now reads the actual stable identity catalogue and profile-bound
+restore ancestry before capturing files. Known initial/new-profile/restore metadata, ciphertext,
+rollback/preference capsules and their sidecars are classified from that ancestry. Unknown artifacts
+in the target database/key/portable namespace fail closed rather than being guessed or silently left.
+All native generation envelopes in the target stable profile namespace are authenticated against
+that installation/profile/generation, including orphaned safety keys. Exact native fingerprints are
+checked before/after authentication and again before publication; complete directory names and all
+identity rows are rechecked under the host's exclusive maintenance validation.
+
+Local portable/legacy safety backups use the actual BackupFileName parser and exact app/profile set.
+Opaque VBS safety copies require bounded native reads and full AES-GCM authentication before target
+ownership is accepted. Unverified foreign headers never cause foreign key access/deletion; a matching
+header alone is insufficient. Owned plaintext package/key buffers are cleared. Retained backup files
+and their separate generation envelopes join the immutable inventory. Shared installation wrapping
+keys and cloud backups are excluded. This capture never advances retirement or deletes financial files.
+
+The actual native reference-file ports provide bounded direct listings, regular-file fingerprints
+and bounded complete/prefix reads. Windows uses existing no-follow native handles; Android uses
+its UID-private descriptor-relative file effects. Four AT-235 actual SQLite/Windows tests cover a
+pending restore with retained rollback/preferences, owned/foreign safety and portable separation,
+unknown generation/malformed backup refusal and matching-header GCM tamper rejection. Initial test
+compilation used an incorrect history method name and exposed native-platform warnings in existing
+assertion lambdas; corrected to the actual ReserveAsync and explicit callback platform guards,
+without suppression. Strict focused tests pass 4/4 with no warnings.
+
+The independent Windows caller uses the retained D-227 real two-profile encrypted model and native
+keys, without repeating migration/startup. It captures actual work ciphertext/history/key references
+and a fully authenticated owned safety copy, excludes main ciphertext/keys/foreign safety, preserves
+the target ciphertext hash and all identity rows, and remains Authorized. Observed seven objects:
+artifacts/native-sqlcipher/d235-native-windows-runtime.log. Native build is clean (17.28s at that check).
+The Android fixture uses actual original compiled EF model/migrations inside native SQLCipher and
+actual native keys/safety/authentication/read effects, not fake controls or a duplicate app algorithm.
+No main application registration or actual catalogue preference publication is introduced here.
+Terminal platform/runtime/main/test/package evidence follows below.
+
+Final exact app catalogue transaction and startup retirement reconciliation remain required, with
+uncommitted creation recovery, optional recovery-key handling, reference-aware safety retention,
+coupled OS policy and remaining native/device/platform acceptance. Main remains plaintext. Unknown
+or unauthenticated ownership is refused, not repaired by generating replacement keys. No unchanged
+UI/upstream producer suite is repeated; complete release/device acceptance is not claimed.
+
+D-235 observed Android failure: first native fixture stopped before EF schema construction with
+its encrypted candidate still zero length. The observation deadline expired, but native PID 15286
+remained live and idle; no success was inferred and no restart was made solely for timeout. Source
+comparison found the missing original AddZananceData registration before compiled-model Instance,
+which sets the documented synchronous initialization switch for Mono (EF issue 31751). The probe
+was stopped only after that concrete deadlock diagnosis. The fixture now uses the original data
+registration and supports explicit recorded discovery continuation; no replacement profile IDs or
+existing generation key preparation occurs in that continuation.
+
+Signed Release AOT/trimmed Android x64/API36/4 KiB continuation of the same run
+04eeecb451b84485a6e87b792a6daf3b succeeds. Actual encrypted original model/local portable/owned
+safety references are captured, main safety is excluded and finance is not deleted. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-006dbb7b9c374e4188a69417743ac94e.json.
+The existing target generation envelope SHA-256 is unchanged before/after continuation; retained
+identity metadata was reused. Initial/native resume builds are clean (66.14s / 54.30s). Negative
+observation evidence remains in d235-native-android-runtime.log; successful continuation in
+ d235-native-android-resume-runtime.log. No unrelated migration/UI/producer acceptance was repeated.
+
+All 3,415 solution cases pass with ContinuousIntegrationBuild, zero failures/skips (3m07.120s).
+Strict main Windows (21.22s) and Android (50.57s) builds have zero warnings/errors. Corrected native
+Windows scope validation build is clean; actual retained encrypted fixture capture was observed.
+Final APK/signature/package evidence follows below. Main encryption/captured app-catalogue retirement
+and remaining recovery/retention/OS/platform/device acceptance are still open.
+
+D-235 final complete signed Release APK: artifacts/android-d235-delivery/pro.vafadar.zanance-Signed.apk
+(83,507,930 bytes), local test certificate. apksigner verification succeeds; package
+pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores are verified.
+Test outputs were cleaned after terminal checks. The original native model-init deadlock and
+failed observation are retained as negative evidence. Final app retirement/startup/recovery,
+retention/OS and main encryption registration remain unfinished; phone/iOS/store acceptance is not implied.

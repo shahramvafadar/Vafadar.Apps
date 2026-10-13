@@ -42,6 +42,7 @@
     <Compile Include="../Compatibility/OriginalProfileFixture.cs" Link="OriginalProfileFixture.cs" />
     <Compile Include="../Compatibility/JournalCompatibility.cs" Link="JournalCompatibility.cs" />
     <Compile Include="../Compatibility/SharedRetirementCompatibility.cs" Link="SharedRetirementCompatibility.cs" />
+    <Compile Include="../Compatibility/RetirementDiscoveryFreshCompatibility.cs" Link="RetirementDiscoveryFreshCompatibility.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/*.cs"
              Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Maui.cs" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />

@@ -47,7 +47,7 @@ public sealed class ProfileRetirementArtifactTests
         await journal.CompareAndAdvanceAsync(request, native, Ct);
         await files.RemoveAsync(request.Advance(), journal, native, Ct);
         await files.RemoveAsync(request.Advance(), journal, native, Ct);
-        await Assert.ThrowsAsync<IOException>(() => keys.ReadAsync(binding, Ct));
+        await Assert.ThrowsAsync<IOException>(() => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return keys.ReadAsync(binding, Ct); });
         Assert.Equal("Retain this file.", await File.ReadAllTextAsync(folder.Combine("foreign.txt"), Ct));
         Assert.True(File.Exists(folder.Combine("retirement.sqlite")));
     }
@@ -66,7 +66,7 @@ public sealed class ProfileRetirementArtifactTests
         await journal.CompareAndAdvanceAsync(request, native, Ct);
         if (replacement) File.Move(folder.Combine("b.bin"), folder.Combine("retained-old.bin"));
         await File.WriteAllTextAsync(folder.Combine("b.bin"), replacement ? "Original B" : "Changed B", Ct);
-        await Assert.ThrowsAsync<IOException>(() => files.RemoveAsync(request.Advance(), journal, native, Ct));
+        await Assert.ThrowsAsync<IOException>(() => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(request.Advance(), journal, native, Ct); });
         Assert.Equal("Original A", await File.ReadAllTextAsync(folder.Combine("a.bin"), Ct));
         Assert.Equal(replacement ? "Original B" : "Changed B", await File.ReadAllTextAsync(folder.Combine("b.bin"), Ct));
     }
@@ -81,7 +81,7 @@ public sealed class ProfileRetirementArtifactTests
         await journal.CreateNewAsync(native, Ct);
         await journal.CaptureArtifactsAsync([await files.CaptureAsync("database", "retirement.sqlite", Ct)], native, Ct);
         await journal.CompareAndAdvanceAsync(request, native, Ct);
-        await Assert.ThrowsAsync<IOException>(() => files.RemoveAsync(request.Advance(), journal, native, Ct));
+        await Assert.ThrowsAsync<IOException>(() => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(request.Advance(), journal, native, Ct); });
         Assert.Equal(request.Advance(), await journal.ReadAsync(Ct));
     }
 
@@ -98,8 +98,8 @@ public sealed class ProfileRetirementArtifactTests
         await journal.CaptureArtifactsAsync([await files.CaptureAsync("database", "owned.bin", Ct)], native, Ct);
         await journal.CompareAndAdvanceAsync(request, native, Ct);
         Directory.Move(objects, objects + ".retained"); Directory.CreateDirectory(objects);
-        await Assert.ThrowsAsync<IOException>(() => files.RemoveAsync(request.Advance(), journal, native, Ct));
-        await Assert.ThrowsAsync<IOException>(() => files.VerifyRemovedAsync(journal, Ct));
+        await Assert.ThrowsAsync<IOException>(() => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(request.Advance(), journal, native, Ct); });
+        await Assert.ThrowsAsync<IOException>(() => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, Ct); });
         Assert.Equal("Retain original bytes.", await File.ReadAllTextAsync(Path.Combine(objects + ".retained", "owned.bin"), Ct));
         Assert.Equal(request.Advance(), await journal.ReadAsync(Ct));
     }
