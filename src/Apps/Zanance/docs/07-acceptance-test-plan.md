@@ -1743,3 +1743,13 @@ only independent package removed. Strict main Windows/Android builds have zero e
 (artifacts/native-sqlcipher/d193-main-{windows,android}.log). Unchanged managed 3,232 baseline
 not rerun. No visible UI/schema/main-key/provider change. Durable recovery/crash migration,
 iOS/physical-device and product encryption acceptance remain open. See device-key guide.
+
+## AT-193 - Original Android envelope file storage
+
+Separate signed Release AOT/trimmed three-process create/stored-key reopen/storage-refusal route.
+Eight storage cases: duplicate retains original key; corruption, truncated, oversized, absent,
+nonregular and symlink file refuse; fictitious partial staging is ignored/preserved. Exclusive creation/native file and directory flush path exercised. Hard-link EACCES failed
+approach retained. Torn final files refuse; not atomic whole-file publication. No mid-publication kill/power-loss acceptance; coordinator
+restart matrix remains. Independent APK signature/native bytes and exact package cleanup checked.
+Strict main build results recorded in d194-main-{windows,android}.log. Unchanged managed 3,232
+and D-193 protector fifteen cases retained without rerunning unrelated suites. Main still plaintext.

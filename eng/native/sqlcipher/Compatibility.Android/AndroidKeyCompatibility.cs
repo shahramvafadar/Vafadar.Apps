@@ -11,12 +11,14 @@ internal static class AndroidKeyCompatibility
     /// <summary>Creates/reopens a protected encrypted fixture or checks native failure behavior, never main app data.</summary>
     internal static async Task<string> RunAsync(string ownedRoot, string phase)
     {
+        var useStore = phase.StartsWith("keys-store-", StringComparison.Ordinal);
+        var create = phase is "keys-create" or "keys-store-create";
         var root = Path.Combine(ownedRoot, "key-fixture");
         var contextFile = Path.Combine(root, "context.txt");
         var envelopeFile = Path.Combine(root, "envelope.bin");
         var dataFile = Path.Combine(root, "fictitious.db");
         DatabaseKeyBinding binding;
-        if (phase == "keys-create")
+        if (create)
         {
             if (Directory.Exists(root)) throw new InvalidOperationException("Key fixture must be fresh.");
             Directory.CreateDirectory(root);
@@ -30,26 +32,33 @@ internal static class AndroidKeyCompatibility
             var ids = (await File.ReadAllTextAsync(contextFile)).Split('\n');
             binding = new DatabaseKeyBinding(Guid.ParseExact(ids[0], "N"), Guid.ParseExact(ids[1], "N"), Guid.ParseExact(ids[2], "N"));
         }
-        var key = phase == "keys-create" ? RandomNumberGenerator.GetBytes(32)
-            : AndroidDatabaseKeyProtector.Unprotect(await File.ReadAllBytesAsync(envelopeFile), binding);
+        var store = new AndroidDatabaseKeyEnvelopeStore(root);
+        var key = create ? RandomNumberGenerator.GetBytes(32)
+            : useStore ? store.ReadKey(binding) : AndroidDatabaseKeyProtector.Unprotect(await File.ReadAllBytesAsync(envelopeFile), binding);
         try
         {
-            if (phase == "keys-create") await File.WriteAllBytesAsync(envelopeFile, AndroidDatabaseKeyProtector.Protect(key, binding));
-            var envelope = await File.ReadAllBytesAsync(envelopeFile);
+            var envelope = AndroidDatabaseKeyProtector.Protect(key, binding);
+            if (create)
+            {
+                if (useStore) store.PublishNew(binding, envelope);
+                else await File.WriteAllBytesAsync(envelopeFile, envelope);
+            }
+            if (!useStore) envelope = await File.ReadAllBytesAsync(envelopeFile);
+            if (phase == "keys-store-negative") return AndroidKeyStorageCompatibility.Check(root, key, envelope, binding);
             var restored = AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
             try { if (!CryptographicOperations.FixedTimeEquals(key, restored)) throw new InvalidOperationException("Native key changed."); }
             finally { CryptographicOperations.ZeroMemory(restored); }
             if (phase == "keys-negative") return CheckRefusals(key, envelope, binding);
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
             var options = new SqliteConnectionStringBuilder { DataSource = dataFile, Password = Convert.ToBase64String(key),
-                Pooling = false, Mode = phase == "keys-create" ? SqliteOpenMode.ReadWriteCreate : SqliteOpenMode.ReadOnly };
+                Pooling = false, Mode = create ? SqliteOpenMode.ReadWriteCreate : SqliteOpenMode.ReadOnly };
             await using var connection = new SqliteConnection(options.ToString());
             await connection.OpenAsync();
             using var command = connection.CreateCommand();
             command.CommandText = "PRAGMA cipher_version";
             if (!(Convert.ToString(await command.ExecuteScalarAsync()) ?? "").StartsWith("4.19.0", StringComparison.Ordinal))
                 throw new InvalidOperationException("Native key check requires reviewed cipher.");
-            if (phase == "keys-create")
+            if (create)
             {
                 command.CommandText = "CREATE TABLE packet(amount INTEGER); INSERT INTO packet VALUES(-9223372036854775808)";
                 await command.ExecuteNonQueryAsync();

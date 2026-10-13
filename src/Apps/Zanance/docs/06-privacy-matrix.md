@@ -529,3 +529,10 @@ network/export/permission or portable credential added. Actual create/read check
 in the independent fictitious package, which is removed afterwards. Production adapter is not
 called by main composition. No OS backup exclusion activated before final encryption. Software
 emulator level is not hardware assurance; durable key/recovery/migration/iOS remain open.
+
+## Android opaque key files (D-194)
+
+Bound encrypted DEK envelope and transient ciphertext staging only in caller-owned private files;
+no network, permission, key export or portable preference. Reads never accept linked/nonregular
+files. Independent proof owns fictitious directories/keys; exact package removed after checking.
+Main composition does not use store yet. Final OS exclusion remains coupled to completed encryption.

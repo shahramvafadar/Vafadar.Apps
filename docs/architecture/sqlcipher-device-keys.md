@@ -60,3 +60,35 @@ without errors/warnings. Portable managed sources are unchanged; 3,232 is retain
 baseline, not rerun. No visible change requires a screen matrix. Main composition still never
 calls this adapter: no main key/provider/OS exclusion, durable files, recovery or migration
 activation. Database remains plaintext until these remaining final effects are implemented.
+
+## Android immutable envelope storage (D-194)
+
+AndroidDatabaseKeyEnvelopeStore accepts an existing trusted application-private absolute directory;
+caller must own its ancestors and hold the exclusive captured profile/access gate. It is not a
+sandbox for arbitrary attacker-controlled directory paths. The final filename contains only bound
+profile/generation GUIDs. Authenticate the envelope before creating its file. Actual hard-link publication returned EACCES
+in the separate Android app-private Release run.
+Use exclusive final creation (CreateNew), 0600, Flush(true), then
+[native directory fsync](https://developer.android.com/reference/android/system/Os). This does not
+publish the entire envelope atomically: interruption can leave a truncated final file, which fails
+authentication/readiness and is never replaced with a fresh DEK. No automatic partial-file cleanup.
+Future migration reconciliation must resolve interrupted state while retaining the original selector.
+
+Read uses O_NOFOLLOW/O_NONBLOCK, fstat regular-file check, exactly 65 bounded bytes and authenticated
+unwrap. No missing-key regeneration. Duplicate publication fails; resumption must read/reconcile
+actual stored binding rather than retry with a new key. Failure after writing can leave the
+complete or incomplete original envelope present; future coordinator must reopen it before recording readiness.
+No failed flush certifies durable completion. These filesystem operations are not a hardware
+power-loss guarantee, and same-UID malicious code is outside this adapter's protection boundary.
+
+Run Test-AndroidKeys.ps1 -RunName android-d -Store. This changes only the separate proof's file
+storage route, retaining the unchanged protector suite as D-193 baseline. Three new processes
+create/reopen/failure-check original production storage source. Eight cases include refusing
+replacement/corruption/malformed/missing/nonregular/symlink and ignoring a fictitious partial staged
+orphan. No actual mid-publication kill or device power-loss injected. Main composition unchanged;
+no automatic OS exclusion or live migration until the remaining protocol/recovery is implemented.
+
+D-194 final evidence: build/android-d/android-key-proof-61b09ff1ad0044f28d0dc251c8f732aa.json
+under artifacts/native-sqlcipher, plus d194-key-store-release-build.log. Signed APK v2/v3 and
+ZIP integrity pass; original reviewed arm64/x64 native hashes match. Separate package removed.
+Strict main Windows/Android build logs d194-main-{windows,android}.log have zero errors/warnings.

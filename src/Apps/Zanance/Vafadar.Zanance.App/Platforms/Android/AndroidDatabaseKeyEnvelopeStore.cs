@@ -1,0 +1,92 @@
+using Android.Systems;
+using System.Security.Cryptography;
+using Vafadar.Data;
+
+namespace Vafadar.Zanance.App.Security;
+
+/// <summary>Publishes immutable protected key envelopes in an existing trusted app-private directory.</summary>
+/// <remarks>The caller captures and holds the exclusive profile/access gate and owns the directory.
+/// This store never creates a wrapping key, selects a database or removes another generation.
+/// File and directory flushes do not establish physical-device power-loss acceptance.</remarks>
+public sealed class AndroidDatabaseKeyEnvelopeStore
+{
+    private readonly string directory;
+
+    /// <summary>Captures an existing private directory supplied by the local installation owner, never a portable path.</summary>
+    public AndroidDatabaseKeyEnvelopeStore(string directory)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(directory);
+        if (!Path.IsPathFullyQualified(directory)) throw new ArgumentException("Key storage requires an absolute private directory.");
+        this.directory = Path.GetFullPath(directory);
+        ValidateDirectory();
+    }
+
+    /// <summary>Reads and authenticates exactly the stored generation; missing files or keys fail without replacement.</summary>
+    public byte[] ReadKey(DatabaseKeyBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        ValidateDirectory();
+        var descriptor = Os.Open(GetPath(binding), OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!;
+        Java.IO.FileInputStream input;
+        try
+        {
+            using var stat = Os.Fstat(descriptor)!;
+            if (!OsConstants.S_ISREG(stat.StMode)) throw new IOException("Key envelope is not a regular file.");
+            input = new Java.IO.FileInputStream(descriptor);
+        }
+        catch { Os.Close(descriptor); throw; }
+        using (input)
+        using (descriptor)
+        {
+            var envelope = new byte[65];
+            var offset = 0;
+            while (offset < envelope.Length)
+            {
+                var count = input.Read(envelope, offset, envelope.Length - offset);
+                if (count <= 0) throw new CryptographicException("Stored key envelope is truncated.");
+                offset += count;
+            }
+            if (input.Read() != -1) throw new CryptographicException("Stored key envelope is oversized.");
+            return AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
+        }
+    }
+
+    /// <summary>Authenticates then publishes a new envelope without replacing an existing generation.</summary>
+    public void PublishNew(DatabaseKeyBinding binding, ReadOnlySpan<byte> envelope)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        ValidateDirectory();
+        var verified = AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
+        CryptographicOperations.ZeroMemory(verified);
+        // Android app-private storage refused hard-link publication in the actual Release probe.
+        // Exclusive final creation preserves no-replace semantics. A torn write is retained and refused,
+        // never repaired with a fresh DEK; the migration owner must reconcile it before readiness.
+        using (var stream = new FileStream(GetPath(binding), FileMode.CreateNew, FileAccess.Write, FileShare.None))
+        {
+            Os.Chmod(GetPath(binding), 384); // 0600: only this application UID may read or write the envelope.
+            stream.Write(envelope);
+            stream.Flush(flushToDisk: true);
+        }
+        FlushDirectory();
+    }
+
+    private string GetPath(DatabaseKeyBinding binding) => Path.Combine(directory,
+        binding.ProfileId.ToString("N") + "-" + binding.GenerationId.ToString("N") + ".key");
+
+    private void ValidateDirectory()
+    {
+        if (!Directory.Exists(directory) || (File.GetAttributes(directory) & FileAttributes.ReparsePoint) != 0)
+            throw new IOException("Trusted key directory is missing or redirected.");
+    }
+
+    private void FlushDirectory()
+    {
+        using var descriptor = Os.Open(directory, OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!;
+        try {
+            using var stat = Os.Fstat(descriptor)!;
+            if (!OsConstants.S_ISDIR(stat.StMode)) throw new IOException("Key storage is not a directory.");
+            Os.Fsync(descriptor);
+        }
+        finally { Os.Close(descriptor); }
+    }
+}

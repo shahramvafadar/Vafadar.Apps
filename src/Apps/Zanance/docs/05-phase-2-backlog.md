@@ -1108,3 +1108,9 @@ full 3,232. Actual native storage, other platforms and final migration/recovery 
 Original Android Keystore primitive and separate Release encrypted reopen/fifteen behavior proof
 pass; software emulator security level reported explicitly. Main strict builds pass, unchanged
 managed baseline retained. Durable files/recovery/coordinator and iOS remain; app plaintext.
+
+## D-194 Android envelope storage
+
+Actual immutable private-file key storage added; independent process reopen/eight file behaviors
+checked. Orphan fixture is not an injected publication crash. Selector/recovery/migration and
+other platform files remain; live database unchanged/plaintext.

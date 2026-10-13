@@ -2912,3 +2912,11 @@ Independent signed Release AOT/trimmed emulator create/reopen and fifteen native
 pass; software level 0, not hardware acceptance. Strict main Windows/Android builds zero errors
 and warnings. Managed 3,232 D-192 baseline unchanged, not rerun. Main database remains plaintext:
 durable storage/recovery/crash-safe migration, iOS and final coupled OS exclusion remain open.
+
+### 31.107 Android immutable envelope storage (D-194 / AT-193)
+
+Original exclusive-create private-file storage with file/directory flush and bounded no-follow reads
+implemented. Independent Release stored-key encrypted reopen and eight file behaviors checked.
+A fictitious staged orphan is not actual kill/power-loss acceptance. Managed baseline unchanged;
+main provider remains plaintext. Native selector/journal, all-profile migration/recovery, other
+platform file adapters, final OS exclusion and runtime/device release acceptance remain open.

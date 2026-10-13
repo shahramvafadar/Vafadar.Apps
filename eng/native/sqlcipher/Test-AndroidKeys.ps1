@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038)
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Store)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
@@ -26,7 +26,8 @@ if ($LASTEXITCODE -ne 0) { throw 'Independent key package installation failed.' 
 $activity = (& $adb -P $AdbPort -s $DeviceSerial shell cmd package resolve-activity --brief $package | Select-Object -Last 1).Trim()
 if ($activity -notmatch '^pro\.vafadar\.zanance\.nativecompatibility/[A-Za-z0-9_.]+$') { throw 'Unexpected independent key activity.' }
 $results = @()
-foreach ($phase in @('keys-create','keys-reopen','keys-negative')) {
+$phases = if ($Store) { @('keys-store-create','keys-store-reopen','keys-store-negative') } else { @('keys-create','keys-reopen','keys-negative') }
+foreach ($phase in $phases) {
     & $adb -P $AdbPort -s $DeviceSerial shell am force-stop $package
     if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()) { throw 'Independent key process did not stop.' }
     & $adb -P $AdbPort -s $DeviceSerial shell am start -W -n $activity --es key_phase $phase --es key_run $proofRun | Out-Host
@@ -41,7 +42,9 @@ foreach ($phase in @('keys-create','keys-reopen','keys-negative')) {
         Start-Sleep -Seconds 2
     }
     if (-not $report -or $report.Failed) { throw 'Independent key phase failed; retain scoped type/stack evidence.' }
-    if ($phase -eq 'keys-negative') {
+    if ($phase -eq 'keys-store-negative') {
+        if ($report.AndroidKeyStorageCases -ne 8 -or -not $report.NoOverwriteOrReplacement) { throw 'Native storage cases missing.' }
+    } elseif ($phase -eq 'keys-negative') {
         if ($report.AndroidKeyBehaviorCases -ne 15 -or -not $report.NoReplacementKey) { throw 'Native refusal cases missing.' }
     } elseif (-not $report.AndroidKeyProtected -or -not $report.EncryptedNativeDatabaseReopened -or $report.Phase -ne $phase) {
         throw 'Native protected key/cipher reopen evidence missing.'

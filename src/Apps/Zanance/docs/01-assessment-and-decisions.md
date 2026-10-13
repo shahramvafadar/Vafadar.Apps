@@ -2454,3 +2454,24 @@ No live key creation/provider/backup policy or migration activation. Durable env
 optional recovery, crash coordinator, iOS and actual device gates remain. Main data stays plaintext.
 Unchanged 3,232 managed-test baseline retained; unrelated suites/UI/APKs were not repeated.
 [Guide](../../../../docs/architecture/sqlcipher-device-keys.md).
+
+## D-194 - Immutable Android protected-envelope storage
+
+Add actual private-files adapter for already authenticated D-193 envelopes. Caller supplies an
+existing trusted installation-owned directory and exclusive access/profile lease; no portable path
+or automatic folder/key creation. Create the final file exclusively, set 0600, flush ciphertext and fsync its directory. Existing
+generations are never replaced. A torn write remains and refuses; no automatic repair/new DEK. Native no-follow/nonblocking reads reject
+nonregular, missing, truncated, oversized and unauthenticated envelopes without key regeneration.
+No format/schema change. This is storage plumbing, not selected live database or recovery UI.
+
+Separate signed Release AOT/trimmed processes create and read original stored key/encrypted packet.
+Eight storage cases check duplicate/no replacement, corruption, short/long/missing/nonregular file,
+symlink refusal and an explicitly staged fictitious orphan ignored/preserved. That orphan case is
+not an actual kill during publication; full crash/power-loss fault matrix remains open. Actual
+OS level 0 software emulator scope remains. Initial native constant/namespace binding compile
+failures retained and corrected against installed SDK metadata. The first actual Release run
+refused native hard-link publication with EACCES; exclusive final creation replaces that approach.
+This is not atomic whole-file publication; partial writes are fail-closed protocol work. AT-193 records final results.
+No unrelated native crypto suites, managed baseline/UI matrices or main phone APK repeated.
+Main remains plaintext; selector/journal, all-profile migration, Windows/iOS file adapters,
+optional recovery and approved final OS exclusion still require final integration.

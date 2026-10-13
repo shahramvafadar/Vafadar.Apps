@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Private Android key file foundation (2026-10-13, D-194)
+
+- Added immutable storage for protected Android database keys, refusing replacement and damaged files.
+- Live database encryption and final migration/recovery are still pending integration.
+
 ### Development - Android device-key protection foundation (2026-10-13, D-193)
 
 - Added Android Keystore protection for bound database keys, with independent encrypted reopen checks.

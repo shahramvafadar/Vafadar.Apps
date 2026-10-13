@@ -1502,3 +1502,11 @@ Release emulator processes prove protected creation/encrypted reopen and fifteen
 reported software level 0 is not hardware acceptance. No main activation. Durable key storage,
 optional recovery, crash migration and iOS remain. Approved OD-04/OD-10 are not decision blockers.
 Strict builds pass; unchanged managed 3,232 baseline retained, no unrelated reruns.
+
+## Android envelope files (D-194)
+
+SEC-03 adds immutable Android private-file envelope store with authenticated bounded/no-follow
+reads and exclusive-create/file-directory flush. Torn files refuse; whole-file atomicity not claimed. Independent process stored-key encrypted
+reopen and eight storage behaviors checked. Actual publication-crash matrix, durable selector,
+Windows/iOS files, optional recovery and all-profile activation remain. Main remains plaintext.
+No decision required beyond approved OD-04/OD-10; physical platform/release gates remain separate.

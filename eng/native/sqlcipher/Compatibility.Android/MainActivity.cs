@@ -22,7 +22,7 @@ public sealed class MainActivity : Activity
         try
         {
             var keyPhase = Intent?.GetStringExtra("key_phase");
-            if (keyPhase is not null && keyPhase is not ("keys-create" or "keys-reopen" or "keys-negative"))
+            if (keyPhase is not null && keyPhase is not ("keys-create" or "keys-reopen" or "keys-negative" or "keys-store-create" or "keys-store-reopen" or "keys-store-negative"))
                 throw new ArgumentException("Unknown independent key phase.");
             var keyRoot = owned;
             if (keyPhase is not null)

@@ -937,3 +937,9 @@ Independent signed Release process creation/encrypted reopen/fifteen behaviors a
 payload/signature checks pass; software security level 0. Strict main builds pass. Main database
 remains plaintext. Durable storage/recovery/crash migration/iOS and physical-device gates remain.
 No whole-app encryption, OS backup or release acceptance inferred. Managed baseline not rerun.
+
+## D-194 private envelope evidence
+
+Independent stored-key process reopen/eight file behaviors exercise actual Android storage.
+No injected publication crash, hardware power-loss, iOS or phone acceptance. Main remains plaintext;
+final selector/journal/recovery/all-profile activation and OS policy coupling remain release gates.

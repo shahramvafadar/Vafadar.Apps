@@ -1421,3 +1421,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   of the app PIN; run native effects off the UI thread under the captured access/migration gate.
 * Report actual OS security level without inferring hardware protection. Independent Release process
   proof is separate from durable storage/recovery/migration and main-app encryption acceptance.
+
+## 126. Immutable Android envelope files (D-194)
+
+* Store only authenticated opaque envelopes in an existing trusted app-private directory under the
+  exclusive captured access/profile gate. Derive final names only from bound profile/generation IDs.
+* Create the final envelope exclusively, flush it and fsync its directory. Android app-private link
+  publication was refused with EACCES. Torn files fail closed and are never replaced with a new key.
+* Reads use native no-follow/nonblocking open and regular-file validation with bounded fixed lengths.
+  Never create missing keys or choose orphan staging files. Process restart is not power-loss acceptance.

@@ -800,3 +800,9 @@ Original Android Keystore adapter authenticates bound DEKs and refuses missing k
 replacement. Separate Release process proof passes; no main activation or schema change.
 See [device keys](sqlcipher-device-keys.md) for exact envelope/access/lifetime/evidence scope.
 Durable storage, migration/recovery and approved final OS backup policy still require integration.
+
+## Android opaque envelope persistence (D-194)
+
+Original private-file key store creates exclusively and flushes file/directory; bounded
+no-follow reads authenticate original binding. This is not a live selector or backup conversion.
+[Device-key guide](sqlcipher-device-keys.md) records process proof and remaining crash/recovery gates.
