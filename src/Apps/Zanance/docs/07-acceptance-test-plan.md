@@ -2480,3 +2480,16 @@ current-user FullControl rule and protected DACL. Full suite: 3,375 pass, zero f
 Proof: artifacts/native-sqlcipher/build/windows-d/key-proof-563590e555544bed8b7802c7204859df/
 key-reopen-proof.json and acl-proof.json. Observed native directory flush is not physical power-loss
 or all-filesystem acceptance. Main adoption/recovery/retention and native warning review remain open.
+
+
+### D-227 / AT-227 — Native startup and pooled original cleanup
+
+Actual SQLite TEMP markers prove scoped original-pool retirement and unrelated-pool retention;
+all 16 bootstrap cases pass. Windows fresh/cold and retained two-profile interrupted migration
+resume use actual app startup and final DPAPI/file effects. Resume deliberately re-primes the
+product idle pool and forbids key preparation; work amount 880 and opening balance 1000 remain
+correct. Shared Android initial/cold startup passes with the same implementation and native effects.
+First Windows cleanup failure and transient Android observation failure remain recorded; neither
+was hidden by replacing fixtures. Full suite: 3,376 pass, zero failures/skips.
+Proofs: artifacts/native-sqlcipher/d227-windows-startup-proof.json and d227-android-final-proof.json.
+Main encryption, remaining native matrix, recovery/retention, device/iOS and release remain open.

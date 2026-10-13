@@ -3539,3 +3539,53 @@ pass; independent two-process key/database reopen and actual current-user-only p
 readback succeed. Test-WindowsKeys.ps1 now enforces that ACL and records its own acl-proof.json;
 the new check was applied to the same existing fictitious file without regenerating keys/data.
 No visible layout changed or unchanged Android runtime/upstream native suite was repeated.
+
+### D-227 — Complete Windows native startup and scoped original-pool retirement
+
+Independent Windows startup now uses the actual ProtectedDatabaseStartup, profile parser,
+complete migrations/bootstrap/session and WindowsGenerationKeyStore/FileDurability. Shared
+FreshStartupCompatibility, ProtectedStartupCompatibility and OriginalProfileFixture remove
+platform-specific copies of the fixture flow; Android injects its actual native effects and
+Windows injects its actual DPAPI/file effects. These callers are not production registrations.
+The initial Windows caller build reported CA1416 at deferred platform factories; explicit Windows
+checks inside those factories resolve the actual reachability issue without warning suppression.
+
+Windows fresh initial/cold startup passes: all 32 real migrations build in memory, no plaintext
+original or automatic account appears, explicit fictitious opening balance 321 survives, and
+missing identity beside retained state refuses replacement. First legacy two-profile startup
+then exposed a real cleanup failure: the disposed work factory left an idle pooled handle open,
+so Windows refused deleting its original after durable encrypted selection. Retained state and
+the original failure log were preserved; no fixture or key was regenerated to hide the failure.
+
+SqlCipherProfileBootstrap now clears only each captured original's known pools after its actual
+application owner drains contexts, before native preparation/cleanup. This fulfills the migration
+session's existing caller obligation; it does not clear all pools or touch unrelated profiles.
+The same interrupted Windows fixture resumes with an intentionally re-primed product idle pool
+and existing-key-only effects, then a separate cold process reopens both prepared profiles.
+Selected work amount 880 and opening balance 1000 remain correct; one session publication/resolution
+occurs despite repeated startup. Managed regression uses actual SQLite TEMP session markers to
+prove target retirement while the unrelated pool survives. Its first fixture placed identity
+metadata outside the captured data directory and was correctly rejected; only that fixture path
+was corrected, without weakening the production directory guard. All 16 bootstrap tests pass.
+
+Proof: artifacts/native-sqlcipher/d227-windows-startup-proof.json; retained interrupted fixture
+migration-startup-proof-8b789542ac4a468e8799d3b44b2978ce, original error d227-legacy-create.log,
+actual pooled-handle resume d227-legacy-resume.log and later process d227-legacy-cold.log.
+Test-WindowsStartup.ps1 supplies reproducible initial/cold wrapper phases and candidate hash
+checks. Its parser is checked; this turn ran the actual CLI phases separately to retain/resume
+the observed failure instead of regenerating test data through the wrapper.
+
+Main registration, profile lifecycle reconciliation, recovery, retained-file policy, final OS
+exclusion, remaining native matrix and Windows narrowing-warning review remain open. These
+proofs do not activate main encryption or establish physical-device, iOS, power-loss or release
+acceptance. Android/shared caller runtime and terminal build/test evidence are recorded below.
+D-227 terminal evidence: Android signed Release AOT x64/API36/4 KiB initial and cold runs pass
+with shared fixtures and actual Android effects; selected work amount 880 is retained. The harness
+initially reported a missing process after a single failed adb observation; direct revalidation
+found the same live process (10399) and completed initial result. Only its cold phase then ran,
+without fixture/key recreation. The harness now revalidates the same package and completion target
+before classifying missing-process termination; parser checked, no simulated branch acceptance
+claimed. Proof: artifacts/native-sqlcipher/d227-android-final-proof.json (run
+45123c35833f4c94a5d50c2c07eb2d9b). Shared Android probe build: 71.83s, zero warnings/errors.
+Full managed suite: 3,376 pass, zero failures/skips (3m13.882s). Strict Windows 19.12s and Android
+49.50s: zero warnings/errors. Main adoption and full security/platform/release gates remain open.

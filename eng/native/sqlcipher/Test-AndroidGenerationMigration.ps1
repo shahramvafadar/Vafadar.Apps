@@ -71,7 +71,17 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
             $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
             if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
         }
-        if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim() -notmatch '^\d+$') { throw 'Owned migration ended without evidence.' }
+        if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim() -notmatch '^\d+$') {
+            # A single failed/empty adb observation is not process death. Revalidate the same package,
+            # then read its exact completion target again before reporting a terminal missing process.
+            $live = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()
+            if ($live -notmatch '^\d+$') {
+                $completion = if ($Barrier -eq 'export') { 'files/result.json' } else { $path }
+                $finished = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $completion 2>$null
+                if ($LASTEXITCODE -eq 0) { $report = ($finished | Out-String) | ConvertFrom-Json; break }
+                throw 'Owned migration ended without evidence after revalidation.'
+            }
+        }
         if ($Barrier) {
             $failed = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat files/result.json 2>$null
             if ($LASTEXITCODE -eq 0 -and (($failed | Out-String) | ConvertFrom-Json).Failed) { throw 'Live migration reported failure before interruption; inspect its owned error.' }

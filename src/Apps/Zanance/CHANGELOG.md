@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Finishing encrypted migration on Windows (D-227)
+
+- Retire idle connections for the original database so they cannot block migration cleanup.
+- Other profiles' connection pools stay available.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Added - Windows protected storage effects (D-226)
 
 - Prepared device-local key files with Windows user protection and restricted access.

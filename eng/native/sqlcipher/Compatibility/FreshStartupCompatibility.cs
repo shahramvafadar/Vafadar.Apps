@@ -5,19 +5,20 @@ using Vafadar.Core.Settings;
 using Vafadar.Data;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Profiles;
-using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.App.Startup;
 using Vafadar.Zanance.Core;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.CompiledModel;
 
-namespace Vafadar.SqlCipher.Compatibility.Android;
+namespace Vafadar.SqlCipher.Compatibility;
 
 /// <summary>Checks new-install startup without a plaintext original and cold missing-identity refusal.</summary>
 internal static class FreshStartupCompatibility
 {
-    internal static async Task<string> RunAsync(string folder, bool create)
+    internal static async Task<string> RunAsync(string folder, bool create,
+        Func<string, IDatabaseGenerationKeyStore> createKeys,
+        Func<string, IDatabaseGenerationFileDurability> createDurability)
     {
         if (create)
         {
@@ -30,9 +31,9 @@ internal static class FreshStartupCompatibility
         var preferences = new InMemorySettingsStore();
         var profiles = new ProfileService(location, services.GetRequiredService<ZananceStore>(), preferences, new Runtime(), Translator.Instance);
         var identityPath = Path.Combine(folder, "identities.sqlite");
-        var actual = new AndroidGenerationKeyStore(folder);
+        var actual = createKeys(folder);
         IDatabaseGenerationKeyStore keys = create ? actual : new ExistingKeys(actual);
-        var durability = new AndroidGenerationFileDurability(folder);
+        var durability = createDurability(folder);
         var schemaBuilds = 0; var resolutions = 0; var publications = 0;
         async Task BuildSchema(SqliteConnection connection, CancellationToken ct)
         {

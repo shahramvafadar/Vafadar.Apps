@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Testing;
 
 namespace Vafadar.Data.Tests;
 
@@ -7,6 +8,25 @@ namespace Vafadar.Data.Tests;
 public sealed class ProfileGenerationBootstrapTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
+    [Fact, Trait("AT", "AT-227")]
+    public async Task All_profile_preparation_retires_only_the_captured_original_pool_before_native_work()
+    {
+        using var db = new TestDatabase(); using var other = new TestDatabase();
+        var location = Location(db); var foreign = Location(other);
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var path = db.PathOf("data/identities.sqlite");
+        var identities = new SqliteDatabaseIdentityCatalogue(path, owner.Validate); await identities.CreateNewAsync([""], Ct);
+        var target = new SqliteConnectionStringBuilder { DataSource = location.Path }.ToString();
+        var unrelated = new SqliteConnectionStringBuilder { DataSource = foreign.Path }.ToString();
+        SqlitePoolProbe.Mark(target); SqlitePoolProbe.Mark(unrelated);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, path,
+            new Dictionary<string, string> { [""] = location.Path }, false, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.Null(SqlitePoolProbe.Read(target));
+        Assert.Equal("retained", SqlitePoolProbe.Read(unrelated));
+        Assert.True(File.Exists(location.Path));
+    }
 
     [Fact, Trait("AT", "AT-206")]
     public async Task Journal_initialization_reuses_actual_metadata_and_cannot_replace_existing_state()

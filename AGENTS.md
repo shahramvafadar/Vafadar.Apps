@@ -1894,3 +1894,11 @@ Existing damaged/foreign/linked entries never get replaced; missing reads never 
 Native file/directory flush errors fail closed. Observed API completion is not physical power-loss
 acceptance; current-user DPAPI is not a same-user or privileged-code security boundary. Final
 main/provider/recovery/lifecycle/retention/OS adoption remains separate and unfinished.
+
+
+### D-227 — Drain original pools before encrypted cleanup
+
+After the application owner drains contexts, all-profile bootstrap retires only each captured
+original's known SQLite pools before native preparation/cleanup. Disposed Windows contexts can
+otherwise retain file handles. Never use ClearAllPools or regenerate interrupted fixtures/keys
+to hide a cleanup failure; resume their actual committed encrypted selection with existing keys.

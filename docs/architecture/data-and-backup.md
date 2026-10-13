@@ -1776,3 +1776,15 @@ unsupported/denied effects. Root storage must be an existing local app-private d
 shares and relative authority are refused. Callers retain the actual exclusive application lease.
 No final metadata/key reconciliation or physical power-loss guarantee is implied. Main registration
 is still pending. See D-226 in the decision log for actual native/ACL evidence and official API links.
+
+
+### D-227 — Complete Windows startup integration evidence
+
+SqlCipherProfileBootstrap owns scoped LocalDatabasePools.ClearFile calls after drained host
+ownership and before each original's native migration. This releases idle Windows handles
+without retiring unrelated databases. Windows native callers now run actual fresh/existing
+startup with final DPAPI/file effects; Android shares those fixture algorithms through platform
+effect factories. Test-WindowsStartup.ps1 reproduces new initial/cold phases against a hash-checked
+reviewed candidate. Interrupted states must be resumed rather than recreated. Actual failure
+and same-fixture pooled-handle resume evidence are in D-227 in the application decision log.
+Main provider/lifecycle/recovery/retention/OS registration remains pending.

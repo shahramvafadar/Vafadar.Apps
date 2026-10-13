@@ -1475,3 +1475,13 @@ reopen. Nine native Windows tests and the separate-process encrypted native pack
 Final main adoption, Windows narrowing-warning review, profile lifecycle reconciliation,
 optional recovery, retained-file policy, coupled OS exclusions and external platform/device
 gates remain open. Exact proof is in D-226 in the decision log and specification Section 31.
+
+
+### D-227 — Windows complete native startup and pool cleanup
+
+SEC-01 remains in progress. Windows fresh/cold startup and interrupted two-profile migration
+now run actual app startup and final native effects. Observed original deletion failure from
+an idle pool is corrected by scoped bootstrap pool retirement; same-state resume and later
+reopen succeed without replacement keys. Shared native fixtures remove platform duplication.
+Main adoption, reconciliation, recovery/retention/OS policy, native warning review and external
+platform/device gates remain open. Exact evidence is recorded in D-227 in the decision log.

@@ -4,17 +4,18 @@ using Vafadar.Core.Settings;
 using Vafadar.Data;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Profiles;
-using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.App.Startup;
 using Vafadar.Zanance.Core;
 using Vafadar.Zanance.Data;
 
-namespace Vafadar.SqlCipher.Compatibility.Android;
+namespace Vafadar.SqlCipher.Compatibility;
 
 /// <summary>Runs the actual application startup composition with every profile and a non-main selected original.</summary>
 internal static class ProtectedStartupCompatibility
 {
-    internal static async Task<string> RunAsync(string folder, bool create)
+    internal static async Task<string> RunAsync(string folder, bool create,
+        Func<string, IDatabaseGenerationKeyStore> createKeys,
+        Func<string, IDatabaseGenerationFileDurability> createDurability, bool primeRetainedPool = false)
     {
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
         var scope = Path.Combine(folder, "startup-profile.txt");
@@ -28,8 +29,8 @@ internal static class ProtectedStartupCompatibility
         var work = Path.Combine(folder, "zanance-" + legacy + ".db");
         if (create)
         {
-            await GenerationMigrationCompatibility.CreateOriginalAsync(main);
-            await GenerationMigrationCompatibility.CreateOriginalAsync(work);
+            await OriginalProfileFixture.CreateOriginalAsync(main);
+            await OriginalProfileFixture.CreateOriginalAsync(work);
             using var workServices = new ServiceCollection().AddZananceData(work).BuildServiceProvider();
             await using var db = await workServices.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync();
             (await db.Entries.SingleAsync()).Amount = 880; await db.SaveChangesAsync();
@@ -41,11 +42,18 @@ internal static class ProtectedStartupCompatibility
         using var services = new ServiceCollection().AddZananceData(work).BuildServiceProvider();
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         var profiles = new ProfileService(location, services.GetRequiredService<ZananceStore>(), preferences, new Runtime(), Translator.Instance);
+        if (primeRetainedPool)
+        {
+            if (!File.Exists(work)) throw new IOException("Recorded interrupted original is missing.");
+            await using var borrowed = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync();
+            if ((await borrowed.Entries.SingleAsync()).Amount != 880) throw new IOException("Recorded original differs.");
+            // Disposal deliberately leaves the product factory's idle pool for the bootstrap to retire.
+        }
         if (profiles.All.Count != 2 || profiles.Current.Id != legacy) throw new IOException("Fictitious captured catalogue is invalid.");
         var identityPath = Path.Combine(folder, "identities.sqlite");
-        var actual = new AndroidGenerationKeyStore(folder);
+        var actual = createKeys(folder);
         IDatabaseGenerationKeyStore keys = create ? actual : new ExistingKeys(actual);
-        var durability = new AndroidGenerationFileDurability(folder);
+        var durability = createDurability(folder);
         var resolutions = 0;
         var session = new SqlCipherProfileSession<ZananceDbContext>(location, async (original, owner, ct) =>
         {

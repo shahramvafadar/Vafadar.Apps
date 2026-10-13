@@ -55,6 +55,9 @@ public static class SqlCipherProfileBootstrap
         foreach (var identity in rows)
         {
             Validate(); var original = captured[identity.LegacyProfileId];
+            // Disposed factory contexts can leave pooled native handles open on Windows. The complete
+            // host lease has drained those contexts; retire only this original before destructive cleanup.
+            LocalDatabasePools.ClearFile(original); Validate();
             // The real host owner excludes all normal contexts. This private unpublished location only
             // supplies the existing migration API's local ownership; it never becomes an application factory.
             var candidateLocation = new LocalDatabaseLocation<TContext>(original);

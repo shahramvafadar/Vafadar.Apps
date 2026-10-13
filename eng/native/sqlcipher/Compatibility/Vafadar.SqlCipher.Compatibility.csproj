@@ -6,6 +6,11 @@
     <Description>Independent compatibility checks of official source-built SQLCipher with original data sources.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="ProtectedDatabaseStartup.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/*.cs"
+             Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Maui.cs" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
     <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
