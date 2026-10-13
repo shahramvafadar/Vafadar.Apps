@@ -14,6 +14,8 @@
     <Description>Independent compatibility checks of official source-built SQLCipher with original data sources.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="ProtectedDatabaseStartup.cs" />
     <PackageReference Include="Microsoft.Maui.Essentials" />
     <Using Include="Microsoft.Maui.Storage" />
     <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Maui/Hosting/MauiSettingsStore.cs" Link="MauiSettingsStore.cs" />

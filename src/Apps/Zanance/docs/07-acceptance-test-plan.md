@@ -2444,3 +2444,13 @@ Main protection registration remains inactive. Main database/provider/session/bo
 Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
 remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
 No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.
+### D-224 — Covered all-profile startup evidence
+
+AT-224: two new actual app-source tests pass for quota-independent complete storage capture and
+changed catalogue rejection; all 19 ProfileTests pass. Native signed Release AOT Android x64
+API36/4 KiB initial and cold process runs pass using actual ProtectedDatabaseStartup, profile
+parser, native keys, durability, bootstrap and session. Two captured originals are encrypted;
+work amount 880 and opening balance 1000 remain correct; one publication and one resolution
+occur despite repeated startup. Cold preparation forbids new key preparation.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-0745a8874d4c489eb2e71304eb953135.json.
+No main-app activation, phone, arm64/API24/16 KiB, iOS, key-loss/recovery or release acceptance.

@@ -17,6 +17,36 @@ public sealed class ProfileTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Fact, Trait("AT", "AT-224")]
+    public void Startup_storage_capture_includes_inactive_originals_without_commercial_or_financial_reads()
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f);
+        var profiles = Create(f, runtime); var work = profiles.Create("Fictitious inactive work");
+        var guarded = new ProfileService(Location(f), f.Store, f.Preferences, runtime, f.Translator, new RejectPolicyRead());
+        var capture = guarded.CaptureStorage();
+        Assert.Equal(2, capture.OriginalPaths.Count);
+        Assert.Equal(Location(f).Path, capture.CurrentOriginalPath);
+        Assert.Equal(Location(f).Path, capture.OriginalPaths[""]);
+        Assert.EndsWith("zanance-" + work.Id + ".db", capture.OriginalPaths[work.Id]);
+        Assert.False(File.Exists(capture.OriginalPaths[work.Id]));
+        capture.Validate();
+        Assert.Equal(0, runtime.ExclusiveRuns);
+    }
+
+    [Fact, Trait("AT", "AT-224")]
+    public void Changed_device_catalogue_invalidates_the_captured_bootstrap_before_publication()
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var work = profiles.Create("Fictitious work"); var capture = profiles.CaptureStorage();
+        profiles.Rename(work, "Fictitious renamed work");
+        Assert.Throws<InvalidOperationException>(capture.Validate);
+    }
+
+    private sealed class RejectPolicyRead : IProfileWorkAccessSource
+    {
+        public ProfileWorkAccess Capture(string cataloguePath) => throw new IOException("Startup consulted commercial availability.");
+    }
+
     [Fact, Trait("AT", "AT-80")]
     public async Task Switching_is_exclusive_and_preserves_independent_accounts_and_settings()
     {

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Protected startup composition (D-224)
+
+- Prepared the startup path that verifies every local profile before opening the selected profile.
+- Main-app encryption activation remains pending final native, recovery and retention integration.
+
 ### Added - Internal safety-copy protection infrastructure (D-223)
 
 - Added device-key protection and cold-reopen checks for internal restore safety copies.

@@ -1892,3 +1892,12 @@ Main protection registration remains inactive. Main database/provider/session/bo
 Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
 remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
 No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.
+### D-224 — Protected startup composition
+
+SEC-01: actual covered startup now drains application access, captures all original profiles
+without commercial reads, invokes native bootstrap and publishes the selected session once.
+Changed catalogue snapshots fail before publication. The independent Android initial/cold runs
+pass with the work profile selected and both originals encrypted. Main provider/lifecycle
+registration, fresh install, reconciliation, recovery, safety retention and coupled OS exclusion
+remain open. No completion or main activation is inferred from the probe. Exact evidence is
+recorded under D-224 in 01-assessment-and-decisions.md and specification Section 31.

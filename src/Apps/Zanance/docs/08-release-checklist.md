@@ -1022,3 +1022,9 @@ Main live resolver/provider/startup, replay/later edits and protected retention/
 D-209 callback/marker must be paired with a qualified real platform persistence adapter. A Task
 placeholder, Set/Get readback or metadata flag is insufficient. Main adapter/startup/provider and
 protected recovery/retention remain open; v1 independent capsules are not silently reset or migrated.
+
+D-224 signed phone artifact: artifacts/android-d224-delivery/pro.vafadar.zanance-Signed.apk
+(79.5 MiB), existing local test certificate, apksigner verification succeeds, package
+pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
+Main storage remains plaintext; independent protected startup proof is not activation, device
+acceptance, recovery completion or product release. No new screen layout was introduced.

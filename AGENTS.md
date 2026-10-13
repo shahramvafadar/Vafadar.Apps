@@ -1870,3 +1870,9 @@ Main protection registration remains inactive. Main database/provider/session/bo
 Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
 remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
 No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.
+### D-224 — Covered all-profile native startup
+
+Protected startup captures every original independently of commercial quotas, rechecks the device
+catalogue and prepares all profiles before one selected session publication. Completed callbacks
+do not repeat resolution. Explicit installation authority and final native/recovery/OS adoption
+remain host duties; no missing metadata or availability decision permits plaintext fallback.

@@ -1448,3 +1448,10 @@ Main protection registration remains inactive. Main database/provider/session/bo
 Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
 remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
 No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.
+### D-224 — Protected startup composition
+
+SEC-01 remains in progress. The actual IAppDatabaseStartup implementation now composes all-profile
+bootstrap and selected protected-session publication, independently of commercial availability.
+Both initial and cold Android probe runs pass with two original profiles and the selected work
+amount preserved. Main registration, new-install handling, reconciliation, recovery and final OS
+policy are not yet activated. See D-224 in 01-assessment-and-decisions.md for exact evidence.

@@ -1733,3 +1733,23 @@ Main protection registration remains inactive. Main database/provider/session/bo
 Windows/mobile matrix, optional recovery, key loss, reconciliation, retention and coupled OS exclusion
 remain unfinished. SEC-08 is in progress; this does not close it or authorize product release.
 No visible UI changed; unchanged layout matrices and upstream native producer suites were not repeated.
+### D-224 — Compose all-profile preparation with covered application startup
+
+ProtectedDatabaseStartup now implements the real IAppDatabaseStartup contract. It waits for drained
+application ownership, captures every original profile, invokes the complete native bootstrap and
+publishes only the selected original through SqlCipherProfileSession after all profiles verify.
+Repeated completed callbacks do not resolve or replace keys again. Explicit first-install authority,
+provider adoption and actual native key/file/restore effects are supplied by the final host; missing
+metadata never grants that authority. No registration or main-app encryption activation occurs yet.
+
+ProfileService.CaptureStorage reads only device catalogue preferences and retains an immutable path
+map plus an actual catalogue recheck. It includes every retained profile regardless of commercial
+availability. Financial access and commercial quota evaluation are inappropriate before storage is
+prepared. A changed catalogue invalidates the captured preparation before session publication.
+The native-independent tests compile these actual app sources; 19 ProfileTests pass including both
+new capture scenarios. Native provider acceptance and successful composed startup are recorded
+separately below, rather than inferred from these capture tests.
+
+Main native/provider/startup registration, fresh installation, profile lifecycle reconciliation,
+restore routing, optional recovery, safety retention and coupled OS exclusion remain in progress.
+No visible layout changed and unchanged layout matrices/native producer suites are not repeated.

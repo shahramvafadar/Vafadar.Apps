@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="Application/ProtectedDatabaseStartup.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/StartupViewModel.cs" Link="Application/StartupViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="Application/IAppDatabaseStartup.cs" />
     <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
@@ -79,6 +80,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DigitFormatting.cs" Link="Application/DigitFormatting.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitNote.cs" Link="Application/DisplayUnitNote.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.cs" Link="Application/ProfileService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Storage.cs" Link="Application/ProfileService.Storage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Work.cs" Link="Application/ProfileService.Work.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileCatalogueReview.cs" Link="Application/ProfileCatalogueReview.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileWorkAccess.cs" Link="Application/ProfileWorkAccess.cs" />

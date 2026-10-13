@@ -3702,3 +3702,40 @@ D-223 phone handoff: artifacts/android-d223-delivery/pro.vafadar.zanance-Signed.
 79.1 MiB Release package. apksigner verification succeeds; package pro.vafadar.zanance, API 24/36,
 arm64-v8a/x86_64 assembly stores are present. Signed with the existing local test certificate.
 Main storage remains plaintext; this APK is not encrypted-main, phone, iOS or release acceptance.
+
+### D-224 — Compose all-profile preparation with covered application startup
+
+ProtectedDatabaseStartup now implements the real IAppDatabaseStartup contract. It waits for drained
+application ownership, captures every original profile, invokes the complete native bootstrap and
+publishes only the selected original through SqlCipherProfileSession after all profiles verify.
+Repeated completed callbacks do not resolve or replace keys again. Explicit first-install authority,
+provider adoption and actual native key/file/restore effects are supplied by the final host; missing
+metadata never grants that authority. No registration or main-app encryption activation occurs yet.
+
+ProfileService.CaptureStorage reads only device catalogue preferences and retains an immutable path
+map plus an actual catalogue recheck. It includes every retained profile regardless of commercial
+availability. Financial access and commercial quota evaluation are inappropriate before storage is
+prepared. A changed catalogue invalidates the captured preparation before session publication.
+The native-independent tests compile these actual app sources; 19 ProfileTests pass including both
+new capture scenarios. Native provider acceptance and successful composed startup are recorded
+separately below, rather than inferred from these capture tests.
+
+Main native/provider/startup registration, fresh installation, profile lifecycle reconciliation,
+restore routing, optional recovery, safety retention and coupled OS exclusion remain in progress.
+No visible layout changed and unchanged layout matrices/native producer suites are not repeated.
+D-224 actual native verification: independent signed Release AOT Android x64/API36/4 KiB
+initial and cold runs pass. The actual startup composes two existing originals before a single
+selected-work publication; amount 880 and opening balance 1000 remain correct. Repeated startup
+does not resolve or publish again; cold key preparation is forbidden. Both original plaintext
+files are absent. Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-0745a8874d4c489eb2e71304eb953135.json
+(run 830eb2f81d5c4424a6447793485c02cd). Native build: zero warnings/errors, 69.24s.
+
+D-224 final managed verification: all 3,363 tests pass with zero failures/skips (3m26.055s).
+Strict Windows and Android builds have zero warnings/errors (21.11s and 83.05s). Main storage
+remains plaintext because final native/recovery/retention/OS registrations are not activated.
+
+D-224 signed phone artifact: artifacts/android-d224-delivery/pro.vafadar.zanance-Signed.apk
+(79.5 MiB), existing local test certificate, apksigner verification succeeds, package
+pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
+Main storage remains plaintext; independent protected startup proof is not activation, device
+acceptance, recovery completion or product release. No new screen layout was introduced.
