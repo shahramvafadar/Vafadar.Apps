@@ -159,7 +159,6 @@ public sealed partial class ProfileService(
             return true;
         }
 
-        var previous = location.Path;
         runtime.DismissUndo();
         var opened = false;
 
@@ -168,10 +167,10 @@ public sealed partial class ProfileService(
         {
             using var owner = await location.Access.AcquireExclusiveAsync();
             ValidateWorkReview(review);
-            location.MoveTo(PathOf(MainPath(), profile.Id), owner);
+            var previous = location.CapturePublication(owner);
             try
             {
-                await runtime.MigrateAsync(owner);
+                await runtime.OpenDatabaseAsync(location, PathOf(MainPath(), profile.Id), owner);
                 var settings = await store.GetSettingsForMaintenanceAsync(owner);
                 var authenticated = !settings.AppLockEnabled
                     || await runtime.AuthenticateAsync(translator["Profile_UnlockReason"]);
@@ -192,7 +191,7 @@ public sealed partial class ProfileService(
             {
                 if (!opened)
                 {
-                    location.MoveTo(previous, owner);
+                    previous.Restore(owner);
                 }
             }
         });

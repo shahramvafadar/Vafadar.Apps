@@ -12,6 +12,34 @@ public sealed class ProtectedLocalDatabaseFactoryTests
     private static SqliteConnection Connection(string path) => new(new SqliteConnectionStringBuilder
     { DataSource = path, Mode = SqliteOpenMode.ReadWrite, Pooling = false, Password = Convert.ToBase64String(new byte[32]) }.ToString());
 
+    [Fact, Trait("AT", "AT-212")]
+    public async Task Publication_rollback_retains_key_creator_and_cannot_be_reused()
+    {
+        using var database = new TestDatabase();
+        var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>(); var original = location.Path;
+        var keyCalls = 0; location.MoveToProtected(original, () => { keyCalls++; return Connection(original); }, "4.19.0");
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var publication = location.CapturePublication(owner);
+        var destination = database.PathOf("other.db"); location.MoveToProtected(destination, () => Connection(destination), "4.19.0", owner);
+        publication.Restore(owner);
+        using var context = database.Services.GetRequiredService<ILocalDbContextFactory<TestDbContext>>().CreateDbContext(owner);
+        Assert.Equal(original, location.Path); Assert.Equal(1, keyCalls);
+        Assert.Throws<InvalidOperationException>(() => publication.Restore(owner));
+        Assert.Throws<InvalidOperationException>(() => location.MoveTo(original, owner));
+    }
+
+    [Fact, Trait("AT", "AT-212")]
+    public async Task Publication_rollback_refuses_plaintext_fallback_and_foreign_owner()
+    {
+        using var database = new TestDatabase(); var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct); var publication = location.CapturePublication(owner);
+        var path = location.Path; location.MoveToProtected(path, () => Connection(path), "4.19.0", owner);
+        using var other = await new DatabaseAccessGate().AcquireExclusiveAsync(Ct);
+        Assert.Throws<InvalidOperationException>(() => publication.Restore(other));
+        Assert.Throws<InvalidOperationException>(() => publication.Restore(owner));
+        Assert.Throws<InvalidOperationException>(() => location.MoveTo(path, owner));
+    }
+
     [Fact, Trait("AT", "AT-196")]
     public async Task Protected_factory_refuses_plaintext_before_the_default_provider_can_open_it()
     {

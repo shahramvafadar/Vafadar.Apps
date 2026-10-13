@@ -115,7 +115,7 @@ foreach ($scenario in $scenarios) {
     }
     if ($scenario -eq 'profile-maintenance') {
         $finished = Invoke-OwnedMigration 'profile-maintenance' $identity
-        if (-not $finished.OriginalProfileFlow -or -not $finished.DrainBeforePathChange -or -not $finished.OwnedMigrationAndSettings -or -not $finished.RefusedAuthenticationRestoresQueuedWork -or -not $finished.NoFinancialPosting -or -not $finished.InactiveDeletionDrainsAndRetainsMain) { throw 'Original native profile maintenance evidence missing.' }
+        if (-not $finished.OriginalProfileFlow -or -not $finished.DrainBeforePathChange -or -not $finished.OwnedMigrationAndSettings -or -not $finished.RefusedAuthenticationRestoresQueuedWork -or -not $finished.NoFinancialPosting -or -not $finished.InactiveDeletionDrainsAndRetainsMain -or -not $finished.ProtectedSwitchAndKeyedRollback) { throw 'Original native profile maintenance evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $finished }
         continue
     }

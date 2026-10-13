@@ -1381,3 +1381,7 @@ Prepared cold startup ownership for restored encrypted data without replaying ob
 ### D-212 - Current encrypted generation resolution
 
 Prepared stable startup selection between initial data and the latest restored data, without silent fallback. Main encryption activation remains pending.
+
+### D-213 - Profile switch rollback
+
+Preserve the complete database connection on refused profile switches, including prepared encrypted storage. Main encryption activation remains pending.

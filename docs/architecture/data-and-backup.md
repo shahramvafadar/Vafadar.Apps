@@ -1352,3 +1352,38 @@ run 13141ec1f63e4c078687bea65746dbc1. Signed APK and reviewed packaged ABI ident
 independent package uninstalled. Both current-generation branches now have actual original-model
 cold process evidence; main startup/provider/profile registration and recovery/retention are still open.
 No physical-device, iOS or product-release acceptance is inferred.
+### D-213 — Preserve protected publication when a profile switch is refused
+
+The original profile switch captures its complete publication inside the actual maintenance owner,
+then asks the native runtime to open/migrate the destination. On authentication refusal, retired
+catalogue or failed opening, rollback restores the original path and bound connection creator.
+A path-only MoveTo cannot restore encrypted storage and is no longer used for this rollback.
+Rollback is one-use, requires its exact live owner, never revives retired protected context identity,
+and refuses a plaintext snapshot after protection is required. The host retains underlying key
+owners until the transition finishes; no credentials are exposed by the publication token.
+
+IProfileRuntime.OpenDatabaseAsync is the explicit native destination effect. The existing default
+opens/migrates plaintext storage; a protected location rejects it. Final protected hosts supply
+verified keyed publication, never strip protection or recreate missing plaintext. The actual MAUI
+host's protected generation resolver/lifetime registration and final startup/all-profile/recovery/
+retention/provider/OS-policy adoption still remain open. Main database encryption is not activated.
+
+Concurrent initial Android/test builds hit CS2012/MSB3248 locked shared DLLs; those negative logs
+are retained. Successful Windows and independent Release builds were not repeated. Only failed
+Android and full test executions were retried once, sequentially after competing builds completed.
+D-213 native evidence: the original ProfileService/Store/factory executes plaintext regression plus
+actual encrypted main/destination switching under source-built SQLCipher and Android-bound keys.
+Active context drain, owned migration/settings, refused authentication, queued keyed original reopen
+(balance 1,250 with no ledger entries) and successful protected destination/return all pass.
+Authentication is an explicit fixture decision port, not owner/device biometric acceptance.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-8ad234ba8cf8479c8b10a9d36869ba85.json,
+run 63d29cca400447179541651a003d2527; ProtectedSwitchAndKeyedRollback=true. Original inactive
+plaintext deletion remains tested separately; encrypted file/key deletion policy is not claimed.
+Signed Release AOT/trim APK, reviewed ABI identities and signature verified; package uninstalled.
+Strict Windows 65.03s, final Android 29.46s and independent Release 95.28s builds report zero
+warnings/errors. Successful builds and the stock native producer suites were not repeated.
+D-213 final managed evidence: all 3,322 tests passed with zero failures/skips (3m00s).
+Two actual-factory tests retain the original bound key creator after rollback and reject repeated,
+foreign-owner or protected-to-plaintext restoration. Final builds are warning/error-free; the
+initial shared-DLL lock failures remain in d213-*-lock-failure.log. Test outputs cleaned only
+after all builds/tests completed. No main encryption, physical/iOS authentication or release claim.

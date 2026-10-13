@@ -34,6 +34,45 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Gets the full path of the database file in use.</summary>
     public string Path { get { lock (_gate) return _endpoint.Path; } }
 
+    /// <summary>Captures the complete current publication for rollback under this exact maintenance owner.</summary>
+    /// <remarks>The host retains underlying key owners until the transition commits or rolls back.</remarks>
+    public Publication CapturePublication(DatabaseAccessGate.ExclusiveLease owner)
+    {
+        ArgumentNullException.ThrowIfNull(owner);
+        lock (_gate) { Access.RequireOwner(owner); return new(this, _endpoint, owner); }
+    }
+
+    /// <summary>One-use rollback of a captured path and bound connection creator; no credentials are exposed.</summary>
+    public sealed class Publication
+    {
+        private readonly LocalDatabaseLocation<TContext> location;
+        private readonly Endpoint endpoint;
+        private readonly DatabaseAccessGate.ExclusiveLease capturedOwner;
+        private bool restored;
+
+        /// <summary>Captures the existing endpoint and the sole maintenance owner allowed to restore it.</summary>
+        internal Publication(LocalDatabaseLocation<TContext> location, Endpoint endpoint, DatabaseAccessGate.ExclusiveLease owner)
+        { this.location = location; this.endpoint = endpoint; capturedOwner = owner; }
+
+        /// <summary>Restores the captured endpoint without reviving retired context identity or permitting plaintext fallback.</summary>
+        public void Restore(DatabaseAccessGate.ExclusiveLease owner)
+        {
+            lock (location._gate)
+            {
+                if (!ReferenceEquals(owner, capturedOwner)) throw new InvalidOperationException("Publication rollback belongs to another maintenance owner.");
+                location.Access.RequireOwner(owner);
+                if (restored) throw new InvalidOperationException("Publication rollback was already consumed.");
+                if (location._protectionRequired && endpoint.CreateConnection is null)
+                    throw new InvalidOperationException("Protected publication cannot roll back to plaintext.");
+                LocalDatabasePools.ClearFile(location._endpoint.Path);
+                // A new identity keeps old protected contexts retired even when the same path/key is restored.
+                location._endpoint = new(endpoint.Path, endpoint.CreateConnection, endpoint.CipherVersion);
+                restored = true;
+            }
+            location.Changed?.Invoke(location, EventArgs.Empty);
+        }
+    }
+
     /// <summary>
     /// Uses the database at <paramref name="path"/> from now on. Pooled connections to the old file are closed; apply
     /// migrations to the new file before reading it.

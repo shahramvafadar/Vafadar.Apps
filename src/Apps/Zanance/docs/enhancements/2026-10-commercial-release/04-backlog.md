@@ -1647,3 +1647,22 @@ still fails closed for reconciliation. This automatic composition is not yet reg
 startup/provider/profile lifecycle. Native producer acceptance, all-profile live adoption, recovery
 and retained-file/key policy, early staging reconciliation and final sensitive OS exclusion remain.
 No additional owner decision or commercial activation follows; main storage remains plaintext.
+### D-213 — Preserve protected publication when a profile switch is refused
+
+The original profile switch captures its complete publication inside the actual maintenance owner,
+then asks the native runtime to open/migrate the destination. On authentication refusal, retired
+catalogue or failed opening, rollback restores the original path and bound connection creator.
+A path-only MoveTo cannot restore encrypted storage and is no longer used for this rollback.
+Rollback is one-use, requires its exact live owner, never revives retired protected context identity,
+and refuses a plaintext snapshot after protection is required. The host retains underlying key
+owners until the transition finishes; no credentials are exposed by the publication token.
+
+IProfileRuntime.OpenDatabaseAsync is the explicit native destination effect. The existing default
+opens/migrates plaintext storage; a protected location rejects it. Final protected hosts supply
+verified keyed publication, never strip protection or recreate missing plaintext. The actual MAUI
+host's protected generation resolver/lifetime registration and final startup/all-profile/recovery/
+retention/provider/OS-policy adoption still remain open. Main database encryption is not activated.
+
+Concurrent initial Android/test builds hit CS2012/MSB3248 locked shared DLLs; those negative logs
+are retained. Successful Windows and independent Release builds were not repeated. Only failed
+Android and full test executions were retried once, sequentially after competing builds completed.
