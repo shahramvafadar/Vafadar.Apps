@@ -298,3 +298,13 @@ Actual native flushed hot-journal kill/restart recovers uncommitted selection, a
 selection survives another external kill/restart on Windows and independent Release Android.
 These results do not accept the complete envelope/export/keyed-reopen/cleanup protocol, disk pressure,
 hardware power loss, all profiles, iOS, recovery UX or live app encryption. See generation guide.
+
+## D-196 complete independent Android session
+
+Original coordinator now runs concrete native key/snapshot/typed candidate+rollback verification,
+selector and exact cleanup effects. Three independent Release original-model profiles exercise
+export interruption/resume, Selected interruption/resume and selected-key loss refusal; actual
+first schema/32 migrations and financial packets remain correct. Source ReadWrite without Create
+is required for writable attached-memory export under exclusive lease; no ledger writes. Encrypted
+rollback retained. Main lifecycle/provider/all-profile/recovery/OS exclusion remains incomplete;
+this does not accept hardware power loss, disk matrix, Windows/iOS effects or product release.

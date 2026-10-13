@@ -109,3 +109,57 @@ D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; tes
 Main strict Windows/Android builds pass with zero warnings/errors. Records under
 artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
 Independent native strict builds also pass; no visible main screen changes or phone-test handoff.
+
+## Concrete captured native session (D-196)
+
+SqlCipherGenerationMigrationSession connects actual journal, platform key store and file durability
+ports to original DatabaseGenerationMigration. Caller captures an exclusive access/profile lease,
+closes every other reader/writer/pool and supplies trusted private original ownership. Candidate
+and rollback names derive only from that original path and bound generation GUID. No automatic
+journal creation, provider activation, profile switching or recovery permission occurs in this class.
+
+Original opens ReadWrite without Create: the observed ReadOnly SQLCipher connection denied export
+into writable attached memory. Only the exporter's read snapshot addresses main; this also allows
+native recovery of an owned hot journal. Native identity must equal the reviewed cipher version;
+plain SQLite fallback and selected plaintext files refuse. Source/WAL/memory and available-volume
+bounds precede allocation/output work. Coherent portable serialization never enters a plaintext
+temporary file. Both encrypted candidate and independent rollback are verified against complete
+source schema/header/typed packets. The existing bound key is reused on unselected interrupted
+output recreation. Sync closed output files and directory before checkpoint acceptance.
+
+Before selection recompare the original snapshot and rollback; after Selected validate candidate
+and rollback under the still-held writer lease. Destructive cleanup rechecks actual stored Selected
+and keyed reopen, then removes only original/main plus its exact -wal/-shm/-journal names, followed
+by directory synchronization. Completed only reopens candidate. It never reads plaintext as missing
+key fallback or generates keys after selection. The encrypted pre-migration rollback remains when
+future ledger writes resume; no secure flash/SSD erasure or complete native-string wiping promised.
+
+AndroidGenerationKeyStore uses original immutable envelope/Keystore code, reading any existing
+entry even if damaged rather than generating a replacement. AndroidGenerationFileDurability uses
+actual StatFs and no-follow regular-file fsync plus directory fsync under the trusted private root.
+Native key effects run off UI. Callers still must globally quiesce all application work; these ports
+are not a substitute for real catalogue/access/startup lifecycle integration. Windows/iOS concrete
+session effects and main activation are not accepted by an Android proof.
+
+Test-AndroidGenerationMigration.ps1 -RunName android-d compiles original sources in the separate
+signed Release AOT/trimmed package and runs three independently owned original-model profiles.
+Actual registration/compiled model/32 migrations, financial packets, Unicode and 2 MiB typed BLOB
+with signed boundary integer are used. External termination occurs after actual candidate creation
+while KeyPrepared remains, then fresh process verifies unchanged original/envelope and resumes to
+Completed. Another external kill follows actual Selected commit before cleanup, then fresh process
+completes original keyed protocol. Third Selected run loses only its generated fixture envelope and
+must stop without replacement/fallback/cleanup. Unrelated fixture file survives; candidate/rollback
+headers and marker leakage checked. No actual app credentials/data, phone or OS settings touched.
+
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-1aef7c0881df49bba4eb61477c38b135.json.
+Runtime/build logs: d196-android-migration-runtime.log and build/android-d/android-migration-build.log.
+Initial ReadOnly failure retained in d196-readonly-export-failed.log. Reviewed ABI hashes unchanged;
+APK v2/v3 signature/ZIP and exact independent package uninstall checked. Ten unit guard cases are
+separate from these real effects. Broader key-publication/candidate/directory/power-loss/disk-pressure
+matrix, original attachments/safety files, all profiles, optional recovery and final backup coupling
+remain. Main application remains plaintext until reviewed final lifecycle/provider adoption.
+
+D-196 final managed results: all 3,255 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
+d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
+native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.

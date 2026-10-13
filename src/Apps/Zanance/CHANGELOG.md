@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Complete database migration foundation (2026-10-13, D-196)
+
+- Connected protected keys, encrypted database and rollback creation, verified selection and exact cleanup.
+- Verified interrupted migration and missing-key refusal using independent real-model profiles.
+- Live profile activation, backup integration and recovery remain unfinished; existing app data is unchanged.
+
 ### Development - Migration selection persistence (2026-10-13, D-195)
 
 - Added transactional recording of database migration progress and generation selection.

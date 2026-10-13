@@ -92,3 +92,12 @@ D-194 final evidence: build/android-d/android-key-proof-61b09ff1ad0044f28d0dc251
 under artifacts/native-sqlcipher, plus d194-key-store-release-build.log. Signed APK v2/v3 and
 ZIP integrity pass; original reviewed arm64/x64 native hashes match. Separate package removed.
 Strict main Windows/Android build logs d194-main-{windows,android}.log have zero errors/warnings.
+
+## Android final session ports (D-196)
+
+Original envelope store now detects any existing entry before preparation, so damaged entries
+are read/refused rather than replaced. AndroidGenerationKeyStore implements actual explicit
+prepare/reopen and existing-only reads; mutable returned keys are cleared by the captured session.
+StatFs and no-follow file/directory fsync provide concrete private-root durability effects. These
+ports are exercised in independent original-model complete migration/process interruption proof;
+main key creation and provider remain inactive. See generation guide for exact remaining scope.

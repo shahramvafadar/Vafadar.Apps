@@ -1769,3 +1769,21 @@ D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; tes
 Main strict Windows/Android builds pass with zero warnings/errors. Records under
 artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
 Independent native strict builds also pass; no visible main screen changes or phone-test handoff.
+
+## AT-195 - Complete original native migration and interruptions
+
+Ten original session guard cases pass (focused 92), distinct from native evidence. Independent
+signed Release AOT/trimmed Android runs three fictitious actual-model profiles, 32 migrations,
+financial fields/Unicode and typed 2 MiB BLOB/signed-boundary data. External kill during actual
+candidate creation leaves KeyPrepared; fresh process checks unchanged source/envelope and resumes
+full coordinator to Completed. External kill at actual Selected resumes keyed candidate/rollback,
+exact source-sidecar cleanup and Completed. Missing Selected envelope refuses without replacement,
+plaintext fallback or cleanup. Unrelated file preserved; encrypted candidate/rollback have no plain
+header/fixture marker. Native signature/ZIP/hash/package cleanup verified. Initial ReadOnly-source
+export failed; corrected source mode without Create passes. Wider crash/power/disk/physical/Windows/
+iOS and real application lifecycle/backup/recovery/all-profile gates remain. Main still plaintext.
+
+D-196 final managed results: all 3,255 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
+d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
+native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.

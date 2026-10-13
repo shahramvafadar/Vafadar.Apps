@@ -21,6 +21,14 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
         ValidateDirectory();
     }
 
+    /// <summary>Checks whether any generation entry exists, including a damaged or redirected entry that must not be replaced.</summary>
+    public bool ContainsEnvelope(DatabaseKeyBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding); ValidateDirectory();
+        try { _ = File.GetAttributes(GetPath(binding)); return true; }
+        catch (FileNotFoundException) { return false; }
+    }
+
     /// <summary>Reads and authenticates exactly the stored generation; missing files or keys fail without replacement.</summary>
     public byte[] ReadKey(DatabaseKeyBinding binding)
     {

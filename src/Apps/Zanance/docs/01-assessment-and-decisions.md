@@ -2505,3 +2505,41 @@ D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; tes
 Main strict Windows/Android builds pass with zero warnings/errors. Records under
 artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
 Independent native strict builds also pass; no visible main screen changes or phone-test handoff.
+
+## D-196 - Actual captured native migration session
+
+Connect D-189 coordinator to a concrete SqlCipherGenerationMigrationSession and D-195 selector,
+original D-193/194 Android protected key storage and native file/directory fsync/StatFs adapter.
+Capture explicit private original ownership, bound installation/generation and exclusive access
+validation callback. Derive exact encrypted candidate/rollback names from the captured generation.
+Preflight bounded source/WAL size and room for candidate/rollback/journal growth. Export coherent
+plaintext only in memory, clear owned buffers, preserve complete schema/headers/typed rows and
+verify both encrypted outputs. Reuse authenticated key after interrupted unselected export; only
+owned unselected output/sidecars can be recreated. Synchronize outputs before readiness. Recheck
+source content before selection, retain encrypted rollback, reopen actual selection/key/rollback
+before exact original/sidecar cleanup and synchronize directory. Never choose plaintext or create
+a replacement key after selection. Context/cancellation guards remain around native awaits.
+
+Initial actual Android run failed exporting writable memory from a ReadOnly original connection.
+Correct to ReadWrite (never Create) under exclusive lease; exporter still reads main in its coherent
+transaction. Original bytes and prepared envelope remain unchanged in the successful interrupted
+run. No invented cipher/fork/provider fallback: reviewed SQLCipher identity is required. Native
+password API strings cannot be fully erased; owned returned key/serialization buffers are cleared.
+
+Ten guard cases added (focused 92), including retired/cancelled lease, invalid cleared key, low disk,
+missing selected key, no plaintext selected candidate/default SQLite provider fallback and no early
+cleanup. These port guards are not native conversion evidence. Separate signed Release AOT/trimmed
+Android uses actual original registration/compiled model, first schema through all 32 migrations,
+financial packets, Unicode, header IDs and a 2 MiB typed BLOB/Int64.MinValue fixture. Three distinct
+fictitious profiles/process sequences prove actual export interruption/resume with unchanged source
+and key, actual Selected interruption/resume through exact cleanup, and missing Selected envelope
+refusal without replacement/fallback/cleanup. Candidate and retained rollback lack plaintext header
+and fixture marker; unrelated file survives. APK signature/ZIP/native bytes and package removal
+verified. AT-195 records final suite/build evidence. Main profiles/provider remain plaintext/inactive;
+all-profile catalogue/startup/backup integration, optional recovery, Windows/iOS effects and wider
+crash/disk/device/OS-exclusion acceptance remain.
+
+D-196 final managed results: all 3,255 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
+d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
+native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.

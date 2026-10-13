@@ -19,7 +19,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-195 transactional selector / D-189 coordinator; complete key/candidate/cleanup session and restart matrix open) | SEC-02, SEC-03 |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-196 concrete Android session and restart proof; main/all-profile lifecycle and broader crash/platform matrix open) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Policy approved D-192; final coupled integration pending, no interim exclusion | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
@@ -1519,3 +1519,12 @@ behavior cases pass (focused 82). Actual native hot-journal rollback and committ
 external process kill pass Windows and independent Release Android. No whole-session activation:
 key/candidate/cleanup integration, all-profile mapping, recovery, crash/disk matrix and iOS remain.
 Main is still plaintext. Owner policy OD-04/OD-10 remains approved, not a repeated question.
+
+## Concrete native session (D-196)
+
+SEC-05 now joins actual Android key/filesystem, coherent memory snapshot, typed candidate and
+retained encrypted rollback, transactional selection and exact cleanup. Independent real-model
+Release three-profile process sequences pass export/Selected interruption and missing selected
+key refusal. Ten guards/focused 92 pass. Main remains plaintext: lifecycle/catalogue/all-profile,
+backup/recovery/OS exclusion, other platform effects and broader crash/disk acceptance remain.
+SEC-08 is not closed by an encrypted migration rollback alone; actual restore safety remains.

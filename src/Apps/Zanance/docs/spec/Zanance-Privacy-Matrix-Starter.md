@@ -559,3 +559,12 @@ network or permission. Its rollback sidecar contains only that same metadata. Ca
 trusted private path/access lease; same-UID malicious modification is not cryptographically prevented.
 Independent Windows/Android fictitious proof only; main creation/OS exclusion is not activated.
 Final encrypted-data and approved OS-backup integration remain required before release.
+
+## Captured encrypted migration and rollback (D-196)
+
+Only caller-owned original database and exact sidecars are deleted after verified keyed selection;
+independent encrypted rollback and bound device key remain. Coherent plaintext snapshot stays in
+bounded cleared owned memory, never a plaintext temporary file. Native password strings cannot be
+fully wiped; same-UID malicious code/flash erasure/hardware power-loss protection is not claimed.
+Independent fixture only currently; no main data/key/provider/OS policy activation. No permission,
+network, SDK or portable credential. Real backup/safety/attachments/recovery integration remains.

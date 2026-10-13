@@ -23,6 +23,9 @@ public sealed class MainActivity : Activity
         {
             var keyPhase = Intent?.GetStringExtra("key_phase");
             var journalPhase = Intent?.GetStringExtra("journal_phase");
+            var migrationPhase = Intent?.GetStringExtra("migration_phase");
+            if (migrationPhase is not null && (keyPhase is not null || journalPhase is not null || migrationPhase is not ("migration-create" or "migration-key-prepare" or "migration-export-kill" or "migration-check-interruption" or "migration-selected-kill" or "migration-missing-key" or "migration-resume")))
+                throw new ArgumentException("Unknown or combined independent migration phase.");
             if (journalPhase is not null && (keyPhase is not null || journalPhase is not ("journal-create" or "journal-uncommitted" or "journal-reopen-rollback" or "journal-committed" or "journal-reopen-selected")))
                 throw new ArgumentException("Unknown or combined independent journal phase.");
             if (keyPhase is not null && keyPhase is not ("keys-create" or "keys-reopen" or "keys-negative" or "keys-store-create" or "keys-store-reopen" or "keys-store-negative"))
@@ -41,7 +44,16 @@ public sealed class MainActivity : Activity
                     throw new ArgumentException("Independent journal requires fresh run identity.");
                 journalRoot = Path.Combine(owned, "journal-proofs", journalRun.ToString("N"));
             }
-            var result = journalPhase is not null
+            var migrationRoot = owned;
+            if (migrationPhase is not null)
+            {
+                if (!Guid.TryParseExact(Intent?.GetStringExtra("migration_run"), "N", out var migrationRun) || migrationRun == Guid.Empty)
+                    throw new ArgumentException("Independent migration requires fresh run identity.");
+                migrationRoot = Path.Combine(owned, "migration-proofs", migrationRun.ToString("N"));
+            }
+            var result = migrationPhase is not null
+                ? await Task.Run(() => GenerationMigrationCompatibility.RunAsync(migrationRoot, migrationPhase))
+                : journalPhase is not null
                 ? await Task.Run(() => JournalCompatibility.RunAsync(journalRoot, journalPhase))
                 : keyPhase is null
                 ? await Task.Run(() => SchemaCompatibility.RunAsync(evidence, owned))

@@ -1120,3 +1120,9 @@ other platform files remain; live database unchanged/plaintext.
 Concrete non-secret SQLite protocol storage and actual native hot-journal/committed-selection
 kill/restart pass on Windows and independent Release Android. Complete native session/migration,
 optional recovery and all-profile/physical/iOS acceptance remain. Main remains plaintext.
+
+## D-196 concrete native migration session
+
+Original-model Android session now performs actual protected keys, encrypted candidate/rollback,
+verified selection/reopen and exact cleanup, including real process interruption and missing-key
+refusal. No main/provider/all-profile adoption; backup/recovery and broader acceptance remain.

@@ -2934,3 +2934,18 @@ D-195 final managed evidence: all 3,245 tests pass with zero failures/skips; tes
 Main strict Windows/Android builds pass with zero warnings/errors. Records under
 artifacts/native-sqlcipher: d195-{journal-tests,full-tests,test-clean,main-windows,main-android}.log.
 Independent native strict builds also pass; no visible main screen changes or phone-test handoff.
+
+### 31.109 Concrete native migration session (D-196 / AT-195)
+
+Actual captured session joins protected Android keys, bounded coherent memory export, complete
+candidate/encrypted rollback verification, transactional selection, keyed reopen and exact plaintext
+cleanup. Native independent original model/32 migrations/financial packets pass real interrupted
+export and Selected restart, with missing Selected envelope refusal. Ten new guards/focused 92
+pass. No ledger/schema/model/UI change or main encryption adoption. Main is still plaintext;
+all-profile/startup/provider/backup/recovery/OS-exclusion integration and broader platform/crash
+acceptance remain. Native software x64/API36/4 KiB evidence is not phone/arm64/iOS/power acceptance.
+
+D-196 final managed results: all 3,255 tests pass with zero failures/skips and output cleaned.
+Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
+d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
+native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.

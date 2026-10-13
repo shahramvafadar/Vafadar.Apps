@@ -950,3 +950,11 @@ Original transactional selector survives actual native process kills as expected
 independent signed Release Android; hot rollback header and committed selection checked. No
 full-session crash/disk-pressure/hardware-power-loss, arm64/API24/16 KiB OS, phone/iOS or release
 acceptance. Main provider remains plaintext and final multi-resource migration/recovery is open.
+
+## D-196 original-model native migration evidence
+
+Three real process-interruption/key-loss scenarios pass in independent signed Release Android,
+using actual compiled model/32 migrations and typed financial content. Encrypted rollback/exact
+plaintext cleanup verified; original main profiles untouched/plaintext. All-profile lifecycle,
+provider packaging/activation, backup/attachments/safety/recovery/OS exclusion, Windows/iOS and
+broader physical/power/disk crash gates remain. No whole-product security/release acceptance.

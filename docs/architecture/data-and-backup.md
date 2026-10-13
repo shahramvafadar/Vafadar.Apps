@@ -814,3 +814,10 @@ with explicit creation, rollback DELETE/synchronous EXTRA and next-phase compare
 It is not an EF financial entity/model or a portable backup member. Native process-kill rollback
 and committed selection pass Windows/independent Release Android. Main composition unchanged.
 [Generation guide](sqlcipher-generation-checkpoints.md) records complete scope and remaining work.
+
+## Captured native generation migration (D-196)
+
+Concrete session connects native Android keys, original coherent memory exporter/verifier, encrypted
+candidate/rollback, transactional selector and exact obsolete plaintext cleanup. Separate actual-model
+Release process interruption/resume proves these effects together. No main adoption or EF model
+change; provider/startup/catalogue/all-profile backup/recovery/OS exclusion remain. See generation guide.

@@ -26,6 +26,7 @@
              Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.cs" Link="AndroidDatabaseKeyEnvelopeStore.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidGenerationMigrationStorage.cs" Link="AndroidGenerationMigrationStorage.cs" />
     <Compile Include="../Compatibility/SchemaCompatibility.cs" Link="SchemaCompatibility.cs" />
     <Compile Include="../Compatibility/JournalCompatibility.cs" Link="JournalCompatibility.cs" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />

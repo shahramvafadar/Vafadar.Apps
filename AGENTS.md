@@ -1441,3 +1441,16 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   access/profile lease; no file store alone authorizes opening/cleanup or a plaintext fallback.
 * Verify actual native hot-journal and committed-selection process kills separately from full
   multi-resource migration, disk-pressure/hardware-power-loss and physical-platform acceptance.
+
+## 128. Complete captured native migration effects (D-196)
+
+* Use original coordinator/session with actual protected keys, coherent bounded memory snapshots,
+  complete typed verification, encrypted candidate and encrypted rollback before selection.
+* Recheck lease/identity/stored phase at native effects. Recreate only the bound unselected candidate
+  with its existing key; missing selected keys never prepare replacements or choose plaintext.
+* Source opens ReadWrite without Create because SQLCipher ATTACH inherits access flags for writable
+  memory export/hot-journal recovery. Main is read in a snapshot transaction; no ledger writes.
+* Keyed reopen and encrypted rollback verification precede exact original/sidecar cleanup. Synchronize
+  closed encrypted files and directory through actual platform effects, not a managed rename claim.
+* Independent original-model Android process interruption evidence does not activate main profiles,
+  final backup/recovery UI, OS exclusion or certify power loss/other platforms.
