@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Native Android retirement cleanup (D-234)
+
+- Prepared exact Android cleanup with preserved main keys and continuation after storage failure.
+- Refuse replacement directories instead of treating their empty contents as completed cleanup.
+- Complete reference discovery and main encryption activation remain pending final integration.
+
 ### Added - Captured encrypted-profile cleanup files (D-233)
 
 - Retain the exact reviewed file set before retirement and refuse changed or replaced files.

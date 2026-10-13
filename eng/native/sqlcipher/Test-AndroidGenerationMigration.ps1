@@ -2,12 +2,13 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup, [switch]$StartupNotification, [switch]$RestoreSession, [switch]$ProfileDeletionGuard,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup, [switch]$StartupNotification, [switch]$RestoreSession, [switch]$ProfileDeletionGuard, [switch]$RetirementFiles, [switch]$RetirementNegativeChecks,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFreshStartupRun = '')
 $ErrorActionPreference = 'Stop'
+if ($RetirementNegativeChecks -and -not $RetirementFiles) { throw 'Negative retirement mode requires retirement-files.' }
 if ($ResumeRestoreSelectionRun -and -not $RestoreSelection) { throw 'Recorded selection resume requires the restore-selection mode.' }
 if ($ResumeFactoryRun -and (-not $Factory -or $ResumeRestoreSelectionRun)) { throw 'Recorded factory continuation requires only the factory mode.' }
 if ($ResumeBootstrapRun -and (-not $InitialBootstrap -or $ResumeFactoryRun -or $ResumeRestoreSelectionRun)) { throw 'Recorded bootstrap continuation requires only initial-bootstrap mode.' }
@@ -62,7 +63,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Phase -in @('fresh-startup-create','fresh-startup-reopen','fresh-startup-notification','restore-session','restore-session-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
+    $maximumAttempts = if ($Phase -in @('retirement-negatives','retirement-create','retirement-reopen','fresh-startup-create','fresh-startup-reopen','fresh-startup-notification','restore-session','restore-session-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -99,9 +100,22 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-$scenarios = if ($FreshStartup) { @('fresh-startup') } elseif ($ProtectedStartup) { @('protected-startup') } elseif ($SafetyCopies) { @('safety-copies') } elseif ($ProfileCreation) { @('profile-creation') } elseif ($NewProfile) { @('new-profile') } elseif ($AllProfiles) { @('all-profiles') } elseif ($MetadataPublication) { @('metadata-publication') } elseif ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+$scenarios = if ($RetirementFiles) { @('retirement-files') } elseif ($FreshStartup) { @('fresh-startup') } elseif ($ProtectedStartup) { @('protected-startup') } elseif ($SafetyCopies) { @('safety-copies') } elseif ($ProfileCreation) { @('profile-creation') } elseif ($NewProfile) { @('new-profile') } elseif ($AllProfiles) { @('all-profiles') } elseif ($MetadataPublication) { @('metadata-publication') } elseif ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
     $identity = if ($ResumeFreshStartupRun) { $ResumeFreshStartupRun } elseif ($ResumeBootstrapRun) { $ResumeBootstrapRun } elseif ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    if ($scenario -eq 'retirement-files') {
+        if ($RetirementNegativeChecks) {
+            $result = Invoke-OwnedMigration 'retirement-negatives' $identity
+            if ($result.ChangedObjectRefusals -ne 3 -or -not $result.NoUnrelatedFilesDeleted) { throw 'Native negative object checks failed.' }
+            $proofs += [pscustomobject]@{ Scenario = 'retirement-negative-files'; Run = $identity; Result = $result }
+            continue
+        }
+        $created = Invoke-OwnedMigration 'retirement-create' $identity
+        $reopened = Invoke-OwnedMigration 'retirement-reopen' $identity
+        if (-not $created.NativeKeyEnvelopeRetained -or -not $reopened.TargetKeyEnvelopeRemoved -or -not $reopened.MainKeyReadable -or -not $reopened.ExactIdentityRetired -or -not $reopened.MainBindingPreserved) { throw 'Actual native retirement evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Reopened = $reopened }
+        continue
+    }
     if ($scenario -eq 'fresh-startup') {
         $created = $null
         if (-not $ResumeFreshStartupRun) { $created = Invoke-OwnedMigration 'fresh-startup-create' $identity }

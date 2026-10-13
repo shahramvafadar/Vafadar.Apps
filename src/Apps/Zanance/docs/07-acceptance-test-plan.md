@@ -2561,3 +2561,12 @@ preserves foreign files and its own authority, synchronizes deletion, and resume
 catalogue-removal request. Real DPAPI-envelope deletion and cold independent continuation pass.
 Complete native profile/reference discovery and final app/mobile/recovery/retention/OS integration
 remain open. See D-233 in the decision log for observed scope and its limits.
+
+### D-234 — Native Android cleanup and bound directory identity
+
+SEC remains in progress. Android now removes only captured no-follow UID-private objects through
+an anchored directory descriptor, with shared preflight/requalification and fsync. Root identity
+prevents accepting absence in a replacement directory on both native adapters. Actual signed Release
+Android lifecycle/cold main-key preservation and three focused changed-object refusals pass.
+Final complete reference discovery, app catalogue integration, reconciliation/recovery/retention/OS
+and platform/device acceptance remain open. Exact observed scope is recorded in D-234.

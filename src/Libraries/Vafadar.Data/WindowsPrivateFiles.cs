@@ -57,6 +57,9 @@ internal sealed class WindowsPrivateFiles : IDisposable
         return $"{info.Volume:x8}{info.IndexHigh:x8}{info.IndexLow:x8}";
     }
 
+    /// <summary>Reads the captured directory's native volume/file identity.</summary>
+    internal string DirectoryIdentity => FileIdentity(root);
+
     /// <summary>Marks this same verified handle for deletion on close; never reopens an unchecked filename.</summary>
     internal static void DeleteOnClose(SafeFileHandle handle)
     {

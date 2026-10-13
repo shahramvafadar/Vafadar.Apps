@@ -39,29 +39,15 @@ public sealed class WindowsProfileRetirementFiles
         var digest = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, ct).ConfigureAwait(false));
         Check(ct);
         if (stream.Length != length) throw new IOException("Captured retirement file changed while hashing.");
-        return new(root, name, identity, length, digest);
+        return new(root, name, identity, length, digest, directory.DirectoryIdentity);
     }
 
     /// <summary>Preflights the captured set, then deletes matching objects and synchronizes actual directories.</summary>
-    public async Task RemoveAsync(ProfileRetirementCheckpoint expected, SqliteProfileRetirementJournal journal,
-        IDatabaseGenerationFileDurability metadataDurability, CancellationToken ct = default)
-    {
-        ArgumentNullException.ThrowIfNull(expected); ArgumentNullException.ThrowIfNull(journal);
-        ArgumentNullException.ThrowIfNull(metadataDurability); Check(ct);
-        if (expected.Phase != ProfileRetirementPhase.CatalogueRemoved
-            || await journal.SynchronizeAndReadAsync(metadataDurability, ct).ConfigureAwait(false) != expected)
-            throw new InvalidOperationException("File cleanup requires the exact durable catalogue-removal barrier.");
-        var captured = await journal.ReadArtifactsAsync(ct).ConfigureAwait(false);
-        foreach (var artifact in captured) await CheckFileAsync(artifact, journal, delete: false, ct).ConfigureAwait(false);
-        foreach (var artifact in captured)
-        {
-            Check(ct);
-            if (await journal.ReadAsync(ct).ConfigureAwait(false) != expected)
-                throw new InvalidOperationException("Retirement changed before exact file deletion.");
-            await CheckFileAsync(artifact, journal, delete: true, ct).ConfigureAwait(false);
-        }
-        await VerifyRemovedAsync(journal, ct).ConfigureAwait(false);
-    }
+    public Task RemoveAsync(ProfileRetirementCheckpoint expected, SqliteProfileRetirementJournal journal,
+        IDatabaseGenerationFileDurability metadataDurability, CancellationToken ct = default) =>
+        ProfileRetirementFileCleanup.RemoveAsync(expected, journal, metadataDurability,
+            (artifact, delete, token) => CheckFileAsync(artifact, journal, delete, token),
+            token => VerifyRemovedAsync(journal, token), validate, ct);
 
     /// <summary>Verifies every captured namespace entry is absent, propagating access and redirection failures.</summary>
     public Task VerifyRemovedAsync(SqliteProfileRetirementJournal journal, CancellationToken ct = default) => VerifyCoreAsync(journal, ct);
@@ -73,6 +59,7 @@ public sealed class WindowsProfileRetirementFiles
         {
             Check(ct); var path = Resolve(artifact); journal.RequireArtifactPath(path);
             using var directory = new WindowsPrivateFiles(roots[artifact.Root]);
+            if (directory.DirectoryIdentity != artifact.RootIdentity) throw new IOException("Captured retirement root was replaced.");
             try { using var handle = directory.OpenForDeletion(path); throw new IOException("Captured retirement file remains."); }
             catch (IOException error) when (MissingFile(error)) { }
             directory.FlushDirectory(); Check(ct);
@@ -83,6 +70,7 @@ public sealed class WindowsProfileRetirementFiles
     {
         Check(ct); var path = Resolve(artifact); journal.RequireArtifactPath(path);
         using var directory = new WindowsPrivateFiles(roots[artifact.Root]);
+        if (directory.DirectoryIdentity != artifact.RootIdentity) throw new IOException("Captured retirement root was replaced.");
         try
         {
             using var handle = directory.OpenForDeletion(path);

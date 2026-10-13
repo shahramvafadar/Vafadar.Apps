@@ -4177,3 +4177,66 @@ pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly store
 Test outputs were cleaned after terminal checks. Main encryption, full reference discovery,
 app/mobile retirement, recovery/retention/OS policy, device/store and product release acceptance
 remain unfinished.
+
+### D-234 — Descriptor-relative Android retirement and captured directory identity
+
+AndroidProfileRetirementFiles now captures UID-private native directory/file identities, lengths
+and SHA-256 through no-follow directory-relative file descriptors. It preflights the recorded set,
+rechecks the anchored namespace against the inspected inode, calls Bionic unlinkat through the
+same directory descriptor, fsyncs that directory and verifies absence. Native missing-file errors
+are distinguished from access/ownership/type errors; linked, non-regular and foreign-owned files
+are refused. Descriptor duplicates are explicitly closed. The operating system's app-data alias
+is canonicalized within the app's actual UID-private data scope; redirected final roots are refused.
+Native ABI reference: https://android.googlesource.com/platform/bionic/+/main/libc/include/unistd.h
+This is not physical erasure or a defence against privileged/same-UID code.
+
+Review identified another namespace issue: an empty replacement directory could otherwise make
+all captured files appear absent while the original directory still retained them. The artifact
+record now includes the native directory identity, verified before accepting absence on Windows
+and Android. The exact inventory table shape changes for this unreleased infrastructure; earlier
+independent inventory shapes are refused, never silently rebound to the currently found directory.
+Main remains plaintext and has no production retirement metadata to convert. An actual Windows
+regression retains the moved original file and rejects cleanup/absence in an empty replacement root.
+
+The ordered requalification/preflight/removal algorithm is shared in ProfileRetirementFileCleanup;
+the native adapters supply actual object effects without duplicating it. The independent runtime
+fixture is also shared, with platform key/durability/file ports and trim-safe identity serialization.
+It creates real main/work identity rows and native generation envelopes, records only the work
+file/envelope, injects synchronization failure after catalogue publication, then cold continuation
+removes work files/identity while the main native key remains readable. Catalogue publication in
+this fixture is still native-flushed fictitious file storage, not final MAUI preference integration.
+
+The signed Release AOT/trimmed Android x64/API36/4 KiB two-process scenario passes. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-21b20f76f70f4030acf58c25a46e5688.json
+(run 9d934b3c3c2e4ec7a7af130b72ef9e8a). After adding focused negative scenarios, only that new
+single-phase runtime was executed: changed bytes, same-content replacement and emptied replacement
+root are refused before unrelated cleanup. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-0ac16a2050d8408289b1d45d71b8ff8b.json.
+The existing native lifecycle was not repeated merely to exercise the added negative cases.
+Initial and final independent Android builds have zero warnings/errors (69.96s / 55.93s).
+Terminal Windows/test/main-build/package evidence follows below.
+
+This provides real native cleanup effects, not complete profile-reference discovery or final
+application activation. Actual complete authenticated reference inventory, durable app catalogue
+publication, uncommitted creation reconciliation, optional recovery, reference-aware safety retention,
+coupled OS policy and final main/native platform gates remain open. Main remains plaintext. No
+unchanged UI or upstream producer suite was repeated. Physical arm64/API24/16 KiB OS, iOS, device
+and product release acceptance are not supplied by this x64 emulator result.
+
+D-234 terminal checks: all 3,411 solution tests pass, zero failures/skips (2m51.932s), including
+the new actual empty-replacement-root regression. Strict main Windows build has zero warnings/
+errors (24.83s); the Android main source was already built strictly without warnings/errors
+(66.37s) and production code did not change afterward. Final signed packaging follows below.
+The final independent Windows build is clean (1.81s); shared changed-object refusals and actual
+main/work key-envelope retirement/cold main-key read pass. Evidence: d234-native-windows-create.log
+and d234-native-windows-resume.log. The owned fixture path is recorded in d234-owned-retirement-path.txt.
+The Android negative runtime run is e51949403ed6465c8b585ab2b03cdb54; its three new scenarios passed
+without repeating the already observed Android lifecycle. No unrelated UI/native producer suite
+was repeated; final app catalogue/reference discovery and main registration remain open.
+
+D-234 final complete signed Release APK: artifacts/android-d234-delivery/pro.vafadar.zanance-Signed.apk
+(83,044,912 bytes), local test certificate. apksigner verification succeeds; package
+pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores are verified.
+Test outputs were cleaned after terminal checks. Main encryption activation, complete reference
+inventory/app catalogue integration, recovery/retention/OS policy and external platform/device/
+store acceptance remain unfinished.

@@ -17,6 +17,28 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase == "retirement-negatives")
+        {
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+            if (Directory.Exists(folder)) throw new IOException("Native negative checks require a fresh independently owned directory.");
+            Directory.CreateDirectory(folder);
+            await Vafadar.SqlCipher.Compatibility.SharedRetirementCompatibility.CheckChangedObjectsAsync(folder,
+                path => new AndroidGenerationFileDurability(path), path =>
+                {
+                    var files = new AndroidProfileRetirementFiles(new Dictionary<string, string> { ["database"] = path }, () => { });
+                    return new(files.CaptureAsync, files.RemoveAsync, files.VerifyRemovedAsync);
+                });
+            return "{\"ChangedObjectRefusals\":3,\"NoUnrelatedFilesDeleted\":true}";
+        }
+        if (phase is "retirement-create" or "retirement-reopen")
+        {
+            return await Vafadar.SqlCipher.Compatibility.SharedRetirementCompatibility.RunAsync(folder, phase == "retirement-create",
+                path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path), path =>
+                {
+                    var files = new AndroidProfileRetirementFiles(new Dictionary<string, string> { ["database"] = path }, () => { });
+                    return new(files.CaptureAsync, files.RemoveAsync, files.VerifyRemovedAsync);
+                });
+        }
         if (phase is "restore-session" or "restore-session-reopen")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

@@ -85,6 +85,25 @@ public sealed class ProfileRetirementArtifactTests
         Assert.Equal(request.Advance(), await journal.ReadAsync(Ct));
     }
 
+    [Fact, Trait("AT", "AT-234")]
+    public async Task Empty_replacement_root_cannot_prove_that_files_in_the_original_root_were_removed()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var folder = new TemporaryDirectory(); var objects = folder.Combine("objects");
+        Directory.CreateDirectory(objects); var request = Request(); var native = new WindowsGenerationFileDurability(folder.Path);
+        var files = new WindowsProfileRetirementFiles(new Dictionary<string, string> { ["database"] = objects }, () => { });
+        var journal = new SqliteProfileRetirementJournal(folder.Combine("retirement.sqlite"), request, () => { });
+        await File.WriteAllTextAsync(Path.Combine(objects, "owned.bin"), "Retain original bytes.", Ct);
+        await journal.CreateNewAsync(native, Ct);
+        await journal.CaptureArtifactsAsync([await files.CaptureAsync("database", "owned.bin", Ct)], native, Ct);
+        await journal.CompareAndAdvanceAsync(request, native, Ct);
+        Directory.Move(objects, objects + ".retained"); Directory.CreateDirectory(objects);
+        await Assert.ThrowsAsync<IOException>(() => files.RemoveAsync(request.Advance(), journal, native, Ct));
+        await Assert.ThrowsAsync<IOException>(() => files.VerifyRemovedAsync(journal, Ct));
+        Assert.Equal("Retain original bytes.", await File.ReadAllTextAsync(Path.Combine(objects + ".retained", "owned.bin"), Ct));
+        Assert.Equal(request.Advance(), await journal.ReadAsync(Ct));
+    }
+
     private sealed class Effects : IDatabaseGenerationFileDurability
     {
         public long AvailableBytes => long.MaxValue;

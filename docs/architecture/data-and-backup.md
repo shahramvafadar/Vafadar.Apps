@@ -1859,3 +1859,16 @@ discovery, exact private-root mapping and maintenance ownership. No directory en
 installation-key deletion is supplied. This is not sector erasure, final app/mobile retirement or
 power-loss acceptance. Native ABI reference:
 https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle
+
+### D-234 — Directory-bound native retirement on Android and Windows
+
+The immutable artifact shape includes rootnative; old unqualified independent table shapes are
+refused. Native roots must match even when their file entries are absent. Shared cleanup owns
+exact requalification, whole-set preflight and ordered removal; each adapter supplies native object
+effects. Android opens no-follow UID-private roots/files, uses directory-relative openat/unlinkat,
+rechecks named/opened inode equality and fsyncs the captured directory. File descriptors and their
+duplicates are explicitly closed. Windows retains same-handle deletion and now checks its root ID.
+The shared independent fixture uses actual platform keys and runtime effects; its catalogue remains
+fictitious native-flushed file storage. Final complete ownership/reference discovery and application
+catalogue/recovery/retention/OS activation remain separate and unfinished. Bionic API reference:
+https://android.googlesource.com/platform/bionic/+/main/libc/include/unistd.h

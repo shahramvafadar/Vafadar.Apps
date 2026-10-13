@@ -639,3 +639,8 @@ D-233: private non-portable retirement metadata additionally records named root/
 native file identifiers, lengths and SHA-256. It contains no financial payload or key bytes and
 never enters portable preference sources. No new permission, SDK or network behavior is added.
 Complete discovery/native mobile cleanup and main registration remain unactivated.
+
+D-234: captured native directory identity additionally binds local retirement inventory. Android
+checks actual application UID ownership and descriptor-relative inode identity. No financial
+payload, credential input, permission, network SDK or portable preference is added. This local
+operational metadata stays outside portable backup sources; main registration remains inactive.
