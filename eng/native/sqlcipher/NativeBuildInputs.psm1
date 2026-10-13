@@ -12,6 +12,46 @@ function Get-NativeFreeSpace {
     [IO.DriveInfo]::new([IO.Path]::GetPathRoot((Get-NativeInputRoot))).AvailableFreeSpace
 }
 
+function Get-NativeContainerHostIdentity {
+    <# .SYNOPSIS Uses the Linux bind-mount owner's numeric identity; Docker Desktop retains its reviewed default user. #>
+    if ([IO.Path]::DirectorySeparatorChar -eq '/') {
+        $nativeUid = & id -u
+        if ($LASTEXITCODE -ne 0) { throw 'Native host user identity unavailable.' }
+        $nativeGid = & id -g
+        if ($LASTEXITCODE -ne 0) { throw 'Native host group identity unavailable.' }
+        if ($nativeUid -notmatch '^[1-9][0-9]*$' -or $nativeGid -notmatch '^[0-9]+$') {
+            throw 'Native builds require a non-root numeric host identity.'
+        }
+        return ($nativeUid + ':' + $nativeGid)
+    }
+    return ''
+}
+
+function Get-NativeContainerRunArguments {
+    <# .SYNOPSIS Binds fresh owned output/work directories, read-only sources/recipe and a non-root Linux owner. #>
+    param([Parameter(Mandatory)][string]$RunRoot,
+        [Parameter(Mandatory)][ValidateSet('candidate','evidence')][string]$OutputName,
+        [Parameter(Mandatory)][ValidateSet('/home/nativebuild/work','/home/nativebuild/upstream')][string]$WorkTarget)
+    $absolute = [IO.Path]::GetFullPath($RunRoot)
+    $prefix = [IO.Path]::GetFullPath((Join-Path (Get-NativeInputRoot) 'build')).TrimEnd('\','/') + [IO.Path]::DirectorySeparatorChar
+    if (-not $absolute.StartsWith($prefix, [StringComparison]::Ordinal) -or
+        [IO.Path]::GetDirectoryName($absolute) -ne $prefix.TrimEnd('\','/')) {
+        throw 'Native container work must belong to one direct owned run directory.'
+    }
+    $workspace = Join-Path $absolute 'work'
+    if (Test-Path -LiteralPath $workspace) { throw 'Use a fresh native container workspace.' }
+    New-Item -ItemType Directory $workspace | Out-Null
+    $identity = Get-NativeContainerHostIdentity
+    # Linux bind mounts retain host ownership. Match it rather than running root or granting world-write.
+    $arguments = @('--rm','--network','none')
+    if ($identity) { $arguments += @('--user',$identity) }
+    $arguments += @('--mount',('type=bind,source=' + (Join-Path $absolute 'inputs') + ',target=/inputs,readonly'),
+        '--mount',('type=bind,source=' + $PSScriptRoot + ',target=/recipe,readonly'),
+        '--mount',('type=bind,source=' + (Join-Path $absolute $OutputName) + ',target=/output'),
+        '--mount',('type=bind,source=' + $workspace + ',target=' + $WorkTarget))
+    return $arguments
+}
+
 function Restore-NativeZipTool {
     <# .SYNOPSIS Verifies a locked official ZIP and restores its executable without an installer. #>
     param([Parameter(Mandatory)]$Tool, [Parameter(Mandatory)][string]$Executable)
@@ -98,4 +138,4 @@ function Restore-NativeSource {
     $archive
 }
 
-Export-ModuleMember -Function Get-NativeInputRoot,Get-NativeFreeSpace,Restore-NativeZipTool,Restore-NativeSource
+Export-ModuleMember -Function Get-NativeInputRoot,Get-NativeFreeSpace,Get-NativeContainerHostIdentity,Get-NativeContainerRunArguments,Restore-NativeZipTool,Restore-NativeSource

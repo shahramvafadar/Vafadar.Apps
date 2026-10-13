@@ -34,13 +34,13 @@ $sources | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root '
 Copy-Item -LiteralPath $androidLockPath -Destination (Join-Path $root 'inputs/android.inputs.lock.json')
 $imageId = & docker image inspect $image --format '{{.Id}}'
 if ($LASTEXITCODE -ne 0) { throw 'Native host image identity unavailable.' }
-$mounts = @('--mount',('type=bind,source=' + (Join-Path $root 'inputs') + ',target=/inputs,readonly'),
-    '--mount',('type=bind,source=' + $PSScriptRoot + ',target=/recipe,readonly'),
-    '--mount',('type=bind,source=' + (Join-Path $root 'candidate') + ',target=/output'))
-& docker run --rm --network none @mounts $image python3 /recipe/Linux/verify-host.py /inputs/android.inputs.lock.json *> (Join-Path $root 'host-proof.json')
+$containerArguments = @(Get-NativeContainerRunArguments -RunRoot $root -OutputName candidate -WorkTarget '/home/nativebuild/work')
+& docker run @containerArguments $image python3 /recipe/Linux/verify-host.py /inputs/android.inputs.lock.json *> (Join-Path $root 'host-proof.json')
 if ($LASTEXITCODE -ne 0) { throw 'Restored Android build tools differ from reviewed versions.' }
-& docker run --rm --network none @mounts $image bash /recipe/Linux/build-android.sh *> (Join-Path $root 'build.log')
-if ($LASTEXITCODE -ne 0) { throw ('Native Android build failed; retain ' + (Join-Path $root 'build.log')) }
+& docker run @containerArguments $image bash /recipe/Linux/build-android.sh *> (Join-Path $root 'build.log')
+if ($LASTEXITCODE -ne 0) {
+    Get-Content -LiteralPath (Join-Path $root 'build.log') -Tail 20 | Write-Host
+    throw ('Native Android build failed; retain ' + (Join-Path $root 'build.log')) }
 $files = @()
 foreach ($abi in @('arm64-v8a','x86_64')) {
     $library = Join-Path $root ('candidate/' + $abi + '/libsqlcipher.so')

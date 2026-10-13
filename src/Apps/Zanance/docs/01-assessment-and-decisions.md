@@ -2386,3 +2386,16 @@ Strict main build results recorded in AT-188. No key/journal adapter, schema/UI/
 activation. Faultable ports are not real power-loss/restart proof. Native durable adapters and
 OD-04/OD-10 remain prerequisites; main databases are still plaintext.
 [Guide](../../../../docs/architecture/sqlcipher-generation-checkpoints.md).
+
+## D-190 - Native CI Linux bind ownership failure
+
+Read failed hosted job 115042317526 and artifact 11777219319 from run 38318994276. Reviewed host
+versions already matched, then build-android.sh failed writing /output/host-proof.json: Permission
+denied. Docker's fixed UID 10001 did not own runner bind output; Git tag warnings were not the
+terminating error. Shared mount arguments now use Linux host non-root UID/GID, fresh owned work
+binds at original recipe paths, read-only input/recipe and disabled network. Apply to both Android
+producer and upstream suite; print last failed build lines in job output. Six actual Docker Linux
+permission/mount/ownership-boundary cases pass; four PowerShell files parse and workflow YAML
+validates. Add the focused workspace regression before native builds in CI. No source/version,
+crypto/compiler flags, app code/UI/provider or APK changes. Previous 3,220 main tests/strict builds
+remain the unchanged baseline, not rerun. Full corrected hosted native run remains pending.

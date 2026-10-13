@@ -130,3 +130,11 @@ android-managed-composed-build.log,android-managed-own-process.log,android-manag
 android-managed-composed-result.json,android-managed-final-apk-proof.json,windows-composed-shared-schema.log,
 test-managed-android-d.log} and build/android-d/managed-android-proof.json. Initial negative runs/
 scoped stage files are preserved as evidence; successful report does not erase them.
+
+## Native CI failure diagnosis (D-190)
+
+Actual job/artifact review identifies output ownership refusal before any native compilation.
+Non-root host identity/fresh work binds correct this without weakening reviewed host/source/ELF
+or suite gates. Six focused Docker workspace regressions pass; previous upstream suites are not
+rerun locally. A complete corrected hosted build/suite result is still pending; local filesystem
+contract success is not a substitute for hosted/native/mobile/encryption acceptance.

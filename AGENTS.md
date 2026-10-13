@@ -1386,3 +1386,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   reopens the candidate with its key before exact cleanup; never fall back to plaintext.
 * Native effects must be idempotent after interruptions. Faultable port tests prove coordination,
   not actual key/filesystem/power-loss durability; require real adapters and restart proof before activation.
+
+## 122. Non-root Native CI bind ownership (D-190)
+
+* Linux native containers use the numeric non-root host UID/GID and one fresh owned bind-mounted
+  scratch directory at the recipe's original path. Keep source/recipe mounts read-only and network disabled.
+* Test real Linux permission refusal/matched ownership plus actual Android/upstream mount arguments.
+  Do not fix ownership by making output world-writable or running native compilation as root.
+* Preserve and surface failed native build logs. Workspace proof is separate from full hosted native
+  build/security suite results; do not repeat unchanged application tests/UI/APKs for a tooling-only fix.

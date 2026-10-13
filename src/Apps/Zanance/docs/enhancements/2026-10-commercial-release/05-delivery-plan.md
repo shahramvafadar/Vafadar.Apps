@@ -1248,3 +1248,9 @@ Ordered native-effect coordination and readback checks pass fifteen new/full 3,2
 substitute faultable-port tests for real native durability. Continue actual captured key/selector/
 cleanup adapters and process-restart proof after required policy choices; app encryption and final
 migration remain incomplete. Do not repeat unchanged UI/native matrices.
+
+## Native CI ownership failure correction (D-190)
+
+Fix the observed hosted Linux output refusal with shared non-root owner/work mounts and focused
+runtime regression. Keep all original native versions/hash/security checks. Push and check the
+new hosted run once; do not repeat application tests/builds/UI or unchanged upstream suites locally.

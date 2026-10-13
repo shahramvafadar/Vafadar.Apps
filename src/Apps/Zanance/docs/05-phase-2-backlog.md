@@ -1083,3 +1083,9 @@ or commercial activation. See the canonical commercial-release backlog and AT-18
 Fifteen new/full 3,220 cases pass for exclusive native-effect coordination, stored checkpoint
 readback and fail-closed selected-key behavior. Native adapters/real restart/key/recovery policy
 remain open. No UI, live encryption/provider/backup or commercial activation.
+
+## D-190 Native CI ownership correction
+
+Actual hosted Permission denied root cause corrected through Linux non-root host ownership and
+fresh work mounts. Six runtime workspace checks pass; corrected full hosted native run pending.
+Application/3,220-test/build/APK baseline unchanged. Canonical security/release gates remain open.

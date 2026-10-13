@@ -2878,3 +2878,11 @@ identity/regression, retired context and cancellation refusal. Fifteen added cas
 Native key/selector/cleanup adapters and real restart/fault/power-loss acceptance remain open.
 This infrastructure does not activate migration or encryption in the app; OD-04/OD-10 still gate
 final policy. Existing UI, provider and backup composition remain unchanged.
+
+### 31.103 Native CI ownership correction (D-190 / AT-189)
+
+Hosted failure is an actual Linux bind UID mismatch, not a cipher test failure. Shared non-root
+host identity/fresh work mounts fix that boundary without relaxing source/version/network guards.
+Six focused Docker permission/mount checks, parser and YAML validation pass. Application baseline
+3,220/strict builds and D-179 APK unchanged; no redundant app test/UI/APK run. Corrected hosted
+native build/security suite success is still pending; encryption integration remains incomplete.

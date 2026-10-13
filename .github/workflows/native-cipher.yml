@@ -26,6 +26,12 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
+      - name: Check non-root Linux workspace ownership
+        shell: pwsh
+        run: |
+          docker build --tag vafadar-native-sqlcipher-host:review-r30 ./eng/native/sqlcipher/Linux
+          if ($LASTEXITCODE -ne 0) { throw 'Reviewed native host restoration failed.' }
+          ./eng/native/sqlcipher/Test-ContainerWorkspace.ps1
       - name: Build two clean Android native candidates
         shell: pwsh
         run: |

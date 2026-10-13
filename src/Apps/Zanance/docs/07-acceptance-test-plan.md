@@ -1696,3 +1696,12 @@ power-loss checks remain open. No visible UI or app activation requires a repeat
 
 D-189 strict main Windows and Android builds pass with zero errors and warnings.
 Evidence: artifacts/native-sqlcipher/d189-{coordinator-tests,full-tests,windows-build,android-build}.log.
+
+## AT-189 - Native CI Linux workspace ownership
+
+Six real Docker cases: UID 10001 cannot write Linux fixture owned by 1001; matched non-root UID
+can write work/output while recipe stays read-only; actual shared Android and upstream mount
+arguments allow their work/output but refuse recipe/input writes; existing and nested workspace
+requests are rejected. Four modified PowerShell sources parse and workflow YAML validates. Full
+hosted native execution remains pending. App tests/builds/UI/APK are unchanged and not repeated.
+Evidence: artifacts/native-sqlcipher/d190-workspace-check.log and failed hosted artifact 11777219319.

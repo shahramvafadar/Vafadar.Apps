@@ -34,13 +34,13 @@ $sources | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root '
 Copy-Item -LiteralPath $androidLockPath -Destination (Join-Path $root 'inputs/android.inputs.lock.json')
 $imageId = & docker image inspect $image --format '{{.Id}}'
 if ($LASTEXITCODE -ne 0) { throw 'Native host image identity unavailable.' }
-$mounts = @('--mount',('type=bind,source=' + (Join-Path $root 'inputs') + ',target=/inputs,readonly'),
-    '--mount',('type=bind,source=' + $PSScriptRoot + ',target=/recipe,readonly'),
-    '--mount',('type=bind,source=' + (Join-Path $root 'evidence') + ',target=/output'))
-& docker run --rm --network none @mounts $image python3 /recipe/Linux/verify-host.py /inputs/android.inputs.lock.json *> (Join-Path $root 'host-proof.json')
+$containerArguments = @(Get-NativeContainerRunArguments -RunRoot $root -OutputName evidence -WorkTarget '/home/nativebuild/upstream')
+& docker run @containerArguments $image python3 /recipe/Linux/verify-host.py /inputs/android.inputs.lock.json *> (Join-Path $root 'host-proof.json')
 if ($LASTEXITCODE -ne 0) { throw 'Restored Android build tools differ from reviewed versions.' }
-& docker run --rm --network none @mounts $image bash /recipe/Linux/test-sqlcipher.sh *> (Join-Path $root 'build.log')
-if ($LASTEXITCODE -ne 0) { throw ('Upstream SQLCipher failed; retain ' + (Join-Path $root 'build.log')) }
+& docker run @containerArguments $image bash /recipe/Linux/test-sqlcipher.sh *> (Join-Path $root 'build.log')
+if ($LASTEXITCODE -ne 0) {
+    Get-Content -LiteralPath (Join-Path $root 'build.log') -Tail 20 | Write-Host
+    throw ('Upstream SQLCipher failed; retain ' + (Join-Path $root 'build.log')) }
 $proofPath = Join-Path $root 'evidence/upstream-proof.json'
 $proof = Get-Content -LiteralPath $proofPath -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($proof.errors -ne 0 -or $proof.tests -le 0 -or -not $proof.reviewedNativeIdentityMatched) {

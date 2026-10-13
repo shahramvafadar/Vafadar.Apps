@@ -87,3 +87,17 @@ hosted execution and same-candidate runtime/packaging plus Windows/iOS matrix re
 Separate signed Release AOT/trimmed Android probe passes the shared actual original-schema
 32-migration/compiled-model/key/tamper proof on x64. Main app unchanged/plaintext; see
 [security validation](sqlcipher-security-validation.md) for exact artifacts and remaining gates.
+
+## Hosted Linux bind ownership (D-190)
+
+Run 38318994276 failed before compilation: /output/host-proof.json was not writable by fixed
+container UID 10001. Its host-proof confirms reviewed versions; do not replace source/tool pins.
+Get-NativeContainerRunArguments now shares host non-root UID/GID on Linux and binds fresh owned
+work at /home/nativebuild/work (Android) or /home/nativebuild/upstream (stock suite). Docker Desktop
+keeps its existing nativebuild user. Sources/recipe remain read-only, network disabled; no chmod
+777 or root compilation. Failed build tails are printed while original files remain artifacts.
+
+Test-ContainerWorkspace.ps1 uses one freshly named, exactly removed Linux fixture volume for
+actual negative/positive permission checks, plus both original argument builders and ownership
+boundary refusals. All six pass locally; it now runs in hosted CI before compilation. No native
+version/flags or app/API/UI/APK change. Full corrected hosted native result remains pending.

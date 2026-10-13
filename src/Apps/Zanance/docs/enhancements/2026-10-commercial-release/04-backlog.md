@@ -1470,3 +1470,10 @@ Final coordinator checks actual checkpoint/readback, captured context, candidate
 selection/cleanup and refuses plaintext fallback on missing key. Fifteen cases/full 3,220 pass.
 SEC-05 remains in progress: native durable key/selector/cleanup adapters, real restart/fault tests
 and owner OD-04/OD-10 policy are not accepted by faultable-port tests. No app provider activation.
+
+## Native CI ownership correction (D-190)
+
+Hosted build stopped before compilation: fixed native UID lacked runner output permission. Shared
+host non-root identity and fresh work bind correct Android/upstream mounts; six focused Docker
+checks/parser/YAML pass. Corrected hosted native suite remains pending. No unchanged app tests,
+UI or APK regenerated; final encryption/platform/recovery acceptance remains open.

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Native CI Linux workspace access (2026-10-13, D-190)
+
+- Correct native build output/work ownership on Linux runners while keeping compilation non-root.
+- Surface the actual failure tail in job logs; application behavior and APK are unchanged.
+
 ### Development - Resumable migration coordination (2026-10-13, D-189)
 
 - Prepare checkpoint readback and keyed candidate reopen before obsolete plaintext cleanup.
