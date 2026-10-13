@@ -80,6 +80,14 @@ public sealed class SqliteProfileRestoreHistory
     /// <summary>Matches the private reference store captured by the receiver, without reading any key.</summary>
     internal bool IsSameStore(SqliteProfileRestoreHistory other) => path == other.path && initial == other.initial;
 
+    /// <summary>Requires the complete initial key context recorded by the stable identity catalogue.</summary>
+    internal void RequireInitialBinding(DatabaseKeyBinding binding)
+    {
+        RequireBinding(binding);
+        if (initial.GenerationId != binding.GenerationId)
+            throw new InvalidOperationException("Restore ancestry starts from another initial generation.");
+    }
+
     /// <summary>Mirrors actual selected journal state after receiver key/file verification; this is not preference durability or package completion.</summary>
     internal async Task RecordSelectedAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal, CancellationToken ct)
     {

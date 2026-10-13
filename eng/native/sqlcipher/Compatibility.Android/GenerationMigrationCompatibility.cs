@@ -151,7 +151,14 @@ internal static class GenerationMigrationCompatibility
             await SqlCipherPortableSnapshot.WriteAsync(source, portable, 16 * 1024 * 1024);
         }
         portable.Position = 0;
-        var binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        DatabaseProfileIdentity? packageIdentity = null;
+        if (package)
+        {
+            var identities = new SqliteDatabaseIdentityCatalogue(Path.Combine(folder, "identities.sqlite"), () => { });
+            await identities.CreateNewAsync([""]);
+            packageIdentity = (await identities.ReadAsync()).Single(row => row.LegacyProfileId == "");
+        }
+        var binding = new DatabaseKeyBinding(packageIdentity?.ProfileId ?? Guid.NewGuid(), packageIdentity?.InstallationId ?? Guid.NewGuid(), Guid.NewGuid());
         var keys = new AndroidGenerationKeyStore(folder);
         var candidate = Path.Combine(folder, "fictitious-restored.cipher.db");
         var upgraded = false;
@@ -186,7 +193,7 @@ internal static class GenerationMigrationCompatibility
             throw new IOException("Restored staging leaked its plain marker.");
         if (select)
         {
-            var oldBinding = new DatabaseKeyBinding(binding.ProfileId, binding.InstallationId, Guid.NewGuid());
+            var oldBinding = new DatabaseKeyBinding(binding.ProfileId, binding.InstallationId, packageIdentity?.CandidateGeneration ?? Guid.NewGuid());
             var currentPath = Path.Combine(folder, "fictitious-current.cipher.db");
             portable.Position = 0;
             await SqlCipherRestoreStaging.PrepareAsync(portable, currentPath, oldBinding, keys, new AndroidGenerationFileDurability(folder),
@@ -337,8 +344,16 @@ internal static class GenerationMigrationCompatibility
                 _ => throw new IOException("Cold retained owner must not invoke an old publication callback."),
                 applied ? (_ => throw new IOException("Completed replay must not persist old preferences.")) : null);
             using var maintenance = await location.Access.AcquireExclusiveAsync();
-            using var restored = await SqlCipherProfileGeneration.OpenRestoredAsync(location, history, receiver, keys,
-                maintenance, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, "4.19.0");
+            var identities = new SqliteDatabaseIdentityCatalogue(Path.Combine(folder, "identities.sqlite"), maintenance.Validate);
+            using var restored = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "",
+                Path.Combine(folder, "fictitious-current.cipher.db"), history,
+                reference =>
+                {
+                    if (reference.CandidateGeneration != binding.GenerationId || reference.OriginalGeneration != captured.OriginalGeneration)
+                        throw new IOException("Current resolver changed retained restore reference.");
+                    return receiver;
+                }, keys, new AndroidGenerationFileDurability(folder), maintenance,
+                () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
             if (settings.Get(PackagePreferenceKeys[0]) != (applied ? "fr" : "en") || settings.Get(PackagePreferenceKeys[1]) != (applied ? "en-GB" : "de-DE"))
                 throw new IOException("Retained owner preceded complete preference replay.");
             if (restored.Binding != binding || restored.Path != candidate) throw new IOException("Restored owner selected another generation.");

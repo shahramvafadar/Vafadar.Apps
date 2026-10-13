@@ -1221,3 +1221,17 @@ retained key owner. The public restore entry retains its existing behavior. Auto
 startup routing, main provider adoption, early staging reconciliation, optional recovery and retained
 file/key lifecycle remain open. Main application storage remains plaintext. This change is not a
 claim of complete encryption, device/iOS/OAuth or release acceptance.
+### D-212 — Resolve the current protected generation from stable ancestry
+
+OpenCurrentAsync reads the actual existing installation/profile catalogue and requires history's
+complete initial key binding. Missing/corrupt/foreign history never implies initial selection and
+cannot manufacture migration state. Row zero routes through actual initial migration/reopen;
+any recorded restore intent routes through the captured latest receiver and retained restored owner.
+Receiver target/parent/private directory and exact history are validated, including unresolved intents.
+No enumeration, latest-file guess, key replacement or initial/plaintext fallback is introduced.
+
+The host explicitly initializes history only after verified initial migration; interrupted bootstrap
+still fails closed for reconciliation. This automatic composition is not yet registered in the main
+startup/provider/profile lifecycle. Native producer acceptance, all-profile live adoption, recovery
+and retained-file/key policy, early staging reconciliation and final sensitive OS exclusion remain.
+No additional owner decision or commercial activation follows; main storage remains plaintext.

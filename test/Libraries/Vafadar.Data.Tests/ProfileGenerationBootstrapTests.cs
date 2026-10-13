@@ -54,6 +54,23 @@ public sealed class ProfileGenerationBootstrapTests
 
     private static LocalDatabaseLocation<TestDbContext> Location(TestDatabase db) => db.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
 
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-211")]
+    public async Task Current_resolution_never_treats_missing_or_foreign_history_as_initial_selection(bool foreignInitial)
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var identities = new SqliteDatabaseIdentityCatalogue(db.PathOf("identities.sqlite"), owner.Validate);
+        await identities.CreateNewAsync([""], Ct); var identity = Assert.Single(await identities.ReadAsync(Ct));
+        var initial = foreignInitial ? new DatabaseKeyBinding(identity.ProfileId, identity.InstallationId, Guid.NewGuid()) : identity.InitialCandidateKey;
+        var history = new SqliteProfileRestoreHistory(db.PathOf("restore-history.sqlite"), initial, owner.Validate);
+        if (foreignInitial) await history.CreateNewAsync(Ct);
+        async Task Open() => _ = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", location.Path, history,
+            _ => throw new InvalidOperationException("Unexpected receiver construction."), new NoKeys(), new NoDurability(), owner, () => { },
+            1024 * 1024, "4.19.0", Ct);
+        if (foreignInitial) await Assert.ThrowsAsync<InvalidOperationException>(Open);
+        else await Assert.ThrowsAsync<IOException>(Open);
+        Assert.True(File.Exists(location.Path)); Assert.False(File.Exists(location.Path + ".generation.sqlite"));
+    }
+
     [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-210")]
     public async Task Restored_owner_rejects_foreign_history_or_installation_before_native_effects(bool foreignInstallation)
     {

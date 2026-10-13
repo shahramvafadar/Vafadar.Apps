@@ -3262,3 +3262,36 @@ run bcd5d26ed6ad4da48fe20a7476f0854d. Signature/reviewed ABI identities verified
 package uninstalled. Test outputs cleaned after terminal builds. No unchanged native producer suite,
 UI matrix or main phone APK was repeated. Main automatic startup routing/provider activation and
 recovery/retention remain open; this is not complete application encryption or physical-device acceptance.
+### D-212 — Resolve the current protected generation from stable ancestry
+
+OpenCurrentAsync reads the actual existing installation/profile catalogue and requires history's
+complete initial key binding. Missing/corrupt/foreign history never implies initial selection and
+cannot manufacture migration state. Row zero routes through actual initial migration/reopen;
+any recorded restore intent routes through the captured latest receiver and retained restored owner.
+Receiver target/parent/private directory and exact history are validated, including unresolved intents.
+No enumeration, latest-file guess, key replacement or initial/plaintext fallback is introduced.
+
+The host explicitly initializes history only after verified initial migration; interrupted bootstrap
+still fails closed for reconciliation. This automatic composition is not yet registered in the main
+startup/provider/profile lifecycle. Native producer acceptance, all-profile live adoption, recovery
+and retained-file/key policy, early staging reconciliation and final sensitive OS exclusion remain.
+No additional owner decision or commercial activation follows; main storage remains plaintext.
+D-212 managed/build evidence: two new guards reject missing and foreign-initial history without
+creating a migration journal or invoking native key work. All 3,320 tests pass (zero failures/skips,
+3m02s). Strict Windows 29.55s, Android 25.64s and independent Release 77.38s builds have no
+warnings/errors. Test outputs cleaned only after all builds/tests completed. Initial native routing
+uses actual retained catalogue/history and an existing-only key port whose Prepare throws; cold
+reopen preserves the saved account and financial packets and refuses access after owner disposal.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-60a8738158fb4efcb3de7a38de9ee1b6.json,
+run 847826db8df04477b49f168da0e073b4. Creation observation expired while PID 28905 remained live;
+its same completed three-success result was read, then only recorded cold continuation ran.
+No initial fixture, identity or key was recreated because of observer expiry.
+D-212 restored-routing evidence: actual stable identity bootstrap supplies the initial key context,
+then the current resolver reads retained history after partial-write interruption and after Applied
+cold reopen. Captured parent/target assertions and actual retained factory money/device-state checks
+pass; later preference edits are retained and no obsolete publication/persistence callback executes.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-26a85b00255a4e55b4bf81f4acb93939.json,
+run 13141ec1f63e4c078687bea65746dbc1. Signed APK and reviewed packaged ABI identities verified;
+independent package uninstalled. Both current-generation branches now have actual original-model
+cold process evidence; main startup/provider/profile registration and recovery/retention are still open.
+No physical-device, iOS or product-release acceptance is inferred.

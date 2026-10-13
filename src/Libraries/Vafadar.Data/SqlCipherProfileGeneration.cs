@@ -4,8 +4,8 @@ using Microsoft.Data.Sqlite;
 namespace Vafadar.Data;
 
 /// <summary>Owns one verified protected generation and its retained mutable device key.</summary>
-/// <remarks>Hosts retain this owner while published, drain contexts before disposal and separately resolve later
-/// restored generations. Native provider, all-profile startup, PIN/recovery UI and retained-file policy are not activated here.</remarks>
+/// <remarks>Hosts retain this owner while published and drain contexts before disposal. Existing history selects
+/// initial or restored composition. Native provider, all-profile startup, recovery UI and retained-file policy are not activated here.</remarks>
 public sealed class SqlCipherProfileGeneration : IDisposable
 {
     private readonly Lock sync = new();
@@ -21,6 +21,39 @@ public sealed class SqlCipherProfileGeneration : IDisposable
     public string CipherVersion { get; }
     /// <summary>The existing device key context; no key bytes are exposed.</summary>
     public DatabaseKeyBinding Binding { get; }
+
+    /// <summary>Resolves existing stable identities and history before opening the authoritative current generation.</summary>
+    /// <remarks>Bootstrap must explicitly create the initial history after verifying initial migration.
+    /// A missing history never implies initial selection. The receiver builder supplies captured native effects,
+    /// not authority to choose a target: its identity is checked against the latest committed intent.</remarks>
+    public static async Task<SqlCipherProfileGeneration> OpenCurrentAsync<TContext>(LocalDatabaseLocation<TContext> location,
+        SqliteDatabaseIdentityCatalogue identities, string legacyProfile, string originalPath, SqliteProfileRestoreHistory history,
+        Func<ProfileRestoreReference, SqlCipherPackageRestoreReceiver> createReceiver, IDatabaseGenerationKeyStore keys,
+        IDatabaseGenerationFileDurability durability, DatabaseAccessGate.ExclusiveLease owner, Action validateAccess,
+        int maximumBytes, string cipherVersion, CancellationToken ct = default) where TContext : LocalDbContext
+    {
+        ArgumentNullException.ThrowIfNull(location); ArgumentNullException.ThrowIfNull(identities);
+        ArgumentNullException.ThrowIfNull(history); ArgumentNullException.ThrowIfNull(createReceiver);
+        ArgumentNullException.ThrowIfNull(keys); ArgumentNullException.ThrowIfNull(durability);
+        ArgumentNullException.ThrowIfNull(owner); ArgumentNullException.ThrowIfNull(validateAccess);
+        ArgumentException.ThrowIfNullOrWhiteSpace(originalPath); ArgumentException.ThrowIfNullOrWhiteSpace(cipherVersion);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
+        void Validate() => Check(location, owner, validateAccess, ct);
+        Validate();
+        if (!System.IO.Path.IsPathFullyQualified(originalPath)) throw new ArgumentException("Current generation requires an absolute original identity path.");
+        var identity = (await identities.ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacyProfile);
+        Validate(); history.RequireInitialBinding(identity.InitialCandidateKey);
+        var latest = (await history.ReadAsync(ct).ConfigureAwait(false))[^1]; Validate();
+        if (latest.Sequence == 0)
+            return await OpenInitialAsync(location, identities, legacyProfile, originalPath, keys, durability, owner,
+                validateAccess, maximumBytes, cipherVersion, ct).ConfigureAwait(false);
+        var receiver = createReceiver(latest) ?? throw new InvalidOperationException("Current restore receiver is missing.");
+        Validate();
+        if (receiver.Captured.OriginalGeneration != latest.OriginalGeneration || receiver.Captured.CandidateGeneration != latest.CandidateGeneration ||
+            System.IO.Path.GetDirectoryName(receiver.CandidatePath) != System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(originalPath)))
+            throw new InvalidOperationException("Current restore receiver differs from the recorded target or private directory.");
+        return await OpenRestoredAsync(location, history, receiver, keys, owner, validateAccess, cipherVersion, ct).ConfigureAwait(false);
+    }
 
     /// <summary>Explicitly creates a first-migration journal only while the original is plaintext and no candidate/rollback exists.</summary>
     public static async Task InitializeJournalAsync<TContext>(LocalDatabaseLocation<TContext> location,

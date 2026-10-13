@@ -30,9 +30,16 @@ internal static class InitialGenerationCompatibility
             }
             var actualKeys = new AndroidGenerationKeyStore(folder);
             IDatabaseGenerationKeyStore keys = create ? actualKeys : new ExistingOnlyKeys(actualKeys);
-            using var generation = await SqlCipherProfileGeneration.OpenInitialAsync(location, identities, "", original,
-                keys, new AndroidGenerationFileDurability(folder), owner,
-                () => { if (!Directory.Exists(folder)) throw new IOException("Retired fictitious profile."); }, 16 * 1024 * 1024, "4.19.0");
+            var identity = (await identities.ReadAsync()).Single(row => row.LegacyProfileId == "");
+            var history = new SqliteProfileRestoreHistory(Path.Combine(folder, "restore-history.sqlite"), identity.InitialCandidateKey, owner.Validate);
+            void ValidateProfile() { if (!Directory.Exists(folder)) throw new IOException("Retired fictitious profile."); }
+            using var generation = create
+                ? await SqlCipherProfileGeneration.OpenInitialAsync(location, identities, "", original, keys,
+                    new AndroidGenerationFileDurability(folder), owner, ValidateProfile, 16 * 1024 * 1024, "4.19.0")
+                : await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", original, history,
+                    _ => throw new IOException("Initial history must not construct a restore receiver."), keys,
+                    new AndroidGenerationFileDurability(folder), owner, ValidateProfile, 16 * 1024 * 1024, "4.19.0");
+            if (create) await history.CreateNewAsync();
             generation.Publish(location, owner); owner.Dispose();
             var factory = services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
             await using (var db = await factory.CreateDbContextAsync())

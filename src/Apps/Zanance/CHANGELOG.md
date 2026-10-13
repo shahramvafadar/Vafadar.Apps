@@ -1377,3 +1377,7 @@ Prepared real durable Android preference writes for protected recovery. Database
 ### D-211 - Restored database lifetime
 
 Prepared cold startup ownership for restored encrypted data without replaying obsolete publication callbacks. Main encryption activation remains pending.
+
+### D-212 - Current encrypted generation resolution
+
+Prepared stable startup selection between initial data and the latest restored data, without silent fallback. Main encryption activation remains pending.
