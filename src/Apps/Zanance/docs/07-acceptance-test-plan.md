@@ -1849,3 +1849,15 @@ D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output 
 strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
 resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.
+
+### AT-200 — Validated package receiver dispatch (D-201)
+
+Managed service tests pass complete two-source dispatch, checksum rejection before receiver access,
+failure without legacy fallback, clearing borrowed buffers on success/failure, gate reuse, normal
+DI resolution, and absent/unknown source delivery. These are real BackupService tests, not native
+rollback/crash acceptance. Main receiver and full package restart/rollback acceptance remain open.
+
+D-201 verification: 42 backup tests and the complete 3,282-test suite pass with zero failures/skips.
+Strict Windows and Android builds pass with zero warnings/errors. Logs: artifacts/native-sqlcipher/
+d201-{backup-tests,full-tests,main-windows,main-android,test-clean}.log. No changed screens or native
+code: no UI/unchanged native matrix rerun and no phone acceptance claim.

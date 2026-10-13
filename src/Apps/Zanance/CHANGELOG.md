@@ -1324,3 +1324,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Added complete schema and typed-content verification for future encrypted migration staging.
 - Live databases and backup composition remain unchanged; encryption is not enabled yet.
+
+### D-201 — Restore integration preparation
+
+- Added validated whole-package restore dispatch for the upcoming protected restore receiver.
+  Main-app recovery behavior and database encryption are not activated by this change.

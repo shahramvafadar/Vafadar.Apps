@@ -1560,3 +1560,7 @@ keyed reopen and same-run selected restart. No key replacement/plaintext fallbac
 Six guards/focused 114 and actual native different old/new packets after external termination pass.
 Outer package transaction/source rollback/catalogue publication/safety/key retention remain; main
 provider/startup/all-profile/recovery/OS policy not active. SEC-08 is not complete from this primitive.
+
+D-201: actual BackupService now has exclusive optional validated package dispatch with no legacy
+fallback and scoped decoded buffers. SEC-01/SEC-07 remain incomplete: register and implement the
+protected complete-package receiver, durable all-source recovery and final profile publication.

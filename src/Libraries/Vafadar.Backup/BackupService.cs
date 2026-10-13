@@ -1,4 +1,6 @@
 using System.Globalization;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using Vafadar.Backup.Security;
 using Vafadar.Core.Hosting;
 using Vafadar.Core.Settings;
@@ -24,6 +26,7 @@ public sealed class BackupService : IBackupService
     private readonly ISettingsStore _settings;
     private readonly TimeProvider _time;
     private readonly BackupOptions _options;
+    private readonly IBackupPackageRestoreReceiver? _restoreReceiver;
     private readonly SemaphoreSlim _gate = new(1, 1);
 
     /// <summary>Creates the service.</summary>
@@ -32,8 +35,9 @@ public sealed class BackupService : IBackupService
         IAppEnvironment app,
         ISettingsStore settings,
         TimeProvider time,
-        BackupOptions options)
-        : this(sources, [], app, settings, time, options)
+        BackupOptions options,
+        IBackupPackageRestoreReceiver? restoreReceiver = null)
+        : this(sources, [], app, settings, time, options, restoreReceiver)
     {
     }
 
@@ -44,7 +48,8 @@ public sealed class BackupService : IBackupService
         IAppEnvironment app,
         ISettingsStore settings,
         TimeProvider time,
-        BackupOptions options)
+        BackupOptions options,
+        IBackupPackageRestoreReceiver? restoreReceiver = null)
     {
         ArgumentNullException.ThrowIfNull(sources);
         ArgumentNullException.ThrowIfNull(summaries);
@@ -59,6 +64,7 @@ public sealed class BackupService : IBackupService
         _settings = settings;
         _time = time;
         _options = options;
+        _restoreReceiver = restoreReceiver;
     }
 
     /// <inheritdoc />
@@ -212,24 +218,38 @@ public sealed class BackupService : IBackupService
         try
         {
             var (manifest, entries) = await OpenAsync(package, password, cancellationToken);
-
-            // Everything is validated; only now is existing data replaced. Sources without an entry (e.g. added in a
-            // later app version than the backup) keep their current data.
-            await Task.Run(
-                async () =>
+            try
+            {
+                if (_restoreReceiver is not null)
                 {
-                    foreach (var source in _sources)
+                    // D-201: whole-package ownership is exclusive. A failed receiver must never trigger legacy writes.
+                    var borrowed = new ReadOnlyDictionary<string, ReadOnlyMemory<byte>>(
+                        entries.ToDictionary(entry => entry.Key, entry => (ReadOnlyMemory<byte>)entry.Value, StringComparer.Ordinal));
+                    await Task.Run(() => _restoreReceiver.RestoreAsync(manifest, borrowed, cancellationToken), cancellationToken);
+                    return manifest;
+                }
+                // Everything is validated; only now is existing data replaced. Sources without an entry (e.g. added in a
+                // later app version than the backup) keep their current data.
+                await Task.Run(
+                    async () =>
                     {
-                        if (entries.TryGetValue(source.Name, out var content))
+                        foreach (var source in _sources)
                         {
-                            using var stream = new MemoryStream(content, writable: false);
-                            await source.RestoreAsync(stream, cancellationToken);
+                            if (entries.TryGetValue(source.Name, out var content))
+                            {
+                                using var stream = new MemoryStream(content, writable: false);
+                                await source.RestoreAsync(stream, cancellationToken);
+                            }
                         }
-                    }
-                },
-                cancellationToken);
+                    },
+                    cancellationToken);
 
-            return manifest;
+                return manifest;
+            }
+            finally
+            {
+                foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content);
+            }
         }
         finally
         {

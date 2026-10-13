@@ -2662,3 +2662,23 @@ D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output 
 strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
 resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.
+
+## D-201 — Validated whole-package restore ownership
+
+**Decision.** Add an optional whole-package receiver to the existing BackupService rather than
+calling the database selector inside its sequential source loop. Both constructors and normal DI
+resolve the receiver. It receives every validated entry under the existing backup gate and worker
+thread; failure cannot trigger legacy restores. Decoded buffers are cleared after completion/failure.
+
+**Why.** Database selection cannot certify complete restore when another source such as portable settings
+may still fail. Zanance attachment bytes remain inside the database source. The actual service must offer one exclusive owner for staging/recovery/publication.
+
+**Verification boundary.** Real package/manifest/checksum service tests cover complete dispatch,
+no fallback, borrowed-buffer clearing, corrupt-package rejection, missing/unknown source policy
+and normal dependency injection. No receiver is yet registered in the main app. Native transaction,
+full interrupted package acceptance, application encryption and device acceptance remain open.
+
+D-201 verification: 42 backup tests and the complete 3,282-test suite pass with zero failures/skips.
+Strict Windows and Android builds pass with zero warnings/errors. Logs: artifacts/native-sqlcipher/
+d201-{backup-tests,full-tests,main-windows,main-android,test-clean}.log. No changed screens or native
+code: no UI/unchanged native matrix rerun and no phone acceptance claim.

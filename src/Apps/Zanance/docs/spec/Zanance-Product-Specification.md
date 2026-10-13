@@ -3007,3 +3007,15 @@ D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output 
 strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
 resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.
+
+### 31.114 Validated whole-package restore dispatch (D-201)
+
+The actual BackupService supports an optional receiver for all validated package entries, instead
+of individual source writes. Failure does not fall back; borrowed decoded buffers are cleared.
+The receiver is not registered in the main app. Full protected package transaction, startup/profile
+integration and final encryption acceptance remain open. No UI/native/provider/schema changes.
+
+D-201 verification: 42 backup tests and the complete 3,282-test suite pass with zero failures/skips.
+Strict Windows and Android builds pass with zero warnings/errors. Logs: artifacts/native-sqlcipher/
+d201-{backup-tests,full-tests,main-windows,main-android,test-clean}.log. No changed screens or native
+code: no UI/unchanged native matrix rerun and no phone acceptance claim.

@@ -1495,3 +1495,11 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   this primitive does not restore preferences, publish contexts, prune keys or certify full recovery.
 * Observation timeout is not process failure. Resume the same live barrier; fix diagnosed Mono
   initialization before restarting only the stuck resume phase, never re-create its existing candidate.
+
+## 133. Whole-package restore dispatch (D-201)
+
+* An explicitly registered package receiver exclusively owns every validated entry under the backup gate.
+  Receiver failure never falls back to per-source writes. Unknown entries stay available for receiver policy;
+  absent entries do not imply deletion. No receiver retains borrowed portable buffers after completion.
+* The service gate is not a global application lease. Receiver registration alone provides no durable
+  package transaction; native staging, rollback, journal reconciliation and publication remain required.

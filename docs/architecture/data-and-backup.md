@@ -940,3 +940,23 @@ D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output 
 strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
 d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
 resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.
+
+### Whole-package dispatch (D-201)
+
+BackupService accepts an optional IBackupPackageRestoreReceiver through both public constructors and
+normal dependency injection. After password/application/version/checksum validation, it passes all
+entries in one read-only dictionary under the existing backup/restore semaphore on the worker pool.
+The receiver replaces the legacy source loop completely; any failure propagates without fallback.
+The dictionary includes unknown entries and excludes absent entries. Receivers own policy and must
+retain existing data for absent sources. Borrowed decoded buffers are cleared on success/failure;
+callers must stage into owned protected storage before returning. The caller's package is not cleared.
+
+No receiver is registered in Zanance yet. This dispatch is the actual integration point for the
+D-199/D-200 database receiver plus portable preferences. Zanance attachments are database rows, not a separate source. It does not itself provide atomicity,
+crash recovery, a global application lease, safety-copy protection or encrypted main databases.
+No native/provider/schema/UI change and no new device evidence are claimed.
+
+D-201 verification: 42 backup tests and the complete 3,282-test suite pass with zero failures/skips.
+Strict Windows and Android builds pass with zero warnings/errors. Logs: artifacts/native-sqlcipher/
+d201-{backup-tests,full-tests,main-windows,main-android,test-clean}.log. No changed screens or native
+code: no UI/unchanged native matrix rerun and no phone acceptance claim.

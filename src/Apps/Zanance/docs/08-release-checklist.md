@@ -986,3 +986,7 @@ Actual encrypted rollback/distinct restored financial packets survive external t
 same-run selected resume in independent signed Release Android. Timeout did not re-create input;
 D-44 resume omission diagnosed/fixed. No package Completed/source rollback/retention/all-profile/
 provider/main recovery/OS policy or physical/iOS/full-crash release acceptance.
+
+D-201 whole-package receiver dispatch is available but unregistered in the app. Do not treat this
+as durable all-source restore or encrypted database activation; native package journal/recovery,
+portable-preference publication and application lease acceptance remain mandatory.

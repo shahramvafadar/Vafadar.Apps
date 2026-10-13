@@ -22,3 +22,9 @@ var manifest = await backups.RestoreAsync(storage, list[0], userPassword, cancel
 ```
 
 Requires `IAppEnvironment` and `ISettingsStore` (provided by `UseVafadar()` in MAUI apps).
+
+An optional `IBackupPackageRestoreReceiver` registration replaces individual source restore calls
+with one whole-package dispatch after validation. Failures never fall back to source writes.
+The receiver owns staging, durable recovery and complete publication, not the service semaphore.
+Decoded entry buffers are borrowed only for the awaited call and cleared afterwards.
+Unknown entries remain available; absent sources are not deletion instructions.

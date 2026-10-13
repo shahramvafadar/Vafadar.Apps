@@ -1150,3 +1150,7 @@ provider/all-profile/recovery/OS policy composition and platform acceptance rema
 Actual current/restored selection and existing-key rollback verification/restart pass in independent
 Release Android. Preserve original and Selected for outer package transaction. No complete dispatch/
 source rollback/retention/provider/main/all-profile/recovery/OS policy acceptance.
+
+D-201 connects an optional complete-package receiver to the actual BackupService after validation,
+without per-source fallback. Main registration, durable package staging/publication and SEC-01
+acceptance remain incomplete; this is not a new released restore feature.
