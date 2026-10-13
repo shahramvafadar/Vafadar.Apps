@@ -22,7 +22,33 @@ public sealed class SqliteDatabaseIdentityCatalogue
     }
 
     /// <summary>Explicitly bootstraps one new installation and known legacy profiles, including the empty-id main profile.</summary>
-    public async Task CreateNewAsync(IReadOnlyList<string> legacyProfiles, CancellationToken ct = default)
+    public Task CreateNewAsync(IReadOnlyList<string> legacyProfiles, CancellationToken ct = default) =>
+        PublishNewAsync(legacyProfiles, null, ct);
+
+    /// <summary>Creates or resumes unpublished identity metadata with actual platform file/directory synchronization.</summary>
+    public Task CreateNewAsync(IReadOnlyList<string> legacyProfiles, IDatabaseGenerationFileDurability durability, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(durability); return PublishNewAsync(legacyProfiles, durability, ct);
+    }
+
+    private async Task PublishNewAsync(IReadOnlyList<string> legacyProfiles, IDatabaseGenerationFileDurability? durability, CancellationToken ct)
+    {
+        ArgumentNullException.ThrowIfNull(legacyProfiles);
+        foreach (var legacy in legacyProfiles) ValidateLegacy(legacy);
+        if (!legacyProfiles.Contains("", StringComparer.Ordinal) || legacyProfiles.Distinct(StringComparer.Ordinal).Count() != legacyProfiles.Count)
+            throw new ArgumentException("Initial identities require exactly one main and unique known profiles.");
+        // A completed staged catalogue supplies its original random identities. Never generate replacements on resume.
+        await SqliteMetadataPublication.CreateAsync(path,
+            stage => new SqliteDatabaseIdentityCatalogue(stage, validate).CreateCoreAsync(legacyProfiles, ct),
+            async target =>
+            {
+                var rows = await new SqliteDatabaseIdentityCatalogue(target, validate).ReadAsync(ct).ConfigureAwait(false);
+                if (!rows.Select(row => row.LegacyProfileId).Order(StringComparer.Ordinal).SequenceEqual(legacyProfiles.Order(StringComparer.Ordinal)))
+                    throw new IOException("Staged identity catalogue belongs to another bootstrap.");
+            }, validate, durability, ct).ConfigureAwait(false);
+    }
+
+    private async Task CreateCoreAsync(IReadOnlyList<string> legacyProfiles, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(legacyProfiles); Check(ct);
         foreach (var legacy in legacyProfiles) ValidateLegacy(legacy);

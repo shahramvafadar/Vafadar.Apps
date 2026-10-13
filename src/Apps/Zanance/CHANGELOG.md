@@ -1393,3 +1393,7 @@ Prepared verified key ownership through accepted and refused profile transitions
 ### D-215 - Initial migration restart
 
 Prepared initial ancestry before encryption work so a restart can complete the captured migration without recreating identities. Main encryption activation remains pending.
+
+### D-216 - Identity bootstrap publication
+
+Prepared restartable identity publication from verified staging, without exposing partial metadata or replacing captured identities. Main encryption activation remains pending.

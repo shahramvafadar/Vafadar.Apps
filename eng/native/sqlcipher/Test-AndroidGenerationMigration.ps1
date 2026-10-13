@@ -53,7 +53,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create')) { 300 } else { 100 }
+    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial','identity-staged') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -61,7 +61,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
             & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -e ($folder + '/' + $name)
             if ($LASTEXITCODE -eq 0) { $report = [pscustomobject]@{ ActualCandidateCreationObserved = $true }; break }
         } else {
-            $path = if ($Barrier -in @('selected','restore-selected','package-partial')) { $folder + $(if ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
+            $path = if ($Barrier -in @('selected','restore-selected','package-partial','identity-staged')) { $folder + $(if ($Barrier -eq 'identity-staged') { '/identity-staged.json' } elseif ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
             $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
             if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
         }
@@ -111,8 +111,8 @@ foreach ($scenario in $scenarios) {
         continue
     }
     if ($scenario -eq 'identity-catalogue') {
-        $created = Invoke-OwnedMigration 'identity-create' $identity
-        if (-not $created.CommittedIdentityCatalogue -or -not $created.MainInitialJournalCreated) { throw 'Original identity bootstrap evidence missing.' }
+        $created = Invoke-OwnedMigration 'identity-create' $identity 'identity-staged'
+        if (-not $created.IdentityStagedBeforePublication) { throw 'Original identity bootstrap evidence missing.' }
         $finished = Invoke-OwnedMigration 'identity-reopen' $identity
         if (-not $finished.IdentityStableAfterProcessRestart -or -not $finished.NonemptyMainKeyAndActualJournalBinding -or -not $finished.ExistingRegistrationUnchanged -or -not $finished.NewProfileRetainsInstallation -or -not $finished.NoKeyPreparationOrAppActivation) { throw 'Original native identity restart evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $finished }

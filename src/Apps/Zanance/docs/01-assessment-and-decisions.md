@@ -3124,3 +3124,31 @@ D-215 final managed evidence: all 3,327 tests pass with zero failures/skips (2m5
 Three new cases verify pending initial persistence, refusal of restore before completion and
 rejection of foreign/advanced journals before history creation. Outputs cleaned after terminal
 builds/tests. Main activation, torn metadata creation, recovery/retention and platform gates remain.
+
+### D-216 — Publish complete identity metadata from captured staging
+
+Identity bootstrap now commits and fully validates a private .creating catalogue before publishing
+its final path with a no-replace same-directory move. A valid staged catalogue is resumed with its
+original installation/profile/generation identities and exact known profile set; no new random ids
+are generated on that path. Missing/corrupt/foreign incomplete staging fails closed rather than
+being overwritten. Existing final metadata or sidecars still reject new bootstrap. Read never creates.
+
+An explicit native durability overload synchronizes staged file/directory before rename and the
+parent after publication. Managed-only callers retain transactional/typed/no-replace checks but do
+not claim platform power-loss qualification. Failure after final rename requires actual existing
+read/reconciliation, not another CreateNew or replacement. Other journal/history creation protocols
+and main lifecycle/provider/OS policy adoption remain unfinished; main storage remains plaintext.
+
+Independent Android x64 API36/4 KiB source-built SQLCipher probe pauses after actual fsync and typed
+staged read, before final publication. The external runner terminates that process. Cold resume
+requires the final path absent, publishes the same staged identity fingerprint, verifies actual
+initial journal binding and idempotent/new profile registration preserving installation. No keys
+are prepared, app encryption activated or scenario repeated. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-58220434415e4174bc471b9760cd95e6.json,
+run f93ba289610e4355aee1b0446d65bc9a. Reviewed APK ABI identities/signature verified; independent
+package uninstalled. Strict Windows 26.63s, Android 17.07s and independent Release 71.92s builds
+have zero warnings/errors. Script parser checked; test cleanup waits for terminal builds/tests.
+D-216 final managed evidence: all 3,329 tests pass with zero failures/skips (2m47s).
+Two new cases preserve staged identities after interrupted synchronization and reject a changed
+profile set without rewriting staging or creating the final catalogue. Native interruption proof
+is separate from these injected managed effects. Outputs cleaned after terminal builds/tests.

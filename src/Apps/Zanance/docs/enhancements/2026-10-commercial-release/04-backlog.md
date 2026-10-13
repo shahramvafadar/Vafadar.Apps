@@ -1700,3 +1700,26 @@ new pre-key intent closes that interval through actual captured resume. Interrup
 creation itself, all-profile host bootstrap, recovery UX, provider/live registration and OS policy
 remain separate unfinished work; missing or corrupt records still fail closed. Main application
 storage remains plaintext. No owner decision, platform key policy or financial schema changes.
+### D-216 — Publish complete identity metadata from captured staging
+
+Identity bootstrap now commits and fully validates a private .creating catalogue before publishing
+its final path with a no-replace same-directory move. A valid staged catalogue is resumed with its
+original installation/profile/generation identities and exact known profile set; no new random ids
+are generated on that path. Missing/corrupt/foreign incomplete staging fails closed rather than
+being overwritten. Existing final metadata or sidecars still reject new bootstrap. Read never creates.
+
+An explicit native durability overload synchronizes staged file/directory before rename and the
+parent after publication. Managed-only callers retain transactional/typed/no-replace checks but do
+not claim platform power-loss qualification. Failure after final rename requires actual existing
+read/reconciliation, not another CreateNew or replacement. Other journal/history creation protocols
+and main lifecycle/provider/OS policy adoption remain unfinished; main storage remains plaintext.
+
+Independent Android x64 API36/4 KiB source-built SQLCipher probe pauses after actual fsync and typed
+staged read, before final publication. The external runner terminates that process. Cold resume
+requires the final path absent, publishes the same staged identity fingerprint, verifies actual
+initial journal binding and idempotent/new profile registration preserving installation. No keys
+are prepared, app encryption activated or scenario repeated. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-58220434415e4174bc471b9760cd95e6.json,
+run f93ba289610e4355aee1b0446d65bc9a. Reviewed APK ABI identities/signature verified; independent
+package uninstalled. Strict Windows 26.63s, Android 17.07s and independent Release 71.92s builds
+have zero warnings/errors. Script parser checked; test cleanup waits for terminal builds/tests.

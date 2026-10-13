@@ -12,6 +12,33 @@ public sealed class DatabaseIdentityCatalogueTests : IDisposable
     private SqliteDatabaseIdentityCatalogue Catalogue() => new(PathOfCatalogue, () => { });
     public void Dispose() => directory.Dispose();
 
+    [Fact, Trait("AT", "AT-215")]
+    public async Task Interrupted_publication_reuses_staged_identities_instead_of_regenerating_them()
+    {
+        var other = Guid.NewGuid().ToString("N"); var durability = new InterruptedPublication();
+        await Assert.ThrowsAsync<IOException>(() => Catalogue().CreateNewAsync(["", other], durability, Ct));
+        Assert.False(File.Exists(PathOfCatalogue)); Assert.True(File.Exists(PathOfCatalogue + ".creating"));
+        var staged = await new SqliteDatabaseIdentityCatalogue(PathOfCatalogue + ".creating", () => { }).ReadAsync(Ct);
+        await Catalogue().CreateNewAsync(["", other], Ct);
+        Assert.Equal(staged, await Catalogue().ReadAsync(Ct)); Assert.False(File.Exists(PathOfCatalogue + ".creating"));
+    }
+
+    [Fact, Trait("AT", "AT-215")]
+    public async Task Another_profile_set_cannot_reinterpret_or_replace_staged_bootstrap()
+    {
+        await Assert.ThrowsAsync<IOException>(() => Catalogue().CreateNewAsync(["", Guid.NewGuid().ToString("N")], new InterruptedPublication(), Ct));
+        var before = await File.ReadAllBytesAsync(PathOfCatalogue + ".creating", Ct);
+        await Assert.ThrowsAsync<IOException>(() => Catalogue().CreateNewAsync([""], Ct));
+        Assert.Equal(before, await File.ReadAllBytesAsync(PathOfCatalogue + ".creating", Ct)); Assert.False(File.Exists(PathOfCatalogue));
+    }
+
+    private sealed class InterruptedPublication : IDatabaseGenerationFileDurability
+    {
+        public long AvailableBytes => long.MaxValue;
+        public Task SynchronizeFileAsync(string path, CancellationToken ct) => throw new IOException("Fictitious interruption before publication.");
+        public Task SynchronizeDirectoryAsync(CancellationToken ct) => throw new IOException("Unexpected publication.");
+    }
+
     [Fact, Trait("AT", "AT-205")]
     public async Task Main_and_existing_profile_bindings_survive_reopen_without_empty_or_shared_identities()
     {
