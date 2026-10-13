@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup, [switch]$StartupNotification, [switch]$RestoreSession,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup, [switch]$StartupNotification, [switch]$RestoreSession, [switch]$ProfileDeletionGuard,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '',
@@ -14,6 +14,7 @@ if ($ResumeBootstrapRun -and (-not $InitialBootstrap -or $ResumeFactoryRun -or $
 if ($ResumeFreshStartupRun -and -not $FreshStartup) { throw 'Recorded fresh startup requires fresh-startup mode.' }
 if ($StartupNotification -and -not $FreshStartup) { throw 'Startup notification check requires fresh-startup mode.' }
 if ($RestoreSession -and -not $FreshStartup) { throw 'Restore-session check requires fresh-startup mode.' }
+if ($ProfileDeletionGuard -and -not $ProtectedStartup) { throw 'Deletion guard check requires protected-startup mode.' }
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
@@ -121,7 +122,8 @@ foreach ($scenario in $scenarios) {
     }
     if ($scenario -eq 'protected-startup') {
         $created = Invoke-OwnedMigration 'startup-create' $identity
-        $reopened = Invoke-OwnedMigration 'startup-reopen' $identity
+        $reopened = Invoke-OwnedMigration $(if ($ProfileDeletionGuard) { 'startup-deletion-guard' } else { 'startup-reopen' }) $identity
+        if ($ProfileDeletionGuard -and -not $reopened.IncompleteProtectedDeletionRefused) { throw 'Incomplete deletion guard evidence missing.' }
         if (-not $created.ActualApplicationStartup -or -not $created.AllProfilesBeforeSinglePublication -or $created.SelectedWorkAmount -ne 880 -or -not $reopened.ColdExistingKeysOnly -or -not $reopened.NoRepeatedKeyResolution) { throw 'Actual protected application startup evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Reopened = $reopened }
         continue

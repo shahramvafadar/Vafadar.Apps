@@ -1919,3 +1919,11 @@ verified same-profile binding/path/version under drained ownership; retain both 
 notification and adoption finish. Observer failure retains the installed restored owner for exact
 retry, without rolling finance back beneath applied preferences. Profile-switch completion cannot
 accept pending restore. Retiring an in-memory key never deletes its durable retained references.
+
+
+### D-230 — Protected profiles never use legacy filename deletion
+
+The legacy delete path must refuse protected active storage or actual target migration/history/
+ciphertext artifacts before removing a catalogue row. Final protected retirement needs durable
+intent, verified catalogue outcome and complete file/key-reference reconciliation; a filename
+loop cannot supply that authority. This boundary does not complete retirement or main adoption.

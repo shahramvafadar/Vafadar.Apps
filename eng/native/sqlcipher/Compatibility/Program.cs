@@ -11,7 +11,7 @@ if (args.Length == 2 && args[0] is "--create-key-proof" or "--reopen-key-proof")
     return;
 }
 
-if (args.Length == 2 && args[0] is "fresh-startup-create" or "fresh-startup-reopen" or "fresh-startup-notification" or "startup-create" or "startup-reopen" or "startup-resume" or "restore-session" or "restore-session-reopen")
+if (args.Length == 2 && args[0] is "fresh-startup-create" or "fresh-startup-reopen" or "fresh-startup-notification" or "startup-create" or "startup-reopen" or "startup-resume" or "startup-deletion-guard" or "restore-session" or "restore-session-reopen")
 {
     if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Windows startup requires Windows.");
     var owned = Path.GetFullPath(args[1]);
@@ -35,7 +35,8 @@ if (args.Length == 2 && args[0] is "fresh-startup-create" or "fresh-startup-reop
         ? await RestoreSessionCompatibility.RunAsync(owned, createKeys, createDurability)
         : args[0].StartsWith("fresh-", StringComparison.Ordinal)
         ? await FreshStartupCompatibility.RunAsync(owned, args[0] == "fresh-startup-create", createKeys, createDurability, args[0] == "fresh-startup-notification")
-        : await ProtectedStartupCompatibility.RunAsync(owned, args[0] == "startup-create", createKeys, createDurability, args[0] == "startup-resume"));
+        : await ProtectedStartupCompatibility.RunAsync(owned, args[0] == "startup-create", createKeys, createDurability,
+            args[0] == "startup-resume", args[0] == "startup-deletion-guard"));
     return;
 }
 

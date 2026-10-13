@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Protected profile deletion boundary (D-230)
+
+- Prevent legacy deletion from removing a profile row while retaining its encrypted files.
+- Plaintext profile deletion keeps its existing path; protected retirement remains pending.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Added - Restored encrypted session adoption (D-229)
 
 - Prepared active-session adoption of a fully verified restored database and its preferences.

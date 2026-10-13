@@ -3975,3 +3975,44 @@ D-229 signed complete phone artifact: artifacts/android-d229-delivery/pro.vafada
 (79.1 MiB), existing local test certificate; apksigner verification succeeds. Package
 pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
 Main storage remains plaintext; this does not establish encrypted-main, device/iOS or release.
+
+### D-230 — Refuse legacy deletion of protected profile storage
+
+ProfileService's legacy DeleteCore previously removed the device catalogue row before deleting
+only its old original filename and portable backup prefix. Protected generations instead retain
+ciphertext, journals/history, bound key envelopes and opaque safety references. Using that legacy
+path would strand stable encryption identities and make the next complete bootstrap inconsistent.
+That path now refuses deletion before any catalogue publication, file effect or Changed event if
+the active endpoint is protected or the target has actual generation/new-profile/history/staged
+metadata or ciphertext artifacts. The legacy path remains for ordinary plaintext profiles.
+
+This is a permanent storage-authority boundary, not an implementation of protected retirement.
+The final native deletion transaction must explicitly capture authorization, persist retirement
+intent/catalogue outcome and reconcile its complete referenced artifact/key set across crashes.
+It must also handle uncommitted creation identities. Main native activation remains gated on that
+work; no deletion, reconciliation, retention or overall SEC completion is claimed here.
+
+Four actual app-source regression scenarios preserve complete device catalogue packet, original
+profile row, notification count and exact artifact bytes for protected/current and partially
+prepared targets. All 23 ProfileTests pass. Native Windows uses the retained D-227 two-profile
+fixture and actual encrypted session switch to main, then invokes actual deletion of inactive
+work. It is refused, both profile rows/active endpoint remain and hashes of every owned retained
+artifact are unchanged. Existing keys are read only. Proof:
+artifacts/native-sqlcipher/d230-native-guard.log. Shared Android caller has the same focused guard
+scenario. Main application still uses plaintext registration; no visible layout changes or
+unchanged producer/upstream suites are repeated. Terminal platform/build evidence follows below.
+D-230 terminal verification: all 3,384 tests pass, zero failures/skips (3m11.386s); strict
+Windows 28.01s and Android 45.92s have zero warnings/errors. Actual signed Release AOT Android
+x64/API36/4 KiB guard refuses inactive protected deletion after actual switch to main, leaving
+profile catalogue/endpoint and hashes of all retained artifacts unchanged. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-3577a018f28e42409c0e679b11872c8f.json
+(run f784a71ef4714eb7b293053e46de2304). Native probe build 66.88s, zero warnings/errors.
+Activity observation timed out with PID 14037 confirmed live; the same run completed and cold
+verification followed without reset. A later adb cleanup connection failed after the proof was
+saved; the same local port was reconnected and only the owned independent package uninstalled.
+This does not implement protected retirement or activate main encryption; those remain open.
+
+D-230 signed complete phone artifact: artifacts/android-d230-delivery/pro.vafadar.zanance-Signed.apk
+(79.5 MiB), existing local test certificate; apksigner verification succeeds. Actual package
+pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
+Main storage remains plaintext; this is not encrypted-main, device, iOS or release acceptance.

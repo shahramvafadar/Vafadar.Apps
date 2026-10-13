@@ -2520,3 +2520,17 @@ native artifacts root. The timed-out Android activity observation did not trigge
 Two new ownership/session refusal contracts pass; full suite 3,380 pass, zero failures/skips.
 File-backed fictitious preferences do not qualify final MAUI persistence, main activation,
 recovery/retention, device/iOS or release acceptance.
+
+
+### D-230 / AT-230 — Refuse incomplete protected profile deletion
+
+Four actual profile-flow tests preserve catalogue packet, profile row, events and artifact bytes
+for protected current storage and target generation/staged-history/ciphertext state. All 23
+ProfileTests and full 3,384-case suite pass. Native Windows retained two-profile fixture and
+Android initial/cold case invoke actual deletion after actual session switch to main; deletion
+is refused and full retained-file hashes/active publication remain unchanged. Proofs:
+artifacts/native-sqlcipher/d230-native-guard.log and build/android-d/
+android-migration-proof-3577a018f28e42409c0e679b11872c8f.json. Activity observation timeout
+did not reset the run; separate post-proof adb cleanup failure was resolved on the same port.
+Protected retirement, orphan reconciliation, main adoption, recovery/retention/OS and release
+acceptance remain unfinished; refusal is not completion of native deletion.

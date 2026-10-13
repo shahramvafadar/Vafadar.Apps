@@ -1504,3 +1504,12 @@ profile-switch completion of its pending restore. Independent Windows restore/ob
 resume/cold read pass without replacement keys or repeated preference persistence. Main native
 and restore registration, reconciliation/recovery/retention/OS policy and remaining external
 gates are still open. Detailed evidence is in D-229 in the decision log and specification.
+
+
+### D-230 — Guard incomplete protected deletion
+
+SEC remains in progress. Actual legacy profile deletion cannot remove a protected/partially
+prepared catalogue row while stranding native identities and referenced artifacts. Four new
+regressions and retained native Windows two-profile guard checks pass. This does not implement
+protected deletion; durable retirement and uncommitted-creation reconciliation remain required
+before main registration. Recovery/retention/OS/native platform and external gates remain open.

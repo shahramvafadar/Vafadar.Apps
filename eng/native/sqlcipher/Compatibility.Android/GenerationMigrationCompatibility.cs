@@ -32,11 +32,11 @@ internal static class GenerationMigrationCompatibility
             return await Vafadar.SqlCipher.Compatibility.FreshStartupCompatibility.RunAsync(folder, phase == "fresh-startup-create",
                 path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path), phase == "fresh-startup-notification");
         }
-        if (phase is "startup-create" or "startup-reopen")
+        if (phase is "startup-create" or "startup-reopen" or "startup-deletion-guard")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
             return await Vafadar.SqlCipher.Compatibility.ProtectedStartupCompatibility.RunAsync(folder, phase == "startup-create",
-                path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path));
+                path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path), checkDeletion: phase == "startup-deletion-guard");
         }
         if (phase is "safety-create" or "safety-reopen")
             return await SafetyCopyCompatibility.RunAsync(folder, phase == "safety-create");

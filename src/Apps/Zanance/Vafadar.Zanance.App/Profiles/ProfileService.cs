@@ -115,6 +115,13 @@ public sealed partial class ProfileService(
                 throw new InvalidOperationException("The main profile and the open profile cannot be deleted.");
             }
 
+            // The legacy filename does not identify a protected generation's retained journal/history,
+            // keys or safety copies. Until the native retirement transaction handles that complete set,
+            // do not publish a removed catalogue row and strand its encryption identities (D-230).
+            var original = PathOf(MainPath(), profile.Id);
+            if (location.IsProtected || HasProtectedProfileState(original))
+                throw new InvalidOperationException("Protected profile deletion requires complete native retirement.");
+
             var state = ReadCatalogue(preferences) with { List = EncodeProfiles(review.Profiles.Where(p => !p.IsMain && p.Id != profile.Id)) };
             if (review.Maximum is not null && !review.RequiresSelection)
                 state = state with { Choice = EncodeField(string.Join(';', review.SelectedIds.Where(id => id != profile.Id).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = Guid.NewGuid().ToString("N") };
@@ -141,6 +148,15 @@ public sealed partial class ProfileService(
 
             Changed?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    private static bool HasProtectedProfileState(string original)
+    {
+        // Guard partially migrated profiles even when the current profile still has a legacy endpoint.
+        foreach (var suffix in new[] { ".generation.sqlite", ".generation.sqlite.creating", ".new-profile.sqlite",
+            ".new-profile.sqlite.creating", ".restore-history.sqlite", ".restore-history.sqlite.creating" })
+            if (File.Exists(original + suffix) || Directory.Exists(original + suffix)) return true;
+        return Directory.EnumerateFiles(Path.GetDirectoryName(original)!, Path.GetFileName(original) + ".*.cipher.db*").Any();
     }
 
     /// <summary>

@@ -1813,3 +1813,14 @@ publication. Duplicate accepted adoption is idempotent; profile-switch acceptanc
 Envelope/file/reference reconciliation remains the final host's duty. Independent Windows/Android
 fixture file preferences qualify that effect only; main native/MAUI registration remains pending.
 See D-229 in the application decision log for exact backup/restore/cold evidence.
+
+
+### D-230 — Legacy deletion storage boundary
+
+ProfileService rejects its legacy original-file deletion before preference publication for a
+protected endpoint or actual target generation/history/new-profile/staged/ciphertext state.
+It does not remove encryption identities, keys or safety references through guessed filename
+patterns. A complete native retirement transaction with durable owner authorization, device
+catalogue outcome and referenced-set reconciliation remains required before activation. New
+profile preparation artifacts after failed catalogue publication need the same lifecycle design.
+See D-230 in the application decision log for actual profile/retained-byte native checks.

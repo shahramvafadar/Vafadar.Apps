@@ -15,7 +15,7 @@ internal static class ProtectedStartupCompatibility
 {
     internal static async Task<string> RunAsync(string folder, bool create,
         Func<string, IDatabaseGenerationKeyStore> createKeys,
-        Func<string, IDatabaseGenerationFileDurability> createDurability, bool primeRetainedPool = false)
+        Func<string, IDatabaseGenerationFileDurability> createDurability, bool primeRetainedPool = false, bool checkDeletion = false)
     {
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
         var scope = Path.Combine(folder, "startup-profile.txt");
@@ -59,9 +59,10 @@ internal static class ProtectedStartupCompatibility
         {
             resolutions++;
             var identities = new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate);
-            var identity = (await identities.ReadAsync(ct)).Single(row => row.LegacyProfileId == legacy);
+            var selectedLegacy = original == main ? "" : legacy;
+            var identity = (await identities.ReadAsync(ct)).Single(row => row.LegacyProfileId == selectedLegacy);
             var history = new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", identity.InitialCandidateKey, owner.Validate);
-            return await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, legacy, original, history,
+            return await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, selectedLegacy, original, history,
                 _ => throw new IOException("Initial startup cannot invent a restore."), keys, durability, owner,
                 () => { }, 16 * 1024 * 1024, "4.19.0", ct);
         });
@@ -76,8 +77,26 @@ internal static class ProtectedStartupCompatibility
         await using (var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync())
             if ((await db.Entries.SingleAsync()).Amount != 880 || (await db.Accounts.SingleAsync()).OpeningBalance != 1000)
                 throw new IOException("Startup selected the wrong financial packet.");
+        if (checkDeletion)
+        {
+            using (var owner = await location.Access.AcquireExclusiveAsync())
+            { await session.BeginSwitchAsync(main, owner); session.FinishSwitch(true, owner); }
+            preferences.Remove("profiles.current");
+            var before = profiles.All.ToArray(); var currentPath = location.Path;
+            var unchanged = Directory.EnumerateFiles(folder).ToDictionary(path => path,
+                path => Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path))));
+            var refused = false;
+            try { await profiles.DeleteAsync(before.Single(profile => profile.Id == legacy)); }
+            catch (InvalidOperationException) { refused = true; }
+            if (!refused || !profiles.All.SequenceEqual(before) || location.Path != currentPath)
+                throw new IOException("Legacy deletion removed protected profile identity or active endpoint.");
+            foreach (var file in unchanged)
+                if (!File.Exists(file.Key) || Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(file.Key))) != file.Value)
+                    throw new IOException("Refused deletion changed a retained native artifact.");
+        }
         using (var owner = await location.Access.AcquireExclusiveAsync()) session.Close(owner);
-        return "{\"ActualApplicationStartup\":true,\"AllProfilesBeforeSinglePublication\":true,\"SelectedWorkAmount\":880,\"NoRepeatedKeyResolution\":true,\"ColdExistingKeysOnly\":" + (!create ? "true" : "false") + "}";
+        return "{\"ActualApplicationStartup\":true,\"AllProfilesBeforeSinglePublication\":true,\"SelectedWorkAmount\":880,\"NoRepeatedKeyResolution\":true,\"ColdExistingKeysOnly\":" + (!create ? "true" : "false") +
+            ",\"IncompleteProtectedDeletionRefused\":" + (checkDeletion ? "true" : "false") + "}";
     }
 
     private sealed class ExistingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore

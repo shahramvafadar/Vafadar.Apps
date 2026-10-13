@@ -17,6 +17,25 @@ public sealed class ProfileTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Theory, InlineData("active-protected"), InlineData("generation"), InlineData("staged-history"), InlineData("ciphertext"), Trait("AT", "AT-230")]
+    public async Task Legacy_deletion_cannot_remove_catalogue_identity_or_retained_protected_artifacts(string state)
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var profile = profiles.Create("Fictitious retained profile");
+        var original = profiles.CaptureStorage().OriginalPaths[profile.Id];
+        var artifact = original + (state == "generation" ? ".generation.sqlite" : state == "staged-history"
+            ? ".restore-history.sqlite.creating" : "." + Guid.NewGuid().ToString("N") + ".cipher.db");
+        await File.WriteAllBytesAsync(artifact, [1, 2, 3], Ct);
+        if (state == "active-protected")
+            Location(f).MoveToProtected(Location(f).Path, () => throw new IOException("No fixture credential access."), "4.19.0");
+        var before = f.Preferences.Get("profiles.work.catalogue"); var notifications = 0;
+        profiles.Changed += (_, _) => notifications++;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => profiles.DeleteAsync(profile, Ct));
+        Assert.Equal(before, f.Preferences.Get("profiles.work.catalogue"));
+        Assert.Contains(profile, profiles.All); Assert.Equal(0, notifications);
+        Assert.Equal(new byte[] { 1, 2, 3 }, await File.ReadAllBytesAsync(artifact, Ct));
+    }
+
     [Fact, Trait("AT", "AT-224")]
     public void Startup_storage_capture_includes_inactive_originals_without_commercial_or_financial_reads()
     {
