@@ -41,6 +41,30 @@ internal sealed class WindowsPrivateFiles : IDisposable
         catch { handle.Dispose(); throw; }
     }
 
+    /// <summary>Opens the exact regular file with DELETE authority while denying concurrent write/rename sharing.</summary>
+    internal SafeFileHandle OpenForDeletion(string path)
+    {
+        RequireChild(path);
+        var handle = CreateFileW(path, Read | 0x00010000, 1, IntPtr.Zero, OpenExisting, NoFollow, IntPtr.Zero);
+        try { RequireHandle(handle, path, isDirectory: false); return handle; }
+        catch { handle.Dispose(); throw; }
+    }
+
+    /// <summary>Reads native volume/file identity from the already verified handle.</summary>
+    internal static string FileIdentity(SafeFileHandle handle)
+    {
+        if (!GetFileInformationByHandle(handle, out var info)) throw Error("Private file identity unavailable.");
+        return $"{info.Volume:x8}{info.IndexHigh:x8}{info.IndexLow:x8}";
+    }
+
+    /// <summary>Marks this same verified handle for deletion on close; never reopens an unchecked filename.</summary>
+    internal static void DeleteOnClose(SafeFileHandle handle)
+    {
+        // Win32 FILE_DISPOSITION_INFO contains one BOOLEAN, and its handle requires DELETE access.
+        byte delete = 1;
+        if (!SetFileInformationByHandle(handle, 4, ref delete, 1)) throw Error("Private handle deletion failed.");
+    }
+
     /// <summary>Creates an immutable final entry with an owner-only protected ACL from its first byte.</summary>
     internal SafeFileHandle CreateNewFile(string path)
     {
@@ -128,6 +152,9 @@ internal sealed class WindowsPrivateFiles : IDisposable
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool FlushFileBuffers(SafeFileHandle handle);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetFileInformationByHandle(SafeFileHandle handle, int informationClass, ref byte information, uint length);
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool ConvertStringSecurityDescriptorToSecurityDescriptorW(string text, uint version, out IntPtr descriptor, out uint size);

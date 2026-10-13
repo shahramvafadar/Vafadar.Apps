@@ -621,3 +621,8 @@ The independent proof uses fictitious files; final main registration remains ina
 D-231: retirement metadata contains only existing local non-secret profile/installation/request
 identities and ordered phase values. No labels, financial data, keys, portable preferences, new
 permission or SDK are added. Final native catalogue/artifact/key retirement is not registered.
+
+D-233: private non-portable retirement metadata additionally records named root/direct filenames,
+native file identifiers, lengths and SHA-256. It contains no financial payload or key bytes and
+never enters portable preference sources. No new permission, SDK or network behavior is added.
+Complete discovery/native mobile cleanup and main registration remain unactivated.

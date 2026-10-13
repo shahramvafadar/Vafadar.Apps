@@ -109,6 +109,7 @@ public sealed class SqliteDatabaseIdentityCatalogue
         Check(ct);
         if (await retirement.SynchronizeAndReadAsync(durability, ct).ConfigureAwait(false) != expected)
             throw new InvalidOperationException("Retirement request changed before identity reconciliation.");
+        _ = await retirement.ReadArtifactsAsync(ct).ConfigureAwait(false);
         // Verify non-secret bindings before the host inspects any financial/key reference for this request.
         var captured = await ReadAsync(ct).ConfigureAwait(false);
         RequireRetirementIdentity(captured, expected);

@@ -5,7 +5,7 @@ namespace Vafadar.Data;
 /// <summary>Records exact non-secret retirement authority/barriers in a private SQLite rollback journal.</summary>
 /// <remarks>Native host must verify actual catalogue/removal/reconciliation effects before each advance.
 /// This journal never enumerates/deletes artifacts or keys, grants new authority on missing state, or retires main.</remarks>
-public sealed class SqliteProfileRetirementJournal
+public sealed partial class SqliteProfileRetirementJournal
 {
     private const int ApplicationId = 0x565a5052;
     private const string Schema = "CREATE TABLE retirement_state (id INTEGER PRIMARY KEY CHECK(id=1), legacy TEXT NOT NULL, profile TEXT NOT NULL, installation TEXT NOT NULL, operation TEXT NOT NULL, phase INTEGER NOT NULL CHECK(phase BETWEEN 0 AND 3))";
@@ -122,7 +122,14 @@ public sealed class SqliteProfileRetirementJournal
         if (Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 1) throw new IOException("Unsupported retirement journal.");
         // GLOB keeps the underscore literal; LIKE would also hide an unrelated table named sqliteAlias.
         command.CommandText = "SELECT count(*) FROM sqlite_schema WHERE name NOT GLOB 'sqlite_*'";
-        if (Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != 1) throw new IOException("Unexpected retirement schema.");
+        var schemaCount = Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false));
+        if (schemaCount is not (1 or 2)) throw new IOException("Unexpected retirement schema.");
+        if (schemaCount == 2)
+        {
+            command.CommandText = "SELECT sql FROM sqlite_schema WHERE name='retirement_artifacts'";
+            if (Convert.ToString(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != ArtifactSchema)
+                throw new IOException("Retirement artifact schema differs.");
+        }
         command.CommandText = "SELECT sql FROM sqlite_schema WHERE name='retirement_state'";
         if (Convert.ToString(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != Schema) throw new IOException("Retirement schema differs.");
         command.CommandText = "SELECT id,legacy,profile,installation,operation,phase FROM retirement_state";

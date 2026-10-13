@@ -80,6 +80,7 @@ public sealed class ProfileRetirementJournalTests
         var durability = new FaultDurability(); var host = new RetirementEffects(durability);
         var journal = new SqliteProfileRetirementJournal(folder.Combine("retirement.sqlite"), identity, () => { });
         await journal.CreateNewAsync(durability, Ct);
+        await journal.CaptureArtifactsAsync([], durability, Ct);
         var coordinator = new ProfileRetirementCoordinator(journal, durability, host);
         await Assert.ThrowsAsync<IOException>(() => coordinator.ResumeAsync(Ct));
         Assert.Equal(ProfileRetirementPhase.CatalogueRemoved, (await journal.ReadAsync(Ct)).Phase);
@@ -103,7 +104,7 @@ public sealed class ProfileRetirementJournalTests
         var coordinator = new ProfileRetirementCoordinator(journal, durability, host);
         await Assert.ThrowsAsync<IOException>(() => coordinator.ResumeAsync(Ct));
         Assert.Equal(0, host.CatalogueRemovals);
-        await journal.CreateNewAsync(durability, Ct); host.Reject = true;
+        await journal.CreateNewAsync(durability, Ct); await journal.CaptureArtifactsAsync([], durability, Ct); host.Reject = true;
         await Assert.ThrowsAsync<InvalidOperationException>(() => coordinator.ResumeAsync(Ct));
         Assert.Equal(0, host.CatalogueRemovals); Assert.Equal(identity, await journal.ReadAsync(Ct));
     }

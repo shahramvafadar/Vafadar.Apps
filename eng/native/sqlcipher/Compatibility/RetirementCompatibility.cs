@@ -39,7 +39,12 @@ internal static class RetirementCompatibility
         var durability = new FaultAfterCatalogue(native);
         var journal = new SqliteProfileRetirementJournal(Path.Combine(folder, "retirement.sqlite"), request, () => { });
         var host = new FileEffects(folder, native, durability, create, journal);
-        if (create) await journal.CreateNewAsync(native);
+        if (create)
+        {
+            await journal.CreateNewAsync(native);
+            var files = new WindowsProfileRetirementFiles(new Dictionary<string, string> { ["database"] = folder }, () => { });
+            await journal.CaptureArtifactsAsync([await files.CaptureAsync("database", "fictitious-artifact.bin")], native);
+        }
         var coordinator = new ProfileRetirementCoordinator(journal, durability, host);
         if (create)
         {
@@ -74,6 +79,7 @@ internal static class RetirementCompatibility
         private string Catalogue => Path.Combine(folder, "catalogue.txt");
         private string Artifact => Path.Combine(folder, "fictitious-artifact.bin");
         private SqliteDatabaseIdentityCatalogue Identities => new(Path.Combine(folder, "identities.sqlite"), () => { });
+        private WindowsProfileRetirementFiles Files => new(new Dictionary<string, string> { ["database"] = folder }, () => { });
         public async Task ValidateAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct)
         {
             using var root = new WindowsPrivateFiles(folder);
@@ -96,24 +102,8 @@ internal static class RetirementCompatibility
             await native.SynchronizeFileAsync(Catalogue, ct); await native.SynchronizeDirectoryAsync(ct);
             fault.Fail = inject;
         }
-        public Task RemoveArtifactsAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) => RemoveAsync(Artifact, ct);
+        public Task RemoveArtifactsAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) => Files.RemoveAsync(checkpoint, journal, native, ct);
         public Task RetireIdentityAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) =>
-            Identities.RetireAsync(checkpoint, journal, native, token =>
-            {
-                token.ThrowIfCancellationRequested();
-                if (File.Exists(Artifact)) throw new IOException("Captured fictitious artifact still references the profile.");
-                return Task.CompletedTask;
-            }, ct);
-        private async Task RemoveAsync(string path, CancellationToken ct)
-        {
-            ct.ThrowIfCancellationRequested();
-            if (File.Exists(path))
-            {
-                using (var root = new WindowsPrivateFiles(folder))
-                using (var handle = root.OpenFile(path, writable: true)) { }
-                File.Delete(path);
-            }
-            await native.SynchronizeDirectoryAsync(ct);
-        }
+            Identities.RetireAsync(checkpoint, journal, native, token => Files.VerifyRemovedAsync(journal, token), ct);
     }
 }

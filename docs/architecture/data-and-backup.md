@@ -1846,3 +1846,16 @@ ownership. Non-secret bindings are checked before host inspection; the full cata
 in the deletion transaction. Native file/directory sync and exact retained-row readback follow even
 when resuming an already absent target after a failed flush. No main retirement or replacement-key
 fallback is admitted. Final preference/native artifact/key effects remain separate host integration.
+
+### D-233 — Captured native file objects, not guessed retirement patterns
+
+CaptureArtifactsAsync adds an immutable bounded exact-schema table to the Authorized retirement
+request, with direct names, native identifiers and byte fingerprints. Missing capture blocks native
+continuation/identity retirement. Windows cleanup preflights every recorded object, then uses the
+same verified no-follow DELETE handle with FileDispositionInfo, closes it and flushes its directory.
+Same-content inode replacement, changed bytes, unknown roots and deleting its own journal fail closed.
+The native host remains responsible for complete authenticated database/restore/backup/key reference
+discovery, exact private-root mapping and maintenance ownership. No directory enumeration or shared
+installation-key deletion is supplied. This is not sector erasure, final app/mobile retirement or
+power-loss acceptance. Native ABI reference:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle

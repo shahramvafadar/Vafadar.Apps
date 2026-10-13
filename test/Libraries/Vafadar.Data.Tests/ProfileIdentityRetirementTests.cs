@@ -36,7 +36,8 @@ public sealed class ProfileIdentityRetirementTests
         var before = await fixture.Catalogue.ReadAsync(Ct); var original = fixture.Request;
         fixture.Request = new(original.LegacyProfileId, installation ? original.ProfileId : Guid.NewGuid(),
             installation ? Guid.NewGuid() : original.InstallationId, original.OperationId);
-        await fixture.Journal.CreateNewAsync(fixture.Durability, Ct); await fixture.ReadyAsync();
+        await fixture.Journal.CreateNewAsync(fixture.Durability, Ct);
+        await fixture.Journal.CaptureArtifactsAsync([], fixture.Durability, Ct); await fixture.ReadyAsync();
         await Assert.ThrowsAsync<InvalidOperationException>(() => fixture.RetireAsync());
         Assert.Equal(before, await fixture.Catalogue.ReadAsync(Ct)); Assert.Equal(0, fixture.ReferenceChecks);
     }
@@ -98,7 +99,11 @@ public sealed class ProfileIdentityRetirementTests
             var legacy = Guid.NewGuid().ToString("N"); await Catalogue.CreateNewAsync(["", legacy, Guid.NewGuid().ToString("N")], Ct);
             var target = (await Catalogue.ReadAsync(Ct)).Single(row => row.LegacyProfileId == legacy);
             Request = new(legacy, target.ProfileId, target.InstallationId, Guid.NewGuid());
-            if (createJournal) await Journal.CreateNewAsync(Durability, Ct);
+            if (createJournal)
+            {
+                await Journal.CreateNewAsync(Durability, Ct);
+                await Journal.CaptureArtifactsAsync([], Durability, Ct);
+            }
         }
         internal async Task ReadyAsync()
         {

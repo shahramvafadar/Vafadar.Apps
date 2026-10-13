@@ -19,6 +19,7 @@ public sealed class ProfileRetirementCoordinator(SqliteProfileRetirementJournal 
             while (true)
             {
                 var state = await journal.SynchronizeAndReadAsync(durability, ct).ConfigureAwait(false);
+                _ = await journal.ReadArtifactsAsync(ct).ConfigureAwait(false);
                 await effects.ValidateAsync(state, ct).ConfigureAwait(false);
                 ct.ThrowIfCancellationRequested();
                 // Recheck after host validation: no stale phase may authorize its next native effect.

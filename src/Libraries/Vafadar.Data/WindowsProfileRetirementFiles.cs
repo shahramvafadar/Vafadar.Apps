@@ -1,0 +1,104 @@
+using System.ComponentModel;
+using System.Runtime.Versioning;
+using System.Security.Cryptography;
+
+namespace Vafadar.Data;
+
+/// <summary>Captures and removes only exact journaled native Windows file objects in named private roots.</summary>
+/// <remarks>The host supplies complete reference discovery and exclusive maintenance ownership.
+/// This class does not enumerate filenames, classify profile ownership or erase physical storage sectors.</remarks>
+[SupportedOSPlatform("windows")]
+public sealed class WindowsProfileRetirementFiles
+{
+    private readonly IReadOnlyDictionary<string, string> roots;
+    private readonly Action validate;
+
+    /// <summary>Captures actual host-owned local roots and the current maintenance ownership check.</summary>
+    public WindowsProfileRetirementFiles(IReadOnlyDictionary<string, string> privateRoots, Action validateAccess)
+    {
+        ArgumentNullException.ThrowIfNull(privateRoots); ArgumentNullException.ThrowIfNull(validateAccess);
+        roots = privateRoots.ToDictionary(row => row.Key, row => Path.GetFullPath(row.Value), StringComparer.Ordinal);
+        validate = validateAccess;
+        foreach (var row in privateRoots)
+        {
+            if (!Path.IsPathFullyQualified(row.Value)) throw new ArgumentException("Retirement roots must be absolute.");
+            using var directory = new WindowsPrivateFiles(roots[row.Key]);
+        }
+        validate();
+    }
+
+    /// <summary>Fingerprints one explicitly discovered owned file through its no-follow native handle.</summary>
+    public async Task<ProfileRetirementArtifact> CaptureAsync(string root, string name, CancellationToken ct = default)
+    {
+        var sample = new ProfileRetirementArtifact(root, name, "0", 0, new string('0', 64));
+        Check(ct); var path = Resolve(sample);
+        using var directory = new WindowsPrivateFiles(roots[root]);
+        using var handle = directory.OpenForDeletion(path);
+        using var stream = new FileStream(handle, FileAccess.Read);
+        var length = stream.Length; var identity = WindowsPrivateFiles.FileIdentity(handle);
+        var digest = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, ct).ConfigureAwait(false));
+        Check(ct);
+        if (stream.Length != length) throw new IOException("Captured retirement file changed while hashing.");
+        return new(root, name, identity, length, digest);
+    }
+
+    /// <summary>Preflights the captured set, then deletes matching objects and synchronizes actual directories.</summary>
+    public async Task RemoveAsync(ProfileRetirementCheckpoint expected, SqliteProfileRetirementJournal journal,
+        IDatabaseGenerationFileDurability metadataDurability, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(expected); ArgumentNullException.ThrowIfNull(journal);
+        ArgumentNullException.ThrowIfNull(metadataDurability); Check(ct);
+        if (expected.Phase != ProfileRetirementPhase.CatalogueRemoved
+            || await journal.SynchronizeAndReadAsync(metadataDurability, ct).ConfigureAwait(false) != expected)
+            throw new InvalidOperationException("File cleanup requires the exact durable catalogue-removal barrier.");
+        var captured = await journal.ReadArtifactsAsync(ct).ConfigureAwait(false);
+        foreach (var artifact in captured) await CheckFileAsync(artifact, journal, delete: false, ct).ConfigureAwait(false);
+        foreach (var artifact in captured)
+        {
+            Check(ct);
+            if (await journal.ReadAsync(ct).ConfigureAwait(false) != expected)
+                throw new InvalidOperationException("Retirement changed before exact file deletion.");
+            await CheckFileAsync(artifact, journal, delete: true, ct).ConfigureAwait(false);
+        }
+        await VerifyRemovedAsync(journal, ct).ConfigureAwait(false);
+    }
+
+    /// <summary>Verifies every captured namespace entry is absent, propagating access and redirection failures.</summary>
+    public Task VerifyRemovedAsync(SqliteProfileRetirementJournal journal, CancellationToken ct = default) => VerifyCoreAsync(journal, ct);
+
+    private async Task VerifyCoreAsync(SqliteProfileRetirementJournal journal, CancellationToken ct)
+    {
+        ArgumentNullException.ThrowIfNull(journal);
+        foreach (var artifact in await journal.ReadArtifactsAsync(ct).ConfigureAwait(false))
+        {
+            Check(ct); var path = Resolve(artifact); journal.RequireArtifactPath(path);
+            using var directory = new WindowsPrivateFiles(roots[artifact.Root]);
+            try { using var handle = directory.OpenForDeletion(path); throw new IOException("Captured retirement file remains."); }
+            catch (IOException error) when (MissingFile(error)) { }
+            directory.FlushDirectory(); Check(ct);
+        }
+    }
+
+    private async Task CheckFileAsync(ProfileRetirementArtifact artifact, SqliteProfileRetirementJournal journal, bool delete, CancellationToken ct)
+    {
+        Check(ct); var path = Resolve(artifact); journal.RequireArtifactPath(path);
+        using var directory = new WindowsPrivateFiles(roots[artifact.Root]);
+        try
+        {
+            using var handle = directory.OpenForDeletion(path);
+            using var stream = new FileStream(handle, FileAccess.Read);
+            if (WindowsPrivateFiles.FileIdentity(handle) != artifact.NativeIdentity || stream.Length != artifact.Length)
+                throw new IOException("Retirement file object was replaced or changed.");
+            var digest = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, ct).ConfigureAwait(false));
+            Check(ct);
+            if (digest != artifact.Sha256 || stream.Length != artifact.Length) throw new IOException("Retirement file content changed.");
+            if (delete) WindowsPrivateFiles.DeleteOnClose(handle);
+        }
+        catch (IOException error) when (MissingFile(error)) { }
+        if (delete) directory.FlushDirectory(); Check(ct);
+    }
+    private string Resolve(ProfileRetirementArtifact artifact) => roots.TryGetValue(artifact.Root, out var root)
+        ? Path.Combine(root, artifact.Name) : throw new IOException("Unknown captured private root.");
+    private void Check(CancellationToken ct) { ct.ThrowIfCancellationRequested(); validate(); }
+    private static bool MissingFile(IOException error) => error.InnerException is Win32Exception { NativeErrorCode: 2 };
+}

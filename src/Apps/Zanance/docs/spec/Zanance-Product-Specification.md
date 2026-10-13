@@ -4118,3 +4118,62 @@ pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly store
 The native Windows candidate retains its reviewed SHA-256 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
 Test outputs were cleaned after terminal builds/tests. Main encryption registration, complete
 profile/key-reference lifecycle, physical devices/iOS/store signing and product release remain open.
+
+### D-233 — Immutable native retirement file inventory and handle-bound Windows deletion
+
+The retirement journal now captures a bounded immutable artifact table before catalogue removal:
+named private root, direct filename, native volume/file identity, byte length and SHA-256. Missing
+inventory is not an empty set. Identical Authorized capture may requalify a failed native flush;
+different/later files cannot replace it. Ordered continuation and identity retirement require the
+existing table. Existing metadata-only requests remain readable, but cannot perform native cleanup
+without the explicitly captured inventory. The operational SQLite schema is validated exactly,
+including typed bounded rows, canonical fingerprints and case-insensitive duplicate refusal.
+
+WindowsProfileRetirementFiles captures actual no-follow regular-file handles and preflights the
+complete captured set before cleanup. Each deletion reopens and verifies that same native file object,
+length and bytes under the host's maintenance ownership, then marks that very handle for deletion on
+close. It never resolves another unchecked filename after verification. Redirected/hard-linked or
+busy files fail through the existing native handle checks. Same-content replacement is refused by
+volume/file identity; changed content is refused by length/hash. Already absent entries may resume
+only under the exact durably requalified CatalogueRemoved request. Actual directory synchronization
+and absence checks follow. The journal and its retained authority sidecars cannot be deleted.
+Native DELETE access and FILE_DISPOSITION_INFO are used as documented by the Windows API:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle
+This is namespace cleanup, not a physical sector-erasure or power-loss claim.
+
+All 208 Data-library tests pass, including nine new AT-233 cases. Actual Windows tests delete a
+synthetic DPAPI generation-key envelope, refuse reopening its missing key without replacement,
+preserve a foreign file and journal, refuse changed bytes and same-content replaced file identity
+before deleting any captured entry, and reject capturing its own authority for cleanup. Metadata
+cases prove immutable reopen, no later additions, explicit missing-list refusal and safe filenames.
+The independent Windows two-process caller now stores the actual captured artifact table and invokes
+the production native cleanup class, then the real identity retirement operation. Initial injected
+flush failure retains the target file/identity; cold continuation deletes only the captured object
+and target identity, preserving main. Evidence: artifacts/native-sqlcipher/d233-native-create.log
+and d233-native-resume.log; owned fixture location in d233-owned-retirement-path.txt.
+
+The native host still must discover/authenticate the complete profile database, migration/restore,
+portable/safety-copy and per-generation key reference set before capture. This class intentionally
+never guesses ownership, scans filename patterns or deletes a shared installation wrapping key.
+Final app catalogue persistence, complete reference discovery, Android/iOS native deletion,
+uncommitted creation reconciliation, optional recovery/retention/OS policy and main registration
+remain unfinished. Main remains plaintext. No visible layout changed and unchanged producer/UI
+matrices are not repeated. Terminal main/test/package evidence follows below.
+
+D-233 terminal managed verification: all 3,410 solution cases pass, zero failures/skips
+(2m53.233s); focused Data suite passes 208/208. The independent final native Windows caller
+builds without warnings/errors (2.16s) and its two real retained-state processes pass.
+Strict main Windows build has zero warnings/errors (22.38s). No unchanged UI/native producer
+suite was repeated. Main registration remains plaintext and final complete reference discovery,
+app catalogue/native mobile effects, recovery/retention/OS integration remain open.
+
+D-233 final strict main Android build has zero warnings/errors (40.20s). Native Windows cleanup
+is verified in the actual host tests and independent caller; Android/iOS deletion adapters are
+not supplied or claimed by this step. The complete-reference discovery requirement is unchanged.
+
+D-233 complete signed Release APK: artifacts/android-d233-delivery/pro.vafadar.zanance-Signed.apk
+(83,450,586 bytes), local test certificate. apksigner verification succeeds; package
+pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores are verified.
+Test outputs were cleaned after terminal checks. Main encryption, full reference discovery,
+app/mobile retirement, recovery/retention/OS policy, device/store and product release acceptance
+remain unfinished.

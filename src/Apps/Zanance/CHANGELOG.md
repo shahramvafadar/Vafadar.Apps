@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Captured encrypted-profile cleanup files (D-233)
+
+- Retain the exact reviewed file set before retirement and refuse changed or replaced files.
+- Prepared Windows cleanup keeps unrelated files and resumes interrupted deletion safely.
+- Complete profile-reference discovery and main encryption activation remain pending integration.
+
 ### Added - Verified encrypted-profile identity retirement (D-232)
 
 - Remove only the reviewed inactive profile identity after verified storage cleanup.

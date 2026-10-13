@@ -2552,3 +2552,12 @@ catalogue recheck. Other bindings are preserved; observable deletion/flush failu
 replacement identities. Actual two-profile SQLite removal runs in the independent Windows caller.
 Final native preference/artifact/key retirement and main registration remain pending. See D-232
 in the decision log for exact evidence and remaining recovery/retention/OS/platform boundaries.
+
+### D-233 — Persist exact file inventory before protected retirement
+
+SEC remains in progress. Retirement now retains immutable direct filenames, native file identities,
+lengths and SHA-256 before catalogue removal. Native Windows cleanup refuses changed/replaced files,
+preserves foreign files and its own authority, synchronizes deletion, and resumes only the existing
+catalogue-removal request. Real DPAPI-envelope deletion and cold independent continuation pass.
+Complete native profile/reference discovery and final app/mobile/recovery/retention/OS integration
+remain open. See D-233 in the decision log for observed scope and its limits.
