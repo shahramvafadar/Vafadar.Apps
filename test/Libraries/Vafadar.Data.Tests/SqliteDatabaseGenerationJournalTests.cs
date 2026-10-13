@@ -16,6 +16,33 @@ public sealed class SqliteDatabaseGenerationJournalTests : IDisposable
     private SqliteDatabaseGenerationJournal Store(DatabaseGenerationCheckpoint? identity = null) => new(PathOfJournal, identity ?? initial);
     private static DatabaseGenerationCheckpoint Next(DatabaseGenerationCheckpoint state) => state.Advance(state.ProfileId, state.CandidateGeneration, state.Phase + 1);
 
+    [Fact, Trait("AT", "AT-216")]
+    public async Task Interrupted_initial_journal_publication_preserves_captured_state_on_resume()
+    {
+        await Assert.ThrowsAsync<IOException>(() => Store().CreateNewAsync(new InterruptedPublication(), Ct));
+        Assert.False(File.Exists(PathOfJournal));
+        Assert.Equal(initial, await new SqliteDatabaseGenerationJournal(PathOfJournal + ".creating", initial).ReadAsync(Ct));
+        await Store().CreateNewAsync(Ct); Assert.Equal(initial, await Store().ReadAsync(Ct));
+        Assert.False(File.Exists(PathOfJournal + ".creating"));
+    }
+
+    [Fact, Trait("AT", "AT-216")]
+    public async Task Advanced_staged_journal_cannot_be_published_as_a_fresh_original()
+    {
+        await Assert.ThrowsAsync<IOException>(() => Store().CreateNewAsync(new InterruptedPublication(), Ct));
+        var staged = new SqliteDatabaseGenerationJournal(PathOfJournal + ".creating", initial);
+        await staged.CompareAndCommitAsync(initial, Next(initial), Ct);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => Store().CreateNewAsync(Ct));
+        Assert.Equal(Next(initial), await staged.ReadAsync(Ct)); Assert.False(File.Exists(PathOfJournal));
+    }
+
+    private sealed class InterruptedPublication : IDatabaseGenerationFileDurability
+    {
+        public long AvailableBytes => long.MaxValue;
+        public Task SynchronizeFileAsync(string path, CancellationToken ct) => throw new IOException("Fictitious pre-publication interruption.");
+        public Task SynchronizeDirectoryAsync(CancellationToken ct) => throw new IOException("Unexpected publication.");
+    }
+
     [Fact, Trait("AT", "AT-194")]
     public async Task Every_committed_phase_reopens_with_its_exact_original_identity()
     {

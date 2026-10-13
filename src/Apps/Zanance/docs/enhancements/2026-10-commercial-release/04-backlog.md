@@ -1723,3 +1723,25 @@ artifacts/native-sqlcipher/build/android-d/android-migration-proof-58220434415e4
 run f93ba289610e4355aee1b0446d65bc9a. Reviewed APK ABI identities/signature verified; independent
 package uninstalled. Strict Windows 26.63s, Android 17.07s and independent Release 71.92s builds
 have zero warnings/errors. Script parser checked; test cleanup waits for terminal builds/tests.
+### D-217 — Publish complete migration and history metadata
+
+Generation journal creation and initial restore-history creation now use the same verified staged
+publication as identities. Existing/corrupt/foreign final files and sidecars are never replaced;
+read never creates. Captured Original journal state and exact initial pending/selected history
+must match on staged resume. Advanced journal staging cannot become a fresh Original, and a pending
+history cannot be republished as verified initial selection. Typed schemas/versions remain unchanged.
+
+Native overloads synchronize file and directory around no-replace publication. Managed-only effects
+do not certify native power loss. Incomplete/corrupt staging still fails closed for reconciliation;
+this does not regenerate missing keys or certify complete startup/recovery. Main provider/all-profile
+bootstrap/covered async startup, recovery/retention and final OS exclusion remain open/unactivated.
+
+Independent signed Release AOT/trim Android x64 API36/4 KiB interrupts journal publication after
+actual staged fsync, resumes that exact journal, then interrupts pending-history publication after
+its actual fsync. Third process resumes both bindings, retains pending initial ancestry and confirms
+staging aliases gone, without preparing keys or writing financial data. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-442b5d696a9a4a8699baf81c8b31218d.json,
+run 18d182139b834d9b84bd34178fd54ef1. Runner clears only its own prior metadata barrier before
+its second phase; no scenario repeat/reinstallation for failure or unrelated native suite/UI matrix.
+ABI identities/signature verified and package uninstalled. Strict Windows 18.74s, Android 17.54s
+and independent Release 59.16s builds report zero warnings/errors. Parser checked.

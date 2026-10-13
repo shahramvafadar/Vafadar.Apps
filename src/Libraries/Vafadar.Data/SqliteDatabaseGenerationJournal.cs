@@ -25,7 +25,24 @@ public sealed class SqliteDatabaseGenerationJournal
     }
 
     /// <summary>Explicitly creates a new original-state journal; existing or interrupted files are never replaced.</summary>
-    public async Task CreateNewAsync(CancellationToken cancellationToken = default)
+    public Task CreateNewAsync(CancellationToken cancellationToken = default) => PublishNewAsync(null, cancellationToken);
+
+    /// <summary>Publishes complete captured initial state with explicit native file/directory synchronization.</summary>
+    public Task CreateNewAsync(IDatabaseGenerationFileDurability durability, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(durability); return PublishNewAsync(durability, cancellationToken);
+    }
+
+    private Task PublishNewAsync(IDatabaseGenerationFileDurability? durability, CancellationToken ct) =>
+        SqliteMetadataPublication.CreateAsync(path,
+            stage => new SqliteDatabaseGenerationJournal(stage, identity).CreateCoreAsync(ct),
+            async target =>
+            {
+                if (await new SqliteDatabaseGenerationJournal(target, identity).ReadAsync(ct).ConfigureAwait(false) != identity)
+                    throw new InvalidOperationException("Staged journal is not the captured Original state.");
+            }, ValidateDirectory, durability, ct);
+
+    private async Task CreateCoreAsync(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         ValidateDirectory();

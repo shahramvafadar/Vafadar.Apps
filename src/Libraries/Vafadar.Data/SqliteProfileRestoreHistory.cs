@@ -22,17 +22,44 @@ public sealed class SqliteProfileRestoreHistory
     }
 
     /// <summary>Explicitly initializes references after the caller verified its current initial encrypted generation.</summary>
-    public Task CreateNewAsync(CancellationToken ct = default) => CreateCoreAsync(true, ct);
+    public Task CreateNewAsync(CancellationToken ct = default) => PublishNewAsync(true, null, ct);
+
+    /// <summary>Publishes verified initial references with explicit native file/directory synchronization.</summary>
+    public Task CreateNewAsync(IDatabaseGenerationFileDurability durability, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(durability); return PublishNewAsync(true, durability, ct);
+    }
 
     /// <summary>Records pending initial ancestry against an existing Original journal before any native key work.</summary>
     public async Task CreateInitialIntentAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal, CancellationToken ct = default)
+        => await CreateInitialIntentCoreAsync(captured, journal, null, ct).ConfigureAwait(false);
+
+    /// <summary>Publishes pending pre-key ancestry through actual native synchronization without replacing captured staging.</summary>
+    public Task CreateInitialIntentAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal,
+        IDatabaseGenerationFileDurability durability, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(durability); return CreateInitialIntentCoreAsync(captured, journal, durability, ct);
+    }
+
+    private async Task CreateInitialIntentCoreAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal,
+        IDatabaseGenerationFileDurability? durability, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(journal); CheckIdentity(captured); Check(ct);
         if (captured.CandidateGeneration != initial.GenerationId || captured.Phase != DatabaseGenerationPhase.Original ||
             await journal.ReadAsync(ct).ConfigureAwait(false) != captured)
             throw new InvalidOperationException("Initial intent requires the exact existing Original migration journal.");
-        await CreateCoreAsync(false, ct).ConfigureAwait(false);
+        await PublishNewAsync(false, durability, ct).ConfigureAwait(false);
     }
+
+    private Task PublishNewAsync(bool selected, IDatabaseGenerationFileDurability? durability, CancellationToken ct) =>
+        SqliteMetadataPublication.CreateAsync(path,
+            stage => new SqliteProfileRestoreHistory(stage, initial, validate).CreateCoreAsync(selected, ct),
+            async target =>
+            {
+                var rows = await new SqliteProfileRestoreHistory(target, initial, validate).ReadAsync(ct).ConfigureAwait(false);
+                if (rows.Count != 1 || rows[0].Selected != selected)
+                    throw new IOException("Staged history is not the captured initial selection state.");
+            }, validate, durability, ct);
 
     private async Task CreateCoreAsync(bool selected, CancellationToken ct)
     {

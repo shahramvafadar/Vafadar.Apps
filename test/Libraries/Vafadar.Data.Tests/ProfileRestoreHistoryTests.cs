@@ -13,6 +13,36 @@ public sealed class ProfileRestoreHistoryTests : IDisposable
     private SqliteProfileRestoreHistory History() => new(PathOfHistory, initial, () => { });
     public void Dispose() => directory.Dispose();
 
+    [Fact, Trait("AT", "AT-216")]
+    public async Task Pending_initial_history_resumes_staged_publication_with_the_same_binding()
+    {
+        var captured = new DatabaseGenerationCheckpoint(initial.ProfileId, Guid.NewGuid(), initial.GenerationId);
+        var journal = new SqliteDatabaseGenerationJournal(directory.Combine("initial.sqlite"), captured); await journal.CreateNewAsync(Ct);
+        await Assert.ThrowsAsync<IOException>(() => History().CreateInitialIntentAsync(captured, journal, new InterruptedPublication(), Ct));
+        Assert.False(File.Exists(PathOfHistory));
+        await History().CreateInitialIntentAsync(captured, journal, Ct);
+        Assert.False(Assert.Single(await History().ReadAsync(Ct)).Selected);
+        Assert.False(File.Exists(PathOfHistory + ".creating"));
+    }
+
+    [Fact, Trait("AT", "AT-216")]
+    public async Task Pending_staged_history_cannot_be_reinterpreted_as_verified_initial_selection()
+    {
+        var captured = new DatabaseGenerationCheckpoint(initial.ProfileId, Guid.NewGuid(), initial.GenerationId);
+        var journal = new SqliteDatabaseGenerationJournal(directory.Combine("initial.sqlite"), captured); await journal.CreateNewAsync(Ct);
+        await Assert.ThrowsAsync<IOException>(() => History().CreateInitialIntentAsync(captured, journal, new InterruptedPublication(), Ct));
+        await Assert.ThrowsAsync<IOException>(() => History().CreateNewAsync(Ct));
+        Assert.False(File.Exists(PathOfHistory));
+        Assert.False(Assert.Single(await new SqliteProfileRestoreHistory(PathOfHistory + ".creating", initial, () => { }).ReadAsync(Ct)).Selected);
+    }
+
+    private sealed class InterruptedPublication : IDatabaseGenerationFileDurability
+    {
+        public long AvailableBytes => long.MaxValue;
+        public Task SynchronizeFileAsync(string path, CancellationToken ct) => throw new IOException("Fictitious pre-publication interruption.");
+        public Task SynchronizeDirectoryAsync(CancellationToken ct) => throw new IOException("Unexpected publication.");
+    }
+
     [Fact, Trait("AT", "AT-214")]
     public async Task Initial_intent_survives_reopen_and_refuses_restore_before_verified_migration()
     {

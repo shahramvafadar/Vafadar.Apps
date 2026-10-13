@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '')
@@ -49,11 +49,15 @@ if ($activity -notmatch '^pro\.vafadar\.zanance\.nativecompatibility/[A-Za-z0-9_
 function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barrier = '') {
     & $adb -P $AdbPort -s $DeviceSerial shell am force-stop $package
     if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()) { throw 'Owned migration process did not stop.' }
+    if ($Barrier -eq 'metadata-staged') {
+        & $adb -P $AdbPort -s $DeviceSerial shell run-as $package rm -f ('files/native-compatibility/migration-proofs/' + $Identity + '/metadata-staged.json')
+        if ($LASTEXITCODE -ne 0) { throw 'Owned metadata barrier cleanup failed.' }
+    }
     & $adb -P $AdbPort -s $DeviceSerial shell am start -W -n $activity --es migration_phase $Phase --es migration_run $Identity | Out-Host
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial','identity-staged') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create')) { 300 } else { 100 }
+    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -61,7 +65,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
             & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -e ($folder + '/' + $name)
             if ($LASTEXITCODE -eq 0) { $report = [pscustomobject]@{ ActualCandidateCreationObserved = $true }; break }
         } else {
-            $path = if ($Barrier -in @('selected','restore-selected','package-partial','identity-staged')) { $folder + $(if ($Barrier -eq 'identity-staged') { '/identity-staged.json' } elseif ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
+            $path = if ($Barrier -in @('selected','restore-selected','package-partial','identity-staged','metadata-staged')) { $folder + $(if ($Barrier -eq 'metadata-staged') { '/metadata-staged.json' } elseif ($Barrier -eq 'identity-staged') { '/identity-staged.json' } elseif ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
             $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
             if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
         }
@@ -80,9 +84,19 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-$scenarios = if ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+$scenarios = if ($MetadataPublication) { @('metadata-publication') } elseif ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
     $identity = if ($ResumeBootstrapRun) { $ResumeBootstrapRun } elseif ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    if ($scenario -eq 'metadata-publication') {
+        $journal = Invoke-OwnedMigration 'metadata-journal' $identity 'metadata-staged'
+        if (-not $journal.CommittedMetadataStaged) { throw 'Committed journal staging missing.' }
+        $history = Invoke-OwnedMigration 'metadata-history' $identity 'metadata-staged'
+        if (-not $history.CommittedMetadataStaged) { throw 'Committed history staging missing.' }
+        $finished = Invoke-OwnedMigration 'metadata-reopen' $identity
+        if (-not $finished.JournalAndHistoryStagingResumed -or -not $finished.CapturedBindingsUnchanged -or -not $finished.InitialIntentStillPending -or -not $finished.NoKeyPreparationOrFinancialData) { throw 'Actual metadata publication restart failed.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Journal = $journal; History = $history; Result = $finished }
+        continue
+    }
     if ($scenario -eq 'settings-persistence') {
         $created = Invoke-OwnedMigration 'settings-create' $identity
         if (-not $created.OriginalMauiWritesPersisted -or -not $created.CanceledPersistenceRejected) { throw 'Original MAUI persistence evidence missing.' }

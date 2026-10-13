@@ -17,6 +17,11 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "metadata-journal" or "metadata-history" or "metadata-reopen")
+        {
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+            return await MetadataPublicationCompatibility.RunAsync(folder, phase);
+        }
         if (phase is "settings-create" or "settings-reopen")
             return await SettingsPersistenceCompatibility.RunAsync(folder, phase == "settings-create");
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

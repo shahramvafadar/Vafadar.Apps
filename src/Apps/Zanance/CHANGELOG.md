@@ -1397,3 +1397,7 @@ Prepared initial ancestry before encryption work so a restart can complete the c
 ### D-216 - Identity bootstrap publication
 
 Prepared restartable identity publication from verified staging, without exposing partial metadata or replacing captured identities. Main encryption activation remains pending.
+
+### D-217 - Migration metadata publication
+
+Prepared restartable publication of captured migration and initial recovery history without treating incomplete state as verified. Main encryption activation remains pending.
