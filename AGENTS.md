@@ -1558,3 +1558,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   atomic protected factory publication. Retain the key owner while active; drain contexts before disposal.
 * Disposed key owners refuse further construction; no original/plaintext fallback. This initial
   composition is not a selector for later restored generations or main startup/provider activation.
+
+## 140. Durable restore generation references (D-208)
+
+* Reserve captured parent/target references before protected package input/key/staging effects. Keep
+  ordered ancestry and initial installation/profile binding; unresolved intent cannot be replaced.
+* Reopen and require the latest reference on receiver restart. Mirror selection only after actual
+  journal/key/file verification and preference replay; Selected is not package/prefs durability.
+* Never fall back to the initial generation after missing/corrupt reference state. Retain all prior
+  references, key/capsule/rollback ownership; live startup resolution and pruning remain separate work.

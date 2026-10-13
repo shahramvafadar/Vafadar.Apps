@@ -1359,3 +1359,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 - Connected durable identities, resumable migration and retained key ownership to protected factory
   publication. This initial composition is not yet registered in main application startup.
+
+### D-208 — Restore generation references
+
+- Added retained original/target restore references to protected package recovery so later startup
+  can find the restored generation. Main encrypted startup is not yet activated.

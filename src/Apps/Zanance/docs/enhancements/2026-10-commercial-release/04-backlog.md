@@ -1590,3 +1590,7 @@ retention/deletion/recovery/OS policy integration and platform acceptance. Main 
 D-207 joins actual initial identities/journal/native keys/migration with retained-key protected
 publication. SEC-01 still needs main provider/bootstrap/live restored registry/all-profile/startup,
 key lifetime/recovery/retention/deletion/OS policy and platform acceptance; no main activation.
+
+D-208 retains ordered restore intent/ancestry and links actual receiver selection readback. Main
+live generation resolution/provider/startup, one-time durable replay/later preference writes,
+key/rollback/reference retention/deletion/recovery and OS policy remain; main is plaintext.

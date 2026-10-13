@@ -610,3 +610,7 @@ network SDK. Capsule is not a portable backup source; final main retention/OS po
 D-206 local identity bootstrap records only non-secret installation/legacy/key-profile/generation
 GUIDs in private protocol storage. No keys/labels/financial facts or portable source and no SDK,
 permission or network change. Main/final OS-policy integration remains open.
+
+D-208 private reference metadata contains installation/profile/parent/target GUIDs, sequence and
+selected-reference flag only, not keys/names/finance/paths or portable preferences. No SDK/network/
+permission change; main final OS-policy and referenced key/file pruning are still open.

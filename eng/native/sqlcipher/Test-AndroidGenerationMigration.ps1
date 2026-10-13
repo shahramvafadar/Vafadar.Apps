@@ -115,7 +115,7 @@ foreach ($scenario in $scenarios) {
         $partial = Invoke-OwnedMigration 'package-restore' $identity 'package-partial'
         if (-not $partial.ActualPartialPreferenceWrite) { throw 'Actual partial platform preference barrier missing.' }
         $finished = Invoke-OwnedMigration 'package-resume' $identity
-        if (-not $finished.ActualPackageReceiver -or -not $finished.PartialPlatformPreferencesSurvivedKill -or -not $finished.DurableReplayBeforeProtectedPublication -or -not $finished.FinancialAndDeviceStateCorrect -or -not $finished.EncryptedPreferenceAndDatabaseRollbackRetained) { throw 'Actual package restore restart evidence missing.' }
+        if (-not $finished.ActualPackageReceiver -or -not $finished.PartialPlatformPreferencesSurvivedKill -or -not $finished.DurableReplayBeforeProtectedPublication -or -not $finished.FinancialAndDeviceStateCorrect -or -not $finished.EncryptedPreferenceAndDatabaseRollbackRetained -or -not $finished.RestoreReferencesSurviveKillAndSelection) { throw 'Actual package restore restart evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Interrupted = $partial; Result = $finished }
         continue
     }

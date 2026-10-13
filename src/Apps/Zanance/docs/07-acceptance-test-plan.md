@@ -1995,3 +1995,24 @@ D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass,
 Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
 only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.
+
+### AT-207 — Durable restore reference ancestry (D-208)
+
+Managed store cases cover idempotent pending intent/reopen, unresolved replacement/stale parent/
+foreign profile refusal, missing/partial state and corrupt ancestry without mutation. Native actual
+package interruption/referral readback is separate evidence; status alone is not key/file/prefs
+authority or main startup/lifecycle acceptance.
+
+D-208 evidence: 140 infrastructure tests and all 3,314 tests pass, zero failures/skips. Strict
+main Windows/Android and independent Release AOT/trim builds zero warnings/errors. Actual Android
+x64 API36/4 KiB package fixture reserves durable references before staging, externally terminates
+at partial platform preference write, reopens same pending parent/target, verifies actual selected
+journal/keys/files/replay and mirrors selection before protected factory publication. Original and
+rollback/capsule references retained; money/device-state checks pass. The final observation expired
+while PID 25465 remained live; actual result later contained all six successful flags. Record the
+same completed fixture without restart: artifacts/native-sqlcipher/d208-native-restore-proof.json,
+run ff097ff6eeb1401197918e20f2e57cff. Preserve d208-native-restore.log timeout evidence. APK signature
+and reviewed packaged ABI identity pass, independent package uninstalled, test outputs cleaned only
+after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
+physical/iOS/preference-durability acceptance is claimed.

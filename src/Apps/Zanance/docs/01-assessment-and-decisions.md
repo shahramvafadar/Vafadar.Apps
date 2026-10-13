@@ -2870,3 +2870,32 @@ D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass,
 Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
 only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.
+
+## D-208 — Persist restore intent and generation ancestry
+
+**Decision.** Add an explicit installation/profile-bound reference history, retaining initial and
+every parent/target restore generation. Reserve before effects; require latest identity in the actual
+package receiver and mirror selected state only after actual journal/key/file checks plus replay.
+Reject missing/changed/unresolved ancestry rather than replacing intent or choosing initial fallback.
+
+**Reason.** Initial migration identity cannot locate later restored generations on restart. Durable
+intent must survive interruption before settings/publication and retain ownership of older keys/files.
+Reference status is not authorization or completed package/preference durability.
+
+**Boundary.** History is operational metadata; main startup/live resolver/provider activation, later
+preference-edit handling, key/reference pruning, recovery and complete lifecycle acceptance remain
+open. Receiver's history argument is optional for existing callers; main final integration must use it.
+
+D-208 evidence: 140 infrastructure tests and all 3,314 tests pass, zero failures/skips. Strict
+main Windows/Android and independent Release AOT/trim builds zero warnings/errors. Actual Android
+x64 API36/4 KiB package fixture reserves durable references before staging, externally terminates
+at partial platform preference write, reopens same pending parent/target, verifies actual selected
+journal/keys/files/replay and mirrors selection before protected factory publication. Original and
+rollback/capsule references retained; money/device-state checks pass. The final observation expired
+while PID 25465 remained live; actual result later contained all six successful flags. Record the
+same completed fixture without restart: artifacts/native-sqlcipher/d208-native-restore-proof.json,
+run ff097ff6eeb1401197918e20f2e57cff. Preserve d208-native-restore.log timeout evidence. APK signature
+and reviewed packaged ABI identity pass, independent package uninstalled, test outputs cleaned only
+after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
+physical/iOS/preference-durability acceptance is claimed.

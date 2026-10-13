@@ -271,6 +271,8 @@ internal static class GenerationMigrationCompatibility
         var environment = new Vafadar.Core.Hosting.StaticAppEnvironment("pro.vafadar.zanance", "Zanance", new Version(1, 0), "Independent fixture", "Fixture");
         var sourceBackup = new Vafadar.Backup.BackupService(sources, environment, imported, TimeProvider.System, new());
         var portable = await sourceBackup.CreatePackageAsync();
+        var history = PackageHistory(folder, captured, binding);
+        await history.CreateNewAsync(); await history.ReserveAsync(captured);
         var receiver = PackageReceiver(folder, captured, journal, binding, keys, new InterruptedPreferenceStore(settings, folder),
             _ => Task.FromResult(current), _ => throw new IOException("Package publication occurred before the interruption barrier."));
         var actualBackup = new Vafadar.Backup.BackupService([], [], environment, settings, TimeProvider.System, new(), receiver);
@@ -288,7 +290,11 @@ internal static class GenerationMigrationCompatibility
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
                 .UseModel(ZananceDbContextModel.Instance).Options;
             await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
-        }, publish, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+        }, publish, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0", PackageHistory(folder, captured, binding));
+
+    private static SqliteProfileRestoreHistory PackageHistory(string folder, DatabaseGenerationCheckpoint captured, DatabaseKeyBinding binding) =>
+        new(Path.Combine(folder, "restore-history.sqlite"), new(binding.ProfileId, binding.InstallationId, captured.OriginalGeneration),
+            () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); });
 
     private static async Task<string> ResumePackageAsync(string folder)
     {
@@ -301,6 +307,9 @@ internal static class GenerationMigrationCompatibility
         var settings = new NativePreferenceStore();
         if (settings.Get(PackagePreferenceKeys[0]) != "en" || settings.Get(PackagePreferenceKeys[1]) != "fa-IR")
             throw new IOException("Actual partial preference write did not survive interruption.");
+        var history = PackageHistory(folder, captured, binding);
+        var pending = (await history.ReadAsync())[^1];
+        if (pending.Selected || pending.CandidateGeneration != binding.GenerationId) throw new IOException("Interrupted restore reference did not retain its pending target.");
         var key = await keys.ReadAsync(binding, CancellationToken.None);
         try
         {
@@ -317,6 +326,9 @@ internal static class GenerationMigrationCompatibility
                     published = true; return Task.CompletedTask;
                 });
             await receiver.ResumeAsync();
+            var references = await history.ReadAsync();
+            if (references.Count != 2 || !references[^1].Selected || references[^1].OriginalGeneration != captured.OriginalGeneration || references[^1].CandidateGeneration != binding.GenerationId)
+                throw new IOException("Selected restore references changed or lost ancestry.");
             await using var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync();
             if (!published || (await db.Entries.SingleAsync()).Amount != 730 || settings.Get("device.fictitious.security") != "keep-device-state")
                 throw new IOException("Actual restored package publication changed financial/device state.");
@@ -330,7 +342,7 @@ internal static class GenerationMigrationCompatibility
                     throw new IOException("Protected package rollback missing or plaintext.");
         }
         finally { CryptographicOperations.ZeroMemory(key); }
-        return "{\"ActualPackageReceiver\":true,\"PartialPlatformPreferencesSurvivedKill\":true,\"DurableReplayBeforeProtectedPublication\":true,\"FinancialAndDeviceStateCorrect\":true,\"EncryptedPreferenceAndDatabaseRollbackRetained\":true}";
+        return "{\"ActualPackageReceiver\":true,\"PartialPlatformPreferencesSurvivedKill\":true,\"DurableReplayBeforeProtectedPublication\":true,\"FinancialAndDeviceStateCorrect\":true,\"EncryptedPreferenceAndDatabaseRollbackRetained\":true,\"RestoreReferencesSurviveKillAndSelection\":true}";
     }
 
     private sealed class InterruptedPreferenceStore(Vafadar.Core.Settings.ISettingsStore inner, string folder) : Vafadar.Core.Settings.ISettingsStore

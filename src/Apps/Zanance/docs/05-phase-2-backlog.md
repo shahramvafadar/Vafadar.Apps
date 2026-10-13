@@ -1178,3 +1178,7 @@ protected retention/recovery/deletion/OS-policy activation remain incomplete.
 D-207 composes real initial identity/journal/key/migration/cleanup with retained-key factory
 publication. Main startup/provider/live restored references and final security lifecycle acceptance
 remain incomplete; main databases are still plaintext.
+
+D-208 durable restore intent/ancestry is connected to actual package receiver checks and selected
+journal readback. Main live resolver/provider/startup, durable one-time preference replay/later edits,
+key/reference retention/deletion/recovery and final OS-policy acceptance remain incomplete.

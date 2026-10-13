@@ -24,6 +24,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
     private readonly Action validate;
     private readonly string version;
     private readonly int maximumBytes;
+    private readonly SqliteProfileRestoreHistory? history;
 
     /// <summary>Captures the actual generation, current connection owner and covered final publication effects.</summary>
     /// <remarks>The openCurrent callback transfers a registered open connection for receiver disposal. The
@@ -32,7 +33,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
         string candidate, DatabaseKeyBinding binding, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
         ISettingsStore settings, IReadOnlyList<string> portableKeys, Func<CancellationToken, Task<SqliteConnection>> openCurrent,
         Func<SqliteConnection, CancellationToken, Task> upgrade, Func<CancellationToken, Task> publish,
-        Action validate, int maximumBytes, string version)
+        Action validate, int maximumBytes, string version, SqliteProfileRestoreHistory? history = null)
     {
         ArgumentNullException.ThrowIfNull(captured); ArgumentNullException.ThrowIfNull(journal);
         ArgumentNullException.ThrowIfNull(binding); ArgumentNullException.ThrowIfNull(keys); ArgumentNullException.ThrowIfNull(durability);
@@ -45,6 +46,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
         this.captured = captured; this.journal = journal; this.candidate = Path.GetFullPath(candidate); this.binding = binding;
         this.keys = keys; this.durability = durability; this.settings = settings; this.openCurrent = openCurrent;
         this.upgrade = upgrade; this.publish = publish; this.validate = validate; this.maximumBytes = maximumBytes; this.version = version;
+        this.history = history;
         preferences = new(this.candidate + ".preferences.cipher.db", binding, keys, durability, version, portableKeys);
     }
 
@@ -52,6 +54,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
     public async Task RestoreAsync(BackupManifest manifest, IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(manifest); ArgumentNullException.ThrowIfNull(entries); Check(ct);
+        if (history is not null) await history.RequireAsync(captured, ct).ConfigureAwait(false);
         // Zanance has two sources. Attachment bytes are inside its database, not a separate sequential restore.
         if (!entries.TryGetValue("database.sqlite", out var database) || entries.Keys.Any(name => name is not "database.sqlite" and not "display-settings.json"))
             throw new InvalidDataException("Protected restore package has missing or unsupported sources.");
@@ -75,12 +78,14 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
     public async Task ResumeAsync(CancellationToken ct = default)
     {
         Check(ct); var packet = await preferences.ReadAsync(validate, ct).ConfigureAwait(false); Check(ct);
+        if (history is not null) await history.RequireAsync(captured, ct).ConfigureAwait(false);
         var state = await journal.ReadAsync(ct).ConfigureAwait(false); Check(ct);
         // Before selection the actual current factory connection remains open/registered; after selection no old key is needed.
         await using var current = state.CandidateSelected ? new SqliteConnection() : await openCurrent(ct).ConfigureAwait(false);
         await SqlCipherRestoreSelection.SelectAsync(captured, journal, candidate, binding, current, keys, durability, validate,
             maximumBytes, version, ct).ConfigureAwait(false); Check(ct);
         preferences.Apply(packet, settings, validate, ct); Check(ct);
+        if (history is not null) await history.RecordSelectedAsync(captured, journal, ct).ConfigureAwait(false);
         await publish(ct).ConfigureAwait(false);
         // Publication may retire the previous access endpoint. The host keeps the cover until this task returns.
         // Do not mark migration Completed: original/capsule/rollback retention belongs to final package lifecycle.

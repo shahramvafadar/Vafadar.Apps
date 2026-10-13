@@ -1014,3 +1014,7 @@ all-profile bootstrap/live references, native provider/security and recovery/ret
 D-207 initial composition/retained key ownership does not activate main provider/startup. Require
 live restored-generation resolution, all-profile registration, covered startup/access lifetime,
 key/recovery/retention/OS-policy and platform acceptance before release.
+
+D-208 retained restore history must be supplied by final main integration and consulted before initial
+bootstrap fallback. Selected metadata is not package/preference durability or key/file authorization.
+Main live resolver/provider/startup, replay/later edits and protected retention/recovery remain open.

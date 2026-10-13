@@ -3159,3 +3159,24 @@ D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass,
 Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
 only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.
+
+### 31.121 Durable restore generation references (D-208)
+
+Protected package receiver can require a retained installation/profile-bound ordered restore intent
+and mirror actual selected journal after verified key/files/replay. Unresolved/foreign/stale/corrupt
+state cannot replace intent or choose initial fallback. Main live resolver/provider/startup and
+complete replay/retention/recovery acceptance remain open; operational metadata, no EF model change.
+
+D-208 evidence: 140 infrastructure tests and all 3,314 tests pass, zero failures/skips. Strict
+main Windows/Android and independent Release AOT/trim builds zero warnings/errors. Actual Android
+x64 API36/4 KiB package fixture reserves durable references before staging, externally terminates
+at partial platform preference write, reopens same pending parent/target, verifies actual selected
+journal/keys/files/replay and mirrors selection before protected factory publication. Original and
+rollback/capsule references retained; money/device-state checks pass. The final observation expired
+while PID 25465 remained live; actual result later contained all six successful flags. Record the
+same completed fixture without restart: artifacts/native-sqlcipher/d208-native-restore-proof.json,
+run ff097ff6eeb1401197918e20f2e57cff. Preserve d208-native-restore.log timeout evidence. APK signature
+and reviewed packaged ABI identity pass, independent package uninstalled, test outputs cleaned only
+after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
+physical/iOS/preference-durability acceptance is claimed.

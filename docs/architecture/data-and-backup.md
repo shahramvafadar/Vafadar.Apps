@@ -1190,3 +1190,40 @@ D-207 final managed evidence: 135 infrastructure tests and all 3,309 tests pass,
 Strict main Windows/Android and independent Release builds zero warnings/errors. Tests cleaned
 only after both main builds completed. Logs: d207-{data-tests,full-tests,main-windows,main-android,
 native-build,test-clean}.log. Driver parser passes; no unchanged UI/cipher matrices repeated.
+
+### Restore ancestry/reference history (D-208)
+
+SqliteProfileRestoreHistory explicitly initializes a private non-secret history bound to the known
+initial encrypted generation's installation/profile/key context. Row zero records that initial
+reference. ReserveAsync adds a captured original/target pair before key/staging work, with contiguous
+sequence, distinct unique target and selected-parent ancestry. A matching reservation is idempotent;
+unresolved intent, wrong profile/parent or reused target cannot be replaced.
+
+The versioned exact schema uses existing-only SQLite DELETE/EXTRA transactions, typed/canonical
+identity checks and commit readback. Missing/corrupt/partial state never initializes on read. No
+financial rows, names, paths, keys or paid facts are stored; this is separate operational metadata.
+All references remain retained, with no key/file/history pruning or guessed rollback. The initial
+binding is supplied only after caller verification; references alone authorize no file/key access.
+
+SqlCipherPackageRestoreReceiver optionally requires latest history before consuming package input
+and again on resume. After actual SqlCipherRestoreSelection key/file/journal checks and preference
+replay, it mirrors actual selected journal state transactionally before captured publication. This
+flag is selected-reference evidence, not preference durability, completion or proof of successful
+publication. Journal/key/encrypted candidate/capsule verification remains mandatory on startup.
+Main integration must provide this history and resolve latest references rather than blindly opening
+initial bootstrap after restore; current main DI/startup/provider activation is still incomplete.
+Later preference edits/one-time durable replay and final recovery/retention/deletion remain open.
+
+D-208 evidence: 140 infrastructure tests and all 3,314 tests pass, zero failures/skips. Strict
+main Windows/Android and independent Release AOT/trim builds zero warnings/errors. Actual Android
+x64 API36/4 KiB package fixture reserves durable references before staging, externally terminates
+at partial platform preference write, reopens same pending parent/target, verifies actual selected
+journal/keys/files/replay and mirrors selection before protected factory publication. Original and
+rollback/capsule references retained; money/device-state checks pass. The final observation expired
+while PID 25465 remained live; actual result later contained all six successful flags. Record the
+same completed fixture without restart: artifacts/native-sqlcipher/d208-native-restore-proof.json,
+run ff097ff6eeb1401197918e20f2e57cff. Preserve d208-native-restore.log timeout evidence. APK signature
+and reviewed packaged ABI identity pass, independent package uninstalled, test outputs cleaned only
+after both main builds completed. Logs: d208-{data-tests,full-tests,main-windows,main-android,
+native-build,test-clean}.log. No unchanged crypto/UI matrix or main startup/reference-retention/
+physical/iOS/preference-durability acceptance is claimed.

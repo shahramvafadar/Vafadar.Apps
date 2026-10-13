@@ -597,3 +597,7 @@ and final retention/OS-backup policy integration remain open.
 D-206 private non-secret protocol metadata holds installation/legacy/key-profile/initial generation
 GUIDs only. No names, financial rows, key bytes, credentials, paid facts or portable preference entry.
 No SDK/permission/network change. Main activation and final OS backup exclusion remain incomplete.
+
+D-208 private restore reference history retains non-secret installation/profile/parent/target GUIDs,
+sequence and selected-reference flag only. No keys, names, finance, paths, credentials or portable
+entry; no SDK/network/permission changes. Main/final OS-policy and pruning remain open.
