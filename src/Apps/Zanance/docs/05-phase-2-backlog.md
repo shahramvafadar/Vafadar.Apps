@@ -1144,3 +1144,9 @@ recovery/OS policy composition remains; no current user backup restriction or te
 Actual bounded portable import/new local key/typed verification/32 schema migrations pass native
 old-backup proof. No live selection or original mutation; final receiver dispatch/rollback/catalogue/
 provider/all-profile/recovery/OS policy composition and platform acceptance remain.
+
+## D-200 restored selector and encrypted rollback
+
+Actual current/restored selection and existing-key rollback verification/restart pass in independent
+Release Android. Preserve original and Selected for outer package transaction. No complete dispatch/
+source rollback/retention/provider/main/all-profile/recovery/OS policy acceptance.

@@ -1552,3 +1552,11 @@ SEC-02 adds bounded memory portable import into fresh keyed staging, typed valid
 old-schema upgrade, verified in independent original-model Release Android. Six guards/focused
 108 pass. This does not close SEC-08 safety/package rollback or main restore dispatch/selection;
 all main provider/lifecycle/catalogue/recovery/all-profile/OS policy gates remain.
+
+## Restored selection / encrypted previous data (D-200)
+
+Actual selector creates/fully verifies encrypted current-data rollback before ordered commit,
+keyed reopen and same-run selected restart. No key replacement/plaintext fallback/original deletion.
+Six guards/focused 114 and actual native different old/new packets after external termination pass.
+Outer package transaction/source rollback/catalogue publication/safety/key retention remain; main
+provider/startup/all-profile/recovery/OS policy not active. SEC-08 is not complete from this primitive.

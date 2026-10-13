@@ -2629,3 +2629,36 @@ D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; out
 Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
 d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
 restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.
+
+## D-200 - Restored generation selection with encrypted rollback
+
+Add actual SqlCipherRestoreSelection for already verified restored staging under captured exclusive
+profile/access ownership. Bind profile/new generation, read existing key only, recheck cipher/native
+integrity, snapshot current registered protected connection in memory, create/fully compare/sync
+independent encrypted pre-restore rollback and sync candidate before ordered journal selection.
+Compare-and-commit/read back every step, keyed reopen after Selected. Restart at Selected checks
+candidate/rollback with existing key without requiring old connection, generating keys, falling back
+to plaintext or deleting original. Retain Selected/original/rollback for outer package transaction.
+No claim of preferences/attachments/package rollback or actual main publication/cleanup completion.
+
+Initial native open-identity guard failed because configured path and native filename alias differed;
+use captured ConnectionString identity (same approach as original actual-file commercial access).
+Actual selected marker later appeared after observer timeout; process remained live. Did not recreate
+or rerun staging/selection. Terminate only at that actual marker, then resume same dataset. Resume
+process initially hung at Mono compiled model without original data registration (D-44). Diagnose
+live no-result/no-error state, stop only that fixture, register actual AddZananceData before model,
+rebuild and rerun only selected resume. Final same-run native result verifies new and old financial
+packets (different amounts/names), encrypted rollback/original retained and no old connection needed.
+Observation expiry is preserved as negative evidence, not called terminal or successful execution.
+
+Six guard cases/focused 114 pass: foreign binding, missing journal/key, retired/cancelled access and
+invalid cleared key never advance selector or prepare replacement. Signed independent Release
+actual-model/32-migration Android selection/real process termination/same-run resume proof passes.
+APK v2/v3/ZIP/reviewed ABI hashes and exact package removal checked. AT-199 records full/build evidence.
+Main profiles remain plaintext; dispatch/catalogue/provider/startup/all-profile/recovery/OS policy,
+package-source transaction, safety retention/pruning and broader platform/crash acceptance remain.
+
+D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output cleaned. Main
+strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
+resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.

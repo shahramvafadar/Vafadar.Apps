@@ -170,3 +170,12 @@ The independent -Factory route now publishes the verified candidate through the 
 location/DI context factory, reads/writes/audits actual model data, and rejects stale already-open
 contexts, same-path unkeyed movement and legacy backup work. This closes the protected EF adapter
 proof, not main provider/profile/backup/recovery activation. See data architecture for exact scope.
+
+## Restore selection is not package completion (D-200)
+
+Actual restored selector joins existing key, current protected snapshot, verified encrypted
+rollback and candidate integrity with ordered CAS/readback. Selected restart checks candidate/
+rollback without original connection. Original remains retained and checkpoint stays Selected;
+preferences/package transaction/catalogue publication/retention remain outer obligations. Native
+same-run external process kill/resume with distinct previous/restored packets passes. Observer
+timeout was reconciled with live marker; diagnosed D-44 resume deadlock fixed without re-creation.

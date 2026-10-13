@@ -1833,3 +1833,19 @@ D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; out
 Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
 d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
 restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.
+
+## AT-199 - Actual restored selection/rollback and selected restart
+
+Six guards/focused 114 pass; no replacement key or implicit journal/selection. Native actual-model
+current/restored packets differ; encrypted rollback fully typed-verified before actual Selected,
+external process terminated at persisted marker and same-run selected resume preserves both packets
+and original without old connection. Observer timeout while live was not a re-creation trigger.
+Resume Mono D-44 registration omission diagnosed/fixed; only same selected dataset phase rerun.
+Final signed Release proof/sig/ZIP/native ABI and package removal pass. This is not package Completed,
+preferences/safety retention/full rollback/main dispatch/provider/all-profile/recovery/OS policy or
+physical/iOS/crash matrix acceptance. Main remains plaintext.
+
+D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output cleaned. Main
+strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
+resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.

@@ -1484,3 +1484,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   upgraded candidate for cipher/relational integrity and synchronize it. No plaintext temporary file.
 * Candidate preparation alone never selects live data, deletes originals or certifies safety rollback;
   generation-aware selection/package transaction and restart acceptance remain separate obligations.
+
+## 132. Restored selection and encrypted rollback (D-200)
+
+* Restored candidate selection reads its existing bound key; it never generates a replacement.
+  Preserve current data in fully verified/synchronized encrypted rollback before journal selection.
+* Use configured connection identity, not SQLite open-time filename aliases. Compare/read back every
+  ordered checkpoint; Selected restart opens candidate/rollback without old connection or plaintext fallback.
+* Retain original/rollback and Selected state until complete package/lifecycle transaction finalizes;
+  this primitive does not restore preferences, publish contexts, prune keys or certify full recovery.
+* Observation timeout is not process failure. Resume the same live barrier; fix diagnosed Mono
+  initialization before restarting only the stuck resume phase, never re-create its existing candidate.

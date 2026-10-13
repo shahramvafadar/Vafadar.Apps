@@ -979,3 +979,10 @@ Original first schema imports under fresh local key and upgrades through all 32 
 independent signed Release Android, preserving financial/profile packets and source bytes. No
 live selection, safety/package rollback or main activation. Receiver dispatch/lifecycle/provider/
 all-profile/recovery/OS policy, physical/iOS/wider crash acceptance remain release gates.
+
+## D-200 restored selected restart
+
+Actual encrypted rollback/distinct restored financial packets survive external termination and
+same-run selected resume in independent signed Release Android. Timeout did not re-create input;
+D-44 resume omission diagnosed/fixed. No package Completed/source rollback/retention/all-profile/
+provider/main recovery/OS policy or physical/iOS/full-crash release acceptance.

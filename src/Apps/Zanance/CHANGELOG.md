@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Protected restored-data selection (2026-10-13, D-200)
+
+- Added verified encrypted previous-data rollback before selecting a restored database.
+- Verified selected restart with distinct restored and previous financial packets after process termination.
+- Original data is retained; full package recovery, retention and app activation remain unfinished.
+
 ### Development - Encrypted restore staging (2026-10-13, D-199)
 
 - Added validated portable import into a fresh encrypted candidate and upgrade with actual app migrations.

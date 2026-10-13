@@ -19,6 +19,8 @@ internal static class GenerationMigrationCompatibility
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
         if (phase == "restore-staging") return await CheckRestoreStagingAsync(folder);
+        if (phase == "restore-select") return await CheckRestoreStagingAsync(folder, select: true);
+        if (phase == "restore-selected-resume") return await ResumeRestoreSelectionAsync(folder);
         var contextPath = Path.Combine(folder, "migration-context.txt");
         DatabaseGenerationCheckpoint initial;
         Guid installation;
@@ -115,7 +117,7 @@ internal static class GenerationMigrationCompatibility
         return "{\"CompleteMigration\":true,\"OriginalModelAndMoneyPreserved\":true,\"EncryptedRollbackRetained\":true,\"ExactPlaintextCleanup\":true}";
     }
 
-    private static async Task<string> CheckRestoreStagingAsync(string folder)
+    private static async Task<string> CheckRestoreStagingAsync(string folder, bool select = false)
     {
         if (Directory.Exists(folder)) throw new IOException("Use a fresh restore fixture directory.");
         Directory.CreateDirectory(folder);
@@ -174,7 +176,72 @@ internal static class GenerationMigrationCompatibility
         var encrypted = await File.ReadAllBytesAsync(candidate);
         if (encrypted.AsSpan().StartsWith("SQLite format 3"u8) || encrypted.AsSpan().IndexOf(System.Text.Encoding.UTF8.GetBytes("Fictitious old restore بانک Ü")) >= 0)
             throw new IOException("Restored staging leaked its plain marker.");
+        if (select)
+        {
+            var oldBinding = new DatabaseKeyBinding(binding.ProfileId, binding.InstallationId, Guid.NewGuid());
+            var currentPath = Path.Combine(folder, "fictitious-current.cipher.db");
+            portable.Position = 0;
+            await SqlCipherRestoreStaging.PrepareAsync(portable, currentPath, oldBinding, keys, new AndroidGenerationFileDurability(folder),
+                async (connection, ct) =>
+                {
+                    var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options;
+                    await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
+                }, () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+            var oldKey = await keys.ReadAsync(oldBinding, CancellationToken.None);
+            try
+            {
+                using var services = new ServiceCollection().AddZananceData(currentPath).BuildServiceProvider();
+                var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+                location.MoveToProtected(currentPath, () => new SqliteConnection(new SqliteConnectionStringBuilder
+                { DataSource = currentPath, Password = Convert.ToBase64String(oldKey), Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString()), "4.19.0");
+                await using var current = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync();
+                var account = await current.Accounts.SingleAsync(); account.Name = "Fictitious before restore";
+                var entry = await current.Entries.SingleAsync(); entry.Amount = 250; await current.SaveChangesAsync();
+                await current.Database.OpenConnectionAsync();
+                var captured = new DatabaseGenerationCheckpoint(binding.ProfileId, oldBinding.GenerationId, binding.GenerationId);
+                var journal = new SqliteDatabaseGenerationJournal(Path.Combine(folder, "restore-selection.sqlite"), captured);
+                await journal.CreateNewAsync();
+                await File.WriteAllTextAsync(Path.Combine(folder, "restore-bindings.txt"), string.Join("\n", binding.ProfileId.ToString("N"), binding.InstallationId.ToString("N"), oldBinding.GenerationId.ToString("N"), binding.GenerationId.ToString("N")));
+                var selected = await SqlCipherRestoreSelection.SelectAsync(captured, journal, candidate, binding,
+                    (SqliteConnection)current.Database.GetDbConnection(), keys, new AndroidGenerationFileDurability(folder),
+                    () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+                if (selected.Phase != DatabaseGenerationPhase.Selected) throw new IOException("Actual restore selection was not committed.");
+                await File.WriteAllTextAsync(Path.Combine(folder, "restore-selected.json"), "{\"ActualRestoreSelected\":true}");
+                await Task.Delay(Timeout.Infinite); // External runner kills after actual selection, before application publication.
+            }
+            finally { CryptographicOperations.ZeroMemory(oldKey); }
+        }
         return "{\"EncryptedRestoreStaging\":true,\"FirstSchemaTo32Migrations\":true,\"OriginalFinancialPacketsPreserved\":true,\"OriginalSourceUnchanged\":true,\"NoLiveSelection\":true}";
+    }
+
+    private static async Task<string> ResumeRestoreSelectionAsync(string folder)
+    {
+        var ids = (await File.ReadAllTextAsync(Path.Combine(folder, "restore-bindings.txt"))).Split('\n');
+        var binding = new DatabaseKeyBinding(Guid.ParseExact(ids[0], "N"), Guid.ParseExact(ids[1], "N"), Guid.ParseExact(ids[3], "N"));
+        var captured = new DatabaseGenerationCheckpoint(binding.ProfileId, Guid.ParseExact(ids[2], "N"), binding.GenerationId);
+        var journal = new SqliteDatabaseGenerationJournal(Path.Combine(folder, "restore-selection.sqlite"), captured);
+        var candidate = Path.Combine(folder, "fictitious-restored.cipher.db"); var keys = new AndroidGenerationKeyStore(folder);
+        // D-44: new resume process must register actual data before Mono compiled-model initialization.
+        _ = new ServiceCollection().AddZananceData(candidate);
+        using var unopenedOld = new SqliteConnection();
+        var selected = await SqlCipherRestoreSelection.SelectAsync(captured, journal, candidate, binding, unopenedOld,
+            keys, new AndroidGenerationFileDurability(folder), () => { if (!Directory.Exists(folder)) throw new IOException("Retired fixture lease."); }, 16 * 1024 * 1024, "4.19.0");
+        if (selected.Phase != DatabaseGenerationPhase.Selected) throw new IOException("Actual selected restore restart regressed.");
+        var key = await keys.ReadAsync(binding, CancellationToken.None);
+        try
+        {
+            foreach (var item in new[] { (candidate, "Fictitious old restore بانک Ü", 730L), (candidate + ".before-restore.cipher.db", "Fictitious before restore", 250L) })
+            {
+                var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(new SqliteConnectionStringBuilder
+                { DataSource = item.Item1, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ToString()).UseModel(ZananceDbContextModel.Instance).Options;
+                await using var db = new ZananceDbContext(options);
+                if ((await db.Accounts.SingleAsync()).Name != item.Item2 || (await db.Entries.SingleAsync()).Amount != item.Item3)
+                    throw new IOException("Selected restore or encrypted rollback packet changed.");
+            }
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+        if (!File.Exists(Path.Combine(folder, "fictitious-current.cipher.db"))) throw new IOException("Restore selection deleted original current data.");
+        return "{\"RestoreSelectedAfterProcessKill\":true,\"RestoredAndPreviousFinancialPacketsCorrect\":true,\"EncryptedRollbackAndOriginalRetained\":true,\"NoOldConnectionNeededOnSelectedRestart\":true}";
     }
 
     private static async Task CheckProtectedFactoryAsync(string path, byte[] key)

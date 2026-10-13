@@ -580,3 +580,11 @@ before native app migrations. No plaintext temporary database, original deletion
 change, portable credential, permission or network effect. Mutable owned keys/buffers cleared;
 full native/string erasure/total peak RAM not promised. Current main unchanged/plaintext; final
 safety/package rollback/dispatch/recovery/OS exclusion and acceptance still required.
+
+## Restored selection with previous-data protection (D-200)
+
+Current protected data exports only into owned cleared memory and encrypted rollback. Existing
+candidate key is read, never regenerated on Selected resume. No original deletion, plaintext temp,
+portable key/credential, network/permission or main OS policy effect. Retain original/rollback/key
+until outer transaction owns safe retention. Full process/string/flash erasure not promised.
+Main unchanged/plaintext; package/catalogue/provider/recovery integration remains required.

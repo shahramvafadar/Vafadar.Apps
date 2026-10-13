@@ -909,3 +909,34 @@ D-199 final managed evidence: all 3,271 tests pass with zero failures/skips; out
 Main strict Windows/Android builds have zero errors/warnings. Logs under artifacts/native-sqlcipher:
 d199-{restore-tests,full-tests,test-clean,main-windows,main-android}.log. Changed native old-schema
 restore route passes; unchanged migration/export/crypto/UI matrices and main phone APK not repeated.
+
+## Restored selection and encrypted rollback (D-200)
+
+SqlCipherRestoreSelection consumes an already verified restored candidate, existing local key,
+actual transition journal and captured open registered protected current connection. Caller owns
+exclusive profile/access/private paths and staging verification. Current configured identity is
+read from ConnectionString rather than native open-time DataSource aliases. It never prepares keys.
+
+Before selection export current coherent data in memory, create an independent rollback encrypted
+under the candidate binding, compare complete schema/header/typed content and synchronize both
+files. Recheck current captured publication and general access; compare-and-commit then read back
+ordered phases. Reopen candidate after Selected. On Selected/Completed restart require candidate/
+rollback integrity with the existing key but do not use old connection or choose plaintext.
+Partial/missing unselected rollback fails closed for outer reconciliation, not guessed deletion.
+Original and rollback remain; method returns Selected, not package Completed. Outer receiver must
+still transact other sources/preferences, publish application catalogue/contexts, manage referenced
+safety/key retention and test full restart/disk/error matrix. No main activation or physical guarantee.
+
+Native actual-model proof uses distinct current/restored financial packets, new device binding,
+real selected journal barrier, external termination and same-dataset resume. Observer expiry occurred
+while writer remained live; actual marker found and continued without re-creation. Mono resume model
+initialization initially hung without original D-44 registration; stop only diagnosed fixture phase,
+rebuild and resume existing data. Successful proof: artifacts/native-sqlcipher/d200-native-selection-
+proof.json (run bad48091ddc84ce3a8ff0bd15603075a). Initial identity failure in d200-open-identity-guard-
+failed.log; no timeout restart or full scenario retest. Native Release/signature/ZIP/ABI checks and
+exact package uninstall pass. Six unit guards/focused 114 are separate from this native evidence.
+
+D-200 final managed evidence: all 3,277 tests pass, zero failures/skips; output cleaned. Main
+strict Windows/Android builds zero warnings/errors. Logs under artifacts/native-sqlcipher:
+d200-{selection-tests,full-tests,test-clean,main-windows,main-android}.log. Native same-run selected
+resume proof passes after diagnosed fixes; existing candidate/selection was not re-created.
