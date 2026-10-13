@@ -1800,3 +1800,16 @@ drained maintenance owner. Readiness follows successful notification and endpoin
 Unpublished failures clear keys as before, ordinary duplicate starts still fail, and Close clears
 the marker. An arbitrary protected endpoint supplies no startup recovery authority. Evidence is
 in D-228 in the application decision log; final native/recovery/lifecycle adoption remains open.
+
+
+### D-229 — Whole-package restore session publication
+
+The receiver closes its old registered native connection before its final publication callback;
+the host must also dispose the transferred owning EF context. SqlCipherProfileSession adopts the
+verified selected binding/path/version with a distinct pending-restore flag. It retains old/new
+owners across failed notification and completes only exact retry after notification and drain.
+Native resolution resumes/verifies actual durable replay/history through OpenCurrentAsync before
+publication. Duplicate accepted adoption is idempotent; profile-switch acceptance is refused.
+Envelope/file/reference reconciliation remains the final host's duty. Independent Windows/Android
+fixture file preferences qualify that effect only; main native/MAUI registration remains pending.
+See D-229 in the application decision log for exact backup/restore/cold evidence.

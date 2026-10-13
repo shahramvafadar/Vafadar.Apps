@@ -3923,3 +3923,55 @@ D-228 complete signed phone artifact: artifacts/android-d228-delivery/pro.vafada
 (79.5 MiB), existing local test certificate; apksigner verification succeeds. Actual package
 pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
 Main storage remains plaintext; this is not encrypted-main, device, iOS or release acceptance.
+
+### D-229 — Adopt a selected whole-package restore into the active protected session
+
+SqlCipherProfileSession.AdoptRestoredAsync resolves/rechecks the exact selected same-profile
+binding/path/version through the existing native generation resolver. It retains previous and
+restored key owners until the actual publication notification and maintenance drain succeed.
+A post-publication observer failure leaves the restored owner installed and alive; only that
+exact pending restore may resume notification/adoption. It never rolls financial data back beneath
+already applied portable preferences. Ordinary profile-switch completion cannot accept a pending
+restore. Successful adoption retires only the previous in-memory owner, not its retained file/key
+references; repeating the accepted exact adoption performs no new resolution or publication.
+
+SqlCipherPackageRestoreReceiver now explicitly disposes the old registered connection after
+selection/replay/history verification and before its publication callback. That callback can then
+release its owning EF context and satisfy the actual session's drained-owner requirement. The
+receiver's existing await-using remains an idempotent failure cleanup. No ledger algorithm or
+portable password policy changes; the final native host still owns registration and UI covering.
+
+The shared native RestoreSessionCompatibility runs the actual BackupService/source/package
+receiver/history/session with actual platform keys/files. A real package captures the encrypted
+profile's balance 321 and allowed locale en in memory. The fixture deliberately changes balance
+to 777/locale de, restores the package, injects an actual observer IOException and reads restored
+finance through the still-live pending key. Exact resume then adopts without repeated preference
+persistence; device-only fake security remains unchanged. It verifies the old registered connection
+was closed before adoption and rejects using profile-switch completion for a pending restore.
+A separate cold process resolves the recorded restore with existing keys only and refuses old
+connection/upgrade/publication/persistence effects. An explicit later fictitious locale choice fr
+is preserved. Independent preference effects are native-flushed fictitious file storage, not
+claims of final MAUI platform preference registration.
+
+Windows retained D-227 dataset was used. Proofs: artifacts/native-sqlcipher/d229-native-runtime.log
+and d229-native-cold.log. The first run preceded the later-choice fixture step; the later fr choice
+was explicitly written/flushed into its owned fictitious preference file before cold verification,
+without rebuilding its finance/key state. Two managed contract scenarios prove no adoption
+resolution before a started session or with a foreign maintenance owner; all 17 publication/factory
+contract tests pass. Shared Android runtime and final managed/build evidence are recorded below.
+Main native/restore registration, profile reconciliation, optional recovery, safety retention,
+final OS policy, remaining native/warning/device/platform and product release gates remain open.
+D-229 terminal verification: shared signed Release AOT Android x64/API36/4 KiB whole-package
+restore, notification-failure continuation and separate cold restored-session read pass.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-4f192702b8794260919da1951279e423.json
+(run 0b6bd586086d46a793e0f4e4ee0b6039). Activity-launch observation timed out while native PID
+13018 was confirmed live; its same restore completed and only the next cold phase followed,
+without fixture/key reset. Native Android build: 73.14s, zero warnings/errors. All 3,380 managed
+cases pass, zero failures/skips (4m00.879s); strict Windows 29.73s and Android 51.99s have zero
+warnings/errors. Main native/restore registration and full security/platform acceptance remain
+unfinished. Fictitious file preferences qualify that effect, not final MAUI preference integration.
+
+D-229 signed complete phone artifact: artifacts/android-d229-delivery/pro.vafadar.zanance-Signed.apk
+(79.1 MiB), existing local test certificate; apksigner verification succeeds. Package
+pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
+Main storage remains plaintext; this does not establish encrypted-main, device/iOS or release.

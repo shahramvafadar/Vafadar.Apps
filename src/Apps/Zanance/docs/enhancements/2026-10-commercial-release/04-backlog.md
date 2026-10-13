@@ -1940,3 +1940,13 @@ recoverable with the retained key, unchanged prepared catalogue and observer rep
 Windows checks prove data/key/endpoint retention and no repeated key reads; shared Android
 scenario verifies the same contract. Main registration, reconciliation, recovery/retention/OS
 policy and remaining native/platform/device gates remain open. See D-228 in the decision log.
+
+
+### D-229 — Selected restore adoption by the active session
+
+SEC-01/SEC-08 remain in progress. Actual whole-package receiver now closes the old connection
+before final adoption. Protected session validates/retains the exact restored key and rejects
+profile-switch completion of its pending restore. Independent Windows restore/observer-error
+resume/cold read pass without replacement keys or repeated preference persistence. Main native
+and restore registration, reconciliation/recovery/retention/OS policy and remaining external
+gates are still open. Detailed evidence is in D-229 in the decision log and specification.

@@ -17,6 +17,15 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "restore-session" or "restore-session-reopen")
+        {
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+            return phase == "restore-session"
+                ? await Vafadar.SqlCipher.Compatibility.RestoreSessionCompatibility.RunAsync(folder,
+                    path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path))
+                : await Vafadar.SqlCipher.Compatibility.RestoreSessionCompatibility.ReopenAsync(folder,
+                    path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path));
+        }
         if (phase is "fresh-startup-create" or "fresh-startup-reopen" or "fresh-startup-notification")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

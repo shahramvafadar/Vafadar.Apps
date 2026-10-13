@@ -1910,3 +1910,12 @@ An initial observer error can follow successful protected publication. Keep its 
 alive; only that failed original and this startup's unchanged prepared catalogue may recover.
 Repeat failed observers for the same endpoint without new publication/pools/keys. Ordinary
 duplicate starts and unrelated protected endpoints remain refused; failures keep startup covered.
+
+
+### D-229 — Adopt the exact selected restored generation
+
+Restore replay releases its old registered connection before session publication. Adopt only the
+verified same-profile binding/path/version under drained ownership; retain both key owners until
+notification and adoption finish. Observer failure retains the installed restored owner for exact
+retry, without rolling finance back beneath applied preferences. Profile-switch completion cannot
+accept pending restore. Retiring an in-memory key never deletes its durable retained references.

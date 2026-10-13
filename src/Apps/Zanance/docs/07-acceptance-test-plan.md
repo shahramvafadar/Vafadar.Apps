@@ -2505,3 +2505,18 @@ Proofs: artifacts/native-sqlcipher/d228-native-complete-proof.json and build/and
 android-migration-proof-6b204a3f4b4c4c37bf842904a534ab33.json. Managed tests cover unowned protected
 startup refusal and same-endpoint/foreign-owner observer contracts; full suite 3,378 pass.
 Main adoption, lifecycle/recovery/retention, remaining native/device/iOS and release remain open.
+
+
+### D-229 / AT-229 — Whole-package restored session adoption
+
+Actual BackupService/package/source/receiver/history/session/native keys/files restore balance
+321 after a deliberate fixture change to 777. Notification failure retains the newly installed
+key/data/preferences; exact continuation does not persist preferences again. Old registered
+connection closes before adoption; profile-switch completion cannot accept pending restore.
+Separate cold processes use existing keys and preserve later locale fr. Windows proofs:
+artifacts/native-sqlcipher/d229-native-runtime.log and d229-native-cold.log; Android proof:
+build/android-d/android-migration-proof-4f192702b8794260919da1951279e423.json under the same
+native artifacts root. The timed-out Android activity observation did not trigger a restart.
+Two new ownership/session refusal contracts pass; full suite 3,380 pass, zero failures/skips.
+File-backed fictitious preferences do not qualify final MAUI persistence, main activation,
+recovery/retention, device/iOS or release acceptance.

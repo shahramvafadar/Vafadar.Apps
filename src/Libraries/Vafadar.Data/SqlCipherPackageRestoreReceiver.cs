@@ -116,6 +116,9 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
             await preferences.MarkAppliedAsync(validate, ct).ConfigureAwait(false); Check(ct);
         }
         if (history is not null) await history.RecordSelectedAsync(captured, journal, ct).ConfigureAwait(false);
+        // Selection/replay no longer needs the old registered connection. Release it before the
+        // session's drained publication callback can retire its previous key owner.
+        await current.DisposeAsync().ConfigureAwait(false); Check(ct);
         if (publishAccess) await publish(ct).ConfigureAwait(false);
         // Publication may retire the previous access endpoint. The host keeps the cover until this task returns.
         // Do not mark migration Completed: original/capsule/rollback retention belongs to final package lifecycle.

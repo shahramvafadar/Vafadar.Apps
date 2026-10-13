@@ -8,6 +8,18 @@ namespace Vafadar.Data.Tests;
 /// <summary>Actual factory publication/refusal contracts with isolated SQLite; actual keyed writes use the native probe.</summary>
 public sealed class ProtectedLocalDatabaseFactoryTests
 {
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-229")]
+    public async Task Restore_adoption_requires_a_started_session_and_its_real_maintenance_owner(bool foreignOwner)
+    {
+        using var database = new TestDatabase();
+        var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        var resolved = false;
+        var session = new SqlCipherProfileSession<TestDbContext>(location, (_, _, _) => { resolved = true; throw new IOException("Unexpected resolution."); });
+        using var owner = await (foreignOwner ? new DatabaseAccessGate() : location.Access).AcquireExclusiveAsync(Ct);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.AdoptRestoredAsync(location.Path, location.Path + ".cipher.db",
+            new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()), owner, Ct));
+        Assert.False(resolved); Assert.False(location.IsProtected); Assert.True(File.Exists(location.Path));
+    }
     [Fact, Trait("AT", "AT-228")]
     public async Task Retrying_protected_notification_keeps_endpoint_and_delivers_observers_that_previously_did_not_run()
     {

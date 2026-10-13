@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Restored encrypted session adoption (D-229)
+
+- Prepared active-session adoption of a fully verified restored database and its preferences.
+- A failed restore notification retains the restored key for continuing the same restore.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Fixed - Retrying prepared encrypted startup (D-228)
 
 - Retain the active key when a startup change notification fails after database publication.

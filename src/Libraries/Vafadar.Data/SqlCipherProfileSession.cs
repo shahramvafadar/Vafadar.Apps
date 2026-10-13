@@ -12,6 +12,59 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
     private SqlCipherProfileGeneration? current;
     private SqlCipherProfileGeneration? pending;
     private string? failedStartupOriginal;
+    private bool pendingRestore;
+
+    /// <summary>Adopts the exact durably selected same-profile restore, keeping both owners until notification and drain succeed.</summary>
+    /// <remarks>Caller already verified restore history and replay through the actual receiver. Resolution rechecks
+    /// those durable facts. A post-publication observer failure retains the new owner for exact retry, never rolls
+    /// financial data back beneath already applied preferences, and never deletes either generation's envelope.</remarks>
+    public async Task AdoptRestoredAsync(string originalPath, string candidatePath, DatabaseKeyBinding binding,
+        DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        ArgumentException.ThrowIfNullOrWhiteSpace(originalPath); ArgumentException.ThrowIfNullOrWhiteSpace(candidatePath);
+        await operations.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            location.Access.RequireDrainedOwner(owner);
+            if (current is null || failedStartupOriginal is not null || (pending is not null && !pendingRestore))
+                throw new InvalidOperationException("Restore requires a completed active profile session.");
+            if (binding.ProfileId != current.Binding.ProfileId || binding.InstallationId != current.Binding.InstallationId)
+                throw new InvalidOperationException("Restore belongs to another active profile or installation.");
+            var expectedPath = Path.GetFullPath(candidatePath);
+            if (pending is null && current.Binding == binding && current.Path == expectedPath) { RequireCurrent(); return; }
+            if (pendingRestore)
+            {
+                if (pending!.Binding != binding || pending.Path != expectedPath)
+                    throw new InvalidOperationException("A different restored publication is unresolved.");
+                RequirePublication(pending);
+                location.RepeatProtectedNotification(location.Capture(), owner);
+            }
+            else
+            {
+                RequireCurrent();
+                var generation = await resolve(originalPath, owner, ct).ConfigureAwait(false);
+                try
+                {
+                    ct.ThrowIfCancellationRequested(); location.Access.RequireDrainedOwner(owner);
+                    if (generation.Binding != binding || generation.Path != expectedPath || generation.CipherVersion != current.CipherVersion)
+                        throw new InvalidOperationException("Resolved restore differs from the captured selected generation.");
+                    pending = generation; pendingRestore = true;
+                    generation.Publish(location, owner);
+                }
+                catch
+                {
+                    var endpoint = location.Capture();
+                    if (!ReferenceEquals(endpoint.CreateConnection?.Target, generation) || endpoint.Path != generation.Path)
+                    { pending = null; pendingRestore = false; generation.Dispose(); }
+                    throw;
+                }
+            }
+            location.Access.RequireDrainedOwner(owner); RequirePublication(pending!);
+            current.Dispose(); current = pending; pending = null; pendingRestore = false;
+        }
+        finally { operations.Release(); }
+    }
 
     /// <summary>Prepares a verified unpublished new profile while retaining the active endpoint and key.</summary>
     public async Task PrepareNewAsync(string profileId, string originalPath, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
@@ -94,6 +147,7 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
         try
         {
             location.Access.RequireDrainedOwner(owner);
+            if (pendingRestore) throw new InvalidOperationException("Restored publication requires its exact adoption retry.");
             if (pending is null) { RequireCurrent(); return; }
             var selected = accepted ? pending : current!;
             RequirePublication(selected);
