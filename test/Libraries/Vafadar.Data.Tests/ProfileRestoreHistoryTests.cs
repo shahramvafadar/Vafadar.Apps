@@ -13,6 +13,32 @@ public sealed class ProfileRestoreHistoryTests : IDisposable
     private SqliteProfileRestoreHistory History() => new(PathOfHistory, initial, () => { });
     public void Dispose() => directory.Dispose();
 
+    [Fact, Trait("AT", "AT-214")]
+    public async Task Initial_intent_survives_reopen_and_refuses_restore_before_verified_migration()
+    {
+        var captured = new DatabaseGenerationCheckpoint(initial.ProfileId, Guid.NewGuid(), initial.GenerationId);
+        var journal = new SqliteDatabaseGenerationJournal(directory.Combine("initial-journal.sqlite"), captured);
+        await journal.CreateNewAsync(Ct);
+        await History().CreateInitialIntentAsync(captured, journal, Ct);
+        var row = Assert.Single(await History().ReadAsync(Ct)); Assert.False(row.Selected);
+        Assert.Equal(initial.GenerationId, row.CandidateGeneration);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => History().ReserveAsync(
+            new(initial.ProfileId, initial.GenerationId, Guid.NewGuid()), Ct));
+        Assert.Equal(row, Assert.Single(await History().ReadAsync(Ct)));
+    }
+
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-214")]
+    public async Task Initial_intent_rejects_foreign_or_already_advanced_journal_without_creating_history(bool advanced)
+    {
+        var captured = new DatabaseGenerationCheckpoint(initial.ProfileId, Guid.NewGuid(), advanced ? initial.GenerationId : Guid.NewGuid());
+        var journal = new SqliteDatabaseGenerationJournal(directory.Combine("initial-journal.sqlite"), captured);
+        await journal.CreateNewAsync(Ct);
+        if (advanced) await journal.CompareAndCommitAsync(captured,
+            captured.Advance(captured.ProfileId, captured.CandidateGeneration, DatabaseGenerationPhase.KeyPrepared), Ct);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => History().CreateInitialIntentAsync(captured, journal, Ct));
+        Assert.False(File.Exists(PathOfHistory));
+    }
+
     [Fact, Trait("AT", "AT-207")]
     public async Task Reservation_survives_reopen_and_repeating_it_keeps_the_same_target()
     {

@@ -1424,3 +1424,33 @@ read directly without reinstall/restart/recreating data or keys. Profile observa
 to 300 attempts for its now-longer two-profile migration; parser checked without repeating the run.
 Reviewed ABI identities/signature verified; package uninstalled and test output cleaned after terminal
 builds/tests. Main startup/provider/registration, recovery, files and OS policy remain unactivated/open.
+### D-215 — Record initial ancestry before native key migration
+
+Initial ancestry can now be captured as pending against the exact existing Original journal,
+before keys/candidates are prepared. Pending row zero survives restart but cannot reserve a
+restore transition. OpenCurrentAsync resumes the actual initial migration, retains/reopens its
+existing native key, then mirrors Completed journal state into selected initial ancestry before
+returning a publication owner. Missing/foreign history still never falls back or regenerates.
+Existing verified initial history remains supported; schema/version is unchanged and typed guards
+still apply. New pending state is not evidence of a completed migration or permission to open data.
+
+The old ordering left a crash interval after initial migration but before history creation. The
+new pre-key intent closes that interval through actual captured resume. Interrupted metadata
+creation itself, all-profile host bootstrap, recovery UX, provider/live registration and OS policy
+remain separate unfinished work; missing or corrupt records still fail closed. Main application
+storage remains plaintext. No owner decision, platform key policy or financial schema changes.
+D-215 native evidence: independent signed Release AOT/trim Android x64 API36/4 KiB records the
+pending initial intent before native key work, then an external process stop/start completes the
+same captured identity through OpenCurrentAsync and actual migration/factory. A third cold process
+uses an existing-only key port (Prepare throws), retains the saved account and money, verifies
+selected initial ancestry, and refuses new construction after key-owner disposal. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-7562abeb4ea24d4b9a90fbb7011b1916.json,
+run 4467935ba0f242168d5dce1f3cb9d315. InitialIntent/Created/Result guards all pass. No scenario
+restart/recreation or unchanged native suite/UI matrix repeat. Signature/reviewed packaged ABI
+identities verified; package uninstalled. Strict Windows 19.00s, Android 18.10s and independent
+Release 55.61s builds report no warnings/errors. Actual initialization is verified only after the
+pending record commits; torn/failed metadata creation itself and final main activation remain open.
+D-215 final managed evidence: all 3,327 tests pass with zero failures/skips (2m55s).
+Three new cases verify pending initial persistence, refusal of restore before completion and
+rejection of foreign/advanced journals before history creation. Outputs cleaned after terminal
+builds/tests. Main activation, torn metadata creation, recovery/retention and platform gates remain.

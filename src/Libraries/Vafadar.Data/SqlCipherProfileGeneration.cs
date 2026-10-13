@@ -45,8 +45,18 @@ public sealed class SqlCipherProfileGeneration : IDisposable
         Validate(); history.RequireInitialBinding(identity.InitialCandidateKey);
         var latest = (await history.ReadAsync(ct).ConfigureAwait(false))[^1]; Validate();
         if (latest.Sequence == 0)
-            return await OpenInitialAsync(location, identities, legacyProfile, originalPath, keys, durability, owner,
+        {
+            var generation = await OpenInitialAsync(location, identities, legacyProfile, originalPath, keys, durability, owner,
                 validateAccess, maximumBytes, cipherVersion, ct).ConfigureAwait(false);
+            try
+            {
+                Validate();
+                await history.MarkInitialSelectedAsync(identity.InitialMigration,
+                    new SqliteDatabaseGenerationJournal(Journal(System.IO.Path.GetFullPath(originalPath)), identity.InitialMigration), ct).ConfigureAwait(false);
+                Validate(); return generation;
+            }
+            catch { generation.Dispose(); throw; }
+        }
         var receiver = createReceiver(latest) ?? throw new InvalidOperationException("Current restore receiver is missing.");
         Validate();
         if (receiver.Captured.OriginalGeneration != latest.OriginalGeneration || receiver.Captured.CandidateGeneration != latest.CandidateGeneration ||

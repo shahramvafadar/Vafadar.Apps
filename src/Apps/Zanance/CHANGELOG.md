@@ -1389,3 +1389,7 @@ Preserve the complete database connection on refused profile switches, including
 ### D-214 - Profile key lifetime
 
 Prepared verified key ownership through accepted and refused profile transitions, with disposal only after database contexts close. Main encryption activation remains pending.
+
+### D-215 - Initial migration restart
+
+Prepared initial ancestry before encryption work so a restart can complete the captured migration without recreating identities. Main encryption activation remains pending.

@@ -13,7 +13,7 @@ public sealed class SqliteProfileRestoreHistory
     private readonly DatabaseKeyBinding initial;
     private readonly Action validate;
 
-    /// <summary>Captures the exact initial encrypted generation and current private maintenance validation.</summary>
+    /// <summary>Captures the stable initial key binding and current private maintenance validation.</summary>
     public SqliteProfileRestoreHistory(string path, DatabaseKeyBinding initial, Action validateAccess)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path); ArgumentNullException.ThrowIfNull(initial); ArgumentNullException.ThrowIfNull(validateAccess);
@@ -22,7 +22,19 @@ public sealed class SqliteProfileRestoreHistory
     }
 
     /// <summary>Explicitly initializes references after the caller verified its current initial encrypted generation.</summary>
-    public async Task CreateNewAsync(CancellationToken ct = default)
+    public Task CreateNewAsync(CancellationToken ct = default) => CreateCoreAsync(true, ct);
+
+    /// <summary>Records pending initial ancestry against an existing Original journal before any native key work.</summary>
+    public async Task CreateInitialIntentAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(journal); CheckIdentity(captured); Check(ct);
+        if (captured.CandidateGeneration != initial.GenerationId || captured.Phase != DatabaseGenerationPhase.Original ||
+            await journal.ReadAsync(ct).ConfigureAwait(false) != captured)
+            throw new InvalidOperationException("Initial intent requires the exact existing Original migration journal.");
+        await CreateCoreAsync(false, ct).ConfigureAwait(false);
+    }
+
+    private async Task CreateCoreAsync(bool selected, CancellationToken ct)
     {
         Check(ct); ValidateDirectory();
         foreach (var suffix in new[] { "", "-journal", "-wal", "-shm" })
@@ -30,10 +42,31 @@ public sealed class SqliteProfileRestoreHistory
         using (var reservation = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None)) reservation.Flush(true);
         await using var connection = await OpenAsync(true, ct).ConfigureAwait(false);
         using var transaction = connection.BeginTransaction(deferred: false); using var command = connection.CreateCommand(); command.Transaction = transaction;
-        command.CommandText = $"PRAGMA application_id={ApplicationId}; PRAGMA user_version=1; {Schema}; INSERT INTO restore_history VALUES(0,$installation,$profile,$original,$candidate,1)";
+        command.CommandText = $"PRAGMA application_id={ApplicationId}; PRAGMA user_version=1; {Schema}; INSERT INTO restore_history VALUES(0,$installation,$profile,$original,$candidate,$selected)";
+        command.Parameters.AddWithValue("$selected", selected ? 1 : 0);
         Bind(command, initial.GenerationId, initial.GenerationId); await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
         Check(ct); transaction.Commit();
-        if ((await ReadAsync(ct).ConfigureAwait(false)).Count != 1) throw new IOException("Restore history bootstrap readback differs.");
+        var rows = await ReadAsync(ct).ConfigureAwait(false);
+        if (rows.Count != 1 || rows[0].Selected != selected) throw new IOException("Restore history bootstrap readback differs.");
+    }
+
+    /// <summary>Mirrors completed initial migration only after the caller retained and verified its existing native key.</summary>
+    internal async Task MarkInitialSelectedAsync(DatabaseGenerationCheckpoint captured, SqliteDatabaseGenerationJournal journal, CancellationToken ct)
+    {
+        CheckIdentity(captured); Check(ct); var actual = await journal.ReadAsync(ct).ConfigureAwait(false);
+        if (actual.ProfileId != initial.ProfileId || actual.CandidateGeneration != initial.GenerationId ||
+            actual.OriginalGeneration != captured.OriginalGeneration || actual.Phase != DatabaseGenerationPhase.Completed)
+            throw new InvalidOperationException("Initial migration has not completed its actual journal.");
+        await using var connection = await OpenAsync(false, ct).ConfigureAwait(false);
+        using var transaction = connection.BeginTransaction(deferred: false);
+        var rows = await ReadCoreAsync(connection, transaction, ct).ConfigureAwait(false);
+        if (rows.Count != 1) throw new InvalidOperationException("Restored ancestry cannot be overwritten by initial completion.");
+        if (rows[0].Selected) return;
+        using var command = connection.CreateCommand(); command.Transaction = transaction;
+        command.CommandText = "UPDATE restore_history SET selected=1 WHERE sequence=0";
+        if (await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false) != 1) throw new IOException("Initial ancestry commit differs.");
+        Check(ct); transaction.Commit();
+        if (!(await ReadAsync(ct).ConfigureAwait(false))[0].Selected) throw new IOException("Initial ancestry readback differs.");
     }
 
     /// <summary>Reads complete existing references without manufacturing a missing history or choosing a fallback generation.</summary>
@@ -139,7 +172,7 @@ public sealed class SqliteProfileRestoreHistory
             if (reader.GetFieldType(0) != typeof(long) || reader.GetFieldType(5) != typeof(long) || Enumerable.Range(1, 4).Any(index => reader.GetFieldType(index) != typeof(string))) throw new IOException("Incorrectly typed restore reference.");
             var sequence = reader.GetInt64(0); var original = Parse(reader.GetString(3)); var candidate = Parse(reader.GetString(4)); var selected = reader.GetInt64(5);
             if (sequence != rows.Count || Parse(reader.GetString(1)) != initial.InstallationId || Parse(reader.GetString(2)) != initial.ProfileId || selected is < 0 or > 1 || !seen.Add(candidate)) throw new IOException("Restore reference identity/sequence differs.");
-            if (sequence == 0 ? original != initial.GenerationId || candidate != original || selected != 1
+            if (sequence == 0 ? original != initial.GenerationId || candidate != original
                 : original != rows[^1].CandidateGeneration || !rows[^1].Selected || original == candidate) throw new IOException("Restore ancestry is invalid.");
             rows.Add(new(sequence, original, candidate, selected == 1));
         }

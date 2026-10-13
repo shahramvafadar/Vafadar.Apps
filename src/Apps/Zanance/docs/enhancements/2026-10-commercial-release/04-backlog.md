@@ -1685,3 +1685,18 @@ remain open. The main database is still plaintext; this is final lifecycle compo
 A protected host may resolve another catalogue-bound profile in the same private directory while
 retaining the previous publication. It never passes through an unkeyed endpoint. Plain/foreign-root
 initialization guards remain enforced, and actual journals, history, keys and files must still verify.
+### D-215 — Record initial ancestry before native key migration
+
+Initial ancestry can now be captured as pending against the exact existing Original journal,
+before keys/candidates are prepared. Pending row zero survives restart but cannot reserve a
+restore transition. OpenCurrentAsync resumes the actual initial migration, retains/reopens its
+existing native key, then mirrors Completed journal state into selected initial ancestry before
+returning a publication owner. Missing/foreign history still never falls back or regenerates.
+Existing verified initial history remains supported; schema/version is unchanged and typed guards
+still apply. New pending state is not evidence of a completed migration or permission to open data.
+
+The old ordering left a crash interval after initial migration but before history creation. The
+new pre-key intent closes that interval through actual captured resume. Interrupted metadata
+creation itself, all-profile host bootstrap, recovery UX, provider/live registration and OS policy
+remain separate unfinished work; missing or corrupt records still fail closed. Main application
+storage remains plaintext. No owner decision, platform key policy or financial schema changes.

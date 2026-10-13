@@ -53,7 +53,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial') -or $Phase -eq 'profile-maintenance') { 300 } else { 100 }
+    $maximumAttempts = if ($Barrier -in @('restore-selected','package-partial') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -92,17 +92,22 @@ foreach ($scenario in $scenarios) {
         continue
     }
     if ($scenario -eq 'initial-bootstrap') {
+        $intent = $null
         if ($ResumeBootstrapRun) {
             $pidText = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()
             if ($pidText -notmatch '^\d+$') { throw 'Recorded bootstrap process is no longer live.' }
             & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -f ('files/native-compatibility/migration-proofs/' + $identity + '/profile.db.generation.sqlite')
             if ($LASTEXITCODE -ne 0) { throw 'Recorded bootstrap journal is missing.' }
             $created = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat files/result.json | Out-String) | ConvertFrom-Json
-        } else { $created = Invoke-OwnedMigration 'bootstrap-create' $identity }
+        } else {
+            $intent = Invoke-OwnedMigration 'bootstrap-intent' $identity
+            if (-not $intent.InitialIntentBeforeKeyWork) { throw 'Initial pending intent evidence missing.' }
+            $created = Invoke-OwnedMigration 'bootstrap-create' $identity
+        }
         if (-not $created.ActualIdentityMigrationFactoryJoined -or -not $created.SelectedCiphertextAndRollback -or -not $created.RetainedKeyDisposalRefusesAccess) { throw 'Initial protected generation evidence missing.' }
         $finished = Invoke-OwnedMigration 'bootstrap-reopen' $identity
         if (-not $finished.InitialGenerationColdReopened -or -not $finished.SavedWriteAndMoneyCorrect -or -not $finished.NoKeyPreparationOnRestart -or -not $finished.NoOriginalOrPlaintextFallback -or -not $finished.RetainedKeyDisposalRefusesAccess) { throw 'Cold protected generation evidence missing.' }
-        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $finished }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; InitialIntent = $intent; Created = $created; Result = $finished }
         continue
     }
     if ($scenario -eq 'identity-catalogue') {
