@@ -35,6 +35,21 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     /// <inheritdoc />
     public Task MigrateAsync(DatabaseAccessGate.ExclusiveLease owner) => services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner);
     /// <inheritdoc />
+    public async Task OpenDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string originalPath, DatabaseAccessGate.ExclusiveLease owner)
+    {
+        if (services.GetService<SqlCipherProfileSession<ZananceDbContext>>() is { } protectedSession)
+            await protectedSession.BeginSwitchAsync(originalPath, owner);
+        else
+        {
+            // Existing plaintext hosts retain their original behavior. Protected locations refuse this route.
+            location.MoveTo(originalPath, owner);
+        }
+        await MigrateAsync(owner);
+    }
+    /// <inheritdoc />
+    public void FinishDatabaseTransition(bool accepted, DatabaseAccessGate.ExclusiveLease owner) =>
+        services.GetService<SqlCipherProfileSession<ZananceDbContext>>()?.FinishSwitch(accepted, owner);
+    /// <inheritdoc />
     public async Task<bool> AuthenticateAsync(string reason) => await appLock.Authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success;
     /// <inheritdoc />
     public Task ReloadLockAsync() => appLock.ReloadAsync();

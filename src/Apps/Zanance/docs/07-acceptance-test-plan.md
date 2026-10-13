@@ -2165,3 +2165,40 @@ Two actual-factory tests retain the original bound key creator after rollback an
 foreign-owner or protected-to-plaintext restoration. Final builds are warning/error-free; the
 initial shared-DLL lock failures remain in d213-*-lock-failure.log. Test outputs cleaned only
 after all builds/tests completed. No main encryption, physical/iOS authentication or release claim.
+
+### D-214 — Own active and tentative profile keys through the real transition
+
+SqlCipherProfileSession retains the active verified generation while a destination is tentative.
+The actual ProfileService invokes finalization after committing its reviewed catalogue or restoring
+its complete previous publication. The MAUI runtime forwards opening/finalization to the registered
+protected session; existing plaintext hosts retain their original path and never bypass protection.
+Accepted switching clears the previous mutable key owner; refused switching clears only the
+candidate after the original publication is verified. No envelope, database or rollback is deleted.
+
+Start, switch, acceptance, refusal and close require the actual live maintenance owner. Key retirement
+also requires all owned contexts to be disposed. Concurrent resolution is serialized and synchronous
+finalization refuses active resolution. Publication identity must belong to the exact retained owner;
+keys cannot be retired based on a path string alone. Main registration/covered async startup, early
+bootstrap/replay reconciliation, recovery/retained-file lifecycle, native provider and final OS policy
+remain open. The main database is still plaintext; this is final lifecycle composition, not activation.
+
+A protected host may resolve another catalogue-bound profile in the same private directory while
+retaining the previous publication. It never passes through an unkeyed endpoint. Plain/foreign-root
+initialization guards remain enforced, and actual journals, history, keys and files must still verify.
+D-214 final evidence: all 3,324 tests pass (zero failures/skips, 3m23s). Two new session guards
+reject unresolved/unstarted state and key retirement while actual owned contexts remain. Strict
+Windows 24.08s, Android 19.02s and independent signed Release AOT/trim 57.60s builds have zero
+warnings/errors; builds/tests were sequential where outputs overlap, with no DLL-lock retry.
+
+Android x64 API36/4 KiB actual original-profile flow uses stable identities, actual initial migration
+and history for both profiles. Session resolves through OpenCurrentAsync with an existing-only key
+port (Prepare throws), reads/retains original money, rejects authentication, verifies rejected-owner
+disposal while the original remains usable, then accepts destination and return and verifies all
+previous owners disposed. Session close refuses an owned context and succeeds after disposal.
+Native decision port is fictitious authentication, not device biometric acceptance. Independent
+proof: artifacts/native-sqlcipher/d214-native-profile-proof.json; run
+9434f1b35a1d438cb3cf9f76a1d60574. Observer expired; same PID 31527 completed all seven flags,
+read directly without reinstall/restart/recreating data or keys. Profile observation bound increased
+to 300 attempts for its now-longer two-profile migration; parser checked without repeating the run.
+Reviewed ABI identities/signature verified; package uninstalled and test output cleaned after terminal
+builds/tests. Main startup/provider/registration, recovery, files and OS policy remain unactivated/open.

@@ -186,7 +186,14 @@ public sealed class SqlCipherProfileGeneration : IDisposable
         var original = System.IO.Path.GetFullPath(originalPath);
         var identity = (await identities.ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
         Check(location, owner, validate, ct);
-        if (location.Path != original && location.Path != Candidate(original, identity)) throw new InvalidOperationException("Initial bootstrap belongs to another current endpoint.");
+        if (location.Path != original && location.Path != Candidate(original, identity))
+        {
+            var endpoint = location.Capture();
+            // D-214: a drained protected host can resolve another existing profile before tentative publication.
+            // The actual catalogue supplies its binding; never move the location through a plaintext endpoint.
+            if (endpoint.CreateConnection is null || System.IO.Path.GetDirectoryName(endpoint.Path) != System.IO.Path.GetDirectoryName(original))
+                throw new InvalidOperationException("Initial bootstrap belongs to another current endpoint or private directory.");
+        }
         return (identity, original);
     }
 

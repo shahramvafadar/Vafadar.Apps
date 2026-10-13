@@ -12,6 +12,31 @@ public sealed class ProtectedLocalDatabaseFactoryTests
     private static SqliteConnection Connection(string path) => new(new SqliteConnectionStringBuilder
     { DataSource = path, Mode = SqliteOpenMode.ReadWrite, Pooling = false, Password = Convert.ToBase64String(new byte[32]) }.ToString());
 
+    [Fact, Trait("AT", "AT-213")]
+    public async Task Session_cannot_resolve_or_retire_a_key_while_owned_contexts_remain()
+    {
+        using var database = new TestDatabase();
+        var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        var resolved = false;
+        var session = new SqlCipherProfileSession<TestDbContext>(location, (_, _, _) =>
+        { resolved = true; throw new IOException("Unexpected native resolution."); });
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        using var context = database.Services.GetRequiredService<ILocalDbContextFactory<TestDbContext>>().CreateDbContext(owner);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.StartAsync(location.Path, owner, Ct));
+        Assert.Throws<InvalidOperationException>(() => session.Close(owner)); Assert.False(resolved);
+    }
+
+    [Fact, Trait("AT", "AT-213")]
+    public async Task Session_requires_started_state_before_switching_or_accepting_a_decision()
+    {
+        using var database = new TestDatabase(); var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        var session = new SqlCipherProfileSession<TestDbContext>(location, (_, _, _) => throw new IOException("Unexpected native resolution."));
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.BeginSwitchAsync(location.Path, owner, Ct));
+        Assert.Throws<InvalidOperationException>(() => session.FinishSwitch(true, owner));
+        session.Close(owner);
+    }
+
     [Fact, Trait("AT", "AT-212")]
     public async Task Publication_rollback_retains_key_creator_and_cannot_be_reused()
     {

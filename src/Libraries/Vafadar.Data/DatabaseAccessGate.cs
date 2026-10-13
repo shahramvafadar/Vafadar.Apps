@@ -99,6 +99,16 @@ public sealed class DatabaseAccessGate
         }
     }
 
+    /// <summary>Requires complete context disposal before retiring a generation's retained key.</summary>
+    internal void RequireDrainedOwner(ExclusiveLease owner)
+    {
+        lock (sync)
+        {
+            RequireOwner(owner);
+            if (owner.Contexts != 0) throw new InvalidOperationException("Owned contexts must close before generation key retirement.");
+        }
+    }
+
     private void LeaveContext(ExclusiveLease? owner)
     {
         lock (sync)

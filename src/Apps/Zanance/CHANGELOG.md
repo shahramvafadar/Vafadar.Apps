@@ -1385,3 +1385,7 @@ Prepared stable startup selection between initial data and the latest restored d
 ### D-213 - Profile switch rollback
 
 Preserve the complete database connection on refused profile switches, including prepared encrypted storage. Main encryption activation remains pending.
+
+### D-214 - Profile key lifetime
+
+Prepared verified key ownership through accepted and refused profile transitions, with disposal only after database contexts close. Main encryption activation remains pending.

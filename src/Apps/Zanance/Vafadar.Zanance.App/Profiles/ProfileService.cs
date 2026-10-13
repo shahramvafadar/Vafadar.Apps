@@ -189,10 +189,11 @@ public sealed partial class ProfileService(
             }
             finally
             {
-                if (!opened)
+                try
                 {
-                    previous.Restore(owner);
+                    if (!opened) previous.Restore(owner);
                 }
+                finally { runtime.FinishDatabaseTransition(opened, owner); }
             }
         });
 

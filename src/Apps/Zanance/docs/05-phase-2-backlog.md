@@ -1254,3 +1254,22 @@ retention/provider/OS-policy adoption still remain open. Main database encryptio
 Concurrent initial Android/test builds hit CS2012/MSB3248 locked shared DLLs; those negative logs
 are retained. Successful Windows and independent Release builds were not repeated. Only failed
 Android and full test executions were retried once, sequentially after competing builds completed.
+### D-214 — Own active and tentative profile keys through the real transition
+
+SqlCipherProfileSession retains the active verified generation while a destination is tentative.
+The actual ProfileService invokes finalization after committing its reviewed catalogue or restoring
+its complete previous publication. The MAUI runtime forwards opening/finalization to the registered
+protected session; existing plaintext hosts retain their original path and never bypass protection.
+Accepted switching clears the previous mutable key owner; refused switching clears only the
+candidate after the original publication is verified. No envelope, database or rollback is deleted.
+
+Start, switch, acceptance, refusal and close require the actual live maintenance owner. Key retirement
+also requires all owned contexts to be disposed. Concurrent resolution is serialized and synchronous
+finalization refuses active resolution. Publication identity must belong to the exact retained owner;
+keys cannot be retired based on a path string alone. Main registration/covered async startup, early
+bootstrap/replay reconciliation, recovery/retained-file lifecycle, native provider and final OS policy
+remain open. The main database is still plaintext; this is final lifecycle composition, not activation.
+
+A protected host may resolve another catalogue-bound profile in the same private directory while
+retaining the previous publication. It never passes through an unkeyed endpoint. Plain/foreign-root
+initialization guards remain enforced, and actual journals, history, keys and files must still verify.
