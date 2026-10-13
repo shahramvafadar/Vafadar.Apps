@@ -2903,3 +2903,12 @@ policy or mandatory portable password. Windows CurrentUser DPAPI/context/bounded
 implemented. Twelve added cases/full 3,232 pass, actual encrypted reopen across independent
 Windows processes passes. Main database/provider/storage/backup still unchanged; remaining native
 adapters/durable migration/recovery/platform checks remain incomplete, not owner policy questions.
+
+### 31.106 Android native key protector (D-193 / AT-192)
+
+Application-scoped non-exportable Android Keystore AES-256/GCM and authenticated profile/device
+installation/generation envelope implemented, with explicit preparation/no unwrap replacement.
+Independent signed Release AOT/trimmed emulator create/reopen and fifteen native behavior checks
+pass; software level 0, not hardware acceptance. Strict main Windows/Android builds zero errors
+and warnings. Managed 3,232 D-192 baseline unchanged, not rerun. Main database remains plaintext:
+durable storage/recovery/crash-safe migration, iOS and final coupled OS exclusion remain open.

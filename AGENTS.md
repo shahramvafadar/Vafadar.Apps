@@ -1412,3 +1412,12 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   No interim policy. Native storage/migration/recovery/platform acceptance still requires implementation.
 * Bind platform envelopes to profile, installation, generation and format. Windows uses CurrentUser
   DPAPI, not LocalMachine; do not claim hardware/device-only protection or same-user malware resistance.
+
+## 125. Android installation wrapping key (D-193)
+
+* Use application-scoped AndroidKeyStore AES-256/GCM with native randomized nonces and bound
+  profile/installation/generation context. Prepare explicitly; unwrap never creates/replaces a key.
+* Reject malformed/tampered envelopes and exportable wrapping keys. Automatic access is independent
+  of the app PIN; run native effects off the UI thread under the captured access/migration gate.
+* Report actual OS security level without inferring hardware protection. Independent Release process
+  proof is separate from durable storage/recovery/migration and main-app encryption acceptance.

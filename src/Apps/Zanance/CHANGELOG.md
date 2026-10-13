@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Android device-key protection foundation (2026-10-13, D-193)
+
+- Added Android Keystore protection for bound database keys, with independent encrypted reopen checks.
+- This foundation is not enabled on live data yet; final storage, recovery and migration remain.
+
 ### Development - Device-key recovery policy and Windows protection (2026-10-13, D-192)
 
 - Confirm automatic device keys, optional recovery keys and recovery from Zanance backups.

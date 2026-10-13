@@ -21,7 +21,19 @@ public sealed class MainActivity : Activity
         var evidence = Path.Combine(owned, "run-" + Guid.NewGuid().ToString("N"));
         try
         {
-            var result = await Task.Run(() => SchemaCompatibility.RunAsync(evidence, owned));
+            var keyPhase = Intent?.GetStringExtra("key_phase");
+            if (keyPhase is not null && keyPhase is not ("keys-create" or "keys-reopen" or "keys-negative"))
+                throw new ArgumentException("Unknown independent key phase.");
+            var keyRoot = owned;
+            if (keyPhase is not null)
+            {
+                if (!Guid.TryParseExact(Intent?.GetStringExtra("key_run"), "N", out var keyRun) || keyRun == Guid.Empty)
+                    throw new ArgumentException("Independent key check requires a fresh run identity.");
+                keyRoot = Path.Combine(owned, "key-proofs", keyRun.ToString("N"));
+            }
+            var result = keyPhase is null
+                ? await Task.Run(() => SchemaCompatibility.RunAsync(evidence, owned))
+                : await Task.Run(() => AndroidKeyCompatibility.RunAsync(keyRoot, keyPhase));
             await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, "result.json"), result);
             label.Text = "Independent schema check passed";
         }

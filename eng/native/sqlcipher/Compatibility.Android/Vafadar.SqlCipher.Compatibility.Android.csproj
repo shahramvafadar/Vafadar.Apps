@@ -24,6 +24,7 @@
              Exclude="$(RepoRoot)src/Libraries/Vafadar.Data/bin/**;$(RepoRoot)src/Libraries/Vafadar.Data/obj/**" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/**/*.cs"
              Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
     <Compile Include="../Compatibility/SchemaCompatibility.cs" Link="SchemaCompatibility.cs" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/x86_64/libsqlcipher.so" Abi="x86_64" />

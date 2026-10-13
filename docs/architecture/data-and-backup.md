@@ -793,3 +793,10 @@ See [protocol and remaining durability obligations](sqlcipher-generation-checkpo
 Automatic local profile keys, optional separate recovery and Zanance backup recovery are approved.
 Android/iOS sensitive data leave OS backup/transfer with completed encryption integration, not an
 interim measure. Portable password choice remains optional. See [device keys](sqlcipher-device-keys.md).
+
+## Android key primitive (D-193)
+
+Original Android Keystore adapter authenticates bound DEKs and refuses missing keys without
+replacement. Separate Release process proof passes; no main activation or schema change.
+See [device keys](sqlcipher-device-keys.md) for exact envelope/access/lifetime/evidence scope.
+Durable storage, migration/recovery and approved final OS backup policy still require integration.

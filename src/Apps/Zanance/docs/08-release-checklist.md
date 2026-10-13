@@ -930,3 +930,10 @@ acceptance. A11Y-01 remains open. [Evidence](quality/android-widget-accessibilit
 Local native names/draft/calendar/no-write checks and full signed installable APK verified. Spoken
 TalkBack/Narrator, system scaling, physical phone/iOS/provider and release acceptance remain open.
 [Evidence](quality/date-context-accessibility.md).
+
+## D-193 Android key evidence
+
+Independent signed Release process creation/encrypted reopen/fifteen behaviors and native APK
+payload/signature checks pass; software security level 0. Strict main builds pass. Main database
+remains plaintext. Durable storage/recovery/crash migration/iOS and physical-device gates remain.
+No whole-app encryption, OS backup or release acceptance inferred. Managed baseline not rerun.

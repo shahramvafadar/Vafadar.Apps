@@ -17,7 +17,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-180 official Community direction and Windows C/.NET proof; native Linux CI accepted D-191; final key/recovery/migration/platform integration remains) | OD-04 approved |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
-| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-192 Windows protector; actual native storage/other platforms remain) | SEC-01 |
+| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-189 coordinator; native key/selector/cleanup adapters and real restart acceptance open) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
@@ -1494,3 +1494,11 @@ CurrentUser DPAPI authenticates full binding, refuses malformed/foreign keys and
 copies. Twelve new/full 3,232 cases and actual two-process encrypted reopen pass. SEC-03 remains
 in progress: persistent native storage, Android/iOS adapters, final migration/recovery UX and
 OS exclusion coupled with full encryption are not implemented by this primitive.
+
+## Android key primitive (D-193)
+
+SEC-03 now has original Android Keystore adapter as well as Windows DPAPI. Three independent
+Release emulator processes prove protected creation/encrypted reopen and fifteen behaviors;
+reported software level 0 is not hardware acceptance. No main activation. Durable key storage,
+optional recovery, crash migration and iOS remain. Approved OD-04/OD-10 are not decision blockers.
+Strict builds pass; unchanged managed 3,232 baseline retained, no unrelated reruns.

@@ -2431,3 +2431,26 @@ creation then encrypted read in a second independent Windows process passes with
 and manifest hash checks. Strict main build evidence in AT-191. No UI/schema/live provider/key
 storage/OS exclusion activated. Android/iOS adapters, final persistence/recovery/crash integration
 remain. [Guide](../../../../docs/architecture/sqlcipher-device-keys.md).
+
+## D-193 - Android Keystore DEK protection
+
+Implement the original platform adapter using application-scoped AndroidKeyStore AES-256/GCM,
+non-exportable wrapping key, native randomized nonce and D-192 authenticated binding. The fixed
+versioned envelope contains only nonce/ciphertext/tag. Explicit preparation is separate from unwrap;
+missing keys never trigger replacement. Automatic native access has no per-use authentication,
+consistent with approved device-key policy; app PIN remains a separate gate. Native work runs off
+UI under the future captured migration/access gate. Owned DEK copies are cleared.
+
+The independent signed Release AOT/trimmed package compiles this exact source. Three stopped/new
+processes create, reopen encrypted signed-money data, and exercise fifteen behaviors (fourteen
+refusals and nonce randomization). Missing alias, wrong identities, tampering and malformed lengths
+refuse. OS reports software security level 0 on this API36 x64/4 KiB emulator; not physical hardware
+acceptance. Both native payload hashes match reviewed candidates; APK ZIP integrity and v2/v3
+signatures pass. Only the independent package is removed afterwards. Initial ambiguous CipherMode
+compile error was corrected using the explicit Java namespace; early report observation preceded
+completion and was read after completion without restarting. Strict main build evidence: AT-192.
+
+No live key creation/provider/backup policy or migration activation. Durable envelope storage,
+optional recovery, crash coordinator, iOS and actual device gates remain. Main data stays plaintext.
+Unchanged 3,232 managed-test baseline retained; unrelated suites/UI/APKs were not repeated.
+[Guide](../../../../docs/architecture/sqlcipher-device-keys.md).

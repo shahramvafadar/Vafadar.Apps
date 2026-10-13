@@ -521,3 +521,11 @@ store/provider activation. No network/permission/financial schema change. Offici
 10.0.12 is local Windows infrastructure; existing .NET notices cover it. Owned mutable key copies
 are cleared, without claiming whole-process erasure. Permanent Android/iOS OS exclusion is approved
 for completed encryption; not yet applied. Optional recovery material/UX remains to implement.
+
+## Android key envelope foundation (D-193)
+
+Only local installation-scoped non-exportable wrapping key and bound opaque DEK envelope; no
+network/export/permission or portable credential added. Actual create/read checks occur solely
+in the independent fictitious package, which is removed afterwards. Production adapter is not
+called by main composition. No OS backup exclusion activated before final encryption. Software
+emulator level is not hardware assurance; durable key/recovery/migration/iOS remain open.

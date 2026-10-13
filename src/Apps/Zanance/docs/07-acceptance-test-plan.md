@@ -1732,3 +1732,14 @@ changed. Evidence: artifacts/native-sqlcipher/d192-{windows-build,android-build}
 The separate Android compatibility project compiles the same changed infrastructure/managed
 package under ContinuousIntegrationBuild with zero warnings/errors (d192-android-probe-build.log).
 Its unchanged schema/native runtime checks were not repeated for unused Windows key code.
+
+## AT-192 - Bound Android native key protection
+
+Original adapter in distinct signed Release AOT/trimmed package: creation and encrypted reopen
+across stopped/new processes pass, followed by fifteen behavior checks (fourteen refusals, one
+random-nonce behavior). Missing wrapping key never regenerates. OS reports software level 0;
+no hardware/device claim. Exact reviewed arm64/x64 APK bytes, ZIP and v2/v3 signatures checked;
+only independent package removed. Strict main Windows/Android builds have zero errors/warnings
+(artifacts/native-sqlcipher/d193-main-{windows,android}.log). Unchanged managed 3,232 baseline
+not rerun. No visible UI/schema/main-key/provider change. Durable recovery/crash migration,
+iOS/physical-device and product encryption acceptance remain open. See device-key guide.

@@ -1102,3 +1102,9 @@ home. Seven focused checks/host identity pass. Full hosted
 Automatic local key/optional recovery/Zanance backups and final coupled Android/iOS OS exclusion
 approved. Windows CurrentUser/context primitive and real two-process encrypted reopen pass;
 full 3,232. Actual native storage, other platforms and final migration/recovery integration remain.
+
+## D-193 Android key protection
+
+Original Android Keystore primitive and separate Release encrypted reopen/fifteen behavior proof
+pass; software emulator security level reported explicitly. Main strict builds pass, unchanged
+managed baseline retained. Durable files/recovery/coordinator and iOS remain; app plaintext.

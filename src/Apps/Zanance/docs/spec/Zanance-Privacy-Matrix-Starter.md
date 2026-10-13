@@ -535,3 +535,11 @@ security metadata are excluded from portable preferences and logs. CurrentUser D
 and fictitious independent proof only, no live storage or provider change. No new network,
 permission or financial schema. Owned key-copy clearing is best effort, not whole-process erasure.
 OD-04/OD-10 approved; optional recovery UX and final Android/iOS OS exclusion remain implementation.
+
+## Android key envelope foundation (D-193)
+
+Only local installation-scoped non-exportable wrapping key and bound opaque DEK envelope; no
+network/export/permission or portable credential added. Actual create/read checks occur solely
+in the independent fictitious package, which is removed afterwards. Production adapter is not
+called by main composition. No OS backup exclusion activated before final encryption. Software
+emulator level is not hardware assurance; durable key/recovery/migration/iOS remain open.
