@@ -2493,3 +2493,15 @@ First Windows cleanup failure and transient Android observation failure remain r
 was hidden by replacing fixtures. Full suite: 3,376 pass, zero failures/skips.
 Proofs: artifacts/native-sqlcipher/d227-windows-startup-proof.json and d227-android-final-proof.json.
 Main encryption, remaining native matrix, recovery/retention, device/iOS and release remain open.
+
+
+### D-228 / AT-228 — Retry an already installed initial protected generation
+
+Actual Windows failure is retained in d228-reproduction.log. The fixed shared Windows/Android
+native scenario injects a throwing initial observer, reads real encrypted data with the retained
+key before retry, refuses a changed catalogue without key reads, then replays notification for
+the exact same endpoint. Later observers run and ordinary duplicate starts remain rejected.
+Proofs: artifacts/native-sqlcipher/d228-native-complete-proof.json and build/android-d/
+android-migration-proof-6b204a3f4b4c4c37bf842904a534ab33.json. Managed tests cover unowned protected
+startup refusal and same-endpoint/foreign-owner observer contracts; full suite 3,378 pass.
+Main adoption, lifecycle/recovery/retention, remaining native/device/iOS and release remain open.

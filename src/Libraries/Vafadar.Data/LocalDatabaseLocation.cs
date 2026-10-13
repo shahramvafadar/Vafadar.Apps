@@ -121,6 +121,18 @@ public sealed class LocalDatabaseLocation<TContext>
 
     /// <summary>Captures one atomic path/credential publication before context construction.</summary>
     internal Endpoint Capture() { lock (_gate) return _endpoint; }
+    /// <summary>Retries failed startup observers for the exact retained endpoint without replacing credentials or retiring pools.</summary>
+    internal void RepeatProtectedNotification(Endpoint expected, DatabaseAccessGate.ExclusiveLease owner)
+    {
+        lock (_gate)
+        {
+            Access.RequireOwner(owner);
+            if (!ReferenceEquals(_endpoint, expected) || expected.CreateConnection is null)
+                throw new InvalidOperationException("Startup notification belongs to another protected publication.");
+        }
+        Changed?.Invoke(this, EventArgs.Empty);
+        RequireCurrent(expected);
+    }
     /// <summary>Rejects retired publications, including same-path credential replacement.</summary>
     internal void RequireCurrent(Endpoint captured)
     {

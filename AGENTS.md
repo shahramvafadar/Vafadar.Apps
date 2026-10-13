@@ -1902,3 +1902,11 @@ After the application owner drains contexts, all-profile bootstrap retires only 
 original's known SQLite pools before native preparation/cleanup. Disposed Windows contexts can
 otherwise retain file handles. Never use ClearAllPools or regenerate interrupted fixtures/keys
 to hide a cleanup failure; resume their actual committed encrypted selection with existing keys.
+
+
+### D-228 — Retry the retained initial protected publication
+
+An initial observer error can follow successful protected publication. Keep its exact key owner
+alive; only that failed original and this startup's unchanged prepared catalogue may recover.
+Repeat failed observers for the same endpoint without new publication/pools/keys. Ordinary
+duplicate starts and unrelated protected endpoints remain refused; failures keep startup covered.

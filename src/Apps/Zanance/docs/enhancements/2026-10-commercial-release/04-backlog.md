@@ -1931,3 +1931,12 @@ an idle pool is corrected by scoped bootstrap pool retirement; same-state resume
 reopen succeed without replacement keys. Shared native fixtures remove platform duplication.
 Main adoption, reconciliation, recovery/retention/OS policy, native warning review and external
 platform/device gates remain open. Exact evidence is recorded in D-227 in the decision log.
+
+
+### D-228 — Initial publication observer retry
+
+SEC-01 remains in progress. Actual native failure after initial endpoint publication is now
+recoverable with the retained key, unchanged prepared catalogue and observer replay. Native
+Windows checks prove data/key/endpoint retention and no repeated key reads; shared Android
+scenario verifies the same contract. Main registration, reconciliation, recovery/retention/OS
+policy and remaining native/platform/device gates remain open. See D-228 in the decision log.

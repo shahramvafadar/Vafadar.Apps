@@ -8,6 +8,23 @@ namespace Vafadar.Data.Tests;
 /// <summary>Actual factory publication/refusal contracts with isolated SQLite; actual keyed writes use the native probe.</summary>
 public sealed class ProtectedLocalDatabaseFactoryTests
 {
+    [Fact, Trait("AT", "AT-228")]
+    public async Task Retrying_protected_notification_keeps_endpoint_and_delivers_observers_that_previously_did_not_run()
+    {
+        using var database = new TestDatabase();
+        var location = database.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var first = 0; var later = 0;
+        location.Changed += (_, _) => { first++; if (first == 1) throw new IOException("Fictitious observer failure."); };
+        location.Changed += (_, _) => later++;
+        Assert.Throws<IOException>(() => location.MoveToProtected(location.Path, () => Connection(location.Path), "4.19.0", owner));
+        var endpoint = location.Capture(); Assert.Equal(0, later);
+        location.RepeatProtectedNotification(endpoint, owner);
+        Assert.Same(endpoint, location.Capture()); Assert.Equal(2, first); Assert.Equal(1, later);
+        using var foreign = await new DatabaseAccessGate().AcquireExclusiveAsync(Ct);
+        Assert.Throws<InvalidOperationException>(() => location.RepeatProtectedNotification(endpoint, foreign));
+        Assert.Equal(1, later);
+    }
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private static SqliteConnection Connection(string path) => new(new SqliteConnectionStringBuilder
     { DataSource = path, Mode = SqliteOpenMode.ReadWrite, Pooling = false, Password = Convert.ToBase64String(new byte[32]) }.ToString());

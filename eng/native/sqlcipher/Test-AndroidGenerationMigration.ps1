@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup,
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory, [switch]$Restore, [switch]$RestoreSelection, [switch]$PackageRestore, [switch]$UseExistingBuild, [switch]$ProfileMaintenance, [switch]$IdentityCatalogue, [switch]$InitialBootstrap, [switch]$SettingsPersistence, [switch]$MetadataPublication, [switch]$AllProfiles, [switch]$NewProfile, [switch]$ProfileCreation, [switch]$SafetyCopies, [switch]$ProtectedStartup, [switch]$FreshStartup, [switch]$StartupNotification,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreSelectionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '',
@@ -12,6 +12,7 @@ if ($ResumeRestoreSelectionRun -and -not $RestoreSelection) { throw 'Recorded se
 if ($ResumeFactoryRun -and (-not $Factory -or $ResumeRestoreSelectionRun)) { throw 'Recorded factory continuation requires only the factory mode.' }
 if ($ResumeBootstrapRun -and (-not $InitialBootstrap -or $ResumeFactoryRun -or $ResumeRestoreSelectionRun)) { throw 'Recorded bootstrap continuation requires only initial-bootstrap mode.' }
 if ($ResumeFreshStartupRun -and -not $FreshStartup) { throw 'Recorded fresh startup requires fresh-startup mode.' }
+if ($StartupNotification -and -not $FreshStartup) { throw 'Startup notification check requires fresh-startup mode.' }
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
@@ -59,7 +60,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Phase -in @('fresh-startup-create','fresh-startup-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
+    $maximumAttempts = if ($Phase -in @('fresh-startup-create','fresh-startup-reopen','fresh-startup-notification')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -102,7 +103,8 @@ foreach ($scenario in $scenarios) {
     if ($scenario -eq 'fresh-startup') {
         $created = $null
         if (-not $ResumeFreshStartupRun) { $created = Invoke-OwnedMigration 'fresh-startup-create' $identity }
-        $reopened = Invoke-OwnedMigration 'fresh-startup-reopen' $identity
+        $reopened = Invoke-OwnedMigration $(if ($StartupNotification) { 'fresh-startup-notification' } else { 'fresh-startup-reopen' }) $identity
+        if ($StartupNotification -and -not $reopened.ObserverFailureRetainsKeyAndRetry) { throw 'Actual startup observer retry evidence missing.' }
         if (($created -and (-not $created.ActualFreshStartup -or -not $created.NoPlaintextOriginal -or -not $created.NoManufacturedAccount)) -or -not $reopened.ActualFreshStartup -or -not $reopened.NoPlaintextOriginal -or $reopened.RetainedOpeningBalance -ne 321 -or -not $reopened.MissingIdentityRefused) { throw 'Actual fresh protected startup evidence missing.' }
         $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Reopened = $reopened }
         continue

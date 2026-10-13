@@ -18,6 +18,7 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
 {
     private readonly SemaphoreSlim operations = new(1, 1);
     private bool completed;
+    private ProfileStorageCapture? preparedCapture;
 
     /// <inheritdoc />
     public async Task PrepareAsync(CancellationToken cancellationToken = default)
@@ -29,6 +30,14 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
             using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken).ConfigureAwait(false);
             var capture = profiles.CaptureStorage();
             capture.Validate();
+            if (location.IsProtected && preparedCapture is not null)
+            {
+                // Only this startup's already prepared catalogue may finish after an observer failure.
+                // The session verifies its exact retained publication; no bootstrap/key work is repeated.
+                preparedCapture.Validate();
+                await session.StartAsync(preparedCapture.CurrentOriginalPath, owner, cancellationToken).ConfigureAwait(false);
+                completed = true; return;
+            }
             if (location.IsProtected || location.Path != capture.CurrentOriginalPath)
                 throw new InvalidOperationException("Protected startup requires the original unpublished endpoint.");
             if (!Enum.IsDefined(initialization)) throw new ArgumentOutOfRangeException(nameof(initialization));
@@ -62,6 +71,7 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
                 maximumBytes, cipherVersion, cancellationToken).ConfigureAwait(false);
             // No context is published midway through all-profile preparation, even for a non-main selection.
             capture.Validate(); cancellationToken.ThrowIfCancellationRequested();
+            preparedCapture = capture;
             await session.StartAsync(capture.CurrentOriginalPath, owner, cancellationToken).ConfigureAwait(false);
             // Publication succeeded. A repeated callback must retain the same owner rather than resolve it twice.
             completed = true;

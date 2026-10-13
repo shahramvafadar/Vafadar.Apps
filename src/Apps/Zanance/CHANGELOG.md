@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Retrying prepared encrypted startup (D-228)
+
+- Retain the active key when a startup change notification fails after database publication.
+- Retry the same prepared startup without replacing its database or keys.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Fixed - Finishing encrypted migration on Windows (D-227)
 
 - Retire idle connections for the original database so they cannot block migration cleanup.

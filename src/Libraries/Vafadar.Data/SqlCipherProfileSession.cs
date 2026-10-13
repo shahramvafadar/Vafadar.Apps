@@ -11,6 +11,7 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
     private readonly SemaphoreSlim operations = new(1, 1);
     private SqlCipherProfileGeneration? current;
     private SqlCipherProfileGeneration? pending;
+    private string? failedStartupOriginal;
 
     /// <summary>Prepares a verified unpublished new profile while retaining the active endpoint and key.</summary>
     public async Task PrepareNewAsync(string profileId, string originalPath, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
@@ -34,10 +35,28 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
         try
         {
             location.Access.RequireDrainedOwner(owner);
+            if (current is not null && pending is null && failedStartupOriginal == Path.GetFullPath(originalPath))
+            {
+                // Initial publication can succeed before a Changed observer throws. Retain that exact
+                // live key owner and finish only its failed startup; ordinary duplicate starts still fail.
+                RequireCurrent();
+                location.RepeatProtectedNotification(location.Capture(), owner);
+                RequireCurrent(); failedStartupOriginal = null; return;
+            }
             if (current is not null || pending is not null) throw new InvalidOperationException("Protected profile session already started.");
             var generation = await resolve(originalPath, owner, ct).ConfigureAwait(false);
             try { ct.ThrowIfCancellationRequested(); location.Access.RequireDrainedOwner(owner); generation.Publish(location, owner); current = generation; }
-            catch { generation.Dispose(); throw; }
+            catch
+            {
+                var endpoint = location.Capture();
+                if (endpoint.Path == generation.Path && ReferenceEquals(endpoint.CreateConnection?.Target, generation)
+                    && endpoint.CipherVersion == generation.CipherVersion)
+                {
+                    current = generation; failedStartupOriginal = Path.GetFullPath(originalPath);
+                }
+                else generation.Dispose();
+                throw;
+            }
         }
         finally { operations.Release(); }
     }
@@ -93,7 +112,7 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
         {
             location.Access.RequireDrainedOwner(owner);
             if (pending is not null) throw new InvalidOperationException("Finish the protected transition before closing.");
-            current?.Dispose(); current = null;
+            current?.Dispose(); current = null; failedStartupOriginal = null;
         }
         finally { operations.Release(); }
     }

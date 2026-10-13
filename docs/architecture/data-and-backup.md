@@ -1788,3 +1788,15 @@ effect factories. Test-WindowsStartup.ps1 reproduces new initial/cold phases aga
 reviewed candidate. Interrupted states must be resumed rather than recreated. Actual failure
 and same-fixture pooled-handle resume evidence are in D-227 in the application decision log.
 Main provider/lifecycle/recovery/retention/OS registration remains pending.
+
+
+### D-228 — Initial protected notification recovery
+
+SqlCipherProfileSession captures a failed-initial-original marker only if a throwing publication
+observer left its exact verified generation installed. The live key survives. Covered startup
+retains and revalidates the prepared profile catalogue; retry performs no bootstrap/key work.
+RepeatProtectedNotification preserves endpoint identity and replays observers under the same
+drained maintenance owner. Readiness follows successful notification and endpoint validation.
+Unpublished failures clear keys as before, ordinary duplicate starts still fail, and Close clears
+the marker. An arbitrary protected endpoint supplies no startup recovery authority. Evidence is
+in D-228 in the application decision log; final native/recovery/lifecycle adoption remains open.

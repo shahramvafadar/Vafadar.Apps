@@ -3878,3 +3878,48 @@ D-227 complete signed phone artifact: artifacts/android-d227-delivery/pro.vafada
 (79.1 MiB), existing local test certificate; apksigner verification succeeds. Actual package
 pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
 Main storage remains plaintext; this is not encrypted-main, device, iOS or release acceptance.
+
+### D-228 — Retain and retry an initial protected publication after observer failure
+
+The shared native caller injects a real first Changed-observer IOException after the protected
+endpoint is installed. Before the fix, that original call disposed the already published key owner;
+covered startup then rejected retry with 'requires the original unpublished endpoint'. The actual
+Windows failure is retained in artifacts/native-sqlcipher/d228-reproduction.log; the existing
+fictitious D-227 dataset was reused, not regenerated.
+
+SqlCipherProfileSession retains a generation only when the actual endpoint/path/creator/version
+still identify that generation after a failed initial publication. A failed-original marker admits
+one startup recovery for that exact original under drained ownership. Ordinary duplicate starts
+still fail. Close clears both the owned key and recovery marker. Unpublished generations still
+clear on failure; no plaintext publication or replacement key is introduced.
+
+ProtectedDatabaseStartup retains the complete prepared profile capture immediately before initial
+publication. Retry requires that same actual catalogue and session owner, never merely an arbitrary
+protected endpoint. It skips already completed bootstrap/schema/native key reads. The failed
+notification is repeated for the exact retained endpoint without changing its identity or pools,
+so later observers that did not run receive it; readiness is accepted only after notification and
+publication validation succeed. Notification failures keep recovery available and startup covered.
+
+Native Windows verification reuses the original encrypted account/balance 321 and forbids key
+preparation. It proves the published key still opens actual data after failure, changed device
+catalogue retry is rejected without key reads, valid retry preserves the exact endpoint and key-read
+count, late observers run, and ordinary duplicate session start remains rejected. The same shared
+case is available in the Android caller with StartupNotification mode. Managed tests separately
+check retained-endpoint notification delivery/foreign-owner refusal and refusal of an unowned
+already-protected startup. They do not substitute plaintext fixtures for native encryption proof.
+Windows proof: artifacts/native-sqlcipher/d228-native-complete-proof.json. Actual final native
+build/runtime and full managed results are recorded below when terminal. Main native/provider,
+recovery/lifecycle/retention/OS adoption and remaining platform/warning gates remain open.
+D-228 terminal verification: actual Windows and Android observer-failure cases pass. Android
+proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-6b204a3f4b4c4c37bf842904a534ab33.json;
+shared signed Release AOT x64/API36/4 KiB case confirms retained key/endpoint, unchanged balance
+321, changed-catalogue refusal, observer delivery and no repeated key reads. Native Android
+build: 66.96s, zero warnings/errors. All 3,378 managed tests pass, zero failures/skips
+(3m13.563s); focused app authority cases 4/4 and publication contracts 15/15 pass. Strict
+Windows 27.65s and Android 46.90s builds have zero warnings/errors. No visible layout changed,
+no unchanged producer/upstream suite was repeated, and main storage remains plaintext.
+
+D-228 complete signed phone artifact: artifacts/android-d228-delivery/pro.vafadar.zanance-Signed.apk
+(79.5 MiB), existing local test certificate; apksigner verification succeeds. Actual package
+pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
+Main storage remains plaintext; this is not encrypted-main, device, iOS or release acceptance.

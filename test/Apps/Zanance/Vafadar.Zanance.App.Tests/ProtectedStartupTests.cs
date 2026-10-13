@@ -42,6 +42,16 @@ public sealed class ProtectedStartupTests
         Assert.False(File.Exists(identity));
     }
 
+    [Fact, Trait("AT", "AT-228")]
+    public async Task Already_protected_endpoint_is_not_accepted_without_this_startups_prepared_capture()
+    {
+        using var f = new FlowFixture(); var location = f.Services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+        location.MoveToProtected(location.Path, () => throw new IOException("Foreign publication must not be opened."), "4.19.0");
+        var identity = f.Directory.Combine("identities.sqlite");
+        await Assert.ThrowsAsync<InvalidOperationException>(() => Create(f, identity, ProtectedStorageInitialization.ExistingInstallation).PrepareAsync(Ct));
+        Assert.True(location.IsProtected); Assert.False(File.Exists(identity));
+    }
+
     private static ProtectedDatabaseStartup Create(FlowFixture f, string identity, ProtectedStorageInitialization mode,
         Func<Microsoft.Data.Sqlite.SqliteConnection, CancellationToken, Task>? schema = null)
     {

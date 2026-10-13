@@ -18,7 +18,7 @@ internal static class FreshStartupCompatibility
 {
     internal static async Task<string> RunAsync(string folder, bool create,
         Func<string, IDatabaseGenerationKeyStore> createKeys,
-        Func<string, IDatabaseGenerationFileDurability> createDurability)
+        Func<string, IDatabaseGenerationFileDurability> createDurability, bool failPublication = false)
     {
         if (create)
         {
@@ -32,7 +32,7 @@ internal static class FreshStartupCompatibility
         var profiles = new ProfileService(location, services.GetRequiredService<ZananceStore>(), preferences, new Runtime(), Translator.Instance);
         var identityPath = Path.Combine(folder, "identities.sqlite");
         var actual = createKeys(folder);
-        IDatabaseGenerationKeyStore keys = create ? actual : new ExistingKeys(actual);
+        var keys = new CountingKeys(create ? actual : new ExistingKeys(actual));
         var durability = createDurability(folder);
         var schemaBuilds = 0; var resolutions = 0; var publications = 0;
         async Task BuildSchema(SqliteConnection connection, CancellationToken ct)
@@ -54,13 +54,40 @@ internal static class FreshStartupCompatibility
                 _ => throw new IOException("Fresh startup cannot invent a restore."), keys, durability, owner,
                 () => { }, 16 * 1024 * 1024, "4.19.0", ct);
         });
-        location.Changed += (_, _) => publications++;
+        location.Changed += (_, _) =>
+        {
+            publications++;
+            if (failPublication && publications == 1) throw new IOException("Fictitious publication observer failure.");
+        };
+        var completedObservers = 0;
+        location.Changed += (_, _) => completedObservers++;
         var startup = new ProtectedDatabaseStartup(location, profiles, session, identityPath,
             create ? ProtectedStorageInitialization.NewInstallation : ProtectedStorageInitialization.ExistingInstallation,
             keys, durability, (_, _) => throw new IOException("Fresh startup cannot invent a restore."),
             16 * 1024 * 1024, "4.19.0", BuildSchema);
+        if (failPublication)
+        {
+            var refused = false;
+            try { await startup.PrepareAsync(); }
+            catch (IOException) { refused = true; }
+            if (!refused || !location.IsProtected) throw new IOException("Actual post-publication failure was not observed.");
+            var retainedEndpoint = location.Capture();
+            if ((await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).Single().OpeningBalance != 321)
+                throw new IOException("Published key owner was retired after observer failure.");
+            var reads = keys.Reads;
+            preferences.Set("profiles.current", Guid.NewGuid().ToString("N"));
+            var changed = false;
+            try { await startup.PrepareAsync(); }
+            catch (InvalidOperationException) { changed = true; }
+            finally { preferences.Remove("profiles.current"); }
+            if (!changed || keys.Reads != reads) throw new IOException("Changed retry repeated key work or was accepted.");
+            await startup.PrepareAsync();
+            if (keys.Reads != reads || !ReferenceEquals(location.Capture(), retainedEndpoint) || completedObservers != 1)
+                throw new IOException("Observer retry changed publication/keys or skipped remaining observers.");
+        }
         await startup.PrepareAsync(); await startup.PrepareAsync();
-        if (File.Exists(original) || !location.IsProtected || resolutions != 1 || publications != 1 || schemaBuilds != (create ? 1 : 0))
+        if (File.Exists(original) || !location.IsProtected || resolutions != 1 || publications != (failPublication ? 2 : 1)
+            || completedObservers != 1 || schemaBuilds != (create ? 1 : 0))
             throw new IOException("Fresh/cold startup created plaintext or repeated initialization.");
         var store = services.GetRequiredService<ZananceStore>();
         if (create)
@@ -69,7 +96,17 @@ internal static class FreshStartupCompatibility
             await store.SaveAccountAsync(new Account { Name = "Fictitious retained account", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1), OpeningBalance = 321 });
         }
         if ((await store.GetAccountsAsync()).Single().OpeningBalance != 321) throw new IOException("Cold startup changed retained finance.");
-        using (var owner = await location.Access.AcquireExclusiveAsync()) session.Close(owner);
+        using (var owner = await location.Access.AcquireExclusiveAsync())
+        {
+            if (failPublication)
+            {
+                var rejected = false;
+                try { await session.StartAsync(original, owner); }
+                catch (InvalidOperationException) { rejected = true; }
+                if (!rejected) throw new IOException("Ordinary duplicate session start was accepted.");
+            }
+            session.Close(owner);
+        }
         if (!create)
         {
             var held = identityPath + ".held"; File.Move(identityPath, held, overwrite: false);
@@ -89,13 +126,21 @@ internal static class FreshStartupCompatibility
             }
             finally { File.Move(held, identityPath, overwrite: false); }
         }
-        return "{\"ActualFreshStartup\":true,\"NoPlaintextOriginal\":true,\"NoManufacturedAccount\":true,\"RetainedOpeningBalance\":321,\"MissingIdentityRefused\":" + (!create ? "true" : "false") + "}";
+        return "{\"ActualFreshStartup\":true,\"NoPlaintextOriginal\":true,\"NoManufacturedAccount\":true,\"RetainedOpeningBalance\":321,\"MissingIdentityRefused\":" + (!create ? "true" : "false") +
+            ",\"ObserverFailureRetainsKeyAndRetry\":" + (failPublication ? "true" : "false") + "}";
     }
 
     private sealed class ExistingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore
     {
         public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new IOException("Cold startup prepared a key.");
         public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) => inner.ReadAsync(binding, ct);
+    }
+
+    private sealed class CountingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore
+    {
+        internal int Reads;
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => inner.PrepareAsync(binding, ct);
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) { Reads++; return inner.ReadAsync(binding, ct); }
     }
 
     private sealed class Runtime : IProfileRuntime
