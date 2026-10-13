@@ -2287,3 +2287,39 @@ D-217 final managed evidence: all 3,333 tests pass with zero failures/skips (2m4
 Four new cases cover captured journal/history resume and rejection of advanced or differently
 selected staging without publishing or rewriting it. Outputs cleaned after terminal builds/tests.
 Main startup/provider/recovery and physical/platform release acceptance remain unfinished.
+
+### D-218 — Compose preparation of all captured existing profiles
+
+SqlCipherProfileBootstrap joins actual identities, staged journal/history creation, pre-key initial
+intent, concrete migration/current-generation resolution and temporary verified key ownership for
+every captured existing profile. The actual host maintenance owner excludes ordinary contexts;
+private unpublished locations supply local ownership without moving the application's factory.
+Only after this pass may the host's protected session publish the selected profile.
+
+The original map must be complete, distinct, absolute and in the real location's private directory.
+Existing metadata must match the captured profile catalogue. Missing installation is not inferred
+as fresh: explicit initialization still refuses missing/redirected/non-plaintext originals or retained
+key/migration/history/cipher state, unless resuming captured valid catalogue staging. Read-only
+startup never creates identities. Missing financial databases are never manufactured here.
+
+Native sync qualifies metadata creation; actual journals/history/current files and keys are reopened.
+All encrypted rollback/envelopes remain retained, and temporary key owners are disposed before the
+next profile. No intermediate application publication or fallback is added. New empty profile
+creation, full restore callback/lifecycle registration, covered main async startup, provider adoption,
+recovery/retention and OS policy remain open. Main application storage is still plaintext.
+D-218 final evidence: all 3,337 managed tests pass with zero failures/skips (2m58s). Four new
+cases reject unauthorized missing installation, duplicate original paths, changed profile capture
+and missing installation with retained migration state before native key/metadata effects. Final
+strict Windows 10.58s, Android 16.48s and independent Release 58.51s builds are warning/error-free;
+build iterations before final guard edits are not used as final verification. Tests run after builds.
+
+Independent signed Release AOT/trim Android x64 API36/4 KiB prepares two actual original 32-migration
+profiles through the complete new bootstrap. Original main/work entries 250/880 and opening balance
+1,000 remain distinct. No application endpoint changes during the pass; retained candidate and encrypted
+rollback verify for both. A cold pass with a key port whose Prepare throws preserves all stable identity
+fingerprints, financial packets and rollback. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-0796e72e6cdc4fe98e3783c3ce11b8d5.json,
+run 6f788670f1204d3d8e32072835e6a0a1. Created/Result all eight guards pass, with no scenario restart
+or unchanged native suite/UI matrix. ABI identities/signature verified; independent package uninstalled.
+Outputs cleaned after terminal tests/builds. This verifies captured existing profiles, not automatic
+new-profile creation, inactive restore policy/UI, main activation, physical/iOS or release acceptance.

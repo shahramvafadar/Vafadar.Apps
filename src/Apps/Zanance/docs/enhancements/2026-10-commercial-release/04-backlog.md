@@ -1745,3 +1745,22 @@ run 18d182139b834d9b84bd34178fd54ef1. Runner clears only its own prior metadata 
 its second phase; no scenario repeat/reinstallation for failure or unrelated native suite/UI matrix.
 ABI identities/signature verified and package uninstalled. Strict Windows 18.74s, Android 17.54s
 and independent Release 59.16s builds report zero warnings/errors. Parser checked.
+### D-218 — Compose preparation of all captured existing profiles
+
+SqlCipherProfileBootstrap joins actual identities, staged journal/history creation, pre-key initial
+intent, concrete migration/current-generation resolution and temporary verified key ownership for
+every captured existing profile. The actual host maintenance owner excludes ordinary contexts;
+private unpublished locations supply local ownership without moving the application's factory.
+Only after this pass may the host's protected session publish the selected profile.
+
+The original map must be complete, distinct, absolute and in the real location's private directory.
+Existing metadata must match the captured profile catalogue. Missing installation is not inferred
+as fresh: explicit initialization still refuses missing/redirected/non-plaintext originals or retained
+key/migration/history/cipher state, unless resuming captured valid catalogue staging. Read-only
+startup never creates identities. Missing financial databases are never manufactured here.
+
+Native sync qualifies metadata creation; actual journals/history/current files and keys are reopened.
+All encrypted rollback/envelopes remain retained, and temporary key owners are disposed before the
+next profile. No intermediate application publication or fallback is added. New empty profile
+creation, full restore callback/lifecycle registration, covered main async startup, provider adoption,
+recovery/retention and OS policy remain open. Main application storage is still plaintext.

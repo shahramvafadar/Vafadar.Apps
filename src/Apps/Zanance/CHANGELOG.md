@@ -1401,3 +1401,7 @@ Prepared restartable identity publication from verified staging, without exposin
 ### D-217 - Migration metadata publication
 
 Prepared restartable publication of captured migration and initial recovery history without treating incomplete state as verified. Main encryption activation remains pending.
+
+### D-218 - Existing profile preparation
+
+Prepared one verified initialization path for all existing local profiles before their encrypted data becomes visible. Main encryption activation remains pending.

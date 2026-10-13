@@ -54,6 +54,53 @@ public sealed class ProfileGenerationBootstrapTests
 
     private static LocalDatabaseLocation<TestDbContext> Location(TestDatabase db) => db.Services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
 
+    [Fact, Trait("AT", "AT-217")]
+    public async Task Missing_installation_with_existing_migration_state_cannot_generate_replacement_bindings()
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var metadata = Path.Combine(Path.GetDirectoryName(location.Path)!, "missing-identities.sqlite");
+        await File.WriteAllBytesAsync(location.Path + ".generation.sqlite", [1, 2, 3], Ct);
+        await Assert.ThrowsAsync<IOException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, metadata,
+            new Dictionary<string, string> { [""] = location.Path }, true, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.False(File.Exists(metadata)); Assert.True(File.Exists(location.Path));
+    }
+
+    [Fact, Trait("AT", "AT-217")]
+    public async Task All_profile_bootstrap_never_creates_missing_installation_when_initialization_is_not_authorized()
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var metadata = Path.Combine(Path.GetDirectoryName(location.Path)!, "missing-identities.sqlite");
+        await Assert.ThrowsAsync<IOException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, metadata,
+            new Dictionary<string, string> { [""] = location.Path }, false, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.False(File.Exists(metadata)); Assert.True(File.Exists(location.Path));
+    }
+
+    [Fact, Trait("AT", "AT-217")]
+    public async Task All_profile_bootstrap_rejects_two_identities_for_the_same_original_before_any_metadata_or_key_work()
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var metadata = Path.Combine(Path.GetDirectoryName(location.Path)!, "missing-identities.sqlite");
+        await Assert.ThrowsAsync<ArgumentException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, metadata,
+            new Dictionary<string, string> { [""] = location.Path, [Guid.NewGuid().ToString("N")] = location.Path }, true,
+            new NoKeys(), new NoDurability(), (_, _) => throw new InvalidOperationException("Unexpected receiver."),
+            () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.False(File.Exists(metadata)); Assert.True(File.Exists(location.Path));
+    }
+
+    [Fact, Trait("AT", "AT-217")]
+    public async Task Changed_captured_profile_set_fails_before_migration_and_preserves_original_data()
+    {
+        using var db = new TestDatabase(); var location = Location(db); using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var metadata = Path.Combine(Path.GetDirectoryName(location.Path)!, "identities.sqlite");
+        await new SqliteDatabaseIdentityCatalogue(metadata, owner.Validate).CreateNewAsync(["", Guid.NewGuid().ToString("N")], Ct);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, metadata,
+            new Dictionary<string, string> { [""] = location.Path }, false, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct));
+        Assert.True(File.Exists(location.Path)); Assert.False(File.Exists(location.Path + ".generation.sqlite"));
+    }
+
     [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-211")]
     public async Task Current_resolution_never_treats_missing_or_foreign_history_as_initial_selection(bool foreignInitial)
     {

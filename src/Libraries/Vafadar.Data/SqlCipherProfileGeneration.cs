@@ -69,6 +69,22 @@ public sealed class SqlCipherProfileGeneration : IDisposable
     public static async Task InitializeJournalAsync<TContext>(LocalDatabaseLocation<TContext> location,
         SqliteDatabaseIdentityCatalogue identities, string legacyProfile, string originalPath,
         DatabaseAccessGate.ExclusiveLease owner, Action validateAccess, CancellationToken ct = default) where TContext : LocalDbContext
+        => await InitializeJournalCoreAsync(location, identities, legacyProfile, originalPath, owner, validateAccess, null, ct).ConfigureAwait(false);
+
+    /// <summary>Initializes captured original journal publication with actual platform synchronization.</summary>
+    public static Task InitializeJournalAsync<TContext>(LocalDatabaseLocation<TContext> location,
+        SqliteDatabaseIdentityCatalogue identities, string legacyProfile, string originalPath,
+        DatabaseAccessGate.ExclusiveLease owner, Action validateAccess, IDatabaseGenerationFileDurability durability,
+        CancellationToken ct = default) where TContext : LocalDbContext
+    {
+        ArgumentNullException.ThrowIfNull(durability);
+        return InitializeJournalCoreAsync(location, identities, legacyProfile, originalPath, owner, validateAccess, durability, ct);
+    }
+
+    private static async Task InitializeJournalCoreAsync<TContext>(LocalDatabaseLocation<TContext> location,
+        SqliteDatabaseIdentityCatalogue identities, string legacyProfile, string originalPath,
+        DatabaseAccessGate.ExclusiveLease owner, Action validateAccess, IDatabaseGenerationFileDurability? durability,
+        CancellationToken ct) where TContext : LocalDbContext
     {
         var state = await CaptureAsync(location, identities, legacyProfile, originalPath, owner, validateAccess, ct).ConfigureAwait(false);
         var candidate = Candidate(state.Original, state.Identity);
@@ -79,7 +95,9 @@ public sealed class SqlCipherProfileGeneration : IDisposable
         using (var file = new FileStream(state.Original, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         { var header = new byte[16]; file.ReadExactly(header); if (!header.AsSpan().SequenceEqual("SQLite format 3\0"u8)) throw new InvalidDataException("Journal initialization requires the known plaintext original."); }
         Check(location, owner, validateAccess, ct);
-        await new SqliteDatabaseGenerationJournal(Journal(state.Original), state.Identity.InitialMigration).CreateNewAsync(ct).ConfigureAwait(false);
+        var journal = new SqliteDatabaseGenerationJournal(Journal(state.Original), state.Identity.InitialMigration);
+        if (durability is null) await journal.CreateNewAsync(ct).ConfigureAwait(false);
+        else await journal.CreateNewAsync(durability, ct).ConfigureAwait(false);
         Check(location, owner, validateAccess, ct);
     }
 
