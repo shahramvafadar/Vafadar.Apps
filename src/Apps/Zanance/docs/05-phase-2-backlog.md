@@ -1455,3 +1455,13 @@ bootstrap and selected protected-session publication, independently of commercia
 Both initial and cold Android probe runs pass with two original profiles and the selected work
 amount preserved. Main registration, new-install handling, reconciliation, recovery and final OS
 policy are not yet activated. See D-224 in 01-assessment-and-decisions.md for exact evidence.
+
+
+### D-225 — Encrypted fresh-install startup composition
+
+SEC-01 remains in progress: the real protected startup contract now supports explicit new
+installation with the actual schema created in memory, and distinct existing/legacy authorities.
+Missing existing metadata never permits replacement. Three authority tests pass; native fresh
+and cold phases use retained fictitious data. Final main provider/lifecycle registration, orphan
+reconciliation, restore routing, optional recovery, safety retention and coupled OS policy
+remain open. Detailed evidence is in D-225 in the decision log and specification Section 31.

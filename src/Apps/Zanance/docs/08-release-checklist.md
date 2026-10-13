@@ -1028,3 +1028,8 @@ D-224 signed phone artifact: artifacts/android-d224-delivery/pro.vafadar.zanance
 pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
 Main storage remains plaintext; independent protected startup proof is not activation, device
 acceptance, recovery completion or product release. No new screen layout was introduced.
+
+D-225 phone artifact: artifacts/android-d225-delivery/pro.vafadar.zanance-Signed.apk (79.1 MiB),
+existing local test certificate, apksigner verification succeeds. Actual package pro.vafadar.zanance,
+API 24/36 and complete arm64-v8a/x86_64 assembly stores verified. Main storage remains plaintext;
+this artifact does not establish encrypted-main, phone, iOS, recovery or release acceptance.

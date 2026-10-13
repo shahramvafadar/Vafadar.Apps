@@ -1876,3 +1876,12 @@ Protected startup captures every original independently of commercial quotas, re
 catalogue and prepares all profiles before one selected session publication. Completed callbacks
 do not repeat resolution. Explicit installation authority and final native/recovery/OS adoption
 remain host duties; no missing metadata or availability decision permits plaintext fallback.
+
+
+### D-225 — Explicit protected installation authority
+
+Protected startup distinguishes reopening, migration of known plaintext profiles and explicitly
+new installation. Missing metadata never chooses a mode. Fresh schema stays in memory and must
+not manufacture an account. Retained financial/key artifacts refuse replacement installation
+identity; cold reopen reads existing keys only. Final main registration/recovery/retention/OS
+policy and other platform/device gates remain separate and unfinished.

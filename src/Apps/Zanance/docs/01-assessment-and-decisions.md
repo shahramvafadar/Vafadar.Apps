@@ -3465,3 +3465,38 @@ files are absent. Proof: artifacts/native-sqlcipher/build/android-d/android-migr
 D-224 final managed verification: all 3,363 tests pass with zero failures/skips (3m26.055s).
 Strict Windows and Android builds have zero warnings/errors (21.11s and 83.05s). Main storage
 remains plaintext because final native/recovery/retention/OS registrations are not activated.
+
+### D-225 — Explicit encrypted fresh-install startup
+
+ProtectedDatabaseStartup now distinguishes ExistingInstallation, LegacyPlaintextProfiles and
+NewInstallation. Absence of an identity file never selects a mode. NewInstallation requires
+one captured main profile and the real schema builder; identity metadata must stay in that
+private directory. Retained database/journal/key artifacts refuse creation of replacement
+identities. Its own staged identity publication may resume under the explicit new-install authority.
+
+The actual SqlCipherNewProfile path creates all 32 application migrations in memory, writes
+only verified encrypted candidate/rollback files and returns to the same all-profile bootstrap
+and single session publication. No account or financial movement is manufactured. Existing
+installation startup never runs the schema builder or prepares replacement keys on cold read.
+Main host registration remains pending final recovery, retention and lifecycle adoption.
+
+Three actual app-source authority tests pass. The first byte-preservation fixture check failed
+because its completed Windows SQLite migration retained a pooled file handle; the fixture now
+closes only its own scoped pool before comparing bytes. No production pooling change was made.
+Independent signed Release AOT Android initial/cold startup preserved a fictitious opening balance
+of 321 and refused missing identity metadata beside retained encrypted/key artifacts. The first
+cold observation deadline expired; its same-process successful result was read before any restart
+and retained in artifacts/native-sqlcipher/d225-native-first-observation.json (run
+31fdee67b3ac43978d8033c16166c54f). Final code limits artifact matching to file names independently
+of parent names and letter case; only the cold phase of that recorded fixture is rechecked.
+The runner supports explicit recorded fresh-fixture continuation and a longer bounded observation.
+Final proof and managed/build results are recorded below when terminal; no main encryption or
+physical-device/iOS/recovery acceptance is inferred from an independent probe.
+D-225 final evidence: cold-only verification on the same recorded fixture passes with the final
+signed Release AOT build; no original/profile data was recreated. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-96d18899dce344978fd693ea0b53cc69.json.
+Its Created=null explicitly denotes continuation, not a repeated initial run; the first observation
+is retained separately. Full managed suite: 3,366 pass, zero failures/skips (3m14.247s). Strict
+Windows 26.09s and Android 44.32s: zero warnings/errors. Final independent native build 83.58s:
+zero warnings/errors. Main runtime registration, recovery/lifecycle/retention/OS adoption, physical
+phone, remaining native matrix and iOS acceptance remain unfinished.

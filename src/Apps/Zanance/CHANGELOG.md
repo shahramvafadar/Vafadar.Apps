@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Protected fresh-install startup path (D-225)
+
+- Prepared creation of a new encrypted database without a plaintext original or automatic account.
+- Existing installation metadata cannot be replaced by treating a missing file as a fresh install.
+- Main-app encryption activation remains pending final native, recovery and lifecycle integration.
+
 ### Added - Protected startup composition (D-224)
 
 - Prepared the startup path that verifies every local profile before opening the selected profile.

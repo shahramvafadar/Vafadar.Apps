@@ -58,7 +58,8 @@ internal static class ProtectedStartupCompatibility
                 () => { }, 16 * 1024 * 1024, "4.19.0", ct);
         });
         var publicationCount = 0; location.Changed += (_, _) => publicationCount++;
-        var startup = new ProtectedDatabaseStartup(location, profiles, session, identityPath, create, keys, durability,
+        var startup = new ProtectedDatabaseStartup(location, profiles, session, identityPath,
+            create ? ProtectedStorageInitialization.LegacyPlaintextProfiles : ProtectedStorageInitialization.ExistingInstallation, keys, durability,
             (_, _) => throw new IOException("Initial startup cannot invent a restore."), 16 * 1024 * 1024, "4.19.0");
         await startup.PrepareAsync();
         await startup.PrepareAsync();

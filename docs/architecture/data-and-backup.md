@@ -1753,3 +1753,14 @@ separately below, rather than inferred from these capture tests.
 Main native/provider/startup registration, fresh installation, profile lifecycle reconciliation,
 restore routing, optional recovery, safety retention and coupled OS exclusion remain in progress.
 No visible layout changed and unchanged layout matrices/native producer suites are not repeated.
+
+### D-225 — New-install startup
+
+ProtectedDatabaseStartup accepts explicit ProtectedStorageInitialization authority. NewInstallation
+requires one captured main profile, a real in-memory EF schema builder and metadata in the same
+private directory. Before absent identity publication it rejects retained database/journal/key
+files; only the owned staged identity may resume. SqlCipherNewProfile performs native key/staging
+verification, then complete bootstrap and session publication proceed normally. No plaintext
+financial original is created. ExistingInstallation forbids missing metadata initialization.
+The final host must select authority from verified install/recovery state; it is not registered
+yet. See D-225 in the application decision log for native and negative fixture evidence.

@@ -2454,3 +2454,17 @@ work amount 880 and opening balance 1000 remain correct; one publication and one
 occur despite repeated startup. Cold preparation forbids new key preparation.
 Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-0745a8874d4c489eb2e71304eb953135.json.
 No main-app activation, phone, arm64/API24/16 KiB, iOS, key-loss/recovery or release acceptance.
+
+
+### D-225 / AT-225 — Fresh encrypted startup authority
+
+Three actual app-source tests pass: existing plaintext cannot be replaced by new-install authority,
+fresh initialization requires a real schema builder, and missing metadata cannot initialize an
+existing installation. Full suite: 3,366 cases pass. Native fresh startup runs the actual 32
+migrations in memory, starts with no account, then cold startup retains the explicit fictitious
+opening balance 321 without key preparation. Missing identity beside retained native artifacts
+is rejected even with explicit NewInstallation mode. The initial observation deadline is retained;
+its same-process completed result was read before restart. Only cold verification was repeated
+after the file-name guard change, using the same fixture and final signed Release AOT binary.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-96d18899dce344978fd693ea0b53cc69.json.
+Main registration, recovery, retention, other device/platform and release acceptance remain open.
